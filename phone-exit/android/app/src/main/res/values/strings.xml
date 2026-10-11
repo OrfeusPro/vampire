@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Phone Exit</string>
+    <string name="title">Phone Exit · Wi-Fi</string>
+    <string name="intro">Передаёт интернет вашего ПК через Wi-Fi этого телефона. Вставьте код из клиента ПК, чтобы установить прямую связь.</string>
+    <string name="app_version">Версия %1$s</string>
+    <string name="pairing_hint">Код сопряжения (JSON)</string>
+    <string name="connect">Подключить ПК</string>
+    <string name="stop">Остановить</string>
+    <string name="invalid_pairing">Некорректный код: %1$s</string>
+</resources>

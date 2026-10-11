@@ -1,0 +1,13 @@
+websocket-probe/node_modules/
+webrtc-probe/.local-test-data/
+phone-exit/pc/node_modules/
+phone-exit/android/.gradle/
+phone-exit/android/**/build/
+phone-exit/android/local.properties
+phone-exit/.tools/
+phone-exit/.test-data/
+phone-exit/PhoneExit-personal.apk
+phone-exit/Phone Exit.exe
+phone-exit/Phone Exit.lnk
+phone-exit/*-preview.png
+phone-exit/android-connected.png

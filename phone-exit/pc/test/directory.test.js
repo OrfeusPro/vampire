@@ -1,0 +1,64 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { Directory, roomKey, SIGNAL, BUCKET_MS } from '../src/directory.js';
+import { spawn } from 'node:child_process';
+import { createInterface } from 'node:readline';
+import { once } from 'node:events';
+import { fileURLToPath } from 'node:url';
+
+test('Windows desktop pipe accepts initial UTF-8 BOM and shuts down', {timeout:5000}, async t => {
+  const child=spawn(process.execPath,[fileURLToPath(new URL('../src/directory.js',import.meta.url))],{stdio:['pipe','pipe','pipe']});
+  t.after(()=>{if(child.exitCode===null) child.kill();});
+  const lines=createInterface({input:child.stdout});
+  t.after(()=>lines.close());
+  const first=once(lines,'line');
+  child.stdin.write('\uFEFF'+JSON.stringify({op:'init',phones:[]})+'\n');
+  assert.deepEqual(JSON.parse((await first)[0]),{event:'phones',phones:[]});
+  const exit=once(child,'exit'); child.stdin.write('{"op":"stop"}\n');
+  assert.equal((await exit)[0],0);
+});
+
+test('private phone directory: isolation, countries, expiry, busy, new session, limits', async () => {
+  let now = 1791719400000;
+  const emitted = [], messages = new Map(), sent = [];
+  const request = async (url, options) => {
+    assert.equal(url,SIGNAL);
+    const body = JSON.parse(options.body);
+    if (body.op==='send') sent.push(body);
+    return {ok:true,text:async()=>JSON.stringify({messages:messages.get(body.token)||[]})};
+  };
+  const directory = new Directory(value=>emitted.push(structuredClone(value)),request,()=>now);
+  const a={id:'a'.repeat(32),token:'1'.repeat(64),name:'Телефон A'};
+  const b={id:'b'.repeat(32),token:'2'.repeat(64),name:'Телефон B'};
+  directory.setPhones([a,b]);
+  const bucket=Math.floor(now/BUCKET_MS);
+  const presence=(country,busy=false,at=now)=>[{id:1,message:{type:'candidate',value:{directory:1,type:'presence',country,busy,at}}}];
+  messages.set(roomKey(a.token,bucket),presence('UA'));
+  messages.set(roomKey(b.token,bucket),presence('PL',true));
+  messages.set(roomKey('3'.repeat(64),bucket),presence('US'));
+  await directory.poll();
+  const state=emitted.at(-1);
+  assert.deepEqual(state.phones.map(p=>[p.country,p.online,p.busy]),[['UA',true,false],['PL',true,true]]);
+  assert.equal(JSON.stringify(state).includes(a.token),false);
+  const code={version:1,signal:SIGNAL,token:'4'.repeat(64)};
+  await directory.connect(a.id,code);
+  assert.equal(sent.length,1); assert.equal(sent[0].token,roomKey(a.token,bucket));
+  assert.deepEqual(sent[0].message.value.pairing,code);
+  assert.notEqual(code.token,a.token); assert.match(sent[0].message.value.request,/^[0-9a-f]{32}$/);
+  await assert.rejects(directory.connect(b.id,code));
+  await assert.rejects(directory.connect('c'.repeat(32),code));
+  now+=46000; await directory.poll();
+  assert.ok(emitted.at(-1).phones.every(p=>!p.online));
+  await assert.rejects(directory.connect(a.id,code));
+  directory.remove(a.id);
+  assert.equal(directory.phones.length,1);
+  directory.add('Новый');
+  const enrollment=JSON.parse(emitted.findLast(e=>e.event==='enroll').code);
+  assert.equal(enrollment.version,2); assert.equal(enrollment.mode,'directory');
+  assert.match(enrollment.token,/^[0-9a-f]{64}$/);
+  directory.add('Третий'); directory.add('Четвёртый');
+  assert.throws(()=>directory.add('Пятый'));
+  assert.throws(()=>directory.setPhones([{...a,token:'weak'}]));
+  assert.notEqual(roomKey(a.token,bucket),roomKey(a.token,bucket+1));
+  assert.notEqual(roomKey(a.token,bucket),roomKey(b.token,bucket));
+});

@@ -1,0 +1,14 @@
+<resources>
+    <style name="Theme.PhoneExit" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#62E7BC</item>
+        <item name="android:windowBackground">#10151F</item>
+        <item name="android:colorBackground">#10151F</item>
+        <item name="android:textColorPrimary">#EFF4FA</item>
+        <item name="android:textColorSecondary">#9DAABC</item>
+        <item name="android:statusBarColor">#10151F</item>
+        <item name="android:navigationBarColor">#10151F</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+</resources>
