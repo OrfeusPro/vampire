@@ -1,7 +1,8 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Security
 $taskRoot = Split-Path -Parent $PSScriptRoot
-$taskAccountFile = Join-Path $env:LOCALAPPDATA 'PhoneExit/account.bin'
+. (Join-Path $taskRoot 'pc/profile.ps1')
+$taskAccountFile = Join-Path (GetPhoneExitProfileDirectory) 'account.bin'
 if (Test-Path -LiteralPath $taskAccountFile) {
     $taskEncrypted = [IO.File]::ReadAllBytes($taskAccountFile)
     $taskBytes = [Security.Cryptography.ProtectedData]::Unprotect($taskEncrypted,$null,[Security.Cryptography.DataProtectionScope]::CurrentUser)

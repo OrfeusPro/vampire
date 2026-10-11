@@ -1,7 +1,8 @@
-param([string]$Serial='81865352')
+﻿param([string]$Serial='81865352')
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.Security
-$taskFile=Join-Path $env:LOCALAPPDATA 'PhoneExit/account.bin'
+. (Join-Path $PSScriptRoot 'profile.ps1')
+$taskFile=Join-Path (GetPhoneExitProfileDirectory) 'account.bin'
 $taskBytes=[Security.Cryptography.ProtectedData]::Unprotect([IO.File]::ReadAllBytes($taskFile),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser)
 $taskRaw=[Text.Encoding]::UTF8.GetString($taskBytes)
 $taskInfo=New-Object Diagnostics.ProcessStartInfo

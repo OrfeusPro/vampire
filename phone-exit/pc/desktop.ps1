@@ -1,6 +1,7 @@
 ﻿param([switch]$SelfTest, [string]$UsbTestSerial, [switch]$VpnTest, [switch]$VpnTestApps, [switch]$StartupTest, [switch]$RecoveryTest, [switch]$RecoveryAll)
 $ErrorActionPreference = 'Stop'
-$script:profileDirectory=Join-Path ([Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)) 'PhoneExit'
+. (Join-Path $PSScriptRoot 'profile.ps1')
+$script:profileDirectory=GetPhoneExitProfileDirectory
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -Path (Join-Path $PSScriptRoot 'desktop-controls.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing

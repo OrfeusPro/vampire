@@ -18,7 +18,12 @@ export function createSocksServer(peer, {port = 1080, maxStreams = 32, udpEnable
     const deadline = setTimeout(() => socket.destroy(), 15000);
     socket.once('close', () => clearTimeout(deadline));
     const reply = code => socket.write(Buffer.from([5,code,0,1,0,0,0,0,0,0]));
-    function fail(code) { reply(code); socket.end(); socket.removeListener('data', parse); }
+    function fail(code) {
+      socket.removeListener('data', parse);
+      // A rejected request has no remote stream to half-close. Flush its reply
+      // and release the slot even if the caller keeps its read side open.
+      socket.end(Buffer.from([5,code,0,1,0,0,0,0,0,0]),()=>socket.destroy());
+    }
     function parse(data) {
       buffer = Buffer.concat([buffer,data]);
       if (buffer.length > 65536) return socket.destroy();

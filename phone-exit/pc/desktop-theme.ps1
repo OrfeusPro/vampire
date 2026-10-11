@@ -22,7 +22,7 @@ $title.Visible=$true;$title.SetBounds(78,28,350,46);$title.Font=New-Object Drawi
 $brandIcon=New-Object Windows.Forms.PictureBox;$brandIcon.SetBounds(36,32,38,38);$brandIcon.SizeMode='Zoom';$brandIcon.Image=[Drawing.Image]::FromFile((Join-Path $PSScriptRoot 'assets/phone-exit.png'));$form.Controls.Add($brandIcon)
 $form.Add_FormClosed({$brandIcon.Image.Dispose()})
 $sub=LabelAt 'Личный интернет. Через твои телефоны.' 38 79 600 30;$sub.ForeColor=$muted
-$versionLabel=LabelAt 'Версия 0.4.8' 440 42 170 24;$versionLabel.ForeColor=$muted;$versionLabel.TextAlign='MiddleRight'
+$versionLabel=LabelAt 'Версия 0.4.10' 440 42 170 24;$versionLabel.ForeColor=$muted;$versionLabel.TextAlign='MiddleRight'
 $badge=LabelAt 'ПРЯМОЕ ПОДКЛЮЧЕНИЕ' 765 49 293 30;$badge.ForeColor=$accent;$badge.TextAlign='MiddleRight';$badge.Font=New-Object Drawing.Font('Segoe UI Semibold',9)
 $form.Add_Paint({param($sender,$paintEvent)
     $g=$paintEvent.Graphics;$g.SmoothingMode='AntiAlias';$g.ScaleTransform($script:uiScale,$script:uiScale)
@@ -107,6 +107,7 @@ $detail.Visible=$true;$detail.SetBounds(38,674,1026,26);$detail.Text='Wi-Fi те
 $codeHeading.Visible=$false;$code.Visible=$false;$copy.Visible=$false
 $appFile=Join-Path $script:profileDirectory 'applications.json'
 . (Join-Path $PSScriptRoot 'desktop-applications.ps1')
+. (Join-Path $PSScriptRoot 'desktop-account.ps1')
 if(Test-Path -LiteralPath $appFile){try{$script:appPaths=@(MergeApplicationPaths @() @([IO.File]::ReadAllText($appFile)|ConvertFrom-Json|ForEach-Object{$_}))}catch{}}
 $mode.Add_SelectedIndexChanged({$chooseApps.Visible=$mode.SelectedIndex -eq 1;$appNote.Visible=$chooseApps.Visible;$start.Text=if($mode.SelectedIndex -eq 2){'Подключить прокси'}else{'Подключить VPN'};$appNote.Text="Приложений: $($script:appPaths.Count) · дочерние EXE автоматически";UpdateWindowLayout})
 $chooseApps.Add_Click({ShowApplicationList})
@@ -180,6 +181,7 @@ function UpdateWindowLayout {
     $buttonY=$h-201;$leftButtonY=if($mode.SelectedIndex -eq 1){510+$script:connectionOffset}else{451+$script:connectionOffset};$primaryWidth=[Math]::Round(($innerWidth-12)*0.61)
     $form.SuspendLayout()
     PlaceControl $badge ($w-350) 49 308 30
+    PlaceControl $accountButton ($w-180) 87 138 34
     PlaceControl $status 62 (319+$script:connectionOffset) ($leftWidth-60) 39
     PlaceControl $pingLabel $innerX (355+$script:connectionOffset) $innerWidth 22
     PlaceControl $mode $innerX (389+$script:connectionOffset) $innerWidth 34

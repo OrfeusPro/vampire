@@ -72,11 +72,11 @@ function PersonalMode {
     $phoneNameLabel.Visible=$false; $phoneName.Visible=$false; $addPhone.Visible=$false
     $code.Visible=$false; $copy.Visible=$false
     $codeHeading.Text='Автоматическое подключение'
-    $null=LabelAt 'Установите персональный APK на свои телефоны и откройте приложение один раз. Телефоны появятся в списке справа автоматически. Выберите телефон по стране и подключитесь. При потере Wi-Fi телефон сам повторяет подключение к серверу.' 26 252 605 104
+    if(!(Get-Command UiPixel -ErrorAction SilentlyContinue)){$null=LabelAt 'Установите персональный APK на свои телефоны и откройте приложение один раз. Телефоны появятся в списке справа автоматически. Выберите телефон по стране и подключитесь. При потере Wi-Fi телефон сам повторяет подключение к серверу.' 26 252 605 104}
     $hint.SetBounds(26,368,605,100)
     $hint.Text='Телефоны с включённым автоматическим доступом появятся в списке.'
     $removePhone.SetBounds(660,464,276,40)
-    $null=LabelAt 'Добавление без кодов: установите PhoneExit-personal.apk на свой телефон.' 660 400 276 54
+    if(!(Get-Command UiPixel -ErrorAction SilentlyContinue)){$null=LabelAt 'Добавление без кодов: установите PhoneExit-personal.apk на свой телефон.' 660 400 276 54}
     $script:apkFolder=ButtonAt 'Папка с APK' 660 513 276
     $apkFolder.Add_Click({ Start-Process explorer.exe -ArgumentList ('/select,"'+(Join-Path $PSScriptRoot '../PhoneExit-personal.apk')+'"') })
 }
