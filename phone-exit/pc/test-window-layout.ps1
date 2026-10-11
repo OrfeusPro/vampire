@@ -4,6 +4,7 @@
         $savedApps=$script:appPaths
         try{$script:appPaths=@((Get-Command curl.exe).Source,(TransportRuntime));ShowApplicationList -Preview}finally{$script:appPaths=$savedApps}
         ShowAccountTransfer -Preview
+        $null=ShowRunningApplications -Preview
         $previousStart=$start.Enabled;$previousStop=$stopButton.Enabled
         try{
             $start.Enabled=$false;$stopButton.Enabled=$true;UpdateConnectionButtons

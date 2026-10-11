@@ -8,48 +8,86 @@
     if($paths.Count -gt 64){throw 'Можно добавить не больше 64 приложений.'}
     return $paths.ToArray()
 }
-function ShowApplicationList([switch]$Preview) {
-    $window=[PhoneExit.DesktopWindow]::new();$window.Text='Приложения Phone Exit'
-    $window.FormBorderStyle='None';$window.StartPosition='CenterParent';$window.BackColor=$form.BackColor;$window.ForeColor=$form.ForeColor;$window.Font=$form.Font
-    $window.ClientSize=[Drawing.Size]::new((UiPixel 700),(UiPixel 440))
-    $list=[PhoneExit.DarkPhoneList]::new();$list.BackColor=[Drawing.ColorTranslator]::FromHtml('#192231');$list.ForeColor=$form.ForeColor;$list.Font=$form.Font;$list.ItemHeight=UiPixel 58
-    $list.SetBounds((UiPixel 24),(UiPixel 120),(UiPixel 652),(UiPixel 223));$list.AccessibleName='Выбранные приложения и игры'
-    foreach($path in $script:appPaths){$list.Items.Add($path)}
-    $list.Add_DrawItem({param($sender,$e)
-        $selected=($e.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0
-        $bg=if($selected){[Drawing.ColorTranslator]::FromHtml('#2d3b50')}else{$sender.BackColor}
-        $brush=[Drawing.SolidBrush]::new($bg);$e.Graphics.FillRectangle($brush,$e.Bounds);$brush.Dispose()
-        $path=[string]$sender.Items[$e.Index];$x=$e.Bounds.X+(UiPixel 12);$width=$e.Bounds.Width-(UiPixel 24)
-        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,[IO.Path]::GetFileName($path),$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(UiPixel 5),$width,(UiPixel 25)),$sender.ForeColor,$bg,([Windows.Forms.TextFormatFlags]::EndEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter))
-        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$path,$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(UiPixel 30),$width,(UiPixel 22)),[Drawing.ColorTranslator]::FromHtml('#9daabc'),$bg,([Windows.Forms.TextFormatFlags]::PathEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter))
-    })
-    $header=[Windows.Forms.Label]::new();$header.Text='Приложения и игры';$header.Font=[Drawing.Font]::new('Segoe UI Semibold',16);$header.SetBounds((UiPixel 24),(UiPixel 20),(UiPixel 600),(UiPixel 35))
-    $note=[Windows.Forms.Label]::new();$note.Text="Дочерние EXE обнаруживаются после запуска. Чтобы первые соединения игры`r`nтоже шли через VPN, добавьте её EXE и лаунчер в список заранее.";$note.SetBounds((UiPixel 24),(UiPixel 60),(UiPixel 652),(UiPixel 52));$note.ForeColor=$muted
-    $tip=[Windows.Forms.ToolTip]::new();$list.Add_SelectedIndexChanged({if($list.SelectedIndex -ge 0){$tip.SetToolTip($list,[string]$list.Items[$list.SelectedIndex])}})
-    $buttons=@()
-    foreach($spec in @(@('Добавить EXE…',24,180),@('Удалить',216,150),@('Готово',496,180))){
-        $b=[PhoneExit.DarkButton]::new();$b.Text=$spec[0];$b.SetBounds((UiPixel $spec[1]),(UiPixel 368),(UiPixel $spec[2]),(UiPixel 44));$b.BackColor=[Drawing.ColorTranslator]::FromHtml('#263144');$b.ForeColor=$form.ForeColor;$b.FlatStyle='Flat';$b.FlatAppearance.BorderSize=0;$window.Controls.Add($b);$buttons+=$b
+function NormalizeApplicationGroups($groups,$paths) {
+    $used=@();$names=@()
+    foreach($group in @($groups)){
+        $name=[string]$group.name
+        if(!$name.Trim() -or $name.Length -gt 80 -or $names -contains $name){continue}
+        $members=@(MergeApplicationPaths @() @($group.paths|ForEach-Object{$_})|Where-Object {$paths -contains $_ -and $used -notcontains $_})
+        if(!$members.Count){continue};$used+=$members;$names+=$name
+        Write-Output ([PSCustomObject]@{name=$name;paths=$members;enabled=($group.enabled -ne $false)})
     }
-    $buttons[1].Enabled=$false
-    $list.Add_SelectedIndexChanged({$buttons[1].Enabled=$list.SelectedIndex -ge 0})
-    $buttons[0].Add_Click({
-        $dialog=[Windows.Forms.OpenFileDialog]::new();$dialog.Filter='Программы (*.exe)|*.exe';$dialog.Multiselect=$true;$dialog.Title='Добавить игры и приложения в список VPN'
-        try{if($dialog.ShowDialog($window) -eq 'OK'){
-            try{$paths=@(MergeApplicationPaths @($list.Items) $dialog.FileNames);$list.BeginUpdate();$list.Items.Clear();foreach($path in $paths){$list.Items.Add($path)};$list.EndUpdate()}
-            catch{[Windows.Forms.MessageBox]::Show($_.Exception.Message,'Phone Exit')|Out-Null}
-        }}finally{$dialog.Dispose()}
+}
+function ReadApplicationGroups($paths) {
+    $file=Join-Path $script:profileDirectory 'application-groups.json'
+    if([IO.File]::Exists($file)){
+        try {if(([IO.FileInfo]::new($file)).Length -gt 262144){return};$decoded=@([IO.File]::ReadAllText($file)|ConvertFrom-Json|ForEach-Object{$_});$all=@(MergeApplicationPaths $paths @($decoded|ForEach-Object {$_.paths}|ForEach-Object{$_}));NormalizeApplicationGroups $decoded $all}catch{}
+    }
+}
+function SaveApplicationSelection($paths,$groups) {
+    $selected=@(MergeApplicationPaths @() $paths)
+    $normalized=@(NormalizeApplicationGroups $groups $selected)
+    $disabled=@($normalized|Where-Object {$_.enabled -eq $false}|ForEach-Object {$_.paths}|ForEach-Object{$_})
+    $active=@($selected|Where-Object {$disabled -notcontains $_})
+    $null=[IO.Directory]::CreateDirectory($script:profileDirectory)
+    foreach($spec in @(@('applications.json',(ConvertTo-Json -InputObject @($active) -Depth 8 -Compress)),@('application-groups.json',(ConvertTo-Json -InputObject @($normalized) -Depth 8 -Compress)))){
+        $target=Join-Path $script:profileDirectory $spec[0];$temp=$target+'.'+[Guid]::NewGuid().ToString('N')+'.tmp'
+        try{[IO.File]::WriteAllText($temp,$spec[1],[Text.UTF8Encoding]::new($false));if([IO.File]::Exists($target)){[IO.File]::Replace($temp,$target,[NullString]::Value)}else{[IO.File]::Move($temp,$target)}}finally{if([IO.File]::Exists($temp)){[IO.File]::Delete($temp)}}
+    }
+    $script:appPaths=$active
+}
+function AddApplicationGroup($paths,$groups,$group) {
+    $all=@(MergeApplicationPaths $paths @($group.paths|ForEach-Object{$_}))
+    $remaining=@()
+    foreach($old in @($groups)){
+        if($old.name -ieq $group.name){$group=[PSCustomObject]@{name=$group.name;paths=@(MergeApplicationPaths @($old.paths|ForEach-Object{$_}) @($group.paths|ForEach-Object{$_}));enabled=($old.enabled -ne $false)};continue}
+        $remaining+=[PSCustomObject]@{name=$old.name;paths=@($old.paths|Where-Object {$group.paths -notcontains $_});enabled=($old.enabled -ne $false)}
+    }
+    return [PSCustomObject]@{paths=$all;groups=@(NormalizeApplicationGroups (@($group)+$remaining) $all)}
+}
+function ShowApplicationList([switch]$Preview) {
+    $window=[PhoneExit.DesktopWindow]::new();$window.Text='Приложения Phone Exit';$window.FormBorderStyle='None';$window.StartPosition='CenterParent';$window.BackColor=$form.BackColor;$window.ForeColor=$form.ForeColor;$window.Font=$form.Font
+    $window.ClientSize=[Drawing.Size]::new((UiPixel 760),(UiPixel 590))
+    $list=[PhoneExit.DarkPhoneList]::new();$list.BackColor=[Drawing.ColorTranslator]::FromHtml('#192231');$list.ForeColor=$form.ForeColor;$list.Font=$form.Font;$list.ItemHeight=UiPixel 58
+    $list.SetBounds((UiPixel 24),(UiPixel 154),(UiPixel 712),(UiPixel 235));$list.AccessibleName='Группы игр и приложения для VPN'
+    $header=[Windows.Forms.Label]::new();$header.Text='Игры и приложения';$header.Font=[Drawing.Font]::new('Segoe UI Semibold',16);$header.SetBounds((UiPixel 24),(UiPixel 20),(UiPixel 712),(UiPixel 35))
+    $note=[Windows.Forms.Label]::new();$note.Text="Добавьте запущенную игру вместе с лаунчером в одну группу.`r`nНовые дочерние EXE обнаруживаются после запуска; первые пакеты могут уйти раньше.";$note.SetBounds((UiPixel 24),(UiPixel 60),(UiPixel 712),(UiPixel 52));$note.ForeColor=$muted
+    $details=[Windows.Forms.Label]::new();$details.ForeColor=$muted;$details.AutoEllipsis=$true;$details.SetBounds((UiPixel 24),(UiPixel 404),(UiPixel 712),(UiPixel 103))
+    $state=@{paths=@($script:appPaths);groups=@(ReadApplicationGroups $script:appPaths);rows=@()}
+    $state.paths=@(MergeApplicationPaths $state.paths @($state.groups|ForEach-Object {$_.paths}|ForEach-Object{$_}))
+    $tip=[Windows.Forms.ToolTip]::new();$buttons=@()
+    foreach($spec in @(@('Запущенная игра…',24,250,110),@('Добавить EXE…',286,220,110),@('Удалить',24,130,529),@('Готово',556,180,529),@('VPN вкл/выкл',166,176,529),@('Только эта',354,190,529))){
+        $b=[PhoneExit.DarkButton]::new();$b.Text=$spec[0];$b.SetBounds((UiPixel $spec[1]),(UiPixel $spec[3]),(UiPixel $spec[2]),(UiPixel 40));$b.BackColor=[Drawing.ColorTranslator]::FromHtml('#263144');$b.ForeColor=$form.ForeColor;$b.FlatStyle='Flat';$b.FlatAppearance.BorderSize=0;$window.Controls.Add($b);$buttons+=$b
+    }
+    $buttons[2].Enabled=$false;$buttons[4].Enabled=$false;$buttons[5].Enabled=$false;$buttons[3].BackColor=$accent;$buttons[3].ForeColor=[Drawing.ColorTranslator]::FromHtml('#10251e')
+    $refresh={
+        $state.groups=@(NormalizeApplicationGroups $state.groups $state.paths);$state.rows=@($state.groups);$grouped=@($state.groups|ForEach-Object {$_.paths}|ForEach-Object{$_})
+        foreach($path in $state.paths){if($grouped -notcontains $path){$state.rows+=[PSCustomObject]@{name=[IO.Path]::GetFileName($path);paths=@($path);enabled=$true}}}
+        $list.BeginUpdate();$list.Items.Clear();foreach($row in $state.rows){$null=$list.Items.Add($row.name)};$list.EndUpdate();$details.Text='Выберите группу. «Только эта» оставляет VPN лишь для её приложений.';foreach($i in @(2,4,5)){$buttons[$i].Enabled=$false}
+    }
+    $list.Add_DrawItem({param($sender,$e)
+        if($e.Index -lt 0){return};$row=$state.rows[$e.Index];$bg=if(($e.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0){[Drawing.ColorTranslator]::FromHtml('#2d3b50')}else{$sender.BackColor}
+        $brush=[Drawing.SolidBrush]::new($bg);$e.Graphics.FillRectangle($brush,$e.Bounds);$brush.Dispose();$x=$e.Bounds.X+(UiPixel 12);$width=$e.Bounds.Width-(UiPixel 24)
+        $flags=[Windows.Forms.TextFormatFlags]::EndEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter
+        $caption=$row.name+$(if($row.enabled){' · VPN'}else{' · обычная сеть'})
+        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$caption,$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(UiPixel 5),$width,(UiPixel 25)),$sender.ForeColor,$bg,$flags)
+        $summary=(@($row.paths|ForEach-Object {[IO.Path]::GetFileName($_)}) -join ' · ')
+        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$summary,$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(UiPixel 30),$width,(UiPixel 22)),$muted,$bg,$flags)
     })
-    $buttons[1].Add_Click({if($list.SelectedIndex -ge 0){$list.Items.RemoveAt($list.SelectedIndex);$buttons[1].Enabled=$list.SelectedIndex -ge 0}})
-    $buttons[2].BackColor=$accent;$buttons[2].ForeColor=[Drawing.ColorTranslator]::FromHtml('#10251e')
-    $buttons[2].Add_Click({
-        $script:appPaths=@($list.Items|ForEach-Object{[string]$_})
-        [IO.Directory]::CreateDirectory($script:profileDirectory)|Out-Null
-        [IO.File]::WriteAllText($appFile,(ConvertTo-Json -InputObject @($script:appPaths) -Compress),[Text.UTF8Encoding]::new($false))
-        $appNote.Text="Приложений: $($script:appPaths.Count) · дочерние EXE автоматически"
-        $window.DialogResult='OK';$window.Close()
+    $list.Add_SelectedIndexChanged({foreach($i in @(2,4,5)){$buttons[$i].Enabled=$list.SelectedIndex -ge 0};if($list.SelectedIndex -ge 0){$row=$state.rows[$list.SelectedIndex];$details.Text=($row.name+' · EXE: '+@($row.paths).Count+"`r`n"+(@($row.paths|ForEach-Object {[IO.Path]::GetFileName($_)}) -join "`r`n"));$tip.SetToolTip($details,(@($row.paths) -join "`r`n"))}})
+    $buttons[4].Add_Click({if($list.SelectedIndex -ge 0){$row=$state.rows[$list.SelectedIndex];$updated=AddApplicationGroup $state.paths $state.groups $row;$state.groups=@($updated.groups);foreach($group in $state.groups){if($group.name -eq $row.name){$group.enabled=!$row.enabled}};& $refresh}})
+    $buttons[5].Add_Click({if($list.SelectedIndex -ge 0){$row=$state.rows[$list.SelectedIndex];foreach($item in $state.rows){$updated=AddApplicationGroup $state.paths $state.groups $item;$state.groups=@($updated.groups)};foreach($group in $state.groups){$group.enabled=$group.name -eq $row.name};& $refresh}})
+    $buttons[0].Add_Click({try{$group=ShowRunningApplications;if($group){$added=AddApplicationGroup $state.paths $state.groups $group;$state.paths=@($added.paths);$state.groups=@($added.groups);& $refresh}}catch{[Windows.Forms.MessageBox]::Show($_.Exception.Message,'Phone Exit')|Out-Null}})
+    $buttons[1].Add_Click({
+        $dialog=[Windows.Forms.OpenFileDialog]::new();$dialog.Filter='Программы (*.exe)|*.exe';$dialog.Multiselect=$true;$dialog.Title='Добавить EXE'
+        try{if($dialog.ShowDialog($window) -eq 'OK'){try{
+            if($list.SelectedIndex -ge 0 -and @($state.groups|Where-Object name -eq $state.rows[$list.SelectedIndex].name).Count){$row=$state.rows[$list.SelectedIndex];$added=AddApplicationGroup $state.paths $state.groups ([PSCustomObject]@{name=$row.name;paths=@($dialog.FileNames)});$state.paths=@($added.paths);$state.groups=@($added.groups)}
+            else{$state.paths=@(MergeApplicationPaths $state.paths $dialog.FileNames)};& $refresh
+        }catch{[Windows.Forms.MessageBox]::Show($_.Exception.Message,'Phone Exit')|Out-Null}}}finally{$dialog.Dispose()}
     })
-    $window.Controls.AddRange([Windows.Forms.Control[]]@($header,$note,$list))
-    $window.KeyPreview=$true;$window.Add_KeyDown({param($sender,$e)if($e.KeyCode -eq 'Escape'){$window.Close()}})
+    $buttons[2].Add_Click({if($list.SelectedIndex -ge 0){$row=$state.rows[$list.SelectedIndex];$state.paths=@($state.paths|Where-Object {$row.paths -notcontains $_});& $refresh}})
+    $buttons[3].Add_Click({try{SaveApplicationSelection $state.paths $state.groups;if($script:appPaths.Count){$mode.SelectedIndex=1};$appNote.Text="Приложений: $($script:appPaths.Count) · дочерние EXE автоматически";$window.DialogResult='OK';$window.Close()}catch{$details.Text='Не удалось сохранить список приложений.'}})
+    $window.Controls.AddRange([Windows.Forms.Control[]]@($header,$note,$list,$details));$window.KeyPreview=$true;$window.Add_KeyDown({param($sender,$e)if($e.KeyCode -eq 'Escape'){$window.Close()}});& $refresh
     $previewTimer=$null
     if($Preview){$previewTimer=[Windows.Forms.Timer]::new();$previewTimer.Interval=400;$previewTimer.Add_Tick({$previewTimer.Stop();$bitmap=[Drawing.Bitmap]::new($window.Width,$window.Height);try{$window.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/applications-preview.png'))}finally{$bitmap.Dispose()};$window.Close()});$previewTimer.Start()}
     try{$null=$window.ShowDialog($form)}finally{if($previewTimer){$previewTimer.Dispose()};$tip.Dispose();$header.Font.Dispose();$window.Dispose()}
