@@ -22,6 +22,7 @@ $title.Visible=$true;$title.SetBounds(78,28,350,46);$title.Font=New-Object Drawi
 $brandIcon=New-Object Windows.Forms.PictureBox;$brandIcon.SetBounds(36,32,38,38);$brandIcon.SizeMode='Zoom';$brandIcon.Image=[Drawing.Image]::FromFile((Join-Path $PSScriptRoot 'assets/phone-exit.png'));$form.Controls.Add($brandIcon)
 $form.Add_FormClosed({$brandIcon.Image.Dispose()})
 $sub=LabelAt 'Личный интернет. Через твои телефоны.' 38 79 600 30;$sub.ForeColor=$muted
+$versionLabel=LabelAt 'Версия 0.4.7' 440 42 170 24;$versionLabel.ForeColor=$muted;$versionLabel.TextAlign='MiddleRight'
 $badge=LabelAt 'ПРЯМОЕ ПОДКЛЮЧЕНИЕ' 765 49 293 30;$badge.ForeColor=$accent;$badge.TextAlign='MiddleRight';$badge.Font=New-Object Drawing.Font('Segoe UI Semibold',9)
 $form.Add_Paint({param($sender,$paintEvent)
     $g=$paintEvent.Graphics;$g.SmoothingMode='AntiAlias';$g.ScaleTransform($script:uiScale,$script:uiScale)
@@ -89,7 +90,7 @@ $phoneList.Add_DrawItem({param($sender,$paintEvent)
     $flagRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 14)),($r.Y+(UiPixel 10)),(UiPixel 34),(UiPixel 34))
     $g.DrawImage((CountryFlag $phone.country),$flagRect)
     $countryRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 60)),($r.Y+(UiPixel 12)),($r.Width-(UiPixel 166)),(UiPixel 28))
-    $nameRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 60)),($r.Y+(UiPixel 42)),($r.Width-(UiPixel 76)),(UiPixel 24))
+    $nameRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 60)),($r.Y+(UiPixel 40)),($r.Width-(UiPixel 76)),(UiPixel 22))
     [Windows.Forms.TextRenderer]::DrawText($g,$country,$large,$countryRect,$form.ForeColor,$flags)
     [Windows.Forms.TextRenderer]::DrawText($g,[string]$phone.name,$small,$nameRect,$muted,$flags)
     $stateColor=if($phone.online -and !$phone.busy){'#62e7bc'}else{'#9daabc'};$dot=New-Object Drawing.SolidBrush([Drawing.ColorTranslator]::FromHtml($stateColor))
@@ -104,7 +105,7 @@ else{$phoneName.SetBounds(664,549,160,28);$addPhone.SetBounds(836,545,210,36)}
 $hint.Visible=$true;$hint.SetBounds(38,611,1026,50);$hint.ForeColor=$muted;$hint.Font=New-Object Drawing.Font('Segoe UI',10)
 $detail.Visible=$true;$detail.SetBounds(38,674,1026,26);$detail.Text='Wi-Fi телефона  •  Шифрование WebRTC  •  Сервер передаёт только параметры связи';$detail.ForeColor=$muted;$detail.Font=New-Object Drawing.Font('Segoe UI',9)
 $codeHeading.Visible=$false;$code.Visible=$false;$copy.Visible=$false
-$appFile=Join-Path $env:LOCALAPPDATA 'PhoneExit/applications.json'
+$appFile=Join-Path $script:profileDirectory 'applications.json'
 if(Test-Path -LiteralPath $appFile){try{$script:appPaths=@([IO.File]::ReadAllText($appFile)|ConvertFrom-Json)}catch{}}
 $mode.Add_SelectedIndexChanged({$chooseApps.Visible=$mode.SelectedIndex -eq 1;$appNote.Visible=$chooseApps.Visible;$start.Text=if($mode.SelectedIndex -eq 2){'Подключить прокси'}else{'Подключить VPN'};$appNote.Text="Выбрано EXE: $($script:appPaths.Count)";UpdateWindowLayout})
 $chooseApps.Add_Click({
@@ -191,12 +192,14 @@ function UpdateWindowLayout {
     PlaceControl $stopButton ($innerX+$primaryWidth+12) $leftButtonY ($innerWidth-$primaryWidth-12) 52
     PlaceControl $heading ($rightX+24) 161 ($rightWidth-48) 35
     PlaceControl $phoneList ($rightX+22) 214 ($rightWidth-44) ($buttonY-241)
+    $phoneList.ItemHeight=UiPixel ([Math]::Min(80,[Math]::Max(64,[Math]::Floor($phoneList.Height/($script:uiScale*4)))))
     $rightButtonWidth=[Math]::Floor(($rightWidth-60)/2)
     PlaceControl $removePhone ($rightX+24) ($buttonY+1) $rightButtonWidth 40
     if($script:personalMode){PlaceControl $apkFolder ($rightX+36+$rightButtonWidth) ($buttonY+1) $rightButtonWidth 40}
     else{PlaceControl $phoneName ($rightX+24) ($buttonY+51) $rightButtonWidth 28;PlaceControl $addPhone ($rightX+36+$rightButtonWidth) ($buttonY+47) $rightButtonWidth 36}
-    PlaceControl $hint 38 ($h-89) ($w-76) 50
-    PlaceControl $detail 38 ($h-46) ($w-76) 26
+    PlaceControl $hint 38 ($h-104) ($w-76) 58
+    PlaceControl $detail 38 ($h-46) ($w-270) 26
+    PlaceControl $versionLabel ($w-208) ($h-46) 170 26
     PlaceControl $minimizeWindow ($w-152) 12 42 34
     PlaceControl $maximizeWindow ($w-106) 12 42 34
     PlaceControl $closeWindow ($w-60) 12 42 34

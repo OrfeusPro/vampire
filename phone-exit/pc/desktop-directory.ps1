@@ -6,8 +6,8 @@ $script:directoryErr = $null
 $script:phoneRows = @()
 $script:selectedPhone = $null
 $script:personalMode = $false
-$script:phonesFile = Join-Path $env:LOCALAPPDATA 'PhoneExit/phones.bin'
-$script:accountFile = Join-Path $env:LOCALAPPDATA 'PhoneExit/account.bin'
+$script:phonesFile = Join-Path $script:profileDirectory 'phones.bin'
+$script:accountFile = Join-Path $script:profileDirectory 'account.bin'
 $null = LabelAt 'Мои телефоны по странам' 660 112 280 40
 $phoneList = New-Object PhoneExit.DarkPhoneList
 $phoneList.SetBounds(660,161,276,220)
@@ -47,7 +47,7 @@ function SavePhones($phones) {
 function LoadPhones {
     if (!(Test-Path -LiteralPath $script:phonesFile)) { return @() }
     $bytes = [System.IO.File]::ReadAllBytes($script:phonesFile)
-    if ($bytes.Length -gt 65536) { throw 'Файл привязок повреждён' }
+    if ($bytes.Length -gt 262144) { throw 'Файл привязок повреждён' }
     $raw = [System.Security.Cryptography.ProtectedData]::Unprotect($bytes,$null,[System.Security.Cryptography.DataProtectionScope]::CurrentUser)
     # Windows PowerShell 5.1 emits a JSON array as one pipeline object.
     # Enumerate explicitly so ConvertTo-Json cannot wrap it as {value, Count}.
@@ -106,6 +106,7 @@ function DirectoryEvent($event) {
         'phones' {
             $selected = if ($phoneList.SelectedIndex -ge 0) { $script:phoneRows[$phoneList.SelectedIndex].id } else { $null }
             $script:phoneRows = @($event.phones | Sort-Object country,name)
+            if($heading){$heading.Text='Мои телефоны · '+$script:phoneRows.Count}
             $phoneList.BeginUpdate(); $phoneList.Items.Clear()
             for ($i=0; $i -lt $script:phoneRows.Count; $i++) {
                 $phone = $script:phoneRows[$i]
@@ -116,6 +117,7 @@ function DirectoryEvent($event) {
             }
             if ($phoneList.SelectedIndex -lt 0 -and $script:phoneRows.Count -eq 1) { $phoneList.SelectedIndex=0 }
             $phoneList.EndUpdate()
+            if($hint.Text.StartsWith('Обновляю доступность телефонов') -and @($script:phoneRows | Where-Object online).Count -gt 0){$hint.Text='Список телефонов обновлён. Выберите устройство и нажмите «Подключить VPN».'}
         }
         'error' { $hint.Text = $event.message; if ($SelfTest) { Write-Host ('Directory command failed: ' + $event.reason) }; if ($script:selectedPhone) { StopClient } }
     }

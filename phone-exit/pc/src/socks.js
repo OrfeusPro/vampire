@@ -1,7 +1,10 @@
 import net from 'node:net';
 import { udpAssociation } from './udp.js';
 
-export function createSocksServer(peer, {port = 1080, maxStreams = 32, udpEnabled = false} = {}) {
+export function createSocksServer(peer, {port = 1080, maxStreams = 32, udpEnabled = false,frameSize=16384,receiveWindow=262144,sendBuffer=262144,phoneReceiveBuffer=0,flowProbe=false} = {}) {
+  if(![1024,4096,16384].includes(frameSize))throw Error('Invalid TCP frame size');
+  if(![262144,524288,1048576].includes(sendBuffer))throw Error('Invalid phone send buffer');
+  if(![0,1048576].includes(phoneReceiveBuffer))throw Error('Invalid phone receive buffer');
   let sequence = 0;
   const sockets = new Set();
   let associations=0, rejected=0, opened=0, readyCount=0, errorCount=0;
@@ -59,8 +62,8 @@ export function createSocksServer(peer, {port = 1080, maxStreams = 32, udpEnable
       import('./bridge.js').then(({bridge}) => {
         if (socket.destroyed) { channel.close(); return; }
         let replied = false;
-        bridge(socket,channel,{onReady:() => { if (!replied) { readyCount++;replied = true; reply(0); } }, onError:code => {errorCount++; if (!replied && !socket.destroyed) { replied = true; reply(code); } }});
-        const open = () => channel.send(JSON.stringify({type:'open',host,port:destPort}));
+        bridge(socket,channel,{receiveWindow,onReady:() => { if (!replied) { readyCount++;replied = true; reply(0); } }, onError:code => {errorCount++; if (!replied && !socket.destroyed) { replied = true; reply(code); } }});
+        const open = () => channel.send(JSON.stringify({type:'open',host,port:destPort,...(frameSize!==16384?{frameSize}:{}),...(sendBuffer!==262144?{sendBuffer}:{}),...(receiveWindow>1048576?{tcpWindow:receiveWindow}:{}),...(phoneReceiveBuffer?{receiveBuffer:phoneReceiveBuffer}:{}),...(flowProbe?{flowProbe:true}:{})}));
         if (channel.readyState === 'open') open(); else channel.onopen = open;
       }).catch(() => socket.destroy());
     }

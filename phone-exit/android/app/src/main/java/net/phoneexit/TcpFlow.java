@@ -16,7 +16,11 @@ final class TcpFlow implements AutoCloseable {
     private final ArrayBlockingQueue<byte[]> writes=new ArrayBlockingQueue<>(17);
     private volatile boolean closed,ready,readEof,writeEof;
     private boolean opened;
-    private int credit=WINDOW,outstanding,incoming;
+    private int frameSize=FRAME;
+    private int sendBuffer=WINDOW;
+    private int receiveBuffer;
+    private boolean flowProbe;
+    private int credit=1048576,outstanding,incoming;
     private Socket socket;
     TcpFlow(ExitEngine engine,DataChannel dc) { this.engine=engine; this.dc=dc; }
     void start() {
@@ -38,6 +42,14 @@ final class TcpFlow implements AutoCloseable {
                         String type=msg.getString("type");
                         if(type.equals("open")&&!opened) {
                             opened=true; String host=msg.getString("host"); int port=msg.getInt("port");
+                            int requested=msg.optInt("frameSize",FRAME);if(requested==1024||requested==4096||requested==FRAME)frameSize=requested;
+                            int requestedBuffer=msg.optInt("sendBuffer",WINDOW);
+                            if(requestedBuffer!=WINDOW&&requestedBuffer!=524288&&requestedBuffer!=1048576)throw new IOException("buffer");
+                            sendBuffer=requestedBuffer;flowProbe=msg.optBoolean("flowProbe",false);
+                            int requestedWindow=msg.optInt("tcpWindow",1048576);
+                            if(requestedWindow!=1048576&&requestedWindow!=2097152&&requestedWindow!=4194304)throw new IOException("credit window");
+                            credit=requestedWindow;receiveBuffer=msg.optInt("receiveBuffer",0);
+                            if(receiveBuffer!=0&&receiveBuffer!=1048576)throw new IOException("receive buffer");
                             if(host.length()>253||!host.matches("[a-zA-Z0-9._:-]+")||port<1||port>65535) throw new IOException("destination");
                             engine.io.execute(() -> connect(host,port));
                         } else if(type.equals("credit")&&ready) {
@@ -63,6 +75,8 @@ final class TcpFlow implements AutoCloseable {
                 if(closed) return;
                 Socket candidate=engine.wifi.getSocketFactory().createSocket();
                 synchronized(this) { if(closed) { candidate.close(); return; } socket=candidate; }
+                if(receiveBuffer!=0)candidate.setReceiveBufferSize(receiveBuffer);
+                if(flowProbe)engine.probeSocketBuffer.accumulateAndGet(candidate.getReceiveBufferSize(),Math::max);
                 try { candidate.connect(new InetSocketAddress(address,port),(int)Math.max(1,Math.min(5000,TimeUnit.NANOSECONDS.toMillis(limit-System.nanoTime())))); break; }
                 catch(IOException e) { candidate.close(); if(System.nanoTime()>=limit) throw e; }
             }
@@ -87,15 +101,21 @@ final class TcpFlow implements AutoCloseable {
     }
     private void reader() {
         try {
-            InputStream input=socket.getInputStream(); byte[] bytes=new byte[FRAME];
+            InputStream input=socket.getInputStream(); byte[] bytes=new byte[frameSize];
             while(!closed) {
                 int n=input.read(bytes);
                 if(n==-1) { readEof=true; ExitEngine.sendControl(dc,ExitEngine.json("type","eof")); finish(); return; }
                 synchronized(this) {
-                    while(!closed&&(credit<n||dc.bufferedAmount()>WINDOW)) wait(1000);
+                    while(!closed&&(credit<n||dc.bufferedAmount()>sendBuffer)) {
+                        long buffered=dc.bufferedAmount(),started=System.nanoTime();
+                        if(flowProbe){if(credit<n)engine.probeCreditWaits.incrementAndGet();if(buffered>sendBuffer)engine.probeBufferWaits.incrementAndGet();engine.probeMaxBuffer.accumulateAndGet(buffered,Math::max);}
+                        wait(1000);
+                        if(flowProbe)engine.probeWaitNs.addAndGet(System.nanoTime()-started);
+                    }
                     if(closed) return; credit-=n; outstanding+=n;
                 }
                 if(!dc.send(new DataChannel.Buffer(ByteBuffer.wrap(Arrays.copyOf(bytes,n)),true))) throw new IOException("send");
+                if(flowProbe){engine.probeBytes.addAndGet(n);engine.probeFrames.incrementAndGet();engine.probeMaxBuffer.accumulateAndGet(dc.bufferedAmount(),Math::max);}
             }
         } catch(Exception e) { if(!closed) error(1); }
     }

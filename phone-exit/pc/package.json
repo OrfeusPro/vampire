@@ -12,6 +12,7 @@
     "postinstall": "node scripts/patch-werift.js"
   },
   "dependencies": {
+    "node-datachannel": "0.33.4",
     "werift": "0.25.0"
   }
 }

@@ -2,8 +2,10 @@ import { createHmac, randomBytes } from 'node:crypto';
 import { createInterface } from 'node:readline';
 import { pathToFileURL } from 'node:url';
 import { feedKey,openRegistration } from './account.js';
+import {CATALOG,MAX_PHONES,catalogKey,sealRequest} from './catalog.js';
 
 export const SIGNAL = 'https://demochko.com/hosting-webrtc-probe/signal.php';
+export const PRODUCT_SIGNAL = 'https://demochko.com/phone-exit/signal.php';
 export const BUCKET_MS = 300000;
 export function roomKey(key, bucket) {
   return createHmac('sha256', Buffer.from(key, 'hex')).update(`phone-exit-directory-v1:${bucket}`).digest('hex');
@@ -15,7 +17,7 @@ export function validPhone(phone) {
 export class Directory {
   constructor(emit, request = fetch, now = Date.now) {
     this.emit = emit; this.request = request; this.now = now;
-    this.phones = []; this.states = new Map(); this.cursors = new Map(); this.running = false;
+    this.phones = []; this.states = new Map(); this.cursors = new Map(); this.running = false; this.catalogDevices=new Set();
   }
   async api(token, op, message) {
     const response = await this.request(SIGNAL, {method:'POST', headers:{'Content-Type':'application/json'},
@@ -26,13 +28,13 @@ export class Directory {
     return JSON.parse(raw);
   }
   setPhones(phones) {
-    if (!Array.isArray(phones) || phones.length > 4 || !phones.every(validPhone) || new Set(phones.map(p=>p.id)).size !== phones.length) throw Error('invalid phones');
+    if (!Array.isArray(phones) || phones.length > MAX_PHONES || !phones.every(validPhone) || new Set(phones.map(p=>p.id)).size !== phones.length) throw Error('invalid phones');
     this.phones = phones.map(p=>({...p}));
     this.publish();
   }
   setAccount(account) {
     if(account==null) { this.account=null; return; }
-    if(account.version!==1||!/^[a-f0-9]{64}$/.test(account.feedToken)||typeof account.privateKey!=='string'||account.privateKey.length>1024||!Array.isArray(account.blocked)||account.blocked.length>100) throw Error('invalid account');
+    if(account.version!==1||!/^[a-f0-9]{64}$/.test(account.feedToken)||typeof account.privateKey!=='string'||account.privateKey.length>1024||!Array.isArray(account.blocked)||account.blocked.length>1024) throw Error('invalid account');
     this.account=account;
   }
   async discover(bucket) {
@@ -51,7 +53,7 @@ export class Directory {
             let phone=this.phones.find(p=>p.id===registration.id);
             if(phone&&phone.token!==registration.token) continue;
             if(!phone) {
-              if(this.phones.length>=4) continue;
+              if(this.phones.length>=MAX_PHONES) continue;
               phone={id:registration.id,name:registration.name,token:registration.token}; this.phones.push(phone);
               this.emit({event:'save',phones:this.phones});
             }
@@ -63,19 +65,47 @@ export class Directory {
       } catch { /* Keep cached devices, expire their availability normally. */ }
     }
   }
+  async catalog(op,extra={}) {
+    const response=await this.request(CATALOG,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({version:1,token:catalogKey(this.account.feedToken),op,...extra}),signal:AbortSignal.timeout(8000)});
+    if(!response.ok)throw Error('catalog unavailable');
+    const raw=await response.text();if(raw.length>2097152)throw Error('catalog response too large');
+    return JSON.parse(raw);
+  }
+  async discoverCatalog(){
+    if(!this.account)return;
+    try{
+      const result=await this.catalog('list');
+      if(!Array.isArray(result.devices)||result.devices.length>MAX_PHONES)return;
+      for(const entry of result.devices){
+        try{
+          const value=openRegistration(this.account,entry.box);
+          if(!validPhone(value)||entry.id!==value.id||!Number.isSafeInteger(value.at)||Math.abs(value.at-this.now())>45000||this.account.blocked.includes(value.id))continue;
+          let phone=this.phones.find(p=>p.id===value.id);
+          if(phone&&phone.token!==value.token)continue;
+          if(!phone){if(this.phones.length>=MAX_PHONES)continue;phone={id:value.id,name:value.name,token:value.token};this.phones.push(phone);this.emit({event:'save',phones:this.phones});}
+          phone.signal=value.signal===PRODUCT_SIGNAL?PRODUCT_SIGNAL:SIGNAL;
+          this.catalogDevices.add(phone.id);
+          const prev=this.states.get(phone.id);
+          if(!prev||value.at>=prev.at)this.states.set(phone.id,{country:/^[A-Z]{2}$/.test(value.country)?value.country:'',busy:value.busy===true,at:value.at,received:Math.min(this.now(),value.at)});
+        }catch{}
+      }
+    }catch{}
+  }
   publish() {
     this.emit({event:'phones', phones:this.phones.map(p => {
       const state = this.states.get(p.id);
       return {id:p.id,name:p.name,country:state?.country || '', online:!!state && this.now()-state.received < 45000,
-        busy:!!state?.busy};
+        busy:!!state?.busy,signal:p.signal===PRODUCT_SIGNAL?PRODUCT_SIGNAL:SIGNAL};
     })});
   }
   async poll() {
     if (this.running) return; this.running = true;
     const bucket = Math.floor(this.now()/BUCKET_MS);
     try {
+      await this.discoverCatalog();
       await this.discover(bucket);
-      await Promise.all(this.phones.map(async phone => {
+      await Promise.all((this.account?[]:this.phones).map(async phone => {
         for (const b of [bucket-1,bucket]) {
           const key = roomKey(phone.token,b);
           try {
@@ -99,7 +129,7 @@ export class Directory {
     } finally { this.running = false; }
   }
   add(name) {
-    if (this.phones.length >= 4) throw Error('phone limit');
+    if (this.phones.length >= MAX_PHONES) throw Error('phone limit');
     if (typeof name !== 'string' || !name.trim() || name.trim().length>40) throw Error('invalid name');
     const phone = {id:randomBytes(16).toString('hex'),token:randomBytes(32).toString('hex'),name:name.trim()};
     this.phones.push(phone);
@@ -109,7 +139,7 @@ export class Directory {
   }
   remove(id) {
     if(this.account&&!this.account.blocked.includes(id)) {
-      if(this.account.blocked.length>=100) throw Error('block limit');
+      if(this.account.blocked.length>=1024) throw Error('block limit');
       this.account.blocked.push(id); this.emit({event:'saveAccount',account:this.account});
     }
     this.phones = this.phones.filter(p=>p.id!==id); this.states.delete(id);
@@ -118,9 +148,10 @@ export class Directory {
   async connect(id, code) {
     const phone = this.phones.find(p=>p.id===id), state = this.states.get(id);
     if (!phone || !state || this.now()-state.received>=45000 || state.busy) throw Error('phone unavailable');
-    if (code?.version!==1 || code.signal!==SIGNAL || !/^[a-f0-9]{64}$/.test(code.token)) throw Error('invalid session');
+    if (code?.version!==1 || code.signal!==(phone.signal===PRODUCT_SIGNAL?PRODUCT_SIGNAL:SIGNAL) || !/^[a-f0-9]{64}$/.test(code.token)) throw Error('invalid session');
     const value = {directory:1,type:'connect',at:this.now(),request:randomBytes(16).toString('hex'),pairing:code};
-    await this.api(roomKey(phone.token,Math.floor(this.now()/BUCKET_MS)),'send',{type:'candidate',value});
+    if(this.account&&this.catalogDevices.has(phone.id))await this.catalog('connect',{id:phone.id,request:sealRequest(phone.token,{at:value.at,request:value.request,pairing:code})});
+    else await this.api(roomKey(phone.token,Math.floor(this.now()/BUCKET_MS)),'send',{type:'candidate',value});
     this.emit({event:'requested',id});
   }
 }

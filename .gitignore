@@ -9,5 +9,6 @@ phone-exit/.test-data/
 phone-exit/PhoneExit-personal.apk
 phone-exit/Phone Exit.exe
 phone-exit/Phone Exit.lnk
+phone-exit/*.lnk
 phone-exit/*-preview.png
 phone-exit/android-connected.png

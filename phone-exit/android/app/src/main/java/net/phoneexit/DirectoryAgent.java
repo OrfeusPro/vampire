@@ -85,6 +85,7 @@ final class DirectoryAgent implements AutoCloseable {
         if(System.nanoTime()<nextAttempt) return;
         long now=System.currentTimeMillis(), bucket=now/300000;
         try {
+            if(config.account!=null){catalogTick(now);if(failures>0&&engine==null)waiting();failures=0;nextAttempt=0;return;}
             String current=roomKey(config.token,bucket), previous=roomKey(config.token,bucket-1);
             if(now-lastPresence>=15000) {
                 api(current,"send",ExitEngine.json("type","candidate","value",ExitEngine.json("directory",1,"type","presence","at",now,"country",country,"busy",engine!=null)));
@@ -121,6 +122,26 @@ final class DirectoryAgent implements AutoCloseable {
             nextAttempt=System.nanoTime()+TimeUnit.SECONDS.toNanos(delay);
             if(!closed&&engine==null) ExitService.update("Сервер недоступен · повторю через "+delay+" с");
         }
+    }
+    private void catalogTick(long now) throws Exception {
+        if(now-lastPresence<15000)return;
+        JSONObject registration=ExitEngine.json("id",config.id,"name",config.name,"token",config.token,"at",now,"country",country,"busy",engine!=null);
+        registration.put("signal","https://demochko.com/phone-exit/signal.php");
+        JSONObject body=ExitEngine.json("version",1,"token",config.account.catalogKey(),"op","pulse","id",config.id,"box",config.account.seal(registration));
+        HttpsURLConnection connection=(HttpsURLConnection)wifi.openConnection(new URL("https://demochko.com/phone-exit/directory.php"));
+        connection.setInstanceFollowRedirects(false);connection.setRequestMethod("POST");connection.setConnectTimeout(8000);connection.setReadTimeout(8000);connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type","application/json");byte[] encoded=body.toString().getBytes(StandardCharsets.UTF_8);connection.setFixedLengthStreamingMode(encoded.length);
+        JSONObject response;
+        try{try(OutputStream output=connection.getOutputStream()){output.write(encoded);}if(connection.getResponseCode()!=200)throw new IOException("catalog HTTP");response=new JSONObject(read(connection,8192));}
+        finally{connection.disconnect();}
+        lastPresence=now;
+        JSONObject box=response.optJSONObject("request");if(box==null)return;
+        JSONObject value;try{value=PersonalAccount.openRequest(config.token,box);}catch(Exception invalid){return;}
+        long at=value.optLong("at",0);String request=value.optString("request");
+        if(!request.matches("[0-9a-f]{32}")||Math.abs(at-now)>45000||requests.contains(request))return;
+        requests.add(request);while(requests.size()>64)requests.remove(requests.iterator().next());if(engine!=null)return;
+        Pairing pairing=Pairing.parse(value.getJSONObject("pairing").toString());
+        synchronized(this){if(closed)return;engine=new ExitEngine(context,wifi,pairing,ExitService::update,this::finished);ExitService.update("Подключаю свой ПК · "+country);engine.start();lastPresence=0;}
     }
     private void finished() {
         if(closed) return;

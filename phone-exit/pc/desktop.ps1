@@ -1,13 +1,14 @@
-﻿param([switch]$SelfTest, [string]$UsbTestSerial, [switch]$VpnTest, [switch]$VpnTestApps)
+﻿param([switch]$SelfTest, [string]$UsbTestSerial, [switch]$VpnTest, [switch]$VpnTestApps, [switch]$StartupTest)
 $ErrorActionPreference = 'Stop'
+$script:profileDirectory=Join-Path ([Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)) 'PhoneExit'
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -Path (Join-Path $PSScriptRoot 'desktop-controls.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing
-if(!$SelfTest -and !$VpnTest){
+if(!$SelfTest -and !$VpnTest -and !$StartupTest){
     $script:instanceCreated=$false
     $script:instanceMutex=[Threading.Mutex]::new($true,('Local\PhoneExitDesktop-'+[Security.Principal.WindowsIdentity]::GetCurrent().User.Value),[ref]$script:instanceCreated)
     if(!$script:instanceCreated){
-        foreach($existing in [Diagnostics.Process]::GetProcessesByName('powershell')){
+        foreach($existing in @([Diagnostics.Process]::GetProcessesByName('powershell'))+@([Diagnostics.Process]::GetProcessesByName('Phone Exit'))){
             if($existing.Id -ne $PID -and $existing.MainWindowTitle -eq 'Phone Exit'){
                 $null=[PhoneExit.DesktopDpi]::ShowWindow($existing.MainWindowHandle,9)
                 $null=[PhoneExit.DesktopDpi]::SetForegroundWindow($existing.MainWindowHandle)
@@ -126,7 +127,7 @@ function StartClient {
         $physicalAddress=Get-NetIPAddress -InterfaceIndex $physicalRoute.InterfaceIndex -AddressFamily IPv4 -ErrorAction Stop | Where-Object {$_.AddressState -eq 'Preferred' -and !$_.SkipAsSource} | Select-Object -First 1
         if(!$physicalAddress){throw 'Не найден исходный сетевой интерфейс'}
         $info.EnvironmentVariables['PHONE_EXIT_BIND_V4']=$physicalAddress.IPAddress
-        $info.EnvironmentVariables['PHONE_EXIT_SIGNAL'] = 'https://demochko.com/hosting-webrtc-probe/signal.php'
+        $info.EnvironmentVariables['PHONE_EXIT_SIGNAL'] = if(($SelfTest -and !$UsbTestSerial) -or ($selected -and $selected.signal -eq 'https://demochko.com/phone-exit/signal.php')) {'https://demochko.com/phone-exit/signal.php'} else {'https://demochko.com/hosting-webrtc-probe/signal.php'}
         $script:client = New-Object System.Diagnostics.Process
         $script:client.StartInfo = $info
         $null = $script:client.Start()
@@ -210,6 +211,17 @@ $timer.Add_Tick({
     if($script:tickBusy){return};$script:tickBusy=$true
     try {
     ReadDirectory
+    if($StartupTest){
+        if($script:phoneRows.Count -gt 0 -and $script:personalMode -and @($script:phoneRows | Where-Object online).Count -gt 0){
+            $result=@{personal=$script:personalMode;phones=$script:phoneRows.Count;online=@($script:phoneRows | Where-Object online).Count;process=[Diagnostics.Process]::GetCurrentProcess().ProcessName}
+            $null=[IO.Directory]::CreateDirectory((Join-Path $PSScriptRoot '../.tools'))
+            [IO.File]::WriteAllText((Join-Path $PSScriptRoot '../.tools/startup-result.json'),($result|ConvertTo-Json))
+            $preview=[Drawing.Bitmap]::new($form.Width,$form.Height)
+            try{$form.DrawToBitmap($preview,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$preview.Save((Join-Path $PSScriptRoot '../desktop-preview.png'))}finally{$preview.Dispose()}
+            $form.Close();return
+        }
+        if(([DateTime]::UtcNow-$script:testStarted).TotalSeconds -gt 40){throw 'Startup test did not load personal phones'}
+    }
     if ($script:client) {
         if ($script:selectedPhone -and !$script:stopping -and !$status.Text.StartsWith('Подключено') -and ([DateTime]::UtcNow - $script:startedAt).TotalSeconds -gt 45) {
             $script:failure = $true

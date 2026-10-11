@@ -4,6 +4,7 @@ import net from 'node:net';
 import dgram from 'node:dgram';
 import { once } from 'node:events';
 import { RTCPeerConnection } from 'werift';
+import {RTCPeerConnection as NativePeer} from '../src/native-peer.js';
 import { createSocksServer } from '../src/socks.js';
 import { decodeDatagram,envelope } from '../src/udp.js';
 import { vpnConfig } from '../src/vpn-config.js';
@@ -22,8 +23,8 @@ test('VPN modes preserve transport paths, tunnel DNS, and never use a direct fal
   assert.ok(selected.route.rules.some(r=>r.process_path_regex?.some(p=>p.startsWith('(?i)^')&&p.endsWith('$'))&&r.outbound==='phone'));
   assert.throws(()=>vpnConfig({mode:'apps',applications:[]}));assert.throws(()=>vpnConfig({mode:'apps',applications:['relative.exe']}));
 });
-test('real WebRTC UDP: SOCKS association, boundaries, source pinning, lifecycle', {timeout:30000},async t=>{
-  const a=new RTCPeerConnection({iceServers:[]}),b=new RTCPeerConnection({iceServers:[]});
+for(const Transport of [RTCPeerConnection,NativePeer])test(`real WebRTC UDP (${Transport===NativePeer?'native':'werift'}): SOCKS association, boundaries, source pinning, lifecycle`, {timeout:30000},async t=>{
+  const a=new Transport({iceServers:[]}),b=new RTCPeerConnection({iceServers:[]});
   const socks=createSocksServer(a,{port:0,udpEnabled:true});const udp=dgram.createSocket('udp4');const stray=dgram.createSocket('udp4');let tcp;
   t.after(async()=>{tcp?.destroy();socks.shutdown();udp.close();stray.close();await Promise.all([a.close(),b.close()]);});
   let resolve;const opened=new Promise(r=>resolve=r);

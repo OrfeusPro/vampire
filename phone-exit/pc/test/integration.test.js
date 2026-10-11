@@ -6,14 +6,18 @@ import { once } from 'node:events';
 import { RTCPeerConnection } from 'werift';
 import { createSocksServer } from '../src/socks.js';
 import { bridge } from '../src/bridge.js';
+import {observeTransport} from '../src/transport-probe.js';
+import {RTCPeerConnection as NativePeer} from '../src/native-peer.js';
 
-test('SOCKS5 over real WebRTC: binary, parallel streams, half-close, rejection', {timeout:60000}, async t => {
+for(const Transport of [RTCPeerConnection,NativePeer])test(`SOCKS5 over real WebRTC (${Transport===NativePeer?'native':'werift'}): binary, parallel streams, half-close, rejection`, {timeout:60000}, async t => {
   const echo = net.createServer({allowHalfOpen:true}, s => {
     s.on('error',()=>{}); s.on('data',data => s.write(data)); s.on('end',() => s.end(Buffer.from('END')));
   });
   echo.listen(0,'127.0.0.1'); await once(echo,'listening');
-  const a = new RTCPeerConnection({iceServers:[]}), b = new RTCPeerConnection({iceServers:[]});
-  const socks = createSocksServer(a,{port:0});
+  const a = new Transport({iceServers:[]}), b = new RTCPeerConnection({iceServers:[]});
+  const flowWindow=Transport===NativePeer?2097152:1048576;
+  const sendBuffer=Transport===NativePeer?524288:1048576;
+  const socks = createSocksServer(a,{port:0,frameSize:4096,receiveWindow:flowWindow,sendBuffer,phoneReceiveBuffer:1048576,flowProbe:true});
   a.connectionStateChange.subscribe(state => { if(state==='closed'||state==='failed') socks.shutdown(); });
   const remoteSockets = new Set();
   t.after(async () => { socks.shutdown(); for (const s of remoteSockets) s.destroy(); echo.close(); await Promise.all([a.close(),b.close()]); });
@@ -24,13 +28,17 @@ test('SOCKS5 over real WebRTC: binary, parallel streams, half-close, rejection',
       const message = JSON.parse(data);
       // The fake exit permits loopback exclusively inside this in-process test.
       assert.equal(message.host,'127.0.0.1'); assert.equal(message.port,echo.address().port);
+      assert.equal(message.frameSize,4096);
+      assert.equal(message.sendBuffer,sendBuffer);assert.equal(message.flowProbe,true);
+      assert.equal(message.receiveBuffer,1048576);
+      if(Transport===NativePeer)assert.equal(message.tcpWindow,2097152);
       const s = net.connect({host:message.host,port:message.port,allowHalfOpen:true});
       remoteSockets.add(s); s.once('close',()=>remoteSockets.delete(s));
-      s.once('connect',() => { bridge(s,dc,{initiallyReady:true}); dc.send(JSON.stringify({type:'ready'})); });
+      s.once('connect',() => { bridge(s,dc,{initiallyReady:true,sendWindow:flowWindow}); dc.send(JSON.stringify({type:'ready'})); });
     });
   });
   a.createDataChannel('control');
-  await a.setLocalDescription(await a.createOffer()); await b.setRemoteDescription(a.localDescription);
+  await a.setLocalDescription(await a.createOffer()); const probe=observeTransport(a);await b.setRemoteDescription(a.localDescription);
   await b.setLocalDescription(await b.createAnswer()); await a.setRemoteDescription(b.localDescription);
   await controlOpen;
   const address = await socks.start();
@@ -53,9 +61,11 @@ test('SOCKS5 over real WebRTC: binary, parallel streams, half-close, rejection',
   }
   await Promise.all([0,1,2].map(async () => {
     const {s,read,reply} = await connect(); assert.equal(reply[1],0);
-    const payload = randomBytes(700000); s.write(payload); s.end();
+    const payload = randomBytes(Transport===NativePeer?5000000:700000); s.write(payload); s.end();
     assert.deepEqual(await read(payload.length+3),Buffer.concat([payload,Buffer.from('END')])); s.destroy();
   }));
+  if(Transport===RTCPeerConnection){assert.ok(probe().bytes>=2100000);assert.ok(probe().sacks>0);}
+  else assert.ok(a.iceTransports[0].connection.nominated,'Native selected ICE pair');
   for (const cmd of [2,3]) { const {s,reply} = await connect(cmd); assert.equal(reply[1],7); s.destroy(); }
   const {s} = await connect(); const ended = once(s,'end'); await a.close(); await ended; s.destroy();
 });

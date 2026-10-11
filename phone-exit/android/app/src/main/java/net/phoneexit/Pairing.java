@@ -15,7 +15,7 @@ final class Pairing {
         URL url = new URL(value.getString("signal"));
         // First build talks only to the previously verified hosting endpoint.
         if (!url.getProtocol().equals("https") || !url.getHost().equals("demochko.com") || url.getPort() != -1 ||
-            !url.getPath().equals("/hosting-webrtc-probe/signal.php") || url.getUserInfo() != null || url.getQuery() != null || url.getRef() != null)
+            !(url.getPath().equals("/hosting-webrtc-probe/signal.php") || url.getPath().equals("/phone-exit/signal.php")) || url.getUserInfo() != null || url.getQuery() != null || url.getRef() != null)
             throw new Exception("неподдерживаемый сервер сигнализации");
         return new Pairing(url,token);
     }

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Directory, roomKey, SIGNAL, BUCKET_MS } from '../src/directory.js';
+import {MAX_PHONES} from '../src/catalog.js';
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
 import { once } from 'node:events';
@@ -57,7 +58,9 @@ test('private phone directory: isolation, countries, expiry, busy, new session, 
   assert.equal(enrollment.version,2); assert.equal(enrollment.mode,'directory');
   assert.match(enrollment.token,/^[0-9a-f]{64}$/);
   directory.add('Третий'); directory.add('Четвёртый');
-  assert.throws(()=>directory.add('Пятый'));
+  directory.add('Пятый');
+  while(directory.phones.length<MAX_PHONES)directory.add('Следующий');
+  assert.throws(()=>directory.add('Сверх лимита'));
   assert.throws(()=>directory.setPhones([{...a,token:'weak'}]));
   assert.notEqual(roomKey(a.token,bucket),roomKey(a.token,bucket+1));
   assert.notEqual(roomKey(a.token,bucket),roomKey(b.token,bucket));

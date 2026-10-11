@@ -54,6 +54,22 @@ final class PersonalAccount {
         byte[] result=mac.doFinal(("phone-exit-registration-v1:"+bucket).getBytes(StandardCharsets.UTF_8));
         StringBuilder out=new StringBuilder(); for(byte b:result) out.append(String.format(java.util.Locale.ROOT,"%02x",b&255)); return out.toString();
     }
+    String catalogKey() throws Exception {
+        byte[] key=new byte[32];for(int i=0;i<32;i++)key[i]=(byte)Integer.parseInt(feedToken.substring(i*2,i*2+2),16);
+        Mac mac=Mac.getInstance("HmacSHA256");mac.init(new SecretKeySpec(key,"HmacSHA256"));
+        byte[] result=mac.doFinal("phone-exit-catalog-v1".getBytes(StandardCharsets.UTF_8));
+        StringBuilder hex=new StringBuilder();for(byte b:result)hex.append(String.format(java.util.Locale.ROOT,"%02x",b&255));return hex.toString();
+    }
+    static JSONObject openRequest(String token,JSONObject box) throws Exception {
+        String ivText=box.getString("iv"),dataText=box.getString("data");
+        if(ivText.length()>32||dataText.length()>4096)throw new Exception("request size");
+        byte[] iv=Base64.decode(ivText,Base64.NO_WRAP),data=Base64.decode(dataText,Base64.NO_WRAP);
+        if(iv.length!=12||data.length<16)throw new Exception("request frame");
+        MessageDigest hash=MessageDigest.getInstance("SHA-256");byte[] label="phone-exit-connect-v1".getBytes(StandardCharsets.UTF_8);hash.update(label);
+        byte[] bytes=new byte[32];for(int i=0;i<32;i++)bytes[i]=(byte)Integer.parseInt(token.substring(i*2,i*2+2),16);hash.update(bytes);
+        Cipher cipher=Cipher.getInstance("AES/GCM/NoPadding");cipher.init(Cipher.DECRYPT_MODE,new SecretKeySpec(hash.digest(),"AES"),new GCMParameterSpec(128,iv));cipher.updateAAD(label);
+        return new JSONObject(new String(cipher.doFinal(data),StandardCharsets.UTF_8));
+    }
     JSONObject seal(JSONObject registration) throws Exception {
         KeyPairGenerator generator=KeyPairGenerator.getInstance("EC"); generator.initialize(new ECGenParameterSpec("secp256r1"));
         KeyPair pair=generator.generateKeyPair();

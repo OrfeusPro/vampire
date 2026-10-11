@@ -3,8 +3,9 @@ export const WINDOW = 262144;
 export const FRAME = 16384;
 
 // Credit acknowledges TCP writes, rather than just arrival in the SCTP queue.
-export function bridge(socket, channel, { onReady = () => {}, onError = () => {}, initiallyReady = false } = {}) {
-  let credit = WINDOW, outstanding = 0, ready = initiallyReady, closed = false;
+export function bridge(socket, channel, { onReady = () => {}, onError = () => {}, initiallyReady = false,receiveWindow=WINDOW,sendWindow=WINDOW } = {}) {
+  if(![WINDOW,1048576,2097152,4194304].includes(receiveWindow)||![WINDOW,1048576,2097152,4194304].includes(sendWindow))throw Error('Invalid flow window');
+  let credit = sendWindow, outstanding = 0, ready = initiallyReady, closed = false;
   let txEof = false, rxEof = false, incoming = 0, drainTimer;
   const queue = [];
   let queued = 0;
@@ -34,12 +35,14 @@ export function bridge(socket, channel, { onReady = () => {}, onError = () => {}
     if (closed) return;
     try {
       if (Buffer.isBuffer(data)) {
-        if (!ready || rxEof || data.length === 0 || data.length > FRAME || incoming + data.length > WINDOW) throw Error('frame');
+        if (!ready || rxEof || data.length === 0 || data.length > FRAME || incoming + data.length > receiveWindow) throw Error('frame');
         incoming += data.length;
         socket.write(data, error => {
           incoming -= data.length;
           if (error) return destroy();
-          if (!closed && channel.readyState === 'open') send({type:'credit',bytes:data.length});
+          if (!closed && channel.readyState === 'open') {
+            try{send({type:'credit',bytes:data.length});}catch{destroy();}
+          }
         });
         return;
       }
@@ -49,7 +52,7 @@ export function bridge(socket, channel, { onReady = () => {}, onError = () => {}
       else if (msg.type === 'error') { onError(Number.isInteger(msg.code) && msg.code >= 1 && msg.code <= 8 ? msg.code : 1); destroy(); }
       else if (msg.type === 'credit' && ready && Number.isInteger(msg.bytes) && msg.bytes > 0 && msg.bytes <= outstanding) {
         outstanding -= msg.bytes; credit += msg.bytes; flush();
-      } else if (msg.type === 'eof' && ready && !rxEof) { rxEof = true; socket.end(); }
+      } else if (msg.type === 'eof' && ready && !rxEof) { rxEof = true;socket.end(); }
       else throw Error('unexpected message');
     } catch { onError(1); destroy(); }
   });
