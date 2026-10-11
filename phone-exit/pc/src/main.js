@@ -19,7 +19,9 @@ const RTCPeerConnection=process.env.PHONE_EXIT_TRANSPORT==='werift'?(await impor
 const requestedPeers=process.env.PHONE_EXIT_PEERS===undefined?null:Number(process.env.PHONE_EXIT_PEERS);
 if(requestedPeers!==null&&(![1,2,4].includes(requestedPeers)||requestedPeers>1&&process.env.PHONE_EXIT_TRANSPORT==='werift'))throw Error('Дополнительные соединения требуют нативный транспорт и число 2 или 4');
 let peerCount=1;
-const peerConfig={iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'}],
+const stunServers=process.env.PHONE_EXIT_STUN_SERVERS?JSON.parse(process.env.PHONE_EXIT_STUN_SERVERS):['stun:stun.l.google.com:19302','stun:stun.cloudflare.com:3478'];
+if(!Array.isArray(stunServers)||!stunServers.length||stunServers.length>16||stunServers.some(s=>typeof s!=='string'||!/^stun:(?:[0-9.]+|stun\.l\.google\.com|stun\.cloudflare\.com):(19302|3478)$/.test(s)))throw Error('Invalid STUN bootstrap servers');
+const peerConfig={iceServers:stunServers.map(urls=>({urls})),
   ...(bindAddress?{iceInterfaceAddresses:{udp4:bindAddress},iceUseIpv6:false}:{})};
 const peer = new RTCPeerConnection(peerConfig);
 let pool;

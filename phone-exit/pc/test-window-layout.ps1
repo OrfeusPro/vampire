@@ -1,6 +1,8 @@
 ﻿function TestWindowLayout {
     $originalSize=$form.ClientSize;$originalMode=$mode.SelectedIndex
     try{
+        $savedApps=$script:appPaths
+        try{$script:appPaths=@((Get-Command curl.exe).Source,(TransportRuntime));ShowApplicationList -Preview}finally{$script:appPaths=$savedApps}
         $previousStart=$start.Enabled;$previousStop=$stopButton.Enabled
         try{
             $start.Enabled=$false;$stopButton.Enabled=$true;UpdateConnectionButtons

@@ -1,10 +1,10 @@
-﻿param([switch]$SelfTest, [string]$UsbTestSerial, [switch]$VpnTest, [switch]$VpnTestApps, [switch]$StartupTest)
+﻿param([switch]$SelfTest, [string]$UsbTestSerial, [switch]$VpnTest, [switch]$VpnTestApps, [switch]$StartupTest, [switch]$RecoveryTest, [switch]$RecoveryAll)
 $ErrorActionPreference = 'Stop'
 $script:profileDirectory=Join-Path ([Environment]::GetFolderPath([Environment+SpecialFolder]::LocalApplicationData)) 'PhoneExit'
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -Path (Join-Path $PSScriptRoot 'desktop-controls.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing
-if(!$SelfTest -and !$VpnTest -and !$StartupTest){
+if(!$SelfTest -and !$VpnTest -and !$StartupTest -and !$RecoveryTest){
     $script:instanceCreated=$false
     $script:instanceMutex=[Threading.Mutex]::new($true,('Local\PhoneExitDesktop-'+[Security.Principal.WindowsIdentity]::GetCurrent().User.Value),[ref]$script:instanceCreated)
     if(!$script:instanceCreated){
@@ -88,7 +88,7 @@ function StopClient {
     $code.Clear()
     try { $script:client.StandardInput.WriteLine('stop'); $script:client.StandardInput.Flush() } catch {}
 }
-function StartClient {
+function StartClient([switch]$Reconnect) {
     try {
         if ($script:client) { return }
         if(!$SelfTest -and $mode.SelectedIndex -eq 1 -and $script:appPaths.Count -eq 0){$hint.Text='Добавьте EXE приложений, которые должны использовать VPN.';return}
@@ -97,6 +97,7 @@ function StartClient {
             $hint.Text = 'Откройте персональное приложение на телефоне и включите Wi-Fi. Телефон появится здесь автоматически.'; return
         }
         $script:selectedPhone = $null
+        $selected=$null
         if (!$SelfTest -and $script:phoneRows.Count -gt 0 -and $phoneList.SelectedIndex -lt 0) {
             $hint.Text = 'Выберите доступный телефон в списке стран справа.'; return
         }
@@ -105,6 +106,7 @@ function StartClient {
             if (!$selected.online -or $selected.busy) { $hint.Text = 'Телефон недоступен. Включите на нём Wi-Fi и доступ в приложении Phone Exit.'; return }
             $script:selectedPhone = $selected.id
         }
+        if(!$Reconnect){$script:connectionWanted=(!$SelfTest -and (!$VpnTest -or $RecoveryTest) -and [bool]$script:selectedPhone);$script:reconnectPhone=$script:selectedPhone;$script:reconnectAttempts=0}
         if (!(Test-Path -LiteralPath (Join-Path $PSScriptRoot 'node_modules/werift'))) {
             throw 'Не установлены зависимости. В каталоге pc выполните npm ci.'
         }
@@ -123,6 +125,15 @@ function StartClient {
         $info.StandardErrorEncoding = [System.Text.Encoding]::UTF8
         $info.EnvironmentVariables['PHONE_EXIT_DESKTOP'] = '1'
         $info.EnvironmentVariables['PHONE_EXIT_PORT'] = '1080'
+        if(!$Reconnect -or !$script:stunServers){
+            $script:stunServers=@();$script:bootstrapAddresses=@()
+            foreach($hostSpec in @(@('stun.l.google.com',19302),@('stun.cloudflare.com',3478),@('demochko.com',443))){
+                $ips=@([Net.Dns]::GetHostAddresses($hostSpec[0])|Where-Object AddressFamily -eq InterNetwork)
+                if(!$ips.Count){throw 'Не удалось разрешить адреса серверов связи'}
+                foreach($ip in $ips){$script:bootstrapAddresses+=$ip.ToString();if($hostSpec[1] -ne 443){$script:stunServers+=('stun:'+$ip.ToString()+':'+$hostSpec[1])}}
+            }
+        }
+        $info.EnvironmentVariables['PHONE_EXIT_STUN_SERVERS']=ConvertTo-Json -InputObject @($script:stunServers) -Compress
         $physicalRoute=Get-NetRoute -DestinationPrefix '0.0.0.0/0' -ErrorAction Stop | Where-Object InterfaceAlias -ne 'PhoneExit' | Sort-Object RouteMetric | Select-Object -First 1
         $physicalAddress=Get-NetIPAddress -InterfaceIndex $physicalRoute.InterfaceIndex -AddressFamily IPv4 -ErrorAction Stop | Where-Object {$_.AddressState -eq 'Preferred' -and !$_.SkipAsSource} | Select-Object -First 1
         if(!$physicalAddress){throw 'Не найден исходный сетевой интерфейс'}
@@ -132,9 +143,11 @@ function StartClient {
         $script:client.StartInfo = $info
         $null = $script:client.Start()
         $script:startedAt = [DateTime]::UtcNow
+        $script:clientExitedAt=$null
         $script:outRead = $script:client.StandardOutput.ReadLineAsync()
         $script:errRead = $script:client.StandardError.ReadLineAsync()
         $script:failure = $false
+        $script:transportReady=$false
         $script:stopping = $false
         $start.Enabled = $false
         $stopButton.Enabled = $true
@@ -148,6 +161,7 @@ function StartClient {
         $mode.Enabled=$true;$chooseApps.Enabled=$true
         $status.Text = 'Не удалось запустить клиент'
         $hint.Text = $_.Exception.Message
+        if($Reconnect){QueueReconnect}else{CancelReconnect}
         if ($SelfTest) { throw }
     }
 }
@@ -172,6 +186,8 @@ function HandleOutput([string]$line, [bool]$isError) {
             }
         } catch {}
     } elseif ($line.StartsWith('Готово: SOCKS5')) {
+        $script:transportReady=$true
+        $script:reconnectAttempts=0
         $status.Text = 'Подключено · TCP через Wi-Fi телефона'
         $code.Clear()
         $copy.Enabled = $false
@@ -183,6 +199,7 @@ function HandleOutput([string]$line, [bool]$isError) {
         if($VpnTest -and $line -match '^(TypeError:|RangeError:|Error:|Телефон |Нет прямой |Сигнализация:)'){Write-Host ('PC error: '+($line -replace '[a-f0-9]{32,}','[id]' -replace '(?:[0-9]{1,3}\.){3}[0-9]{1,3}','[address]'))}
         # Display known operational messages only; never expose raw stacks or capabilities.
         $script:failure = $true
+        $script:transportReady=$false
         $status.Text = 'Соединение остановлено'
         if ($line -match '^(Истекло время сопряжения|Телефон остановил выход|Телефон не отвечает, прокси остановлен|Нет прямой связи с телефоном|Телефон отключён|Сигнализация: HTTP [0-9]{3})$') {
             $hint.Text = $line
@@ -194,7 +211,7 @@ function HandleOutput([string]$line, [bool]$isError) {
     }
 }
 $start.Add_Click({ StartClient })
-$stopButton.Add_Click({ StopVpn; $script:failure = $false; StopClient; if(!$script:client){$status.Text='Отключено';$hint.Text='Обычное подключение восстанавливается.';$start.Enabled=$true;$stopButton.Enabled=$false;$mode.Enabled=$true;$chooseApps.Enabled=$true} })
+$stopButton.Add_Click({ CancelReconnect; StopVpn; $script:failure = $false; StopClient; if(!$script:client){$status.Text='Отключено';$hint.Text='Обычное подключение восстанавливается.';$start.Enabled=$true;$stopButton.Enabled=$false;$mode.Enabled=$true;$chooseApps.Enabled=$true} })
 $copy.Add_Click({
     if ($code.Text) {
         try { [System.Windows.Forms.Clipboard]::SetText($code.Text); $hint.Text = 'Код скопирован. Вставьте его в приложение на телефоне.' }
@@ -203,7 +220,9 @@ $copy.Add_Click({
 })
 . (Join-Path $PSScriptRoot 'desktop-directory.ps1')
 . (Join-Path $PSScriptRoot 'desktop-vpn.ps1')
+. (Join-Path $PSScriptRoot 'desktop-reconnect.ps1')
 if($VpnTest){ . (Join-Path $PSScriptRoot 'test-vpn-desktop.ps1') }
+if($RecoveryTest){ . (Join-Path $PSScriptRoot 'test-recovery-desktop.ps1') }
 if ($SelfTest) { $script:expectedPhoneCount = @(LoadPhones).Count }
 $timer = New-Object System.Windows.Forms.Timer
 $timer.Interval = 100
@@ -223,10 +242,10 @@ $timer.Add_Tick({
         if(([DateTime]::UtcNow-$script:testStarted).TotalSeconds -gt 40){throw 'Startup test did not load personal phones'}
     }
     if ($script:client) {
-        if ($script:selectedPhone -and !$script:stopping -and !$status.Text.StartsWith('Подключено') -and ([DateTime]::UtcNow - $script:startedAt).TotalSeconds -gt 45) {
+        if ($script:selectedPhone -and !$script:stopping -and !$script:transportReady -and ([DateTime]::UtcNow - $script:startedAt).TotalSeconds -gt 90) {
             $script:failure = $true
             StopClient
-            $hint.Text = 'Телефон не установил прямую связь за 45 секунд. Проверьте Wi-Fi и фильтры трафика, затем повторите подключение.'
+            $hint.Text = 'Телефон не установил прямую связь за 90 секунд. Проверьте Wi-Fi и фильтры трафика.'
         }
         foreach ($kind in @('out','err')) {
             for ($i = 0; $i -lt 50; $i++) {
@@ -243,17 +262,21 @@ $timer.Add_Tick({
             }
         }
         if ($script:stopping -and !$script:client.HasExited -and ([DateTime]::UtcNow - $script:stopAt).TotalSeconds -gt 5) { $script:client.Kill() }
-        if ($script:client.HasExited -and $null -eq $script:outRead -and $null -eq $script:errRead) {
+        if($script:client.HasExited -and !$script:clientExitedAt){$script:clientExitedAt=[DateTime]::UtcNow}
+        if ($script:client.HasExited -and (($null -eq $script:outRead -and $null -eq $script:errRead) -or ([DateTime]::UtcNow-$script:clientExitedAt).TotalSeconds -gt 1)) {
             if (!$script:failure) { $status.Text = 'Отключено'; $hint.Text = 'Соединение остановлено. Можно подключиться заново.' }
             else { $status.Text = 'Соединение остановлено' }
             $script:client.Dispose(); $script:client = $null
+            $script:outRead=$null;$script:errRead=$null;$script:transportReady=$false
             $code.Clear(); $copy.Enabled = $false; $stopButton.Enabled = $false; $start.Enabled = $true
             $mode.Enabled=$script:vpnState -ne 'active';$chooseApps.Enabled=$mode.Enabled
+            QueueReconnect
         }
     }
     if(!$script:client -or $script:stopping -or $script:client.HasExited -or !$script:lastPingAt -or ([DateTime]::UtcNow-$script:lastPingAt).TotalSeconds -gt 6){$pingLabel.Text='Пинг до телефона: —'}
     ReadVpn
-    if($VpnTest){ TestVpnTick }
+    ReadReconnect
+    if($RecoveryTest){TestRecoveryTick}elseif($VpnTest){ TestVpnTick }
     if ($SelfTest) {
         if ($UsbTestSerial) { TestDirectoryTick; return }
         if ($script:testStage -eq 0) { $script:testStage = 1; $start.PerformClick() }
@@ -279,6 +302,7 @@ $timer.Add_Tick({
 })
 $form.Add_FormClosing({
     $timer.Stop()
+    CancelReconnect
     StopVpn
     if ($script:client) {
         StopClient
@@ -293,7 +317,8 @@ $timer.Start()
 try { $null = $form.ShowDialog() } finally { StopVpn; if($script:client){try{$script:client.StandardInput.Close();if(!$script:client.WaitForExit(4000)){$script:client.Kill()}}catch{}};CloseDirectory }
 $timer.Dispose()
 $form.Dispose()
-if($VpnTest -and !$script:vpnTestPassed){throw 'VPN system test did not pass'}
+if($RecoveryTest -and !$script:recoveryPassed){throw 'VPN recovery system test did not pass'}
+if($VpnTest -and !$RecoveryTest -and !$script:vpnTestPassed){throw 'VPN system test did not pass'}
 if ($SelfTest) {
     if (!$script:testPassed) { throw "Desktop smoke test failed at stage $($script:testStage), phones=$($script:phoneRows.Count), status=$($status.Text), hint=$($hint.Text)" }
     if ($UsbTestSerial) { Write-Output 'PASS: saved private enrollment, country and online status, automatic WebRTC, HTTPS through phone, reconnect without new enrollment' }

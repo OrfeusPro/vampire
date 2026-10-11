@@ -119,7 +119,7 @@ function DirectoryEvent($event) {
             $phoneList.EndUpdate()
             if($hint.Text.StartsWith('Обновляю доступность телефонов') -and @($script:phoneRows | Where-Object online).Count -gt 0){$hint.Text='Список телефонов обновлён. Выберите устройство и нажмите «Подключить VPN».'}
         }
-        'error' { $hint.Text = $event.message; if ($SelfTest) { Write-Host ('Directory command failed: ' + $event.reason) }; if ($script:selectedPhone) { StopClient } }
+        'error' { $hint.Text = $event.message; if ($SelfTest) { Write-Host ('Directory command failed: ' + $event.reason) }; if ($script:selectedPhone -and !$script:transportReady) { StopClient } }
     }
 }
 function StartDirectory {
@@ -177,7 +177,7 @@ $removePhone.Add_Click({
     if ($phoneList.SelectedIndex -lt 0) { return }
     $phone = $script:phoneRows[$phoneList.SelectedIndex]
     if ([System.Windows.Forms.MessageBox]::Show('Удалить телефон из списка? Удалите также привязку в приложении телефона.','Phone Exit','YesNo','Question') -eq 'Yes') {
-        if ($script:selectedPhone -eq $phone.id) { StopClient }
+        if ($script:selectedPhone -eq $phone.id -or $script:reconnectPhone -eq $phone.id) { CancelReconnect;StopVpn;StopClient }
         DirectoryCommand @{op='remove';id=$phone.id}
         $code.Clear(); $copy.Enabled = $false
     }

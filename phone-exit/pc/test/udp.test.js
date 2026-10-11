@@ -22,6 +22,13 @@ test('VPN modes preserve transport paths, tunnel DNS, and never use a direct fal
   const selected=vpnConfig({mode:'apps',applications:['C:\\Game\\game.exe']});assert.equal(selected.route.final,'direct');assert.equal(selected.dns.servers[0].detour,undefined);assert.equal(selected.dns.servers[1].type,'fakeip');assert.equal(selected.route.default_domain_resolver,'direct-dns');
   assert.ok(selected.route.rules.some(r=>r.process_path_regex?.some(p=>p.startsWith('(?i)^')&&p.endsWith('$'))&&r.outbound==='phone'));
   assert.throws(()=>vpnConfig({mode:'apps',applications:[]}));assert.throws(()=>vpnConfig({mode:'apps',applications:['relative.exe']}));
+  const live=vpnConfig({mode:'apps',applications:['C:\\Game\\game.exe'],applicationRuleFile:'C:\\PhoneExit\\applications-rules.json'});
+  assert.equal(live.route.rule_set[0].type,'local');assert.equal(live.route.rule_set[0].format,'source');
+  assert.ok(live.route.rules.some(r=>r.rule_set?.includes('selected-applications')&&r.outbound==='phone'));
+  assert.equal(live.dns.rules[0].server,'direct-dns');assert.ok(live.dns.rules[0].domain.includes('demochko.com'));
+  assert.equal(full.dns.rules[0].server,'direct-dns');assert.equal(full.dns.final,'phone-dns');
+  assert.ok(full.route.rules[0].process_path_regex[0].startsWith('(?i)^'));
+  assert.throws(()=>vpnConfig({mode:'apps',applications:['C:\\Game\\game.exe'],applicationRuleFile:'relative.json'}));
 });
 for(const Transport of [RTCPeerConnection,NativePeer])test(`real WebRTC UDP (${Transport===NativePeer?'native':'werift'}): SOCKS association, boundaries, source pinning, lifecycle`, {timeout:30000},async t=>{
   const a=new Transport({iceServers:[]}),b=new RTCPeerConnection({iceServers:[]});
