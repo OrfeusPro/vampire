@@ -51,11 +51,11 @@ final class ExitEngine implements AutoCloseable {
             try {
                 // Also confines the native ICE sockets to the selected Wi-Fi.
                 ConnectivityManager cm=context.getSystemService(ConnectivityManager.class);
-                if (!cm.bindProcessToNetwork(wifi)) {
+                if (!WifiBinding.acquire(context,wifi,this)) {
                     fail("Android запретил доступ к Wi-Fi. Проверьте активный VPN или фильтр трафика (например, AdGuard).");
                     return;
                 }
-                PeerConnectionFactory.initialize(PeerConnectionFactory.InitializationOptions.builder(context).createInitializationOptions());
+                WebRtcRuntime.initialize(context);
                 factory=PeerConnectionFactory.builder().createPeerConnectionFactory();
                 PeerConnection.RTCConfiguration config = new PeerConnection.RTCConfiguration(Arrays.asList(
                     PeerConnection.IceServer.builder("stun:stun.l.google.com:19302").createIceServer(),
@@ -250,7 +250,7 @@ final class ExitEngine implements AutoCloseable {
         releases.execute(() -> {
             for(ExtraPeer extra:extraPeers.values())extra.dispose();extraPeers.clear();
             if(peer!=null) { peer.close(); peer.dispose(); } if(factory!=null) factory.dispose();
-            context.getSystemService(ConnectivityManager.class).bindProcessToNetwork(null);
+            WifiBinding.release(context,this);
         });
         releases.shutdown();
     }

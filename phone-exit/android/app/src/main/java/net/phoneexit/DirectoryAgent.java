@@ -23,6 +23,8 @@ final class DirectoryAgent implements AutoCloseable {
     private final Set<String> requests=new LinkedHashSet<>();
     private volatile boolean closed;
     private volatile ExitEngine engine;
+    private volatile ControlAgent control;
+    private boolean directWasOpen;
     private String country="";
     private long lastPresence;
     private long nextAttempt;
@@ -30,16 +32,20 @@ final class DirectoryAgent implements AutoCloseable {
     DirectoryAgent(Context context,Network wifi,DirectoryConfig config,Runnable retryWifi) { this.context=context; this.wifi=wifi; this.config=config; this.retryWifi=retryWifi; }
     void start() {
         loop.execute(() -> {
-            if(!context.getSystemService(android.net.ConnectivityManager.class).bindProcessToNetwork(wifi)) {
+            if(!WifiBinding.acquire(context,wifi,this)) {
                 closed=true; loop.shutdown();
                 ExitService.update("Ошибка: Android запретил Wi-Fi. Проверьте активный VPN или AdGuard.");
                 retryWifi.run(); return;
             }
-            country=country(); if(!closed) waiting();
+            country=country(); synchronized(this){if(!closed) { waiting(); control=new ControlAgent(context,wifi,config);control.start(); }}
         });
         try { loop.scheduleWithFixedDelay(this::tick,0,3,TimeUnit.SECONDS); } catch(RejectedExecutionException ignored) {}
     }
-    private void waiting() { ExitService.update("Доступен для своего ПК · "+config.name+" · "+(country.isEmpty()?"страна неизвестна":country)); }
+    private void waiting() {
+        if(control!=null&&control.directConnected())ExitService.update("Прямое управление подключено"+(failures>0?" · каталог временно недоступен":""));
+        else if(failures>0)ExitService.update("Каталог недоступен · ожидаю восстановления");
+        else ExitService.update("Доступен для своего ПК · "+config.name+" · "+(country.isEmpty()?"страна неизвестна":country));
+    }
     private String country() {
         HttpsURLConnection connection=null;
         try {
@@ -82,10 +88,12 @@ final class DirectoryAgent implements AutoCloseable {
     }
     private void tick() {
         if(closed) return;
+        boolean directOpen=control!=null&&control.directConnected();
+        if(engine==null&&directOpen!=directWasOpen){directWasOpen=directOpen;waiting();}
         if(System.nanoTime()<nextAttempt) return;
         long now=System.currentTimeMillis(), bucket=now/300000;
         try {
-            if(config.account!=null){catalogTick(now);if(failures>0&&engine==null)waiting();failures=0;nextAttempt=0;return;}
+            if(config.account!=null){catalogTick(now);boolean recovered=failures>0;failures=0;nextAttempt=0;if(recovered&&engine==null)waiting();return;}
             String current=roomKey(config.token,bucket), previous=roomKey(config.token,bucket-1);
             if(now-lastPresence>=15000) {
                 api(current,"send",ExitEngine.json("type","candidate","value",ExitEngine.json("directory",1,"type","presence","at",now,"country",country,"busy",engine!=null)));
@@ -115,18 +123,20 @@ final class DirectoryAgent implements AutoCloseable {
                 }
             }
             cursors.keySet().retainAll(new HashSet<>(Arrays.asList(previous,current)));
-            if(failures>0&&engine==null) waiting(); failures=0; nextAttempt=0;
+            boolean recovered=failures>0;failures=0;nextAttempt=0;if(recovered&&engine==null)waiting();
         } catch(Exception ignored) {
             failures=Math.min(failures+1,5);
             long delay=Math.min(30,1L<<failures);
             nextAttempt=System.nanoTime()+TimeUnit.SECONDS.toNanos(delay);
-            if(!closed&&engine==null) ExitService.update("Сервер недоступен · повторю через "+delay+" с");
+            if(!closed&&engine==null) waiting();
         }
     }
     private void catalogTick(long now) throws Exception {
         if(now-lastPresence<15000)return;
         JSONObject registration=ExitEngine.json("id",config.id,"name",config.name,"token",config.token,"at",now,"country",country,"busy",engine!=null);
         registration.put("signal","https://demochko.com/phone-exit/signal.php");
+        registration.put("versionName",BuildConfig.VERSION_NAME).put("versionCode",BuildConfig.VERSION_CODE);
+        registration.put("control",ControlAgent.capabilities(context)).put("update",AppUpdater.state(context));
         JSONObject body=ExitEngine.json("version",1,"token",config.account.catalogKey(),"op","pulse","id",config.id,"box",config.account.seal(registration));
         HttpsURLConnection connection=(HttpsURLConnection)wifi.openConnection(new URL("https://demochko.com/phone-exit/directory.php"));
         connection.setInstanceFollowRedirects(false);connection.setRequestMethod("POST");connection.setConnectTimeout(8000);connection.setReadTimeout(8000);connection.setDoOutput(true);
@@ -152,7 +162,8 @@ final class DirectoryAgent implements AutoCloseable {
     }
     @Override public synchronized void close() {
         closed=true; loop.shutdownNow();
+        if(control!=null)control.close();control=null;
         if(engine!=null) engine.close(); engine=null;
-        context.getSystemService(android.net.ConnectivityManager.class).bindProcessToNetwork(null);
+        WifiBinding.release(context,this);
     }
 }

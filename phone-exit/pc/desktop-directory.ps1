@@ -77,8 +77,11 @@ function PersonalMode {
     $hint.Text='Телефоны с включённым автоматическим доступом появятся в списке.'
     $removePhone.SetBounds(660,464,276,40)
     if(!(Get-Command UiPixel -ErrorAction SilentlyContinue)){$null=LabelAt 'Добавление без кодов: установите PhoneExit-personal.apk на свой телефон.' 660 400 276 54}
-    $script:apkFolder=ButtonAt 'Папка с APK' 660 513 276
-    $apkFolder.Add_Click({ Start-Process explorer.exe -ArgumentList ('/select,"'+(Join-Path $PSScriptRoot '../PhoneExit-personal.apk')+'"') })
+    $script:apkFolder=ButtonAt 'Обновить телефон' 660 513 276
+    $apkFolder.Add_Click({
+        if($phoneList.SelectedIndex -lt 0){$hint.Text='Выберите телефон для обновления.';return}
+        try{DirectoryCommand @{op='update';id=$script:phoneRows[$phoneList.SelectedIndex].id};$hint.Text='Отправляю запрос обновления…'}catch{$hint.Text='Не удалось отправить запрос обновления.'}
+    })
 }
 function CountryName($country) {
     $names = @{UA='Украина';PL='Польша';DE='Германия';US='США';GB='Великобритания';NL='Нидерланды';FR='Франция';JP='Япония';CZ='Чехия';RO='Румыния';MD='Молдова';RU='Россия';CA='Канада';FI='Финляндия';SE='Швеция';IT='Италия';ES='Испания';BG='Болгария';TR='Турция'}
@@ -92,6 +95,7 @@ function DirectoryEvent($event) {
     switch ($event.event) {
         'save' { SavePhones $event.phones }
         'saveAccount' { SaveAccount $event.account }
+        'update' { $hint.Text=$event.message }
         'enroll' {
             $script:usbPhoneId = ($event.code | ConvertFrom-Json).id
             $code.Text = $event.code; $copy.Enabled = $true
@@ -112,7 +116,8 @@ function DirectoryEvent($event) {
                 $phone = $script:phoneRows[$i]
                 $state = if (!$phone.online) { 'не в сети' } elseif ($phone.busy) { 'занят' } else { 'доступен' }
                 if ($script:client -and !$script:stopping -and $script:selectedPhone -eq $phone.id) { $state = 'подключён к этому ПК' }
-                $null = $phoneList.Items.Add("$(CountryName $phone.country) · $($phone.name) · $state")
+                $apkVersion = if ($phone.versionName) { ' · APK ' + $phone.versionName } else { ' · APK ?' }
+                $null = $phoneList.Items.Add("$(CountryName $phone.country) · $($phone.name) · $state$apkVersion")
                 if ($phone.id -eq $selected) { $phoneList.SelectedIndex = $i }
             }
             if ($phoneList.SelectedIndex -lt 0 -and $script:phoneRows.Count -eq 1) { $phoneList.SelectedIndex=0 }

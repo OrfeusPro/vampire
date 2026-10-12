@@ -78,6 +78,20 @@ public final class MainActivity extends Activity {
         TextView info = label(getString(R.string.intro),14,MUTED); add(details,info,12);
         if(personal) info.setText("Этот телефон появляется в вашем списке на ПК автоматически. При потере Wi-Fi приложение ждёт сеть и подключается заново.");
         add(details,label("Работает в фоне с уведомлением. Можно свернуть приложение, пока доступ включён.",14,MUTED),14);
+        LinearLayout remote=column(22);remote.setBackground(surface(CARD,20));add(layout,remote,16);
+        add(remote,label("API управления своим телефоном",18,TEXT),0);
+        add(remote,label("Скриншоты, нажатия и свайпы для своего ПК. Без root. Доступ к экрану включается отдельно; защищённые системные окна не управляются.",14,MUTED),10);
+        Switch controlToggle=new Switch(this);controlToggle.setText("Разрешить управление с ПК");controlToggle.setTextColor(TEXT);
+        controlToggle.setChecked(getSharedPreferences("control",MODE_PRIVATE).getBoolean("enabled",true));add(remote,controlToggle,12);
+        controlToggle.setOnCheckedChangeListener((button,on)->getSharedPreferences("control",MODE_PRIVATE).edit().putBoolean("enabled",on).apply());
+        Button permissions=action("Включить специальные возможности",false);add(remote,permissions,10);
+        permissions.setOnClickListener(v->startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)));
+        Switch updates=new Switch(this);updates.setText("Автоматически загружать обновления по Wi-Fi");updates.setTextColor(TEXT);
+        updates.setChecked(getSharedPreferences("control",MODE_PRIVATE).getBoolean("autoUpdate",true));add(remote,updates,16);
+        updates.setOnCheckedChangeListener((button,on)->getSharedPreferences("control",MODE_PRIVATE).edit().putBoolean("autoUpdate",on).apply());
+        add(remote,label("Удалённая команда готовит обновление. Установку подтверждают здесь и в системном окне Android.",14,MUTED),10);
+        Button install=action("Установить загруженное обновление",false);add(remote,install,10);
+        install.setOnClickListener(v->{try{AppUpdater.install(this);}catch(Exception e){status.setText("Проверенного обновления пока нет. Отправьте проверку с ПК.");}});
         Button forget=action("Удалить привязку к ПК",false); add(layout,forget,20);
         add(layout,label("Wi-Fi телефона  ·  Шифрование WebRTC\nПрямое подключение к твоему ПК",12,MUTED),22);
         connect.setOnClickListener(v -> {

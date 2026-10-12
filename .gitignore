@@ -12,3 +12,4 @@ phone-exit/Phone Exit.lnk
 phone-exit/*.lnk
 phone-exit/*-preview.png
 phone-exit/android-connected.png
+phone-exit/**/__pycache__/

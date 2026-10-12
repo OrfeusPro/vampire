@@ -87,7 +87,7 @@ export class Directory {
           phone.signal=value.signal===PRODUCT_SIGNAL?PRODUCT_SIGNAL:SIGNAL;
           this.catalogDevices.add(phone.id);
           const prev=this.states.get(phone.id);
-          if(!prev||value.at>=prev.at)this.states.set(phone.id,{country:/^[A-Z]{2}$/.test(value.country)?value.country:'',busy:value.busy===true,at:value.at,received:Math.min(this.now(),value.at)});
+          if(!prev||value.at>=prev.at)this.states.set(phone.id,{country:/^[A-Z]{2}$/.test(value.country)?value.country:'',busy:value.busy===true,at:value.at,received:Math.min(this.now(),value.at),versionName:typeof value.versionName==='string'?value.versionName.slice(0,32):null,versionCode:Number.isSafeInteger(value.versionCode)?value.versionCode:null,control:value.control||null,update:value.update||null});
         }catch{}
       }
     }catch{}
@@ -96,7 +96,7 @@ export class Directory {
     this.emit({event:'phones', phones:this.phones.map(p => {
       const state = this.states.get(p.id);
       return {id:p.id,name:p.name,country:state?.country || '', online:!!state && this.now()-state.received < 45000,
-        busy:!!state?.busy,signal:p.signal===PRODUCT_SIGNAL?PRODUCT_SIGNAL:SIGNAL};
+        busy:!!state?.busy,signal:p.signal===PRODUCT_SIGNAL?PRODUCT_SIGNAL:SIGNAL,versionName:state?.versionName??null,versionCode:state?.versionCode??null,control:state?.control??null,update:state?.update??null};
     })});
   }
   async poll() {
@@ -154,6 +154,15 @@ export class Directory {
     else await this.api(roomKey(phone.token,Math.floor(this.now()/BUCKET_MS)),'send',{type:'candidate',value});
     this.emit({event:'requested',id});
   }
+  async updatePhone(id){
+    const phone=this.phones.find(p=>p.id===id),state=this.states.get(id);
+    if(!this.account||!phone||this.account.blocked.includes(id)||!state||this.now()-state.received>=45000)throw Error('phone unavailable');
+    if(!state.control?.api){this.emit({event:'update',message:'На этом телефоне старый APK: первое обновление установите вручную из папки проекта.'});return;}
+    const {sealControl,CONTROL}=await import('./control-api.js');const request=randomBytes(16).toString('hex');
+    const response=await this.request(CONTROL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:1,token:catalogKey(this.account.feedToken),op:'enqueue',id,request,box:sealControl(phone.token,{id,request,at:this.now(),command:'installUpdate',args:{}})}),signal:AbortSignal.timeout(10000)});
+    if(!response.ok)throw Error('update unavailable');
+    this.emit({event:'update',message:'Запрос обновления отправлен выбранному телефону. После загрузки подтвердите установку на телефоне; версия в списке обновится автоматически.'});
+  }
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const emit = value => process.stdout.write(JSON.stringify(value)+'\n');
@@ -173,6 +182,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       else if(command.op==='add') directory.add(command.name);
       else if(command.op==='remove') directory.remove(command.id);
       else if(command.op==='connect') await directory.connect(command.id,command.code);
+      else if(command.op==='update')await directory.updatePhone(command.id);
       else if(command.op==='stop') { clearInterval(timer); process.exit(0); }
     }).catch(error=>emit({event:'error',reason:['invalid phones','phone limit','invalid name','phone unavailable','invalid session'].includes(error.message)?error.message:'invalid command',message:'Телефон недоступен или каталог не отвечает. Проверьте Wi-Fi и включённый выход на телефоне.'}));
   });

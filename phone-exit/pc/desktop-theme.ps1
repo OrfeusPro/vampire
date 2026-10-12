@@ -22,7 +22,7 @@ $title.Visible=$true;$title.SetBounds(78,28,350,46);$title.Font=New-Object Drawi
 $brandIcon=New-Object Windows.Forms.PictureBox;$brandIcon.SetBounds(36,32,38,38);$brandIcon.SizeMode='Zoom';$brandIcon.Image=[Drawing.Image]::FromFile((Join-Path $PSScriptRoot 'assets/phone-exit.png'));$form.Controls.Add($brandIcon)
 $form.Add_FormClosed({$brandIcon.Image.Dispose()})
 $sub=LabelAt 'Личный интернет. Через твои телефоны.' 38 79 600 30;$sub.ForeColor=$muted
-$versionLabel=LabelAt 'Версия 0.4.11' 440 42 170 24;$versionLabel.ForeColor=$muted;$versionLabel.TextAlign='MiddleRight'
+$versionLabel=LabelAt 'Версия 0.6.0' 440 42 170 24;$versionLabel.ForeColor=$muted;$versionLabel.TextAlign='MiddleRight'
 $badge=LabelAt 'ПРЯМОЕ ПОДКЛЮЧЕНИЕ' 765 49 293 30;$badge.ForeColor=$accent;$badge.TextAlign='MiddleRight';$badge.Font=New-Object Drawing.Font('Segoe UI Semibold',9)
 $form.Add_Paint({param($sender,$paintEvent)
     $g=$paintEvent.Graphics;$g.SmoothingMode='AntiAlias';$g.ScaleTransform($script:uiScale,$script:uiScale)
@@ -92,7 +92,8 @@ $phoneList.Add_DrawItem({param($sender,$paintEvent)
     $countryRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 60)),($r.Y+(UiPixel 12)),($r.Width-(UiPixel 166)),(UiPixel 28))
     $nameRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 60)),($r.Y+(UiPixel 40)),($r.Width-(UiPixel 76)),(UiPixel 22))
     [Windows.Forms.TextRenderer]::DrawText($g,$country,$large,$countryRect,$form.ForeColor,$flags)
-    [Windows.Forms.TextRenderer]::DrawText($g,[string]$phone.name,$small,$nameRect,$muted,$flags)
+    $phoneDescription=$(if($phone.versionName){'APK '+$phone.versionName}else{'APK ?'}) + ' · ' + [string]$phone.name
+    [Windows.Forms.TextRenderer]::DrawText($g,$phoneDescription,$small,$nameRect,$muted,$flags)
     $stateColor=if($phone.online -and !$phone.busy){'#62e7bc'}else{'#9daabc'};$dot=New-Object Drawing.SolidBrush([Drawing.ColorTranslator]::FromHtml($stateColor))
     $g.FillEllipse($dot,($r.Right-(UiPixel 98)),($r.Y+(UiPixel 21)),(UiPixel 6),(UiPixel 6))
     $stateRect=New-Object Drawing.Rectangle(($r.Right-(UiPixel 86)),($r.Y+(UiPixel 15)),(UiPixel 82),(UiPixel 24))
@@ -100,7 +101,7 @@ $phoneList.Add_DrawItem({param($sender,$paintEvent)
     $small.Dispose();$large.Dispose();$dot.Dispose()
 })
 $removePhone.SetBounds(664,499,180,40);$removePhone.Text='Удалить телефон'
-if($script:personalMode){$apkFolder.SetBounds(856,499,190,40);$apkFolder.Text='APK для телефона'}
+if($script:personalMode){$apkFolder.SetBounds(856,499,190,40);$apkFolder.Text='Обновить телефон'}
 else{$phoneName.SetBounds(664,549,160,28);$addPhone.SetBounds(836,545,210,36)}
 $hint.Visible=$true;$hint.SetBounds(38,611,1026,50);$hint.ForeColor=$muted;$hint.Font=New-Object Drawing.Font('Segoe UI',10)
 $detail.Visible=$true;$detail.SetBounds(38,674,1026,26);$detail.Text='Wi-Fi телефона  •  Шифрование WebRTC  •  Сервер передаёт только параметры связи';$detail.ForeColor=$muted;$detail.Font=New-Object Drawing.Font('Segoe UI',9)
