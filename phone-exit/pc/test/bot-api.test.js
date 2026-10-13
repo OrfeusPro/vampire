@@ -46,6 +46,8 @@ test('editor receives a fresh phone result, restores settings and leaves bot pau
 });
 test('bot settings validate coordinates, revisions and switches',()=>{
   assert.equal(validateBotSettings(settings()).settingsVersion,1);
+  assert.equal(validateBotSettings({...settings(),confirm_rare_dismantle_enabled:true}).confirm_rare_dismantle_enabled,true);
+  assert.throws(()=>validateBotSettings({...settings(),confirm_rare_dismantle_enabled:'true'}));
   assert.throws(()=>validateBotSettings({...settings(),active_farm_map_spot_id:'missing'}));
   assert.throws(()=>validateBotSettings({...settings(),farm_map_spots:[{id:'a',map_id:'map',map_points:[[NaN,.2]]}]}));
   assert.throws(()=>validateBotSettings({...settings(),current_location_templates:{'../outside':'abc'}}));

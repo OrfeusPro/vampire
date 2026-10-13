@@ -271,6 +271,48 @@ def _tick(host, settings, state, directory):
             candidates.append({'confidence': value['confidence'], 'map_id': map_id, 'found': value['found'], 'catalog': False})
         return navigation.choose_location(candidates, config['vision'])
 
+    # These are identified notice bodies, not a generic OK-button detector.
+    # Drop interrupted input before reconnecting; never replay a purchase.
+    notice = ('session_timeout' if found('timeout_notification') else
+              'network_error' if found('game_server_error_t005') or found('disconnected') else None)
+    if notice:
+        if not settings.get('autostart_enabled'):
+            return pause('game_reconnect_disabled')
+        if not state.get('notice_active'):
+            attempts, retry_at = state.get('notice_attempts', 0), state.get('notice_retry_at', 0)
+            state.clear()
+            state.update(settings_fingerprint=fingerprint, phase='monitoring',
+                         notice_recovery=True, notice_active=True, entry_autobattle_pending=True,
+                         notice_attempts=attempts, notice_retry_at=retry_at)
+        if now < state.get('notice_retry_at', 0):
+            return report('waiting_game_reconnect', status='waiting', reason=notice)
+        button_name = 'timeout_notification_ok' if notice == 'session_timeout' else 'game_notice_ok'
+        button = match(button_name)
+        if not button['found'] and notice == 'network_error':
+            button_name = 'game_notice_ok_large'
+            button = match(button_name)
+        if not button['found']:
+            # Do not guess at a new dialog's coordinates.
+            if now - state.setdefault('notice_button_since', now) > 15:
+                return pause('game_notice_ok_not_found')
+            return report('waiting_game_notice_button', status='waiting', reason=notice)
+        state.pop('notice_button_since', None)
+        attempts = state.get('notice_attempts', 0)
+        template(button_name)
+        state.update(notice_attempts=attempts + 1,
+                     notice_retry_at=time.monotonic() + min(60, 15 * 2 ** min(attempts, 2)),
+                     notice_gone_since=None)
+        phase('monitoring', 2)
+        return report('dismiss_' + notice, status='waiting', reason=notice)
+    if state.get('notice_recovery'):
+        state.pop('notice_active', None)
+        # Reset the retry budget only after the notice has stayed absent.
+        if state.get('notice_gone_since') is None:
+            state['notice_gone_since'] = now
+        if now - state['notice_gone_since'] >= 60:
+            for key in ('notice_recovery', 'notice_gone_since', 'notice_retry_at', 'notice_attempts'):
+                state.pop(key, None)
+
     editor = settings.get('editor_request')
     if editor:
         map_id = editor.get('map_id')
@@ -309,7 +351,7 @@ def _tick(host, settings, state, directory):
                       reason='editor_point_%.8f_%.8f' % (x/width, y/height))
 
     # Reconcile actual screen after restart: never restore an unconfirmed purchase/tap.
-    if any(found(n) for n in ('game_update_notice_title', 'game_server_error_t005', 'disconnected')):
+    if found('game_update_notice_title'):
         return pause('game_notice_requires_attention')
     if state.get('phase') == 'revive_wait' and now < state.get('wait_until', 0):
         return report('waiting_after_revive')
@@ -377,10 +419,116 @@ def _tick(host, settings, state, directory):
         template('auto_hunt_result_ok')
         return report('close_auto_hunt_result')
 
-    if state.get('phase', '').startswith('dismantle_') and match('dismantle_rare_warning', {
+    if (state.get('phase', '').startswith('dismantle_') or state.get('phase', 'monitoring') == 'monitoring') and match('dismantle_rare_warning', {
             'file': 'dismantle_rare_warning.png', 'threshold': .88,
             'region': [.34,.44,.66,.55]})['found']:
-        return pause('dismantle_rare_items_confirmation_required')
+        if not settings.get('auto_dismantle_enabled') or settings.get('confirm_rare_dismantle_enabled') is not True:
+            return pause('dismantle_rare_items_confirmation_required')
+        if state.get('rare_confirm_sent'):
+            if now - state['rare_confirm_sent'] >= config['timeouts'].get('service_screen_timeout_sec', 12):
+                return pause('dismantle_rare_confirmation_not_closed')
+            return report('waiting_dismantle_rare_confirmation')
+        if not found('dismantle_rare_ok'):
+            if now - state.setdefault('rare_button_since', now) > 12:
+                return pause('dismantle_rare_ok_not_found')
+            return report('waiting_dismantle_rare_ok')
+        template('dismantle_rare_ok')
+        state['rare_confirm_sent'] = time.monotonic()
+        state.pop('rare_button_since', None)
+        phase('dismantle_result', 1)
+        return report('confirm_dismantle_rare_items')
+
+    # A dark launch background can satisfy the map layout fallback. Only the
+    # actual title template may bypass login before gameplay is recognized.
+    launch_screen = next((screen for screen in config['game'].get('launch_flow', {}).get('screens', [])
+                          if not screen.get('done') and screen.get('template') and found(screen['template'])), None)
+    if (launch_screen or state.get('launch_since') is not None or state.get('launch_pending')
+            or state.get('entry_wait_started') is not None) and not hud() and not match('world_map_title')['found']:
+        flow = config['game'].get('launch_flow', {})
+        if launch_screen and not state.get('entry_autobattle_pending'):
+            # MultiBot handles login before farm/service. Clear interrupted
+            # action state, but retain the reconnect backoff and settings.
+            if not settings.get('autostart_enabled'):
+                return pause('autostart_disabled')
+            preserved = {key: value for key, value in state.items()
+                         if key.startswith('notice_') or key == 'settings_fingerprint'}
+            state.clear()
+            state.update(preserved, phase='monitoring', launch_since=now,
+                         entry_autobattle_pending=True)
+        if state.get('launch_done_until'):
+            if now >= state['launch_done_until']:
+                # Original start_game_and_wait verifies the screen again,
+                # then gives handle_launch_screen_if_needed a bounded rescue.
+                state.pop('launch_done_until', None)
+                state['launch_fallback_until'] = now + flow.get('fallback_timeout_sec', 30)
+                state['launch_fallback_actions'] = 0
+            else:
+                return report('waiting_game_launch_done')
+        if state.get('launch_fallback_until') and now >= state['launch_fallback_until']:
+            return pause('game_launch_done_timeout')
+        if state.get('launch_since') is not None and now - state['launch_since'] > flow.get('max_seconds', 210):
+            return pause('game_launch_timeout')
+        for screen in flow.get('screens', []):
+            name = screen.get('template')
+            if name and not screen.get('done') and found(name):
+                if screen.get('only_during_start') and state.get('launch_fallback_until'):
+                    continue
+                if not settings.get('autostart_enabled'):
+                    return pause('autostart_disabled')
+                state.setdefault('launch_since', now)
+                state['entry_autobattle_pending'] = True
+                counts = state.setdefault('launch_actions', {})
+                if sum(counts.values()) >= flow.get('max_steps', 35):
+                    return pause('game_launch_action_limit')
+                count = counts.get(screen['name'], 0)
+                if count >= screen.get('max_actions', 9999):
+                    state['wait_until'] = now + flow.get('poll_sec', 1)
+                    return report('waiting_launch_' + screen['name'])
+                if not screen.get('point_name'):
+                    return report('waiting_launch_' + screen['name'])
+                if state.get('launch_fallback_until'):
+                    if state.get('launch_fallback_actions', 0) >= flow.get('fallback_action_attempts', 3):
+                        return report('waiting_game_launch_done')
+                    state['launch_fallback_actions'] = state.get('launch_fallback_actions', 0) + 1
+                named(screen['point_name'])
+                counts[screen['name']] = count + 1
+                phase('monitoring', screen.get('wait_sec', 1))
+                if screen.get('wait_for_done_after_action') and not state.get('launch_fallback_until'):
+                    state['launch_done_until'] = state['wait_until'] + screen.get('done_timeout_sec', 120)
+                return report('launch_' + screen['name'], reason='connect_' + str(round(match('launch_connect')['confidence'], 3)) + '_tap_' + str(round(match('launch_tap_to_start')['confidence'], 3)))
+        if state.get('launch_fallback_until'):
+            return report('waiting_game_launch_done')
+        if settings.get('autostart_enabled') and not state.get('gameplay_seen'):
+            # A restarted bot may attach while login is already loading, so no
+            # launch command or first button has armed a bounded entry budget.
+            # Known buttons above still act immediately; no blind loading taps.
+            started = state.setdefault('entry_wait_started', now)
+            if now - started < config['game'].get('initial_recognition_timeout_sec', 20):
+                return report('waiting_game_launch')
+            return pause('game_launch_timeout')
+        if now - state.get('last_launch', -100000) < config['game'].get('start_timeout_sec', 90):
+            return report('waiting_game_launch')
+        state.setdefault('unknown_since', now)
+        if now - state['unknown_since'] > 12:
+            return report('recognizing_screen', status='error', error='unrecognized_game_screen', pause=True,
+                          reason='connect_' + str(round(match('launch_connect')['confidence'], 3)) + '_tap_' + str(round(match('launch_tap_to_start')['confidence'], 3)))
+        return report('recognizing_screen')
+    if state.get('entry_autobattle_pending') and hud() and found('launch_offer_close'):
+        # MultiBot Actions.close_launch_offer: real close template, max 3.
+        count = state.get('launch_offer_close_count', 0)
+        if count >= 3:
+            return pause('launch_offer_not_closed')
+        template('launch_offer_close')
+        state['launch_offer_close_count'] = count + 1
+        state['wait_until'] = time.monotonic() + config['game'].get('launch_flow', {}).get('poll_sec', 1)
+        return report('close_launch_offer')
+    if hud() or match('world_map_title')['found']:
+        state.pop('unknown_since', None)
+        state['gameplay_seen'] = True
+        state.pop('entry_wait_started', None)
+        for key in ('launch_since', 'launch_actions', 'launch_done_until', 'launch_fallback_until', 'launch_fallback_actions', 'launch_offer_close_count'):
+            state.pop(key, None)
+
 
     current = state.get('phase', 'monitoring')
     timeout = config['timeouts'].get('service_screen_timeout_sec', 12)
@@ -467,6 +615,8 @@ def _tick(host, settings, state, directory):
         return report('open_dismantle')
     if current == 'dismantle_add':
         if found('dismantle_quick_add_button'):
+            state.pop('rare_confirm_sent', None)
+            state.pop('rare_button_since', None)
             template('dismantle_quick_add_button')
             phase('dismantle_selection', 1)
         return report('dismantle_quick_add')
@@ -539,54 +689,31 @@ def _tick(host, settings, state, directory):
         # Navigation is never marked complete solely because a timer elapsed.
         return farm_tick(host, config, catalog, settings, state, match, found, tap, named, phase, report, pause, hud, now, width, height, current_location, navigation, farm_confirmation, minimap)
 
-    # A dark launch background can satisfy the map layout fallback. Only the
-    # actual title template may bypass login before gameplay is recognized.
     if not hud() and not match('world_map_title')['found']:
-        flow = config['game'].get('launch_flow', {})
-        if state.get('launch_done_until'):
-            if now >= state['launch_done_until']:
-                return pause('game_launch_done_timeout')
-            return report('waiting_game_launch_done')
-        if state.get('launch_since') is not None and now - state['launch_since'] > flow.get('max_seconds', 210):
+        if settings.get('autostart_enabled') and not state.get('gameplay_seen'):
+            started = state.setdefault('entry_wait_started', now)
+            if now - started < config['game'].get('initial_recognition_timeout_sec', 20):
+                return report('waiting_game_launch')
             return pause('game_launch_timeout')
-        for screen in flow.get('screens', []):
-            name = screen.get('template')
-            if name and not screen.get('done') and found(name):
-                if not settings.get('autostart_enabled'):
-                    return pause('autostart_disabled')
-                state.setdefault('launch_since', now)
-                state['entry_autobattle_pending'] = True
-                counts = state.setdefault('launch_actions', {})
-                if sum(counts.values()) >= flow.get('max_steps', 35):
-                    return pause('game_launch_action_limit')
-                count = counts.get(screen['name'], 0)
-                if count >= screen.get('max_actions', 9999):
-                    state['wait_until'] = now + flow.get('poll_sec', 1)
-                    return report('waiting_launch_' + screen['name'])
-                if not screen.get('point_name'):
-                    return report('waiting_launch_' + screen['name'])
-                named(screen['point_name'])
-                counts[screen['name']] = count + 1
-                phase('monitoring', screen.get('wait_sec', 1))
-                if screen.get('wait_for_done_after_action'):
-                    state['launch_done_until'] = state['wait_until'] + screen.get('done_timeout_sec', 120)
-                return report('launch_' + screen['name'], reason='connect_' + str(round(match('launch_connect')['confidence'], 3)) + '_tap_' + str(round(match('launch_tap_to_start')['confidence'], 3)))
-        if now - state.get('last_launch', -100000) < config['game'].get('start_timeout_sec', 90):
-            return report('waiting_game_launch')
         state.setdefault('unknown_since', now)
         if now - state['unknown_since'] > 12:
             return report('recognizing_screen', status='error', error='unrecognized_game_screen', pause=True,
                           reason='connect_' + str(round(match('launch_connect')['confidence'], 3)) + '_tap_' + str(round(match('launch_tap_to_start')['confidence'], 3)))
         return report('recognizing_screen')
-    state.pop('unknown_since', None)
-    for key in ('launch_since', 'launch_actions', 'launch_done_until'):
-        state.pop(key, None)
 
     # Only a recognized game login/launch arms this one-shot check. Starting
     # the bot on an already open character or beginning a new route does not.
     if state.get('entry_autobattle_pending') and hud() and settings.get('autobattle_enabled', True) and not found('town_supplies_icon'):
         off, on = match('auto_battle_off'), match('auto_battle_on')
         button_off = off['found'] and (not on['found'] or off['confidence'] > on['confidence'])
+        if not on['found'] and not button_off and not state.get('preflight_autobattle_attempts'):
+            # ensure_autobattle_after_launch waits for a recognizable button
+            # five times. Unknown is never treated as an enabled AUTO button.
+            checks = state.get('launch_autobattle_checks', 0) + 1
+            state['launch_autobattle_checks'] = checks
+            if checks < max(1, config['vision'].get('launch_autobattle_retry_attempts', 5)):
+                state['wait_until'] = time.monotonic() + config['timeouts'].get('launch_autobattle_retry_sec', config['timeouts'].get('auto_battle_sec', 2))
+                return report('waiting_launch_autobattle')
         if button_off:
             attempts = state.get('preflight_autobattle_attempts', 0)
             if attempts >= max(1, config['vision'].get('dungeon_autobattle_retry_attempts', 3)):
@@ -599,6 +726,7 @@ def _tick(host, settings, state, directory):
             return pause('farm_preroute_autobattle_state_unknown')
         state.pop('preflight_autobattle_attempts', None)
         state.pop('entry_autobattle_pending', None)
+        state.pop('launch_autobattle_checks', None)
     elif state.get('entry_autobattle_pending') and hud():
         state.pop('entry_autobattle_pending', None)
 

@@ -45,6 +45,94 @@ def settings():
 
 
 class Replay(unittest.TestCase):
+    def test_initial_loading_waits_for_connect_without_blind_input(self):
+        self.settings['autostart_enabled'] = True
+        self.assertEqual(self.tick([])['step'], 'waiting_game_launch')
+        self.assertEqual(self.tick([], 14)['step'], 'waiting_game_launch')
+        self.assertFalse(any(cmd in ('tap', 'launch', 'back') for cmd, _ in self.host.calls))
+        self.assertEqual(self.tick(['launch_connect'], 3)['step'], 'launch_account_connect')
+
+    def test_initial_loading_has_bounded_twenty_second_budget(self):
+        self.settings['autostart_enabled'] = True
+        self.tick([])
+        result = self.tick([], 21)
+        self.assertEqual(result['error'], 'game_launch_timeout')
+        self.assertTrue(result['pause'])
+
+    def test_long_initial_wait_does_not_hide_unknown_screen_during_gameplay(self):
+        self.settings['autostart_enabled'] = True
+        self.tick(['game_inventory_icon'])
+        self.tick([])
+        result = self.tick([], 13)
+        self.assertEqual(result['error'], 'unrecognized_game_screen')
+
+    def test_approved_rare_warning_confirms_once_then_waits_for_result(self):
+        self.settings.update(auto_dismantle_enabled=True, confirm_rare_dismantle_enabled=True)
+        self.state.update(phase='dismantle_result', since=self.host.now)
+        result = self.tick(['dismantle_rare_warning', 'dismantle_rare_ok'])
+        self.assertEqual(result['step'], 'confirm_dismantle_rare_items')
+        self.assertIsNone(result['error'])
+        self.tick(['dismantle_rare_warning', 'dismantle_rare_ok'])
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 1)
+        result = self.tick(['dismantle_result'])
+        self.assertEqual(result['step'], 'waiting_dismantle_result')
+        self.assertEqual(self.state['phase'], 'dismantle_result_closed')
+
+    def test_rare_warning_without_button_never_guesses_coordinates(self):
+        self.settings.update(auto_dismantle_enabled=True, confirm_rare_dismantle_enabled=True)
+        self.tick(['dismantle_rare_warning'])
+        result = self.tick(['dismantle_rare_warning'], 13)
+        self.assertEqual(result['error'], 'dismantle_rare_ok_not_found')
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+
+    def test_stuck_rare_warning_never_repeats_destructive_confirmation(self):
+        self.settings.update(auto_dismantle_enabled=True, confirm_rare_dismantle_enabled=True)
+        self.tick(['dismantle_rare_warning', 'dismantle_rare_ok'])
+        result = self.tick(['dismantle_rare_warning', 'dismantle_rare_ok'], 13)
+        self.assertEqual(result['error'], 'dismantle_rare_confirmation_not_closed')
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 1)
+
+    def test_timeout_notice_discards_interrupted_purchase_and_reenters_login(self):
+        self.settings['autostart_enabled'] = True
+        self.state.update(phase='shop_confirm', route=[{'map_id':'old'}], at_farm=True)
+        result = self.tick(['timeout_notification', 'timeout_notification_ok', 'game_inventory_icon'])
+        self.assertEqual(result['step'], 'dismiss_session_timeout')
+        self.assertNotIn('route', self.state)
+        self.assertNotIn('at_farm', self.state)
+        result = self.tick(['launch_connect'], 3)
+        self.assertEqual(result['step'], 'launch_account_connect')
+
+    def test_network_notice_retries_with_backoff_and_recognized_button(self):
+        self.settings['autostart_enabled'] = True
+        self.state.update(phase='farm_transition', wait_until=1100, route=[{'map_id':'old'}])
+        result = self.tick(['game_server_error_t005', 'game_notice_ok'])
+        self.assertEqual(result['step'], 'dismiss_network_error')
+        self.assertNotIn('route', self.state)
+        self.tick(['game_server_error_t005', 'game_notice_ok'], 3)
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 1)
+        self.tick(['game_server_error_t005', 'game_notice_ok'], 13)
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 2)
+        self.assertEqual(self.state['notice_retry_at'], self.host.now + 30)
+
+    def test_network_notice_new_occurrence_drops_new_interrupted_action(self):
+        self.settings['autostart_enabled'] = True
+        self.tick(['game_server_error_t005', 'game_notice_ok'])
+        self.tick(['game_inventory_icon'], 3)
+        self.state.update(phase='shop_confirm', route=[{'map_id':'new'}])
+        self.tick(['game_server_error_t005', 'game_notice_ok'], 16)
+        self.assertNotIn('route', self.state)
+        self.assertEqual(self.state['phase'], 'monitoring')
+
+    def test_unknown_notice_title_and_missing_network_button_are_not_auto_confirmed(self):
+        self.settings['autostart_enabled'] = True
+        result = self.tick(['game_update_notice_title', 'game_notice_ok'])
+        self.assertEqual(result['error'], 'game_notice_requires_attention')
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+        self.tick(['game_server_error_t005'])
+        result = self.tick(['game_server_error_t005'], 16)
+        self.assertEqual(result['error'], 'game_notice_ok_not_found')
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+
     def test_rare_item_warning_pauses_without_confirming_or_repeating_dismantle(self):
         self.state.update(phase='dismantle_result',since=self.host.now)
         result=self.tick(['dismantle_rare_warning'])
@@ -368,7 +456,66 @@ class Replay(unittest.TestCase):
         self.assertEqual(result['step'], 'waiting_game_launch_done')
         self.assertEqual(sum(c[0] == 'tap' for c in self.host.calls), 1)
         result = self.tick(['launch_start'], 71)
+        self.assertIsNone(result['error'])
+        result = self.tick([], 31)
         self.assertEqual(result['error'], 'game_launch_done_timeout')
+
+    def test_login_interrupts_farm_transition_before_old_floor_timeout(self):
+        self.settings['autostart_enabled'] = True
+        self.state.update(phase='farm_transition', since=800, arrival_started=800,
+                          route=[{'map_id':'old'}], at_farm=True, serviced=True, gameplay_seen=True)
+        result = self.tick(['launch_connect'])
+        self.assertEqual(result['step'], 'launch_account_connect')
+        self.assertIsNone(result['error'])
+        self.assertNotIn('route', self.state)
+        self.assertNotIn('serviced', self.state)
+
+    def test_login_interrupts_old_purchase_without_replaying_confirmation(self):
+        self.settings['autostart_enabled'] = True
+        self.state.update(phase='shop_confirm', since=800, gameplay_seen=True)
+        result = self.tick(['launch_connect'])
+        self.assertEqual(result['step'], 'launch_account_connect')
+        config, _, _ = bot.resources(str(ROOT))
+        taps = [v for cmd, v in self.host.calls if cmd == 'tap']
+        self.assertEqual(len(taps), 1)
+        self.assertEqual(taps[0]['x'], round(config['tap_points']['launch_connect'][0]*1280))
+
+    def test_login_offer_closes_before_completed_launch_runs_service(self):
+        self.settings['autostart_enabled'] = True
+        self.tick(['launch_start'])
+        result = self.tick(['game_inventory_icon','town_supplies_icon','launch_offer_close'], 13)
+        self.assertEqual(result['step'], 'close_launch_offer')
+        self.assertNotIn('gameplay_seen', self.state)
+        result = self.tick(['game_inventory_icon','town_supplies_icon'], 2)
+        self.assertEqual(result['step'], 'buy_supplies')
+        self.assertNotIn('launch_offer_close_count', self.state)
+
+    def test_launch_offer_is_bounded_and_never_taps_after_three_attempts(self):
+        self.settings['autostart_enabled'] = True
+        self.state['entry_autobattle_pending'] = True
+        for i in range(3):
+            self.assertEqual(self.tick(['game_inventory_icon','launch_offer_close'])['step'], 'close_launch_offer')
+        self.assertEqual(self.tick(['game_inventory_icon','launch_offer_close'])['error'], 'launch_offer_not_closed')
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 3)
+
+    def test_launch_fallback_handles_returned_connect_and_preserves_imported_pause(self):
+        self.settings['autostart_enabled'] = True
+        self.tick(['launch_start'])
+        result = self.tick(['launch_connect'], 84)
+        self.assertEqual(result['step'], 'launch_account_connect')
+        self.assertEqual(self.state['wait_until'], self.host.now+5)
+        self.assertEqual(self.state['launch_fallback_actions'], 1)
+
+    def test_after_launch_unknown_auto_waits_without_tapping_and_on_is_untouched(self):
+        self.settings.update(autostart_enabled=True, recovery_enabled=False)
+        self.state['entry_autobattle_pending'] = True
+        result = self.tick(['game_inventory_icon'])
+        self.assertEqual(result['step'], 'waiting_launch_autobattle')
+        self.assertEqual(self.state['wait_until'], self.host.now+2)
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+        self.tick(['game_inventory_icon','auto_battle_on'], 3)
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+        self.assertNotIn('entry_autobattle_pending', self.state)
 
     def test_launch_hud_clears_action_budget(self):
         self.settings['autostart_enabled'] = True

@@ -2,11 +2,41 @@
   "type": "object",
   "version": 1,
   "properties": {
-    "farm_enabled": {"type": "boolean", "title": "Фарм", "default": false},
-    "recovery_enabled": {"type": "boolean", "title": "Восстановление после смерти", "default": false},
-    "auto_dismantle_enabled": {"type": "boolean", "title": "Разбор вещей", "default": false},
-    "autostart_enabled": {"type": "boolean", "title": "Запуск игры", "default": false},
-    "farm_map_spots": {"type": "array", "default": []},
-    "active_farm_map_spot_id": {"type": ["string", "null"], "default": null}
+    "farm_enabled": {
+      "type": "boolean",
+      "title": "Фарм",
+      "default": false
+    },
+    "recovery_enabled": {
+      "type": "boolean",
+      "title": "Восстановление после смерти",
+      "default": false
+    },
+    "auto_dismantle_enabled": {
+      "type": "boolean",
+      "title": "Разбор вещей",
+      "default": false
+    },
+    "autostart_enabled": {
+      "type": "boolean",
+      "title": "Запуск игры",
+      "default": false
+    },
+    "farm_map_spots": {
+      "type": "array",
+      "default": []
+    },
+    "active_farm_map_spot_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "confirm_rare_dismantle_enabled": {
+      "type": "boolean",
+      "title": "Разбирать Epic+ без подтверждения",
+      "default": false
+    }
   }
 }
