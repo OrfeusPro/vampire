@@ -88,7 +88,7 @@ function OpenBotPanel([string]$phoneId='', [string[]]$targetIds=@()) {
     try {
         Add-Type -AssemblyName System.Net.Http
         Add-Type -AssemblyName System.Web.Extensions
-        if(!('PhoneExit.BotPanel' -as [type])){Add-Type -Path (Join-Path $PSScriptRoot 'desktop-bots.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions}
+        if(!('PhoneExit.BotPanel' -as [type])){Add-Type -Path @((Join-Path $PSScriptRoot 'desktop-controls.cs'),(Join-Path $PSScriptRoot 'desktop-bots.cs')) -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions}
         EnsureBotGateway
         $taskSecret=$script:botApiSecret
         $taskPanel=New-Object PhoneExit.BotPanel($taskSecret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))

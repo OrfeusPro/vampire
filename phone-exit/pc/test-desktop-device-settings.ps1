@@ -1,7 +1,7 @@
 ﻿$ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.Windows.Forms,System.Drawing,System.Security,System.Net.Http,System.Web.Extensions
 . (Join-Path $PSScriptRoot 'profile.ps1')
-Add-Type -Path (Join-Path $PSScriptRoot 'desktop-bots.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions
+Add-Type -Path @((Join-Path $PSScriptRoot 'desktop-controls.cs'),(Join-Path $PSScriptRoot 'desktop-bots.cs')) -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions
 $secret=[Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect([IO.File]::ReadAllBytes((Join-Path (GetPhoneExitProfileDirectory) 'control-api.bin')),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser))
 $catalog=Invoke-RestMethod 'http://127.0.0.1:17842/bot/v1/phones' -Headers @{Authorization="Bearer $secret"} -TimeoutSec 10
 $phone=@($catalog.phones|Where-Object {$_.country -eq 'SG'})[0]
@@ -120,6 +120,39 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $panel.GetType().GetMethod('LoadMap',$flags).Invoke($panel,@())
             $panel.GetType().GetMethod('SetPointTool',$flags).Invoke($panel,@('add'))
             $panel.GetType().GetField('dirty',$flags).SetValue($panel,$false)
+            $twilightIndex=-1
+            for($i=0;$i -lt $mapItems.Count;$i++){if($mapItems[$i]['label'] -eq 'Twilight Hill'){$twilightIndex=$i;break}}
+            if($twilightIndex -lt 0){throw 'Twilight Hill catalog entry missing'}
+            $countBeforePreview=$points.Count
+            $panel.GetType().GetMethod('SelectCatalogMap',$flags).Invoke($panel,@($twilightIndex))
+            if($points.Count -ne $countBeforePreview -or $panel.GetType().GetField('dirty',$flags).GetValue($panel)){throw 'Catalog navigation changed the profile'}
+            $mapNav=$panel.GetType().GetField('mapNavigation',$flags).GetValue($panel)
+            if($mapNav.Controls.Count -ne 4){throw 'Lindris navigation must show all four maps'}
+            $fixture=[Web.Script.Serialization.JavaScriptSerializer]::new().DeserializeObject('{"id":"ui-twilight-fixture","label":"Twilight Hill","enabled":true,"run_after_teleport":true,"map_points":[[0.505,0.562]],"teleport_point":null}')
+            $fixture['map_id']=$mapItems[$twilightIndex]['id']
+            $points.Add($fixture);$panel.GetType().GetMethod('RefreshSpots',$flags).Invoke($panel,@($points.Count-1));$panel.Size=[Drawing.Size]::new(1440,900);[Windows.Forms.Application]::DoEvents()
+            $moveRows=@($pointList.Controls|Where-Object {$_ -is [PhoneExit.MoveRowButton]})
+            if($moveRows.Count -ne 11){throw "Twilight Hill must show all eleven Move rows; got $($moveRows.Count)"}
+            $marker=[Drawing.Bitmap]::new($picture.Width,$picture.Height)
+            $markerGraphics=[Drawing.Graphics]::FromImage($marker)
+            try{
+                $panel.GetType().GetMethod('PaintPoints',$flags).Invoke($panel,@($markerGraphics))
+                $rect=$panel.GetType().GetMethod('ImageRect',$flags).Invoke($panel,@())
+                $crop=$panel.GetType().GetField('mapCrop',$flags).GetValue($panel)
+                $mx=[int]($rect.X+(.505-$crop.X)/$crop.Width*$rect.Width)
+                $my=[int]($rect.Y+(.562-$crop.Y)/$crop.Height*$rect.Height)
+                if($marker.GetPixel($mx+8,$my).G -lt 180){throw 'Farm point marker is not painted at its normalized map coordinate'}
+            }finally{$markerGraphics.Dispose();$marker.Dispose()}
+            if($pointList.HorizontalScroll.Visible -or $mapNav.HorizontalScroll.Visible){throw 'Farm navigation or Move list needs horizontal scrolling'}
+            $regionNav=$panel.GetType().GetField('regionNavigation',$flags).GetValue($panel)
+            for($i=0;$i -lt $regionNav.Controls.Count;$i++){if(!$regionNav.Controls[$i].Image){throw 'Region icon missing'};$regionNav.Controls[$i].Image.Save((Join-Path $PSScriptRoot "../.tools/region-icon-$i.png"))}
+            for($i=0;$i -lt $mapNav.Controls.Count;$i++){if(!$mapNav.Controls[$i].Image){throw 'Location icon missing'};$mapNav.Controls[$i].Image.Save((Join-Path $PSScriptRoot "../.tools/lindris-icon-$i.png"))}
+            $picture.Image.Save((Join-Path $PSScriptRoot '../.tools/twilight-map-crop.png'))
+            for($i=0;$i -lt $moveRows.Count;$i++){$moveRows[$i].Image.Save((Join-Path $PSScriptRoot "../.tools/twilight-move-$i.png"))}
+            $pointList.AutoScrollPosition=[Drawing.Point]::Empty
+            $preview=[Drawing.Bitmap]::new($panel.Width,$panel.Height)
+            try{$panel.DrawToBitmap($preview,[Drawing.Rectangle]::new(0,0,$panel.Width,$panel.Height));$preview.Save((Join-Path $PSScriptRoot '../.tools/farm-twilight-preview.png'))}finally{$preview.Dispose()}
+            $points.RemoveAt($points.Count-1);$panel.GetType().GetMethod('RefreshSpots',$flags).Invoke($panel,@($originalSpot))
             $bitmap=[Drawing.Bitmap]::new($panel.Width,$panel.Height)
             try{$panel.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$panel.Width,$panel.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/device-settings-preview.png'))}finally{$bitmap.Dispose()}
             $panel.GetType().GetField('dirty',$flags).SetValue($panel,$true)

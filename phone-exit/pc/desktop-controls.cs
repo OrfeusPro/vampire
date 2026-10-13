@@ -135,6 +135,7 @@ namespace PhoneExit {
 
     public sealed class DarkSelect : Control {
         public Collection<string> Items { get; private set; }
+        public string SelectedItem {get{return selected<0?null:Items[selected];}set{SelectedIndex=Items.IndexOf(value);}}
         public event EventHandler SelectedIndexChanged;
         int selected = -1;
         ContextMenuStrip activeMenu;

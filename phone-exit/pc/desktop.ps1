@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 $script:profileDirectory=GetPhoneExitProfileDirectory
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
-Add-Type -Path (Join-Path $PSScriptRoot 'desktop-controls.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing
+Add-Type -Path @((Join-Path $PSScriptRoot 'desktop-controls.cs'),(Join-Path $PSScriptRoot 'desktop-bots.cs')) -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions
 if(!$SelfTest -and !$VpnTest -and !$StartupTest -and !$RecoveryTest -and !$UiTest){
     $script:instanceCreated=$false
     $script:instanceMutex=[Threading.Mutex]::new($true,('Local\PhoneExitDesktop-'+[Security.Principal.WindowsIdentity]::GetCurrent().User.Value),[ref]$script:instanceCreated)
