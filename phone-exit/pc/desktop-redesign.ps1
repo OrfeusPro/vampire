@@ -86,6 +86,7 @@ function RefreshFleet {
         $phone=$script:phoneRows[$i];$bot=$script:botPhoneBadges[[string]$phone.id]
         $row=[PhoneExit.FleetPhone]::new();$row.Key=[string]$phone.id;$row.Index=$i;$row.Model=[string]$phone.name;$row.Name=$row.Model;$row.Country=[string]$phone.country
         $row.Online=[bool]$phone.online;$row.Busy=[bool]$phone.busy;$row.Flag=CountryFlag $phone.country
+        $row.ApkVersion=if($phone.versionName){[string]$phone.versionName}else{''}
         $row.Fresh=$row.Online -and $bot -and !$bot.botStatusStale -and ([DateTime]::UtcNow-$script:botBadgeLast).TotalSeconds -le 15
         $row.Pending=$script:botRowJobs.ContainsKey([string]$phone.id)
         if($bot){$row.BotId=if($bot.bot.botId){[string]$bot.bot.botId}else{[string]$bot.profile.botId};$row.BotState=[string]$bot.bot.status;if($bot.profile.identity.characterName){$row.Name=[string]$bot.profile.identity.characterName}}

@@ -33,6 +33,13 @@ foreach($scale in @(1.0,1.5)){
         $view.SetPhones([PhoneExit.FleetPhone[]]@($rows[0..4]))
         if($view.SelectedCount -ne 5){throw 'Hidden filtered devices remain selected'}
         $view.Table=$true
+        $rows[3].ApkVersion='0.8.8';$view.SetPhones([PhoneExit.FleetPhone[]]@($rows[0..4]))
+        if(!$view.AccessibilityObject.GetChild(3).Name.Contains('APK 0.8.8')){throw 'APK version missing from accessibility'}
+        $headerHit=$view.GetType().GetMethod('Hit',$flags).Invoke($view,@([Drawing.Point]::new(10,10)))
+        if($headerHit -ne -1){throw 'Table header selects a phone'}
+        foreach($i in 0..4){foreach($action in 0..2){if(!$view.CardBounds($i).Contains($view.ActionBounds($i,$action))){throw 'Table action clips its row'}}}
+        $tableShot=[Drawing.Bitmap]::new($window.Width,$window.Height)
+        try{$window.DrawToBitmap($tableShot,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$tableShot.Save((Join-Path $PSScriptRoot "../.tools/fleet-table-$scale.png"))}finally{$tableShot.Dispose()}
         if($view.CardBounds(1).X -ne 0 -or $view.CardBounds(1).Y -le $view.CardBounds(0).Y){throw 'Table view failed'}
         $view.Table=$false;$view.Compact=$false;$view.SetPhones($rows)
         $bitmap=[Drawing.Bitmap]::new($window.Width,$window.Height)
