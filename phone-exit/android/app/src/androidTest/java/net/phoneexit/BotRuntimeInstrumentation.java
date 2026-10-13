@@ -12,6 +12,8 @@ public final class BotRuntimeInstrumentation extends Instrumentation {
     @Override public void onCreate(Bundle b){args=b;super.onCreate(b);start();}
     private void write(File f,String s)throws Exception{try(OutputStream out=new FileOutputStream(f)){out.write(s.getBytes(StandardCharsets.UTF_8));}}
     @Override public void onStart(){Bundle result=new Bundle();Context c=getTargetContext();JSONObject old=null;File dir=new File(BotStore.root(c),"runtime-test");
+        if(args.containsKey("retryPolicy")){retryPolicy(c,result);return;}
+        if(args.containsKey("retryRuntime")){retryRuntime(c,result);return;}
         if(args.containsKey("diagnostics")){diagnostics(c,result);return;}
         if(args.containsKey("visionZip")){visionBenchmark(c,result);return;}
         try{
@@ -41,6 +43,63 @@ public final class BotRuntimeInstrumentation extends Instrumentation {
             result.putString("stream","PASS "+target+" local Python/OpenCV/Binder screenshots/actions, settings revision 2, manual pause");finish(0,result);
         }catch(Exception e){result.putString("stream","FAIL "+BotManager.safe(e));finish(1,result);}
         finally{c.stopService(new Intent(c,BotService.class));try{if(old!=null)BotStore.write(c,"state",old);}catch(Exception ignored){}}
+    }
+    private void retryPolicy(Context c,Bundle result){JSONObject old=null;int code=0;
+        try{
+            old=BotStore.read(c,"state");long now=100000;
+            JSONObject state=new JSONObject().put("botId","retry-test").put("desired","running").put("generation","first");
+            JSONObject failure=new JSONObject().put("status","error").put("error","farm_floor_not_verified").put("step","farm_transition").put("pause",true);
+            for(int i=1;i<=5;i++){
+                String generation=state.getString("generation");BotRetry.apply(state,failure,now+i*10000,false);
+                if(state.getInt("retryCount")!=i||!state.getString("desired").equals("running")||state.getString("generation").equals(generation)||state.getLong("retryAt")!=now+i*10000+5000||!state.isNull("error"))throw new Exception("retry_schedule_failed");
+                JSONObject success=new JSONObject().put("status","running");BotRetry.apply(state,success,now+i*10000+6000,false);
+                if(state.getInt("retryCount")!=i||state.has("retryAt"))throw new Exception("success_reset_budget");
+            }
+            state.put("error","farm_floor_not_verified");BotRetry.apply(state,failure,now+70000,false);
+            if(!state.getBoolean("retryExhausted")||!state.getString("desired").equals("paused")||!state.getString("error").equals("farm_floor_not_verified")||state.getJSONArray("retryHistory").length()!=6)throw new Exception("retry_limit_failed");
+            long first=state.getLong("retryWindowStarted");BotRetry.expire(state,first+BotRetry.WINDOW_MS-1);
+            if(state.getInt("retryCount")!=5)throw new Exception("retry_expired_early");
+            BotRetry.expire(state,first+BotRetry.WINDOW_MS);
+            if(state.getInt("retryCount")!=0||!state.getString("desired").equals("paused"))throw new Exception("retry_expiry_resumed_bot");
+            for(boolean editor:new boolean[]{true,false}){
+                JSONObject paused=new JSONObject().put("desired","paused");
+                JSONObject report=editor?failure:new JSONObject().put("status","paused").put("pause",true);
+                BotRetry.apply(paused,report,now,editor);
+                if(paused.has("retryCount")||!paused.getString("desired").equals("paused"))throw new Exception("non_error_pause_retried");
+            }
+            BotRetry.reset(state);state.put("desired","running").put("generation","live");BotStore.write(c,"state",state);
+            BotManager.report(c,"live",failure);JSONObject scheduled=BotStore.read(c,"state");
+            if(scheduled.getInt("retryCount")!=1||!scheduled.has("retryAt"))throw new Exception("manager_did_not_retry");
+            BotManager.report(c,"live",failure);if(BotStore.read(c,"state").getInt("retryCount")!=1)throw new Exception("stale_report_retried");
+            BotManager.manualPause(c);JSONObject manual=BotStore.read(c,"state");
+            if(manual.has("retryAt")||!manual.getString("desired").equals("paused"))throw new Exception("manual_pause_did_not_cancel");
+            result.putString("stream","PASS 5 retries, terminal cause/history, persisted 6h window, success retains budget, editor/manual pauses, stale generation");
+        }catch(Exception e){result.putString("stream","FAIL "+e.getMessage());code=1;}
+        finally{if(old!=null)try{BotStore.write(c,"state",old);}catch(Exception ignored){}}
+        finish(code,result);
+    }
+    private void retryRuntime(Context c,Bundle result){JSONObject old=null;int code=0;File dir=new File(BotStore.root(c),"retry-runtime");
+        try{
+            old=BotStore.read(c,"state");dir.mkdirs();
+            write(new File(dir,"manifest.json"),"{\"packages\":[\"net.phoneexit\"]}");
+            write(new File(dir,"bot.py"),"def tick(host,settings,state,directory):\n host.call('capture')\n state['count']=state.get('count',0)+1\n return {'status':'error','step':'fixture_failure_'+str(state['count']),'error':'fixture_transient_error','pause':True}\n");
+            BotStore.write(c,"retry-runtime-installed",new JSONObject().put("directory",dir.getAbsolutePath()).put("version","test"));
+            BotStore.write(c,"retry-runtime-settings",new JSONObject().put("revision",1).put("value",new JSONObject()));
+            BotStore.write(c,"state",new JSONObject().put("botId","retry-runtime").put("desired","running").put("status","starting").put("generation","fixture-"+System.nanoTime()));
+            c.startActivity(new Intent(c,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            c.startForegroundService(new Intent(c,BotService.class));
+            long end=SystemClock.elapsedRealtime()+60000;JSONObject state=null;
+            while(SystemClock.elapsedRealtime()<end){Thread.sleep(250);state=BotStore.read(c,"state");
+                if(state.optBoolean("retryExhausted"))break;
+                if(!state.optString("desired").equals("running"))throw new Exception("fixture_stopped_before_retry_limit");
+            }
+            if(state==null||!state.optBoolean("retryExhausted")||state.optInt("retryCount")!=5||!state.optString("desired").equals("paused")||!state.optString("error").equals("fixture_transient_error")||!state.optString("lastRetryStep").equals("fixture_failure_1")||state.getJSONArray("retryHistory").length()!=6)throw new Exception("retry_runtime_failed");
+            String generation=state.getString("generation");Thread.sleep(1500);
+            if(!BotStore.read(c,"state").getString("generation").equals(generation))throw new Exception("sixth_restart_dispatched");
+            result.putString("stream","PASS real Python/Binder/capture: 5 automatic restarts, state reset on each, sixth error stays paused with cause");
+        }catch(Exception e){result.putString("stream","FAIL "+e.getMessage());code=1;}
+        finally{c.stopService(new Intent(c,BotService.class));if(old!=null)try{BotStore.write(c,"state",old);BotManager.resumeWanted(c);}catch(Exception ignored){}}
+        finish(code,result);
     }
     private void diagnostics(Context c,Bundle result){
         File testRoot=new File(c.getCacheDir(),"diagnostics-fixture");

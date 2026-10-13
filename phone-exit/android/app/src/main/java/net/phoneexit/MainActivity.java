@@ -44,6 +44,7 @@ public final class MainActivity extends Activity {
                 String state=bot.optString("status"),id=bot.optString("botId");
                 String translated=state.equals("running")?"Работает":state.equals("paused")?"Пауза":state.equals("starting")?"Запускается":state.equals("error")?"Ошибка":state.equals("waiting")?"Ожидает":"Остановлен";
                 botState.setText(id.isEmpty()?"Бот не назначен. Назначьте его в приложении на ПК.":(id.equals("lordnine")?"Lord Nine":id)+" · "+translated+(bot.optString("error").isEmpty()?"":"\n"+bot.optString("error")));
+                if(bot.optInt("retryCount")>0)botState.append("\nПерезапуски: "+bot.optInt("retryCount")+" / 5"+(bot.optString("lastRetryError").isEmpty()?"":" · "+bot.optString("lastRetryError")));
                 botState.setTextColor(state.equals("error")?Color.rgb(255,137,137):TEXT);
             }catch(Exception ignored){}
             try{boolean ready=AppUpdater.state(MainActivity.this).optString("status").equals("ready_for_confirmation");updateButton.setImageTintList(ColorStateList.valueOf(ready?ACCENT:MUTED));updateButton.setContentDescription(ready?"Установить загруженное обновление":"Обновление приложения");}catch(Exception ignored){}

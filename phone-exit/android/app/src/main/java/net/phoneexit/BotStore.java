@@ -21,6 +21,6 @@ final class BotStore {
         catch(Exception e){if(out!=null)file.failWrite(out);throw e;}
     }
     static JSONObject status(Context c)throws Exception{
-        JSONObject s=read(c,"state");s.put("apiVersion",1).put("engineVersion",3).put("lastSeenAt",System.currentTimeMillis());return s;
+        JSONObject s=read(c,"state");BotRetry.expire(s,System.currentTimeMillis());s.put("apiVersion",1).put("engineVersion",3).put("lastSeenAt",System.currentTimeMillis());return s;
     }
 }

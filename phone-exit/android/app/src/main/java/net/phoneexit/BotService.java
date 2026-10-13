@@ -35,6 +35,7 @@ public final class BotService extends Service {
             String permittedGeneration=null;
             while(!closed){long started=SystemClock.elapsedRealtime();JSONObject state=BotStore.read(this,"state");String generation=state.optString("generation");
                 if(!state.optString("desired").equals("running")){if(state.optString("desired").equals("stopped")){stopSelf();return;}Thread.sleep(500);continue;}
+                if(state.optLong("retryAt",0)>System.currentTimeMillis()){Thread.sleep(500);continue;}
                 if(bridge==null){Thread.sleep(500);continue;}Host host=new Host(generation);
                 try{
                     if(!new JSONObject(host.call("ready","{}")).optBoolean("ready")){

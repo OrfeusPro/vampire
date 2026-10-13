@@ -93,20 +93,24 @@ final class BotManager {
             JSONObject installed=BotStore.read(c,bot+"-installed"),settings=BotStore.read(c,bot+"-settings");
             if(!installed.has("directory"))throw new Exception("bot_not_installed");if(!settings.has("value"))throw new Exception("bot_settings_required");
             if(!ControlAccessibility.allowed(c)||ControlAccessibility.current==null)throw new Exception("accessibility_permission_required");
+            BotRetry.reset(state);state.remove("reason");
             state.put("desired","running").put("status","starting").put("generation",UUID.randomUUID().toString()).put("version",installed.getString("version"));state.remove("error");BotStore.write(c,"state",state);resumeWanted(c);
         }else if(op.equals("pause")||op.equals("stop")){
-            state.put("desired",op.equals("pause")?"paused":"stopped").put("status",op.equals("pause")?"paused":"stopped").put("generation",UUID.randomUUID().toString());BotStore.write(c,"state",state);
+            state.remove("retryAt");state.put("desired",op.equals("pause")?"paused":"stopped").put("status",op.equals("pause")?"paused":"stopped").put("generation",UUID.randomUUID().toString());BotStore.write(c,"state",state);
             if(op.equals("stop"))c.stopService(new Intent(c,BotService.class));
         }else throw new Exception("unsupported_bot_operation");return BotStore.status(c);
     }
-    static synchronized void manualPause(Context c)throws Exception{JSONObject s=BotStore.read(c,"state");if(s.optString("desired").equals("running")){s.put("desired","paused").put("status","paused").put("reason","manual_control").put("generation",UUID.randomUUID().toString());BotStore.write(c,"state",s);}}
+    static synchronized void manualPause(Context c)throws Exception{JSONObject s=BotStore.read(c,"state");if(s.optString("desired").equals("running")){s.remove("retryAt");s.put("desired","paused").put("status","paused").put("reason","manual_control").put("generation",UUID.randomUUID().toString());BotStore.write(c,"state",s);}}
     static void resumeWanted(Context c){try{if(BotStore.read(c,"state").optString("desired").equals("running"))c.startForegroundService(new Intent(c,BotService.class));}catch(Exception ignored){}}
     static synchronized boolean valid(Context c,String generation)throws Exception{JSONObject s=BotStore.read(c,"state");return s.optString("desired").equals("running")&&s.optString("generation").equals(generation)&&ControlAccessibility.allowed(c);}
     static synchronized void report(Context c,String generation,JSONObject report)throws Exception{
         JSONObject state=BotStore.read(c,"state");if(!state.optString("generation").equals(generation)||!state.optString("desired").equals("running"))return;
         for(String field:new String[]{"status","step","error","reason","activePoint","appliedRevision","tickMs","hostTimingsMs"})if(report.has(field))state.put(field,report.get(field));
         if(report.has("settingsStatus")&&report.optInt("appliedRevision")==state.optInt("receivedRevision"))state.put("settingsStatus",report.get("settingsStatus"));
-        if(report.optBoolean("pause"))state.put("desired",report.optString("reason").equals("phone_stop")?"stopped":"paused");state.put("updatedAt",System.currentTimeMillis());BotStore.write(c,"state",state);
+        if(report.optBoolean("pause"))state.put("desired",report.optString("reason").equals("phone_stop")?"stopped":"paused");
+        JSONObject settings=BotStore.read(c,state.getString("botId")+"-settings").optJSONObject("value");
+        BotRetry.apply(state,report,System.currentTimeMillis(),settings!=null&&settings.optJSONObject("editor_request")!=null);
+        state.put("updatedAt",System.currentTimeMillis());BotStore.write(c,"state",state);
     }
     static void validateSettings(JSONObject value)throws Exception{
         if(value.optInt("settingsVersion")!=1)throw new Exception("bot_settings_incompatible");
