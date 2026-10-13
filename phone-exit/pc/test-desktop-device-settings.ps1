@@ -1,7 +1,9 @@
-﻿$ErrorActionPreference='Stop'
+﻿param([ValidateRange(0,120)][int]$PreviewSeconds=0)
+$ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.Windows.Forms,System.Drawing,System.Security,System.Net.Http,System.Web.Extensions
 . (Join-Path $PSScriptRoot 'profile.ps1')
 Add-Type -Path @((Join-Path $PSScriptRoot 'desktop-controls.cs'),(Join-Path $PSScriptRoot 'desktop-bots.cs')) -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions
+[PhoneExit.DesktopDpi]::Enable()
 $secret=[Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect([IO.File]::ReadAllBytes((Join-Path (GetPhoneExitProfileDirectory) 'control-api.bin')),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser))
 $catalog=Invoke-RestMethod 'http://127.0.0.1:17842/bot/v1/phones' -Headers @{Authorization="Bearer $secret"} -TimeoutSec 10
 $phone=@($catalog.phones|Where-Object {$_.country -eq 'SG'})[0]
@@ -121,6 +123,14 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $panel.GetType().GetMethod('UndoPointEdit',$flags).Invoke($panel,@())
             if(@($spot['map_points']).Count -ne $count){throw 'Undo did not restore original point count'}
             $snapshot=ConvertTo-Json $spot['map_points'] -Compress -Depth 10
+            $viewport=$picture.Parent
+            $panel.GetType().GetMethod('ZoomMapAt',$flags).Invoke($panel,@([Drawing.Point]::new(100,100),[int]120))
+            if($panel.GetType().GetField('zoom',$flags).GetValue($panel) -le 1){throw 'Mouse wheel did not zoom the map'}
+            $panel.GetType().GetMethod('SetZoom',$flags).Invoke($panel,@([double]2))
+            $previousLocation=$picture.Location
+            $panel.GetType().GetMethod('PositionMap',$flags).Invoke($panel,@([Drawing.Point]::new(($previousLocation.X-40),($previousLocation.Y-40))))
+            if($picture.Location -eq $previousLocation -or $viewport.AutoScroll){throw 'Map panning or scrollbar-free viewport is broken'}
+            if((ConvertTo-Json $spot['map_points'] -Compress -Depth 10) -ne $snapshot){throw 'Panning or mouse-wheel zoom changed saved points'}
             $panel.GetType().GetMethod('SetZoom',$flags).Invoke($panel,@([double]1))
             $compactMap=$picture.Size
             $panel.Size=[Drawing.Size]::new(2400,1400);[Windows.Forms.Application]::DoEvents()
@@ -148,6 +158,9 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $points.Add($fixture);$panel.GetType().GetMethod('RefreshSpots',$flags).Invoke($panel,@($points.Count-1));$panel.Size=[Drawing.Size]::new(1440,900);[Windows.Forms.Application]::DoEvents()
             $moveRows=@($pointList.Controls|Where-Object {$_ -is [PhoneExit.MoveRowButton]})
             if($moveRows.Count -ne 11){throw "Twilight Hill must show all eleven Move rows; got $($moveRows.Count)"}
+            $pointList.GetType().GetMethod('OnMouseWheel',$flags).Invoke($pointList,@([Windows.Forms.MouseEventArgs]::new('None',0,10,10,-120)))
+            if($pointList.AutoScrollPosition.Y -ge 0){throw 'Custom list scrollbar does not respond to the wheel'}
+            $pointList.AutoScrollPosition=[Drawing.Point]::Empty
             $marker=[Drawing.Bitmap]::new($picture.Width,$picture.Height)
             $markerGraphics=[Drawing.Graphics]::FromImage($marker)
             try{
@@ -167,6 +180,7 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $pointList.AutoScrollPosition=[Drawing.Point]::Empty
             $preview=[Drawing.Bitmap]::new($panel.Width,$panel.Height)
             try{$panel.DrawToBitmap($preview,[Drawing.Rectangle]::new(0,0,$panel.Width,$panel.Height));$preview.Save((Join-Path $PSScriptRoot '../.tools/farm-twilight-preview.png'))}finally{$preview.Dispose()}
+            if($PreviewSeconds -gt 0){$until=[DateTime]::UtcNow.AddSeconds($PreviewSeconds);do{[Windows.Forms.Application]::DoEvents();Start-Sleep -Milliseconds 20}while([DateTime]::UtcNow -lt $until)}
             $points.RemoveAt($points.Count-1);$panel.GetType().GetMethod('RefreshSpots',$flags).Invoke($panel,@($originalSpot))
             $bitmap=[Drawing.Bitmap]::new($panel.Width,$panel.Height)
             try{$panel.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$panel.Width,$panel.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/device-settings-preview.png'))}finally{$bitmap.Dispose()}

@@ -6,33 +6,23 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace PhoneExit {
-    public static class DarkScrollPaint {
-        [DllImport("user32.dll")] static extern IntPtr GetWindowDC(IntPtr window);
-        [DllImport("user32.dll")] static extern int ReleaseDC(IntPtr window,IntPtr dc);
-        public static void Paint(ScrollableControl control){
-            if(!control.IsHandleCreated)return;
-            IntPtr dc=GetWindowDC(control.Handle);if(dc==IntPtr.Zero)return;
-            try{using(var g=Graphics.FromHdc(dc)){
-                if(control.VerticalScroll.Visible)Bar(g,new Rectangle(control.ClientSize.Width,0,SystemInformation.VerticalScrollBarWidth,control.ClientSize.Height),control.VerticalScroll,true);
-                if(control.HorizontalScroll.Visible)Bar(g,new Rectangle(0,control.ClientSize.Height,control.ClientSize.Width,SystemInformation.HorizontalScrollBarHeight),control.HorizontalScroll,false);
-            }}finally{ReleaseDC(control.Handle,dc);}
-        }
-        static void Bar(Graphics g,Rectangle r,ScrollProperties scroll,bool vertical){
-            using(var track=new SolidBrush(Color.FromArgb(25,28,31)))g.FillRectangle(track,r);
-            int end=vertical?r.Width:r.Height,length=(vertical?r.Height:r.Width)-end*2;
-            if(length<=0)return;
-            int range=Math.Max(1,scroll.Maximum+1),thumb=Math.Min(length,Math.Max(end,(int)(length*(double)scroll.LargeChange/range)));
-            int offset=(int)((length-thumb)*(double)scroll.Value/Math.Max(1,range-scroll.LargeChange));
-            var bounds=vertical?new Rectangle(r.X+4,r.Y+end+offset,r.Width-8,thumb):new Rectangle(r.X+end+offset,r.Y+4,thumb,r.Height-8);
-            using(var ink=new SolidBrush(Color.FromArgb(112,123,133))){g.FillRectangle(ink,bounds);for(int i=0;i<2;i++){float x=r.X+r.Width/2f,y=r.Y+r.Height/2f;if(vertical)y=i==0?r.Y+end/2f:r.Bottom-end/2f;else x=i==0?r.X+end/2f:r.Right-end/2f;int direction=i==0?-1:1;g.FillPolygon(ink,vertical?new[]{new PointF(x-3,y-direction*2),new PointF(x+3,y-direction*2),new PointF(x,y+direction*2)}:new[]{new PointF(x-direction*2,y-3),new PointF(x-direction*2,y+3),new PointF(x+direction*2,y)});}}
-        }
-        public static bool NeedsPaint(int message){return message==0x85||message==0xf||message==0x114||message==0x115||message==0x20a||message==0x200||message==0x2a0;}
+    public class MapViewportPanel : Panel {
+        public MapViewportPanel(){SetStyle(ControlStyles.Selectable,true);TabStop=true;}
     }
     public class DarkFlowPanel : FlowLayoutPanel {
-        protected override void WndProc(ref Message m){base.WndProc(ref m);if(DarkScrollPaint.NeedsPaint(m.Msg))DarkScrollPaint.Paint(this);}
-    }
-    public class DarkScrollPanel : Panel {
-        protected override void WndProc(ref Message m){base.WndProc(ref m);if(DarkScrollPaint.NeedsPaint(m.Msg))DarkScrollPaint.Paint(this);}
+        int offset,extent,dragY,dragOffset;bool layingOut,dragging,scrollEnabled;
+        public new bool AutoScroll {get{return scrollEnabled;}set{scrollEnabled=value;base.AutoScroll=false;PerformLayout();}}
+        public new Point AutoScrollPosition {get{return new Point(0,-offset);}set{SetOffset(Math.Abs(value.Y));}}
+        public DarkFlowPanel(){SetStyle(ControlStyles.Selectable|ControlStyles.UserPaint|ControlStyles.OptimizedDoubleBuffer|ControlStyles.AllPaintingInWmPaint,true);TabStop=true;}
+        protected override void OnLayout(LayoutEventArgs e){if(layingOut)return;layingOut=true;try{base.OnLayout(e);extent=0;foreach(Control c in Controls)if(c.Visible)extent=Math.Max(extent,c.Bottom+c.Margin.Bottom);offset=Math.Min(offset,Math.Max(0,extent-ClientSize.Height));if(scrollEnabled)foreach(Control c in Controls)c.Top-=offset;}finally{layingOut=false;}Invalidate();}
+        void SetOffset(int value){offset=Math.Max(0,Math.Min(value,Math.Max(0,extent-ClientSize.Height)));PerformLayout();Invalidate();}
+        Rectangle Thumb(){int height=Math.Max(24,(int)(ClientSize.Height*(double)ClientSize.Height/Math.Max(1,extent)));height=Math.Min(ClientSize.Height,height);int top=(int)((ClientSize.Height-height)*(double)offset/Math.Max(1,extent-ClientSize.Height));return new Rectangle(ClientSize.Width-10,top,6,height);}
+        protected override void OnPaint(PaintEventArgs e){base.OnPaint(e);if(!scrollEnabled||extent<=ClientSize.Height)return;using(var track=new SolidBrush(Color.FromArgb(25,28,31)))e.Graphics.FillRectangle(track,ClientSize.Width-14,0,14,ClientSize.Height);using(var ink=new SolidBrush(Color.FromArgb(112,123,133)))e.Graphics.FillRectangle(ink,Thumb());}
+        protected override void OnMouseWheel(MouseEventArgs e){if(scrollEnabled)SetOffset(offset-e.Delta/120*54);else base.OnMouseWheel(e);}
+        protected override void OnMouseDown(MouseEventArgs e){base.OnMouseDown(e);if(scrollEnabled&&extent>ClientSize.Height&&e.X>=ClientSize.Width-14){Focus();var thumb=Thumb();if(thumb.Contains(e.Location)){dragging=true;dragY=e.Y;dragOffset=offset;Capture=true;}else SetOffset(offset+(e.Y<thumb.Top?-1:1)*ClientSize.Height);}}
+        protected override void OnMouseMove(MouseEventArgs e){base.OnMouseMove(e);if(dragging)SetOffset(dragOffset+(int)((e.Y-dragY)*(double)(extent-ClientSize.Height)/Math.Max(1,ClientSize.Height-Thumb().Height)));}
+        protected override void OnMouseUp(MouseEventArgs e){dragging=false;Capture=false;base.OnMouseUp(e);}
+        protected override void OnKeyDown(KeyEventArgs e){int value=offset;if(e.KeyCode==Keys.Home)value=0;else if(e.KeyCode==Keys.End)value=extent;else if(e.KeyCode==Keys.PageDown)value+=ClientSize.Height;else if(e.KeyCode==Keys.PageUp)value-=ClientSize.Height;else if(e.KeyCode==Keys.Down)value+=54;else if(e.KeyCode==Keys.Up)value-=54;else{base.OnKeyDown(e);return;}SetOffset(value);e.Handled=true;}
     }
     public static class DesktopDpi {
         [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
