@@ -18,6 +18,24 @@
         $fleetSearch.Clear();$fleetState.SelectedIndex=2
         if($fleet.VisibleCount -ne @($script:phoneRows|Where-Object {!$_.online}).Count){throw 'Offline filter is inaccurate'}
         $fleetState.SelectedIndex=0;$fleetSort.SelectedIndex=0
+        if(!$pageTitle.Font.Bold -or !$fleetGame.Font.Bold -or !$bulkStart.Font.Bold -or !$selectAll.Font.Bold){throw 'Fleet header lost bold typography'}
+        foreach($button in @($bulkStart,$bulkPause,$bulkSettings)){
+            if(!$button.KeepForegroundWhenDisabled -or $button.ForeColor.ToArgb() -ne $form.ForeColor.ToArgb()){throw 'Bulk command text and icons are not white'}
+        }
+        $fleetSummary.SetCounts(50,46,42,2)
+        $summaryBitmap=[Drawing.Bitmap]::new($fleetSummary.Width,$fleetSummary.Height)
+        try{
+            $fleetSummary.DrawToBitmap($summaryBitmap,[Drawing.Rectangle]::new(0,0,$summaryBitmap.Width,$summaryBitmap.Height))
+            $hasPink=$false;$hasBlue=$false;$hasMint=$false
+            for($px=0;$px -lt $summaryBitmap.Width;$px++){for($py=0;$py -lt $summaryBitmap.Height;$py++){
+                $color=$summaryBitmap.GetPixel($px,$py)
+                if($color.R -eq 242 -and $color.G -eq 141 -and $color.B -eq 157){$hasPink=$true}
+                if($color.R -eq 140 -and $color.G -eq 183 -and $color.B -eq 255){$hasBlue=$true}
+                if($color.R -eq 98 -and $color.G -eq 231 -and $color.B -eq 188){$hasMint=$true}
+            }}
+            if(!$hasPink -or !$hasBlue -or !$hasMint){throw 'Fleet summary status colors missing'}
+            $summaryBitmap.Save((Join-Path $PSScriptRoot '../.tools/fleet-summary-colors.png'))
+        }finally{$summaryBitmap.Dispose();RefreshFleet}
         SetFleetAdvanced $true
         foreach($field in @('Country','ApkVersion','Provider','BotVersion')){
             $control=$fleetExtra[$field]

@@ -108,12 +108,12 @@ namespace PhoneExit {
         static readonly string[] headers={"Устройство / персонаж","Группа","Страна","Связь","VPN","APK","Бот / версия","Состояние","Поставщик","Действия"};
         public Rectangle ColumnBounds(int column){
             // Share the same tracks for headings and cells at every DPI and window size.
-            double[] tracks={0,.20,.28,.35,.43,.49,.55,.73,.89,1};
-            int available=Math.Max(1,tileWidth-D(104));
+            int[] widths={0,D(100),D(70),D(96),D(64),D(64),0,0,D(104),D(104)};
+            int flexible=tileWidth-widths.Sum();
+            widths[0]=(int)Math.Round(flexible*.45);widths[6]=(int)Math.Round(flexible*.27);widths[7]=flexible-widths[0]-widths[6];
             int offset=table?horizontal.Value:0;
-            if(column==9)return new Rectangle(available-offset,0,tileWidth-available,D(34));
-            int left=(int)Math.Round(available*tracks[column]),right=(int)Math.Round(available*tracks[column+1]);
-            return new Rectangle(left-offset,0,right-left,D(34));
+            int left=0;for(int i=0;i<column;i++)left+=widths[i];
+            return new Rectangle(left-offset,0,widths[column],D(34));
         }
         Rectangle Cell(int column,Rectangle row,int inset){var r=ColumnBounds(column);return new Rectangle(r.X+D(inset),row.Y+D(15),Math.Max(1,r.Width-D(inset+6)),D(28));}
         string ApkText(FleetPhone phone){return String.IsNullOrEmpty(phone.ApkVersion)?"—":phone.ApkVersion;}

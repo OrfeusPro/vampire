@@ -108,6 +108,7 @@ namespace PhoneExit {
         public bool IconOnly {get;set;}
         public bool Borderless {get;set;}
         public bool CenterContent {get;set;}
+        public bool KeepForegroundWhenDisabled {get;set;}
         public Color SurroundColor {get;set;}
         bool hover,pressed;
         protected override void OnMouseEnter(EventArgs e){hover=true;Invalidate();base.OnMouseEnter(e);}
@@ -120,7 +121,7 @@ namespace PhoneExit {
                 if(Rounded)Background(e.Graphics);else e.Graphics.Clear(BackColor);float s=DesktopDpi.ForControl(this),x=IconOnly?Width/2f-7*s:14*s,y=Height/2f-6*s;
                 int textWidth=TextRenderer.MeasureText(e.Graphics,Text,Font,Size.Empty,TextFormatFlags.NoPadding).Width;
                 if(CenterContent&&!IconOnly)x=(Width-textWidth-22*s)/2;
-                Color ink=Enabled?ForeColor:Color.FromArgb(119,136,158);
+                Color ink=Enabled||KeepForegroundWhenDisabled?ForeColor:Color.FromArgb(119,136,158);
                 using(var pen=new Pen(ink,Math.Max(1,1.2f*s))){
                     if(NavigationIcon=="devices"){for(int i=0;i<4;i++)e.Graphics.DrawRectangle(pen,x+(i%2)*8*s,y+(i/2)*8*s,4*s,4*s);}
                     else if(NavigationIcon=="list"){for(int i=0;i<3;i++){e.Graphics.DrawLine(pen,x,y+i*6*s,x+2*s,y+i*6*s);e.Graphics.DrawLine(pen,x+5*s,y+i*6*s,x+14*s,y+i*6*s);}}
@@ -153,7 +154,7 @@ namespace PhoneExit {
             var box=new Rectangle(0,top,size,size);var ink=Enabled?Color.FromArgb(98,231,188):Color.FromArgb(119,136,158);
             using(var brush=new SolidBrush(Checked?ink:Color.FromArgb(32,36,40)))e.Graphics.FillRectangle(brush,box);
             using(var pen=new Pen(Checked?ink:Color.FromArgb(112,123,133)))e.Graphics.DrawRectangle(pen,0,top,size-1,size-1);
-            if(Checked)using(var pen=new Pen(Color.FromArgb(16,37,30),Math.Max(1,1.5f*s)))e.Graphics.DrawLines(pen,new[]{new PointF(3*s,top+7*s),new PointF(6*s,top+10*s),new PointF(11*s,top+4*s)});
+            if(Checked)using(var pen=new Pen(Color.FromArgb(16,37,30),Math.Max(1,1.5f*s))){if(CheckState==CheckState.Indeterminate)e.Graphics.DrawLine(pen,3*s,top+7*s,11*s,top+7*s);else e.Graphics.DrawLines(pen,new[]{new PointF(3*s,top+7*s),new PointF(6*s,top+10*s),new PointF(11*s,top+4*s)});}
             TextRenderer.DrawText(e.Graphics,Text,Font,new Rectangle(size+(int)(7*s),0,Width-size-(int)(7*s),Height),Enabled?ForeColor:Color.FromArgb(119,136,158),TextFormatFlags.VerticalCenter|TextFormatFlags.SingleLine|TextFormatFlags.EndEllipsis);
             if(Focused)ControlPaint.DrawFocusRectangle(e.Graphics,new Rectangle(size+(int)(5*s),2,Width-size-(int)(5*s)-2,Height-4),ForeColor,BackColor);
         }
@@ -195,9 +196,20 @@ namespace PhoneExit {
         }
     }
 
+    public sealed class FleetSummaryControl : Control {
+        public int Total {get;private set;} public int Online {get;private set;} public int Running {get;private set;} public int Errors {get;private set;}
+        static string Count(int n,string one,string few,string many){int tail=n%100;return n+" "+(tail>=11&&tail<=14?many:n%10==1?one:n%10>=2&&n%10<=4?few:many);}
+        public FleetSummaryControl(){SetStyle(ControlStyles.UserPaint|ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer|ControlStyles.ResizeRedraw,true);TabStop=false;AccessibleRole=AccessibleRole.StaticText;}
+        public void SetCounts(int total,int online,int running,int errors){Total=total;Online=online;Running=running;Errors=errors;Text=Count(total,"устройство","устройства","устройств")+" · "+online+" в сети · "+Count(running,"бот работает","бота работают","ботов работают")+" · "+Count(errors,"ошибка","ошибки","ошибок");AccessibleName=Text;Invalidate();}
+        protected override void OnPaint(PaintEventArgs e){e.Graphics.Clear(BackColor);float s=DesktopDpi.ForControl(this);int x=0;string[] labels={Count(Total,"устройство","устройства","устройств"),Online+" в сети",Count(Running,"бот работает","бота работают","ботов работают"),Count(Errors,"ошибка","ошибки","ошибок")};Color[] colors={ForeColor,Color.FromArgb(145,155,165),Color.FromArgb(145,155,165),Errors>0?Color.FromArgb(242,141,157):Color.FromArgb(145,155,165)};Color[] dots={ForeColor,Color.FromArgb(98,231,188),Color.FromArgb(140,183,255),Errors>0?Color.FromArgb(242,141,157):Color.FromArgb(145,155,165)};var flags=TextFormatFlags.NoPadding|TextFormatFlags.SingleLine|TextFormatFlags.VerticalCenter;using(var bold=new Font(Font,FontStyle.Bold)){for(int i=0;i<labels.Length;i++){if(i>0){using(var b=new SolidBrush(dots[i]))e.Graphics.FillEllipse(b,x,(Height-6*s)/2,6*s,6*s);x+=(int)Math.Round(14*s);}var font=i==0?bold:Font;int width=TextRenderer.MeasureText(e.Graphics,labels[i],font,Size.Empty,TextFormatFlags.NoPadding|TextFormatFlags.SingleLine).Width;TextRenderer.DrawText(e.Graphics,labels[i],font,new Rectangle(x,0,width,Height),colors[i],flags);x+=width+(int)Math.Round(26*s);}}}
+    }
+
     public sealed class SearchField : UserControl {
-        [DllImport("user32.dll",CharSet=CharSet.Unicode)] static extern IntPtr SendMessage(IntPtr window,int message,IntPtr value,string text);
-        readonly TextBox input=new TextBox{BorderStyle=BorderStyle.None,Multiline=false,AccessibleName="Поиск по имени, персонажу, модели или стране"};
+        sealed class SearchInput : TextBox {
+            public string Cue;
+            protected override void WndProc(ref Message m){base.WndProc(ref m);if(m.Msg!=0xf&&m.Msg!=0x317&&m.Msg!=0x318)return;if(Text.Length!=0||Focused||String.IsNullOrEmpty(Cue))return;using(var g=m.Msg==0xf?Graphics.FromHwnd(Handle):Graphics.FromHdc(m.WParam)){TextRenderer.DrawText(g,Cue,Font,ClientRectangle,Color.FromArgb(145,155,165),TextFormatFlags.NoPadding|TextFormatFlags.SingleLine|TextFormatFlags.VerticalCenter|TextFormatFlags.EndEllipsis);}}
+        }
+        readonly SearchInput input=new SearchInput{BorderStyle=BorderStyle.None,Multiline=false,AccessibleName="Поиск по имени, персонажу, модели или стране"};
         readonly SearchClear clear=new SearchClear();
         readonly ToolTip tips=new ToolTip();
         public string Placeholder="Поиск имени, модели или страны";
@@ -207,9 +219,9 @@ namespace PhoneExit {
             public SearchClear(){FlatStyle=FlatStyle.Flat;FlatAppearance.BorderSize=0;AccessibleName="Очистить поиск";Cursor=Cursors.Hand;TabStop=false;}
             protected override void OnPaint(PaintEventArgs e){e.Graphics.Clear(BackColor);float s=DesktopDpi.Scale,x=Width/2f,y=Height/2f;using(var pen=new Pen(ForeColor,Math.Max(1,s))){e.Graphics.DrawLine(pen,x-3*s,y-3*s,x+3*s,y+3*s);e.Graphics.DrawLine(pen,x+3*s,y-3*s,x-3*s,y+3*s);}}
         }
-        public SearchField(){SetStyle(ControlStyles.UserPaint|ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer|ControlStyles.ResizeRedraw,true);BackColor=Color.FromArgb(32,36,40);ForeColor=Color.FromArgb(238,241,244);Controls.Add(input);Controls.Add(clear);input.BackColor=BackColor;input.ForeColor=ForeColor;clear.ForeColor=Color.FromArgb(145,155,165);clear.BackColor=BackColor;tips.SetToolTip(clear,"Очистить поиск");input.TextChanged+=(s,e)=>{OnTextChanged(EventArgs.Empty);LayoutInput();Invalidate();};input.GotFocus+=(s,e)=>Invalidate();input.LostFocus+=(s,e)=>Invalidate();input.KeyDown+=(s,e)=>{if(e.KeyCode==Keys.Escape){Clear();e.Handled=true;e.SuppressKeyPress=true;}};clear.Click+=(s,e)=>{Clear();input.Focus();};input.HandleCreated+=(s,e)=>SendMessage(input.Handle,0x1501,(IntPtr)1,Placeholder);LayoutInput();}
+        public SearchField(){SetStyle(ControlStyles.UserPaint|ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer|ControlStyles.ResizeRedraw,true);BackColor=Color.FromArgb(32,36,40);ForeColor=Color.FromArgb(238,241,244);Controls.Add(input);Controls.Add(clear);input.BackColor=BackColor;input.ForeColor=ForeColor;clear.ForeColor=Color.FromArgb(145,155,165);clear.BackColor=BackColor;tips.SetToolTip(clear,"Очистить поиск");input.TextChanged+=(s,e)=>{OnTextChanged(EventArgs.Empty);LayoutInput();Invalidate();};input.GotFocus+=(s,e)=>{LayoutInput();Invalidate();};input.LostFocus+=(s,e)=>{LayoutInput();Invalidate();};input.KeyDown+=(s,e)=>{if(e.KeyCode==Keys.Escape){Clear();e.Handled=true;e.SuppressKeyPress=true;}};clear.Click+=(s,e)=>{Clear();input.Focus();};LayoutInput();}
         public void Clear(){input.Clear();}
-        void LayoutInput(){if(input==null)return;clear.Visible=input.Text.Length>0;int height=input.PreferredHeight;input.SetBounds(D(34),Math.Max(D(4),(Height-height)/2),Math.Max(1,Width-D(clear.Visible?66:46)),height);clear.SetBounds(Width-D(28),(Height-D(24))/2,D(24),D(24));}
+        void LayoutInput(){if(input==null)return;clear.Visible=input.Text.Length>0;int height=input.PreferredHeight;input.SetBounds(D(34),Math.Max(D(4),(Height-height)/2),Math.Max(1,Width-D(clear.Visible?66:46)),height);clear.SetBounds(Width-D(28),(Height-D(24))/2,D(24),D(24));input.Cue=Placeholder;input.Invalidate();}
         protected override void OnResize(EventArgs e){base.OnResize(e);LayoutInput();}
         protected override void OnFontChanged(EventArgs e){base.OnFontChanged(e);if(input!=null){input.Font=Font;LayoutInput();}}
         protected override void OnBackColorChanged(EventArgs e){base.OnBackColorChanged(e);if(input!=null)input.BackColor=BackColor;if(clear!=null)clear.BackColor=BackColor;}

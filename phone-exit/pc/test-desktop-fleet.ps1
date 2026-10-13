@@ -62,6 +62,7 @@ foreach($scale in @(1.0,1.5)){
             $view.Width=[int]($width*$scale)
             $previous=0
             foreach($column in 0..9){$bounds=$view.ColumnBounds($column);if($bounds.X -lt $previous -or $bounds.Width -le 0 -or $bounds.Right -gt $view.CardBounds(0).Right){throw 'Table columns overlap or escape content'};$previous=$bounds.Right}
+            if($view.ColumnBounds(2).Width -gt [Math]::Ceiling(70*$scale) -or $view.ColumnBounds(5).Width -gt [Math]::Ceiling(64*$scale)){throw 'Country or APK column expands unnecessarily'}
         }
         $view.Dock='Fill';$window.PerformLayout()
         $horizontal=$view.GetType().GetField('horizontal',$flags).GetValue($view)

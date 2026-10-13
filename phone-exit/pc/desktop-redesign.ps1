@@ -25,9 +25,9 @@ $accountButton.Anchor='None';$accountButton.Text='Настройки'
 $navDevices=ButtonAt 'Устройства' 0 0 160
 $navConnection=ButtonAt 'Подключение' 0 0 160
 $sidebarNote=LabelAt 'Личные телефоны' 0 0 160 24;$sidebarNote.BackColor=$title.BackColor;$sidebarNote.ForeColor=$muted;$sidebarNote.Font=[Drawing.Font]::new('Segoe UI',8)
-$pageTitle=LabelAt 'Устройства' 0 0 600 38;$pageTitle.Font=[Drawing.Font]::new('Segoe UI Semibold',20)
+$pageTitle=LabelAt 'Устройства' 0 0 600 38;$pageTitle.Font=[Drawing.Font]::new('Segoe UI',20,[Drawing.FontStyle]::Bold)
 $pageSubtitle=LabelAt 'Все устройства / Личный список' 0 0 600 24;$pageSubtitle.ForeColor=$muted;$pageSubtitle.Font=[Drawing.Font]::new('Segoe UI',9)
-$fleetSummary=LabelAt '' 0 0 600 25;$fleetSummary.Font=[Drawing.Font]::new('Segoe UI',9)
+$fleetSummary=New-Object PhoneExit.FleetSummaryControl;$fleetSummary.BackColor=$form.BackColor;$fleetSummary.ForeColor=$form.ForeColor;$fleetSummary.Font=[Drawing.Font]::new('Segoe UI',9);$form.Controls.Add($fleetSummary)
 $fleet=New-Object PhoneExit.FleetView;$fleet.UiScale=$script:uiScale;$form.Controls.Add($fleet)
 $fleetSearch=New-Object PhoneExit.SearchField;$fleetSearch.BackColor=$surface;$fleetSearch.ForeColor=$form.ForeColor;$fleetSearch.Font=[Drawing.Font]::new('Segoe UI',9);$fleetSearch.AccessibleName='Поиск по имени, персонажу, модели или стране';$form.Controls.Add($fleetSearch)
 $fleetGame=New-Object PhoneExit.DarkSelect;$fleetGame.AccessibleName='Фильтр по боту';$fleetGame.BackColor=$buttonSurface;$fleetGame.ForeColor=$form.ForeColor
@@ -52,11 +52,11 @@ $advancedButton=ButtonAt '' 0 0 34;$advancedButton.NavigationIcon='settings';$ad
 $gridButton.Text='';$gridButton.NavigationIcon='devices';$gridButton.IconOnly=$true;$gridButton.AccessibleName='Карточки';$captionTips.SetToolTip($gridButton,'Карточки')
 $tableButton.Text='';$tableButton.NavigationIcon='list';$tableButton.IconOnly=$true;$tableButton.AccessibleName='Таблица';$captionTips.SetToolTip($tableButton,'Таблица')
 foreach($control in $form.Controls){if($control -is [PhoneExit.DarkSelect] -or $control -is [PhoneExit.DarkButton]){$control.Rounded=$true}}
-$selectAll=New-Object Windows.Forms.CheckBox;$selectAll.Text='Выбрать все';$selectAll.ForeColor=$accent;$selectAll.FlatStyle='Flat';$selectAll.AccessibleName='Выбрать все видимые устройства';$form.Controls.Add($selectAll)
+$selectAll=New-Object PhoneExit.DarkCheckBox;$selectAll.Text='Выбрать все';$selectAll.ForeColor=$accent;$selectAll.BackColor=$form.BackColor;$selectAll.AccessibleName='Выбрать все видимые устройства';$form.Controls.Add($selectAll)
 $bulkStart=ButtonAt 'Запустить' 0 0 120;$bulkPause=ButtonAt 'Пауза' 0 0 110
 $bulkSettings=ButtonAt 'Настроить бота' 0 0 146
 $bulkStart.NavigationIcon='play';$bulkPause.NavigationIcon='pause';$bulkSettings.NavigationIcon='settings'
-foreach($button in @($bulkStart,$bulkPause,$bulkSettings)){$button.CenterContent=$true}
+foreach($button in @($bulkStart,$bulkPause,$bulkSettings)){$button.CenterContent=$true;$button.KeepForegroundWhenDisabled=$true}
 $viewSwitch=New-Object PhoneExit.SegmentedSurface;$form.Controls.Add($viewSwitch)
 foreach($button in @($gridButton,$tableButton,$densityButton)){$viewSwitch.Controls.Add($button);$button.Borderless=$true;$button.Rounded=$true}
 $selectionLabel=LabelAt '' 0 0 200 24;$selectionLabel.ForeColor=$muted;$selectionLabel.Font=[Drawing.Font]::new('Segoe UI',9)
@@ -91,7 +91,8 @@ function DrawConnectionPhone($paintEvent) {
 function SetDesktopView([string]$view) {$script:desktopView=$view;UpdateWindowLayout}
 function UpdateFleetSelection {
     $script:fleetSync=$true
-    $selectAll.Checked=$fleet.VisibleCount -gt 0 -and $fleet.SelectedCount -eq $fleet.VisibleCount
+    $selectAll.CheckState=if($fleet.SelectedCount -eq 0){'Unchecked'}elseif($fleet.SelectedCount -eq $fleet.VisibleCount){'Checked'}else{'Indeterminate'}
+    $selectAll.Text=if($fleet.SelectedCount -gt 0){"Выбрано $($fleet.SelectedCount)"}else{'Выбрать все'}
     $script:fleetSync=$false
     $selectionLabel.Text="Выбрано: $($fleet.SelectedCount)"
     $bulkStart.Enabled=($fleet.ActionIndexes('start').Count+$fleet.ActionIndexes('resume').Count) -gt 0
@@ -145,7 +146,7 @@ function RefreshFleet {
     $phones=@($phones|Where-Object {$conditions.Matches($_) -and ($fleetState.SelectedIndex -ne 1 -or $_.Online) -and ($fleetState.SelectedIndex -ne 2 -or !$_.Online) -and (!$query -or ($_.Name+' '+$_.Model+' '+$_.Country+' '+(CountryName $_.Country)+' '+$_.Key+' '+$_.Provider+' '+$_.Group).IndexOf($query,[StringComparison]::OrdinalIgnoreCase) -ge 0)})
     $sorted=switch($fleetSort.SelectedIndex){1{@($phones|Sort-Object Name -Descending)}2{@($phones|Sort-Object @{Expression='Online';Descending=$true},Name)}3{@($phones|Sort-Object Country,Name)}default{@($phones|Sort-Object Name)}}
     $fleet.SetPhones([PhoneExit.FleetPhone[]]$sorted)
-    $fleetSummary.Text="Устройств: $($script:phoneRows.Count)     ·     В сети: $online     ·     Боты работают: $running     ·     Ошибки: $errors"
+    $fleetSummary.SetCounts($script:phoneRows.Count,$online,$running,$errors)
     $selected=$null
     if($script:selectedPhone -and ($script:client -or $script:connectionWanted)){$selected=@($script:phoneRows|Where-Object {[string]$_.id -eq [string]$script:selectedPhone}|Select-Object -First 1)[0]}
     elseif($phoneList.SelectedIndex -ge 0 -and $phoneList.SelectedIndex -lt $script:phoneRows.Count){$selected=$script:phoneRows[$phoneList.SelectedIndex]}
@@ -206,8 +207,9 @@ $navDevices.NavigationIcon='devices';$navConnection.NavigationIcon='connection';
 foreach($button in @($minimizeWindow,$maximizeWindow,$closeWindow)){$button.BackColor=$form.BackColor}
 $sidebarNote.Cursor='Hand';$sidebarNote.Add_Click({SetDesktopView 'connection'})
 $tabIndex=0
-foreach($control in @($fleetGame,$fleetState,$fleetSort)+@($fleetExtra.Values)){$control.Font=[Drawing.Font]::new('Segoe UI',9)}
-$selectAll.Font=[Drawing.Font]::new('Segoe UI',9)
+foreach($control in @($fleetGame,$fleetState,$fleetSort)+@($fleetExtra.Values)){$control.Font=[Drawing.Font]::new('Segoe UI',9,[Drawing.FontStyle]::Bold)}
+foreach($button in @($bulkStart,$bulkPause,$bulkSettings)){$button.Font=[Drawing.Font]::new('Segoe UI',9,[Drawing.FontStyle]::Bold)}
+$selectAll.Font=[Drawing.Font]::new('Segoe UI',9,[Drawing.FontStyle]::Bold)
 foreach($control in $form.Controls){if($control -is [PhoneExit.DarkSelect] -or $control -is [PhoneExit.DarkButton]){$control.Rounded=$true}}
 foreach($button in @($navDevices,$navConnection,$script:botsButton,$accountButton)){$button.Borderless=$true}
 foreach($control in @($navDevices,$navConnection,$script:botsButton,$accountButton,$fleetSearch,$fleetGame,$fleetState,$fleetSort,$advancedButton,$viewSwitch,$selectAll,$bulkStart,$bulkPause,$bulkSettings,$fleet,$phoneList,$mode,$chooseApps,$start,$stopButton,$removePhone)){$control.TabIndex=$tabIndex;$tabIndex++}
