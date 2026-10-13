@@ -39,17 +39,25 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $originalDirty=$panel.GetType().GetField('dirty',$flags).GetValue($panel)
             $panel.GetType().GetField('chosenGame',$flags).SetValue($panel,'future-game')
             $panel.GetType().GetMethod('UpdateGameView',$flags).Invoke($panel,@())
+            $automationHeading=$panel.GetType().GetField('automationHeading',$flags).GetValue($panel)
+            if(!$automationHeading.Image -or $automationHeading.Text.Contains('Lord Nine')){throw 'Unassigned game retained the LordNine logo or name'}
             $tabs.SelectedIndex=1
             if($tabs.SelectedIndex -eq 1 -or $panel.GetType().GetField('farm',$flags).GetValue($panel).Visible){throw 'Another game exposes LordNine farm controls'}
             foreach($action in $panel.GetType().GetField('actions',$flags).GetValue($panel)){if($action.Text -eq 'Сохранить и отправить настройки' -and $action.Enabled){throw 'Another game can save LordNine settings'}}
             if($profile['settings'] -ne $originalSettings -or $panel.GetType().GetField('dirty',$flags).GetValue($panel) -ne $originalDirty){throw 'Game preview mutated the profile'}
             $panel.GetType().GetField('chosenGame',$flags).SetValue($panel,'lordnine')
             $panel.GetType().GetMethod('UpdateGameView',$flags).Invoke($panel,@())
+            if(!$automationHeading.Image -or !$automationHeading.Text.StartsWith('Lord Nine')){throw 'Assigned game heading lacks its logo or name'}
             $points=$panel.GetType().GetField('points',$flags).GetValue($panel)
             $before=$points.Count
             foreach($width in @(1200,1440)){
                 $panel.Size=[Drawing.Size]::new($width,900)
                 foreach($action in $panel.GetType().GetField('actions',$flags).GetValue($panel)){
+                    if($action -is [PhoneExit.BotButton] -and $action.IconOnly){
+                        if($action.Width -ne 44 -or $action.Height -ne 44 -or !$action.ActionIconName -or !$action.AccessibleName){throw 'Bot command lacks compact icon or accessible name'}
+                    }elseif($action -is [PhoneExit.BotButton] -and $action.ActionIconName -and $action.Visible){
+                        if($action.Width -lt $action.ContentWidth()-4){throw ('Button clips its caption: '+$action.Text)}
+                    }
                     if($action.Text -eq 'Сохранить и отправить настройки'){
                         foreach($button in $action.Parent.Controls){if($button.Right -gt $button.Parent.ClientSize.Width -or $button.Bottom -gt $button.Parent.ClientSize.Height){throw 'Footer button overflows its container'}}
                     }
