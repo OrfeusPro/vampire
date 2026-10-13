@@ -104,23 +104,46 @@ namespace PhoneExit {
 
     public sealed class DarkButton : Button {
         public string NavigationIcon {get;set;}
+        public bool Rounded {get;set;}
+        public bool IconOnly {get;set;}
+        public bool Borderless {get;set;}
+        public bool CenterContent {get;set;}
+        public Color SurroundColor {get;set;}
+        bool hover,pressed;
+        protected override void OnMouseEnter(EventArgs e){hover=true;Invalidate();base.OnMouseEnter(e);}
+        protected override void OnMouseLeave(EventArgs e){hover=false;pressed=false;Invalidate();base.OnMouseLeave(e);}
+        protected override void OnMouseDown(MouseEventArgs e){pressed=true;Invalidate();base.OnMouseDown(e);}
+        protected override void OnMouseUp(MouseEventArgs e){pressed=false;Invalidate();base.OnMouseUp(e);}
+        void Background(Graphics g){g.Clear(!SurroundColor.IsEmpty?SurroundColor:Parent==null?BackColor:Parent.BackColor);float s=DesktopDpi.ForControl(this),d=8*s;var r=new RectangleF(.5f,.5f,Width-1,Height-1);using(var path=new System.Drawing.Drawing2D.GraphicsPath()){path.AddArc(r.Left,r.Top,d,d,180,90);path.AddArc(r.Right-d,r.Top,d,d,270,90);path.AddArc(r.Right-d,r.Bottom-d,d,d,0,90);path.AddArc(r.Left,r.Bottom-d,d,d,90,90);path.CloseFigure();g.SmoothingMode=System.Drawing.Drawing2D.SmoothingMode.AntiAlias;using(var fill=new SolidBrush(Enabled&&hover?ControlPaint.Light(BackColor,pressed?.04f:.08f):BackColor))g.FillPath(fill,path);if(!Borderless||Focused&&ShowFocusCues)using(var pen=new Pen(Focused&&ShowFocusCues?Color.FromArgb(98,231,188):Color.FromArgb(52,57,63)))g.DrawPath(pen,path);}}
         protected override void OnPaint(PaintEventArgs e){
             if(!String.IsNullOrEmpty(NavigationIcon)){
-                e.Graphics.Clear(BackColor);float s=DesktopDpi.ForControl(this),x=14*s,y=Height/2f-6*s;
-                using(var pen=new Pen(ForeColor,Math.Max(1,1.2f*s))){
+                if(Rounded)Background(e.Graphics);else e.Graphics.Clear(BackColor);float s=DesktopDpi.ForControl(this),x=IconOnly?Width/2f-7*s:14*s,y=Height/2f-6*s;
+                int textWidth=TextRenderer.MeasureText(e.Graphics,Text,Font,Size.Empty,TextFormatFlags.NoPadding).Width;
+                if(CenterContent&&!IconOnly)x=(Width-textWidth-22*s)/2;
+                Color ink=Enabled?ForeColor:Color.FromArgb(119,136,158);
+                using(var pen=new Pen(ink,Math.Max(1,1.2f*s))){
                     if(NavigationIcon=="devices"){for(int i=0;i<4;i++)e.Graphics.DrawRectangle(pen,x+(i%2)*8*s,y+(i/2)*8*s,4*s,4*s);}
+                    else if(NavigationIcon=="list"){for(int i=0;i<3;i++){e.Graphics.DrawLine(pen,x,y+i*6*s,x+2*s,y+i*6*s);e.Graphics.DrawLine(pen,x+5*s,y+i*6*s,x+14*s,y+i*6*s);}}
                     else if(NavigationIcon=="connection"){e.Graphics.DrawPolygon(pen,new[]{new PointF(x,y),new PointF(x+6*s,y-2*s),new PointF(x+12*s,y),new PointF(x+12*s,y+8*s),new PointF(x+6*s,y+13*s),new PointF(x,y+8*s)});}
                     else if(NavigationIcon=="bots"){e.Graphics.DrawRectangle(pen,x,y+3*s,12*s,10*s);e.Graphics.DrawLine(pen,x+6*s,y-1*s,x+6*s,y+3*s);e.Graphics.DrawRectangle(pen,x+3*s,y+6*s,1*s,1*s);e.Graphics.DrawRectangle(pen,x+8*s,y+6*s,1*s,1*s);e.Graphics.DrawLine(pen,x+4*s,y+10*s,x+8*s,y+10*s);}
+                    else if(NavigationIcon=="play"){e.Graphics.DrawPolygon(pen,new[]{new PointF(x+2*s,y),new PointF(x+12*s,y+6*s),new PointF(x+2*s,y+12*s)});}
+                    else if(NavigationIcon=="pause"){e.Graphics.DrawLine(pen,x+4*s,y,x+4*s,y+12*s);e.Graphics.DrawLine(pen,x+10*s,y,x+10*s,y+12*s);}
                     else{for(int i=0;i<3;i++){e.Graphics.DrawLine(pen,x,y+i*5*s,x+13*s,y+i*5*s);e.Graphics.DrawLine(pen,x+(i==1?9:4)*s,y+(i*5-2)*s,x+(i==1?9:4)*s,y+(i*5+2)*s);}}
                 }
-                TextRenderer.DrawText(e.Graphics,Text,Font,new Rectangle((int)(36*s),0,Width-(int)(40*s),Height),ForeColor,TextFormatFlags.NoPadding|TextFormatFlags.VerticalCenter|TextFormatFlags.SingleLine|TextFormatFlags.EndEllipsis);
-                if(Focused)using(var focusPen=new Pen(Color.FromArgb(98,231,188)))e.Graphics.DrawRectangle(focusPen,2,2,Width-5,Height-5);return;
+                if(!IconOnly){int left=CenterContent?(int)(x+22*s):(int)(36*s);TextRenderer.DrawText(e.Graphics,Text,Font,new Rectangle(left,0,Width-left-(int)(4*s),Height),ink,TextFormatFlags.NoPadding|TextFormatFlags.VerticalCenter|TextFormatFlags.SingleLine|TextFormatFlags.EndEllipsis);}
+                if(Focused&&ShowFocusCues&&!Rounded)using(var focusPen=new Pen(Color.FromArgb(98,231,188)))e.Graphics.DrawRectangle(focusPen,2,2,Width-5,Height-5);return;
             }
+            if(Rounded){Background(e.Graphics);TextRenderer.DrawText(e.Graphics,Text,Font,ClientRectangle,Enabled?ForeColor:Color.FromArgb(119,136,158),TextFormatFlags.HorizontalCenter|TextFormatFlags.VerticalCenter|TextFormatFlags.SingleLine|TextFormatFlags.EndEllipsis|TextFormatFlags.NoPadding);return;}
             if(Enabled){base.OnPaint(e);return;}
             e.Graphics.Clear(BackColor);
             TextRenderer.DrawText(e.Graphics,Text,Font,ClientRectangle,Color.FromArgb(119,136,158),BackColor,
                 TextFormatFlags.HorizontalCenter|TextFormatFlags.VerticalCenter|TextFormatFlags.SingleLine|TextFormatFlags.EndEllipsis);
         }
+    }
+
+    public sealed class SegmentedSurface : Panel {
+        public SegmentedSurface(){DoubleBuffered=true;BackColor=Color.FromArgb(32,36,40);}
+        protected override void OnPaintBackground(PaintEventArgs e){e.Graphics.Clear(Parent==null?BackColor:Parent.BackColor);float d=8*DesktopDpi.ForControl(this);var r=new RectangleF(.5f,.5f,Width-1,Height-1);using(var p=new System.Drawing.Drawing2D.GraphicsPath()){p.AddArc(r.Left,r.Top,d,d,180,90);p.AddArc(r.Right-d,r.Top,d,d,270,90);p.AddArc(r.Right-d,r.Bottom-d,d,d,0,90);p.AddArc(r.Left,r.Bottom-d,d,d,90,90);p.CloseFigure();e.Graphics.SmoothingMode=System.Drawing.Drawing2D.SmoothingMode.AntiAlias;using(var b=new SolidBrush(BackColor))e.Graphics.FillPath(b,p);using(var pen=new Pen(Color.FromArgb(52,57,63)))e.Graphics.DrawPath(pen,p);}}
     }
 
     public sealed class DarkCheckBox : CheckBox {
@@ -198,6 +221,8 @@ namespace PhoneExit {
     }
 
     public sealed class DarkSelect : Control {
+        public readonly Dictionary<string,Image> ItemImages=new Dictionary<string,Image>();
+        public bool Rounded {get;set;}
         public Collection<string> Items { get; private set; }
         public string SelectedItem {get{return selected<0?null:Items[selected];}set{SelectedIndex=Items.IndexOf(value);}}
         public event EventHandler SelectedIndexChanged;
@@ -220,7 +245,10 @@ namespace PhoneExit {
         int D(int value) { return (int)Math.Round(value * DesktopDpi.ForControl(this)); }
         protected override void OnPaint(PaintEventArgs e) {
             e.Graphics.Clear(BackColor);
-            var text = new Rectangle(D(12),0,Math.Max(0,Width-D(46)),Height);
+            if(Rounded){e.Graphics.Clear(Parent==null?BackColor:Parent.BackColor);using(var path=new System.Drawing.Drawing2D.GraphicsPath()){int d=D(8);var r=new Rectangle(1,1,Width-3,Height-3);path.AddArc(r.Left,r.Top,d,d,180,90);path.AddArc(r.Right-d,r.Top,d,d,270,90);path.AddArc(r.Right-d,r.Bottom-d,d,d,0,90);path.AddArc(r.Left,r.Bottom-d,d,d,90,90);path.CloseFigure();e.Graphics.SmoothingMode=System.Drawing.Drawing2D.SmoothingMode.AntiAlias;using(var brush=new SolidBrush(BackColor))e.Graphics.FillPath(brush,path);}}
+            Image image;bool hasImage=ItemImages.TryGetValue(Text,out image)&&image!=null;
+            if(hasImage)e.Graphics.DrawImage(image,new Rectangle(D(10),(Height-D(18))/2,D(18),D(18)));
+            var text = new Rectangle(D(hasImage?36:12),0,Math.Max(0,Width-D(hasImage?70:46)),Height);
             TextRenderer.DrawText(e.Graphics,Text,Font,text,Enabled ? ForeColor : Color.FromArgb(157,170,188),BackColor,
                 TextFormatFlags.NoPadding | TextFormatFlags.SingleLine | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis);
             using(var pen = new Pen(Enabled ? ForeColor : Color.FromArgb(157,170,188),D(1))) {
@@ -231,6 +259,7 @@ namespace PhoneExit {
             // Keep the complete outline visible while the popup owns focus.
             int border=Math.Max(1,D(1)), inset=1;
             using(var brush=new SolidBrush(Focused || activeMenu!=null ? Color.FromArgb(98,231,188) : Color.FromArgb(52,57,63))){
+                if(Rounded){using(var path=new System.Drawing.Drawing2D.GraphicsPath()){int d=D(8);var r=new Rectangle(1,1,Width-3,Height-3);path.AddArc(r.Left,r.Top,d,d,180,90);path.AddArc(r.Right-d,r.Top,d,d,270,90);path.AddArc(r.Right-d,r.Bottom-d,d,d,0,90);path.AddArc(r.Left,r.Bottom-d,d,d,90,90);path.CloseFigure();e.Graphics.SmoothingMode=System.Drawing.Drawing2D.SmoothingMode.AntiAlias;using(var pen=new Pen(brush,D(1)))e.Graphics.DrawPath(pen,path);}return;}
                 e.Graphics.FillRectangle(brush,inset,inset,Width-2*inset,border);
                 e.Graphics.FillRectangle(brush,inset,Height-inset-border,Width-2*inset,border);
                 e.Graphics.FillRectangle(brush,inset,inset,border,Height-2*inset);
@@ -240,13 +269,15 @@ namespace PhoneExit {
         void OpenMenu() {
             if(!Enabled || Items.Count == 0) return;
             if(activeMenu!=null){activeMenu.Close();return;}
-            var menu = new ContextMenuStrip {ShowImageMargin=false,ShowCheckMargin=true,Font=Font,ForeColor=ForeColor,BackColor=BackColor};
+            var menu = new ContextMenuStrip {ShowImageMargin=ItemImages.Count>0,ShowCheckMargin=true,Font=Font,ForeColor=ForeColor,BackColor=BackColor};
             menu.MinimumSize=new Size(Width,0);
+            int menuWidth=Width;if(ItemImages.Count>0)foreach(var label in Items)menuWidth=Math.Max(menuWidth,TextRenderer.MeasureText(label,Font).Width+D(90));
             activeMenu=menu;Invalidate();
             menu.Renderer = new DarkMenuRenderer();
             for(int i=0;i<Items.Count;i++) {
                 int index = i;
-                var item = new ToolStripMenuItem(Items[i]) {Checked=i==selected,ForeColor=ForeColor,BackColor=BackColor,AutoSize=false,Size=new Size(Width-D(4),D(36))};
+                var item = new ToolStripMenuItem(Items[i]) {Checked=i==selected,ForeColor=ForeColor,BackColor=BackColor,AutoSize=false,Size=new Size(menuWidth-D(4),D(36))};
+                Image image;if(ItemImages.TryGetValue(Items[i],out image)){item.Image=image;item.ImageScaling=ToolStripItemImageScaling.SizeToFit;}menu.ImageScalingSize=new Size(D(18),D(18));
                 item.Click += (sender,args) => {SelectedIndex=index; Focus();}; menu.Items.Add(item);
             }
             menu.Closed += (sender,args) => {

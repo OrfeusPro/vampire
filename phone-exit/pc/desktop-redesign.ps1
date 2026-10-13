@@ -36,11 +36,29 @@ $fleetState=New-Object PhoneExit.DarkSelect;$fleetState.AccessibleName='Филь
 foreach($text in @('Статус: все','В сети','Не в сети','Бот работает','Ошибка бота')){$null=$fleetState.Items.Add($text)};$fleetState.SelectedIndex=0;$form.Controls.Add($fleetState)
 $fleetSort=New-Object PhoneExit.DarkSelect;$fleetSort.AccessibleName='Сортировка устройств';$fleetSort.BackColor=$buttonSurface;$fleetSort.ForeColor=$form.ForeColor
 foreach($text in @('Имя ↑','Имя ↓','Сначала в сети','По стране')){$null=$fleetSort.Items.Add($text)};$fleetSort.SelectedIndex=0;$form.Controls.Add($fleetSort)
+$script:fleetFilterSync=$false;$script:fleetAdvanced=$false;$script:fleetCountryCodes=@{}
+$fleetExtra=@{}
+foreach($spec in @(@('Country','Страна'),@('Connection','Связь'),@('VpnState','VPN'),@('ApkVersion','APK'),@('BotVersion','Версия бота'),@('Provider','Поставщик'))){
+    $control=New-Object PhoneExit.DarkSelect;$control.AccessibleName='Фильтр: '+$spec[1];$control.BackColor=$buttonSurface;$control.ForeColor=$form.ForeColor
+    $null=$control.Items.Add($spec[1]+': все');$control.SelectedIndex=0;$form.Controls.Add($control);$fleetExtra[$spec[0]]=$control
+}
+foreach($text in @('Онлайн','Офлайн')){$null=$fleetExtra.Connection.Items.Add($text)}
+foreach($text in @('Включён','Выключен','Трафик заблокирован')){$null=$fleetExtra.VpnState.Items.Add($text)}
+foreach($text in @('На паузе','Ожидает','Запускается','Остановлен','Без бота')){$null=$fleetState.Items.Add($text)}
+$captionTips.SetToolTip($fleetExtra.VpnState,'VPN через этот ПК; не состояние стороннего VPN на телефоне')
 $gridButton=ButtonAt 'Карточки' 0 0 90;$tableButton=ButtonAt 'Таблица' 0 0 90
 $densityButton=ButtonAt 'XS' 0 0 40;$densityButton.AccessibleName='Плотность карточек';$captionTips.SetToolTip($densityButton,'Компактные / крупные карточки')
+$advancedButton=ButtonAt '' 0 0 34;$advancedButton.NavigationIcon='settings';$advancedButton.IconOnly=$true;$advancedButton.AccessibleName='Расширенные фильтры';$captionTips.SetToolTip($advancedButton,'Показать / скрыть расширенные фильтры')
+$gridButton.Text='';$gridButton.NavigationIcon='devices';$gridButton.IconOnly=$true;$gridButton.AccessibleName='Карточки';$captionTips.SetToolTip($gridButton,'Карточки')
+$tableButton.Text='';$tableButton.NavigationIcon='list';$tableButton.IconOnly=$true;$tableButton.AccessibleName='Таблица';$captionTips.SetToolTip($tableButton,'Таблица')
+foreach($control in $form.Controls){if($control -is [PhoneExit.DarkSelect] -or $control -is [PhoneExit.DarkButton]){$control.Rounded=$true}}
 $selectAll=New-Object Windows.Forms.CheckBox;$selectAll.Text='Выбрать все';$selectAll.ForeColor=$accent;$selectAll.FlatStyle='Flat';$selectAll.AccessibleName='Выбрать все видимые устройства';$form.Controls.Add($selectAll)
 $bulkStart=ButtonAt 'Запустить' 0 0 120;$bulkPause=ButtonAt 'Пауза' 0 0 110
-$bulkSettings=ButtonAt 'Копировать' 0 0 130
+$bulkSettings=ButtonAt 'Настроить бота' 0 0 146
+$bulkStart.NavigationIcon='play';$bulkPause.NavigationIcon='pause';$bulkSettings.NavigationIcon='settings'
+foreach($button in @($bulkStart,$bulkPause,$bulkSettings)){$button.CenterContent=$true}
+$viewSwitch=New-Object PhoneExit.SegmentedSurface;$form.Controls.Add($viewSwitch)
+foreach($button in @($gridButton,$tableButton,$densityButton)){$viewSwitch.Controls.Add($button);$button.Borderless=$true;$button.Rounded=$true}
 $selectionLabel=LabelAt '' 0 0 200 24;$selectionLabel.ForeColor=$muted;$selectionLabel.Font=[Drawing.Font]::new('Segoe UI',9)
 $connectTitle=LabelAt 'Выход через телефон' 0 0 300 26;$connectTitle.Font=[Drawing.Font]::new('Segoe UI Semibold',14)
 $selectedPhoneLabel=LabelAt 'Выберите телефон в списке' 0 0 300 52;$selectedPhoneLabel.ForeColor=$muted;$selectedPhoneLabel.Font=[Drawing.Font]::new('Segoe UI',10)
@@ -81,23 +99,50 @@ function UpdateFleetSelection {
     $bulkSettings.Enabled=$fleet.SelectedCount -gt 0
 }
 function RefreshFleet {
+    if($script:fleetFilterSync){return}
     $phones=[Collections.Generic.List[PhoneExit.FleetPhone]]::new();$online=0;$running=0;$errors=0
     for($i=0;$i -lt $script:phoneRows.Count;$i++){
         $phone=$script:phoneRows[$i];$bot=$script:botPhoneBadges[[string]$phone.id]
         $row=[PhoneExit.FleetPhone]::new();$row.Key=[string]$phone.id;$row.Index=$i;$row.Model=[string]$phone.name;$row.Name=$row.Model;$row.Country=[string]$phone.country
         $row.Online=[bool]$phone.online;$row.Busy=[bool]$phone.busy;$row.Flag=CountryFlag $phone.country
         $row.ApkVersion=if($phone.versionName){[string]$phone.versionName}else{''}
+        $row.Group=[string]$phone.group
+        $row.VpnState=if([string]$script:selectedPhone -eq $row.Key -and $script:vpnState -eq 'active'){if($script:transportReady){'active'}else{'blocked'}}else{'off'}
         $row.Fresh=$row.Online -and $bot -and !$bot.botStatusStale -and ([DateTime]::UtcNow-$script:botBadgeLast).TotalSeconds -le 15
         $row.Pending=$script:botRowJobs.ContainsKey([string]$phone.id)
         if($bot){$row.BotId=if($bot.bot.botId){[string]$bot.bot.botId}else{[string]$bot.profile.botId};$row.BotState=[string]$bot.bot.status;if($bot.profile.identity.characterName){$row.Name=[string]$bot.profile.identity.characterName}}
+        if($bot){$row.BotVersion=[string]$bot.bot.version;$row.Provider=[string]$bot.profile.identity.provider;if($bot.profile.identity.group){$row.Group=[string]$bot.profile.identity.group}}
+        $row.BotName=if($row.BotId -eq 'lordnine'){'Lord Nine'}else{$row.BotId}
         $row.BotText=if(!$row.BotId){'Без бота'}else{switch($row.BotState){'running'{'Работает'}'paused'{'На паузе'}'error'{'Ошибка'}'stopped'{'Остановлен'}'starting'{'Запускается'}'waiting'{'Ожидает'}default{'Назначен'}}}
         if($row.BotId){$row.GameIcon=BotGameIcon $row.BotId;if(!$row.Fresh){$row.BotText='Последнее: '+$row.BotText}}
         if($row.Online){$online++};if($row.Fresh -and $row.BotState -eq 'running'){$running++};if($row.Fresh -and $row.BotState -eq 'error'){$errors++}
-        $query=$fleetSearch.Text.Trim();if($query -and ($row.Name+' '+$row.Model+' '+$row.Country+' '+(CountryName $phone.country)).IndexOf($query,[StringComparison]::OrdinalIgnoreCase) -lt 0){continue}
-        if($fleetGame.SelectedIndex -eq 1 -and $row.BotId -ne 'lordnine'){continue};if($fleetGame.SelectedIndex -eq 2 -and $row.BotId){continue}
-        if(($fleetState.SelectedIndex -eq 1 -and !$row.Online) -or ($fleetState.SelectedIndex -eq 2 -and $row.Online) -or ($fleetState.SelectedIndex -eq 3 -and (!$row.Fresh -or $row.BotState -ne 'running')) -or ($fleetState.SelectedIndex -eq 4 -and (!$row.Fresh -or $row.BotState -ne 'error'))){continue}
         $phones.Add($row)
     }
+    $script:fleetFilterSync=$true
+    try{
+        foreach($field in @('Country','ApkVersion','BotVersion','Provider')){
+            $control=$fleetExtra[$field];$old=[string]$control.SelectedItem
+            $oldCode=if($field -eq 'Country'){$script:fleetCountryCodes[$old]}else{''}
+            if($field -eq 'Country'){
+                $script:fleetCountryCodes=@{};$control.ItemImages.Clear()
+                $values=@($phones|ForEach-Object {$code=$_.Country;$label=CountryName $code;$script:fleetCountryCodes[$label]=$code;$control.ItemImages[$label]=CountryFlag $code;$label}|Sort-Object -Unique)
+            }else{$values=@($phones|ForEach-Object {if($_.$field){[string]$_.$field}else{'Не указано'}}|Sort-Object -Unique)}
+            if($control.SelectedIndex -gt 0 -and $values -notcontains $old){$values=@($values)+$old;if($field -eq 'Country'){$script:fleetCountryCodes[$old]=$oldCode;$control.ItemImages[$old]=CountryFlag $oldCode}}
+            $values=@($values|Sort-Object)
+            $items=@([string]$control.Items[0])+$values
+            if(($items -join "`n") -ne (@($control.Items|ForEach-Object {[string]$_}) -join "`n")){
+                $control.SelectedIndex=-1;$control.Items.Clear();foreach($item in $items){$null=$control.Items.Add($item)}
+                $control.SelectedIndex=[Math]::Max(0,$control.Items.IndexOf($old))
+            }
+        }
+    }finally{$script:fleetFilterSync=$false}
+    $conditions=[PhoneExit.FleetFilter]::new();$conditions.Connection=$fleetExtra.Connection.SelectedIndex
+    foreach($field in @('Country','ApkVersion','BotVersion','Provider')){if($fleetExtra[$field].SelectedIndex -gt 0){$value=[string]$fleetExtra[$field].SelectedItem;$conditions.$field=if($field -eq 'Country'){[string]$script:fleetCountryCodes[$value]}elseif($value -eq 'Не указано'){''}else{$value}}}
+    if($fleetExtra.VpnState.SelectedIndex -gt 0){$conditions.VpnState=@('','active','off','blocked')[$fleetExtra.VpnState.SelectedIndex]}
+    if($fleetGame.SelectedIndex -gt 0){$conditions.BotId=if($fleetGame.SelectedIndex -eq 1){'lordnine'}else{''}}
+    if($fleetState.SelectedIndex -ge 3){$conditions.State=@('','','','running','error','paused','waiting','starting','stopped','none')[$fleetState.SelectedIndex]}
+    $query=$fleetSearch.Text.Trim()
+    $phones=@($phones|Where-Object {$conditions.Matches($_) -and ($fleetState.SelectedIndex -ne 1 -or $_.Online) -and ($fleetState.SelectedIndex -ne 2 -or !$_.Online) -and (!$query -or ($_.Name+' '+$_.Model+' '+$_.Country+' '+(CountryName $_.Country)+' '+$_.Key+' '+$_.Provider+' '+$_.Group).IndexOf($query,[StringComparison]::OrdinalIgnoreCase) -ge 0)})
     $sorted=switch($fleetSort.SelectedIndex){1{@($phones|Sort-Object Name -Descending)}2{@($phones|Sort-Object @{Expression='Online';Descending=$true},Name)}3{@($phones|Sort-Object Country,Name)}default{@($phones|Sort-Object Name)}}
     $fleet.SetPhones([PhoneExit.FleetPhone[]]$sorted)
     $fleetSummary.Text="Устройств: $($script:phoneRows.Count)     ·     В сети: $online     ·     Боты работают: $running     ·     Ошибки: $errors"
@@ -108,12 +153,21 @@ function RefreshFleet {
     $sidebarNote.Text=if($script:vpnState -eq 'active'){if($script:transportReady){'VPN активен'}else{'Трафик заблокирован'}}elseif($script:transportReady){'Прокси подключён'}else{'Личные телефоны'}
 }
 foreach($filter in @($fleetGame,$fleetState,$fleetSort)){$filter.Add_SelectedIndexChanged({RefreshFleet})}
+foreach($filter in $fleetExtra.Values){$filter.Add_SelectedIndexChanged({RefreshFleet})}
 $fleetSearch.Add_TextChanged({RefreshFleet})
 $fleet.Add_SelectionChanged({UpdateFleetSelection})
 $selectAll.Add_CheckedChanged({if(!$script:fleetSync){$fleet.SelectAll($selectAll.Checked)}})
 $gridButton.Add_Click({$fleet.Table=$false;UpdateWindowLayout})
 $tableButton.Add_Click({$fleet.Table=$true;UpdateWindowLayout})
 $densityButton.Add_Click({$fleet.Compact=!$fleet.Compact;$densityButton.Text=if($fleet.Compact){'XS'}else{'M'}})
+$advancedButton.Add_Click({SetFleetAdvanced (!$script:fleetAdvanced)})
+function SetFleetAdvanced([bool]$enabled){
+    $script:fleetAdvanced=$enabled
+    if(!$enabled){$script:fleetFilterSync=$true;try{foreach($field in @('Connection','VpnState','ApkVersion','BotVersion','Provider')){$fleetExtra[$field].SelectedIndex=0}}finally{$script:fleetFilterSync=$false};RefreshFleet}
+    $advancedButton.ForeColor=if($enabled){$accent}else{$muted};UpdateWindowLayout
+}
+$form.Add_MouseDown({param($sender,$e)if($script:desktopView -eq 'devices' -and $e.Button -eq 'Left'){$fleet.ClearSelection()}})
+foreach($label in @($pageTitle,$pageSubtitle,$fleetSummary,$selectionLabel)){$label.Add_MouseDown({param($sender,$e)if($e.Button -eq 'Left'){$fleet.ClearSelection()}})}
 $navDevices.Add_Click({SetDesktopView 'devices'})
 $navConnection.Add_Click({SetDesktopView 'connection'})
 function FindFleetPhone([string]$id) {
@@ -152,7 +206,13 @@ $navDevices.NavigationIcon='devices';$navConnection.NavigationIcon='connection';
 foreach($button in @($minimizeWindow,$maximizeWindow,$closeWindow)){$button.BackColor=$form.BackColor}
 $sidebarNote.Cursor='Hand';$sidebarNote.Add_Click({SetDesktopView 'connection'})
 $tabIndex=0
-foreach($control in @($navDevices,$navConnection,$script:botsButton,$accountButton,$fleetSearch,$fleetGame,$fleetState,$fleetSort,$selectAll,$bulkStart,$bulkPause,$bulkSettings,$gridButton,$tableButton,$densityButton,$fleet,$phoneList,$mode,$chooseApps,$start,$stopButton,$removePhone)){$control.TabIndex=$tabIndex;$tabIndex++}
+foreach($control in @($fleetGame,$fleetState,$fleetSort)+@($fleetExtra.Values)){$control.Font=[Drawing.Font]::new('Segoe UI',9)}
+$selectAll.Font=[Drawing.Font]::new('Segoe UI',9)
+foreach($control in $form.Controls){if($control -is [PhoneExit.DarkSelect] -or $control -is [PhoneExit.DarkButton]){$control.Rounded=$true}}
+foreach($button in @($navDevices,$navConnection,$script:botsButton,$accountButton)){$button.Borderless=$true}
+foreach($control in @($navDevices,$navConnection,$script:botsButton,$accountButton,$fleetSearch,$fleetGame,$fleetState,$fleetSort,$advancedButton,$viewSwitch,$selectAll,$bulkStart,$bulkPause,$bulkSettings,$fleet,$phoneList,$mode,$chooseApps,$start,$stopButton,$removePhone)){$control.TabIndex=$tabIndex;$tabIndex++}
+$gridButton.TabIndex=0;$tableButton.TabIndex=1;$densityButton.TabIndex=2
+foreach($control in $fleetExtra.Values){$control.TabIndex=$tabIndex;$tabIndex++}
 function UpdateWindowLayout {
     if(!$script:redesignReady -or $form.WindowState -eq 'Minimized'){return}
     $w=$form.ClientSize.Width/$script:uiScale;$h=$form.ClientSize.Height/$script:uiScale
@@ -162,28 +222,37 @@ function UpdateWindowLayout {
     PlaceControl $badge 204 12 ($w-390) 25
     PlaceControl $minimizeWindow ($w-116) 8 32 32;PlaceControl $maximizeWindow ($w-80) 8 32 32;PlaceControl $closeWindow ($w-44) 8 32 32
     $maximizeWindow.RestoredIcon=$form.WindowState -eq 'Maximized'
-    foreach($button in @($navDevices,$navConnection,$script:botsButton,$accountButton)){$button.ForeColor=$muted;$button.BackColor=$title.BackColor}
+    foreach($button in @($navDevices,$navConnection,$script:botsButton,$accountButton)){$button.ForeColor=$muted;$button.BackColor=$title.BackColor;$button.SurroundColor=$title.BackColor}
     PlaceControl $navDevices 12 92 168 38;PlaceControl $navConnection 12 136 168 38;PlaceControl $script:botsButton 12 180 168 38;PlaceControl $accountButton 12 ($h-104) 168 38;PlaceControl $sidebarNote 24 ($h-54) 155 24
     $active=if($devices){$navDevices}else{$navConnection};$active.BackColor=[Drawing.ColorTranslator]::FromHtml('#263e34');$active.ForeColor=$accent
     $pageTitle.Text=if($devices){'Устройства'}else{'Подключение'};$pageSubtitle.Text=if($devices){'Все устройства / Личный список'}else{'Интернет через личный телефон'}
     PlaceControl $pageTitle $x 65 $width 38;PlaceControl $pageSubtitle $x 106 $width 25
-    $deviceControls=@($fleet,$fleetSummary,$fleetSearch,$fleetGame,$fleetState,$fleetSort,$gridButton,$tableButton,$densityButton,$selectAll,$bulkStart,$bulkPause,$bulkSettings,$selectionLabel)
+    $deviceControls=@($fleet,$fleetSummary,$fleetSearch,$fleetGame,$fleetState,$fleetSort,$viewSwitch,$selectAll,$bulkStart,$bulkPause,$bulkSettings,$selectionLabel)
     foreach($control in $deviceControls){$control.Visible=$devices}
+    foreach($control in $fleetExtra.Values){$control.Visible=$devices}
+    foreach($field in @('Connection','VpnState','ApkVersion','BotVersion','Provider')){$fleetExtra[$field].Visible=$devices -and $script:fleetAdvanced}
+    $advancedButton.Visible=$devices
     foreach($control in @($status,$pingLabel,$mode,$start,$stopButton,$phoneList,$removePhone,$connectTitle,$selectedPhoneLabel,$modeTitle,$safetyLabel)){$control.Visible=!$devices}
     $chooseApps.Visible=!$devices -and $mode.SelectedIndex -eq 1;$appNote.Visible=$chooseApps.Visible
     $heading.Visible=$false;$phoneColumnHeading.Visible=$false;$providerColumnHeading.Visible=$false;$botColumnHeading.Visible=$false
     if($script:personalMode){$apkFolder.Visible=!$devices}else{$phoneName.Visible=!$devices;$addPhone.Visible=!$devices}
     $code.Visible=!$script:personalMode -and !$devices;$copy.Visible=$code.Visible
     PlaceControl $fleetSummary $x 139 $width 26
-    $searchWidth=[Math]::Min(326,[Math]::Max(140,$width-420))
-    PlaceControl $fleetSearch $x 188 $searchWidth 34
-    PlaceControl $fleetGame ($x+$searchWidth+8) 188 120 34;PlaceControl $fleetState ($x+$searchWidth+136) 188 140 34;PlaceControl $fleetSort ($x+$searchWidth+284) 188 136 34
-    PlaceControl $selectAll $x 235 135 32;PlaceControl $bulkStart ($x+143) 235 110 32;PlaceControl $bulkPause ($x+261) 235 90 32
-    PlaceControl $bulkSettings ($x+359) 235 130 32
-    PlaceControl $gridButton ($w-250) 235 88 32;PlaceControl $tableButton ($w-158) 235 88 32;PlaceControl $densityButton ($w-66) 235 42 32
+    $filterX=$x;$filterY=172;$filterRight=$x+$width-172
+    $specs=@(@($fleetSearch,326),@($fleetGame,144),@($fleetExtra.Country,170),@($fleetState,160),@($fleetSort,112))
+    foreach($spec in $specs){if($filterX -gt $x -and $filterX+$spec[1] -gt $filterRight){$filterX=$x;$filterY+=42;$filterRight=$x+$width};PlaceControl $spec[0] $filterX $filterY $spec[1] 36;$filterX+=$spec[1]+8}
+    PlaceControl $advancedButton ($w-196) 172 36 36;PlaceControl $viewSwitch ($w-152) 172 128 36
+    PlaceControl $gridButton 4 4 36 28;PlaceControl $tableButton 44 4 36 28;PlaceControl $densityButton 84 4 40 28
+    if($script:fleetAdvanced){$filterX=$x;$filterY+=42;foreach($spec in @(@($fleetExtra.Connection,126),@($fleetExtra.VpnState,126),@($fleetExtra.ApkVersion,126),@($fleetExtra.BotVersion,160),@($fleetExtra.Provider,160))){if($filterX -gt $x -and $filterX+$spec[1] -gt $x+$width){$filterX=$x;$filterY+=42};PlaceControl $spec[0] $filterX $filterY $spec[1] 34;$filterX+=$spec[1]+8}}
+    $bulkY=$filterY+43
+    PlaceControl $selectAll $x $bulkY 145 36;PlaceControl $bulkStart ($x+153) $bulkY 130 36;PlaceControl $bulkPause ($x+291) $bulkY 130 36
+    PlaceControl $bulkSettings ($x+429) $bulkY 146 36
+    $viewY=$bulkY
     $gridButton.ForeColor=if(!$fleet.Table){$accent}else{$muted};$tableButton.ForeColor=if($fleet.Table){$accent}else{$muted}
-    PlaceControl $selectionLabel $x ($h-132) $width 26
-    PlaceControl $fleet $x 279 $width ($h-421)
+    $gridButton.BackColor=if(!$fleet.Table){[Drawing.ColorTranslator]::FromHtml('#263e34')}else{$surface};$tableButton.BackColor=if($fleet.Table){[Drawing.ColorTranslator]::FromHtml('#263e34')}else{$surface};$densityButton.BackColor=$surface
+    PlaceControl $selectionLabel $x ($h-56) ($width-180) 26
+    $fleetTop=$viewY+44
+    PlaceControl $fleet $x $fleetTop $width ([Math]::Max(60,$h-66-$fleetTop))
     $leftWidth=$width-330;$right=$x+$leftWidth+24
     $listHeight=if($script:personalMode){$h-370}else{$h-420}
     PlaceControl $phoneList $x 154 $leftWidth $listHeight;$phoneList.ItemHeight=UiPixel 76
@@ -199,6 +268,7 @@ function UpdateWindowLayout {
     PlaceControl $start $right $buttonY 177 44;PlaceControl $stopButton ($right+189) $buttonY 117 44
     PlaceControl $safetyLabel $right ($buttonY+58) 306 32
     PlaceControl $hint $x ($h-85) $width 43;PlaceControl $detail $x ($h-35) ($width-165) 24;PlaceControl $versionLabel ($w-180) ($h-35) 156 24
+    $hint.Visible=!$devices;$detail.Visible=!$devices
     $form.ResumeLayout();$form.Invalidate()
 }
 $script:fleetTimer=New-Object Windows.Forms.Timer;$script:fleetTimer.Interval=1000

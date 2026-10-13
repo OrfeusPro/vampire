@@ -46,7 +46,7 @@
             SetDesktopView 'devices'
             if($fleet.Bottom -gt $selectionLabel.Top -or $fleetSearch.Right -gt $fleetGame.Left -or $fleetSort.Right -gt $form.ClientSize.Width){throw 'Fleet layout overlaps toolbar or footer'}
             if($fleetSearch.Height -ne $fleetGame.Height -or $fleetSearch.Top -ne $fleetGame.Top -or $fleetSearch.Width -gt (UiPixel 326)){throw 'Search field differs from Figma dimensions or filter alignment'}
-            if($bulkSettings.Right -gt $gridButton.Left){throw 'Fleet selection toolbar overlaps view switch'}
+            if($bulkSettings.Bounds.IntersectsWith($gridButton.Bounds)){throw 'Fleet selection toolbar overlaps view switch'}
             $fleetBitmap=[Drawing.Bitmap]::new($form.Width,$form.Height)
             try{$form.DrawToBitmap($fleetBitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$fleetBitmap.Save((Join-Path $PSScriptRoot ('../.tools/fleet-'+$testSize.Width+'-preview.png')))}finally{$fleetBitmap.Dispose()}
             SetDesktopView 'connection'

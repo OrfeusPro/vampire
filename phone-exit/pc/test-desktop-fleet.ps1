@@ -53,7 +53,29 @@ foreach($scale in @(1.0,1.5)){
         $view.SetPhones([PhoneExit.FleetPhone[]]@($rows[0..4]))
         if($view.SelectedCount -ne 5){throw 'Hidden filtered devices remain selected'}
         $view.Table=$true
-        $rows[3].ApkVersion='0.8.8';$view.SetPhones([PhoneExit.FleetPhone[]]@($rows[0..4]))
+        $rows[3].ApkVersion='0.8.8';$rows[3].Provider='VMOS';$rows[3].BotVersion='1.1.18';$rows[3].Group='Фарм / A';$rows[3].VpnState='active';$view.SetPhones([PhoneExit.FleetPhone[]]@($rows[0..4]))
+        $filter=[PhoneExit.FleetFilter]::new();$filter.Provider='VMOS';$filter.ApkVersion='0.8.8';$filter.BotVersion='1.1.18';$filter.Group='Фарм / A';$filter.VpnState='active';$filter.State='running';$filter.Connection=1
+        if(!$filter.Matches($rows[3]) -or $filter.Matches($rows[2])){throw 'Combined fleet filters failed'}
+        $rows[3].Fresh=$false;if($filter.Matches($rows[3])){throw 'Stale bot matches current-state filter'};$rows[3].Fresh=$true
+        $filter.Provider='UgPhone';if($filter.Matches($rows[3])){throw 'Provider filter ignored'}
+        foreach($width in @(720,1000,1360)){
+            $view.Width=[int]($width*$scale)
+            $previous=0
+            foreach($column in 0..9){$bounds=$view.ColumnBounds($column);if($bounds.X -lt $previous -or $bounds.Width -le 0 -or $bounds.Right -gt $view.CardBounds(0).Right){throw 'Table columns overlap or escape content'};$previous=$bounds.Right}
+        }
+        $view.Dock='Fill';$window.PerformLayout()
+        $horizontal=$view.GetType().GetField('horizontal',$flags).GetValue($view)
+        if(!$horizontal.Visible){throw 'Narrow table cannot scroll horizontally'}
+        $horizontal.Value=100
+        if($view.ColumnBounds(0).X -ne -100 -or $view.CardBounds(0).X -ne -100){throw 'Horizontal scroll separates columns from rows'}
+        $horizontal.Value=100000
+        $settings=$view.ActionBounds(3,1)
+        if($settings.Right -gt $view.Width){throw 'Horizontal scroll cannot reach action column'}
+        $script:fleetTestAction=$null
+        $mouse=[Windows.Forms.MouseEventArgs]::new([Windows.Forms.MouseButtons]::Left,1,($settings.X+3),($settings.Y+3),0)
+        $view.GetType().GetMethod('OnMouseDown',$flags).Invoke($view,@($mouse.PSObject.BaseObject))
+        if($script:fleetTestAction.Key -ne 'fixture-3'){throw 'Horizontal scroll changed action target'}
+        $horizontal.Value=0
         if(!$view.AccessibilityObject.GetChild(3).Name.Contains('APK 0.8.8')){throw 'APK version missing from accessibility'}
         $headerHit=$view.GetType().GetMethod('Hit',$flags).Invoke($view,@([Drawing.Point]::new(10,10)))
         if($headerHit -ne -1){throw 'Table header selects a phone'}
@@ -61,6 +83,10 @@ foreach($scale in @(1.0,1.5)){
         $tableShot=[Drawing.Bitmap]::new($window.Width,$window.Height)
         try{$window.DrawToBitmap($tableShot,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$tableShot.Save((Join-Path $PSScriptRoot "../.tools/fleet-table-$scale.png"))}finally{$tableShot.Dispose()}
         if($view.CardBounds(1).X -ne 0 -or $view.CardBounds(1).Y -le $view.CardBounds(0).Y){throw 'Table view failed'}
+        $view.SelectAll($true)
+        $empty=[Windows.Forms.MouseEventArgs]::new([Windows.Forms.MouseButtons]::Left,1,10,($view.CardBounds(4).Bottom+5),0)
+        $view.GetType().GetMethod('OnMouseDown',$flags).Invoke($view,@($empty.PSObject.BaseObject))
+        if($view.SelectedCount -ne 0 -or $view.GetType().GetField('focus',$flags).GetValue($view) -ne -1){throw 'Empty-space click retains selection highlight'}
         $view.Table=$false;$view.Compact=$false;$view.SetPhones($rows)
         $bitmap=[Drawing.Bitmap]::new($window.Width,$window.Height)
         try{$window.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$bitmap.Save((Join-Path $PSScriptRoot ('../.tools/fleet-fixture-'+$scale+'-preview.png')))}finally{$bitmap.Dispose()}
