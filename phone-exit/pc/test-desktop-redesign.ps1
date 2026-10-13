@@ -36,6 +36,8 @@
         }finally{$script:selectedPhone=$savedActive;$script:connectionWanted=$savedWanted;RefreshFleet}
         $bitmap=[Drawing.Bitmap]::new($form.Width,$form.Height)
         try{$form.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/redesign-connection.png'))}finally{$bitmap.Dispose()}
-        Write-Host "PASS: real directory $($script:phoneRows.Count) phones; live bot badges; search, filter, sort, selection, two sizes, grid/table and connection view. No bot commands or VPN started."
+        . (Join-Path $PSScriptRoot 'test-window-layout.ps1')
+        TestWindowLayout
+        Write-Host "PASS: real directory $($script:phoneRows.Count) phones; live bot badges; search, filter, sort, selection, two sizes, grid/table, connection and auxiliary windows. No bot commands or VPN started."
     }finally{$phoneList.SelectedIndex=$savedIndex}
 }

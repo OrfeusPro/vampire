@@ -51,7 +51,7 @@ function ShowApplicationList([switch]$Preview) {
     $list=[PhoneExit.DarkPhoneList]::new();$list.BackColor=[Drawing.ColorTranslator]::FromHtml('#192231');$list.ForeColor=$form.ForeColor;$list.Font=$form.Font;$list.ItemHeight=UiPixel 58
     $list.SetBounds((UiPixel 24),(UiPixel 154),(UiPixel 712),(UiPixel 235));$list.AccessibleName='Группы игр и приложения для VPN'
     $header=[Windows.Forms.Label]::new();$header.Text='Игры и приложения';$header.Font=[Drawing.Font]::new('Segoe UI Semibold',16);$header.SetBounds((UiPixel 24),(UiPixel 20),(UiPixel 712),(UiPixel 35))
-    $note=[Windows.Forms.Label]::new();$note.Text="Добавьте запущенную игру вместе с лаунчером в одну группу.`r`nНовые дочерние EXE обнаруживаются после запуска; первые пакеты могут уйти раньше.";$note.SetBounds((UiPixel 24),(UiPixel 60),(UiPixel 712),(UiPixel 52));$note.ForeColor=$muted
+    $note=[Windows.Forms.Label]::new();$note.Text="Добавьте запущенную игру вместе с лаунчером в одну группу.`r`nНовые дочерние EXE обнаруживаются после запуска; первые пакеты могут уйти раньше.";$note.SetBounds((UiPixel 24),(UiPixel 60),(UiPixel 712),(UiPixel 46));$note.ForeColor=$muted
     $details=[Windows.Forms.Label]::new();$details.ForeColor=$muted;$details.AutoEllipsis=$true;$details.SetBounds((UiPixel 24),(UiPixel 404),(UiPixel 712),(UiPixel 103))
     $state=@{paths=@($script:appPaths);groups=@(ReadApplicationGroups $script:appPaths);rows=@()}
     $state.paths=@(MergeApplicationPaths $state.paths @($state.groups|ForEach-Object {$_.paths}|ForEach-Object{$_}))
@@ -66,7 +66,7 @@ function ShowApplicationList([switch]$Preview) {
         $list.BeginUpdate();$list.Items.Clear();foreach($row in $state.rows){$null=$list.Items.Add($row.name)};$list.EndUpdate();$details.Text='Выберите группу. «Только эта» оставляет VPN лишь для её приложений.';foreach($i in @(2,4,5)){$buttons[$i].Enabled=$false}
     }
     $list.Add_DrawItem({param($sender,$e)
-        if($e.Index -lt 0){return};$row=$state.rows[$e.Index];$bg=if(($e.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0){[Drawing.ColorTranslator]::FromHtml('#2d3b50')}else{$sender.BackColor}
+        if($e.Index -lt 0){return};$row=$state.rows[$e.Index];$bg=if(($e.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0){[Drawing.ColorTranslator]::FromHtml('#263e34')}else{$sender.BackColor}
         $brush=[Drawing.SolidBrush]::new($bg);$e.Graphics.FillRectangle($brush,$e.Bounds);$brush.Dispose();$x=$e.Bounds.X+(UiPixel 12);$width=$e.Bounds.Width-(UiPixel 24)
         $flags=[Windows.Forms.TextFormatFlags]::EndEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter
         $caption=$row.name+$(if($row.enabled){' · VPN'}else{' · обычная сеть'})
@@ -88,7 +88,9 @@ function ShowApplicationList([switch]$Preview) {
     $buttons[2].Add_Click({if($list.SelectedIndex -ge 0){$row=$state.rows[$list.SelectedIndex];$state.paths=@($state.paths|Where-Object {$row.paths -notcontains $_});& $refresh}})
     $buttons[3].Add_Click({try{SaveApplicationSelection $state.paths $state.groups;if($script:appPaths.Count){$mode.SelectedIndex=1};$appNote.Text="Приложений: $($script:appPaths.Count) · дочерние EXE автоматически";$window.DialogResult='OK';$window.Close()}catch{$details.Text='Не удалось сохранить список приложений.'}})
     $window.Controls.AddRange([Windows.Forms.Control[]]@($header,$note,$list,$details));$window.KeyPreview=$true;$window.Add_KeyDown({param($sender,$e)if($e.KeyCode -eq 'Escape'){$window.Close()}});& $refresh
+    SetDesktopDialogStyle $window $header $list $buttons[3]
+    $buttons[3].Anchor='Bottom, Right'
     $previewTimer=$null
-    if($Preview){$previewTimer=[Windows.Forms.Timer]::new();$previewTimer.Interval=400;$previewTimer.Add_Tick({$previewTimer.Stop();$bitmap=[Drawing.Bitmap]::new($window.Width,$window.Height);try{$window.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/applications-preview.png'))}finally{$bitmap.Dispose()};$window.Close()});$previewTimer.Start()}
+    if($Preview){$previewTimer=[Windows.Forms.Timer]::new();$previewTimer.Interval=400;$previewTimer.Add_Tick({$previewTimer.Stop();SaveDesktopDialogPreview $window 'applications';$window.Close()});$previewTimer.Start()}
     try{$null=$window.ShowDialog($form)}finally{if($previewTimer){$previewTimer.Dispose()};$tip.Dispose();$header.Font.Dispose();$window.Dispose()}
 }

@@ -73,5 +73,11 @@ try {
     $taskStatusY=$taskBounds.Y+[int][Math]::Round(48*[PhoneExit.DesktopDpi]::Scale)
     $list.GetType().GetMethod('OnMouseMove',$flags).Invoke($list,@([Windows.Forms.MouseEventArgs]::new('None',0,([int][Math]::Round(26*[PhoneExit.DesktopDpi]::Scale)),$taskStatusY,0)))
     if($list.GetType().GetField('tipText',$flags).GetValue($list) -ne 'Не в сети'){throw 'Connection indicator tooltip missing'}
-    Write-Output 'PASS: dark dropdown, scrolling, correct row action target and offline/unassigned controls'
+    $check=[PhoneExit.DarkCheckBox]::new();$check.Text='Проверка';$check.Size=[Drawing.Size]::new(240,40);$check.BackColor=[Drawing.Color]::FromArgb(17,19,21);$form.Controls.Add($check)
+    $script:checkEvents=0;$check.Add_CheckedChanged({$script:checkEvents++})
+    $check.GetType().GetMethod('OnClick',$flags).Invoke($check,@([EventArgs]::Empty))
+    if(!$check.Checked -or $script:checkEvents -ne 1){throw 'Dark checkbox did not toggle exactly once'}
+    $checkBitmap=[Drawing.Bitmap]::new($check.Width,$check.Height)
+    try{$check.DrawToBitmap($checkBitmap,[Drawing.Rectangle]::new(0,0,$check.Width,$check.Height));if($checkBitmap.GetPixel(1,[int]($check.Height/2)).ToArgb() -ne [Drawing.Color]::FromArgb(98,231,188).ToArgb()){throw 'Dark checkbox missing mint checked state'}}finally{$checkBitmap.Dispose()}
+    Write-Output 'PASS: dark dropdown, checkbox, scrolling, correct row action target and offline/unassigned controls'
 }finally{$form.Close();$form.Dispose()}

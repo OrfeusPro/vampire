@@ -47,8 +47,11 @@ function ShowAccountTransfer([switch]$Preview) {
         }}catch{$message.Text=$_.Exception.Message}finally{$window.UseWaitCursor=$false;$dialog.Dispose()}
     })
     $buttons[2].Add_Click({$window.Close()});$window.KeyPreview=$true;$window.Add_KeyDown({param($sender,$e)if($e.KeyCode -eq 'Escape'){$window.Close()}})
+    SetDesktopDialogStyle $window $header $null $null
+    foreach($button in $buttons){$button.Anchor='Bottom, Left'}
+    $message.Anchor='Bottom, Left, Right'
     $previewTimer=$null
-    if($Preview){$previewTimer=[Windows.Forms.Timer]::new();$previewTimer.Interval=400;$previewTimer.Add_Tick({$previewTimer.Stop();$bitmap=[Drawing.Bitmap]::new($window.Width,$window.Height);try{$window.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/account-preview.png'))}finally{$bitmap.Dispose()};$window.Close()});$previewTimer.Start()}
+    if($Preview){$previewTimer=[Windows.Forms.Timer]::new();$previewTimer.Interval=400;$previewTimer.Add_Tick({$previewTimer.Stop();SaveDesktopDialogPreview $window 'account';$window.Close()});$previewTimer.Start()}
     try{$null=$window.ShowDialog($form)}finally{if($previewTimer){$previewTimer.Dispose()};foreach($field in $fields){$field.Clear()};$header.Font.Dispose();$window.Dispose()}
 }
 $accountButton=ButtonAt 'Аккаунт…' 850 87 180

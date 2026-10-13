@@ -94,6 +94,19 @@ namespace PhoneExit {
         }
     }
 
+    public sealed class DarkCheckBox : CheckBox {
+        public DarkCheckBox(){SetStyle(ControlStyles.UserPaint|ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer,true);AutoSize=false;}
+        protected override void OnPaint(PaintEventArgs e){
+            e.Graphics.Clear(BackColor);float s=DesktopDpi.Scale;int size=(int)Math.Round(14*s),top=(Height-size)/2;
+            var box=new Rectangle(0,top,size,size);var ink=Enabled?Color.FromArgb(98,231,188):Color.FromArgb(119,136,158);
+            using(var brush=new SolidBrush(Checked?ink:Color.FromArgb(32,36,40)))e.Graphics.FillRectangle(brush,box);
+            using(var pen=new Pen(Checked?ink:Color.FromArgb(112,123,133)))e.Graphics.DrawRectangle(pen,0,top,size-1,size-1);
+            if(Checked)using(var pen=new Pen(Color.FromArgb(16,37,30),Math.Max(1,1.5f*s)))e.Graphics.DrawLines(pen,new[]{new PointF(3*s,top+7*s),new PointF(6*s,top+10*s),new PointF(11*s,top+4*s)});
+            TextRenderer.DrawText(e.Graphics,Text,Font,new Rectangle(size+(int)(7*s),0,Width-size-(int)(7*s),Height),Enabled?ForeColor:Color.FromArgb(119,136,158),TextFormatFlags.VerticalCenter|TextFormatFlags.SingleLine|TextFormatFlags.EndEllipsis);
+            if(Focused)ControlPaint.DrawFocusRectangle(e.Graphics,new Rectangle(size+(int)(5*s),2,Width-size-(int)(5*s)-2,Height-4),ForeColor,BackColor);
+        }
+    }
+
     public sealed class CaptionButton : Button {
         public string Icon {get;set;}
         public bool RestoredIcon {get;set;}

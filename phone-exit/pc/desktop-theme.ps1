@@ -168,6 +168,7 @@ $hint.Visible=$true;$hint.SetBounds(38,611,1026,50);$hint.ForeColor=$muted;$hint
 $detail.Visible=$true;$detail.SetBounds(38,674,1026,26);$detail.Text='Wi-Fi телефона  •  Шифрование WebRTC  •  Сервер передаёт только параметры связи';$detail.ForeColor=$muted;$detail.Font=New-Object Drawing.Font('Segoe UI',9)
 $codeHeading.Visible=$false;$code.Visible=$false;$copy.Visible=$false
 $appFile=Join-Path $script:profileDirectory 'applications.json'
+. (Join-Path $PSScriptRoot 'desktop-dialogs.ps1')
 . (Join-Path $PSScriptRoot 'desktop-applications.ps1')
 . (Join-Path $PSScriptRoot 'desktop-running-apps.ps1')
 . (Join-Path $PSScriptRoot 'desktop-account.ps1')
