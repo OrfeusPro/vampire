@@ -18,9 +18,25 @@ final class AppUpdater {
         android.content.SharedPreferences p=c.getSharedPreferences("update",Context.MODE_PRIVATE);
         boolean ready=p.getInt("code",0)>BuildConfig.VERSION_CODE&&new File(c.getCacheDir(),"phone-exit-update.apk").isFile();
         String status=p.getString("status","idle");if(!ready&&status.equals("ready_for_confirmation"))status="current";
-        return new JSONObject().put("status",ready?"ready_for_confirmation":status).put("availableVersion",ready?p.getString("name",""):JSONObject.NULL).put("autoDownload",c.getSharedPreferences("control",Context.MODE_PRIVATE).getBoolean("autoUpdate",true)).put("silentInstall",false);
+        return new JSONObject().put("status",ready?"ready_for_confirmation":status).put("availableVersion",ready?p.getString("name",""):JSONObject.NULL).put("autoDownload",false).put("silentInstall",false);
     }
-    static void check(ControlAgent agent)throws Exception{
+    static void checkOnPhone(Context c)throws Exception{
+        DirectoryConfig config=DirectoryConfig.load(c);
+        if(config==null||config.account==null)throw new IOException("update_account_required");
+        android.net.ConnectivityManager manager=c.getSystemService(android.net.ConnectivityManager.class);
+        for(android.net.Network network:manager.getAllNetworks()){
+            android.net.NetworkCapabilities caps=manager.getNetworkCapabilities(network);
+            if(caps!=null&&caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI)
+                    &&caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
+                    &&caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED)){
+                // Only authenticated HTTPS through Wi-Fi: no peer, polling,
+                // accessibility permission or automatic access activation.
+                try(ControlAgent agent=new ControlAgent(c,network,config,true)){check(agent);return;}
+            }
+        }
+        throw new IOException("update_wifi_required");
+    }
+    static synchronized void check(ControlAgent agent)throws Exception{
         Context c=agent.context;android.content.SharedPreferences p=c.getSharedPreferences("update",Context.MODE_PRIVATE);
         try{
             JSONObject meta;

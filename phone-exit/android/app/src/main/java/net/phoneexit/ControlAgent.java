@@ -17,11 +17,13 @@ import org.json.*;
 final class ControlAgent implements AutoCloseable {
     static final String ENDPOINT="https://demochko.com/hosting-webrtc-probe/phone-exit-api/control.php",LABEL="phone-exit-control-v1";
     final Context context;final Network wifi;final DirectoryConfig config;
+    private final boolean updateOnly;
     private final ScheduledExecutorService loop=Executors.newSingleThreadScheduledExecutor();
-    private volatile ControlPeer direct;private volatile boolean closed;private JSONObject pending;private String pendingId;private long pendingAt,nextUpdate,nextPoll;private int failures;
+    private volatile ControlPeer direct;private volatile boolean closed;private JSONObject pending;private String pendingId;private long pendingAt,nextPoll;private int failures;
     private org.webrtc.PeerConnectionFactory peerFactory;
     private volatile JSONObject lastConnectDiagnostic;
-    ControlAgent(Context c,Network wifi,DirectoryConfig config){this.context=c;this.wifi=wifi;this.config=config;}
+    ControlAgent(Context c,Network wifi,DirectoryConfig config){this(c,wifi,config,false);}
+    ControlAgent(Context c,Network wifi,DirectoryConfig config,boolean updateOnly){this.context=c;this.wifi=wifi;this.config=config;this.updateOnly=updateOnly;}
     synchronized org.webrtc.PeerConnectionFactory peerFactory()throws Exception{
         if(closed)throw new Exception("wifi_lost");
         if(peerFactory==null){
@@ -48,7 +50,7 @@ final class ControlAgent implements AutoCloseable {
             .put("androidSdk",Build.VERSION.SDK_INT).put("processUid",android.os.Process.myUid()).put("processRoot",android.os.Process.myUid()==0).put("rootGranted",JSONObject.NULL).put("suPresent",su).put("rootProbe","passive_only");
     }
     boolean directConnected(){ControlPeer p=direct;return p!=null&&p.open();}
-    boolean active(){NetworkCapabilities caps=context.getSystemService(ConnectivityManager.class).getNetworkCapabilities(wifi);return !closed&&ExitService.enabled(context)&&caps!=null&&caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)&&caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);}
+    boolean active(){NetworkCapabilities caps=context.getSystemService(ConnectivityManager.class).getNetworkCapabilities(wifi);return !closed&&(updateOnly||ExitService.enabled(context))&&caps!=null&&caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)&&caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);}
     HttpsURLConnection connection(JSONObject body)throws Exception{
         HttpsURLConnection c=(HttpsURLConnection)wifi.openConnection(new URL(ENDPOINT));c.setInstanceFollowRedirects(false);c.setRequestMethod("POST");c.setDoOutput(true);c.setConnectTimeout(8000);c.setReadTimeout(10000);c.setRequestProperty("Content-Type","application/json");
         body.put("version",1).put("token",config.account.catalogKey());byte[] bytes=body.toString().getBytes(StandardCharsets.UTF_8);c.setFixedLengthStreamingMode(bytes.length);try(OutputStream out=c.getOutputStream()){out.write(bytes);}return c;
@@ -75,9 +77,6 @@ final class ControlAgent implements AutoCloseable {
                 JSONObject result=process(v);
                 pendingId=request;pendingAt=now;pending=crypt(config.token,result,true);
                 if(active()){api(new JSONObject().put("op","result").put("id",config.id).put("request",request).put("box",pending));pending=null;}
-            }
-            if(System.currentTimeMillis()>=nextUpdate&&context.getSharedPreferences("control",Context.MODE_PRIVATE).getBoolean("autoUpdate",true)){
-                nextUpdate=System.currentTimeMillis()+1800000;AppUpdater.check(this);
             }
             failures=0;nextPoll=System.currentTimeMillis()+(direct!=null&&direct.open()?15000:4000);
         }catch(Exception ignored){failures=Math.min(5,failures+1);nextPoll=System.currentTimeMillis()+Math.min(30000,1000L<<failures);/* Never log payloads, screenshots or keys. */}

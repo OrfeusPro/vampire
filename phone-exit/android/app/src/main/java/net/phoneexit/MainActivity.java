@@ -24,6 +24,8 @@ public final class MainActivity extends Activity {
     private ScrollView mainScroll, settingsScroll;
     private ImageButton updateButton, settingsButton;
     private boolean showingSettings;
+    private boolean checkingUpdate;
+    private android.app.AlertDialog updateProgress;
     private Button available, stop;
     private PowerMark power;
     private static final int BACKGROUND=Color.rgb(16,21,31), CARD=Color.rgb(25,35,50),
@@ -75,7 +77,7 @@ public final class MainActivity extends Activity {
         Button back=action("← На главный экран",false);add(settingsLayout,back,0);back.setOnClickListener(v->showSettings(false));
         add(settingsLayout,label("Настройки",24,TEXT),20);
         settingsButton.setOnClickListener(v->showSettings(!showingSettings));
-        updateButton.setOnClickListener(v->showUpdate());
+        updateButton.setOnClickListener(v->checkUpdateOnPhone());
         TextView version=label(getString(R.string.app_version,BuildConfig.VERSION_NAME),13,MUTED);
         add(layout,version,6);
         add(layout,label("Личный интернет. Через твои телефоны.",14,MUTED),10);
@@ -116,12 +118,9 @@ public final class MainActivity extends Activity {
         controlToggle.setOnCheckedChangeListener((button,on)->getSharedPreferences("control",MODE_PRIVATE).edit().putBoolean("enabled",on).apply());
         Button permissions=action("Включить специальные возможности",false);add(remote,permissions,10);
         permissions.setOnClickListener(v->startActivity(new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS)));
-        Switch updates=new Switch(this);updates.setText("Автоматически загружать обновления по Wi-Fi");updates.setTextColor(TEXT);
-        updates.setChecked(getSharedPreferences("control",MODE_PRIVATE).getBoolean("autoUpdate",true));add(remote,updates,16);
-        updates.setOnCheckedChangeListener((button,on)->getSharedPreferences("control",MODE_PRIVATE).edit().putBoolean("autoUpdate",on).apply());
-        add(remote,label("Удалённая команда готовит обновление. Установку подтверждают здесь и в системном окне Android.",14,MUTED),10);
+        add(remote,label("Проверяйте обновление кнопкой вверху экрана. Фоновых проверок нет. Установку подтверждают в системном окне Android.",14,MUTED),10);
         Button install=action("Установить загруженное обновление",false);add(remote,install,10);
-        install.setOnClickListener(v->{try{AppUpdater.install(this);}catch(Exception e){status.setText("Проверенного обновления пока нет. Отправьте проверку с ПК.");}});
+        install.setOnClickListener(v->{try{AppUpdater.install(this);}catch(Exception e){checkUpdateOnPhone();}});
         LinearLayout background=column(22);background.setBackground(surface(CARD,20));add(settingsLayout,background,16);
         add(background,label("Работа в фоне",18,TEXT),0);
         batteryState=label("Проверка ограничений батареи…",14,MUTED);add(background,batteryState,10);
@@ -180,15 +179,34 @@ public final class MainActivity extends Activity {
     private int dp(int value) { return Math.round(value*getResources().getDisplayMetrics().density); }
     private ImageButton headerAction(int icon,String description){ImageButton button=new ImageButton(this);button.setImageResource(icon);button.setImageTintList(ColorStateList.valueOf(MUTED));button.setBackground(surface(BACKGROUND,12));button.setPadding(dp(12),dp(12),dp(12),dp(12));button.setContentDescription(description);return button;}
     private void showSettings(boolean value){showingSettings=value;mainScroll.setVisibility(value?View.GONE:View.VISIBLE);settingsScroll.setVisibility(value?View.VISIBLE:View.GONE);settingsButton.setImageTintList(ColorStateList.valueOf(value?ACCENT:MUTED));settingsButton.setContentDescription(value?"Вернуться на главный экран":"Настройки приложения");}
+    private void checkUpdateOnPhone(){
+        if(checkingUpdate)return;
+        checkingUpdate=true;updateButton.setEnabled(false);
+        android.app.AlertDialog progress=new android.app.AlertDialog.Builder(this).setTitle("Обновление Phone Exit")
+            .setMessage("Проверяем обновление по Wi-Fi. Если найдена новая версия, она будет загружена.")
+            .setNegativeButton("Закрыть",null).show();
+        updateProgress=progress;
+        android.content.Context context=getApplicationContext();
+        new Thread(()->{
+            String failure=null;
+            try{AppUpdater.checkOnPhone(context);}catch(Exception e){failure="update_wifi_required".equals(e.getMessage())?
+                "Для проверки обновления подключите телефон к Wi-Fi.":"update_account_required".equals(e.getMessage())?
+                "Сначала привяжите телефон к своему аккаунту.":"Не удалось проверить или загрузить обновление. Повторите проверку кнопкой.";}
+            final String message=failure;
+            handler.post(()->{checkingUpdate=false;if(isFinishing()||isDestroyed())return;updateButton.setEnabled(true);progress.dismiss();updateProgress=null;
+                if(message==null)showUpdate();else new android.app.AlertDialog.Builder(this).setTitle("Обновление Phone Exit").setMessage(message).setPositiveButton("OK",null).show();});
+        },"PhoneExitUpdate").start();
+    }
     private void showUpdate(){try{
         org.json.JSONObject state=AppUpdater.state(this);boolean ready=state.optString("status").equals("ready_for_confirmation");
         android.app.AlertDialog.Builder dialog=new android.app.AlertDialog.Builder(this).setTitle("Обновление Phone Exit")
-            .setMessage(ready?"Загружена версия "+state.optString("availableVersion")+". Подтвердите установку в системном окне Android.":"Установлена версия "+BuildConfig.VERSION_NAME+". Проверенного обновления пока нет. Проверку и загрузку можно отправить с ПК; автоматическая загрузка по Wi-Fi включается в настройках.")
+            .setMessage(ready?"Загружена версия "+state.optString("availableVersion")+". Подтвердите установку в системном окне Android.":"Установлена версия "+BuildConfig.VERSION_NAME+". Нового обновления нет. Фоновые проверки отключены.")
             .setNegativeButton("Закрыть",null);
         if(ready)dialog.setPositiveButton("Установить",(d,w)->{try{AppUpdater.install(this);}catch(Exception e){status.setText("Не удалось открыть проверенное обновление. Повторите загрузку с ПК.");}});
         dialog.show();
     }catch(Exception e){status.setText("Не удалось прочитать состояние обновления.");}}
     @Override public void onBackPressed(){if(showingSettings)showSettings(false);else super.onBackPressed();}
+    @Override protected void onDestroy(){if(updateProgress!=null){updateProgress.dismiss();updateProgress=null;}super.onDestroy();}
     private LinearLayout column(int padding) {
         LinearLayout box=new LinearLayout(this); box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(padding),dp(padding),dp(padding),dp(padding)); return box;
