@@ -52,6 +52,7 @@ try {
     })
     try{$taskTimer.Start();$taskPanel.GetType().GetMethod('OpenFarmEditor',$taskFlags).Invoke($taskPanel,@())}finally{$taskTimer.Dispose()}
     if($script:taskDialogFailure){throw $script:taskDialogFailure}
+    $taskPanel.GetType().GetField('dirty',$taskFlags).SetValue($taskPanel,$false)
     $taskPanel.InitialCopyTargets=[string[]]@($taskPhones.Rows|Where-Object {$_.Tag -ne $taskInitialPhone.id}|Select-Object -First 2|ForEach-Object {[string]$_.Tag})
     $taskCopyTimer=New-Object Windows.Forms.Timer;$taskCopyTimer.Interval=250
     $script:taskCopyFailure=$null
@@ -61,6 +62,7 @@ try {
         try{
             $taskCopyList=@($taskCopyDialog.Controls|Where-Object {$_ -is [Windows.Forms.CheckedListBox]})[0]
             if($taskCopyList.CheckedIndices.Count -ne 2){throw 'Selected fleet targets were not prechecked in copy dialog'}
+            if(!@($taskCopyDialog.Controls|Where-Object {$_.Text -like 'Источник:*'}).Count){throw 'Copy source is not identified'}
             $taskCopyBitmap=[Drawing.Bitmap]::new($taskCopyDialog.Width,$taskCopyDialog.Height)
             try{$taskCopyDialog.DrawToBitmap($taskCopyBitmap,[Drawing.Rectangle]::new(0,0,$taskCopyDialog.Width,$taskCopyDialog.Height));$taskCopyBitmap.Save((Join-Path $PSScriptRoot '../.tools/bot-copy-preview.png'))}finally{$taskCopyBitmap.Dispose()}
         }catch{$script:taskCopyFailure=$_.Exception.Message}finally{$taskCopyDialog.DialogResult='Cancel';$taskCopyDialog.Close()}
@@ -70,4 +72,4 @@ try {
     $taskBitmap=New-Object Drawing.Bitmap($taskPanel.Width,$taskPanel.Height)
     try{$taskPanel.DrawToBitmap($taskBitmap,(New-Object Drawing.Rectangle(0,0,$taskPanel.Width,$taskPanel.Height)));$taskBitmap.Save((Join-Path $PSScriptRoot '../.tools/bot-panel-preview.png'))}finally{$taskBitmap.Dispose()}
     Write-Output "PASS bot panel: $($taskPhones.Rows.Count) phones, $($taskMaps.Items.Count) maps; no settings or commands sent."
-} finally {$taskPanel.Close();$taskPanel.Dispose()}
+} finally {$taskPanel.GetType().GetField('dirty',$taskFlags).SetValue($taskPanel,$false);$taskPanel.Close();$taskPanel.Dispose()}

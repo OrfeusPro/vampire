@@ -40,7 +40,7 @@ $gridButton=ButtonAt 'Карточки' 0 0 90;$tableButton=ButtonAt 'Табли
 $densityButton=ButtonAt 'XS' 0 0 40;$densityButton.AccessibleName='Плотность карточек';$captionTips.SetToolTip($densityButton,'Компактные / крупные карточки')
 $selectAll=New-Object Windows.Forms.CheckBox;$selectAll.Text='Выбрать все';$selectAll.ForeColor=$accent;$selectAll.FlatStyle='Flat';$selectAll.AccessibleName='Выбрать все видимые устройства';$form.Controls.Add($selectAll)
 $bulkStart=ButtonAt 'Запустить' 0 0 120;$bulkPause=ButtonAt 'Пауза' 0 0 110
-$bulkSettings=ButtonAt 'Настройки' 0 0 130
+$bulkSettings=ButtonAt 'Копировать' 0 0 130
 $selectionLabel=LabelAt '' 0 0 200 24;$selectionLabel.ForeColor=$muted;$selectionLabel.Font=[Drawing.Font]::new('Segoe UI',9)
 $connectTitle=LabelAt 'Выход через телефон' 0 0 300 26;$connectTitle.Font=[Drawing.Font]::new('Segoe UI Semibold',14)
 $selectedPhoneLabel=LabelAt 'Выберите телефон в списке' 0 0 300 52;$selectedPhoneLabel.ForeColor=$muted;$selectedPhoneLabel.Font=[Drawing.Font]::new('Segoe UI',10)

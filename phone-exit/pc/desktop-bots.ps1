@@ -92,7 +92,7 @@ function OpenBotPanel([string]$phoneId='', [string[]]$targetIds=@()) {
         EnsureBotGateway
         $taskSecret=$script:botApiSecret
         $taskPanel=New-Object PhoneExit.BotPanel($taskSecret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))
-        if($phoneId){$taskPanel.InitialPhoneId=$phoneId}
+        if($phoneId){$taskPanel.DevicePhoneId=$phoneId}
         $taskPanel.InitialCopyTargets=$targetIds
         $null=$taskPanel.ShowDialog($form);$taskPanel.Dispose()
     }catch{$hint.Text='Панель ботов недоступна: '+$_.Exception.Message}
