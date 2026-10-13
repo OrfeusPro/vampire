@@ -9,6 +9,7 @@ $catalog=Invoke-RestMethod 'http://127.0.0.1:17842/bot/v1/phones' -Headers @{Aut
 $phone=@($catalog.phones|Where-Object {$_.country -eq 'SG'})[0]
 if(!$phone){$phone=@($catalog.phones)[-1]}
 $flags=[Reflection.BindingFlags]'NonPublic,Instance'
+function GetDarkFlows($root){if($root -is [PhoneExit.DarkFlowPanel]){Write-Output -NoEnumerate $root};foreach($child in $root.Controls){GetDarkFlows $child}}
 foreach($id in @([string]$phone.id,'missing-test-device')) {
     $panel=New-Object PhoneExit.BotPanel($secret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))
     $panel.DevicePhoneId=$id
@@ -55,6 +56,11 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
                 }
                 for($tab=0;$tab -lt 4;$tab++){
                     $tabs.SelectedIndex=$tab;[Windows.Forms.Application]::DoEvents()
+                    foreach($flow in @(GetDarkFlows $tabs.TabPages[$tab])){
+                        $flow.PerformLayout();$tops=@($flow.Controls|ForEach-Object {$_.Top})
+                        for($pass=0;$pass -lt 10;$pass++){$flow.PerformLayout()}
+                        for($i=0;$i -lt $tops.Count;$i++){if($flow.Controls[$i].Top -ne $tops[$i]){throw "Tab $tab has unstable repeated layout"}}
+                    }
                     if($points.Count -ne $before){throw 'Tab switching changed farm points'}
                     if($tab -eq 1){
                         $picture=$panel.GetType().GetField('picture',$flags).GetValue($panel)
@@ -160,7 +166,18 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             if($moveRows.Count -ne 11){throw "Twilight Hill must show all eleven Move rows; got $($moveRows.Count)"}
             $pointList.GetType().GetMethod('OnMouseWheel',$flags).Invoke($pointList,@([Windows.Forms.MouseEventArgs]::new('None',0,10,10,-120)))
             if($pointList.AutoScrollPosition.Y -ge 0){throw 'Custom list scrollbar does not respond to the wheel'}
+            $positions=@($pointList.Controls|ForEach-Object {$_.Top})
+            for($pass=0;$pass -lt 20;$pass++){$pointList.PerformLayout()}
+            for($i=0;$i -lt $positions.Count;$i++){if($pointList.Controls[$i].Top -ne $positions[$i]){throw 'Repeated list layout accumulates scroll displacement'}}
+            for($i=1;$i -lt $pointList.Controls.Count;$i++){if($pointList.Controls[$i].Top -lt $pointList.Controls[$i-1].Bottom){throw 'Right-side list controls overlap'}}
             $pointList.AutoScrollPosition=[Drawing.Point]::Empty
+            $regionNav=$panel.GetType().GetField('regionNavigation',$flags).GetValue($panel)
+            for($pass=0;$pass -lt 3;$pass++){
+                $panel.GetType().GetMethod('SelectCatalogMap',$flags).Invoke($panel,@(0))
+                $panel.GetType().GetMethod('SelectCatalogMap',$flags).Invoke($panel,@($twilightIndex))
+                if($mapNav.Controls.Count -ne 4 -or @($regionNav.Controls|Group-Object Text|Where-Object Count -gt 1).Count -gt 0){throw 'Catalog refresh duplicates navigation rows'}
+            }
+            $moveRows=@($pointList.Controls|Where-Object {$_ -is [PhoneExit.MoveRowButton]})
             $marker=[Drawing.Bitmap]::new($picture.Width,$picture.Height)
             $markerGraphics=[Drawing.Graphics]::FromImage($marker)
             try{

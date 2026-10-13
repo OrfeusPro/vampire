@@ -10,11 +10,15 @@ namespace PhoneExit {
         public MapViewportPanel(){SetStyle(ControlStyles.Selectable,true);TabStop=true;}
     }
     public class DarkFlowPanel : FlowLayoutPanel {
+        [DllImport("user32.dll")] static extern IntPtr SendMessage(IntPtr h,int m,IntPtr w,IntPtr l);
+        public IDisposable DeferUpdates(){return new UpdateScope(this);}
+        sealed class UpdateScope : IDisposable {readonly DarkFlowPanel panel;public UpdateScope(DarkFlowPanel p){panel=p;p.SuspendLayout();if(p.IsHandleCreated)SendMessage(p.Handle,0xb,IntPtr.Zero,IntPtr.Zero);}public void Dispose(){panel.ResumeLayout(true);if(panel.IsHandleCreated)SendMessage(panel.Handle,0xb,(IntPtr)1,IntPtr.Zero);panel.Invalidate(true);}}
+        protected override CreateParams CreateParams {get{var p=base.CreateParams;p.ExStyle|=0x02000000;return p;}}
         int offset,extent,dragY,dragOffset;bool layingOut,dragging,scrollEnabled;
         public new bool AutoScroll {get{return scrollEnabled;}set{scrollEnabled=value;base.AutoScroll=false;PerformLayout();}}
         public new Point AutoScrollPosition {get{return new Point(0,-offset);}set{SetOffset(Math.Abs(value.Y));}}
         public DarkFlowPanel(){SetStyle(ControlStyles.Selectable|ControlStyles.UserPaint|ControlStyles.OptimizedDoubleBuffer|ControlStyles.AllPaintingInWmPaint,true);TabStop=true;}
-        protected override void OnLayout(LayoutEventArgs e){if(layingOut)return;layingOut=true;try{base.OnLayout(e);extent=0;foreach(Control c in Controls)if(c.Visible)extent=Math.Max(extent,c.Bottom+c.Margin.Bottom);offset=Math.Min(offset,Math.Max(0,extent-ClientSize.Height));if(scrollEnabled)foreach(Control c in Controls)c.Top-=offset;}finally{layingOut=false;}Invalidate();}
+        protected override void OnLayout(LayoutEventArgs e){if(layingOut)return;layingOut=true;try{int top=Padding.Top;foreach(Control c in Controls){if(Visible&&!c.Visible)continue;if(c.AutoSize){int width=c.MaximumSize.Width>0?c.MaximumSize.Width:c.Width;c.Size=c.GetPreferredSize(new Size(width,0));}top+=c.Margin.Top+c.Height+c.Margin.Bottom;}extent=top+Padding.Bottom;offset=Math.Min(offset,Math.Max(0,extent-ClientSize.Height));top=Padding.Top-(scrollEnabled?offset:0);foreach(Control c in Controls){if(Visible&&!c.Visible)continue;top+=c.Margin.Top;c.Location=new Point(Padding.Left+c.Margin.Left,top);top+=c.Height+c.Margin.Bottom;}}finally{layingOut=false;}Invalidate(true);}
         void SetOffset(int value){offset=Math.Max(0,Math.Min(value,Math.Max(0,extent-ClientSize.Height)));PerformLayout();Invalidate();}
         Rectangle Thumb(){int height=Math.Max(24,(int)(ClientSize.Height*(double)ClientSize.Height/Math.Max(1,extent)));height=Math.Min(ClientSize.Height,height);int top=(int)((ClientSize.Height-height)*(double)offset/Math.Max(1,extent-ClientSize.Height));return new Rectangle(ClientSize.Width-10,top,6,height);}
         protected override void OnPaint(PaintEventArgs e){base.OnPaint(e);if(!scrollEnabled||extent<=ClientSize.Height)return;using(var track=new SolidBrush(Color.FromArgb(25,28,31)))e.Graphics.FillRectangle(track,ClientSize.Width-14,0,14,ClientSize.Height);using(var ink=new SolidBrush(Color.FromArgb(112,123,133)))e.Graphics.FillRectangle(ink,Thumb());}
