@@ -12,6 +12,26 @@ foreach($scale in @(1.0,1.5)){
     })
     try{
         $window.Show();$view.SetPhones($rows);[Windows.Forms.Application]::DoEvents()
+        $accent=$view.GetType().GetMethod('StatusAccent',$flags)
+        foreach($case in @(
+            @{online=$true;fresh=$true;state='running';pending=$false;bot='lordnine';rgb=@(98,231,188)},
+            @{online=$true;fresh=$true;state='paused';pending=$false;bot='lordnine';rgb=@(240,198,127)},
+            @{online=$true;fresh=$true;state='error';pending=$false;bot='lordnine';rgb=@(242,141,157)},
+            @{online=$false;fresh=$false;state='running';pending=$false;bot='lordnine';rgb=@(242,141,157)},
+            @{online=$true;fresh=$false;state='running';pending=$false;bot='lordnine';rgb=@(78,88,94)},
+            @{online=$true;fresh=$true;state='stopped';pending=$true;bot='lordnine';rgb=@(240,198,127)},
+            @{online=$true;fresh=$true;state='running';pending=$false;bot='';rgb=@(78,88,94)}
+        )){
+            $p=[PhoneExit.FleetPhone]::new();$p.Online=$case.online;$p.Fresh=$case.fresh;$p.BotState=$case.state;$p.Pending=$case.pending;$p.BotId=$case.bot
+            $color=$accent.Invoke($view,@($p));$expected=[Drawing.Color]::FromArgb($case.rgb[0],$case.rgb[1],$case.rgb[2])
+            if($color.ToArgb() -ne $expected.ToArgb()){throw "Incorrect status accent: $($case.state)"}
+        }
+        $stripeShot=[Drawing.Bitmap]::new($view.Width,$view.Height)
+        try{
+            $view.DrawToBitmap($stripeShot,[Drawing.Rectangle]::new(0,0,$view.Width,$view.Height))
+            foreach($i in 0..2){$r=$view.CardBounds($i);$color=$stripeShot.GetPixel(($r.X+[int]($r.Width/2)),($r.Y+1));$expected=$accent.Invoke($view,@($rows[$i]));if($color.ToArgb() -ne $expected.ToArgb()){throw 'Status stripe missing from card pixels'}}
+            $stripeShot.Save((Join-Path $PSScriptRoot "../.tools/fleet-status-stripes-$scale.png"))
+        }finally{$stripeShot.Dispose()}
         $script:fleetTestAction=$null
         $view.Add_Action({param($sender,$e)$script:fleetTestAction=$e})
         $r=$view.ActionBounds(3,1)

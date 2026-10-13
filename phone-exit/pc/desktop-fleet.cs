@@ -101,6 +101,7 @@ namespace PhoneExit {
             using(var normal=new Font("Segoe UI",9*fontScale))using(var small=new Font("Segoe UI",8*fontScale))using(var bold=new Font("Segoe UI Semibold",9*fontScale)){
                 if(rows.Length==0){DrawLabel(g,"Нет устройств по выбранным условиям",normal,new Rectangle(D(12),D(24),Width-D(32),D(36)),Muted);return;}
                 for(int i=0;i<rows.Length;i++){var r=CardBounds(i);if(r.Bottom<(table?D(34):0)||r.Top>Height)continue;var p=rows[i];bool check=selected.Contains(p.Key);using(var path=Round(r,D(6)))using(var brush=new SolidBrush(check?Color.FromArgb(33,49,43):Surface))using(var pen=new Pen(check?Color.FromArgb(72,121,104):Line)){if(table){g.FillRectangle(brush,r);g.DrawLine(pen,r.Left,r.Bottom-1,r.Right,r.Bottom-1);}else{g.FillPath(brush,path);g.DrawPath(pen,path);}}if(Focused&&focus==i){using(var pen=new Pen(Mint))g.DrawRectangle(pen,r.X+D(3),r.Y+D(3),r.Width-D(6),r.Height-D(6));}
+                    if(!table){var saved=g.Save();using(var path=Round(r,D(6)))using(var stripe=new SolidBrush(StatusAccent(p))){g.SetClip(path,CombineMode.Intersect);g.FillRectangle(stripe,r.X,r.Y,r.Width,D(3));}g.Restore(saved);}
                     var box=new Rectangle(r.X+D(10),r.Y+D(12),D(13),D(13));using(var pen=new Pen(check?Mint:Muted)){g.DrawRectangle(pen,box);if(check){using(var fill=new SolidBrush(Mint))g.FillRectangle(fill,box);using(var tick=new Pen(Bg,D(1.5))){g.DrawLines(tick,new[]{new Point(box.X+D(3),box.Y+D(6)),new Point(box.X+D(6),box.Y+D(9)),new Point(box.X+D(10),box.Y+D(3))});}}}
                     DrawLabel(g,p.Name,bold,new Rectangle(r.X+D(29),r.Y+D(6),table?StatusX-D(40):r.Width-D(38),D(25)),TextColor);
                     Color state=p.Online?(p.Busy?Color.FromArgb(240,198,127):Mint):Muted;
@@ -116,6 +117,15 @@ namespace PhoneExit {
         }
         void DrawTableHeader(Graphics g,Font font){using(var brush=new SolidBrush(Bg))g.FillRectangle(brush,0,0,tileWidth,D(34));DrawLabel(g,"Устройство",font,new Rectangle(D(29),0,StatusX-D(40),D(34)),Muted);DrawLabel(g,"Связь",font,new Rectangle(StatusX,0,D(84),D(34)),Muted);DrawLabel(g,"APK",font,new Rectangle(ApkX,0,D(76),D(34)),Muted);DrawLabel(g,"Бот",font,new Rectangle(BotX,0,Math.Max(1,tileWidth-D(110)-BotX),D(34)),Muted);DrawLabel(g,"Действия",font,new Rectangle(tileWidth-D(100),0,D(96),D(34)),Muted);using(var pen=new Pen(Line))g.DrawLine(pen,0,D(34)-1,tileWidth,D(34)-1);}
         Color BotColor(FleetPhone p){return !p.Fresh?Muted:p.BotState=="error"?Color.FromArgb(242,141,157):p.BotState=="running"?Mint:p.BotState=="paused"?Color.FromArgb(240,198,127):TextColor;}
+        Color StatusAccent(FleetPhone p){
+            if(!p.Online)return Color.FromArgb(242,141,157);
+            if(p.Pending)return Color.FromArgb(240,198,127);
+            if(String.IsNullOrEmpty(p.BotId)||!p.Fresh)return Color.FromArgb(78,88,94);
+            if(p.BotState=="error")return Color.FromArgb(242,141,157);
+            if(p.BotState=="running")return Mint;
+            if(p.BotState=="paused"||p.BotState=="starting"||p.BotState=="waiting")return Color.FromArgb(240,198,127);
+            return Color.FromArgb(78,88,94);
+        }
         public Rectangle ActionBounds(int i,int action){var r=CardBounds(i);return new Rectangle(table?r.Right-D(94)+action*D(29):r.X+D(6)+action*(r.Width-D(12))/3,table?r.Y+D(18):r.Bottom-D(25),D(26),D(22));}
         string QuickOp(FleetPhone p){return p.BotState=="running"?"pause":p.BotState=="paused"?"resume":"start";}
         bool CanAct(FleetPhone p,string op){return p.Online&&p.Fresh&&!p.Pending&&!string.IsNullOrEmpty(p.BotId)&&(op=="pause"?p.BotState=="running"||p.BotState=="starting"||p.BotState=="waiting":op=="resume"?p.BotState=="paused":op=="start"?p.BotState!="running"&&p.BotState!="starting"&&p.BotState!="paused":op=="stop"?p.BotState!="stopped":false);}
