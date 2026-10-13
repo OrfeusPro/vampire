@@ -6,6 +6,34 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace PhoneExit {
+    public static class DarkScrollPaint {
+        [DllImport("user32.dll")] static extern IntPtr GetWindowDC(IntPtr window);
+        [DllImport("user32.dll")] static extern int ReleaseDC(IntPtr window,IntPtr dc);
+        public static void Paint(ScrollableControl control){
+            if(!control.IsHandleCreated)return;
+            IntPtr dc=GetWindowDC(control.Handle);if(dc==IntPtr.Zero)return;
+            try{using(var g=Graphics.FromHdc(dc)){
+                if(control.VerticalScroll.Visible)Bar(g,new Rectangle(control.ClientSize.Width,0,SystemInformation.VerticalScrollBarWidth,control.ClientSize.Height),control.VerticalScroll,true);
+                if(control.HorizontalScroll.Visible)Bar(g,new Rectangle(0,control.ClientSize.Height,control.ClientSize.Width,SystemInformation.HorizontalScrollBarHeight),control.HorizontalScroll,false);
+            }}finally{ReleaseDC(control.Handle,dc);}
+        }
+        static void Bar(Graphics g,Rectangle r,ScrollProperties scroll,bool vertical){
+            using(var track=new SolidBrush(Color.FromArgb(25,28,31)))g.FillRectangle(track,r);
+            int end=vertical?r.Width:r.Height,length=(vertical?r.Height:r.Width)-end*2;
+            if(length<=0)return;
+            int range=Math.Max(1,scroll.Maximum+1),thumb=Math.Min(length,Math.Max(end,(int)(length*(double)scroll.LargeChange/range)));
+            int offset=(int)((length-thumb)*(double)scroll.Value/Math.Max(1,range-scroll.LargeChange));
+            var bounds=vertical?new Rectangle(r.X+4,r.Y+end+offset,r.Width-8,thumb):new Rectangle(r.X+end+offset,r.Y+4,thumb,r.Height-8);
+            using(var ink=new SolidBrush(Color.FromArgb(112,123,133))){g.FillRectangle(ink,bounds);for(int i=0;i<2;i++){float x=r.X+r.Width/2f,y=r.Y+r.Height/2f;if(vertical)y=i==0?r.Y+end/2f:r.Bottom-end/2f;else x=i==0?r.X+end/2f:r.Right-end/2f;int direction=i==0?-1:1;g.FillPolygon(ink,vertical?new[]{new PointF(x-3,y-direction*2),new PointF(x+3,y-direction*2),new PointF(x,y+direction*2)}:new[]{new PointF(x-direction*2,y-3),new PointF(x-direction*2,y+3),new PointF(x+direction*2,y)});}}
+        }
+        public static bool NeedsPaint(int message){return message==0x85||message==0xf||message==0x114||message==0x115||message==0x20a||message==0x200||message==0x2a0;}
+    }
+    public class DarkFlowPanel : FlowLayoutPanel {
+        protected override void WndProc(ref Message m){base.WndProc(ref m);if(DarkScrollPaint.NeedsPaint(m.Msg))DarkScrollPaint.Paint(this);}
+    }
+    public class DarkScrollPanel : Panel {
+        protected override void WndProc(ref Message m){base.WndProc(ref m);if(DarkScrollPaint.NeedsPaint(m.Msg))DarkScrollPaint.Paint(this);}
+    }
     public static class DesktopDpi {
         [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
         [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr window);

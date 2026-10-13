@@ -12,6 +12,11 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
     $panel.DevicePhoneId=$id
     try {
         $panel.Show();$deadline=[DateTime]::UtcNow.AddSeconds(20)
+        $captions=@($panel.Controls|ForEach-Object {$_.Controls}|Where-Object {$_ -is [PhoneExit.CaptionButton]})
+        $close=@($captions|Where-Object {$_.Icon -eq 'close'})[0]
+        $maximize=@($captions|Where-Object {$_.Icon -eq 'maximize'})[0]
+        $minimize=@($captions|Where-Object {$_.Icon -eq 'minimize'})[0]
+        if($captions.Count -ne 3 -or $close.Left -le $maximize.Left -or $maximize.Left -le $minimize.Left){throw 'Window caption icons have incorrect order'}
         $rows=$panel.GetType().GetField('phones',$flags).GetValue($panel)
         do {[Windows.Forms.Application]::DoEvents();Start-Sleep -Milliseconds 50} while([DateTime]::UtcNow -lt $deadline -and ($rows.Rows.Count -eq 0 -or $panel.GetType().GetField('loading',$flags).GetValue($panel)))
         if($rows.Visible){throw 'Device settings still display the global phone list'}
@@ -41,6 +46,11 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $before=$points.Count
             foreach($width in @(1200,1440)){
                 $panel.Size=[Drawing.Size]::new($width,900)
+                foreach($action in $panel.GetType().GetField('actions',$flags).GetValue($panel)){
+                    if($action.Text -eq 'Сохранить и отправить настройки'){
+                        foreach($button in $action.Parent.Controls){if($button.Right -gt $button.Parent.ClientSize.Width -or $button.Bottom -gt $button.Parent.ClientSize.Height){throw 'Footer button overflows its container'}}
+                    }
+                }
                 for($tab=0;$tab -lt 4;$tab++){
                     $tabs.SelectedIndex=$tab;[Windows.Forms.Application]::DoEvents()
                     if($points.Count -ne $before){throw 'Tab switching changed farm points'}
@@ -111,6 +121,11 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $panel.GetType().GetMethod('UndoPointEdit',$flags).Invoke($panel,@())
             if(@($spot['map_points']).Count -ne $count){throw 'Undo did not restore original point count'}
             $snapshot=ConvertTo-Json $spot['map_points'] -Compress -Depth 10
+            $panel.GetType().GetMethod('SetZoom',$flags).Invoke($panel,@([double]1))
+            $compactMap=$picture.Size
+            $panel.Size=[Drawing.Size]::new(2400,1400);[Windows.Forms.Application]::DoEvents()
+            if($picture.Height -le $compactMap.Height+100){throw 'Map does not grow with the editor viewport'}
+            if($picture.Height -gt $picture.Parent.ClientSize.Height -or $picture.Width -gt $picture.Parent.ClientSize.Width){throw 'Fit map overflows viewport'}
             $panel.GetType().GetMethod('SetZoom',$flags).Invoke($panel,@([double]2))
             $panel.Size=[Drawing.Size]::new(1200,900);[Windows.Forms.Application]::DoEvents()
             $panel.GetType().GetField('wholeMap',$flags).SetValue($panel,$true)
@@ -141,7 +156,7 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
                 $crop=$panel.GetType().GetField('mapCrop',$flags).GetValue($panel)
                 $mx=[int]($rect.X+(.505-$crop.X)/$crop.Width*$rect.Width)
                 $my=[int]($rect.Y+(.562-$crop.Y)/$crop.Height*$rect.Height)
-                if($marker.GetPixel($mx+8,$my).G -lt 180){throw 'Farm point marker is not painted at its normalized map coordinate'}
+                if($marker.GetPixel($mx+10,$my-27).G -lt 180 -or $marker.GetPixel($mx,$my+8).A -ne 0){throw 'Triangle marker is not anchored by its lower tip at the saved coordinate'}
             }finally{$markerGraphics.Dispose();$marker.Dispose()}
             if($pointList.HorizontalScroll.Visible -or $mapNav.HorizontalScroll.Visible){throw 'Farm navigation or Move list needs horizontal scrolling'}
             $regionNav=$panel.GetType().GetField('regionNavigation',$flags).GetValue($panel)
