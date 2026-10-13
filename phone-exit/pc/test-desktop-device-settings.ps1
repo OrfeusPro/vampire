@@ -209,6 +209,17 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             $points.RemoveAt($points.Count-1);$panel.GetType().GetMethod('RefreshSpots',$flags).Invoke($panel,@($originalSpot))
             $bitmap=[Drawing.Bitmap]::new($panel.Width,$panel.Height)
             try{$panel.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$panel.Width,$panel.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/device-settings-preview.png'))}finally{$bitmap.Dispose()}
+            $savedLocation=$panel.Location;$savedSize=$panel.Size
+            foreach($screen in [Windows.Forms.Screen]::AllScreens){
+                $panel.Location=[Drawing.Point]::new(($screen.WorkingArea.Left+30),($screen.WorkingArea.Top+30));[Windows.Forms.Application]::DoEvents()
+                if($panel.MonitorDpi -ne [PhoneExit.DesktopDpi]::WindowDpi($panel)){throw 'Device editor did not adopt monitor DPI'}
+                foreach($tabIndex in @(0,1)){
+                    $tabs.SelectedIndex=$tabIndex;[Windows.Forms.Application]::DoEvents()
+                    $preview=[Drawing.Bitmap]::new($panel.Width,$panel.Height)
+                    try{$panel.DrawToBitmap($preview,[Drawing.Rectangle]::new(0,0,$panel.Width,$panel.Height));$preview.Save((Join-Path $PSScriptRoot "../.tools/device-dpi-$($panel.MonitorDpi)-tab-$tabIndex.png"))}finally{$preview.Dispose()}
+                }
+            }
+            $panel.Location=$savedLocation;[Windows.Forms.Application]::DoEvents();$panel.Size=$savedSize
             $panel.GetType().GetField('dirty',$flags).SetValue($panel,$true)
             $script:discardSeen=$false
             $timer=New-Object Windows.Forms.Timer;$timer.Interval=100

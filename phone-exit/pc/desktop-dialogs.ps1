@@ -1,5 +1,6 @@
 ﻿function SetDesktopDialogStyle($window, $header, $stretchControl, $primaryButton) {
     $surface=[Drawing.ColorTranslator]::FromHtml('#202428')
+    $window.SetLayoutDpi($form.MonitorDpi)
     $foreground=[Drawing.ColorTranslator]::FromHtml('#eef1f4')
     $background=[Drawing.ColorTranslator]::FromHtml('#111315')
     $shift=UiPixel 36
@@ -28,7 +29,7 @@
         $updatePrimary={param($sender,$event)$sender.BackColor=if($sender.Enabled){[Drawing.ColorTranslator]::FromHtml('#62e7bc')}else{[Drawing.ColorTranslator]::FromHtml('#202428')};$sender.ForeColor=if($sender.Enabled){[Drawing.ColorTranslator]::FromHtml('#10251e')}else{[Drawing.ColorTranslator]::FromHtml('#9daabc')}}
         $primaryButton.Add_EnabledChanged($updatePrimary);& $updatePrimary $primaryButton $null;$window.AcceptButton=$primaryButton
     }
-    $header.Font.Dispose();$header.Font=[Drawing.Font]::new('Segoe UI Semibold',13)
+    $header.Font.Dispose();$header.Font=[Drawing.Font]::new('Segoe UI Semibold',(13*$form.LayoutScale))
     $bar=[Windows.Forms.Panel]::new();$bar.SetBounds(0,0,$window.ClientSize.Width,(UiPixel 36));$bar.Anchor='Top, Left, Right';$bar.BackColor=$surface
     $caption=[Windows.Forms.Label]::new();$caption.Text='Phone Exit';$caption.ForeColor=$foreground;$caption.TextAlign='MiddleLeft';$caption.SetBounds((UiPixel 16),0,($window.ClientSize.Width-(UiPixel 64)),(UiPixel 36));$caption.Anchor='Top, Left, Right'
     $close=[PhoneExit.CaptionButton]::new();$close.Icon='close';$close.AccessibleName='Закрыть';$close.SetBounds(($window.ClientSize.Width-(UiPixel 44)),0,(UiPixel 44),(UiPixel 36));$close.Anchor='Top, Right';$close.BackColor=$surface;$close.ForeColor=$foreground;$close.FlatStyle='Flat';$close.FlatAppearance.BorderSize=0;$close.FlatAppearance.MouseOverBackColor=[Drawing.ColorTranslator]::FromHtml('#8c343b')
@@ -39,6 +40,8 @@
     $window.MinimumSize=$window.Size
     $window.ResumeLayout()
 }
+
+function DialogPixel($control,[double]$value){return [int][Math]::Round($value*[PhoneExit.DesktopDpi]::ForControl($control))}
 
 function TestDesktopDialogBounds($window) {
     foreach($control in $window.Controls){
@@ -56,6 +59,7 @@ function TestDesktopDialogBounds($window) {
 
 function SaveDesktopDialogPreview($window,[string]$name) {
     $original=$window.ClientSize
+    $position=$window.Location
     try{
         foreach($extra in @(0,120)){
             $window.ClientSize=[Drawing.Size]::new(($original.Width+(UiPixel $extra)),($original.Height+(UiPixel $extra)))
@@ -64,5 +68,11 @@ function SaveDesktopDialogPreview($window,[string]$name) {
             $suffix=if($extra){'-wide'}else{''}
             try{$window.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$bitmap.Save((Join-Path $PSScriptRoot ('../.tools/'+$name+$suffix+'-preview.png')))}finally{$bitmap.Dispose()}
         }
-    }finally{$window.ClientSize=$original}
+        foreach($screen in [Windows.Forms.Screen]::AllScreens){
+            $window.Location=[Drawing.Point]::new(($screen.WorkingArea.Left+30),($screen.WorkingArea.Top+30));[Windows.Forms.Application]::DoEvents()
+            TestDesktopDialogBounds $window
+            $bitmap=[Drawing.Bitmap]::new($window.Width,$window.Height)
+            try{$window.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$window.Width,$window.Height));$bitmap.Save((Join-Path $PSScriptRoot "../.tools/$name-dpi-$($window.MonitorDpi).png"))}finally{$bitmap.Dispose()}
+        }
+    }finally{$window.Location=$position;[Windows.Forms.Application]::DoEvents();$window.ClientSize=$original}
 }

@@ -278,5 +278,10 @@ function UpdateWindowLayout {
     $maximizeWindow.RestoredIcon=$form.WindowState -eq 'Maximized';$maximizeWindow.Invalidate()
     $form.ResumeLayout();$form.Invalidate()
 }
-$form.Add_ClientSizeChanged({UpdateWindowLayout})
+$form.Add_MonitorDpiChanged({
+    $script:uiScale=[single]($form.MonitorDpi/96.0)
+    if($script:fleet){$fleet.UiScale=$script:uiScale}
+    UpdateWindowLayout
+})
+$form.Add_ClientSizeChanged({if(!$form.ChangingDpi){UpdateWindowLayout}})
 UpdateWindowLayout

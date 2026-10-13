@@ -67,12 +67,12 @@ function ShowApplicationList([switch]$Preview) {
     }
     $list.Add_DrawItem({param($sender,$e)
         if($e.Index -lt 0){return};$row=$state.rows[$e.Index];$bg=if(($e.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0){[Drawing.ColorTranslator]::FromHtml('#263e34')}else{$sender.BackColor}
-        $brush=[Drawing.SolidBrush]::new($bg);$e.Graphics.FillRectangle($brush,$e.Bounds);$brush.Dispose();$x=$e.Bounds.X+(UiPixel 12);$width=$e.Bounds.Width-(UiPixel 24)
+        $brush=[Drawing.SolidBrush]::new($bg);$e.Graphics.FillRectangle($brush,$e.Bounds);$brush.Dispose();$x=$e.Bounds.X+(DialogPixel $sender 12);$width=$e.Bounds.Width-(DialogPixel $sender 24)
         $flags=[Windows.Forms.TextFormatFlags]::EndEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter
         $caption=$row.name+$(if($row.enabled){' · VPN'}else{' · обычная сеть'})
-        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$caption,$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(UiPixel 5),$width,(UiPixel 25)),$sender.ForeColor,$bg,$flags)
+        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$caption,$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(DialogPixel $sender 5),$width,(DialogPixel $sender 25)),$sender.ForeColor,$bg,$flags)
         $summary=(@($row.paths|ForEach-Object {[IO.Path]::GetFileName($_)}) -join ' · ')
-        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$summary,$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(UiPixel 30),$width,(UiPixel 22)),$muted,$bg,$flags)
+        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$summary,$sender.Font,[Drawing.Rectangle]::new($x,$e.Bounds.Y+(DialogPixel $sender 30),$width,(DialogPixel $sender 22)),$muted,$bg,$flags)
     })
     $list.Add_SelectedIndexChanged({foreach($i in @(2,4,5)){$buttons[$i].Enabled=$list.SelectedIndex -ge 0};if($list.SelectedIndex -ge 0){$row=$state.rows[$list.SelectedIndex];$details.Text=($row.name+' · EXE: '+@($row.paths).Count+"`r`n"+(@($row.paths|ForEach-Object {[IO.Path]::GetFileName($_)}) -join "`r`n"));$tip.SetToolTip($details,(@($row.paths) -join "`r`n"))}})
     $buttons[4].Add_Click({if($list.SelectedIndex -ge 0){$row=$state.rows[$list.SelectedIndex];$updated=AddApplicationGroup $state.paths $state.groups $row;$state.groups=@($updated.groups);foreach($group in $state.groups){if($group.name -eq $row.name){$group.enabled=!$row.enabled}};& $refresh}})

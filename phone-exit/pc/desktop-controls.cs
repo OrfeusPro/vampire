@@ -30,20 +30,49 @@ namespace PhoneExit {
     }
     public static class DesktopDpi {
         [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
+        [DllImport("user32.dll")] static extern bool SetProcessDpiAwarenessContext(IntPtr context);
+        [DllImport("user32.dll")] static extern IntPtr SetThreadDpiAwarenessContext(IntPtr context);
+        [DllImport("user32.dll")] static extern uint GetDpiForWindow(IntPtr window);
         [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr window);
         [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr window,int command);
         public static float Scale=1;
-        public static void Enable(){SetProcessDPIAware();using(var graphics=Graphics.FromHwnd(IntPtr.Zero))Scale=graphics.DpiX/96f;}
+        public static void Enable(){try{SetProcessDpiAwarenessContext((IntPtr)(-4));SetThreadDpiAwarenessContext((IntPtr)(-4));}catch(EntryPointNotFoundException){SetProcessDPIAware();}using(var graphics=Graphics.FromHwnd(IntPtr.Zero))Scale=graphics.DpiX/96f;}
+        public static int WindowDpi(Control control){try{uint dpi=GetDpiForWindow(control.Handle);if(dpi>0)return (int)dpi;}catch(EntryPointNotFoundException){}return (int)Math.Round(96*Scale);}
+        public static float ForControl(Control control){var window=control.FindForm() as MonitorDpiWindow;return window==null?Scale:window.MonitorDpi/96f;}
+        public static float Relative(Control control){return ForControl(control)/Scale;}
     }
 
-    public sealed class DesktopWindow : Form {
+    public class MonitorDpiWindow : Form {
+        public int MonitorDpi {get;private set;}
+        public float LayoutScale {get{return MonitorDpi/(96f*DesktopDpi.Scale);}}
+        public bool ChangingDpi {get;private set;}
+        public event EventHandler MonitorDpiChanged;
+        public MonitorDpiWindow(){MonitorDpi=(int)Math.Round(96*DesktopDpi.Scale);AutoScaleMode=AutoScaleMode.None;}
+        public void SetLayoutDpi(int dpi){if(IsHandleCreated)throw new InvalidOperationException("Set layout DPI before creating the window handle.");MonitorDpi=dpi;}
+        [StructLayout(LayoutKind.Sequential)] struct DpiRect {public int Left,Top,Right,Bottom;}
+        static void CollectFonts(Control parent,Dictionary<Control,Font> fonts){fonts[parent]=parent.Font;foreach(Control child in parent.Controls)CollectFonts(child,fonts);}
+        // Scaling is owned here, not by WinForms and Windows bitmap virtualization together.
+        public void ApplyMonitorDpi(int dpi,Rectangle bounds){
+            if(dpi<48||dpi>768||ChangingDpi)return;
+            if(dpi==MonitorDpi){if(!bounds.IsEmpty)Bounds=bounds;return;}
+            float ratio=dpi/(float)MonitorDpi;var minimum=MinimumSize;var fonts=new Dictionary<Control,Font>();CollectFonts(this,fonts);
+            ChangingDpi=true;SuspendLayout();
+            try{MonitorDpi=dpi;MinimumSize=Size.Empty;Scale(new SizeF(ratio,ratio));foreach(var pair in fonts)pair.Key.Font=new Font(pair.Value.FontFamily,pair.Value.Size*ratio,pair.Value.Style,pair.Value.Unit,pair.Value.GdiCharSet);if(!bounds.IsEmpty)Bounds=bounds;MaximizedBounds=Screen.FromControl(this).WorkingArea;}
+            finally{MinimumSize=new Size((int)Math.Round(minimum.Width*ratio),(int)Math.Round(minimum.Height*ratio));ChangingDpi=false;ResumeLayout(true);Invalidate(true);}
+            var handler=MonitorDpiChanged;if(handler!=null)handler(this,EventArgs.Empty);
+        }
+        protected override void OnHandleCreated(EventArgs e){base.OnHandleCreated(e);ApplyMonitorDpi(DesktopDpi.WindowDpi(this),Rectangle.Empty);}
+        protected override void WndProc(ref Message message){if(message.Msg==0x2e0){int dpi=(int)(message.WParam.ToInt64()&0xffff);var rect=(DpiRect)Marshal.PtrToStructure(message.LParam,typeof(DpiRect));ApplyMonitorDpi(dpi,Rectangle.FromLTRB(rect.Left,rect.Top,rect.Right,rect.Bottom));message.Result=IntPtr.Zero;return;}base.WndProc(ref message);}
+    }
+
+    public sealed class DesktopWindow : MonitorDpiWindow {
         public DesktopWindow(){DoubleBuffered=true;ResizeRedraw=true;}
         [StructLayout(LayoutKind.Sequential)] struct PointData {public int X,Y;}
         [StructLayout(LayoutKind.Sequential)] struct MinMaxData {public PointData Reserved,MaxSize,MaxPosition,MinTrackSize,MaxTrackSize;}
         protected override void WndProc(ref Message message){
             if(message.Msg==0x84 && WindowState==FormWindowState.Normal){
                 long packed=message.LParam.ToInt64();var point=PointToClient(new Point((short)packed,(short)(packed>>16)));
-                int edge=(int)Math.Ceiling(7*DesktopDpi.Scale);
+                int edge=(int)Math.Ceiling(7*DesktopDpi.ForControl(this));
                 bool left=point.X<edge,right=point.X>=ClientSize.Width-edge,top=point.Y<edge,bottom=point.Y>=ClientSize.Height-edge;
                 int hit=top?(left?13:right?14:12):bottom?(left?16:right?17:15):left?10:right?11:0;
                 if(hit!=0){message.Result=(IntPtr)hit;return;}
@@ -77,7 +106,7 @@ namespace PhoneExit {
         public string NavigationIcon {get;set;}
         protected override void OnPaint(PaintEventArgs e){
             if(!String.IsNullOrEmpty(NavigationIcon)){
-                e.Graphics.Clear(BackColor);float s=DesktopDpi.Scale,x=14*s,y=Height/2f-6*s;
+                e.Graphics.Clear(BackColor);float s=DesktopDpi.ForControl(this),x=14*s,y=Height/2f-6*s;
                 using(var pen=new Pen(ForeColor,Math.Max(1,1.2f*s))){
                     if(NavigationIcon=="devices"){for(int i=0;i<4;i++)e.Graphics.DrawRectangle(pen,x+(i%2)*8*s,y+(i/2)*8*s,4*s,4*s);}
                     else if(NavigationIcon=="connection"){e.Graphics.DrawPolygon(pen,new[]{new PointF(x,y),new PointF(x+6*s,y-2*s),new PointF(x+12*s,y),new PointF(x+12*s,y+8*s),new PointF(x+6*s,y+13*s),new PointF(x,y+8*s)});}
@@ -97,7 +126,7 @@ namespace PhoneExit {
     public sealed class DarkCheckBox : CheckBox {
         public DarkCheckBox(){SetStyle(ControlStyles.UserPaint|ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer,true);AutoSize=false;}
         protected override void OnPaint(PaintEventArgs e){
-            e.Graphics.Clear(BackColor);float s=DesktopDpi.Scale;int size=(int)Math.Round(14*s),top=(Height-size)/2;
+            e.Graphics.Clear(BackColor);float s=DesktopDpi.ForControl(this);int size=(int)Math.Round(14*s),top=(Height-size)/2;
             var box=new Rectangle(0,top,size,size);var ink=Enabled?Color.FromArgb(98,231,188):Color.FromArgb(119,136,158);
             using(var brush=new SolidBrush(Checked?ink:Color.FromArgb(32,36,40)))e.Graphics.FillRectangle(brush,box);
             using(var pen=new Pen(Checked?ink:Color.FromArgb(112,123,133)))e.Graphics.DrawRectangle(pen,0,top,size-1,size-1);
@@ -112,7 +141,7 @@ namespace PhoneExit {
         public bool RestoredIcon {get;set;}
         protected override void OnPaint(PaintEventArgs e){
             base.OnPaint(e);
-            float s=DesktopDpi.Scale,x=ClientSize.Width/2f,y=ClientSize.Height/2f;
+            float s=DesktopDpi.ForControl(this),x=ClientSize.Width/2f,y=ClientSize.Height/2f;
             using(var pen=new Pen(ForeColor,Math.Max(1,1.2f*s))){
                 if(Icon=="minimize")e.Graphics.DrawLine(pen,x-5*s,y,x+5*s,y);
                 else if(Icon=="close"){
@@ -150,7 +179,7 @@ namespace PhoneExit {
         readonly ToolTip tips=new ToolTip();
         public string Placeholder="Поиск имени, модели или страны";
         public override string Text {get{return input==null?base.Text:input.Text;}set{if(input==null)base.Text=value;else input.Text=value??"";}}
-        int D(double value){return (int)Math.Round(value*DesktopDpi.Scale);}
+        int D(double value){return (int)Math.Round(value*DesktopDpi.ForControl(this));}
         sealed class SearchClear : Button {
             public SearchClear(){FlatStyle=FlatStyle.Flat;FlatAppearance.BorderSize=0;AccessibleName="Очистить поиск";Cursor=Cursors.Hand;TabStop=false;}
             protected override void OnPaint(PaintEventArgs e){e.Graphics.Clear(BackColor);float s=DesktopDpi.Scale,x=Width/2f,y=Height/2f;using(var pen=new Pen(ForeColor,Math.Max(1,s))){e.Graphics.DrawLine(pen,x-3*s,y-3*s,x+3*s,y+3*s);e.Graphics.DrawLine(pen,x+3*s,y-3*s,x-3*s,y+3*s);}}
@@ -188,7 +217,7 @@ namespace PhoneExit {
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.Selectable,true);
             Cursor = Cursors.Hand;
         }
-        int D(int value) { return (int)Math.Round(value * DesktopDpi.Scale); }
+        int D(int value) { return (int)Math.Round(value * DesktopDpi.ForControl(this)); }
         protected override void OnPaint(PaintEventArgs e) {
             e.Graphics.Clear(BackColor);
             var text = new Rectangle(D(12),0,Math.Max(0,Width-D(46)),Height);
@@ -271,6 +300,7 @@ namespace PhoneExit {
         int selected=-1, itemHeight=80, offset, batch, dragY=-1, dragOffset;
         bool hoverScroll;
         public int ItemHeight {get{return itemHeight;}set{itemHeight=Math.Max(1,value);Changed();}}
+        protected override void ScaleControl(SizeF factor,BoundsSpecified specified){itemHeight=Math.Max(1,(int)Math.Round(itemHeight*factor.Height));base.ScaleControl(factor,specified);}
         public int SelectedIndex {
             get{return selected;}
             set{
@@ -284,7 +314,7 @@ namespace PhoneExit {
             Items=new ItemCollection(this);TabStop=true;AccessibleRole=AccessibleRole.List;
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.Selectable,true);
         }
-        int D(int value){return (int)Math.Round(value*DesktopDpi.Scale);}
+        int D(int value){return (int)Math.Round(value*DesktopDpi.ForControl(this));}
         int MaxOffset {get{return Math.Max(0,Items.Count*itemHeight-Height);}}
         void NotifySelection(){var h=SelectedIndexChanged;if(h!=null)h(this,EventArgs.Empty);}
         void Changed(){if(batch>0)return;offset=Math.Max(0,Math.Min(MaxOffset,offset));Invalidate();}

@@ -61,7 +61,7 @@ function DrawConnectionPhone($paintEvent) {
     $selected=($paintEvent.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0
     $brush=[Drawing.SolidBrush]::new([Drawing.ColorTranslator]::FromHtml($(if($selected){'#263e34'}else{'#202428'})));$g.FillRectangle($brush,$r);$brush.Dispose()
     $g.DrawImage((CountryFlag $phone.country),[Drawing.Rectangle]::new(($r.X+(UiPixel 12)),($r.Y+(UiPixel 17)),(UiPixel 24),(UiPixel 24)))
-    $font=[Drawing.Font]::new('Segoe UI Semibold',10);$small=[Drawing.Font]::new('Segoe UI',8)
+    $font=[Drawing.Font]::new('Segoe UI Semibold',(10*$form.LayoutScale));$small=[Drawing.Font]::new('Segoe UI',(8*$form.LayoutScale))
     $flags=[Windows.Forms.TextFormatFlags]::NoPadding -bor [Windows.Forms.TextFormatFlags]::SingleLine -bor [Windows.Forms.TextFormatFlags]::EndEllipsis
     [Windows.Forms.TextRenderer]::DrawText($g,(CountryName $phone.country),$font,[Drawing.Rectangle]::new(($r.X+(UiPixel 48)),($r.Y+(UiPixel 12)),($r.Width-(UiPixel 144)),(UiPixel 24)),$form.ForeColor,$flags)
     [Windows.Forms.TextRenderer]::DrawText($g,([string]$phone.name),$small,[Drawing.Rectangle]::new(($r.X+(UiPixel 48)),($r.Y+(UiPixel 39)),($r.Width-(UiPixel 60)),(UiPixel 24)),$muted,$flags)

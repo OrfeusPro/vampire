@@ -30,8 +30,8 @@ function ShowRunningApplications([switch]$Preview) {
         if($e.Index -lt 0){return};$bg=if(($e.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0){[Drawing.ColorTranslator]::FromHtml('#263e34')}else{$sender.BackColor}
         $brush=[Drawing.SolidBrush]::new($bg);$e.Graphics.FillRectangle($brush,$e.Bounds);$brush.Dispose();$path=[string]$sender.Items[$e.Index]
         $flags=[Windows.Forms.TextFormatFlags]::EndEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter
-        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,[IO.Path]::GetFileName($path),$sender.Font,[Drawing.Rectangle]::new($e.Bounds.X+(UiPixel 12),$e.Bounds.Y+(UiPixel 3),$e.Bounds.Width-(UiPixel 24),(UiPixel 24)),$sender.ForeColor,$bg,$flags)
-        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$path,$sender.Font,[Drawing.Rectangle]::new($e.Bounds.X+(UiPixel 12),$e.Bounds.Y+(UiPixel 26),$e.Bounds.Width-(UiPixel 24),(UiPixel 23)),$muted,$bg,([Windows.Forms.TextFormatFlags]::PathEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter))
+        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,[IO.Path]::GetFileName($path),$sender.Font,[Drawing.Rectangle]::new($e.Bounds.X+(DialogPixel $sender 12),$e.Bounds.Y+(DialogPixel $sender 3),$e.Bounds.Width-(DialogPixel $sender 24),(DialogPixel $sender 24)),$sender.ForeColor,$bg,$flags)
+        [Windows.Forms.TextRenderer]::DrawText($e.Graphics,$path,$sender.Font,[Drawing.Rectangle]::new($e.Bounds.X+(DialogPixel $sender 12),$e.Bounds.Y+(DialogPixel $sender 26),$e.Bounds.Width-(DialogPixel $sender 24),(DialogPixel $sender 23)),$muted,$bg,([Windows.Forms.TextFormatFlags]::PathEllipsis -bor [Windows.Forms.TextFormatFlags]::VerticalCenter))
     })
     $list.Add_SelectedIndexChanged($select);$related.Add_CheckedChanged($select);$search.Add_TextChanged($filter);$buttons[0].Add_Click($refresh)
     $buttons[1].Add_Click({if(!$groupName.Text.Trim()){$note.Text='Введите название группы.';return};$state.result=[PSCustomObject]@{name=$groupName.Text.Trim();paths=@($state.paths)};$window.DialogResult='OK';$window.Close()});$buttons[2].Add_Click({$window.Close()})

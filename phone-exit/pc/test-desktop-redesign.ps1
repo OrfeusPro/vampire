@@ -38,6 +38,17 @@
         try{$form.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$bitmap.Save((Join-Path $PSScriptRoot '../.tools/redesign-connection.png'))}finally{$bitmap.Dispose()}
         . (Join-Path $PSScriptRoot 'test-window-layout.ps1')
         TestWindowLayout
+        $originalLocation=$form.Location
+        foreach($screen in [Windows.Forms.Screen]::AllScreens){
+            $form.Location=[Drawing.Point]::new(($screen.WorkingArea.Left+30),($screen.WorkingArea.Top+30));[Windows.Forms.Application]::DoEvents()
+            if($form.MonitorDpi -ne [PhoneExit.DesktopDpi]::WindowDpi($form)){throw 'Main window did not adopt monitor DPI'}
+            foreach($view in @('devices','connection')){
+                SetDesktopView $view;[Windows.Forms.Application]::DoEvents()
+                $bitmap=[Drawing.Bitmap]::new($form.Width,$form.Height)
+                try{$form.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$bitmap.Save((Join-Path $PSScriptRoot "../.tools/main-$view-dpi-$($form.MonitorDpi).png"))}finally{$bitmap.Dispose()}
+            }
+        }
+        $form.Location=$originalLocation;[Windows.Forms.Application]::DoEvents()
         Write-Host "PASS: real directory $($script:phoneRows.Count) phones; live bot badges; search, filter, sort, selection, two sizes, grid/table, connection and auxiliary windows. No bot commands or VPN started."
     }finally{$phoneList.SelectedIndex=$savedIndex}
 }
