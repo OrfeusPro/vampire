@@ -19,6 +19,7 @@ public final class MainActivity extends Activity {
     private final Handler handler = new Handler();
     private TextView status;
     private TextView accessState;
+    private TextView batteryState;
     private Button available, stop;
     private PowerMark power;
     private static final int BACKGROUND=Color.rgb(16,21,31), CARD=Color.rgb(25,35,50),
@@ -32,6 +33,9 @@ public final class MainActivity extends Activity {
             available.setEnabled(!enabled); stop.setEnabled(enabled);
             available.setAlpha(enabled?0.5f:1f); stop.setAlpha(enabled?1f:0.5f);
             power.active=enabled; power.invalidate();
+            if(batteryState!=null)batteryState.setText(getSystemService(android.os.PowerManager.class).isIgnoringBatteryOptimizations(getPackageName())?
+                "Оптимизация батареи Android отключена для Phone Exit. Ограничения производителя проверяются отдельно в настройках приложения.":
+                "Android может ограничивать работу в фоне. Для автономного бота разрешите Phone Exit работать без оптимизации батареи.");
             handler.postDelayed(this,1000);
         }
     };
@@ -92,6 +96,18 @@ public final class MainActivity extends Activity {
         add(remote,label("Удалённая команда готовит обновление. Установку подтверждают здесь и в системном окне Android.",14,MUTED),10);
         Button install=action("Установить загруженное обновление",false);add(remote,install,10);
         install.setOnClickListener(v->{try{AppUpdater.install(this);}catch(Exception e){status.setText("Проверенного обновления пока нет. Отправьте проверку с ПК.");}});
+        LinearLayout background=column(22);background.setBackground(surface(CARD,20));add(layout,background,16);
+        add(background,label("Работа в фоне",18,TEXT),0);
+        batteryState=label("Проверка ограничений батареи…",14,MUTED);add(background,batteryState,10);
+        Button battery=action("Разрешить работу в фоне",false);add(background,battery,10);
+        battery.setOnClickListener(v->{try{
+            if(getSystemService(android.os.PowerManager.class).isIgnoringBatteryOptimizations(getPackageName()))
+                startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:"+getPackageName())));
+            else startActivity(new Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,android.net.Uri.parse("package:"+getPackageName())));
+        }catch(Exception e){status.setText("Откройте настройки Android → приложения → Phone Exit → батарея и разрешите работу в фоне.");}});
+        Button appSettings=action("Настройки Phone Exit в Android",false);add(background,appSettings,10);
+        appSettings.setOnClickListener(v->{try{startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:"+getPackageName())));}catch(Exception e){status.setText("Откройте настройки Android → приложения → Phone Exit.");}});
+        add(background,label("На vivo и realme дополнительно разрешите фоновую работу и автозапуск, если такие ограничения есть. Разрешения подтверждаются в системных настройках.",14,MUTED),10);
         Button forget=action("Удалить привязку к ПК",false); add(layout,forget,20);
         add(layout,label("Wi-Fi телефона  ·  Шифрование WebRTC\nПрямое подключение к твоему ПК",12,MUTED),22);
         connect.setOnClickListener(v -> {

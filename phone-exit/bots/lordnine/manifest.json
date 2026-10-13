@@ -1,0 +1,11 @@
+{
+  "id": "lordnine",
+  "name": "Lord Nine",
+  "version": "1.1.18",
+  "engineVersion": 3,
+  "settingsVersion": 1,
+  "entrypoint": "bot.py",
+  "packages": ["com.smilegate.l9asia.stove.google"],
+  "ocr": false,
+  "features": ["farm", "recovery", "dismantle", "supplies"]
+}

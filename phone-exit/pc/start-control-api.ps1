@@ -23,7 +23,7 @@ $info.UseShellExecute=$false;$info.CreateNoWindow=$true;$info.RedirectStandardIn
 $process=New-Object Diagnostics.Process;$process.StartInfo=$info
 try{
     $null=$process.Start()
-    $process.StandardInput.WriteLine((@{account=$taskAccount;phones=$taskPhones;secret=$taskKey}|ConvertTo-Json -Depth 12 -Compress));$process.StandardInput.Flush()
+    $process.StandardInput.WriteLine((ConvertToPhoneExitTransportJson @{account=$taskAccount;phones=$taskPhones;secret=$taskKey;profilePath=$taskProfile}));$process.StandardInput.Flush()
     $taskAccountStamp=(Get-Item -LiteralPath (Join-Path $taskProfile 'account.bin')).LastWriteTimeUtc.Ticks
     while(!$process.WaitForExit(1000)){
         $taskStamp=(Get-Item -LiteralPath (Join-Path $taskProfile 'account.bin')).LastWriteTimeUtc.Ticks

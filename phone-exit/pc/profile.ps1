@@ -1,5 +1,11 @@
 # A user-home folder avoids MSIX AppData virtualization inherited by child
 # processes. Keep the same DPAPI account when migrating earlier installations.
+function ConvertToPhoneExitTransportJson($Value,[int]$Depth=12) {
+    $json=$Value|ConvertTo-Json -Depth $Depth -Compress
+    # Windows PowerShell's child stdin writer may use the OEM code page.
+    # ASCII JSON escapes preserve Cyrillic paths and names regardless of it.
+    return [regex]::Replace($json,'[^\x00-\x7f]',[Text.RegularExpressions.MatchEvaluator]{param($m) '\u'+([int][char]$m.Value).ToString('x4')})
+}
 function GetPhoneExitProfileDirectory {
     $key=[Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
     try {$local=if($key){[string]$key.GetValue('Local AppData')}else{''}} finally {if($key){$key.Dispose()}}

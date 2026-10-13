@@ -25,6 +25,7 @@ public final class ExitService extends Service {
     private final Runnable reconcile=new Runnable() {
         public void run() {
             if(destroyed) return;
+            BotDiagnostics.prune(ExitService.this,false);
             if(config!=null&&directory==null) {
                 for(Network network:manager.getAllNetworks()) {
                     NetworkCapabilities caps=manager.getNetworkCapabilities(network);
@@ -58,6 +59,7 @@ public final class ExitService extends Service {
                 .setContentText("Автоматический доступ через Wi-Fi включён")
                 .setSmallIcon(R.drawable.ic_exit_notification).setContentIntent(activity)
                 .addAction(new Notification.Action.Builder(null,"Остановить",stop).build()).setOngoing(true).build());
+            BotManager.resumeWanted(this);
             manager=getSystemService(ConnectivityManager.class);
             callback=new ConnectivityManager.NetworkCallback() {
                 @Override public void onAvailable(Network network) { useWifi(network,manager.getNetworkCapabilities(network)); }

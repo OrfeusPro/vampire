@@ -1,17 +1,28 @@
-plugins { id 'com.android.application' }
+plugins { id 'com.android.application'; id 'com.chaquo.python' }
 android {
     buildFeatures { buildConfig true }
     namespace 'net.phoneexit'
     compileSdk 35
     defaultConfig {
         applicationId 'net.phoneexit'
-        testInstrumentationRunner 'net.phoneexit.ControlDirectInstrumentation'
+        testInstrumentationRunner((findProperty('phoneExitTestRunner') ?: 'net.phoneexit.ControlDirectInstrumentation').toString())
         minSdk 26
         targetSdk 35
-        versionCode 25
-        versionName '0.7.7'
+        versionCode 33
+        versionName '0.8.7'
+        // Per-ABI personal APK keeps the upgrade within the 0.7.x downloader's 60 MB bound.
+        ndk { abiFilters((findProperty('phoneExitAbi') ?: 'arm64-v8a').toString()) }
     }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
     if (project.hasProperty('personalAssetsDir')) { sourceSets.main.assets.srcDir(project.property('personalAssetsDir')) }
 }
-dependencies { implementation 'io.github.webrtc-sdk:android:150.7871.01' }
+chaquopy {
+    defaultConfig {
+        version = '3.11'
+        pyc { src = false }
+    }
+}
+dependencies {
+    implementation 'io.github.webrtc-sdk:android:150.7871.01'
+    implementation 'org.opencv:opencv:4.12.0'
+}

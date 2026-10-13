@@ -314,6 +314,7 @@ $form.Add_FormClosing({
 })
 try { StartDirectory } catch { $hint.Text = 'Не удалось открыть список телефонов. Проверьте Node.js и файл привязок.' }
 . (Join-Path $PSScriptRoot 'desktop-theme.ps1')
+. (Join-Path $PSScriptRoot 'desktop-bots.ps1')
 $timer.Start()
 try { $null = $form.ShowDialog() } finally { StopVpn; if($script:client){try{$script:client.StandardInput.Close();if(!$script:client.WaitForExit(4000)){$script:client.Kill()}}catch{}};CloseDirectory }
 $timer.Dispose()

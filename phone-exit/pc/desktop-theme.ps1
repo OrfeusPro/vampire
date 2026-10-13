@@ -68,6 +68,15 @@ $heading=LabelAt 'Мои телефоны' 664 161 346 35;$heading.Font=New-Obje
 $phoneList.SetBounds(662,214,384,258);$phoneList.BackColor=[Drawing.ColorTranslator]::FromHtml('#192231');$phoneList.ForeColor=$form.ForeColor
 $phoneList.ItemHeight=80
 $script:flagImages=@{}
+$script:botGameIcons=@{}
+function BotGameIcon([string]$id){
+    if($id -notmatch '^[a-z][a-z0-9_-]{0,40}$'){return $null}
+    if(!$script:botGameIcons.ContainsKey($id)){
+        $taskFile=Join-Path $PSScriptRoot ('assets/bots/'+$id+'.png')
+        if(Test-Path -LiteralPath $taskFile){$script:botGameIcons[$id]=[Drawing.Image]::FromFile($taskFile)}else{return $null}
+    }
+    return $script:botGameIcons[$id]
+}
 $flagFolder=Join-Path $PSScriptRoot 'assets/flags'
 function CountryFlag($country){
     $key=if($country -match '^[A-Z]{2}$'){$country}else{'unknown'}
@@ -78,7 +87,7 @@ function CountryFlag($country){
     }
     return $script:flagImages[$key]
 }
-$form.Add_FormClosed({foreach($flagImage in $script:flagImages.Values){$flagImage.Dispose()}})
+$form.Add_FormClosed({foreach($flagImage in $script:flagImages.Values){$flagImage.Dispose()};foreach($taskIcon in $script:botGameIcons.Values){$taskIcon.Dispose()}})
 $phoneList.Add_DrawItem({param($sender,$paintEvent)
     if($paintEvent.Index -lt 0 -or $paintEvent.Index -ge $script:phoneRows.Count){return}
     $phone=$script:phoneRows[$paintEvent.Index];$g=$paintEvent.Graphics;$r=$paintEvent.Bounds
@@ -93,11 +102,28 @@ $phoneList.Add_DrawItem({param($sender,$paintEvent)
     $nameRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 60)),($r.Y+(UiPixel 40)),($r.Width-(UiPixel 76)),(UiPixel 22))
     [Windows.Forms.TextRenderer]::DrawText($g,$country,$large,$countryRect,$form.ForeColor,$flags)
     $phoneDescription=$(if($phone.versionName){'APK '+$phone.versionName}else{'APK ?'}) + ' · ' + [string]$phone.name
+    $botEntry=if($script:botPhoneBadges){$script:botPhoneBadges[[string]$phone.id]}else{$null}
+    if($botEntry -and ($botEntry.profile.identity.characterName -or $botEntry.profile.identity.provider)){$phoneDescription=(@($botEntry.profile.identity.characterName,$botEntry.profile.identity.provider,$phone.name)|Where-Object {$_}) -join ' · '}
     [Windows.Forms.TextRenderer]::DrawText($g,$phoneDescription,$small,$nameRect,$muted,$flags)
     $stateColor=if($phone.online -and !$phone.busy){'#62e7bc'}else{'#9daabc'};$dot=New-Object Drawing.SolidBrush([Drawing.ColorTranslator]::FromHtml($stateColor))
     $g.FillEllipse($dot,($r.Right-(UiPixel 98)),($r.Y+(UiPixel 21)),(UiPixel 6),(UiPixel 6))
     $stateRect=New-Object Drawing.Rectangle(($r.Right-(UiPixel 86)),($r.Y+(UiPixel 15)),(UiPixel 82),(UiPixel 24))
     [Windows.Forms.TextRenderer]::DrawText($g,$state,$small,$stateRect,$dot.Color,$flags)
+    $botEntry=if($script:botPhoneBadges){$script:botPhoneBadges[[string]$phone.id]}else{$null}
+    if($botEntry){
+        $botId=if($botEntry.bot.botId){[string]$botEntry.bot.botId}else{[string]$botEntry.profile.botId}
+        if($botId){
+            $botState=[string]$botEntry.bot.status
+            $botText=switch($botState){'running'{'Работает'}'paused'{'Пауза'}'error'{'Ошибка'}'stopped'{'Остановлен'}'starting'{'Запускается'}'waiting'{'Ожидает'}default{'Назначен'}}
+            if(!$phone.online -or $botEntry.botStatusStale -or ([DateTime]::UtcNow-$script:botBadgeLast).TotalSeconds -gt 15){$botText='Последнее: '+$botText}
+            $botColor=if($botState -eq 'error'){'#ff8989'}elseif($botState -eq 'running'){'#62e7bc'}else{'#b8c4d4'}
+            $badgeRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 60)),($r.Y+(UiPixel 64)),(UiPixel 30),(UiPixel 26))
+            $taskIcon=BotGameIcon $botId
+            if($taskIcon){$g.DrawImage($taskIcon,$badgeRect)}else{[Windows.Forms.TextRenderer]::DrawText($g,'Б',$small,$badgeRect,[Drawing.ColorTranslator]::FromHtml('#ead18b'),($flags -bor [Windows.Forms.TextFormatFlags]::HorizontalCenter))}
+            $botRect=New-Object Drawing.Rectangle(($r.X+(UiPixel 98)),($r.Y+(UiPixel 65)),($r.Width-(UiPixel 116)),(UiPixel 26))
+            [Windows.Forms.TextRenderer]::DrawText($g,$botText,$small,$botRect,[Drawing.ColorTranslator]::FromHtml($botColor),$flags)
+        }
+    }
     $small.Dispose();$large.Dispose();$dot.Dispose()
 })
 $removePhone.SetBounds(664,499,180,40);$removePhone.Text='Удалить телефон'
@@ -188,6 +214,8 @@ function UpdateWindowLayout {
     $form.SuspendLayout()
     PlaceControl $badge ($w-350) 49 308 30
     PlaceControl $accountButton ($w-180) 87 138 34
+    if($script:botsButton){PlaceControl $script:botsButton ($w-430) 87 230 34}
+    PlaceControl $sub 38 79 ($w-500) 30
     PlaceControl $status 62 (319+$script:connectionOffset) ($leftWidth-60) 39
     PlaceControl $pingLabel $innerX (355+$script:connectionOffset) $innerWidth 22
     PlaceControl $mode $innerX (389+$script:connectionOffset) $innerWidth 34
@@ -197,7 +225,7 @@ function UpdateWindowLayout {
     PlaceControl $stopButton ($innerX+$primaryWidth+12) $leftButtonY ($innerWidth-$primaryWidth-12) 52
     PlaceControl $heading ($rightX+24) 161 ($rightWidth-48) 35
     PlaceControl $phoneList ($rightX+22) 214 ($rightWidth-44) ($buttonY-241)
-    $phoneList.ItemHeight=UiPixel ([Math]::Min(80,[Math]::Max(64,[Math]::Floor($phoneList.Height/($script:uiScale*4)))))
+    $phoneList.ItemHeight=UiPixel ([Math]::Min(104,[Math]::Max(94,[Math]::Floor($phoneList.Height/($script:uiScale*4)))))
     $rightButtonWidth=[Math]::Floor(($rightWidth-60)/2)
     PlaceControl $removePhone ($rightX+24) ($buttonY+1) $rightButtonWidth 40
     if($script:personalMode){PlaceControl $apkFolder ($rightX+36+$rightButtonWidth) ($buttonY+1) $rightButtonWidth 40}

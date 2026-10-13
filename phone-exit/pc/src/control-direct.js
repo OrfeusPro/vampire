@@ -49,7 +49,7 @@ export class DirectControl {
     if(this.jobs.size>=256||[...this.jobs.values()].filter(j=>!j.value).length>=4)throw Object.assign(Error('direct busy'),{status:429});
     const request=randomBytes(16).toString('hex'),frame=JSON.stringify({id:this.id,request,at:Date.now(),command,args});
     if(Buffer.byteLength(frame)>12000||this.channel.bufferedAmount>262144)throw Object.assign(Error('direct busy'),{status:429});
-    const j={until:Date.now()+30000};this.jobs.set(request,j);
+    const j={until:Date.now()+(command==='bot'&&args?.op==='install'?150000:30000)};this.jobs.set(request,j);
     try{this.channel.send(frame);}catch{this.close();}
     return {id:request,status:'queued',transport:'webrtc'};
   }

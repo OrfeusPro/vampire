@@ -1,0 +1,13 @@
+{
+  "apiVersion": 1,
+  "engineVersion": 2,
+  "supportedModuleEngineVersions": [1, 2],
+  "entrypoint": "bot.py:tick",
+  "oneActiveBotPerPhone": true,
+  "ocr": false,
+  "maxSettingsBytes": 1048576,
+  "settingsChunkBytes": 4096,
+  "maxPackageBytes": 60000000,
+  "maxExpandedBytes": 120000000,
+  "maxPackageFiles": 4096
+}

@@ -42,6 +42,27 @@ public final class ControlAccessibility extends AccessibilityService {
             if(!done)throw new Exception("input_field_action_rejected");return new JSONObject().put("performed",true);
         }finally{if(field!=null)field.recycle();root.recycle();}
     }
+    // Local bot capture keeps pixels in memory: no PNG/Base64 encode/decode round trip.
+    Bitmap captureLocal(java.util.function.BooleanSupplier connected)throws Exception{
+        CompletableFuture<Bitmap> future=new CompletableFuture<>();Handler main=new Handler(Looper.getMainLooper());long deadline=SystemClock.elapsedRealtime()+7500;
+        Runnable[] task=new Runnable[1];task[0]=()->{try{
+            if(future.isDone())return;if(!validAccess()||!connected.getAsBoolean())throw new Exception("control_disabled_or_screen_locked");
+            long now=SystemClock.elapsedRealtime();if(now>=deadline)throw new Exception("action_timeout");long wait=lastScreenshot+1000-now;
+            if(wait>0){main.postDelayed(task[0],wait);return;}lastScreenshot=now;
+            if(Build.VERSION.SDK_INT<30)throw new Exception("screenshot_requires_android_11");
+            takeScreenshot(Display.DEFAULT_DISPLAY,getMainExecutor(),new TakeScreenshotCallback(){
+                public void onFailure(int code){future.completeExceptionally(new Exception("screenshot_denied_"+code));}
+                public void onSuccess(ScreenshotResult shot){Bitmap hardware=null,bitmap=null,scaled=null;try{
+                    if(future.isDone())return;if(!validAccess()||!connected.getAsBoolean())throw new Exception("control_disabled_or_screen_locked");
+                    hardware=Bitmap.wrapHardwareBuffer(shot.getHardwareBuffer(),shot.getColorSpace());if(hardware==null)throw new Exception("screenshot_failed");
+                    bitmap=hardware.copy(Bitmap.Config.ARGB_8888,false);float scale=Math.min(1f,1280f/Math.max(bitmap.getWidth(),bitmap.getHeight()));
+                    scaled=Bitmap.createScaledBitmap(bitmap,Math.round(bitmap.getWidth()*scale),Math.round(bitmap.getHeight()*scale),true);
+                    if(future.complete(scaled)){if(scaled==bitmap)bitmap=null;scaled=null;}
+                }catch(Exception e){future.completeExceptionally(e);}finally{if(scaled!=null&&scaled!=bitmap)scaled.recycle();if(bitmap!=null)bitmap.recycle();if(hardware!=null)hardware.recycle();shot.getHardwareBuffer().close();}}
+            });
+        }catch(Exception e){future.completeExceptionally(e);}};main.post(task[0]);
+        try{return future.get(8,TimeUnit.SECONDS);}catch(TimeoutException e){future.cancel(false);throw new Exception("action_timeout");}catch(InterruptedException e){future.cancel(false);Thread.currentThread().interrupt();throw e;}catch(ExecutionException e){throw new Exception(e.getCause().getMessage());}
+    }
     JSONObject execute(String command,JSONObject args,java.util.function.BooleanSupplier connected) throws Exception {
         CompletableFuture<JSONObject> future=new CompletableFuture<>();
         Handler main=new Handler(Looper.getMainLooper());long deadline=SystemClock.elapsedRealtime()+7500;

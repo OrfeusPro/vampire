@@ -6,6 +6,7 @@ import {DirectControl} from './control-direct.js';
 import {Directory} from './directory.js';
 import {catalogKey} from './catalog.js';
 import {authenticateVmos,createVmosCompat} from './vmos-compat.js';
+import {createBotApi} from './bot-api.js';
 export const CONTROL='https://demochko.com/hosting-webrtc-probe/phone-exit-api/control.php';
 const label=Buffer.from('phone-exit-control-v1');
 function key(token){if(!/^[a-f0-9]{64}$/.test(token))throw Error('invalid key');return createHash('sha256').update(label).update(Buffer.from(token,'hex')).digest();}
@@ -13,7 +14,16 @@ export function sealControl(token,value){const iv=randomBytes(12),c=createCipher
 export function openControl(token,box){if(!box||typeof box.data!=='string'||box.data.length>2800000||typeof box.iv!=='string'||box.iv.length!==16)throw Error('invalid frame');const iv=Buffer.from(box.iv,'base64'),data=Buffer.from(box.data,'base64');if(iv.length!==12||data.length<16)throw Error('invalid frame');const c=createDecipheriv('aes-256-gcm',key(token),iv);c.setAAD(label);c.setAuthTag(data.subarray(-16));return JSON.parse(Buffer.concat([c.update(data.subarray(0,-16)),c.final()]).toString('utf8'));}
 export function validateCommand(command,args={}){
   if(!args||typeof args!=='object'||Array.isArray(args))throw Error('invalid arguments');
-  if(!['status','screenshot','tap','swipe','back','home','launch','checkUpdate','installUpdate','deviceInfo','apps','foreground','keyevent','inputText','longPress','gesture','connectControl'].includes(command))throw Error('unsupported command');
+  if(!['bot','status','screenshot','tap','swipe','back','home','launch','checkUpdate','installUpdate','deviceInfo','apps','foreground','keyevent','inputText','longPress','gesture','connectControl'].includes(command))throw Error('unsupported command');
+  if(command==='bot'){
+    if(!['status','catalog','assign','install','rollback','settingsBegin','settingsChunk','settingsCommit','start','pause','resume','stop','diagnosticsList','diagnosticsGet'].includes(args.op))throw Error('unsupported bot operation');
+    if(args.op==='diagnosticsGet'&&!/^\d{13}-[a-f0-9]{32}$/.test(args.id))throw Error('invalid diagnostic id');
+    if(args.op==='assign'&&!/^[a-z][a-z0-9_-]{0,40}$/.test(args.botId))throw Error('invalid bot');
+    if(args.op==='install'&&!/^[0-9]+\.[0-9]+\.[0-9]+$/.test(args.version))throw Error('invalid version');
+    if(['settingsBegin','settingsChunk','settingsCommit'].includes(args.op)&&(!Number.isSafeInteger(args.revision)||args.revision<1))throw Error('invalid revision');
+    if(args.op==='settingsBegin'&&(!Number.isSafeInteger(args.size)||args.size<2||args.size>1048576||!/^[a-f0-9]{64}$/.test(args.sha256)))throw Error('invalid settings upload');
+    if(args.op==='settingsChunk'&&(!Number.isSafeInteger(args.offset)||args.offset<0||typeof args.data!=='string'||args.data.length>5464))throw Error('invalid settings chunk');
+  }
   if(command==='connectControl'&&(typeof args.sdp!=='string'||args.sdp.length>11000||!args.sdp.startsWith('v=0')))throw Error('invalid offer');
   if(command==='launch'&&(typeof args.package!=='string'||!/^[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z0-9_]+)+$/.test(args.package)||args.package.length>200))throw Error('invalid package');
   if(command==='launch'&&args.activity!==undefined&&(typeof args.activity!=='string'||args.activity.length>250||!/^\.?[A-Za-z][A-Za-z0-9_.$]*$/.test(args.activity)))throw Error('invalid activity');
@@ -45,7 +55,7 @@ export function applyBlocked(directory,blocked){
   if(!directory?.account||!Array.isArray(blocked)||blocked.length>1024||!blocked.every(id=>typeof id==='string'&&/^[a-f0-9]{32}$/.test(id)))throw Error('invalid blocked ids');
   directory.account.blocked=[...blocked];directory.phones=directory.phones.filter(p=>!blocked.includes(p.id));
 }
-export function createControlServer({directory,secret,request=fetch,vmosWaitMs=20000}){
+export function createControlServer({directory,secret,request=fetch,vmosWaitMs=20000,profilePath}){
   if(!/^[0-9a-f]{64}$/.test(secret))throw Error('invalid local key');
   let active=0;
   const results=new Map();let resultBytes=0;
@@ -105,10 +115,11 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
       if(['done','expired'].includes(j.peer.get(k.slice(k.lastIndexOf(':')+1)).status))directJobs.delete(k);
     }
     if(directJobs.size>=1024)throw Object.assign(Error('too many tasks'),{status:429});
-    const job=entry.peer.send(command,args);directJobs.set(id+':'+job.id,{peer:entry.peer,until:Date.now()+120000});return job;
+    const job=entry.peer.send(command,args);directJobs.set(id+':'+job.id,{peer:entry.peer,until:Date.now()+(command==='bot'&&args?.op==='install'?180000:120000)});return job;
   };
   const getAny=async(id,request)=>{phoneFor(id);const j=directJobs.get(id+':'+request);return j?j.peer.get(request):get(id,request);};
   const vmos=createVmosCompat({directory,enqueue,get:getAny,devices,validate:validateCommand,waitMs:vmosWaitMs});
+  const bots=createBotApi({enqueue,get:getAny,devices,profilePath});
   const server=createServer(async(req,res)=>{
     const send=(status,body)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(body));};
     if(req.headers.origin)return send(403,{error:'browser origins forbidden'});
@@ -119,6 +130,10 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
     if(!bearer&&!(isVmos&&req.method==='POST'&&authenticateVmos(req,raw,secret)))return send(401,{error:'unauthorized'});
     if(active>=8)return send(429,{error:'busy'});active++;
     try{
+      if(req.url.startsWith('/bot/v1/')){
+        let body={};if(req.method==='POST'){let raw='';for await(const chunk of req){raw+=chunk;if(Buffer.byteLength(raw)>1100000)return send(413,{error:'large bot request'});}try{body=JSON.parse(raw);}catch{return send(400,{error:'invalid json'});}}
+        try{const result=await bots.handle(req.method,req.url,body);if(result.binary){res.writeHead(200,{'Content-Type':result.mime,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(result.binary);return;}return send(200,result);}catch(e){return send(e.status||400,{error:e.message});}
+      }
       if(isVmos){if(req.method!=='POST')return send(405,{error:'method not allowed'});try{const data=await vmos.handle(req.url.split('/').at(-1),JSON.parse(raw||'{}'),'http://127.0.0.1:'+res.socket.localPort);return send(200,{code:200,msg:'success',ts:Date.now(),data});}catch(e){return send(200,{code:(Number.isInteger(e.code)&&e.code>=100?e.code:e.status??1104),msg:e.message,ts:Date.now(),data:e.taskId?[{taskId:e.taskId}]:[],supported:e.code===501?false:undefined});}}
       if(req.method==='GET'&&req.url==='/v1/devices'){
         return send(200,{devices:devices()});
@@ -138,12 +153,12 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
       send(405,{error:'method not allowed'});
     }catch(e){send([404,409,429].includes(e.status)?e.status:502,{error:'phone service unavailable'});}finally{active--;}
   });
-  server.once('close',()=>{vmos.close();clearInterval(resultTimer);clearInterval(directTimer);for(const p of peers.values())p.peer?.close();directJobs.clear();results.clear();});return server;
+  server.once('close',()=>{bots.close();vmos.close();clearInterval(resultTimer);clearInterval(directTimer);for(const p of peers.values())p.peer?.close();directJobs.clear();results.clear();});return server;
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const lines=createInterface({input:process.stdin,crlfDelay:Infinity});let server,timer,directory;
   lines.once('line',line=>{
-    try{const config=JSON.parse(line.replace(/^\uFEFF/,''));directory=new Directory(()=>{});directory.setAccount(config.account);directory.setPhones(config.phones);server=createControlServer({directory,secret:config.secret});server.requestTimeout=15000;server.headersTimeout=10000;server.listen(17842,'127.0.0.1',()=>process.stdout.write('HTTP API: 127.0.0.1:17842\n'));server.on('error',()=>{process.stderr.write('API port unavailable\n');process.exit(1);});directory.poll();timer=setInterval(()=>directory.poll(),6000);}catch{process.stderr.write('API profile unavailable\n');process.exit(1);}
+    try{const config=JSON.parse(line.replace(/^\uFEFF/,''));directory=new Directory(()=>{});directory.setAccount(config.account);directory.setPhones(config.phones);server=createControlServer({directory,secret:config.secret,profilePath:config.profilePath});server.requestTimeout=15000;server.headersTimeout=10000;server.listen(17842,'127.0.0.1',()=>process.stdout.write('HTTP API: 127.0.0.1:17842\n'));server.on('error',()=>{process.stderr.write('API port unavailable\n');process.exit(1);});directory.poll();timer=setInterval(()=>directory.poll(),6000);}catch{process.stderr.write('API profile unavailable\n');process.exit(1);}
   });
   lines.on('line',line=>{try{const c=JSON.parse(line.replace(/^\uFEFF/,''));if(c.op!=='blocked')return;applyBlocked(directory,c.blocked);}catch{process.stderr.write('API profile update rejected\n');process.exit(1);}});
   lines.on('close',()=>{clearInterval(timer);server?.close();process.exit(0);});

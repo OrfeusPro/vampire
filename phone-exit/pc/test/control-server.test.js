@@ -18,6 +18,16 @@ test('real PHP broker isolates accounts/devices, bounds queues and never redeliv
   const url='http://127.0.0.1:'+port+'/control.php';let started=false;
   for(let i=0;i<40;i++){try{await fetch(url);started=true;break;}catch{await new Promise(r=>setTimeout(r,50));}}assert.ok(started);
   const api=body=>fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:1,token,id,...body})});
+  const botDir=join(dir,'control','bots',digest);await mkdir(botDir,{recursive:true});
+  const bytes=Buffer.from('private signed package fixture'),sha256=createHash('sha256').update(bytes).digest('hex');
+  const signed={payload:JSON.stringify({id:'lordnine',version:'1.0.0',sha256}),signature:'fixture'};
+  await writeFile(join(botDir,'index.json'),JSON.stringify({version:1,bots:[signed]}));await writeFile(join(botDir,sha256+'.zip'),bytes);
+  assert.deepEqual((await (await api({op:'botCatalog'})).json()).bots,[signed]);
+  assert.deepEqual(Buffer.from(await (await api({op:'botPackage',botId:'lordnine',sha256})).arrayBuffer()),bytes);
+  assert.equal((await api({op:'botCatalog',token:randomBytes(32).toString('hex')})).status,403);
+  assert.equal((await api({op:'botCatalog',id:randomBytes(16).toString('hex')})).status,403);
+  assert.equal((await api({op:'botPackage',botId:'../lordnine',sha256})).status,404);
+  assert.equal((await api({op:'botPackage',botId:'lordnine',sha256:'../index.json'})).status,404);
   const request=randomBytes(16).toString('hex'),box=sealControl(token,{command:'status'});
   assert.equal((await api({op:'enqueue',request,box})).status,200);
   assert.equal((await (await api({op:'poll',id:other})).json()).job,null);

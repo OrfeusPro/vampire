@@ -1,0 +1,550 @@
+{
+  "maps": [
+    {
+      "id": "tab1_row1_dien_port",
+      "label": "Dien Port",
+      "image": "tab1_row1_dien_port.png",
+      "tab_id": "tab1",
+      "tab_label": "Dien",
+      "tab_index": 1,
+      "row_index": 1,
+      "select_point": [
+        0.125,
+        0.3
+      ],
+      "captured_at": "2026-06-14T10:41:28.086669+00:00"
+    },
+    {
+      "id": "tab1_row2_northern_dien_lv_19",
+      "label": "Northern Dien",
+      "image": "tab1_row2_northern_dien_lv_19.png",
+      "tab_id": "tab1",
+      "tab_label": "Dien",
+      "tab_index": 1,
+      "row_index": 2,
+      "select_point": [
+        0.125,
+        0.36
+      ],
+      "captured_at": "2026-06-14T10:41:48.519653+00:00"
+    },
+    {
+      "id": "tab1_row3_gray_ruins_lv_1119",
+      "label": "Gray Ruins",
+      "image": "tab1_row3_gray_ruins_lv_1119.png",
+      "tab_id": "tab1",
+      "tab_label": "Dien",
+      "tab_index": 1,
+      "row_index": 3,
+      "select_point": [
+        0.125,
+        0.43
+      ],
+      "captured_at": "2026-06-14T10:42:06.790908+00:00"
+    },
+    {
+      "id": "tab1_row4_corrupted_basin_lv_2030",
+      "label": "Corrupted Basin",
+      "image": "tab1_row4_corrupted_basin_lv_2030.png",
+      "tab_id": "tab1",
+      "tab_label": "Dien",
+      "tab_index": 1,
+      "row_index": 4,
+      "select_point": [
+        0.125,
+        0.495
+      ],
+      "captured_at": "2026-06-14T10:42:22.636949+00:00"
+    },
+    {
+      "id": "tab1_row5_secret_laboratory_lv_3255",
+      "label": "Secret Laboratory",
+      "image": "tab1_row5_secret_laboratory_lv_3255.png",
+      "tab_id": "tab1",
+      "tab_label": "Dien",
+      "tab_index": 1,
+      "row_index": 5,
+      "select_point": [
+        0.125,
+        0.563
+      ],
+      "captured_at": "2026-06-14T10:42:37.296058+00:00"
+    },
+    {
+      "id": "tab2_row1_lindris",
+      "label": "Lindris",
+      "image": "tab2_row1_lindris.png",
+      "tab_id": "tab2",
+      "tab_label": "Lindris",
+      "tab_index": 2,
+      "row_index": 1,
+      "select_point": [
+        0.125,
+        0.3
+      ],
+      "captured_at": "2026-06-14T10:43:23.853744+00:00"
+    },
+    {
+      "id": "tab2_row2_crescent_lake_lv_3741",
+      "label": "Crescent Lake",
+      "image": "tab2_row2_crescent_lake_lv_3741.png",
+      "tab_id": "tab2",
+      "tab_label": "Lindris",
+      "tab_index": 2,
+      "row_index": 2,
+      "select_point": [
+        0.125,
+        0.36
+      ],
+      "captured_at": "2026-06-14T10:43:45.564371+00:00"
+    },
+    {
+      "id": "tab2_row3_twilight_hill_lv_4348",
+      "label": "Twilight Hill",
+      "image": "tab2_row3_twilight_hill_lv_4348.png",
+      "tab_id": "tab2",
+      "tab_label": "Lindris",
+      "tab_index": 2,
+      "row_index": 3,
+      "select_point": [
+        0.125,
+        0.43
+      ],
+      "captured_at": "2026-06-14T10:43:59.263943+00:00"
+    },
+    {
+      "id": "tab2_row4_volcano_dracas_lv_105115",
+      "label": "Volcano Dracas",
+      "image": "tab2_row4_volcano_dracas_lv_105115.png",
+      "tab_id": "tab2",
+      "tab_label": "Lindris",
+      "tab_index": 2,
+      "row_index": 4,
+      "select_point": [
+        0.125,
+        0.495
+      ],
+      "captured_at": "2026-06-14T10:44:17.418409+00:00"
+    },
+    {
+      "id": "tab3_row1_ulan",
+      "label": "Ulan",
+      "image": "tab3_row1_ulan.png",
+      "tab_id": "tab3",
+      "tab_label": "Ulan",
+      "tab_index": 3,
+      "row_index": 1,
+      "select_point": [
+        0.125,
+        0.3
+      ],
+      "captured_at": "2026-06-14T10:45:05.886758+00:00"
+    },
+    {
+      "id": "tab3_row2_ulan_canyon_lv_5056",
+      "label": "Ulan Canyon",
+      "image": "tab3_row2_ulan_canyon_lv_5056.png",
+      "tab_id": "tab3",
+      "tab_label": "Ulan",
+      "tab_index": 3,
+      "row_index": 2,
+      "select_point": [
+        0.125,
+        0.36
+      ],
+      "captured_at": "2026-06-14T10:45:25.772385+00:00"
+    },
+    {
+      "id": "tab3_row3_protector_s_ruins_lv_5559",
+      "label": "Protector's Ruins",
+      "image": "tab3_row3_protector_s_ruins_lv_5559.png",
+      "tab_id": "tab3",
+      "tab_label": "Ulan",
+      "tab_index": 3,
+      "row_index": 3,
+      "select_point": [
+        0.125,
+        0.43
+      ],
+      "captured_at": "2026-06-14T10:45:46.912093+00:00"
+    },
+    {
+      "id": "tab3_row4_desert_of_the_screaming_lv_6268",
+      "label": "Desert of the Screaming",
+      "image": "tab3_row4_desert_of_the_screaming_lv_6268.png",
+      "tab_id": "tab3",
+      "tab_label": "Ulan",
+      "tab_index": 3,
+      "row_index": 4,
+      "select_point": [
+        0.125,
+        0.495
+      ],
+      "captured_at": "2026-06-14T10:46:04.936425+00:00"
+    },
+    {
+      "id": "tab3_row5_lower_tomb_of_tyriosa_1f_lv_6570",
+      "label": "Lower Tomb of Tyriosa 1F",
+      "image": "tab3_row5_lower_tomb_of_tyriosa_1f_lv_6570.png",
+      "tab_id": "tab3",
+      "tab_label": "Ulan",
+      "tab_index": 3,
+      "row_index": 5,
+      "select_point": [
+        0.125,
+        0.563
+      ],
+      "captured_at": "2026-06-14T10:46:23.486017+00:00"
+    },
+    {
+      "id": "tab3_row6_lower_tomb_of_tyriosa_2f_lv_7482",
+      "label": "Lower Tomb of Tyriosa 2F",
+      "image": "tab3_row6_lower_tomb_of_tyriosa_2f_lv_7482.png",
+      "tab_id": "tab3",
+      "tab_label": "Ulan",
+      "tab_index": 3,
+      "row_index": 6,
+      "select_point": [
+        0.125,
+        0.627
+      ],
+      "captured_at": "2026-06-14T10:46:41.631349+00:00"
+    },
+    {
+      "id": "tab3_row7_lower_tomb_of_tyriosa_3f_lv_88102",
+      "label": "Lower Tomb of Tyriosa 3F",
+      "image": "tab3_row7_lower_tomb_of_tyriosa_3f_lv_88102.png",
+      "tab_id": "tab3",
+      "tab_label": "Ulan",
+      "tab_index": 3,
+      "row_index": 7,
+      "select_point": [
+        0.125,
+        0.69
+      ],
+      "captured_at": "2026-06-14T10:46:57.381959+00:00"
+    },
+    {
+      "id": "tab4_row1_serbis",
+      "label": "Serbis",
+      "image": "tab4_row1_serbis.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 1,
+      "select_point": [
+        0.125,
+        0.3
+      ],
+      "captured_at": "2026-06-14T10:47:28.124508+00:00"
+    },
+    {
+      "id": "tab4_row2_land_of_glory_lv_7078",
+      "label": "Land of Glory",
+      "image": "tab4_row2_land_of_glory_lv_7078.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 2,
+      "select_point": [
+        0.125,
+        0.36
+      ],
+      "captured_at": "2026-06-14T10:47:48.347743+00:00"
+    },
+    {
+      "id": "tab4_row3_battlefieldof_templar_lv_7688",
+      "label": "Battlefieldof Templar",
+      "image": "tab4_row3_battlefieldof_templar_lv_7688.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 3,
+      "select_point": [
+        0.125,
+        0.43
+      ],
+      "captured_at": "2026-06-14T10:48:06.739235+00:00"
+    },
+    {
+      "id": "tab4_row4_plateau_of_revolution_lv_8594",
+      "label": "Plateau of Revolution",
+      "image": "tab4_row4_plateau_of_revolution_lv_8594.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 4,
+      "select_point": [
+        0.125,
+        0.495
+      ],
+      "captured_at": "2026-06-14T10:48:23.191327+00:00"
+    },
+    {
+      "id": "tab4_row5_ruins_of_the_war_lv_91100",
+      "label": "Ruins of the War",
+      "image": "tab4_row5_ruins_of_the_war_lv_91100.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 5,
+      "select_point": [
+        0.125,
+        0.563
+      ],
+      "captured_at": "2026-06-14T10:48:40.399170+00:00"
+    },
+    {
+      "id": "tab4_row6_silvergrass_field_lv_101108",
+      "label": "silvergrass Field",
+      "image": "tab4_row6_silvergrass_field_lv_101108.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 6,
+      "select_point": [
+        0.125,
+        0.627
+      ],
+      "captured_at": "2026-06-14T10:49:03.875329+00:00"
+    },
+    {
+      "id": "tab4_row7_barbas_lv_105115",
+      "label": "Barbas",
+      "image": "tab4_row7_barbas_lv_105115.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 7,
+      "select_point": [
+        0.125,
+        0.69
+      ],
+      "captured_at": "2026-06-14T10:49:21.832323+00:00"
+    },
+    {
+      "id": "tab4_row8_deadman_s_land_district_1_lv_87_92",
+      "label": "Deadman's Land District 1",
+      "image": "tab4_row8_deadman_s_land_district_1_lv_87_92.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 8,
+      "select_point": [
+        0.125,
+        0.752
+      ],
+      "captured_at": "2026-06-14T12:13:47.202634+00:00"
+    },
+    {
+      "id": "tab4_row9_deadman_s_land_district_2_lv_95_100",
+      "label": "Deadman's Land District 2",
+      "image": "tab4_row9_deadman_s_land_district_2_lv_95_100.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 9,
+      "select_point": [
+        0.125,
+        0.818
+      ],
+      "captured_at": "2026-06-14T12:13:55.944436+00:00"
+    },
+    {
+      "id": "tab4_row10_deadman_s_land_district_3_lv_105_113",
+      "label": "Deadman's Land District 3",
+      "image": "tab4_row10_deadman_s_land_district_3_lv_105_113.png",
+      "tab_id": "tab4",
+      "tab_label": "Serbis",
+      "tab_index": 4,
+      "row_index": 10,
+      "select_point": [
+        0.125,
+        0.884
+      ],
+      "captured_at": "2026-06-14T12:14:04.573991+00:00"
+    },
+    {
+      "id": "tab5_row1_guild_base",
+      "label": "Guild Base",
+      "image": "tab5_row1_guild_base.png",
+      "tab_id": "tab5",
+      "tab_label": "Guild Base",
+      "tab_index": 5,
+      "row_index": 1,
+      "select_point": [
+        0.125,
+        0.3
+      ],
+      "captured_at": "2026-06-14T10:49:56.097345+00:00"
+    },
+    {
+      "id": "kransia_ashen_haven",
+      "label": "Ashen Haven",
+      "image": "kransia_ashen_haven.png",
+      "continent": "kransia",
+      "continent_label": "Kransia",
+      "tab_id": "kransia_tab1",
+      "tab_label": "Luscal",
+      "tab_index": 1,
+      "tab_point": [
+        0.0203125,
+        0.2513888888888889
+      ],
+      "row_index": 1,
+      "select_point": [
+        0.121875,
+        0.2972222222222222
+      ],
+      "captured_at": "2026-10-04T18:13:40.677618+00:00",
+      "capture_method": "vmos_http",
+      "teleports": [
+        {
+          "label": "Refugee Camp",
+          "select_point": [
+            0.84375,
+            0.18888888888888888
+          ]
+        }
+      ],
+      "navigation_region": [
+        0.22,
+        0.08,
+        0.738,
+        0.93
+      ],
+      "selected_template_method": "sqdiff"
+    },
+    {
+      "id": "kransia_fallen_wasteland",
+      "label": "Fallen Wasteland",
+      "image": "kransia_fallen_wasteland.png",
+      "continent": "kransia",
+      "continent_label": "Kransia",
+      "tab_id": "kransia_tab1",
+      "tab_label": "Luscal",
+      "tab_index": 1,
+      "tab_point": [
+        0.0203125,
+        0.2513888888888889
+      ],
+      "row_index": 2,
+      "select_point": [
+        0.121875,
+        0.3638888888888889
+      ],
+      "captured_at": "2026-10-04T18:13:40.681319+00:00",
+      "capture_method": "vmos_http",
+      "teleports": [
+        {
+          "label": "Path to Ancient Castle",
+          "select_point": [
+            0.84375,
+            0.18888888888888888
+          ]
+        },
+        {
+          "label": "Exhumed Grave Site",
+          "select_point": [
+            0.84375,
+            0.25555555555555554
+          ]
+        },
+        {
+          "label": "Sanctuary of the Fallen",
+          "select_point": [
+            0.84375,
+            0.32222222222222224
+          ]
+        },
+        {
+          "label": "Wildland of Unspoken Prayers",
+          "select_point": [
+            0.84375,
+            0.3888888888888889
+          ]
+        },
+        {
+          "label": "Altar of Devastation",
+          "select_point": [
+            0.84375,
+            0.45555555555555555
+          ]
+        },
+        {
+          "label": "Crumbled Garden",
+          "select_point": [
+            0.84375,
+            0.5222222222222223
+          ]
+        }
+      ],
+      "level_range": [
+        105,
+        120
+      ],
+      "navigation_region": [
+        0.22,
+        0.08,
+        0.738,
+        0.93
+      ],
+      "selected_template_method": "sqdiff"
+    },
+    {
+      "id": "kransia_heart_of_volcanca",
+      "label": "Heart of Volcanca",
+      "image": "kransia_heart_of_volcanca.png",
+      "continent": "kransia",
+      "continent_label": "Kransia",
+      "tab_id": "kransia_tab1",
+      "tab_label": "Luscal",
+      "tab_index": 1,
+      "tab_point": [
+        0.0203125,
+        0.2513888888888889
+      ],
+      "row_index": 3,
+      "select_point": [
+        0.121875,
+        0.42916666666666664
+      ],
+      "captured_at": "2026-10-04T18:13:40.683969+00:00",
+      "capture_method": "vmos_http",
+      "teleports": [
+        {
+          "label": "Blazing Breath",
+          "select_point": [
+            0.84375,
+            0.18888888888888888
+          ]
+        },
+        {
+          "label": "Flame Rift",
+          "select_point": [
+            0.84375,
+            0.25555555555555554
+          ]
+        },
+        {
+          "label": "Roaring Fire",
+          "select_point": [
+            0.84375,
+            0.32222222222222224
+          ]
+        }
+      ],
+      "level_range": [
+        116,
+        120
+      ],
+      "navigation_region": [
+        0.22,
+        0.08,
+        0.738,
+        0.93
+      ],
+      "selected_template_method": "sqdiff"
+    }
+  ]
+}

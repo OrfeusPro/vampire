@@ -1,0 +1,15 @@
+{
+  "source": "MultiBot",
+  "stateMachineSha256": "cb2916f80c851905d7689709e8c3e7e227d86fb24a2efc8405414cf44cdb7b7b",
+  "recognition": "templates-only",
+  "imported": [
+    "game",
+    "tap_points",
+    "timeouts",
+    "routes",
+    "auto_dismantle",
+    "vision",
+    "templates",
+    "maps"
+  ]
+}

@@ -12,7 +12,7 @@ if(strlen($raw)>3000000)answer(413,['error'=>'Request too large']);
 $in=json_decode($raw,true);
 if(!is_array($in)||($in['version']??0)!==1||!validhex($in['token']??null,64))answer(403,['error'=>'Invalid capability']);
 $op=$in['op']??'';
-if(!in_array($op,['enqueue','poll','result','get','ack','manifest','package'],true))answer(400,['error'=>'Invalid operation']);
+if(!in_array($op,['enqueue','poll','result','get','ack','manifest','package','botCatalog','botPackage'],true))answer(400,['error'=>'Invalid operation']);
 $root=getenv('PHONE_EXIT_CONTROL_DATA')?:__DIR__.'/private';
 $account=hash('sha256',$in['token']);
 if(in_array($op,['manifest','package'],true)){
@@ -26,6 +26,22 @@ if(in_array($op,['manifest','package'],true)){
     readfile($base.'.apk');exit;
 }
 $id=$in['id']??null;if(!validhex($id,32))answer(400,['error'=>'Invalid device']);
+if(in_array($op,['botCatalog','botPackage'],true)){
+    $catalog=getenv('PHONE_EXIT_CATALOG_DATA')?:dirname($_SERVER['DOCUMENT_ROOT']).'/phone-exit-catalog-data';
+    $known=json_decode(@file_get_contents($catalog.'/'.$account.'.json')?:'',true);
+    if(!isset($known['devices'][$id]))answer(403,['error'=>'Unknown device']);
+    $base=$root.'/bots/'.$account;
+    $index=json_decode(@file_get_contents($base.'/index.json')?:'',true);
+    if(!is_array($index)||!is_array($index['bots']??null))answer(404,['error'=>'No bot releases']);
+    if($op==='botCatalog')answer(200,$index);
+    foreach($index['bots'] as $signed){
+        $meta=json_decode($signed['payload']??'',true);
+        if(($meta['id']??null)!==($in['botId']??null)||($meta['sha256']??null)!==($in['sha256']??null))continue;
+        if(!validhex($meta['sha256']??null,64))answer(503,['error'=>'Invalid bot release']);
+        $file=$base.'/'.$meta['sha256'].'.zip';if(!is_file($file))answer(404,['error'=>'Missing bot package']);
+        header('Content-Type: application/zip');header('Content-Length: '.filesize($file));readfile($file);exit;
+    }answer(404,['error'=>'Unknown bot package']);
+}
 $request=$in['request']??null;
 if($op!=='poll'&&!validhex($request,32))answer(400,['error'=>'Invalid request']);
 if($op==='enqueue'&&!boxok($in['box']??null,16384))answer(400,['error'=>'Invalid command']);

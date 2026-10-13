@@ -1,0 +1,93 @@
+{
+  "1f.png": {
+    "source": "captures/v06-http-darkwood-1f.png",
+    "crop": [
+      828,
+      398,
+      864,
+      424
+    ],
+    "label": "1F",
+    "selected": true,
+    "capture": "VMOS HTTP getLongGenerateUrl, PNG, width=720 height=1280 quality=100; returned landscape 1280x720",
+    "transform": "exact crop, no recoloring"
+  },
+  "2f.png": {
+    "source": "captures/v06-http-darkwood-2f.png",
+    "crop": [
+      828,
+      398,
+      864,
+      424
+    ],
+    "label": "2F",
+    "selected": true,
+    "capture": "VMOS HTTP getLongGenerateUrl, PNG, width=720 height=1280 quality=100; returned landscape 1280x720",
+    "transform": "exact crop, no recoloring"
+  },
+  "3f.png": {
+    "source": "captures/v06-http-darkwood-3f.png",
+    "crop": [
+      828,
+      398,
+      864,
+      424
+    ],
+    "label": "3F",
+    "selected": true,
+    "capture": "VMOS HTTP getLongGenerateUrl, PNG, width=720 height=1280 quality=100; returned landscape 1280x720",
+    "transform": "exact crop, no recoloring"
+  },
+  "4f.png": {
+    "source": "captures/v06-http-darkwood-4f.png",
+    "crop": [
+      828,
+      398,
+      864,
+      424
+    ],
+    "label": "4F",
+    "selected": true,
+    "capture": "VMOS HTTP getLongGenerateUrl, PNG, width=720 height=1280 quality=100; returned landscape 1280x720",
+    "transform": "exact crop, no recoloring"
+  },
+  "5f.png": {
+    "source": "captures/v06-http-darkwood-5f.png",
+    "crop": [
+      828,
+      398,
+      864,
+      424
+    ],
+    "label": "5F",
+    "selected": true,
+    "capture": "VMOS HTTP getLongGenerateUrl, PNG, width=720 height=1280 quality=100; returned landscape 1280x720",
+    "transform": "exact crop, no recoloring"
+  },
+  "6f.png": {
+    "source": "captures/v06-http-darkwood-6f.png",
+    "crop": [
+      828,
+      398,
+      864,
+      424
+    ],
+    "label": "6F",
+    "selected": true,
+    "capture": "VMOS HTTP getLongGenerateUrl, PNG, width=720 height=1280 quality=100; returned landscape 1280x720",
+    "transform": "exact crop, no recoloring"
+  },
+  "7f.png": {
+    "source": "captures/v06-http-darkwood-7f.png",
+    "crop": [
+      828,
+      398,
+      864,
+      424
+    ],
+    "label": "7F",
+    "selected": true,
+    "capture": "VMOS HTTP getLongGenerateUrl, PNG, width=720 height=1280 quality=100; returned landscape 1280x720",
+    "transform": "exact crop, no recoloring"
+  }
+}

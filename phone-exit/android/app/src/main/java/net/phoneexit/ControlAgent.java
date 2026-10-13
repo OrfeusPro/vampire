@@ -43,7 +43,7 @@ final class ControlAgent implements AutoCloseable {
     void start(){if(config.account!=null)loop.scheduleWithFixedDelay(this::tick,0,1,TimeUnit.SECONDS);}
     static JSONObject capabilities(Context c)throws Exception{
         boolean su=false;for(String path:new String[]{"/system/bin/su","/system/xbin/su","/sbin/su","/su/bin/su","/system_ext/bin/su"})if(new File(path).exists())su=true;
-        return new JSONObject().put("api",3).put("directControl",true).put("enabled",ControlAccessibility.allowed(c)).put("accessibility",ControlAccessibility.current!=null).put("screenshot",Build.VERSION.SDK_INT>=30)
+        return new JSONObject().put("api",4).put("botApi",1).put("botDiagnostics",1).put("bot",BotStore.status(c)).put("directControl",true).put("enabled",ControlAccessibility.allowed(c)).put("accessibility",ControlAccessibility.current!=null).put("screenshot",Build.VERSION.SDK_INT>=30)
             .put("shell",false).put("forceStop",false).put("reboot",false).put("textInput",ControlAccessibility.current!=null).put("gesture",ControlAccessibility.current!=null)
             .put("androidSdk",Build.VERSION.SDK_INT).put("processUid",android.os.Process.myUid()).put("processRoot",android.os.Process.myUid()==0).put("rootGranted",JSONObject.NULL).put("suPresent",su).put("rootProbe","passive_only");
     }
@@ -121,11 +121,13 @@ final class ControlAgent implements AutoCloseable {
             throw new Exception("ice_no_candidates");
         }
         if(command.equals("status"))return capabilities(context);
+        if(command.equals("bot"))return BotManager.execute(this,args==null?new JSONObject():args);
         if(command.equals("checkUpdate")||command.equals("installUpdate")){AppUpdater.check(this);if(command.equals("installUpdate"))AppUpdater.notifyReady(context);return AppUpdater.state(context);}
         if(!ControlAccessibility.allowed(context))throw new Exception("control_disabled");
         if(command.equals("deviceInfo")){JSONObject info=DeviceControl.info(context);ControlPeer p=direct;if(p!=null)info.put("controlDiagnostics",p.diagnostics());return info;}
         if(command.equals("apps"))return DeviceControl.apps(context,args==null?new JSONObject():args);
         ControlAccessibility service=ControlAccessibility.current;if(service==null)throw new Exception("accessibility_permission_required");
+        if(java.util.Arrays.asList("tap","swipe","longPress","gesture","back","home","launch","keyevent","inputText").contains(command))BotManager.manualPause(context);
         return service.execute(command,args==null?new JSONObject():args,this::active);
     }
     private String safeError(Exception e){String m=e.getMessage();return m!=null&&m.matches("[a-z0-9_]{1,80}")?m:"action_failed_or_timeout";}

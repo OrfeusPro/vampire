@@ -1,6 +1,16 @@
 ﻿function TestWindowLayout {
     $originalSize=$form.ClientSize;$originalMode=$mode.SelectedIndex
     try{
+        $savedBotBadges=$script:botPhoneBadges
+        try{
+            $script:botPhoneBadges=@{}
+            foreach($testPhone in $script:phoneRows){$script:botPhoneBadges[[string]$testPhone.id]=[pscustomobject]@{profile=[pscustomobject]@{identity=[pscustomobject]@{characterName='Персонаж';provider='UgPhone'};botId='lordnine'};bot=[pscustomobject]@{botId='lordnine';status='running'};botStatusStale=$false}}
+            $script:botBadgeLast=[DateTime]::UtcNow
+            $form.ClientSize=[Drawing.Size]::new((UiPixel 1100),(UiPixel 780));UpdateWindowLayout;[Windows.Forms.Application]::DoEvents()
+            if($phoneList.ItemHeight -lt (UiPixel 90)){throw 'Bot badge row clips third line'}
+            $badgeBitmap=[Drawing.Bitmap]::new($form.Width,$form.Height)
+            try{$form.DrawToBitmap($badgeBitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$badgeBitmap.Save((Join-Path $PSScriptRoot '../.tools/main-bot-badges-preview.png'))}finally{$badgeBitmap.Dispose()}
+        }finally{$script:botPhoneBadges=$savedBotBadges}
         $savedApps=$script:appPaths
         try{$script:appPaths=@((Get-Command curl.exe).Source,(TransportRuntime));ShowApplicationList -Preview}finally{$script:appPaths=$savedApps}
         ShowAccountTransfer -Preview
