@@ -1,5 +1,5 @@
 ﻿function TestWindowLayout {
-    $originalSize=$form.ClientSize;$originalMode=$mode.SelectedIndex
+    $originalSize=$form.ClientSize;$originalMode=$mode.SelectedIndex;$originalView=$script:desktopView
     try{
         $savedBotBadges=$script:botPhoneBadges
         try{
@@ -7,10 +7,12 @@
             foreach($testPhone in $script:phoneRows){$script:botPhoneBadges[[string]$testPhone.id]=[pscustomobject]@{profile=[pscustomobject]@{identity=[pscustomobject]@{characterName='Orfeus';provider='VMOS'};botId='lordnine'};bot=[pscustomobject]@{botId='lordnine';status='running'};botStatusStale=$false}}
             $script:botBadgeLast=[DateTime]::UtcNow
             $form.ClientSize=[Drawing.Size]::new((UiPixel 1100),(UiPixel 780));UpdateWindowLayout;[Windows.Forms.Application]::DoEvents()
-            if($phoneList.ItemHeight -lt (UiPixel 90)){throw 'Bot badge row clips third line'}
+            SetDesktopView 'devices';RefreshFleet
+            if($fleet.VisibleCount -ne $script:phoneRows.Count){throw 'Fleet did not project all directory phones'}
             $badgeBitmap=[Drawing.Bitmap]::new($form.Width,$form.Height)
             try{$form.DrawToBitmap($badgeBitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$badgeBitmap.Save((Join-Path $PSScriptRoot '../.tools/main-bot-badges-preview.png'))}finally{$badgeBitmap.Dispose()}
         }finally{$script:botPhoneBadges=$savedBotBadges}
+        SetDesktopView 'connection'
         $savedApps=$script:appPaths
         try{$script:appPaths=@((Get-Command curl.exe).Source,(TransportRuntime));ShowApplicationList -Preview}finally{$script:appPaths=$savedApps}
         ShowAccountTransfer -Preview
@@ -31,7 +33,7 @@
         $mode.SelectedIndex=1
         foreach($testSize in @([Drawing.Size]::new((UiPixel 960),(UiPixel 700)),[Drawing.Size]::new((UiPixel 1300),(UiPixel 880)))){
             $form.ClientSize=$testSize;[Windows.Forms.Application]::DoEvents()
-            if($start.Bottom -gt $hint.Top -or $start.Top -lt $appNote.Bottom){throw 'Resize overlaps connection controls'}
+            if($safetyLabel.Bottom -gt $hint.Top -or $start.Top -lt $appNote.Bottom){throw 'Resize overlaps connection controls'}
             if($phoneList.Bottom -ge $removePhone.Top -or $phoneList.Right -ge $form.ClientSize.Width){throw 'Resize breaks phone list bounds'}
             if($closeWindow.Right -gt $form.ClientSize.Width -or $detail.Bottom -gt $form.ClientSize.Height){throw 'Resize clips chrome or footer'}
             if($form.MaximumSize -ne [Drawing.Size]::Empty){throw 'Window resizing still restricted'}
@@ -41,6 +43,13 @@
                 $previewName=if($testSize.Width -eq (UiPixel 960)){'desktop-compact-preview.png'}else{'desktop-wide-preview.png'}
                 $layoutBitmap.Save((Join-Path $PSScriptRoot ('../'+$previewName)))
             }finally{$layoutBitmap.Dispose()}
+            SetDesktopView 'devices'
+            if($fleet.Bottom -gt $selectionLabel.Top -or $fleetSearch.Right -gt $fleetGame.Left -or $fleetSort.Right -gt $form.ClientSize.Width){throw 'Fleet layout overlaps toolbar or footer'}
+            if($fleetSearch.Height -ne $fleetGame.Height -or $fleetSearch.Top -ne $fleetGame.Top -or $fleetSearch.Width -gt (UiPixel 326)){throw 'Search field differs from Figma dimensions or filter alignment'}
+            if($bulkSettings.Right -gt $gridButton.Left){throw 'Fleet selection toolbar overlaps view switch'}
+            $fleetBitmap=[Drawing.Bitmap]::new($form.Width,$form.Height)
+            try{$form.DrawToBitmap($fleetBitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$fleetBitmap.Save((Join-Path $PSScriptRoot ('../.tools/fleet-'+$testSize.Width+'-preview.png')))}finally{$fleetBitmap.Dispose()}
+            SetDesktopView 'connection'
         }
         $screenCorner=$form.PointToScreen([Drawing.Point]::new(($form.ClientSize.Width-2),($form.ClientSize.Height-2)))
         $packed=[int64](($screenCorner.Y -band 65535)*65536+($screenCorner.X -band 65535))
@@ -54,5 +63,5 @@
             $flagCheck=[Drawing.Image]::FromFile($flagFile.FullName);$flagCheck.Dispose()
         }
         Write-Host 'PASS: resizable layouts, native edge hit-testing, maximize inside work area, local flag assets'
-    }finally{$form.WindowState='Normal';$mode.SelectedIndex=$originalMode;$form.ClientSize=$originalSize;[Windows.Forms.Application]::DoEvents()}
+    }finally{$form.WindowState='Normal';$mode.SelectedIndex=$originalMode;$form.ClientSize=$originalSize;SetDesktopView $originalView;[Windows.Forms.Application]::DoEvents()}
 }

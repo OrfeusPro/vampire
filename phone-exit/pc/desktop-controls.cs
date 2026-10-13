@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
@@ -38,7 +38,7 @@ namespace PhoneExit {
     }
 
     public sealed class DarkMenuColors : ProfessionalColorTable {
-        static Color Surface = Color.FromArgb(38,49,68), Selected = Color.FromArgb(48,65,86);
+        static Color Surface = Color.FromArgb(39,44,49), Selected = Color.FromArgb(52,65,59);
         public override Color ToolStripDropDownBackground { get { return Surface; } }
         public override Color MenuBorder { get { return Selected; } }
         public override Color MenuItemBorder { get { return Selected; } }
@@ -52,7 +52,19 @@ namespace PhoneExit {
     }
 
     public sealed class DarkButton : Button {
+        public string NavigationIcon {get;set;}
         protected override void OnPaint(PaintEventArgs e){
+            if(!String.IsNullOrEmpty(NavigationIcon)){
+                e.Graphics.Clear(BackColor);float s=DesktopDpi.Scale,x=14*s,y=Height/2f-6*s;
+                using(var pen=new Pen(ForeColor,Math.Max(1,1.2f*s))){
+                    if(NavigationIcon=="devices"){for(int i=0;i<4;i++)e.Graphics.DrawRectangle(pen,x+(i%2)*8*s,y+(i/2)*8*s,4*s,4*s);}
+                    else if(NavigationIcon=="connection"){e.Graphics.DrawPolygon(pen,new[]{new PointF(x,y),new PointF(x+6*s,y-2*s),new PointF(x+12*s,y),new PointF(x+12*s,y+8*s),new PointF(x+6*s,y+13*s),new PointF(x,y+8*s)});}
+                    else if(NavigationIcon=="bots"){e.Graphics.DrawRectangle(pen,x,y+3*s,12*s,10*s);e.Graphics.DrawLine(pen,x+6*s,y-1*s,x+6*s,y+3*s);e.Graphics.DrawRectangle(pen,x+3*s,y+6*s,1*s,1*s);e.Graphics.DrawRectangle(pen,x+8*s,y+6*s,1*s,1*s);e.Graphics.DrawLine(pen,x+4*s,y+10*s,x+8*s,y+10*s);}
+                    else{for(int i=0;i<3;i++){e.Graphics.DrawLine(pen,x,y+i*5*s,x+13*s,y+i*5*s);e.Graphics.DrawLine(pen,x+(i==1?9:4)*s,y+(i*5-2)*s,x+(i==1?9:4)*s,y+(i*5+2)*s);}}
+                }
+                TextRenderer.DrawText(e.Graphics,Text,Font,new Rectangle((int)(36*s),0,Width-(int)(40*s),Height),ForeColor,TextFormatFlags.NoPadding|TextFormatFlags.VerticalCenter|TextFormatFlags.SingleLine|TextFormatFlags.EndEllipsis);
+                if(Focused)using(var focusPen=new Pen(Color.FromArgb(98,231,188)))e.Graphics.DrawRectangle(focusPen,2,2,Width-5,Height-5);return;
+            }
             if(Enabled){base.OnPaint(e);return;}
             e.Graphics.Clear(BackColor);
             TextRenderer.DrawText(e.Graphics,Text,Font,ClientRectangle,Color.FromArgb(119,136,158),BackColor,
@@ -96,6 +108,31 @@ namespace PhoneExit {
         }
     }
 
+    public sealed class SearchField : UserControl {
+        [DllImport("user32.dll",CharSet=CharSet.Unicode)] static extern IntPtr SendMessage(IntPtr window,int message,IntPtr value,string text);
+        readonly TextBox input=new TextBox{BorderStyle=BorderStyle.None,Multiline=false,AccessibleName="Поиск по имени, персонажу, модели или стране"};
+        readonly SearchClear clear=new SearchClear();
+        readonly ToolTip tips=new ToolTip();
+        public string Placeholder="Поиск имени, модели или страны";
+        public override string Text {get{return input==null?base.Text:input.Text;}set{if(input==null)base.Text=value;else input.Text=value??"";}}
+        int D(double value){return (int)Math.Round(value*DesktopDpi.Scale);}
+        sealed class SearchClear : Button {
+            public SearchClear(){FlatStyle=FlatStyle.Flat;FlatAppearance.BorderSize=0;AccessibleName="Очистить поиск";Cursor=Cursors.Hand;TabStop=false;}
+            protected override void OnPaint(PaintEventArgs e){e.Graphics.Clear(BackColor);float s=DesktopDpi.Scale,x=Width/2f,y=Height/2f;using(var pen=new Pen(ForeColor,Math.Max(1,s))){e.Graphics.DrawLine(pen,x-3*s,y-3*s,x+3*s,y+3*s);e.Graphics.DrawLine(pen,x+3*s,y-3*s,x-3*s,y+3*s);}}
+        }
+        public SearchField(){SetStyle(ControlStyles.UserPaint|ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer|ControlStyles.ResizeRedraw,true);BackColor=Color.FromArgb(32,36,40);ForeColor=Color.FromArgb(238,241,244);Controls.Add(input);Controls.Add(clear);input.BackColor=BackColor;input.ForeColor=ForeColor;clear.ForeColor=Color.FromArgb(145,155,165);clear.BackColor=BackColor;tips.SetToolTip(clear,"Очистить поиск");input.TextChanged+=(s,e)=>{OnTextChanged(EventArgs.Empty);LayoutInput();Invalidate();};input.GotFocus+=(s,e)=>Invalidate();input.LostFocus+=(s,e)=>Invalidate();input.KeyDown+=(s,e)=>{if(e.KeyCode==Keys.Escape){Clear();e.Handled=true;e.SuppressKeyPress=true;}};clear.Click+=(s,e)=>{Clear();input.Focus();};input.HandleCreated+=(s,e)=>SendMessage(input.Handle,0x1501,(IntPtr)1,Placeholder);LayoutInput();}
+        public void Clear(){input.Clear();}
+        void LayoutInput(){if(input==null)return;clear.Visible=input.Text.Length>0;int height=input.PreferredHeight;input.SetBounds(D(34),Math.Max(D(4),(Height-height)/2),Math.Max(1,Width-D(clear.Visible?66:46)),height);clear.SetBounds(Width-D(28),(Height-D(24))/2,D(24),D(24));}
+        protected override void OnResize(EventArgs e){base.OnResize(e);LayoutInput();}
+        protected override void OnFontChanged(EventArgs e){base.OnFontChanged(e);if(input!=null){input.Font=Font;LayoutInput();}}
+        protected override void OnBackColorChanged(EventArgs e){base.OnBackColorChanged(e);if(input!=null)input.BackColor=BackColor;if(clear!=null)clear.BackColor=BackColor;}
+        protected override void OnForeColorChanged(EventArgs e){base.OnForeColorChanged(e);if(input!=null)input.ForeColor=ForeColor;}
+        protected override void OnEnter(EventArgs e){base.OnEnter(e);input.Focus();}
+        protected override void OnMouseDown(MouseEventArgs e){base.OnMouseDown(e);input.Focus();}
+        protected override void OnPaint(PaintEventArgs e){e.Graphics.Clear(Parent==null?BackColor:Parent.BackColor);e.Graphics.SmoothingMode=System.Drawing.Drawing2D.SmoothingMode.AntiAlias;var r=new RectangleF(1,1,Width-3,Height-3);float d=D(12);using(var path=new System.Drawing.Drawing2D.GraphicsPath()){path.AddArc(r.X,r.Y,d,d,180,90);path.AddArc(r.Right-d,r.Y,d,d,270,90);path.AddArc(r.Right-d,r.Bottom-d,d,d,0,90);path.AddArc(r.X,r.Bottom-d,d,d,90,90);path.CloseFigure();using(var brush=new SolidBrush(BackColor))e.Graphics.FillPath(brush,path);using(var pen=new Pen(input.Focused?Color.FromArgb(98,231,188):Color.FromArgb(52,57,63)))e.Graphics.DrawPath(pen,path);}float x=D(14),y=Height/2f-D(2);using(var pen=new Pen(Color.FromArgb(145,155,165),Math.Max(1,DesktopDpi.Scale))){e.Graphics.DrawEllipse(pen,x-D(4),y-D(4),D(8),D(8));e.Graphics.DrawLine(pen,x+D(3),y+D(3),x+D(8),y+D(8));}}
+        protected override void Dispose(bool disposing){if(disposing)tips.Dispose();base.Dispose(disposing);}
+    }
+
     public sealed class DarkSelect : Control {
         public Collection<string> Items { get; private set; }
         public event EventHandler SelectedIndexChanged;
@@ -128,7 +165,7 @@ namespace PhoneExit {
             // Solid strips remain inside the client area at fractional DPI scales.
             // Keep the complete outline visible while the popup owns focus.
             int border=Math.Max(1,D(1)), inset=1;
-            using(var brush=new SolidBrush(Focused || activeMenu!=null ? Color.FromArgb(98,231,188) : Color.FromArgb(76,94,118))){
+            using(var brush=new SolidBrush(Focused || activeMenu!=null ? Color.FromArgb(98,231,188) : Color.FromArgb(52,57,63))){
                 e.Graphics.FillRectangle(brush,inset,inset,Width-2*inset,border);
                 e.Graphics.FillRectangle(brush,inset,Height-inset-border,Width-2*inset,border);
                 e.Graphics.FillRectangle(brush,inset,inset,border,Height-2*inset);
@@ -246,8 +283,8 @@ namespace PhoneExit {
                 }
             }
             if(MaxOffset>0){
-                using(var track=new SolidBrush(Color.FromArgb(25,35,50)))e.Graphics.FillRectangle(track,Width-D(12),0,D(12),Height);
-                using(var thumb=new SolidBrush(hoverScroll || dragY>=0?Color.FromArgb(157,170,188):Color.FromArgb(76,94,118)))e.Graphics.FillRectangle(thumb,Thumb);
+                using(var track=new SolidBrush(Color.FromArgb(32,36,40)))e.Graphics.FillRectangle(track,Width-D(12),0,D(12),Height);
+                using(var thumb=new SolidBrush(hoverScroll || dragY>=0?Color.FromArgb(145,155,165):Color.FromArgb(78,88,94)))e.Graphics.FillRectangle(thumb,Thumb);
             }
             if(Focused && selected>=0){var r=new Rectangle(1,selected*itemHeight-offset+1,contentWidth-2,itemHeight-2);using(var p=new Pen(Color.FromArgb(98,231,188)))e.Graphics.DrawRectangle(p,r);}
         }

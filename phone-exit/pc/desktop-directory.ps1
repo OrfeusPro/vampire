@@ -122,7 +122,7 @@ function DirectoryEvent($event) {
             }
             if ($phoneList.SelectedIndex -lt 0 -and $script:phoneRows.Count -eq 1) { $phoneList.SelectedIndex=0 }
             $phoneList.EndUpdate()
-            if($hint.Text.StartsWith('Обновляю доступность телефонов') -and @($script:phoneRows | Where-Object online).Count -gt 0){$hint.Text='Список телефонов обновлён. Выберите устройство и нажмите «Подключить VPN».'}
+            if($hint.Text.StartsWith('Обновляю доступность телефонов') -and @($script:phoneRows | Where-Object online).Count -gt 0){$hint.Text='Список телефонов обновлён.'}
         }
         'error' { $hint.Text = $event.message; if ($SelfTest) { Write-Host ('Directory command failed: ' + $event.reason) }; if ($script:selectedPhone -and !$script:transportReady) { StopClient } }
     }

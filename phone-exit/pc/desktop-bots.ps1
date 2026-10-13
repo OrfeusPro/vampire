@@ -22,20 +22,21 @@ $script:botBadgeRead=$null
 $script:botBadgeNext=[DateTime]::MinValue
 $script:botBadgeLast=[DateTime]::MinValue
 $script:botRowJobs=@{}
-$phoneList.Add_RowAction({param($sender,$event)
-    if($event.Index -lt 0 -or $event.Index -ge $script:phoneRows.Count){return}
-    $taskPhone=$script:phoneRows[$event.Index];$taskId=[string]$taskPhone.id
-    if($event.Action -eq 'settings'){OpenBotPanel $taskId;return}
+function InvokePhoneBotAction([int]$index,[string]$action) {
+    if($index -lt 0 -or $index -ge $script:phoneRows.Count){return}
+    $taskPhone=$script:phoneRows[$index];$taskId=[string]$taskPhone.id
+    if($action -eq 'settings'){OpenBotPanel $taskId;return}
     if(!$script:botBadgeHttp -or $script:botRowJobs.ContainsKey($taskId)){return}
     $taskBadge=$script:botPhoneBadges[$taskId]
     if(!$taskPhone.online -or !$taskBadge -or $taskBadge.botStatusStale -or ([DateTime]::UtcNow-$script:botBadgeLast).TotalSeconds -gt 15 -or (!$taskBadge.bot.botId -and !$taskBadge.profile.botId)){return}
     try{
-        $taskOp=[string]$event.Action
+        $taskOp=$action
         $taskBody=New-Object Net.Http.StringContent((ConvertTo-Json @{op=$taskOp} -Compress),[Text.Encoding]::UTF8,'application/json')
         $script:botRowJobs[$taskId]=@{task=$script:botBadgeHttp.PostAsync(('http://127.0.0.1:17842/bot/v1/devices/'+$taskId+'/action'),$taskBody);content=$taskBody;stage='post';deadline=[DateTime]::UtcNow.AddSeconds(190);name=[string]$taskPhone.name}
         $hint.Text='Отправляется команда боту: '+$taskPhone.name;$phoneList.Invalidate()
     }catch{$hint.Text='Команда не отправлена: '+$_.Exception.Message}
-})
+}
+$phoneList.Add_RowAction({param($sender,$event) InvokePhoneBotAction $event.Index $event.Action})
 function RefreshBotRowJobs {
     foreach($taskId in @($script:botRowJobs.Keys)){
         $taskJob=$script:botRowJobs[$taskId]
@@ -83,7 +84,7 @@ $form.Add_Shown({
 })
 $form.Add_FormClosed({$script:botBadgeTimer.Stop();$script:botBadgeTimer.Dispose();if($script:botBadgeHttp){$script:botBadgeHttp.Dispose()}})
 # A panel owned by the main EXE. The local gateway lifetime is independent of bots.
-function OpenBotPanel([string]$phoneId='') {
+function OpenBotPanel([string]$phoneId='', [string[]]$targetIds=@()) {
     try {
         Add-Type -AssemblyName System.Net.Http
         Add-Type -AssemblyName System.Web.Extensions
@@ -92,6 +93,7 @@ function OpenBotPanel([string]$phoneId='') {
         $taskSecret=$script:botApiSecret
         $taskPanel=New-Object PhoneExit.BotPanel($taskSecret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))
         if($phoneId){$taskPanel.InitialPhoneId=$phoneId}
+        $taskPanel.InitialCopyTargets=$targetIds
         $null=$taskPanel.ShowDialog($form);$taskPanel.Dispose()
     }catch{$hint.Text='Панель ботов недоступна: '+$_.Exception.Message}
 }

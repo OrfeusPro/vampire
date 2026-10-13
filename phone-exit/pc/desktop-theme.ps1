@@ -26,6 +26,14 @@ $versionLabel=LabelAt 'Версия 0.6.0' 440 42 170 24;$versionLabel.ForeColor
 $badge=LabelAt 'ПРЯМОЕ ПОДКЛЮЧЕНИЕ' 765 49 293 30;$badge.ForeColor=$accent;$badge.TextAlign='MiddleRight';$badge.Font=New-Object Drawing.Font('Segoe UI Semibold',9)
 $form.Add_Paint({param($sender,$paintEvent)
     $g=$paintEvent.Graphics;$g.SmoothingMode='AntiAlias';$g.ScaleTransform($script:uiScale,$script:uiScale)
+    if($script:redesignReady){
+        $brush=[Drawing.SolidBrush]::new([Drawing.ColorTranslator]::FromHtml('#191c1f'))
+        $g.FillRectangle($brush,0,0,192,($form.ClientSize.Height/$script:uiScale));$brush.Dispose()
+        $pen=[Drawing.Pen]::new([Drawing.ColorTranslator]::FromHtml('#34393f'))
+        $w=$form.ClientSize.Width/$script:uiScale;$h=$form.ClientSize.Height/$script:uiScale
+        $g.DrawLine($pen,192,48,$w,48);$g.DrawLine($pen,216,($h-94),($w-24),($h-94));$pen.Dispose()
+        return
+    }
     $brush=New-Object Drawing.SolidBrush([Drawing.ColorTranslator]::FromHtml('#192231'))
     $left=$script:leftPane;$right=$script:rightPane
     $g.FillRectangle($brush,$left);$g.FillRectangle($brush,$right);$brush.Dispose()
@@ -103,6 +111,7 @@ function CountryFlag($country){
 $form.Add_FormClosed({foreach($flagImage in $script:flagImages.Values){$flagImage.Dispose()};foreach($taskIcon in $script:botGameIcons.Values){$taskIcon.Dispose()}})
 $phoneList.Add_DrawItem({param($sender,$paintEvent)
     if($paintEvent.Index -lt 0 -or $paintEvent.Index -ge $script:phoneRows.Count){return}
+    if($script:redesignReady){DrawConnectionPhone $paintEvent;return}
     $phone=$script:phoneRows[$paintEvent.Index];$g=$paintEvent.Graphics;$r=$paintEvent.Bounds
     $selected=($paintEvent.State -band [Windows.Forms.DrawItemState]::Selected) -ne 0
     $bg=if($selected){'#2c3a50'}else{'#192231'};$brush=New-Object Drawing.SolidBrush([Drawing.ColorTranslator]::FromHtml($bg));$g.FillRectangle($brush,$r);$brush.Dispose()
@@ -169,7 +178,7 @@ $mode.Add_SelectedIndexChanged({$chooseApps.Visible=$mode.SelectedIndex -eq 1;$a
 $mode.Add_SelectedIndexChanged({if(!$SelfTest -and !$VpnTest -and !$StartupTest -and !$RecoveryTest){try{$null=[IO.Directory]::CreateDirectory($script:profileDirectory);[IO.File]::WriteAllText($modeFile,[string]$mode.SelectedIndex)}catch{}}})
 $chooseApps.Visible=$mode.SelectedIndex -eq 1;$appNote.Visible=$chooseApps.Visible;$appNote.Text="Приложений: $($script:appPaths.Count) · дочерние EXE автоматически";$start.Text=if($mode.SelectedIndex -eq 2){'Подключить прокси'}else{'Подключить VPN'}
 $chooseApps.Add_Click({ShowApplicationList})
-$phoneList.Add_SelectedIndexChanged({if($phoneList.SelectedIndex -ge 0 -and !$script:client){$phone=$script:phoneRows[$phoneList.SelectedIndex];$hint.Text="Выбран $($phone.name) · $(CountryName $phone.country). Нажмите «Подключить VPN»."}})
+$phoneList.Add_SelectedIndexChanged({if($phoneList.SelectedIndex -ge 0 -and !$script:client){$phone=$script:phoneRows[$phoneList.SelectedIndex];$hint.Text="Выбран $($phone.name) · $(CountryName $phone.country)."}})
 
 # Native caption dragging retains Windows movement across monitors without
 # introducing a system caption or bypassing the form's normal close cleanup.

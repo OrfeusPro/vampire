@@ -1,11 +1,11 @@
-﻿param([switch]$SelfTest, [string]$UsbTestSerial, [switch]$VpnTest, [switch]$VpnTestApps, [switch]$StartupTest, [switch]$RecoveryTest, [switch]$RecoveryAll)
+﻿param([switch]$SelfTest, [string]$UsbTestSerial, [switch]$VpnTest, [switch]$VpnTestApps, [switch]$StartupTest, [switch]$RecoveryTest, [switch]$RecoveryAll, [switch]$UiTest)
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'profile.ps1')
 $script:profileDirectory=GetPhoneExitProfileDirectory
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -Path (Join-Path $PSScriptRoot 'desktop-controls.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing
-if(!$SelfTest -and !$VpnTest -and !$StartupTest -and !$RecoveryTest){
+if(!$SelfTest -and !$VpnTest -and !$StartupTest -and !$RecoveryTest -and !$UiTest){
     $script:instanceCreated=$false
     $script:instanceMutex=[Threading.Mutex]::new($true,('Local\PhoneExitDesktop-'+[Security.Principal.WindowsIdentity]::GetCurrent().User.Value),[ref]$script:instanceCreated)
     if(!$script:instanceCreated){
@@ -100,7 +100,7 @@ function StartClient([switch]$Reconnect) {
         $script:selectedPhone = $null
         $selected=$null
         if (!$SelfTest -and $script:phoneRows.Count -gt 0 -and $phoneList.SelectedIndex -lt 0) {
-            $hint.Text = 'Выберите доступный телефон в списке стран справа.'; return
+            $hint.Text = 'Не выбран доступный телефон.'; return
         }
         if ($phoneList.SelectedIndex -ge 0 -and (!$SelfTest -or $UsbTestSerial)) {
             $selected = $script:phoneRows[$phoneList.SelectedIndex]
@@ -231,6 +231,13 @@ $timer.Add_Tick({
     if($script:tickBusy){return};$script:tickBusy=$true
     try {
     ReadDirectory
+    if($UiTest){
+        if($script:phoneRows.Count -gt 0 -and $script:botBadgeLast -gt [DateTime]::MinValue){
+            . (Join-Path $PSScriptRoot 'test-desktop-redesign.ps1')
+            TestDesktopRedesign;$script:uiTestPassed=$true;$form.Close();return
+        }
+        if(([DateTime]::UtcNow-$script:testStarted).TotalSeconds -gt 45){throw 'UI test did not receive directory and bot statuses'}
+    }
     if($StartupTest){
         if($script:phoneRows.Count -gt 0 -and $script:personalMode -and @($script:phoneRows | Where-Object online).Count -gt 0){
             $result=@{personal=$script:personalMode;phones=$script:phoneRows.Count;online=@($script:phoneRows | Where-Object online).Count;process=[Diagnostics.Process]::GetCurrentProcess().ProcessName}
@@ -315,10 +322,12 @@ $form.Add_FormClosing({
 try { StartDirectory } catch { $hint.Text = 'Не удалось открыть список телефонов. Проверьте Node.js и файл привязок.' }
 . (Join-Path $PSScriptRoot 'desktop-theme.ps1')
 . (Join-Path $PSScriptRoot 'desktop-bots.ps1')
+. (Join-Path $PSScriptRoot 'desktop-redesign.ps1')
 $timer.Start()
 try { $null = $form.ShowDialog() } finally { StopVpn; if($script:client){try{$script:client.StandardInput.Close();if(!$script:client.WaitForExit(4000)){$script:client.Kill()}}catch{}};CloseDirectory }
 $timer.Dispose()
 $form.Dispose()
+if($UiTest -and !$script:uiTestPassed){throw 'Desktop redesign test failed'}
 if($RecoveryTest -and !$script:recoveryPassed){throw 'VPN recovery system test did not pass'}
 if($VpnTest -and !$RecoveryTest -and !$script:vpnTestPassed){throw 'VPN system test did not pass'}
 if ($SelfTest) {

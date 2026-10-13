@@ -52,6 +52,21 @@ try {
     })
     try{$taskTimer.Start();$taskPanel.GetType().GetMethod('OpenFarmEditor',$taskFlags).Invoke($taskPanel,@())}finally{$taskTimer.Dispose()}
     if($script:taskDialogFailure){throw $script:taskDialogFailure}
+    $taskPanel.InitialCopyTargets=[string[]]@($taskPhones.Rows|Where-Object {$_.Tag -ne $taskInitialPhone.id}|Select-Object -First 2|ForEach-Object {[string]$_.Tag})
+    $taskCopyTimer=New-Object Windows.Forms.Timer;$taskCopyTimer.Interval=250
+    $script:taskCopyFailure=$null
+    $taskCopyTimer.Add_Tick({
+        $taskCopyDialog=@([Windows.Forms.Application]::OpenForms|Where-Object {$_.Text -eq 'Копирование настроек'})[0]
+        if(!$taskCopyDialog){return};$taskCopyTimer.Stop()
+        try{
+            $taskCopyList=@($taskCopyDialog.Controls|Where-Object {$_ -is [Windows.Forms.CheckedListBox]})[0]
+            if($taskCopyList.CheckedIndices.Count -ne 2){throw 'Selected fleet targets were not prechecked in copy dialog'}
+            $taskCopyBitmap=[Drawing.Bitmap]::new($taskCopyDialog.Width,$taskCopyDialog.Height)
+            try{$taskCopyDialog.DrawToBitmap($taskCopyBitmap,[Drawing.Rectangle]::new(0,0,$taskCopyDialog.Width,$taskCopyDialog.Height));$taskCopyBitmap.Save((Join-Path $PSScriptRoot '../.tools/bot-copy-preview.png'))}finally{$taskCopyBitmap.Dispose()}
+        }catch{$script:taskCopyFailure=$_.Exception.Message}finally{$taskCopyDialog.DialogResult='Cancel';$taskCopyDialog.Close()}
+    })
+    try{$taskCopyTimer.Start();$taskPanel.GetType().GetMethod('Copy',$taskFlags).Invoke($taskPanel,@())|Out-Null}finally{$taskCopyTimer.Dispose()}
+    if($script:taskCopyFailure){throw $script:taskCopyFailure}
     $taskBitmap=New-Object Drawing.Bitmap($taskPanel.Width,$taskPanel.Height)
     try{$taskPanel.DrawToBitmap($taskBitmap,(New-Object Drawing.Rectangle(0,0,$taskPanel.Width,$taskPanel.Height)));$taskBitmap.Save((Join-Path $PSScriptRoot '../.tools/bot-panel-preview.png'))}finally{$taskBitmap.Dispose()}
     Write-Output "PASS bot panel: $($taskPhones.Rows.Count) phones, $($taskMaps.Items.Count) maps; no settings or commands sent."
