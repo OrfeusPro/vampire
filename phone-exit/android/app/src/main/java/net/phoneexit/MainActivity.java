@@ -68,7 +68,7 @@ public final class MainActivity extends Activity {
         LinearLayout.LayoutParams iconParams=new LinearLayout.LayoutParams(dp(36),dp(36));iconParams.setMarginEnd(dp(8));
         brand.addView(brandIcon,iconParams);
         TextView title = label("Phone Exit",24,TEXT); title.setTypeface(Typeface.DEFAULT,Typeface.BOLD);title.setSingleLine(true);title.setEllipsize(android.text.TextUtils.TruncateAt.END);brand.addView(title,new LinearLayout.LayoutParams(0,-2,1));
-        updateButton=headerAction(android.R.drawable.ic_popup_sync,"Обновление приложения");brand.addView(updateButton,new LinearLayout.LayoutParams(dp(48),dp(48)));
+        updateButton=headerAction(R.drawable.ic_refresh,"Обновление приложения");brand.addView(updateButton,new LinearLayout.LayoutParams(dp(48),dp(48)));
         settingsButton=headerAction(R.drawable.ic_settings,"Настройки приложения");brand.addView(settingsButton,new LinearLayout.LayoutParams(dp(48),dp(48)));
         brand.setPadding(dp(20),dp(12),dp(12),dp(4));root.addView(brand);
         root.addView(mainScroll,new LinearLayout.LayoutParams(-1,0,1));
