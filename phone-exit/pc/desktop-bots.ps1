@@ -21,6 +21,51 @@ $script:botPhoneBadges=@{}
 $script:botBadgeRead=$null
 $script:botBadgeNext=[DateTime]::MinValue
 $script:botBadgeLast=[DateTime]::MinValue
+$script:botRowJobs=@{}
+$phoneList.Add_RowAction({param($sender,$event)
+    if($event.Index -lt 0 -or $event.Index -ge $script:phoneRows.Count){return}
+    $taskPhone=$script:phoneRows[$event.Index];$taskId=[string]$taskPhone.id
+    if($event.Action -eq 'settings'){OpenBotPanel $taskId;return}
+    if(!$script:botBadgeHttp -or $script:botRowJobs.ContainsKey($taskId)){return}
+    $taskBadge=$script:botPhoneBadges[$taskId]
+    if(!$taskPhone.online -or !$taskBadge -or $taskBadge.botStatusStale -or ([DateTime]::UtcNow-$script:botBadgeLast).TotalSeconds -gt 15 -or (!$taskBadge.bot.botId -and !$taskBadge.profile.botId)){return}
+    try{
+        $taskOp=[string]$event.Action
+        $taskBody=New-Object Net.Http.StringContent((ConvertTo-Json @{op=$taskOp} -Compress),[Text.Encoding]::UTF8,'application/json')
+        $script:botRowJobs[$taskId]=@{task=$script:botBadgeHttp.PostAsync(('http://127.0.0.1:17842/bot/v1/devices/'+$taskId+'/action'),$taskBody);content=$taskBody;stage='post';deadline=[DateTime]::UtcNow.AddSeconds(190);name=[string]$taskPhone.name}
+        $hint.Text='Отправляется команда боту: '+$taskPhone.name;$phoneList.Invalidate()
+    }catch{$hint.Text='Команда не отправлена: '+$_.Exception.Message}
+})
+function RefreshBotRowJobs {
+    foreach($taskId in @($script:botRowJobs.Keys)){
+        $taskJob=$script:botRowJobs[$taskId]
+        try{
+            if([DateTime]::UtcNow -gt $taskJob.deadline){throw 'Результат неизвестен. Проверьте статус телефона; команда автоматически не повторяется.'}
+            if(!$taskJob.task.IsCompleted -or ($taskJob.nextPoll -and [DateTime]::UtcNow -lt $taskJob.nextPoll)){continue}
+            if($taskJob.task.IsFaulted -or $taskJob.task.IsCanceled){throw 'Нет подтверждения HTTP API. Проверьте статус перед повторной командой.'}
+            if($taskJob.stage -eq 'post'){
+                $taskResponse=$taskJob.task.Result
+                $taskJob.content.Dispose();$taskJob.Remove('content')
+                $taskJob.task=$taskResponse.Content.ReadAsStringAsync();$taskJob.response=$taskResponse;$taskJob.stage='body';continue
+            }
+            $taskResult=$taskJob.task.Result|ConvertFrom-Json
+            if($taskJob.stage -eq 'body'){
+                $taskOk=$taskJob.response.IsSuccessStatusCode;$taskJob.response.Dispose();$taskJob.Remove('response')
+                if(!$taskOk){throw 'API отклонил команду: '+$taskResult.error}
+                $taskJob.jobId=[string]$taskResult.id;$taskJob.stage='poll'
+            }elseif($taskResult.status -eq 'done'){
+                if($script:botPhoneBadges[$taskId] -and $taskResult.result){$script:botPhoneBadges[$taskId].bot=$taskResult.result}
+                $hint.Text='Команда боту выполнена: '+$taskJob.name;$script:botRowJobs.Remove($taskId);$script:botBadgeNext=[DateTime]::MinValue;$phoneList.Invalidate();continue
+            }elseif($taskResult.status -eq 'failed'){throw ('Команда боту не выполнена: '+$taskResult.error)}
+            $taskJob.task=$script:botBadgeHttp.GetStringAsync('http://127.0.0.1:17842/bot/v1/jobs/'+$taskJob.jobId)
+            $taskJob.nextPoll=[DateTime]::UtcNow.AddSeconds(1)
+        }catch{
+            $hint.Text=$_.Exception.Message
+            if($taskJob.content){$taskJob.content.Dispose()};if($taskJob.response){$taskJob.response.Dispose()}
+            $script:botRowJobs.Remove($taskId);$phoneList.Invalidate()
+        }
+    }
+}
 function RefreshBotBadges {
     if(!$script:botBadgeHttp){return}
     if($script:botBadgeRead -and $script:botBadgeRead.IsCompleted){
@@ -31,14 +76,14 @@ function RefreshBotBadges {
 }
 $script:botBadgeTimer=New-Object Windows.Forms.Timer
 $script:botBadgeTimer.Interval=250
-$script:botBadgeTimer.Add_Tick({RefreshBotBadges})
+$script:botBadgeTimer.Add_Tick({RefreshBotBadges;RefreshBotRowJobs})
 $form.Add_Shown({
     if($SelfTest -or $VpnTest -or $StartupTest -or $RecoveryTest){return}
     try{EnsureBotGateway;Add-Type -AssemblyName System.Net.Http;$script:botBadgeHttp=New-Object Net.Http.HttpClient;$script:botBadgeHttp.Timeout=[TimeSpan]::FromSeconds(3);$script:botBadgeHttp.DefaultRequestHeaders.Authorization=New-Object Net.Http.Headers.AuthenticationHeaderValue('Bearer',$script:botApiSecret);$script:botBadgeTimer.Start()}catch{}
 })
 $form.Add_FormClosed({$script:botBadgeTimer.Stop();$script:botBadgeTimer.Dispose();if($script:botBadgeHttp){$script:botBadgeHttp.Dispose()}})
 # A panel owned by the main EXE. The local gateway lifetime is independent of bots.
-function OpenBotPanel {
+function OpenBotPanel([string]$phoneId='') {
     try {
         Add-Type -AssemblyName System.Net.Http
         Add-Type -AssemblyName System.Web.Extensions
@@ -46,6 +91,7 @@ function OpenBotPanel {
         EnsureBotGateway
         $taskSecret=$script:botApiSecret
         $taskPanel=New-Object PhoneExit.BotPanel($taskSecret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))
+        if($phoneId){$taskPanel.InitialPhoneId=$phoneId}
         $null=$taskPanel.ShowDialog($form);$taskPanel.Dispose()
     }catch{$hint.Text='Панель ботов недоступна: '+$_.Exception.Message}
 }

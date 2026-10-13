@@ -4,7 +4,7 @@
         $savedBotBadges=$script:botPhoneBadges
         try{
             $script:botPhoneBadges=@{}
-            foreach($testPhone in $script:phoneRows){$script:botPhoneBadges[[string]$testPhone.id]=[pscustomobject]@{profile=[pscustomobject]@{identity=[pscustomobject]@{characterName='Персонаж';provider='UgPhone'};botId='lordnine'};bot=[pscustomobject]@{botId='lordnine';status='running'};botStatusStale=$false}}
+            foreach($testPhone in $script:phoneRows){$script:botPhoneBadges[[string]$testPhone.id]=[pscustomobject]@{profile=[pscustomobject]@{identity=[pscustomobject]@{characterName='Orfeus';provider='VMOS'};botId='lordnine'};bot=[pscustomobject]@{botId='lordnine';status='running'};botStatusStale=$false}}
             $script:botBadgeLast=[DateTime]::UtcNow
             $form.ClientSize=[Drawing.Size]::new((UiPixel 1100),(UiPixel 780));UpdateWindowLayout;[Windows.Forms.Application]::DoEvents()
             if($phoneList.ItemHeight -lt (UiPixel 90)){throw 'Bot badge row clips third line'}

@@ -4,6 +4,10 @@ Add-Type -AssemblyName System.Windows.Forms,System.Drawing,System.Security,Syste
 Add-Type -Path (Join-Path $PSScriptRoot 'desktop-bots.cs') -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions
 $taskSecret=[Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect([IO.File]::ReadAllBytes((Join-Path (GetPhoneExitProfileDirectory) 'control-api.bin')),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser))
 $taskPanel=New-Object PhoneExit.BotPanel($taskSecret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))
+$taskInitialPhones=Invoke-RestMethod 'http://127.0.0.1:17842/bot/v1/phones' -Headers @{Authorization="Bearer $taskSecret"} -TimeoutSec 10
+$taskInitialPhone=@($taskInitialPhones.phones|Where-Object {$_.name -eq 'realme RMX3830' -and $_.country -eq 'SG'})[0]
+if(!$taskInitialPhone){throw 'Expected SG phone for initial selection'}
+$taskPanel.InitialPhoneId=[string]$taskInitialPhone.id
 try {
     $taskPanel.Show()
     $taskDeadline=[DateTime]::UtcNow.AddSeconds(15)
@@ -12,6 +16,7 @@ try {
     $taskMaps=$taskPanel.GetType().GetField('maps',$taskFlags).GetValue($taskPanel)
     while([DateTime]::UtcNow -lt $taskDeadline -and ($taskPhones.Rows.Count -eq 0 -or $taskMaps.Items.Count -eq 0)){[Windows.Forms.Application]::DoEvents();Start-Sleep -Milliseconds 50}
     if($taskPhones.Rows.Count -lt 1 -or $taskMaps.Items.Count -lt 1){throw 'Panel did not load phones/maps'}
+    if($taskPhones.SelectedRows.Count -ne 1 -or $taskPhones.SelectedRows[0].Tag -ne $taskInitialPhone.id){throw 'Settings panel ignored selected phone'}
     $taskSG=@($taskPhones.Rows|Where-Object { $_.Cells[0].Value -like '*RMX3830*SG*' })[0]
     if(!$taskSG){throw 'Expected SG profile for editor verification'}
     $taskPhones.ClearSelection();$taskSG.Selected=$true

@@ -54,5 +54,24 @@ try {
     $menu.Items[1].PerformClick()
     if($select.SelectedIndex -ne 1 -or $script:selectedEvents -ne 1){throw 'Selector did not change mode exactly once'}
     if(!$menu.IsDisposed){$menu.Close()}
-    Write-Output 'PASS: dark dropdown selects mode; wheel, keyboard and directory refresh preserve usable phone scrolling'
+    $list.ShowBotActions=$true;$list.Width=700;$list.ItemHeight=100;$list.Height=200;$list.SelectedIndex=4
+    $list.SetBotActions(4,$true,$true,'running')
+    if($list.ActionEnabled(4,0) -or !$list.ActionEnabled(4,1) -or !$list.ActionEnabled(4,2)){throw 'Running bot action availability is wrong'}
+    $script:rowAction=$null;$list.Add_RowAction({param($sender,$event)$script:rowAction=$event})
+    $taskBounds=$list.ActionBounds(4,1)
+    $list.GetType().GetMethod('OnMouseDown',$flags).Invoke($list,@([Windows.Forms.MouseEventArgs]::new('Left',1,($taskBounds.X+3),($taskBounds.Y+3),0)))
+    if(!$script:rowAction -or $script:rowAction.Index -ne 4 -or $script:rowAction.Action -ne 'pause'){throw 'Scrolled row action targets the wrong phone'}
+    $list.SetBotActions(4,$false,$true,'running')
+    if($list.ActionEnabled(4,0) -or $list.ActionEnabled(4,1) -or $list.ActionEnabled(4,2) -or !$list.ActionEnabled(4,3)){throw 'Offline action availability is unsafe'}
+    $list.SetBotActions(4,$true,$false,'')
+    if($list.ActionEnabled(4,0) -or !$list.ActionEnabled(4,3)){throw 'Unassigned phone should expose settings only'}
+    $list.SetPhoneHeader(4,250,'Не в сети','VMOS')
+    $taskBounds=$list.ActionBounds(4,3)
+    if($taskBounds.X -ne 250){throw 'Settings button did not move after country'}
+    $list.GetType().GetMethod('OnMouseDown',$flags).Invoke($list,@([Windows.Forms.MouseEventArgs]::new('Left',1,($taskBounds.X+3),($taskBounds.Y+3),0)))
+    if($script:rowAction.Index -ne 4 -or $script:rowAction.Action -ne 'settings'){throw 'Header settings action targets the wrong phone'}
+    $taskStatusY=$taskBounds.Y+[int][Math]::Round(48*[PhoneExit.DesktopDpi]::Scale)
+    $list.GetType().GetMethod('OnMouseMove',$flags).Invoke($list,@([Windows.Forms.MouseEventArgs]::new('None',0,([int][Math]::Round(26*[PhoneExit.DesktopDpi]::Scale)),$taskStatusY,0)))
+    if($list.GetType().GetField('tipText',$flags).GetValue($list) -ne 'Не в сети'){throw 'Connection indicator tooltip missing'}
+    Write-Output 'PASS: dark dropdown, scrolling, correct row action target and offline/unassigned controls'
 }finally{$form.Close();$form.Dispose()}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -167,6 +168,23 @@ namespace PhoneExit {
     }
 
     public sealed class DarkPhoneList : Control {
+        public sealed class RowActionEventArgs : EventArgs { public int Index; public string Action; public RowActionEventArgs(int index,string action){Index=index;Action=action;} }
+        public event EventHandler<RowActionEventArgs> RowAction;
+        public bool ShowBotActions {get;set;}
+        readonly Dictionary<int,string> botStates=new Dictionary<int,string>();
+        readonly HashSet<int> assignedRows=new HashSet<int>();
+        readonly Dictionary<int,int> settingsPositions=new Dictionary<int,int>();
+        readonly Dictionary<int,string> phoneStatusTips=new Dictionary<int,string>(),providerTips=new Dictionary<int,string>();
+        public void SetPhoneHeader(int index,int settingsX,string status,string provider){settingsPositions[index]=settingsX;phoneStatusTips[index]=status;providerTips[index]=provider;}
+        readonly ToolTip actionTip=new ToolTip();
+        string tipText="";
+        static readonly string[] actionNames={"start","pause","stop","settings"};
+        public int BotColumnX {get{return Width-D(14)-D(244);}}
+        public void SetBotActions(int index,bool available,bool assigned,string state){if(assigned)assignedRows.Add(index);else assignedRows.Remove(index);botStates[index]=!available?"offline":!assigned?"unassigned":state;}
+        public Rectangle ActionBounds(int index,int action){bool header=action==3&&settingsPositions.ContainsKey(index);return new Rectangle(header?settingsPositions[index]:BotColumnX+D(12+action*40),index*itemHeight-offset+D(header?8:57),D(32),D(28));}
+        public bool ActionEnabled(int index,int action){string state;if(!botStates.TryGetValue(index,out state))state="offline";return action==3 || (state!="offline" && state!="unassigned" && state!="busy" && (action==0?state!="running"&&state!="starting":action==1?state=="running"||state=="starting"||state=="waiting":state!="stopped"));}
+        void InvokeAction(int index,int action){if(!ActionEnabled(index,action))return;var h=RowAction;if(h!=null)h(this,new RowActionEventArgs(index,actionNames[action]));}
+        void ActionMenu(){if(selected<0)return;var menu=new ContextMenuStrip();string[] labels={"Запустить / продолжить","Пауза","Остановить","Настройки телефона и бота"};for(int i=0;i<4;i++){if(i!=3&&!assignedRows.Contains(selected))continue;int action=i;var item=menu.Items.Add(labels[i]);item.Enabled=ActionEnabled(selected,i);item.Click+=(s,e)=>InvokeAction(selected,action);}menu.Closed+=(s,e)=>menu.Dispose();menu.Show(this,new Point(BotColumnX,Math.Max(0,selected*itemHeight-offset)));}
         public sealed class ItemCollection : Collection<object> {
             readonly DarkPhoneList owner;
             internal ItemCollection(DarkPhoneList owner){this.owner=owner;}
@@ -214,6 +232,18 @@ namespace PhoneExit {
                 var handler=DrawItem;
                 if(handler!=null)handler(this,new DrawItemEventArgs(e.Graphics,Font,rect,i,i==selected?DrawItemState.Selected:DrawItemState.None,ForeColor,BackColor));
                 else TextRenderer.DrawText(e.Graphics,Items[i].ToString(),Font,rect,ForeColor,BackColor);
+                if(ShowBotActions){
+                    string[] symbols={"▶","Ⅱ","■","⚙"};
+                    using(var font=new Font("Segoe UI Symbol",10))for(int a=0;a<4;a++){
+                        if(a!=3&&!assignedRows.Contains(i))continue;
+                        var bounds=ActionBounds(i,a);bool enabled=ActionEnabled(i,a);
+                        using(var path=new System.Drawing.Drawing2D.GraphicsPath()){
+                            int radius=D(6);path.AddArc(bounds.Left,bounds.Top,radius*2,radius*2,180,90);path.AddArc(bounds.Right-radius*2,bounds.Top,radius*2,radius*2,270,90);path.AddArc(bounds.Right-radius*2,bounds.Bottom-radius*2,radius*2,radius*2,0,90);path.AddArc(bounds.Left,bounds.Bottom-radius*2,radius*2,radius*2,90,90);path.CloseFigure();
+                            using(var brush=new SolidBrush(Color.FromArgb(38,49,68)))e.Graphics.FillPath(brush,path);
+                        }
+                        TextRenderer.DrawText(e.Graphics,symbols[a],font,bounds,enabled?Color.FromArgb(98,231,188):Color.FromArgb(92,108,130),TextFormatFlags.HorizontalCenter|TextFormatFlags.VerticalCenter|TextFormatFlags.NoPadding);
+                    }
+                }
             }
             if(MaxOffset>0){
                 using(var track=new SolidBrush(Color.FromArgb(25,35,50)))e.Graphics.FillRectangle(track,Width-D(12),0,D(12),Height);
@@ -226,9 +256,10 @@ namespace PhoneExit {
             if(MaxOffset>0 && e.X>=Width-D(14)){
                 if(Thumb.Contains(e.Location)){dragY=e.Y;dragOffset=offset;Capture=true;}
                 else{offset+=e.Y<Thumb.Y?-Height:Height;Changed();}
-            }else{int index=(e.Y+offset)/itemHeight;if(index<Items.Count)SelectedIndex=index;}
+            }else{int index=(e.Y+offset)/itemHeight;if(index<Items.Count){SelectedIndex=index;if(ShowBotActions)for(int a=0;a<4;a++)if(ActionBounds(index,a).Contains(e.Location)){InvokeAction(index,a);break;}}}
         }
         protected override void OnMouseMove(MouseEventArgs e){
+            if(ShowBotActions){string text="";int index=(e.Y+offset)/itemHeight;if(index<Items.Count){for(int a=0;a<4;a++)if((a==3||assignedRows.Contains(index))&&ActionBounds(index,a).Contains(e.Location)){text=new[]{"Запустить / продолжить","Пауза","Остановить","Настройки телефона и бота"}[a];break;}int rowY=e.Y+offset-index*itemHeight;if(text==""&&e.X>=D(8)&&e.X<=D(44)){if(rowY>=D(45)&&rowY<=D(69))phoneStatusTips.TryGetValue(index,out text);else if(rowY>=D(8)&&rowY<=D(40))providerTips.TryGetValue(index,out text);}}if(text!=tipText){tipText=text;actionTip.SetToolTip(this,text);}}
             base.OnMouseMove(e);hoverScroll=e.X>=Width-D(14);
             if(dragY>=0){int travel=Height-Thumb.Height;if(travel>0){offset=dragOffset+(int)((long)(e.Y-dragY)*MaxOffset/travel);Changed();}}
             else Invalidate();
@@ -240,6 +271,7 @@ namespace PhoneExit {
         protected override void OnResize(EventArgs e){base.OnResize(e);Changed();}
         protected override bool IsInputKey(Keys key){return key==Keys.Up || key==Keys.Down || key==Keys.Home || key==Keys.End || key==Keys.PageUp || key==Keys.PageDown || base.IsInputKey(key);}
         protected override void OnKeyDown(KeyEventArgs e){
+            if(ShowBotActions&&(e.KeyCode==Keys.Apps||(e.Shift&&e.KeyCode==Keys.F10))){ActionMenu();e.Handled=true;return;}
             int next=selected;
             if(e.KeyCode==Keys.Down)next++;else if(e.KeyCode==Keys.Up)next--;
             else if(e.KeyCode==Keys.Home)next=0;else if(e.KeyCode==Keys.End)next=Items.Count-1;
@@ -249,5 +281,6 @@ namespace PhoneExit {
         }
         protected override void OnGotFocus(EventArgs e){base.OnGotFocus(e);Invalidate();}
         protected override void OnLostFocus(EventArgs e){base.OnLostFocus(e);Invalidate();}
+        protected override void Dispose(bool disposing){if(disposing)actionTip.Dispose();base.Dispose(disposing);}
     }
 }

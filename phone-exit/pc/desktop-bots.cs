@@ -38,6 +38,7 @@ public sealed class BotPanel : BotWindow {
     readonly List<Button> actions=new List<Button>(); readonly List<Dictionary<string,object>> mapItems=new List<Dictionary<string,object>>();
     Dictionary<string,object> profile,settings; readonly List<Dictionary<string,object>> points=new List<Dictionary<string,object>>();
     string selected; bool loading,busy,dirty; readonly Timer poll=new Timer(); readonly string root;
+    public string InitialPhoneId {set{selected=value;}}
     readonly Label moduleLabel=new Label(); string moduleVersion="1.0.0";
     readonly Panel mapViewport=new Panel{AutoScroll=true,Dock=DockStyle.Fill};
     readonly FlowLayoutPanel pointList=new FlowLayoutPanel{Dock=DockStyle.Fill,AutoScroll=true};

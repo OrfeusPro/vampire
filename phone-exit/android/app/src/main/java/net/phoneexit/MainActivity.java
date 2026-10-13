@@ -20,6 +20,10 @@ public final class MainActivity extends Activity {
     private TextView status;
     private TextView accessState;
     private TextView batteryState;
+    private TextView botState;
+    private ScrollView mainScroll, settingsScroll;
+    private ImageButton updateButton, settingsButton;
+    private boolean showingSettings;
     private Button available, stop;
     private PowerMark power;
     private static final int BACKGROUND=Color.rgb(16,21,31), CARD=Color.rgb(25,35,50),
@@ -33,6 +37,14 @@ public final class MainActivity extends Activity {
             available.setEnabled(!enabled); stop.setEnabled(enabled);
             available.setAlpha(enabled?0.5f:1f); stop.setAlpha(enabled?1f:0.5f);
             power.active=enabled; power.invalidate();
+            if(botState!=null)try{
+                org.json.JSONObject bot=BotStore.status(MainActivity.this);
+                String state=bot.optString("status"),id=bot.optString("botId");
+                String translated=state.equals("running")?"Работает":state.equals("paused")?"Пауза":state.equals("starting")?"Запускается":state.equals("error")?"Ошибка":state.equals("waiting")?"Ожидает":"Остановлен";
+                botState.setText(id.isEmpty()?"Бот не назначен. Назначьте его в приложении на ПК.":(id.equals("lordnine")?"Lord Nine":id)+" · "+translated+(bot.optString("error").isEmpty()?"":"\n"+bot.optString("error")));
+                botState.setTextColor(state.equals("error")?Color.rgb(255,137,137):TEXT);
+            }catch(Exception ignored){}
+            try{boolean ready=AppUpdater.state(MainActivity.this).optString("status").equals("ready_for_confirmation");updateButton.setImageTintList(ColorStateList.valueOf(ready?ACCENT:MUTED));updateButton.setContentDescription(ready?"Установить загруженное обновление":"Обновление приложения");}catch(Exception ignored){}
             if(batteryState!=null)batteryState.setText(getSystemService(android.os.PowerManager.class).isIgnoringBatteryOptimizations(getPackageName())?
                 "Оптимизация батареи Android отключена для Phone Exit. Ограничения производителя проверяются отдельно в настройках приложения.":
                 "Android может ограничивать работу в фоне. Для автономного бота разрешите Phone Exit работать без оптимизации батареи.");
@@ -45,14 +57,25 @@ public final class MainActivity extends Activity {
         try { personal=PersonalAccount.asset(this)!=null; } catch(Exception ignored) {}
         ScrollView scroll=new ScrollView(this); scroll.setFillViewport(true);
         scroll.setBackgroundColor(BACKGROUND); scroll.setFitsSystemWindows(true);
-        LinearLayout layout = column(24); scroll.addView(layout);
+        mainScroll=scroll;
+        LinearLayout layout = column(20); scroll.addView(layout);
+        LinearLayout root=column(0);root.setBackgroundColor(BACKGROUND);root.setFitsSystemWindows(true);
         LinearLayout brand=new LinearLayout(this); brand.setGravity(Gravity.CENTER_VERTICAL);
         ImageView brandIcon=new ImageView(this); brandIcon.setImageResource(R.drawable.phone_exit_brand);
         brandIcon.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-        LinearLayout.LayoutParams iconParams=new LinearLayout.LayoutParams(dp(48),dp(48));iconParams.setMarginEnd(dp(12));
+        LinearLayout.LayoutParams iconParams=new LinearLayout.LayoutParams(dp(36),dp(36));iconParams.setMarginEnd(dp(8));
         brand.addView(brandIcon,iconParams);
-        TextView title = label("Phone Exit",30,TEXT); title.setTypeface(Typeface.DEFAULT,Typeface.BOLD);brand.addView(title);
-        layout.addView(brand);
+        TextView title = label("Phone Exit",24,TEXT); title.setTypeface(Typeface.DEFAULT,Typeface.BOLD);title.setSingleLine(true);title.setEllipsize(android.text.TextUtils.TruncateAt.END);brand.addView(title,new LinearLayout.LayoutParams(0,-2,1));
+        updateButton=headerAction(android.R.drawable.ic_popup_sync,"Обновление приложения");brand.addView(updateButton,new LinearLayout.LayoutParams(dp(48),dp(48)));
+        settingsButton=headerAction(android.R.drawable.ic_menu_preferences,"Настройки приложения");brand.addView(settingsButton,new LinearLayout.LayoutParams(dp(48),dp(48)));
+        brand.setPadding(dp(20),dp(12),dp(12),dp(4));root.addView(brand);
+        root.addView(mainScroll,new LinearLayout.LayoutParams(-1,0,1));
+        settingsScroll=new ScrollView(this);settingsScroll.setFillViewport(true);settingsScroll.setBackgroundColor(BACKGROUND);
+        LinearLayout settingsLayout=column(20);settingsScroll.addView(settingsLayout);root.addView(settingsScroll,new LinearLayout.LayoutParams(-1,0,1));settingsScroll.setVisibility(View.GONE);
+        Button back=action("← На главный экран",false);add(settingsLayout,back,0);back.setOnClickListener(v->showSettings(false));
+        add(settingsLayout,label("Настройки",24,TEXT),20);
+        settingsButton.setOnClickListener(v->showSettings(!showingSettings));
+        updateButton.setOnClickListener(v->showUpdate());
         TextView version=label(getString(R.string.app_version,BuildConfig.VERSION_NAME),13,MUTED);
         add(layout,version,6);
         add(layout,label("Личный интернет. Через твои телефоны.",14,MUTED),10);
@@ -77,12 +100,15 @@ public final class MainActivity extends Activity {
             code.setVisibility(android.view.View.GONE); connect.setVisibility(android.view.View.GONE);
             available.setText("Включить автоматический доступ");
         }
-        LinearLayout details=column(22); details.setBackground(surface(CARD,20)); add(layout,details,16);
+        LinearLayout botCard=column(22);botCard.setBackground(surface(CARD,20));add(layout,botCard,16);
+        add(botCard,label("Бот на телефоне",18,ACCENT),0);botState=label("Проверка состояния…",15,TEXT);add(botCard,botState,10);
+        add(botCard,label("Назначение, точки и управление ботом — в приложении на ПК. Бот продолжает работу автономно.",14,MUTED),10);
+        LinearLayout details=column(22); details.setBackground(surface(CARD,20)); add(settingsLayout,details,16);
         TextView heading=label("Как это работает",18,TEXT); heading.setTypeface(Typeface.DEFAULT,Typeface.BOLD); details.addView(heading);
         TextView info = label(getString(R.string.intro),14,MUTED); add(details,info,12);
         if(personal) info.setText("Этот телефон появляется в вашем списке на ПК автоматически. При потере Wi-Fi приложение ждёт сеть и подключается заново.");
         add(details,label("Работает в фоне с уведомлением. Можно свернуть приложение, пока доступ включён.",14,MUTED),14);
-        LinearLayout remote=column(22);remote.setBackground(surface(CARD,20));add(layout,remote,16);
+        LinearLayout remote=column(22);remote.setBackground(surface(CARD,20));add(settingsLayout,remote,16);
         add(remote,label("API управления своим телефоном",18,TEXT),0);
         add(remote,label("Скриншоты, нажатия и свайпы для своего ПК. Без root. Доступ к экрану включается отдельно; защищённые системные окна не управляются.",14,MUTED),10);
         Switch controlToggle=new Switch(this);controlToggle.setText("Разрешить управление с ПК");controlToggle.setTextColor(TEXT);
@@ -96,7 +122,7 @@ public final class MainActivity extends Activity {
         add(remote,label("Удалённая команда готовит обновление. Установку подтверждают здесь и в системном окне Android.",14,MUTED),10);
         Button install=action("Установить загруженное обновление",false);add(remote,install,10);
         install.setOnClickListener(v->{try{AppUpdater.install(this);}catch(Exception e){status.setText("Проверенного обновления пока нет. Отправьте проверку с ПК.");}});
-        LinearLayout background=column(22);background.setBackground(surface(CARD,20));add(layout,background,16);
+        LinearLayout background=column(22);background.setBackground(surface(CARD,20));add(settingsLayout,background,16);
         add(background,label("Работа в фоне",18,TEXT),0);
         batteryState=label("Проверка ограничений батареи…",14,MUTED);add(background,batteryState,10);
         Button battery=action("Разрешить работу в фоне",false);add(background,battery,10);
@@ -108,7 +134,7 @@ public final class MainActivity extends Activity {
         Button appSettings=action("Настройки Phone Exit в Android",false);add(background,appSettings,10);
         appSettings.setOnClickListener(v->{try{startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:"+getPackageName())));}catch(Exception e){status.setText("Откройте настройки Android → приложения → Phone Exit.");}});
         add(background,label("На vivo и realme дополнительно разрешите фоновую работу и автозапуск, если такие ограничения есть. Разрешения подтверждаются в системных настройках.",14,MUTED),10);
-        Button forget=action("Удалить привязку к ПК",false); add(layout,forget,20);
+        Button forget=action("Удалить привязку к ПК",false); add(settingsLayout,forget,20);
         add(layout,label("Wi-Fi телефона  ·  Шифрование WebRTC\nПрямое подключение к твоему ПК",12,MUTED),22);
         connect.setOnClickListener(v -> {
             try {
@@ -137,7 +163,8 @@ public final class MainActivity extends Activity {
                 status.setText("Привязка удалена");
             })
             .setNegativeButton("Отмена",null).show());
-        setContentView(scroll);
+        setContentView(root);
+        if(getIntent().getBooleanExtra("update",false))updateButton.post(()->showUpdate());
         if(personal) {
             try {
                 boolean first=!getSharedPreferences("runtime",MODE_PRIVATE).contains("enabled");
@@ -151,6 +178,17 @@ public final class MainActivity extends Activity {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},1);
     }
     private int dp(int value) { return Math.round(value*getResources().getDisplayMetrics().density); }
+    private ImageButton headerAction(int icon,String description){ImageButton button=new ImageButton(this);button.setImageResource(icon);button.setImageTintList(ColorStateList.valueOf(MUTED));button.setBackground(surface(BACKGROUND,12));button.setPadding(dp(12),dp(12),dp(12),dp(12));button.setContentDescription(description);return button;}
+    private void showSettings(boolean value){showingSettings=value;mainScroll.setVisibility(value?View.GONE:View.VISIBLE);settingsScroll.setVisibility(value?View.VISIBLE:View.GONE);settingsButton.setImageTintList(ColorStateList.valueOf(value?ACCENT:MUTED));settingsButton.setContentDescription(value?"Вернуться на главный экран":"Настройки приложения");}
+    private void showUpdate(){try{
+        org.json.JSONObject state=AppUpdater.state(this);boolean ready=state.optString("status").equals("ready_for_confirmation");
+        android.app.AlertDialog.Builder dialog=new android.app.AlertDialog.Builder(this).setTitle("Обновление Phone Exit")
+            .setMessage(ready?"Загружена версия "+state.optString("availableVersion")+". Подтвердите установку в системном окне Android.":"Установлена версия "+BuildConfig.VERSION_NAME+". Проверенного обновления пока нет. Проверку и загрузку можно отправить с ПК; автоматическая загрузка по Wi-Fi включается в настройках.")
+            .setNegativeButton("Закрыть",null);
+        if(ready)dialog.setPositiveButton("Установить",(d,w)->{try{AppUpdater.install(this);}catch(Exception e){status.setText("Не удалось открыть проверенное обновление. Повторите загрузку с ПК.");}});
+        dialog.show();
+    }catch(Exception e){status.setText("Не удалось прочитать состояние обновления.");}}
+    @Override public void onBackPressed(){if(showingSettings)showSettings(false);else super.onBackPressed();}
     private LinearLayout column(int padding) {
         LinearLayout box=new LinearLayout(this); box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(padding),dp(padding),dp(padding),dp(padding)); return box;
