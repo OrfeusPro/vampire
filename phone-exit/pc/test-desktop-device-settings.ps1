@@ -25,6 +25,18 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             if(!$panel.Text.Contains([string]$phone.name)){throw 'Device title does not identify the selected phone'}
             $tabs=$panel.GetType().GetField('deviceTabs',$flags).GetValue($panel)
             if($tabs.TabPages.Count -ne 4){throw 'Device settings tabs are missing'}
+            $gameSelect=$panel.GetType().GetField('gameSelect',$flags).GetValue($panel)
+            if($gameSelect.SelectedItem -ne 'Lord Nine'){throw 'Assigned game is not selected from the catalog'}
+            $originalSettings=$profile['settings']
+            $originalDirty=$panel.GetType().GetField('dirty',$flags).GetValue($panel)
+            $panel.GetType().GetField('chosenGame',$flags).SetValue($panel,'future-game')
+            $panel.GetType().GetMethod('UpdateGameView',$flags).Invoke($panel,@())
+            $tabs.SelectedIndex=1
+            if($tabs.SelectedIndex -eq 1 -or $panel.GetType().GetField('farm',$flags).GetValue($panel).Visible){throw 'Another game exposes LordNine farm controls'}
+            foreach($action in $panel.GetType().GetField('actions',$flags).GetValue($panel)){if($action.Text -eq 'Сохранить и отправить настройки' -and $action.Enabled){throw 'Another game can save LordNine settings'}}
+            if($profile['settings'] -ne $originalSettings -or $panel.GetType().GetField('dirty',$flags).GetValue($panel) -ne $originalDirty){throw 'Game preview mutated the profile'}
+            $panel.GetType().GetField('chosenGame',$flags).SetValue($panel,'lordnine')
+            $panel.GetType().GetMethod('UpdateGameView',$flags).Invoke($panel,@())
             $points=$panel.GetType().GetField('points',$flags).GetValue($panel)
             $before=$points.Count
             foreach($width in @(1200,1440)){
