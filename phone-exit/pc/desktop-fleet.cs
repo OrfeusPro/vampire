@@ -163,7 +163,7 @@ namespace PhoneExit {
             if(p.BotState=="paused"||p.BotState=="starting"||p.BotState=="waiting")return Color.FromArgb(240,198,127);
             return Color.FromArgb(78,88,94);
         }
-        public Rectangle ActionBounds(int i,int action){var r=CardBounds(i);return new Rectangle(table?r.Right-D(94)+action*D(29):r.X+D(6)+action*(r.Width-D(12))/3,table?r.Y+D(18):r.Bottom-D(25),D(26),D(22));}
+        public Rectangle ActionBounds(int i,int action){var r=CardBounds(i);int x=table?r.Right-D(94)+action*D(29):action==0?r.X+D(6):r.Right-D(action==1?60:32);return new Rectangle(x,table?r.Y+D(18):r.Bottom-D(25),D(26),D(22));}
         string QuickOp(FleetPhone p){return p.BotState=="running"?"pause":p.BotState=="paused"?"resume":"start";}
         bool CanAct(FleetPhone p,string op){return p.Online&&p.Fresh&&!p.Pending&&!string.IsNullOrEmpty(p.BotId)&&(op=="pause"?p.BotState=="running"||p.BotState=="starting"||p.BotState=="waiting":op=="resume"?p.BotState=="paused":op=="start"?p.BotState!="running"&&p.BotState!="starting"&&p.BotState!="paused":op=="stop"?p.BotState!="stopped":false);}
         void DrawAction(Graphics g,Rectangle r,int a,FleetPhone p){bool enabled=a>0||CanAct(p,QuickOp(p));using(var pen=new Pen(enabled?Muted:Color.FromArgb(66,73,79),D(1.3))){int x=r.X+D(7),y=r.Y+D(5);if(a==0){if(p.BotState=="running"){g.DrawLine(pen,x,y,x,y+D(10));g.DrawLine(pen,x+D(5),y,x+D(5),y+D(10));}else g.DrawPolygon(pen,new[]{new Point(x,y),new Point(x+D(8),y+D(5)),new Point(x,y+D(10))});}else if(a==1){for(int k=0;k<3;k++){g.DrawLine(pen,x,y+D(k*4),x+D(12),y+D(k*4));g.DrawLine(pen,x+D(k==1?8:4),y+D(k*4-2),x+D(k==1?8:4),y+D(k*4+2));}}else for(int k=0;k<3;k++)g.DrawEllipse(pen,x+D(k*5),y+D(4),D(1),D(1));}}

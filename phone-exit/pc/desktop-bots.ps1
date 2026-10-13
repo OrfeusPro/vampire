@@ -85,6 +85,7 @@ $form.Add_Shown({
 $form.Add_FormClosed({$script:botBadgeTimer.Stop();$script:botBadgeTimer.Dispose();if($script:botBadgeHttp){$script:botBadgeHttp.Dispose()}})
 # A panel owned by the main EXE. The local gateway lifetime is independent of bots.
 function OpenBotPanel([string]$phoneId='', [string[]]$targetIds=@()) {
+    if(!$phoneId -and $script:redesignReady){OpenEmbeddedBotPanel;return}
     try {
         Add-Type -AssemblyName System.Net.Http
         Add-Type -AssemblyName System.Web.Extensions
@@ -94,9 +95,29 @@ function OpenBotPanel([string]$phoneId='', [string[]]$targetIds=@()) {
         $taskPanel=New-Object PhoneExit.BotPanel($taskSecret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))
         if($phoneId){$taskPanel.DevicePhoneId=$phoneId}
         $taskPanel.InitialCopyTargets=$targetIds
-        $null=$taskPanel.ShowDialog($form);$taskPanel.Dispose()
+        if(!$script:phoneBotWindows){$script:phoneBotWindows=@{}}
+        if($phoneId -and $script:phoneBotWindows.ContainsKey($phoneId) -and !$script:phoneBotWindows[$phoneId].IsDisposed){$taskPanel.Dispose();$script:phoneBotWindows[$phoneId].Activate();return}
+        if($phoneId){$script:phoneBotWindows[$phoneId]=$taskPanel}
+        $taskPanel.Add_FormClosed({param($sender,$event)$sender.Dispose()})
+        $taskPanel.Show($form)
     }catch{$hint.Text='Панель ботов недоступна: '+$_.Exception.Message}
 }
+function OpenEmbeddedBotPanel {
+    try {
+        if(!$script:embeddedBotPanel -or $script:embeddedBotPanel.IsDisposed){
+            Add-Type -AssemblyName System.Net.Http,System.Web.Extensions
+            if(!('PhoneExit.BotPanel' -as [type])){Add-Type -Path @((Join-Path $PSScriptRoot 'desktop-controls.cs'),(Join-Path $PSScriptRoot 'desktop-bots.cs')) -ReferencedAssemblies System.Windows.Forms,System.Drawing,System.Net.Http,System.Web.Extensions}
+            EnsureBotGateway
+            $script:embeddedBotPanel=New-Object PhoneExit.BotPanel($script:botApiSecret,([IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../bots'))))
+            $script:embeddedBotPanel.PrepareEmbedded()
+            $form.Controls.Add($script:embeddedBotPanel)
+            $script:embeddedBotPanel.Show()
+        }
+        SetDesktopView 'bots'
+    }catch{$hint.Text='Раздел ботов недоступен: '+$_.Exception.Message}
+}
+$form.Add_FormClosing({param($sender,$e)if($script:embeddedBotPanel -and !$script:embeddedBotPanel.IsDisposed -and !$script:embeddedBotPanel.CanLeave()){$e.Cancel=$true}})
+$form.Add_FormClosed({if($script:embeddedBotPanel){$script:embeddedBotPanel.Dispose()};if($script:phoneBotWindows){foreach($window in $script:phoneBotWindows.Values){if(!$window.IsDisposed){$window.Dispose()}}}})
 $form.Add_FormClosed({if($script:botGateway){try{$script:botGateway.StandardInput.Close();if(!$script:botGateway.WaitForExit(2000)){$script:botGateway.Kill()}}catch{};$script:botGateway.Dispose()}})
 $script:botsButton=ButtonAt 'Боты и настройки' 38 87 230
 $script:botsButton.Anchor='Top,Right'

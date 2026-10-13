@@ -6,7 +6,7 @@ Add-Type -Path @((Join-Path $PSScriptRoot 'desktop-controls.cs'),(Join-Path $PSS
 [PhoneExit.DesktopDpi]::Enable()
 $secret=[Text.Encoding]::UTF8.GetString([Security.Cryptography.ProtectedData]::Unprotect([IO.File]::ReadAllBytes((Join-Path (GetPhoneExitProfileDirectory) 'control-api.bin')),$null,[Security.Cryptography.DataProtectionScope]::CurrentUser))
 $catalog=Invoke-RestMethod 'http://127.0.0.1:17842/bot/v1/phones' -Headers @{Authorization="Bearer $secret"} -TimeoutSec 10
-$phone=@($catalog.phones|Where-Object {$_.country -eq 'SG'})[0]
+$phone=@($catalog.phones|Where-Object {$_.profile.botId -eq 'lordnine' -and $_.online})[0]
 if(!$phone){$phone=@($catalog.phones)[-1]}
 $flags=[Reflection.BindingFlags]'NonPublic,Instance'
 function GetDarkFlows($root){if($root -is [PhoneExit.DarkFlowPanel]){Write-Output -NoEnumerate $root};foreach($child in $root.Controls){GetDarkFlows $child}}
@@ -74,6 +74,11 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
                         $picture=$panel.GetType().GetField('picture',$flags).GetValue($panel)
                         if(!$picture.Image -or $picture.Width -lt 50 -or $picture.Height -lt 50){throw 'Embedded farm map is blank'}
                     }
+                    if($tab -eq 0){
+                        $autostart=$panel.GetType().GetField('autostart',$flags).GetValue($panel)
+                        if(!$autostart.Visible -or $autostart.Bottom -gt $autostart.Parent.ClientSize.Height){throw 'Game autostart toggle is clipped'}
+                    }
+                    if($tab -eq 2){if(!$panel.GetType().GetField('deviceDetails',$flags).GetValue($panel).Text.Contains('Поставщик:')){throw 'Device details are missing'}}
                     $preview=[Drawing.Bitmap]::new($panel.Width,$panel.Height)
                     try{$panel.DrawToBitmap($preview,[Drawing.Rectangle]::new(0,0,$panel.Width,$panel.Height));$preview.Save((Join-Path $PSScriptRoot "../.tools/device-tab-$tab-$width.png"))}finally{$preview.Dispose()}
                 }

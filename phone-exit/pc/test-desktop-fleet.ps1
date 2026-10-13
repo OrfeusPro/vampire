@@ -12,6 +12,14 @@ foreach($scale in @(1.0,1.5)){
     })
     try{
         $window.Show();$view.SetPhones($rows);[Windows.Forms.Application]::DoEvents()
+        foreach($compact in @($true,$false)){
+            $view.Compact=$compact
+            $card=$view.CardBounds(0);$start=$view.ActionBounds(0,0);$settings=$view.ActionBounds(0,1);$menu=$view.ActionBounds(0,2)
+            if($settings.Right -gt $menu.Left -or $start.Right -ge $settings.Left -or $menu.Right -gt $card.Right){throw 'Card footer actions overlap'}
+            if($settings.Left -ne $card.Right-[int][Math]::Round(60*$scale) -or $menu.Left -ne $card.Right-[int][Math]::Round(32*$scale)){throw 'Settings and menu are not grouped at card right edge'}
+            if($start.Top -ne $settings.Top -or $settings.Top -ne $menu.Top){throw 'Footer icons are not vertically aligned'}
+        }
+        $view.Compact=$true
         $accent=$view.GetType().GetMethod('StatusAccent',$flags)
         foreach($case in @(
             @{online=$true;fresh=$true;state='running';pending=$false;bot='lordnine';rgb=@(98,231,188)},

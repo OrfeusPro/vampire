@@ -3,7 +3,9 @@
     try{
         SetDesktopView 'devices';RefreshFleet
         if($fleet.VisibleCount -ne $script:phoneRows.Count){throw 'Directory phones missing from grid'}
+        $fleet.ClearSelection();if($bulkStart.Visible -or $bulkPause.Visible -or $bulkSettings.Visible){throw 'Bulk actions visible without selection'}
         $fleet.SelectAll($true)
+        if(!$bulkStart.Visible -or !$bulkPause.Visible -or !$bulkSettings.Visible){throw 'Bulk actions missing after selection'}
         if($fleet.SelectedCount -ne $script:phoneRows.Count){throw 'Select all failed'}
         $fleetSort.SelectedIndex=1
         if($fleet.SelectedCount -ne $script:phoneRows.Count){throw 'Sort lost selection'}
@@ -84,6 +86,40 @@
             try{$form.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$bitmap.Save((Join-Path $PSScriptRoot "../docs/redesign-2026-10-13/audit-app-$view.png"))}finally{$bitmap.Dispose()}
         }
         $fleet.Compact=$true;$densityButton.Text='XS'
+        OpenEmbeddedBotPanel;[Windows.Forms.Application]::DoEvents()
+        if(!$script:embeddedBotPanel -or $script:embeddedBotPanel.TopLevel -or $script:embeddedBotPanel.Parent -ne $form -or $script:desktopView -ne 'bots'){throw 'Bots still opens as a popup'}
+        $deadline=[DateTime]::UtcNow.AddSeconds(20)
+        $botFlags=[Reflection.BindingFlags]'Instance,NonPublic'
+        $embeddedLayout=$script:embeddedBotPanel.GetType().GetField('mainLayout',$botFlags).GetValue($script:embeddedBotPanel)
+        $embeddedStack=$embeddedLayout.GetControlFromPosition(1,0)
+        $commandBand=@($embeddedStack.Controls|Where-Object {$_ -is [Windows.Forms.FlowLayoutPanel] -and @($_.Controls|Where-Object {$_.IconOnly}).Count -eq 4})
+        if($commandBand.Count -ne 1 -or $commandBand[0].Controls.Count -ne 4){throw 'Embedded runtime controls are mixed with module buttons'}
+        while([DateTime]::UtcNow -lt $deadline -and $script:embeddedBotPanel.GetType().GetField('phones',$botFlags).GetValue($script:embeddedBotPanel).Rows.Count -eq 0){[Windows.Forms.Application]::DoEvents();Start-Sleep -Milliseconds 50}
+        $embeddedActions=$script:embeddedBotPanel.GetType().GetField('actions',$botFlags).GetValue($script:embeddedBotPanel)
+        foreach($action in $embeddedActions){if($action.Visible -and !$action.Enabled){throw 'Unavailable embedded action is still visible'}}
+        $embeddedGame=$script:embeddedBotPanel.GetType().GetField('gameSelect',$botFlags).GetValue($script:embeddedBotPanel)
+        $savedGameIndex=$embeddedGame.SelectedIndex
+        if($embeddedGame.Items.Count -gt 0){
+            $embeddedGame.SelectedIndex=0;[Windows.Forms.Application]::DoEvents()
+            $assign=@($embeddedActions|Where-Object {$_.Text -eq 'Назначить'})[0]
+            if($assign.Enabled -and !$assign.Visible){throw 'Available assignment did not reappear'}
+            $embeddedGame.SelectedIndex=$savedGameIndex;[Windows.Forms.Application]::DoEvents()
+        }
+        foreach($size in @([Drawing.Size]::new((UiPixel 960),(UiPixel 700)),[Drawing.Size]::new((UiPixel 1440),(UiPixel 1000)))){
+            $form.ClientSize=$size;UpdateWindowLayout;[Windows.Forms.Application]::DoEvents()
+            if($script:embeddedBotPanel.Right -gt $form.ClientSize.Width -or $script:embeddedBotPanel.Bottom -gt $versionLabel.Top){throw 'Embedded bots section escapes main page'}
+            if($script:embeddedBotPanel.Top -ne $pageTitle.Top -or $embeddedLayout.GetControlFromPosition(0,0).Padding.Top -ne (UiPixel 89)){throw 'Embedded controls did not align with page heading'}
+            if($sidebarDivider.Bottom -ge $sidebarNote.Top -or $accountButton.Bottom -ge $sidebarDivider.Top -or $sidebarDot.Right -ge $sidebarNote.Left){throw 'Sidebar footer overlaps'}
+            $lastAction=@($embeddedStack.Controls|Where-Object {$_ -is [PhoneExit.BotButton]})[-1]
+            $embeddedStack.AutoScrollPosition=[Drawing.Point]::new(0,100000);[Windows.Forms.Application]::DoEvents()
+            if($lastAction.Bottom -gt $embeddedStack.ClientSize.Height){throw 'Last embedded action cannot be reached by scrolling'}
+            $embeddedStack.AutoScrollPosition=[Drawing.Point]::Empty;[Windows.Forms.Application]::DoEvents()
+            $bitmap=[Drawing.Bitmap]::new($form.Width,$form.Height)
+            try{$form.DrawToBitmap($bitmap,[Drawing.Rectangle]::new(0,0,$form.Width,$form.Height));$bitmap.Save((Join-Path $PSScriptRoot "../.tools/embedded-bots-$($size.Width).png"))}finally{$bitmap.Dispose()}
+        }
+        $two=@($script:phoneRows|Select-Object -First 2)
+        foreach($p in $two){OpenBotPanel ([string]$p.id)}
+        foreach($p in $two){$window=$script:phoneBotWindows[[string]$p.id];if(!$window -or !$window.Visible -or $window.GetType().GetField('deviceId',$botFlags).GetValue($window) -ne [string]$p.id){throw 'Selected phone did not get its own modeless editor'};$window.Close()}
         $fleet.Table=$false;$phoneList.SelectedIndex=0;SetDesktopView 'connection'
         if(!$start.Visible -or $fleet.Visible -or !$selectedPhoneLabel.Text.Contains([string]$script:phoneRows[0].name)){throw 'Connection view selection failed'}
         $savedActive=$script:selectedPhone;$savedWanted=$script:connectionWanted
