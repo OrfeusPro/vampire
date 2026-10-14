@@ -35,7 +35,7 @@ namespace PhoneExit {
         public string Key, Name, Model, Country, BotId, BotText, BotState, ApkVersion, Group, BotVersion, BotName, VpnState, Provider;
         public int Index;
         public bool Online, Busy, Fresh, Pending;
-        public Image Flag, GameIcon;
+        public Image Flag, GameIcon, ProviderIcon;
     }
     public sealed class FleetFilter {
         public string Group, Country, ApkVersion, BotVersion, BotId, State, VpnState, Query, Provider;
@@ -141,12 +141,14 @@ namespace PhoneExit {
                         DrawLabel(g,String.IsNullOrEmpty(p.BotId)?"—":(p.BotName??p.BotId)+" · "+(String.IsNullOrEmpty(p.BotVersion)?"—":p.BotVersion),small,Cell(6,r,p.GameIcon==null?6:30),TextColor);
                         using(var brush=new SolidBrush(BotColor(p)))g.FillEllipse(brush,Cell(7,r,6).X,r.Y+D(27),D(6),D(6));
                         DrawLabel(g,p.Pending?"Команда…":p.BotText,small,Cell(7,r,18),BotColor(p));
-                        DrawLabel(g,String.IsNullOrEmpty(p.Provider)?"Не указан":p.Provider,small,Cell(8,r,6),Muted);
+                        var provider=Cell(8,r,6);if(p.ProviderIcon!=null)g.DrawImage(p.ProviderIcon,new Rectangle(provider.X,r.Y+D(20),D(18),D(18)));
+                        DrawLabel(g,String.IsNullOrEmpty(p.Provider)?"Не указан":p.Provider,small,Cell(8,r,p.ProviderIcon==null?6:30),Muted);
                     }
                     else {using(var brush=new SolidBrush(state))g.FillEllipse(brush,r.X+D(10),r.Y+D(39),D(6),D(6));DrawLabel(g,p.Online?(p.Busy?"Занят":"В сети"):"Не в сети",small,new Rectangle(r.X+D(23),r.Y+D(31),r.Width-D(32),D(23)),state);
                         if(p.Flag!=null)g.DrawImage(p.Flag,new Rectangle(r.X+D(10),r.Y+D(61),D(16),D(16)));DrawLabel(g,p.Country+" · "+p.Model,small,new Rectangle(r.X+D(31),r.Y+D(57),r.Width-D(40),D(23)),Muted);
                         using(var pen=new Pen(Line))g.DrawLine(pen,r.X+D(10),r.Y+D(86),r.Right-D(10),r.Y+D(86));
                         if(p.GameIcon!=null)g.DrawImage(p.GameIcon,new Rectangle(r.X+D(10),r.Y+D(94),D(20),D(20)));DrawLabel(g,p.Pending?"Команда…":p.BotText,small,new Rectangle(r.X+D(p.GameIcon==null?10:36),r.Y+D(93),r.Width-D(p.GameIcon==null?20:45),D(22)),BotColor(p));DrawLabel(g,"APK "+ApkText(p),small,new Rectangle(r.X+D(10),r.Y+D(115),r.Width-D(20),D(20)),Muted);}
+                    if(!table&&p.ProviderIcon!=null)g.DrawImage(p.ProviderIcon,new Rectangle(r.Right-D(28),r.Y+D(116),D(16),D(16)));
                     for(int a=0;a<3;a++)DrawAction(g,ActionBounds(i,a),a,p);
                 }
                 if(table)DrawTableHeader(g,small);

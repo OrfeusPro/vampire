@@ -66,6 +66,13 @@ foreach($scale in @(1.0,1.5)){
         if(!$filter.Matches($rows[3]) -or $filter.Matches($rows[2])){throw 'Combined fleet filters failed'}
         $rows[3].Fresh=$false;if($filter.Matches($rows[3])){throw 'Stale bot matches current-state filter'};$rows[3].Fresh=$true
         $filter.Provider='UgPhone';if($filter.Matches($rows[3])){throw 'Provider filter ignored'}
+        $rows[3].Provider='LDCloud';$filter.Provider='LDCloud';if(!$filter.Matches($rows[3])){throw 'LDCloud provider filter failed'}
+        $providerLogo=[Drawing.Image]::FromFile((Join-Path $PSScriptRoot 'assets/providers/ldcloud.png'))
+        try{
+            if($providerLogo.Width -ne 40 -or $providerLogo.Height -ne 40){throw 'LDCloud official logo dimensions changed'}
+            $rows[3].ProviderIcon=$providerLogo;$view.SetPhones([PhoneExit.FleetPhone[]]@($rows[0..4]))
+            foreach($tableMode in @($true,$false)){$view.Table=$tableMode;$bitmap=[Drawing.Bitmap]::new($view.Width,$view.Height);try{$view.DrawToBitmap($bitmap,$view.ClientRectangle)}finally{$bitmap.Dispose()}}
+        }finally{$rows[3].ProviderIcon=$null;$providerLogo.Dispose();$view.Table=$true}
         foreach($width in @(720,1000,1360)){
             $view.Width=[int]($width*$scale)
             $previous=0

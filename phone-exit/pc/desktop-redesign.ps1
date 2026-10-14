@@ -118,6 +118,7 @@ function RefreshFleet {
         if($bot){$row.BotId=if($bot.bot.botId){[string]$bot.bot.botId}else{[string]$bot.profile.botId};$row.BotState=[string]$bot.bot.status;if($bot.profile.identity.characterName){$row.Name=[string]$bot.profile.identity.characterName}}
         if($bot){$row.BotVersion=[string]$bot.bot.version;$row.Provider=[string]$bot.profile.identity.provider;if($bot.profile.identity.group){$row.Group=[string]$bot.profile.identity.group}}
         $row.BotName=if($row.BotId -eq 'lordnine'){'Lord Nine'}else{$row.BotId}
+        $row.ProviderIcon=ProviderIcon $row.Provider
         $row.BotText=if(!$row.BotId){'Без бота'}else{switch($row.BotState){'running'{'Работает'}'paused'{'На паузе'}'error'{'Ошибка'}'stopped'{'Остановлен'}'starting'{'Запускается'}'waiting'{'Ожидает'}default{'Назначен'}}}
         if($row.Fresh -and $bot.bot.step -eq 'auto_restart_pending'){$row.BotText='Перезапуск '+$bot.bot.retryCount+'/5'}
         if($row.BotId){$row.GameIcon=BotGameIcon $row.BotId;if(!$row.Fresh){$row.BotText='Последнее: '+$row.BotText}}

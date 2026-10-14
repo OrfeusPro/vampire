@@ -85,7 +85,7 @@ export function createBotApi({enqueue,get,devices,profilePath,root=path.resolve(
       if(method==='GET'&&match[2]==='profile')return profiles[id]||{botId:'lordnine',revision:0,settings:defaults(),pending:false};
       if(method!=='POST')throw Object.assign(Error('method not allowed'),{status:405});
       if(match[2]==='identity'){
-        if(typeof body.characterName!=='string'||body.characterName.length>80||/[\x00-\x1f]/.test(body.characterName)||!['','VMOS','UgPhone','Другое'].includes(body.provider))throw Error('invalid phone identity');
+        if(typeof body.characterName!=='string'||body.characterName.length>80||/[\x00-\x1f]/.test(body.characterName)||!['','VMOS','UgPhone','LDCloud','Другое'].includes(body.provider))throw Error('invalid phone identity');
         const p=profiles[id]||{revision:0,settings:defaults(),pending:false};p.identity={characterName:body.characterName.trim(),provider:body.provider};profiles[id]=p;await save();return {saved:true,identity:p.identity};
       }
       if(match[2]==='settings'){

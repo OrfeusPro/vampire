@@ -84,7 +84,7 @@ $script:flagImages=@{}
 $script:botGameIcons=@{}
 $script:providerIcons=@{}
 function ProviderIcon([string]$provider){
-    $taskKey=switch($provider){'VMOS'{'vmos'}'UgPhone'{'ugphone'}default{''}}
+    $taskKey=switch($provider){'VMOS'{'vmos'}'UgPhone'{'ugphone'}'LDCloud'{'ldcloud'}default{''}}
     if(!$taskKey){return $null}
     if(!$script:providerIcons.ContainsKey($taskKey)){$script:providerIcons[$taskKey]=[Drawing.Image]::FromFile((Join-Path $PSScriptRoot ('assets/providers/'+$taskKey+'.png')))}
     return $script:providerIcons[$taskKey]

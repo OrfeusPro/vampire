@@ -22,6 +22,19 @@ test('phone identity stays on PC and copying settings preserves recipient identi
   }finally{api.close();}
 });
 
+test('LDCloud identity persists locally and rejects unknown providers',async()=>{
+  const directory=await mkdtemp(path.join(os.tmpdir(),'phone-exit-provider-'));
+  const options={profilePath:directory,devices:()=>[{id}],enqueue:()=>{throw Error('identity must not command phone');},get:()=>{}};
+  let api=createBotApi(options);
+  try{
+    await api.handle('POST',`/bot/v1/devices/${id}/identity`,{characterName:'Cloud phone',provider:'LDCloud'});
+    api.close();api=createBotApi(options);
+    const profile=await api.handle('GET',`/bot/v1/devices/${id}/profile`);
+    assert.equal(profile.identity.provider,'LDCloud');
+    await assert.rejects(api.handle('POST',`/bot/v1/devices/${id}/identity`,{characterName:'Cloud phone',provider:'UnknownCloud'}));
+  }finally{api.close();await rm(directory,{recursive:true,force:true});}
+});
+
 test('editor receives a fresh phone result, restores settings and leaves bot paused',async()=>{
   const moduleVersion=JSON.parse(await readFile(new URL('../../bots/lordnine/manifest.json',import.meta.url),'utf8')).version;
   const frames=[],done=new Map();let revision=0,desired='stopped',upload=[],value;
