@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "version": 1,
+  "properties": {
+    "autostart_enabled": {
+      "type": "boolean",
+      "title": "Автозапуск игры",
+      "default": true
+    },
+    "farm_enabled": {
+      "type": "boolean",
+      "title": "Фарм по выбранной точке",
+      "default": false
+    }
+  }
+}

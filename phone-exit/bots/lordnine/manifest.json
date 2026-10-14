@@ -1,7 +1,7 @@
 {
   "id": "lordnine",
   "name": "Lord Nine",
-  "version": "1.1.22",
+  "version": "1.1.23",
   "engineVersion": 3,
   "settingsVersion": 1,
   "entrypoint": "bot.py",

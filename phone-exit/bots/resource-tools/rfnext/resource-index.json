@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "game": "RF Online Next",
+  "study_date": "2026-10-14",
+  "storage_root": "F:\\PhoneExit Resources\\RF Online Next",
+  "gallery_url": "http://127.0.0.1:17943/",
+  "source_pc_game": "F:\\Games\\Netmarble Game\\RFonlineNext",
+  "game_archives_scanned": 585,
+  "png_variants": 22021,
+  "unique_asset_paths": 17583,
+  "ui_textures": 7831,
+  "detail_map_tiles": 9746,
+  "region_map_tiles": 6,
+  "formats": [
+    "PF_B8G8R8A8",
+    "PF_BC7",
+    "PF_DXT1",
+    "PF_DXT5"
+  ],
+  "catalogs": [
+    "archive-image-latest.json",
+    "archive-image-catalog.json",
+    "pak-scan-progress.json",
+    "gallery-catalog.json"
+  ],
+  "novus_map": {
+    "file": "maps/novus-world.png",
+    "metadata": "maps/novus-world.json",
+    "width": 12109,
+    "height": 5395,
+    "navigation_calibrated": false
+  },
+  "resource_tools": "phone-exit/bots/resource-tools/rfnext",
+  "aes_key_used": false,
+  "original_game_modified": false
+}

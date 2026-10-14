@@ -44,6 +44,25 @@ public final class BotRuntimeInstrumentation extends Instrumentation {
         }catch(Exception e){result.putString("stream","FAIL "+BotManager.safe(e));finish(1,result);}
         finally{c.stopService(new Intent(c,BotService.class));try{if(old!=null)BotStore.write(c,"state",old);}catch(Exception ignored){}}
     }
+    private void rfNavigation(Context c,File directory,Bundle result){
+        JSONObject oldState=null,oldInstalled=null,oldSettings=null;int code=0;
+        try{
+            oldState=BotStore.read(c,"state");oldInstalled=BotStore.read(c,"rfonlinenext-installed");oldSettings=BotStore.read(c,"rfonlinenext-settings");
+            if(oldState.optString("desired").equals("running"))throw new Exception("pause_bot_before_test");
+            JSONObject settings=new JSONObject("{\"settingsVersion\":1,\"autostart_enabled\":true,\"farm_enabled\":true,\"farm_map_spots\":[{\"id\":\"usb-ground-point\",\"map_id\":\"novus_world_101\",\"label\":\"USB checked ground point\",\"enabled\":true,\"map_points\":[[0.316827,0.56163]],\"travel_mode\":\"walk\"}],\"active_farm_map_spot_id\":\"usb-ground-point\"}");
+            BotStore.write(c,"rfonlinenext-installed",new JSONObject().put("directory",directory.getAbsolutePath()).put("version","1.1.0-test").put("settingsVersion",1));
+            BotStore.write(c,"rfonlinenext-settings",new JSONObject().put("revision",oldSettings.optInt("revision",1)+1).put("value",settings));
+            BotStore.write(c,"state",new JSONObject().put("botId","rfonlinenext").put("desired","running").put("generation","rf-navigation-test-"+SystemClock.elapsedRealtime()).put("status","starting"));
+            c.startForegroundService(new Intent(c,BotService.class));long end=SystemClock.elapsedRealtime()+330000;String last="";
+            while(SystemClock.elapsedRealtime()<end){Thread.sleep(1000);JSONObject s=BotStore.read(c,"state");String step=s.optString("step");
+                if(!step.equals(last)){Bundle progress=new Bundle();progress.putString("stream","RF route: "+step+" "+s.optString("error"));sendStatus(0,progress);last=step;}
+                if(step.equals("farming")){Thread.sleep(10000);s=BotStore.read(c,"state");if(!s.optString("step").equals("farming"))throw new Exception("farming_not_stable");result.putString("stream","PASS real phone-local point route, arrival and autobattle; compact status stable 10s");return;}
+                if(s.optString("status").equals("error")||s.optString("desired").equals("paused"))throw new Exception("route_failed_"+step+"_"+s.optString("error"));
+            }
+            throw new Exception("rf_navigation_test_timeout");
+        }catch(Exception e){code=1;result.putString("stream","FAIL "+BotManager.safe(e));}
+        finally{c.stopService(new Intent(c,BotService.class));try{if(oldInstalled!=null)BotStore.write(c,"rfonlinenext-installed",oldInstalled);if(oldSettings!=null)BotStore.write(c,"rfonlinenext-settings",oldSettings);if(oldState!=null){oldState.put("desired","paused").put("status","paused");BotStore.write(c,"state",oldState);}}catch(Exception ignored){}finish(code,result);}
+    }
     private void retryPolicy(Context c,Bundle result){JSONObject old=null;int code=0;
         try{
             old=BotStore.read(c,"state");long now=100000;
@@ -124,8 +143,20 @@ public final class BotRuntimeInstrumentation extends Instrumentation {
                 java.util.zip.ZipEntry entry;byte[] bytes=new byte[65536];long total=0;int count=0;
                 while((entry=zip.getNextEntry())!=null){File out=new File(root,entry.getName());if(++count>4096||!out.getCanonicalPath().startsWith(root.getCanonicalPath()+File.separator))throw new Exception("invalid_test_archive");if(entry.isDirectory()){out.mkdirs();continue;}out.getParentFile().mkdirs();try(OutputStream dest=new FileOutputStream(out)){int n;while((n=zip.read(bytes))!=-1){total+=n;if(total>120000000)throw new Exception("large_test_archive");dest.write(bytes,0,n);}}}
             }
+            if(args.containsKey("rfNavigation")){rfNavigation(c,root,result);return;}
             JSONObject config=new JSONObject(BotManager.read(new File(root,"imported.json"),1048576)).getJSONObject("vision").getJSONObject("templates");
             if(!org.opencv.android.OpenCVLoader.initLocal())throw new Exception("opencv_unavailable");
+            if(args.containsKey("atlasFrame")){
+                long started=SystemClock.elapsedRealtime();
+                try(BotVision vision=new BotVision()){
+                    vision.capture(android.graphics.BitmapFactory.decodeFile(args.getString("atlasFrame")));
+                    JSONObject spec=new JSONObject().put("file","novus-atlas.png").put("region",new JSONArray("[0.05,0.12,0.70,0.90]")).put("detector",new JSONObject().put("type","atlas_point").put("target",new JSONArray(args.getString("atlasTarget"))));
+                    JSONObject found=vision.match(root,"atlas_test",spec);boolean expected=Boolean.parseBoolean(args.getString("atlasExpected","true"));
+                    if(found.optBoolean("registered")!=expected)throw new Exception("atlas_registration_failed:"+found);
+                    if(expected){JSONArray p=found.getJSONArray("point"),want=new JSONArray(args.getString("atlasPoint"));if(Math.hypot(p.getDouble(0)-want.getDouble(0),p.getDouble(1)-want.getDouble(1))>5)throw new Exception("atlas_projection_failed:"+found);}
+                    result.putString("stream","PASS local atlas ms="+(SystemClock.elapsedRealtime()-started)+" "+found);finish(0,result);return;
+                }
+            }
             if(args.containsKey("arrivalFrame")){
                 JSONObject v=new JSONObject(BotManager.read(new File(root,"imported.json"),1048576)).getJSONObject("vision");
                 double tx=Double.parseDouble(args.getString("arrivalX")),ty=Double.parseDouble(args.getString("arrivalY"));

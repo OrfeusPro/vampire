@@ -1,0 +1,1899 @@
+{
+  "version": 1,
+  "id": "novus_world_101",
+  "label": "Мир Novus",
+  "image": "novus-world.png",
+  "original_size": [
+    12109,
+    5395
+  ],
+  "original_sha256": "15074c2130ab2b3d99196a0c6379699f071256c35a2172e7b6e1189d6025cf66",
+  "image_sha256": "08b994f3d34faecf7e7c19ef9bd3b4096d82c60c47e3ffe1f40cfa28fe665f5b",
+  "coordinate_space": "normalized original cropped atlas; x and y in [0,1)",
+  "game_version": "1.30.7",
+  "study_date": "2026-10-14",
+  "source_package": "com.netmarble.rfnext",
+  "labels_sha256": "797413ddf952e35a893869925c9aaaa1b44997531e31f86efb79a40e254b877c",
+  "locations": [
+    {
+      "id": "poi_611e2c286e42",
+      "label": "Акваран",
+      "level": "",
+      "kind": "town",
+      "x": 0.0773661,
+      "y": 0.634578,
+      "source_view": "far-west-south",
+      "source_preview_point": [
+        763,
+        734
+      ],
+      "source_frame_point": [
+        894.141,
+        859.783
+      ],
+      "source_sha256": "e8ee967fe75a3abcfdd21310211dd48f7414634a9ba921039278dfa938f4ac53",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_00d9e69969eb",
+      "label": "База Палеон",
+      "level": "",
+      "kind": "town",
+      "x": 0.3134957,
+      "y": 0.1164285,
+      "source_view": "snow-top",
+      "source_preview_point": [
+        497,
+        389
+      ],
+      "source_frame_point": [
+        582.422,
+        455.662
+      ],
+      "source_sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_1598a92d1558",
+      "label": "База Пепельной Стаи",
+      "level": "",
+      "kind": "town",
+      "x": 0.3155538,
+      "y": 0.2252937,
+      "source_view": "north-east-end",
+      "source_preview_point": [
+        518,
+        599
+      ],
+      "source_frame_point": [
+        607.031,
+        701.649
+      ],
+      "source_sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_3e56a43f0bf2",
+      "label": "База Полярис",
+      "level": "",
+      "kind": "town",
+      "x": 0.3101774,
+      "y": 0.1945798,
+      "source_view": "north-east-end",
+      "source_preview_point": [
+        463,
+        459
+      ],
+      "source_frame_point": [
+        542.578,
+        537.657
+      ],
+      "source_sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_bfc0b116dd70",
+      "label": "База Фрекс",
+      "level": "",
+      "kind": "town",
+      "x": 0.7631529,
+      "y": 0.659228,
+      "source_view": "archipelago",
+      "source_preview_point": [
+        1092,
+        520
+      ],
+      "source_frame_point": [
+        1279.688,
+        609.111
+      ],
+      "source_sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_75d6965b49b6",
+      "label": "Великий храм Дишема",
+      "level": "",
+      "kind": "town",
+      "x": 0.3083682,
+      "y": 0.5901733,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1027,
+        461
+      ],
+      "source_frame_point": [
+        1203.516,
+        540.0
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_41d7c8985585",
+      "label": "Врата Нумеруса",
+      "level": "",
+      "kind": "town",
+      "x": 0.2910775,
+      "y": 0.6434758,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        850,
+        704
+      ],
+      "source_frame_point": [
+        996.094,
+        824.642
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_e383a0f1e0fd",
+      "label": "Гарнизон в Акресии",
+      "level": "",
+      "kind": "town",
+      "x": 0.2435621,
+      "y": 0.5856312,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        364,
+        440
+      ],
+      "source_frame_point": [
+        426.562,
+        515.401
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_9716211e9261",
+      "label": "Гарнизон в Беллато",
+      "level": "",
+      "kind": "town",
+      "x": 0.2640731,
+      "y": 0.5044766,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        574,
+        70
+      ],
+      "source_frame_point": [
+        672.656,
+        81.996
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_25761c4c0267",
+      "label": "Гарнизон в Коре",
+      "level": "",
+      "kind": "town",
+      "x": 0.2842245,
+      "y": 0.5869074,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        780,
+        446
+      ],
+      "source_frame_point": [
+        914.062,
+        522.43
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_3c1f530a98d6",
+      "label": "Город Беллато",
+      "level": "",
+      "kind": "town",
+      "x": 0.2844747,
+      "y": 0.2730383,
+      "source_view": "center-top",
+      "source_preview_point": [
+        851,
+        260
+      ],
+      "source_frame_point": [
+        997.266,
+        304.555
+      ],
+      "source_sha256": "710464f92a5c982324c1a022f3653ce74ef32d373408f97373816daf02c22fde",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_7c352af650eb",
+      "label": "Деревня изгнанников",
+      "level": "",
+      "kind": "town",
+      "x": 0.3718921,
+      "y": 0.5350716,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1677,
+        210
+      ],
+      "source_frame_point": [
+        1965.234,
+        245.987
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_bd5e186d7f72",
+      "label": "Дозорный гарнизон",
+      "level": "",
+      "kind": "town",
+      "x": 0.255052,
+      "y": 0.3395424,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        550,
+        277
+      ],
+      "source_frame_point": [
+        644.531,
+        324.469
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_be40177d4b4b",
+      "label": "Закрытая радарная база",
+      "level": "",
+      "kind": "town",
+      "x": 0.2571476,
+      "y": 0.455778,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        571,
+        807
+      ],
+      "source_frame_point": [
+        669.141,
+        945.293
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_3f2a573b4aa7",
+      "label": "Исследовательская база Махина",
+      "level": "",
+      "kind": "town",
+      "x": 0.1913037,
+      "y": 0.3046653,
+      "source_view": "northwest",
+      "source_preview_point": [
+        568,
+        132
+      ],
+      "source_frame_point": [
+        665.625,
+        154.62
+      ],
+      "source_sha256": "2334b8bb49583ccfd5fbc875e277f3618885c8bdb21b7f276944fd18682bd683",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_a6e07c1aadbc",
+      "label": "Кортия",
+      "level": "",
+      "kind": "town",
+      "x": 0.3538274,
+      "y": 0.4696991,
+      "source_view": "center-north",
+      "source_preview_point": [
+        1560,
+        573
+      ],
+      "source_frame_point": [
+        1828.125,
+        671.193
+      ],
+      "source_sha256": "65d0784b72f2c7e0708bb7331731fbc89d0deee5ff887e5ee10e602f69d8af15",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_0f6e2cd4110a",
+      "label": "Лагерь в Рамоне",
+      "level": "",
+      "kind": "town",
+      "x": 0.1729728,
+      "y": 0.4949286,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1741,
+        366
+      ],
+      "source_frame_point": [
+        2040.234,
+        428.72
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_12e3e8bb4f66",
+      "label": "Лагерь в оазисе",
+      "level": "",
+      "kind": "town",
+      "x": 0.135332,
+      "y": 0.541205,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1356,
+        577
+      ],
+      "source_frame_point": [
+        1589.062,
+        675.879
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_2d35f86652dd",
+      "label": "Лагерь в ущелье",
+      "level": "",
+      "kind": "town",
+      "x": 0.1194806,
+      "y": 0.6258268,
+      "source_view": "far-west-south",
+      "source_preview_point": [
+        1194,
+        694
+      ],
+      "source_frame_point": [
+        1399.219,
+        812.928
+      ],
+      "source_sha256": "e8ee967fe75a3abcfdd21310211dd48f7414634a9ba921039278dfa938f4ac53",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_1712cc1f2e26",
+      "label": "Минералогический завод",
+      "level": "",
+      "kind": "town",
+      "x": 0.2765707,
+      "y": 0.4696995,
+      "source_view": "center-north",
+      "source_preview_point": [
+        770,
+        573
+      ],
+      "source_frame_point": [
+        902.344,
+        671.193
+      ],
+      "source_sha256": "65d0784b72f2c7e0708bb7331731fbc89d0deee5ff887e5ee10e602f69d8af15",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_37f80397618e",
+      "label": "Особняк герцога Оза",
+      "level": "",
+      "kind": "town",
+      "x": 0.0613231,
+      "y": 0.49207,
+      "source_view": "far-west",
+      "source_preview_point": [
+        599,
+        353
+      ],
+      "source_frame_point": [
+        701.953,
+        413.492
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_6e8c631c4a86",
+      "label": "Охотничий перевал",
+      "level": "",
+      "kind": "town",
+      "x": 0.3179353,
+      "y": 0.5278876,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1125,
+        177
+      ],
+      "source_frame_point": [
+        1318.359,
+        207.332
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_9d84f33e0b2a",
+      "label": "Охраняемая зона в Белтране",
+      "level": "",
+      "kind": "town",
+      "x": 0.2792077,
+      "y": 0.3627457,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        797,
+        383
+      ],
+      "source_frame_point": [
+        933.984,
+        448.633
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_fd33a536e2b0",
+      "label": "Поселение Пейл",
+      "level": "",
+      "kind": "town",
+      "x": 0.2937399,
+      "y": 0.0747516,
+      "source_view": "snow-top",
+      "source_preview_point": [
+        295,
+        199
+      ],
+      "source_frame_point": [
+        345.703,
+        233.102
+      ],
+      "source_sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_686ead14374f",
+      "label": "Рутвейн",
+      "level": "",
+      "kind": "town",
+      "x": 0.751711,
+      "y": 0.6793926,
+      "source_view": "archipelago",
+      "source_preview_point": [
+        975,
+        612
+      ],
+      "source_frame_point": [
+        1142.578,
+        716.876
+      ],
+      "source_sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_2ba8b7a17f66",
+      "label": "Саурийский лагерь",
+      "level": "",
+      "kind": "town",
+      "x": 0.17698,
+      "y": 0.5857318,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1782,
+        780
+      ],
+      "source_frame_point": [
+        2088.281,
+        913.666
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_e6d593905c3f",
+      "label": "Сектор 117",
+      "level": "",
+      "kind": "town",
+      "x": 0.2213224,
+      "y": 0.3347798,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        205,
+        255
+      ],
+      "source_frame_point": [
+        240.234,
+        298.698
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_505601d0d080",
+      "label": "Алмазная шахта",
+      "level": "92–94",
+      "kind": "farm",
+      "x": 0.3040108,
+      "y": 0.128936,
+      "source_view": "snow-top",
+      "source_preview_point": [
+        400,
+        446
+      ],
+      "source_frame_point": [
+        468.75,
+        522.43
+      ],
+      "source_sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_a92365404955",
+      "label": "Антеросские руины",
+      "level": "101–103",
+      "kind": "farm",
+      "x": 0.3229779,
+      "y": 0.0552184,
+      "source_view": "snow-top",
+      "source_preview_point": [
+        594,
+        110
+      ],
+      "source_frame_point": [
+        696.094,
+        128.85
+      ],
+      "source_sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_c3c41035e7c2",
+      "label": "База Горизонт",
+      "level": "76–77",
+      "kind": "farm",
+      "x": 0.1839225,
+      "y": 0.5056765,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1853,
+        415
+      ],
+      "source_frame_point": [
+        2171.484,
+        486.117
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_967d16396af1",
+      "label": "Божественные сады",
+      "level": "49–50",
+      "kind": "farm",
+      "x": 0.3668108,
+      "y": 0.5427515,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1625,
+        245
+      ],
+      "source_frame_point": [
+        1904.297,
+        286.985
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_a59af1ef6e1a",
+      "label": "Буровая база Байросы",
+      "level": "22–24",
+      "kind": "farm",
+      "x": 0.2737093,
+      "y": 0.2980565,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        741,
+        88
+      ],
+      "source_frame_point": [
+        868.359,
+        103.08
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_95888c0a3df4",
+      "label": "Бухта Ропус",
+      "level": "103–106",
+      "kind": "farm",
+      "x": 0.2910053,
+      "y": 0.1359599,
+      "source_view": "snow-top",
+      "source_preview_point": [
+        267,
+        478
+      ],
+      "source_frame_point": [
+        312.891,
+        559.913
+      ],
+      "source_sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_c786dcfa5676",
+      "label": "Военный завод Блэкстоун",
+      "level": "64",
+      "kind": "farm",
+      "x": 0.0700239,
+      "y": 0.5300149,
+      "source_view": "far-west",
+      "source_preview_point": [
+        688,
+        526
+      ],
+      "source_frame_point": [
+        806.25,
+        616.139
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_aded03380c32",
+      "label": "Врата Ромулус",
+      "level": "69",
+      "kind": "farm",
+      "x": 0.1104286,
+      "y": 0.6545561,
+      "source_view": "west-bottom",
+      "source_preview_point": [
+        435,
+        556
+      ],
+      "source_frame_point": [
+        509.766,
+        651.28
+      ],
+      "source_sha256": "97dc795b032dc3c785979befd752d4c09c7829949ad08630a77305dd6e8ac904",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_ab8f77da7f30",
+      "label": "Вулканический остров Чалдея",
+      "level": "107–109",
+      "kind": "farm",
+      "x": 0.7490802,
+      "y": 0.6379398,
+      "source_view": "archipelago",
+      "source_preview_point": [
+        948,
+        423
+      ],
+      "source_frame_point": [
+        1110.938,
+        495.488
+      ],
+      "source_sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_9ad4285c25ba",
+      "label": "Вулканическое ущелье",
+      "level": "",
+      "kind": "farm",
+      "x": 0.1837692,
+      "y": 0.2969375,
+      "source_view": "northwest-high",
+      "source_preview_point": [
+        491,
+        337
+      ],
+      "source_frame_point": [
+        575.391,
+        394.751
+      ],
+      "source_sha256": "d14eb2492d8a11c9497b199640c75fc81eaedd8cee586092600a4465eab48007",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_9d36506cad40",
+      "label": "Долина Скади",
+      "level": "",
+      "kind": "farm",
+      "x": 0.1837686,
+      "y": 0.2877238,
+      "source_view": "northwest-high",
+      "source_preview_point": [
+        491,
+        295
+      ],
+      "source_frame_point": [
+        575.391,
+        345.553
+      ],
+      "source_sha256": "d14eb2492d8a11c9497b199640c75fc81eaedd8cee586092600a4465eab48007",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_b077e95e9e56",
+      "label": "Забытая долина",
+      "level": "25–26",
+      "kind": "farm",
+      "x": 0.2613955,
+      "y": 0.3094839,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        615,
+        140
+      ],
+      "source_frame_point": [
+        720.703,
+        163.991
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_be9bf4bc3130",
+      "label": "Затерянные снега",
+      "level": "95–97",
+      "kind": "farm",
+      "x": 0.2903185,
+      "y": 0.0969101,
+      "source_view": "snow-top",
+      "source_preview_point": [
+        260,
+        300
+      ],
+      "source_frame_point": [
+        304.688,
+        351.41
+      ],
+      "source_sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_10054b0f6864",
+      "label": "Иневтский лес",
+      "level": "78–81",
+      "kind": "farm",
+      "x": 0.2832866,
+      "y": 0.18821,
+      "source_view": "north-east-end",
+      "source_preview_point": [
+        188,
+        430
+      ],
+      "source_frame_point": [
+        220.312,
+        503.688
+      ],
+      "source_sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_0f2753217531",
+      "label": "Исследовательская база Северин",
+      "level": "80–82",
+      "kind": "farm",
+      "x": 0.3011818,
+      "y": 0.1822922,
+      "source_view": "north-east-end",
+      "source_preview_point": [
+        371,
+        403
+      ],
+      "source_frame_point": [
+        434.766,
+        472.061
+      ],
+      "source_sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_367915fb559b",
+      "label": "Исследовательский комплекс Анакаде",
+      "level": "29–30",
+      "kind": "farm",
+      "x": 0.2495855,
+      "y": 0.3619232,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        494,
+        379
+      ],
+      "source_frame_point": [
+        578.906,
+        443.948
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_2014854c67af",
+      "label": "Карантинная зона Фумус",
+      "level": "",
+      "kind": "farm",
+      "x": 0.3059711,
+      "y": 0.2200259,
+      "source_view": "north-east-end",
+      "source_preview_point": [
+        420,
+        575
+      ],
+      "source_frame_point": [
+        492.188,
+        673.536
+      ],
+      "source_sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_7118a14b55c7",
+      "label": "Кратер Кордис",
+      "level": "115–118",
+      "kind": "farm",
+      "x": 0.7691213,
+      "y": 0.6351098,
+      "source_view": "archipelago",
+      "source_preview_point": [
+        1153,
+        410
+      ],
+      "source_frame_point": [
+        1351.172,
+        480.26
+      ],
+      "source_sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_1967a511ee24",
+      "label": "Кричащая долина",
+      "level": "78",
+      "kind": "farm",
+      "x": 0.1845086,
+      "y": 0.5449368,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1859,
+        594
+      ],
+      "source_frame_point": [
+        2178.516,
+        695.792
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_e4dc66644101",
+      "label": "Лес Изгнанников",
+      "level": "48",
+      "kind": "farm",
+      "x": 0.3716924,
+      "y": 0.5131435,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1675,
+        110
+      ],
+      "source_frame_point": [
+        1962.891,
+        128.85
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_34ade4ad3af7",
+      "label": "Лес в Маязаре",
+      "level": "32",
+      "kind": "farm",
+      "x": 0.2158334,
+      "y": 0.295751,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        149,
+        77
+      ],
+      "source_frame_point": [
+        174.609,
+        90.195
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_dcad34deccc5",
+      "label": "Лоудиский лес",
+      "level": "",
+      "kind": "farm",
+      "x": 0.2706021,
+      "y": 0.3557434,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        709,
+        351
+      ],
+      "source_frame_point": [
+        830.859,
+        411.15
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_d6f3ad62acac",
+      "label": "Мёртвая пустыня",
+      "level": "71–72",
+      "kind": "farm",
+      "x": 0.1452067,
+      "y": 0.5181758,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1457,
+        472
+      ],
+      "source_frame_point": [
+        1707.422,
+        552.885
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_a5127252aad4",
+      "label": "Мёртвый лес",
+      "level": "53–54",
+      "kind": "farm",
+      "x": 0.3125567,
+      "y": 0.5145166,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1070,
+        116
+      ],
+      "source_frame_point": [
+        1253.906,
+        135.879
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_7b1f405bf09c",
+      "label": "Нагорье в Нумерусе",
+      "level": "61–62",
+      "kind": "farm",
+      "x": 0.2975282,
+      "y": 0.6408381,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        916,
+        692
+      ],
+      "source_frame_point": [
+        1073.438,
+        810.586
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_568b176002ce",
+      "label": "Обитель покоя",
+      "level": "70",
+      "kind": "farm",
+      "x": 0.1430553,
+      "y": 0.557436,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1435,
+        651
+      ],
+      "source_frame_point": [
+        1681.641,
+        762.56
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_77480ed88884",
+      "label": "Осквернённый храм",
+      "level": "59–60",
+      "kind": "farm",
+      "x": 0.3099396,
+      "y": 0.6287655,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1043,
+        637
+      ],
+      "source_frame_point": [
+        1222.266,
+        746.161
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_3ea054cfba16",
+      "label": "Павшие руины",
+      "level": "73–74",
+      "kind": "farm",
+      "x": 0.1634892,
+      "y": 0.5135711,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1644,
+        451
+      ],
+      "source_frame_point": [
+        1926.562,
+        528.286
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_4e4d0fa39aa3",
+      "label": "Паломнический остров",
+      "level": "58",
+      "kind": "farm",
+      "x": 0.3377055,
+      "y": 0.6609732,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1327,
+        784
+      ],
+      "source_frame_point": [
+        1555.078,
+        918.351
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_5c7166b5f332",
+      "label": "Передовая база в Лоуде",
+      "level": "14–16",
+      "kind": "farm",
+      "x": 0.288978,
+      "y": 0.3469366,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        897,
+        311
+      ],
+      "source_frame_point": [
+        1051.172,
+        364.295
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_8f8596387ffc",
+      "label": "Площадь у Великого храма",
+      "level": "56",
+      "kind": "farm",
+      "x": 0.3111018,
+      "y": 0.5728473,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1055,
+        382
+      ],
+      "source_frame_point": [
+        1236.328,
+        447.462
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_c59815acc1fe",
+      "label": "Пустоши Кредо",
+      "level": "104–106",
+      "kind": "farm",
+      "x": 0.7370446,
+      "y": 0.6914394,
+      "source_view": "archipelago",
+      "source_preview_point": [
+        825,
+        667
+      ],
+      "source_frame_point": [
+        966.797,
+        781.302
+      ],
+      "source_sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_8015f3c67b8c",
+      "label": "Пустоши Рамблер",
+      "level": "63",
+      "kind": "farm",
+      "x": 0.0530129,
+      "y": 0.4986494,
+      "source_view": "far-west",
+      "source_preview_point": [
+        514,
+        383
+      ],
+      "source_frame_point": [
+        602.344,
+        448.633
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_dcf6e13a7dd2",
+      "label": "Пустошь Сомора",
+      "level": "31",
+      "kind": "farm",
+      "x": 0.2286571,
+      "y": 0.3417844,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        280,
+        287
+      ],
+      "source_frame_point": [
+        328.125,
+        336.182
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_5d3109c18777",
+      "label": "Пустыня Рамон",
+      "level": "75",
+      "kind": "farm",
+      "x": 0.1784478,
+      "y": 0.4898843,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1797,
+        343
+      ],
+      "source_frame_point": [
+        2105.859,
+        401.779
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_9c9f6ebdb478",
+      "label": "Пыльные земли Галлио",
+      "level": "45–46",
+      "kind": "farm",
+      "x": 0.2838074,
+      "y": 0.4765005,
+      "source_view": "center-north",
+      "source_preview_point": [
+        844,
+        604
+      ],
+      "source_frame_point": [
+        989.062,
+        707.505
+      ],
+      "source_sha256": "65d0784b72f2c7e0708bb7331731fbc89d0deee5ff887e5ee10e602f69d8af15",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_1767a4fe81bb",
+      "label": "Равнина в Шииде",
+      "level": "47",
+      "kind": "farm",
+      "x": 0.3594743,
+      "y": 0.5135939,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1550,
+        112
+      ],
+      "source_frame_point": [
+        1816.406,
+        131.193
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_0a124f00b8e5",
+      "label": "Рувийский лес",
+      "level": "98–100",
+      "kind": "farm",
+      "x": 0.309092,
+      "y": 0.0602681,
+      "source_view": "snow-top",
+      "source_preview_point": [
+        452,
+        133
+      ],
+      "source_frame_point": [
+        529.688,
+        155.792
+      ],
+      "source_sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_0d6a0da8bcaa",
+      "label": "Руины шахты Ген",
+      "level": "43–44",
+      "kind": "farm",
+      "x": 0.2696274,
+      "y": 0.4837405,
+      "source_view": "center-north",
+      "source_preview_point": [
+        699,
+        637
+      ],
+      "source_frame_point": [
+        819.141,
+        746.161
+      ],
+      "source_sha256": "65d0784b72f2c7e0708bb7331731fbc89d0deee5ff887e5ee10e602f69d8af15",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_0a730e4312d6",
+      "label": "Сакерские руины",
+      "level": "113–115",
+      "kind": "farm",
+      "x": 0.7902284,
+      "y": 0.6768016,
+      "source_view": "archipelago",
+      "source_preview_point": [
+        1369,
+        600
+      ],
+      "source_frame_point": [
+        1604.297,
+        702.82
+      ],
+      "source_sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_2ce7d3dd3282",
+      "label": "Саурийская колония",
+      "level": "78–79",
+      "kind": "farm",
+      "x": 0.1585023,
+      "y": 0.5732288,
+      "source_view": "far-west",
+      "source_preview_point": [
+        1593,
+        723
+      ],
+      "source_frame_point": [
+        1866.797,
+        846.898
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_9396e1a634e2",
+      "label": "Северные леса в Дориане",
+      "level": "39",
+      "kind": "farm",
+      "x": 0.2737422,
+      "y": 0.3877582,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        741,
+        497
+      ],
+      "source_frame_point": [
+        868.359,
+        582.169
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_2faef3ae453f",
+      "label": "Сетская свалка",
+      "level": "67–68",
+      "kind": "farm",
+      "x": 0.0998485,
+      "y": 0.7038923,
+      "source_view": "west-bottom",
+      "source_preview_point": [
+        327,
+        781
+      ],
+      "source_frame_point": [
+        383.203,
+        914.837
+      ],
+      "source_sha256": "97dc795b032dc3c785979befd752d4c09c7829949ad08630a77305dd6e8ac904",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_219042f63b37",
+      "label": "Сетские трущобы",
+      "level": "66",
+      "kind": "farm",
+      "x": 0.091055,
+      "y": 0.6865447,
+      "source_view": "west-bottom",
+      "source_preview_point": [
+        237,
+        702
+      ],
+      "source_frame_point": [
+        277.734,
+        822.299
+      ],
+      "source_sha256": "97dc795b032dc3c785979befd752d4c09c7829949ad08630a77305dd6e8ac904",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_ed06204d7252",
+      "label": "Старый Фронтир",
+      "level": "20–21",
+      "kind": "farm",
+      "x": 0.2817314,
+      "y": 0.3136134,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        823,
+        159
+      ],
+      "source_frame_point": [
+        964.453,
+        186.247
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_72be75d80271",
+      "label": "Страннический холм",
+      "level": "57",
+      "kind": "farm",
+      "x": 0.3190246,
+      "y": 0.6011271,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1136,
+        511
+      ],
+      "source_frame_point": [
+        1331.25,
+        598.568
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_f0322415b4d0",
+      "label": "Топи",
+      "level": "51–52",
+      "kind": "farm",
+      "x": 0.3246803,
+      "y": 0.5311703,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1194,
+        192
+      ],
+      "source_frame_point": [
+        1399.219,
+        224.902
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_72fe950dcfb4",
+      "label": "Тренировочный лагерь в Маязаре",
+      "level": "33–34",
+      "kind": "farm",
+      "x": 0.2045028,
+      "y": 0.3145266,
+      "source_view": "northwest",
+      "source_preview_point": [
+        703,
+        177
+      ],
+      "source_frame_point": [
+        823.828,
+        207.332
+      ],
+      "source_sha256": "2334b8bb49583ccfd5fbc875e277f3618885c8bdb21b7f276944fd18682bd683",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_93faf0a848d1",
+      "label": "Утес Римен",
+      "level": "110–112",
+      "kind": "farm",
+      "x": 0.7688155,
+      "y": 0.6947626,
+      "source_view": "archipelago",
+      "source_preview_point": [
+        1150,
+        682
+      ],
+      "source_frame_point": [
+        1347.656,
+        798.872
+      ],
+      "source_sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_ef64b50aa705",
+      "label": "Ущелье Карма",
+      "level": "86–88",
+      "kind": "farm",
+      "x": 0.3273857,
+      "y": 0.2296846,
+      "source_view": "north-east-end",
+      "source_preview_point": [
+        639,
+        619
+      ],
+      "source_frame_point": [
+        748.828,
+        725.076
+      ],
+      "source_sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_981fbd5db204",
+      "label": "Холм Колдрон",
+      "level": "41–42",
+      "kind": "farm",
+      "x": 0.2496775,
+      "y": 0.4745262,
+      "source_view": "center-north",
+      "source_preview_point": [
+        495,
+        595
+      ],
+      "source_frame_point": [
+        580.078,
+        696.963
+      ],
+      "source_sha256": "65d0784b72f2c7e0708bb7331731fbc89d0deee5ff887e5ee10e602f69d8af15",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_53a834478738",
+      "label": "Холм Первопроходца",
+      "level": "65",
+      "kind": "farm",
+      "x": 0.0697304,
+      "y": 0.5490966,
+      "source_view": "far-west",
+      "source_preview_point": [
+        685,
+        613
+      ],
+      "source_frame_point": [
+        802.734,
+        718.048
+      ],
+      "source_sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_623edd40e636",
+      "label": "Холмы Пожирателя",
+      "level": "27–28",
+      "kind": "farm",
+      "x": 0.2617954,
+      "y": 0.3338277,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        619,
+        251
+      ],
+      "source_frame_point": [
+        725.391,
+        294.013
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_079b512773f5",
+      "label": "Чёрная равнина",
+      "level": "55",
+      "kind": "farm",
+      "x": 0.3147144,
+      "y": 0.5526697,
+      "source_view": "map-title-ready",
+      "source_preview_point": [
+        1092,
+        290
+      ],
+      "source_frame_point": [
+        1279.688,
+        339.696
+      ],
+      "source_sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_e0cb84f4406d",
+      "label": "Шахта Нейбл",
+      "level": "89–91",
+      "kind": "farm",
+      "x": 0.3415663,
+      "y": 0.2007314,
+      "source_view": "north-east-end",
+      "source_preview_point": [
+        784,
+        487
+      ],
+      "source_frame_point": [
+        918.75,
+        570.456
+      ],
+      "source_sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    },
+    {
+      "id": "poi_7dd39b999317",
+      "label": "Южные леса в Дориане",
+      "level": "40",
+      "kind": "farm",
+      "x": 0.2681803,
+      "y": 0.4164994,
+      "source_view": "center-far-north",
+      "source_preview_point": [
+        684,
+        628
+      ],
+      "source_frame_point": [
+        801.562,
+        735.618
+      ],
+      "source_sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "provenance": "manually transcribed icon center and label from game screenshot; terrain registration; not game-world coordinates",
+      "navigation_verified": false
+    }
+  ],
+  "registration": [
+    {
+      "view": "map-title-ready",
+      "sha256": "2d53a6b9d5265d5b2a8c797f02aed5318e8ca21788ba07b340dd7dba89e053c5",
+      "matrix": [
+        [
+          8.340938642366196e-05,
+          3.6043412647523415e-08,
+          0.20796425489880768
+        ],
+        [
+          -8.089524285164707e-08,
+          0.00018720265577606542,
+          0.48918119028651724
+        ]
+      ],
+      "inliers": 429,
+      "median_residual_atlas_px": 1.347212028620303
+    },
+    {
+      "view": "far-west",
+      "sha256": "316a6f96953ba597be5f3f07a817f8bfbc977391bd81748b7698fe7a3fc6d94b",
+      "matrix": [
+        [
+          8.342765580754245e-05,
+          -2.403623210581692e-09,
+          0.002761835346883436
+        ],
+        [
+          5.3946524222151295e-09,
+          0.00018724365928092816,
+          0.4146424219960367
+        ]
+      ],
+      "inliers": 325,
+      "median_residual_atlas_px": 1.3086769677165913
+    },
+    {
+      "view": "far-west-south",
+      "sha256": "e8ee967fe75a3abcfdd21310211dd48f7414634a9ba921039278dfa938f4ac53",
+      "matrix": [
+        [
+          8.33806996901419e-05,
+          -1.50832307738331e-08,
+          0.0028249872000715315
+        ],
+        [
+          3.385255520527144e-08,
+          0.00018713827174291574,
+          0.4736494105435923
+        ]
+      ],
+      "inliers": 328,
+      "median_residual_atlas_px": 1.6427749387450863
+    },
+    {
+      "view": "west-bottom",
+      "sha256": "97dc795b032dc3c785979befd752d4c09c7829949ad08630a77305dd6e8ac904",
+      "matrix": [
+        [
+          8.344095004173815e-05,
+          -7.449501646484628e-08,
+          0.06794180500065555
+        ],
+        [
+          1.6719539037808787e-07,
+          0.00018727349664162163,
+          0.5325034318035672
+        ]
+      ],
+      "inliers": 324,
+      "median_residual_atlas_px": 1.3042134680320778
+    },
+    {
+      "view": "center-far-north",
+      "sha256": "7e888e64a31fceb98e780e08533c2fea72af885b59b21cd6fce9779fe5c44834",
+      "matrix": [
+        [
+          8.342333901650143e-05,
+          6.871341757775018e-08,
+          0.20126073522463786
+        ],
+        [
+          -1.542192648758711e-07,
+          0.00018723397074607662,
+          0.2788903041472862
+        ]
+      ],
+      "inliers": 408,
+      "median_residual_atlas_px": 1.5582586058483852
+    },
+    {
+      "view": "center-north",
+      "sha256": "65d0784b72f2c7e0708bb7331731fbc89d0deee5ff887e5ee10e602f69d8af15",
+      "matrix": [
+        [
+          8.345024649593943e-05,
+          2.0149432709310356e-10,
+          0.20126973339406595
+        ],
+        [
+          -4.522305554922478e-10,
+          0.00018729436145061256,
+          0.3439892046633982
+        ]
+      ],
+      "inliers": 505,
+      "median_residual_atlas_px": 1.4807782838797343
+    },
+    {
+      "view": "northwest",
+      "sha256": "2334b8bb49583ccfd5fbc875e277f3618885c8bdb21b7f276944fd18682bd683",
+      "matrix": [
+        [
+          8.342369429375044e-05,
+          2.2826530158326597e-08,
+          0.13577129146254696
+        ],
+        [
+          -5.123148905671547e-08,
+          0.00018723476812449415,
+          0.2757490486906464
+        ]
+      ],
+      "inliers": 375,
+      "median_residual_atlas_px": 1.5704846007793853
+    },
+    {
+      "view": "center-top",
+      "sha256": "710464f92a5c982324c1a022f3653ce74ef32d373408f97373816daf02c22fde",
+      "matrix": [
+        [
+          8.341458907261271e-05,
+          2.564499639389738e-08,
+          0.2012803535722513
+        ],
+        [
+          -5.7557208344878726e-08,
+          0.00018721433251584748,
+          0.21607853716631634
+        ]
+      ],
+      "inliers": 465,
+      "median_residual_atlas_px": 1.4903080921488674
+    },
+    {
+      "view": "northwest-high",
+      "sha256": "d14eb2492d8a11c9497b199640c75fc81eaedd8cee586092600a4465eab48007",
+      "matrix": [
+        [
+          8.344369928122478e-05,
+          1.2294574967087377e-08,
+          0.13575163687147446
+        ],
+        [
+          -2.759374195352871e-08,
+          0.00018727966698953245,
+          0.22302460482108136
+        ]
+      ],
+      "inliers": 576,
+      "median_residual_atlas_px": 1.49706576729757
+    },
+    {
+      "view": "north-east-end",
+      "sha256": "5cb9b558f048c9616738483379a05f36f846d1603cfbed10e70353c8c2630e40",
+      "matrix": [
+        [
+          8.344399060289292e-05,
+          -1.0921828090922513e-08,
+          0.26490838975351877
+        ],
+        [
+          2.4512771430366365e-08,
+          0.00018728032082709556,
+          0.09387382972880685
+        ]
+      ],
+      "inliers": 778,
+      "median_residual_atlas_px": 1.445891801710535
+    },
+    {
+      "view": "snow-top",
+      "sha256": "cb41f733bec4787cf3235b93624572fb4de30336dbe431b3ecbe5ff160214d4e",
+      "matrix": [
+        [
+          8.344695515750849e-05,
+          1.0512228748799044e-08,
+          0.2648895977557566
+        ],
+        [
+          -2.359347340004432e-08,
+          0.00018728697442474236,
+          0.03110279994029067
+        ]
+      ],
+      "inliers": 706,
+      "median_residual_atlas_px": 1.4190299109339835
+    },
+    {
+      "view": "archipelago",
+      "sha256": "d7e6ff8722ef0157ef45e05791f2bdc0a673ee14f8a02be65bd47077243e9fc5",
+      "matrix": [
+        [
+          8.342072517916587e-05,
+          -3.924701660626332e-08,
+          0.6564243920410616
+        ],
+        [
+          8.808535891466003e-08,
+          0.0001872281042925279,
+          0.545072601605373
+        ]
+      ],
+      "inliers": 232,
+      "median_residual_atlas_px": 1.3085927475396117
+    }
+  ],
+  "navigation_verified": false,
+  "coverage": "Surveyed visible Novus POIs; unobserved markers are not invented"
+}

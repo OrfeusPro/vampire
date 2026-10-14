@@ -22,7 +22,7 @@ final class BotRetry {
         expire(state,now);
         state.remove("retryAt");
         String error=report.optString("error","");
-        if(!report.optBoolean("pause")||error.isEmpty()||error.equals("null")
+        if(!report.optBoolean("pause")||!report.optBoolean("retryable",true)||error.isEmpty()||error.equals("null")
                 ||report.optString("reason").equals("phone_stop")||editor
                 ||error.equals("settings_changed_during_action"))return;
         int count=state.optInt("retryCount",0);

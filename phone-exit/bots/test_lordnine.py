@@ -45,6 +45,43 @@ def settings():
 
 
 class Replay(unittest.TestCase):
+    def test_interrupted_mail_closes_before_login_and_verifies_hud(self):
+        self.settings['autostart_enabled'] = True
+        self.state.update(phase='farm_map_open', route=[{'map_id': 'old'}])
+        self.assertEqual(self.tick(['mail_screen'])['step'], 'close_interrupted_mail')
+        self.assertNotIn('route', self.state)
+        self.assertEqual(self.tick([])['step'], 'waiting_interrupted_window_closed')
+        self.assertEqual(self.tick(['game_inventory_icon'])['step'], 'interrupted_window_closed')
+        self.assertFalse(any(cmd == 'launch' for cmd, _ in self.host.calls))
+
+    def test_interrupted_mail_confirmation_reward_and_close_sequence(self):
+        for visible in ('mail_confirm_popup', 'mail_reward', 'mail_screen'):
+            self.assertEqual(self.tick([visible])['step'], 'close_interrupted_mail')
+        self.assertEqual(self.tick(['game_inventory_icon'])['step'], 'interrupted_window_closed')
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 3)
+
+    def test_interrupted_shop_cancels_purchase_instead_of_confirming_or_restoring(self):
+        self.state.update(phase='restore_open', since=self.host.now)
+        self.assertEqual(self.tick(['supplies_shop', 'auto_purchase_ok', 'restore_icon', 'town_supplies_icon'])['step'], 'close_interrupted_shop')
+        self.assertEqual(sum(cmd == 'back' for cmd, _ in self.host.calls), 1)
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+
+    def test_interrupted_dismantle_closes_without_quick_add(self):
+        self.assertEqual(self.tick(['dismantle_quick_add_button'])['step'], 'close_interrupted_dismantle')
+        self.assertEqual(self.state['phase'], 'overlay_close')
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 1)
+
+    def test_interrupted_inventory_returns_before_map(self):
+        self.state['phase'] = 'farm_map_open'
+        self.assertEqual(self.tick(['inventory_dismantle_button'])['step'], 'close_interrupted_inventory')
+        self.assertEqual(sum(cmd == 'back' for cmd, _ in self.host.calls), 1)
+
+    def test_stuck_mail_is_bounded_and_has_specific_error(self):
+        for _ in range(3):
+            self.tick(['mail_screen'])
+        self.assertEqual(self.tick(['mail_screen'])['error'], 'interrupted_mail_not_closed')
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 3)
+
     def test_initial_loading_waits_for_connect_without_blind_input(self):
         self.settings['autostart_enabled'] = True
         self.assertEqual(self.tick([])['step'], 'waiting_game_launch')

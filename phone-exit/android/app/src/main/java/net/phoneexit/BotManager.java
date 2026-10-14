@@ -40,7 +40,7 @@ final class BotManager {
             JSONObject signed=null;JSONArray items=catalog.getJSONArray("bots");for(int i=0;i<items.length();i++){
                 JSONObject item=items.getJSONObject(i),p=new JSONObject(item.getString("payload"));if(bot.equals(p.optString("id"))&&wanted.equals(p.optString("version")))signed=item;
             }if(signed==null)throw new Exception("bot_release_unavailable");
-            JSONObject meta=verify(c,signed);if(meta.getInt("engineVersion")<1||meta.getInt("engineVersion")>3)throw new Exception("bot_engine_incompatible");if(meta.getInt("settingsVersion")!=1)throw new Exception("bot_settings_incompatible");
+            JSONObject meta=verify(c,signed);if(meta.getInt("engineVersion")<1||meta.getInt("engineVersion")>4)throw new Exception("bot_engine_incompatible");if(meta.getInt("settingsVersion")!=1)throw new Exception("bot_settings_incompatible");
             long size=meta.getLong("size");if(size<1||size>60000000)throw new Exception("bot_package_size");
             state.put("status","downloading");BotStore.write(c,"state",state);
             File tmp=new File(base,"download.tmp");HttpsURLConnection conn=agent.connection(new JSONObject().put("op","botPackage").put("id",agent.config.id).put("botId",bot).put("sha256",meta.getString("sha256")));

@@ -11,6 +11,27 @@ test('control frames isolate devices and reject tampering',()=>{
   const data=Buffer.from(box.data,'base64');data[0]^=1;assert.throws(()=>openControl(token,{...box,data:data.toString('base64')}));
 });
 
+test('bot management uses encrypted HTTPS without opening a direct channel; manual control still requires WebRTC',async t=>{
+ const directory=new Directory(()=>{}),secret=hex(32),phone={id:hex(16),name:'No ICE',token:hex(32)},requests=new Map(),commands=[];
+ directory.setAccount({version:1,feedToken:hex(32),privateKey:'test',blocked:[]});directory.setPhones([phone]);
+ directory.states.set(phone.id,{received:Date.now(),control:{api:3,directControl:true,enabled:true,botApi:1}});
+ const server=createControlServer({directory,secret,request:async(_,options)=>{
+  const b=JSON.parse(options.body);
+  if(b.op==='enqueue'){
+   const v=openControl(phone.token,b.box);commands.push(v.command);
+   requests.set(b.request,{status:'done',box:sealControl(phone.token,{id:phone.id,request:b.request,at:Date.now(),ok:v.command!=='connectControl',error:v.command==='connectControl'?'ice_no_candidates':undefined,result:{botId:'rfonlinenext',status:'assigned'}})});
+   return Response.json({ok:true});
+  }
+  return Response.json(b.op==='ack'?{ok:true}:requests.get(b.request)||{status:'pending'});
+ }});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(()=>new Promise(r=>server.close(r)));
+ const base='http://127.0.0.1:'+server.address().port,path=base+'/v1/devices/'+phone.id+'/commands',headers={Authorization:'Bearer '+secret,'Content-Type':'application/json'};
+ const response=await fetch(path,{method:'POST',headers,body:JSON.stringify({command:'bot',args:{op:'assign',botId:'rfonlinenext'}})});
+ assert.equal(response.status,202);const job=await response.json();assert.notEqual(job.transport,'webrtc');
+ assert.deepEqual(commands,['bot']);
+ const manual=await fetch(path,{method:'POST',headers,body:'{"command":"home"}'});assert.equal(manual.status,502);assert.deepEqual(commands,['bot','connectControl']);
+});
+
 test('HTTP API bootstraps authenticated native WebRTC once and survives catalog outage',async t=>{
   const directory=new Directory(()=>{}),secret=hex(32),phone={id:hex(16),name:'Direct',token:hex(32)};
   directory.setAccount({version:1,feedToken:hex(32),privateKey:'test',blocked:[]});directory.setPhones([phone]);
@@ -68,6 +89,12 @@ test('HTTP gateway authentication, offline gate, encrypted enqueue and bound res
   assert.equal((await fetch(base+path,{method:'POST',headers,body:'{"command":"screenshot","args":{"format":"png"}}'})).status,409);
   const response=await fetch(base+path,{method:'POST',headers,body:'{"command":"status"}'});assert.equal(response.status,202);const job=await response.json();
   assert.equal(received.op,'enqueue');assert.equal(received.command,undefined);assert.equal(openControl(phone.token,received.box).command,'status');
+  directory.states.set(phone.id,{received:Date.now(),control:{api:4,directControl:true,enabled:true},versionName:'0.8.13',versionCode:39});
+  const snapshot=await fetch(base+path,{method:'POST',headers,body:JSON.stringify({command:'screenshot',args:{format:'jpg',quality:80},transport:'https'})});
+  assert.equal(snapshot.status,202);assert.equal(openControl(phone.token,received.box).command,'screenshot');
+  assert.equal((await fetch(base+path,{method:'POST',headers,body:JSON.stringify({command:'tap',args:{x:10,y:20,width:720,height:1280},transport:'https'})})).status,202);
+  assert.equal(openControl(phone.token,received.box).command,'tap');
+  directory.states.set(phone.id,{received:Date.now(),control:{api:1},versionName:'0.5.0',versionCode:15});
   const result=await (await fetch(base+path+'/'+job.id,{headers})).json();assert.equal(result.result.ok,true);assert.equal(result.box,undefined);
   const devices=await (await fetch(base+'/v1/devices',{headers})).json();assert.equal(devices.devices[0].versionCode,15);assert.equal(devices.devices[0].token,undefined);
   assert.throws(()=>applyBlocked(directory,['invalid']));assert.equal(directory.phones.length,1);

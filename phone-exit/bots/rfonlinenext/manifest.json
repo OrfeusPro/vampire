@@ -1,0 +1,17 @@
+{
+  "id": "rfonlinenext",
+  "name": "RF Online Next",
+  "version": "1.1.7",
+  "engineVersion": 4,
+  "settingsVersion": 1,
+  "entrypoint": "bot.py",
+  "packages": [
+    "com.netmarble.rfnext"
+  ],
+  "ocr": false,
+  "features": [
+    "autostart",
+    "point_navigation",
+    "farm"
+  ]
+}

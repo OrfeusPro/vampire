@@ -94,8 +94,10 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
     phoneFor(id);validateCommand(command,args);
     const state=directory.states.get(id);
     const linked=peers.get(id)?.peer;
+    const management=['status','catalog','assign','install','rollback','stop','pause','start','resume','settingsBegin','settingsChunk','settingsCommit'];
     if((!state||Date.now()-state.received>=45000)&&(!linked||linked.closed||linked.channel?.readyState!=='open'))throw Object.assign(Error('device offline'),{status:409});
     if(state.control?.api<3||!state.control?.directControl||['checkUpdate','installUpdate'].includes(command))return enqueueHttp(id,command,args);
+    if(command==='bot'&&management.includes(args.op)&&(!linked||linked.closed||linked.channel?.readyState!=='open'))return enqueueHttp(id,command,args);
     if(!state.control.enabled)throw Object.assign(Error('control disabled'),{status:409});
     let entry=peers.get(id);
     if(!entry||entry.peer?.closed){
@@ -110,7 +112,12 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
       }});
       entry.ready=direct.connect();entry.ready.catch(()=>{});
     }
-    await entry.ready;phoneFor(id);
+    try{await entry.ready;}catch(error){
+      // Handshake failed before any bot command was sent. Small management
+      // commands may use the existing authenticated HTTPS mailbox instead.
+      if(command==='bot'&&management.includes(args.op)&&error.message==='ice_no_candidates')return enqueueHttp(id,command,args);
+      throw error;
+    }phoneFor(id);
     for(const[k,j]of directJobs){if(directJobs.size<1024)break;
       if(['done','expired'].includes(j.peer.get(k.slice(k.lastIndexOf(':')+1)).status))directJobs.delete(k);
     }
@@ -145,6 +152,12 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
       if(req.method==='POST'&&!match[2]){
         let raw='';for await(const chunk of req){raw+=chunk;if(raw.length>16384)return send(413,{error:'large request'});}
         let input;try{input=JSON.parse(raw);if(input.command==='connectControl')throw Error();validateCommand(input.command,input.args);}catch{return send(400,{error:'invalid command or arguments'});}
+        if(input.transport!==undefined&&input.transport!=='https')return send(400,{error:'invalid transport'});
+        if(input.transport==='https'){
+          // Explicit opt-in to the same authenticated mailbox used by older APKs.
+          // Never replay an action from a failed direct channel automatically.
+          return send(202,await enqueueHttp(phone.id,input.command,input.args));
+        }
         return send(202,await enqueue(phone.id,input.command,input.args));
       }
       if(req.method==='GET'&&match[2]){

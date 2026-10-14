@@ -36,7 +36,7 @@ public final class BotBridgeService extends Service {
             JSONObject foreground=control.execute("foreground",new JSONObject(),()->valid(generation));boolean found=false;for(int i=0;i<packages.length();i++)if(packages.getString(i).equals(foreground.optString("package")))found=true;if(!found)throw new Exception("bot_game_not_foreground");
         }
         if(command.equals("capture")){if(vision==null)vision=new BotVision();JSONObject frame=vision.capture(control.captureLocal(()->valid(generation)));visionGeneration=generation;return frame;}
-        if(!java.util.Arrays.asList("foreground","launch","tap","swipe","back").contains(command))throw new Exception("unsupported_bot_host_command");
+        if(!java.util.Arrays.asList("foreground","launch","tap","swipe","longPress","gesture","back").contains(command))throw new Exception("unsupported_bot_host_command");
         return control.execute(command,args,()->valid(generation));
     }
     private boolean valid(String g){try{return BotManager.valid(this,g);}catch(Exception e){return false;}}

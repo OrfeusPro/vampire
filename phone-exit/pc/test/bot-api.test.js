@@ -9,6 +9,47 @@ const id='1'.repeat(32),id2='2'.repeat(32);
 const settings=()=>({settingsVersion:1,farm_enabled:true,recovery_enabled:true,auto_dismantle_enabled:true,autostart_enabled:false,
   farm_map_spots:[{id:'a',map_id:'map',map_points:[[.2,.3]],teleport_point:null}],active_farm_map_spot_id:'a'});
 
+test('unassigned phone has no implicit Lord Nine module',async()=>{
+ const api=createBotApi({devices:()=>[{id}],enqueue:()=>{},get:()=>{}});
+ try{assert.equal((await api.handle('GET',`/bot/v1/devices/${id}/profile`)).botId,null);}finally{api.close();}
+});
+
+test('PC assignment survives device rejection and retries only after fresh status',async()=>{
+ const calls=[],done=new Map();let remoteBot='lordnine',reject=true;
+ const api=createBotApi({devices:()=>[{id,online:true,control:{botApi:1}}],enqueue:async(phone,command,args)=>{
+  calls.push(args.op);let result={botId:remoteBot,desired:'running'};let ok=true;
+  if(args.op==='assign'){ok=!reject;if(ok)remoteBot=args.botId;result={botId:remoteBot,desired:'stopped'};}
+  done.set(String(calls.length),{status:'done',result:{ok,result,error:ok?undefined:'device_rejected'}});return {id:String(calls.length)};
+ },get:async(phone,job)=>done.get(job)});
+ const wait=async job=>{while(job.status==='running')await new Promise(r=>setTimeout(r,10));return job;};
+ try{
+  const job=await wait(await api.handle('POST',`/bot/v1/devices/${id}/action`,{op:'assign',botId:'rfonlinenext'}));
+  assert.equal(job.status,'done');let p=await api.handle('GET',`/bot/v1/devices/${id}/profile`);
+  assert.equal(p.botId,'rfonlinenext');assert.equal(p.assignmentPending,true);assert.match(p.assignmentError,/device_rejected/);
+  assert.deepEqual(calls,['status','stop','assign']);reject=false;
+  await wait(await api.handle('POST',`/bot/v1/devices/${id}/action`,{op:'install',version:'1.0.1'}));
+  p=await api.handle('GET',`/bot/v1/devices/${id}/profile`);assert.equal(p.assignmentPending,false);assert.equal(remoteBot,'rfonlinenext');
+  assert.deepEqual(calls,['status','stop','assign','status','stop','assign','install']);
+ }finally{api.close();}
+});
+
+test('RF assignment prepares its own defaults without starting or copying Lord Nine farm',async()=>{
+  const calls=[],done=new Map();
+  const api=createBotApi({devices:()=>[{id,control:{botApi:1}}],enqueue:async(phone,command,args)=>{
+    calls.push(args.op);done.set('job',{status:'done',result:{ok:true,result:{botId:args.botId,desired:'stopped'}}});return {id:'job'};
+  },get:async()=>done.get('job')});
+  try{
+    await api.handle('POST',`/bot/v1/devices/${id}/identity`,{characterName:'RF hero',provider:'VMOS'});
+    const job=await api.handle('POST',`/bot/v1/devices/${id}/action`,{op:'assign',botId:'rfonlinenext'});
+    for(let i=0;i<100&&job.status==='running';i++)await new Promise(r=>setTimeout(r,10));
+    assert.equal(job.status,'done');assert.deepEqual(calls,[]);
+    const profile=await api.handle('GET',`/bot/v1/devices/${id}/profile`);
+    assert.equal(profile.botId,'rfonlinenext');assert.equal(profile.pending,true);assert.equal(profile.assignmentPending,true);
+    assert.equal(profile.settings.autostart_enabled,true);assert.equal(profile.settings.farm_enabled,false);
+    assert.deepEqual(profile.settings.farm_map_spots,[]);assert.equal(profile.identity.characterName,'RF hero');
+  }finally{api.close();}
+});
+
 test('phone identity stays on PC and copying settings preserves recipient identity',async()=>{
   const api=createBotApi({devices:()=>[{id},{id:id2}],enqueue:()=>{throw Error('identity must not command phone');},get:()=>{}});
   try{

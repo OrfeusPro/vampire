@@ -13,6 +13,7 @@ import java.security.MessageDigest;
 
 // Frames and template Mats are local to the bridge, never sent through WebRTC.
 final class BotVision implements AutoCloseable {
+    private BotAtlasVision atlasVision;
     private Mat frame;private final Map<String,Mat> templates=new LinkedHashMap<>();private final Map<String,JSONObject> cache=new HashMap<>();
     long frameCapturedAt;
     byte[] diagnosticJpeg(){if(frame==null)return null;Mat resized=new Mat();MatOfByte bytes=new MatOfByte();MatOfInt options=new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY,80);try{double scale=Math.min(1,1280.0/Math.max(frame.cols(),frame.rows()));Imgproc.resize(frame,resized,new Size(Math.round(frame.cols()*scale),Math.round(frame.rows()*scale)));if(!Imgcodecs.imencode(".jpg",resized,bytes,options))return null;return bytes.toArray();}finally{resized.release();bytes.release();options.release();}}
@@ -35,6 +36,7 @@ final class BotVision implements AutoCloseable {
         Mat roi=frame.submat(new org.opencv.core.Rect(x,y,right-x,bottom-y));JSONObject detector=spec.optJSONObject("detector");String type=detector==null?"":detector.optString("type");
         JSONObject result=new JSONObject().put("found",false).put("confidence",0).put("point",new JSONArray().put((x+right)/2).put((y+bottom)/2));
         try{
+            if(type.equals("atlas_point")){if(atlasVision==null)atlasVision=new BotAtlasVision();result=atlasVision.locate(directory,frame,spec);cache.put(key,result);return result;}
             if(type.equals("power_saving_colors")){result=powerSavingColors();cache.put(key,result);return result;}
             if(type.equals("region_features")){result=regionFeatures(roi);cache.put(key,result);return result;}
             if(type.equals("colored_button")){result=coloredButton(detector);cache.put(key,result);return result;}
@@ -176,5 +178,5 @@ final class BotVision implements AutoCloseable {
             centers=density.submat(new org.opencv.core.Rect(template.cols()/2,template.rows()/2,scores.cols(),scores.rows()));Core.compare(centers,new Scalar(6),allowed,Core.CMP_LT);scores.setTo(new Scalar(lower?1:-1),allowed);
         }finally{if(centers!=null)centers.release();for(Mat m:new Mat[]{hsv,mask,gold,density,allowed})m.release();}
     }
-    public void close(){if(frame!=null)frame.release();for(Mat m:templates.values())m.release();for(Mat m:scaledTemplates.values())m.release();for(Mat m:scaledMasks.values())m.release();scaledTemplates.clear();scaledMasks.clear();templates.clear();cache.clear();unchangedMatches.clear();regionHashes.clear();}
+    public void close(){if(atlasVision!=null){atlasVision.close();atlasVision=null;}if(frame!=null)frame.release();for(Mat m:templates.values())m.release();for(Mat m:scaledTemplates.values())m.release();for(Mat m:scaledMasks.values())m.release();scaledTemplates.clear();scaledMasks.clear();templates.clear();cache.clear();unchangedMatches.clear();regionHashes.clear();}
 }

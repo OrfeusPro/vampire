@@ -1,7 +1,12 @@
 {
   "apiVersion": 1,
-  "engineVersion": 2,
-  "supportedModuleEngineVersions": [1, 2],
+  "engineVersion": 4,
+  "supportedModuleEngineVersions": [
+    1,
+    2,
+    3,
+    4
+  ],
   "entrypoint": "bot.py:tick",
   "oneActiveBotPerPhone": true,
   "ocr": false,

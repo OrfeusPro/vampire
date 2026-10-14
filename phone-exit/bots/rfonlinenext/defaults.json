@@ -1,0 +1,9 @@
+{
+  "settingsVersion": 1,
+  "autostart_enabled": true,
+  "farm_enabled": false,
+  "recovery_enabled": false,
+  "auto_dismantle_enabled": false,
+  "farm_map_spots": [],
+  "active_farm_map_spot_id": null
+}

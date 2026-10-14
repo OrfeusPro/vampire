@@ -59,7 +59,8 @@ export function createBotApi({enqueue,get,devices,profilePath,root=path.resolve(
     while(!closed&&Date.now()<end){const result=await get(id,job.id);if(result.status==='done'){if(!result.result?.ok)throw Error(result.result?.error||'bot operation failed');return result.result.result;}
       if(['expired','unknown'].includes(result.status))throw Error('bot operation outcome unknown; refresh status');await new Promise(r=>setTimeout(r,250));}throw Error('bot operation timeout');
   }
-  async function sync(id){const p=profiles[id];if(!p?.pending)return;if(p.editorRecovery){await command(id,{op:'pause'});delete p.editorRecovery;await save();}const state=await command(id,{op:'status'});if(state.botId!==p.botId)throw Error('assign bot before settings');
+  async function ensureAssignment(id){const p=profiles[id];if(!p?.assignmentPending)return;const state=await command(id,{op:'status'});if(state.botId!==p.botId){if(state.desired==='running')await command(id,{op:'stop'});await command(id,{op:'assign',botId:p.botId});}p.assignmentPending=false;delete p.assignmentError;await save();}
+  async function sync(id){const p=profiles[id];if(!p?.pending)return;await ensureAssignment(id);if(p.editorRecovery){await command(id,{op:'pause'});delete p.editorRecovery;await save();}const state=await command(id,{op:'status'});if(state.botId!==p.botId)throw Error('assign bot before settings');
     const bytes=Buffer.from(JSON.stringify(p.settings)),sha256=createHash('sha256').update(bytes).digest('hex');
     if(state.receivedRevision===p.revision&&state.settingsSha256===sha256&&state.settingsStatus!=='receiving'){p.pending=false;delete p.lastError;await save();return;}
     if(state.receivedRevision>=p.revision&&state.settingsStatus!=='receiving'){p.revision=state.receivedRevision+1;await save();}
@@ -82,7 +83,7 @@ export function createBotApi({enqueue,get,devices,profilePath,root=path.resolve(
       if(method==='GET'&&asset)return {binary:await readFile(path.join(root,asset[1],'maps',asset[2])),mime:asset[2].endsWith('.json')?'application/json':'image/png'};
       const jobMatch=/^\/bot\/v1\/jobs\/([a-f0-9]{32})$/.exec(url);if(method==='GET'&&jobMatch){const job=jobs.get(jobMatch[1]);if(!job)throw Object.assign(Error('unknown bot job'),{status:404});return job;}
       const match=/^\/bot\/v1\/devices\/([a-f0-9]{32})\/(profile|action|settings|copy|identity)$/.exec(url);if(!match)throw Object.assign(Error('not found'),{status:404});const id=match[1];phone(id);
-      if(method==='GET'&&match[2]==='profile')return profiles[id]||{botId:'lordnine',revision:0,settings:defaults(),pending:false};
+      if(method==='GET'&&match[2]==='profile')return profiles[id]||{botId:null,revision:0,settings:defaults(),pending:false};
       if(method!=='POST')throw Object.assign(Error('method not allowed'),{status:405});
       if(match[2]==='identity'){
         if(typeof body.characterName!=='string'||body.characterName.length>80||/[\x00-\x1f]/.test(body.characterName)||!['','VMOS','UgPhone','LDCloud','Другое'].includes(body.provider))throw Error('invalid phone identity');
@@ -98,6 +99,7 @@ export function createBotApi({enqueue,get,devices,profilePath,root=path.resolve(
       }
       if(match[2]==='action')return launch(id,async()=>{
         if(body.op==='update'){
+          await ensureAssignment(id);
           const before=await command(id,{op:'status'});
           if(!before.botId)throw Error('assign bot before update');
           const catalog=await command(id,{op:'catalog'});
@@ -117,7 +119,18 @@ export function createBotApi({enqueue,get,devices,profilePath,root=path.resolve(
           else if(before.desired==='paused')result=await command(id,{op:'pause'});
           return {...result,updateResult:'updated'};
         }
-        if(body.op==='assign'){if(typeof body.botId!=='string'||!body.botId.match(/^[a-z][a-z0-9_-]{0,40}$/))throw Error('unknown bot');try{const manifest=JSON.parse(await readFile(path.join(root,body.botId,'manifest.json'),'utf8'));if(manifest.id!==body.botId)throw Error();}catch{throw Error('unknown bot');}const result=await command(id,body);profiles[id]={...(profiles[id]||{}),botId:body.botId,settings:profiles[id]?.botId===body.botId?profiles[id].settings:defaults(),revision:profiles[id]?.revision||0};await save();return result;}
+        if(body.op==='assign'){
+          if(typeof body.botId!=='string'||!body.botId.match(/^[a-z][a-z0-9_-]{0,40}$/))throw Error('unknown bot');
+          try{const manifest=JSON.parse(await readFile(path.join(root,body.botId,'manifest.json'),'utf8'));if(manifest.id!==body.botId)throw Error();}catch{throw Error('unknown bot');}
+          const same=profiles[id]?.botId===body.botId;let initial=defaults();
+          if(!same){try{initial=validateBotSettings(JSON.parse(await readFile(path.join(root,body.botId,'defaults.json'),'utf8')));}catch(error){if(error.code!=='ENOENT')throw error;}}
+          profiles[id]={...(profiles[id]||{}),botId:body.botId,settings:same?profiles[id].settings:initial,revision:profiles[id]?.revision||0,pending:true,assignmentPending:true};
+          await save();
+          // PC assignment is durable even when the device cannot confirm it yet.
+          const device=phone(id);if(!device.online||device.control?.botApi!==1)return {botId:body.botId,status:'assigned',assignmentPending:true};
+          try{await ensureAssignment(id);return {botId:body.botId,status:'assigned',assignmentPending:false};}
+          catch(error){profiles[id].assignmentError=error.message;await save();return {botId:body.botId,status:'assigned',assignmentPending:true,assignmentError:error.message};}
+        }
         if(body.op==='editor'){
           if(!['point','capture'].includes(body.kind)||typeof body.mapId!=='string')throw Error('invalid editor operation');
           const index=JSON.parse(await readFile(path.join(root,'lordnine/maps/index.json'),'utf8'));
@@ -140,7 +153,8 @@ export function createBotApi({enqueue,get,devices,profilePath,root=path.resolve(
             }throw Error('editor recognition timeout');
           }finally{try{await command(id,{op:'pause'});}finally{p.settings=original;delete p.editorBackup;p.revision++;p.pending=true;await save();await sync(id);}}
         }
-        if(['start','resume'].includes(body.op))await sync(id);
+          if(['install','rollback'].includes(body.op))await ensureAssignment(id);
+          if(['start','resume'].includes(body.op))await sync(id);
         if(!['status','install','rollback','start','pause','resume','stop'].includes(body.op))throw Error('invalid action');return command(id,body);
       });throw Object.assign(Error('not found'),{status:404});
     },close(){closed=true;clearInterval(timer);}

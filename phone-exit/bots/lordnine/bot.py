@@ -438,6 +438,50 @@ def _tick(host, settings, state, directory):
         phase('dismantle_result', 1)
         return report('confirm_dismantle_rare_items')
 
+    # MultiBot recover_open_mail and fresh-screen reconciliation take priority
+    # over login, floor timeouts and restore-icon checks on an obscured HUD.
+    current = state.get('phase', 'monitoring')
+    mail = next((name for name in ('mail_confirm_popup', 'mail_reward', 'mail_screen') if found(name)), None)
+    shop = found('supplies_shop') or found('auto_purchase')
+    dismantle = found('dismantle_quick_add_button') or found('dismantle_result')
+    inventory = found('inventory_dismantle_button') or found('inventory_auto_sell_button')
+    orphan = ('mail' if mail else 'shop' if shop and not current.startswith('shop_') and current != 'farm_map_open' else
+              'dismantle' if dismantle and not current.startswith('dismantle_') else
+              'inventory' if inventory and not current.startswith('dismantle_') else None)
+    if orphan:
+        if 'overlay_since' not in state:
+            state['overlay_since'] = now
+            state['overlay_attempts'] = 0
+            # Re-evaluate location after closing; don't replay the old route.
+            for key in ('route', 'at_farm', 'destination', 'arrival_started', 'prepare_route',
+                        'launch_since', 'launch_actions', 'launch_done_until', 'entry_wait_started', 'unknown_since'):
+                state.pop(key, None)
+        if state.get('overlay_attempts', 0) >= 3 or now-state['overlay_since'] > config['timeouts'].get('service_screen_timeout_sec', 12):
+            return pause('interrupted_' + orphan + '_not_closed')
+        if orphan == 'mail':
+            named('mail_reward_confirm' if mail == 'mail_confirm_popup' else 'mail_reward_dismiss' if mail == 'mail_reward' else 'mail_close')
+        elif orphan == 'shop':
+            if found('auto_purchase_ok'):
+                host.call('back')  # Cancel an interrupted purchase, not replay OK.
+            else:
+                named('shop_exit')
+        elif orphan == 'dismantle':
+            named('dismantle_result_close' if found('dismantle_result') else 'dismantle_window_close')
+        else:
+            host.call('back')
+        state['overlay_attempts'] += 1
+        phase('overlay_close', config['timeouts'].get('shop_close_sec', 4) if orphan == 'shop' else config['timeouts'].get('popup_close_sec', 1.5))
+        return report('close_interrupted_' + orphan)
+    if current == 'overlay_close':
+        if hud() or match('world_map_title')['found']:
+            state.pop('overlay_since', None)
+            state.pop('overlay_attempts', None)
+            phase('monitoring')
+            return report('interrupted_window_closed')
+        if now-state.get('overlay_since', now) > config['timeouts'].get('service_screen_timeout_sec', 12):
+            return pause('interrupted_window_hud_not_verified')
+        return report('waiting_interrupted_window_closed')
+
     # A dark launch background can satisfy the map layout fallback. Only the
     # actual title template may bypass login before gameplay is recognized.
     launch_screen = next((screen for screen in config['game'].get('launch_flow', {}).get('screens', [])
@@ -593,7 +637,7 @@ def _tick(host, settings, state, directory):
             named('close_stat_window')
         phase('monitoring', 1)
         return report('close_restore_window')
-    if settings.get('recovery_enabled') and found('restore_icon') and match('restore_icon')['confidence'] >= config['vision'].get('restore_icon_strict_threshold', .85) and found('town_supplies_icon'):
+    if current == 'monitoring' and hud() and settings.get('recovery_enabled') and found('restore_icon') and match('restore_icon')['confidence'] >= config['vision'].get('restore_icon_strict_threshold', .85) and found('town_supplies_icon'):
         template('restore_icon')
         phase('restore_open', config['timeouts'].get('restore_sec', 3))
         return report('open_restore')
