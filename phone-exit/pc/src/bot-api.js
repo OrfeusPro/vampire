@@ -97,6 +97,26 @@ export function createBotApi({enqueue,get,devices,profilePath,root=path.resolve(
         for(const target of body.targets){profiles[target]={...profiles[target],botId:source.botId,settings:structuredClone(source.settings),revision:Math.max(profiles[target]?.revision||0,phone(target).control?.bot?.receivedRevision||0)+1,pending:true};}await save();return {saved:body.targets.length,status:'pending'};
       }
       if(match[2]==='action')return launch(id,async()=>{
+        if(body.op==='update'){
+          const before=await command(id,{op:'status'});
+          if(!before.botId)throw Error('assign bot before update');
+          const catalog=await command(id,{op:'catalog'});
+          const versionParts=v=>{if(typeof v!=='string'||!/^\d{1,9}\.\d{1,9}\.\d{1,9}$/.test(v))throw Error('invalid bot release version');return v.split('.').map(Number);};
+          const compare=(a,b)=>{const x=versionParts(a),y=versionParts(b);for(let i=0;i<3;i++)if(x[i]!==y[i])return Math.sign(x[i]-y[i]);return 0;};
+          const releases=(catalog.bots||[]).map(entry=>JSON.parse(entry.payload)).filter(meta=>meta.id===before.botId&&Number.isInteger(meta.engineVersion)&&meta.engineVersion>=1&&meta.engineVersion<=before.engineVersion&&meta.settingsVersion===1);
+          releases.forEach(meta=>versionParts(meta.version));releases.sort((a,b)=>compare(b.version,a.version));
+          if(!releases.length)throw Error('no compatible bot release');
+          const latest=releases[0].version;
+          if(before.version&&compare(latest,before.version)<=0)return {...before,updateResult:'current'};
+          // Android verifies signature/hash. Resume only a confirmed install.
+          await command(id,{op:'stop'});
+          const installed=await command(id,{op:'install',version:latest});
+          if(installed.version!==latest)throw Error('bot update not confirmed; inspect status');
+          let result=installed;
+          if(before.desired==='running'){await sync(id);result=await command(id,{op:'start'});}
+          else if(before.desired==='paused')result=await command(id,{op:'pause'});
+          return {...result,updateResult:'updated'};
+        }
         if(body.op==='assign'){if(typeof body.botId!=='string'||!body.botId.match(/^[a-z][a-z0-9_-]{0,40}$/))throw Error('unknown bot');try{const manifest=JSON.parse(await readFile(path.join(root,body.botId,'manifest.json'),'utf8'));if(manifest.id!==body.botId)throw Error();}catch{throw Error('unknown bot');}const result=await command(id,body);profiles[id]={...(profiles[id]||{}),botId:body.botId,settings:profiles[id]?.botId===body.botId?profiles[id].settings:defaults(),revision:profiles[id]?.revision||0};await save();return result;}
         if(body.op==='editor'){
           if(!['point','capture'].includes(body.kind)||typeof body.mapId!=='string')throw Error('invalid editor operation');

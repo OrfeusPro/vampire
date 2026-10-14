@@ -92,3 +92,39 @@ test('start waits for chunk hash commit; failed action is never replayed',async(
     for(let i=0;i<30&&job.status==='running';i++)await new Promise(r=>setTimeout(r,10));assert.equal(job.status,'failed');assert.equal(frames.filter(x=>x.op==='start').length,1);assert.ok(frames.findIndex(x=>x.op==='settingsCommit')<frames.findIndex(x=>x.op==='start'));
   }finally{api.close();}
 });
+// One-click update must preserve activity intent and never replay failed installs.
+function updateFixture({desired='running',version='1.1.9',failInstall=false,failCatalog=false,mismatch=false,entries}={}){
+  const calls=[],done=new Map();let current=version,intent=desired;
+  const releases=entries||[
+    {id:'lordnine',version:'1.1.9',engineVersion:3,settingsVersion:1},
+    {id:'lordnine',version:'1.1.22',engineVersion:3,settingsVersion:1},
+    {id:'lordnine',version:'2.0.0',engineVersion:4,settingsVersion:1},
+    {id:'other',version:'9.0.0',engineVersion:1,settingsVersion:1},
+    {id:'lordnine',version:'3.0.0',engineVersion:3,settingsVersion:2},
+  ];
+  const api=createBotApi({devices:()=>[{id,online:true,control:{botApi:1}}],enqueue:async(phone,command,args)=>{
+    calls.push(args);const jobId=String(calls.length);let result={botId:'lordnine',engineVersion:3,version:current,desired:intent};
+    if(args.op==='catalog'){if(failCatalog){done.set(jobId,{status:'done',result:{ok:false,error:'catalog unavailable'}});return {id:jobId};}result={bots:releases.map(meta=>({payload:JSON.stringify(meta)}))};}
+    if(args.op==='stop'){intent='stopped';result.desired=intent;}
+    if(args.op==='install'){if(failInstall){done.set(jobId,{status:'done',result:{ok:false,error:'bot_hash_mismatch'}});return {id:jobId};}current=mismatch?'1.1.9':args.version;result.version=current;result.desired=intent;}
+    if(args.op==='start'||args.op==='pause'){intent=args.op==='start'?'running':'paused';result.desired=intent;}
+    done.set(jobId,{status:'done',result:{ok:true,result}});return {id:jobId};
+  },get:async(phone,job)=>done.get(job)});
+  return {api,calls,get desired(){return intent;},get version(){return current;}};
+}
+async function updateJob(api){const job=await api.handle('POST',`/bot/v1/devices/${id}/action`,{op:'update'});for(let i=0;i<100&&job.status==='running';i++)await new Promise(r=>setTimeout(r,5));return job;}
+test('one-click update chooses newest compatible numeric version and restores running bot',async()=>{
+ const f=updateFixture();try{const job=await updateJob(f.api);assert.equal(job.status,'done');assert.equal(job.result.updateResult,'updated');assert.equal(f.version,'1.1.22');assert.equal(f.desired,'running');assert.deepEqual(f.calls.map(c=>c.op),['status','catalog','stop','install','start']);}finally{f.api.close();}
+});
+test('one-click current version leaves bot and commands untouched',async()=>{
+ const f=updateFixture({version:'1.1.22'});try{const job=await updateJob(f.api);assert.equal(job.result.updateResult,'current');assert.deepEqual(f.calls.map(c=>c.op),['status','catalog']);}finally{f.api.close();}
+});
+test('one-click update retains manual pause and stopped state',async()=>{
+ for(const desired of ['paused','stopped']){const f=updateFixture({desired});try{const job=await updateJob(f.api);assert.equal(job.status,'done');assert.equal(f.desired,desired);assert.equal(f.calls.filter(c=>c.op==='start').length,0);}finally{f.api.close();}}
+});
+test('failed or unconfirmed update never restarts or repeats installation',async()=>{
+ for(const options of [{failInstall:true},{mismatch:true}]){const f=updateFixture(options);try{const job=await updateJob(f.api);assert.equal(job.status,'failed');assert.equal(f.desired,'stopped');assert.equal(f.calls.filter(c=>c.op==='install').length,1);assert.equal(f.calls.filter(c=>c.op==='start').length,0);}finally{f.api.close();}}
+});
+test('unavailable catalog or incompatible releases never stops a running bot',async()=>{
+ for(const options of [{failCatalog:true},{entries:[{id:'lordnine',version:'2.0.0',engineVersion:4,settingsVersion:1}]}]){const f=updateFixture(options);try{const job=await updateJob(f.api);assert.equal(job.status,'failed');assert.equal(f.desired,'running');assert.equal(f.calls.filter(c=>c.op==='stop').length,0);}finally{f.api.close();}}
+});
