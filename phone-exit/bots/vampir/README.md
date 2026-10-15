@@ -45,7 +45,7 @@ Bloodshape связано с Quest 110530 → Task 110530005 → Tutorial 4009.
 1.0.5 сама выполнила Equip; 1.0.6 добавила выход из оставшегося окна.
 1.0.7 установлена и запущена с обработкой Guide-наград; итог этого запуска
 перед новым действием проверить по свежему статусу/кадру, не по старому тексту.
-Последний целевой прогон `test_vampir*.py`: 154 теста прошли
+Последний целевой прогон `test_vampir*.py`: 163 теста прошли
 (включая PE, UI, пресеты масштаба и покупки).
 
 Вход также исследуется по макетам: [ENTRY-FLOW.md](../resource-tools/vampir/ENTRY-FLOW.md),
@@ -71,7 +71,7 @@ runtime-видимость и необработанные свойства из
 Уточнение: проверка перед презентацией сама обрабатывает список окон и вызывает
 методы найденного окна. Это не чистый IsVisible; см. [UI-MANAGER.md](../resource-tools/vampir/UI-MANAGER.md).
 
-Каталог runtime referenceRevision=2 дополнен группами наград и ContentsLock,
+Каталог runtime referenceRevision=3 дополнен группами наград и ContentsLock,
 двумя магазинными задачами и нативными именами типов. Перед покупкой shop.py
 проверяет соответствие задаче, предмету/цене/количеству и SHA источников.
 Семантика неизвестных условий блокировок не исполняется.
@@ -209,3 +209,11 @@ powershell -NoProfile -File phone-exit/pc/build-bot-package.ps1 -Bot vampir
 Класс перехода связан с WBP_FaderUI через superclass imports и native vtable:
 [FADER-CLASS.md](../resource-tools/vampir/FADER-CLASS.md). Одноимённый ImageFader
 в WBP_MediaUI относится к другому native-классу.
+
+ContentsLockCondition: [CONDITION-TYPES.md](../resource-tools/vampir/CONDITION-TYPES.md).
+Native-конвертер подтвердил11 имён типов и связь со330 CSV-условиями;
+Type1=CompletedQuest. Runtime evaluator ещё не включён.
+
+Подтверждённые имена11 типов включены в quest-runtime.json referenceRevision3;
+330 условий сохраняют исходные значения, неизвестные сравнения и AND/OR
+не исполняются. Изменение источников блокирует сборку каталога до пересверки.

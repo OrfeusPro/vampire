@@ -156,3 +156,11 @@ UI-менеджер и побочные эффекты проверки окна
 Точная Windows-связь FaderUI с native: build-fader-class-link.py,
 [FADER-CLASS.md](FADER-CLASS.md). SuperIndex/import-chain читается из uasset,
 затем соединяется с регистрацией NkFaderUI и vtable.
+
+Прямые callers остановки easing: build-easing-stop-links.py, отчёт
+code-clues/easing-stop-links.json. Очистку callback не считать выполнением;
+полная reset→stop-связь пока не доказана.
+
+Карта native ConditionType вне reflected enum: build-lock-condition-types.py,
+[CONDITION-TYPES.md](CONDITION-TYPES.md), quest-graph/condition-types.json.
+Подтверждённые имена не заменяют evaluator/состояние персонажа.

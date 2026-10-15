@@ -87,6 +87,67 @@ class CompiledFullCatalog(unittest.TestCase):
         self.assertEqual(c['contentsLocks']['10100030']['conditions'][0]['ConditionTypeValue1'], '901010')
         self.assertEqual(c['contentsLocks']['10100030']['evaluation'], 'not_evaluated')
 
+    def test_condition_native_names_preserve_unknown_evaluation(self):
+        c = self.catalog
+        self.assertEqual(c['referenceRevision'], 3)
+        self.assertEqual(c['contentsLockConditionTypes']['1'], 'CompletedQuest')
+        self.assertEqual(c['contentsLocks']['10100030']['conditions'][0]['typeName'], 'CompletedQuest')
+        for lock in c['contentsLocks'].values():
+            self.assertEqual(lock['combination'], 'unknown_do_not_assume_AND_OR')
+            self.assertEqual(lock['evaluation'], 'not_evaluated')
+            for condition in lock['conditions']:
+                self.assertEqual(condition['typeName'], c['contentsLockConditionTypes'][condition['ConditionType']])
+        self.assertEqual(c['sourceInterpretations']['lockEvaluator'], 'not_implemented')
+
     def test_reward_rows_keep_native_types_and_source_records(self):
         for rows in self.catalog['rewardGroups'].values():
             self.assertTrue(all(r['typeName'].startswith('ERewardType::') and r['source']['entry'] == 1475 for r in rows))
+
+
+class ConditionNamesJoin(unittest.TestCase):
+    def setUp(self):
+        self.meta = dict(entry=70, file='condition.csv', offset=100, sha256='table_hash')
+        self.row = dict(Id='199', GroupId='10100030', ConditionType='1', ConditionTypeValue1='901010', ConditionTypeValue2='0')
+        self.catalog = dict(nativeEnumSource=dict(source='game.exe', sha256='native_hash'),
+            sources={'locks:70': dict(self.meta)}, sourceInterpretations=dict(lockEvaluator='not_implemented'),
+            contentsLocks={'10100030': dict(conditions=[dict(self.row, source=dict(entry=70, csv_record=199))],
+                evaluation='not_evaluated', combination='unknown_do_not_assume_AND_OR')})
+        self.report = dict(source='game.exe', sha256='native_hash', condition_source=dict(self.meta),
+            types=[dict(value=i, name='CompletedQuest' if i == 1 else 'Type' + str(i)) for i in range(11)],
+            conditions=[dict(row=dict(self.row), csv_record=199, type_name='CompletedQuest', evaluation='not_evaluated')])
+
+    def test_name_does_not_enable_evaluator_or_change_values(self):
+        builder.attach_condition_types(self.catalog, self.report)
+        condition = self.catalog['contentsLocks']['10100030']['conditions'][0]
+        self.assertEqual(condition['ConditionTypeValue1'], '901010')
+        self.assertEqual(condition['typeName'], 'CompletedQuest')
+        self.assertEqual(self.catalog['sourceInterpretations']['lockEvaluator'], 'not_implemented')
+
+    def test_mixed_native_and_csv_sources_rejected(self):
+        for location, key in [('native', 'sha256'), ('native', 'source'), ('table', 'sha256'), ('table', 'offset')]:
+            self.setUp()
+            (self.report if location == 'native' else self.report['condition_source'])[key] = 'changed'
+            with self.assertRaises(ValueError):
+                builder.attach_condition_types(self.catalog, self.report)
+
+    def test_changed_type_record_or_provenance_rejected_without_partial_mutation(self):
+        for mode in ('type', 'raw', 'record', 'missing', 'evaluated'):
+            self.setUp()
+            if mode == 'type': self.report['conditions'][0]['type_name'] = 'Other'
+            elif mode == 'raw': self.report['conditions'][0]['row']['ConditionTypeValue1'] = '999'
+            elif mode == 'record': self.report['conditions'][0]['csv_record'] = 200
+            elif mode == 'missing': self.report['conditions'] = []
+            else: self.report['conditions'][0]['evaluation'] = 'true'
+            before = copy.deepcopy(self.catalog)
+            with self.assertRaises(ValueError):
+                builder.attach_condition_types(self.catalog, self.report)
+            self.assertEqual(self.catalog, before)
+
+    def test_duplicate_or_incomplete_symbols_rejected(self):
+        for mode in ('duplicate_value', 'duplicate_name', 'missing'):
+            self.setUp()
+            if mode == 'duplicate_value': self.report['types'][2]['value'] = 1
+            elif mode == 'duplicate_name': self.report['types'][2]['name'] = 'CompletedQuest'
+            else: self.report['types'].pop()
+            with self.assertRaises(ValueError):
+                builder.attach_condition_types(self.catalog, self.report)

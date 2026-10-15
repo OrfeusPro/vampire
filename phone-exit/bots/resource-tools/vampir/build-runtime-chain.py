@@ -50,11 +50,52 @@ def attach_reference_data(catalog, rewards, locks, shops):
                                   shopTabLockKeywords=shops['unresolvedTabLockKeywords']))
 
 
+def attach_condition_types(catalog, report):
+    """Attach proven names only; do not turn raw conditions into a predicate."""
+    expected = catalog['nativeEnumSource']
+    if any(report[key] != expected[key] for key in ('source', 'sha256')):
+        raise ValueError('Condition native source mismatch')
+    meta = report['condition_source']
+    table = catalog['sources'].get('locks:70')
+    if meta['entry'] != 70 or not table or any(meta[key] != table[key] for key in ('entry', 'file', 'offset', 'sha256')):
+        raise ValueError('Condition CSV source mismatch')
+    symbols = {}
+    for row in report['types']:
+        key = str(row['value'])
+        if key in symbols or row['name'] in symbols.values():
+            raise ValueError('Duplicate condition native type')
+        symbols[key] = row['name']
+    if set(symbols) != {str(value) for value in range(11)}:
+        raise ValueError('Incomplete condition native types')
+    rows = {}
+    for item in report['conditions']:
+        row = item['row']
+        if row['Id'] in rows or item['type_name'] != symbols.get(row['ConditionType']) or item['evaluation'] != 'not_evaluated':
+            raise ValueError('Invalid condition source row/type')
+        rows[row['Id']] = item
+    for lock in catalog['contentsLocks'].values():
+        if lock['evaluation'] != 'not_evaluated' or lock['combination'] != 'unknown_do_not_assume_AND_OR':
+            raise ValueError('Unexpected condition evaluation')
+        for condition in lock['conditions']:
+            item = rows.get(condition['Id'])
+            raw = {key: value for key, value in condition.items() if key != 'source'}
+            if not item or item['row'] != raw or condition['source'] != dict(entry=70, csv_record=item['csv_record']):
+                raise ValueError('Condition record mismatch')
+    # Mutate only after every source join has passed.
+    for lock in catalog['contentsLocks'].values():
+        for condition in lock['conditions']:
+            condition['typeName'] = symbols[condition['ConditionType']]
+    catalog.update(referenceRevision=3, contentsLockConditionTypes=symbols,
+                   conditionTypeNativeSource={key: report[key] for key in ('source', 'sha256')})
+    catalog['sourceInterpretations']['conditionTypeNames'] = 'native_initializer_confirmed_names_only'
+
+
 def main():
     graph = json.loads((ROOT / 'quest-graph/index.json').read_text(encoding='utf-8'))
     rewards = json.loads((ROOT / 'quest-graph/rewards.json').read_text(encoding='utf-8'))
     locks = json.loads((ROOT / 'quest-graph/contents-locks.json').read_text(encoding='utf-8'))
     shops = json.loads((ROOT / 'quest-graph/shop-tasks.json').read_text(encoding='utf-8'))
+    condition_types = json.loads((ROOT / 'quest-graph/condition-types.json').read_text(encoding='utf-8'))
     native_source = graph['native_enum_source']
     enum_file = ROOT / 'code-clues/native-enums.json'
     native_enums = json.loads(enum_file.read_text(encoding='utf-8'))
@@ -135,6 +176,7 @@ def main():
                                 'Game action rows are reference only, never executable by this bot',
                                 'Only registered fresh visual matches confirm a step; no blind replay'])
     attach_reference_data(catalog, rewards, locks, shops)
+    attach_condition_types(catalog, condition_types)
     catalog.update(nativeValueSymbols=native_symbols, nativeEnumReportHash=hashlib.sha256(enum_file.read_bytes()).hexdigest())
     for quest in quests.values():
         if quest['typeName'] != native_symbols['EQuestType'].get(quest['type']):
@@ -149,7 +191,7 @@ def main():
         if any(row['typeName'] != native_symbols['ERewardType'].get(row['Type']) or row['groupName'] != native_symbols['ERewardGroup'].get(row['RewardGroup']) for row in group):
             raise ValueError('Reward numeric/native type mismatch')
     catalog['sourceReports'] = {file: hashlib.sha256((ROOT / 'quest-graph' / file).read_bytes()).hexdigest()
-                              for file in ('index.json', 'rewards.json', 'contents-locks.json', 'shop-tasks.json')}
+                              for file in ('index.json', 'rewards.json', 'contents-locks.json', 'shop-tasks.json', 'condition-types.json')}
     path = MODULE / 'quest-runtime.json'
     path.write_text(json.dumps(catalog, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
     config_path = MODULE / 'vision.json'

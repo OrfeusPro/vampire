@@ -21,7 +21,7 @@
 | V08 | Исполнение квестов и обучения | Частично | 18 учебных действий; часть Bloodshape проверена на телефоне. Нужен полный проход цепочки с распознаванием текущего этапа | [RUNTIME-CHAIN.md](../resource-tools/vampir/RUNTIME-CHAIN.md), quests.py |
 | V09 | Магазинный Guide 901030 | Частично | Обработчик, сверка источников и журнал покупки готовы локально; успешная покупка, результат и награда на Android не подтверждены | shop.py, [SHOP-REPLAY.md](../resource-tools/vampir/SHOP-REPLAY.md) |
 | V10 | Окна сообщений | Частично | KICKOUT_FOR_INSPECT связан с точным текстовым ключом и паузой; конкретный вызываемый WBP и прочие попапы ещё связывать | ui-window-reference.json, [UI-CATALOG.md](../resource-tools/vampir/UI-CATALOG.md) |
-| V11 | Устойчивость на сохранённых кадрах | Готово | Последний целевой прогон: 154 теста; магазин: 32/32 сценария, масштабы, сдвиг, неверная сумма, повтор и перезапуск | [SHOP-REPLAY.md](../resource-tools/vampir/SHOP-REPLAY.md) |
+| V11 | Устойчивость на сохранённых кадрах | Готово | Последний целевой прогон: 163 теста; магазин: 32/32 сценария, масштабы, сдвиг, неверная сумма, повтор и перезапуск | [SHOP-REPLAY.md](../resource-tools/vampir/SHOP-REPLAY.md) |
 | V12 | Сборка локального модуля 1.0.8 | Готово | Подписанный ZIP собран, основные файлы сверены с рабочими; публикации и установки нет | phone-exit/.tools/bot-release/vampir-1.0.8.zip |
 | V13 | Карты и точки | Частично | Изображения и данные извлечены; полная привязка точек к карте/экрану и маршрут фарма не подтверждены | [RESOURCE-INDEX.md](../resource-tools/vampir/RESOURCE-INDEX.md), библиотека maps/ |
 
@@ -54,10 +54,13 @@ APK 0.8.13 и окно отключения сессии. Не считать е
 
 | V24 | Семантика UI-проверки перед показом | Частично | Найдены удаление, dispatch/очистка очереди, отдельный reset и синхронный путь завершения; callbacks идут до изменения state, вторая очередь может запустить новый переход. Десять корней, 24 фрагмента + leaf, 1523 инструкции. Остались обычный триггер завершения, reentrancy, контракт отмены, виртуальные методы и Android. [UI-MANAGER.md](../resource-tools/vampir/UI-MANAGER.md) |
 
-| V25 | Обычный переход и easing callback | Частично | Tick→update→завершение→callback связан по слотам; найдены повторный запуск и отдельный stop без dispatch. Десять корней / 919 инструкций. WBP_FaderUI связан в V26; остались reset→stop, имена флагов, reentrancy и Android. [UI-TRANSITION.md](../resource-tools/vampir/UI-TRANSITION.md) |
+| V25 | Обычный переход и easing callback | Частично | Tick→update→завершение→callback связан по слотам; найдены повторный запуск и пять прямых callers stop. Очистка callback отделена от выполнения. WBP_FaderUI связан в V26; остались reset→stop, имена флагов, reentrancy и Android. [UI-TRANSITION.md](../resource-tools/vampir/UI-TRANSITION.md) |
 
 
 | V26 | Fader: cooked superclass → native class → методы | Готово | В четырёх вариантах прочитаны superclass imports; Fader/Media различены. Регистрация NkFaderUI связана с инициализатором и vtable слотов настройки/сброса. Только Windows; Android/видимость/reset→stop остаются в V25. [FADER-CLASS.md](../resource-tools/vampir/FADER-CLASS.md) |
+
+
+| V27 | Native-имена типов ContentsLockCondition | Готово | Карта11 типов извлечена из инициализации конвертера и связана с330 CSV-условиями; имена включены в runtime referenceRevision3 с проверкой хешей/строк. Type1=CompletedQuest. Это имена/схема хранения; evaluator, сравнения, AND/OR и Android остаются в V03. [CONDITION-TYPES.md](../resource-tools/vampir/CONDITION-TYPES.md) |
 
 ## Правило ведения
 
