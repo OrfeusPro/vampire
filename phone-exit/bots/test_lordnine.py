@@ -160,6 +160,30 @@ class Replay(unittest.TestCase):
         self.assertNotIn('route', self.state)
         self.assertEqual(self.state['phase'], 'monitoring')
 
+    def test_network_302_preempts_map_retry_and_discards_old_route(self):
+        self.settings['autostart_enabled'] = True
+        self.state.update(phase='farm_map_open', wait_until=1100, route=[{'map_id':'old'}], map_open_retries=3)
+        result = self.tick(['network_error_302', 'network_error_title', 'network_error_302_ok'])
+        self.assertEqual(result['step'], 'dismiss_network_error')
+        self.assertNotIn('route', self.state)
+        self.assertNotIn('map_open_retries', self.state)
+        self.tick(['network_error_302', 'network_error_title', 'network_error_302_ok'], 3)
+        self.assertEqual(sum(cmd == 'tap' for cmd, _ in self.host.calls), 1)
+        self.assertEqual(self.tick(['launch_connect'], 15)['step'], 'launch_account_connect')
+
+    def test_network_302_needs_identified_body_title_and_button(self):
+        self.settings['autostart_enabled'] = True
+        self.tick(['network_error_title', 'network_error_302_ok'])
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+        self.tick(['network_error_302', 'network_error_title'])
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+        self.assertEqual(self.tick(['network_error_302', 'network_error_title'], 16)['error'], 'game_notice_ok_not_found')
+
+    def test_network_302_does_not_reconnect_when_autostart_disabled(self):
+        result = self.tick(['network_error_302', 'network_error_title', 'network_error_302_ok'])
+        self.assertEqual(result['error'], 'game_reconnect_disabled')
+        self.assertFalse(any(cmd == 'tap' for cmd, _ in self.host.calls))
+
     def test_unknown_notice_title_and_missing_network_button_are_not_auto_confirmed(self):
         self.settings['autostart_enabled'] = True
         result = self.tick(['game_update_notice_title', 'game_notice_ok'])

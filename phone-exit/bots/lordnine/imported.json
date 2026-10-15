@@ -952,16 +952,24 @@
       },
       "network_error_302": {
         "file": "network_error_302.png",
+        "threshold": 0.9,
         "region": [
-          0.33,
           0.3,
-          0.67,
-          0.7
+          0.38,
+          0.7,
+          0.59
         ],
-        "detector": {
-          "type": "network_error_302",
-          "detector_only": true
-        }
+        "scales": [
+          0.65,
+          0.75,
+          0.85,
+          0.9,
+          1,
+          1.1,
+          1.17,
+          1.25,
+          1.5
+        ]
       },
       "death_popup": {
         "file": "death_popup.png",
@@ -2192,6 +2200,48 @@
           1.1,
           1.17,
           1.25
+        ]
+      },
+      "network_error_title": {
+        "file": "network_error_title.png",
+        "threshold": 0.9,
+        "region": [
+          0.3,
+          0.28,
+          0.7,
+          0.43
+        ],
+        "scales": [
+          0.65,
+          0.75,
+          0.85,
+          0.9,
+          1,
+          1.1,
+          1.17,
+          1.25,
+          1.5
+        ]
+      },
+      "network_error_302_ok": {
+        "file": "network_error_302_ok.png",
+        "threshold": 0.9,
+        "region": [
+          0.35,
+          0.55,
+          0.65,
+          0.72
+        ],
+        "scales": [
+          0.65,
+          0.75,
+          0.85,
+          0.9,
+          1,
+          1.1,
+          1.17,
+          1.25,
+          1.5
         ]
       }
     }

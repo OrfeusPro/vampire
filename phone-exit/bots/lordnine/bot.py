@@ -273,8 +273,9 @@ def _tick(host, settings, state, directory):
 
     # These are identified notice bodies, not a generic OK-button detector.
     # Drop interrupted input before reconnecting; never replay a purchase.
+    network_302 = found('network_error_302') and found('network_error_title')
     notice = ('session_timeout' if found('timeout_notification') else
-              'network_error' if found('game_server_error_t005') or found('disconnected') else None)
+              'network_error' if network_302 or found('game_server_error_t005') or found('disconnected') else None)
     if notice:
         if not settings.get('autostart_enabled'):
             return pause('game_reconnect_disabled')
@@ -286,7 +287,8 @@ def _tick(host, settings, state, directory):
                          notice_attempts=attempts, notice_retry_at=retry_at)
         if now < state.get('notice_retry_at', 0):
             return report('waiting_game_reconnect', status='waiting', reason=notice)
-        button_name = 'timeout_notification_ok' if notice == 'session_timeout' else 'game_notice_ok'
+        button_name = ('timeout_notification_ok' if notice == 'session_timeout' else
+                       'network_error_302_ok' if network_302 else 'game_notice_ok')
         button = match(button_name)
         if not button['found'] and notice == 'network_error':
             button_name = 'game_notice_ok_large'

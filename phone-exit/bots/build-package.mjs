@@ -13,10 +13,14 @@ for await(const line of lines){
   const dest=path.join(root,'.tools','bot-release');await mkdir(dest,{recursive:true});
   const zip=path.join(dest,`${manifest.id}-${manifest.version}.zip`);
   const result=spawnSync('python',['-c',`import sys,zipfile,pathlib
+import json
 src=pathlib.Path(sys.argv[1]); dest=pathlib.Path(sys.argv[2])
+pc_only=json.loads((src/'manifest.json').read_text('utf-8')).get('pcOnly',[])
+if not isinstance(pc_only,list) or any(not isinstance(p,str) or p.startswith(('/',chr(92))) or ':' in p or '..' in p.split('/') for p in pc_only):
+ raise ValueError('Invalid pcOnly paths')
 with zipfile.ZipFile(dest,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
  for p in sorted(src.rglob('*')):
-  if p.is_file() and '__pycache__' not in p.parts:
+  if p.is_file() and '__pycache__' not in p.parts and not any(p.relative_to(src).match(pattern) for pattern in pc_only):
    i=zipfile.ZipInfo(p.relative_to(src).as_posix(),(2026,1,1,0,0,0));i.compress_type=zipfile.ZIP_DEFLATED
    z.writestr(i,p.read_bytes())
 `,dir,zip],{encoding:'utf8'});
