@@ -1,0 +1,2000 @@
+{
+  "launch_timeout_sec": 90,
+  "entry_timeout_sec": 120,
+  "button_timeout_sec": 20,
+  "max_actions": 12,
+  "templates": {
+    "patch_download": {
+      "file": "patch_download.png",
+      "threshold": 0.88,
+      "region": [
+        0.25,
+        0.78,
+        0.75,
+        0.96
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "patch_apply": {
+      "file": "patch_apply.png",
+      "threshold": 0.88,
+      "region": [
+        0.25,
+        0.78,
+        0.75,
+        0.96
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "character_creation": {
+      "file": "character_creation.png",
+      "threshold": 0.9,
+      "region": [
+        0,
+        0,
+        0.4,
+        0.14
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "hud_health_tail": {
+      "file": "hud_health_tail.png",
+      "threshold": 0.86,
+      "region": [
+        0,
+        0,
+        0.3,
+        0.12
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "hud_inventory": {
+      "file": "hud_inventory.png",
+      "threshold": 0.86,
+      "region": [
+        0.78,
+        0,
+        0.98,
+        0.12
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "quest_anchor": {
+      "file": "quest_anchor.png",
+      "threshold": 0.82,
+      "region": [
+        0.6,
+        0.05,
+        0.98,
+        0.3
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "quest_auto_on": {
+      "file": "quest_auto_on.png",
+      "threshold": 0.86,
+      "region": [
+        0.8,
+        0.38,
+        1,
+        0.7
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "quest_auto_off": {
+      "file": "quest_auto_off.png",
+      "threshold": 0.86,
+      "region": [
+        0.8,
+        0.38,
+        1,
+        0.7
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_quest": {
+      "file": "tutorial_quest.png",
+      "threshold": 0.9,
+      "region": [
+        0.25,
+        0.16,
+        0.85,
+        0.55
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_drain": {
+      "file": "tutorial_drain.png",
+      "threshold": 0.9,
+      "region": [
+        0.1,
+        0.35,
+        0.6,
+        0.75
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_target_corner": {
+      "file": "tutorial_target_corner.png",
+      "threshold": 0.82,
+      "region": [
+        0.25,
+        0.15,
+        0.8,
+        0.65
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "scene_skip": {
+      "file": "scene_skip.png",
+      "threshold": 0.75,
+      "region": [
+        0.84,
+        0,
+        0.99,
+        0.12
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ],
+      "detector": {
+        "type": "edge_template",
+        "canny_low": 45,
+        "canny_high": 140
+      }
+    },
+    "dialog_auto_header": {
+      "file": "dialog_auto_header.png",
+      "threshold": 0.75,
+      "region": [
+        0,
+        0,
+        0.45,
+        0.12
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ],
+      "detector": {
+        "type": "edge_template",
+        "canny_low": 45,
+        "canny_high": 140
+      }
+    },
+    "tutorial_drain_menu": {
+      "file": "tutorial_drain_menu.png",
+      "threshold": 0.9,
+      "region": [
+        0.55,
+        0.08,
+        0.97,
+        0.3
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "game_menu": {
+      "file": "game_menu.png",
+      "threshold": 0.9,
+      "region": [
+        0.85,
+        0,
+        1,
+        0.15
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_skill_menu": {
+      "file": "tutorial_skill_menu.png",
+      "threshold": 0.9,
+      "region": [
+        0.3,
+        0.18,
+        0.75,
+        0.5
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "skills_menu": {
+      "file": "skills_menu.png",
+      "threshold": 0.88,
+      "region": [
+        0.6,
+        0.05,
+        0.85,
+        0.3
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_drain_select": {
+      "file": "tutorial_drain_select.png",
+      "threshold": 0.87,
+      "region": [
+        0.35,
+        0.4,
+        0.67,
+        0.65
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_skill_row_corner": {
+      "file": "tutorial_skill_row_corner.png",
+      "threshold": 0.87,
+      "region": [
+        0.6,
+        0.15,
+        0.96,
+        0.55
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_drain_effects": {
+      "file": "tutorial_drain_effects.png",
+      "threshold": 0.9,
+      "region": [
+        0.6,
+        0.55,
+        0.98,
+        0.84
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_auto_drain": {
+      "file": "tutorial_auto_drain.png",
+      "threshold": 0.87,
+      "region": [
+        0.45,
+        0.35,
+        0.92,
+        0.65
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_auto_drain_button": {
+      "file": "tutorial_auto_drain_button.png",
+      "threshold": 0.87,
+      "region": [
+        0.8,
+        0.25,
+        0.95,
+        0.5
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "drain_effects_corner": {
+      "file": "drain_effects_corner.png",
+      "threshold": 0.87,
+      "region": [
+        0.25,
+        0.2,
+        0.65,
+        0.65
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_close_skills": {
+      "file": "tutorial_close_skills.png",
+      "threshold": 0.88,
+      "region": [
+        0.55,
+        0.15,
+        0.95,
+        0.4
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "skills_close": {
+      "file": "skills_close.png",
+      "threshold": 0.88,
+      "region": [
+        0.9,
+        0.05,
+        1,
+        0.25
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_adrenaline": {
+      "file": "tutorial_adrenaline.png",
+      "threshold": 0.88,
+      "region": [
+        0.3,
+        0.5,
+        0.75,
+        0.82
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_adrenaline_gauge": {
+      "file": "tutorial_adrenaline_gauge.png",
+      "threshold": 0.88,
+      "region": [
+        0.18,
+        0.78,
+        0.35,
+        1
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_bag": {
+      "file": "tutorial_bag.png",
+      "threshold": 0.88,
+      "region": [
+        0.45,
+        0.1,
+        0.9,
+        0.35
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_equipment_select": {
+      "file": "tutorial_equipment_select.png",
+      "threshold": 0.88,
+      "region": [
+        0.4,
+        0.25,
+        0.85,
+        0.55
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_equipment_corner": {
+      "file": "tutorial_equipment_corner.png",
+      "threshold": 0.88,
+      "region": [
+        0.65,
+        0.1,
+        0.96,
+        0.45
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_equip": {
+      "file": "tutorial_equip.png",
+      "threshold": 0.88,
+      "region": [
+        0.2,
+        0.4,
+        0.7,
+        0.75
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_equip_button": {
+      "file": "tutorial_equip_button.png",
+      "threshold": 0.88,
+      "region": [
+        0.45,
+        0.6,
+        0.7,
+        0.9
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "world_map_header": {
+      "file": "world_map_header.png",
+      "threshold": 0.9,
+      "region": [
+        0.68,
+        0,
+        0.9,
+        0.12
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "world_map_exit": {
+      "file": "world_map_exit.png",
+      "threshold": 0.9,
+      "region": [
+        0.92,
+        0,
+        1,
+        0.12
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_bloodshape_menu": {
+      "file": "tutorial_bloodshape_menu.png",
+      "threshold": 0.88,
+      "region": [
+        0.55,
+        0.1,
+        0.96,
+        0.3
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_bloodshape_open": {
+      "file": "tutorial_bloodshape_open.png",
+      "threshold": 0.88,
+      "region": [
+        0.3,
+        0.2,
+        0.8,
+        0.5
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "bloodshape_menu_button": {
+      "file": "bloodshape_menu_button.png",
+      "threshold": 0.88,
+      "region": [
+        0.65,
+        0.05,
+        0.9,
+        0.3
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_bloodshape_class": {
+      "file": "tutorial_bloodshape_class.png",
+      "threshold": 0.88,
+      "region": [
+        0.2,
+        0.22,
+        0.75,
+        0.6
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "bloodshape_class_button": {
+      "file": "bloodshape_class_button.png",
+      "threshold": 0.88,
+      "region": [
+        0.55,
+        0.1,
+        0.9,
+        0.4
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_bloodshape_skill": {
+      "file": "tutorial_bloodshape_skill.png",
+      "threshold": 0.88,
+      "region": [
+        0.2,
+        0.25,
+        0.75,
+        0.6
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "bloodshape_skill_corner": {
+      "file": "bloodshape_skill_corner.png",
+      "threshold": 0.88,
+      "region": [
+        0,
+        0.48,
+        0.32,
+        0.8
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_bloodshape_select": {
+      "file": "tutorial_bloodshape_select.png",
+      "threshold": 0.88,
+      "region": [
+        0.2,
+        0.35,
+        0.75,
+        0.65
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "bloodshape_select_corner": {
+      "file": "bloodshape_select_corner.png",
+      "threshold": 0.88,
+      "region": [
+        0.55,
+        0.1,
+        0.9,
+        0.5
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "tutorial_bloodshape_equip": {
+      "file": "tutorial_bloodshape_equip.png",
+      "threshold": 0.88,
+      "region": [
+        0.35,
+        0.6,
+        0.8,
+        0.9
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "bloodshape_equip_button": {
+      "file": "bloodshape_equip_button.png",
+      "threshold": 0.88,
+      "region": [
+        0.65,
+        0.85,
+        0.9,
+        1
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "bloodshape_header": {
+      "file": "bloodshape_header.png",
+      "threshold": 0.9,
+      "region": [
+        0.68,
+        0,
+        0.9,
+        0.12
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "claim_rewards_text": {
+      "file": "claim_rewards_text.png",
+      "threshold": 0.88,
+      "region": [
+        0.65,
+        0.12,
+        0.96,
+        0.36
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "guide_complete_check": {
+      "file": "guide_complete_check.png",
+      "threshold": 0.85,
+      "region": [
+        0.72,
+        0.12,
+        0.96,
+        0.36
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "quest_complete_title": {
+      "file": "quest_complete_title.png",
+      "threshold": 0.86,
+      "region": [
+        0.25,
+        0.15,
+        0.75,
+        0.5
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "reward_tap_close": {
+      "file": "reward_tap_close.png",
+      "threshold": 0.82,
+      "region": [
+        0.3,
+        0.6,
+        0.7,
+        0.85
+      ],
+      "scales": [
+        0.65,
+        0.75,
+        0.85,
+        1,
+        1.15,
+        1.3,
+        1.5
+      ]
+    },
+    "shop_guide_title": {
+      "file": "shop_guide_title.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_guide_task": {
+      "file": "shop_guide_task.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.22,
+        0.95,
+        0.32
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_merchant_header": {
+      "file": "shop_merchant_header.png",
+      "threshold": 0.94,
+      "region": [
+        0.68,
+        0,
+        0.9,
+        0.12
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_small_row": {
+      "file": "shop_small_row.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.15,
+        0.36,
+        0.34
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_row_gold75": {
+      "file": "shop_row_gold75.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.18,
+        0.23,
+        0.34
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_small_popup": {
+      "file": "shop_small_popup.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.05,
+        0.72,
+        0.23
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_quantity_one": {
+      "file": "shop_quantity_one.png",
+      "threshold": 0.94,
+      "region": [
+        0.44,
+        0.44,
+        0.55,
+        0.56
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_amount75": {
+      "file": "shop_amount75.png",
+      "threshold": 0.94,
+      "region": [
+        0.55,
+        0.68,
+        0.65,
+        0.8
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_buy_button": {
+      "file": "shop_buy_button.png",
+      "threshold": 0.94,
+      "region": [
+        0.45,
+        0.78,
+        0.72,
+        0.92
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_exit": {
+      "file": "shop_exit.png",
+      "threshold": 0.94,
+      "region": [
+        0.92,
+        0,
+        1,
+        0.11
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "connection_terminated_inspect": {
+      "file": "connection_terminated_inspect.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.3,
+        0.7,
+        0.55
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_amount_label": {
+      "file": "shop_amount_label.png",
+      "threshold": 0.94,
+      "region": [
+        0.35,
+        0.68,
+        0.57,
+        0.8
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ]
+    },
+    "shop_guide_title_compact": {
+      "file": "shop_guide_title_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_guide_title_large": {
+      "file": "shop_guide_title_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "shop_guide_task_compact": {
+      "file": "shop_guide_task_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.22,
+        0.95,
+        0.32
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_guide_task_large": {
+      "file": "shop_guide_task_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.22,
+        0.95,
+        0.32
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "shop_row_gold75_compact": {
+      "file": "shop_row_gold75_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.18,
+        0.23,
+        0.34
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_row_gold75_large": {
+      "file": "shop_row_gold75_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.18,
+        0.23,
+        0.34
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "shop_small_popup_compact": {
+      "file": "shop_small_popup_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.05,
+        0.72,
+        0.23
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_small_popup_large": {
+      "file": "shop_small_popup_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.05,
+        0.72,
+        0.23
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "shop_amount_label_compact": {
+      "file": "shop_amount_label_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.35,
+        0.68,
+        0.57,
+        0.8
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_amount_label_large": {
+      "file": "shop_amount_label_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.35,
+        0.68,
+        0.57,
+        0.8
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "connection_terminated_inspect_compact": {
+      "file": "connection_terminated_inspect_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.3,
+        0.7,
+        0.55
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "connection_terminated_inspect_large": {
+      "file": "connection_terminated_inspect_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.3,
+        0.7,
+        0.55
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    }
+  },
+  "ready_anchors": [
+    "hud_inventory",
+    "game_menu"
+  ],
+  "launch_buttons": [],
+  "download_screens": [
+    "patch_download",
+    "patch_apply"
+  ],
+  "manual_screens": [
+    "character_creation",
+    "connection_terminated_inspect"
+  ],
+  "tutorial_corner": {
+    "width": 22,
+    "offset": [
+      30,
+      32
+    ]
+  },
+  "tutorial_actions": [
+    {
+      "prompt": "tutorial_quest",
+      "target": "quest_anchor",
+      "step": "quest_start_auto",
+      "source_tutorial": {
+        "tutorial_id": "1001",
+        "step_id": "1001002",
+        "step": 2,
+        "ui_key": "QuestPanel_PanelTouch",
+        "wbp": "WBP_GameUI",
+        "widget": "DeferredQuestUI",
+        "control": "TableViewQuestList",
+        "dialog_en": "Tap the <Yellow>quest panel</> on the right for automatic quest progression.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "1",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 3
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_drain",
+      "target": "tutorial_target_corner",
+      "step": "quest_tutorial_drain",
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002004",
+        "step": 4,
+        "ui_key": "Deadly_Target",
+        "wbp": "WBP_InteractionDeadlyNPCT",
+        "widget": "",
+        "control": "ButtonInteraction",
+        "dialog_en": "Use the <Yellow>Drain Skill</> that appears above targets in Near Death.",
+        "minimum_delay_sec": 4.5,
+        "delay_records": [
+          "4002005"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 69
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_drain_menu",
+      "target": "game_menu",
+      "step": "quest_tutorial_menu",
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002006",
+        "step": 6,
+        "ui_key": "Hud_Menu",
+        "wbp": "WBP_GameUI",
+        "widget": "MenuBarUI",
+        "control": "ButtonMenu",
+        "dialog_en": "Let's learn about the Drain Skill.",
+        "minimum_delay_sec": 0.3,
+        "delay_records": [
+          "4002007"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 71
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_skill_menu",
+      "target": "skills_menu",
+      "step": "quest_tutorial_skills",
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002008",
+        "step": 8,
+        "ui_key": "Menu_Skill",
+        "wbp": "WBP_MainMenuUI",
+        "widget": "CanvasPanelSkill",
+        "control": "ButtonSkill",
+        "dialog_en": "Select the <Yellow>Skills Menu Button</>.",
+        "minimum_delay_sec": 0.3,
+        "delay_records": [
+          "4002009"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 73
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_drain_select",
+      "target": "tutorial_skill_row_corner",
+      "step": "quest_tutorial_select_drain",
+      "width": 22,
+      "offset": [
+        155,
+        30
+      ],
+      "point_region": [
+        0.6,
+        0.15,
+        0.96,
+        0.55
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002010",
+        "step": 10,
+        "ui_key": "SkillSetting_SecondSkill_Select",
+        "wbp": "WBP_SkillSettingPopup",
+        "widget": "",
+        "control": "TableViewSkillList",
+        "dialog_en": "Select the <Yellow>Drain Skill</>.",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4002011"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 75
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_drain_effects",
+      "target": "drain_effects_corner",
+      "step": "quest_tutorial_continue",
+      "width": 22,
+      "offset": [
+        170,
+        86
+      ],
+      "point_region": [
+        0.3,
+        0.25,
+        0.65,
+        0.65
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002012",
+        "step": 12,
+        "ui_key": "Skill_Tooltip",
+        "wbp": "WBP_SkillEffectInfoT",
+        "widget": "",
+        "control": "CanvasPanelTutorial",
+        "dialog_en": "These are the effects obtained when defeating monsters with the Drain Skill.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 77
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_auto_drain",
+      "target": "tutorial_auto_drain_button",
+      "step": "quest_tutorial_auto_drain",
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002013",
+        "step": 13,
+        "ui_key": "SkillSetting_SecondSkill_Auto",
+        "wbp": "WBP_SkillSettingPopup",
+        "widget": "TableViewSkillList",
+        "control": "ButtonAuto",
+        "dialog_en": "The Drain Skill can be set to auto. Press the <Yellow>Auto Button</> to set auto mode.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 78
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_close_skills",
+      "target": "skills_close",
+      "step": "quest_tutorial_close_skills",
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002014",
+        "step": 14,
+        "ui_key": "SkillSetting_Close",
+        "wbp": "WBP_SkillSettingPopup",
+        "widget": "",
+        "control": "ButtonClose",
+        "dialog_en": "Press close to close the Skills menu.",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4002015"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 79
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_adrenaline",
+      "target": "tutorial_adrenaline_gauge",
+      "step": "quest_tutorial_adrenaline",
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002016",
+        "step": 16,
+        "ui_key": "Deadly_AdrenalineGauge",
+        "wbp": "WBP_GameUI",
+        "widget": "CanvasPanelAdrenaline",
+        "control": "ButtonAdrenalineGauge",
+        "dialog_en": "When defeating monsters with the Drain Skill, the \r\n[<Yellow>Adrenaline Gauge</>] is temporarily charged.",
+        "minimum_delay_sec": 0.2,
+        "delay_records": [
+          "4002017"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 81
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_bag",
+      "target": "hud_inventory",
+      "step": "quest_tutorial_bag",
+      "source_tutorial": {
+        "tutorial_id": "4003",
+        "step_id": "4003003",
+        "step": 3,
+        "ui_key": "Hud_Inventory",
+        "wbp": "WBP_GameUI",
+        "widget": "MenuBarUI",
+        "control": "ButtonInventory",
+        "dialog_en": "Press the [<Yellow>bag</>] button to check obtained equipment.",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4003004"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 86
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_equipment_select",
+      "target": "tutorial_equipment_corner",
+      "step": "quest_tutorial_select_equipment",
+      "width": 22,
+      "offset": [
+        24,
+        24
+      ],
+      "point_region": [
+        0.65,
+        0.1,
+        0.96,
+        0.45
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4003",
+        "step_id": "4003007",
+        "step": 7,
+        "ui_key": "Inventory_EquipmentItem_Class1",
+        "wbp": "WBP_GameUI",
+        "widget": "InventoryUI",
+        "control": "TileViewList",
+        "dialog_en": "Click the [<Yellow>Equipment icon</>] obtained from the quest",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4003008"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 90
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_equip",
+      "target": "tutorial_equip_button",
+      "step": "quest_tutorial_equip",
+      "source_tutorial": {
+        "tutorial_id": "4003",
+        "step_id": "4003009",
+        "step": 9,
+        "ui_key": "ItemInfoPopup_Equip",
+        "wbp": "WBP_ItemInfoPopup",
+        "widget": "",
+        "control": "ButtonEquip",
+        "dialog_en": "You can equip items by pressing the [<Yellow>Equip</>] button at the bottom of the selected equipment's information popup.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "1",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 92
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_bloodshape_menu",
+      "target": "game_menu",
+      "step": "quest_tutorial_bloodshape_menu",
+      "source_tutorial": {
+        "tutorial_id": "4009",
+        "step_id": "4009004",
+        "step": 4,
+        "ui_key": "Hud_Menu",
+        "wbp": "WBP_GameUI",
+        "widget": "MenuBarUI",
+        "control": "ButtonMenu",
+        "dialog_en": "Press the [<Yellow>Menu</>] button to change your Bloodshape.",
+        "minimum_delay_sec": 0.3,
+        "delay_records": [
+          "4009005"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 118
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_bloodshape_open",
+      "target": "bloodshape_menu_button",
+      "step": "quest_tutorial_bloodshape_open",
+      "source_tutorial": {
+        "tutorial_id": "4009",
+        "step_id": "4009006",
+        "step": 6,
+        "ui_key": "Menu_CostumeArmor",
+        "wbp": "WBP_MainMenuUI",
+        "widget": "CanvasPanelCostume",
+        "control": "ButtonCostume",
+        "dialog_en": "Press the [<Yellow>Bloodshape</>] menu button to access the Bloodshape UI.",
+        "minimum_delay_sec": 1.0,
+        "delay_records": [
+          "4009007"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 120
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_bloodshape_class",
+      "target": "bloodshape_class_button",
+      "step": "quest_tutorial_bloodshape_class",
+      "source_tutorial": {
+        "tutorial_id": "4009",
+        "step_id": "4009008",
+        "step": 8,
+        "ui_key": "CostumeArmor_ClassIcon",
+        "wbp": "WBP_CostumeUI",
+        "widget": "TileViewList",
+        "control": "ImageClass",
+        "dialog_en": "All Bloodshapes have designated [<Yellow>classes</>], but\r\nyou can equip Bloodshapes from other classes.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 122
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_bloodshape_skill",
+      "target": "bloodshape_skill_corner",
+      "step": "quest_tutorial_bloodshape_skill",
+      "width": 22,
+      "offset": [
+        155,
+        40
+      ],
+      "point_region": [
+        0,
+        0.48,
+        0.32,
+        0.8
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4009",
+        "step_id": "4009009",
+        "step": 9,
+        "ui_key": "CostumeArmor_ClassSkill",
+        "wbp": "WBP_CostumeInfoT",
+        "widget": "",
+        "control": "CanvasPanelSkillInfo",
+        "dialog_en": "However, [<Yellow>Bloodshape Skills</>] only apply when you equip Bloodshapes of your class.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 123
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_bloodshape_select",
+      "target": "bloodshape_select_corner",
+      "step": "quest_tutorial_bloodshape_select",
+      "width": 22,
+      "offset": [
+        37,
+        65
+      ],
+      "point_region": [
+        0.55,
+        0.1,
+        0.9,
+        0.5
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4009",
+        "step_id": "4009011",
+        "step": 11,
+        "ui_key": "CostumeArmor_SelectCostume_Class1",
+        "wbp": "WBP_CostumeUI",
+        "widget": "InventoryUI",
+        "control": "TileViewList",
+        "dialog_en": "Select a [<Yellow>Bloodshape</>] you have obtained.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 125
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_bloodshape_equip",
+      "target": "bloodshape_equip_button",
+      "step": "quest_tutorial_bloodshape_equip",
+      "source_tutorial": {
+        "tutorial_id": "4009",
+        "step_id": "4009012",
+        "step": 12,
+        "ui_key": "CostumeArmor_EquipCostume",
+        "wbp": "WBP_CostumeInfoUI",
+        "widget": "",
+        "control": "ButtonEquip",
+        "dialog_en": "Press the [<Yellow>Equip</>] button to equip the selected Bloodshape.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "1",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 126
+        }
+      }
+    }
+  ],
+  "known_overlays": [
+    {
+      "id": "world_map",
+      "header": "world_map_header",
+      "close": "world_map_exit",
+      "wait_sec": 8,
+      "timeout_sec": 20
+    },
+    {
+      "id": "bloodshape",
+      "header": "bloodshape_header",
+      "close": "world_map_exit",
+      "wait_sec": 8,
+      "timeout_sec": 20
+    },
+    {
+      "id": "quest_reward",
+      "header": "quest_complete_title",
+      "close": "reward_tap_close",
+      "wait_sec": 2,
+      "timeout_sec": 20
+    }
+  ],
+  "chain_catalog": "quest-runtime.json",
+  "interaction": {
+    "delay_jitter_sec": [
+      0.15,
+      0.65
+    ],
+    "tap_jitter_px": 3,
+    "retry_wait_sec": 8
+  },
+  "quest_actions": [
+    {
+      "id": "claim_guide_reward",
+      "anchors": [
+        "claim_rewards_text",
+        "guide_complete_check"
+      ],
+      "target": "claim_rewards_text",
+      "retry_wait_sec": 8,
+      "max_attempts": 2
+    }
+  ],
+  "reference_size": [
+    1280,
+    720
+  ],
+  "shop_flow": {
+    "reference": "shop-reference.json",
+    "timeout_sec": 20,
+    "guide": [
+      "shop_guide_title",
+      "shop_guide_task"
+    ],
+    "open": "shop_guide_task",
+    "listing": [
+      "shop_merchant_header",
+      "shop_small_row",
+      "shop_row_gold75"
+    ],
+    "select": "shop_small_row",
+    "confirmation": [
+      "shop_small_popup",
+      "shop_quantity_one",
+      "shop_amount_label",
+      "shop_amount75"
+    ],
+    "buy": "shop_buy_button",
+    "merchant": [
+      "shop_merchant_header",
+      "shop_exit"
+    ],
+    "close": "shop_exit",
+    "completed": [
+      "shop_guide_title",
+      "claim_rewards_text",
+      "guide_complete_check"
+    ]
+  },
+  "manual_screen_sources": {
+    "connection_terminated_inspect": {
+      "localization_key": "KICKOUT_FOR_INSPECT",
+      "reference": "ui-window-reference.json",
+      "widget_binding_proven": false
+    }
+  },
+  "match_alternatives": {
+    "shop_guide_title": [
+      "shop_guide_title_compact",
+      "shop_guide_title_large"
+    ],
+    "shop_guide_task": [
+      "shop_guide_task_compact",
+      "shop_guide_task_large"
+    ],
+    "shop_row_gold75": [
+      "shop_row_gold75_compact",
+      "shop_row_gold75_large"
+    ],
+    "shop_small_popup": [
+      "shop_small_popup_compact",
+      "shop_small_popup_large"
+    ],
+    "shop_amount_label": [
+      "shop_amount_label_compact",
+      "shop_amount_label_large"
+    ],
+    "connection_terminated_inspect": [
+      "connection_terminated_inspect_compact",
+      "connection_terminated_inspect_large"
+    ]
+  }
+}

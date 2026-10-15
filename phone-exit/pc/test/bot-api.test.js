@@ -33,20 +33,20 @@ test('PC assignment survives device rejection and retries only after fresh statu
  }finally{api.close();}
 });
 
-test('RF assignment prepares its own defaults without starting or copying Lord Nine farm',async()=>{
+for (const [gameId, hero] of [['rfonlinenext','RF hero'],['vampir','Vampir hero']]) test(`${gameId} assignment prepares its own defaults without starting or copying Lord Nine farm`,async()=>{
   const calls=[],done=new Map();
   const api=createBotApi({devices:()=>[{id,control:{botApi:1}}],enqueue:async(phone,command,args)=>{
     calls.push(args.op);done.set('job',{status:'done',result:{ok:true,result:{botId:args.botId,desired:'stopped'}}});return {id:'job'};
   },get:async()=>done.get('job')});
   try{
-    await api.handle('POST',`/bot/v1/devices/${id}/identity`,{characterName:'RF hero',provider:'VMOS'});
-    const job=await api.handle('POST',`/bot/v1/devices/${id}/action`,{op:'assign',botId:'rfonlinenext'});
+    await api.handle('POST',`/bot/v1/devices/${id}/identity`,{characterName:hero,provider:'VMOS'});
+    const job=await api.handle('POST',`/bot/v1/devices/${id}/action`,{op:'assign',botId:gameId});
     for(let i=0;i<100&&job.status==='running';i++)await new Promise(r=>setTimeout(r,10));
     assert.equal(job.status,'done');assert.deepEqual(calls,[]);
     const profile=await api.handle('GET',`/bot/v1/devices/${id}/profile`);
-    assert.equal(profile.botId,'rfonlinenext');assert.equal(profile.pending,true);assert.equal(profile.assignmentPending,true);
+    assert.equal(profile.botId,gameId);assert.equal(profile.pending,true);assert.equal(profile.assignmentPending,true);
     assert.equal(profile.settings.autostart_enabled,true);assert.equal(profile.settings.farm_enabled,false);
-    assert.deepEqual(profile.settings.farm_map_spots,[]);assert.equal(profile.identity.characterName,'RF hero');
+    assert.deepEqual(profile.settings.farm_map_spots,[]);assert.equal(profile.identity.characterName,hero);
   }finally{api.close();}
 });
 

@@ -19,6 +19,7 @@ export function validateBotSettings(value){
   if(value.active_farm_map_spot_id&&!ids.has(value.active_farm_map_spot_id))throw Error('unknown active spot');
   for(const key of ['farm_enabled','recovery_enabled','auto_dismantle_enabled','autostart_enabled'])if(typeof value[key]!=='boolean')throw Error('invalid switch');
   if('confirm_rare_dismantle_enabled' in value&&typeof value.confirm_rare_dismantle_enabled!=='boolean')throw Error('invalid switch');
+  for(const key of ['quest_enabled','skip_cutscenes_enabled'])if(key in value&&typeof value[key]!=='boolean')throw Error('invalid switch');
   if(value.editor_request&&(!['point','capture'].includes(value.editor_request.kind)||typeof value.editor_request.map_id!=='string'||value.editor_request.map_id.length>128))throw Error('invalid editor request');
   if(value.current_location_templates){
     if(typeof value.current_location_templates!=='object'||Array.isArray(value.current_location_templates)||Object.keys(value.current_location_templates).length>256)throw Error('invalid location templates');

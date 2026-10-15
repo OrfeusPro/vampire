@@ -1,0 +1,158 @@
+# Исследование ресурсов Vampir
+
+Начинать разработку с [главного файла модуля](../../vampir/README.md).
+
+Данные: `F:/PhoneExit Resources/Vampir`.
+Установка: `C:/Program Files/Netmarble/Netmarble Game/VAMPIR`.
+Переопределение: `PHONEEXIT_VAMPIR_RESOURCES`, `PHONEEXIT_VAMPIR_INSTALL`.
+Оригиналы не меняются. Не сохранять секреты, файлы аккаунта или дампы памяти.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/scan-resources.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/export-images.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/assemble-nocturne.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/inspect-ui.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/extract-tables.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/extract-tables.py --archive pakchunk1-Windows
+python -X utf8 phone-exit/bots/resource-tools/vampir/find-code-clues.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/find-quest-tables.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/extract-dependencies.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/inspect-ui.py --tutorial-controls
+python -X utf8 phone-exit/bots/resource-tools/vampir/extract-native-enums.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-quest-graph.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-reward-links.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-shop-links.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/decode-canvas-slots.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/decode-panel-slots.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-ui-topology.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-runtime-chain.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-tutorial-bindings.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-gallery.py
+```
+
+`scan-resources.py` сохраняет инвентаризацию `.pak/.utoc/.ucas`, размер,
+mtime_ns и SHA256 первых+последних64KiB. Это отпечаток для обнаружения изменения,
+а не полный SHA256 исходного архива. Читает записи PAKv11, ограничивает
+декодирование существующим reader RF; шифрованные записи пропускает.
+`source.json` рядом с entries.json предотвращает использование старых
+результатов после смены архива. pak-scan-progress.json обновляется атомарно.
+После обновления игры рекомендуется новая папка библиотеки, чтобы сохранить
+старые ресурсы; в прежней папке повторный запуск пересканирует изменённые PAK.
+
+Общий reader: `../rfnext/scan-pak.py`; используется уже установленный локальный
+Oodle DLL из `F:/PhoneExit Resources/RF Online Next/tools`. Его происхождение
+зафиксировано там в oodle-source.json. DLL и извлечённые данные не входят в Git.
+Общая библиотека декодирования не означает совместимости игровых таблиц RF.
+
+`export-images.py` использует общий декодер DXT1/DXT5/BC7/BGRA и сохраняет:
+
+- archive-image-catalog.json — все варианты PNG и источники;
+- archive-image-latest.json — рабочий выбор по наибольшему `_sN`;
+- map-image-catalog.json — выделенные текстуры карт;
+- texture-export-errors.json — ошибки, не подменяемые успешными изображениями.
+
+Выбор `_sN` предварительный: перед игровым применением сверять с manifest
+установки и экраном Android. Положение плитки нельзя выводить только из
+порядка файлов. Отдельно проверяются оси, прозрачные поля, сетка, подписи,
+координаты и преобразование мир→пиксели. Эти проверки пока не завершены.
+
+Текущее состояние бота и живые проверки: [../../vampir.md](../../vampir.md).
+
+## Быстрый поиск и границы разбора
+
+[RESOURCE-INDEX.md](RESOURCE-INDEX.md) — основной указатель по картам, таблицам,
+квестам, объектам интерфейса и происхождению данных. Его копия хранится в корне
+библиотеки на F:.
+
+`assemble-nocturne.py` собирает плитки и записывает оценку швов и источники.
+`inspect-ui.py` извлекает имена и диапазоны экспортов WidgetBlueprint;
+координаты unversioned properties пока не декодирует.
+`extract-tables.py` сохраняет открытые CSV с UTF-8 BOM из ProjectRED-Windows
+(записи до 16 MiB), заголовки, количество строк и SHA256. Это ограниченная
+проверка одного архива, не полный поиск всех форматов таблиц во всех PAK.
+`build-gallery.py` создаёт локальный индекс картинок.
+
+Текущее извлечение CSV: ProjectRED — 125 таблиц, pakchunk1 — 1565 таблиц,
+ошибок декодирования 0. Индексы — table-study/index.json и
+index-pakchunk1-Windows.json. Реальные строки квестов и обучения найдены;
+зависимости описаны в [QUEST-DEPENDENCIES.md](QUEST-DEPENDENCIES.md).
+Текущая стадия персонажа и автоматическое выполнение всего графа не реализованы.
+
+`build-reward-links.py` также соединяет ContentsLock (69) и
+ContentsLockCondition (70) и записывает contents-locks.json / early-unlock-chain.json.
+См. [CONTENTS-LOCKS.md](CONTENTS-LOCKS.md): 269 блокировок, 330 условий,
+109 ссылок квестов; числовые сравнения и AND/OR не предполагаются автоматически.
+
+`build-tutorial-bindings.py` обновляет vision.json и tutorial-reference.json:
+связывает только 18 явно проверенных экранов с исходными шагами. Проверяет хеши
+CSV и точные UI-ключи. Не генерирует клики для остальных шагов, покупок или разбора.
+Исполнение требует свежих совпадений шаблонов. minimum_delay_sec берётся из
+следующих строк TaskType=4; трактовка как ожидания отмечена отдельно от чисел.
+Защитная задержка 2 с сохраняется, если значение меньше. Цикл телефона может
+длиться дольше паузы; точность субсекундных интервалов не гарантируется.
+
+Нативные значения типов и полный путь магазинных задач:
+[NATIVE-SEMANTICS.md](NATIVE-SEMANTICS.md).
+
+Полный каталог найденного UI и попапов: [UI-CATALOG.md](UI-CATALOG.md).
+Для воспроизведения всего каталога использовать `inspect-ui.py --tutorial-controls
+--all-widgets`, затем decode-canvas-slots, decode-panel-slots, build-ui-topology,
+build-ui-catalog. Для привязок сообщений — build-window-bindings.py.
+Перед build-ui-catalog также выполнить extract-ui-properties.py и
+decode-size-boxes.py, чтобы связать собственные размеры контейнеров, а не только слоты.
+Затем decode-scale-boxes.py добавляет режимы масштабирования и наследуемые
+свойства ScaleBox. Общий декодер — decode-widget-properties.py; схема подтверждена
+массивами Widget/WidgetTransform в EXE, источник и индексы сохранены в библиотеке.
+Для магазинного этапа — build-shop-templates.py (нужны сохранённые кадры),
+build-shop-binding.py. После них повторить build-window-bindings.py.
+
+Сначала извлекать enum из текущего
+EXE, затем строить quest/reward/shop отчёты: генераторы сверяют SHA256 EXE.
+Панельные слоты и порядок дочерних элементов описаны в
+[REWARDS-AND-LAYOUT.md](REWARDS-AND-LAYOUT.md). Абсолютная геометрия не доказана.
+
+Пресеты UI Scale и полная цепочка настройки: [UI-SCALE.md](UI-SCALE.md).
+build-ui-scale-reference.py соединяет 25 коэффициентов, Option137, подписи и
+вкладки, проверяя хеши. find-ui-scale-config.py сохраняет ограниченный поиск
+настроек DPI в пяти стартовых архивах; неизвестное активное значение не подставляется.
+verify-ui-links.py повторно проверяет native дескрипторы, контейнеры и строки
+настройки масштаба по исходным CSV.
+
+`replay-shop.py` проверяет настоящий bot.py на сохранённых кадрах и синтетических
+отрицательных изменениях, включая смену масштаба и перезапуск с reserved-журналом.
+См. [SHOP-REPLAY.md](SHOP-REPLAY.md): 32 случая, параметры и хеши; ни одного
+обращения к телефону. Перед ним выполнить генераторы shop-templates/shop-binding
+и window-bindings. Резервные текстовые образцы имеют собственный reference_size.
+
+
+Вход по макетам: [ENTRY-FLOW.md](ENTRY-FLOW.md). После decode-deferred-panels.py
+выполнить build-entry-reference.py: ссылки UserWidget подтверждаются по байтам.
+Нативные ветви входа: [NATIVE-ENTRY.md](NATIVE-ENTRY.md). Требуется закреплённый
+Capstone из requirements-native.txt в игнорируемом .tools/vampir-analysis;
+build-native-entry-code.py читает EXE статически, учитывает chained unwind и
+проверяет инструкции. Runtime-переходы и Android-соответствие ещё не доказаны.
+
+Привязки кнопок к полям и сравнению в native: build-entry-button-links.py,
+[ENTRY-BUTTONS.md](ENTRY-BUTTONS.md). Генератор требует entry-reference и entry-code
+текущей версии; читает только EXE, не обращается к телефону.
+
+Нативные ссылки на окна: [NATIVE-UI-LINKS.md](NATIVE-UI-LINKS.md).
+build-native-ui-links.py строит индекс; query-native-ui.py принимает точное имя
+WBP или путь и проверяет хеши перед выдачей. Неподтверждённые кандидаты и ошибки
+линейного разбора сохранены отдельно, по ним клики не строятся.
+
+Получение/показ входных окон: build-entry-window-code.py и
+[ENTRY-WINDOWS.md](ENTRY-WINDOWS.md). Зависит от native-ui-links; прямые E8
+проверяются по декодированным границам, непрямые/хвостовые пути не покрыты.
+
+UI-менеджер и побочные эффекты проверки окна: build-ui-manager-code.py,
+[UI-MANAGER.md](UI-MANAGER.md). Зависит от entry-window-code.json;
+не считать0x144a1cbf0 чистым IsVisible/Contains.
+
+Обычный переход: build-ui-transition-code.py и [UI-TRANSITION.md](UI-TRANSITION.md).
+Отчёт связывает настройку/copy callback с FNnEasingVar::Start и завершением,
+сохраняет диагностические отказы и отдельно кандидаты ImageFader.
+
+Точная Windows-связь FaderUI с native: build-fader-class-link.py,
+[FADER-CLASS.md](FADER-CLASS.md). SuperIndex/import-chain читается из uasset,
+затем соединяется с регистрацией NkFaderUI и vtable.

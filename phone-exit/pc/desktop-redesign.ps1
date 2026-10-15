@@ -34,7 +34,7 @@ $fleetSummary=New-Object PhoneExit.FleetSummaryControl;$fleetSummary.BackColor=$
 $fleet=New-Object PhoneExit.FleetView;$fleet.UiScale=$script:uiScale;$form.Controls.Add($fleet)
 $fleetSearch=New-Object PhoneExit.SearchField;$fleetSearch.BackColor=$surface;$fleetSearch.ForeColor=$form.ForeColor;$fleetSearch.Font=[Drawing.Font]::new('Segoe UI',9);$fleetSearch.AccessibleName='Поиск по имени, персонажу, модели или стране';$form.Controls.Add($fleetSearch)
 $fleetGame=New-Object PhoneExit.DarkSelect;$fleetGame.AccessibleName='Фильтр по боту';$fleetGame.BackColor=$buttonSurface;$fleetGame.ForeColor=$form.ForeColor
-foreach($text in @('Бот: все','Lord Nine','RF Online Next','Без бота')){$null=$fleetGame.Items.Add($text)};$fleetGame.SelectedIndex=0;$form.Controls.Add($fleetGame)
+foreach($text in @('Бот: все','Lord Nine','RF Online Next','Vampir','Без бота')){$null=$fleetGame.Items.Add($text)};$fleetGame.SelectedIndex=0;$form.Controls.Add($fleetGame)
 $fleetState=New-Object PhoneExit.DarkSelect;$fleetState.AccessibleName='Фильтр состояния';$fleetState.BackColor=$buttonSurface;$fleetState.ForeColor=$form.ForeColor
 foreach($text in @('Статус: все','В сети','Не в сети','Бот работает','Ошибка бота')){$null=$fleetState.Items.Add($text)};$fleetState.SelectedIndex=0;$form.Controls.Add($fleetState)
 $fleetSort=New-Object PhoneExit.DarkSelect;$fleetSort.AccessibleName='Сортировка устройств';$fleetSort.BackColor=$buttonSurface;$fleetSort.ForeColor=$form.ForeColor
@@ -118,7 +118,7 @@ function RefreshFleet {
         if($bot){$row.BotId=if($bot.bot.botId){[string]$bot.bot.botId}else{[string]$bot.profile.botId};$row.BotState=[string]$bot.bot.status;if($bot.profile.identity.characterName){$row.Name=[string]$bot.profile.identity.characterName}}
         if($bot){$row.BotVersion=[string]$bot.bot.version;$row.Provider=[string]$bot.profile.identity.provider;if($bot.profile.identity.group){$row.Group=[string]$bot.profile.identity.group}}
         if($bot.profile.assignmentPending){$row.BotId=[string]$bot.profile.botId;$row.BotState='assigned';$row.BotVersion='';$row.Fresh=$false}
-        $row.BotName=switch($row.BotId){'lordnine'{'Lord Nine'}'rfonlinenext'{'RF Online Next'}default{$row.BotId}}
+        $row.BotName=switch($row.BotId){'lordnine'{'Lord Nine'}'rfonlinenext'{'RF Online Next'}'vampir'{'Vampir'}default{$row.BotId}}
         $row.ProviderIcon=ProviderIcon $row.Provider
         $row.BotText=if(!$row.BotId){'Без бота'}else{switch($row.BotState){'running'{'Работает'}'paused'{'На паузе'}'error'{'Ошибка'}'stopped'{'Остановлен'}'starting'{'Запускается'}'waiting'{'Ожидает'}default{'Назначен'}}}
         if($row.Fresh -and $bot.bot.step -eq 'auto_restart_pending'){$row.BotText='Перезапуск '+$bot.bot.retryCount+'/5'}
@@ -148,7 +148,7 @@ function RefreshFleet {
     $conditions=[PhoneExit.FleetFilter]::new();$conditions.Connection=$fleetExtra.Connection.SelectedIndex
     foreach($field in @('Country','ApkVersion','BotVersion','Provider')){if($fleetExtra[$field].SelectedIndex -gt 0){$value=[string]$fleetExtra[$field].SelectedItem;$conditions.$field=if($field -eq 'Country'){[string]$script:fleetCountryCodes[$value]}elseif($value -eq 'Не указано'){''}else{$value}}}
     if($fleetExtra.VpnState.SelectedIndex -gt 0){$conditions.VpnState=@('','active','off','blocked')[$fleetExtra.VpnState.SelectedIndex]}
-    if($fleetGame.SelectedIndex -gt 0){$conditions.BotId=@('','lordnine','rfonlinenext','')[$fleetGame.SelectedIndex]}
+    if($fleetGame.SelectedIndex -gt 0){$conditions.BotId=@('','lordnine','rfonlinenext','vampir','')[$fleetGame.SelectedIndex]}
     if($fleetState.SelectedIndex -ge 3){$conditions.State=@('','','','running','error','paused','waiting','starting','stopped','none')[$fleetState.SelectedIndex]}
     $query=$fleetSearch.Text.Trim()
     $phones=@($phones|Where-Object {$conditions.Matches($_) -and ($fleetState.SelectedIndex -ne 1 -or $_.Online) -and ($fleetState.SelectedIndex -ne 2 -or !$_.Online) -and (!$query -or ($_.Name+' '+$_.Model+' '+$_.Country+' '+(CountryName $_.Country)+' '+$_.Key+' '+$_.Provider+' '+$_.Group).IndexOf($query,[StringComparison]::OrdinalIgnoreCase) -ge 0)})

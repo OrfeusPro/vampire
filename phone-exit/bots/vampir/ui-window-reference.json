@@ -1,0 +1,5441 @@
+{
+  "schemaVersion": 1,
+  "messages": {
+    "KICKOUT_FOR_INSPECT": {
+      "localization": {
+        "source": {
+          "file": "pakchunk1-Windows-405.csv",
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk1-Windows.pak",
+            "size": 11841434,
+            "modified_ns": 1791752696761175700,
+            "sample_sha256": "11cfb06d2bcce296f155a658a45f7435964597c0c54b5133084777926e30da73",
+            "pak_version": 11
+          },
+          "entry": 405,
+          "offset": 1892352,
+          "size": 654581,
+          "sha256": "32956f16902bdd8f7507d000143dee29ad457e7fa1ea09194c3632a2d1f4179e",
+          "header": [
+            "Key",
+            "Value",
+            "L10NOrder",
+            "L10NRegistrationDate",
+            "Untranslated"
+          ],
+          "rows": 7032,
+          "quest_tutorial_rows": 705,
+          "examples": [
+            [
+              "QUEST_PROGRESS_VALUE_STATE_MINI",
+              "[Count]/[MaxCount]",
+              "0521",
+              "2025-05-21 16:11:00",
+              ""
+            ],
+            [
+              "MAINMENU_QUEST",
+              "Quests",
+              "0521",
+              "2025-05-21 16:11:00",
+              ""
+            ],
+            [
+              "QUEST_POPUPTITLE_MAIN",
+              "Quests",
+              "0521",
+              "2025-05-21 16:11:00",
+              ""
+            ],
+            [
+              "QUEST_POPUPTITLE_DAILY",
+              "Daily Quests",
+              "0521",
+              "2025-05-21 16:11:00",
+              ""
+            ],
+            [
+              "QUEST_POPUPMENUTITLE_MAIN",
+              "Main Quest",
+              "0521",
+              "2025-05-21 16:11:00",
+              ""
+            ]
+          ],
+          "internal_path": null
+        },
+        "csv_record": 3612,
+        "row": {
+          "Key": "KICKOUT_FOR_INSPECT",
+          "Value": "Connection terminated for safe gameplay.",
+          "L10NOrder": "0521",
+          "L10NRegistrationDate": "2025-05-21 16:11:00",
+          "Untranslated": ""
+        }
+      },
+      "template": {
+        "name": "connection_terminated_inspect",
+        "source": "session-terminated.jpg",
+        "source_sha256": "6c4fbb523e522796fffacf2fad3298ca720dafb0cef3f55a19124ba5638ca67a",
+        "crop": [
+          490,
+          294,
+          793,
+          347
+        ],
+        "template_sha256": "430c0eb5fdc611778e20c5544076b76f3a0d2b90acb040e4e801f1e2f6b4c7dd"
+      },
+      "alternative_templates": [
+        {
+          "name": "connection_terminated_inspect_compact",
+          "source": "session-terminated.jpg",
+          "source_sha256": "6c4fbb523e522796fffacf2fad3298ca720dafb0cef3f55a19124ba5638ca67a",
+          "resize_factor": 0.75,
+          "interpolation": "OpenCV INTER_LINEAR",
+          "crop": [
+            368,
+            221,
+            595,
+            260
+          ],
+          "reference_size": [
+            960,
+            540
+          ],
+          "template_sha256": "477aa643e0f6e2b1dbecbbde9b8c1d2627db50f98fc8180eac16bdbb066fe346"
+        },
+        {
+          "name": "connection_terminated_inspect_large",
+          "source": "session-terminated.jpg",
+          "source_sha256": "6c4fbb523e522796fffacf2fad3298ca720dafb0cef3f55a19124ba5638ca67a",
+          "resize_factor": 1.25,
+          "interpolation": "OpenCV INTER_LINEAR",
+          "crop": [
+            613,
+            368,
+            991,
+            434
+          ],
+          "reference_size": [
+            1600,
+            900
+          ],
+          "template_sha256": "748024944ff45fc9176ce75f9751e274263be6f8ded407f7215d1b5005194adc"
+        }
+      ],
+      "behavior": "pause_without_dismissal_or_reconnect",
+      "widget_candidates": [
+        {
+          "file": "pakchunk500-Windows-559.json",
+          "paths": [
+            "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxConfirmPopup"
+          ],
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+            "size": 90792756,
+            "modified_ns": 1791753957558672500,
+            "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+            "pak_version": 11
+          },
+          "entry": 559,
+          "asset_sha256": "6bb9a1910fb0ebd1208b634bb1bd59a1bad5b0d99de365d1567f3bb2a3ef26f7",
+          "body_sha256": "a01f4289493d70f85bbcd65cae322b847e64dad97831333237a68f18f92e435a",
+          "container_native_schema": {
+            "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+            "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+            "array_offset": 150476368,
+            "widget_array_offset": 150571360,
+            "widget_transform_array_offset": 150377256
+          },
+          "controls": [
+            {
+              "export": 23,
+              "name": "ButtonOk",
+              "type": "NkButton",
+              "offset": 11148,
+              "size": 343,
+              "sha256": "3ebdb8435bb38f292656a63414951b30c9360a78a67683236639a02099de0aba",
+              "local_slots": [
+                22
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 22,
+                  "parent_export": 21
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 5
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 7
+                },
+                {
+                  "slot_export": 34,
+                  "parent_export": 30
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 9
+                },
+                {
+                  "slot_export": 29,
+                  "parent_export": 28
+                },
+                {
+                  "slot_export": 10,
+                  "parent_export": 3
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 24,
+              "name": "TextMessage",
+              "type": "NkRichTextBlock",
+              "offset": 11491,
+              "size": 150,
+              "sha256": "453a60130d104789de2c45492db8b1aa4b8eef4e6a12cff6d25f16d6be594d20",
+              "local_slots": [
+                35
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 35,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 27,
+                  "parent_export": 26
+                },
+                {
+                  "slot_export": 33,
+                  "parent_export": 30
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 9
+                },
+                {
+                  "slot_export": 29,
+                  "parent_export": 28
+                },
+                {
+                  "slot_export": 10,
+                  "parent_export": 3
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 25,
+              "name": "TextOk",
+              "type": "NkTextBlock",
+              "offset": 11641,
+              "size": 178,
+              "sha256": "6ff013ad1d26e189e876f684ee7ac73d97448cba0a8f27631aae76828c4b60af",
+              "local_slots": [
+                36
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 36,
+                  "parent_export": 32
+                },
+                {
+                  "slot_export": 13,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 28,
+              "name": "SizeBox_0",
+              "type": "SizeBox",
+              "offset": 11871,
+              "size": 27,
+              "sha256": "fa117625ea276ff91edbe9095e1ef6849ce41fd335da534bfdfc4bb2766ef5dc",
+              "local_slots": [
+                10
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 10,
+                  "parent_export": 3
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot",
+              "container_geometry": {
+                "provenance": {
+                  "file": "pakchunk500-Windows-559.json",
+                  "export": 28,
+                  "name": "SizeBox_0",
+                  "offset": 11871,
+                  "sha256": "fa117625ea276ff91edbe9095e1ef6849ce41fd335da534bfdfc4bb2766ef5dc",
+                  "source": {
+                    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                    "size": 90792756,
+                    "modified_ns": 1791753957558672500,
+                    "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                    "pak_version": 11
+                  },
+                  "entry": 559
+                },
+                "decoded": {
+                  "explicit_properties": {
+                    "MinDesiredHeight": 400.0,
+                    "bOverride_MinDesiredHeight": true
+                  },
+                  "slots": [
+                    29
+                  ],
+                  "incoming_slot": 10
+                }
+              },
+              "size_constraints": {
+                "WidthOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "HeightOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredHeight": {
+                  "status": "explicitly_enabled",
+                  "value": 400.0
+                },
+                "MaxDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxDesiredHeight": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                }
+              },
+              "container_native_schema": {
+                "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+                "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+                "array_offset": 150476368,
+                "widget_array_offset": 150571360,
+                "widget_transform_array_offset": 150377256
+              }
+            }
+          ],
+          "slots": [
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 10,
+                "offset": 10235,
+                "sha256": "2d20874de04314659963286f4d3d4f742cdb9b7a57fe83ef95f5b1249bcb1053",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 600.0,
+                    "bottom": 400.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.5
+                    ],
+                    "maximum": [
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 3,
+                "content_export": 28,
+                "parent": {
+                  "index": 3,
+                  "name": "CanvasPanel_1",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 28,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 13,
+                "offset": 10431,
+                "sha256": "81b93d396a3c1cf72c8db212ca1b5148f64dc455223a21f9f23cd19ef23ca801",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 4,
+                "content_export": 32,
+                "parent": {
+                  "index": 4,
+                  "name": "CanvasPanel_3",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 32,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 14,
+                "offset": 10486,
+                "sha256": "2ea6bd861e6d286de7e365caf6cc93bbaf295fd71257cccad84ac660ab90d1fd",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 20.0,
+                    "right": 546.0,
+                    "bottom": 0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.0
+                    ],
+                    "maximum": [
+                      0.5,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 5,
+                "content_export": 21,
+                "parent": {
+                  "index": 5,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 21,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 15,
+                "offset": 10566,
+                "sha256": "09860ae74b8f2f0cb6aac4068149d1c5b3fffcbde6e136543b6b3c646ed7fb34",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 100.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 7,
+                "content_export": 5,
+                "parent": {
+                  "index": 7,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 5,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 17,
+                "offset": 10720,
+                "sha256": "16682952e212e459b045cba8e0dfc3723ee43d9b29b45a9b2580a0bca5468384",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 7.0,
+                    "top": 7.0,
+                    "right": 7.0,
+                    "bottom": 7.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 9,
+                "content_export": 30,
+                "parent": {
+                  "index": 9,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 30,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 22,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 11126,
+                "sha256": "1355d00ecf2ec94474c30cbd2d4e3c0a0717785a044ae2e01562570a580649fe",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 5.0,
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0
+                },
+                "parent_export": 21,
+                "content_export": 23,
+                "parent": {
+                  "index": 21,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 23,
+                  "name": "ButtonOk",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 27,
+                "slot_type": "OverlaySlot",
+                "offset": 11837,
+                "sha256": "e0d0e32cb964d43d9f0c55cc9510f983db53654ca14485aba3d67756c80bd3e7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "horizontal_alignment",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 40.0,
+                  "right": 20.0,
+                  "bottom": 40.0
+                },
+                "horizontal_alignment": 0,
+                "vertical_alignment": 2,
+                "parent_export": 26,
+                "content_export": 31,
+                "parent": {
+                  "index": 26,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                },
+                "content": {
+                  "index": 31,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 29,
+                "slot_type": "SizeBoxSlot",
+                "offset": 11898,
+                "sha256": "e34c782daffb459e08e7c7668997740c6fc7df7475af2ab4c2cbaac42dadd847",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "parent_export",
+                  "content_export"
+                ],
+                "parent_export": 28,
+                "content_export": 9,
+                "parent": {
+                  "index": 28,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                },
+                "content": {
+                  "index": 9,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 33,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 11970,
+                "sha256": "d32a106550fda65d825f701f65f02a7f5a39a5d3da9784ac10bbbe70f9db128c",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 20.0,
+                  "top": 20.0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "parent_export": 30,
+                "content_export": 26,
+                "parent": {
+                  "index": 30,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 26,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 34,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12007,
+                "sha256": "3b4ffd78d591299008ba15a080b30b91f4ce259ced32cc8205399939ff68ac3f",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "vertical_alignment": 3,
+                "parent_export": 30,
+                "content_export": 7,
+                "parent": {
+                  "index": 30,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 7,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 35,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12040,
+                "sha256": "2e58a8a11ccfc84b894c76a0cb5a667304ad14e23cffb19e605cd832ec0a86e3",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "vertical_alignment": 2,
+                "parent_export": 31,
+                "content_export": 24,
+                "parent": {
+                  "index": 31,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 24,
+                  "name": "TextMessage",
+                  "type": "NkRichTextBlock"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-559.json",
+                "slot_export": 36,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12060,
+                "sha256": "b06b863a9e4878d898bbd5745d21d3cde22ad2c23ba408dd42c4a1d905b63ba7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 559
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 10.0,
+                  "right": 0,
+                  "bottom": 10.0
+                },
+                "parent_export": 32,
+                "content_export": 25,
+                "parent": {
+                  "index": 32,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 25,
+                  "name": "TextOk",
+                  "type": "NkTextBlock"
+                }
+              }
+            }
+          ],
+          "binding_status": "candidate_only_no_native_caller_link"
+        },
+        {
+          "file": "pakchunk500-Windows-561.json",
+          "paths": [
+            "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxPopup"
+          ],
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+            "size": 90792756,
+            "modified_ns": 1791753957558672500,
+            "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+            "pak_version": 11
+          },
+          "entry": 561,
+          "asset_sha256": "4ced75199317a84715d47319f7f78b1ce48c2559221c81511aaf4c07219fcb1c",
+          "body_sha256": "5ec690a70e8120f42f1d5072a3580be3997417b3925ec2564fd7c0a96f532ba1",
+          "container_native_schema": {
+            "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+            "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+            "array_offset": 150476368,
+            "widget_array_offset": 150571360,
+            "widget_transform_array_offset": 150377256
+          },
+          "controls": [
+            {
+              "export": 28,
+              "name": "ButtonCancel",
+              "type": "NkButton",
+              "offset": 12992,
+              "size": 338,
+              "sha256": "a6b261a4102bb1e6e28e59dcac2ba0a9df99394f8f9133e2b73afcbf1e0672b2",
+              "local_slots": [
+                25
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 25,
+                  "parent_export": 22
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 16,
+                  "parent_export": 8
+                },
+                {
+                  "slot_export": 41,
+                  "parent_export": 37
+                },
+                {
+                  "slot_export": 18,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 36,
+                  "parent_export": 35
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 29,
+              "name": "ButtonOk",
+              "type": "NkButton",
+              "offset": 13330,
+              "size": 343,
+              "sha256": "8e988dc02ba8671bfea4881efd2e8ffd48ccfed64f64f7f741aa4f1bfbdd2c2f",
+              "local_slots": [
+                24
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 24,
+                  "parent_export": 22
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 16,
+                  "parent_export": 8
+                },
+                {
+                  "slot_export": 41,
+                  "parent_export": 37
+                },
+                {
+                  "slot_export": 18,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 36,
+                  "parent_export": 35
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 30,
+              "name": "TextMessage",
+              "type": "NkRichTextBlock",
+              "offset": 13673,
+              "size": 150,
+              "sha256": "62a4c4daa78d868aaf5781f7f59f3babda5351449ef200802369b33367f6e5ea",
+              "local_slots": [
+                42
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 42,
+                  "parent_export": 38
+                },
+                {
+                  "slot_export": 34,
+                  "parent_export": 33
+                },
+                {
+                  "slot_export": 40,
+                  "parent_export": 37
+                },
+                {
+                  "slot_export": 18,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 36,
+                  "parent_export": 35
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 32,
+              "name": "TextOk",
+              "type": "NkTextBlock",
+              "offset": 14004,
+              "size": 178,
+              "sha256": "dd60d8d6414ad1bd047ca9b5ec179797859e7db0fac4b99ba20642f13e7ea720",
+              "local_slots": [
+                43
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 43,
+                  "parent_export": 39
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 5
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 35,
+              "name": "SizeBox_0",
+              "type": "SizeBox",
+              "offset": 14234,
+              "size": 27,
+              "sha256": "c5d89a747173b1ef50a07a93ba17c1ffea545099544141b285594c7f1c0f5281",
+              "local_slots": [
+                11
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot",
+              "container_geometry": {
+                "provenance": {
+                  "file": "pakchunk500-Windows-561.json",
+                  "export": 35,
+                  "name": "SizeBox_0",
+                  "offset": 14234,
+                  "sha256": "c5d89a747173b1ef50a07a93ba17c1ffea545099544141b285594c7f1c0f5281",
+                  "source": {
+                    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                    "size": 90792756,
+                    "modified_ns": 1791753957558672500,
+                    "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                    "pak_version": 11
+                  },
+                  "entry": 561
+                },
+                "decoded": {
+                  "explicit_properties": {
+                    "MinDesiredHeight": 400.0,
+                    "bOverride_MinDesiredHeight": true
+                  },
+                  "slots": [
+                    36
+                  ],
+                  "incoming_slot": 11
+                }
+              },
+              "size_constraints": {
+                "WidthOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "HeightOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredHeight": {
+                  "status": "explicitly_enabled",
+                  "value": 400.0
+                },
+                "MaxDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxDesiredHeight": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                }
+              },
+              "container_native_schema": {
+                "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+                "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+                "array_offset": 150476368,
+                "widget_array_offset": 150571360,
+                "widget_transform_array_offset": 150377256
+              }
+            }
+          ],
+          "slots": [
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 11,
+                "offset": 11992,
+                "sha256": "45338ce7089acdf23dcebf193204fbe747c50fc271a3a836dc8e15e1ec1b1896",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 600.0,
+                    "bottom": 400.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.5
+                    ],
+                    "maximum": [
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 4,
+                "content_export": 35,
+                "parent": {
+                  "index": 4,
+                  "name": "CanvasPanel_1",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 35,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 14,
+                "offset": 12188,
+                "sha256": "2b95b089a48ec123773f57d2392ea3033786517dacc51e577df971ee3ea92169",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 5,
+                "content_export": 39,
+                "parent": {
+                  "index": 5,
+                  "name": "CanvasPanel_3",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 39,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 15,
+                "offset": 12243,
+                "sha256": "1dbd8e449c72a2a70c746cc898b9bb496128c24e57e4ed35eb7390a1b7bc975f",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 80.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 6,
+                "content_export": 22,
+                "parent": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 22,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 16,
+                "offset": 12318,
+                "sha256": "9cafa97da87c8a0898664f5247b9f961f97200f0d6e4efb4fa4f78d88d8a5273",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 100.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 8,
+                "content_export": 6,
+                "parent": {
+                  "index": 8,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 18,
+                "offset": 12472,
+                "sha256": "05d5bea96cafbcb150c3bedd12500b964c53e57facb368546a194307447d16c5",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 7.0,
+                    "top": 7.0,
+                    "right": 7.0,
+                    "bottom": 7.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 10,
+                "content_export": 37,
+                "parent": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 37,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 24,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 12904,
+                "sha256": "f409393ceeca894aef0535570f2ecf86a7ced110759c9b6b72b3371cc62d66cc",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 5.0,
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0
+                },
+                "parent_export": 22,
+                "content_export": 29,
+                "parent": {
+                  "index": 22,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 29,
+                  "name": "ButtonOk",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 25,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 12929,
+                "sha256": "19be58328fbdbd74a0c681f336161ba7220eb18b2c4f46560eac3964841564d1",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 0,
+                  "right": 5.0,
+                  "bottom": 0
+                },
+                "parent_export": 22,
+                "content_export": 28,
+                "parent": {
+                  "index": 22,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 28,
+                  "name": "ButtonCancel",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 34,
+                "slot_type": "OverlaySlot",
+                "offset": 14200,
+                "sha256": "e78bc451b9473692f115228d94d1f6d71c292ab595c24afb1d842676e195983b",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "horizontal_alignment",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 40.0,
+                  "right": 20.0,
+                  "bottom": 40.0
+                },
+                "horizontal_alignment": 0,
+                "vertical_alignment": 2,
+                "parent_export": 33,
+                "content_export": 38,
+                "parent": {
+                  "index": 33,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                },
+                "content": {
+                  "index": 38,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 36,
+                "slot_type": "SizeBoxSlot",
+                "offset": 14261,
+                "sha256": "e0deaabf86774ddba456391c16f7cc7e0bbb025249ad27d4b9171f202679f291",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "parent_export",
+                  "content_export"
+                ],
+                "parent_export": 35,
+                "content_export": 10,
+                "parent": {
+                  "index": 35,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                },
+                "content": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 40,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14333,
+                "sha256": "28862525e13e6bdfe30589fe28f18fcd394f6aefed6f3c4507e1da4564173a37",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 20.0,
+                  "top": 20.0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "parent_export": 37,
+                "content_export": 33,
+                "parent": {
+                  "index": 37,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 33,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 41,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14370,
+                "sha256": "8ceadd7f96c3c84f35c9a6340a854f1f40e31905729d9f7a0992006a86cc7b21",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "vertical_alignment": 3,
+                "parent_export": 37,
+                "content_export": 8,
+                "parent": {
+                  "index": 37,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 8,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 42,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14403,
+                "sha256": "77a48f109619876c0361db648a7b5dd5e23077a27c90b101e82d257dac166738",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "vertical_alignment": 2,
+                "parent_export": 38,
+                "content_export": 30,
+                "parent": {
+                  "index": 38,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 30,
+                  "name": "TextMessage",
+                  "type": "NkRichTextBlock"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-561.json",
+                "slot_export": 43,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14423,
+                "sha256": "4f918d010c257e735c976029d8b43bd39f4065f01812ec8d752fddad4f89107d",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 561
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 10.0,
+                  "right": 0,
+                  "bottom": 10.0
+                },
+                "parent_export": 39,
+                "content_export": 32,
+                "parent": {
+                  "index": 39,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 32,
+                  "name": "TextOk",
+                  "type": "NkTextBlock"
+                }
+              }
+            }
+          ],
+          "binding_status": "candidate_only_no_native_caller_link"
+        },
+        {
+          "file": "pakchunk500-Windows-573.json",
+          "paths": [
+            "/Game/RED/UI/Common/MessageBox/WBP_SystemMessageBoxPopup"
+          ],
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+            "size": 90792756,
+            "modified_ns": 1791753957558672500,
+            "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+            "pak_version": 11
+          },
+          "entry": 573,
+          "asset_sha256": "6d18c0ad62be1cc00fd0e38eace5484da3d7986aaeda909bee900d74f032b313",
+          "body_sha256": "362a6e6300406e665ba1c79a083e8b1cbb48a90067f4989c525a31305d665556",
+          "container_native_schema": {
+            "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+            "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+            "array_offset": 150476368,
+            "widget_array_offset": 150571360,
+            "widget_transform_array_offset": 150377256
+          },
+          "controls": [
+            {
+              "export": 22,
+              "name": "ButtonCancel",
+              "type": "NkButton",
+              "offset": 11052,
+              "size": 338,
+              "sha256": "b41fe3e72c903d25c5f3ae28e16fdf5a3865790f3c47ec68aa550776b67f99af",
+              "local_slots": [
+                21
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 21,
+                  "parent_export": 19
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 7
+                },
+                {
+                  "slot_export": 35,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 30,
+                  "parent_export": 29
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 23,
+              "name": "ButtonOk",
+              "type": "NkButton",
+              "offset": 11390,
+              "size": 337,
+              "sha256": "e228382cf84173a9fc42faaabdfb4d12c534247b3b64566882b4ea0dc36068b2",
+              "local_slots": [
+                20
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 20,
+                  "parent_export": 19
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 7
+                },
+                {
+                  "slot_export": 35,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 30,
+                  "parent_export": 29
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 24,
+              "name": "TextMessage",
+              "type": "NkRichTextBlock",
+              "offset": 11727,
+              "size": 196,
+              "sha256": "9a99f78e638bc26cc52d9757d4a1747af00cb1ab2b2ad9da1aeaaeca3a261ee5",
+              "local_slots": [
+                36
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 36,
+                  "parent_export": 32
+                },
+                {
+                  "slot_export": 28,
+                  "parent_export": 27
+                },
+                {
+                  "slot_export": 34,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 30,
+                  "parent_export": 29
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 26,
+              "name": "TextOk",
+              "type": "NkTextBlock",
+              "offset": 12153,
+              "size": 175,
+              "sha256": "955647ba36208e5d9b57e2f4cb2f7a6962f0347d6b7e4a8cf66733d11bf2ae3f",
+              "local_slots": [
+                38
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 38,
+                  "parent_export": 33
+                },
+                {
+                  "slot_export": 13,
+                  "parent_export": 5
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 29,
+              "name": "SizeBox_0",
+              "type": "SizeBox",
+              "offset": 12380,
+              "size": 27,
+              "sha256": "3fae5bd12ceb498221bbb2390192a768908b815adf73d9c3308748c3ede5bff7",
+              "local_slots": [
+                11
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot",
+              "container_geometry": {
+                "provenance": {
+                  "file": "pakchunk500-Windows-573.json",
+                  "export": 29,
+                  "name": "SizeBox_0",
+                  "offset": 12380,
+                  "sha256": "3fae5bd12ceb498221bbb2390192a768908b815adf73d9c3308748c3ede5bff7",
+                  "source": {
+                    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                    "size": 90792756,
+                    "modified_ns": 1791753957558672500,
+                    "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                    "pak_version": 11
+                  },
+                  "entry": 573
+                },
+                "decoded": {
+                  "explicit_properties": {
+                    "MinDesiredHeight": 400.0,
+                    "bOverride_MinDesiredHeight": true
+                  },
+                  "slots": [
+                    30
+                  ],
+                  "incoming_slot": 11
+                }
+              },
+              "size_constraints": {
+                "WidthOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "HeightOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredHeight": {
+                  "status": "explicitly_enabled",
+                  "value": 400.0
+                },
+                "MaxDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxDesiredHeight": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                }
+              },
+              "container_native_schema": {
+                "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+                "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+                "array_offset": 150476368,
+                "widget_array_offset": 150571360,
+                "widget_transform_array_offset": 150377256
+              }
+            }
+          ],
+          "slots": [
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 11,
+                "offset": 10408,
+                "sha256": "132fdd17bd0e308bb295287b334301b190bf1db0b141833a6be7f2d62b33d8ed",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 600.0,
+                    "bottom": 400.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.5
+                    ],
+                    "maximum": [
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 4,
+                "content_export": 29,
+                "parent": {
+                  "index": 4,
+                  "name": "CanvasPanel_1",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 29,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 13,
+                "offset": 10526,
+                "sha256": "63972b22ce860199ca58e531c066fc40189f0bdf389727c0fd0e37aa9a84f9d8",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 80.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      0.5
+                    ],
+                    "maximum": [
+                      1.0,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.26
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 5,
+                "content_export": 33,
+                "parent": {
+                  "index": 5,
+                  "name": "CanvasPanel_3",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 33,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 14,
+                "offset": 10601,
+                "sha256": "14a77d1b64e4f20af5807a942f285aed5acb91850c57d7c270ee94247fda624b",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 80.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 6,
+                "content_export": 19,
+                "parent": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 19,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 15,
+                "offset": 10676,
+                "sha256": "e3fce1fa328fbebe27fcba71d4696e5bc4f1fc9134f4fc1de71ad6b0310b6fde",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 100.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 7,
+                "content_export": 6,
+                "parent": {
+                  "index": 7,
+                  "name": "CanvasPanel_7",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 17,
+                "offset": 10830,
+                "sha256": "5ef94b2d928b40aed1b2d5fb2b7cab9a28a9db98ff79c8821f7bdff67e4f86e7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 7.0,
+                    "top": 7.0,
+                    "right": 7.0,
+                    "bottom": 7.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 10,
+                "content_export": 31,
+                "parent": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 31,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 20,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 11002,
+                "sha256": "6b59ab559d810eefd72cbbf9efdcc1428306767b28a97e62c123630725b9ac4d",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 5.0,
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0
+                },
+                "parent_export": 19,
+                "content_export": 23,
+                "parent": {
+                  "index": 19,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 23,
+                  "name": "ButtonOk",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 21,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 11027,
+                "sha256": "ef3c33d4abc34a2cc7ebfe4cd7d91906359c274afa68728d101b969d01b262b7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 0,
+                  "right": 5.0,
+                  "bottom": 0
+                },
+                "parent_export": 19,
+                "content_export": 22,
+                "parent": {
+                  "index": 19,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 22,
+                  "name": "ButtonCancel",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 28,
+                "slot_type": "OverlaySlot",
+                "offset": 12346,
+                "sha256": "8f4c08839e7d2fd6ade71b77ebf928d2efe46f85c416ff72b5fc7314c17658b5",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "horizontal_alignment",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 40.0,
+                  "right": 20.0,
+                  "bottom": 40.0
+                },
+                "horizontal_alignment": 0,
+                "vertical_alignment": 2,
+                "parent_export": 27,
+                "content_export": 32,
+                "parent": {
+                  "index": 27,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                },
+                "content": {
+                  "index": 32,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 30,
+                "slot_type": "SizeBoxSlot",
+                "offset": 12407,
+                "sha256": "099e46a331c944b6b70d23ec934a36d08df008736593b9c417b93b62af847280",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "parent_export",
+                  "content_export"
+                ],
+                "parent_export": 29,
+                "content_export": 10,
+                "parent": {
+                  "index": 29,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                },
+                "content": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 34,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12483,
+                "sha256": "d2cd327e3b7a00e383c4a1ce7ebe3f94cf270c5062134d9e6a401ab7f1ee9412",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 20.0,
+                  "top": 20.0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "parent_export": 31,
+                "content_export": 27,
+                "parent": {
+                  "index": 31,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 27,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 35,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12520,
+                "sha256": "edd6b4717938e6d65120e7bac55ca137222a7d0b07a5e2d04aa3a6d7b159e721",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "vertical_alignment": 3,
+                "parent_export": 31,
+                "content_export": 7,
+                "parent": {
+                  "index": 31,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 7,
+                  "name": "CanvasPanel_7",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 36,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12553,
+                "sha256": "839ab0c401b69d320fb3ef9e43380077c8f8c071b2fb2e347017671e54b411ba",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "vertical_alignment": 2,
+                "parent_export": 32,
+                "content_export": 24,
+                "parent": {
+                  "index": 32,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 24,
+                  "name": "TextMessage",
+                  "type": "NkRichTextBlock"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "pakchunk500-Windows-573.json",
+                "slot_export": 38,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12587,
+                "sha256": "ea564dfd9eff68d8bb58940094e889cdd8898b1d2bd0b26a8e8713773c0d025e",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+                  "size": 90792756,
+                  "modified_ns": 1791753957558672500,
+                  "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+                  "pak_version": 11
+                },
+                "entry": 573
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "horizontal_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "horizontal_alignment": 2,
+                "parent_export": 33,
+                "content_export": 26,
+                "parent": {
+                  "index": 33,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 26,
+                  "name": "TextOk",
+                  "type": "NkTextBlock"
+                }
+              }
+            }
+          ],
+          "binding_status": "candidate_only_no_native_caller_link"
+        },
+        {
+          "file": "ProjectRED-Windows-7867.json",
+          "paths": [
+            "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxConfirmPopup"
+          ],
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+            "size": 420675245,
+            "modified_ns": 1789135616000000000,
+            "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+            "pak_version": 11
+          },
+          "entry": 7867,
+          "asset_sha256": "6bb9a1910fb0ebd1208b634bb1bd59a1bad5b0d99de365d1567f3bb2a3ef26f7",
+          "body_sha256": "a01f4289493d70f85bbcd65cae322b847e64dad97831333237a68f18f92e435a",
+          "container_native_schema": {
+            "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+            "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+            "array_offset": 150476368,
+            "widget_array_offset": 150571360,
+            "widget_transform_array_offset": 150377256
+          },
+          "controls": [
+            {
+              "export": 23,
+              "name": "ButtonOk",
+              "type": "NkButton",
+              "offset": 11148,
+              "size": 343,
+              "sha256": "3ebdb8435bb38f292656a63414951b30c9360a78a67683236639a02099de0aba",
+              "local_slots": [
+                22
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 22,
+                  "parent_export": 21
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 5
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 7
+                },
+                {
+                  "slot_export": 34,
+                  "parent_export": 30
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 9
+                },
+                {
+                  "slot_export": 29,
+                  "parent_export": 28
+                },
+                {
+                  "slot_export": 10,
+                  "parent_export": 3
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 24,
+              "name": "TextMessage",
+              "type": "NkRichTextBlock",
+              "offset": 11491,
+              "size": 150,
+              "sha256": "453a60130d104789de2c45492db8b1aa4b8eef4e6a12cff6d25f16d6be594d20",
+              "local_slots": [
+                35
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 35,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 27,
+                  "parent_export": 26
+                },
+                {
+                  "slot_export": 33,
+                  "parent_export": 30
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 9
+                },
+                {
+                  "slot_export": 29,
+                  "parent_export": 28
+                },
+                {
+                  "slot_export": 10,
+                  "parent_export": 3
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 25,
+              "name": "TextOk",
+              "type": "NkTextBlock",
+              "offset": 11641,
+              "size": 178,
+              "sha256": "6ff013ad1d26e189e876f684ee7ac73d97448cba0a8f27631aae76828c4b60af",
+              "local_slots": [
+                36
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 36,
+                  "parent_export": 32
+                },
+                {
+                  "slot_export": 13,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 28,
+              "name": "SizeBox_0",
+              "type": "SizeBox",
+              "offset": 11871,
+              "size": 27,
+              "sha256": "fa117625ea276ff91edbe9095e1ef6849ce41fd335da534bfdfc4bb2766ef5dc",
+              "local_slots": [
+                10
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 10,
+                  "parent_export": 3
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot",
+              "container_geometry": {
+                "provenance": {
+                  "file": "ProjectRED-Windows-7867.json",
+                  "export": 28,
+                  "name": "SizeBox_0",
+                  "offset": 11871,
+                  "sha256": "fa117625ea276ff91edbe9095e1ef6849ce41fd335da534bfdfc4bb2766ef5dc",
+                  "source": {
+                    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                    "size": 420675245,
+                    "modified_ns": 1789135616000000000,
+                    "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                    "pak_version": 11
+                  },
+                  "entry": 7867
+                },
+                "decoded": {
+                  "explicit_properties": {
+                    "MinDesiredHeight": 400.0,
+                    "bOverride_MinDesiredHeight": true
+                  },
+                  "slots": [
+                    29
+                  ],
+                  "incoming_slot": 10
+                }
+              },
+              "size_constraints": {
+                "WidthOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "HeightOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredHeight": {
+                  "status": "explicitly_enabled",
+                  "value": 400.0
+                },
+                "MaxDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxDesiredHeight": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                }
+              },
+              "container_native_schema": {
+                "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+                "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+                "array_offset": 150476368,
+                "widget_array_offset": 150571360,
+                "widget_transform_array_offset": 150377256
+              }
+            }
+          ],
+          "slots": [
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 10,
+                "offset": 10235,
+                "sha256": "2d20874de04314659963286f4d3d4f742cdb9b7a57fe83ef95f5b1249bcb1053",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 600.0,
+                    "bottom": 400.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.5
+                    ],
+                    "maximum": [
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 3,
+                "content_export": 28,
+                "parent": {
+                  "index": 3,
+                  "name": "CanvasPanel_1",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 28,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 13,
+                "offset": 10431,
+                "sha256": "81b93d396a3c1cf72c8db212ca1b5148f64dc455223a21f9f23cd19ef23ca801",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 4,
+                "content_export": 32,
+                "parent": {
+                  "index": 4,
+                  "name": "CanvasPanel_3",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 32,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 14,
+                "offset": 10486,
+                "sha256": "2ea6bd861e6d286de7e365caf6cc93bbaf295fd71257cccad84ac660ab90d1fd",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 20.0,
+                    "right": 546.0,
+                    "bottom": 0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.0
+                    ],
+                    "maximum": [
+                      0.5,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 5,
+                "content_export": 21,
+                "parent": {
+                  "index": 5,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 21,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 15,
+                "offset": 10566,
+                "sha256": "09860ae74b8f2f0cb6aac4068149d1c5b3fffcbde6e136543b6b3c646ed7fb34",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 100.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 7,
+                "content_export": 5,
+                "parent": {
+                  "index": 7,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 5,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 17,
+                "offset": 10720,
+                "sha256": "16682952e212e459b045cba8e0dfc3723ee43d9b29b45a9b2580a0bca5468384",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 7.0,
+                    "top": 7.0,
+                    "right": 7.0,
+                    "bottom": 7.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 9,
+                "content_export": 30,
+                "parent": {
+                  "index": 9,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 30,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 22,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 11126,
+                "sha256": "1355d00ecf2ec94474c30cbd2d4e3c0a0717785a044ae2e01562570a580649fe",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 5.0,
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0
+                },
+                "parent_export": 21,
+                "content_export": 23,
+                "parent": {
+                  "index": 21,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 23,
+                  "name": "ButtonOk",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 27,
+                "slot_type": "OverlaySlot",
+                "offset": 11837,
+                "sha256": "e0d0e32cb964d43d9f0c55cc9510f983db53654ca14485aba3d67756c80bd3e7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "horizontal_alignment",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 40.0,
+                  "right": 20.0,
+                  "bottom": 40.0
+                },
+                "horizontal_alignment": 0,
+                "vertical_alignment": 2,
+                "parent_export": 26,
+                "content_export": 31,
+                "parent": {
+                  "index": 26,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                },
+                "content": {
+                  "index": 31,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 29,
+                "slot_type": "SizeBoxSlot",
+                "offset": 11898,
+                "sha256": "e34c782daffb459e08e7c7668997740c6fc7df7475af2ab4c2cbaac42dadd847",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "parent_export",
+                  "content_export"
+                ],
+                "parent_export": 28,
+                "content_export": 9,
+                "parent": {
+                  "index": 28,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                },
+                "content": {
+                  "index": 9,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 33,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 11970,
+                "sha256": "d32a106550fda65d825f701f65f02a7f5a39a5d3da9784ac10bbbe70f9db128c",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 20.0,
+                  "top": 20.0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "parent_export": 30,
+                "content_export": 26,
+                "parent": {
+                  "index": 30,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 26,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 34,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12007,
+                "sha256": "3b4ffd78d591299008ba15a080b30b91f4ce259ced32cc8205399939ff68ac3f",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "vertical_alignment": 3,
+                "parent_export": 30,
+                "content_export": 7,
+                "parent": {
+                  "index": 30,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 7,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 35,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12040,
+                "sha256": "2e58a8a11ccfc84b894c76a0cb5a667304ad14e23cffb19e605cd832ec0a86e3",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "vertical_alignment": 2,
+                "parent_export": 31,
+                "content_export": 24,
+                "parent": {
+                  "index": 31,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 24,
+                  "name": "TextMessage",
+                  "type": "NkRichTextBlock"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7867.json",
+                "slot_export": 36,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12060,
+                "sha256": "b06b863a9e4878d898bbd5745d21d3cde22ad2c23ba408dd42c4a1d905b63ba7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7867
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 10.0,
+                  "right": 0,
+                  "bottom": 10.0
+                },
+                "parent_export": 32,
+                "content_export": 25,
+                "parent": {
+                  "index": 32,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 25,
+                  "name": "TextOk",
+                  "type": "NkTextBlock"
+                }
+              }
+            }
+          ],
+          "binding_status": "candidate_only_no_native_caller_link"
+        },
+        {
+          "file": "ProjectRED-Windows-7869.json",
+          "paths": [
+            "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxPopup"
+          ],
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+            "size": 420675245,
+            "modified_ns": 1789135616000000000,
+            "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+            "pak_version": 11
+          },
+          "entry": 7869,
+          "asset_sha256": "4ced75199317a84715d47319f7f78b1ce48c2559221c81511aaf4c07219fcb1c",
+          "body_sha256": "5ec690a70e8120f42f1d5072a3580be3997417b3925ec2564fd7c0a96f532ba1",
+          "container_native_schema": {
+            "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+            "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+            "array_offset": 150476368,
+            "widget_array_offset": 150571360,
+            "widget_transform_array_offset": 150377256
+          },
+          "controls": [
+            {
+              "export": 28,
+              "name": "ButtonCancel",
+              "type": "NkButton",
+              "offset": 12992,
+              "size": 338,
+              "sha256": "a6b261a4102bb1e6e28e59dcac2ba0a9df99394f8f9133e2b73afcbf1e0672b2",
+              "local_slots": [
+                25
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 25,
+                  "parent_export": 22
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 16,
+                  "parent_export": 8
+                },
+                {
+                  "slot_export": 41,
+                  "parent_export": 37
+                },
+                {
+                  "slot_export": 18,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 36,
+                  "parent_export": 35
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 29,
+              "name": "ButtonOk",
+              "type": "NkButton",
+              "offset": 13330,
+              "size": 343,
+              "sha256": "8e988dc02ba8671bfea4881efd2e8ffd48ccfed64f64f7f741aa4f1bfbdd2c2f",
+              "local_slots": [
+                24
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 24,
+                  "parent_export": 22
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 16,
+                  "parent_export": 8
+                },
+                {
+                  "slot_export": 41,
+                  "parent_export": 37
+                },
+                {
+                  "slot_export": 18,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 36,
+                  "parent_export": 35
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 30,
+              "name": "TextMessage",
+              "type": "NkRichTextBlock",
+              "offset": 13673,
+              "size": 150,
+              "sha256": "62a4c4daa78d868aaf5781f7f59f3babda5351449ef200802369b33367f6e5ea",
+              "local_slots": [
+                42
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 42,
+                  "parent_export": 38
+                },
+                {
+                  "slot_export": 34,
+                  "parent_export": 33
+                },
+                {
+                  "slot_export": 40,
+                  "parent_export": 37
+                },
+                {
+                  "slot_export": 18,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 36,
+                  "parent_export": 35
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 32,
+              "name": "TextOk",
+              "type": "NkTextBlock",
+              "offset": 14004,
+              "size": 178,
+              "sha256": "dd60d8d6414ad1bd047ca9b5ec179797859e7db0fac4b99ba20642f13e7ea720",
+              "local_slots": [
+                43
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 43,
+                  "parent_export": 39
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 5
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 35,
+              "name": "SizeBox_0",
+              "type": "SizeBox",
+              "offset": 14234,
+              "size": 27,
+              "sha256": "c5d89a747173b1ef50a07a93ba17c1ffea545099544141b285594c7f1c0f5281",
+              "local_slots": [
+                11
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot",
+              "container_geometry": {
+                "provenance": {
+                  "file": "ProjectRED-Windows-7869.json",
+                  "export": 35,
+                  "name": "SizeBox_0",
+                  "offset": 14234,
+                  "sha256": "c5d89a747173b1ef50a07a93ba17c1ffea545099544141b285594c7f1c0f5281",
+                  "source": {
+                    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                    "size": 420675245,
+                    "modified_ns": 1789135616000000000,
+                    "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                    "pak_version": 11
+                  },
+                  "entry": 7869
+                },
+                "decoded": {
+                  "explicit_properties": {
+                    "MinDesiredHeight": 400.0,
+                    "bOverride_MinDesiredHeight": true
+                  },
+                  "slots": [
+                    36
+                  ],
+                  "incoming_slot": 11
+                }
+              },
+              "size_constraints": {
+                "WidthOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "HeightOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredHeight": {
+                  "status": "explicitly_enabled",
+                  "value": 400.0
+                },
+                "MaxDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxDesiredHeight": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                }
+              },
+              "container_native_schema": {
+                "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+                "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+                "array_offset": 150476368,
+                "widget_array_offset": 150571360,
+                "widget_transform_array_offset": 150377256
+              }
+            }
+          ],
+          "slots": [
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 11,
+                "offset": 11992,
+                "sha256": "45338ce7089acdf23dcebf193204fbe747c50fc271a3a836dc8e15e1ec1b1896",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 600.0,
+                    "bottom": 400.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.5
+                    ],
+                    "maximum": [
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 4,
+                "content_export": 35,
+                "parent": {
+                  "index": 4,
+                  "name": "CanvasPanel_1",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 35,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 14,
+                "offset": 12188,
+                "sha256": "2b95b089a48ec123773f57d2392ea3033786517dacc51e577df971ee3ea92169",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 5,
+                "content_export": 39,
+                "parent": {
+                  "index": 5,
+                  "name": "CanvasPanel_3",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 39,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 15,
+                "offset": 12243,
+                "sha256": "1dbd8e449c72a2a70c746cc898b9bb496128c24e57e4ed35eb7390a1b7bc975f",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 80.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 6,
+                "content_export": 22,
+                "parent": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 22,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 16,
+                "offset": 12318,
+                "sha256": "9cafa97da87c8a0898664f5247b9f961f97200f0d6e4efb4fa4f78d88d8a5273",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 100.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 8,
+                "content_export": 6,
+                "parent": {
+                  "index": 8,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 18,
+                "offset": 12472,
+                "sha256": "05d5bea96cafbcb150c3bedd12500b964c53e57facb368546a194307447d16c5",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 7.0,
+                    "top": 7.0,
+                    "right": 7.0,
+                    "bottom": 7.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 10,
+                "content_export": 37,
+                "parent": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 37,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 24,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 12904,
+                "sha256": "f409393ceeca894aef0535570f2ecf86a7ced110759c9b6b72b3371cc62d66cc",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 5.0,
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0
+                },
+                "parent_export": 22,
+                "content_export": 29,
+                "parent": {
+                  "index": 22,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 29,
+                  "name": "ButtonOk",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 25,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 12929,
+                "sha256": "19be58328fbdbd74a0c681f336161ba7220eb18b2c4f46560eac3964841564d1",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 0,
+                  "right": 5.0,
+                  "bottom": 0
+                },
+                "parent_export": 22,
+                "content_export": 28,
+                "parent": {
+                  "index": 22,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 28,
+                  "name": "ButtonCancel",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 34,
+                "slot_type": "OverlaySlot",
+                "offset": 14200,
+                "sha256": "e78bc451b9473692f115228d94d1f6d71c292ab595c24afb1d842676e195983b",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "horizontal_alignment",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 40.0,
+                  "right": 20.0,
+                  "bottom": 40.0
+                },
+                "horizontal_alignment": 0,
+                "vertical_alignment": 2,
+                "parent_export": 33,
+                "content_export": 38,
+                "parent": {
+                  "index": 33,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                },
+                "content": {
+                  "index": 38,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 36,
+                "slot_type": "SizeBoxSlot",
+                "offset": 14261,
+                "sha256": "e0deaabf86774ddba456391c16f7cc7e0bbb025249ad27d4b9171f202679f291",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "parent_export",
+                  "content_export"
+                ],
+                "parent_export": 35,
+                "content_export": 10,
+                "parent": {
+                  "index": 35,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                },
+                "content": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 40,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14333,
+                "sha256": "28862525e13e6bdfe30589fe28f18fcd394f6aefed6f3c4507e1da4564173a37",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 20.0,
+                  "top": 20.0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "parent_export": 37,
+                "content_export": 33,
+                "parent": {
+                  "index": 37,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 33,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 41,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14370,
+                "sha256": "8ceadd7f96c3c84f35c9a6340a854f1f40e31905729d9f7a0992006a86cc7b21",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "vertical_alignment": 3,
+                "parent_export": 37,
+                "content_export": 8,
+                "parent": {
+                  "index": 37,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 8,
+                  "name": "CanvasPanelButton",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 42,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14403,
+                "sha256": "77a48f109619876c0361db648a7b5dd5e23077a27c90b101e82d257dac166738",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "vertical_alignment": 2,
+                "parent_export": 38,
+                "content_export": 30,
+                "parent": {
+                  "index": 38,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 30,
+                  "name": "TextMessage",
+                  "type": "NkRichTextBlock"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7869.json",
+                "slot_export": 43,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 14423,
+                "sha256": "4f918d010c257e735c976029d8b43bd39f4065f01812ec8d752fddad4f89107d",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7869
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 10.0,
+                  "right": 0,
+                  "bottom": 10.0
+                },
+                "parent_export": 39,
+                "content_export": 32,
+                "parent": {
+                  "index": 39,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 32,
+                  "name": "TextOk",
+                  "type": "NkTextBlock"
+                }
+              }
+            }
+          ],
+          "binding_status": "candidate_only_no_native_caller_link"
+        },
+        {
+          "file": "ProjectRED-Windows-7881.json",
+          "paths": [
+            "/Game/RED/UI/Common/MessageBox/WBP_SystemMessageBoxPopup"
+          ],
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+            "size": 420675245,
+            "modified_ns": 1789135616000000000,
+            "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+            "pak_version": 11
+          },
+          "entry": 7881,
+          "asset_sha256": "6d18c0ad62be1cc00fd0e38eace5484da3d7986aaeda909bee900d74f032b313",
+          "body_sha256": "362a6e6300406e665ba1c79a083e8b1cbb48a90067f4989c525a31305d665556",
+          "container_native_schema": {
+            "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+            "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+            "array_offset": 150476368,
+            "widget_array_offset": 150571360,
+            "widget_transform_array_offset": 150377256
+          },
+          "controls": [
+            {
+              "export": 22,
+              "name": "ButtonCancel",
+              "type": "NkButton",
+              "offset": 11052,
+              "size": 338,
+              "sha256": "b41fe3e72c903d25c5f3ae28e16fdf5a3865790f3c47ec68aa550776b67f99af",
+              "local_slots": [
+                21
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 21,
+                  "parent_export": 19
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 7
+                },
+                {
+                  "slot_export": 35,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 30,
+                  "parent_export": 29
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 23,
+              "name": "ButtonOk",
+              "type": "NkButton",
+              "offset": 11390,
+              "size": 337,
+              "sha256": "e228382cf84173a9fc42faaabdfb4d12c534247b3b64566882b4ea0dc36068b2",
+              "local_slots": [
+                20
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 20,
+                  "parent_export": 19
+                },
+                {
+                  "slot_export": 14,
+                  "parent_export": 6
+                },
+                {
+                  "slot_export": 15,
+                  "parent_export": 7
+                },
+                {
+                  "slot_export": 35,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 30,
+                  "parent_export": 29
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 24,
+              "name": "TextMessage",
+              "type": "NkRichTextBlock",
+              "offset": 11727,
+              "size": 196,
+              "sha256": "9a99f78e638bc26cc52d9757d4a1747af00cb1ab2b2ad9da1aeaaeca3a261ee5",
+              "local_slots": [
+                36
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 36,
+                  "parent_export": 32
+                },
+                {
+                  "slot_export": 28,
+                  "parent_export": 27
+                },
+                {
+                  "slot_export": 34,
+                  "parent_export": 31
+                },
+                {
+                  "slot_export": 17,
+                  "parent_export": 10
+                },
+                {
+                  "slot_export": 30,
+                  "parent_export": 29
+                },
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 26,
+              "name": "TextOk",
+              "type": "NkTextBlock",
+              "offset": 12153,
+              "size": 175,
+              "sha256": "955647ba36208e5d9b57e2f4cb2f7a6962f0347d6b7e4a8cf66733d11bf2ae3f",
+              "local_slots": [
+                38
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 38,
+                  "parent_export": 33
+                },
+                {
+                  "slot_export": 13,
+                  "parent_export": 5
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot"
+            },
+            {
+              "export": 29,
+              "name": "SizeBox_0",
+              "type": "SizeBox",
+              "offset": 12380,
+              "size": 27,
+              "sha256": "3fae5bd12ceb498221bbb2390192a768908b815adf73d9c3308748c3ede5bff7",
+              "local_slots": [
+                11
+              ],
+              "parent_chain": [
+                {
+                  "slot_export": 11,
+                  "parent_export": 4
+                }
+              ],
+              "chain_termination": "no_further_decoded_slot",
+              "container_geometry": {
+                "provenance": {
+                  "file": "ProjectRED-Windows-7881.json",
+                  "export": 29,
+                  "name": "SizeBox_0",
+                  "offset": 12380,
+                  "sha256": "3fae5bd12ceb498221bbb2390192a768908b815adf73d9c3308748c3ede5bff7",
+                  "source": {
+                    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                    "size": 420675245,
+                    "modified_ns": 1789135616000000000,
+                    "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                    "pak_version": 11
+                  },
+                  "entry": 7881
+                },
+                "decoded": {
+                  "explicit_properties": {
+                    "MinDesiredHeight": 400.0,
+                    "bOverride_MinDesiredHeight": true
+                  },
+                  "slots": [
+                    30
+                  ],
+                  "incoming_slot": 11
+                }
+              },
+              "size_constraints": {
+                "WidthOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "HeightOverride": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinDesiredHeight": {
+                  "status": "explicitly_enabled",
+                  "value": 400.0
+                },
+                "MaxDesiredWidth": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxDesiredHeight": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MinAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                },
+                "MaxAspectRatio": {
+                  "status": "unresolved_default_or_archetype",
+                  "stored_value": null,
+                  "enabled_flag": null
+                }
+              },
+              "container_native_schema": {
+                "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Binaries\\Win64\\ProjectRED-Win64-Shipping.exe",
+                "sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+                "array_offset": 150476368,
+                "widget_array_offset": 150571360,
+                "widget_transform_array_offset": 150377256
+              }
+            }
+          ],
+          "slots": [
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 11,
+                "offset": 10408,
+                "sha256": "132fdd17bd0e308bb295287b334301b190bf1db0b141833a6be7f2d62b33d8ed",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 600.0,
+                    "bottom": 400.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.5,
+                      0.5
+                    ],
+                    "maximum": [
+                      0.5,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 4,
+                "content_export": 29,
+                "parent": {
+                  "index": 4,
+                  "name": "CanvasPanel_1",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 29,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 13,
+                "offset": 10526,
+                "sha256": "63972b22ce860199ca58e531c066fc40189f0bdf389727c0fd0e37aa9a84f9d8",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 80.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      0.5
+                    ],
+                    "maximum": [
+                      1.0,
+                      0.5
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.26
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 5,
+                "content_export": 33,
+                "parent": {
+                  "index": 5,
+                  "name": "CanvasPanel_3",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 33,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 14,
+                "offset": 10601,
+                "sha256": "14a77d1b64e4f20af5807a942f285aed5acb91850c57d7c270ee94247fda624b",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 80.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 6,
+                "content_export": 19,
+                "parent": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 19,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 15,
+                "offset": 10676,
+                "sha256": "e3fce1fa328fbebe27fcba71d4696e5bc4f1fc9134f4fc1de71ad6b0310b6fde",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 0,
+                    "top": 0,
+                    "right": 0,
+                    "bottom": 100.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0.0,
+                      1.0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.0,
+                    1.0
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "parent_export": 7,
+                "content_export": 6,
+                "parent": {
+                  "index": 7,
+                  "name": "CanvasPanel_7",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 6,
+                  "name": "CanvasPanel_6",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 17,
+                "offset": 10830,
+                "sha256": "5ef94b2d928b40aed1b2d5fb2b7cab9a28a9db98ff79c8821f7bdff67e4f86e7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "layout": {
+                  "offsets": {
+                    "left": 7.0,
+                    "top": 7.0,
+                    "right": 7.0,
+                    "bottom": 7.0
+                  },
+                  "anchors": {
+                    "minimum": [
+                      0,
+                      0
+                    ],
+                    "maximum": [
+                      1.0,
+                      1.0
+                    ]
+                  },
+                  "alignment": [
+                    0.5,
+                    0.5
+                  ],
+                  "serialized_fields": [
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                "auto_size": 1,
+                "parent_export": 10,
+                "content_export": 31,
+                "parent": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                },
+                "content": {
+                  "index": 31,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 20,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 11002,
+                "sha256": "6b59ab559d810eefd72cbbf9efdcc1428306767b28a97e62c123630725b9ac4d",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 5.0,
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0
+                },
+                "parent_export": 19,
+                "content_export": 23,
+                "parent": {
+                  "index": 19,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 23,
+                  "name": "ButtonOk",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 21,
+                "slot_type": "HorizontalBoxSlot",
+                "offset": 11027,
+                "sha256": "ef3c33d4abc34a2cc7ebfe4cd7d91906359c274afa68728d101b969d01b262b7",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 0,
+                  "top": 0,
+                  "right": 5.0,
+                  "bottom": 0
+                },
+                "parent_export": 19,
+                "content_export": 22,
+                "parent": {
+                  "index": 19,
+                  "name": "HorizontalBox_0",
+                  "type": "HorizontalBox"
+                },
+                "content": {
+                  "index": 22,
+                  "name": "ButtonCancel",
+                  "type": "NkButton"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 28,
+                "slot_type": "OverlaySlot",
+                "offset": 12346,
+                "sha256": "8f4c08839e7d2fd6ade71b77ebf928d2efe46f85c416ff72b5fc7314c17658b5",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "horizontal_alignment",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 40.0,
+                  "right": 20.0,
+                  "bottom": 40.0
+                },
+                "horizontal_alignment": 0,
+                "vertical_alignment": 2,
+                "parent_export": 27,
+                "content_export": 32,
+                "parent": {
+                  "index": 27,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                },
+                "content": {
+                  "index": 32,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 30,
+                "slot_type": "SizeBoxSlot",
+                "offset": 12407,
+                "sha256": "099e46a331c944b6b70d23ec934a36d08df008736593b9c417b93b62af847280",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "parent_export",
+                  "content_export"
+                ],
+                "parent_export": 29,
+                "content_export": 10,
+                "parent": {
+                  "index": 29,
+                  "name": "SizeBox_0",
+                  "type": "SizeBox"
+                },
+                "content": {
+                  "index": 10,
+                  "name": "PanelPopup",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 34,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12483,
+                "sha256": "d2cd327e3b7a00e383c4a1ce7ebe3f94cf270c5062134d9e6a401ab7f1ee9412",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "padding",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "padding": {
+                  "left": 20.0,
+                  "top": 20.0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "parent_export": 31,
+                "content_export": 27,
+                "parent": {
+                  "index": 31,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 27,
+                  "name": "Overlay_0",
+                  "type": "Overlay"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 35,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12520,
+                "sha256": "edd6b4717938e6d65120e7bac55ca137222a7d0b07a5e2d04aa3a6d7b159e721",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "padding",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "padding": {
+                  "left": 20.0,
+                  "top": 0,
+                  "right": 20.0,
+                  "bottom": 20.0
+                },
+                "vertical_alignment": 3,
+                "parent_export": 31,
+                "content_export": 7,
+                "parent": {
+                  "index": 31,
+                  "name": "VerticalBox_0",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 7,
+                  "name": "CanvasPanel_7",
+                  "type": "CanvasPanel"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 36,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12553,
+                "sha256": "839ab0c401b69d320fb3ef9e43380077c8f8c071b2fb2e347017671e54b411ba",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "size",
+                  "vertical_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "size": {
+                  "value": 1.0,
+                  "rule": 1,
+                  "serialized_fields": [
+                    1
+                  ]
+                },
+                "vertical_alignment": 2,
+                "parent_export": 32,
+                "content_export": 24,
+                "parent": {
+                  "index": 32,
+                  "name": "VerticalBox_1",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 24,
+                  "name": "TextMessage",
+                  "type": "NkRichTextBlock"
+                }
+              }
+            },
+            {
+              "provenance": {
+                "file": "ProjectRED-Windows-7881.json",
+                "slot_export": 38,
+                "slot_type": "VerticalBoxSlot",
+                "offset": 12587,
+                "sha256": "ea564dfd9eff68d8bb58940094e889cdd8898b1d2bd0b26a8e8713773c0d025e",
+                "source": {
+                  "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+                  "size": 420675245,
+                  "modified_ns": 1789135616000000000,
+                  "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+                  "pak_version": 11
+                },
+                "entry": 7881
+              },
+              "decoded": {
+                "serialized_fields": [
+                  "horizontal_alignment",
+                  "parent_export",
+                  "content_export"
+                ],
+                "horizontal_alignment": 2,
+                "parent_export": 33,
+                "content_export": 26,
+                "parent": {
+                  "index": 33,
+                  "name": "VerticalBox_2",
+                  "type": "VerticalBox"
+                },
+                "content": {
+                  "index": 26,
+                  "name": "TextOk",
+                  "type": "NkTextBlock"
+                }
+              }
+            }
+          ],
+          "binding_status": "candidate_only_no_native_caller_link"
+        }
+      ],
+      "widget_binding_proven": false,
+      "limitation": "Exact localized text confirmed; dynamic caller-to-widget binding and absolute geometry unresolved"
+    }
+  }
+}

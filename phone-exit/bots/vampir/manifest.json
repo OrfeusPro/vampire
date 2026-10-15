@@ -1,0 +1,17 @@
+{
+  "id": "vampir",
+  "name": "Vampir",
+  "version": "1.0.8",
+  "engineVersion": 3,
+  "settingsVersion": 1,
+  "entrypoint": "bot.py",
+  "packages": [
+    "com.netmarble.thered"
+  ],
+  "ocr": false,
+  "features": [
+    "autostart",
+    "quests",
+    "skip_cutscenes"
+  ]
+}

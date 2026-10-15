@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "version": 1,
+  "properties": {
+    "autostart_enabled": {
+      "type": "boolean",
+      "title": "РђРІС‚РѕР·Р°РїСѓСЃРє РёРіСЂС‹",
+      "default": true
+    },
+    "quest_enabled": {
+      "type": "boolean",
+      "title": "Прокачка по квестам",
+      "default": false
+    },
+    "skip_cutscenes_enabled": {
+      "type": "boolean",
+      "title": "Пропускать диалоги и кат-сцены",
+      "default": true
+    }
+  }
+}
