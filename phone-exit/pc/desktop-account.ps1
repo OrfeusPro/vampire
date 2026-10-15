@@ -56,4 +56,4 @@ function ShowAccountTransfer([switch]$Preview) {
 }
 $accountButton=ButtonAt 'Аккаунт…' 850 87 180
 $accountButton.BackColor=[Drawing.ColorTranslator]::FromHtml('#263144');$accountButton.ForeColor=$form.ForeColor;$accountButton.FlatStyle='Flat';$accountButton.FlatAppearance.BorderSize=0
-$accountButton.Add_Click({ShowAccountTransfer})
+$accountButton.Add_Click({try{ShowAccountTransfer}catch{$hint.Text='Не удалось открыть настройки аккаунта. Закройте окно настроек и повторите.'}})

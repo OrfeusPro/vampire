@@ -324,9 +324,13 @@ try { StartDirectory } catch { $hint.Text = 'Не удалось открыть 
 . (Join-Path $PSScriptRoot 'desktop-bots.ps1')
 . (Join-Path $PSScriptRoot 'desktop-redesign.ps1')
 $timer.Start()
-try { $null = $form.ShowDialog() } finally { StopVpn; if($script:client){try{$script:client.StandardInput.Close();if(!$script:client.WaitForExit(4000)){$script:client.Kill()}}catch{}};CloseDirectory }
-$timer.Dispose()
-$form.Dispose()
+try { $null = $form.ShowDialog() } finally {
+    # Timers must not invoke PowerShell delegates after its runspace has unwound.
+    $timer.Stop();$timer.Dispose()
+    if($script:botBadgeTimer){$script:botBadgeTimer.Stop();$script:botBadgeTimer.Dispose()}
+    try{StopVpn; if($script:client){try{$script:client.StandardInput.Close();if(!$script:client.WaitForExit(4000)){$script:client.Kill()}}catch{}};CloseDirectory}
+    finally{$form.Dispose()}
+}
 if($UiTest -and !$script:uiTestPassed){throw 'Desktop redesign test failed'}
 if($RecoveryTest -and !$script:recoveryPassed){throw 'VPN recovery system test did not pass'}
 if($VpnTest -and !$RecoveryTest -and !$script:vpnTestPassed){throw 'VPN system test did not pass'}

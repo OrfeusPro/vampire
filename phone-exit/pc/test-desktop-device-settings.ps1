@@ -33,6 +33,13 @@ foreach($id in @([string]$phone.id,'missing-test-device')) {
             if(!$panel.Text.Contains([string]$phone.name)){throw 'Device title does not identify the selected phone'}
             $tabs=$panel.GetType().GetField('deviceTabs',$flags).GetValue($panel)
             if($tabs.TabPages.Count -ne 4){throw 'Device settings tabs are missing'}
+            $tabs.SelectedIndex=2;[Windows.Forms.Application]::DoEvents()
+            $script:identityOpened=$false
+            $identityTimer=[Windows.Forms.Timer]::new();$identityTimer.Interval=100
+            $identityTimer.Add_Tick({$dialog=@([Windows.Forms.Application]::OpenForms|Where-Object {$_ -is [PhoneExit.PhoneIdentityDialog]})[0];if($dialog){$script:identityOpened=$true;$identityTimer.Stop();$dialog.CancelButton.PerformClick()}})
+            try{$identityTimer.Start();$panel.GetType().GetMethod('EditIdentity',$flags).Invoke($panel,@());[Windows.Forms.Application]::DoEvents()}finally{$identityTimer.Dispose()}
+            if(!$script:identityOpened -or !$panel.Visible){throw 'Opening identity settings failed or closed the bot editor'}
+            $tabs.SelectedIndex=0
             $gameSelect=$panel.GetType().GetField('gameSelect',$flags).GetValue($panel)
             if($gameSelect.SelectedItem -ne 'Lord Nine'){throw 'Assigned game is not selected from the catalog'}
             $originalSettings=$profile['settings']
