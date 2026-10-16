@@ -90,12 +90,60 @@ def attach_condition_types(catalog, report):
     catalog['sourceInterpretations']['conditionTypeNames'] = 'native_initializer_confirmed_names_only'
 
 
+def attach_client_predicate_reference(catalog, predicate, fields):
+    """Keep checked Windows semantics as reference, separate from live evaluation."""
+    for report in (predicate, fields):
+        if any(report[k] != catalog['nativeEnumSource'][k] for k in ('source', 'sha256')):
+            raise ValueError('Predicate native source mismatch')
+    if predicate['runtime_evaluator_enabled'] is not False or predicate['group_loop'] != 'all_conditions_until_first_false_after_prechecks_and_overrides':
+        raise ValueError('Unexpected predicate scope')
+    if (predicate['forced_lock_presence_checked_first'] is not True or
+            predicate['missing_or_empty_group_result'] is not True or fields['predicate'] != 0x145cf2dc0):
+        raise ValueError('Unexpected predicate early branches')
+    entries = predicate['switch']['entries']
+    if len(entries) != 11 or {str(e['type']): e['name'] for e in entries} != catalog['contentsLockConditionTypes']:
+        raise ValueError('Predicate condition types mismatch')
+    expected_fields = {'Id': (8, 4), 'OpenNotification': (12, 1), 'SystemMessageNotify': (13, 1),
+                       'SaveType': (14, 1), 'ContentsLockConditionGroupId': (32, 4)}
+    actual_fields = {f['name']: (f['object_offset'], f['width']) for f in fields['fields']}
+    if len(fields['fields']) != 5 or actual_fields != expected_fields:
+        raise ValueError('Predicate field layout mismatch')
+    meta = fields['csv_source']
+    if any(meta[k] != catalog['sources']['locks:69'][k] for k in ('entry', 'file', 'offset', 'sha256')):
+        raise ValueError('Predicate lock table mismatch')
+    source_rows = {}
+    for item in fields['csv_rows']:
+        row = item['row']
+        if row['Id'] in source_rows:
+            raise ValueError('Duplicate predicate lock record')
+        source_rows[row['Id']] = item
+    if set(source_rows) != set(catalog['contentsLocks']):
+        raise ValueError('Predicate lock records differ')
+    for lid, lock in catalog['contentsLocks'].items():
+        item = source_rows[lid]
+        if (any(lock.get(k) != v for k, v in item['row'].items()) or
+                lock['source'] != dict(entry=69, csv_record=item['csv_record'])):
+            raise ValueError('Predicate lock record mismatch')
+    catalog.update(referenceRevision=4, clientPredicateReference=dict(
+        scope='Windows_client_reference_only_not_player_evaluation',
+        source={k: predicate[k] for k in ('source', 'sha256')},
+        ordinaryGroupPath=predicate['group_loop'],
+        earlyBranches=['ForcedLock_presence_false', 'SaveType_1_saved_id_true', 'other_saved_id_true'],
+        lockFields={k: dict(offset=v[0], width=v[1]) for k, v in expected_fields.items()},
+        dispatch=entries, runtimeEvaluatorEnabled=False,
+        unresolved=['gate_state', 'saved_lists_state', 'quest_state_semantics', 'Android_equivalence']))
+
+
 def main():
     graph = json.loads((ROOT / 'quest-graph/index.json').read_text(encoding='utf-8'))
     rewards = json.loads((ROOT / 'quest-graph/rewards.json').read_text(encoding='utf-8'))
     locks = json.loads((ROOT / 'quest-graph/contents-locks.json').read_text(encoding='utf-8'))
     shops = json.loads((ROOT / 'quest-graph/shop-tasks.json').read_text(encoding='utf-8'))
     condition_types = json.loads((ROOT / 'quest-graph/condition-types.json').read_text(encoding='utf-8'))
+    predicate = json.loads((ROOT / 'code-clues/lock-predicate-code.json').read_text(encoding='utf-8'))
+    lock_fields = json.loads((ROOT / 'code-clues/contents-lock-fields.json').read_text(encoding='utf-8'))
+    if predicate['condition_type_report_sha256'] != hashlib.sha256((ROOT / 'quest-graph/condition-types.json').read_bytes()).hexdigest():
+        raise ValueError('Predicate condition type report changed')
     native_source = graph['native_enum_source']
     enum_file = ROOT / 'code-clues/native-enums.json'
     native_enums = json.loads(enum_file.read_text(encoding='utf-8'))
@@ -177,6 +225,7 @@ def main():
                                 'Only registered fresh visual matches confirm a step; no blind replay'])
     attach_reference_data(catalog, rewards, locks, shops)
     attach_condition_types(catalog, condition_types)
+    attach_client_predicate_reference(catalog, predicate, lock_fields)
     catalog.update(nativeValueSymbols=native_symbols, nativeEnumReportHash=hashlib.sha256(enum_file.read_bytes()).hexdigest())
     for quest in quests.values():
         if quest['typeName'] != native_symbols['EQuestType'].get(quest['type']):
@@ -192,6 +241,8 @@ def main():
             raise ValueError('Reward numeric/native type mismatch')
     catalog['sourceReports'] = {file: hashlib.sha256((ROOT / 'quest-graph' / file).read_bytes()).hexdigest()
                               for file in ('index.json', 'rewards.json', 'contents-locks.json', 'shop-tasks.json', 'condition-types.json')}
+    catalog['sourceReports'].update({file: hashlib.sha256((ROOT / 'code-clues' / file).read_bytes()).hexdigest()
+                                    for file in ('lock-predicate-code.json', 'contents-lock-fields.json')})
     path = MODULE / 'quest-runtime.json'
     path.write_text(json.dumps(catalog, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
     config_path = MODULE / 'vision.json'

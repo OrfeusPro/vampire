@@ -1,0 +1,175 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\zizak-level1-2026-10-16\\adrenaline-buff.jpg",
+  "sha256": "e0169b741160787056921ae549c9de7c31025460a0f107eb7553a60e95980c25",
+  "source_step": "4002018",
+  "variants": [
+    {
+      "name": "tutorial_adrenaline_buff",
+      "factor": 1,
+      "crop": [
+        722,
+        443,
+        1029,
+        490
+      ],
+      "sha256": "81f531baf5b3aee128cbf607d0b1c1cc47586e142715632ca5ca09d8b3d09797"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_compact",
+      "factor": 0.75,
+      "crop": [
+        542,
+        332,
+        772,
+        368
+      ],
+      "sha256": "aca0857666b0bf83aa654ff38fc4f92501fede7f8f2cbf50caa9ee9b40f719fa"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_large",
+      "factor": 1.25,
+      "crop": [
+        902,
+        554,
+        1286,
+        612
+      ],
+      "sha256": "6675e05bacc87ae8f01087d6d8cd66bdd6dd786d473c076e31529e5ff3a316fe"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_target",
+      "factor": 1,
+      "crop": [
+        310,
+        567,
+        476,
+        592
+      ],
+      "sha256": "5fcaead89a7448c950daa003555edd87dcc91262232cd149aeb758fc41ad27b7"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_target_compact",
+      "factor": 0.75,
+      "crop": [
+        232,
+        425,
+        357,
+        444
+      ],
+      "sha256": "b9348917360f925a7a56d9333879ebc1758fa7db116d372c0e46b1db9a8ba489"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_target_large",
+      "factor": 1.25,
+      "crop": [
+        388,
+        709,
+        595,
+        740
+      ],
+      "sha256": "e9eb4837586e0739ffdb1449bb5023736fca014c713988f243f62b74fab6a5f0"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_corner",
+      "factor": 1,
+      "crop": [
+        296,
+        553,
+        315,
+        572
+      ],
+      "sha256": "6f7dbd362ccb8e9bb5095fc09d3b3306d676eefa73bc11d8acbc6197ca1db01d"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_corner_compact",
+      "factor": 0.75,
+      "crop": [
+        222,
+        415,
+        236,
+        429
+      ],
+      "sha256": "01858c3c01636b06be15f79371a84efb685d487e272409312fc61fb91b43f285"
+    },
+    {
+      "name": "tutorial_adrenaline_buff_corner_large",
+      "factor": 1.25,
+      "crop": [
+        370,
+        691,
+        394,
+        715
+      ],
+      "sha256": "39b7a2768bd2c75f4c563c3b7c4cfdaa92111925c007a9ac90ea3e6d77357e1c"
+    }
+  ],
+  "widget_sources": [
+    {
+      "file": "pakchunk500-Windows-9122.json",
+      "sha256": "ac789e3ab34714a3e79f1d90d3f031513e266a233bc93d0fa2633e29754ccbea",
+      "source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+        "size": 90792756,
+        "modified_ns": 1791753957558672500,
+        "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+        "pak_version": 11
+      },
+      "controls": [
+        {
+          "export": 5,
+          "name": "CanvasPanelRoot",
+          "type": "CanvasPanel",
+          "offset": 7310,
+          "size": 18,
+          "sha256": "ec6b82e80ecc1a92e9898fc2aa3791c115f336d027104299beadabcd63ee4717",
+          "local_slots": [
+            7
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 7,
+              "parent_export": 3
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 6,
+          "name": "CanvasPanelTutorial",
+          "type": "CanvasPanel",
+          "offset": 7328,
+          "size": 13,
+          "sha256": "d822b672b146398ca9fbc4c6ad452e910e52c08151e4860c99bb0d3ba5cc745d",
+          "local_slots": [
+            20
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 20,
+              "parent_export": 18
+            },
+            {
+              "slot_export": 2,
+              "parent_export": 1
+            },
+            {
+              "slot_export": 9,
+              "parent_export": 4
+            },
+            {
+              "slot_export": 11,
+              "parent_export": 5
+            },
+            {
+              "slot_export": 7,
+              "parent_export": 3
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        }
+      ]
+    }
+  ],
+  "absolute_geometry_proven": false,
+  "policy": "source-linked exact tutorial prompt, buff header and highlighted corner; no stat values used"
+}

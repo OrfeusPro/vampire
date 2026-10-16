@@ -1371,6 +1371,2058 @@
         1600,
         900
       ]
+    },
+    "connection_terminated_confirm": {
+      "file": "connection_terminated_confirm.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.45,
+        0.75,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "connection_terminated_confirm_compact": {
+      "file": "connection_terminated_confirm_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.45,
+        0.75,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "connection_terminated_confirm_large": {
+      "file": "connection_terminated_confirm_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.45,
+        0.75,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "idle_disconnected": {
+      "file": "idle_disconnected.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.25,
+        0.75,
+        0.55
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "idle_disconnected_compact": {
+      "file": "idle_disconnected_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.25,
+        0.75,
+        0.55
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "idle_disconnected_large": {
+      "file": "idle_disconnected_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.25,
+        0.75,
+        0.55
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "title_prompt": {
+      "file": "title_prompt.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.5,
+        0.7,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "title_prompt_compact": {
+      "file": "title_prompt_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.5,
+        0.7,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "title_prompt_large": {
+      "file": "title_prompt_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.5,
+        0.7,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "title_logo": {
+      "file": "title_logo.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.3,
+        0.75,
+        0.65
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "title_logo_compact": {
+      "file": "title_logo_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.3,
+        0.75,
+        0.65
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "title_logo_large": {
+      "file": "title_logo_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.25,
+        0.3,
+        0.75,
+        0.65
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "character_game_start": {
+      "file": "character_game_start.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.8,
+        1,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "character_game_start_compact": {
+      "file": "character_game_start_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.8,
+        1,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "character_game_start_large": {
+      "file": "character_game_start_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.8,
+        1,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "character_selection_title": {
+      "file": "character_selection_title.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0,
+        0.4,
+        0.15
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "character_selection_title_compact": {
+      "file": "character_selection_title_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0,
+        0.4,
+        0.15
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "character_selection_title_large": {
+      "file": "character_selection_title_large.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0,
+        0.4,
+        0.15
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "character_last_login": {
+      "file": "character_last_login.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0.4,
+        0.4,
+        0.65
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "character_last_login_compact": {
+      "file": "character_last_login_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0.4,
+        0.4,
+        0.65
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "character_last_login_large": {
+      "file": "character_last_login_large.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0.4,
+        0.4,
+        0.65
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_enhance_bag": {
+      "file": "tutorial_enhance_bag.png",
+      "threshold": 0.94,
+      "region": [
+        0.45,
+        0.1,
+        0.9,
+        0.35
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_enhance_bag_compact": {
+      "file": "tutorial_enhance_bag_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.45,
+        0.1,
+        0.9,
+        0.35
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_enhance_bag_large": {
+      "file": "tutorial_enhance_bag_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.45,
+        0.1,
+        0.9,
+        0.35
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_enhance_select": {
+      "file": "tutorial_enhance_select.png",
+      "threshold": 0.94,
+      "region": [
+        0.4,
+        0.25,
+        0.8,
+        0.5
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_enhance_select_compact": {
+      "file": "tutorial_enhance_select_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.4,
+        0.25,
+        0.8,
+        0.5
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_enhance_select_large": {
+      "file": "tutorial_enhance_select_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.4,
+        0.25,
+        0.8,
+        0.5
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_selected_corner": {
+      "file": "enhance_selected_corner.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.1,
+        0.95,
+        0.35
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_selected_corner_compact": {
+      "file": "enhance_selected_corner_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.1,
+        0.95,
+        0.35
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_selected_corner_large": {
+      "file": "enhance_selected_corner_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.1,
+        0.95,
+        0.35
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_enhance_open": {
+      "file": "tutorial_enhance_open.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.4,
+        0.55,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_enhance_open_compact": {
+      "file": "tutorial_enhance_open_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.4,
+        0.55,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_enhance_open_large": {
+      "file": "tutorial_enhance_open_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.4,
+        0.55,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_info_button": {
+      "file": "enhance_info_button.png",
+      "threshold": 0.94,
+      "region": [
+        0.45,
+        0.65,
+        0.7,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_info_button_compact": {
+      "file": "enhance_info_button_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.45,
+        0.65,
+        0.7,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_info_button_large": {
+      "file": "enhance_info_button_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.45,
+        0.65,
+        0.7,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_enhance_material": {
+      "file": "tutorial_enhance_material.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.5,
+        0.5,
+        0.8
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_enhance_material_compact": {
+      "file": "tutorial_enhance_material_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.5,
+        0.5,
+        0.8
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_enhance_material_large": {
+      "file": "tutorial_enhance_material_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.5,
+        0.5,
+        0.8
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_material_corner": {
+      "file": "enhance_material_corner.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.7,
+        0.2,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_material_corner_compact": {
+      "file": "enhance_material_corner_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.7,
+        0.2,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_material_corner_large": {
+      "file": "enhance_material_corner_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.7,
+        0.2,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_enhance_attempt": {
+      "file": "tutorial_enhance_attempt.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.55,
+        0.75,
+        0.88
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_enhance_attempt_compact": {
+      "file": "tutorial_enhance_attempt_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.55,
+        0.75,
+        0.88
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_enhance_attempt_large": {
+      "file": "tutorial_enhance_attempt_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.3,
+        0.55,
+        0.75,
+        0.88
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_attempt_button": {
+      "file": "enhance_attempt_button.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.85,
+        0.4,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_attempt_button_compact": {
+      "file": "enhance_attempt_button_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.85,
+        0.4,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_attempt_button_large": {
+      "file": "enhance_attempt_button_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.85,
+        0.4,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_safe_range": {
+      "file": "enhance_safe_range.png",
+      "threshold": 0.94,
+      "region": [
+        0.05,
+        0.75,
+        0.4,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_plus_one": {
+      "file": "enhance_plus_one.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.55,
+        0.2,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_safe_range_compact": {
+      "file": "enhance_safe_range_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.05,
+        0.75,
+        0.4,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_safe_range_large": {
+      "file": "enhance_safe_range_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.05,
+        0.75,
+        0.4,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_plus_one_compact": {
+      "file": "enhance_plus_one_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.55,
+        0.2,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_plus_one_large": {
+      "file": "enhance_plus_one_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.04,
+        0.55,
+        0.2,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_screen_header": {
+      "file": "enhance_screen_header.png",
+      "threshold": 0.94,
+      "region": [
+        0.7,
+        0,
+        0.9,
+        0.1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_screen_header_compact": {
+      "file": "enhance_screen_header_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.7,
+        0,
+        0.9,
+        0.1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_screen_header_large": {
+      "file": "enhance_screen_header_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.7,
+        0,
+        0.9,
+        0.1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_screen_multi": {
+      "file": "enhance_screen_multi.png",
+      "threshold": 0.94,
+      "region": [
+        0.02,
+        0.05,
+        0.3,
+        0.23
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_screen_multi_compact": {
+      "file": "enhance_screen_multi_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.02,
+        0.05,
+        0.3,
+        0.23
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_screen_multi_large": {
+      "file": "enhance_screen_multi_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.02,
+        0.05,
+        0.3,
+        0.23
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_screen_register": {
+      "file": "enhance_screen_register.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.8,
+        0.95,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_screen_register_compact": {
+      "file": "enhance_screen_register_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.8,
+        0.95,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_screen_register_large": {
+      "file": "enhance_screen_register_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.8,
+        0.95,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_screen_exit": {
+      "file": "enhance_screen_exit.png",
+      "threshold": 0.94,
+      "region": [
+        0.9,
+        0,
+        1,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_screen_exit_compact": {
+      "file": "enhance_screen_exit_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.9,
+        0,
+        1,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_screen_exit_large": {
+      "file": "enhance_screen_exit_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.9,
+        0,
+        1,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "enhance_tutorial_skip": {
+      "file": "enhance_tutorial_skip.png",
+      "threshold": 0.94,
+      "region": [
+        0.85,
+        0,
+        1,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "enhance_tutorial_skip_compact": {
+      "file": "enhance_tutorial_skip_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.85,
+        0,
+        1,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "enhance_tutorial_skip_large": {
+      "file": "enhance_tutorial_skip_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.85,
+        0,
+        1,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_drain_variant": {
+      "file": "tutorial_drain_variant.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.35,
+        0.6,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_drain_variant_compact": {
+      "file": "tutorial_drain_variant_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.35,
+        0.6,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_drain_variant_large": {
+      "file": "tutorial_drain_variant_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.1,
+        0.35,
+        0.6,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_adrenaline_frame": {
+      "file": "tutorial_adrenaline_frame.png",
+      "threshold": 0.94,
+      "region": [
+        0.18,
+        0.78,
+        0.36,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_adrenaline_frame_compact": {
+      "file": "tutorial_adrenaline_frame_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.18,
+        0.78,
+        0.36,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_adrenaline_frame_large": {
+      "file": "tutorial_adrenaline_frame_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.18,
+        0.78,
+        0.36,
+        1
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_adrenaline_buff": {
+      "file": "tutorial_adrenaline_buff.png",
+      "threshold": 0.94,
+      "region": [
+        0.5,
+        0.5,
+        0.9,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_adrenaline_buff_compact": {
+      "file": "tutorial_adrenaline_buff_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.5,
+        0.5,
+        0.9,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_adrenaline_buff_large": {
+      "file": "tutorial_adrenaline_buff_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.5,
+        0.5,
+        0.9,
+        0.75
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_adrenaline_buff_target": {
+      "file": "tutorial_adrenaline_buff_target.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.7,
+        0.6,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_adrenaline_buff_target_compact": {
+      "file": "tutorial_adrenaline_buff_target_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.7,
+        0.6,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_adrenaline_buff_target_large": {
+      "file": "tutorial_adrenaline_buff_target_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.7,
+        0.6,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_adrenaline_buff_corner": {
+      "file": "tutorial_adrenaline_buff_corner.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.7,
+        0.4,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_adrenaline_buff_corner_compact": {
+      "file": "tutorial_adrenaline_buff_corner_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.7,
+        0.4,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_adrenaline_buff_corner_large": {
+      "file": "tutorial_adrenaline_buff_corner_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.15,
+        0.7,
+        0.4,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "bag_screen_header": {
+      "file": "bag_screen_header.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.08,
+        0.8,
+        0.2
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "bag_screen_header_compact": {
+      "file": "bag_screen_header_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.08,
+        0.8,
+        0.2
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "bag_screen_header_large": {
+      "file": "bag_screen_header_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.08,
+        0.8,
+        0.2
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "bag_screen_bulk": {
+      "file": "bag_screen_bulk.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "bag_screen_bulk_compact": {
+      "file": "bag_screen_bulk_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "bag_screen_bulk_large": {
+      "file": "bag_screen_bulk_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.7,
+        0.8,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "bag_screen_default": {
+      "file": "bag_screen_default.png",
+      "threshold": 0.94,
+      "region": [
+        0.75,
+        0.7,
+        0.9,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "bag_screen_default_compact": {
+      "file": "bag_screen_default_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.75,
+        0.7,
+        0.9,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "bag_screen_default_large": {
+      "file": "bag_screen_default_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.75,
+        0.7,
+        0.9,
+        0.9
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "bag_screen_exit": {
+      "file": "bag_screen_exit.png",
+      "threshold": 0.94,
+      "region": [
+        0.9,
+        0.05,
+        1,
+        0.2
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "bag_screen_exit_compact": {
+      "file": "bag_screen_exit_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.9,
+        0.05,
+        1,
+        0.2
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "bag_screen_exit_large": {
+      "file": "bag_screen_exit_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.9,
+        0.05,
+        1,
+        0.2
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "tutorial_skip_left": {
+      "file": "tutorial_skip_left.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0,
+        0.18,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "tutorial_skip_left_compact": {
+      "file": "tutorial_skip_left_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0,
+        0.18,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "tutorial_skip_left_large": {
+      "file": "tutorial_skip_left_large.png",
+      "threshold": 0.94,
+      "region": [
+        0,
+        0,
+        0.18,
+        0.13
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "shop_guide_title_current": {
+      "file": "shop_guide_title_current.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "shop_guide_title_current_compact": {
+      "file": "shop_guide_title_current_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_guide_title_current_large": {
+      "file": "shop_guide_title_current_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "shop_guide_title_completed": {
+      "file": "shop_guide_title_completed.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "shop_guide_title_completed_compact": {
+      "file": "shop_guide_title_completed_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_guide_title_completed_large": {
+      "file": "shop_guide_title_completed_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.17,
+        0.95,
+        0.26
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
+    },
+    "shop_claim_rewards_native": {
+      "file": "shop_claim_rewards_native.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.22,
+        0.95,
+        0.32
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1280,
+        720
+      ]
+    },
+    "shop_claim_rewards_compact": {
+      "file": "shop_claim_rewards_compact.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.22,
+        0.95,
+        0.32
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        960,
+        540
+      ]
+    },
+    "shop_claim_rewards_large": {
+      "file": "shop_claim_rewards_large.png",
+      "threshold": 0.94,
+      "region": [
+        0.65,
+        0.22,
+        0.95,
+        0.32
+      ],
+      "scales": [
+        0.95,
+        1,
+        1.05
+      ],
+      "reference_size": [
+        1600,
+        900
+      ]
     }
   },
   "ready_anchors": [
@@ -1612,7 +3664,7 @@
     },
     {
       "prompt": "tutorial_adrenaline",
-      "target": "tutorial_adrenaline_gauge",
+      "target": "tutorial_adrenaline_frame",
       "step": "quest_tutorial_adrenaline",
       "source_tutorial": {
         "tutorial_id": "4002",
@@ -1882,6 +3934,180 @@
           "csv_record": 126
         }
       }
+    },
+    {
+      "prompt": "tutorial_enhance_bag",
+      "target": "hud_inventory",
+      "step": "quest_tutorial_enhance_bag",
+      "source_tutorial": {
+        "tutorial_id": "4007",
+        "step_id": "4007004",
+        "step": 4,
+        "ui_key": "Hud_Inventory",
+        "wbp": "WBP_GameUI",
+        "widget": "MenuBarUI",
+        "control": "ButtonInventory",
+        "dialog_en": "Press the [<Yellow>Bag</>] button to select equipment for enhancement.",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4007005"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 96
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_select",
+      "target": "enhance_selected_corner",
+      "step": "quest_tutorial_enhance_select",
+      "width": 18,
+      "offset": [
+        29,
+        29
+      ],
+      "point_region": [
+        0.68,
+        0.1,
+        0.95,
+        0.35
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4007",
+        "step_id": "4007007",
+        "step": 7,
+        "ui_key": "Inventory_EnchantItem",
+        "wbp": "WBP_GameUI",
+        "widget": "InventoryUI",
+        "control": "TileViewList",
+        "dialog_en": "Press the obtained [<Yellow>Equipment icon</>.]",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4007008"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 99
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_open",
+      "target": "enhance_info_button",
+      "step": "quest_tutorial_enhance_open",
+      "source_tutorial": {
+        "tutorial_id": "4007",
+        "step_id": "4007009",
+        "step": 9,
+        "ui_key": "ItemInfoPopup_Enchant",
+        "wbp": "WBP_ItemInfoPopup",
+        "widget": "",
+        "control": "ButtonEnchant",
+        "dialog_en": "You can access the Enhancement UI by pressing the [<Yellow>Enhance</>] button at the bottom of the selected equipment's information popup.",
+        "minimum_delay_sec": 0.25,
+        "delay_records": [
+          "4007010"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 101
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_material",
+      "target": "enhance_material_corner",
+      "step": "quest_tutorial_enhance_material",
+      "width": 19,
+      "offset": [
+        17,
+        17
+      ],
+      "point_region": [
+        0.04,
+        0.7,
+        0.2,
+        0.9
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4007",
+        "step_id": "4007011",
+        "step": 11,
+        "ui_key": "ItemEnchant_MaterialSlot",
+        "wbp": "WBP_ItemEnchantMultiUI",
+        "widget": "",
+        "control": "ButtonMaterialSlot",
+        "dialog_en": "Required [<Yellow>Enhancement Scrolls</>] will be automatically registered for the selected equipment.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 103
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_attempt",
+      "target": "enhance_attempt_button",
+      "step": "quest_tutorial_enhance_attempt",
+      "max_attempts": 1,
+      "required_templates": [
+        "enhance_safe_range",
+        "enhance_plus_one"
+      ],
+      "source_tutorial": {
+        "tutorial_id": "4007",
+        "step_id": "4007012",
+        "step": 12,
+        "ui_key": "ItemEnchant_Enchant",
+        "wbp": "WBP_ItemEnchantMultiUI",
+        "widget": "",
+        "control": "ButtonEnchantMulti",
+        "dialog_en": "All necessary enhancement items have been registered.\r\nNow press the [<Yellow>Enhancement</>] button to attempt enhancement.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "1",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 104
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_adrenaline_buff",
+      "target": "tutorial_adrenaline_buff_target",
+      "required_templates": [
+        "tutorial_adrenaline_buff_corner"
+      ],
+      "step": "quest_tutorial_adrenaline_buff",
+      "source_tutorial": {
+        "tutorial_id": "4002",
+        "step_id": "4002018",
+        "step": 18,
+        "ui_key": "Deadly_AdrenalineTooltip",
+        "wbp": "WBP_AdrenalineGaugeToolTipUI",
+        "widget": "CanvasPanelRoot",
+        "control": "CanvasPanelTutorial",
+        "dialog_en": "When the Adrenaline Gauge is charged, \r\n[<Yellow>Adrenaline Buff</>] effect is applied.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "1",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 83
+        }
+      }
     }
   ],
   "known_overlays": [
@@ -1974,7 +4200,13 @@
   "match_alternatives": {
     "shop_guide_title": [
       "shop_guide_title_compact",
-      "shop_guide_title_large"
+      "shop_guide_title_large",
+      "shop_guide_title_current",
+      "shop_guide_title_current_compact",
+      "shop_guide_title_current_large",
+      "shop_guide_title_completed",
+      "shop_guide_title_completed_compact",
+      "shop_guide_title_completed_large"
     ],
     "shop_guide_task": [
       "shop_guide_task_compact",
@@ -1995,6 +4227,237 @@
     "connection_terminated_inspect": [
       "connection_terminated_inspect_compact",
       "connection_terminated_inspect_large"
+    ],
+    "connection_terminated_confirm": [
+      "connection_terminated_confirm_compact",
+      "connection_terminated_confirm_large"
+    ],
+    "idle_disconnected": [
+      "idle_disconnected_compact",
+      "idle_disconnected_large"
+    ],
+    "title_prompt": [
+      "title_prompt_compact",
+      "title_prompt_large"
+    ],
+    "title_logo": [
+      "title_logo_compact",
+      "title_logo_large"
+    ],
+    "character_game_start": [
+      "character_game_start_compact",
+      "character_game_start_large"
+    ],
+    "character_selection_title": [
+      "character_selection_title_compact",
+      "character_selection_title_large"
+    ],
+    "character_last_login": [
+      "character_last_login_compact",
+      "character_last_login_large"
+    ],
+    "tutorial_enhance_bag": [
+      "tutorial_enhance_bag_compact",
+      "tutorial_enhance_bag_large"
+    ],
+    "tutorial_enhance_select": [
+      "tutorial_enhance_select_compact",
+      "tutorial_enhance_select_large"
+    ],
+    "enhance_selected_corner": [
+      "enhance_selected_corner_compact",
+      "enhance_selected_corner_large"
+    ],
+    "tutorial_enhance_open": [
+      "tutorial_enhance_open_compact",
+      "tutorial_enhance_open_large"
+    ],
+    "enhance_info_button": [
+      "enhance_info_button_compact",
+      "enhance_info_button_large"
+    ],
+    "tutorial_enhance_material": [
+      "tutorial_enhance_material_compact",
+      "tutorial_enhance_material_large"
+    ],
+    "enhance_material_corner": [
+      "enhance_material_corner_compact",
+      "enhance_material_corner_large"
+    ],
+    "tutorial_enhance_attempt": [
+      "tutorial_enhance_attempt_compact",
+      "tutorial_enhance_attempt_large"
+    ],
+    "enhance_attempt_button": [
+      "enhance_attempt_button_compact",
+      "enhance_attempt_button_large"
+    ],
+    "enhance_safe_range": [
+      "enhance_safe_range_compact",
+      "enhance_safe_range_large"
+    ],
+    "enhance_plus_one": [
+      "enhance_plus_one_compact",
+      "enhance_plus_one_large"
+    ],
+    "enhance_screen_header": [
+      "enhance_screen_header_compact",
+      "enhance_screen_header_large"
+    ],
+    "enhance_screen_multi": [
+      "enhance_screen_multi_compact",
+      "enhance_screen_multi_large"
+    ],
+    "enhance_screen_register": [
+      "enhance_screen_register_compact",
+      "enhance_screen_register_large"
+    ],
+    "enhance_screen_exit": [
+      "enhance_screen_exit_compact",
+      "enhance_screen_exit_large"
+    ],
+    "enhance_tutorial_skip": [
+      "enhance_tutorial_skip_compact",
+      "enhance_tutorial_skip_large"
+    ],
+    "tutorial_drain": [
+      "tutorial_drain_variant",
+      "tutorial_drain_variant_compact",
+      "tutorial_drain_variant_large"
+    ],
+    "tutorial_adrenaline_frame": [
+      "tutorial_adrenaline_frame_compact",
+      "tutorial_adrenaline_frame_large"
+    ],
+    "tutorial_adrenaline_buff": [
+      "tutorial_adrenaline_buff_compact",
+      "tutorial_adrenaline_buff_large"
+    ],
+    "tutorial_adrenaline_buff_target": [
+      "tutorial_adrenaline_buff_target_compact",
+      "tutorial_adrenaline_buff_target_large"
+    ],
+    "tutorial_adrenaline_buff_corner": [
+      "tutorial_adrenaline_buff_corner_compact",
+      "tutorial_adrenaline_buff_corner_large"
+    ],
+    "bag_screen_header": [
+      "bag_screen_header_compact",
+      "bag_screen_header_large"
+    ],
+    "bag_screen_bulk": [
+      "bag_screen_bulk_compact",
+      "bag_screen_bulk_large"
+    ],
+    "bag_screen_default": [
+      "bag_screen_default_compact",
+      "bag_screen_default_large"
+    ],
+    "bag_screen_exit": [
+      "bag_screen_exit_compact",
+      "bag_screen_exit_large"
+    ],
+    "tutorial_skip_left": [
+      "tutorial_skip_left_compact",
+      "tutorial_skip_left_large"
+    ],
+    "claim_rewards_text": [
+      "shop_claim_rewards_native",
+      "shop_claim_rewards_compact",
+      "shop_claim_rewards_large"
+    ]
+  },
+  "inspect_confirm": {
+    "message": "connection_terminated_inspect",
+    "button": "connection_terminated_confirm",
+    "reference": "inspect-confirm-reference.json",
+    "dx_max": 24,
+    "dy_min": 100,
+    "dy_max": 160,
+    "timeout_sec": 10
+  },
+  "message_acknowledgements": [
+    {
+      "id": "idle_disconnect",
+      "message": "idle_disconnected",
+      "button": "connection_terminated_confirm",
+      "localization_key": "CHARACTER_IDLE_KICKOUT_POPUP_INFO",
+      "dx_max": 24,
+      "dy_min": 100,
+      "dy_max": 160,
+      "timeout_sec": 10
+    }
+  ],
+  "entry_title": {
+    "prompt": "title_prompt",
+    "anchors": [
+      "title_logo"
+    ],
+    "timeout_sec": 20,
+    "control": "WBP_TitlePanelUI/ButtonStart"
+  },
+  "entry_character": {
+    "prompt": "character_game_start",
+    "anchors": [
+      "character_selection_title",
+      "character_last_login"
+    ],
+    "timeout_sec": 20,
+    "control": "WBP_CharacterSelectUI/ButtonStart"
+  },
+  "fast_overlays": [
+    {
+      "id": "enhance",
+      "anchors": [
+        "enhance_screen_header",
+        "enhance_screen_multi",
+        "enhance_screen_register"
+      ],
+      "blocked_by": [
+        "enhance_tutorial_skip",
+        "tutorial_enhance_bag",
+        "tutorial_enhance_select",
+        "tutorial_enhance_open",
+        "tutorial_enhance_material",
+        "tutorial_enhance_attempt"
+      ],
+      "close": "enhance_screen_exit",
+      "wait_sec": 2,
+      "timeout_sec": 10
+    },
+    {
+      "id": "bag",
+      "anchors": [
+        "bag_screen_header",
+        "bag_screen_bulk",
+        "bag_screen_default"
+      ],
+      "blocked_by": [
+        "enhance_tutorial_skip",
+        "tutorial_bag",
+        "tutorial_equipment_select",
+        "tutorial_equip",
+        "tutorial_enhance_select",
+        "tutorial_enhance_open"
+      ],
+      "close": "bag_screen_exit",
+      "wait_sec": 2,
+      "timeout_sec": 10
+    }
+  ],
+  "passive_hud": {
+    "full_scan_interval_sec": 12,
+    "markers": [
+      "tutorial_skip_left",
+      "enhance_tutorial_skip",
+      "scene_skip"
+    ],
+    "extra_blockers": [
+      "claim_rewards_text",
+      "guide_complete_check",
+      "world_map_header",
+      "bloodshape_header",
+      "quest_complete_title"
     ]
   }
 }

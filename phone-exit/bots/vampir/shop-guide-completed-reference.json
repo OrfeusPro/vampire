@@ -1,0 +1,80 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\purchase-context-2026-10-16\\run-1.0.22\\sample-002.jpg",
+  "sha256": "0aee5d8e398d1e23c74426762e5f3cd2f907fac804747b575d2f5d134b40a4d2",
+  "questId": "901030",
+  "questSource": {
+    "entry": 1448,
+    "csv_record": 1284,
+    "name": "[Guide] Importance of Supplies",
+    "hashes": "quest-runtime.json sources / shop-reference.json sources"
+  },
+  "reason": "Gold completion background: current header confidence 0.903, Claim Rewards 0.986 and check 0.929. Completion still requires all three anchors.",
+  "variants": [
+    {
+      "name": "shop_guide_title_completed",
+      "factor": 1,
+      "crop": [
+        895,
+        149,
+        1125,
+        171
+      ],
+      "sha256": "e663dc88016b7076cfb465d25b17470473631ceaf0187d29ceb4906da9a6f753"
+    },
+    {
+      "name": "shop_guide_title_completed_compact",
+      "factor": 0.75,
+      "crop": [
+        671,
+        112,
+        844,
+        128
+      ],
+      "sha256": "277550015b55ab8098e94f9c91de2fb4db4fc3d007e6f906786bd613d22a4e9c"
+    },
+    {
+      "name": "shop_guide_title_completed_large",
+      "factor": 1.25,
+      "crop": [
+        1119,
+        186,
+        1406,
+        214
+      ],
+      "sha256": "64cb94fcdfab8bcb322713bee5ccf5388904e1f757948a99afd80b7d3418985f"
+    },
+    {
+      "name": "shop_claim_rewards_native",
+      "factor": 1,
+      "crop": [
+        894,
+        178,
+        1108,
+        202
+      ],
+      "sha256": "798664c23afad0d1aeeb846784d7eb5a5e836f29e5df3a7f3e66dd8499d3beb3"
+    },
+    {
+      "name": "shop_claim_rewards_compact",
+      "factor": 0.75,
+      "crop": [
+        670,
+        134,
+        831,
+        152
+      ],
+      "sha256": "91db62938ed467e02e15a43502ab250286e17f8c3bcc579b4050c3f0029495dd"
+    },
+    {
+      "name": "shop_claim_rewards_large",
+      "factor": 1.25,
+      "crop": [
+        1118,
+        222,
+        1385,
+        252
+      ],
+      "sha256": "ed3601e1846cbc99e99d8d5853a30c79f586a01be712621dc4059d37f8175596"
+    }
+  ]
+}

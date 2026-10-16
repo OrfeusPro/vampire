@@ -1,0 +1,42 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\zizak-level1-2026-10-16\\drain.jpg",
+  "sha256": "f35598c2dd4ab57a09f2e2b96bbfabb4b9eddec99783afef776deec700b2cf95",
+  "variants": [
+    {
+      "name": "tutorial_drain_variant",
+      "factor": 1,
+      "crop": [
+        239,
+        345,
+        540,
+        390
+      ],
+      "sha256": "f927050724a77886f14f0f732adb4b676a360bf4bf2795deb260af6434b1fbde"
+    },
+    {
+      "name": "tutorial_drain_variant_compact",
+      "factor": 0.75,
+      "crop": [
+        179,
+        259,
+        405,
+        292
+      ],
+      "sha256": "3399638e7418fbe71ae88bd294118a2a516f1d1e4be9eec2e09f40a4286e3305"
+    },
+    {
+      "name": "tutorial_drain_variant_large",
+      "factor": 1.25,
+      "crop": [
+        299,
+        431,
+        675,
+        488
+      ],
+      "sha256": "8a2b9e137a2e19e13c98cdce2535c1653917c5890b8828ef32c5bb88bfb35d91"
+    }
+  ],
+  "same_action_source": "tutorial-reference.json:4002004",
+  "target_unchanged": "tutorial_target_corner",
+  "reason": "Observed text rendering differs; old score0.816 below0.9; no threshold decrease"
+}

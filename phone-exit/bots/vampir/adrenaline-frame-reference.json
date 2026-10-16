@@ -1,0 +1,170 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\zizak-level1-2026-10-16\\adrenaline.jpg",
+  "sha256": "b8da11e6ccba790677ee567f6c01d641338eda9a8268c5456eec169a3f62c21e",
+  "source_step": "4002016",
+  "controlKey": "Deadly_AdrenalineGauge",
+  "uiControl": "CanvasPanelAdrenaline/ButtonAdrenalineGauge",
+  "widget_file": "pakchunk500-Windows-1685.json",
+  "widget_sha256": "4b9ff9d974871b311badfcfc8717e49dff274900917ad91cbbe6da8e7758a668",
+  "owner": [
+    {
+      "export": 16,
+      "name": "CanvasPanelAdrenaline",
+      "type": "CanvasPanel",
+      "offset": 60103,
+      "size": 38,
+      "sha256": "2dbf896735b0c364d1b6727a9842578d863c839470ac1da397693c48f0cd01c2",
+      "local_slots": [
+        269
+      ],
+      "parent_chain": [
+        {
+          "slot_export": 269,
+          "parent_export": 237
+        },
+        {
+          "slot_export": 295,
+          "parent_export": 293
+        },
+        {
+          "slot_export": 284,
+          "parent_export": 242
+        },
+        {
+          "slot_export": 38,
+          "parent_export": 7
+        }
+      ],
+      "chain_termination": "no_further_decoded_slot"
+    }
+  ],
+  "variants": [
+    {
+      "name": "tutorial_adrenaline_frame",
+      "factor": 1,
+      "crop": [
+        293,
+        597,
+        414,
+        706
+      ],
+      "sha256": "15e42f54452bce3722066be35d7ad42171f3ae6cc1b15e0f49dd89b0ff8e4f47",
+      "mask": "top/left/right3px,inset3px; bottom excluded for near-edge shifts; center alpha0"
+    },
+    {
+      "name": "tutorial_adrenaline_frame_compact",
+      "factor": 0.75,
+      "crop": [
+        220,
+        448,
+        310,
+        530
+      ],
+      "sha256": "0d52cd08f96870189449d14c6d90e9288bae9540505bd8d223768010771ffff3",
+      "mask": "top/left/right3px,inset3px; bottom excluded for near-edge shifts; center alpha0"
+    },
+    {
+      "name": "tutorial_adrenaline_frame_large",
+      "factor": 1.25,
+      "crop": [
+        366,
+        746,
+        518,
+        882
+      ],
+      "sha256": "b1a53bba23d567ca3ce0a6094586c634f932c31ce9966d5106646503a0fd9dec",
+      "mask": "top/left/right3px,inset3px; bottom excluded for near-edge shifts; center alpha0"
+    }
+  ],
+  "native_button_geometry_proven": false,
+  "policy": "exact source-linked tutorial text plus observed square border; no skill art used",
+  "nested_widget_candidates": [
+    {
+      "file": "pakchunk500-Windows-1631.json",
+      "sha256": "40d6bbe9423f20f1511ee7be369e64fa41bc28c03ea3a84f528fb17dfc0df256",
+      "source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+        "size": 90792756,
+        "modified_ns": 1791753957558672500,
+        "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+        "pak_version": 11
+      },
+      "controls": [
+        {
+          "export": 88,
+          "name": "FX_Aura_GaugeUp",
+          "type": "Image",
+          "offset": 98238,
+          "size": 79,
+          "sha256": "98407c4cada9b104ded7c08c9a5b18335ad079d6c045beef61ca65499a44db2c",
+          "local_slots": [
+            65
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 65,
+              "parent_export": 13
+            },
+            {
+              "slot_export": 43,
+              "parent_export": 7
+            },
+            {
+              "slot_export": 46,
+              "parent_export": 8
+            },
+            {
+              "slot_export": 36,
+              "parent_export": 6
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 111,
+          "name": "GaugeUp",
+          "type": "MovieScene",
+          "offset": 107000,
+          "size": 1110,
+          "sha256": "4297576ba82c06685cb915a92c2a2a5a8b1a595df1a2d3eacda3f91b0ac601fb",
+          "local_slots": [],
+          "parent_chain": [],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 639,
+          "name": "ButtonAdrenalineGauge",
+          "type": "NkButton",
+          "offset": 164135,
+          "size": 10,
+          "sha256": "ade991989bd0671f20c4182588258c1b3e79ef5b356cdff1c0ec15eb089ccdfe",
+          "local_slots": [
+            45
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 45,
+              "parent_export": 8
+            },
+            {
+              "slot_export": 36,
+              "parent_export": 6
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 673,
+          "name": "GaugeUp_INST",
+          "type": "WidgetAnimation",
+          "offset": 168503,
+          "size": 468,
+          "sha256": "2dd0d594760f1ad09bb0cfc5c68d87baf5c779e14e3465814bb9dd4bf4fa853c",
+          "local_slots": [],
+          "parent_chain": [],
+          "chain_termination": "no_further_decoded_slot"
+        }
+      ]
+    }
+  ]
+}

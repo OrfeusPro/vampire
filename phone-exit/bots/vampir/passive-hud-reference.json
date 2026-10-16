@@ -1,0 +1,40 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\tutorial4007-2026-10-16\\bag.jpg",
+  "sha256": "b50abe12d06218d12e81ed381fd57986a226b7b5114185699c57b8db914fe104",
+  "variants": [
+    {
+      "name": "tutorial_skip_left",
+      "factor": 1,
+      "crop": [
+        64,
+        20,
+        121,
+        44
+      ],
+      "sha256": "62aba9ec697e74b398a8ee4aefbfee768c7a97bc1ea40a1febec82a8424910fd"
+    },
+    {
+      "name": "tutorial_skip_left_compact",
+      "factor": 0.75,
+      "crop": [
+        48,
+        15,
+        91,
+        33
+      ],
+      "sha256": "505c53a2314d6dcc277a7f12fbe07afb26f6e54e96489a32016fe26f031d44c6"
+    },
+    {
+      "name": "tutorial_skip_left_large",
+      "factor": 1.25,
+      "crop": [
+        80,
+        25,
+        151,
+        55
+      ],
+      "sha256": "1644379453c0b00f81b3dfd338d3c1df902887042bd9ca556a1ebe768b4ad870"
+    }
+  ],
+  "policy": "No tap, fresh HUD+auto-on and no known blockers. Periodic full discovery12sec; unknown-marker layouts may be delayed until full discovery."
+}

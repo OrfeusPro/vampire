@@ -1,3 +1,4 @@
+import copy
 import importlib.util
 import struct
 import unittest
@@ -45,6 +46,58 @@ class WindowSourceLinks(unittest.TestCase):
         for rows in ([], [row, row], [dict(row, Value='Changed')]):
             with self.assertRaises(ValueError):
                 window_binding.bind_text(rows, row['Key'], row['Value'])
+
+
+class SystemMessageReferenceGuards(unittest.TestCase):
+    def report(self):
+        variants = []
+        for i in range(4):
+            is_root = i < 2
+            variants.append(dict(file=str(i) + '.json',
+                name='WBP_SystemMessageUI' if is_root else 'WBP_CommonMessageNotifyLightUI',
+                absolute_screen_geometry_verified=False,
+                superclass=dict(path='/Script/NkUMG.NkSystemMessageUI'),
+                controls=[dict(name=n, type=t) for n, t in
+                    ([('TextMessage', 'NkRichTextBlock'), ('CommonMessageNotifyLightUI', 'WBP_CommonMessageNotifyLightUI_C')]
+                     if is_root else [('ImageBackGround', 'Image')])]))
+        return dict(native_class='/Script/NkUMG.NkSystemMessageUI', text_field=0xa00,
+                    source='reviewed.exe', sha256='a' * 64, variants=variants, runtime_actions_enabled=False)
+
+    def test_reference_keeps_observed_kickout_separate_and_no_click_enabled(self):
+        message = dict(widget_binding_proven=False, behavior='pause_without_dismissal_or_reconnect')
+        reference = dict(messages={'KICKOUT_FOR_INSPECT': message})
+        window_binding.attach_system_message_reference(reference, self.report(), 'b' * 64)
+        self.assertEqual(reference['messages']['KICKOUT_FOR_INSPECT'], message)
+        self.assertFalse(reference['systemMessageReference']['appliesToObservedKickout'])
+        self.assertFalse(reference['systemMessageReference']['runtimeActionsEnabled'])
+
+    def test_changed_native_scope_or_control_is_rejected(self):
+        for mismatch in ('actions', 'class', 'field', 'control'):
+            report = self.report()
+            if mismatch == 'actions':
+                report['runtime_actions_enabled'] = True
+            elif mismatch == 'class':
+                report['native_class'] = '/Script/NkUMG.Other'
+            elif mismatch == 'field':
+                report['text_field'] = 0xa08
+            else:
+                report['variants'][0]['controls'][0]['name'] = 'Unknown'
+            reference = dict(messages={})
+            with self.subTest(mismatch=mismatch), self.assertRaises(ValueError):
+                window_binding.attach_system_message_reference(reference, report, 'b' * 64)
+            self.assertEqual(reference, dict(messages={}))
+
+    def test_unproven_geometry_or_incomplete_variants_cannot_be_promoted(self):
+        for mismatch in ('geometry', 'missing', 'duplicate'):
+            report = self.report()
+            if mismatch == 'geometry':
+                report['variants'][0]['absolute_screen_geometry_verified'] = True
+            elif mismatch == 'missing':
+                report['variants'].pop()
+            else:
+                report['variants'][3] = copy.deepcopy(report['variants'][2])
+            with self.subTest(mismatch=mismatch), self.assertRaises(ValueError):
+                window_binding.attach_system_message_reference({}, report, 'b' * 64)
 
 
 class SerializedSlotGuards(unittest.TestCase):

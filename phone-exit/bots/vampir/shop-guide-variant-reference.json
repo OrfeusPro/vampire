@@ -1,0 +1,47 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\purchase-context-2026-10-16\\before-guide.jpg",
+  "sha256": "f3b5dfc78cd8676c6fbdb21cd1fa3a47cc37912e71e486829434ad0991c62baf",
+  "questId": "901030",
+  "questSource": {
+    "entry": 1448,
+    "csv_record": 1284,
+    "name": "[Guide] Importance of Supplies",
+    "hashes": "quest-runtime.json sources / shop-reference.json sources"
+  },
+  "reason": "Original title confidence 0.815 on the current frame; task confidence 0.969. No threshold reduction.",
+  "variants": [
+    {
+      "name": "shop_guide_title_current",
+      "factor": 1,
+      "crop": [
+        895,
+        149,
+        1125,
+        171
+      ],
+      "sha256": "b24eed000dab57820d56a3bd4be945a7cab5f63abb3468750b34415466bb9ae3"
+    },
+    {
+      "name": "shop_guide_title_current_compact",
+      "factor": 0.75,
+      "crop": [
+        671,
+        112,
+        844,
+        128
+      ],
+      "sha256": "65de1e032218cf41657cebe653dc46e6409f257e9e313a4bab08de53b7ab4d28"
+    },
+    {
+      "name": "shop_guide_title_current_large",
+      "factor": 1.25,
+      "crop": [
+        1119,
+        186,
+        1406,
+        214
+      ],
+      "sha256": "8d02262b4de69b8ad6f1f21e6cfc47d7ebfc255912a42d55603f9a3b120f54aa"
+    }
+  ]
+}

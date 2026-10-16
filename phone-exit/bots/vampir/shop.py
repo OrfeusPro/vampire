@@ -2,17 +2,21 @@
 import json
 import os
 import random
+import re
 from pathlib import Path
 
 
-def journal_path(directory):
+def journal_path(directory, context=None):
     # BotManager installs immutable payloads under files/bots/vampir/<sha256>.
     # The module's data stays in the game base across updates/rollback.
-    return Path(directory).resolve().parent / 'vampir-purchases.json'
+    if context is not None and (not isinstance(context, str) or not re.fullmatch(r'[a-f0-9]{32}', context)):
+        raise ValueError('shop_context_invalid')
+    filename = 'vampir-purchases' + ('.' + context if context else '') + '.json'
+    return Path(directory).resolve().parent / filename
 
 
-def read_journal(directory):
-    path = journal_path(directory)
+def read_journal(directory, context=None):
+    path = journal_path(directory, context)
     if not path.exists():
         return {}
     if path.stat().st_size > 4096:
@@ -23,10 +27,10 @@ def read_journal(directory):
     return value
 
 
-def write_journal(directory, status):
-    value = read_journal(directory)
+def write_journal(directory, status, context=None):
+    value = read_journal(directory, context)
     value['901030010'] = status
-    path = journal_path(directory)
+    path = journal_path(directory, context)
     temporary = path.with_suffix('.tmp')
     with temporary.open('w', encoding='utf-8') as stream:
         json.dump(value, stream)
@@ -95,7 +99,7 @@ def validate_reference(reference, catalog):
         raise ValueError('quest_shop_source_reference_invalid') from error
 
 
-def tick(host, state, frame, config, now, directory, reference):
+def tick(host, state, frame, config, now, directory, reference, settings=None):
     flow = config.get('shop_flow')
     if not flow:
         return None
@@ -140,8 +144,12 @@ def tick(host, state, frame, config, now, directory, reference):
                   y=round(point[1] + random.uniform(-radius, radius)), width=frame['width'], height=frame['height'])
         return report('quest_shop_' + stage)
 
+    context = settings.get('purchase_context_id') if settings else None
+    if state.get('shop_context') != context:
+        state.pop('shop', None)
+        state['shop_context'] = context
     try:
-        journal = read_journal(directory)
+        journal = read_journal(directory, context)
     except (OSError, ValueError):
         return report('quest_shop_journal', 'quest_shop_journal_unreadable')
     pending = journal.get('901030010')
@@ -157,7 +165,7 @@ def tick(host, state, frame, config, now, directory, reference):
     if pending == 'reserved':
         if visible(flow['completed']):
             try:
-                write_journal(directory, 'completed')
+                write_journal(directory, 'completed', context)
             except (OSError, ValueError):
                 return report('quest_shop_journal', 'quest_shop_journal_write_failed')
             state.pop('shop', None)
@@ -179,7 +187,7 @@ def tick(host, state, frame, config, now, directory, reference):
         # A crash/transport error after this point has an unknown outcome.
         # Persist before sending any purchase tap and never retry it blindly.
         try:
-            write_journal(directory, 'reserved')
+            write_journal(directory, 'reserved', context)
         except (OSError, ValueError):
             return report('quest_shop_journal', 'quest_shop_journal_write_failed')
         return tap(flow['buy'], 'purchased')

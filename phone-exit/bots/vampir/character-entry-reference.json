@@ -1,0 +1,352 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\character-entry-2026-10-16\\before.jpg",
+  "source_sha256": "2d3e9b48dbb33e30d716baeba62f6ba721eb402834b77fc8d242c8a9d389a800",
+  "templates": [
+    {
+      "name": "character_game_start",
+      "factor": 1,
+      "crop": [
+        1038,
+        668,
+        1219,
+        692
+      ],
+      "reference_size": [
+        1280,
+        720
+      ],
+      "sha256": "4dcd0279f22b182ff6297295729ba351195b978ef5061a53afc4b04dfe430372"
+    },
+    {
+      "name": "character_game_start_compact",
+      "factor": 0.75,
+      "crop": [
+        778,
+        501,
+        914,
+        519
+      ],
+      "reference_size": [
+        960,
+        540
+      ],
+      "sha256": "dbb528d2e62163da472ec1c8c3b4ff4633f1ff664f590c889a2ef276943e9206"
+    },
+    {
+      "name": "character_game_start_large",
+      "factor": 1.25,
+      "crop": [
+        1298,
+        835,
+        1524,
+        865
+      ],
+      "reference_size": [
+        1600,
+        900
+      ],
+      "sha256": "e9a13f1e03d4013bedafe135f3a847a53e01174480800b43d84b24cc04cd8b1e"
+    },
+    {
+      "name": "character_selection_title",
+      "factor": 1,
+      "crop": [
+        61,
+        19,
+        294,
+        48
+      ],
+      "reference_size": [
+        1280,
+        720
+      ],
+      "sha256": "3577164cdfe3e25c5dfa023735acd144f8262d65d13a020bdf9e98715607f629"
+    },
+    {
+      "name": "character_selection_title_compact",
+      "factor": 0.75,
+      "crop": [
+        46,
+        14,
+        220,
+        36
+      ],
+      "reference_size": [
+        960,
+        540
+      ],
+      "sha256": "19133a254153139bc9a3b6539f92c827e7781f9d3754e31085928723577444fe"
+    },
+    {
+      "name": "character_selection_title_large",
+      "factor": 1.25,
+      "crop": [
+        76,
+        24,
+        368,
+        60
+      ],
+      "reference_size": [
+        1600,
+        900
+      ],
+      "sha256": "dc171382f565355fcca3c0a0c9a2bcaa8f13f28c93e61468c419ce12a0458739"
+    },
+    {
+      "name": "character_last_login",
+      "factor": 1,
+      "crop": [
+        20,
+        340,
+        144,
+        366
+      ],
+      "reference_size": [
+        1280,
+        720
+      ],
+      "sha256": "8be60f5ce8be045680a331b9f3489c1b7d0cf31e8e0ae48d9d19a3017fb1eb14"
+    },
+    {
+      "name": "character_last_login_compact",
+      "factor": 0.75,
+      "crop": [
+        15,
+        255,
+        108,
+        274
+      ],
+      "reference_size": [
+        960,
+        540
+      ],
+      "sha256": "326aaf8b1f3727913184b1a12b9e6205162dad0466ab7792b8419fab56ea1578"
+    },
+    {
+      "name": "character_last_login_large",
+      "factor": 1.25,
+      "crop": [
+        25,
+        425,
+        180,
+        458
+      ],
+      "reference_size": [
+        1600,
+        900
+      ],
+      "sha256": "2418210f393dc5075e2a231350a1a1b07aff06d654aaff8ba9f9b007c4f52209"
+    }
+  ],
+  "widget": {
+    "name": "WBP_CharacterSelectUI",
+    "source": {
+      "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+      "size": 90792756,
+      "modified_ns": 1791753957558672500,
+      "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+      "pak_version": 11
+    },
+    "catalog_file": "pakchunk500-Windows-2371.json",
+    "catalog_sha256": "c21ac7b94527ac0d35c7d6ac3db0d9864b38bde373ee1a636e7f4b1368bea5eb",
+    "control": {
+      "export": 124,
+      "name": "ButtonStart",
+      "type": "NkButton",
+      "offset": 44196,
+      "size": 337,
+      "sha256": "9a131f8c52107e4023334009a293a0293968024a199e1c678c62888f1ce71c3f",
+      "local_slots": [
+        48
+      ],
+      "parent_chain": [
+        {
+          "slot_export": 48,
+          "parent_export": 39
+        },
+        {
+          "slot_export": 37,
+          "parent_export": 14
+        },
+        {
+          "slot_export": 24,
+          "parent_export": 10
+        },
+        {
+          "slot_export": 155,
+          "parent_export": 154
+        },
+        {
+          "slot_export": 21,
+          "parent_export": 9
+        }
+      ],
+      "chain_termination": "no_further_decoded_slot"
+    },
+    "slots": [
+      {
+        "provenance": {
+          "file": "pakchunk500-Windows-2371.json",
+          "slot_export": 48,
+          "slot_type": "HorizontalBoxSlot",
+          "offset": 38078,
+          "sha256": "285ce3bceea91a9644abb1dc8d6d0e258b779b87d2e55ec0c49401c04079caf6",
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+            "size": 90792756,
+            "modified_ns": 1791753957558672500,
+            "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+            "pak_version": 11
+          },
+          "entry": 2371
+        },
+        "decoded": {
+          "serialized_fields": [
+            "size",
+            "horizontal_alignment",
+            "parent_export",
+            "content_export"
+          ],
+          "size": {
+            "value": 1.0,
+            "rule": 1,
+            "serialized_fields": [
+              1
+            ]
+          },
+          "horizontal_alignment": 2,
+          "parent_export": 39,
+          "content_export": 124,
+          "parent": {
+            "index": 39,
+            "name": "HorizontalBox_0",
+            "type": "HorizontalBox"
+          },
+          "content": {
+            "index": 124,
+            "name": "ButtonStart",
+            "type": "NkButton"
+          }
+        }
+      }
+    ]
+  },
+  "localization": {
+    "source": {
+      "file": "pakchunk1-Windows-405.csv",
+      "source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk1-Windows.pak",
+        "size": 11841434,
+        "modified_ns": 1791752696761175700,
+        "sample_sha256": "11cfb06d2bcce296f155a658a45f7435964597c0c54b5133084777926e30da73",
+        "pak_version": 11
+      },
+      "entry": 405,
+      "offset": 1892352,
+      "size": 654581,
+      "sha256": "32956f16902bdd8f7507d000143dee29ad457e7fa1ea09194c3632a2d1f4179e",
+      "header": [
+        "Key",
+        "Value",
+        "L10NOrder",
+        "L10NRegistrationDate",
+        "Untranslated"
+      ],
+      "rows": 7032,
+      "quest_tutorial_rows": 705,
+      "examples": [
+        [
+          "QUEST_PROGRESS_VALUE_STATE_MINI",
+          "[Count]/[MaxCount]",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "MAINMENU_QUEST",
+          "Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPTITLE_MAIN",
+          "Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPTITLE_DAILY",
+          "Daily Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPMENUTITLE_MAIN",
+          "Main Quest",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ]
+      ],
+      "internal_path": null
+    },
+    "matches": [
+      {
+        "csv_record": 6,
+        "row": {
+          "Key": "TITLEBUTTON_GAMESTART",
+          "Value": "Game Start",
+          "L10NOrder": "0521",
+          "L10NRegistrationDate": "2025-05-21 16:11:00",
+          "Untranslated": ""
+        }
+      },
+      {
+        "csv_record": 7,
+        "row": {
+          "Key": "CLASS_SELECT",
+          "Value": "Character Selection",
+          "L10NOrder": "0521",
+          "L10NRegistrationDate": "2025-05-21 16:11:00",
+          "Untranslated": ""
+        }
+      },
+      {
+        "csv_record": 2834,
+        "row": {
+          "Key": "CHARACTER_SELECT_INFO_CONNECT_TIME",
+          "Value": "Last Login",
+          "L10NOrder": "0521",
+          "L10NRegistrationDate": "2025-05-21 16:11:00",
+          "Untranslated": ""
+        }
+      },
+      {
+        "csv_record": 7007,
+        "row": {
+          "Key": "TITLEBUTTON_GAMESTART",
+          "Value": "Game Start",
+          "L10NOrder": "0521",
+          "L10NRegistrationDate": "2025-05-21 16:11:00",
+          "Untranslated": ""
+        }
+      },
+      {
+        "csv_record": 7008,
+        "row": {
+          "Key": "CLASS_SELECT",
+          "Value": "Character Selection",
+          "L10NOrder": "0521",
+          "L10NRegistrationDate": "2025-05-21 16:11:00",
+          "Untranslated": ""
+        }
+      }
+    ]
+  },
+  "observed_character": "OrfPro",
+  "character_name_used_at_runtime": false,
+  "absolute_geometry_proven": false
+}

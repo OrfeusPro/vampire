@@ -1,0 +1,71 @@
+{
+  "localization_key": "KICKOUT_FOR_INSPECT",
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\inspect-confirm-2026-10-16\\before.jpg",
+  "source_sha256": "aefffc1f9283fdd3d7fd3d18eb267dcc9e23c6dfdc7c0a19a420203b611461e6",
+  "crop": [
+    470,
+    430,
+    810,
+    466
+  ],
+  "template_sha256": "52004746c492702249a6c921b2db7b9db714314ffd1efece4d2d8fda9957346b",
+  "reference_size": [
+    1280,
+    720
+  ],
+  "widget_binding_proven": false,
+  "candidate": "WBP_MessageBoxConfirmPopup/ButtonOk",
+  "relative_geometry": {
+    "dx_max": 24,
+    "dy_min": 100,
+    "dy_max": 160
+  },
+  "behavior": "confirm_once_verify_then_pause_no_reconnect",
+  "variants": [
+    {
+      "name": "connection_terminated_confirm",
+      "factor": 1,
+      "crop": [
+        470,
+        430,
+        810,
+        466
+      ],
+      "reference_size": [
+        1280,
+        720
+      ],
+      "sha256": "52004746c492702249a6c921b2db7b9db714314ffd1efece4d2d8fda9957346b"
+    },
+    {
+      "name": "connection_terminated_confirm_compact",
+      "factor": 0.75,
+      "crop": [
+        352,
+        322,
+        608,
+        350
+      ],
+      "reference_size": [
+        960,
+        540
+      ],
+      "sha256": "494fe675e0df22f1f1dece8915dabde980d2324b9e274c82d56abb87644aab6a"
+    },
+    {
+      "name": "connection_terminated_confirm_large",
+      "factor": 1.25,
+      "crop": [
+        588,
+        538,
+        1012,
+        582
+      ],
+      "reference_size": [
+        1600,
+        900
+      ],
+      "sha256": "4e6194c7c9519a94827e01591121b03b5d209b48c1a6698f9c575e911418d4c4"
+    }
+  ]
+}

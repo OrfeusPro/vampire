@@ -88,3 +88,8 @@ shop.py перед вводом сверяет canonical task/quest/product, ц�
 Применение имён атомарно относительно source checks: ошибка не оставляет
 частично размеченный каталог. Это справочник; AND/OR и числовые сравнения
 не вычисляются. Источник:CONDITION-TYPES.md; целевой прогон163 теста прошёл.
+
+
+## referenceRevision4: клиентский предикат как справочная связь
+
+clientPredicateReference связывает dispatch11 типов и обычный AND после ранних ветвей с пятью полями ContentsLock. Соединение проверяет EXE, CSV69, исходные269 строки, csv_record, карту имён и scope отчётов; хеши lock-predicate-code.json и contents-lock-fields.json сохраняются в sourceReports. При ошибке проверок каталог не изменяется. Исходные evaluation/combination сохранены; runtimeEvaluatorEnabled=false, схема1. Подробности: [CONTENTS-LOCK-FIELDS.md](CONTENTS-LOCK-FIELDS.md). Это не доказательство состояния персонажа или равенства Android-клиента.

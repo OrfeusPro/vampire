@@ -1,0 +1,375 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\enhance-exit-2026-10-16\\before.jpg",
+  "source_sha256": "1d451488bfdc79876d1fe2344f0e99b15afa76aa3f619120080ba8d3292d76e6",
+  "observations": [
+    {
+      "name": "enhance_screen_header",
+      "source_sha256": "1d451488bfdc79876d1fe2344f0e99b15afa76aa3f619120080ba8d3292d76e6",
+      "crop": [
+        990,
+        20,
+        1105,
+        46
+      ],
+      "variants": [
+        {
+          "name": "enhance_screen_header",
+          "sha256": "554343b5750babf70af435aed57abf0deb7ea4b1d4dcbe26d23f0bfb12e64cd2"
+        },
+        {
+          "name": "enhance_screen_header_compact",
+          "sha256": "6184336ed6dab6e73e2e574ff59b8af04f778c3a14e7512a5308aaeee516d361"
+        },
+        {
+          "name": "enhance_screen_header_large",
+          "sha256": "6d0a82cdb58c54967a522ca8c7cfada40112b72ffa012c91c1dece4b0f246f15"
+        }
+      ]
+    },
+    {
+      "name": "enhance_screen_multi",
+      "source_sha256": "1d451488bfdc79876d1fe2344f0e99b15afa76aa3f619120080ba8d3292d76e6",
+      "crop": [
+        90,
+        95,
+        247,
+        120
+      ],
+      "variants": [
+        {
+          "name": "enhance_screen_multi",
+          "sha256": "4e460853053a5499b8be5f4449368ab8b0c26b2c7c41b322a53b5a03c5b97c31"
+        },
+        {
+          "name": "enhance_screen_multi_compact",
+          "sha256": "a77b4b31c557cfec5fe78ae9772e9a1c4f28ff6fe66abb9ebe29f7d477df9bf6"
+        },
+        {
+          "name": "enhance_screen_multi_large",
+          "sha256": "9b3443335427f2798f1a1b1326dd7f500546f3f0ed2b42283ba66fb854d0fba3"
+        }
+      ]
+    },
+    {
+      "name": "enhance_screen_register",
+      "source_sha256": "1d451488bfdc79876d1fe2344f0e99b15afa76aa3f619120080ba8d3292d76e6",
+      "crop": [
+        932,
+        664,
+        1146,
+        688
+      ],
+      "variants": [
+        {
+          "name": "enhance_screen_register",
+          "sha256": "6abc69662380e80e80d883758273710ef8263d66f1eef42b3362bc42203fcf46"
+        },
+        {
+          "name": "enhance_screen_register_compact",
+          "sha256": "e6296abae936399ecda921f8e3d30ada37811cc9cd6e003f14f64bf26e69e9c3"
+        },
+        {
+          "name": "enhance_screen_register_large",
+          "sha256": "301ded1e634d628f361c12c09e253c1aaa78db7a5f69fd5b3861a206652a8c94"
+        }
+      ]
+    },
+    {
+      "name": "enhance_screen_exit",
+      "source_sha256": "1d451488bfdc79876d1fe2344f0e99b15afa76aa3f619120080ba8d3292d76e6",
+      "crop": [
+        1222,
+        17,
+        1263,
+        51
+      ],
+      "variants": [
+        {
+          "name": "enhance_screen_exit",
+          "sha256": "1306276f007a2b8f6b33071acffc07f225092645536e233714763be691a71209"
+        },
+        {
+          "name": "enhance_screen_exit_compact",
+          "sha256": "d021b2b4237b469a6421b62d0fd16262c2a72f2664341bdffa7bbf86c5f0a7b6"
+        },
+        {
+          "name": "enhance_screen_exit_large",
+          "sha256": "7b355fa10caa671427921de7422e91c83165b89fdc07a341873ef1a0d9e36e19"
+        }
+      ]
+    },
+    {
+      "name": "enhance_tutorial_skip",
+      "source_sha256": "3b572781a9fd427862d2807b9b2248d17ba133c1fa4f4fc5f2a446cbd049bc28",
+      "crop": [
+        1156,
+        21,
+        1215,
+        43
+      ],
+      "variants": [
+        {
+          "name": "enhance_tutorial_skip",
+          "sha256": "273baa29dd651bcef79aa3475e9f8300cc88b3782fc52cdd4f63ee0632637a33"
+        },
+        {
+          "name": "enhance_tutorial_skip_compact",
+          "sha256": "476341a94a24644f2edcccca7bfcdecd7a18649d5962457eaa46104726fe890e"
+        },
+        {
+          "name": "enhance_tutorial_skip_large",
+          "sha256": "4b8719dfac6dd538a4762490d4d6da9eaf02983b9ea8bd1ac0359e2cc657682a"
+        }
+      ]
+    }
+  ],
+  "control_candidates": [
+    {
+      "file": "pakchunk500-Windows-897.json",
+      "sha256": "a5d8c7de0f72873f9d9de63ee8329decdf429032d878380156c4eb8ab861c652",
+      "source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+        "size": 90792756,
+        "modified_ns": 1791753957558672500,
+        "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+        "pak_version": 11
+      },
+      "controls": [
+        {
+          "export": 105,
+          "name": "ButtonBack",
+          "type": "NkButton",
+          "offset": 43656,
+          "size": 180,
+          "sha256": "68e2e85a015d5c1cfb35e188a84bdc78b52c052ef839797c55b36c7740f3fdc4",
+          "local_slots": [
+            163
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 163,
+              "parent_export": 156
+            },
+            {
+              "slot_export": 69,
+              "parent_export": 52
+            },
+            {
+              "slot_export": 202,
+              "parent_export": 197
+            },
+            {
+              "slot_export": 142,
+              "parent_export": 132
+            },
+            {
+              "slot_export": 24,
+              "parent_export": 4
+            },
+            {
+              "slot_export": 150,
+              "parent_export": 147
+            },
+            {
+              "slot_export": 206,
+              "parent_export": 199
+            },
+            {
+              "slot_export": 37,
+              "parent_export": 11
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 106,
+          "name": "ButtonBackSimple",
+          "type": "NkButton",
+          "offset": 43836,
+          "size": 263,
+          "sha256": "8c8fbc4b56d24c119f6da96e0a7dd46b557d59bb0a0117f4a5a23131a739b765",
+          "local_slots": [
+            164
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 164,
+              "parent_export": 157
+            },
+            {
+              "slot_export": 57,
+              "parent_export": 46
+            },
+            {
+              "slot_export": 151,
+              "parent_export": 148
+            },
+            {
+              "slot_export": 207,
+              "parent_export": 199
+            },
+            {
+              "slot_export": 37,
+              "parent_export": 11
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 127,
+          "name": "TextTitle",
+          "type": "NkTextBlock",
+          "offset": 46793,
+          "size": 241,
+          "sha256": "5f13578ec2ba8ef9d575fdd318200d4abfacb124eed9cc1593923ef8ab9c11f0",
+          "local_slots": [
+            26
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 26,
+              "parent_export": 5
+            },
+            {
+              "slot_export": 71,
+              "parent_export": 54
+            },
+            {
+              "slot_export": 61,
+              "parent_export": 48
+            },
+            {
+              "slot_export": 162,
+              "parent_export": 155
+            },
+            {
+              "slot_export": 67,
+              "parent_export": 52
+            },
+            {
+              "slot_export": 202,
+              "parent_export": 197
+            },
+            {
+              "slot_export": 142,
+              "parent_export": 132
+            },
+            {
+              "slot_export": 24,
+              "parent_export": 4
+            },
+            {
+              "slot_export": 150,
+              "parent_export": 147
+            },
+            {
+              "slot_export": 206,
+              "parent_export": 199
+            },
+            {
+              "slot_export": 37,
+              "parent_export": 11
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        }
+      ]
+    },
+    {
+      "file": "pakchunk500-Windows-1559.json",
+      "sha256": "c0404ca9ff66c502827463d0be75f80a80bd3f158f4bc5ecce5b152f0161a7e4",
+      "source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+        "size": 90792756,
+        "modified_ns": 1791753957558672500,
+        "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+        "pak_version": 11
+      },
+      "controls": [
+        {
+          "export": 123,
+          "name": "ButtonEnchantMulti",
+          "type": "NkButton",
+          "offset": 39533,
+          "size": 337,
+          "sha256": "c90ba1c2611da77723cdf39473bd19a98b90c669bbbe890998b544eb06ff9201",
+          "local_slots": [
+            210
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 210,
+              "parent_export": 208
+            },
+            {
+              "slot_export": 45,
+              "parent_export": 17
+            },
+            {
+              "slot_export": 43,
+              "parent_export": 15
+            },
+            {
+              "slot_export": 196,
+              "parent_export": 188
+            },
+            {
+              "slot_export": 70,
+              "parent_export": 31
+            },
+            {
+              "slot_export": 76,
+              "parent_export": 34
+            },
+            {
+              "slot_export": 51,
+              "parent_export": 21
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 144,
+          "name": "TextPopupTitle",
+          "type": "NkTextBlock",
+          "offset": 43574,
+          "size": 234,
+          "sha256": "a6081d3f558e04f3bb84f03f5e465c801dcfc1012aa801ba9e96c1e1105bf3f9",
+          "local_slots": [
+            105
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 105,
+              "parent_export": 84
+            },
+            {
+              "slot_export": 64,
+              "parent_export": 28
+            },
+            {
+              "slot_export": 194,
+              "parent_export": 188
+            },
+            {
+              "slot_export": 70,
+              "parent_export": 31
+            },
+            {
+              "slot_export": 76,
+              "parent_export": 34
+            },
+            {
+              "slot_export": 51,
+              "parent_export": 21
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        }
+      ]
+    }
+  ],
+  "caller_to_titlebar_binding_proven": false,
+  "absolute_geometry_from_resource_proven": false,
+  "policy": "Observed reversible exit with three anchors, no tutorial marker, result verification; no guessed native control link"
+}

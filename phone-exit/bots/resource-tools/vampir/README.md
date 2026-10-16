@@ -164,3 +164,62 @@ code-clues/easing-stop-links.json. Очистку callback не считать �
 Карта native ConditionType вне reflected enum: build-lock-condition-types.py,
 [CONDITION-TYPES.md](CONDITION-TYPES.md), quest-graph/condition-types.json.
 Подтверждённые имена не заменяют evaluator/состояние персонажа.
+
+build-lock-loader-links.py: проверка нативного загрузчика условий, шага записей,
+полей и пустых post-load слотов; code-clues/lock-loader-links.json.
+Доказательства и ограничения — в CONDITION-TYPES.md, раздел загрузчика.
+Дополнительно проверяются пять исходных заголовков колонок и построение индекса
+GroupId → массив указателей на объекты условий; AND/OR не интерпретируется.
+
+Клиентский dispatch и обычный AND-путь с исключениями:
+[CONDITION-PREDICATE.md](CONDITION-PREDICATE.md), build-lock-predicate-code.py,
+code-clues/lock-predicate-code.json. Таблица переходов хранится отдельно от кода;
+gate/состояния ещё не позволяют вычислять доступность персонажа.
+
+Поля ContentsLock и пять прямых вызовов предиката:
+[CONTENTS-LOCK-FIELDS.md](CONTENTS-LOCK-FIELDS.md), build-contents-lock-fields.py,
+code-clues/contents-lock-fields.json. SaveType=2 во всех269 исходных строках;
+символическое имя2 пока неизвестно. Соединение со справочником — referenceRevision4,
+clientPredicateReference; вычисление для персонажа не включено.
+
+Обновление контекста и источники кешированных уровней:
+[CONDITION-STATE.md](CONDITION-STATE.md), build-lock-state-code.py,
+code-clues/lock-state-code.json. Два флага готовности, замена/добавление ID,
+refresh перед пересчётом. Происхождение входного массива и gate пока неизвестно.
+
+Следующий результат V32/V33:
+[UNLOCK-RESULTS.md](UNLOCK-RESULTS.md), build-lock-packet-links.py,
+code-clues/lock-packet-links.json — точные OnHandler чтения списка и результата
+запроса, два tail-jump в update; это приём результата, не отправка запросов.
+[CONDITION-GATE.md](CONDITION-GATE.md), build-lock-gate-code.py,
+code-clues/lock-gate-code.json — reset0..10, getter/setter готовности и EnterArea.
+Готовность не равна выполнению условия; события setter/dispatcher ещё искать.
+
+
+Регистрация двух unlock-handler и прямые события готовности:
+[UNLOCK-REGISTRATION.md](UNLOCK-REGISTRATION.md), build-lock-registration-events.py,
+code-clues/lock-registration-events.json. Две packet/handler пары в
+PacketDispatcher::_AddPacketHandler, таблицы методов/ID и7 setter-вызовов;
+CharacterSelect/Engraving связаны точными диагностическими именами. Принимающая
+диспетчеризация и другие события не объявляются завершёнными.
+
+Guard перед обновлением разрешений и сообщения:
+[PACKET-RESULT-GUARD.md](PACKET-RESULT-GUARD.md), build-packet-result-guard.py,
+code-clues/packet-result-guard.json.25 опорных инструкций,227 selector-записей,
+5 точных ключей EXE→CSV405; исключение4503 не заменено правилом result==0.
+Общий UI-путь содержит ограничения и пока не связан с конкретным WBP.
+
+
+Общий путь ошибки → системный виджет:
+[SYSTEM-MESSAGE-UI.md](SYSTEM-MESSAGE-UI.md), build-system-message-link.py,
+code-clues/system-message-link.json. WBP_SystemMessageUI → NkSystemMessageUI →
+TextMessage+0xa00 и вложенный ImageBackGround;4 cooked-варианта с хешами.
+Отдельный systemMessageReference в ui-window-reference.json не доказывает
+привязку KICKOUT_FOR_INSPECT и не включает клики/абсолютную геометрию.
+
+
+Кандидат именованного содержимого системного сообщения:
+[MESSAGE-NAMED-SLOT.md](MESSAGE-NAMED-SLOT.md), decode-message-named-slot.py,
+ui-geometry/system-message-named-slot.json. Тип NamedSlotBinding/Name/Content
+подтверждён, но unversioned-индекс59 ещё не связан с полной схемой наследования.
+Два префикса сохранены с opaque-хвостом; ребро топологии и координаты не включены.

@@ -3,7 +3,7 @@ import importlib.util
 import json
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 ROOT = Path(__file__).parent / 'vampir'
 spec = importlib.util.spec_from_file_location('vampir_bot', ROOT / 'bot.py')
@@ -129,6 +129,69 @@ class Vampir(unittest.TestCase):
         self.assertTrue(result['pause'])
         self.assertEqual(result['reason'], 'source_text:KICKOUT_FOR_INSPECT')
         self.assertFalse(any(c in ('tap', 'launch') for c, _ in self.host.calls))
+
+    def inspect_tick(self, after=1, dx=0, dy=128, visible=True):
+        original = self.host.call
+        def call(command, **args):
+            result = original(command, **args)
+            if command == 'match':
+                if args['name'] == 'connection_terminated_inspect':
+                    result.update(point=[640, 320])
+                elif args['name'] == 'connection_terminated_confirm':
+                    result.update(point=[640 + dx, 320 + dy])
+            return result
+        with patch.object(self.host, 'call', side_effect=call):
+            return self.tick(['connection_terminated_inspect', 'connection_terminated_confirm'] if visible else [], after)
+
+    def test_inspect_confirm_once_then_wait_without_shop_input(self):
+        self.assertEqual(self.inspect_tick()['step'], 'inspect_confirm_wait')
+        self.inspect_tick(after=3)
+        result = self.inspect_tick(after=10)
+        self.assertEqual(result['error'], 'inspect_confirm_outcome_unknown')
+        self.assertTrue(result['pause'])
+        self.assertFalse(result['retryable'])
+        self.assertEqual(sum(c == 'tap' for c, _ in self.host.calls), 1)
+
+    def test_inspect_confirm_exit_never_relaunches(self):
+        self.inspect_tick()
+        self.host.package = 'launcher'
+        self.assertEqual(self.tick()['step'], 'inspect_confirm_game_closed')
+        self.assertFalse(any(c == 'launch' for c, _ in self.host.calls))
+
+    def test_inspect_confirm_disappeared_pauses_before_quests(self):
+        self.inspect_tick()
+        result = self.inspect_tick(after=3, visible=False)
+        self.assertEqual(result['step'], 'inspect_confirm_dismissed')
+        self.assertTrue(result['pause'])
+        self.assertEqual(sum(c == 'tap' for c, _ in self.host.calls), 1)
+
+    def test_inspect_confirm_wrong_geometry_never_taps(self):
+        for dx, dy in [(100,128),(0,20),(0,300)]:
+            self.assertTrue(self.inspect_tick(dx=dx,dy=dy)['pause'])
+        self.assertFalse(any(c == 'tap' for c, _ in self.host.calls))
+
+    def test_confirm_button_without_inspect_text_never_taps(self):
+        self.tick(['connection_terminated_confirm'])
+        self.assertFalse(any(c == 'tap' for c, _ in self.host.calls))
+
+    def test_purchase_can_be_disabled_without_disabling_quests(self):
+        self.settings.update(quest_enabled=True, quest_shop_enabled=False)
+        shop, quests = Mock(), Mock()
+        quests.tick.return_value = dict(status='running', step='quest_test')
+        with patch.dict(bot._shops, {self.directory: shop}), patch.dict(bot._quests, {self.directory: quests}):
+            self.assertEqual(self.tick()['step'], 'quest_test')
+        shop.tick.assert_not_called()
+        quests.tick.assert_called_once()
+
+    def test_match_cache_is_per_frame_and_never_reused_after_capture(self):
+        config=bot._configs[self.directory]
+        config['download_screens']=['hud_inventory']
+        config['ready_anchors']=['hud_inventory']
+        self.tick(['hud_inventory'])
+        count=lambda:sum(c=='match' and args['name']=='hud_inventory' for c,args in self.host.calls)
+        self.assertEqual(count(),1)
+        self.tick([])
+        self.assertEqual(count(),2)
 
 
 if __name__ == '__main__':

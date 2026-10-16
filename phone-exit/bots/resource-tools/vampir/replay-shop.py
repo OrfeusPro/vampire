@@ -169,7 +169,8 @@ def main():
                 cases.append(run_case(destination, name + '_' + tag, prefix + [(name, changed, 3),
                     (name + '_timeout', changed, 21)], 2, 'quest_shop_selected'))
             cases.append(run_case(destination, 'session_terminated_' + tag,
-                [('terminated', variant(images['session-terminated.jpg']), 3)], 0, 'waiting_connection_terminated_inspect'))
+                [('terminated', variant(images['session-terminated.jpg']), 3),
+                 ('still_terminated', variant(images['session-terminated.jpg']), 12)], 1, 'inspect_confirm_not_closed'))
     report = dict(opencv=cv2.__version__, phone_commands_sent=0, cases=cases,
         module_version=json.loads((MODULE / 'manifest.json').read_text(encoding='utf-8'))['version'],
         module_sha256={file: hashlib.sha256((MODULE / file).read_bytes()).hexdigest()

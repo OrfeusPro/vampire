@@ -1,0 +1,244 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\bag-exit-2026-10-16\\before.jpg",
+  "source_sha256": "7485bb186d231d219ea578233d600d815bcfaba57e50263317b0e20d81035106",
+  "variants": [
+    {
+      "name": "bag_screen_header",
+      "crop": [
+        877,
+        82,
+        924,
+        108
+      ],
+      "factor": 1,
+      "sha256": "cf69ebd10315e52b76433c3f18416b839ed515c5ec1f7566509f3e28e87fd374"
+    },
+    {
+      "name": "bag_screen_header_compact",
+      "crop": [
+        658,
+        62,
+        693,
+        81
+      ],
+      "factor": 0.75,
+      "sha256": "625b0efc2363b90ecf7ca3bc166a40630d6ae9efbe483269d458f349e01cb28a"
+    },
+    {
+      "name": "bag_screen_header_large",
+      "crop": [
+        1096,
+        102,
+        1155,
+        135
+      ],
+      "factor": 1.25,
+      "sha256": "947d34dd7c6f9643a44795903c3477492041274ac2dad47fadce117ba071fb08"
+    },
+    {
+      "name": "bag_screen_bulk",
+      "crop": [
+        888,
+        546,
+        984,
+        585
+      ],
+      "factor": 1,
+      "sha256": "225aa75487bcb065d07798ab76ee82bd8ca2d5bdfed2af89127e5aae84ff5a97"
+    },
+    {
+      "name": "bag_screen_bulk_compact",
+      "crop": [
+        666,
+        410,
+        738,
+        439
+      ],
+      "factor": 0.75,
+      "sha256": "465599095ca3f0fa49641c95c29cac2e0d1235f7600736063abeafec39a4f96c"
+    },
+    {
+      "name": "bag_screen_bulk_large",
+      "crop": [
+        1110,
+        682,
+        1230,
+        731
+      ],
+      "factor": 1.25,
+      "sha256": "a5070a4e57263fd4d8fe73fec5a85fc91e0c4287cafda1bff0ab1fe91b117f51"
+    },
+    {
+      "name": "bag_screen_default",
+      "crop": [
+        1020,
+        554,
+        1103,
+        580
+      ],
+      "factor": 1,
+      "sha256": "d6912f102ff05eb3cb72c5d05f3592eae2e9e9237b13627f539f7eeddb470675"
+    },
+    {
+      "name": "bag_screen_default_compact",
+      "crop": [
+        765,
+        416,
+        827,
+        435
+      ],
+      "factor": 0.75,
+      "sha256": "5944d3add57a458d8091924914343859c2ef9ab8bd2abfd8a8e4d3dac65d11b3"
+    },
+    {
+      "name": "bag_screen_default_large",
+      "crop": [
+        1275,
+        692,
+        1379,
+        725
+      ],
+      "factor": 1.25,
+      "sha256": "cef45d0736d3ea47a080dcd18727d783b328bfd184254c689c27bd9e21e76789"
+    },
+    {
+      "name": "bag_screen_exit",
+      "crop": [
+        1223,
+        78,
+        1255,
+        109
+      ],
+      "factor": 1,
+      "sha256": "d32b0156df508d3d3b3742ff6c0d8e84699afc493b5637f5bb6dc5cbfc72e358"
+    },
+    {
+      "name": "bag_screen_exit_compact",
+      "crop": [
+        917,
+        58,
+        941,
+        82
+      ],
+      "factor": 0.75,
+      "sha256": "b6411ac822eab4c5d41404110be489ba72f22c20c6e344967293a1e066e6161a"
+    },
+    {
+      "name": "bag_screen_exit_large",
+      "crop": [
+        1529,
+        98,
+        1569,
+        136
+      ],
+      "factor": 1.25,
+      "sha256": "604caba7d73f2e0d57140c74b711ccd2557e5dad4c48544dc42b7e89a85e3e64"
+    }
+  ],
+  "widget_file": "pakchunk500-Windows-2167.json",
+  "widget_sha256": "20c1f6a550da910ce48d441516f669857b8fa4bb217bc155b621abae282f3987",
+  "widget_source": {
+    "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+    "size": 90792756,
+    "modified_ns": 1791753957558672500,
+    "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+    "pak_version": 11
+  },
+  "control": {
+    "export": 161,
+    "name": "ButtonClose",
+    "type": "NkButton",
+    "offset": 58972,
+    "size": 276,
+    "sha256": "39777985c0481d2b6d094ae8d871dc7410203b5d335329f9eff453b0d071967d",
+    "local_slots": [
+      69
+    ],
+    "parent_chain": [
+      {
+        "slot_export": 69,
+        "parent_export": 31
+      },
+      {
+        "slot_export": 276,
+        "parent_export": 261
+      },
+      {
+        "slot_export": 251,
+        "parent_export": 237
+      },
+      {
+        "slot_export": 71,
+        "parent_export": 32
+      },
+      {
+        "slot_export": 83,
+        "parent_export": 37
+      },
+      {
+        "slot_export": 44,
+        "parent_export": 15
+      }
+    ],
+    "chain_termination": "no_further_decoded_slot"
+  },
+  "slots": [
+    {
+      "provenance": {
+        "file": "pakchunk500-Windows-2167.json",
+        "slot_export": 69,
+        "offset": 53394,
+        "sha256": "f47e7fbcc6574616e1f818dc08f3a1f22f80086303ae2058b47fd8dc5f9694c2",
+        "source": {
+          "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+          "size": 90792756,
+          "modified_ns": 1791753957558672500,
+          "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+          "pak_version": 11
+        },
+        "entry": 2167
+      },
+      "decoded": {
+        "layout": {
+          "offsets": {
+            "left": 0,
+            "top": 0,
+            "right": 110.0,
+            "bottom": 80.0
+          },
+          "anchors": {
+            "minimum": [
+              0,
+              0
+            ],
+            "maximum": [
+              0,
+              0
+            ]
+          },
+          "alignment": [
+            0,
+            0
+          ],
+          "serialized_fields": [
+            0
+          ]
+        },
+        "parent_export": 31,
+        "content_export": 161,
+        "parent": {
+          "index": 31,
+          "name": "CanvasPanel_9",
+          "type": "CanvasPanel"
+        },
+        "content": {
+          "index": 161,
+          "name": "ButtonClose",
+          "type": "NkButton"
+        }
+      }
+    }
+  ],
+  "absolute_geometry_from_resource_proven": false,
+  "policy": "Three positive inventory labels, no tutorial marker/prompt; existing overlay_route single tap and verification"
+}

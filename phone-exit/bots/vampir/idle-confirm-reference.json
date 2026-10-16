@@ -1,0 +1,126 @@
+{
+  "localization": {
+    "source": {
+      "file": "pakchunk1-Windows-405.csv",
+      "source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk1-Windows.pak",
+        "size": 11841434,
+        "modified_ns": 1791752696761175700,
+        "sample_sha256": "11cfb06d2bcce296f155a658a45f7435964597c0c54b5133084777926e30da73",
+        "pak_version": 11
+      },
+      "entry": 405,
+      "offset": 1892352,
+      "size": 654581,
+      "sha256": "32956f16902bdd8f7507d000143dee29ad457e7fa1ea09194c3632a2d1f4179e",
+      "header": [
+        "Key",
+        "Value",
+        "L10NOrder",
+        "L10NRegistrationDate",
+        "Untranslated"
+      ],
+      "rows": 7032,
+      "quest_tutorial_rows": 705,
+      "examples": [
+        [
+          "QUEST_PROGRESS_VALUE_STATE_MINI",
+          "[Count]/[MaxCount]",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "MAINMENU_QUEST",
+          "Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPTITLE_MAIN",
+          "Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPTITLE_DAILY",
+          "Daily Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPMENUTITLE_MAIN",
+          "Main Quest",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ]
+      ],
+      "internal_path": null
+    },
+    "csv_record": 3794,
+    "row": {
+      "Key": "CHARACTER_IDLE_KICKOUT_POPUP_INFO",
+      "Value": "You have been disconnected due to inactivity.",
+      "L10NOrder": "0521",
+      "L10NRegistrationDate": "2025-06-18 12:38:30",
+      "Untranslated": ""
+    }
+  },
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\idle-confirm-2026-10-16\\before.jpg",
+  "source_sha256": "ca0640350a1ebb6dfc6b530161188926eb79a472511aa23058f886d01260418c",
+  "variants": [
+    {
+      "name": "idle_disconnected",
+      "factor": 1,
+      "crop": [
+        470,
+        293,
+        812,
+        347
+      ],
+      "reference_size": [
+        1280,
+        720
+      ],
+      "sha256": "9190cd32afee83a940a35ebeec78c8697802dfea3cd486bab06bbd0482d32ace"
+    },
+    {
+      "name": "idle_disconnected_compact",
+      "factor": 0.75,
+      "crop": [
+        352,
+        220,
+        609,
+        260
+      ],
+      "reference_size": [
+        960,
+        540
+      ],
+      "sha256": "30f282b9b5858eba60da647ef92b93d08285a819c048b506fdeffd43ac853210"
+    },
+    {
+      "name": "idle_disconnected_large",
+      "factor": 1.25,
+      "crop": [
+        588,
+        366,
+        1015,
+        434
+      ],
+      "reference_size": [
+        1600,
+        900
+      ],
+      "sha256": "f5d070d701dd21ac45aafc1e0e3c6883b97db24e620cb0842690f37cec1cfcc4"
+    }
+  ],
+  "confirm_reference": "inspect-confirm-reference.json",
+  "widget_binding_proven": false,
+  "behavior": "confirm_once_verify_then_continue_known_entry",
+  "limits": "ButtonOk candidates are not proof of caller; observed geometry only"
+}

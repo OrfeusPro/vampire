@@ -1,5 +1,11 @@
 """Quest mode: game auto-progression plus identified tutorial and scene controls."""
 import random
+import importlib.util
+from pathlib import Path
+
+_executor_spec = importlib.util.spec_from_file_location('vampir_quest_executor', Path(__file__).with_name('quest_executor.py'))
+_executor = importlib.util.module_from_spec(_executor_spec)
+_executor_spec.loader.exec_module(_executor)
 
 
 def tap_point(button, frame, interaction):
@@ -41,6 +47,7 @@ def tick(host, settings, state, frame, config, now):
         return None
     quest = state.setdefault('quest', {})
     interaction = config.get('interaction', {})
+    executions = quest.setdefault('executions', {})
 
     def match(name):
         if callable(config.get('_match')):
@@ -65,13 +72,19 @@ def tick(host, settings, state, frame, config, now):
             result.update(status='error', pause=True, retryable=False)
         return result
 
-    def tap(button, step, source=None):
+    def tap(button, step, source=None, policy=None):
         try:
             observed = source_observation(source, config) if source else None
         except (KeyError, ValueError) as error:
             return report('quest_reference_error', str(error))
         x, y = tap_point(button, frame, interaction)
-        host.call('tap', x=x, y=y, width=frame['width'], height=frame['height'])
+        outcome = _executor.execute(host, executions, button, frame, now, [x, y], policy, observed)
+        if outcome['phase'] == 'wait':
+            return report('quest_wait_action')
+        if outcome['phase'] == 'exhausted':
+            return report(step, 'quest_tutorial_not_advanced' if source else 'quest_action_not_advanced')
+        if outcome['phase'] == 'error':
+            return report(step, outcome['error'])
         lo, hi = interaction.get('delay_jitter_sec', [0, 0])
         jitter = random.uniform(lo, hi) if 0 <= lo <= hi <= 1 else 0
         quest['settle_until'] = now + max(2, source.get('minimum_delay_sec', 0) if source else 0) + jitter
@@ -82,7 +95,14 @@ def tick(host, settings, state, frame, config, now):
 
     if now < quest.get('settle_until', 0):
         return report('quest_wait_action')
-    hud = all(found(name) for name in config['ready_anchors']) if config['ready_anchors'] else False
+    router = config.get('_recognition')
+    if router:
+        route = router.overlay_route(config, quest, match, now)
+        if route is not None:
+            button = route.pop('button', None)
+            if button is not None:
+                return tap(button, route['step'])
+            return route
     skip = match('scene_skip')
     # Tutorial panels also contain SKIP. Only the observed dialog header
     # authorizes this control; a missing HUD alone is not a cinematic signal.
@@ -93,23 +113,34 @@ def tick(host, settings, state, frame, config, now):
         return tap(skip, 'quest_skip_scene')
     if not skip.get('found'):
         quest.pop('skip_attempts', None)
-    for action in config['tutorial_actions']:
+    passive = config.get('passive_hud')
+    if passive and quest.get('last_auto_scan_at') is not None:
+        age = now - quest['last_auto_scan_at']
+        if 0 <= age < passive['full_scan_interval_sec']:
+            blockers = passive['markers'] + passive['extra_blockers']
+            if (not any(found(name) for name in blockers)
+                    and all(found(name) for name in config['ready_anchors'])
+                    and found('quest_auto_on')):
+                # Observational only: never infer permission to tap from cached state.
+                return report('quest_auto_observing')
+    quest.pop('last_auto_scan_at', None)
+    router = config.get('_recognition')
+    candidates = router.tutorial_candidates(config, quest) if router else config['tutorial_actions']
+    for action in candidates:
         prompt, target, step = action['prompt'], action['target'], action['step']
         if not found(prompt):
-            quest.pop(prompt + '_attempts', None)
-            quest.pop(prompt + '_attempt_at', None)
+            _executor.forget(executions, 'tutorial:' + prompt)
             quest.pop(prompt + '_target_since', None)
             continue
+        quest['recognized_prompt'] = prompt
+        quest['screen_kind'] = router.screen_kind(action.get('source_tutorial', {})) if router else 'tutorial'
+        if any(not found(name) for name in action.get('required_templates', [])):
+            return report(step, 'quest_tutorial_conditions_not_verified')
         button = match(target)
         if not button.get('found'):
             since = quest.setdefault(prompt + '_target_since', now)
             return report(step, 'quest_tutorial_target_not_found' if now - since > 20 else None)
         quest.pop(prompt + '_target_since', None)
-        attempts = quest.get(prompt + '_attempts', 0)
-        if attempts and now - quest.get(prompt + '_attempt_at', now) < interaction.get('retry_wait_sec', 8):
-            return report('quest_wait_action')
-        if attempts >= 2:
-            return report(step, 'quest_tutorial_not_advanced')
         if target == 'tutorial_target_corner' or 'offset' in action:
             rect = button.get('rect')
             if not rect or len(rect) != 4:
@@ -123,25 +154,20 @@ def tick(host, settings, state, frame, config, now):
                 return report(step, 'quest_tutorial_target_geometry')
             safe_radius = 6 * scale
             button = dict(point=point, rect=[point[0] - safe_radius, point[1] - safe_radius, point[0] + safe_radius, point[1] + safe_radius])
-        quest[prompt + '_attempts'] = attempts + 1
-        quest[prompt + '_attempt_at'] = now
-        return tap(button, step, action.get('source_tutorial'))
+        policy = dict(id='tutorial:' + prompt, retry_wait_sec=interaction.get('retry_wait_sec', 8),
+                      max_attempts=action.get('max_attempts', 2))
+        return tap(button, step, action.get('source_tutorial'), policy)
     for action in config.get('quest_actions', []):
         key = 'action_' + action['id']
         if not all(found(name) for name in action['anchors']):
-            quest.pop(key, None)
+            _executor.forget(executions, key)
             continue
         button = match(action['target'])
         if not button.get('found'):
             continue
-        pending = quest.setdefault(key, dict(attempts=0))
-        if pending['attempts'] and now - pending['at'] < action['retry_wait_sec']:
-            return report('quest_wait_action')
-        if pending['attempts'] >= action['max_attempts']:
-            return report(action['id'], 'quest_action_not_advanced')
-        pending.update(attempts=pending['attempts'] + 1, at=now)
         quest.pop('last_observed_tutorial', None)
-        return tap(button, action['id'])
+        return tap(button, action['id'], policy=dict(id=key, retry_wait_sec=action['retry_wait_sec'],
+                                                    max_attempts=action['max_attempts']))
     visible_overlay = None
     for overlay in config.get('known_overlays', []):
         if not found(overlay['header']):
@@ -162,12 +188,14 @@ def tick(host, settings, state, frame, config, now):
         return tap(close, 'quest_close_' + visible_overlay)
     if visible_overlay is None:
         quest.pop('overlay', None)
+    hud = all(found(name) for name in config['ready_anchors']) if config['ready_anchors'] else False
     if hud:
         quest.pop('last_observed_tutorial', None)
         quest.pop('unknown_since', None)
         if found('quest_auto_on'):
             quest.pop('hud_unknown_since', None)
             quest.pop('activation_since', None)
+            quest['last_auto_scan_at'] = now
             return report('quest_auto_running')
         if 'activation_since' in quest:
             return report('quest_wait_auto', 'quest_auto_not_enabled' if now - quest['activation_since'] > 20 else None)

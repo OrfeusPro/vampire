@@ -41,7 +41,7 @@ class QuestMode(unittest.TestCase):
 
     def test_active_autoquest_is_never_toggled_by_repeated_taps(self):
         for _ in range(20):
-            self.assertEqual(self.tick(self.hud('quest_auto_on'))['step'], 'quest_auto_running')
+            self.assertIn(self.tick(self.hud('quest_auto_on'))['step'], ('quest_auto_running', 'quest_auto_observing'))
         self.assertFalse(any(c == 'tap' for c, _ in self.host.calls))
 
     def test_off_state_activates_once_then_waits_for_confirmation(self):
@@ -99,8 +99,8 @@ class QuestMode(unittest.TestCase):
         self.assertIsNone(self.tick(['tutorial_adrenaline'])['error'])
         self.assertFalse(any(c == 'tap' for c, _ in self.host.calls))
         for _ in range(2):
-            self.assertEqual(self.tick(['tutorial_adrenaline', 'tutorial_adrenaline_gauge'], after=9)['step'], 'quest_tutorial_adrenaline')
-        self.assertEqual(self.tick(['tutorial_adrenaline', 'tutorial_adrenaline_gauge'], after=9)['error'], 'quest_tutorial_not_advanced')
+            self.assertEqual(self.tick(['tutorial_adrenaline', 'tutorial_adrenaline_frame'], after=9)['step'], 'quest_tutorial_adrenaline')
+        self.assertEqual(self.tick(['tutorial_adrenaline', 'tutorial_adrenaline_frame'], after=9)['error'], 'quest_tutorial_not_advanced')
         self.assertEqual(sum(c == 'tap' for c, _ in self.host.calls), 2)
 
     def test_unknown_auto_state_is_bounded_without_input(self):
@@ -141,7 +141,7 @@ class QuestMode(unittest.TestCase):
         self.assertEqual(result['step'], 'quest_start_auto')
 
     def test_phone_lag_does_not_trigger_rapid_second_tap(self):
-        visible = ['tutorial_adrenaline', 'tutorial_adrenaline_gauge']
+        visible = ['tutorial_adrenaline', 'tutorial_adrenaline_frame']
         self.tick(visible)
         self.assertEqual(self.tick(visible, after=3)['step'], 'quest_wait_action')
         self.assertEqual(sum(c == 'tap' for c, _ in self.host.calls), 1)
@@ -170,7 +170,7 @@ class QuestMode(unittest.TestCase):
     def test_temporary_missing_target_recovers_without_blind_tap(self):
         self.tick(['tutorial_adrenaline'])
         self.assertFalse(any(c == 'tap' for c, _ in self.host.calls))
-        self.tick(['tutorial_adrenaline', 'tutorial_adrenaline_gauge'], after=5)
+        self.tick(['tutorial_adrenaline', 'tutorial_adrenaline_frame'], after=5)
         self.assertEqual(sum(c == 'tap' for c, _ in self.host.calls), 1)
 
     def test_expected_source_step_is_context_not_an_input_command(self):
@@ -195,3 +195,30 @@ class QuestMode(unittest.TestCase):
         visible = ['quest_complete_title', 'reward_tap_close']
         self.assertEqual(self.tick(visible)['step'], 'quest_wait_quest_reward')
         self.assertEqual(self.tick(visible, after=3)['step'], 'quest_close_quest_reward')
+
+    def test_passive_hud_reuses_no_matches_from_previous_frame(self):
+        self.assertEqual(self.tick(self.hud('quest_auto_on'))['step'], 'quest_auto_running')
+        self.host.calls=[]
+        self.assertEqual(self.tick(self.hud('quest_auto_on'), after=1)['step'], 'quest_auto_observing')
+        self.assertFalse(any(name=='tap' for name,_ in self.host.calls))
+        matched=[args['name'] for name,args in self.host.calls if name=='match']
+        self.assertNotIn('tutorial_bag', matched)
+        self.assertIn('quest_auto_on', matched)
+        self.assertIn('hud_inventory', matched)
+
+    def test_passive_hud_full_discovery_is_periodic(self):
+        self.tick(self.hud('quest_auto_on'))
+        self.host.calls=[]
+        result=self.tick(self.hud('quest_auto_on'), after=12)
+        self.assertEqual(result['step'],'quest_auto_running')
+        self.assertTrue(any(c=='match' and a['name']=='tutorial_bag' for c,a in self.host.calls))
+
+    def test_tutorial_marker_interrupts_passive_hud(self):
+        self.tick(self.hud('quest_auto_on'))
+        result=self.tick(self.hud('quest_auto_on','tutorial_skip_left','tutorial_bag'),after=1)
+        self.assertEqual(result['step'],'quest_tutorial_bag')
+
+    def test_lost_hud_disables_passive_observation(self):
+        self.tick(self.hud('quest_auto_on'))
+        result=self.tick(['quest_auto_on'],after=1)
+        self.assertNotEqual((result or {}).get('step'),'quest_auto_observing')

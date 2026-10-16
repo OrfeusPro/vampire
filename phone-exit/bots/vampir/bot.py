@@ -9,6 +9,9 @@ PACKAGE = 'com.netmarble.thered'
 _configs = {}
 _quests = {}
 _shops = {}
+_messages = {}
+_entries = {}
+_recognition = {}
 
 
 def prepare_templates(config, frame):
@@ -55,6 +58,12 @@ def tick(host, settings, state, directory):
         since = state.setdefault('foreground_since', now)
         return report('waiting_game_foreground', 'foreground_unavailable' if now - since >= 10 else None)
     state.pop('foreground_since', None)
+    if foreground != PACKAGE and state.get('message_ack_pending'):
+        return dict(status='paused', step='message_confirm_game_closed', pause=True, error=None,
+                    reason='source_text:' + state['message_ack_pending']['key'])
+    if foreground != PACKAGE and state.get('inspect_confirm_at') is not None:
+        return dict(status='paused', step='inspect_confirm_game_closed', pause=True,
+                    error=None, reason='source_text:KICKOUT_FOR_INSPECT')
     if foreground != PACKAGE:
         if not settings.get('autostart_enabled'):
             return dict(status='paused', step='game_not_foreground', pause=True, error=None)
@@ -67,7 +76,16 @@ def tick(host, settings, state, directory):
     frame = host.call('capture')
     prepare_templates(config, frame)
 
+    frame_matches = {}
+
     def match(name):
+        if name in frame_matches:
+            return frame_matches[name]
+        result = raw_match(name)
+        frame_matches[name] = result
+        return result
+
+    def raw_match(name):
         result = host.call('match', name=name, spec=config['templates'][name])
         if result.get('found'):
             return result
@@ -80,6 +98,35 @@ def tick(host, settings, state, directory):
         return result
 
     config['_match'] = match
+    if directory not in _recognition:
+        spec = importlib.util.spec_from_file_location('vampir_recognition', Path(directory) / 'recognition.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        _recognition[directory] = module
+    config['_recognition'] = _recognition[directory]
+
+    if config.get('message_acknowledgements'):
+        if directory not in _messages:
+            spec = importlib.util.spec_from_file_location('vampir_messages', Path(directory) / 'messages.py')
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            _messages[directory] = module
+        message_result = _messages[directory].tick(host, state, frame, config, match, now)
+        if message_result is not None:
+            return message_result
+
+    # An acknowledged session termination must never trigger automatic re-entry.
+    inspect = config.get('inspect_confirm', {})
+    pending = state.get('inspect_confirm_at')
+    if pending is not None:
+        if now - pending < 2:
+            return report('inspect_confirm_wait')
+        if not match(inspect['message']).get('found'):
+            return dict(status='paused', step='inspect_confirm_dismissed', pause=True,
+                        error=None, reason='source_text:KICKOUT_FOR_INSPECT')
+        if now - pending >= inspect.get('timeout_sec', 10):
+            return report('inspect_confirm_not_closed', 'inspect_confirm_outcome_unknown')
+        return report('inspect_confirm_wait')
 
     # Asset download may take much longer than login. Never restart or click it.
     if any(match(name).get('found') for name in config.get('download_screens', ['patch_download'])):
@@ -88,16 +135,40 @@ def tick(host, settings, state, directory):
     for name in config.get('manual_screens', []):
         if match(name).get('found'):
             source = config.get('manual_screen_sources', {}).get(name, {})
+            if name == inspect.get('message'):
+                message, button = match(name), match(inspect['button'])
+                scale = config['_prepared_scale']
+                if button.get('found') and message.get('found'):
+                    dx = abs(button['point'][0] - message['point'][0]) / scale
+                    dy = (button['point'][1] - message['point'][1]) / scale
+                    if dx <= inspect['dx_max'] and inspect['dy_min'] <= dy <= inspect['dy_max']:
+                        # Reserve before sending: an uncertain tap must not be repeated.
+                        state['inspect_confirm_at'] = now
+                        try:
+                            host.call('tap', x=button['point'][0], y=button['point'][1],
+                                      width=frame['width'], height=frame['height'])
+                        except RuntimeError:
+                            return report('inspect_confirm_uncertain', 'inspect_confirm_outcome_unknown')
+                        return report('inspect_confirm_wait')
             return dict(status='paused', step='waiting_' + name, pause=True, error=None,
                         reason=('source_text:' + source['localization_key']) if source.get('localization_key') else None)
+    if config.get('entry_title') and settings.get('autostart_enabled'):
+        if directory not in _entries:
+            spec = importlib.util.spec_from_file_location('vampir_entry', Path(directory) / 'entry.py')
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            _entries[directory] = module
+        entry_result = _entries[directory].tick(host, settings, state, frame, config, match, now)
+        if entry_result is not None:
+            return entry_result
     if settings.get('quest_enabled', False):
-        if config.get('shop_flow'):
+        if config.get('shop_flow') and settings.get('quest_shop_enabled', True):
             if directory not in _shops:
                 spec = importlib.util.spec_from_file_location('vampir_shop', Path(directory) / 'shop.py')
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
                 _shops[directory] = module
-            result = _shops[directory].tick(host, state, frame, config, now, directory, config['_shop_reference'])
+            result = _shops[directory].tick(host, state, frame, config, now, directory, config['_shop_reference'], settings)
             if result is not None:
                 state.pop('entry_since', None)
                 return result

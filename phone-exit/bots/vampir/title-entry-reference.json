@@ -1,0 +1,276 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\title-entry-2026-10-16\\before.jpg",
+  "source_sha256": "e8a84369771f45523a58f0bd6399973d1c847839ee2fc59edef3016c0e59d7e0",
+  "templates": [
+    {
+      "name": "title_prompt",
+      "factor": 1,
+      "crop": [
+        498,
+        459,
+        785,
+        489
+      ],
+      "reference_size": [
+        1280,
+        720
+      ],
+      "sha256": "e3e835c9c59a8f185b583738a2897b47ab8c05317e827716df1acc1faccade45"
+    },
+    {
+      "name": "title_prompt_compact",
+      "factor": 0.75,
+      "crop": [
+        374,
+        344,
+        589,
+        367
+      ],
+      "reference_size": [
+        960,
+        540
+      ],
+      "sha256": "66a48cf9eacb1930cfa842c506515943cae6eee1d287b2bb978616b0389fab1c"
+    },
+    {
+      "name": "title_prompt_large",
+      "factor": 1.25,
+      "crop": [
+        622,
+        574,
+        981,
+        611
+      ],
+      "reference_size": [
+        1600,
+        900
+      ],
+      "sha256": "13da3288706f1508ea6d83e960f29e02d342a098ade8f127cbc04a678c55fccd"
+    },
+    {
+      "name": "title_logo",
+      "factor": 1,
+      "crop": [
+        403,
+        291,
+        878,
+        430
+      ],
+      "reference_size": [
+        1280,
+        720
+      ],
+      "sha256": "60ffb771eee61cd292b3684176ff744a90aaac45398f7424782ed4551fc93fac"
+    },
+    {
+      "name": "title_logo_compact",
+      "factor": 0.75,
+      "crop": [
+        302,
+        218,
+        658,
+        322
+      ],
+      "reference_size": [
+        960,
+        540
+      ],
+      "sha256": "ce857ac0f90e0afb72c68bd66add0a6b5dd4b26a2967eb9f84c76165f0764cc1"
+    },
+    {
+      "name": "title_logo_large",
+      "factor": 1.25,
+      "crop": [
+        504,
+        364,
+        1098,
+        538
+      ],
+      "reference_size": [
+        1600,
+        900
+      ],
+      "sha256": "066b1c564f0f9e70af6d147626fd36f94afaf441b882056deb2d698589f85da8"
+    }
+  ],
+  "localization": {
+    "source": {
+      "file": "pakchunk1-Windows-405.csv",
+      "source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk1-Windows.pak",
+        "size": 11841434,
+        "modified_ns": 1791752696761175700,
+        "sample_sha256": "11cfb06d2bcce296f155a658a45f7435964597c0c54b5133084777926e30da73",
+        "pak_version": 11
+      },
+      "entry": 405,
+      "offset": 1892352,
+      "size": 654581,
+      "sha256": "32956f16902bdd8f7507d000143dee29ad457e7fa1ea09194c3632a2d1f4179e",
+      "header": [
+        "Key",
+        "Value",
+        "L10NOrder",
+        "L10NRegistrationDate",
+        "Untranslated"
+      ],
+      "rows": 7032,
+      "quest_tutorial_rows": 705,
+      "examples": [
+        [
+          "QUEST_PROGRESS_VALUE_STATE_MINI",
+          "[Count]/[MaxCount]",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "MAINMENU_QUEST",
+          "Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPTITLE_MAIN",
+          "Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPTITLE_DAILY",
+          "Daily Quests",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ],
+        [
+          "QUEST_POPUPMENUTITLE_MAIN",
+          "Main Quest",
+          "0521",
+          "2025-05-21 16:11:00",
+          ""
+        ]
+      ],
+      "internal_path": null
+    },
+    "csv_record": 3357,
+    "row": {
+      "Key": "COMMON_TOUCH_THE_SCREEN_2",
+      "Value": "Please tap the screen.",
+      "L10NOrder": "0521",
+      "L10NRegistrationDate": "2025-05-21 16:11:00",
+      "Untranslated": ""
+    }
+  },
+  "entry_reference_sha256": "af596c30bc12765cdfa4d0e0e23b195a060d7adbb9265040f064b7649ff3b37e",
+  "widget": {
+    "name": "WBP_TitlePanelUI",
+    "catalog_file": "pakchunk500-Windows-2425.json",
+    "catalog_sha256": "c94798299ad6bfc1213de307b02dc44d519f439fcf39c959e150e2bacaf75bd6",
+    "source": {
+      "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+      "size": 90792756,
+      "modified_ns": 1791753957558672500,
+      "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+      "pak_version": 11
+    },
+    "control": {
+      "export": 105,
+      "name": "ButtonStart",
+      "type": "NkButton",
+      "offset": 39685,
+      "size": 62,
+      "sha256": "f8efbd5061004585b5d60ea83695479d4b203272d5955cd018e7483cc3f88184",
+      "local_slots": [
+        32
+      ],
+      "parent_chain": [
+        {
+          "slot_export": 32,
+          "parent_export": 10
+        },
+        {
+          "slot_export": 16,
+          "parent_export": 7
+        }
+      ],
+      "chain_termination": "no_further_decoded_slot"
+    },
+    "slots": [
+      {
+        "provenance": {
+          "file": "pakchunk500-Windows-2425.json",
+          "slot_export": 32,
+          "offset": 33798,
+          "sha256": "1990e03bb3c2853791292586da89f49e9bff9df21754487d3691ee54d27d6713",
+          "source": {
+            "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk500-Windows.pak",
+            "size": 90792756,
+            "modified_ns": 1791753957558672500,
+            "sample_sha256": "d7377f9a3bab329cea8bb88526e71859416eb5a5eca5193c1fd0e197dd8e0d2a",
+            "pak_version": 11
+          },
+          "entry": 2425
+        },
+        "decoded": {
+          "layout": {
+            "offsets": {
+              "left": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0
+            },
+            "anchors": {
+              "minimum": [
+                0,
+                0
+              ],
+              "maximum": [
+                1.0,
+                1.0
+              ]
+            },
+            "alignment": [
+              0,
+              0
+            ],
+            "serialized_fields": [
+              0,
+              1
+            ]
+          },
+          "parent_export": 10,
+          "content_export": 105,
+          "parent": {
+            "index": 10,
+            "name": "CanvasPanelLobby",
+            "type": "CanvasPanel"
+          },
+          "content": {
+            "index": 105,
+            "name": "ButtonStart",
+            "type": "NkButton"
+          }
+        }
+      }
+    ]
+  },
+  "native_links": "ENTRY-BUTTONS.md: ButtonStart +0xaa8 compare 0x146417db2",
+  "absolute_geometry_proven": false,
+  "observed_server": "Evans-Evans 1",
+  "manual_taps": [
+    [
+      640,
+      473
+    ],
+    [
+      640,
+      360
+    ]
+  ],
+  "manual_result": "title_not_advanced",
+  "behavior": "universal_title_single_attempt_then_20sec_pause_no_server_change",
+  "observed_server_is_runtime_requirement": false
+}

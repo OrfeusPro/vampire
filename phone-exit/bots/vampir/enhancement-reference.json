@@ -1,0 +1,74 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\tutorial4007-2026-10-16\\bag.jpg",
+  "source_sha256": "b50abe12d06218d12e81ed381fd57986a226b7b5114185699c57b8db914fe104",
+  "variants": [
+    {
+      "name": "tutorial_enhance_bag",
+      "factor": 1,
+      "crop": [
+        724,
+        124,
+        1060,
+        166
+      ],
+      "sha256": "da90468e1e7ea75ac42411efcd25e2910aa054f1d44f3482412fe336e261507e"
+    },
+    {
+      "name": "tutorial_enhance_bag_compact",
+      "factor": 0.75,
+      "crop": [
+        543,
+        93,
+        795,
+        124
+      ],
+      "sha256": "345e7b35c05872ea71e435d31065629fcd35ad49c644003992b4de41c8b94663"
+    },
+    {
+      "name": "tutorial_enhance_bag_large",
+      "factor": 1.25,
+      "crop": [
+        905,
+        155,
+        1325,
+        208
+      ],
+      "sha256": "cc32dff458b947bf752aade555938a02bd55fa50af1a46842d59358383877368"
+    }
+  ],
+  "step": "4007004",
+  "targetReused": "hud_inventory",
+  "widget_file": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\pakchunk500-Windows-1713.json",
+  "widget_sha256": "aa48d1ce251a32df8530da9c8a854fd5ec21944626d16936b59e35553bca5b99",
+  "control": {
+    "export": 97,
+    "name": "ButtonInventory",
+    "type": "NkButton",
+    "offset": 33620,
+    "size": 182,
+    "sha256": "115c7f86cd3cf4a14985d6eb027abe12ddde79db47301a46f838b1f4621f6439",
+    "local_slots": [
+      134
+    ],
+    "parent_chain": [
+      {
+        "slot_export": 134,
+        "parent_export": 128
+      },
+      {
+        "slot_export": 80,
+        "parent_export": 75
+      },
+      {
+        "slot_export": 85,
+        "parent_export": 76
+      },
+      {
+        "slot_export": 44,
+        "parent_export": 24
+      }
+    ],
+    "chain_termination": "no_further_decoded_slot"
+  },
+  "note": "New text observation, existing control detector reused; no character name in templates"
+}

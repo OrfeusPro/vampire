@@ -1,7 +1,7 @@
 {
   "id": "vampir",
   "name": "Vampir",
-  "version": "1.0.8",
+  "version": "1.0.23",
   "engineVersion": 3,
   "settingsVersion": 1,
   "entrypoint": "bot.py",

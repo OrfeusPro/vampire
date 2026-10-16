@@ -1,0 +1,509 @@
+{
+  "records": [
+    {
+      "step": "4007007",
+      "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\tutorial4007-2026-10-16\\equipment.jpg",
+      "sha256": "b2e964fd1d4b56cfd79511021eae455d050e153e5b70489d2e0389a36bc0988c",
+      "templates": [
+        {
+          "name": "tutorial_enhance_select",
+          "crop": [
+            601,
+            274,
+            896,
+            295
+          ],
+          "factor": 1,
+          "sha256": "1854263ff21cba8306626c5fc7e67e0747bc861da59de7a77fcabdcbbc324c19"
+        },
+        {
+          "name": "tutorial_enhance_select_compact",
+          "crop": [
+            451,
+            206,
+            672,
+            221
+          ],
+          "factor": 0.75,
+          "sha256": "b3adab6f64e464740a669e9f8cef6621e71bc36edefd1bff22c8c6d8be2d5822"
+        },
+        {
+          "name": "tutorial_enhance_select_large",
+          "crop": [
+            751,
+            342,
+            1120,
+            369
+          ],
+          "factor": 1.25,
+          "sha256": "46fb249aa9d04a967ceaa27538f92d05030c72005b936137872a30396d238ae9"
+        },
+        {
+          "name": "enhance_selected_corner",
+          "crop": [
+            955,
+            138,
+            973,
+            156
+          ],
+          "factor": 1,
+          "sha256": "5b50cf2b7d960a74f0e3ba33bc18c5497e842c9fdca1d38dad37450473c52e7c"
+        },
+        {
+          "name": "enhance_selected_corner_compact",
+          "crop": [
+            716,
+            104,
+            730,
+            117
+          ],
+          "factor": 0.75,
+          "sha256": "8777c84700bcc263e8366ff399b1a232f44c5fba57700a8d98d9e41633bbd75e"
+        },
+        {
+          "name": "enhance_selected_corner_large",
+          "crop": [
+            1194,
+            172,
+            1216,
+            195
+          ],
+          "factor": 1.25,
+          "sha256": "25c246463a745923ad965aac9944e643ba5f7b95d658ad09d56e4d8f79e5acc9"
+        }
+      ]
+    },
+    {
+      "step": "4007009",
+      "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\tutorial4007-2026-10-16\\info.jpg",
+      "sha256": "7be1e9dc4964d3c462a30521e297138c9f3ec748c1afedfa3946bcff46353dfc",
+      "templates": [
+        {
+          "name": "tutorial_enhance_open",
+          "crop": [
+            311,
+            374,
+            609,
+            469
+          ],
+          "factor": 1,
+          "sha256": "a6739c9b704e7f42f62c96bac4f53e5f0b68057f2939978bf6f2c6437b68a05d"
+        },
+        {
+          "name": "tutorial_enhance_open_compact",
+          "crop": [
+            233,
+            280,
+            457,
+            352
+          ],
+          "factor": 0.75,
+          "sha256": "d194adaa6786bb77766e7803e3ec6523c241f67002c6b1808203f80b726589f7"
+        },
+        {
+          "name": "tutorial_enhance_open_large",
+          "crop": [
+            389,
+            468,
+            761,
+            586
+          ],
+          "factor": 1.25,
+          "sha256": "717fbe181b11e5bf7f1ca10ff82c412b4d178881744374594bf47cab69322026"
+        },
+        {
+          "name": "enhance_info_button",
+          "crop": [
+            677,
+            548,
+            746,
+            575
+          ],
+          "factor": 1,
+          "sha256": "4e02aabcc48be61cc941b9866df8043f074b0ec7845e2ec34909370dfa792585"
+        },
+        {
+          "name": "enhance_info_button_compact",
+          "crop": [
+            508,
+            411,
+            560,
+            431
+          ],
+          "factor": 0.75,
+          "sha256": "2708c03b8923bb2480b853c5ce790e0e7da8e23abf4ff2cdb958ba145184701d"
+        },
+        {
+          "name": "enhance_info_button_large",
+          "crop": [
+            846,
+            685,
+            932,
+            719
+          ],
+          "factor": 1.25,
+          "sha256": "26c9bcc757e01cad5eeea2c67ebca627b30eb0a1da405168f9d988b5f500ac2d"
+        }
+      ]
+    },
+    {
+      "step": "4007011",
+      "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\tutorial4007-2026-10-16\\material.jpg",
+      "sha256": "bda1f822ad76543b81626c704d4f72ee7a49abc0fd2f05b5a423d0f81e6c7d52",
+      "templates": [
+        {
+          "name": "tutorial_enhance_material",
+          "crop": [
+            206,
+            435,
+            520,
+            503
+          ],
+          "factor": 1,
+          "sha256": "8722c059c0c889a76c14f7bde910606d40441960ff63a5662020f2a78b9b2e3c"
+        },
+        {
+          "name": "tutorial_enhance_material_compact",
+          "crop": [
+            154,
+            326,
+            390,
+            377
+          ],
+          "factor": 0.75,
+          "sha256": "95b5afd2116447231562394f2d24667c7b33540c8e9df4cb88b12ecd0fe1c5c4"
+        },
+        {
+          "name": "tutorial_enhance_material_large",
+          "crop": [
+            258,
+            544,
+            650,
+            629
+          ],
+          "factor": 1.25,
+          "sha256": "f364cd1d2a4d2898c401bacb589c88fadaa43b2c1e8c32c7a0cd46a656918505"
+        },
+        {
+          "name": "enhance_material_corner",
+          "crop": [
+            90,
+            570,
+            109,
+            589
+          ],
+          "factor": 1,
+          "sha256": "6803a5ef54747202b16550994f9e6468d0179bbd424d747ddbef74eda75807e1"
+        },
+        {
+          "name": "enhance_material_corner_compact",
+          "crop": [
+            68,
+            428,
+            82,
+            442
+          ],
+          "factor": 0.75,
+          "sha256": "fc9f30e387fd5deef71a6c6094a1fbcdd08e1136c219b62bc108c20e01421cb6"
+        },
+        {
+          "name": "enhance_material_corner_large",
+          "crop": [
+            112,
+            712,
+            136,
+            736
+          ],
+          "factor": 1.25,
+          "sha256": "d37fb211fe5248f44b5b963a0bdd0a23ef07b4634aa71b41569e9b4ae8ba6c3d"
+        }
+      ]
+    },
+    {
+      "step": "4007012",
+      "source": "F:\\PhoneExit Resources\\Vampir\\phone-tests\\tutorial4007-2026-10-16\\attempt.jpg",
+      "sha256": "3b572781a9fd427862d2807b9b2248d17ba133c1fa4f4fc5f2a446cbd049bc28",
+      "templates": [
+        {
+          "name": "tutorial_enhance_attempt",
+          "crop": [
+            512,
+            485,
+            853,
+            577
+          ],
+          "factor": 1,
+          "sha256": "6b6e47f48a68e17746dc226d032d059f5a96ee54a2d49293d39932c86fcf2cca"
+        },
+        {
+          "name": "tutorial_enhance_attempt_compact",
+          "crop": [
+            384,
+            364,
+            640,
+            433
+          ],
+          "factor": 0.75,
+          "sha256": "f44c491e156b14913993d73d2c1d2524e6ef84b45c8995370aaaa9f2e6456d85"
+        },
+        {
+          "name": "tutorial_enhance_attempt_large",
+          "crop": [
+            640,
+            606,
+            1066,
+            721
+          ],
+          "factor": 1.25,
+          "sha256": "da47eed8f37b8a8d22e54db911506136192419f2ea76096b9f13ff15560574e1"
+        },
+        {
+          "name": "enhance_attempt_button",
+          "crop": [
+            214,
+            651,
+            446,
+            695
+          ],
+          "factor": 1,
+          "sha256": "dcf207a6a8b152584147d174b5089a0321213008d7725827cebf9856415f9ccf"
+        },
+        {
+          "name": "enhance_attempt_button_compact",
+          "crop": [
+            160,
+            488,
+            334,
+            521
+          ],
+          "factor": 0.75,
+          "sha256": "a5e0511084d6644f49b5c3ccdd74d2a62d85c1cf714ea2499ea5b293de127a8f"
+        },
+        {
+          "name": "enhance_attempt_button_large",
+          "crop": [
+            268,
+            814,
+            558,
+            869
+          ],
+          "factor": 1.25,
+          "sha256": "492960bcfa04e7d923087355f0487538f0568ad899af75988a069ffc72b04e7f"
+        }
+      ]
+    }
+  ],
+  "scope": "Observed tutorial prompts and controls; no character or item image detector",
+  "control_sources": [
+    {
+      "file": "pakchunk500-Windows-2167.json",
+      "sha256": "20c1f6a550da910ce48d441516f669857b8fa4bb217bc155b621abae282f3987",
+      "controls": [
+        {
+          "export": 205,
+          "name": "TileViewList",
+          "type": "NkTileView",
+          "offset": 67461,
+          "size": 97,
+          "sha256": "1783402a99c84a03ccb419fe4d003fd94eac2b507c5711da1de0f24cd241800a",
+          "local_slots": [
+            215
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 215,
+              "parent_export": 207
+            },
+            {
+              "slot_export": 79,
+              "parent_export": 36
+            },
+            {
+              "slot_export": 267,
+              "parent_export": 258
+            },
+            {
+              "slot_export": 48,
+              "parent_export": 19
+            },
+            {
+              "slot_export": 82,
+              "parent_export": 37
+            },
+            {
+              "slot_export": 44,
+              "parent_export": 15
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        }
+      ]
+    },
+    {
+      "file": "pakchunk500-Windows-2241.json",
+      "sha256": "e7afa2762d732849a06fb84a894f0f3904b374d6ac047b1659cd457e6771267a",
+      "controls": [
+        {
+          "export": 227,
+          "name": "ButtonEnchant",
+          "type": "NkButton",
+          "offset": 75170,
+          "size": 342,
+          "sha256": "31848f2c0ef0279a089efe6df397aed746958f9dfdcfe6897810898368bc92ff",
+          "local_slots": [
+            192
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 192,
+              "parent_export": 159
+            },
+            {
+              "slot_export": 207,
+              "parent_export": 165
+            },
+            {
+              "slot_export": 92,
+              "parent_export": 36
+            },
+            {
+              "slot_export": 198,
+              "parent_export": 162
+            },
+            {
+              "slot_export": 348,
+              "parent_export": 334
+            },
+            {
+              "slot_export": 83,
+              "parent_export": 31
+            },
+            {
+              "slot_export": 111,
+              "parent_export": 44
+            },
+            {
+              "slot_export": 128,
+              "parent_export": 56
+            },
+            {
+              "slot_export": 340,
+              "parent_export": 331
+            },
+            {
+              "slot_export": 141,
+              "parent_export": 66
+            },
+            {
+              "slot_export": 70,
+              "parent_export": 23
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        }
+      ]
+    },
+    {
+      "file": "pakchunk500-Windows-1559.json",
+      "sha256": "c0404ca9ff66c502827463d0be75f80a80bd3f158f4bc5ecce5b152f0161a7e4",
+      "controls": [
+        {
+          "export": 123,
+          "name": "ButtonEnchantMulti",
+          "type": "NkButton",
+          "offset": 39533,
+          "size": 337,
+          "sha256": "c90ba1c2611da77723cdf39473bd19a98b90c669bbbe890998b544eb06ff9201",
+          "local_slots": [
+            210
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 210,
+              "parent_export": 208
+            },
+            {
+              "slot_export": 45,
+              "parent_export": 17
+            },
+            {
+              "slot_export": 43,
+              "parent_export": 15
+            },
+            {
+              "slot_export": 196,
+              "parent_export": 188
+            },
+            {
+              "slot_export": 70,
+              "parent_export": 31
+            },
+            {
+              "slot_export": 76,
+              "parent_export": 34
+            },
+            {
+              "slot_export": 51,
+              "parent_export": 21
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        },
+        {
+          "export": 124,
+          "name": "ButtonMaterialSlot",
+          "type": "NkButton",
+          "offset": 39870,
+          "size": 31,
+          "sha256": "03ebdab2dd34577176a63326a790a1d28c6be64612616a30043747b58ea72e06",
+          "local_slots": [
+            184
+          ],
+          "parent_chain": [
+            {
+              "slot_export": 184,
+              "parent_export": 177
+            },
+            {
+              "slot_export": 213,
+              "parent_export": 209
+            },
+            {
+              "slot_export": 92,
+              "parent_export": 79
+            },
+            {
+              "slot_export": 66,
+              "parent_export": 29
+            },
+            {
+              "slot_export": 72,
+              "parent_export": 32
+            },
+            {
+              "slot_export": 179,
+              "parent_export": 172
+            },
+            {
+              "slot_export": 195,
+              "parent_export": 188
+            },
+            {
+              "slot_export": 70,
+              "parent_export": 31
+            },
+            {
+              "slot_export": 76,
+              "parent_export": 34
+            },
+            {
+              "slot_export": 51,
+              "parent_export": 21
+            }
+          ],
+          "chain_termination": "no_further_decoded_slot"
+        }
+      ]
+    }
+  ]
+}

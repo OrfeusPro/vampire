@@ -65,6 +65,64 @@ class ReferenceCatalogJoin(unittest.TestCase):
             self.attach()
 
 
+class ClientPredicateReferenceJoin(unittest.TestCase):
+    def setUp(self):
+        self.native = dict(source='reviewed.exe', sha256='a' * 64)
+        self.meta = dict(entry=69, file='locks.csv', offset=42, sha256='b' * 64)
+        self.row = dict(Id='10', SaveType='2', ContentsLockConditionGroupId='20')
+        self.catalog = dict(nativeEnumSource=self.native, sources={'locks:69': self.meta},
+                            contentsLockConditionTypes={str(i): 'type' + str(i) for i in range(11)},
+                            contentsLocks={'10': dict(self.row, source=dict(entry=69, csv_record=2),
+                                                      evaluation='not_evaluated',
+                                                      combination='unknown_do_not_assume_AND_OR')})
+        self.predicate = dict(self.native, runtime_evaluator_enabled=False,
+            forced_lock_presence_checked_first=True, missing_or_empty_group_result=True,
+            group_loop='all_conditions_until_first_false_after_prechecks_and_overrides',
+            switch=dict(entries=[dict(type=i, name='type' + str(i), target=100 + i) for i in range(11)]))
+        self.fields = dict(self.native, csv_source=self.meta, predicate=0x145cf2dc0,
+            csv_rows=[dict(csv_record=2, row=self.row)], fields=[dict(name=n, object_offset=o, width=w)
+            for n, o, w in [('Id', 8, 4), ('OpenNotification', 12, 1), ('SystemMessageNotify', 13, 1),
+                            ('SaveType', 14, 1), ('ContentsLockConditionGroupId', 32, 4)]])
+
+    def attach(self):
+        builder.attach_client_predicate_reference(self.catalog, self.predicate, self.fields)
+
+    def test_proven_client_path_does_not_enable_player_evaluation(self):
+        locks = copy.deepcopy(self.catalog['contentsLocks'])
+        self.attach()
+        self.assertEqual(self.catalog['contentsLocks'], locks)
+        self.assertEqual(self.catalog['referenceRevision'], 4)
+        self.assertFalse(self.catalog['clientPredicateReference']['runtimeEvaluatorEnabled'])
+
+    def test_mixed_native_table_or_row_is_rejected_before_mutation(self):
+        for mismatch in ('native', 'table', 'row', 'record'):
+            self.setUp()
+            if mismatch == 'native':
+                self.predicate['sha256'] = 'c' * 64
+            elif mismatch == 'table':
+                self.fields['csv_source'] = dict(self.meta, sha256='c' * 64)
+            elif mismatch == 'row':
+                self.fields['csv_rows'][0]['row'] = dict(self.row, SaveType='1')
+            else:
+                self.fields['csv_rows'][0]['csv_record'] = 3
+            before = copy.deepcopy(self.catalog)
+            with self.subTest(mismatch=mismatch), self.assertRaises(ValueError):
+                self.attach()
+            self.assertEqual(self.catalog, before)
+
+    def test_changed_scope_types_or_layout_is_rejected(self):
+        for mismatch in ('scope', 'type', 'layout'):
+            self.setUp()
+            if mismatch == 'scope':
+                self.predicate['runtime_evaluator_enabled'] = True
+            elif mismatch == 'type':
+                self.predicate['switch']['entries'][0]['name'] = 'guessed'
+            else:
+                self.fields['fields'][4]['object_offset'] = 24
+            with self.subTest(mismatch=mismatch), self.assertRaises(ValueError):
+                self.attach()
+
+
 class CompiledFullCatalog(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -89,7 +147,10 @@ class CompiledFullCatalog(unittest.TestCase):
 
     def test_condition_native_names_preserve_unknown_evaluation(self):
         c = self.catalog
-        self.assertEqual(c['referenceRevision'], 3)
+        self.assertEqual(c['referenceRevision'], 4)
+        self.assertFalse(c['clientPredicateReference']['runtimeEvaluatorEnabled'])
+        self.assertEqual(c['clientPredicateReference']['lockFields']['ContentsLockConditionGroupId'],
+                         dict(offset=32, width=4))
         self.assertEqual(c['contentsLockConditionTypes']['1'], 'CompletedQuest')
         self.assertEqual(c['contentsLocks']['10100030']['conditions'][0]['typeName'], 'CompletedQuest')
         for lock in c['contentsLocks'].values():

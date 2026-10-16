@@ -214,7 +214,7 @@
     },
     {
       "prompt": "tutorial_adrenaline",
-      "target": "tutorial_adrenaline_gauge",
+      "target": "tutorial_adrenaline_frame",
       "source": {
         "tutorial_id": "4002",
         "step_id": "4002016",
@@ -439,6 +439,144 @@
           "table": "TutorialStep",
           "entry": 1555,
           "csv_record": 126
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_bag",
+      "target": "hud_inventory",
+      "source": {
+        "tutorial_id": "4007",
+        "step_id": "4007004",
+        "step": 4,
+        "ui_key": "Hud_Inventory",
+        "wbp": "WBP_GameUI",
+        "widget": "MenuBarUI",
+        "control": "ButtonInventory",
+        "dialog_en": "Press the [<Yellow>Bag</>] button to select equipment for enhancement.",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4007005"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 96
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_select",
+      "target": "enhance_selected_corner",
+      "source": {
+        "tutorial_id": "4007",
+        "step_id": "4007007",
+        "step": 7,
+        "ui_key": "Inventory_EnchantItem",
+        "wbp": "WBP_GameUI",
+        "widget": "InventoryUI",
+        "control": "TileViewList",
+        "dialog_en": "Press the obtained [<Yellow>Equipment icon</>.]",
+        "minimum_delay_sec": 0.1,
+        "delay_records": [
+          "4007008"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 99
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_open",
+      "target": "enhance_info_button",
+      "source": {
+        "tutorial_id": "4007",
+        "step_id": "4007009",
+        "step": 9,
+        "ui_key": "ItemInfoPopup_Enchant",
+        "wbp": "WBP_ItemInfoPopup",
+        "widget": "",
+        "control": "ButtonEnchant",
+        "dialog_en": "You can access the Enhancement UI by pressing the [<Yellow>Enhance</>] button at the bottom of the selected equipment's information popup.",
+        "minimum_delay_sec": 0.25,
+        "delay_records": [
+          "4007010"
+        ],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 101
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_material",
+      "target": "enhance_material_corner",
+      "source": {
+        "tutorial_id": "4007",
+        "step_id": "4007011",
+        "step": 11,
+        "ui_key": "ItemEnchant_MaterialSlot",
+        "wbp": "WBP_ItemEnchantMultiUI",
+        "widget": "",
+        "control": "ButtonMaterialSlot",
+        "dialog_en": "Required [<Yellow>Enhancement Scrolls</>] will be automatically registered for the selected equipment.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "0",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 103
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_enhance_attempt",
+      "target": "enhance_attempt_button",
+      "source": {
+        "tutorial_id": "4007",
+        "step_id": "4007012",
+        "step": 12,
+        "ui_key": "ItemEnchant_Enchant",
+        "wbp": "WBP_ItemEnchantMultiUI",
+        "widget": "",
+        "control": "ButtonEnchantMulti",
+        "dialog_en": "All necessary enhancement items have been registered.\r\nNow press the [<Yellow>Enhancement</>] button to attempt enhancement.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "1",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 104
+        }
+      }
+    },
+    {
+      "prompt": "tutorial_adrenaline_buff",
+      "target": "tutorial_adrenaline_buff_target",
+      "source": {
+        "tutorial_id": "4002",
+        "step_id": "4002018",
+        "step": 18,
+        "ui_key": "Deadly_AdrenalineTooltip",
+        "wbp": "WBP_AdrenalineGaugeToolTipUI",
+        "widget": "CanvasPanelRoot",
+        "control": "CanvasPanelTutorial",
+        "dialog_en": "When the Adrenaline Gauge is charged, \r\n[<Yellow>Adrenaline Buff</>] effect is applied.",
+        "minimum_delay_sec": 0.0,
+        "delay_records": [],
+        "server_process_request": "1",
+        "provenance": {
+          "table": "TutorialStep",
+          "entry": 1555,
+          "csv_record": 83
         }
       }
     }

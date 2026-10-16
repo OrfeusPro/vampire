@@ -41,12 +41,13 @@ class ShopTransaction(unittest.TestCase):
         self.config['_chain_catalog'] = json.loads((ROOT / 'quest-runtime.json').read_text(encoding='utf-8'))
         self.reference = json.loads((ROOT / 'shop-reference.json').read_text(encoding='utf-8'))
         self.flow = self.config['shop_flow']
+        self.settings = {}
 
     def tick(self, *visible, after=3):
         self.now += after
         self.host.visible = set(visible)
         return shop.tick(self.host, self.state, dict(width=1280, height=720), self.config,
-                         self.now, str(self.directory), self.reference)
+                         self.now, str(self.directory), self.reference, self.settings)
 
     def prepare(self):
         self.assertEqual(self.tick(*self.flow['guide'])['step'], 'quest_shop_open')
@@ -227,3 +228,51 @@ class ShopTransaction(unittest.TestCase):
         product['row']['CostValue'] = '76'
         with self.assertRaises(ValueError):
             binding.reference(report)
+
+    def test_character_context_preserves_legacy_and_other_character(self):
+        shop.write_journal(self.directory, 'reserved')
+        shop.write_journal(self.directory, 'completed', 'a' * 32)
+        self.settings = {'purchase_context_id': 'b' * 32}
+        self.prepare()
+        self.assertEqual(self.confirm()['step'], 'quest_shop_purchased')
+        self.assertEqual(shop.read_journal(self.directory), {'901030010': 'reserved'})
+        self.assertEqual(shop.read_journal(self.directory, 'a' * 32), {'901030010': 'completed'})
+        self.assertEqual(shop.read_journal(self.directory, 'b' * 32), {'901030010': 'reserved'})
+
+    def test_context_purchase_remains_reserved_after_restart_and_update(self):
+        self.settings = {'purchase_context_id': 'c' * 32}
+        self.prepare()
+        self.confirm()
+        self.state = {}
+        self.directory = Path(self.temp.name) / 'updated-payload'
+        self.directory.mkdir()
+        self.tick(*self.flow['guide'])
+        self.confirm()
+        self.assertEqual(len(self.host.taps), 3)
+        self.assertEqual(shop.read_journal(self.directory, 'c' * 32), {'901030010': 'reserved'})
+
+    def test_invalid_context_never_taps_or_creates_files(self):
+        for context in ('../escape', '', 'A' * 32, 'a' * 31, 42, {}):
+            with self.subTest(context=context):
+                self.settings = {'purchase_context_id': context}
+                self.assertEqual(self.tick(*self.flow['guide'])['error'], 'quest_shop_journal_unreadable')
+        self.assertEqual(self.host.taps, [])
+        self.assertEqual(list(Path(self.temp.name).glob('*.json')), [])
+
+    def test_context_change_discards_in_memory_confirmation(self):
+        self.settings = {'purchase_context_id': 'd' * 32}
+        self.prepare()
+        self.settings = {'purchase_context_id': 'e' * 32}
+        self.assertIsNone(self.confirm())
+        self.assertEqual(len(self.host.taps), 2)
+        self.assertEqual(shop.read_journal(self.directory, 'e' * 32), {})
+
+    def test_context_completion_survives_restart(self):
+        self.settings = {'purchase_context_id': 'f' * 32}
+        self.prepare()
+        self.confirm()
+        self.assertIsNone(self.tick(*self.flow['completed']))
+        self.state = {}
+        result = self.tick(*self.flow['guide'])
+        self.assertEqual(result['error'], 'quest_shop_already_recorded_for_device')
+        self.assertEqual(len(self.host.taps), 3)
