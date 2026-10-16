@@ -76,5 +76,6 @@
   "seoHeading": "VAMPIR diamanter: pris, server og betaling",
   "seoIntro": "Bestil diamanter til MMORPG VAMPIR i den mængde, du har brug for, startende fra 1.000. Prisen er {pricePer1000} USD pr 1.000 diamanter. Brug lommeregneren til at se totalen, før du sender din anmodning. Priserne er vist i USD; betaling er på USDT.",
   "seoDetails": "Vælg dit spilområde, indtast det nøjagtige servernavn og efterlad en Discord, Telegram eller e-mail-kontakt. Tilgængelighed, leveringsmetode, overførselsnetværk og endeligt USDT beløb aftales inden betaling. Der kræves ingen kontoadgangskode. VAMPIR.TOP er en uafhængig butik, ikke en officiel Netmarble-tjeneste.",
-  "securityCheck": "Gennemfør venligst sikkerhedstjekket. Hvis den ikke indlæses, skal du genindlæse siden og prøve igen."
+  "securityCheck": "Gennemfør venligst sikkerhedstjekket. Hvis den ikke indlæses, skal du genindlæse siden og prøve igen.",
+  "thankYou": "Tak!"
 }

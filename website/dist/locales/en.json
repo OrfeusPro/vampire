@@ -76,5 +76,6 @@
   "seoHeading": "VAMPIR diamonds: price, server and payment",
   "seoIntro": "Order diamonds for the MMORPG VAMPIR in the quantity you need, starting from 1,000. The price is {pricePer1000} USD per 1,000 diamonds. Use the calculator to see the total before submitting your request. Prices are shown in USD; payment is in USDT.",
   "seoDetails": "Choose your game region, enter the exact server name and leave a Discord, Telegram or email contact. Availability, the delivery method, transfer network and final USDT amount are agreed before payment. No account password is required. VAMPIR.TOP is an independent store, not an official Netmarble service.",
-  "securityCheck": "Please complete the security check. If it does not load, reload the page and try again."
+  "securityCheck": "Please complete the security check. If it does not load, reload the page and try again.",
+  "thankYou": "Thank you!"
 }

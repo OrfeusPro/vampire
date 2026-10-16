@@ -5,6 +5,15 @@ const selector = document.querySelector('#language');
 const dialog = document.querySelector('#order-dialog');
 const form = document.querySelector('#order-form');
 const result = document.querySelector('#order-result');
+const confirmation = document.querySelector('#order-confirmation');
+const confirmationMessage = document.querySelector('#confirmation-message');
+function showOrderConfirmation(){
+  confirmationMessage.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',savedRequest);
+  confirmation.dataset.state=savedEmailAccepted?'success':'warning';
+  form.hidden=true;confirmation.hidden=false;
+  dialog.classList.add('order-complete');
+  dialog.scrollTop=0;confirmation.focus({preventScroll:true});
+}
 let savedRequest = null;
 let savedEmailAccepted = true;
 let orderSubmitting = false;
@@ -15,17 +24,18 @@ const securityContainer = document.querySelector('#order-turnstile');
 const securityStatus = document.querySelector('#turnstile-status');
 function securityNotice(){securityStatus.textContent=messages[language].securityCheck;}
 function loadTurnstile(){
-  if(window.turnstile)return Promise.resolve();
+  if(window.turnstile && typeof window.turnstile.render==='function')return Promise.resolve();
   if(turnstileLoader)return turnstileLoader;
   turnstileLoader=new Promise((resolve,reject)=>{
     const script=document.createElement('script');
-    script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?onload=vampirTurnstileLoaded&render=explicit';
     script.async=true;script.defer=true;
-    const timer=setTimeout(()=>reject(new Error('security unavailable')),15000);
-    script.onload=()=>{clearTimeout(timer);window.turnstile?window.turnstile.ready(resolve):reject(new Error('security unavailable'));};
-    script.onerror=()=>{clearTimeout(timer);reject(new Error('security unavailable'));};
+    const fail=()=>{script.remove();reject(new Error('security unavailable'));};
+    const timer=setTimeout(fail,15000);
+    window.vampirTurnstileLoaded=()=>{clearTimeout(timer);window.turnstile && typeof window.turnstile.render==='function'?resolve():reject(new Error('security unavailable'));};
+    script.onerror=()=>{clearTimeout(timer);fail();};
     document.head.append(script);
-  });
+  }).catch(error=>{turnstileLoader=null;throw error;});
   return turnstileLoader;
 }
 async function prepareTurnstile(){
@@ -88,12 +98,13 @@ document.querySelectorAll('.select-package').forEach(button=>button.addEventList
   if(orderSubmitting)return;
   const customAmount = document.querySelector('#custom-amount');
   if(button.hasAttribute('data-custom') && !customAmount.reportValidity()) return;
+  form.hidden=false;confirmation.hidden=true;dialog.classList.remove('order-complete');
   form.reset();savedRequest=null;result.textContent='';form.elements.amount.value=button.hasAttribute('data-custom') ? customAmount.value : (button.dataset.amount || customAmount.value || '1000');
   updatePrices();
   dialog.showModal();form.elements.amount.focus();securityStatus.textContent='';prepareTurnstile();
 }));
-document.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());
-dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+document.querySelector('.close-dialog').addEventListener('click',()=>{if(!orderSubmitting)dialog.close();});
+document.querySelector('#confirmation-close').addEventListener('click',()=>dialog.close());
 form.addEventListener('submit',async e=>{
   e.preventDefault(); if(!form.elements.region.value){regionTrigger.setAttribute('aria-invalid','true');regionTrigger.focus();openRegion();return;} if(!form.reportValidity())return;
   if(orderSubmitting)return;
@@ -105,8 +116,8 @@ form.addEventListener('submit',async e=>{
     const payload=Object.fromEntries(new FormData(form));payload.language=language;payload['cf-turnstile-response']=token;
     const response=await fetch('/api/order.php',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(payload)});
     const data=await response.json();if(!response.ok||!data.id)throw new Error(data.error||'request failed');
-    savedRequest=data.id;savedEmailAccepted=data.email_accepted===true;result.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',data.id);form.reset();updatePrices();
-  } catch(error){result.textContent=error.message.startsWith('turnstile_')?messages[language].securityCheck:messages[language].error;}
+    savedRequest=data.id;savedEmailAccepted=data.email_accepted===true;showOrderConfirmation();
+  } catch(error){result.textContent=error.message.startsWith('turnstile_')?messages[language].securityCheck:messages[language].error;result.tabIndex=-1;result.focus();result.scrollIntoView({block:'nearest'});}
   finally{resetTurnstile();orderSubmitting=false;submit.disabled=false;submit.textContent=messages[language].submit;}
 });
 
@@ -161,6 +172,6 @@ regionTrigger.addEventListener('keydown',event=>{if(['ArrowDown','ArrowUp'].incl
 regionOptions.addEventListener('keydown',event=>{const options=[...regionOptions.querySelectorAll('[data-region]')],index=options.indexOf(document.activeElement);if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();options[event.key==='Home'?0:event.key==='End'?options.length-1:(index+(event.key==='ArrowDown'?1:-1)+options.length)%options.length].focus();}});
 document.addEventListener('click',event=>{if(!event.target.closest('.region-field'))closeRegion();});
 document.querySelector('.region-field').addEventListener('focusout',event=>{if(!event.currentTarget.contains(event.relatedTarget))closeRegion();});
-dialog.addEventListener('cancel',event=>{if(!regionOptions.hidden){event.preventDefault();closeRegion();regionTrigger.focus();}});
+dialog.addEventListener('cancel',event=>{if(orderSubmitting){event.preventDefault();return;}if(!regionOptions.hidden){event.preventDefault();closeRegion();regionTrigger.focus();}});
 form.addEventListener('reset',resetRegion);
 dialog.addEventListener('close',closeRegion);
