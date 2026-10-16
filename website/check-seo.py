@@ -65,12 +65,12 @@ else: raise AssertionError('Missing 404')
 with urllib.request.urlopen(BASE + '/sitemap.xml') as response:
     assert not response.headers.get('Set-Cookie')
     tree = ET.fromstring(response.read())
-    assert len(tree) == 50
+    assert len(tree) == 100
 with urllib.request.urlopen(BASE + '/robots.txt') as response:
     robots = response.read().decode()
     assert ('Disallow: /\n' in robots) == (not PRODUCTION)
     if PRODUCTION: assert 'Sitemap: https://vampir.top/sitemap.xml' in robots
-print('301 aliases, real 404, 50 sitemap URLs and robots: OK')
+print('301 aliases, real 404, 100 sitemap URLs and robots: OK')
 # Verify public-host directives without changing DNS or publishing.
 for path in ([] if not PRODUCTION else ['/', '/robots.txt']):
     request = urllib.request.Request(BASE + path, headers={'Host': 'vampir.top'})

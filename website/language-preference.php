@@ -27,7 +27,8 @@ function site_preferred_language(array $enabled, string $header): ?string {
 }
 
 function site_redirect_language_entry(array $languages): void {
-    if (parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) !== '/' || isset($_GET['lang'])) return;
+    $entryPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+    if (!in_array($entryPath, ['/', '/sell/'], true) || isset($_GET['lang'])) return;
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') return;
     // Cache must never serve one visitor's negotiated redirect to another visitor.
     header('Vary: Accept-Language, Cookie, User-Agent');
@@ -41,6 +42,6 @@ function site_redirect_language_entry(array $languages): void {
     if ($target === null || $target === 'en') return;
     $query = $_GET ? '?' . http_build_query($_GET) : '';
     header('Cache-Control: private, no-store');
-    header('Location: ' . language_path($target) . $query, true, 302);
+    header('Location: ' . ($entryPath === '/sell/' ? sell_path($target) : language_path($target)) . $query, true, 302);
     exit;
 }

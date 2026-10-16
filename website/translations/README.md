@@ -43,3 +43,5 @@ JavaScript, PHP и меню при этом редактировать не тр
 Во всех 50 словарях добавлены metaDescription, heroEyebrow, seoHeading, seoIntro, seoDetails; обновлены pageTitle, heroDesc, catalogTitle. pageTitle — заголовок вкладки и поисковой страницы; metaDescription — описание для поиска, Open Graph, Twitter и WebPage JSON-LD. seoHeading/seoIntro/seoDetails — видимый блок о покупке перед футером. Сохраняйте {pricePer1000}: значение автоматически подставляется из settings.json, вручную цену в переводах не дублировать. Не менять названия VAMPIR, VAMPIR.TOP, Netmarble, Discord, Telegram и валюты USD/USDT. Редкие языки остаются машинными черновиками и требуют вычитки носителями. Проверки: node website/check-translations.cjs и python website/check-seo.py.
 
 securityCheck — сообщение при незавершённой/недоступной проверке Turnstile. Сам виджет локализует интерфейс автоматически по браузеру.
+
+Страница /sell/: ключи navSell и sell* управляют заголовками, метаданными, видимым SEO-текстом, шагами, формой и новым FAQ главной. В каждой локали требуется полный набор 113 ключей. Реестр языков общий; новые страницы добавляются в sitemap и hreflang автоматически.

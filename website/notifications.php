@@ -12,11 +12,13 @@ function site_notify_order(array $order): bool {
         || !filter_var($recipient, FILTER_VALIDATE_EMAIL) || !filter_var($sender, FILTER_VALIDATE_EMAIL)
         || preg_match('/[\r\n]/', $recipient . $sender)
         || !preg_match('/^[A-Za-z0-9._+-]+@[A-Za-z0-9.-]+$/D', $sender)) return false;
+    $selling = ($order['kind'] ?? 'buy') === 'sell';
     $lines = [
-        'New diamond order from VAMPIR.TOP', 'Order: ' . $order['id'],
+        $selling ? 'Diamond buyback offer for VAMPIR.TOP' : 'New diamond order from VAMPIR.TOP', 'Order: ' . $order['id'],
         'Created (UTC): ' . $order['created_at'], 'Diamonds: ' . $order['amount'],
-        'Price: ' . $order['price_usd'] . ' USD', 'Rate per 1000: ' . $order['rate_usd_per_1000'] . ' USD',
-        'Payment currency: USDT (not paid)', 'Region: ' . $order['region'], 'Server: ' . $order['server'],
+        ($selling ? 'Seller asking total: ' : 'Price: ') . ($order['price_usd'] === null ? 'To agree' : $order['price_usd'] . ' USD'),
+        $selling ? 'Purchase price and payment terms: to agree' : 'Rate per 1000: ' . $order['rate_usd_per_1000'] . ' USD',
+        $selling ? 'Seller offer; purchase not confirmed' : 'Payment currency: USDT (not paid)', 'Region: ' . $order['region'], 'Server: ' . $order['server'],
         'Character: ' . ($order['nickname'] ?: 'Not provided'), 'Contact: ' . $order['contact'],
         'Language: ' . $order['language'], '', 'Comment:', $order['comment'] ?: 'Not provided',
         '', 'This is a request, not proof of payment. Confirm delivery details with the customer.',
@@ -43,7 +45,7 @@ function site_notify_order(array $order): bool {
             $mailer->setFrom($sender, 'VAMPIR.TOP');
             $mailer->Sender = $sender;
             $mailer->addAddress($recipient);
-            $mailer->Subject = 'VAMPIR.TOP order ' . $order['id'];
+            $mailer->Subject = 'VAMPIR.TOP ' . ($selling ? 'BUYBACK OFFER ' : 'order ') . $order['id'];
             $mailer->isHTML(true);
             $mailer->Body = site_order_email_html($order);
             $mailer->AltBody = implode("\r\n", $lines);

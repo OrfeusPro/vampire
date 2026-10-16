@@ -5,6 +5,7 @@ const selector = document.querySelector('#language');
 const dialog = document.querySelector('#order-dialog');
 const form = document.querySelector('#order-form');
 const result = document.querySelector('#order-result');
+const sellingDiamonds = JSON.parse(document.querySelector('#i18n-data').textContent).pageType === 'sell';
 const confirmation = document.querySelector('#order-confirmation');
 const confirmationMessage = document.querySelector('#confirmation-message');
 function showOrderConfirmation(){
@@ -75,7 +76,8 @@ function translate(lang) {
   document.querySelectorAll('[data-i18n-html]').forEach(el => { const value=messages[language][el.dataset.i18nHtml]; if(value!==undefined) el.innerHTML=value; });
   document.title = messages[language].pageTitle;
   document.querySelector('meta[name="description"]').content = messages[language].metaDescription;
-  document.querySelector('#official-link').href=`https://vampirgb.netmarble.com/${language==='ru'?'ru':'en'}/preorder`;
+  const officialLink=document.querySelector('#official-link');
+  if(officialLink)officialLink.href=`https://vampirgb.netmarble.com/${language==='ru'?'ru':'en'}/preorder`;
   if(savedRequest) result.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',savedRequest);
   updatePrices();
 }
@@ -102,7 +104,7 @@ document.querySelectorAll('.select-package').forEach(button=>button.addEventList
   const customAmount = document.querySelector('#custom-amount');
   if(button.hasAttribute('data-custom') && !customAmount.reportValidity()) return;
   form.hidden=false;confirmation.hidden=true;dialog.classList.remove('order-complete');
-  form.reset();savedRequest=null;result.textContent='';form.elements.amount.value=button.hasAttribute('data-custom') ? customAmount.value : (button.dataset.amount || customAmount.value || '1000');
+  form.reset();savedRequest=null;result.textContent='';form.elements.amount.value=button.hasAttribute('data-custom') ? customAmount.value : (button.dataset.amount || customAmount?.value || '1000');
   updatePrices();
   dialog.showModal();form.elements.amount.focus();securityStatus.textContent='';prepareTurnstile();
 }));
@@ -116,7 +118,7 @@ form.addEventListener('submit',async e=>{
   orderSubmitting=true;
   const submit=document.querySelector('#submit-order');submit.disabled=true;submit.textContent=messages[language].sending;result.textContent='';
   try {
-    const payload=Object.fromEntries(new FormData(form));payload.language=language;payload['cf-turnstile-response']=token;
+    const payload=Object.fromEntries(new FormData(form));payload.language=language;payload.kind=sellingDiamonds?'sell':'buy';payload['cf-turnstile-response']=token;
     const response=await fetch('/api/order.php',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(payload)});
     const data=await response.json();if(!response.ok||!data.id)throw new Error(data.error||'request failed');
     savedRequest=data.id;savedEmailAccepted=data.email_accepted===true;showOrderConfirmation();
@@ -126,6 +128,7 @@ form.addEventListener('submit',async e=>{
 
 const amountInput = document.querySelector('#custom-amount');
 function syncAmounts(){
+  if(!amountInput)return;
   updatePrices();
   document.querySelector('[data-adjust="-1000"]').disabled=Number(amountInput.value)<=1000;
   document.querySelectorAll('[data-preset]').forEach(button=>{
@@ -140,7 +143,7 @@ document.querySelectorAll('[data-adjust]').forEach(button=>button.addEventListen
   const current=Number(amountInput.value)||0;
   amountInput.value=Math.min(10000000,Math.max(1000,current+Number(button.dataset.adjust)));syncAmounts();
 }));
-amountInput.addEventListener('input',syncAmounts);
+amountInput?.addEventListener('input',syncAmounts);
 syncAmounts();
 
 const menuToggle=document.querySelector('.menu-toggle');
@@ -152,6 +155,7 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu();
 document.addEventListener('click',event=>{if(!siteHeader.contains(event.target))closeMenu();});
 
 function updatePrices(){
+  if(sellingDiamonds)return;
   for(const [inputSelector, outputSelector] of [['#custom-amount','#price-total'],['#order-form [name="amount"]','#order-price-total']]){
     const input=document.querySelector(inputSelector),output=document.querySelector(outputSelector);
     if(!input||!output)continue;
@@ -178,3 +182,21 @@ document.querySelector('.region-field').addEventListener('focusout',event=>{if(!
 dialog.addEventListener('cancel',event=>{if(orderSubmitting){event.preventDefault();return;}if(!regionOptions.hidden){event.preventDefault();closeRegion();regionTrigger.focus();}});
 form.addEventListener('reset',resetRegion);
 dialog.addEventListener('close',closeRegion);
+
+// One-time entrance effects; content stays visible without JS or motion support.
+(()=>{
+ const preference=window.matchMedia('(prefers-reduced-motion: reduce)');
+ if(preference.matches || !('IntersectionObserver' in window) || !Element.prototype.animate)return;
+ const active=new Set();
+ const observer=new IntersectionObserver(entries=>{
+  for(const entry of entries){
+   if(!entry.isIntersecting)continue;
+   observer.unobserve(entry.target);
+   if(preference.matches || entry.boundingClientRect.top<0)continue;
+   const animation=entry.target.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'translateY(0)'}],{duration:1050,easing:'cubic-bezier(.22,.61,.36,1)'});
+   active.add(animation);animation.finished.then(()=>active.delete(animation),()=>active.delete(animation));
+  }
+ },{threshold:.08});
+ document.querySelectorAll('.section-heading,.custom-main,.how>div,.steps li,.world-banner,.faq>div,.buying-guide').forEach(element=>observer.observe(element));
+ preference.addEventListener('change',event=>{if(event.matches){observer.disconnect();for(const animation of active)animation.cancel();active.clear();}});
+})();

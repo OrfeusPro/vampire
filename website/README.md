@@ -204,3 +204,23 @@ HTML-шаблон уведомлений опубликован: FTPS 92 про�
 Владелец прислал историческое сканирование 16.10 23:47 с meta noindex и статус sitemap «не удалось получить». Текущая HTTP-проверка 24 вариантов HTTP/HTTPS, www/non-www, browser/Googlebot показала доступность sitemap (HTTP 200, application/xml, 50 URL) и index на актуальной странице; реальный доступ из сети Google этим не доказан. DNS возвращает один IPv4, AAAA не найден. Обнаружена старая hosting-заглушка /index.html с meta robots=None. Добавлен 301 /index.html → / через rewrite и router; HTTP/www → https://vampir.top с сохранением пути/query. PHP session_start перенесён после SEO router: robots/sitemap теперь не устанавливают session cookie, имеют public max-age=300. XML остаётся автоматически собранным из включённых языков. check-seo.py расширен редиректами и Googlebot-запросами. Search Console требует повторного Live test/отправки sitemap; точная причина старого fetch failure неизвестна без деталей Google/логов хостинга.
 
 Владелец подтвердил: карта сайта успешно принята в Google Search Console после публикации исправлений. Само принятие sitemap не подтверждает индексацию всех URL.
+
+## Анимации, 17.10.2026
+
+Добавлены короткие появления первого экрана, блоков при первом входе в viewport, диалога, FAQ и подтверждения; hover/press для кнопок. Scroll reveal использует IntersectionObserver и Web Animations без скрытия контента по умолчанию; без JS всё видно. Постоянных циклических эффектов нет. prefers-reduced-motion отключает CSS и JS анимации, смена настройки отменяет активные Web Animations. PHP/данные/форма и SEO не менялись. Проверка JS syntax и прежних feedback/loader сценариев; визуальный просмотр в браузере недоступен.
+
+По замечанию владельца анимации замедлены: scroll reveal 1.05 s (смещение 14 px), hero 1.2 s с задержками 0.14/0.28/0.42 s, dialog 0.45 s, подтверждение 0.6 s; easing смягчён. Быстрый отклик кнопок сохранён.
+
+## Страница продажи алмазов, 17.10.2026
+
+По запросу владельца добавлен выкуп: минимум 5000 алмазов, цена по согласованию. URL /sell/ (EN), /ua/sell/, /ru/sell/ и ещё 47 языков. Шаблон dist/sell-content.php подключается из index.php через SEO router; прямой запрос к partial возвращает 404. Ссылка в навигации и новый FAQ главной. Языковой переключатель остаётся на том же типе страницы; автоопределение на /sell/ имеет прежние исключения ботов и cookie-приоритет. Сохранены 301 aliases и canonical-origin редиректы.
+
+Добавлены 34 переводимых ключа: pageTitle/metaDescription, видимый SEO-блок, этапы, форма и FAQ. Итого 113 ключей, 50 словарей. EN/RU/UK и nn/rm подготовлены отдельно, остальные новые переводы — машинные черновики; требуют вычитки носителями. Canonical/hreflang/x-default отдельно для продажи, sitemap содержит 100 уникальных URL (50 магазина + 50 продажи). Переводы цены розничного магазина на выкуп не распространяются.
+
+Общая форма открывается как предложение продавца: количество от 5000, регион, сервер, ник, необязательная желаемая общая цена USD (до 1000000 с 2 знаками), контакт, комментарий и согласие. Оплата/валюта — по согласованию. Нет платёжного шага или обещания гарантированной покупки. Старый buy-flow от 1000 и тариф 8 USD/1000 сохранены. api/order.php различает kind=buy/sell, валидирует минимум/желаемую цену, использует прежние CSRF/лимиты/Turnstile action=order. Sell хранится с VS-номером, pricing_status=negotiable, asking_price_usd (nullable), payment_currency=TO_AGREE; розничный rate не рассчитывается.
+
+SMTP уведомления помечены BUYBACK OFFER: отдельный заголовок, предложенная продавцом сумма или To agree, без розничного тарифа. Текстовая альтернатива также различает предложения. HTML экранирует пользовательские поля.
+
+Локально проверены все 50 seller URL/метаданные/SSR/минимум/FAQ-ссылки, sitemap100, отказы API ниже5000/неверная цена/нет Turnstile (check-sell.py), запуск общего JS без retail-контролов (check-sell-ui.cjs), HTML buyback-письма (check-order-email.php), прежние SEO/язык/Turnstile/feedback/loader проверки, PHP/JS syntax и 50×113 translation keys. Реальная заявка с пользовательским Turnstile-токеном не отправлялась. Визуальный browser QA недоступен при отключённом browser use.
+
+Публикация seller page завершена после повторного FTPS: 93 проверенных файла, backup website/var/ftp-backup-20261016T223430Z/. На HTTPS прошли check-sell.py --production (50 страниц/FAQ/SEO/sitemap100/API validation/Turnstile), check-seo.py --production, check-language-preference.py --production (включая /sell/ browser/cookie/bot/explicit paths) и check-turnstile.py --production. Реальный пользовательский токен/положительная отправка seller offer остаётся ручной проверкой.

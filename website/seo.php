@@ -4,6 +4,7 @@ declare(strict_types=1);
 function language_path(string $code): string {
     return $code === 'en' ? '/' : '/' . ($code === 'uk' ? 'ua' : strtolower($code)) . '/';
 }
+function sell_path(string $code): string { return language_path($code) . 'sell/'; }
 function site_escape(string $text): string { return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
 function site_text(string $key, bool $html = false): string {
     global $i18n, $currentLanguage;
@@ -44,15 +45,21 @@ if ($requestPath === '/sitemap.xml') {
     echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
     foreach ($i18n['languages'] as $entry) {
         echo '<url><loc>' . site_escape($productionOrigin . $entry['path']) . '</loc></url>';
+        echo '<url><loc>' . site_escape($productionOrigin . sell_path($entry['code'])) . '</loc></url>';
     }
     echo '</urlset>';
     exit;
 }
 
 $currentLanguage = null;
+$isSellPage = (bool)preg_match('~/sell/?$~i', $requestPath);
 foreach ($i18n['languages'] as $entry) {
     $aliases = [$entry['path'], rtrim($entry['path'], '/'), '/' . strtolower($entry['code']), '/' . strtolower($entry['code']) . '/'];
     if (in_array(strtolower($requestPath), $aliases, true)) $currentLanguage = $entry['code'];
+    if ($isSellPage) {
+        $sellAliases = [sell_path($entry['code']), rtrim(sell_path($entry['code']), '/'), '/' . strtolower($entry['code']) . '/sell/', '/' . strtolower($entry['code']) . '/sell'];
+        if (in_array(strtolower($requestPath), $sellAliases, true)) $currentLanguage = $entry['code'];
+    }
 }
 if (in_array($requestPath, ['/', '/index.php', '/index.html', '/en', '/en/'], true)) $currentLanguage = 'en';
 // Preserve old shared query links, consolidating them into the language URL.
@@ -67,7 +74,7 @@ if ($currentLanguage === null) {
     echo '<!doctype html><html lang="en"><meta charset="utf-8"><title>Page not found | VAMPIR.TOP</title><h1>Page not found</h1><a href="/">VAMPIR.TOP</a></html>';
     exit;
 }
-$canonicalPath = language_path($currentLanguage);
+$canonicalPath = $isSellPage ? sell_path($currentLanguage) : language_path($currentLanguage);
 if ($requestPath !== $canonicalPath || isset($_GET['lang'])) {
     $query = $_GET;
     unset($query['lang']);
@@ -78,6 +85,15 @@ if ($requestPath !== $canonicalPath || isset($_GET['lang'])) {
 header('Content-Language: ' . $currentLanguage);
 if (!$isProduction) header('X-Robots-Tag: noindex, nofollow');
 $i18n['currentLanguage'] = $currentLanguage;
+$i18n['pageType'] = $isSellPage ? 'sell' : 'buy';
+if ($isSellPage) {
+    foreach ($i18n['languages'] as &$entry) $entry['path'] = sell_path($entry['code']);
+    unset($entry);
+    foreach (['pageTitle'=>'sellPageTitle', 'metaDescription'=>'sellMetaDescription', 'orderTitle'=>'sellFormTitle', 'orderDesc'=>'sellFormDesc', 'amountLabel'=>'sellAmountLabel', 'orderEyebrow'=>'sellEyebrow', 'currencyLabel'=>'sellPaymentLabel', 'currencyHelp'=>'sellPaymentHelp', 'submit'=>'sellButton'] as $key=>$source) {
+        foreach ($i18n['messages'] as &$dictionary) $dictionary[$key] = $dictionary[$source] ?? $source;
+        unset($dictionary);
+    }
+}
 $canonicalUrl = $productionOrigin . $canonicalPath;
 $structuredData = [
     '@context' => 'https://schema.org',
