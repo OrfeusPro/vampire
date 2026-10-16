@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / VAI KĀDI JAUTĀJUMI?",
   "faqTitle": "Pirms <br><em>sāc.</em>",
   "footer": "Neatkarīgs veikals. Nav saistīts ar Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Vietējā demonstrācija: jūsu pieprasījums tiks saglabāts, bet netiks nosūtīts pārdevējam. Neievadiet paroles vai maksājuma informāciju.",
+  "formNote": "Neievadiet paroles, verifikācijas kodus vai maksājuma informāciju.",
   "goShop": "Izveidojiet pielāgotu pasūtījumu ↗",
   "heroDesc": "Dimanti jūsu nākamajai nodaļai VAMPIR. Izvēlieties savu summu. Skatīt cenu USD. Maksājiet USDT.",
   "heroNote": "Jūsu summa. Jūsu serveris. Jūsu nākamais gājiens.",
@@ -35,7 +35,6 @@
   "howTitle": "Vienkāršas darbības.<br><em>Noskaidrojiet cerības.</em>",
   "increase": "Palielināt summu",
   "languageLabel": "Valoda",
-  "localNotice": "Vietējā veikala priekšskatījums. Pieprasījumi tiek saglabāti šajā serverī. Tiešsaistes maksājumi un operatora paziņojumi vēl nav savienoti.",
   "menuLabel": "Izvēlne",
   "navHow": "Kā nopirkt",
   "navShop": "Dimanti",
@@ -69,6 +68,7 @@
   "step3": "Vienojieties, pirms maksājat",
   "step3Desc": "Apstipriniet pieejamību, galīgo cenu un piegādes veidu.",
   "submit": "Saglabāt pieprasījumu",
-  "success": "Pieprasījums {id} saglabāts lokāli. Nav nosūtīts pārdevējam. Maksājums netika veikts.",
-  "worldTitle": "Nakts pieder<br><em>jums.</em>"
+  "success": "Saņemts pieprasījums {id}. Saglabājiet šo numuru. Maksājums nav veikts.",
+  "worldTitle": "Nakts pieder<br><em>jums.</em>",
+  "notificationWarning": "Pieprasījums {id} tika saglabāts, taču e-pasta paziņojumu nevarēja nosūtīt. Lūdzu, vēlāk mēģiniet vēlreiz."
 }

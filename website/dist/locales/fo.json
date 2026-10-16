@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / ANY QUESTIONS?",
   "faqTitle": "Áðrenn tú<br><em>byrjar.</em>",
   "footer": "Independent store. Ikki tilknýtt Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Lokal demo: tín umbøn verður goymd men ikki send til ein seljara. Skriva ikki loyniorð ella gjaldsupplýsingar.",
+  "formNote": "Skriva ikki loyniorð, váttanarkotur ella gjaldsupplýsingar.",
   "goShop": "Stovna eina sersniðgivna bílegging ↗",
   "heroDesc": "Diamantir til tín næsta kapittul í VAMPIR. Vel tína upphædd. Sí prísin í USD. Greið í USDT.",
   "heroNote": "Tín upphædd. Tín ambætari. Títt næsta stig.",
@@ -35,7 +35,6 @@
   "howTitle": "Einføld stig.<br><em>Tær væntanir.</em>",
   "increase": "Hækka upphædd",
   "languageLabel": "Mál",
-  "localNotice": "Local store preview. Umbønir eru goymdar á hesum ambætaranum. Netgjaldingar og operatørfráboðanir eru ikki knýttar saman enn.",
   "menuLabel": "Matskrá",
   "navHow": "Hvussu keypir tú",
   "navShop": "Diamantir",
@@ -69,6 +68,7 @@
   "step3": "Avtala áðrenn tú rindar",
   "step3Desc": "Staðfest tøkni, endaligan prís og hvussu avhending fer at virka.",
   "submit": "Goym umbøn",
-  "success": "Umbøn {id} goymd lokalt. Ikki send til seljara. Eingin útgjalding varð gjørd.",
-  "worldTitle": "Náttin eigur<br><em>tú.</em>"
+  "success": "Umbøn {id} móttikin. Goym hetta nummarið. Eingin útgjalding er gjørd.",
+  "worldTitle": "Náttin eigur<br><em>tú.</em>",
+  "notificationWarning": "Umbønin {id} varð goymd, men teldupostfráboðanin kundi ikki sendast. Vinarliga royn aftur seinni."
 }

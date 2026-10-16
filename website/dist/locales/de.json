@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / HABEN SIE FRAGEN?",
   "faqTitle": "Bevor Sie<br><em>beginnen.</em>",
   "footer": "Unabhängiger Laden. Nicht mit Netmarble verbunden.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Lokale Demo: Ihre Anfrage wird gespeichert, aber nicht an einen Verkäufer gesendet. Geben Sie keine Passwörter oder Zahlungsdaten ein.",
+  "formNote": "Geben Sie keine Passwörter, Bestätigungscodes oder Zahlungsdetails ein.",
   "goShop": "Individuelle Bestellung erstellen ↗",
   "heroDesc": "Diamanten für Ihr nächstes Kapitel in VAMPIR. Wählen Sie Ihren Betrag. Sehen Sie sich den Preis in USD an. Bezahlen Sie in USDT.",
   "heroNote": "Ihr Betrag. Ihr Server. Ihr nächster Schritt.",
@@ -35,7 +35,6 @@
   "howTitle": "Einfache Schritte.<br><em>Klare Erwartungen.</em>",
   "increase": "Menge erhöhen",
   "languageLabel": "Sprache",
-  "localNotice": "Vorschau des lokalen Stores. Anfragen werden auf diesem Server gespeichert. Online-Zahlungen und Betreiberbenachrichtigungen sind noch nicht verbunden.",
   "menuLabel": "Menü",
   "navHow": "So funktioniert’s",
   "navShop": "Diamanten",
@@ -69,6 +68,7 @@
   "step3": "Stimmen Sie zu, bevor Sie bezahlen",
   "step3Desc": "Bestätigen Sie die Verfügbarkeit, den Endpreis und die Funktionsweise der Lieferung.",
   "submit": "Anfrage speichern",
-  "success": "Anfrage {id} lokal gespeichert. Nicht an einen Verkäufer gesendet. Es wurde keine Zahlung geleistet.",
-  "worldTitle": "Die Nacht gehört<br><em>dir.</em>"
+  "success": "Anfrage {id} erhalten. Behalten Sie diese Nummer. Es wurde keine Zahlung geleistet.",
+  "worldTitle": "Die Nacht gehört<br><em>dir.</em>",
+  "notificationWarning": "Anfrage {id} wurde gespeichert, aber die E-Mail-Benachrichtigung konnte nicht gesendet werden. Bitte versuchen Sie es später noch einmal."
 }

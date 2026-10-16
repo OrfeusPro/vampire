@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / TURI KLAUSIMŲ?",
   "faqTitle": "Prieš <br><em>pradėdami.</em>",
   "footer": "Nepriklausoma parduotuvė. Nesusijęs su Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Vietinė demonstracinė versija: jūsų užklausa bus išsaugota, bet neišsiųsta pardavėjui. Neveskite slaptažodžių ar mokėjimo informacijos.",
+  "formNote": "Neveskite slaptažodžių, patvirtinimo kodų ar mokėjimo informacijos.",
   "goShop": "Sukurkite pasirinktinį užsakymą ↗",
   "heroDesc": "Deimantai kitam jūsų VAMPIR skyriui. Pasirinkite savo sumą. Žiūrėkite kainą USD. Mokėkite USDT.",
   "heroNote": "Jūsų suma. Jūsų serveris. Kitas tavo žingsnis.",
@@ -35,7 +35,6 @@
   "howTitle": "Paprasti veiksmai.<br><em>Aiškūs lūkesčiai.</em>",
   "increase": "Padidinti sumą",
   "languageLabel": "Kalba",
-  "localNotice": "Vietinės parduotuvės peržiūra. Užklausos išsaugomos šiame serveryje. Mokėjimai internetu ir operatoriaus pranešimai dar nesusieti.",
   "menuLabel": "Meniu",
   "navHow": "Kaip pirkti",
   "navShop": "Deimantai",
@@ -69,6 +68,7 @@
   "step3": "Prieš mokėdami susitarkite",
   "step3Desc": "Patvirtinkite prieinamumą, galutinę kainą ir pristatymo būdą.",
   "submit": "Išsaugoti užklausą",
-  "success": "Užklausa {id} išsaugota vietoje. Pardavėjui nesiunčiama. Mokėjimas nebuvo atliktas.",
-  "worldTitle": "Naktis priklauso<br><em>jums.</em>"
+  "success": "Gautas prašymas {id}. Išsaugokite šį numerį. Joks mokėjimas nebuvo atliktas.",
+  "worldTitle": "Naktis priklauso<br><em>jums.</em>",
+  "notificationWarning": "Užklausa {id} buvo išsaugota, bet el. pašto pranešimo išsiųsti nepavyko. Bandykite dar kartą vėliau."
 }

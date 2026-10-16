@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / SUALINIZ VAR?",
   "faqTitle": "<br><em>başlamazdan</em> əvvəl",
   "footer": "Müstəqil mağaza. Netmarble ilə əlaqəli deyil.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Yerli demo: sorğunuz yadda saxlanılacaq, lakin satıcıya göndərilməyəcək. Şifrə və ya ödəniş təfərrüatlarını daxil etməyin.",
+  "formNote": "Parollar, doğrulama kodları və ya ödəniş təfərrüatlarını daxil etməyin.",
   "goShop": "Fərdi sifariş yaradın ↗",
   "heroDesc": "VAMPIR-də növbəti fəsiliniz üçün brilyantlar. Məbləğinizi seçin. USD ilə qiymətə baxın. USDT ilə ödəyin.",
   "heroNote": "Sizin məbləğiniz. Sizin serveriniz. Növbəti hərəkətiniz.",
@@ -35,7 +35,6 @@
   "howTitle": "Sadə addımlar.<br><em>Gözləntiləri aydınlaşdırın.</em>",
   "increase": "Məbləği artırın",
   "languageLabel": "Dil",
-  "localNotice": "Yerli mağazaya baxış. Sorğular bu serverdə saxlanılır. Onlayn ödənişlər və operator bildirişləri hələ qoşulmayıb.",
   "menuLabel": "Menyu",
   "navHow": "Necə almaq olar",
   "navShop": "Brilyantlar",
@@ -69,6 +68,7 @@
   "step3": "Ödəniş etmədən əvvəl razılaşın",
   "step3Desc": "Mövcudluğu, son qiyməti və çatdırılmanın necə işləyəcəyini təsdiqləyin.",
   "submit": "Sorğunu yadda saxla",
-  "success": "{id} sorğusu yerli olaraq yadda saxlanıldı. Satıcıya göndərilməyib. Heç bir ödəniş edilmədi.",
-  "worldTitle": "Gecə<br><em>sizindir.</em>"
+  "success": "{id} sorğusu alındı. Bu nömrəni saxla. Heç bir ödəniş edilməmişdir.",
+  "worldTitle": "Gecə<br><em>sizindir.</em>",
+  "notificationWarning": "{id} sorğusu yadda saxlanıldı, lakin e-poçt bildirişini göndərmək mümkün olmadı. Lütfən, sonra yenidən cəhd edin."
 }

@@ -6,6 +6,7 @@ const dialog = document.querySelector('#order-dialog');
 const form = document.querySelector('#order-form');
 const result = document.querySelector('#order-result');
 let savedRequest = null;
+let savedEmailAccepted = true;
 function translate(lang) {
   language = messages[lang] ? lang : defaultLanguage;
   selector.querySelector('.language-current').textContent = availableLanguages.find(item=>item.code===language).label;
@@ -18,7 +19,7 @@ function translate(lang) {
   document.title = messages[language].pageTitle;
   document.querySelector('meta[name="description"]').content = messages[language].heroDesc;
   document.querySelector('#official-link').href=`https://vampirgb.netmarble.com/${language==='ru'?'ru':'en'}/preorder`;
-  if(savedRequest) result.textContent=messages[language].success.replace('{id}',savedRequest);
+  if(savedRequest) result.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',savedRequest);
   updatePrices();
 }
 const languageMenu=document.querySelector('#language-menu');
@@ -50,7 +51,7 @@ form.addEventListener('submit',async e=>{
     const payload=Object.fromEntries(new FormData(form));payload.language=language;
     const response=await fetch('/api/order.php',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(payload)});
     const data=await response.json();if(!response.ok||!data.id)throw new Error('request failed');
-    savedRequest=data.id;result.textContent=messages[language].success.replace('{id}',data.id);form.reset();updatePrices();
+    savedRequest=data.id;savedEmailAccepted=data.email_accepted===true;result.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',data.id);form.reset();updatePrices();
   } catch {result.textContent=messages[language].error;}
   finally{submit.disabled=false;submit.textContent=messages[language].submit;}
 });

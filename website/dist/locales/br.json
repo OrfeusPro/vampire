@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / GOULENNOÙ ?",
   "faqTitle": "A-raok ma krogfec'h.</em>",
   "footer": "Stal dizalc'h. N'eo ket stag ouzh Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demo lec'hel : enrollet e vo ho koulenn met ne vo ket kaset d'ur gwerzher. Na lakait ket gerioù-tremen pe titouroù paeañ.",
+  "formNote": "Na lakait ket gerioù-tremen, kodoù gwiriañ pe titouroù paeañ.",
   "goShop": "Krouiñ ur gourc'hemenn personelaet ↗",
   "heroDesc": "Diamantoù evit ho pennad da zont e VAMPIR. Dibabit ho sammad. Gwelet ar priz e USD. Paeañ e USDT.",
   "heroNote": "Ho sammad. Ho servijer. Ho tro da heul.",
@@ -35,7 +35,6 @@
   "howTitle": "Pazennoù simpl.<br><em>Gortozoù sklaer.</em>",
   "increase": "Kreskiñ ar sammad",
   "languageLabel": "Yezh",
-  "localNotice": "Rakwelet ar stal lec'hel. Enrollet e vez ar goulennoù war an dafariad-mañ. N'eo ket kevreet c'hoazh ar paemantoù enlinenn hag ar c'hemennadennoù oberataer.",
   "menuLabel": "Menu",
   "navHow": "Penaos prenañ",
   "navShop": "Diamantoù",
@@ -69,6 +68,7 @@
   "step3": "Asantiñ a-raok paeañ",
   "step3Desc": "Kadarnaat an digoust, ar priz diwezhañ ha penaos e vo graet an degasadenn.",
   "submit": "Goulenn enrollañ",
-  "success": "Goulenn {id} enrollet lec'hel. N'eo ket bet kaset d'ur gwerzher. Paeamant ebet n'eo bet graet.",
-  "worldTitle": "An noz a zo<br><em>deoc'h.</em>"
+  "success": "Goulenn {id} resevet. Mirout an niverenn-mañ. Paeamant ebet n'eus bet graet.",
+  "worldTitle": "An noz a zo<br><em>deoc'h.</em>",
+  "notificationWarning": "Enrollet eo bet ar goulenn {id}, met n'hall ket bezañ kaset ar gemennadenn dre bostel. Klaskit en-dro diwezhatoc'h mar plij."
 }

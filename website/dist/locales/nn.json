@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / HAR DU SPØRSMÅL?",
   "faqTitle": "Før du<br><em>byrjar.</em>",
   "footer": "Uavhengig butikk. Ikkje knytt til Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Lokal demo: førespurnaden blir lagra, men ikkje send til ein seljar. Ikkje skriv inn passord eller betalingsopplysningar.",
+  "formNote": "Ikkje skriv inn passord, stadfestingskodar eller betalingsopplysningar.",
   "goShop": "Lag ei tilpassa bestilling ↗",
   "heroDesc": "Diamantar til det neste kapittelet ditt i VAMPIR. Vel talet. Sjå prisen i USD. Betal i USDT.",
   "heroNote": "Ditt tal. Din tenar. Ditt neste trekk.",
@@ -35,7 +35,6 @@
   "howTitle": "Enkle steg.<br><em>Klåre forventningar.</em>",
   "increase": "Auk talet",
   "languageLabel": "Språk",
-  "localNotice": "Lokal førehandsvising av butikken. Førespurnader blir lagra på denne tenaren. Nettbetaling og varsling til operatøren er ikkje kopla til enno.",
   "menuLabel": "Meny",
   "navHow": "Slik kjøper du",
   "navShop": "Diamantar",
@@ -69,6 +68,7 @@
   "step3": "Avtal før du betaler",
   "step3Desc": "Stadfest tilgjenge, endeleg pris og korleis leveringa skal skje.",
   "submit": "Lagre førespurnaden",
-  "success": "Førespurnad {id} er lagra lokalt. Ikkje send til ein seljar. Inga betaling er utført.",
-  "worldTitle": "Natta høyrer<br><em>deg til.</em>"
+  "success": "Førespurnad {id} er motteken. Ta vare på dette nummeret. Inga betaling er utført.",
+  "worldTitle": "Natta høyrer<br><em>deg til.</em>",
+  "notificationWarning": "Førespurnad {id} er lagra, men e-postvarselet kunne ikkje sendast. Prøv igjen seinare."
 }

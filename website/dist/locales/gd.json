@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / CEISTEAN sam bith?",
   "faqTitle": "Mus tòisich thu <br><em>.</em>",
   "footer": "Bùth neo-eisimeileach. Gun a bhith ceangailte ri Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demo ionadail: thèid an t-iarrtas agad a shàbhaladh ach cha tèid a chuir gu neach-reic. Na cuir a-steach faclan-faire no mion-fhiosrachadh pàighidh.",
+  "formNote": "Na cuir a-steach faclan-faire, còdan dearbhaidh no mion-fhiosrachadh pàighidh.",
   "goShop": "Cruthaich òrdugh gnàthaichte ↗",
   "heroDesc": "Daoimeanan airson an ath chaibideil agad ann an VAMPIR. Tagh an t-suim agad. Coimhead ìre USDe. Pàigheadh ​​​​ann an USDT.",
   "heroNote": "An t-suim agad. Am frithealaiche agad. An ath ghluasad agad.",
@@ -35,7 +35,6 @@
   "howTitle": "Ceumannan sìmplidh.<br><em>Soilleir dùilean.</em>",
   "increase": "Meudaich meud",
   "languageLabel": "Cànain",
-  "localNotice": "Ro-shealladh stòr ionadail. Thèid iarrtasan a shàbhaladh air an fhrithealaiche seo. Chan eil pàighidhean air-loidhne agus fiosan gnìomhaiche ceangailte fhathast.",
   "menuLabel": "Clàr-taice",
   "navHow": "Ciamar a cheannach",
   "navShop": "Daoimeanan",
@@ -69,6 +68,7 @@
   "step3": "Aontaich mus pàigh thu",
   "step3Desc": "Dearbhaich ruigsinneachd, a’ phrìs mu dheireadh agus mar a dh’obraicheas lìbhrigeadh.",
   "submit": "Sàbhail iarrtas",
-  "success": "Iarrtas {id} air a shàbhaladh gu h-ionadail. Gun a chuir gu neach-reic. Cha deach pàigheadh ​​sam bith a dhèanamh.",
-  "worldTitle": "Buinidh an oidhche <br><em>dhut.</em>"
+  "success": "Iarrtas {id} air fhaighinn. Cùm an àireamh seo. Cha deach pàigheadh ​​sam bith a dhèanamh.",
+  "worldTitle": "Buinidh an oidhche <br><em>dhut.</em>",
+  "notificationWarning": "Chaidh iarrtas {id} a shàbhaladh, ach cha b' urrainn dhuinn am brath post-d a chur. Feuch ris a-rithist nas anmoiche."
 }

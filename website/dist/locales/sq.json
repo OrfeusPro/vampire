@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / NDONJE PYETJE?",
   "faqTitle": "Përpara se të<br><em>filloni.</em>",
   "footer": "Dyqan i pavarur. Nuk është e lidhur me Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demonstrimi lokal: kërkesa juaj do të ruhet, por nuk do t'i dërgohet një shitësi. Mos vendosni fjalëkalime ose detaje të pagesës.",
+  "formNote": "Mos vendosni fjalëkalime, kode verifikimi ose detaje të pagesës.",
   "goShop": "Krijoni një porosi me porosi ↗",
   "heroDesc": "Diamante për kapitullin tuaj të ardhshëm në VAMPIR. Zgjidhni shumën tuaj. Shihni çmimin në USD. Paguani në USDT.",
   "heroNote": "Shuma juaj. Serveri juaj. Lëvizja juaj e radhës.",
@@ -35,7 +35,6 @@
   "howTitle": "Hapat e thjeshtë.<br><em>Pastroni pritshmëritë.</em>",
   "increase": "Rritja e sasisë",
   "languageLabel": "Gjuha",
-  "localNotice": "Pamja paraprake e dyqanit lokal. Kërkesat ruhen në këtë server. Pagesat në internet dhe njoftimet e operatorit nuk janë lidhur ende.",
   "menuLabel": "Menyja",
   "navHow": "Si të blini",
   "navShop": "Diamante",
@@ -69,6 +68,7 @@
   "step3": "Bini dakord para se të paguani",
   "step3Desc": "Konfirmoni disponueshmërinë, çmimin përfundimtar dhe mënyrën se si do të funksionojë dorëzimi.",
   "submit": "Ruaj kërkesën",
-  "success": "Kërkesa për {id} u ruajt në nivel lokal. Nuk është dërguar te një shitës. Asnjë pagesë nuk është bërë.",
-  "worldTitle": "Nata të përket<br><em>ty.</em>"
+  "success": "Kërkesa {id} e marrë. Mbajeni këtë numër. Asnjë pagesë nuk është bërë.",
+  "worldTitle": "Nata të përket<br><em>ty.</em>",
+  "notificationWarning": "Kërkesa {id} u ruajt, por njoftimi me email nuk mund të dërgohej. Ju lutemi provoni përsëri më vonë."
 }

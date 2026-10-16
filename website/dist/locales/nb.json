@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / NOEN SPØRSMÅL?",
   "faqTitle": "Før du<br><em>begynner.</em>",
   "footer": "Uavhengig butikk. Ikke tilknyttet Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Lokal demo: forespørselen din vil bli lagret, men ikke sendt til en selger. Ikke skriv inn passord eller betalingsdetaljer.",
+  "formNote": "Ikke skriv inn passord, bekreftelseskoder eller betalingsdetaljer.",
   "goShop": "Opprett en tilpasset bestilling ↗",
   "heroDesc": "Diamanter for ditt neste kapittel i VAMPIR. Velg beløpet ditt. Se prisen i USD. Betal i USDT.",
   "heroNote": "Beløpet ditt. Din server. Ditt neste trekk.",
@@ -35,7 +35,6 @@
   "howTitle": "Enkle trinn.<br><em>Tydelige forventninger.</em>",
   "increase": "Øk beløpet",
   "languageLabel": "Språk",
-  "localNotice": "Forhåndsvisning av lokal butikk. Forespørsler lagres på denne serveren. Nettbetalinger og operatørvarsler er ikke koblet til ennå.",
   "menuLabel": "Meny",
   "navHow": "Hvordan kjøpe",
   "navShop": "Diamanter",
@@ -69,6 +68,7 @@
   "step3": "Enig før du betaler",
   "step3Desc": "Bekreft tilgjengelighet, den endelige prisen og hvordan leveringen vil fungere.",
   "submit": "Lagre forespørselen",
-  "success": "Forespørsel {id} lagret lokalt. Ikke sendt til selger. Ingen betaling ble utført.",
-  "worldTitle": "Natten tilhører<br><em>deg.</em>"
+  "success": "Forespørsel {id} mottatt. Behold dette nummeret. Ingen betaling er foretatt.",
+  "worldTitle": "Natten tilhører<br><em>deg.</em>",
+  "notificationWarning": "Forespørsel {id} ble lagret, men e-postvarselet kunne ikke sendes. Vennligst prøv igjen senere."
 }

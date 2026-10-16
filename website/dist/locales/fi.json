@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / KYSYMYKSIÄ?",
   "faqTitle": "Ennen kuin <br><em>aloitat.</em>",
   "footer": "Itsenäinen kauppa. Ei sidoksissa Netmarbleen.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Paikallinen esittely: Pyyntösi tallennetaan, mutta sitä ei lähetetä myyjälle. Älä syötä salasanoja tai maksutietoja.",
+  "formNote": "Älä syötä salasanoja, vahvistuskoodeja tai maksutietoja.",
   "goShop": "Luo mukautettu tilaus ↗",
   "heroDesc": "Timantteja seuraavaan VAMPIR-lukuusi. Valitse summasi. Katso hinta USD. Maksa USDT.",
   "heroNote": "Sinun summasi. Palvelimesi. Seuraava siirtosi.",
@@ -35,7 +35,6 @@
   "howTitle": "Yksinkertaiset vaiheet.<br><em>Tyhjennä odotukset.</em>",
   "increase": "Lisää määrää",
   "languageLabel": "Kieli",
-  "localNotice": "Paikallisen kaupan esikatselu. Pyynnöt tallennetaan tälle palvelimelle. Verkkomaksuja ja operaattorin ilmoituksia ei ole vielä yhdistetty.",
   "menuLabel": "Valikko",
   "navHow": "Kuinka ostaa",
   "navShop": "Timantit",
@@ -69,6 +68,7 @@
   "step3": "Sovi ennen kuin maksat",
   "step3Desc": "Vahvista saatavuus, lopullinen hinta ja toimitustapa.",
   "submit": "Tallenna pyyntö",
-  "success": "Pyyntö {id} tallennettu paikallisesti. Ei lähetetty myyjälle. Maksua ei suoritettu.",
-  "worldTitle": "Yö kuuluu<br><em>sinulle.</em>"
+  "success": "Pyyntö {id} vastaanotettu. Säilytä tämä numero. Maksua ei ole suoritettu.",
+  "worldTitle": "Yö kuuluu<br><em>sinulle.</em>",
+  "notificationWarning": "Pyyntö {id} tallennettiin, mutta sähköposti-ilmoitusta ei voitu lähettää. Yritä myöhemmin uudelleen."
 }

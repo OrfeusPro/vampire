@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / NOG VRAGEN?",
   "faqTitle": "Voordat je<br><em>begint.</em>",
   "footer": "Onafhankelijke winkel. Niet aangesloten bij Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Lokale demo: uw aanvraag wordt opgeslagen maar niet naar een verkoper verzonden. Voer geen wachtwoorden of betalingsgegevens in.",
+  "formNote": "Voer geen wachtwoorden, verificatiecodes of betalingsgegevens in.",
   "goShop": "Maak een aangepaste bestelling ↗",
   "heroDesc": "Diamanten voor je volgende hoofdstuk in VAMPIR. Kies uw bedrag. Bekijk de prijs in USD. Betaal in USDT.",
   "heroNote": "Jouw bedrag. Jouw server. Je volgende zet.",
@@ -35,7 +35,6 @@
   "howTitle": "Eenvoudige stappen.<br><em>Duidelijke verwachtingen.</em>",
   "increase": "Verhoog het bedrag",
   "languageLabel": "Taal",
-  "localNotice": "Voorbeeld van een lokale winkel. Op deze server worden verzoeken opgeslagen. Online betalingen en operatormeldingen zijn nog niet gekoppeld.",
   "menuLabel": "Menukaart",
   "navHow": "Hoe te kopen",
   "navShop": "Diamanten",
@@ -69,6 +68,7 @@
   "step3": "Ga akkoord voordat u betaalt",
   "step3Desc": "Bevestig de beschikbaarheid, de uiteindelijke prijs en hoe de levering zal werken.",
   "submit": "Aanvraag opslaan",
-  "success": "Verzoek {id} lokaal opgeslagen. Niet naar een verkoper gestuurd. Er heeft geen betaling plaatsgevonden.",
-  "worldTitle": "De nacht is<br><em>van jou.</em>"
+  "success": "Verzoek {id} ontvangen. Bewaar dit nummer. Er heeft geen betaling plaatsgevonden.",
+  "worldTitle": "De nacht is<br><em>van jou.</em>",
+  "notificationWarning": "Verzoek {id} is opgeslagen, maar de e-mailmelding kon niet worden verzonden. Probeer het later opnieuw."
 }

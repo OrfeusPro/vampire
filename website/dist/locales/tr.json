@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / HERHANGİ BİR SORUNUZ VAR MI?",
   "faqTitle": "<br><em>Başlamadan önce.</em>",
   "footer": "Bağımsız mağaza. Netmarble'a bağlı değildir.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Yerel demo: Talebiniz kaydedilecek ancak satıcıya gönderilmeyecektir. Şifreleri veya ödeme ayrıntılarını girmeyin.",
+  "formNote": "Şifreleri, doğrulama kodlarını veya ödeme ayrıntılarını girmeyin.",
   "goShop": "Özel bir sipariş oluşturun ↗",
   "heroDesc": "VAMPIR'deki bir sonraki bölümünüz için elmaslar. Tutarınızı seçin. Fiyatı USD cinsinden görün. USDT cinsinden ödeme yapın.",
   "heroNote": "Tutarınız. Sunucunuz. Bir sonraki hamlen.",
@@ -35,7 +35,6 @@
   "howTitle": "Basit adımlar.<br><em>Beklentileri netleştirin.</em>",
   "increase": "Tutarı artır",
   "languageLabel": "Dil",
-  "localNotice": "Yerel mağaza önizlemesi. İstekler bu sunucuya kaydedilir. Çevrimiçi ödemeler ve operatör bildirimleri henüz bağlanmadı.",
   "menuLabel": "Menü",
   "navHow": "Nasıl satın alınır",
   "navShop": "Elmaslar",
@@ -69,6 +68,7 @@
   "step3": "Ödemeden önce kabul edin",
   "step3Desc": "Stok durumunu, son fiyatı ve teslimatın nasıl gerçekleşeceğini doğrulayın.",
   "submit": "İsteği kaydet",
-  "success": "{id} isteği yerel olarak kaydedildi. Satıcıya gönderilmedi. Herhangi bir ödeme yapılmadı.",
-  "worldTitle": "Gece<br><em>size ait.</em>"
+  "success": "Talep {id} alındı. Bu numarayı saklayın. Herhangi bir ödeme yapılmadı.",
+  "worldTitle": "Gece<br><em>size ait.</em>",
+  "notificationWarning": "{id} numaralı istek kaydedildi ancak e-posta bildirimi gönderilemedi. Lütfen daha sonra tekrar deneyin."
 }

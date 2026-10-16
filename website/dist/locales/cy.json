@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / UNRHYW GWESTIYNAU?",
   "faqTitle": "Cyn i chi <br><em>ddechrau.</em>",
   "footer": "Siop annibynnol. Ddim yn gysylltiedig â Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demo lleol: bydd eich cais yn cael ei gadw ond ni chaiff ei anfon at werthwr. Peidiwch â rhoi cyfrineiriau na manylion talu.",
+  "formNote": "Peidiwch â rhoi cyfrineiriau, codau dilysu na manylion talu.",
   "goShop": "Creu gorchymyn wedi'i deilwra ↗",
   "heroDesc": "Diemwntau ar gyfer eich pennod nesaf yn VAMPIR. Dewiswch eich swm. Gweler y pris yn USD. Talu mewn USDT.",
   "heroNote": "Eich swm. Eich gweinydd. Eich symudiad nesaf.",
@@ -35,7 +35,6 @@
   "howTitle": "Camau syml.<br><em>Digwyliadau clir.</em>",
   "increase": "Cynyddu swm",
   "languageLabel": "Iaith",
-  "localNotice": "Rhagolwg siop leol. Mae ceisiadau'n cael eu cadw ar y gweinydd hwn. Nid yw taliadau ar-lein a hysbysiadau gweithredwr wedi'u cysylltu eto.",
   "menuLabel": "Bwydlen",
   "navHow": "Sut i brynu",
   "navShop": "Diemwntau",
@@ -69,6 +68,7 @@
   "step3": "Cytuno cyn talu",
   "step3Desc": "Cadarnhewch argaeledd, y pris terfynol a sut y bydd y danfoniad yn gweithio.",
   "submit": "Cadw cais",
-  "success": "Cais {id} wedi'i gadw'n lleol. Heb ei anfon at werthwr. Ni wnaed unrhyw daliad.",
-  "worldTitle": "Mae'r noson yn perthyn <br><em>i chi.</em>"
+  "success": "Derbyniwyd cais {id}. Cadwch y rhif hwn. Nid oes unrhyw daliad wedi'i wneud.",
+  "worldTitle": "Mae'r noson yn perthyn <br><em>i chi.</em>",
+  "notificationWarning": "Cadwyd cais {id}, ond ni ellid anfon yr hysbysiad e-bost. Ceisiwch eto yn nes ymlaen."
 }

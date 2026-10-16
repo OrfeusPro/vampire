@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / IMATE PITANJA?",
   "faqTitle": "Prije nego što<br><em>počnete.</em>",
   "footer": "Samostalna trgovina. Nije povezan s Netmarbleom.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Lokalna demonstracija: vaš će zahtjev biti spremljen, ali neće biti poslan prodavatelju. Nemojte unositi lozinke ili podatke o plaćanju.",
+  "formNote": "Nemojte unositi lozinke, kontrolne kodove ili podatke o plaćanju.",
   "goShop": "Izradite prilagođenu narudžbu ↗",
   "heroDesc": "Dijamanti za vaše sljedeće poglavlje u VAMPIR-u. Odaberite svoj iznos. Pogledajte cijenu u USD. Platite u USDT.",
   "heroNote": "Vaš iznos. Vaš poslužitelj. Vaš sljedeći potez.",
@@ -35,7 +35,6 @@
   "howTitle": "Jednostavni koraci.<br><em>Jasna očekivanja.</em>",
   "increase": "Povećajte iznos",
   "languageLabel": "Jezik",
-  "localNotice": "Pregled lokalne trgovine. Zahtjevi se spremaju na ovom poslužitelju. Online plaćanja i obavijesti operatera još nisu povezani.",
   "menuLabel": "Izbornik",
   "navHow": "Kako kupiti",
   "navShop": "Dijamanti",
@@ -69,6 +68,7 @@
   "step3": "Dogovorite se prije plaćanja",
   "step3Desc": "Potvrdite dostupnost, konačnu cijenu i način dostave.",
   "submit": "Spremi zahtjev",
-  "success": "Zahtjev {id} spremljen lokalno. Nije poslano prodavatelju. Plaćanje nije izvršeno.",
-  "worldTitle": "Noć pripada<br><em>tebi.</em>"
+  "success": "Upit {id} primljen. Zadrži ovaj broj. Uplata nije izvršena.",
+  "worldTitle": "Noć pripada<br><em>tebi.</em>",
+  "notificationWarning": "Zahtjev {id} je spremljen, ali obavijest e-poštom nije mogla biti poslana. Pokušajte ponovno kasnije."
 }

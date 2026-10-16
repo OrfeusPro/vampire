@@ -1,0 +1,13 @@
+{
+  "name": "vampir-top/storefront",
+  "description": "VAMPIR.TOP storefront email transport",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "phpmailer/phpmailer": "7.1.1"
+  },
+  "config": {
+    "allow-plugins": false,
+    "sort-packages": true
+  }
+}

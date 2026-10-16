@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / GALDERArik?",
   "faqTitle": "<br><em>hasi baino lehen.</em>",
   "footer": "Denda independentea. Netmarblerekin afiliatuta ez dago.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Tokiko demoa: zure eskaera gordeko da baina ez da saltzaile bati bidaliko. Ez sartu pasahitzak edo ordainketa xehetasunak.",
+  "formNote": "Ez sartu pasahitzak, egiaztapen-kodeak edo ordainketa xehetasunak.",
   "goShop": "Sortu eskaera pertsonalizatua ↗",
   "heroDesc": "Diamanteak zure hurrengo kapitulurako VAMPIR-en. Aukeratu zure zenbatekoa. Ikusi prezioa USDtan. Ordaindu USDT-n.",
   "heroNote": "Zure zenbatekoa. Zure zerbitzaria. Zure hurrengo mugimendua.",
@@ -35,7 +35,6 @@
   "howTitle": "Urrats sinpleak.<br><em>Itxaropenak argi.</em>",
   "increase": "Handitu zenbatekoa",
   "languageLabel": "Hizkuntza",
-  "localNotice": "Tokiko dendaren aurrebista. Eskaerak zerbitzari honetan gordetzen dira. Lineako ordainketak eta operadoreen jakinarazpenak oraindik ez daude konektatuta.",
   "menuLabel": "Menua",
   "navHow": "Nola erosi",
   "navShop": "Diamanteak",
@@ -69,6 +68,7 @@
   "step3": "Ordaindu aurretik adostu",
   "step3Desc": "Berretsi erabilgarritasuna, azken prezioa eta entrega nola funtzionatuko duen.",
   "submit": "Gorde eskaera",
-  "success": "{id} eskaera lokalean gorde da. Ez da saltzaile bati bidali. Ez da ordainketarik egin.",
-  "worldTitle": "Gaua<br><em>zuena da.</em>"
+  "success": "Jasotako {id} eskaera. Mantendu zenbaki hau. Ez da ordainketarik egin.",
+  "worldTitle": "Gaua<br><em>zuena da.</em>",
+  "notificationWarning": "{id} eskaera gorde da, baina ezin izan da mezu elektronikoaren jakinarazpena bidali. Saiatu berriro geroago."
 }

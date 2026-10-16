@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / LEAT GE GAŽALAT?",
   "faqTitle": "Ovdal go<br><em>álggat.</em>",
   "footer": "Iehčanas gávpi. Ii leat čadnon Netmarble:ii.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Báikkálaš demo: du jearaldat vurkejuvvo muhto ii sáddejuvvo vuovdimii. Ale čále beassansániid dahje máksindieđuid.",
+  "formNote": "Ale čále beassansániid, duođaštuskodaid dahje máksindieđuid.",
   "goShop": "Ráhkat iešheanalaš diŋgojumi ↗",
   "heroDesc": "Diamánttat du boahtte kapihttalii VAMPIR:s. Vállje iežat supmi. Geahča hatti USD:in. Mákset USDT:in.",
   "heroNote": "Du supmi. Du bálvaleaddji. Du boahtte lihkadus.",
@@ -35,7 +35,6 @@
   "howTitle": "Álbmot lávkkit.<br><em>Čilge vuordámušat.</em>",
   "increase": "Lasihit supmi",
   "languageLabel": "Giella",
-  "localNotice": "Báikkálaš gávppi ovdagovva. Jearaldagat vurkejuvvojit dán bálvaleaddjái. Neahttamáksu ja operatevrra dieđiheapmi eai leat vuos čadnojuvvon.",
   "menuLabel": "Meny",
   "navHow": "Mo oastit",
   "navShop": "Diamánttat",
@@ -69,6 +68,7 @@
   "step3": "Soahpat ovdal go máksát",
   "step3Desc": "Duođaš gávdnosiid, loahppahámi ja mo fievrrideapmi doaibmá.",
   "submit": "Seailluheami",
-  "success": "Jearaldat {id} lea vurkejuvvon báikkálaččat. Ii sáddejuvvon vuovdimii. Ii máksojuvvon.",
-  "worldTitle": "Ija gullá<br><em>dutnje.</em>"
+  "success": "Jearaldat {id} lea boahtán. Doala dán nummira. Ii leat máksojuvvon.",
+  "worldTitle": "Ija gullá<br><em>dutnje.</em>",
+  "notificationWarning": "Gáibádus {id} vurkejuvvui, muhto e-poastadieđáhus ii sáhttán sáddejuvvot. Geahččal fas maŋŋelabbos."
 }

@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / ALGUNA PREGUNTA?",
   "faqTitle": "Abans de<br><em>començar.</em>",
   "footer": "Botiga independent. No està afiliat a Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demo local: la vostra sol·licitud es desarà però no s'enviarà a un venedor. No introduïu contrasenyes ni dades de pagament.",
+  "formNote": "No introduïu contrasenyes, codis de verificació ni detalls de pagament.",
   "goShop": "Crea una comanda personalitzada ↗",
   "heroDesc": "Diamants per al teu proper capítol a VAMPIR. Tria la teva quantitat. Consulteu el preu en USD. Paga en USDT.",
   "heroNote": "La teva quantitat. El teu servidor. El teu proper moviment.",
@@ -35,7 +35,6 @@
   "howTitle": "Passos senzills.<br><em>Expectatives clares.</em>",
   "increase": "Augmentar la quantitat",
   "languageLabel": "Llengua",
-  "localNotice": "Vista prèvia de la botiga local. Les sol·licituds es guarden en aquest servidor. Els pagaments en línia i les notificacions de l'operador encara no estan connectats.",
   "menuLabel": "Menú",
   "navHow": "Com comprar",
   "navShop": "Diamants",
@@ -69,6 +68,7 @@
   "step3": "Accepta abans de pagar",
   "step3Desc": "Confirmeu la disponibilitat, el preu final i com funcionarà el lliurament.",
   "submit": "Desa la sol·licitud",
-  "success": "La sol·licitud {id} s'ha desat localment. No enviat a un venedor. No s'ha fet cap pagament.",
-  "worldTitle": "La nit et pertany<br><em>.</em>"
+  "success": "Sol·licitud {id} rebuda. Conserveu aquest número. No s'ha fet cap pagament.",
+  "worldTitle": "La nit et pertany<br><em>.</em>",
+  "notificationWarning": "La sol·licitud {id} s'ha desat, però no s'ha pogut enviar la notificació per correu electrònic. Si us plau, torna-ho a provar més tard."
 }

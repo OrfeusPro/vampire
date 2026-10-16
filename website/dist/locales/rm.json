@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / DUMONDAS?",
   "faqTitle": "Avant che ti<br><em>cumenzas.</em>",
   "footer": "Butia independenta. Betg colliada cun Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demo locala: tia dumonda vegn memorisada, ma betg tramessa ad in vendider. N’inditgar betg pleds-clav u datas da pajament.",
+  "formNote": "N’inditgar betg pleds-clav, codes da conferma u datas da pajament.",
   "goShop": "Crear in’empustaziun individuala ↗",
   "heroDesc": "Diamants per tes proxim chapitel en VAMPIR. Tscherna la quantitad. Ves il pretsch en USD. Paja en USDT.",
   "heroNote": "Tia quantitad. Tes server. Tes proxim pass.",
@@ -35,7 +35,6 @@
   "howTitle": "Pass simpels.<br><em>Aspectativas cleras.</em>",
   "increase": "Augmentar la quantitad",
   "languageLabel": "Lingua",
-  "localNotice": "Prevista locala da la butia. Las dumondas vegnan memorisadas sin quest server. Ils pajaments online e las notificaziuns a l’operatur n’èn anc betg activads.",
   "menuLabel": "Menu",
   "navHow": "Co cumprar",
   "navShop": "Diamants",
@@ -69,6 +68,7 @@
   "step3": "Fixescha las cundiziuns avant che pajar",
   "step3Desc": "Conferma la disponibladad, il pretsch final e la metoda da furniziun.",
   "submit": "Memorisar la dumonda",
-  "success": "La dumonda {id} è memorisada localmain. Betg tramessa ad in vendider. Nagin pajament è vegnì fatg.",
-  "worldTitle": "La notg tutga<br><em>a tai.</em>"
+  "success": "La dumonda {id} è arrivada. Conserva quest numer. Nagin pajament è vegnì fatg.",
+  "worldTitle": "La notg tutga<br><em>a tai.</em>",
+  "notificationWarning": "La dumonda {id} è memorisada, ma la notificaziun per e-mail n’ha betg pudì vegnir tramessa. Emprova pli tard."
 }

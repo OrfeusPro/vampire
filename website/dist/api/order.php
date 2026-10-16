@@ -2,6 +2,7 @@
 declare(strict_types=1);
 session_start();
 require_once dirname(__DIR__, 2) . '/i18n.php';
+require_once dirname(__DIR__, 2) . '/notifications.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Content-Type-Options: nosniff');
@@ -23,13 +24,20 @@ foreach (['region'=>60,'server'=>60,'contact'=>160,'comment'=>1000,'nickname'=>8
   $fields[$key]=$value;
 }
 if(strlen($fields['contact'])<3) fail(422,'invalid_contact');
+if(!in_array($fields['region'], ['GLOBAL','SEA','KR'], true)) fail(422,'invalid_region');
 $currency=$data['currency']??'USD';$language=$data['language']??'en';
 if($currency!=='USD'||($data['payment_currency']??'USDT')!=='USDT'||!is_string($language)||!isset(site_languages()['messages'][$language])) fail(422,'invalid_locale');
+if(!site_email_rate_limit(dirname(__DIR__,2).'/var/mail-limits')) fail(429,'rate_limit');
 $id='VT-'.strtoupper(bin2hex(random_bytes(6)));
-$order=['id'=>$id,'created_at'=>gmdate('c'),'status'=>'local_request','amount'=>$amount,'currency'=>'USD','payment_currency'=>'USDT','language'=>$language,'consent_at'=>gmdate('c')]+site_order_price($amount)+$fields;
+$order=['id'=>$id,'created_at'=>gmdate('c'),'status'=>'received','email_status'=>'pending','amount'=>$amount,'currency'=>'USD','payment_currency'=>'USDT','language'=>$language,'consent_at'=>gmdate('c')]+site_order_price($amount)+$fields;
 $directory=dirname(__DIR__,2).'/var/orders';
 if(!is_dir($directory)&&!@mkdir($directory,0700,true)&&!is_dir($directory)) fail(503,'storage_unavailable');
 $json=json_encode($order,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR);
 if(@file_put_contents($directory.'/'.$id.'.json',$json,LOCK_EX)===false) fail(503,'storage_unavailable');
 $_SESSION['last_order']=time();
-http_response_code(201);echo json_encode(['id'=>$id,'status'=>'local_request']);
+$accepted=site_notify_order($order);
+$order['email_status']=$accepted?'accepted_by_mail_server':'failed';
+$order['email_attempted_at']=gmdate('c');
+if(@file_put_contents($directory.'/'.$id.'.json',json_encode($order,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR),LOCK_EX)===false) error_log('VAMPIR order email status write failed: '.$id);
+if(!$accepted) error_log('VAMPIR order email failed: '.$id);
+http_response_code(201);echo json_encode(['id'=>$id,'status'=>'received','email_accepted'=>$accepted]);

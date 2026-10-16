@@ -3,7 +3,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/pricing.php';
 
 function site_languages(): array {
-    $root = __DIR__ . '/dist/locales/';
+    $publicDirectory = is_dir(__DIR__ . '/dist/locales') ? __DIR__ . '/dist' : __DIR__ . '/public_html';
+    $root = $publicDirectory . '/locales/';
     $registry = json_decode(file_get_contents($root . 'languages.json'), true, 512, JSON_THROW_ON_ERROR);
     $base = json_decode(file_get_contents($root . 'en.json'), true, 512, JSON_THROW_ON_ERROR);
     $messages = [];

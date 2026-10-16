@@ -1,3 +1,9 @@
 {
-  "price_usd_per_1000": "8.00"
+  "price_usd_per_1000": "8.00",
+  "order_email": {
+    "enabled": true,
+    "to": "v.heart.breaking@gmail.com",
+    "from": "orders@vampir.top",
+    "transport": "smtp"
+  }
 }

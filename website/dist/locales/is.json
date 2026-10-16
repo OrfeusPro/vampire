@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / EINHVER SPURNINGAR?",
   "faqTitle": "Áður en þú<br><em>byrjar.</em>",
   "footer": "Sjálfstæð verslun. Ekki tengt Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Staðbundin kynning: beiðni þín verður vistuð en ekki send til seljanda. Ekki slá inn lykilorð eða greiðsluupplýsingar.",
+  "formNote": "Ekki slá inn lykilorð, staðfestingarkóða eða greiðsluupplýsingar.",
   "goShop": "Búðu til sérsniðna röð ↗",
   "heroDesc": "Demantar fyrir næsta kafla þinn í VAMPIR. Veldu upphæð þína. Sjá verð í USD. Borgaðu í USDT.",
   "heroNote": "Upphæð þín. Þinn þjónn. Næsta skref þitt.",
@@ -35,7 +35,6 @@
   "howTitle": "Simple steps.<br><em>Clear expectations.</em>",
   "increase": "Hækka upphæð",
   "languageLabel": "Tungumál",
-  "localNotice": "Forskoðun á staðbundinni verslun. Beiðnir eru vistaðar á þessum þjóni. Netgreiðslur og tilkynningar frá símafyrirtæki eru ekki tengdar ennþá.",
   "menuLabel": "Matseðill",
   "navHow": "Hvernig á að kaupa",
   "navShop": "Demantar",
@@ -69,6 +68,7 @@
   "step3": "Sammála áður en þú borgar",
   "step3Desc": "Staðfestu framboð, endanlegt verð og hvernig afhending mun virka.",
   "submit": "Vista beiðni",
-  "success": "Request {id} saved locally. Ekki sent til seljanda. Engin greiðsla var innt af hendi.",
-  "worldTitle": "The night belongs<br><em>to you.</em>"
+  "success": "Beiðni {id} móttekin. Haltu þessu númeri. Engin greiðsla hefur farið fram.",
+  "worldTitle": "The night belongs<br><em>to you.</em>",
+  "notificationWarning": "Beiðni {id} var vistuð en ekki var hægt að senda tölvupósttilkynninguna. Vinsamlegast reyndu aftur síðar."
 }

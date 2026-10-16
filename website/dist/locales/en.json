@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / ANY QUESTIONS?",
   "faqTitle": "Before you<br><em>begin.</em>",
   "footer": "Independent store. Not affiliated with Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Local demo: your request will be saved but not sent to a seller. Do not enter passwords or payment details.",
+  "formNote": "Do not enter passwords, verification codes or payment details.",
   "goShop": "Create a custom order ↗",
   "heroDesc": "Diamonds for your next chapter in VAMPIR. Choose your amount. See the price in USD. Pay in USDT.",
   "heroNote": "Your amount. Your server. Your next move.",
@@ -35,7 +35,6 @@
   "howTitle": "Simple steps.<br><em>Clear expectations.</em>",
   "increase": "Increase amount",
   "languageLabel": "Language",
-  "localNotice": "Local store preview. Requests are saved on this server. Online payments and operator notifications are not connected yet.",
   "menuLabel": "Menu",
   "navHow": "How to buy",
   "navShop": "Diamonds",
@@ -69,6 +68,7 @@
   "step3": "Agree before you pay",
   "step3Desc": "Confirm availability, the final price and how delivery will work.",
   "submit": "Save request",
-  "success": "Request {id} saved locally. Not sent to a seller. No payment was made.",
-  "worldTitle": "The night belongs<br><em>to you.</em>"
+  "success": "Request {id} received. Keep this number. No payment has been made.",
+  "worldTitle": "The night belongs<br><em>to you.</em>",
+  "notificationWarning": "Request {id} was saved, but the email notification could not be sent. Please try again later."
 }

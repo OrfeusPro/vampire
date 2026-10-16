@@ -76,3 +76,5 @@ body:has(dialog[open]){overflow:hidden}
 @media(max-width:700px){.world-banner::after{background-position:77% top}}
 .world-banner::after{background-position:68% 8%}
 @media(max-width:700px){.world-banner::after{background-position:77% 8%}}
+/* Align full-width chrome with the centered site on ultrawide and 4K screens. */
+@media(min-width:1440px){.header,footer{padding-left:max(6%,calc((100% - 1320px)/2 + 60px));padding-right:max(6%,calc((100% - 1320px)/2 + 60px))}.hero-bottom{left:max(6%,calc((100% - 1320px)/2 + 60px));right:max(6%,calc((100% - 1320px)/2 + 60px))}.ribbon{padding-left:max(6%,calc((100% - 1320px)/2));padding-right:max(6%,calc((100% - 1320px)/2))}}

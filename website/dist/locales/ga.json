@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / AON CHEIST?",
   "faqTitle": "Sula <br><em>thosaíonn tú.</em>",
   "footer": "Siopa neamhspleách. Níl sé cleamhnaithe le Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Taispeántas áitiúil: sábhálfar d’iarratas ach ní sheolfar chuig díoltóir é. Ná cuir isteach pasfhocail nó sonraí íocaíochta.",
+  "formNote": "Ná cuir isteach pasfhocail, cóid fíorúcháin ná sonraí íocaíochta.",
   "goShop": "Cruthaigh ordú saincheaptha ↗",
   "heroDesc": "Diamonds don chéad chaibidil eile i VAMPIR. Roghnaigh do mhéid. Féach ar an bpraghas i USD. Íoc i USDT.",
   "heroNote": "Do mhéid. Do fhreastalaí. Do chéad bogadh eile.",
@@ -35,7 +35,6 @@
   "howTitle": "Céimeanna simplí.<br><em>Ionchais soiléire.</em>",
   "increase": "Méadú ar an méid",
   "languageLabel": "Teanga",
-  "localNotice": "Réamhamharc ar an siopa áitiúil. Sábháiltear iarratais ar an bhfreastalaí seo. Níl íocaíochtaí ar líne agus fógraí oibritheora ceangailte go fóill.",
   "menuLabel": "Roghchlár",
   "navHow": "Conas a cheannach",
   "navShop": "Diamaint",
@@ -69,6 +68,7 @@
   "step3": "Aontaigh sula n-íocann tú",
   "step3Desc": "Deimhnigh infhaighteacht, an praghas deiridh agus conas a oibreoidh an seachadadh.",
   "submit": "Sábháil iarratas",
-  "success": "Iarratas {id} sábháilte go háitiúil. Gan a sheoladh chuig an díoltóir. Ní dhearnadh aon íocaíocht.",
-  "worldTitle": "Is leatsa an oíche.</em>"
+  "success": "Fuarthas iarratas {id}. Coinnigh an uimhir seo. Níl aon íocaíocht déanta.",
+  "worldTitle": "Is leatsa an oíche.</em>",
+  "notificationWarning": "Sábháladh iarratas {id}, ach níorbh fhéidir an fógra ríomhphoist a sheoladh. Bain triail eile as ar ball."
 }

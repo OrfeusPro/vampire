@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / VAN KÉRDÉS?",
   "faqTitle": "Mielőtt <br><em>kezdené.</em>",
   "footer": "Független üzlet. Nem áll kapcsolatban a Netmarble-vel.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Helyi bemutató: kérését elmentjük, de nem küldjük el az eladónak. Ne adjon meg jelszavakat vagy fizetési adatokat.",
+  "formNote": "Ne írjon be jelszavakat, ellenőrző kódokat vagy fizetési adatokat.",
   "goShop": "Hozzon létre egyéni rendelést ↗",
   "heroDesc": "Gyémántok a VAMPIR következő fejezetéhez. Válassza ki az összeget. Lásd az árat USD-ben. Fizessen USDT-ban.",
   "heroNote": "Az Ön összege. A szervered. A következő lépésed.",
@@ -35,7 +35,6 @@
   "howTitle": "Egyszerű lépések.<br><em>Egyértelmű elvárások.</em>",
   "increase": "Növelje az összeget",
   "languageLabel": "Nyelv",
-  "localNotice": "Helyi bolt előnézete. A kérések ezen a szerveren vannak elmentve. Az online fizetések és a szolgáltatói értesítések még nincsenek összekapcsolva.",
   "menuLabel": "Menü",
   "navHow": "Hogyan vásároljunk",
   "navShop": "Gyémántok",
@@ -69,6 +68,7 @@
   "step3": "Fizetés előtt állapodjon meg",
   "step3Desc": "Erősítse meg a rendelkezésre állást, a végső árat és a szállítás módját.",
   "submit": "Kérés mentése",
-  "success": "A(z) {id} kérés helyileg mentve. Nem küldték el eladónak. Fizetés nem történt.",
-  "worldTitle": "Az éjszaka a<br><em>tiéd.</em>"
+  "success": "{id}-ös megkeresés érkezett. Tartsa meg ezt a számot. Nem történt fizetés.",
+  "worldTitle": "Az éjszaka a<br><em>tiéd.</em>",
+  "notificationWarning": "A {id}-ös kérést elmentettük, de az e-mail értesítést nem sikerült elküldeni. Kérjük, próbálja újra később."
 }

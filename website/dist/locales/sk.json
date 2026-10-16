@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / NEJAKÉ OTÁZKY?",
   "faqTitle": "Skôr než<br><em>začnete.</em>",
   "footer": "Nezávislý obchod. Nie je pridružený k Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Miestna ukážka: Vaša požiadavka bude uložená, ale nebude odoslaná predajcovi. Nezadávajte heslá ani platobné údaje.",
+  "formNote": "Nezadávajte heslá, overovacie kódy ani platobné údaje.",
   "goShop": "Vytvorte si vlastnú objednávku ↗",
   "heroDesc": "Diamanty pre vašu ďalšiu kapitolu vo VAMPIR. Vyberte si sumu. Pozrite si cenu v USD. Platba v USDT.",
   "heroNote": "Vaša suma. Váš server. Váš ďalší krok.",
@@ -35,7 +35,6 @@
   "howTitle": "Jednoduché kroky.<br><em>Jasné očakávania.</em>",
   "increase": "Zvýšte množstvo",
   "languageLabel": "Jazyk",
-  "localNotice": "Ukážka miestneho obchodu. Požiadavky sú uložené na tomto serveri. Online platby a notifikácie operátorov zatiaľ nie sú prepojené.",
   "menuLabel": "Menu",
   "navHow": "Ako nakupovať",
   "navShop": "Diamanty",
@@ -69,6 +68,7 @@
   "step3": "Pred platbou sa dohodnite",
   "step3Desc": "Potvrďte dostupnosť, konečnú cenu a spôsob doručenia.",
   "submit": "Uložiť žiadosť",
-  "success": "Žiadosť {id} uložená lokálne. Nebolo odoslané predajcovi. Nebola vykonaná žiadna platba.",
-  "worldTitle": "Noc patrí<br><em>vám.</em>"
+  "success": "Žiadosť {id} prijatá. Toto číslo si ponechajte. Nebola vykonaná žiadna platba.",
+  "worldTitle": "Noc patrí<br><em>vám.</em>",
+  "notificationWarning": "Požiadavka {id} bola uložená, ale e-mailové upozornenie nebolo možné odoslať. Skúste to znova neskôr."
 }

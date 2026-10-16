@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / ON KÜSIMUSED?",
   "faqTitle": "Enne <br><em>alustamist.</em>",
   "footer": "Sõltumatu kauplus. Ei ole Netmarble'iga seotud.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Kohalik demo: teie taotlus salvestatakse, kuid seda ei saadeta müüjale. Ärge sisestage paroole ega makseandmeid.",
+  "formNote": "Ärge sisestage paroole, kinnituskoode ega makseandmeid.",
   "goShop": "Loo kohandatud tellimus ↗",
   "heroDesc": "Teemandid teie järgmise VAMPIRi peatüki jaoks. Valige oma summa. Vaata hinda USD-des. Makske USDT-des.",
   "heroNote": "Teie summa. Teie server. Sinu järgmine käik.",
@@ -35,7 +35,6 @@
   "howTitle": "Lihtsad toimingud.<br><em>Selge ootused.</em>",
   "increase": "Suurendage summat",
   "languageLabel": "Keel",
-  "localNotice": "Kohaliku poe eelvaade. Päringud salvestatakse sellesse serverisse. Veebimaksed ja operaatoriteatised pole veel ühendatud.",
   "menuLabel": "Menüü",
   "navHow": "Kuidas osta",
   "navShop": "Teemandid",
@@ -69,6 +68,7 @@
   "step3": "Leppige enne maksmist kokku",
   "step3Desc": "Kinnitage saadavus, lõplik hind ja kohaletoimetamine.",
   "submit": "Salvesta taotlus",
-  "success": "Taotlus {id} salvestati kohapeal. Müüjale ei saadetud. Makse ei tehtud.",
-  "worldTitle": "Öö kuulub<br><em>teile.</em>"
+  "success": "Päring {id} laekus. Hoidke see number alles. Makse pole tehtud.",
+  "worldTitle": "Öö kuulub<br><em>teile.</em>",
+  "notificationWarning": "Päring {id} salvestati, kuid meilimärguannet ei saanud saata. Proovige hiljem uuesti."
 }

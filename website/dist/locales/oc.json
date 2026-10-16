@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / QUALQUE PREGUNTA?",
   "faqTitle": "Abans de<br><em>començar.</em>",
   "footer": "Botiga independenta. Pas afiliat a Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demo locala : vòstra demanda serà enregistrada mas pas mandada a un vendeire. Picatz pas de senhals o de detalhs de pagament.",
+  "formNote": "Picatz pas de senhals, de còdes de verificacion o de detalhs de pagament.",
   "goShop": "Crear una comanda personalizada ↗",
   "heroDesc": "Diamants per ton pròplèu capítol de VAMPIR. Causissètz vòstre montant. Veire lo prètz en USD. Pagar en USDT.",
   "heroNote": "Vòstra quantitat. Vòstre servidor. Vòstre movement seguent.",
@@ -35,7 +35,6 @@
   "howTitle": "Passes simples.<br><em>Espèras claras.</em>",
   "increase": "Aumentar la quantitat",
   "languageLabel": "Lenga",
-  "localNotice": "Apercebut de la botiga locala. Las requèstas son enregistradas sus aqueste servidor. Los pagaments en linha e las notificacions de l'operator son pas encara connectats.",
   "menuLabel": "Menú",
   "navHow": "Cossí crompar",
   "navShop": "Diamants",
@@ -69,6 +68,7 @@
   "step3": "D'acòrdi abans de pagar",
   "step3Desc": "Confirmatz la disponibilitat, lo prètz final e cossí foncionarà la liurason.",
   "submit": "Demanda d'enregistrament",
-  "success": "Demanda {id} enregistrada localament. Pas mandat a un vendeire. Cap de pagament foguèt pas fach.",
-  "worldTitle": "La nuèch vos aparten<br><em>.</em>"
+  "success": "Demanda {id} recebuda. Gardatz aqueste numèro. Cap de pagament es pas estat efectuat.",
+  "worldTitle": "La nuèch vos aparten<br><em>.</em>",
+  "notificationWarning": "La demanda {id} es estada enregistrada, mas la notificacion per corrièl a pas pogut èsser mandada. Ensajatz tornar mai tard."
 }

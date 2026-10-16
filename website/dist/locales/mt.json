@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / XI MISTOQSIJIET?",
   "faqTitle": "Qabel ma<br><em>tibda.</em>",
   "footer": "Maħżen indipendenti. Mhux affiljat ma 'Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Demo lokali: it-talba tiegħek tiġi ssejvjata iżda mhux mibgħuta lil bejjiegħ. Daħħalx passwords jew dettalji tal-ħlas.",
+  "formNote": "Daħħalx passwords, kodiċi ta' verifika jew dettalji tal-ħlas.",
   "goShop": "Oħloq ordni tad-dwana ↗",
   "heroDesc": "Djamanti għall-kapitlu li jmiss tiegħek f'VAMPIR. Agħżel l-ammont tiegħek. Ara l-prezz f'USD. Ħlas f'USDT.",
   "heroNote": "L-ammont tiegħek. Is-server tiegħek. Il-mossa li jmiss tiegħek.",
@@ -35,7 +35,6 @@
   "howTitle": "Passi sempliċi.<br><em>Aspettattivi ċari.</em>",
   "increase": "Żid l-ammont",
   "languageLabel": "Lingwa",
-  "localNotice": "Preview tal-maħżen lokali. It-talbiet jiġu ssejvjati fuq dan is-server. Il-pagamenti onlajn u n-notifiki tal-operaturi għadhom mhumiex konnessi.",
   "menuLabel": "Menu",
   "navHow": "Kif tixtri",
   "navShop": "Djamanti",
@@ -69,6 +68,7 @@
   "step3": "Aqbel qabel ma tħallas",
   "step3Desc": "Ikkonferma d-disponibbiltà, il-prezz finali u kif se taħdem il-kunsinna.",
   "submit": "Ħlief it-talba",
-  "success": "It-talba {id} issejvjata lokalment. Mhux mibgħut lil bejjiegħ. Ma sar l-ebda ħlas.",
-  "worldTitle": "Il-lejl jappartjeni<br><em>lilek.</em>"
+  "success": "Riċevuta talba {id}. Żomm dan in-numru. Ma sar l-ebda ħlas.",
+  "worldTitle": "Il-lejl jappartjeni<br><em>lilek.</em>",
+  "notificationWarning": "It-talba {id} ġiet salvata, iżda n-notifika bl-email ma setgħetx tintbagħat. Jekk jogħġbok erġa' pprova aktar tard."
 }

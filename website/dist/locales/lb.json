@@ -26,7 +26,7 @@
   "faqEyebrow": "03 / KENG FROEN?",
   "faqTitle": "Ier Dir<br><em>ufänkt.</em>",
   "footer": "Onofhängeg Buttek. Net verbonne mat Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
-  "formNote": "Lokal Demo: Är Ufro gëtt gespäichert awer net un e Verkeefer geschéckt. Gitt keng Passwierder oder Bezuelungsdetailer.",
+  "formNote": "Gitt keng Passwierder, Verifikatiounscoden oder Bezuelungsdetailer an.",
   "goShop": "Erstellt eng personaliséiert Bestellung ↗",
   "heroDesc": "Diamanten fir Är nächst Kapitel am VAMPIR. Wielt Äre Betrag. Kuckt de Präis an USD. Bezuelen an USDT.",
   "heroNote": "Äre Betrag. Äre Server. Är nächst Beweegung.",
@@ -35,7 +35,6 @@
   "howTitle": "Einfach Schrëtt.<br><em>Kloer Erwaardungen.</em>",
   "increase": "Erhéijung Betrag",
   "languageLabel": "Sprooch",
-  "localNotice": "Lokal Buttek Virschau. Ufroe ginn op dësem Server gespäichert. Online Bezuelungen an Bedreiwer Notifikatiounen sinn nach net ugeschloss.",
   "menuLabel": "Menu",
   "navHow": "Wéi kafen",
   "navShop": "Diamanten",
@@ -69,6 +68,7 @@
   "step3": "Averstanen ier Dir bezuelt",
   "step3Desc": "Bestätegt Disponibilitéit, den definitiven Präis a wéi d'Liwwerung funktionnéiert.",
   "submit": "Späicheren Ufro",
-  "success": "Ufro {id} lokal gespäichert. Net un e Verkeefer geschéckt. Kee Bezuelung gouf gemaach.",
-  "worldTitle": "D'Nuecht gehéiert<br><em>Dir.</em>"
+  "success": "Ufro {id} kritt. Halt dës Zuel. Kee Bezuelung gouf gemaach.",
+  "worldTitle": "D'Nuecht gehéiert<br><em>Dir.</em>",
+  "notificationWarning": "Ufro {id} gouf gespäichert, awer d'E-Mail Notifikatioun konnt net geschéckt ginn. Probéiert w.e.g. méi spéit nach eng Kéier."
 }
