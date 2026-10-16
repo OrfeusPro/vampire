@@ -23,18 +23,10 @@ final class AppUpdater {
     static void checkOnPhone(Context c)throws Exception{
         DirectoryConfig config=DirectoryConfig.load(c);
         if(config==null||config.account==null)throw new IOException("update_account_required");
-        android.net.ConnectivityManager manager=c.getSystemService(android.net.ConnectivityManager.class);
-        for(android.net.Network network:manager.getAllNetworks()){
-            android.net.NetworkCapabilities caps=manager.getNetworkCapabilities(network);
-            if(caps!=null&&caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI)
-                    &&caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
-                    &&caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED)){
-                // Only authenticated HTTPS through Wi-Fi: no peer, polling,
-                // accessibility permission or automatic access activation.
-                try(ControlAgent agent=new ControlAgent(c,network,config,true)){check(agent);return;}
-            }
-        }
-        throw new IOException("update_wifi_required");
+        android.net.Network network;
+        try{network=PeerDirectory.internetNetwork(c);}catch(IOException unavailable){throw new IOException("update_network_required");}
+        // User-initiated authenticated HTTPS; no peer or background polling.
+        try(ControlAgent agent=new ControlAgent(c,network,config,true)){check(agent);}
     }
     static synchronized void check(ControlAgent agent)throws Exception{
         Context c=agent.context;android.content.SharedPreferences p=c.getSharedPreferences("update",Context.MODE_PRIVATE);

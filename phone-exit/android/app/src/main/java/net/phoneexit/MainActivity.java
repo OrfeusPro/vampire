@@ -27,6 +27,10 @@ public final class MainActivity extends Activity {
     private boolean checkingUpdate;
     private android.app.AlertDialog updateProgress;
     private Button available, stop;
+    private Button vpnChoose,vpnStop;
+    private TextView vpnState;
+    private boolean loadingPhones;
+    private String pendingVpnTarget;
     private PowerMark power;
     private static final int BACKGROUND=Color.rgb(16,21,31), CARD=Color.rgb(25,35,50),
         TEXT=Color.rgb(239,244,250), MUTED=Color.rgb(157,170,188), ACCENT=Color.rgb(98,231,188);
@@ -36,8 +40,11 @@ public final class MainActivity extends Activity {
             boolean enabled=ExitService.enabled(MainActivity.this);
             accessState.setText(enabled?"Автоматический доступ включён":"Доступ выключен");
             accessState.setTextColor(enabled?ACCENT:MUTED);
-            available.setEnabled(!enabled); stop.setEnabled(enabled);
-            available.setAlpha(enabled?0.5f:1f); stop.setAlpha(enabled?1f:0.5f);
+            boolean vpn=ClientVpnService.active||ClientVpnService.requested(MainActivity.this);
+            available.setEnabled(!vpn); stop.setEnabled(enabled);
+            available.setText(enabled?"Переподключить доступ":"Включить автоматический доступ");
+            if(vpnState!=null){vpnState.setText(ClientVpnService.status);vpnChoose.setEnabled(!vpn&&!ClientVpnService.stopping&&!loadingPhones);vpnStop.setEnabled(vpn);vpnChoose.setAlpha(vpnChoose.isEnabled()?1f:0.5f);vpnStop.setAlpha(vpn?1f:0.5f);}
+            available.setAlpha(vpn?0.5f:1f); stop.setAlpha(enabled?1f:0.5f);
             power.active=enabled; power.invalidate();
             if(botState!=null)try{
                 org.json.JSONObject bot=BotStore.status(MainActivity.this);
@@ -56,6 +63,7 @@ public final class MainActivity extends Activity {
     };
     @Override public void onCreate(Bundle saved) {
         super.onCreate(saved);
+        if(saved!=null)pendingVpnTarget=saved.getString("vpnTarget");
         boolean personal=false;
         try { personal=PersonalAccount.asset(this)!=null; } catch(Exception ignored) {}
         ScrollView scroll=new ScrollView(this); scroll.setFillViewport(true);
@@ -102,6 +110,15 @@ public final class MainActivity extends Activity {
         if(personal) {
             code.setVisibility(android.view.View.GONE); connect.setVisibility(android.view.View.GONE);
             available.setText("Включить автоматический доступ");
+            add(connection,label("Приоритет Wi-Fi. Мобильный интернет используется, если Wi-Fi с интернетом недоступен. На мобильной сети расходуется трафик SIM-карты.",13,MUTED),12);
+        }
+        if(personal){
+            LinearLayout vpnCard=column(22);vpnCard.setBackground(surface(CARD,20));add(layout,vpnCard,16);
+            add(vpnCard,label("VPN через другой телефон",18,ACCENT),0);
+            add(vpnCard,label("Подключайтесь по мобильному интернету или Wi-Fi. Выход — через сеть другого личного телефона. Предоставление доступа на этом телефоне будет выключено.",14,MUTED),10);
+            vpnState=label(ClientVpnService.status,15,TEXT);vpnState.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);add(vpnCard,vpnState,12);
+            vpnChoose=action("Выбрать телефон и подключиться",true);add(vpnCard,vpnChoose,16);vpnChoose.setOnClickListener(v->chooseVpnPhone());
+            vpnStop=action("Отключить VPN",false);add(vpnCard,vpnStop,10);vpnStop.setOnClickListener(v->ClientVpnService.stop(this));
         }
         LinearLayout botCard=column(22);botCard.setBackground(surface(CARD,20));add(layout,botCard,16);
         add(botCard,label("Бот на телефоне",18,ACCENT),0);botState=label("Проверка состояния…",15,TEXT);add(botCard,botState,10);
@@ -109,7 +126,7 @@ public final class MainActivity extends Activity {
         LinearLayout details=column(22); details.setBackground(surface(CARD,20)); add(settingsLayout,details,16);
         TextView heading=label("Как это работает",18,TEXT); heading.setTypeface(Typeface.DEFAULT,Typeface.BOLD); details.addView(heading);
         TextView info = label(getString(R.string.intro),14,MUTED); add(details,info,12);
-        if(personal) info.setText("Этот телефон появляется в вашем списке на ПК автоматически. При потере Wi-Fi приложение ждёт сеть и подключается заново.");
+        if(personal) info.setText("Этот телефон появляется в вашем списке на ПК автоматически. Для доступа используются Wi-Fi или мобильный интернет; после потери сети приложение подключается заново.");
         add(details,label("Работает в фоне с уведомлением. Можно свернуть приложение, пока доступ включён.",14,MUTED),14);
         LinearLayout remote=column(22);remote.setBackground(surface(CARD,20));add(settingsLayout,remote,16);
         add(remote,label("API управления своим телефоном",18,TEXT),0);
@@ -135,7 +152,7 @@ public final class MainActivity extends Activity {
         appSettings.setOnClickListener(v->{try{startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:"+getPackageName())));}catch(Exception e){status.setText("Откройте настройки Android → приложения → Phone Exit.");}});
         add(background,label("На vivo и realme дополнительно разрешите фоновую работу и автозапуск, если такие ограничения есть. Разрешения подтверждаются в системных настройках.",14,MUTED),10);
         Button forget=action("Удалить привязку к ПК",false); add(settingsLayout,forget,20);
-        add(layout,label("Wi-Fi телефона  ·  Шифрование WebRTC\nПрямое подключение к твоему ПК",12,MUTED),22);
+        add(layout,label("Интернет телефона  ·  Шифрование WebRTC\nПрямое подключение личных устройств",12,MUTED),22);
         connect.setOnClickListener(v -> {
             try {
                 String raw=code.getText().toString();
@@ -150,14 +167,17 @@ public final class MainActivity extends Activity {
         stop.setOnClickListener(v -> ExitService.stopEnabled(this));
         available.setOnClickListener(v -> {
             try {
+                if(ClientVpnService.active)return;
+                getSharedPreferences("runtime",MODE_PRIVATE).edit().putBoolean("vpnRequested",false).apply();
                 DirectoryConfig config=PersonalAccount.prepare(this,true);
                 if(config==null) { status.setText("Сначала добавьте телефон в приложении ПК и вставьте код привязки"); return; }
-                startForegroundService(new Intent(this,ExitService.class).putExtra("pairing",config.raw));
+                startForegroundService(new Intent(this,ExitService.class).setAction("reconnect").putExtra("pairing",config.raw));
             } catch(Exception e) { status.setText("Не удалось прочитать привязку. Добавьте телефон заново."); }
         });
         forget.setOnClickListener(v -> new android.app.AlertDialog.Builder(this).setTitle("Удалить привязку?")
             .setMessage("Этот телефон перестанет принимать подключения своего ПК. Удалите его также из списка на ПК.")
             .setPositiveButton("Удалить",(dialog,which) -> {
+                ClientVpnService.stop(this);
                 ExitService.stopEnabled(this); DirectoryConfig.forget(this);
                 getSharedPreferences("runtime",MODE_PRIVATE).edit().putBoolean("ignorePersonal",true).apply();
                 status.setText("Привязка удалена");
@@ -169,7 +189,7 @@ public final class MainActivity extends Activity {
             try {
                 boolean first=!getSharedPreferences("runtime",MODE_PRIVATE).contains("enabled");
                 DirectoryConfig config=PersonalAccount.prepare(this,false);
-                if(config!=null&&(first||ExitService.enabled(this))) startForegroundService(new Intent(this,ExitService.class).putExtra("pairing",config.raw));
+                if(config!=null&&!ClientVpnService.active&&!ClientVpnService.requested(this)&&(first||ExitService.enabled(this))) startForegroundService(new Intent(this,ExitService.class).setAction("reconnect").putExtra("pairing",config.raw));
             } catch(Exception e) { status.setText("Не удалось включить автоматический доступ"); }
         } else if(ExitService.enabled(this)) {
             startForegroundService(new Intent(this,ExitService.class));
@@ -178,20 +198,55 @@ public final class MainActivity extends Activity {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},1);
     }
     private int dp(int value) { return Math.round(value*getResources().getDisplayMetrics().density); }
+    private void chooseVpnPhone(){
+        if(android.os.Build.VERSION.SDK_INT<29){new android.app.AlertDialog.Builder(this).setTitle("Требуется Android 10").setMessage("Подключение через другой телефон доступно с Android 10. Предоставление интернета по-прежнему работает с Android 8.").setPositiveButton("OK",null).show();return;}
+        if(loadingPhones||ClientVpnService.active)return;loadingPhones=true;vpnChoose.setEnabled(false);vpnState.setText("Получаю список личных телефонов…");
+        android.content.Context app=getApplicationContext();
+        new Thread(()->{
+            java.util.List<org.json.JSONObject> phones=null;String error=null;
+            try{phones=PeerDirectory.list(PeerDirectory.clientNetwork(app),DirectoryConfig.load(app));}
+            catch(Exception e){error="Не удалось получить список. Проверьте мобильный интернет или Wi-Fi и личную привязку.";}
+            final java.util.List<org.json.JSONObject> result=phones;final String failure=error;
+            handler.post(()->{
+                loadingPhones=false;if(isFinishing()||isDestroyed())return;vpnChoose.setEnabled(!ClientVpnService.active);
+                if(failure!=null){vpnState.setText(failure);new android.app.AlertDialog.Builder(this).setTitle("VPN").setMessage(failure).setPositiveButton("OK",null).show();return;}
+                if(result.isEmpty()){new android.app.AlertDialog.Builder(this).setTitle("Нет доступных телефонов").setMessage("Обновите APK на другом личном телефоне, включите предоставление доступа и Wi-Fi или мобильный интернет. Телефон появится в течение 15–45 секунд.").setPositiveButton("OK",null).show();return;}
+                new android.app.AlertDialog.Builder(this).setTitle("Интернет через телефон").setAdapter(new PhoneChoiceAdapter(this,result),(d,index)->{
+                    org.json.JSONObject phone=result.get(index);
+                    if(phone.optBoolean("busy")){new android.app.AlertDialog.Builder(this).setMessage("Этот телефон занят другим подключением.").setPositiveButton("OK",null).show();return;}
+                    new android.app.AlertDialog.Builder(this).setTitle("Подключиться через "+phone.optString("name")+"?")
+                        .setMessage("Предоставление доступа на этом телефоне остановится. При потере связи интернет будет заблокирован до нажатия «Отключить VPN». Android запросит разрешение; другое VPN-подключение может быть заменено.")
+                        .setPositiveButton("Подключиться",(dialog,which)->{
+                            pendingVpnTarget=phone.optString("id");Intent consent=android.net.VpnService.prepare(this);
+                            if(consent!=null)startActivityForResult(consent,42);else startClientVpn();
+                        }).setNegativeButton("Отмена",null).show();
+                }).setNegativeButton("Отмена",null).show();
+            });
+        },"PhoneExit-Peers").start();
+    }
+    private void startClientVpn(){
+        if(pendingVpnTarget==null)return;
+        startForegroundService(new Intent(this,ClientVpnService.class).putExtra("target",pendingVpnTarget));pendingVpnTarget=null;
+    }
+    @Override protected void onActivityResult(int request,int result,Intent data){
+        super.onActivityResult(request,result,data);
+        if(request==42){if(result==RESULT_OK)startClientVpn();else{pendingVpnTarget=null;vpnState.setText("Подключение отменено");}}
+    }
+    @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);state.putString("vpnTarget",pendingVpnTarget);}
     private ImageButton headerAction(int icon,String description){ImageButton button=new ImageButton(this);button.setImageResource(icon);button.setImageTintList(ColorStateList.valueOf(MUTED));button.setBackground(surface(BACKGROUND,12));button.setPadding(dp(12),dp(12),dp(12),dp(12));button.setContentDescription(description);return button;}
     private void showSettings(boolean value){showingSettings=value;mainScroll.setVisibility(value?View.GONE:View.VISIBLE);settingsScroll.setVisibility(value?View.VISIBLE:View.GONE);settingsButton.setImageTintList(ColorStateList.valueOf(value?ACCENT:MUTED));settingsButton.setContentDescription(value?"Вернуться на главный экран":"Настройки приложения");}
     private void checkUpdateOnPhone(){
         if(checkingUpdate)return;
         checkingUpdate=true;updateButton.setEnabled(false);
         android.app.AlertDialog progress=new android.app.AlertDialog.Builder(this).setTitle("Обновление Phone Exit")
-            .setMessage("Проверяем обновление по Wi-Fi. Если найдена новая версия, она будет загружена.")
+            .setMessage("Если найдена новая версия, она будет загружена через текущее подключение. Может использоваться мобильный трафик.")
             .setNegativeButton("Закрыть",null).show();
         updateProgress=progress;
         android.content.Context context=getApplicationContext();
         new Thread(()->{
             String failure=null;
-            try{AppUpdater.checkOnPhone(context);}catch(Exception e){failure="update_wifi_required".equals(e.getMessage())?
-                "Для проверки обновления подключите телефон к Wi-Fi.":"update_account_required".equals(e.getMessage())?
+            try{AppUpdater.checkOnPhone(context);}catch(Exception e){failure="update_network_required".equals(e.getMessage())?
+                "Для проверки обновления включите Wi-Fi или мобильный интернет.":"update_account_required".equals(e.getMessage())?
                 "Сначала привяжите телефон к своему аккаунту.":"Не удалось проверить или загрузить обновление. Повторите проверку кнопкой.";}
             final String message=failure;
             handler.post(()->{checkingUpdate=false;if(isFinishing()||isDestroyed())return;updateButton.setEnabled(true);progress.dismiss();updateProgress=null;

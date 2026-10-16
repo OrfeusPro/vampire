@@ -1,4 +1,5 @@
 plugins { id 'com.android.application'; id 'com.chaquo.python' }
+dependencyLocking { lockAllConfigurations() }
 android {
     buildFeatures { buildConfig true }
     namespace 'net.phoneexit'
@@ -9,13 +10,14 @@ android {
         manifestPlaceholders.phoneExitTestProcess = (findProperty('phoneExitTestProcess') ?: 'net.phoneexit').toString()
         minSdk 26
         targetSdk 35
-        versionCode 39
-        versionName '0.8.13'
+        versionCode 46
+        versionName '0.9.6'
         // Per-ABI personal APK keeps the upgrade within the 0.7.x downloader's 60 MB bound.
         ndk { abiFilters((findProperty('phoneExitAbi') ?: 'arm64-v8a').toString()) }
     }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
     if (project.hasProperty('personalAssetsDir')) { sourceSets.main.assets.srcDir(project.property('personalAssetsDir')) }
+    sourceSets.main.assets.srcDir(layout.buildDirectory.dir('generated/countryFlags'))
 }
 chaquopy {
     defaultConfig {
@@ -24,6 +26,27 @@ chaquopy {
     }
 }
 dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.json:json:20250517'
+    testImplementation 'org.mockito:mockito-core:5.18.0'
+    implementation files('../../.tools/hev-socks5-tunnel-2.19.0/hev-socks5-tunnel.aar')
     implementation 'io.github.webrtc-sdk:android:150.7871.01'
     implementation 'org.opencv:opencv:4.12.0'
 }
+tasks.register('verifyTunnel') {
+    doLast {
+        def aar = file('../../.tools/hev-socks5-tunnel-2.19.0/hev-socks5-tunnel.aar')
+        if (!aar.exists() || java.security.MessageDigest.getInstance('SHA-256').digest(aar.bytes).encodeHex().toString() != 'fbbf014c1c4c6d1e0922db88542abd9dc726600473bdfdc8039ed157b4ba02b0') {
+            throw new GradleException('Run android/fetch-tunnel.ps1: missing or invalid tunnel AAR')
+        }
+    }
+}
+tasks.named('preBuild').configure { dependsOn 'verifyTunnel' }
+tasks.register('syncCountryFlags', Sync) {
+    from('../../pc/assets/flags') {
+        include '*.png', 'countries-ru.json', 'README.md', 'LICENSE-GRAPHICS'
+        into 'flags'
+    }
+    into layout.buildDirectory.dir('generated/countryFlags')
+}
+tasks.named('preBuild').configure { dependsOn 'syncCountryFlags' }

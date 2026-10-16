@@ -1,5 +1,6 @@
 ﻿$ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Security
+& (Join-Path $PSScriptRoot 'fetch-tunnel.ps1')
 $taskRoot = Split-Path -Parent $PSScriptRoot
 . (Join-Path $taskRoot 'pc/profile.ps1')
 $taskAccountFile = Join-Path (GetPhoneExitProfileDirectory) 'account.bin'

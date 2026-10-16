@@ -1,5 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
+& (Join-Path $PSScriptRoot 'fetch-tunnel.ps1')
 $toolsRoot = Join-Path $projectRoot '.tools'
 $env:JAVA_HOME = (Get-ChildItem (Join-Path $toolsRoot 'jdk') -Directory | Select-Object -First 1).FullName
 $env:GRADLE_USER_HOME = Join-Path $toolsRoot 'gradle-cache'

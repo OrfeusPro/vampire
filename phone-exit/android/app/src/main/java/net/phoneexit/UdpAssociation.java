@@ -37,7 +37,7 @@ final class UdpAssociation implements AutoCloseable {
         if(closed)return;
         if(!ready)try{
             DatagramSocket candidate=new DatagramSocket(null);
-            try{engine.wifi.bindSocket(candidate);candidate.bind(new InetSocketAddress(0));candidate.setSoTimeout(1000);socket=candidate;ready=true;}
+            try{engine.uplink.bind(candidate);candidate.bind(new InetSocketAddress(0));candidate.setSoTimeout(1000);socket=candidate;ready=true;}
             catch(Exception e){candidate.close();throw e;}
             Thread reader=new Thread(this::read,"PhoneExit-UDP");reader.setDaemon(true);reader.start();
         }catch(Exception e){close();return;}
@@ -52,19 +52,19 @@ final class UdpAssociation implements AutoCloseable {
             else if(data[3]==3){int n=b.get()&255;if(n==0||n>253)return;byte[] name=new byte[n];b.get(name);host=new String(name,StandardCharsets.US_ASCII);if(!host.matches("[a-zA-Z0-9._-]+"))return;}
             else return;
             int port=b.getShort()&65535;if(port==0||!b.hasRemaining())return;
-            InetAddress[] ips=engine.wifi.getAllByName(host);if(ips.length==0)return;
+            InetAddress[] ips=engine.uplink.resolve(host);if(ips.length==0)return;
             for(InetAddress ip:ips)if(!PublicAddress.allowed(ip))return;
             long now=System.nanoTime();destinations.entrySet().removeIf(e->now-e.getValue()>TimeUnit.SECONDS.toNanos(60));
             String key=ips[0].getHostAddress()+":"+port;
             if(!destinations.containsKey(key)&&destinations.size()>=32)return;
             destinations.put(key,now);
-            if(!closed)socket.send(new DatagramPacket(data,b.position(),b.remaining(),ips[0],port));
+            engine.uplink.check();if(!closed)socket.send(new DatagramPacket(data,b.position(),b.remaining(),ips[0],port));
         }catch(Exception ignored){}
     }
     private void read(){
         byte[] bytes=new byte[1401];
         while(!closed)try{
-            DatagramPacket packet=new DatagramPacket(bytes,bytes.length);socket.receive(packet);
+            DatagramPacket packet=new DatagramPacket(bytes,bytes.length);socket.receive(packet);engine.uplink.check();
             if(packet.getLength()==0||packet.getLength()>1378)continue;
             Long last=destinations.get(packet.getAddress().getHostAddress()+":"+packet.getPort());
             if(last==null||System.nanoTime()-last>TimeUnit.SECONDS.toNanos(60))continue;

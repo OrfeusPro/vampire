@@ -15,6 +15,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 final class ExitEngine implements AutoCloseable {
     final Network wifi;
+    final ExitNetwork uplink;
     private final Context context;
     private final Pairing pairing;
     private final Consumer<String> status;
@@ -44,15 +45,16 @@ final class ExitEngine implements AutoCloseable {
     final AtomicLong probeBytes=new AtomicLong(),probeFrames=new AtomicLong(),probeCreditWaits=new AtomicLong(),probeBufferWaits=new AtomicLong(),probeWaitNs=new AtomicLong(),probeMaxBuffer=new AtomicLong(),probeSocketBuffer=new AtomicLong();
 
     ExitEngine(Context context,Network wifi,Pairing pairing,Consumer<String> status,Runnable stop) {
-        this.context=context; this.wifi=wifi; this.pairing=pairing; this.status=status; this.stop=stop;
+        this.context=context; this.wifi=wifi; this.uplink=new ExitNetwork(context,wifi); this.pairing=pairing; this.status=status; this.stop=stop;
     }
+    private String networkLabel(){NetworkCapabilities caps=context.getSystemService(ConnectivityManager.class).getNetworkCapabilities(wifi);return caps!=null&&caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)?"мобильный интернет":"Wi-Fi";}
     void start() {
         signals.execute(() -> {
             try {
-                // Also confines the native ICE sockets to the selected Wi-Fi.
+                // Also confines native ICE sockets to the selected physical network.
                 ConnectivityManager cm=context.getSystemService(ConnectivityManager.class);
-                if (!WifiBinding.acquire(context,wifi,this)) {
-                    fail("Android запретил доступ к Wi-Fi. Проверьте активный VPN или фильтр трафика (например, AdGuard).");
+                if (WifiBinding.acquireExitResult(context,wifi,this)!=WifiBinding.Result.ACQUIRED) {
+                    fail("Не удалось привязаться к сети. Проверьте её доступность и активный VPN.");
                     return;
                 }
                 WebRtcRuntime.initialize(context);
@@ -66,7 +68,7 @@ final class ExitEngine implements AutoCloseable {
                     public void onIceConnectionChange(PeerConnection.IceConnectionState s) {
                         if (s==PeerConnection.IceConnectionState.FAILED) fail("Прямая связь не установлена");
                         if (s==PeerConnection.IceConnectionState.DISCONNECTED) later(() -> {
-                            if (!closed && peer.iceConnectionState()==PeerConnection.IceConnectionState.DISCONNECTED) fail("Связь с ПК потеряна");
+                            if (!closed && peer.iceConnectionState()==PeerConnection.IceConnectionState.DISCONNECTED) fail("Связь с устройством потеряна");
                         },10);
                     }
                     public void onIceConnectionReceivingChange(boolean receiving) {}
@@ -79,7 +81,7 @@ final class ExitEngine implements AutoCloseable {
                     public void onDataChannel(DataChannel dc) { attach(dc); }
                 });
                 if (peer==null) throw new Exception("WebRTC недоступен");
-                status.accept("Ожидаю ПК через Wi-Fi");
+                status.accept("Ожидаю устройство через "+networkLabel());
                 signals.scheduleWithFixedDelay(this::poll,0,1,TimeUnit.SECONDS);
                 signals.schedule(() -> { if (!linked) fail("Истекло время сопряжения"); },600,TimeUnit.SECONDS);
                 signals.scheduleWithFixedDelay(() -> {
@@ -91,7 +93,7 @@ final class ExitEngine implements AutoCloseable {
     private void enqueue(Runnable task) { if (!closed) { try { signals.execute(() -> { if(!closed) task.run(); }); } catch(RejectedExecutionException ignored) {} } }
     void later(Runnable task,long seconds) { if(!closed) { try { signals.schedule(() -> { if(!closed) task.run(); },seconds,TimeUnit.SECONDS); } catch(RejectedExecutionException ignored) {} } }
     private JSONObject api(String op,JSONObject message) throws Exception {
-        HttpsURLConnection connection=(HttpsURLConnection)wifi.openConnection(pairing.endpoint);
+        HttpsURLConnection connection=(HttpsURLConnection)uplink.connection(pairing.endpoint);
         connection.setInstanceFollowRedirects(false); connection.setRequestMethod("POST");
         connection.setConnectTimeout(10000); connection.setReadTimeout(10000); connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type","application/json");
@@ -149,7 +151,7 @@ final class ExitEngine implements AutoCloseable {
                     try {
                         byte[] bytes=new byte[buffer.data.remaining()]; buffer.data.get(bytes);
                         JSONObject message=new JSONObject(new String(bytes,StandardCharsets.UTF_8));
-                        if("bye".equals(message.optString("type"))) { fail("ПК отключился"); return; }
+                        if("bye".equals(message.optString("type"))) { fail("Устройство отключилось"); return; }
                         String id=message.optString("id","");
                         if("ping".equals(message.optString("type"))&&id.matches("[0-9]{1,16}")) {
                             lastPcSeen=System.nanoTime(); sendControl(dc,json("type","pong","id",id));
@@ -164,11 +166,11 @@ final class ExitEngine implements AutoCloseable {
                 }
                 public void onStateChange() {
                     if(closed) return;
-                    if(dc.state()==DataChannel.State.OPEN) { lastPcSeen=System.nanoTime(); linked=true; sendHello(dc); status.accept("ПК подключён · TCP и UDP через Wi-Fi"); }
-                    if(dc.state()==DataChannel.State.CLOSED&&!closed) fail("ПК отключился");
+                    if(dc.state()==DataChannel.State.OPEN) { lastPcSeen=System.nanoTime(); linked=true; sendHello(dc); status.accept("Устройство подключено · IPv4 TCP и UDP через "+networkLabel()); }
+                    if(dc.state()==DataChannel.State.CLOSED&&!closed) fail("Устройство отключилось");
                 }
             });
-            if(dc.state()==DataChannel.State.OPEN) { lastPcSeen=System.nanoTime(); linked=true; sendHello(dc); status.accept("ПК подключён · TCP и UDP через Wi-Fi"); }
+            if(dc.state()==DataChannel.State.OPEN) { lastPcSeen=System.nanoTime(); linked=true; sendHello(dc); status.accept("Устройство подключено · IPv4 TCP и UDP через "+networkLabel()); }
         } else if(linked&&dc.label().equals("phone-exit-links-v1")&&extraSignal==null){
             extraSignal=dc;
             observe(dc,new DataChannel.Observer(){
@@ -209,7 +211,7 @@ final class ExitEngine implements AutoCloseable {
         WifiDownloadProbe probe=new WifiDownloadProbe();downloadProbe=probe;
         ScheduledFuture<?> timeout=signals.schedule(probe::close,60,TimeUnit.SECONDS);
         io.execute(()->{
-            WifiDownloadProbe.Result result=probe.run(wifi,upload);timeout.cancel(false);
+            WifiDownloadProbe.Result result=probe.run(uplink,upload);timeout.cancel(false);
             enqueue(()->{if(!closed&&control.state()==DataChannel.State.OPEN)sendControl(control,json("type",upload?"upload-probe":"download-probe","id",id,"bytes",result.bytes,"elapsedMs",result.elapsedMs,"success",result.success));});
         });
     }

@@ -67,13 +67,13 @@ final class TcpFlow implements AutoCloseable {
     }
     private void connect(String host,int port) {
         try {
-            InetAddress[] addresses=engine.wifi.getAllByName(host);
+            InetAddress[] addresses=engine.uplink.resolve(host);
             if(addresses.length==0) throw new IOException("dns");
             for(InetAddress address:addresses) if(!PublicAddress.allowed(address)) { error(2); return; }
             long limit=System.nanoTime()+TimeUnit.SECONDS.toNanos(10);
             for(InetAddress address:addresses) {
                 if(closed) return;
-                Socket candidate=engine.wifi.getSocketFactory().createSocket();
+                Socket candidate=engine.uplink.socket();
                 synchronized(this) { if(closed) { candidate.close(); return; } socket=candidate; }
                 if(receiveBuffer!=0)candidate.setReceiveBufferSize(receiveBuffer);
                 if(flowProbe)engine.probeSocketBuffer.accumulateAndGet(candidate.getReceiveBufferSize(),Math::max);
@@ -82,7 +82,7 @@ final class TcpFlow implements AutoCloseable {
             }
             if(closed) return;
             if(socket==null||!socket.isConnected()||socket.isClosed()) throw new IOException("connect");
-            socket.setTcpNoDelay(true); ready=true;
+            engine.uplink.check(); socket.setTcpNoDelay(true); ready=true;
             if(!ExitEngine.sendControl(dc,ExitEngine.json("type","ready"))) throw new IOException("send");
             engine.io.execute(this::writer); engine.io.execute(this::reader);
         } catch(Exception e) { error(4); }
@@ -93,7 +93,7 @@ final class TcpFlow implements AutoCloseable {
             while(!closed) {
                 byte[] bytes=writes.take();
                 if(bytes.length==0) { socket.shutdownOutput(); finish(); return; }
-                output.write(bytes);
+                engine.uplink.check(); output.write(bytes);
                 synchronized(this) { incoming-=bytes.length; }
                 if(!ExitEngine.sendControl(dc,ExitEngine.json("type","credit","bytes",bytes.length))) throw new IOException("send");
             }
@@ -103,7 +103,7 @@ final class TcpFlow implements AutoCloseable {
         try {
             InputStream input=socket.getInputStream(); byte[] bytes=new byte[frameSize];
             while(!closed) {
-                int n=input.read(bytes);
+                int n=input.read(bytes); engine.uplink.check();
                 if(n==-1) { readEof=true; ExitEngine.sendControl(dc,ExitEngine.json("type","eof")); finish(); return; }
                 synchronized(this) {
                     while(!closed&&(credit<n||dc.bufferedAmount()>sendBuffer)) {

@@ -17,14 +17,14 @@ final class WifiDownloadProbe implements AutoCloseable {
         long bytes,elapsedMs;
         boolean success;
     }
-    Result run(Network wifi,boolean upload) {
+    Result run(ExitNetwork wifi,boolean upload) {
         Result result=new Result();long start=System.nanoTime();
         try {
             URL url=new URL(upload?"https://speed.cloudflare.com/__up":"https://speed.cloudflare.com/__down?bytes=5000000");
-            InetAddress[] addresses=wifi.getAllByName(url.getHost());
+            InetAddress[] addresses=wifi.resolve(url.getHost());
             if(addresses.length==0)throw new Exception("dns");
             for(InetAddress address:addresses)if(!PublicAddress.allowed(address))throw new Exception("destination");
-            HttpsURLConnection candidate=(HttpsURLConnection)wifi.openConnection(url);
+            HttpsURLConnection candidate=(HttpsURLConnection)wifi.connection(url);
             synchronized(this){if(closed){candidate.disconnect();return result;}connection=candidate;}
             candidate.setInstanceFollowRedirects(false);candidate.setConnectTimeout(10000);candidate.setReadTimeout(10000);
             candidate.setRequestProperty("Accept-Encoding","identity");candidate.setRequestProperty("Cache-Control","no-store");

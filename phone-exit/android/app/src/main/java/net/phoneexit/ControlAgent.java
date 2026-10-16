@@ -50,9 +50,9 @@ final class ControlAgent implements AutoCloseable {
             .put("androidSdk",Build.VERSION.SDK_INT).put("processUid",android.os.Process.myUid()).put("processRoot",android.os.Process.myUid()==0).put("rootGranted",JSONObject.NULL).put("suPresent",su).put("rootProbe","passive_only");
     }
     boolean directConnected(){ControlPeer p=direct;return p!=null&&p.open();}
-    boolean active(){NetworkCapabilities caps=context.getSystemService(ConnectivityManager.class).getNetworkCapabilities(wifi);return !closed&&(updateOnly||ExitService.enabled(context))&&caps!=null&&caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)&&caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);}
+    boolean active(){NetworkCapabilities caps=context.getSystemService(ConnectivityManager.class).getNetworkCapabilities(wifi);return !closed&&(updateOnly||ExitService.enabled(context))&&PeerDirectory.clientUplink(caps);}
     HttpsURLConnection connection(JSONObject body)throws Exception{
-        HttpsURLConnection c=(HttpsURLConnection)wifi.openConnection(new URL(ENDPOINT));c.setInstanceFollowRedirects(false);c.setRequestMethod("POST");c.setDoOutput(true);c.setConnectTimeout(8000);c.setReadTimeout(10000);c.setRequestProperty("Content-Type","application/json");
+        HttpsURLConnection c=(HttpsURLConnection)new ExitNetwork(context,wifi).connection(new URL(ENDPOINT));c.setInstanceFollowRedirects(false);c.setRequestMethod("POST");c.setDoOutput(true);c.setConnectTimeout(8000);c.setReadTimeout(10000);c.setRequestProperty("Content-Type","application/json");
         body.put("version",1).put("token",config.account.catalogKey());byte[] bytes=body.toString().getBytes(StandardCharsets.UTF_8);c.setFixedLengthStreamingMode(bytes.length);try(OutputStream out=c.getOutputStream()){out.write(bytes);}return c;
     }
     JSONObject api(JSONObject body)throws Exception{HttpsURLConnection c=connection(body);try{if(c.getResponseCode()!=200)throw new IOException("control_http");return new JSONObject(read(c.getInputStream(),3000000));}finally{c.disconnect();}}

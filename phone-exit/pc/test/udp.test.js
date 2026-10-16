@@ -25,10 +25,21 @@ test('VPN modes preserve transport paths, tunnel DNS, and never use a direct fal
   const live=vpnConfig({mode:'apps',applications:['C:\\Game\\game.exe'],applicationRuleFile:'C:\\PhoneExit\\applications-rules.json'});
   assert.equal(live.route.rule_set[0].type,'local');assert.equal(live.route.rule_set[0].format,'source');
   assert.ok(live.route.rules.some(r=>r.rule_set?.includes('selected-applications')&&r.outbound==='phone'));
-  assert.equal(live.dns.rules[0].server,'direct-dns');assert.ok(live.dns.rules[0].domain.includes('demochko.com'));
-  assert.equal(full.dns.rules[0].server,'direct-dns');assert.equal(full.dns.final,'phone-dns');
+  assert.equal(live.dns.rules[1].server,'direct-dns');assert.ok(live.dns.rules[1].domain.includes('demochko.com'));
+  assert.equal(full.dns.rules[1].server,'direct-dns');assert.equal(full.dns.final,'phone-dns');
   assert.ok(full.route.rules[0].process_path_regex[0].startsWith('(?i)^'));
   assert.throws(()=>vpnConfig({mode:'apps',applications:['C:\\Game\\game.exe'],applicationRuleFile:'relative.json'}));
+});
+test('IPv4-only VPN suppresses AAAA and rejects IPv6 only for tunneled processes',()=>{
+  for(const config of [vpnConfig(),vpnConfig({mode:'apps',applications:['C:\\Game\\game.exe']}),vpnConfig({mode:'apps',applications:['C:\\Game\\game.exe'],applicationRuleFile:'C:\\PhoneExit\\apps.json'})]){
+    assert.deepEqual(config.dns.rules[0],{query_type:['AAAA'],action:'predefined',rcode:'NOERROR',answer:[]});
+    const reject=config.route.rules.find(r=>r.ip_version===6&&r.action==='reject');assert.ok(reject);
+    const fake=config.dns.servers.find(s=>s.type==='fakeip');if(fake)assert.equal(fake.inet6_range,undefined);
+    if(config.route.final==='direct'){
+      assert.ok(reject.process_path_regex||reject.rule_set,'unselected IPv6 keeps its ordinary route');
+      assert.ok(config.route.rules.indexOf(reject)<config.route.rules.findIndex(r=>r.outbound==='phone'));
+    }
+  }
 });
 for(const Transport of [RTCPeerConnection,NativePeer])test(`real WebRTC UDP (${Transport===NativePeer?'native':'werift'}): SOCKS association, boundaries, source pinning, lifecycle`, {timeout:30000},async t=>{
   const a=new Transport({iceServers:[]}),b=new RTCPeerConnection({iceServers:[]});

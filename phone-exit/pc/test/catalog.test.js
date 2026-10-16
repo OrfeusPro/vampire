@@ -17,8 +17,8 @@ function seal(account,value){
   const data=Buffer.concat([cipher.update(JSON.stringify(value)),cipher.final(),cipher.getAuthTag()]);
   return {ephemeral:pair.publicKey.export({type:'spki',format:'der'}).toString('base64'),iv:iv.toString('base64'),data:data.toString('base64')};
 }
-function open(token,box){
-  const label=Buffer.from('phone-exit-connect-v1'),key=createHash('sha256').update(label).update(Buffer.from(token,'hex')).digest();
+function open(token,box,labelText='phone-exit-connect-v1'){
+  const label=Buffer.from(labelText),key=createHash('sha256').update(label).update(Buffer.from(token,'hex')).digest();
   const data=Buffer.from(box.data,'base64'),cipher=createDecipheriv('aes-256-gcm',key,Buffer.from(box.iv,'base64'));
   cipher.setAAD(label);cipher.setAuthTag(data.subarray(-16));return JSON.parse(Buffer.concat([cipher.update(data.subarray(0,-16)),cipher.final()]).toString());
 }
@@ -34,9 +34,18 @@ test('real PHP catalog: 40 automatic phones, bounded latest state, encrypted con
   const api=async(op,extra={},key=token)=>{const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:1,token:key,op,...extra})});assert.equal(response.status,200);return response.json();};
   const phones=Array.from({length:40},(_,i)=>({id:randomBytes(16).toString('hex'),token:randomBytes(32).toString('hex'),name:'Test device '+i,at:now,country:i%2?'UA':'PL',busy:false,signal:PRODUCT_SIGNAL}));
   const boxes=phones.map(phone=>seal(account,phone));
+  // Mobile discovery extends the opaque box without changing PHP or the PC ciphertext.
+  const peerLabel=Buffer.from('phone-exit-peer-directory-v1');
+  const peerKey=createHash('sha256').update(peerLabel).update(Buffer.from(account.feedToken,'hex')).digest();
+  const peerIv=randomBytes(12),peerCipher=createCipheriv('aes-256-gcm',peerKey,peerIv);peerCipher.setAAD(peerLabel);
+  const peerValue={...phones[0],role:'exit'};
+  boxes[0].peer={iv:peerIv.toString('base64'),data:Buffer.concat([peerCipher.update(JSON.stringify(peerValue)),peerCipher.final(),peerCipher.getAuthTag()]).toString('base64')};
   for(let i=0;i<phones.length;i++)await api('pulse',{id:phones[i].id,box:boxes[i]});
   for(let i=0;i<110;i++)await api('pulse',{id:phones[0].id,box:boxes[0]});
   assert.equal((await api('list')).devices.length,40);
+  const peerBox=(await api('list')).devices.find(d=>d.id===phones[0].id).box.peer;
+  assert.deepEqual(open(account.feedToken,peerBox,'phone-exit-peer-directory-v1'),peerValue);
+  assert.throws(()=>open(createAccount().feedToken,peerBox,'phone-exit-peer-directory-v1'));
   assert.equal((await api('list',{},catalogKey(createAccount().feedToken))).devices.length,0);
   let clock=now;const events=[];
   const request=async(url,options)=>url===CATALOG?fetch('http://127.0.0.1:'+port+'/directory.php',options):{ok:true,text:async()=>'{"messages":[]}'};

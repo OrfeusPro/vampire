@@ -9,16 +9,18 @@ export function vpnConfig({mode='all',applications=[],applicationRuleFile,physic
   const bootstrapDns={domain:['demochko.com','stun.l.google.com','stun.cloudflare.com'],action:'route',server:'direct-dns'};
   if(physicalInterface!==undefined&&(typeof physicalInterface!=='string'||!physicalInterface.length||physicalInterface.length>256))throw Error('Invalid physical interface');
   const directDns={type:'https',tag:'direct-dns',server:'1.1.1.1',tls:{enabled:true,server_name:'cloudflare-dns.com'},...(physicalInterface?{detour:'direct'}:{})};
+  const noIpv6Dns={query_type:['AAAA'],action:'predefined',rcode:'NOERROR',answer:[]};
+  const applicationMatch=applicationRuleFile?{rule_set:['selected-applications']}:{process_path_regex:applications.map(p=>'(?i)^'+p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$')};
   const rules=[
     {process_path_regex:['(?i)^'+nodePath.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$'],action:'route',outbound:'direct'},
     {port:53,action:'hijack-dns'},
-    ...(mode==='all'?[{network:'icmp',action:'reject'},{ip_is_private:true,action:'reject'}]:[]),
+    ...(mode==='all'?[{ip_version:6,action:'reject'},{network:'icmp',action:'reject'},{ip_is_private:true,action:'reject'}]:[]),
   ];
   if(applicationRuleFile&&(!path.win32.isAbsolute(applicationRuleFile)||!applicationRuleFile.endsWith('.json')))throw Error('Invalid rule file');
-  if(mode==='apps')rules.push({...(applicationRuleFile?{rule_set:['selected-applications']}:{process_path_regex:applications.map(p=>'(?i)^'+p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$')}),action:'route',outbound:'phone'});
+  if(mode==='apps')rules.push({...applicationMatch,ip_version:6,action:'reject'},{...applicationMatch,action:'route',outbound:'phone'});
   return {
     log:{disabled:true},
-    dns:mode==='all'?{servers:[{type:'https',tag:'phone-dns',server:'1.1.1.1',tls:{enabled:true,server_name:'cloudflare-dns.com'},detour:'phone'},directDns],rules:[bootstrapDns],final:'phone-dns'}:{servers:[directDns,{type:'fakeip',tag:'app-names',inet4_range:'198.18.0.0/15',inet6_range:'fc00::/18'}],rules:[bootstrapDns,{query_type:['A','AAAA'],action:'route',server:'app-names'}],final:'direct-dns'},
+    dns:mode==='all'?{strategy:'ipv4_only',servers:[{type:'https',tag:'phone-dns',server:'1.1.1.1',tls:{enabled:true,server_name:'cloudflare-dns.com'},detour:'phone'},directDns],rules:[noIpv6Dns,bootstrapDns],final:'phone-dns'}:{servers:[directDns,{type:'fakeip',tag:'app-names',inet4_range:'198.18.0.0/15'}],rules:[noIpv6Dns,bootstrapDns,{query_type:['A'],action:'route',server:'app-names'}],final:'direct-dns'},
     inbounds:[{type:'tun',tag:'vpn',interface_name:'PhoneExit',address:['172.28.251.1/30','fd91:ee51:1701::1/126'],mtu:1280,auto_route:true,strict_route:true,stack:'gvisor',route_exclude_address:addresses}],
     outbounds:[{type:'socks',tag:'phone',server:'127.0.0.1',server_port:1080,version:'5',bind_interface:'Loopback Pseudo-Interface 1',inet4_bind_address:'127.0.0.1'},{type:'direct',tag:'direct',...(physicalInterface?{bind_interface:physicalInterface}:{})}],
     route:{auto_detect_interface:true,...(mode==='apps'&&applicationRuleFile?{rule_set:[{type:'local',tag:'selected-applications',format:'source',path:applicationRuleFile}]}:{}),rules,final:mode==='all'?'phone':'direct',default_domain_resolver:mode==='all'?'phone-dns':'direct-dns'}

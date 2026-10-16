@@ -2,6 +2,7 @@ package net.phoneexit;
 import java.net.*;
 
 final class PublicAddress {
+    static InetAddress[] ipv4Addresses(InetAddress[] addresses){return java.util.Arrays.stream(addresses).filter(a->a instanceof Inet4Address).toArray(InetAddress[]::new);}
     static boolean allowed(InetAddress address) {
         if(address.isAnyLocalAddress()||address.isLoopbackAddress()||address.isLinkLocalAddress()||address.isSiteLocalAddress()||address.isMulticastAddress()) return false;
         byte[] b=address.getAddress();

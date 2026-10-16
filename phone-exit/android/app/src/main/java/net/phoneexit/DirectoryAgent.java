@@ -32,24 +32,29 @@ final class DirectoryAgent implements AutoCloseable {
     DirectoryAgent(Context context,Network wifi,DirectoryConfig config,Runnable retryWifi) { this.context=context; this.wifi=wifi; this.config=config; this.retryWifi=retryWifi; }
     void start() {
         loop.execute(() -> {
-            if(!WifiBinding.acquire(context,wifi,this)) {
+            WifiBinding.Result binding=WifiBinding.acquireExitResult(context,wifi,this);
+            if(binding!=WifiBinding.Result.ACQUIRED) {
                 closed=true; loop.shutdown();
-                ExitService.update("Ошибка: Android запретил Wi-Fi. Проверьте активный VPN или AdGuard.");
+                ExitService.update(binding==WifiBinding.Result.PREVIOUS_NETWORK
+                    ?"Ожидаю завершения прежнего соединения · повторю подключение сети"
+                    :"Не удалось привязаться к сети · проверьте её доступность и другой VPN; повторю подключение");
                 retryWifi.run(); return;
             }
-            country=country(); synchronized(this){if(!closed) { waiting(); control=new ControlAgent(context,wifi,config);control.start(); }}
+            ExitService.update("Проверяю доступ в интернет · "+networkLabel());
+            country=country(); synchronized(this){if(!closed) { control=new ControlAgent(context,wifi,config);control.start(); }}
         });
         try { loop.scheduleWithFixedDelay(this::tick,0,3,TimeUnit.SECONDS); } catch(RejectedExecutionException ignored) {}
     }
     private void waiting() {
         if(control!=null&&control.directConnected())ExitService.update("Прямое управление подключено"+(failures>0?" · каталог временно недоступен":""));
         else if(failures>0)ExitService.update("Каталог недоступен · ожидаю восстановления");
-        else ExitService.update("Доступен для своего ПК · "+config.name+" · "+(country.isEmpty()?"страна неизвестна":country));
+        else ExitService.update("Доступен для личных устройств · "+config.name+" · "+(country.isEmpty()?"страна неизвестна":country)+" · "+networkLabel());
     }
+    private String networkLabel(){android.net.NetworkCapabilities caps=context.getSystemService(android.net.ConnectivityManager.class).getNetworkCapabilities(wifi);return (caps!=null&&caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_CELLULAR)?"мобильная сеть":"Wi-Fi")+(WifiBinding.compatible(wifi)?" · совместимый режим":"");}
     private String country() {
         HttpsURLConnection connection=null;
         try {
-            connection=(HttpsURLConnection)wifi.openConnection(new URL("https://www.cloudflare.com/cdn-cgi/trace"));
+            connection=(HttpsURLConnection)new ExitNetwork(context,wifi).connection(new URL("https://www.cloudflare.com/cdn-cgi/trace"));
             connection.setInstanceFollowRedirects(false); connection.setConnectTimeout(8000); connection.setReadTimeout(8000);
             if(connection.getResponseCode()!=200) return "";
             String body=read(connection,8192);
@@ -74,7 +79,7 @@ final class DirectoryAgent implements AutoCloseable {
         return hex.toString();
     }
     private JSONObject api(String key,String op,JSONObject message) throws Exception {
-        HttpsURLConnection connection=(HttpsURLConnection)wifi.openConnection(config.pairing.endpoint);
+        HttpsURLConnection connection=(HttpsURLConnection)new ExitNetwork(context,wifi).connection(config.pairing.endpoint);
         connection.setInstanceFollowRedirects(false); connection.setRequestMethod("POST");
         connection.setConnectTimeout(8000); connection.setReadTimeout(8000); connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type","application/json");
@@ -93,7 +98,7 @@ final class DirectoryAgent implements AutoCloseable {
         if(System.nanoTime()<nextAttempt) return;
         long now=System.currentTimeMillis(), bucket=now/300000;
         try {
-            if(config.account!=null){catalogTick(now);boolean recovered=failures>0;failures=0;nextAttempt=0;if(recovered&&engine==null)waiting();return;}
+            if(config.account!=null){boolean first=lastPresence==0;catalogTick(now);boolean recovered=failures>0;failures=0;nextAttempt=0;if((first||recovered)&&engine==null)waiting();return;}
             String current=roomKey(config.token,bucket), previous=roomKey(config.token,bucket-1);
             if(now-lastPresence>=15000) {
                 api(current,"send",ExitEngine.json("type","candidate","value",ExitEngine.json("directory",1,"type","presence","at",now,"country",country,"busy",engine!=null)));
@@ -118,7 +123,7 @@ final class DirectoryAgent implements AutoCloseable {
                     synchronized(this) {
                         if(closed) return;
                         engine=new ExitEngine(context,wifi,pairing,ExitService::update,this::finished);
-                        ExitService.update("Подключаю свой ПК · "+country); engine.start(); lastPresence=0;
+                        ExitService.update("Подключаю личное устройство · "+country); engine.start(); lastPresence=0;
                     }
                 }
             }
@@ -137,8 +142,11 @@ final class DirectoryAgent implements AutoCloseable {
         registration.put("signal","https://demochko.com/phone-exit/signal.php");
         registration.put("versionName",BuildConfig.VERSION_NAME).put("versionCode",BuildConfig.VERSION_CODE);
         registration.put("control",ControlAgent.capabilities(context)).put("update",AppUpdater.state(context));
-        JSONObject body=ExitEngine.json("version",1,"token",config.account.catalogKey(),"op","pulse","id",config.id,"box",config.account.seal(registration));
-        HttpsURLConnection connection=(HttpsURLConnection)wifi.openConnection(new URL("https://demochko.com/phone-exit/directory.php"));
+        JSONObject boxForPc=config.account.seal(registration);
+        JSONObject peer=new JSONObject(registration.toString());peer.remove("control");peer.remove("update");peer.put("role","exit");
+        boxForPc.put("peer",PersonalAccount.secretBox(config.account.feedToken,"phone-exit-peer-directory-v1",peer,null));
+        JSONObject body=ExitEngine.json("version",1,"token",config.account.catalogKey(),"op","pulse","id",config.id,"box",boxForPc);
+        HttpsURLConnection connection=(HttpsURLConnection)new ExitNetwork(context,wifi).connection(new URL("https://demochko.com/phone-exit/directory.php"));
         connection.setInstanceFollowRedirects(false);connection.setRequestMethod("POST");connection.setConnectTimeout(8000);connection.setReadTimeout(8000);connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type","application/json");byte[] encoded=body.toString().getBytes(StandardCharsets.UTF_8);connection.setFixedLengthStreamingMode(encoded.length);
         JSONObject response;
@@ -151,7 +159,7 @@ final class DirectoryAgent implements AutoCloseable {
         if(!request.matches("[0-9a-f]{32}")||Math.abs(at-now)>45000||requests.contains(request))return;
         requests.add(request);while(requests.size()>64)requests.remove(requests.iterator().next());if(engine!=null)return;
         Pairing pairing=Pairing.parse(value.getJSONObject("pairing").toString());
-        synchronized(this){if(closed)return;engine=new ExitEngine(context,wifi,pairing,ExitService::update,this::finished);ExitService.update("Подключаю свой ПК · "+country);engine.start();lastPresence=0;}
+        synchronized(this){if(closed)return;engine=new ExitEngine(context,wifi,pairing,ExitService::update,this::finished);ExitService.update("Подключаю личное устройство · "+country);engine.start();lastPresence=0;}
     }
     private void finished() {
         if(closed) return;
