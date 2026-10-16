@@ -7,7 +7,7 @@
   "artCaption": "PËR KAPITULLI TUAJ TJETËR",
   "catalogDesc": "Shkruani çdo sasi diamanti. Shikoni menjëherë çmimin tuaj në USD dhe vazhdoni me pagesën USDT.",
   "catalogEyebrow": "01 / DYQANI",
-  "catalogTitle": "Pikërisht diamantet<br><em>që ju duhen.</em>",
+  "catalogTitle": "Bli VAMPIR diamante.<br><em>Zgjidh shumën tënde.</em>",
   "choose": "Ndërtoni porosinë tuaj",
   "closeLabel": "Mbylle",
   "commentLabel": "Koment (opsionale)",
@@ -28,7 +28,7 @@
   "footer": "Dyqan i pavarur. Nuk është e lidhur me Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Mos vendosni fjalëkalime, kode verifikimi ose detaje të pagesës.",
   "goShop": "Krijoni një porosi me porosi ↗",
-  "heroDesc": "Diamante për kapitullin tuaj të ardhshëm në VAMPIR. Zgjidhni shumën tuaj. Shihni çmimin në USD. Paguani në USDT.",
+  "heroDesc": "Blini diamante për VAMPIR nga 1000 diamante. Llogaritni çmimin në USD, zgjidhni serverin tuaj dhe bëni një kërkesë me pagesën USDT.",
   "heroNote": "Shuma juaj. Serveri juaj. Lëvizja juaj e radhës.",
   "heroTitle": "Nata<br><em>është e jotja.</em>",
   "howEyebrow": "02 / SI FUNKSIONON",
@@ -44,7 +44,7 @@
   "orderDesc": "Kontrolloni totalin tuaj në USD dhe lini kontaktin tuaj. Pagesa është në USDT.",
   "orderEyebrow": "Porosia JUAJ PERSONALE",
   "orderTitle": "Le të marrim detajet.",
-  "pageTitle": "VAMPIR.TOP - Diamante VAMPIR",
+  "pageTitle": "Bli diamante VAMPIR | Pagesë me USDT — VAMPIR.TOP",
   "q1": "A është ky një dyqan zyrtar Netmarble?",
   "q2": "Sa kushtojnë diamantet?",
   "q3": "Si funksionon dorëzimi?",
@@ -70,5 +70,10 @@
   "submit": "Ruaj kërkesën",
   "success": "Kërkesa {id} e marrë. Mbajeni këtë numër. Asnjë pagesë nuk është bërë.",
   "worldTitle": "Nata të përket<br><em>ty.</em>",
-  "notificationWarning": "Kërkesa {id} u ruajt, por njoftimi me email nuk mund të dërgohej. Ju lutemi provoni përsëri më vonë."
+  "notificationWarning": "Kërkesa {id} u ruajt, por njoftimi me email nuk mund të dërgohej. Ju lutemi provoni përsëri më vonë.",
+  "metaDescription": "Blini diamante për VAMPIR: minimumi 1000, me çmim {pricePer1000} USD për 1000. Llogaritni totalin tuaj dhe kërkoni një porosi me pagesë USDT.",
+  "heroEyebrow": "BLENI VAMPIR DIAMONTË",
+  "seoHeading": "VAMPIR diamante: çmimi, serveri dhe pagesa",
+  "seoIntro": "Porosit diamante për MMORPG VAMPIR në sasinë që ju nevojitet, duke filluar nga 1000. Çmimi është {pricePer1000} USD për 1000 diamante. Përdorni kalkulatorin për të parë totalin përpara se të paraqisni kërkesën tuaj. Çmimet tregohen në USD; pagesa është në USDT.",
+  "seoDetails": "Zgjidhni rajonin tuaj të lojës, shkruani emrin e saktë të serverit dhe lini një kontakt Discord, Telegram ose email. Disponueshmëria, mënyra e dorëzimit, rrjeti i transferimit dhe shuma përfundimtare USDT bien dakord para pagesës. Asnjë fjalëkalim i llogarisë nuk kërkohet. VAMPIR.TOP është një dyqan i pavarur, jo një shërbim zyrtar Netmarble."
 }

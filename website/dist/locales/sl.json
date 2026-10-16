@@ -7,7 +7,7 @@
   "artCaption": "ZA VAŠE NASLEDNJE POGLAVJE",
   "catalogDesc": "Vnesite poljubno količino diamanta. Takoj si oglejte svojo ceno v USD in nadaljujte s plačilom USDT.",
   "catalogEyebrow": "01 / TRGOVINA",
-  "catalogTitle": "Točno diamanti,<br><em>ki jih potrebujete.</em>",
+  "catalogTitle": "Kupite VAMPIR diamantov.<br><em>Izberite količino.</em>",
   "choose": "Zgradite svoje naročilo",
   "closeLabel": "Zapri",
   "commentLabel": "Komentar (izbirno)",
@@ -28,7 +28,7 @@
   "footer": "Samostojna trgovina. Ni povezan z Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Ne vnašajte gesel, potrditvenih kod ali podatkov o plačilu.",
   "goShop": "Ustvari naročilo po meri ↗",
-  "heroDesc": "Diamanti za vaše naslednje poglavje v VAMPIR-ju. Izberite svoj znesek. Oglejte si ceno v USD. Plačajte v USDT.",
+  "heroDesc": "Kupite diamante za VAMPIR od 1000 diamantov. Izračunajte ceno v USD, izberite svoj strežnik in oddajte zahtevo s plačilom USDT.",
   "heroNote": "Vaš znesek. Vaš strežnik. Vaša naslednja poteza.",
   "heroTitle": "Noč<br><em>je vaša.</em>",
   "howEyebrow": "02 / KAKO DELUJE",
@@ -44,7 +44,7 @@
   "orderDesc": "Preverite skupno vrednost v USD in pustite svoj kontakt. Plačilo je v USDT.",
   "orderEyebrow": "VAŠE OSEBNO NAROČILO",
   "orderTitle": "Poglejmo si podrobnosti.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamanti",
+  "pageTitle": "Kupite diamante VAMPIR | Plačilo z USDT — VAMPIR.TOP",
   "q1": "Ali je to uradna trgovina Netmarble?",
   "q2": "Koliko stanejo diamanti?",
   "q3": "Kako poteka dostava?",
@@ -70,5 +70,10 @@
   "submit": "Shrani zahtevo",
   "success": "Zahteva {id} prejeta. Obdrži to številko. Nobeno plačilo ni bilo izvedeno.",
   "worldTitle": "Noč pripada<br><em>tebi.</em>",
-  "notificationWarning": "Zahteva {id} je bila shranjena, vendar e-poštnega obvestila ni bilo mogoče poslati. Poskusite znova pozneje."
+  "notificationWarning": "Zahteva {id} je bila shranjena, vendar e-poštnega obvestila ni bilo mogoče poslati. Poskusite znova pozneje.",
+  "metaDescription": "Kupite diamante za VAMPIR: najmanj 1000 po ceni {pricePer1000} USD za 1000. Izračunajte skupno in zahtevajte naročilo s plačilom USDT.",
+  "heroEyebrow": "KUPI VAMPIR DIAMANT",
+  "seoHeading": "VAMPIR diamanti: cena, strežnik in plačilo",
+  "seoIntro": "Naročite diamante za MMORPG VAMPIR v potrebni količini, od 1000 naprej. Cena je {pricePer1000} USD za 1000 diamantov. Pred oddajo zahteve uporabite kalkulator, da si ogledate skupno. Cene so prikazane v USD; plačilo je na USDT.",
+  "seoDetails": "Izberite svojo regijo igre, vnesite točno ime strežnika in pustite Discord, Telegram ali e-poštni kontakt. Dobavljivost, način dostave, prenosna mreža in končni USDT znesek se dogovorijo pred plačilom. Geslo za račun ni potrebno. VAMPIR.TOP je neodvisna trgovina, ne uradna Netmarble storitev."
 }

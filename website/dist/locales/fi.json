@@ -7,7 +7,7 @@
   "artCaption": "SEURAAVAA LUKUASI",
   "catalogDesc": "Syötä mikä tahansa timanttimäärä. Näet hintasi USD välittömästi ja jatka USDT-maksulla.",
   "catalogEyebrow": "01 / KAUPPA",
-  "catalogTitle": "Juuri ne timantit,<br><em>jotka tarvitset.</em>",
+  "catalogTitle": "Osta VAMPIR timanttia.<br><em>Valitse summa.</em>",
   "choose": "Rakenna tilauksesi",
   "closeLabel": "Sulje",
   "commentLabel": "Kommentoi (valinnainen)",
@@ -28,7 +28,7 @@
   "footer": "Itsenäinen kauppa. Ei sidoksissa Netmarbleen.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Älä syötä salasanoja, vahvistuskoodeja tai maksutietoja.",
   "goShop": "Luo mukautettu tilaus ↗",
-  "heroDesc": "Timantteja seuraavaan VAMPIR-lukuusi. Valitse summasi. Katso hinta USD. Maksa USDT.",
+  "heroDesc": "Osta timantteja hintaan VAMPIR 1 000 timantista. Laske hinta USD, valitse palvelimesi ja jätä pyyntö USDT maksulla.",
   "heroNote": "Sinun summasi. Palvelimesi. Seuraava siirtosi.",
   "heroTitle": "Yö<br><em>on sinun.</em>",
   "howEyebrow": "02 / MITEN SE TOIMII",
@@ -44,7 +44,7 @@
   "orderDesc": "Tarkista USD-summasi ja jätä yhteystietosi. Maksu on USDT.",
   "orderEyebrow": "HENKILÖKOHTAISET TILAUKSET",
   "orderTitle": "Otetaan yksityiskohdat.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Timantit",
+  "pageTitle": "Osta VAMPIR-timantteja | Maksa USDT:llä — VAMPIR.TOP",
   "q1": "Onko tämä virallinen Netmarble-myymälä?",
   "q2": "Paljonko timantit maksavat?",
   "q3": "Miten toimitus toimii?",
@@ -70,5 +70,10 @@
   "submit": "Tallenna pyyntö",
   "success": "Pyyntö {id} vastaanotettu. Säilytä tämä numero. Maksua ei ole suoritettu.",
   "worldTitle": "Yö kuuluu<br><em>sinulle.</em>",
-  "notificationWarning": "Pyyntö {id} tallennettiin, mutta sähköposti-ilmoitusta ei voitu lähettää. Yritä myöhemmin uudelleen."
+  "notificationWarning": "Pyyntö {id} tallennettiin, mutta sähköposti-ilmoitusta ei voitu lähettää. Yritä myöhemmin uudelleen.",
+  "metaDescription": "Osta timantteja hintaan VAMPIR: vähintään 1 000, hinta {pricePer1000} USD per 1 000. Laske loppusummasi ja pyydä tilaus USDT maksulla.",
+  "heroEyebrow": "OSTA VAMPIR TIMANTEJA",
+  "seoHeading": "VAMPIR timantit: hinta, palvelin ja maksu",
+  "seoIntro": "Tilaa timantteja numeroon MMORPG VAMPIR tarvitsemassasi määrässä, alkaen 1 000. Hinta on {pricePer1000} USD per 1 000 timanttia. Käytä laskinta nähdäksesi loppusumma ennen pyynnön lähettämistä. Hinnat näkyvät numerossa USD; maksu on USDT.",
+  "seoDetails": "Valitse pelialueesi, kirjoita tarkka palvelimen nimi ja jätä Discord, Telegram tai sähköpostiyhteys. Saatavuus, toimitustapa, siirtoverkosto ja lopullinen USDT summa sovitaan ennen maksua. Tilin salasanaa ei vaadita. VAMPIR.TOP on itsenäinen kauppa, ei virallinen Netmarble-palvelu."
 }

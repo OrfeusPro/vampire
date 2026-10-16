@@ -7,7 +7,7 @@
   "artCaption": "A KÖVETKEZŐ FEJEZETÉHEZ",
   "catalogDesc": "Adja meg a gyémánt mennyiségét. Azonnal megtekintheti az árat USD-ben, és folytassa az USDT fizetéssel.",
   "catalogEyebrow": "01 / AZ ÁRUHÁZ",
-  "catalogTitle": "Pontosan a gyémántokat<br><em>amire szüksége van.</em>",
+  "catalogTitle": "Vásároljon VAMPIR gyémántot.<br><em>Válassza ki az összeget.</em>",
   "choose": "Építsd fel a rendelésedet",
   "closeLabel": "Bezárás",
   "commentLabel": "Megjegyzés (nem kötelező)",
@@ -28,7 +28,7 @@
   "footer": "Független üzlet. Nem áll kapcsolatban a Netmarble-vel.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Ne írjon be jelszavakat, ellenőrző kódokat vagy fizetési adatokat.",
   "goShop": "Hozzon létre egyéni rendelést ↗",
-  "heroDesc": "Gyémántok a VAMPIR következő fejezetéhez. Válassza ki az összeget. Lásd az árat USD-ben. Fizessen USDT-ban.",
+  "heroDesc": "Vásároljon gyémántokat VAMPIR-ért 1000 gyémántból. Számolja ki az árat USD-ben, válassza ki a szervert és kérjen USDT fizetéssel.",
   "heroNote": "Az Ön összege. A szervered. A következő lépésed.",
   "heroTitle": "Az éjszaka<br><em>tiéd.</em>",
   "howEyebrow": "02 / HOGYAN MŰKÖDIK",
@@ -44,7 +44,7 @@
   "orderDesc": "Ellenőrizze az USD végösszegét, és hagyja meg kapcsolattartóját. A fizetés USDT-ban történik.",
   "orderEyebrow": "AZ ÖN SZEMÉLYES MEGRENDELÉSE",
   "orderTitle": "Nézzük a részleteket.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Gyémántok",
+  "pageTitle": "VAMPIR gyémánt vásárlás | Fizetés USDT-vel — VAMPIR.TOP",
   "q1": "Ez egy hivatalos Netmarble bolt?",
   "q2": "Mennyibe kerülnek a gyémántok?",
   "q3": "Hogyan működik a szállítás?",
@@ -70,5 +70,10 @@
   "submit": "Kérés mentése",
   "success": "{id}-ös megkeresés érkezett. Tartsa meg ezt a számot. Nem történt fizetés.",
   "worldTitle": "Az éjszaka a<br><em>tiéd.</em>",
-  "notificationWarning": "A {id}-ös kérést elmentettük, de az e-mail értesítést nem sikerült elküldeni. Kérjük, próbálja újra később."
+  "notificationWarning": "A {id}-ös kérést elmentettük, de az e-mail értesítést nem sikerült elküldeni. Kérjük, próbálja újra később.",
+  "metaDescription": "Vásároljon gyémántokat VAMPIR-ért: minimum 1000, ára {pricePer1000} USD per 1000. Számolja ki végösszegét, és kérjen rendelést USDT fizetéssel.",
+  "heroEyebrow": "VAMPIR GYÉMÁNT VÁSÁRLÁS",
+  "seoHeading": "VAMPIR gyémánt: ár, szerver és fizetés",
+  "seoIntro": "Rendeljen gyémántokat a MMORPG VAMPIR számra a szükséges mennyiségben, 1000-től. Az ár {pricePer1000} USD/1000 gyémánt. Használja a számológépet a végösszeg megtekintéséhez, mielőtt elküldi kérelmét. Az árak a USD számon vannak feltüntetve; a fizetés USDT-ban történik.",
+  "seoDetails": "Válassza ki a játék régióját, adja meg a szerver pontos nevét, és hagyjon meg egy Discord, Telegram vagy e-mail elérhetőséget. A rendelkezésre állás, a szállítási mód, a transzferhálózat és a USDT végösszeg fizetés előtt egyeztetés alatt áll. Nincs szükség fiókjelszóra. A VAMPIR.TOP egy független üzlet, nem hivatalos Netmarble szolgáltatás."
 }

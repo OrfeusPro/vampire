@@ -7,7 +7,7 @@
   "artCaption": "NÖVBƏTİ FƏSİL ÜÇÜN",
   "catalogDesc": "İstənilən almaz məbləğini daxil edin. Dərhal USD ilə qiymətinizə baxın və USDT ödənişinə davam edin.",
   "catalogEyebrow": "01 / MAĞAZA",
-  "catalogTitle": "Məhz sizə lazım olan brilyantlar<br><em>.</em>",
+  "catalogTitle": "VAMPIR brilyant alın.<br><em>Məbiyyətinizi seçin.</em>",
   "choose": "Sifarişinizi qurun",
   "closeLabel": "Bağlayın",
   "commentLabel": "Şərh (istəyə görə)",
@@ -28,7 +28,7 @@
   "footer": "Müstəqil mağaza. Netmarble ilə əlaqəli deyil.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Parollar, doğrulama kodları və ya ödəniş təfərrüatlarını daxil etməyin.",
   "goShop": "Fərdi sifariş yaradın ↗",
-  "heroDesc": "VAMPIR-də növbəti fəsiliniz üçün brilyantlar. Məbləğinizi seçin. USD ilə qiymətə baxın. USDT ilə ödəyin.",
+  "heroDesc": "1000 almazdan VAMPIR-yə brilyant alın. USD-də qiyməti hesablayın, serverinizi seçin və USDT ödənişi ilə sorğu göndərin.",
   "heroNote": "Sizin məbləğiniz. Sizin serveriniz. Növbəti hərəkətiniz.",
   "heroTitle": "Gecə<br><em>sizindir.</em>",
   "howEyebrow": "02 / NECƏ İŞLƏYİR",
@@ -44,7 +44,7 @@
   "orderDesc": "USD cəminizi yoxlayın və əlaqənizi tərk edin. Ödəniş USDT ilədir.",
   "orderEyebrow": "ŞƏXSİ SİFARİŞİNİZ",
   "orderTitle": "Detalları əldə edək.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR brilyantları",
+  "pageTitle": "VAMPIR almazları al | USDT ilə ödəniş — VAMPIR.TOP",
   "q1": "Bu rəsmi Netmarble mağazasıdır?",
   "q2": "Brilyantların qiyməti nə qədərdir?",
   "q3": "Çatdırılma necə işləyir?",
@@ -70,5 +70,10 @@
   "submit": "Sorğunu yadda saxla",
   "success": "{id} sorğusu alındı. Bu nömrəni saxla. Heç bir ödəniş edilməmişdir.",
   "worldTitle": "Gecə<br><em>sizindir.</em>",
-  "notificationWarning": "{id} sorğusu yadda saxlanıldı, lakin e-poçt bildirişini göndərmək mümkün olmadı. Lütfən, sonra yenidən cəhd edin."
+  "notificationWarning": "{id} sorğusu yadda saxlanıldı, lakin e-poçt bildirişini göndərmək mümkün olmadı. Lütfən, sonra yenidən cəhd edin.",
+  "metaDescription": "VAMPIR üçün brilyant alın: minimum 1000, 1000 üçün {pricePer1000} USD qiymətində. Cəminizi hesablayın və USDT ödənişi ilə sifariş tələb edin.",
+  "heroEyebrow": "VAMPIR BRİLLİYAT ALIN",
+  "seoHeading": "VAMPIR brilyant: qiymət, server və ödəniş",
+  "seoIntro": "MMORPG VAMPIR üçün 1000-dən başlayaraq sizə lazım olan miqdarda brilyant sifariş edin. Qiymət 1000 brilyant üçün {pricePer1000} USD. Sorğunuzu təqdim etməzdən əvvəl cəmini görmək üçün kalkulyatordan istifadə edin. Qiymətlər USD; Ödəniş USDT.",
+  "seoDetails": "Oyun bölgənizi seçin, dəqiq server adını daxil edin və Discord, Telegram və ya e-poçt əlaqəsini buraxın. Mövcudluq, çatdırılma üsulu, köçürmə şəbəkəsi və son USDT məbləği ödənişdən əvvəl razılaşdırılır. Heç bir hesab parolu tələb olunmur. VAMPIR.TOP rəsmi Netmarble xidməti deyil, müstəqil mağazadır."
 }

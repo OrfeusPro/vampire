@@ -17,12 +17,17 @@ function translate(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => { const value=messages[language][el.dataset.i18n]; if(value!==undefined) el.textContent=value; });
   document.querySelectorAll('[data-i18n-html]').forEach(el => { const value=messages[language][el.dataset.i18nHtml]; if(value!==undefined) el.innerHTML=value; });
   document.title = messages[language].pageTitle;
-  document.querySelector('meta[name="description"]').content = messages[language].heroDesc;
+  document.querySelector('meta[name="description"]').content = messages[language].metaDescription;
   document.querySelector('#official-link').href=`https://vampirgb.netmarble.com/${language==='ru'?'ru':'en'}/preorder`;
   if(savedRequest) result.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',savedRequest);
   updatePrices();
 }
 const languageMenu=document.querySelector('#language-menu');
+languageMenu.addEventListener('click',event=>{
+ const link=event.target.closest('a[data-language]');
+ if(!link || !availableLanguages.some(entry=>entry.code===link.dataset.language))return;
+ document.cookie=`vampir_language=${encodeURIComponent(link.dataset.language)}; Path=/; Max-Age=31536000; SameSite=Lax${location.protocol==='https:'?'; Secure':''}`;
+});
 function closeLanguageMenu(restoreFocus=false){languageMenu.hidden=true;selector.setAttribute('aria-expanded','false');if(restoreFocus)selector.focus();}
 function openLanguageMenu(){languageMenu.hidden=false;selector.setAttribute('aria-expanded','true');}
 selector.addEventListener('click',()=>{if(languageMenu.hidden)openLanguageMenu();else closeLanguageMenu();});

@@ -7,7 +7,7 @@
   "artCaption": "ZURE HURRENGO KAPITULUKO",
   "catalogDesc": "Sartu edozein diamante-kopurua. Ikusi zure prezioa USD berehala eta jarraitu USDT ordainketarekin.",
   "catalogEyebrow": "01 / DENDA",
-  "catalogTitle": "Zehazki, behar dituzun diamante<br><em>.</em>",
+  "catalogTitle": "Erosi VAMPIR diamante.<br><em>Aukeratu zure zenbatekoa.</em>",
   "choose": "Eraiki zure eskaera",
   "closeLabel": "Itxi",
   "commentLabel": "Iruzkina (aukerakoa)",
@@ -28,7 +28,7 @@
   "footer": "Denda independentea. Netmarblerekin afiliatuta ez dago.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Ez sartu pasahitzak, egiaztapen-kodeak edo ordainketa xehetasunak.",
   "goShop": "Sortu eskaera pertsonalizatua ↗",
-  "heroDesc": "Diamanteak zure hurrengo kapitulurako VAMPIR-en. Aukeratu zure zenbatekoa. Ikusi prezioa USDtan. Ordaindu USDT-n.",
+  "heroDesc": "Erosi diamanteak VAMPIR 1.000 diamantetik. Kalkulatu prezioa USD telefonoan, aukeratu zure zerbitzaria eta egin eskaera USDT ordainketarekin.",
   "heroNote": "Zure zenbatekoa. Zure zerbitzaria. Zure hurrengo mugimendua.",
   "heroTitle": "Gaua<br><em>zurea da.</em>",
   "howEyebrow": "02 / NOLA FUNTZIONAMENDUA",
@@ -44,7 +44,7 @@
   "orderDesc": "Egiaztatu zure USD guztira eta utzi zure kontaktua. Ordainketa USDT-n dago.",
   "orderEyebrow": "ZURE ESKAERA PERTSONALA",
   "orderTitle": "Jaso ditzagun xehetasunak.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamanteak",
+  "pageTitle": "Erosi VAMPIR diamanteak | Ordaindu USDT-rekin — VAMPIR.TOP",
   "q1": "Netmarble denda ofiziala al da hau?",
   "q2": "Zenbat balio dute diamanteek?",
   "q3": "Nola funtzionatzen du bidalketak?",
@@ -70,5 +70,10 @@
   "submit": "Gorde eskaera",
   "success": "Jasotako {id} eskaera. Mantendu zenbaki hau. Ez da ordainketarik egin.",
   "worldTitle": "Gaua<br><em>zuena da.</em>",
-  "notificationWarning": "{id} eskaera gorde da, baina ezin izan da mezu elektronikoaren jakinarazpena bidali. Saiatu berriro geroago."
+  "notificationWarning": "{id} eskaera gorde da, baina ezin izan da mezu elektronikoaren jakinarazpena bidali. Saiatu berriro geroago.",
+  "metaDescription": "Erosi diamanteak VAMPIRrako: gutxienez 1.000, {pricePer1000} USD prezioan 1.000 bakoitzeko. Kalkulatu zure osoa eta eskatu eskaera USDT ordainketarekin.",
+  "heroEyebrow": "EROSI VAMPIR DIAMANTES",
+  "seoHeading": "VAMPIR diamanteak: prezioa, zerbitzaria eta ordainketa",
+  "seoIntro": "Eskatu diamanteak MMORPG VAMPIRrako behar duzun kantitatean, 1.000etik aurrera. Prezioa {pricePer1000} USD da 1.000 diamante bakoitzeko. Erabili kalkulagailua zure eskaera bidali aurretik guztira ikusteko. Prezioak USD telefonoan daude ikusgai; ordainketa USDT telefonoan da.",
+  "seoDetails": "Aukeratu zure joko-eskualdea, idatzi zerbitzariaren izen zehatza eta utzi Discord, Telegram edo posta elektronikoko kontaktua. Eskuragarritasuna, entrega modua, transferentzia sarea eta azken USDT zenbatekoa adosten dira ordainketa aurretik. Ez da kontuaren pasahitzik behar. VAMPIR.TOP denda independentea da, ez Netmarble zerbitzu ofiziala."
 }

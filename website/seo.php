@@ -17,6 +17,8 @@ $productionOrigin = 'https://vampir.top';
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $host = strtolower(explode(':', $_SERVER['HTTP_HOST'] ?? '')[0]);
 $isProduction = in_array($host, ['vampir.top', 'www.vampir.top'], true);
+require_once __DIR__ . '/language-preference.php';
+site_redirect_language_entry($i18n['languages']);
 
 foreach ($i18n['languages'] as &$entry) $entry['path'] = language_path($entry['code']);
 unset($entry);
@@ -75,7 +77,7 @@ $structuredData = [
     '@graph' => [
         ['@type' => 'WebSite', '@id' => $productionOrigin . '/#website', 'url' => $productionOrigin . '/', 'name' => 'VAMPIR.TOP'],
         ['@type' => 'WebPage', '@id' => $canonicalUrl . '#webpage', 'url' => $canonicalUrl,
-         'name' => $i18n['messages'][$currentLanguage]['pageTitle'], 'description' => $i18n['messages'][$currentLanguage]['heroDesc'],
+         'name' => $i18n['messages'][$currentLanguage]['pageTitle'], 'description' => $i18n['messages'][$currentLanguage]['metaDescription'],
          'inLanguage' => $currentLanguage, 'isPartOf' => ['@id' => $productionOrigin . '/#website']],
     ],
 ];

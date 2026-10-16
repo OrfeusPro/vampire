@@ -14,7 +14,7 @@ $clientI18n['messages'] = array_intersect_key($i18n['messages'], array_flip(['en
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= site_text('pageTitle') ?></title>
-  <meta name="description" content="<?= site_text('heroDesc') ?>">
+  <meta name="description" content="<?= site_text('metaDescription') ?>">
   <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf'], ENT_QUOTES) ?>">
   <meta name="theme-color" content="#0c0b0d">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,9 +25,9 @@ $clientI18n['messages'] = array_intersect_key($i18n['messages'], array_flip(['en
   <link rel="alternate" hreflang="x-default" href="https://vampir.top/">
   <meta name="robots" content="<?= $isProduction ? 'index, follow, max-image-preview:large' : 'noindex, nofollow' ?>">
   <meta property="og:type" content="website"><meta property="og:site_name" content="VAMPIR.TOP">
-  <meta property="og:title" content="<?= site_text('pageTitle') ?>"><meta property="og:description" content="<?= site_text('heroDesc') ?>">
+  <meta property="og:title" content="<?= site_text('pageTitle') ?>"><meta property="og:description" content="<?= site_text('metaDescription') ?>">
   <meta property="og:url" content="<?= site_escape($canonicalUrl) ?>"><meta property="og:image" content="https://vampir.top/assets/hero.jpg">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="<?= site_text('pageTitle') ?>"><meta name="twitter:description" content="<?= site_text('heroDesc') ?>"><meta name="twitter:image" content="https://vampir.top/assets/hero.jpg">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="<?= site_text('pageTitle') ?>"><meta name="twitter:description" content="<?= site_text('metaDescription') ?>"><meta name="twitter:image" content="https://vampir.top/assets/hero.jpg">
   <link rel="preload" as="image" href="/assets/world.jpg">
   <script type="application/ld+json"><?= json_encode($structuredData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) ?></script>
 </head>
@@ -40,7 +40,7 @@ $clientI18n['messages'] = array_intersect_key($i18n['messages'], array_flip(['en
 <main>
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-art" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
-  <div class="hero-content"><p class="eyebrow"><span></span> VAMPIR / DIAMOND STORE</p>
+  <div class="hero-content"><p class="eyebrow"><span aria-hidden="true"></span><b data-i18n="heroEyebrow"><?= site_text('heroEyebrow', false) ?></b></p>
     <h1 id="hero-title" data-i18n-html="heroTitle"><?= site_text('heroTitle', true) ?></h1>
     <p class="hero-description" data-i18n="heroDesc"><?= site_text('heroDesc', false) ?></p>
     <button type="button" class="button primary select-package" data-amount=""><span class="diamond">◇</span><span data-i18n="choose"><?= site_text('choose', false) ?></span><span>↗</span></button>
@@ -69,6 +69,10 @@ $clientI18n['messages'] = array_intersect_key($i18n['messages'], array_flip(['en
 <details><summary data-i18n="q3"><?= site_text('q3', false) ?></summary><p data-i18n="a3"><?= site_text('a3', false) ?></p></details>
 <details><summary data-i18n="q4"><?= site_text('q4', false) ?></summary><p data-i18n="a4"><?= site_text('a4', false) ?></p></details>
 </div></section>
+<section class="section buying-guide" aria-labelledby="buying-guide-title">
+  <h2 id="buying-guide-title" data-i18n="seoHeading"><?= site_text('seoHeading', false) ?></h2>
+  <div class="buying-guide-copy"><p data-i18n="seoIntro"><?= site_text('seoIntro', false) ?></p><p data-i18n="seoDetails"><?= site_text('seoDetails', false) ?></p></div>
+</section>
 </main>
 <footer><a class="brand" href="#" aria-label="Vampir.top"><img class="brand-symbol" src="/assets/brand-mark.svg" width="36" height="42" alt=""><span>VAMPIR<span class="brand-dot">.TOP</span></span></a><p data-i18n="footer"><?= site_text('footer', false) ?></p><span>18+</span></footer>
 <dialog id="order-dialog" aria-labelledby="order-title"><button class="close-dialog" data-i18n-aria="closeLabel" type="button" aria-label="<?= site_text('closeLabel') ?>">×</button><p class="eyebrow" data-i18n="orderEyebrow"><?= site_text('orderEyebrow', false) ?></p><h2 id="order-title" data-i18n="orderTitle"><?= site_text('orderTitle', false) ?></h2><p class="dialog-description" data-i18n="orderDesc"><?= site_text('orderDesc', false) ?></p>

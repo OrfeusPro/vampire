@@ -7,7 +7,7 @@
   "artCaption": "SINU JÄRGMISE PEATÜKIKS",
   "catalogDesc": "Sisestage mis tahes teemandisumma. Vaadake oma hinda kohe numbril USD ja jätkake USDT maksega.",
   "catalogEyebrow": "01 / KAUPLUS",
-  "catalogTitle": "Täpselt sellised teemandid<br><em>, mida vajate.</em>",
+  "catalogTitle": "Ostke VAMPIR teemanti.<br><em>Valige oma kogus.</em>",
   "choose": "Koostage oma tellimus",
   "closeLabel": "Sule",
   "commentLabel": "Kommentaar (valikuline)",
@@ -28,7 +28,7 @@
   "footer": "Sõltumatu kauplus. Ei ole Netmarble'iga seotud.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Ärge sisestage paroole, kinnituskoode ega makseandmeid.",
   "goShop": "Loo kohandatud tellimus ↗",
-  "heroDesc": "Teemandid teie järgmise VAMPIRi peatüki jaoks. Valige oma summa. Vaata hinda USD-des. Makske USDT-des.",
+  "heroDesc": "Ostke teemante hinnaga VAMPIR alates 1000 teemandist. Arvutage hind USD, valige oma server ja esitage päring USDT maksega.",
   "heroNote": "Teie summa. Teie server. Sinu järgmine käik.",
   "heroTitle": "Öö<br><em>on sinu.</em>",
   "howEyebrow": "02 / KUIDAS SEE TÖÖTAB",
@@ -44,7 +44,7 @@
   "orderDesc": "Kontrollige oma USD kogusummat ja jätke oma kontakt. Makse tehakse USDT-des.",
   "orderEyebrow": "TEIE ISIKLIK TELLIMUS",
   "orderTitle": "Vaatame üksikasju.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Teemandid",
+  "pageTitle": "Osta VAMPIR-i teemante | Maksa USDT-ga — VAMPIR.TOP",
   "q1": "Kas see on ametlik Netmarble'i pood?",
   "q2": "Kui palju teemandid maksavad?",
   "q3": "Kuidas kohaletoimetamine toimib?",
@@ -70,5 +70,10 @@
   "submit": "Salvesta taotlus",
   "success": "Päring {id} laekus. Hoidke see number alles. Makse pole tehtud.",
   "worldTitle": "Öö kuulub<br><em>teile.</em>",
-  "notificationWarning": "Päring {id} salvestati, kuid meilimärguannet ei saanud saata. Proovige hiljem uuesti."
+  "notificationWarning": "Päring {id} salvestati, kuid meilimärguannet ei saanud saata. Proovige hiljem uuesti.",
+  "metaDescription": "Ostke teemante hinnaga VAMPIR: vähemalt 1000, hinnaga {pricePer1000} USD 1000 kohta. Arvutage oma kogusumma ja taotlege USDT maksega tellimust.",
+  "heroEyebrow": "OSTA VAMPIR TEEMANTID",
+  "seoHeading": "VAMPIR teemandid: hind, server ja makse",
+  "seoIntro": "Tellige teemante numbrile MMORPG VAMPIR vajalikus koguses, alates 1000. Hind on {pricePer1000} USD 1000 teemandi kohta. Enne taotluse esitamist kasutage kogusumma vaatamiseks kalkulaatorit. Hinnad on näidatud USD; makse on USDT.",
+  "seoDetails": "Valige oma mängupiirkond, sisestage täpne serveri nimi ja jätke Discord, Telegram või meiliaadress. Kättesaadavus, tarneviis, ülekandevõrk ja lõppsumma USDT lepitakse kokku enne tasumist. Konto parooli pole vaja. VAMPIR.TOP on sõltumatu kauplus, mitte ametlik Netmarble teenus."
 }

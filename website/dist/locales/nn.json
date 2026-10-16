@@ -7,7 +7,7 @@
   "artCaption": "FOR DET NESTE KAPITTELET DITT",
   "catalogDesc": "Skriv inn talet på diamantar. Sjå prisen i USD med ein gong, og gå vidare med betaling i USDT.",
   "catalogEyebrow": "01 / BUTIKKEN",
-  "catalogTitle": "Nett dei diamantane<br><em>du treng.</em>",
+  "catalogTitle": "Kjøp VAMPIR-diamantar.<br><em>Vel talet ditt.</em>",
   "choose": "Set saman bestillinga di",
   "closeLabel": "Lukk",
   "commentLabel": "Merknad (valfritt)",
@@ -28,7 +28,7 @@
   "footer": "Uavhengig butikk. Ikkje knytt til Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Ikkje skriv inn passord, stadfestingskodar eller betalingsopplysningar.",
   "goShop": "Lag ei tilpassa bestilling ↗",
-  "heroDesc": "Diamantar til det neste kapittelet ditt i VAMPIR. Vel talet. Sjå prisen i USD. Betal i USDT.",
+  "heroDesc": "Kjøp diamantar til VAMPIR frå 1 000 diamantar. Rekn ut prisen i USD, vel tenar og send ein førespurnad med betaling i USDT.",
   "heroNote": "Ditt tal. Din tenar. Ditt neste trekk.",
   "heroTitle": "Natta<br><em>er di.</em>",
   "howEyebrow": "02 / SLIK FUNGERER DET",
@@ -44,7 +44,7 @@
   "orderDesc": "Sjekk totalprisen i USD og legg att kontaktopplysningar. Betaling skjer i USDT.",
   "orderEyebrow": "DI PERSONLEGE BESTILLING",
   "orderTitle": "La oss sjå på detaljane.",
-  "pageTitle": "VAMPIR.TOP — Diamantar i VAMPIR",
+  "pageTitle": "Kjøp VAMPIR-diamantar | Betal med USDT — VAMPIR.TOP",
   "q1": "Er dette ein offisiell Netmarble-butikk?",
   "q2": "Kva kostar diamantar?",
   "q3": "Korleis fungerer levering?",
@@ -70,5 +70,10 @@
   "submit": "Lagre førespurnaden",
   "success": "Førespurnad {id} er motteken. Ta vare på dette nummeret. Inga betaling er utført.",
   "worldTitle": "Natta høyrer<br><em>deg til.</em>",
-  "notificationWarning": "Førespurnad {id} er lagra, men e-postvarselet kunne ikkje sendast. Prøv igjen seinare."
+  "notificationWarning": "Førespurnad {id} er lagra, men e-postvarselet kunne ikkje sendast. Prøv igjen seinare.",
+  "metaDescription": "Kjøp diamantar til VAMPIR: minst 1 000, til {pricePer1000} USD per 1 000. Rekn ut totalprisen og send ein førespurnad med betaling i USDT.",
+  "heroEyebrow": "KJØP VAMPIR-DIAMANTAR",
+  "seoHeading": "VAMPIR-diamantar: pris, tenar og betaling",
+  "seoIntro": "Bestill diamantar til MMORPG-spelet VAMPIR i talet du treng, frå 1 000. Prisen er {pricePer1000} USD per 1 000 diamantar. Bruk kalkulatoren for å sjå totalprisen før du sender førespurnaden. Prisane er i USD; betaling skjer i USDT.",
+  "seoDetails": "Vel spelregion, skriv inn det nøyaktige tenarnamnet og legg att kontakt via Discord, Telegram eller e-post. Tilgjenge, leveringsmåte, overføringsnettverk og endeleg USDT-sum blir avtalte før betaling. Du treng ikkje oppgje kontopassordet. VAMPIR.TOP er ein uavhengig butikk, ikkje ei offisiell Netmarble-teneste."
 }

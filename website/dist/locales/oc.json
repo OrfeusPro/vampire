@@ -7,7 +7,7 @@
   "artCaption": "PER VÒSTRE CAPÍTOL SEGUENT",
   "catalogDesc": "Picatz quina quantitat que siá de diamant. Vejatz vòstre prètz en USD sul còp e contunhatz amb lo pagament en USDT.",
   "catalogEyebrow": "01 / LA BOTIGA",
-  "catalogTitle": "Exactament los diamants<br><em>que cal.</em>",
+  "catalogTitle": "Crompatz VAMPIR diamants.<br><em>Causissètz vòstra quantitat.</em>",
   "choose": "Construissètz vòstra comanda",
   "closeLabel": "Barrar",
   "commentLabel": "Comentari (facultatiu)",
@@ -28,7 +28,7 @@
   "footer": "Botiga independenta. Pas afiliat a Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Picatz pas de senhals, de còdes de verificacion o de detalhs de pagament.",
   "goShop": "Crear una comanda personalizada ↗",
-  "heroDesc": "Diamants per ton pròplèu capítol de VAMPIR. Causissètz vòstre montant. Veire lo prètz en USD. Pagar en USDT.",
+  "heroDesc": "Compra diamants per VAMPIR a partir de 1.000 diamants. Calculatz lo prètz al USD, causissètz vòstre servidor e plaçatz una demanda amb lo pagament USDT.",
   "heroNote": "Vòstra quantitat. Vòstre servidor. Vòstre movement seguent.",
   "heroTitle": "La nuèch<br><em>es vòstra.</em>",
   "howEyebrow": "02 / COMA FONCIONA",
@@ -44,7 +44,7 @@
   "orderDesc": "Verificatz vòstre total USD e daissatz vòstre contacte. Lo pagament es en USDT.",
   "orderEyebrow": "VÒSTRA COMANDA PERSONALA",
   "orderTitle": "Prenèm los detalhs.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamants",
+  "pageTitle": "Comprar de diamants VAMPIR | Pagar en USDT — VAMPIR.TOP",
   "q1": "Es una botiga oficiala de Netmarble?",
   "q2": "Quant còstan los diamants?",
   "q3": "Cossí fonciona la liurason?",
@@ -70,5 +70,10 @@
   "submit": "Demanda d'enregistrament",
   "success": "Demanda {id} recebuda. Gardatz aqueste numèro. Cap de pagament es pas estat efectuat.",
   "worldTitle": "La nuèch vos aparten<br><em>.</em>",
-  "notificationWarning": "La demanda {id} es estada enregistrada, mas la notificacion per corrièl a pas pogut èsser mandada. Ensajatz tornar mai tard."
+  "notificationWarning": "La demanda {id} es estada enregistrada, mas la notificacion per corrièl a pas pogut èsser mandada. Ensajatz tornar mai tard.",
+  "metaDescription": "Crompatz de diamants per VAMPIR: minimum 1,000, al prètz de {pricePer1000} USD per 1,000. Calculatz vòstre total e demandatz una comanda amb lo pagament USDT.",
+  "heroEyebrow": "COMPRAR VAMPIR DIAMANTS",
+  "seoHeading": "VAMPIR diamants: prètz, servidor e pagament",
+  "seoIntro": "Comandatz de diamants pel MMORPG VAMPIR dins la quantitat que necessitatz, a partir de 1.000. Lo prètz es {pricePer1000} USD per 1.000 diamants. Utilizatz la calculadoira per veire lo total abans de mandar vòstra demanda. Los prètzs son mostrats dins USD; lo pagament es al USDT.",
+  "seoDetails": "Causissètz vòstra region de jòc, picatz lo nom exacte del servidor e daissatz un contacte Discord, Telegram o un corrièl. La disponibilitat, lo metòde de liurason, la ret de transferiment e lo montant final USDT son convenguts abans lo pagament. Cap de senhal de compte es pas requerit. VAMPIR.TOP es una botiga independenta, pas un servici oficial Netmarble."
 }

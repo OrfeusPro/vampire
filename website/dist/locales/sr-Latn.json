@@ -7,7 +7,7 @@
   "artCaption": "ZA VAŠE SLEDEĆE POGLAVLjE",
   "catalogDesc": "Unesite bilo koju količinu dijamanata. Odmah pogledajte svoju cenu na USD i nastavite sa plaćanjem na USDT.",
   "catalogEyebrow": "01 / PRODAVNICA",
-  "catalogTitle": "Tačno dijamanti<br><em>koji su vam potrebni.</em>",
+  "catalogTitle": "Kupite VAMPIR dijamante.<br><em>Izaberite količinu.</em>",
   "choose": "Izgradite svoj red",
   "closeLabel": "Zatvori",
   "commentLabel": "Komentar (opciono)",
@@ -28,7 +28,7 @@
   "footer": "Nezavisna prodavnica. Nije povezan sa Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Nemojte unositi lozinke, verifikacione kodove ili detalje plaćanja.",
   "goShop": "Napravite prilagođeni nalog ↗",
-  "heroDesc": "Dijamanti za vaše sledeće poglavlje na VAMPIR. Odaberite iznos. Pogledajte cenu na USD. Platite na USDT.",
+  "heroDesc": "Kupite dijamante za VAMPIR od 1000 dijamanata. Izračunajte cenu na USD, izaberite svoj server i pošaljite zahtev uz plaćanje USDT.",
   "heroNote": "Vaš iznos. Vaš server. Vaš sledeći potez.",
   "heroTitle": "Noć<br><em>je tvoja.</em>",
   "howEyebrow": "02 / KAKO RADI",
@@ -44,7 +44,7 @@
   "orderDesc": "Proverite ukupan broj USD i ostavite svoj kontakt. Plaćanje je na USDT.",
   "orderEyebrow": "VAŠA LIČNA NARUDžBINA",
   "orderTitle": "Hajde da saznamo detalje.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Dijamanti",
+  "pageTitle": "Kupite VAMPIR dijamante | Plaćanje u USDT — VAMPIR.TOP",
   "q1": "Da li je ovo zvanična Netmarble prodavnica?",
   "q2": "Koliko koštaju dijamanti?",
   "q3": "Kako funkcioniše dostava?",
@@ -70,5 +70,10 @@
   "submit": "Sačuvaj zahtev",
   "success": "Zahtev {id} primljen. Zadrži ovaj broj. Uplata nije izvršena.",
   "worldTitle": "Noć pripada<br><em>vabi.</em>",
-  "notificationWarning": "Zahtev {id} je sačuvan, ali obaveštenje putem e-pošte nije moglo da se pošalje. Pokušajte ponovo kasnije."
+  "notificationWarning": "Zahtev {id} je sačuvan, ali obaveštenje putem e-pošte nije moglo da se pošalje. Pokušajte ponovo kasnije.",
+  "metaDescription": "Kupite dijamante za VAMPIR: minimum 1.000, po ceni od {pricePer1000} USD za 1.000. Izračunajte svoj ukupni iznos i zatražite porudžbinu uz plaćanje USDT.",
+  "heroEyebrow": "KUPI VAMPIR DIJAMANTI",
+  "seoHeading": "VAMPIR dijamanti: cena, server i plaćanje",
+  "seoIntro": "Naručite dijamante za MMORPG VAMPIR u količini koja vam je potrebna, počevši od 1.000. Cena je {pricePer1000} USD za 1.000 dijamanata. Koristite kalkulator da vidite ukupan iznos pre nego što podnesete zahtev. Cene su prikazane u USD; uplata je na USDT.",
+  "seoDetails": "Izaberite region igre, unesite tačno ime servera i ostavite Discord, Telegram ili imejl kontakt. Dostupnost, način isporuke, mreža prenosa i konačni iznos USDT se dogovaraju pre plaćanja. Lozinka naloga nije potrebna. VAMPIR.TOP je nezavisna prodavnica, a ne zvanična Netmarble usluga."
 }

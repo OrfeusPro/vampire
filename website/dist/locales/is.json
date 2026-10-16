@@ -7,7 +7,7 @@
   "artCaption": "FYRIR NÆSTA KAFLI ÞINN",
   "catalogDesc": "Sláðu inn hvaða demantsupphæð sem er. Sjáðu verðið þitt í USD samstundis og haltu áfram með USDT greiðslu.",
   "catalogEyebrow": "01 / VERSLUNIN",
-  "catalogTitle": "Nákvæmlega demantarnir<br><em>þú þarft.</em>",
+  "catalogTitle": "Kauptu VAMPIR demöntum.<br><em>Veldu upphæðina þína.</em>",
   "choose": "Byggðu pöntunina þína",
   "closeLabel": "Loka",
   "commentLabel": "Athugasemd (valfrjálst)",
@@ -28,7 +28,7 @@
   "footer": "Sjálfstæð verslun. Ekki tengt Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Ekki slá inn lykilorð, staðfestingarkóða eða greiðsluupplýsingar.",
   "goShop": "Búðu til sérsniðna röð ↗",
-  "heroDesc": "Demantar fyrir næsta kafla þinn í VAMPIR. Veldu upphæð þína. Sjá verð í USD. Borgaðu í USDT.",
+  "heroDesc": "Kauptu demöntum fyrir VAMPIR af 1.000 demöntum. Reiknaðu verðið í USD, veldu netþjóninn þinn og settu inn beiðni með USDT greiðslu.",
   "heroNote": "Upphæð þín. Þinn þjónn. Næsta skref þitt.",
   "heroTitle": "Nóttin<br><em>er þín.</em>",
   "howEyebrow": "02 / HVERNIG ÞAÐ VIRKAR",
@@ -44,7 +44,7 @@
   "orderDesc": "Check your USD total and leave your contact. Greiðsla er í USDT.",
   "orderEyebrow": "ÞÍN PÖNNUN",
   "orderTitle": "Við skulum fá smáatriðin.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamonds",
+  "pageTitle": "Kaupa VAMPIR-demanta | Greiðsla með USDT — VAMPIR.TOP",
   "q1": "Is this an official Netmarble store?",
   "q2": "How much do diamonds cost?",
   "q3": "Hvernig virkar afhending?",
@@ -70,5 +70,10 @@
   "submit": "Vista beiðni",
   "success": "Beiðni {id} móttekin. Haltu þessu númeri. Engin greiðsla hefur farið fram.",
   "worldTitle": "The night belongs<br><em>to you.</em>",
-  "notificationWarning": "Beiðni {id} var vistuð en ekki var hægt að senda tölvupósttilkynninguna. Vinsamlegast reyndu aftur síðar."
+  "notificationWarning": "Beiðni {id} var vistuð en ekki var hægt að senda tölvupósttilkynninguna. Vinsamlegast reyndu aftur síðar.",
+  "metaDescription": "Kaupa demöntum fyrir VAMPIR: lágmark 1.000, verð á {pricePer1000} USD á 1.000. Reiknaðu heildarfjölda þína og biðja um pöntun með USDT greiðslu.",
+  "heroEyebrow": "KAUPA VAMPIR DEMANTA",
+  "seoHeading": "VAMPIR demantar: verð, miðlari og greiðsla",
+  "seoIntro": "Pantaðu demöntum fyrir MMORPG VAMPIR í því magni sem þú þarft, frá 1.000. Verðið er {pricePer1000} USD á 1.000 demöntum. Notaðu reiknivélina til að sjá heildartöluna áður en þú sendir beiðni þína. Verð eru sýnd í USD; greiðsla er í USDT.",
+  "seoDetails": "Veldu leiksvæðið þitt, sláðu inn nákvæmlega nafn netþjónsins og skildu eftir Discord, Telegram eða tölvupósttengilið. Samið er um framboð, afhendingaraðferð, flutningsnet og endanlega USDT upphæð fyrir greiðslu. Ekkert lykilorð reiknings er krafist. VAMPIR.TOP er sjálfstæð verslun, ekki opinber Netmarble þjónusta."
 }

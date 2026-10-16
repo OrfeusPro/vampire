@@ -7,7 +7,7 @@
   "artCaption": "VOOR JE VOLGENDE HOOFDSTUK",
   "catalogDesc": "Voer een willekeurig diamantbedrag in. Bekijk direct uw prijs in USD en ga verder met USDT-betaling.",
   "catalogEyebrow": "01 / DE WINKEL",
-  "catalogTitle": "Precies de diamanten<br><em>die je nodig hebt.</em>",
+  "catalogTitle": "Koop VAMPIR diamanten.<br><em>Kies uw aantal.</em>",
   "choose": "Bouw uw bestelling op",
   "closeLabel": "Sluiten",
   "commentLabel": "Opmerking (optioneel)",
@@ -28,7 +28,7 @@
   "footer": "Onafhankelijke winkel. Niet aangesloten bij Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Voer geen wachtwoorden, verificatiecodes of betalingsgegevens in.",
   "goShop": "Maak een aangepaste bestelling ↗",
-  "heroDesc": "Diamanten voor je volgende hoofdstuk in VAMPIR. Kies uw bedrag. Bekijk de prijs in USD. Betaal in USDT.",
+  "heroDesc": "Koop diamanten voor VAMPIR vanaf 1.000 diamanten. Bereken de prijs in USD, kies uw server en plaats een aanvraag met USDT betaling.",
   "heroNote": "Jouw bedrag. Jouw server. Je volgende zet.",
   "heroTitle": "De nacht<br><em>is van jou.</em>",
   "howEyebrow": "02 / HOE HET WERKT",
@@ -44,7 +44,7 @@
   "orderDesc": "Controleer uw USD-totaal en laat uw contactpersoon achter. Betaling vindt plaats in USDT.",
   "orderEyebrow": "UW PERSOONLIJKE BESTELLING",
   "orderTitle": "Laten we de details bekijken.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR-diamanten",
+  "pageTitle": "VAMPIR-diamanten kopen | Betalen met USDT — VAMPIR.TOP",
   "q1": "Is dit een officiële Netmarble-winkel?",
   "q2": "Hoeveel kosten diamanten?",
   "q3": "Hoe werkt de bezorging?",
@@ -70,5 +70,10 @@
   "submit": "Aanvraag opslaan",
   "success": "Verzoek {id} ontvangen. Bewaar dit nummer. Er heeft geen betaling plaatsgevonden.",
   "worldTitle": "De nacht is<br><em>van jou.</em>",
-  "notificationWarning": "Verzoek {id} is opgeslagen, maar de e-mailmelding kon niet worden verzonden. Probeer het later opnieuw."
+  "notificationWarning": "Verzoek {id} is opgeslagen, maar de e-mailmelding kon niet worden verzonden. Probeer het later opnieuw.",
+  "metaDescription": "Koop diamanten voor VAMPIR: minimaal 1.000, geprijsd op {pricePer1000} USD per 1.000. Bereken uw totaal en vraag een bestelling aan met USDT betaling.",
+  "heroEyebrow": "KOOP VAMPIR DIAMANTEN",
+  "seoHeading": "VAMPIR diamanten: prijs, server en betaling",
+  "seoIntro": "Bestel diamanten voor de MMORPG VAMPIR in de hoeveelheid die u nodig heeft, vanaf 1.000. De prijs is {pricePer1000} USD per 1.000 diamanten. Gebruik de calculator om het totaal te zien voordat u uw aanvraag indient. Prijzen staan ​​vermeld in USD; betaling vindt plaats op USDT.",
+  "seoDetails": "Kies je spelregio, vul de exacte servernaam in en laat je contactgegevens voor Discord, Telegram of e-mail achter. Beschikbaarheid, leveringsmethode, transfernetwerk en het definitieve USDT-bedrag worden vóór betaling afgesproken. Je accountwachtwoord is niet nodig. VAMPIR.TOP is een onafhankelijke winkel, geen officiële Netmarble-dienst."
 }

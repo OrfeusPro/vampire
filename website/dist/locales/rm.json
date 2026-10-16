@@ -7,7 +7,7 @@
   "artCaption": "PER TES PROXIM CHAPITEL",
   "catalogDesc": "Inditgescha la quantitad da diamants. Ves immediat il pretsch en USD e cuntinuescha cun il pajament en USDT.",
   "catalogEyebrow": "01 / LA BUTIA",
-  "catalogTitle": "Gist ils diamants<br><em>che ti dovras.</em>",
+  "catalogTitle": "Cumprar diamants VAMPIR.<br><em>Tscherna la quantitad.</em>",
   "choose": "Prepara tia empustaziun",
   "closeLabel": "Serrar",
   "commentLabel": "Commentari (facultativ)",
@@ -28,7 +28,7 @@
   "footer": "Butia independenta. Betg colliada cun Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "N’inditgar betg pleds-clav, codes da conferma u datas da pajament.",
   "goShop": "Crear in’empustaziun individuala ↗",
-  "heroDesc": "Diamants per tes proxim chapitel en VAMPIR. Tscherna la quantitad. Ves il pretsch en USD. Paja en USDT.",
+  "heroDesc": "Cumpra diamants per VAMPIR a partir da 1 000. Calculatescha il pretsch en USD, tscherna il server e trametta ina dumonda cun pajament en USDT.",
   "heroNote": "Tia quantitad. Tes server. Tes proxim pass.",
   "heroTitle": "La notg<br><em>è tia.</em>",
   "howEyebrow": "02 / USCHIA FUNCZIUNA QUAI",
@@ -44,7 +44,7 @@
   "orderDesc": "Controllescha il total en USD e lascha tias datas da contact. Il pajament è en USDT.",
   "orderEyebrow": "TIA EMPUSTAZIUN PERSUNALA",
   "orderTitle": "Precisain ils detagls.",
-  "pageTitle": "VAMPIR.TOP — Diamants VAMPIR",
+  "pageTitle": "Cumprar diamants VAMPIR | Pajar cun USDT — VAMPIR.TOP",
   "q1": "È quai ina butia uffiziala da Netmarble?",
   "q2": "Quant custan ils diamants?",
   "q3": "Co funcziuna la furniziun?",
@@ -70,5 +70,10 @@
   "submit": "Memorisar la dumonda",
   "success": "La dumonda {id} è arrivada. Conserva quest numer. Nagin pajament è vegnì fatg.",
   "worldTitle": "La notg tutga<br><em>a tai.</em>",
-  "notificationWarning": "La dumonda {id} è memorisada, ma la notificaziun per e-mail n’ha betg pudì vegnir tramessa. Emprova pli tard."
+  "notificationWarning": "La dumonda {id} è memorisada, ma la notificaziun per e-mail n’ha betg pudì vegnir tramessa. Emprova pli tard.",
+  "metaDescription": "Cumpra diamants per VAMPIR: almain 1 000, per {pricePer1000} USD per 1 000. Calculatescha il total e trametta ina dumonda cun pajament en USDT.",
+  "heroEyebrow": "CUMPRAR DIAMANTS VAMPIR",
+  "seoHeading": "Diamants VAMPIR: pretsch, server e pajament",
+  "seoIntro": "Emposta diamants per il MMORPG VAMPIR en la quantitad che ti dovras, a partir da 1 000. Il pretsch è {pricePer1000} USD per 1 000 diamants. Il calculatur mussa il total avant che ti tramettas la dumonda. Ils pretschs èn en USD; il pajament è en USDT.",
+  "seoDetails": "Tscherna la regiun dal gieu, inditgescha il num exact dal server e lascha in contact via Discord, Telegram u e-mail. La disponibladad, la metoda da furniziun, la rait da transferiment e la summa finala en USDT vegnan fixadas avant il pajament. Il pled-clav dal conto n’è betg necessari. VAMPIR.TOP è ina butia independenta, betg in servetsch uffizial da Netmarble."
 }

@@ -7,7 +7,7 @@
   "artCaption": "PENTRU URMĂTORUL TĂU CAPITOLUL",
   "catalogDesc": "Introduceți orice cantitate de diamante. Vedeți prețul în USD instantaneu și continuați cu plata USDT.",
   "catalogEyebrow": "01 / MAGAZINUL",
-  "catalogTitle": "Exact diamantele<br><em>de care aveți nevoie.</em>",
+  "catalogTitle": "Cumpărați VAMPIR diamante.<br><em>Alegeți suma.</em>",
   "choose": "Construiește-ți comanda",
   "closeLabel": "Închide",
   "commentLabel": "Comentariu (opțional)",
@@ -28,7 +28,7 @@
   "footer": "Magazin independent. Nu este afiliat cu Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Nu introduceți parole, coduri de verificare sau detalii de plată.",
   "goShop": "Creați o comandă personalizată ↗",
-  "heroDesc": "Diamante pentru următorul tău capitol din VAMPIR. Alegeți suma dvs. Vezi prețul în USD. Plătiți în USDT.",
+  "heroDesc": "Cumpărați diamante pentru VAMPIR din 1.000 de diamante. Calculeaza pretul in USD, alege serverul tau si plaseaza o cerere cu plata USDT.",
   "heroNote": "Suma ta. Serverul dvs. Următoarea ta mișcare.",
   "heroTitle": "Noaptea<br><em>este a ta.</em>",
   "howEyebrow": "02 / CUM FUNcționează",
@@ -44,7 +44,7 @@
   "orderDesc": "Verificați-vă totalul USD și lăsați-vă contactul. Plata este în USDT.",
   "orderEyebrow": "COMANDA DVS. PERSONALĂ",
   "orderTitle": "Să luăm detaliile.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamante",
+  "pageTitle": "Cumpără diamante VAMPIR | Plată cu USDT — VAMPIR.TOP",
   "q1": "Este acesta un magazin oficial Netmarble?",
   "q2": "Cât costă diamantele?",
   "q3": "Cum funcționează livrarea?",
@@ -70,5 +70,10 @@
   "submit": "Salvați cererea",
   "success": "Solicitare {id} primita. Păstrează acest număr. Nu a fost efectuată nicio plată.",
   "worldTitle": "Noaptea îți aparține<br><em>.</em>",
-  "notificationWarning": "Solicitarea {id} a fost salvată, dar notificarea prin e-mail nu a putut fi trimisă. Vă rugăm să încercați din nou mai târziu."
+  "notificationWarning": "Solicitarea {id} a fost salvată, dar notificarea prin e-mail nu a putut fi trimisă. Vă rugăm să încercați din nou mai târziu.",
+  "metaDescription": "Cumpărați diamante pentru VAMPIR: minim 1.000, la prețul de {pricePer1000} USD la 1.000. Calculați-vă totalul și solicitați o comandă cu plata USDT.",
+  "heroEyebrow": "CUMPARA VAMPIR DIAMANTE",
+  "seoHeading": "VAMPIR diamante: pret, server si plata",
+  "seoIntro": "Comanda diamante pentru MMORPG VAMPIR in cantitatea de care ai nevoie, incepand de la 1.000. Pretul este {pricePer1000} USD la 1.000 de diamante. Utilizați calculatorul pentru a vedea totalul înainte de a trimite cererea. Preturile sunt afisate la USD; plata se face la USDT.",
+  "seoDetails": "Alegeți regiunea de joc, introduceți numele exact al serverului și lăsați un contact Discord, Telegram sau e-mail. Disponibilitatea, modalitatea de livrare, reteaua de transfer si suma finala USDT sunt convenite inainte de plata. Nu este necesară parola de cont. VAMPIR.TOP este un magazin independent, nu un serviciu oficial Netmarble."
 }

@@ -7,7 +7,7 @@
   "artCaption": "FIR ÄR NEXT KAPITEL",
   "catalogDesc": "Gitt all Diamant Betrag. Kuckt Äre Präis an USD direkt a fuert weider mat USDT Bezuelung.",
   "catalogEyebrow": "01 / DE STORE",
-  "catalogTitle": "Genau déi Diamanten<br><em>Dir braucht.</em>",
+  "catalogTitle": "Kaaft VAMPIR Diamanten.<br><em>Wielt Äre Betrag.</em>",
   "choose": "Bauen Är Bestellung",
   "closeLabel": "Zoumaachen",
   "commentLabel": "Kommentar (optional)",
@@ -28,7 +28,7 @@
   "footer": "Onofhängeg Buttek. Net verbonne mat Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Gitt keng Passwierder, Verifikatiounscoden oder Bezuelungsdetailer an.",
   "goShop": "Erstellt eng personaliséiert Bestellung ↗",
-  "heroDesc": "Diamanten fir Är nächst Kapitel am VAMPIR. Wielt Äre Betrag. Kuckt de Präis an USD. Bezuelen an USDT.",
+  "heroDesc": "Kaaft Diamanten fir VAMPIR vun 1.000 Diamanten. Berechent de Präis an USD, wielt Äre Server a Plaz eng Demande mat USDT Bezuelen.",
   "heroNote": "Äre Betrag. Äre Server. Är nächst Beweegung.",
   "heroTitle": "D'Nuecht<br><em>ass Är.</em>",
   "howEyebrow": "02 / WÉI FUNKT",
@@ -44,7 +44,7 @@
   "orderDesc": "Préift Ären USD Total a loosst Äre Kontakt. Bezuelung ass an USDT.",
   "orderEyebrow": "ÄR PERSONELL Uerdnung",
   "orderTitle": "Loosst eis d'Detailer kréien.",
-  "pageTitle": "VAMPIR.TOP - VAMPIR Diamanten",
+  "pageTitle": "VAMPIR-Diamante kafen | Mat USDT bezuelen — VAMPIR.TOP",
   "q1": "Ass dëst en offiziellen Netmarble Store?",
   "q2": "Wéi vill kaschten Diamanten?",
   "q3": "Wéi funktionéiert d'Liwwerung?",
@@ -70,5 +70,10 @@
   "submit": "Späicheren Ufro",
   "success": "Ufro {id} kritt. Halt dës Zuel. Kee Bezuelung gouf gemaach.",
   "worldTitle": "D'Nuecht gehéiert<br><em>Dir.</em>",
-  "notificationWarning": "Ufro {id} gouf gespäichert, awer d'E-Mail Notifikatioun konnt net geschéckt ginn. Probéiert w.e.g. méi spéit nach eng Kéier."
+  "notificationWarning": "Ufro {id} gouf gespäichert, awer d'E-Mail Notifikatioun konnt net geschéckt ginn. Probéiert w.e.g. méi spéit nach eng Kéier.",
+  "metaDescription": "Kaaft Diamanten fir VAMPIR: Minimum 1.000, Präis bei {pricePer1000} USD pro 1.000. Berechent Ären Total an frot eng Bestellung mat USDT Bezuelung.",
+  "heroEyebrow": "KEE VAMPIR DIAMANTEN",
+  "seoHeading": "VAMPIR Diamanten: Präis, Server a Bezuelen",
+  "seoIntro": "Bestellt Diamanten fir den MMORPG VAMPIR an der Quantitéit déi Dir braucht, ab 1.000. De Präis ass {pricePer1000} USD pro 1.000 Diamanten. Benotzt de Rechner fir den Total ze gesinn ier Dir Är Ufro ofgitt. Präisser sinn ugewisen an USD; Bezuelung ass am USDT.",
+  "seoDetails": "Wielt Är Spill Regioun, gitt der exakt Server Numm an verloossen engem Discord, Telegram oder Email Kontakt. Disponibilitéit, d'Liwwermethod, d'Transfernetz an d'Finale USDT Betrag si virum Bezuelen ausgemaach. Kee Kont Passwuert ass néideg. VAMPIR.TOP ass en onofhängege Buttek, net en offiziellen Netmarble Service."
 }

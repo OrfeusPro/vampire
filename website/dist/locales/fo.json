@@ -7,7 +7,7 @@
   "artCaption": "FOR YOUR NEXT CHAPTER",
   "catalogDesc": "Skriva nakra diamant upphædd. Sí tín prís í USD beinanvegin og halt fram við USDT gjaldi.",
   "catalogEyebrow": "01 / THE STORE",
-  "catalogTitle": "Júst teir diamantarnar<br><em>tú hevur brúk fyri.</em>",
+  "catalogTitle": "Keyp VAMPIR diamantir.<br><em>Vel tína upphædd.</em>",
   "choose": "Build your order",
   "closeLabel": "Lat aftur",
   "commentLabel": "Viðmerking (valfrítt)",
@@ -28,7 +28,7 @@
   "footer": "Independent store. Ikki tilknýtt Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Skriva ikki loyniorð, váttanarkotur ella gjaldsupplýsingar.",
   "goShop": "Stovna eina sersniðgivna bílegging ↗",
-  "heroDesc": "Diamantir til tín næsta kapittul í VAMPIR. Vel tína upphædd. Sí prísin í USD. Greið í USDT.",
+  "heroDesc": "Keyp diamantir til VAMPIR úr 1.000 diamantum. Rokna prísin í USD, vel tín ambætara og set eina umbøn við USDT gjaldi.",
   "heroNote": "Tín upphædd. Tín ambætari. Títt næsta stig.",
   "heroTitle": "Náttin<br><em>er tín.</em>",
   "howEyebrow": "02 / HVUSSU TAÐ VIRKAR",
@@ -44,7 +44,7 @@
   "orderDesc": "Kanna títt USD samlaða og skriva tína kontakt. Gjaldið er í USDT.",
   "orderEyebrow": "TÍN PERSÓNLIGA BÍLEGGING",
   "orderTitle": "Latið okkum fáa smálutirnar.",
-  "pageTitle": "VAMPIR.TOPPUR — VAMPIR Diamantir",
+  "pageTitle": "Keyp VAMPIR-diamantar | Rinda við USDT — VAMPIR.TOP",
   "q1": "Er hetta ein offisiellur Netmarble handil?",
   "q2": "Hvussu nógv kosta diamantir?",
   "q3": "Hvussu virkar avhending?",
@@ -70,5 +70,10 @@
   "submit": "Goym umbøn",
   "success": "Umbøn {id} móttikin. Goym hetta nummarið. Eingin útgjalding er gjørd.",
   "worldTitle": "Náttin eigur<br><em>tú.</em>",
-  "notificationWarning": "Umbønin {id} varð goymd, men teldupostfráboðanin kundi ikki sendast. Vinarliga royn aftur seinni."
+  "notificationWarning": "Umbønin {id} varð goymd, men teldupostfráboðanin kundi ikki sendast. Vinarliga royn aftur seinni.",
+  "metaDescription": "Keyp diamantir fyri VAMPIR: minst 1.000, prísað á {pricePer1000} USD á 1.000. Rokna tína samlaðu upphædd og bið um bílegging við USDT gjaldi.",
+  "heroEyebrow": "KEYP VAMPIR DIAMANTAR",
+  "seoHeading": "VAMPIR diamantir: verð, servari og greiðing",
+  "seoIntro": "Bílegg diamantir til MMORPG VAMPIR í nøgdini tú hevur brúk fyri, byrjandi frá 1.000. Prísurin er {pricePer1000} USD á 1.000 diamantir. Brúka roknimaskinuna til at síggja samlaðu upphæddina, áðrenn tú sendir tína umbøn inn. Prísir síggjast í USD; gjaldið er á USDT.",
+  "seoDetails": "Vel títt spæliøki, skriva nágreiniliga ambætaranavnið og skriva eina Discord, Telegram ella teldupostkontakt. Tilgongd, avhendingarháttur, flytingarnet og endalig USDT upphædd eru avtalað áðrenn gjald. Einki kontuloyniorð er kravt. VAMPIR.TOP er ein sjálvstøðugur handil, ikki ein offisiell Netmarble tænasta."
 }

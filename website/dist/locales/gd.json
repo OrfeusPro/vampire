@@ -7,7 +7,7 @@
   "artCaption": "DO MHAC CAIBIDEIL",
   "catalogDesc": "Cuir a-steach meud daoimean sam bith. Faic do phrìs ann an USD sa bhad agus lean ort le pàigheadh ​​​​USDT.",
   "catalogEyebrow": "01 / AN STÒIR",
-  "catalogTitle": "Dìreach na daoimeanan <br><em>a tha a dhìth ort.</em>",
+  "catalogTitle": "Ceannaich VAMPIR daoimeanan.<br><em>Tagh an t-suim agad.</em>",
   "choose": "Tog do òrdugh",
   "closeLabel": "Dùin",
   "commentLabel": "Beachd (roghainneil)",
@@ -28,7 +28,7 @@
   "footer": "Bùth neo-eisimeileach. Gun a bhith ceangailte ri Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Na cuir a-steach faclan-faire, còdan dearbhaidh no mion-fhiosrachadh pàighidh.",
   "goShop": "Cruthaich òrdugh gnàthaichte ↗",
-  "heroDesc": "Daoimeanan airson an ath chaibideil agad ann an VAMPIR. Tagh an t-suim agad. Coimhead ìre USDe. Pàigheadh ​​​​ann an USDT.",
+  "heroDesc": "Ceannaich daoimeanan airson VAMPIR bho 1,000 daoimeanan. Obraich a-mach a’ phrìs ann an USD, tagh am frithealaiche agad agus cuir iarrtas le pàigheadh ​​USDT.",
   "heroNote": "An t-suim agad. Am frithealaiche agad. An ath ghluasad agad.",
   "heroTitle": "<br><em>'s leatsa an oidhche.</em>",
   "howEyebrow": "02 / Mar a tha e ag obair",
@@ -44,7 +44,7 @@
   "orderDesc": "Thoir sùil air an àireamh USD agad agus fàg do neach-conaltraidh. Tha pàigheadh ​​​​ann an USDT.",
   "orderEyebrow": "DO ORDÚ PEARSANTA",
   "orderTitle": "Feuch gum faigh sinn am mion-fhiosrachadh.",
-  "pageTitle": "VAMPIR.TOP - VAMPIR Daoimeanan",
+  "pageTitle": "Ceannaich daoimeanan VAMPIR | Pàigh le USDT — VAMPIR.TOP",
   "q1": "An e stòr oifigeil Netmarble a tha seo?",
   "q2": "Dè a chosgas daoimeanan?",
   "q3": "Ciamar a tha lìbhrigeadh ag obair?",
@@ -70,5 +70,10 @@
   "submit": "Sàbhail iarrtas",
   "success": "Iarrtas {id} air fhaighinn. Cùm an àireamh seo. Cha deach pàigheadh ​​sam bith a dhèanamh.",
   "worldTitle": "Buinidh an oidhche <br><em>dhut.</em>",
-  "notificationWarning": "Chaidh iarrtas {id} a shàbhaladh, ach cha b' urrainn dhuinn am brath post-d a chur. Feuch ris a-rithist nas anmoiche."
+  "notificationWarning": "Chaidh iarrtas {id} a shàbhaladh, ach cha b' urrainn dhuinn am brath post-d a chur. Feuch ris a-rithist nas anmoiche.",
+  "metaDescription": "Ceannaich daoimeanan airson VAMPIR: 1,000 aig a’ char as lugha, prìs aig {pricePer1000} USD gach 1,000. Obraich a-mach an àireamh iomlan agad agus iarr òrdugh le pàigheadh ​​USDT.",
+  "heroEyebrow": "Ceannaich VAMPIR DIAMONDS",
+  "seoHeading": "VAMPIR daoimeanan: prìs, frithealaiche agus pàigheadh",
+  "seoIntro": "Òrdaich daoimeanan airson an MMORPG VAMPIR anns a’ mheud a dh’ fheumas tu, a’ tòiseachadh bho 1,000. Is e a’ phrìs {pricePer1000} USD gach 1,000 daoimeanan. Cleachd an àireamhair gus an àireamh iomlan fhaicinn mus cuir thu a-steach d’ iarrtas. Tha prìsean air an sealltainn ann an USD; Tha am pàigheadh ​​ann an USDT.",
+  "seoDetails": "Tagh an sgìre geama agad, cuir a-steach an dearbh ainm frithealaiche agus fàg Discord, Telegram no fios post-d. Tha cothrom, an dòigh lìbhrigidh, lìonra gluasaid agus an t-suim USDT mu dheireadh air an aontachadh mus tèid am pàigheadh. Chan eil feum air facal-faire cunntais. 'S e stòr neo-eisimeileach a th' ann an VAMPIR.TOP, chan e seirbheis oifigeil Netmarble."
 }

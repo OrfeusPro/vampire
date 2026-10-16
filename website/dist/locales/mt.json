@@ -7,7 +7,7 @@
   "artCaption": "GĦAL KAPITOLU LI JMISS TIEGĦEK",
   "catalogDesc": "Daħħal kwalunkwe ammont tad-djamanti. Ara l-prezz tiegħek f'USD istantanjament u kompli bil-ħlas USDT.",
   "catalogEyebrow": "01 / IL-ĦAŻEN",
-  "catalogTitle": "Eżattament id-djamanti<br><em>li għandek bżonn.</em>",
+  "catalogTitle": "Ixtri VAMPIR djamanti.<br><em>Agħżel l-ammont tiegħek.</em>",
   "choose": "Ibni l-ordni tiegħek",
   "closeLabel": "Agħlaq",
   "commentLabel": "Kumment (mhux obbligatorju)",
@@ -28,7 +28,7 @@
   "footer": "Maħżen indipendenti. Mhux affiljat ma 'Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Daħħalx passwords, kodiċi ta' verifika jew dettalji tal-ħlas.",
   "goShop": "Oħloq ordni tad-dwana ↗",
-  "heroDesc": "Djamanti għall-kapitlu li jmiss tiegħek f'VAMPIR. Agħżel l-ammont tiegħek. Ara l-prezz f'USD. Ħlas f'USDT.",
+  "heroDesc": "Ixtri djamanti għal VAMPIR minn 1,000 djamant. Ikkalkula l-prezz f'USD, agħżel is-server tiegħek u poġġi talba bi ħlas USDT.",
   "heroNote": "L-ammont tiegħek. Is-server tiegħek. Il-mossa li jmiss tiegħek.",
   "heroTitle": "Il-lejl<br><em>huwa tiegħek.</em>",
   "howEyebrow": "02 / KIF TAĦDEM",
@@ -44,7 +44,7 @@
   "orderDesc": "Iċċekkja t-total tal-USD tiegħek u ħalli l-kuntatt tiegħek. Il-ħlas huwa f'USDT.",
   "orderEyebrow": "L-ORDNI PERSONALI TIEGĦEK",
   "orderTitle": "Ejja nġibu d-dettalji.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Djamanti",
+  "pageTitle": "Ixtri djamanti VAMPIR | Ħlas b’USDT — VAMPIR.TOP",
   "q1": "Dan huwa ħanut uffiċjali Netmarble?",
   "q2": "Kemm jiswew id-djamanti?",
   "q3": "Kif taħdem il-kunsinna?",
@@ -70,5 +70,10 @@
   "submit": "Ħlief it-talba",
   "success": "Riċevuta talba {id}. Żomm dan in-numru. Ma sar l-ebda ħlas.",
   "worldTitle": "Il-lejl jappartjeni<br><em>lilek.</em>",
-  "notificationWarning": "It-talba {id} ġiet salvata, iżda n-notifika bl-email ma setgħetx tintbagħat. Jekk jogħġbok erġa' pprova aktar tard."
+  "notificationWarning": "It-talba {id} ġiet salvata, iżda n-notifika bl-email ma setgħetx tintbagħat. Jekk jogħġbok erġa' pprova aktar tard.",
+  "metaDescription": "Ixtri djamanti għal VAMPIR: minimu 1,000, bi prezz {pricePer1000} USD għal kull 1,000. Ikkalkula t-total tiegħek u itlob ordni bi ħlas USDT.",
+  "heroEyebrow": "IXTRI VAMPIR DJAMANTI",
+  "seoHeading": "VAMPIR djamanti: prezz, server u ħlas",
+  "seoIntro": "Ordna djamanti għad-MMORPG VAMPIR fil-kwantità li għandek bżonn, tibda minn 1,000. Il-prezz huwa {pricePer1000} USD għal kull 1,000 djamant. Uża l-kalkulatur biex tara t-total qabel ma tibgħat it-talba tiegħek. Il-prezzijiet huma murija f’USD; il-ħlas huwa fi USDT.",
+  "seoDetails": "Agħżel ir-reġjun tal-logħba tiegħek, daħħal l-isem eżatt tas-server u ħalli kuntatt Discord, Telegram jew email. Id-disponibbiltà, il-metodu tal-kunsinna, in-netwerk tat-trasferiment u l-ammont finali USDT huma miftiehma qabel il-ħlas. Mhi meħtieġa l-ebda password tal-kont. VAMPIR.TOP huwa ħanut indipendenti, mhux servizz uffiċjali Netmarble."
 }

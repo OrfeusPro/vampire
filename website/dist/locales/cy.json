@@ -7,7 +7,7 @@
   "artCaption": "AM EICH PENNOD NESAF",
   "catalogDesc": "Rhowch unrhyw swm diemwnt. Gweld eich pris yn USD ar unwaith a pharhau â thaliad USDT.",
   "catalogEyebrow": "01/ Y STORFA",
-  "catalogTitle": "Yn union y diemwntau <br><em>sydd eu hangen arnoch.</em>",
+  "catalogTitle": "Prynwch VAMPIR o ddiamwntau.<br><em>Dewiswch eich swm.</em>",
   "choose": "Adeiladwch eich archeb",
   "closeLabel": "Cau",
   "commentLabel": "Sylw (dewisol)",
@@ -28,7 +28,7 @@
   "footer": "Siop annibynnol. Ddim yn gysylltiedig â Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Peidiwch â rhoi cyfrineiriau, codau dilysu na manylion talu.",
   "goShop": "Creu gorchymyn wedi'i deilwra ↗",
-  "heroDesc": "Diemwntau ar gyfer eich pennod nesaf yn VAMPIR. Dewiswch eich swm. Gweler y pris yn USD. Talu mewn USDT.",
+  "heroDesc": "Prynu diemwntau ar gyfer VAMPIR o 1,000 o ddiamwntau. Cyfrifwch y pris yn USD, dewiswch eich gweinydd a gosodwch gais gyda thaliad USDT.",
   "heroNote": "Eich swm. Eich gweinydd. Eich symudiad nesaf.",
   "heroTitle": "Eich un chi yw'r nos <br><em>.</em>",
   "howEyebrow": "02 / SUT MAE'N GWEITHIO",
@@ -44,7 +44,7 @@
   "orderDesc": "Gwiriwch eich cyfanswm USD a gadewch eich cyswllt. Mae'r taliad mewn USDT.",
   "orderEyebrow": "EICH GORCHYMYN PERSONOL",
   "orderTitle": "Gadewch i ni gael y manylion.",
-  "pageTitle": "VAMPIR.TOP—VAMPIR Diemwntau",
+  "pageTitle": "Prynu diemwntau VAMPIR | Talu gyda USDT — VAMPIR.TOP",
   "q1": "Ai siop Netmarble swyddogol yw hon?",
   "q2": "Faint mae diemwntau yn ei gostio?",
   "q3": "Sut mae cyflwyno'n gweithio?",
@@ -70,5 +70,10 @@
   "submit": "Cadw cais",
   "success": "Derbyniwyd cais {id}. Cadwch y rhif hwn. Nid oes unrhyw daliad wedi'i wneud.",
   "worldTitle": "Mae'r noson yn perthyn <br><em>i chi.</em>",
-  "notificationWarning": "Cadwyd cais {id}, ond ni ellid anfon yr hysbysiad e-bost. Ceisiwch eto yn nes ymlaen."
+  "notificationWarning": "Cadwyd cais {id}, ond ni ellid anfon yr hysbysiad e-bost. Ceisiwch eto yn nes ymlaen.",
+  "metaDescription": "Prynu diemwntau ar gyfer VAMPIR: lleiafswm 1,000, pris {pricePer1000} USD fesul 1,000. Cyfrifwch eich cyfanswm a gofynnwch am archeb gyda thaliad USDT.",
+  "heroEyebrow": "PRYNU VAMPIR DIAMONDS",
+  "seoHeading": "VAMPIR diemwntau: pris, gweinydd a thaliad",
+  "seoIntro": "Archebwch ddiamwntau ar gyfer y MMORPG VAMPIR yn y swm sydd ei angen arnoch, gan ddechrau o 1,000. Y pris yw {pricePer1000} USD fesul 1,000 o ddiamwntau. Defnyddiwch y gyfrifiannell i weld y cyfanswm cyn cyflwyno'ch cais. Dangosir y prisiau yn USD; mae'r taliad yn USDT.",
+  "seoDetails": "Dewiswch eich rhanbarth gêm, nodwch union enw'r gweinydd a gadewch Discord, Telegram neu gyswllt e-bost. Argaeledd, cytunir ar y dull cyflwyno, rhwydwaith trosglwyddo a swm terfynol USDT cyn talu. Nid oes angen cyfrinair cyfrif. Mae VAMPIR.TOP yn siop annibynnol, nid yn wasanaeth Netmarble swyddogol."
 }

@@ -7,7 +7,7 @@
   "artCaption": "JŪSU NĀKAMAJAI NODAĻAI",
   "catalogDesc": "Ievadiet jebkuru dimanta summu. Nekavējoties skatiet savu cenu USD un turpiniet ar USDT maksājumu.",
   "catalogEyebrow": "01 / VEIKALS",
-  "catalogTitle": "Tieši tādi dimanti<br><em>, kas jums nepieciešami.</em>",
+  "catalogTitle": "Pērciet VAMPIR dimantus.<br><em>Izvēlieties summu.</em>",
   "choose": "Izveidojiet savu pasūtījumu",
   "closeLabel": "Aizvērt",
   "commentLabel": "Komentēt (pēc izvēles)",
@@ -28,7 +28,7 @@
   "footer": "Neatkarīgs veikals. Nav saistīts ar Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Neievadiet paroles, verifikācijas kodus vai maksājuma informāciju.",
   "goShop": "Izveidojiet pielāgotu pasūtījumu ↗",
-  "heroDesc": "Dimanti jūsu nākamajai nodaļai VAMPIR. Izvēlieties savu summu. Skatīt cenu USD. Maksājiet USDT.",
+  "heroDesc": "Pērciet dimantus par VAMPIR no 1000 dimantiem. Aprēķiniet cenu USD, izvēlieties savu serveri un iesniedziet pieprasījumu ar USDT maksājumu.",
   "heroNote": "Jūsu summa. Jūsu serveris. Jūsu nākamais gājiens.",
   "heroTitle": "Nakts<br><em>ir jūsu.</em>",
   "howEyebrow": "02 / KĀ TAS DARBOJAS",
@@ -44,7 +44,7 @@
   "orderDesc": "Pārbaudiet savu USD kopējo summu un atstājiet savu kontaktpersonu. Maksājums ir USDT.",
   "orderEyebrow": "JŪSU PERSONĪGAIS PASŪTĪJUMS",
   "orderTitle": "Iegūsim sīkāku informāciju.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Dimanti",
+  "pageTitle": "Pirkt VAMPIR dimantus | Maksājums ar USDT — VAMPIR.TOP",
   "q1": "Vai šis ir oficiālais Netmarble veikals?",
   "q2": "Cik maksā dimanti?",
   "q3": "Kā notiek piegāde?",
@@ -70,5 +70,10 @@
   "submit": "Saglabāt pieprasījumu",
   "success": "Saņemts pieprasījums {id}. Saglabājiet šo numuru. Maksājums nav veikts.",
   "worldTitle": "Nakts pieder<br><em>jums.</em>",
-  "notificationWarning": "Pieprasījums {id} tika saglabāts, taču e-pasta paziņojumu nevarēja nosūtīt. Lūdzu, vēlāk mēģiniet vēlreiz."
+  "notificationWarning": "Pieprasījums {id} tika saglabāts, taču e-pasta paziņojumu nevarēja nosūtīt. Lūdzu, vēlāk mēģiniet vēlreiz.",
+  "metaDescription": "Pērciet dimantus par VAMPIR: vismaz 1000, cena {pricePer1000} USD par 1000. Aprēķiniet kopējo summu un pieprasiet pasūtījumu ar USDT maksājumu.",
+  "heroEyebrow": "PIRKT VAMPIR DIMANTU",
+  "seoHeading": "VAMPIR dimanti: cena, serveris un samaksa",
+  "seoIntro": "Pasūtiet dimantus uz MMORPG VAMPIR jums vajadzīgajā daudzumā, sākot no 1000. Cena ir {pricePer1000} USD par 1000 dimantiem. Pirms pieprasījuma iesniegšanas izmantojiet kalkulatoru, lai redzētu kopējo summu. Cenas norādītas USD; maksājums ir USDT.",
+  "seoDetails": "Izvēlieties savu spēles reģionu, ievadiet precīzu servera nosaukumu un atstājiet Discord, Telegram vai e-pasta kontaktpersonu. Pieejamība, piegādes veids, pārsūtīšanas tīkls un galīgā USDT summa tiek saskaņota pirms apmaksas. Konta parole nav nepieciešama. VAMPIR.TOP ir neatkarīgs veikals, nevis oficiāls Netmarble pakalpojums."
 }

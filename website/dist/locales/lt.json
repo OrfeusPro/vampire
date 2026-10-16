@@ -7,7 +7,7 @@
   "artCaption": "KITAM SKYRIUI",
   "catalogDesc": "Įveskite bet kokį deimantų kiekį. Nedelsdami pamatykite kainą USD ir tęskite mokėjimą USDT.",
   "catalogEyebrow": "01 / PARDUOTUVĖ",
-  "catalogTitle": "Būtent deimantai<br><em>jums reikia.</em>",
+  "catalogTitle": "Pirkite VAMPIR deimantus.<br><em>Pasirinkite sumą.</em>",
   "choose": "Sukurkite savo užsakymą",
   "closeLabel": "Uždaryti",
   "commentLabel": "Komentuoti (neprivaloma)",
@@ -28,7 +28,7 @@
   "footer": "Nepriklausoma parduotuvė. Nesusijęs su Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Neveskite slaptažodžių, patvirtinimo kodų ar mokėjimo informacijos.",
   "goShop": "Sukurkite pasirinktinį užsakymą ↗",
-  "heroDesc": "Deimantai kitam jūsų VAMPIR skyriui. Pasirinkite savo sumą. Žiūrėkite kainą USD. Mokėkite USDT.",
+  "heroDesc": "Pirkite deimantus už VAMPIR iš 1000 deimantų. Apskaičiuokite kainą USD, pasirinkite savo serverį ir pateikite užklausą su mokėjimu USDT.",
   "heroNote": "Jūsų suma. Jūsų serveris. Kitas tavo žingsnis.",
   "heroTitle": "Naktis<br><em>yra tavo.</em>",
   "howEyebrow": "02 / KAIP TAI VEIKIA",
@@ -44,7 +44,7 @@
   "orderDesc": "Patikrinkite savo USD sumą ir palikite savo kontaktą. Mokėjimas atliekamas USDT.",
   "orderEyebrow": "JŪSŲ ASMENINIS UŽSAKYMAS",
   "orderTitle": "Išsiaiškinkime detales.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR deimantai",
+  "pageTitle": "Pirkti VAMPIR deimantus | Mokėti USDT — VAMPIR.TOP",
   "q1": "Ar tai oficiali Netmarble parduotuvė?",
   "q2": "Kiek kainuoja deimantai?",
   "q3": "Kaip veikia pristatymas?",
@@ -70,5 +70,10 @@
   "submit": "Išsaugoti užklausą",
   "success": "Gautas prašymas {id}. Išsaugokite šį numerį. Joks mokėjimas nebuvo atliktas.",
   "worldTitle": "Naktis priklauso<br><em>jums.</em>",
-  "notificationWarning": "Užklausa {id} buvo išsaugota, bet el. pašto pranešimo išsiųsti nepavyko. Bandykite dar kartą vėliau."
+  "notificationWarning": "Užklausa {id} buvo išsaugota, bet el. pašto pranešimo išsiųsti nepavyko. Bandykite dar kartą vėliau.",
+  "metaDescription": "Pirkite deimantus už VAMPIR: mažiausiai 1000, kurių kaina yra {pricePer1000} USD už 1000. Suskaičiuokite savo sumą ir paprašykite užsakymo su USDT apmokėjimu.",
+  "heroEyebrow": "PIRKTI VAMPIR DEIMANTUS",
+  "seoHeading": "VAMPIR deimantai: kaina, serveris ir mokėjimas",
+  "seoIntro": "Užsisakykite deimantų numeriu MMORPG VAMPIR tiek, kiek jums reikia, pradedant nuo 1000. Kaina yra {pricePer1000} USD už 1000 deimantų. Prieš pateikdami užklausą, naudokite skaičiuoklę, kad pamatytumėte bendrą sumą. Kainos nurodytos USD; Mokėjimas yra USDT.",
+  "seoDetails": "Pasirinkite žaidimo regioną, įveskite tikslų serverio pavadinimą ir palikite Discord, Telegram arba el. Prieinamumas, pristatymo būdas, perdavimo tinklas ir galutinė USDT suma derinama prieš apmokėjimą. Paskyros slaptažodis nereikalingas. VAMPIR.TOP yra nepriklausoma parduotuvė, o ne oficiali Netmarble paslauga."
 }

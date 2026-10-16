@@ -7,7 +7,7 @@
   "artCaption": "FÖR DITT NÄSTA KAPITEL",
   "catalogDesc": "Ange valfritt diamantbelopp. Se ditt pris i USD direkt och fortsätt med USDT-betalning.",
   "catalogEyebrow": "01 / BUTIKEN",
-  "catalogTitle": "Exakt de diamanter<br><em>du behöver.</em>",
+  "catalogTitle": "Köp VAMPIR diamanter.<br><em>Välj ditt belopp.</em>",
   "choose": "Bygg din beställning",
   "closeLabel": "Stäng",
   "commentLabel": "Kommentar (valfritt)",
@@ -28,7 +28,7 @@
   "footer": "Oberoende butik. Ej ansluten till Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Ange inte lösenord, verifieringskoder eller betalningsuppgifter.",
   "goShop": "Skapa en anpassad ordning ↗",
-  "heroDesc": "Diamanter för ditt nästa kapitel i VAMPIR. Välj ditt belopp. Se priset i USD. Betala i USDT.",
+  "heroDesc": "Köp diamanter för VAMPIR från 1 000 diamanter. Beräkna priset i USD, välj din server och lägg en förfrågan med USDT betalning.",
   "heroNote": "Ditt belopp. Din server. Ditt nästa drag.",
   "heroTitle": "Natten<br><em>är din.</em>",
   "howEyebrow": "02 / HUR DET FUNGERAR",
@@ -44,7 +44,7 @@
   "orderDesc": "Kontrollera din totala USD och lämna din kontakt. Betalning sker i USDT.",
   "orderEyebrow": "DIN PERSONLIGA BESTÄLLNING",
   "orderTitle": "Låt oss ta reda på detaljerna.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamanter",
+  "pageTitle": "Köp VAMPIR-diamanter | Betala med USDT — VAMPIR.TOP",
   "q1": "Är detta en officiell Netmarble-butik?",
   "q2": "Hur mycket kostar diamanter?",
   "q3": "Hur fungerar leveransen?",
@@ -70,5 +70,10 @@
   "submit": "Spara begäran",
   "success": "Begäran {id} mottagen. Behåll detta nummer. Ingen betalning har gjorts.",
   "worldTitle": "Natten tillhör<br><em>dig.</em>",
-  "notificationWarning": "Begäran {id} sparades, men e-postmeddelandet kunde inte skickas. Försök igen senare."
+  "notificationWarning": "Begäran {id} sparades, men e-postmeddelandet kunde inte skickas. Försök igen senare.",
+  "metaDescription": "Köp diamanter för VAMPIR: minst 1 000, prissatt till {pricePer1000} USD per 1 000. Beräkna din totalsumma och begär en beställning med USDT betalning.",
+  "heroEyebrow": "KÖP VAMPIR DIAMANTER",
+  "seoHeading": "VAMPIR diamanter: pris, server och betalning",
+  "seoIntro": "Beställ diamanter för MMORPG VAMPIR i den mängd du behöver, från 1 000. Priset är {pricePer1000} USD per 1 000 diamanter. Använd kalkylatorn för att se summan innan du skickar in din förfrågan. Priserna visas i USD; betalning sker på USDT.",
+  "seoDetails": "Välj din spelregion, ange det exakta servernamnet och lämna en Discord, Telegram eller e-postkontakt. Tillgänglighet, leveranssätt, överföringsnätverk och slutligt USDT belopp avtalas före betalning. Inget kontolösenord krävs. VAMPIR.TOP är en oberoende butik, inte en officiell Netmarble-tjänst."
 }

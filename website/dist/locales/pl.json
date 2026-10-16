@@ -7,7 +7,7 @@
   "artCaption": "NA NASTĘPNY ROZDZIAŁ",
   "catalogDesc": "Wpisz dowolną ilość diamentów. Natychmiast zobacz swoją cenę w USD i kontynuuj płatność w USDT.",
   "catalogEyebrow": "01 / SKLEP",
-  "catalogTitle": "Dokładnie takie diamenty<br><em>potrzebujesz.</em>",
+  "catalogTitle": "Kup VAMPIR diamentów.<br><em>Wybierz ilość.</em>",
   "choose": "Zbuduj swoje zamówienie",
   "closeLabel": "Zamknij",
   "commentLabel": "Komentarz (opcjonalnie)",
@@ -28,7 +28,7 @@
   "footer": "Niezależny sklep. Nie jest powiązany z Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Nie wprowadzaj haseł, kodów weryfikacyjnych ani szczegółów płatności.",
   "goShop": "Utwórz zamówienie niestandardowe ↗",
-  "heroDesc": "Diamenty na kolejny rozdział w VAMPIR. Wybierz kwotę. Zobacz cenę w USD. Zapłać w USDT.",
+  "heroDesc": "Kup diamenty do VAMPIR już od 1000 sztuk. Oblicz cenę w USD, wybierz serwer i złóż zamówienie z płatnością w USDT.",
   "heroNote": "Twoja kwota. Twój serwer. Twój następny ruch.",
   "heroTitle": "Ta noc<br><em>należy do Ciebie.</em>",
   "howEyebrow": "02 / JAK TO DZIAŁA",
@@ -44,7 +44,7 @@
   "orderDesc": "Sprawdź sumę USD i zostaw kontakt. Płatność jest w USDT.",
   "orderEyebrow": "TWOJE OSOBISTE ZAMÓWIENIE",
   "orderTitle": "Poznajmy szczegóły.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamenty",
+  "pageTitle": "Kup diamenty VAMPIR | Płatność USDT — VAMPIR.TOP",
   "q1": "Czy to oficjalny sklep Netmarble?",
   "q2": "Ile kosztują diamenty?",
   "q3": "Jak działa dostawa?",
@@ -70,5 +70,10 @@
   "submit": "Zapisz prośbę",
   "success": "Otrzymano żądanie {id}. Zachowaj ten numer. Nie dokonano żadnej płatności.",
   "worldTitle": "Noc należy<br><em>do Ciebie.</em>",
-  "notificationWarning": "Żądanie {id} zostało zapisane, ale nie można wysłać powiadomienia e-mail. Spróbuj ponownie później."
+  "notificationWarning": "Żądanie {id} zostało zapisane, ale nie można wysłać powiadomienia e-mail. Spróbuj ponownie później.",
+  "metaDescription": "Kup diamenty do VAMPIR: od 1000 diamentów, cena {pricePer1000} USD za 1000. Oblicz koszt i złóż zamówienie z płatnością w USDT.",
+  "heroEyebrow": "KUP VAMPIR DIAMENTÓW",
+  "seoHeading": "VAMPIR diamentów: cena, serwer i płatność",
+  "seoIntro": "Zamów diamenty dla MMORPG VAMPIR w potrzebnej ilości, zaczynając od 1000. Cena wynosi {pricePer1000} USD za 1000 diamentów. Skorzystaj z kalkulatora, aby sprawdzić kwotę całkowitą przed złożeniem wniosku. Ceny podane są pod numerem USD; płatność odbywa się pod numerem USDT.",
+  "seoDetails": "Wybierz region gry, wpisz dokładną nazwę serwera i zostaw kontakt Discord, Telegram lub e-mail. Dostępność, sposób dostawy, sieć transferów i ostateczna kwota USDT uzgadniane są przed dokonaniem płatności. Nie jest wymagane hasło do konta. VAMPIR.TOP to niezależny sklep, a nie oficjalny serwis Netmarble."
 }

@@ -7,7 +7,7 @@
   "artCaption": "SONRAKİ BÖLÜM İÇİN",
   "catalogDesc": "Herhangi bir elmas miktarını girin. USD cinsinden fiyatınızı anında görün ve USDT ödemesine devam edin.",
   "catalogEyebrow": "01 / MAĞAZA",
-  "catalogTitle": "Tam olarak ihtiyacınız olan<br><em>elmaslar.</em>",
+  "catalogTitle": "VAMPIR elmas satın alın.<br><em>Miktarınızı seçin.</em>",
   "choose": "Siparişinizi oluşturun",
   "closeLabel": "Kapat",
   "commentLabel": "Yorum (isteğe bağlı)",
@@ -28,7 +28,7 @@
   "footer": "Bağımsız mağaza. Netmarble'a bağlı değildir.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Şifreleri, doğrulama kodlarını veya ödeme ayrıntılarını girmeyin.",
   "goShop": "Özel bir sipariş oluşturun ↗",
-  "heroDesc": "VAMPIR'deki bir sonraki bölümünüz için elmaslar. Tutarınızı seçin. Fiyatı USD cinsinden görün. USDT cinsinden ödeme yapın.",
+  "heroDesc": "1.000 elmastan VAMPIR'ye elmas satın alın. USD'te fiyatı hesapla, sunucunu seç ve USDT ödemeyle talep oluştur.",
   "heroNote": "Tutarınız. Sunucunuz. Bir sonraki hamlen.",
   "heroTitle": "Bu gece<br><em>senindir.</em>",
   "howEyebrow": "02 / NASIL ÇALIŞIR",
@@ -44,7 +44,7 @@
   "orderDesc": "USD toplamınızı kontrol edin ve kişinizden ayrılın. Ödeme USDT cinsindendir.",
   "orderEyebrow": "KİŞİSEL SİPARİŞİNİZ",
   "orderTitle": "Ayrıntıları alalım.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Elmaslar",
+  "pageTitle": "VAMPIR Elmas Satın Al | USDT ile Ödeme — VAMPIR.TOP",
   "q1": "Burası resmi bir Netmarble mağazası mı?",
   "q2": "Elmasların maliyeti ne kadar?",
   "q3": "Teslimat nasıl çalışır?",
@@ -70,5 +70,10 @@
   "submit": "İsteği kaydet",
   "success": "Talep {id} alındı. Bu numarayı saklayın. Herhangi bir ödeme yapılmadı.",
   "worldTitle": "Gece<br><em>size ait.</em>",
-  "notificationWarning": "{id} numaralı istek kaydedildi ancak e-posta bildirimi gönderilemedi. Lütfen daha sonra tekrar deneyin."
+  "notificationWarning": "{id} numaralı istek kaydedildi ancak e-posta bildirimi gönderilemedi. Lütfen daha sonra tekrar deneyin.",
+  "metaDescription": "VAMPIR karşılığında elmas satın alın: minimum 1.000, fiyatı 1.000 başına {pricePer1000} USD. Toplam tutarınızı hesaplayıp USDT ödeme ile sipariş talebinde bulunun.",
+  "heroEyebrow": "VAMPIR ELMAS SATIN ALIN",
+  "seoHeading": "VAMPIR elmas: fiyat, sunucu ve ödeme",
+  "seoIntro": "MMORPG VAMPIR için 1.000 adetten başlayarak ihtiyacınız olan miktarda pırlanta sipariş edin. 1.000 pırlantanın fiyatı {pricePer1000} USD. İsteğinizi göndermeden önce toplamı görmek için hesap makinesini kullanın. Fiyatlar USD'te gösterilmektedir; ödeme USDT'te.",
+  "seoDetails": "Oyun bölgenizi seçin, sunucu adını tam olarak girin ve Discord, Telegram veya e-posta yoluyla iletişim kurun. Kullanılabilirlik, teslimat yöntemi, transfer ağı ve nihai USDT tutarı ödemeden önce kararlaştırılır. Hesap şifresine gerek yoktur. VAMPIR.TOP, resmi bir Netmarble hizmeti değil, bağımsız bir mağazadır."
 }

@@ -7,7 +7,7 @@
   "artCaption": "PARA O TEU PRÓXIMO CAPÍTULO",
   "catalogDesc": "Introduza calquera cantidade de diamante. Consulta o teu prezo en USD ao instante e continúa co pago USDT.",
   "catalogEyebrow": "01 / A TENDA",
-  "catalogTitle": "Exactamente os diamantes<br><em>que necesitas.</em>",
+  "catalogTitle": "Compra VAMPIR diamantes.<br><em>Escolle a túa cantidade.</em>",
   "choose": "Crea o teu pedido",
   "closeLabel": "Pechar",
   "commentLabel": "Comentario (opcional)",
@@ -28,7 +28,7 @@
   "footer": "Tenda independente. Non está afiliado a Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Non introduza contrasinais, códigos de verificación ou detalles de pago.",
   "goShop": "Crear un pedido personalizado ↗",
-  "heroDesc": "Diamantes para o teu próximo capítulo en VAMPIR. Escolla a súa cantidade. Consulta o prezo en USD. Paga en USDT.",
+  "heroDesc": "Compra diamantes para VAMPIR de 1.000 diamantes. Calcula o prezo no USD, escolle o teu servidor e fai unha solicitude co pago USDT.",
   "heroNote": "A túa cantidade. O teu servidor. O teu próximo movemento.",
   "heroTitle": "A noite<br><em>é túa.</em>",
   "howEyebrow": "02 / COMO FUNCIONA",
@@ -44,7 +44,7 @@
   "orderDesc": "Comproba o teu total de USD e deixa o teu contacto. O pago realízase en USDT.",
   "orderEyebrow": "A SÚA PEDIDO PERSOAL",
   "orderTitle": "Vexamos os detalles.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamantes",
+  "pageTitle": "Comprar diamantes VAMPIR | Pagar con USDT — VAMPIR.TOP",
   "q1": "É esta unha tenda oficial de Netmarble?",
   "q2": "Canto custan os diamantes?",
   "q3": "Como funciona a entrega?",
@@ -70,5 +70,10 @@
   "submit": "Gardar solicitude",
   "success": "Solicitude {id} recibida. Mantén este número. Non se fixo ningún pago.",
   "worldTitle": "A noite é<br><em>de ti.</em>",
-  "notificationWarning": "Gardouse a solicitude {id}, pero non se puido enviar a notificación por correo electrónico. Téntao de novo máis tarde."
+  "notificationWarning": "Gardouse a solicitude {id}, pero non se puido enviar a notificación por correo electrónico. Téntao de novo máis tarde.",
+  "metaDescription": "Compra diamantes para VAMPIR: mínimo 1.000, cun prezo de {pricePer1000} USD por 1.000. Calcula o teu total e solicita un pedido co pago USDT.",
+  "heroEyebrow": "COMPRA VAMPIR DIAMANTES",
+  "seoHeading": "VAMPIR diamantes: prezo, servidor e pago",
+  "seoIntro": "Pide diamantes para o MMORPG VAMPIR na cantidade que necesites, a partir de 1.000. O prezo é {pricePer1000} USD por 1.000 diamantes. Use a calculadora para ver o total antes de enviar a súa solicitude. Os prezos móstranse no USD; O pago realízase no USDT.",
+  "seoDetails": "Escolle a túa rexión de xogo, introduce o nome exacto do servidor e deixa un Discord, Telegram ou un correo electrónico de contacto. A dispoñibilidade, o método de entrega, a rede de transferencia e o importe final do USDT acórdase antes do pagamento. Non se require ningún contrasinal da conta. VAMPIR.TOP é unha tenda independente, non un servizo oficial Netmarble."
 }

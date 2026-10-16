@@ -22,6 +22,7 @@ for (const entry of registry.languages) {
       if(count(text)!==count(value)) errors.push('Changed brand/currency '+token+': '+key);
     }
     if(htmlKeys.has(key) && /<\/?(?!em\b|br\b)[a-z]|<(?:em|br)\s+[^>]*\w+=/i.test(text)) errors.push('Unsupported HTML: '+key);
+    if(htmlKeys.has(key) && JSON.stringify(text.match(/<[^>]+>/g)||[])!==JSON.stringify(value.match(/<[^>]+>/g)||[])) errors.push('Changed HTML structure: '+key);
   }
   for(const key of Object.keys(translation)) if(!(key in base)) errors.push('Unknown: '+key);
   failures += errors.length;

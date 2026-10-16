@@ -1,5 +1,7 @@
 """Read-only HTTP checks for language routes and search metadata."""
 import json
+import re
+import sys
 import pathlib
 import urllib.request
 import urllib.error
@@ -7,7 +9,8 @@ import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 
 ROOT = pathlib.Path(__file__).resolve().parent
-BASE = 'http://127.0.0.1:8787'
+PRODUCTION = '--production' in sys.argv
+BASE = 'https://vampir.top' if PRODUCTION else 'http://127.0.0.1:8787'
 class Page(HTMLParser):
     def __init__(self, html):
         super().__init__()
@@ -25,7 +28,7 @@ for entry in registry['languages']:
         html = response.read().decode('utf-8')
         assert response.status == 200
         assert response.headers['Content-Language'] == code
-        assert 'noindex' in response.headers['X-Robots-Tag']
+        assert ('noindex' in (response.headers.get('X-Robots-Tag') or '')) == (not PRODUCTION)
     page = Page(html)
     assert next(a['lang'] for t,a in page.tags if t == 'html') == code
     canonical = [a['href'] for t,a in page.tags if t == 'link' and a.get('rel') == 'canonical']
@@ -37,6 +40,15 @@ for entry in registry['languages']:
     title = json.loads((ROOT / ('dist/locales/'+code+'.json')).read_text(encoding='utf-8'))['pageTitle']
     import html as html_module
     assert '<title>' + html_module.escape(title, quote=True).replace('&#x27;', '&#039;') + '</title>' in html
+    messages = json.loads(re.search(r'<script id="i18n-data" type="application/json">(.*?)</script>', html, re.S).group(1))['messages'][code]
+    for attribute, key in [('name','description'), ('property','og:description'), ('name','twitter:description')]:
+        assert next(a['content'] for t,a in page.tags if t == 'meta' and a.get(attribute) == key) == messages['metaDescription'], (code, key)
+    structured = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S).group(1))
+    assert structured['@graph'][1]['description'] == messages['metaDescription']
+    for key in ['heroEyebrow', 'seoHeading', 'seoIntro', 'seoDetails']:
+        assert html_module.escape(messages[key], quote=True).replace('&#x27;', '&#039;') in html, (code, key)
+    assert '{pricePer1000}' not in messages['metaDescription'] + messages['seoIntro']
+    assert not re.search(r'918273\d+', messages['metaDescription'] + messages['seoIntro'])
 print('50 SSR routes, lang/title/canonical, 51 hreflang entries and crawlable links: OK')
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -54,8 +66,10 @@ with urllib.request.urlopen(BASE + '/sitemap.xml') as response:
     tree = ET.fromstring(response.read())
     assert len(tree) == 50
 with urllib.request.urlopen(BASE + '/robots.txt') as response:
-    assert 'Disallow: /\n' in response.read().decode()
-print('301 aliases, real 404, 50 sitemap URLs and local robots: OK')
+    robots = response.read().decode()
+    assert ('Disallow: /\n' in robots) == (not PRODUCTION)
+    if PRODUCTION: assert 'Sitemap: https://vampir.top/sitemap.xml' in robots
+print('301 aliases, real 404, 50 sitemap URLs and robots: OK')
 # Verify public-host directives without changing DNS or publishing.
 for path in ['/', '/robots.txt']:
     request = urllib.request.Request(BASE + path, headers={'Host': 'vampir.top'})

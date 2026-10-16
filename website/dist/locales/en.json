@@ -7,7 +7,7 @@
   "artCaption": "FOR YOUR NEXT CHAPTER",
   "catalogDesc": "Enter any diamond amount. See your price in USD instantly and continue with USDT payment.",
   "catalogEyebrow": "01 / THE STORE",
-  "catalogTitle": "Exactly the diamonds<br><em>you need.</em>",
+  "catalogTitle": "Buy VAMPIR diamonds.<br><em>Choose your amount.</em>",
   "choose": "Build your order",
   "closeLabel": "Close",
   "commentLabel": "Comment (optional)",
@@ -28,7 +28,7 @@
   "footer": "Independent store. Not affiliated with Netmarble.\n© 2026 VAMPIR.TOP. VAMPIR artwork © Netmarble Corp. & Netmarble Neo Inc.",
   "formNote": "Do not enter passwords, verification codes or payment details.",
   "goShop": "Create a custom order ↗",
-  "heroDesc": "Diamonds for your next chapter in VAMPIR. Choose your amount. See the price in USD. Pay in USDT.",
+  "heroDesc": "Buy diamonds for VAMPIR from 1,000 diamonds. Calculate the price in USD, choose your server and place a request with USDT payment.",
   "heroNote": "Your amount. Your server. Your next move.",
   "heroTitle": "The night<br><em>is yours.</em>",
   "howEyebrow": "02 / HOW IT WORKS",
@@ -44,7 +44,7 @@
   "orderDesc": "Check your USD total and leave your contact. Payment is in USDT.",
   "orderEyebrow": "YOUR PERSONAL ORDER",
   "orderTitle": "Let’s get the details.",
-  "pageTitle": "VAMPIR.TOP — VAMPIR Diamonds",
+  "pageTitle": "Buy VAMPIR Diamonds | Pay with USDT — VAMPIR.TOP",
   "q1": "Is this an official Netmarble store?",
   "q2": "How much do diamonds cost?",
   "q3": "How does delivery work?",
@@ -70,5 +70,10 @@
   "submit": "Save request",
   "success": "Request {id} received. Keep this number. No payment has been made.",
   "worldTitle": "The night belongs<br><em>to you.</em>",
-  "notificationWarning": "Request {id} was saved, but the email notification could not be sent. Please try again later."
+  "notificationWarning": "Request {id} was saved, but the email notification could not be sent. Please try again later.",
+  "metaDescription": "Buy diamonds for VAMPIR: minimum 1,000, priced at {pricePer1000} USD per 1,000. Calculate your total and request an order with USDT payment.",
+  "heroEyebrow": "BUY VAMPIR DIAMONDS",
+  "seoHeading": "VAMPIR diamonds: price, server and payment",
+  "seoIntro": "Order diamonds for the MMORPG VAMPIR in the quantity you need, starting from 1,000. The price is {pricePer1000} USD per 1,000 diamonds. Use the calculator to see the total before submitting your request. Prices are shown in USD; payment is in USDT.",
+  "seoDetails": "Choose your game region, enter the exact server name and leave a Discord, Telegram or email contact. Availability, the delivery method, transfer network and final USDT amount are agreed before payment. No account password is required. VAMPIR.TOP is an independent store, not an official Netmarble service."
 }
