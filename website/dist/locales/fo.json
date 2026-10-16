@@ -68,7 +68,7 @@
   "step3": "Avtala áðrenn tú rindar",
   "step3Desc": "Staðfest tøkni, endaligan prís og hvussu avhending fer at virka.",
   "submit": "Goym umbøn",
-  "success": "Umbøn {id} móttikin. Goym hetta nummarið. Eingin útgjalding er gjørd.",
+  "success": "Umbøn {id} móttikin. Goym hetta nummarið.",
   "worldTitle": "Náttin eigur<br><em>tú.</em>",
   "notificationWarning": "Umbønin {id} varð goymd, men teldupostfráboðanin kundi ikki sendast. Vinarliga royn aftur seinni.",
   "metaDescription": "Keyp diamantir fyri VAMPIR: minst 1.000, prísað á {pricePer1000} USD á 1.000. Rokna tína samlaðu upphædd og bið um bílegging við USDT gjaldi.",

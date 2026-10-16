@@ -68,7 +68,7 @@
   "step3": "Sammála áður en þú borgar",
   "step3Desc": "Staðfestu framboð, endanlegt verð og hvernig afhending mun virka.",
   "submit": "Vista beiðni",
-  "success": "Beiðni {id} móttekin. Haltu þessu númeri. Engin greiðsla hefur farið fram.",
+  "success": "Beiðni {id} móttekin. Haltu þessu númeri.",
   "worldTitle": "The night belongs<br><em>to you.</em>",
   "notificationWarning": "Beiðni {id} var vistuð en ekki var hægt að senda tölvupósttilkynninguna. Vinsamlegast reyndu aftur síðar.",
   "metaDescription": "Kaupa demöntum fyrir VAMPIR: lágmark 1.000, verð á {pricePer1000} USD á 1.000. Reiknaðu heildarfjölda þína og biðja um pöntun með USDT greiðslu.",

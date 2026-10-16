@@ -68,7 +68,7 @@
   "step3": "Avtal før du betaler",
   "step3Desc": "Stadfest tilgjenge, endeleg pris og korleis leveringa skal skje.",
   "submit": "Lagre førespurnaden",
-  "success": "Førespurnad {id} er motteken. Ta vare på dette nummeret. Inga betaling er utført.",
+  "success": "Førespurnad {id} er motteken. Ta vare på dette nummeret.",
   "worldTitle": "Natta høyrer<br><em>deg til.</em>",
   "notificationWarning": "Førespurnad {id} er lagra, men e-postvarselet kunne ikkje sendast. Prøv igjen seinare.",
   "metaDescription": "Kjøp diamantar til VAMPIR: minst 1 000, til {pricePer1000} USD per 1 000. Rekn ut totalprisen og send ein førespurnad med betaling i USDT.",

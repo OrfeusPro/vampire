@@ -68,7 +68,7 @@
   "step3": "Před zaplacením se dohodněte",
   "step3Desc": "Potvrďte dostupnost, konečnou cenu a způsob doručení.",
   "submit": "Uložit žádost",
-  "success": "Žádost {id} přijata. Toto číslo si ponechte. Nebyla provedena žádná platba.",
+  "success": "Žádost {id} přijata. Toto číslo si ponechte.",
   "worldTitle": "Noc patří<br><em>tobě.</em>",
   "notificationWarning": "Požadavek {id} byl uložen, ale e-mailové upozornění nebylo možné odeslat. Zkuste to znovu později.",
   "metaDescription": "Kupte diamanty za VAMPIR: minimálně 1000, cena {pricePer1000} USD za 1000. Spočítejte si celkovou částku a požádejte o objednávku s platbou USDT.",

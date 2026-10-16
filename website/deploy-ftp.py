@@ -28,7 +28,7 @@ def deploy():
     backup.mkdir(parents=True)
     files = [(file, WEBROOT + '/' + file.relative_to(ROOT / 'dist').as_posix())
              for file in sorted((ROOT / 'dist').rglob('*')) if file.is_file()]
-    for name in ['i18n.php', 'pricing.php', 'language-preference.php', 'seo.php', 'settings.json', 'notifications.php', 'turnstile.php']:
+    for name in ['i18n.php', 'pricing.php', 'language-preference.php', 'seo.php', 'settings.json', 'order-email.php', 'notifications.php', 'turnstile.php']:
         files.append((ROOT / name, '/' + name))
 
     if (ROOT / 'smtp.local.php').exists():

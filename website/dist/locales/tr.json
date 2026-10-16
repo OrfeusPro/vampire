@@ -68,7 +68,7 @@
   "step3": "Ödemeden önce kabul edin",
   "step3Desc": "Stok durumunu, son fiyatı ve teslimatın nasıl gerçekleşeceğini doğrulayın.",
   "submit": "İsteği kaydet",
-  "success": "Talep {id} alındı. Bu numarayı saklayın. Herhangi bir ödeme yapılmadı.",
+  "success": "Talep {id} alındı. Bu numarayı saklayın.",
   "worldTitle": "Gece<br><em>size ait.</em>",
   "notificationWarning": "{id} numaralı istek kaydedildi ancak e-posta bildirimi gönderilemedi. Lütfen daha sonra tekrar deneyin.",
   "metaDescription": "VAMPIR karşılığında elmas satın alın: minimum 1.000, fiyatı 1.000 başına {pricePer1000} USD. Toplam tutarınızı hesaplayıp USDT ödeme ile sipariş talebinde bulunun.",

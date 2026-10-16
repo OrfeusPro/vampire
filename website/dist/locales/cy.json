@@ -68,7 +68,7 @@
   "step3": "Cytuno cyn talu",
   "step3Desc": "Cadarnhewch argaeledd, y pris terfynol a sut y bydd y danfoniad yn gweithio.",
   "submit": "Cadw cais",
-  "success": "Derbyniwyd cais {id}. Cadwch y rhif hwn. Nid oes unrhyw daliad wedi'i wneud.",
+  "success": "Derbyniwyd cais {id}. Cadwch y rhif hwn.",
   "worldTitle": "Mae'r noson yn perthyn <br><em>i chi.</em>",
   "notificationWarning": "Cadwyd cais {id}, ond ni ellid anfon yr hysbysiad e-bost. Ceisiwch eto yn nes ymlaen.",
   "metaDescription": "Prynu diemwntau ar gyfer VAMPIR: lleiafswm 1,000, pris {pricePer1000} USD fesul 1,000. Cyfrifwch eich cyfanswm a gofynnwch am archeb gyda thaliad USDT.",

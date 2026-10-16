@@ -68,7 +68,7 @@
   "step3": "D'acòrdi abans de pagar",
   "step3Desc": "Confirmatz la disponibilitat, lo prètz final e cossí foncionarà la liurason.",
   "submit": "Demanda d'enregistrament",
-  "success": "Demanda {id} recebuda. Gardatz aqueste numèro. Cap de pagament es pas estat efectuat.",
+  "success": "Demanda {id} recebuda. Gardatz aqueste numèro.",
   "worldTitle": "La nuèch vos aparten<br><em>.</em>",
   "notificationWarning": "La demanda {id} es estada enregistrada, mas la notificacion per corrièl a pas pogut èsser mandada. Ensajatz tornar mai tard.",
   "metaDescription": "Crompatz de diamants per VAMPIR: minimum 1,000, al prètz de {pricePer1000} USD per 1,000. Calculatz vòstre total e demandatz una comanda amb lo pagament USDT.",

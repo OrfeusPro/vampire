@@ -68,7 +68,7 @@
   "step3": "Aqbel qabel ma tħallas",
   "step3Desc": "Ikkonferma d-disponibbiltà, il-prezz finali u kif se taħdem il-kunsinna.",
   "submit": "Ħlief it-talba",
-  "success": "Riċevuta talba {id}. Żomm dan in-numru. Ma sar l-ebda ħlas.",
+  "success": "Riċevuta talba {id}. Żomm dan in-numru.",
   "worldTitle": "Il-lejl jappartjeni<br><em>lilek.</em>",
   "notificationWarning": "It-talba {id} ġiet salvata, iżda n-notifika bl-email ma setgħetx tintbagħat. Jekk jogħġbok erġa' pprova aktar tard.",
   "metaDescription": "Ixtri djamanti għal VAMPIR: minimu 1,000, bi prezz {pricePer1000} USD għal kull 1,000. Ikkalkula t-total tiegħek u itlob ordni bi ħlas USDT.",

@@ -68,7 +68,7 @@
   "step3": "De acord înainte de a plăti",
   "step3Desc": "Confirmați disponibilitatea, prețul final și modul în care va funcționa livrarea.",
   "submit": "Salvați cererea",
-  "success": "Solicitare {id} primita. Păstrează acest număr. Nu a fost efectuată nicio plată.",
+  "success": "Solicitare {id} primita. Păstrează acest număr.",
   "worldTitle": "Noaptea îți aparține<br><em>.</em>",
   "notificationWarning": "Solicitarea {id} a fost salvată, dar notificarea prin e-mail nu a putut fi trimisă. Vă rugăm să încercați din nou mai târziu.",
   "metaDescription": "Cumpărați diamante pentru VAMPIR: minim 1.000, la prețul de {pricePer1000} USD la 1.000. Calculați-vă totalul și solicitați o comandă cu plata USDT.",

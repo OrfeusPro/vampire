@@ -68,7 +68,7 @@
   "step3": "Dogovorite se pre nego što platite",
   "step3Desc": "Potvrdite dostupnost, konačnu cenu i način isporuke.",
   "submit": "Sačuvaj zahtev",
-  "success": "Zahtev {id} primljen. Zadrži ovaj broj. Uplata nije izvršena.",
+  "success": "Zahtev {id} primljen. Zadrži ovaj broj.",
   "worldTitle": "Noć pripada<br><em>vabi.</em>",
   "notificationWarning": "Zahtev {id} je sačuvan, ali obaveštenje putem e-pošte nije moglo da se pošalje. Pokušajte ponovo kasnije.",
   "metaDescription": "Kupite dijamante za VAMPIR: minimum 1.000, po ceni od {pricePer1000} USD za 1.000. Izračunajte svoj ukupni iznos i zatražite porudžbinu uz plaćanje USDT.",

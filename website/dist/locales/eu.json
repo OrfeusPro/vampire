@@ -68,7 +68,7 @@
   "step3": "Ordaindu aurretik adostu",
   "step3Desc": "Berretsi erabilgarritasuna, azken prezioa eta entrega nola funtzionatuko duen.",
   "submit": "Gorde eskaera",
-  "success": "Jasotako {id} eskaera. Mantendu zenbaki hau. Ez da ordainketarik egin.",
+  "success": "Jasotako {id} eskaera. Mantendu zenbaki hau.",
   "worldTitle": "Gaua<br><em>zuena da.</em>",
   "notificationWarning": "{id} eskaera gorde da, baina ezin izan da mezu elektronikoaren jakinarazpena bidali. Saiatu berriro geroago.",
   "metaDescription": "Erosi diamanteak VAMPIRrako: gutxienez 1.000, {pricePer1000} USD prezioan 1.000 bakoitzeko. Kalkulatu zure osoa eta eskatu eskaera USDT ordainketarekin.",

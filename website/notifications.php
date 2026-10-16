@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/order-email.php';
 
 function site_notify_order(array $order): bool {
     $config = json_decode(file_get_contents(__DIR__ . '/settings.json'), true, 512, JSON_THROW_ON_ERROR);
@@ -43,7 +44,9 @@ function site_notify_order(array $order): bool {
             $mailer->Sender = $sender;
             $mailer->addAddress($recipient);
             $mailer->Subject = 'VAMPIR.TOP order ' . $order['id'];
-            $mailer->Body = implode("\r\n", $lines);
+            $mailer->isHTML(true);
+            $mailer->Body = site_order_email_html($order);
+            $mailer->AltBody = implode("\r\n", $lines);
             $mailer->MessageID = '<' . $order['id'] . '.' . bin2hex(random_bytes(8)) . '@vampir.top>';
             $mailer->addCustomHeader('Auto-Submitted', 'auto-generated');
             return $mailer->send();

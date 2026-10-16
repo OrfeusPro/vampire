@@ -68,7 +68,7 @@
   "step3": "Averstanen ier Dir bezuelt",
   "step3Desc": "Bestätegt Disponibilitéit, den definitiven Präis a wéi d'Liwwerung funktionnéiert.",
   "submit": "Späicheren Ufro",
-  "success": "Ufro {id} kritt. Halt dës Zuel. Kee Bezuelung gouf gemaach.",
+  "success": "Ufro {id} kritt. Halt dës Zuel.",
   "worldTitle": "D'Nuecht gehéiert<br><em>Dir.</em>",
   "notificationWarning": "Ufro {id} gouf gespäichert, awer d'E-Mail Notifikatioun konnt net geschéckt ginn. Probéiert w.e.g. méi spéit nach eng Kéier.",
   "metaDescription": "Kaaft Diamanten fir VAMPIR: Minimum 1.000, Präis bei {pricePer1000} USD pro 1.000. Berechent Ären Total an frot eng Bestellung mat USDT Bezuelung.",

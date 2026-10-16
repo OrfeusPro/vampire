@@ -68,7 +68,7 @@
   "step3": "Zgadzam się, zanim zapłacisz",
   "step3Desc": "Potwierdź dostępność, ostateczną cenę i sposób realizacji dostawy.",
   "submit": "Zapisz prośbę",
-  "success": "Otrzymano żądanie {id}. Zachowaj ten numer. Nie dokonano żadnej płatności.",
+  "success": "Otrzymano żądanie {id}. Zachowaj ten numer.",
   "worldTitle": "Noc należy<br><em>do Ciebie.</em>",
   "notificationWarning": "Żądanie {id} zostało zapisane, ale nie można wysłać powiadomienia e-mail. Spróbuj ponownie później.",
   "metaDescription": "Kup diamenty do VAMPIR: od 1000 diamentów, cena {pricePer1000} USD za 1000. Oblicz koszt i złóż zamówienie z płatnością w USDT.",

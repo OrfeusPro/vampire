@@ -68,7 +68,7 @@
   "step3": "Ödəniş etmədən əvvəl razılaşın",
   "step3Desc": "Mövcudluğu, son qiyməti və çatdırılmanın necə işləyəcəyini təsdiqləyin.",
   "submit": "Sorğunu yadda saxla",
-  "success": "{id} sorğusu alındı. Bu nömrəni saxla. Heç bir ödəniş edilməmişdir.",
+  "success": "{id} sorğusu alındı. Bu nömrəni saxla.",
   "worldTitle": "Gecə<br><em>sizindir.</em>",
   "notificationWarning": "{id} sorğusu yadda saxlanıldı, lakin e-poçt bildirişini göndərmək mümkün olmadı. Lütfən, sonra yenidən cəhd edin.",
   "metaDescription": "VAMPIR üçün brilyant alın: minimum 1000, 1000 üçün {pricePer1000} USD qiymətində. Cəminizi hesablayın və USDT ödənişi ilə sifariş tələb edin.",

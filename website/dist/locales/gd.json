@@ -68,7 +68,7 @@
   "step3": "Aontaich mus pàigh thu",
   "step3Desc": "Dearbhaich ruigsinneachd, a’ phrìs mu dheireadh agus mar a dh’obraicheas lìbhrigeadh.",
   "submit": "Sàbhail iarrtas",
-  "success": "Iarrtas {id} air fhaighinn. Cùm an àireamh seo. Cha deach pàigheadh ​​sam bith a dhèanamh.",
+  "success": "Iarrtas {id} air fhaighinn. Cùm an àireamh seo.",
   "worldTitle": "Buinidh an oidhche <br><em>dhut.</em>",
   "notificationWarning": "Chaidh iarrtas {id} a shàbhaladh, ach cha b' urrainn dhuinn am brath post-d a chur. Feuch ris a-rithist nas anmoiche.",
   "metaDescription": "Ceannaich daoimeanan airson VAMPIR: 1,000 aig a’ char as lugha, prìs aig {pricePer1000} USD gach 1,000. Obraich a-mach an àireamh iomlan agad agus iarr òrdugh le pàigheadh ​​USDT.",

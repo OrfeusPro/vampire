@@ -68,7 +68,7 @@
   "step3": "Fizetés előtt állapodjon meg",
   "step3Desc": "Erősítse meg a rendelkezésre állást, a végső árat és a szállítás módját.",
   "submit": "Kérés mentése",
-  "success": "{id}-ös megkeresés érkezett. Tartsa meg ezt a számot. Nem történt fizetés.",
+  "success": "{id}-ös megkeresés érkezett. Tartsa meg ezt a számot.",
   "worldTitle": "Az éjszaka a<br><em>tiéd.</em>",
   "notificationWarning": "A {id}-ös kérést elmentettük, de az e-mail értesítést nem sikerült elküldeni. Kérjük, próbálja újra később.",
   "metaDescription": "Vásároljon gyémántokat VAMPIR-ért: minimum 1000, ára {pricePer1000} USD per 1000. Számolja ki végösszegét, és kérjen rendelést USDT fizetéssel.",

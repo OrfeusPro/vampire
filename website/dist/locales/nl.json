@@ -68,7 +68,7 @@
   "step3": "Ga akkoord voordat u betaalt",
   "step3Desc": "Bevestig de beschikbaarheid, de uiteindelijke prijs en hoe de levering zal werken.",
   "submit": "Aanvraag opslaan",
-  "success": "Verzoek {id} ontvangen. Bewaar dit nummer. Er heeft geen betaling plaatsgevonden.",
+  "success": "Verzoek {id} ontvangen. Bewaar dit nummer.",
   "worldTitle": "De nacht is<br><em>van jou.</em>",
   "notificationWarning": "Verzoek {id} is opgeslagen, maar de e-mailmelding kon niet worden verzonden. Probeer het later opnieuw.",
   "metaDescription": "Koop diamanten voor VAMPIR: minimaal 1.000, geprijsd op {pricePer1000} USD per 1.000. Bereken uw totaal en vraag een bestelling aan met USDT betaling.",

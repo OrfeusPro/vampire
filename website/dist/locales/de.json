@@ -68,7 +68,7 @@
   "step3": "Stimmen Sie zu, bevor Sie bezahlen",
   "step3Desc": "Bestätigen Sie die Verfügbarkeit, den Endpreis und die Funktionsweise der Lieferung.",
   "submit": "Anfrage speichern",
-  "success": "Anfrage {id} erhalten. Behalten Sie diese Nummer. Es wurde keine Zahlung geleistet.",
+  "success": "Anfrage {id} erhalten. Behalten Sie diese Nummer.",
   "worldTitle": "Die Nacht gehört<br><em>dir.</em>",
   "notificationWarning": "Anfrage {id} wurde gespeichert, aber die E-Mail-Benachrichtigung konnte nicht gesendet werden. Bitte versuchen Sie es später noch einmal.",
   "metaDescription": "Kaufen Sie Diamanten für VAMPIR: mindestens 1.000, zum Preis von {pricePer1000} USD pro 1.000. Berechnen Sie Ihren Gesamtbetrag und fordern Sie eine Bestellung mit USDT Zahlung an.",

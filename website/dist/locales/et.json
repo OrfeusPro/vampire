@@ -68,7 +68,7 @@
   "step3": "Leppige enne maksmist kokku",
   "step3Desc": "Kinnitage saadavus, lõplik hind ja kohaletoimetamine.",
   "submit": "Salvesta taotlus",
-  "success": "Päring {id} laekus. Hoidke see number alles. Makse pole tehtud.",
+  "success": "Päring {id} laekus. Hoidke see number alles.",
   "worldTitle": "Öö kuulub<br><em>teile.</em>",
   "notificationWarning": "Päring {id} salvestati, kuid meilimärguannet ei saanud saata. Proovige hiljem uuesti.",
   "metaDescription": "Ostke teemante hinnaga VAMPIR: vähemalt 1000, hinnaga {pricePer1000} USD 1000 kohta. Arvutage oma kogusumma ja taotlege USDT maksega tellimust.",

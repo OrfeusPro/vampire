@@ -68,7 +68,7 @@
   "step3": "Fixescha las cundiziuns avant che pajar",
   "step3Desc": "Conferma la disponibladad, il pretsch final e la metoda da furniziun.",
   "submit": "Memorisar la dumonda",
-  "success": "La dumonda {id} è arrivada. Conserva quest numer. Nagin pajament è vegnì fatg.",
+  "success": "La dumonda {id} è arrivada. Conserva quest numer.",
   "worldTitle": "La notg tutga<br><em>a tai.</em>",
   "notificationWarning": "La dumonda {id} è memorisada, ma la notificaziun per e-mail n’ha betg pudì vegnir tramessa. Emprova pli tard.",
   "metaDescription": "Cumpra diamants per VAMPIR: almain 1 000, per {pricePer1000} USD per 1 000. Calculatescha il total e trametta ina dumonda cun pajament en USDT.",

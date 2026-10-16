@@ -68,7 +68,7 @@
   "step3": "Acepta antes de pagar",
   "step3Desc": "Confirma disponibilidad, precio final y cómo se realizará el envío.",
   "submit": "Guardar solicitud",
-  "success": "Solicitud {id} recibida. Mantenga este número. No se ha realizado ningún pago.",
+  "success": "Solicitud {id} recibida. Mantenga este número.",
   "worldTitle": "La noche te pertenece<br><em>tú.</em>",
   "notificationWarning": "Se guardó la solicitud {id}, pero no se pudo enviar la notificación por correo electrónico. Inténtelo de nuevo más tarde.",
   "metaDescription": "Compra diamantes para VAMPIR: desde 1.000 diamantes, a {pricePer1000} USD por 1.000. Calcula el total y solicita tu pedido con pago en USDT.",

@@ -68,7 +68,7 @@
   "step3": "Sovi ennen kuin maksat",
   "step3Desc": "Vahvista saatavuus, lopullinen hinta ja toimitustapa.",
   "submit": "Tallenna pyyntö",
-  "success": "Pyyntö {id} vastaanotettu. Säilytä tämä numero. Maksua ei ole suoritettu.",
+  "success": "Pyyntö {id} vastaanotettu. Säilytä tämä numero.",
   "worldTitle": "Yö kuuluu<br><em>sinulle.</em>",
   "notificationWarning": "Pyyntö {id} tallennettiin, mutta sähköposti-ilmoitusta ei voitu lähettää. Yritä myöhemmin uudelleen.",
   "metaDescription": "Osta timantteja hintaan VAMPIR: vähintään 1 000, hinta {pricePer1000} USD per 1 000. Laske loppusummasi ja pyydä tilaus USDT maksulla.",

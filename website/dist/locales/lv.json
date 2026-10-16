@@ -68,7 +68,7 @@
   "step3": "Vienojieties, pirms maksājat",
   "step3Desc": "Apstipriniet pieejamību, galīgo cenu un piegādes veidu.",
   "submit": "Saglabāt pieprasījumu",
-  "success": "Saņemts pieprasījums {id}. Saglabājiet šo numuru. Maksājums nav veikts.",
+  "success": "Saņemts pieprasījums {id}. Saglabājiet šo numuru.",
   "worldTitle": "Nakts pieder<br><em>jums.</em>",
   "notificationWarning": "Pieprasījums {id} tika saglabāts, taču e-pasta paziņojumu nevarēja nosūtīt. Lūdzu, vēlāk mēģiniet vēlreiz.",
   "metaDescription": "Pērciet dimantus par VAMPIR: vismaz 1000, cena {pricePer1000} USD par 1000. Aprēķiniet kopējo summu un pieprasiet pasūtījumu ar USDT maksājumu.",

@@ -8,7 +8,10 @@ const result = document.querySelector('#order-result');
 const confirmation = document.querySelector('#order-confirmation');
 const confirmationMessage = document.querySelector('#confirmation-message');
 function showOrderConfirmation(){
-  confirmationMessage.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',savedRequest);
+  const [before,after='']=messages[language][savedEmailAccepted?'success':'notificationWarning'].split('{id}');
+  const orderNumber=document.createElement('strong');
+  orderNumber.textContent=savedRequest;
+  confirmationMessage.replaceChildren(before,orderNumber,after);
   confirmation.dataset.state=savedEmailAccepted?'success':'warning';
   form.hidden=true;confirmation.hidden=false;
   dialog.classList.add('order-complete');

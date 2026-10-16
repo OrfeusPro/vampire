@@ -68,7 +68,7 @@
   "step3": "Prieš mokėdami susitarkite",
   "step3Desc": "Patvirtinkite prieinamumą, galutinę kainą ir pristatymo būdą.",
   "submit": "Išsaugoti užklausą",
-  "success": "Gautas prašymas {id}. Išsaugokite šį numerį. Joks mokėjimas nebuvo atliktas.",
+  "success": "Gautas prašymas {id}. Išsaugokite šį numerį.",
   "worldTitle": "Naktis priklauso<br><em>jums.</em>",
   "notificationWarning": "Užklausa {id} buvo išsaugota, bet el. pašto pranešimo išsiųsti nepavyko. Bandykite dar kartą vėliau.",
   "metaDescription": "Pirkite deimantus už VAMPIR: mažiausiai 1000, kurių kaina yra {pricePer1000} USD už 1000. Suskaičiuokite savo sumą ir paprašykite užsakymo su USDT apmokėjimu.",

@@ -68,7 +68,7 @@
   "step3": "Aontaigh sula n-íocann tú",
   "step3Desc": "Deimhnigh infhaighteacht, an praghas deiridh agus conas a oibreoidh an seachadadh.",
   "submit": "Sábháil iarratas",
-  "success": "Fuarthas iarratas {id}. Coinnigh an uimhir seo. Níl aon íocaíocht déanta.",
+  "success": "Fuarthas iarratas {id}. Coinnigh an uimhir seo.",
   "worldTitle": "Is leatsa<br><em>an oíche.</em>",
   "notificationWarning": "Sábháladh iarratas {id}, ach níorbh fhéidir an fógra ríomhphoist a sheoladh. Bain triail eile as ar ball.",
   "metaDescription": "Ceannaigh diamaint le haghaidh VAMPIR: íosmhéid 1,000, praghas {pricePer1000} USD in aghaidh an 1,000. Ríomh d’iomlán agus iarr ordú le híocaíocht USDT.",

@@ -68,7 +68,7 @@
   "step3": "Kom överens innan du betalar",
   "step3Desc": "Bekräfta tillgänglighet, slutpris och hur leverans kommer att fungera.",
   "submit": "Spara begäran",
-  "success": "Begäran {id} mottagen. Behåll detta nummer. Ingen betalning har gjorts.",
+  "success": "Begäran {id} mottagen. Behåll detta nummer.",
   "worldTitle": "Natten tillhör<br><em>dig.</em>",
   "notificationWarning": "Begäran {id} sparades, men e-postmeddelandet kunde inte skickas. Försök igen senare.",
   "metaDescription": "Köp diamanter för VAMPIR: minst 1 000, prissatt till {pricePer1000} USD per 1 000. Beräkna din totalsumma och begär en beställning med USDT betalning.",

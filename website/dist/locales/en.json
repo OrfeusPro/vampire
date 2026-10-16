@@ -68,7 +68,7 @@
   "step3": "Agree before you pay",
   "step3Desc": "Confirm availability, the final price and how delivery will work.",
   "submit": "Save request",
-  "success": "Request {id} received. Keep this number. No payment has been made.",
+  "success": "Request {id} received. Keep this number.",
   "worldTitle": "The night belongs<br><em>to you.</em>",
   "notificationWarning": "Request {id} was saved, but the email notification could not be sent. Please try again later.",
   "metaDescription": "Buy diamonds for VAMPIR: minimum 1,000, priced at {pricePer1000} USD per 1,000. Calculate your total and request an order with USDT payment.",
