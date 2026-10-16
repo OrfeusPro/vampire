@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
-session_start();
 require_once dirname(__DIR__) . '/seo.php';
 require_once dirname(__DIR__) . '/turnstile.php';
+session_start();
 if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32));
 header('Cache-Control: no-cache');
 header('X-Content-Type-Options: nosniff');

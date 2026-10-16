@@ -54,7 +54,7 @@ print('50 SSR routes, lang/title/canonical, 51 hreflang entries and crawlable li
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl): return None
 opener = urllib.request.build_opener(NoRedirect)
-for source, target in [('/ru','/ru/'),('/ua','/ua/'),('/uk/','/ua/'),('/en/','/'),('/index.php','/'),('/?lang=de','/de/'),('/?lang=ua','/ua/'),('/SR-Latn','/sr-latn/')]:
+for source, target in [('/ru','/ru/'),('/ua','/ua/'),('/uk/','/ua/'),('/en/','/'),('/index.php','/'),('/index.html','/'),('/?lang=de','/de/'),('/?lang=ua','/ua/'),('/SR-Latn','/sr-latn/')]:
     try: opener.open(BASE + source)
     except urllib.error.HTTPError as error:
         assert error.code == 301 and error.headers['Location'] == target, (source, error.code)
@@ -63,6 +63,7 @@ try: urllib.request.urlopen(BASE + '/not-a-language/')
 except urllib.error.HTTPError as error: assert error.code == 404
 else: raise AssertionError('Missing 404')
 with urllib.request.urlopen(BASE + '/sitemap.xml') as response:
+    assert not response.headers.get('Set-Cookie')
     tree = ET.fromstring(response.read())
     assert len(tree) == 50
 with urllib.request.urlopen(BASE + '/robots.txt') as response:
@@ -71,7 +72,7 @@ with urllib.request.urlopen(BASE + '/robots.txt') as response:
     if PRODUCTION: assert 'Sitemap: https://vampir.top/sitemap.xml' in robots
 print('301 aliases, real 404, 50 sitemap URLs and robots: OK')
 # Verify public-host directives without changing DNS or publishing.
-for path in ['/', '/robots.txt']:
+for path in ([] if not PRODUCTION else ['/', '/robots.txt']):
     request = urllib.request.Request(BASE + path, headers={'Host': 'vampir.top'})
     with urllib.request.urlopen(request) as response:
         text = response.read().decode('utf-8')
@@ -79,3 +80,17 @@ for path in ['/', '/robots.txt']:
         if path == '/': assert 'index, follow, max-image-preview:large' in text
         else: assert 'Sitemap: https://vampir.top/sitemap.xml' in text
 print('Production indexing directives: OK')
+if PRODUCTION:
+    for origin in ['http://vampir.top', 'http://www.vampir.top', 'https://www.vampir.top']:
+        for path in ['/', '/sitemap.xml', '/robots.txt', '/ua/']:
+            try: opener.open(origin + path)
+            except urllib.error.HTTPError as error:
+                assert error.code == 301 and error.headers['Location'] == 'https://vampir.top' + path
+            else: raise AssertionError('Missing canonical origin redirect')
+    for path in ['/sitemap.xml', '/robots.txt', '/', '/ua/']:
+        request = urllib.request.Request(BASE + path, headers={'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', 'Accept-Language': 'uk-UA', 'Accept': 'text/html'})
+        with urllib.request.urlopen(request) as response:
+            assert response.url == BASE + path
+            assert 'noindex' not in (response.headers.get('X-Robots-Tag') or '')
+            if path.endswith('.xml') or path.endswith('.txt'): assert not response.headers.get('Set-Cookie')
+    print('Canonical HTTP/www redirects, session-free crawl files and Googlebot requests: OK')

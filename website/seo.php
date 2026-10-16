@@ -17,6 +17,11 @@ $productionOrigin = 'https://vampir.top';
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $host = strtolower(explode(':', $_SERVER['HTTP_HOST'] ?? '')[0]);
 $isProduction = in_array($host, ['vampir.top', 'www.vampir.top'], true);
+$secure = (!empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off') || (int)($_SERVER['SERVER_PORT'] ?? 0) === 443;
+if ($isProduction && ($host !== 'vampir.top' || !$secure)) {
+    header('Location: ' . $productionOrigin . ($_SERVER['REQUEST_URI'] ?? '/'), true, 301);
+    exit;
+}
 require_once __DIR__ . '/language-preference.php';
 site_redirect_language_entry($i18n['languages']);
 
@@ -25,6 +30,7 @@ unset($entry);
 
 if ($requestPath === '/robots.txt') {
     header('Content-Type: text/plain; charset=utf-8');
+    header('Cache-Control: public, max-age=300');
     echo $isProduction
         ? "User-agent: *\nDisallow: /api/\nDisallow: /locales/\nSitemap: $productionOrigin/sitemap.xml\n"
         : "User-agent: *\nDisallow: /\n";
@@ -32,6 +38,7 @@ if ($requestPath === '/robots.txt') {
 }
 if ($requestPath === '/sitemap.xml') {
     header('Content-Type: application/xml; charset=utf-8');
+    header('Cache-Control: public, max-age=300');
     if (!$isProduction) header('X-Robots-Tag: noindex');
     echo '<?xml version="1.0" encoding="UTF-8"?>';
     echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
@@ -47,7 +54,7 @@ foreach ($i18n['languages'] as $entry) {
     $aliases = [$entry['path'], rtrim($entry['path'], '/'), '/' . strtolower($entry['code']), '/' . strtolower($entry['code']) . '/'];
     if (in_array(strtolower($requestPath), $aliases, true)) $currentLanguage = $entry['code'];
 }
-if ($requestPath === '/' || $requestPath === '/index.php' || in_array($requestPath, ['/en', '/en/'], true)) $currentLanguage = 'en';
+if (in_array($requestPath, ['/', '/index.php', '/index.html', '/en', '/en/'], true)) $currentLanguage = 'en';
 // Preserve old shared query links, consolidating them into the language URL.
 $legacy = $_GET['lang'] ?? null;
 if (is_string($legacy)) {

@@ -98,3 +98,9 @@ body:has(dialog[open]){overflow:hidden}
 
 /* Use the server field typography consistently across editable order fields. */
 #order-form input:not([type="checkbox"]):not([type="hidden"]),#order-form textarea{font-family:inherit;font-size:16px;line-height:22px;font-weight:400;padding:12px 14px;border-radius:7px}#order-form input:not([type="checkbox"]):not([type="hidden"]){height:48px;min-height:48px}#order-form textarea{min-height:76px}
+
+/* Match order placeholders to the payment label. */
+#order-form input::placeholder,#order-form textarea::placeholder{color:#ac98a5;opacity:1}
+
+/* Quiet, theme-matched native scrollbars inside the order dialog. */
+#order-dialog,#order-dialog textarea{scrollbar-width:thin;scrollbar-color:#815568 #170f17}#order-dialog::-webkit-scrollbar,#order-dialog textarea::-webkit-scrollbar{width:8px;height:8px}#order-dialog::-webkit-scrollbar-track,#order-dialog textarea::-webkit-scrollbar-track{background:#170f17;border-radius:12px}#order-dialog::-webkit-scrollbar-thumb,#order-dialog textarea::-webkit-scrollbar-thumb{background:#815568;border:2px solid #170f17;border-radius:12px}#order-dialog::-webkit-scrollbar-thumb:hover,#order-dialog textarea::-webkit-scrollbar-thumb:hover{background:#b16c88}#order-dialog::-webkit-scrollbar-button,#order-dialog textarea::-webkit-scrollbar-button{display:none;width:0;height:0}#order-dialog::-webkit-scrollbar-corner,#order-dialog textarea::-webkit-scrollbar-corner{background:#170f17}@media(forced-colors:active){#order-dialog,#order-dialog textarea{scrollbar-color:auto}}

@@ -48,7 +48,7 @@ async function prepareTurnstile(){
     if(turnstileWidget!==null){window.turnstile.reset(turnstileWidget);return;}
     turnstileSize=securityContainer.clientWidth<300?'compact':'flexible';
     turnstileWidget=window.turnstile.render(securityContainer,{
-      sitekey:securityContainer.dataset.sitekey,action:'order',theme:'dark',size:turnstileSize,language:'auto',
+      sitekey:securityContainer.dataset.sitekey,action:'order',theme:'dark',size:turnstileSize,language:'auto',appearance:'interaction-only',
       callback:()=>{securityStatus.textContent='';},
       'error-callback':()=>{securityNotice();return true;},
       'expired-callback':()=>{securityNotice();},

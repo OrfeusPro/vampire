@@ -1,6 +1,7 @@
 Options -Indexes -MultiViews
 DirectoryIndex index.php
 RewriteEngine On
+RewriteRule ^index\.html$ index.php [L,QSA]
 RewriteRule ^(?:locales/|api/(?!order\.php$)) - [F,L]
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
