@@ -75,5 +75,6 @@
   "heroEyebrow": "KUPITE VAMPIR DIJAMANTI",
   "seoHeading": "VAMPIR dijamanti: cijena, server i plaćanje",
   "seoIntro": "Naručite dijamante za MMORPG VAMPIR u količini koja vam je potrebna, počevši od 1.000. Cijena je {pricePer1000} USD za 1000 dijamanata. Koristite kalkulator da vidite ukupan iznos prije podnošenja zahtjeva. Cijene su prikazane u USD; uplata je na USDT.",
-  "seoDetails": "Odaberite svoju regiju igre, unesite tačno ime servera i ostavite Discord, Telegram ili e-mail kontakt. Dostupnost, način isporuke, mreža prijenosa i konačni iznos USDT se dogovaraju prije plaćanja. Lozinka naloga nije potrebna. VAMPIR.TOP je nezavisna prodavnica, a ne službena Netmarble usluga."
+  "seoDetails": "Odaberite svoju regiju igre, unesite tačno ime servera i ostavite Discord, Telegram ili e-mail kontakt. Dostupnost, način isporuke, mreža prijenosa i konačni iznos USDT se dogovaraju prije plaćanja. Lozinka naloga nije potrebna. VAMPIR.TOP je nezavisna prodavnica, a ne službena Netmarble usluga.",
+  "securityCheck": "Molimo dovršite sigurnosnu provjeru. Ako se ne učita, ponovo učitajte stranicu i pokušajte ponovo."
 }

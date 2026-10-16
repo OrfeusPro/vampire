@@ -7,6 +7,50 @@ const form = document.querySelector('#order-form');
 const result = document.querySelector('#order-result');
 let savedRequest = null;
 let savedEmailAccepted = true;
+let orderSubmitting = false;
+let turnstileWidget = null;
+let turnstileLoader = null;
+let turnstileSize = null;
+const securityContainer = document.querySelector('#order-turnstile');
+const securityStatus = document.querySelector('#turnstile-status');
+function securityNotice(){securityStatus.textContent=messages[language].securityCheck;}
+function loadTurnstile(){
+  if(window.turnstile)return Promise.resolve();
+  if(turnstileLoader)return turnstileLoader;
+  turnstileLoader=new Promise((resolve,reject)=>{
+    const script=document.createElement('script');
+    script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async=true;script.defer=true;
+    const timer=setTimeout(()=>reject(new Error('security unavailable')),15000);
+    script.onload=()=>{clearTimeout(timer);window.turnstile?window.turnstile.ready(resolve):reject(new Error('security unavailable'));};
+    script.onerror=()=>{clearTimeout(timer);reject(new Error('security unavailable'));};
+    document.head.append(script);
+  });
+  return turnstileLoader;
+}
+async function prepareTurnstile(){
+  try{
+    await loadTurnstile();
+    if(!dialog.open)return;
+    if(turnstileWidget!==null){window.turnstile.reset(turnstileWidget);return;}
+    turnstileSize=securityContainer.clientWidth<300?'compact':'flexible';
+    turnstileWidget=window.turnstile.render(securityContainer,{
+      sitekey:securityContainer.dataset.sitekey,action:'order',theme:'dark',size:turnstileSize,language:'auto',
+      callback:()=>{securityStatus.textContent='';},
+      'error-callback':()=>{securityNotice();return true;},
+      'expired-callback':()=>{securityNotice();},
+      'timeout-callback':()=>{securityNotice();}
+    });
+  }catch{securityNotice();}
+}
+function resetTurnstile(){
+  if(turnstileWidget!==null && window.turnstile)window.turnstile.reset(turnstileWidget);
+}
+new ResizeObserver(()=>{
+  if(!dialog.open || orderSubmitting || turnstileWidget===null)return;
+  const size=securityContainer.clientWidth<300?'compact':'flexible';
+  if(size!==turnstileSize){window.turnstile.remove(turnstileWidget);turnstileWidget=null;prepareTurnstile();}
+}).observe(securityContainer);
 function translate(lang) {
   language = messages[lang] ? lang : defaultLanguage;
   selector.querySelector('.language-current').textContent = availableLanguages.find(item=>item.code===language).label;
@@ -41,24 +85,29 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!languageMe
 document.querySelector('.language').addEventListener('focusout',event=>{if(!event.currentTarget.contains(event.relatedTarget))closeLanguageMenu();});
 translate(currentLanguage || defaultLanguage);
 document.querySelectorAll('.select-package').forEach(button=>button.addEventListener('click',()=>{
+  if(orderSubmitting)return;
   const customAmount = document.querySelector('#custom-amount');
   if(button.hasAttribute('data-custom') && !customAmount.reportValidity()) return;
   form.reset();savedRequest=null;result.textContent='';form.elements.amount.value=button.hasAttribute('data-custom') ? customAmount.value : (button.dataset.amount || customAmount.value || '1000');
   updatePrices();
-  dialog.showModal();form.elements.amount.focus();
+  dialog.showModal();form.elements.amount.focus();securityStatus.textContent='';prepareTurnstile();
 }));
 document.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
 form.addEventListener('submit',async e=>{
   e.preventDefault(); if(!form.elements.region.value){regionTrigger.setAttribute('aria-invalid','true');regionTrigger.focus();openRegion();return;} if(!form.reportValidity())return;
+  if(orderSubmitting)return;
+  const token=turnstileWidget!==null && window.turnstile ? window.turnstile.getResponse(turnstileWidget) : '';
+  if(!token || window.turnstile.isExpired(turnstileWidget)){securityNotice();securityContainer.focus();return;}
+  orderSubmitting=true;
   const submit=document.querySelector('#submit-order');submit.disabled=true;submit.textContent=messages[language].sending;result.textContent='';
   try {
-    const payload=Object.fromEntries(new FormData(form));payload.language=language;
+    const payload=Object.fromEntries(new FormData(form));payload.language=language;payload['cf-turnstile-response']=token;
     const response=await fetch('/api/order.php',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(payload)});
-    const data=await response.json();if(!response.ok||!data.id)throw new Error('request failed');
+    const data=await response.json();if(!response.ok||!data.id)throw new Error(data.error||'request failed');
     savedRequest=data.id;savedEmailAccepted=data.email_accepted===true;result.textContent=messages[language][savedEmailAccepted?'success':'notificationWarning'].replace('{id}',data.id);form.reset();updatePrices();
-  } catch {result.textContent=messages[language].error;}
-  finally{submit.disabled=false;submit.textContent=messages[language].submit;}
+  } catch(error){result.textContent=error.message.startsWith('turnstile_')?messages[language].securityCheck:messages[language].error;}
+  finally{resetTurnstile();orderSubmitting=false;submit.disabled=false;submit.textContent=messages[language].submit;}
 });
 
 const amountInput = document.querySelector('#custom-amount');

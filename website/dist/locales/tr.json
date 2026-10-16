@@ -75,5 +75,6 @@
   "heroEyebrow": "VAMPIR ELMAS SATIN ALIN",
   "seoHeading": "VAMPIR elmas: fiyat, sunucu ve ödeme",
   "seoIntro": "MMORPG VAMPIR için 1.000 adetten başlayarak ihtiyacınız olan miktarda pırlanta sipariş edin. 1.000 pırlantanın fiyatı {pricePer1000} USD. İsteğinizi göndermeden önce toplamı görmek için hesap makinesini kullanın. Fiyatlar USD'te gösterilmektedir; ödeme USDT'te.",
-  "seoDetails": "Oyun bölgenizi seçin, sunucu adını tam olarak girin ve Discord, Telegram veya e-posta yoluyla iletişim kurun. Kullanılabilirlik, teslimat yöntemi, transfer ağı ve nihai USDT tutarı ödemeden önce kararlaştırılır. Hesap şifresine gerek yoktur. VAMPIR.TOP, resmi bir Netmarble hizmeti değil, bağımsız bir mağazadır."
+  "seoDetails": "Oyun bölgenizi seçin, sunucu adını tam olarak girin ve Discord, Telegram veya e-posta yoluyla iletişim kurun. Kullanılabilirlik, teslimat yöntemi, transfer ağı ve nihai USDT tutarı ödemeden önce kararlaştırılır. Hesap şifresine gerek yoktur. VAMPIR.TOP, resmi bir Netmarble hizmeti değil, bağımsız bir mağazadır.",
+  "securityCheck": "Lütfen güvenlik kontrolünü tamamlayın. Yüklenmezse sayfayı yeniden yükleyip tekrar deneyin."
 }

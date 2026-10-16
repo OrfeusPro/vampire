@@ -28,11 +28,13 @@ def deploy():
     backup.mkdir(parents=True)
     files = [(file, WEBROOT + '/' + file.relative_to(ROOT / 'dist').as_posix())
              for file in sorted((ROOT / 'dist').rglob('*')) if file.is_file()]
-    for name in ['i18n.php', 'pricing.php', 'language-preference.php', 'seo.php', 'settings.json', 'notifications.php']:
+    for name in ['i18n.php', 'pricing.php', 'language-preference.php', 'seo.php', 'settings.json', 'notifications.php', 'turnstile.php']:
         files.append((ROOT / name, '/' + name))
 
     if (ROOT / 'smtp.local.php').exists():
         files.append((ROOT / 'smtp.local.php', '/smtp.local.php'))
+    if (ROOT / 'turnstile.local.php').exists():
+        files.append((ROOT / 'turnstile.local.php', '/turnstile.local.php'))
     if (ROOT / 'vendor/autoload.php').exists():
         runtime = [ROOT / 'vendor/autoload.php']
         runtime += [file for file in (ROOT / 'vendor/composer').glob('*') if file.is_file()]
@@ -60,7 +62,7 @@ def deploy():
     directories = {'/', WEBROOT}
     manifest = []
     # Load dependencies/assets first; switch routing and entry point last.
-    files.sort(key=lambda pair: (2 if pair[1] == WEBROOT + '/index.php' else 1 if pair[1] in [WEBROOT + '/.htaccess', '/notifications.php'] else 0, pair[1]))
+    files.sort(key=lambda pair: (2 if pair[1] == WEBROOT + '/index.php' else 1 if pair[1] in [WEBROOT + '/.htaccess', WEBROOT + '/api/order.php', '/notifications.php'] else 0, pair[1]))
     for local, remote in files:
         parent = pathlib.PurePosixPath(remote).parent
         for directory in reversed([parent] + list(parent.parents)):
@@ -76,7 +78,7 @@ def deploy():
         if remote == WEBROOT + '/.htaccess': payload = handler.encode() + payload
         existing = backup / remote.lstrip('/')
         if existing.exists() and existing.read_bytes() == payload:
-            if remote == '/smtp.local.php': ftp.sendcmd('SITE CHMOD 600 ' + remote)
+            if remote in ['/smtp.local.php', '/turnstile.local.php']: ftp.sendcmd('SITE CHMOD 600 ' + remote)
             manifest.append({'remote': remote, 'sha256': hashlib.sha256(payload).hexdigest(), 'unchanged': True})
             continue
         temporary = remote + '.deploy-' + stamp
@@ -85,7 +87,7 @@ def deploy():
         ftp.retrbinary('RETR ' + temporary, check.write)
         if hashlib.sha256(check.getvalue()).digest() != hashlib.sha256(payload).digest():
             raise RuntimeError('Remote verification failed: ' + remote)
-        if remote == '/smtp.local.php': ftp.sendcmd('SITE CHMOD 600 ' + temporary)
+        if remote in ['/smtp.local.php', '/turnstile.local.php']: ftp.sendcmd('SITE CHMOD 600 ' + temporary)
         ftp.rename(temporary, remote)
         manifest.append({'remote': remote, 'sha256': hashlib.sha256(payload).hexdigest()})
         if len(manifest) % 15 == 0: print('Uploaded and verified: ' + str(len(manifest)), flush=True)

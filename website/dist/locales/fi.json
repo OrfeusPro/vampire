@@ -75,5 +75,6 @@
   "heroEyebrow": "OSTA VAMPIR TIMANTEJA",
   "seoHeading": "VAMPIR timantit: hinta, palvelin ja maksu",
   "seoIntro": "Tilaa timantteja numeroon MMORPG VAMPIR tarvitsemassasi määrässä, alkaen 1 000. Hinta on {pricePer1000} USD per 1 000 timanttia. Käytä laskinta nähdäksesi loppusumma ennen pyynnön lähettämistä. Hinnat näkyvät numerossa USD; maksu on USDT.",
-  "seoDetails": "Valitse pelialueesi, kirjoita tarkka palvelimen nimi ja jätä Discord, Telegram tai sähköpostiyhteys. Saatavuus, toimitustapa, siirtoverkosto ja lopullinen USDT summa sovitaan ennen maksua. Tilin salasanaa ei vaadita. VAMPIR.TOP on itsenäinen kauppa, ei virallinen Netmarble-palvelu."
+  "seoDetails": "Valitse pelialueesi, kirjoita tarkka palvelimen nimi ja jätä Discord, Telegram tai sähköpostiyhteys. Saatavuus, toimitustapa, siirtoverkosto ja lopullinen USDT summa sovitaan ennen maksua. Tilin salasanaa ei vaadita. VAMPIR.TOP on itsenäinen kauppa, ei virallinen Netmarble-palvelu.",
+  "securityCheck": "Suorita turvatarkastus. Jos se ei lataudu, lataa sivu uudelleen ja yritä uudelleen."
 }

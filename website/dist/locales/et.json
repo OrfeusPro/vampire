@@ -75,5 +75,6 @@
   "heroEyebrow": "OSTA VAMPIR TEEMANTID",
   "seoHeading": "VAMPIR teemandid: hind, server ja makse",
   "seoIntro": "Tellige teemante numbrile MMORPG VAMPIR vajalikus koguses, alates 1000. Hind on {pricePer1000} USD 1000 teemandi kohta. Enne taotluse esitamist kasutage kogusumma vaatamiseks kalkulaatorit. Hinnad on näidatud USD; makse on USDT.",
-  "seoDetails": "Valige oma mängupiirkond, sisestage täpne serveri nimi ja jätke Discord, Telegram või meiliaadress. Kättesaadavus, tarneviis, ülekandevõrk ja lõppsumma USDT lepitakse kokku enne tasumist. Konto parooli pole vaja. VAMPIR.TOP on sõltumatu kauplus, mitte ametlik Netmarble teenus."
+  "seoDetails": "Valige oma mängupiirkond, sisestage täpne serveri nimi ja jätke Discord, Telegram või meiliaadress. Kättesaadavus, tarneviis, ülekandevõrk ja lõppsumma USDT lepitakse kokku enne tasumist. Konto parooli pole vaja. VAMPIR.TOP on sõltumatu kauplus, mitte ametlik Netmarble teenus.",
+  "securityCheck": "Palun viige läbi turvakontroll. Kui see ei laadi, laadige leht uuesti ja proovige uuesti."
 }

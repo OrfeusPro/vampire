@@ -75,5 +75,6 @@
   "heroEyebrow": "VAMPIR GYÉMÁNT VÁSÁRLÁS",
   "seoHeading": "VAMPIR gyémánt: ár, szerver és fizetés",
   "seoIntro": "Rendeljen gyémántokat a MMORPG VAMPIR számra a szükséges mennyiségben, 1000-től. Az ár {pricePer1000} USD/1000 gyémánt. Használja a számológépet a végösszeg megtekintéséhez, mielőtt elküldi kérelmét. Az árak a USD számon vannak feltüntetve; a fizetés USDT-ban történik.",
-  "seoDetails": "Válassza ki a játék régióját, adja meg a szerver pontos nevét, és hagyjon meg egy Discord, Telegram vagy e-mail elérhetőséget. A rendelkezésre állás, a szállítási mód, a transzferhálózat és a USDT végösszeg fizetés előtt egyeztetés alatt áll. Nincs szükség fiókjelszóra. A VAMPIR.TOP egy független üzlet, nem hivatalos Netmarble szolgáltatás."
+  "seoDetails": "Válassza ki a játék régióját, adja meg a szerver pontos nevét, és hagyjon meg egy Discord, Telegram vagy e-mail elérhetőséget. A rendelkezésre állás, a szállítási mód, a transzferhálózat és a USDT végösszeg fizetés előtt egyeztetés alatt áll. Nincs szükség fiókjelszóra. A VAMPIR.TOP egy független üzlet, nem hivatalos Netmarble szolgáltatás.",
+  "securityCheck": "Kérjük, végezze el a biztonsági ellenőrzést. Ha nem töltődik be, töltse be újra az oldalt, és próbálkozzon újra."
 }

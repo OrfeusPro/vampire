@@ -83,3 +83,6 @@ body:has(dialog[open]){overflow:hidden}
 .hero-content .eyebrow b{font-weight:inherit}
 .buying-guide{padding-top:0;padding-bottom:64px}.buying-guide h2{font-size:clamp(26px,3vw,36px);line-height:1.25;margin:0 0 24px;max-width:850px}.buying-guide-copy{display:grid;grid-template-columns:1fr 1fr;gap:40px;border-top:1px solid #30232c;padding-top:22px}.buying-guide-copy p{margin:0;color:#a99ba4;font-size:13px;line-height:1.9;overflow-wrap:anywhere}
 @media(max-width:700px){.buying-guide{padding-top:0;padding-bottom:40px}.buying-guide-copy{grid-template-columns:minmax(0,1fr);gap:16px}.buying-guide h2{margin-bottom:20px}}
+
+/* Keep the verification widget inside the responsive order dialog. */
+.order-security{margin:20px 0 16px;min-width:0}.order-security #order-turnstile{width:100%;min-width:0}.order-security #turnstile-status{margin:8px 0 0}.order-security #turnstile-status:empty{display:none}#order-turnstile:focus-visible{outline:2px solid #b65a77;outline-offset:4px}

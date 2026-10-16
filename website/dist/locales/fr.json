@@ -75,5 +75,6 @@
   "heroEyebrow": "ACHETER VAMPIR DIAMANTS",
   "seoHeading": "VAMPIR diamants : prix, serveur et paiement",
   "seoIntro": "Commandez des diamants pour le MMORPG VAMPIR dans la quantité dont vous avez besoin, à partir de 1 000. Le prix est de {pricePer1000} USD pour 1 000 diamants. Utilisez le calculateur pour voir le total avant de soumettre votre demande. Les prix sont indiqués au USD ; le paiement est au USDT.",
-  "seoDetails": "Choisissez votre région de jeu, entrez le nom exact du serveur et laissez un Discord, Telegram ou un contact par e-mail. La disponibilité, le mode de livraison, le réseau de transfert et le montant final USDT sont convenus avant le paiement. Aucun mot de passe de compte n'est requis. VAMPIR.TOP est un magasin indépendant et non un service officiel Netmarble."
+  "seoDetails": "Choisissez votre région de jeu, entrez le nom exact du serveur et laissez un Discord, Telegram ou un contact par e-mail. La disponibilité, le mode de livraison, le réseau de transfert et le montant final USDT sont convenus avant le paiement. Aucun mot de passe de compte n'est requis. VAMPIR.TOP est un magasin indépendant et non un service officiel Netmarble.",
+  "securityCheck": "Veuillez effectuer le contrôle de sécurité. S'il ne se charge pas, rechargez la page et réessayez."
 }

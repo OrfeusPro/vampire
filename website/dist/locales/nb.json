@@ -75,5 +75,6 @@
   "heroEyebrow": "KJØP VAMPIR DIAMANTER",
   "seoHeading": "VAMPIR diamanter: pris, server og betaling",
   "seoIntro": "Bestill diamanter for MMORPG VAMPIR i det antallet du trenger, fra 1000. Prisen er {pricePer1000} USD per 1000 diamanter. Bruk kalkulatoren for å se totalen før du sender inn forespørselen. Prisene er vist i USD; betaling er på USDT.",
-  "seoDetails": "Velg din spillregion, skriv inn det nøyaktige servernavnet og legg igjen en Discord, Telegram eller e-postkontakt. Tilgjengelighet, leveringsmåte, overføringsnettverk og endelig USDT beløp avtales før betaling. Ingen kontopassord kreves. VAMPIR.TOP er en uavhengig butikk, ikke en offisiell Netmarble-tjeneste."
+  "seoDetails": "Velg din spillregion, skriv inn det nøyaktige servernavnet og legg igjen en Discord, Telegram eller e-postkontakt. Tilgjengelighet, leveringsmåte, overføringsnettverk og endelig USDT beløp avtales før betaling. Ingen kontopassord kreves. VAMPIR.TOP er en uavhengig butikk, ikke en offisiell Netmarble-tjeneste.",
+  "securityCheck": "Vennligst fullfør sikkerhetskontrollen. Hvis den ikke lastes inn, last inn siden på nytt og prøv igjen."
 }

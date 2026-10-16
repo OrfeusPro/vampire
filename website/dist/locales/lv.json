@@ -75,5 +75,6 @@
   "heroEyebrow": "PIRKT VAMPIR DIMANTU",
   "seoHeading": "VAMPIR dimanti: cena, serveris un samaksa",
   "seoIntro": "Pasūtiet dimantus uz MMORPG VAMPIR jums vajadzīgajā daudzumā, sākot no 1000. Cena ir {pricePer1000} USD par 1000 dimantiem. Pirms pieprasījuma iesniegšanas izmantojiet kalkulatoru, lai redzētu kopējo summu. Cenas norādītas USD; maksājums ir USDT.",
-  "seoDetails": "Izvēlieties savu spēles reģionu, ievadiet precīzu servera nosaukumu un atstājiet Discord, Telegram vai e-pasta kontaktpersonu. Pieejamība, piegādes veids, pārsūtīšanas tīkls un galīgā USDT summa tiek saskaņota pirms apmaksas. Konta parole nav nepieciešama. VAMPIR.TOP ir neatkarīgs veikals, nevis oficiāls Netmarble pakalpojums."
+  "seoDetails": "Izvēlieties savu spēles reģionu, ievadiet precīzu servera nosaukumu un atstājiet Discord, Telegram vai e-pasta kontaktpersonu. Pieejamība, piegādes veids, pārsūtīšanas tīkls un galīgā USDT summa tiek saskaņota pirms apmaksas. Konta parole nav nepieciešama. VAMPIR.TOP ir neatkarīgs veikals, nevis oficiāls Netmarble pakalpojums.",
+  "securityCheck": "Lūdzu, aizpildiet drošības pārbaudi. Ja tā netiek ielādēta, atkārtoti ielādējiet lapu un mēģiniet vēlreiz."
 }

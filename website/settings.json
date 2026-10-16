@@ -1,5 +1,9 @@
 {
   "price_usd_per_1000": "8.00",
+  "turnstile": {
+    "site_key": "0x4AAAAAAFY1pvcWcGmKXFv3",
+    "hostnames": ["vampir.top", "www.vampir.top"]
+  },
   "order_email": {
     "enabled": true,
     "to": "v.heart.breaking@gmail.com",
