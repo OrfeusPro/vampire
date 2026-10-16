@@ -1,0 +1,355 @@
+{
+  "default": "en",
+  "languages": [
+    {
+      "code": "en",
+      "name": "English",
+      "label": "EN",
+      "enabled": true,
+      "translationStatus": "existing"
+    },
+    {
+      "code": "ru",
+      "name": "Русский",
+      "label": "RU",
+      "enabled": true,
+      "translationStatus": "existing"
+    },
+    {
+      "code": "uk",
+      "name": "Українська",
+      "label": "UA",
+      "enabled": true,
+      "translationStatus": "existing"
+    },
+    {
+      "code": "de",
+      "name": "Deutsch",
+      "label": "DE",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "fr",
+      "name": "Français",
+      "label": "FR",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "es",
+      "name": "Español",
+      "label": "ES",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "it",
+      "name": "Italiano",
+      "label": "IT",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "pt",
+      "name": "Português",
+      "label": "PT",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "pl",
+      "name": "Polski",
+      "label": "PL",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "nl",
+      "name": "Nederlands",
+      "label": "NL",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "sv",
+      "name": "Svenska",
+      "label": "SV",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "da",
+      "name": "Dansk",
+      "label": "DA",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "nb",
+      "name": "Norsk bokmål",
+      "label": "NB",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "nn",
+      "name": "Norsk nynorsk",
+      "label": "NN",
+      "enabled": true,
+      "translationStatus": "draft"
+    },
+    {
+      "code": "fi",
+      "name": "Suomi",
+      "label": "FI",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "is",
+      "name": "Íslenska",
+      "label": "IS",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "fo",
+      "name": "Føroyskt",
+      "label": "FO",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "et",
+      "name": "Eesti",
+      "label": "ET",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "lv",
+      "name": "Latviešu",
+      "label": "LV",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "lt",
+      "name": "Lietuvių",
+      "label": "LT",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "cs",
+      "name": "Čeština",
+      "label": "CS",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "sk",
+      "name": "Slovenčina",
+      "label": "SK",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "sl",
+      "name": "Slovenščina",
+      "label": "SL",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "hr",
+      "name": "Hrvatski",
+      "label": "HR",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "bs",
+      "name": "Bosanski",
+      "label": "BS",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "sr",
+      "name": "Српски",
+      "label": "SR",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "sr-Latn",
+      "name": "Srpski",
+      "label": "SR-L",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "bg",
+      "name": "Български",
+      "label": "BG",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "ro",
+      "name": "Română",
+      "label": "RO",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "hu",
+      "name": "Magyar",
+      "label": "HU",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "el",
+      "name": "Ελληνικά",
+      "label": "EL",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "sq",
+      "name": "Shqip",
+      "label": "SQ",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "mk",
+      "name": "Македонски",
+      "label": "MK",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "tr",
+      "name": "Türkçe",
+      "label": "TR",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "mt",
+      "name": "Malti",
+      "label": "MT",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "ga",
+      "name": "Gaeilge",
+      "label": "GA",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "cy",
+      "name": "Cymraeg",
+      "label": "CY",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "gd",
+      "name": "Gàidhlig",
+      "label": "GD",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "eu",
+      "name": "Euskara",
+      "label": "EU",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "ca",
+      "name": "Català",
+      "label": "CA",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "gl",
+      "name": "Galego",
+      "label": "GL",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "be",
+      "name": "Беларуская",
+      "label": "BE",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "lb",
+      "name": "Lëtzebuergesch",
+      "label": "LB",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "rm",
+      "name": "Rumantsch",
+      "label": "RM",
+      "enabled": true,
+      "translationStatus": "draft"
+    },
+    {
+      "code": "oc",
+      "name": "Occitan",
+      "label": "OC",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "br",
+      "name": "Brezhoneg",
+      "label": "BR",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "se",
+      "name": "Davvisámegi",
+      "label": "SE",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "hy",
+      "name": "Հայերեն",
+      "label": "HY",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "ka",
+      "name": "ქართული",
+      "label": "KA",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    },
+    {
+      "code": "az",
+      "name": "Azərbaycanca",
+      "label": "AZ",
+      "enabled": true,
+      "translationStatus": "machine-draft"
+    }
+  ]
+}

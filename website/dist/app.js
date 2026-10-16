@@ -1,0 +1,111 @@
+'use strict';
+const {messages, languages: availableLanguages, defaultLanguage, currentLanguage, pricing} = JSON.parse(document.querySelector('#i18n-data').textContent);
+let language = defaultLanguage;
+const selector = document.querySelector('#language');
+const dialog = document.querySelector('#order-dialog');
+const form = document.querySelector('#order-form');
+const result = document.querySelector('#order-result');
+let savedRequest = null;
+function translate(lang) {
+  language = messages[lang] ? lang : defaultLanguage;
+  selector.querySelector('.language-current').textContent = availableLanguages.find(item=>item.code===language).label;
+  document.querySelectorAll('[data-language]').forEach(link=>{if(link.dataset.language===language)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
+  document.documentElement.lang = language;
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>el.placeholder=messages[language][el.dataset.i18nPlaceholder]);
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', messages[language][el.dataset.i18nAria]));
+  document.querySelectorAll('[data-i18n]').forEach(el => { const value=messages[language][el.dataset.i18n]; if(value!==undefined) el.textContent=value; });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { const value=messages[language][el.dataset.i18nHtml]; if(value!==undefined) el.innerHTML=value; });
+  document.title = messages[language].pageTitle;
+  document.querySelector('meta[name="description"]').content = messages[language].heroDesc;
+  document.querySelector('#official-link').href=`https://vampirgb.netmarble.com/${language==='ru'?'ru':'en'}/preorder`;
+  if(savedRequest) result.textContent=messages[language].success.replace('{id}',savedRequest);
+  updatePrices();
+}
+const languageMenu=document.querySelector('#language-menu');
+function closeLanguageMenu(restoreFocus=false){languageMenu.hidden=true;selector.setAttribute('aria-expanded','false');if(restoreFocus)selector.focus();}
+function openLanguageMenu(){languageMenu.hidden=false;selector.setAttribute('aria-expanded','true');}
+selector.addEventListener('click',()=>{if(languageMenu.hidden)openLanguageMenu();else closeLanguageMenu();});
+selector.addEventListener('keydown',event=>{if(event.key==='ArrowDown'||event.key==='ArrowUp'){event.preventDefault();openLanguageMenu();const options=languageMenu.querySelectorAll('a');options[event.key==='ArrowDown'?0:options.length-1].focus();}});
+languageMenu.addEventListener('keydown',event=>{
+ const options=[...languageMenu.querySelectorAll('a')],index=options.indexOf(document.activeElement);
+ if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?options.length-1:(index+(event.key==='ArrowDown'?1:-1)+options.length)%options.length;options[next].focus();}
+});
+document.addEventListener('click',event=>{if(!event.target.closest('.language'))closeLanguageMenu();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!languageMenu.hidden){event.preventDefault();closeLanguageMenu(true);}});
+document.querySelector('.language').addEventListener('focusout',event=>{if(!event.currentTarget.contains(event.relatedTarget))closeLanguageMenu();});
+translate(currentLanguage || defaultLanguage);
+document.querySelectorAll('.select-package').forEach(button=>button.addEventListener('click',()=>{
+  const customAmount = document.querySelector('#custom-amount');
+  if(button.hasAttribute('data-custom') && !customAmount.reportValidity()) return;
+  form.reset();savedRequest=null;result.textContent='';form.elements.amount.value=button.hasAttribute('data-custom') ? customAmount.value : (button.dataset.amount || customAmount.value || '1000');
+  updatePrices();
+  dialog.showModal();form.elements.amount.focus();
+}));
+document.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());
+dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+form.addEventListener('submit',async e=>{
+  e.preventDefault(); if(!form.elements.region.value){regionTrigger.setAttribute('aria-invalid','true');regionTrigger.focus();openRegion();return;} if(!form.reportValidity())return;
+  const submit=document.querySelector('#submit-order');submit.disabled=true;submit.textContent=messages[language].sending;result.textContent='';
+  try {
+    const payload=Object.fromEntries(new FormData(form));payload.language=language;
+    const response=await fetch('/api/order.php',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':document.querySelector('meta[name="csrf-token"]').content},body:JSON.stringify(payload)});
+    const data=await response.json();if(!response.ok||!data.id)throw new Error('request failed');
+    savedRequest=data.id;result.textContent=messages[language].success.replace('{id}',data.id);form.reset();updatePrices();
+  } catch {result.textContent=messages[language].error;}
+  finally{submit.disabled=false;submit.textContent=messages[language].submit;}
+});
+
+const amountInput = document.querySelector('#custom-amount');
+function syncAmounts(){
+  updatePrices();
+  document.querySelector('[data-adjust="-1000"]').disabled=Number(amountInput.value)<=1000;
+  document.querySelectorAll('[data-preset]').forEach(button=>{
+    const selected=Number(amountInput.value)===Number(button.dataset.preset);
+    button.classList.toggle('active',selected); button.setAttribute('aria-pressed',String(selected));
+  });
+}
+document.querySelectorAll('[data-preset]').forEach(button=>button.addEventListener('click',()=>{
+  amountInput.value=button.dataset.preset; syncAmounts();
+}));
+document.querySelectorAll('[data-adjust]').forEach(button=>button.addEventListener('click',()=>{
+  const current=Number(amountInput.value)||0;
+  amountInput.value=Math.min(10000000,Math.max(1000,current+Number(button.dataset.adjust)));syncAmounts();
+}));
+amountInput.addEventListener('input',syncAmounts);
+syncAmounts();
+
+const menuToggle=document.querySelector('.menu-toggle');
+const siteHeader=document.querySelector('.header');
+function closeMenu(){siteHeader.classList.remove('menu-open');menuToggle.setAttribute('aria-expanded','false');}
+menuToggle.addEventListener('click',()=>{const open=siteHeader.classList.toggle('menu-open');menuToggle.setAttribute('aria-expanded',String(open));});
+document.querySelectorAll('#primary-nav a').forEach(link=>link.addEventListener('click',closeMenu));
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu();});
+document.addEventListener('click',event=>{if(!siteHeader.contains(event.target))closeMenu();});
+
+function updatePrices(){
+  for(const [inputSelector, outputSelector] of [['#custom-amount','#price-total'],['#order-form [name="amount"]','#order-price-total']]){
+    const input=document.querySelector(inputSelector),output=document.querySelector(outputSelector);
+    if(!input||!output)continue;
+    const amount=Number(input.value);
+    output.textContent=Number.isInteger(amount)&&amount>=1000&&amount<=10000000
+      ? new Intl.NumberFormat(language,{minimumFractionDigits:2,maximumFractionDigits:5}).format(amount*pricing.rateCents/100000)+' USD'
+      : '— USD';
+  }
+}
+form.elements.amount.addEventListener('input',updatePrices);
+updatePrices();
+
+const regionTrigger=document.querySelector('#region-trigger');
+const regionOptions=document.querySelector('#region-options');
+function closeRegion(){regionOptions.hidden=true;regionTrigger.setAttribute('aria-expanded','false');}
+function openRegion(){regionOptions.hidden=false;regionTrigger.setAttribute('aria-expanded','true');}
+function resetRegion(){form.elements.region.value='';document.querySelector('#region-value').textContent='—';regionTrigger.removeAttribute('aria-invalid');regionOptions.querySelectorAll('[data-region]').forEach(option=>option.setAttribute('aria-selected','false'));closeRegion();}
+regionTrigger.addEventListener('click',()=>regionOptions.hidden?openRegion():closeRegion());
+regionOptions.querySelectorAll('[data-region]').forEach(option=>option.addEventListener('click',()=>{form.elements.region.value=option.dataset.region;document.querySelector('#region-value').textContent=option.firstChild.textContent;regionOptions.querySelectorAll('[data-region]').forEach(item=>item.setAttribute('aria-selected',String(item===option)));regionTrigger.removeAttribute('aria-invalid');closeRegion();regionTrigger.focus();}));
+regionTrigger.addEventListener('keydown',event=>{if(['ArrowDown','ArrowUp'].includes(event.key)){event.preventDefault();openRegion();const options=regionOptions.querySelectorAll('[data-region]');options[event.key==='ArrowDown'?0:options.length-1].focus();}});
+regionOptions.addEventListener('keydown',event=>{const options=[...regionOptions.querySelectorAll('[data-region]')],index=options.indexOf(document.activeElement);if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();options[event.key==='Home'?0:event.key==='End'?options.length-1:(index+(event.key==='ArrowDown'?1:-1)+options.length)%options.length].focus();}});
+document.addEventListener('click',event=>{if(!event.target.closest('.region-field'))closeRegion();});
+document.querySelector('.region-field').addEventListener('focusout',event=>{if(!event.currentTarget.contains(event.relatedTarget))closeRegion();});
+dialog.addEventListener('cancel',event=>{if(!regionOptions.hidden){event.preventDefault();closeRegion();regionTrigger.focus();}});
+form.addEventListener('reset',resetRegion);
+dialog.addEventListener('close',closeRegion);
