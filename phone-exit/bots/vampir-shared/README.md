@@ -20,6 +20,8 @@
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.
 24 SDK roots/512 native byte primitive calls: [доказательства](../resource-tools/vampir/HEADLESS-AUTH.md).
 Нет получения/отправки credentials, browser login, HTTP или game session.
+Источник конфигурации исследуется отдельно: [GMC2](../resource-tools/vampir/HEADLESS-SDK-CONFIG.md).
+Адреса и активный режим не зашиты в runtime по наличию строки в EXE.
 
 `socket_send.py:drain_outbound` — bounded send на уже подключённом nonblocking
 socket; `OutboundFrames.peek_frame/consume_sent` сохраняют partial tail.

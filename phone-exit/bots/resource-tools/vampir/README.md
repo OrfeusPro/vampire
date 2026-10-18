@@ -1,5 +1,10 @@
 # Исследование ресурсов Vampir
 
+`build-headless-sdk-config.py` → `code-clues/headless-sdk-config.json`:
+7 SDK diagnostic literals, 8 LEA, 7 roots, 48 constants и 256 native mode cases.
+[HEADLESS-SDK-CONFIG.md](HEADLESS-SDK-CONFIG.md): GMC2 address selection и
+статические части URL; активная конфигурация/ответ/декодирование ещё неизвестны.
+
 `build-headless-auth-index.py` → `code-clues/headless-auth-index.json`:
 24 selected SDK symbols/34 LEA/24 roots, 143 constants, 512 native escaping calls.
 [HEADLESS-AUTH.md](HEADLESS-AUTH.md), общий auth_request.py создаёт offline

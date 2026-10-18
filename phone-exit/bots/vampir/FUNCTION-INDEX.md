@@ -1,5 +1,16 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK configuration GMC2, 18 октября: H04b partial
+
+Для общего SHA Windows EXE ниже связаны constructor `0x1444bd970`,
+Start `0x144501970`, RefreshSDKConstants `0x1444f38e0`, RequestGMC2 `0x1444f5320`,
+callback `0x1444edbb0`, parser `0x1444f0e80`, DecryptXOR `0x1444ddf50`.
+7 literals / 8 LEA / 7 roots / 48 constants. Native selector
+`0x144501a11..0x144501a46` проверен для всех 256 byte values: settings+0x49
+выбирает manager+0x150/160/170/180; unknown values ведут на dev.
+[Source/SHA/offsets и ограничения](../resource-tools/vampir/HEADLESS-SDK-CONFIG.md).
+Активный mode, template/build/market values и response→auth bases ещё неизвестны.
+
 ## SDK auth, 18 октября: H04 partial
 
 Общий SHA Windows EXE ниже. FAuthImpl SignIn root1444fb800 использует

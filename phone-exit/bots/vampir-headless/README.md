@@ -7,6 +7,9 @@
 [Transport и границы](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
 H04 начат: 24 SDK symbols/34 LEA/24 roots, 512 native escape calls, offline
 code/refresh token request plans. [Авторизация](../resource-tools/vampir/HEADLESS-AUTH.md).
+GMC2 config: 7 связанных функций и 256 native проверок выбора адреса.
+Активный режим/параметры ещё не установлены.
+[Источник и границы](../resource-tools/vampir/HEADLESS-SDK-CONFIG.md).
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

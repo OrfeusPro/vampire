@@ -1,5 +1,34 @@
 # Самостоятельный Vampir — журнал работы
 
+## 18 октября 2026 — H04b: источник GMC2 config и выбор адреса
+
+После коммита ядра 09815f8 и вычитки Markdown b3a373b продолжено исследование
+авторизации. Новый build-headless-sdk-config.py связывает 7 точных diagnostic
+literals с 8 LEA / 7 unwind roots; 48 constants сохранены с bytes/offsets/SHA.
+Найдены constructor/Start/RefreshSDKConstants/RequestGMC2/callback/parser/decryptor.
+Повторная ссылка DecryptXOR внутри parser не считается именем всего parser root.
+
+Native slice 0x144501a11..0x144501a46 исполнен для всех 256 byte values:
+settings+0x49 выбирает manager field +0x150/160/170/180. Constructor связывает
+их с alpha/dev/production/DR GMC2 bases; значения 4–255 выбирают dev. Settings
+inputs явные, strings/network не исполняются; активный mode установленной игры
+не доказан. Поэтому production не выбирается автоматически для auth plans.
+
+Статически прослежены template-groups path, game=v5/country=G9/build/engine/market
+части URL и GET. Runtime template/getter values и active settings ещё unknown.
+Ключи encConstants/encSecretConstants/DECKEY найдены как имена полей, не полученные
+секреты; response/schema/decode ещё не восстановлены. Игра/Saved/launcher memory/
+account tokens не читались, внешних HTTP запросов не было. H04b partial.
+
+Report code-clues/headless-sdk-config.json,
+SHA256 b6f3418f9d9bb44f2feb748c4bc662059110080c54117d9d52f6448da668799c.
+HEADLESS-SDK-CONFIG.md/общий реестр/README/задачи обновлены. Три теста проверяют
+source bytes, literals/LEA boundaries, constructor field binding, все mode outputs
+и повторное native исполнение. Далее source settings+0x49, getters 0x144524390
+и 0x14452b820, callback response→auth bases/client ID. network_ready=false.
+Регрессия: 75/75 тестов без skip (35,5 с); синтаксис двух новых Python-файлов,
+230 локальных ссылок и git diff --check проверены успешно.
+
 ## 18 октября 2026 — коммит ядра и вычитка документации
 
 Накопленные код, инструменты и доказательства сохранены коммитом 09815f8
