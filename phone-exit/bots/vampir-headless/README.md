@@ -10,6 +10,8 @@ code/refresh token request plans. [Авторизация](../resource-tools/vam
 GMC2 config: 7 связанных функций и 256 native проверок выбора адреса.
 Активный режим/параметры ещё не установлены.
 [Источник и границы](../resource-tools/vampir/HEADLESS-SDK-CONFIG.md).
+Параметры SDK и UTF-16 XOR конфигурации сохранены в общем ядре;
+42 native проверки. [Доказательства](../resource-tools/vampir/HEADLESS-SDK-VALUES.md).
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

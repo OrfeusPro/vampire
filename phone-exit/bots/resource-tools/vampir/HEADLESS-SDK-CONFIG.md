@@ -6,6 +6,9 @@
 
 ## Источник и воспроизведение
 
+Продолжение: [параметры SDK и проверка DecryptXOR](HEADLESS-SDK-VALUES.md).
+Оно уточняет getters ниже; активные настройки и реальный ответ ещё неизвестны.
+
 Собранный Windows клиент, не исходный C++ проект:
 `C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe`.
 SHA256 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.

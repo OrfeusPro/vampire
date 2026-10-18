@@ -14,6 +14,9 @@ code/refresh token request plans. [Авторизация](../resource-tools/vam
 Источник конфигурации GMC2 найден: выбор адреса проверен на 256 значениях
 режима; активный режим и параметры установленной игры ещё неизвестны.
 [Доказательства](../resource-tools/vampir/HEADLESS-SDK-CONFIG.md).
+Уточнены строка SDK `5.2.11`, начальные строки build `A/B/C` и отдельный
+UTF-16 XOR GMC2: 42 native проверки, общий ограниченный модуль.
+[Параметры и границы](../resource-tools/vampir/HEADLESS-SDK-VALUES.md).
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

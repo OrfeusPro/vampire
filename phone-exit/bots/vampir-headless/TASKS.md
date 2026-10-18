@@ -33,7 +33,7 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 | H03b.2b-drain | Queue→socket и partial send | Готово в указанном объёме |61 native cases/5 tests, ordinal send provenance, partial consume/errors; portable bounded pump/real IPv4 loopback; connect/auth/shutdown/scheduler ещё открыты |
 | H04 | Авторизация почта/пароль→игровая сессия; H01 | Частично: H04a static SDK/token-form evidence | Прослеженный SDK/HTTP/session flow, параметры/сроки/ошибки, ручные challenge; секреты защищены, игра не нужна |
 | H04a | SDK auth graph и token request forms | Готово в указанном объёме |24 symbols/34 LEA/24 roots, 143 constants, 512 native escaping calls/5 tests; offline code/refresh plans, не email/password login/config/response/game handoff |
-| H04b | Источник SDK config GMC2 и параметры | Частично | 7 literals / 8 LEA / 7 roots, 48 constants, 256 native mode cases / 3 tests; active settings/getters/response/decode/auth bases ещё неизвестны |
+| H04b | Источник SDK config GMC2 и параметры | Частично | 256 native проверок окружения; SDK `5.2.11`, начальные build `A/B/C`, 42 native проверки UTF-16 XOR и общий модуль; active settings/market/внешний response decode/DECKEY/auth bases ещё неизвестны |
 | H05 | Один вход и модель персонажа; H02–H04 | Осталось | Выбрать правильный сервер/персонажа, получить ID/world/position/HP; живой тест без процесса игры |
 | H06 | Общий runtime на Windows/Android; минимальный H03 | Осталось | Один сетевой/codec smoke на двух платформах, зависимости закреплены; UI/OS вне ядра |
 | H07 | Боевой цикл на месте; H05 | Осталось | Доказать client/server обязанности автобоя, команды/результаты/кулдауны, stop; один аккаунт 30 мин без игры |

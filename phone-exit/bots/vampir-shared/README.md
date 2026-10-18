@@ -16,6 +16,11 @@
 
 ## Общий код
 
+`sdk_constants.py:xor_sdk_utf16le` — отдельный XOR 16-битных единиц GMC2,
+с ограничением входа/ключа и сохранением нулей/суррогатов. 42 native проверки
+и пять тестов: [доказательства](../resource-tools/vampir/HEADLESS-SDK-VALUES.md).
+Получение ключа, внешний разбор ответа и проверка JSON ещё не реализованы.
+
 `auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.
 24 SDK roots/512 native byte primitive calls: [доказательства](../resource-tools/vampir/HEADLESS-AUTH.md).

@@ -1,5 +1,17 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Параметры SDK и XOR GMC2, 18 октября: H04b partial
+
+Для общего SHA Windows EXE ниже getter `0x144524390` возвращает литерал
+`5.2.11`; RefreshSDKConstants вызывает его на `0x1444f3bb3`. Getter
+`0x14452b820` получает settings+`0x48` для build, выбирает глобальные строки,
+инициализированные `A/B/C` функциями `0x1411b3220/3250/3280`.
+Это другое поле, чем окружение GMC2 settings+`0x49`; активные значения неизвестны.
+Цикл DecryptXOR `0x1444ddf50` проверен на 42 искусственных входах:
+16-битные единицы, повторяющийся ключ, ограниченный захват append.
+Общий `sdk_constants.py`, пять тестов; получение ключа и внешняя упаковка открыты.
+[Source/SHA/offsets и ограничения](../resource-tools/vampir/HEADLESS-SDK-VALUES.md).
+
 ## SDK configuration GMC2, 18 октября: H04b partial
 
 Для общего SHA Windows EXE ниже связаны constructor `0x1444bd970`,
