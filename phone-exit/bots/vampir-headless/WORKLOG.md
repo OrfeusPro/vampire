@@ -1,5 +1,34 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-path: полный offline token request
+
+После 2c63e30 исполнен path helper `0x14142c9d0`: 70 сценариев, включая
+пустые FString count 0/1, слеши с обеих сторон, backslash и Unicode.
+Разделитель добавляется условно; двойные слеши и завершающий backslash базы
+не нормализуются. Growth не исполнялась, memcpy ограничен shim.
+Code/refresh callers `0x1450e2b01/3451` используют literal v2/access-token.
+
+Общий append_sdk_path и bind_token_request дают immutable BoundTokenRequestPlan
+из явной карты SDK и существующего form plan; body не меняется, repr скрывает
+URL/body. Binder отклоняет hostless/userinfo/query/fragment/backslash/control
+и invalid port как локальную политику, более строгую, чем native prefix.
+HTTP и реальное получение конфигурации отсутствуют.
+
+Статически уточнены ветви `0x144476940`: IDs 2/3/4, string virtual slot 0x58,
+fallback numeric formatter и true/false. Исполнение форматирования и конкретных
+JSON values не заявляется. Следом active settings/GMC2/DECKEY, callback → SDK map
+и семантика value conversion, затем live auth flow.
+
+Отчёт code-clues/headless-sdk-path.json, SHA256
+734ffd3259ff35d1a2bfcae55af4f6f528176816a492f2417202323ff393a00c.
+Пять тестов проверяют provenance/replay, metadata/repr/ошибки и интеграционный
+offline путь RSA secret list → merge → token form → полный адрес. Private key
+искусственный и остаётся в памяти; игра/сеть/аккаунты не использовались.
+Главный указатель, общий реестр и задачи обновлены. network_ready=false.
+Регрессия: полный набор 111/111 без skip (68,3 с); после уточнения запрета
+Unicode whitespace отдельно повторены 5/5 новых тестов (3,0 с). Синтаксис
+изменённых Python-файлов, 212 относительных ссылок и git diff --check прошли.
+
 ## 19 октября 2026 — H04b-map: приоритет secret и чтение auth URL
 
 После ce19fbe прослежены normal/secret insertion calls в один map, helper

@@ -1,6 +1,6 @@
 """Offline SDK string-map merge/URL getter; no response acquisition or HTTP.
 
-Evidence: HEADLESS-SDK-MAP.md. Values must already be strings, as in the
+Evidence: HEADLESS-SDK-MAP.md / HEADLESS-SDK-PATH.md. Values must be strings, as in the
 client's final SDK map; conversion of arbitrary JSON values is unresolved.
 """
 _ASCII_UPPER = str.maketrans('abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
@@ -61,3 +61,26 @@ def lookup_sdk_url_value(constants: dict, key: str) -> str | None:
         return None
     value = entry[1]
     return value if _fold(value).startswith(('HTTP://', 'HTTPS://')) else None
+
+
+def append_sdk_path(base: str, segment: str) -> str:
+    """Repeat native path append, preserving existing slashes/backslashes.
+
+    This is string concatenation, not URL parsing. Empty segment adds a trailing
+    slash to a nonempty base lacking either separator. Local bound: 4096 UTF-16
+    units for each input and result; NUL is rejected.
+    """
+    for value in (base, segment):
+        if not isinstance(value, str) or len(value) > 4096 or '\0' in value:
+            raise ValueError('Invalid SDK path argument')
+        if len(value.encode('utf-16le', 'surrogatepass')) > 8192:
+            raise ValueError('SDK path exceeds local budget')
+    if not segment:
+        result = base if not base or base.endswith(('/', '\\')) else base+'/'
+    elif base and not base.endswith(('/', '\\')) and not segment.startswith('/'):
+        result = base+'/'+segment
+    else:
+        result = base+segment
+    if len(result.encode('utf-16le', 'surrogatepass')) > 8192:
+        raise ValueError('SDK path result exceeds local budget')
+    return result

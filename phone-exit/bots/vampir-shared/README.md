@@ -38,6 +38,10 @@ Windows проверен на искусственных ключах, native OA
 secret и читает значение по native HTTP(S) prefix check. 24 lookup / 3 replacement /
 5 hash native сценариев: [доказательства](../resource-tools/vampir/HEADLESS-SDK-MAP.md).
 Stringify прочих JSON-типов, весь callback → SDK map и Android ещё открыты.
+`append_sdk_path` повторяет native path concatenation (70 сценариев),
+`auth_request.py:bind_token_request` связывает code/refresh form с явным
+authTokenUrl. URL/body скрыты в repr; нет HTTP или автоматического выбора адреса.
+[Правила и локальные ограничения](../resource-tools/vampir/HEADLESS-SDK-PATH.md).
 
 `auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.

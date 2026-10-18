@@ -22,6 +22,8 @@ GMC2 config: 7 связанных функций и 256 native проверок 
 возвращает JSON только после успешной обработки всех элементов.
 Общие [merge строковых констант и auth URL lookup](../resource-tools/vampir/HEADLESS-SDK-MAP.md)
 подтверждают secret priority и ASCII case matching; весь GMC2 callback ещё открыт.
+Общий [bind_token_request и native path append](../resource-tools/vampir/HEADLESS-SDK-PATH.md)
+дают полный offline-план из явной карты; реальных серверных данных ещё нет.
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

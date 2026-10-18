@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Auth path append и offline binding, 19 октября: H04 partial
+
+Общий SHA Windows EXE ниже. Code `0x1450e2b01` и refresh `0x1450e3451`
+вызывают `0x14142c9d0` с v2/access-token длиной 15. 70 native path scenarios:
+separator rules/empty FString/Unicode, preallocated buffer, memcpy shim.
+Общие append_sdk_path / BoundTokenRequestPlan / bind_token_request;
+явные SDK constants, без HTTP. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-PATH.md).
+Статически уточнены ветви value conversion `0x144476940`; числа/virtual values
+ещё не исполнены. Активные settings/GMC2/DECKEY и весь SDK map flow открыты.
+
 ## Normal/secret map и auth URL getter, 19 октября: H04b partial
 
 Общий SHA Windows EXE ниже. Parser normal `0x1444f1250` → secret `0x1444f162f`

@@ -1,9 +1,12 @@
 """Offline SDK token-request plans, not email/password login or HTTP execution.
 
-Evidence: HEADLESS-AUTH.md. The server base URL is deliberately unresolved:
-authTokenUrl must come from the verified current SDK configuration.
+Evidence: HEADLESS-AUTH.md / HEADLESS-SDK-PATH.md. authTokenUrl is supplied
+explicitly from SDK string constants, not inferred from client literals.
 """
 from dataclasses import dataclass
+from urllib.parse import urlsplit
+
+from .sdk_config import append_sdk_path, lookup_sdk_url_value
 
 _SAFE = frozenset(b'-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~')
 
@@ -30,6 +33,44 @@ class TokenRequestPlan:
 
     def __repr__(self):
         return 'TokenRequestPlan(POST authTokenUrl/v2/access-token, body=<redacted>)'
+
+
+@dataclass(frozen=True, slots=True, repr=False)
+class BoundTokenRequestPlan:
+    url: str
+    body: bytes
+    method: str = 'POST'
+    content_type: str = 'application/x-www-form-urlencoded'
+
+    def __repr__(self):
+        return 'BoundTokenRequestPlan(POST, url=<redacted>, body=<redacted>)'
+
+
+def bind_token_request(plan: TokenRequestPlan, constants: dict) -> BoundTokenRequestPlan:
+    """Bind an existing code/refresh plan to an explicit SDK base, without HTTP.
+
+    Local policy rejects hostless bases, userinfo, query/fragment, backslashes,
+    controls and invalid ports. This is stricter than the native prefix check;
+    actual config acquisition, endpoint trust and authentication remain separate.
+    """
+    if not isinstance(plan, TokenRequestPlan) or not isinstance(plan.body, bytes) or len(plan.body) > 32768:
+        raise ValueError('Expected a bounded token request plan')
+    if (plan.endpoint_key, plan.relative_path, plan.method, plan.content_type) != (
+            'authTokenUrl', 'v2/access-token', 'POST', 'application/x-www-form-urlencoded'):
+        raise ValueError('Unsupported token request metadata')
+    base = lookup_sdk_url_value(constants, plan.endpoint_key)
+    if base is None:
+        raise ValueError('Missing or unsupported SDK token endpoint')
+    try:
+        if any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in base) or any(c in base for c in '\\?#'):
+            raise ValueError
+        parsed = urlsplit(base)
+        if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username is not None or parsed.password is not None:
+            raise ValueError
+        parsed.port  # Validate syntax/range without resolving the host.
+    except ValueError:
+        raise ValueError('Unsupported SDK token base URL') from None
+    return BoundTokenRequestPlan(append_sdk_path(base, plan.relative_path), plan.body)
 
 
 def _plan(grant_type: str, client_id: str, device_key: str, field: str, secret: str) -> TokenRequestPlan:
