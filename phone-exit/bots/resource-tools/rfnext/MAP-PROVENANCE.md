@@ -70,7 +70,7 @@ y = m10*sx + m11*sy + m12
 В каждой точке index.json сохранены source_view, source_preview_point,
 source_frame_point, source_sha256, provenance и navigation_verified=false.
 В каждом профиле собственные точки хранятся как map_id=novus_world_101,
-map_points=[[x,y]]; активная точка хранится отдельно по id.
+map_points=[[x, y]]; активная точка хранится отдельно по id.
 
 ## Как проверить после обновления игры
 

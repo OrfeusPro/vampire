@@ -1,7 +1,7 @@
 # Исследование ресурсов Vampir
 
 `build-headless-auth-index.py` → `code-clues/headless-auth-index.json`:
-24 selected SDK symbols/34 LEA/24 roots,143 constants,512 native escaping calls.
+24 selected SDK symbols/34 LEA/24 roots, 143 constants, 512 native escaping calls.
 [HEADLESS-AUTH.md](HEADLESS-AUTH.md), общий auth_request.py создаёт offline
 code/refresh form plans; нет получения пароля/токена, HTTP или игровой сессии.
 
@@ -38,27 +38,27 @@ container lifecycle fixtures и final callback capture.
 Начинать разработку с [главного файла модуля](../../vampir/README.md).
 
 `build-headless-transport-stage.py` → `code-clues/headless-transport-stage.json`:
-62 native receive-stage сценария, length23/compressed flag/native decompressor.
+62 native receive-stage сценария, length 23/compressed flag/native decompressor.
 [HEADLESS-TRANSPORT-STAGE.md](HEADLESS-TRANSPORT-STAGE.md), shared transport_header.py;
 распаковка расширена в HEADLESS-BLOCK-DECODE.md; доставка слушателям/CRC ещё требуют проверки.
 
 `build-headless-key-change.py` → `code-clues/headless-key-change.json`:
-Notify11/ack12,10native payload roundtrips/16shortcases/20handler slices.
+Notify11/ack12,10 native payload roundtrips/16 shortcases/20 handler slices.
 [HEADLESS-KEY-CHANGE.md](HEADLESS-KEY-CHANGE.md): send-before-key-update,
-registration/source/limitations; общий key_change.py неуправляетсессией.
+registration/source/limitations; общий key_change.py не управляет сессией.
 
 H03b.2b partial: `build-headless-receive-envelope.py` → `code-clues/headless-receive-envelope.json`.
-Length probe156cases, receive wrapper13cases, static callback→Dispatch;
+Length probe 156 cases, receive wrapper 13 cases, static callback→Dispatch;
 [HEADLESS-RECEIVE-ENVELOPE.md](HEADLESS-RECEIVE-ENVELOPE.md). Shared receive_frame.py
-добавляетlocalbounds, полный transport/CRC/keyflow ещёunknown.
+добавляет localbounds, полный transport/CRC/keyflow ещё unknown.
 
 H03b.2a: `build-headless-send-frame.py` → `code-clues/headless-send-frame.json`.
-Цельная native сборка Ping send-A,20cases, shared `vampir_core/send_frame.py`.
+Цельная native сборка Ping send-A, 20 cases, shared `vampir_core/send_frame.py`.
 [HEADLESS-SEND-FRAME.md](HEADLESS-SEND-FRAME.md): length/CRC/ID/sequence/body/XOR,
-explicit environment иограничения; receive validation ещё H03b.2b.
+explicit environment и ограничения; receive validation ещё H03b.2b.
 
 H03b.1: `build-headless-frame-primitives.py` → `code-clues/headless-frame-primitives.json`.
-252native executions CRC32/XOR, безshims; shared runtime в
+252 native executions CRC32/XOR, без shims; shared runtime в
 `vampir-shared/vampir_core/frame_primitives.py`.
 [HEADLESS-FRAME-PRIMITIVES.md](HEADLESS-FRAME-PRIMITIVES.md): callers и ограничения;
 полный frame/key/context ещё H03b.2.
@@ -69,12 +69,12 @@ H03b.1: `build-headless-frame-primitives.py` → `code-clues/headless-frame-prim
 Это статические привязки, не готовый сетевой протокол.
 
 H02: `build-headless-packet-bindings.py` → `code-clues/headless-packet-bindings.json`.
-10типов/5регистраций, constructor/vtable/ID/IO targets, контекстные коллизии
+10 типов/5 регистраций, constructor/vtable/ID/IO targets, контекстные коллизии
 Login/LobbyLogin; [HEADLESS-PACKET-BINDINGS.md](HEADLESS-PACKET-BINDINGS.md).
 Не готовый wire codec; общий реестр обновляется вместе с отчётом.
 
 H03a: `build-headless-ping-codec.py` → `code-clues/headless-ping-codec.json`.
-Native constructors/primitive/raw buffer IO,126scenarios; только memcpy shim.
+Native constructors/primitive/raw buffer IO, 126 scenarios; только memcpy shim.
 Переносимые Ping payloads — `vampir-shared/vampir_core/ping.py`.
 [HEADLESS-PING-CODEC.md](HEADLESS-PING-CODEC.md): реальные bytes и границы
 подтверждения. Framing/transport остаются H03b/H03c.
@@ -108,7 +108,7 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/build-gallery.py
 ```
 
 `scan-resources.py` сохраняет инвентаризацию `.pak/.utoc/.ucas`, размер,
-mtime_ns и SHA256 первых+последних64KiB. Это отпечаток для обнаружения изменения,
+mtime_ns и SHA256 первых+последних 64KiB. Это отпечаток для обнаружения изменения,
 а не полный SHA256 исходного архива. Читает записи PAKv11, ограничивает
 декодирование существующим reader RF; шифрованные записи пропускает.
 `source.json` рядом с entries.json предотвращает использование старых
@@ -229,7 +229,7 @@ WBP или путь и проверяет хеши перед выдачей. Н
 
 UI-менеджер и побочные эффекты проверки окна: build-ui-manager-code.py,
 [UI-MANAGER.md](UI-MANAGER.md). Зависит от entry-window-code.json;
-не считать0x144a1cbf0 чистым IsVisible/Contains.
+не считать 0x144a1cbf0 чистым IsVisible/Contains.
 
 Обычный переход: build-ui-transition-code.py и [UI-TRANSITION.md](UI-TRANSITION.md).
 Отчёт связывает настройку/copy callback с FNnEasingVar::Start и завершением,
@@ -260,8 +260,8 @@ gate/состояния ещё не позволяют вычислять дос
 
 Поля ContentsLock и пять прямых вызовов предиката:
 [CONTENTS-LOCK-FIELDS.md](CONTENTS-LOCK-FIELDS.md), build-contents-lock-fields.py,
-code-clues/contents-lock-fields.json. SaveType=2 во всех269 исходных строках;
-символическое имя2 пока неизвестно. Соединение со справочником — referenceRevision4,
+code-clues/contents-lock-fields.json. SaveType=2 во всех 269 исходных строках;
+символическое имя 2 пока неизвестно. Соединение со справочником — referenceRevision4,
 clientPredicateReference; вычисление для персонажа не включено.
 
 Обновление контекста и источники кешированных уровней:
@@ -281,21 +281,21 @@ code-clues/lock-gate-code.json — reset0..10, getter/setter готовност�
 Регистрация двух unlock-handler и прямые события готовности:
 [UNLOCK-REGISTRATION.md](UNLOCK-REGISTRATION.md), build-lock-registration-events.py,
 code-clues/lock-registration-events.json. Две packet/handler пары в
-PacketDispatcher::_AddPacketHandler, таблицы методов/ID и7 setter-вызовов;
+PacketDispatcher::_AddPacketHandler, таблицы методов/ID и 7 setter-вызовов;
 CharacterSelect/Engraving связаны точными диагностическими именами. Принимающая
 диспетчеризация и другие события не объявляются завершёнными.
 
 Guard перед обновлением разрешений и сообщения:
 [PACKET-RESULT-GUARD.md](PACKET-RESULT-GUARD.md), build-packet-result-guard.py,
-code-clues/packet-result-guard.json.25 опорных инструкций,227 selector-записей,
-5 точных ключей EXE→CSV405; исключение4503 не заменено правилом result==0.
+code-clues/packet-result-guard.json.25 опорных инструкций, 227 selector-записей,
+5 точных ключей EXE→CSV405; исключение 4503 не заменено правилом result==0.
 Общий UI-путь содержит ограничения и пока не связан с конкретным WBP.
 
 
 Общий путь ошибки → системный виджет:
 [SYSTEM-MESSAGE-UI.md](SYSTEM-MESSAGE-UI.md), build-system-message-link.py,
 code-clues/system-message-link.json. WBP_SystemMessageUI → NkSystemMessageUI →
-TextMessage+0xa00 и вложенный ImageBackGround;4 cooked-варианта с хешами.
+TextMessage+0xa00 и вложенный ImageBackGround; 4 cooked-варианта с хешами.
 Отдельный systemMessageReference в ui-window-reference.json не доказывает
 привязку KICKOUT_FOR_INSPECT и не включает клики/абсолютную геометрию.
 
@@ -303,7 +303,7 @@ TextMessage+0xa00 и вложенный ImageBackGround;4 cooked-вариант�
 Кандидат именованного содержимого системного сообщения:
 [MESSAGE-NAMED-SLOT.md](MESSAGE-NAMED-SLOT.md), decode-message-named-slot.py,
 ui-geometry/system-message-named-slot.json. Тип NamedSlotBinding/Name/Content
-подтверждён, но unversioned-индекс59 ещё не связан с полной схемой наследования.
+подтверждён, но unversioned-индекс 59 ещё не связан с полной схемой наследования.
 Два префикса сохранены с opaque-хвостом; ребро топологии и координаты не включены.
 
 
@@ -324,22 +324,22 @@ build-npc-loot.py → query-npc-loot.py. Проценты выпадения н�
 исходные rates/условия/источники сохранены. Отдельные справочники вне Git/APK.
 
 
-build-loot-rate-evidence.py проверяет именованныеLoad AreaReward/NpcReward/Reward,
-привязку rate к32-битному полю и PE-importatoi. Запускать доbuild-npc-loot.py,
+build-loot-rate-evidence.py проверяет именованные Load AreaReward/NpcReward/Reward,
+привязку rate к 32-битному полю и PE-importatoi. Запускать до build-npc-loot.py,
 который включает компактное доказательство и item-origins.json (Item→NPC→цепочки).
 Native/CSV версии сверяются. Проценты всё ещё не вычисляются. NPC-LOOT.md.
 
 
 build-loot-record-links.py продолжает nativeLoad до создания объектов/vtable
-NpcReward/Reward:проверяет два пустых ratecallback и24опорныхинструкции.
-После негоbuild-npc-loot.py включаетrate-callbacks.json иnpc-locations.json.
+NpcReward/Reward: проверяет два пустых ratecallback и 24 опорных инструкции.
+После него build-npc-loot.py включает rate-callbacks.json и npc-locations.json.
 query-npc-loot.py поддерживает --item/--npc совместно с--world. NPC-LOOT.md.
 
 Nocturne Map10/11: `build-map-projection.py` создаёт проверку XY→атлас;
-затем `build-map-atlas.py`. Источники,7 областей исторического кадра,
-фильтр предметов и33 теста: [MAP-ATLAS.md](MAP-ATLAS.md).
+затем `build-map-atlas.py`. Источники, 7 областей исторического кадра,
+фильтр предметов и 33 теста: [MAP-ATLAS.md](MAP-ATLAS.md).
 
 Единая большая Nocturne: `build-world-map.py` / `world-map.html` /
 `world-map.js` / `world-map-model.js`, экспорт `render-world-map.py`.
-Главныйindex открывает36контекстов вместе; старый просмотрщик —world.html.
-Порядок и51тест: [MAP-ATLAS.md](MAP-ATLAS.md).
+Главный index открывает 36 контекстов вместе; старый просмотрщик —world.html.
+Порядок и 51 тест: [MAP-ATLAS.md](MAP-ATLAS.md).

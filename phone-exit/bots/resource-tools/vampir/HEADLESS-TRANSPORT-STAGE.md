@@ -80,7 +80,7 @@ Literal fixtures соответствуют проверенной ветке д
 
 `vampir-shared/vampir_core/transport_header.py` содержит:
 
-- `inspect_transport_header(buffer, *, max_frame_size)` — size23/flag.
+- `inspect_transport_header(buffer, *, max_frame_size)` — size 23/flag.
 - `take_uncompressed_transport_frame(...)` — первый полный несжатый body и
   количество потребляемых байтов, либо None для неполного входа.
 
@@ -91,7 +91,7 @@ NotImplementedError. Частичный кадр ожидается, данны�
 
 `receive_frame.py` продолжает относиться ко **второму** уровню длины (LE24
 без отдельного compressed bit в исследованной функции). Его нельзя применять
-к raw stream вместо transport_header.py. Исторические записи «длина24» до
+к raw stream вместо transport_header.py. Исторические записи «длина 24» до
 этого открытия описывают именно второй уровень, а не весь протокол.
 
 Пять тестов сверяют source/fragment bytes, native vectors, поведение общего

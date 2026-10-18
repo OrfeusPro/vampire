@@ -139,7 +139,7 @@ PHP 8.3+, HTML/CSS/JS без сборки и npm-зависимостей. Ру�
 
 ## Авторизованный SMTP, 17.10.2026
 
-Пользователь создал orders@vampir.top. Проверены сертификат mail.vampir.top:587 STARTTLS и авторизация ящика. settings.json → order_email.transport = smtp. notifications.php использует PHPMailer 7.1.1 (точная версия в composer.json/composer.lock, Composer audit без известных advisories). Сервер подтверждает сертификат, SMTPAuth включён, From и envelope sender совпадают с orders@vampir.top. Нет автоматического возврата к PHP mail при ошибке SMTP.
+Пользователь создал orders@vampir.top. Проверены сертификат mail.vampir.top: 587 STARTTLS и авторизация ящика. settings.json → order_email.transport = smtp. notifications.php использует PHPMailer 7.1.1 (точная версия в composer.json/composer.lock, Composer audit без известных advisories). Сервер подтверждает сертификат, SMTPAuth включён, From и envelope sender совпадают с orders@vampir.top. Нет автоматического возврата к PHP mail при ошибке SMTP.
 
 Пароль находится только в игнорируемом website/smtp.local.php, вне dist; файл не входит в Git. Образец без пароля — smtp.example.php. На хостинге файл расположен /smtp.local.php вне /public_html, доступ ограничен правами 600. Данные SMTP не передаются клиентскому JavaScript. Пакет vendor игнорируется; установка: PHP Composer install --no-dev --prefer-dist в website. Скрипт FTPS выгружает только runtime библиотеки вне webroot и проверяет содержимое файлов. Новая резервная копия: website/var/ftp-backup-20261016T212029Z/ (также вне Git; может содержать приватные настройки).
 
@@ -221,6 +221,6 @@ HTML-шаблон уведомлений опубликован: FTPS 92 про�
 
 SMTP уведомления помечены BUYBACK OFFER: отдельный заголовок, предложенная продавцом сумма или To agree, без розничного тарифа. Текстовая альтернатива также различает предложения. HTML экранирует пользовательские поля.
 
-Локально проверены все 50 seller URL/метаданные/SSR/минимум/FAQ-ссылки, sitemap100, отказы API ниже5000/неверная цена/нет Turnstile (check-sell.py), запуск общего JS без retail-контролов (check-sell-ui.cjs), HTML buyback-письма (check-order-email.php), прежние SEO/язык/Turnstile/feedback/loader проверки, PHP/JS syntax и 50×113 translation keys. Реальная заявка с пользовательским Turnstile-токеном не отправлялась. Визуальный browser QA недоступен при отключённом browser use.
+Локально проверены все 50 seller URL/метаданные/SSR/минимум/FAQ-ссылки, sitemap100, отказы API ниже 5000/неверная цена/нет Turnstile (check-sell.py), запуск общего JS без retail-контролов (check-sell-ui.cjs), HTML buyback-письма (check-order-email.php), прежние SEO/язык/Turnstile/feedback/loader проверки, PHP/JS syntax и 50×113 translation keys. Реальная заявка с пользовательским Turnstile-токеном не отправлялась. Визуальный browser QA недоступен при отключённом browser use.
 
 Публикация seller page завершена после повторного FTPS: 93 проверенных файла, backup website/var/ftp-backup-20261016T223430Z/. На HTTPS прошли check-sell.py --production (50 страниц/FAQ/SEO/sitemap100/API validation/Turnstile), check-seo.py --production, check-language-preference.py --production (включая /sell/ browser/cookie/bot/explicit paths) и check-turnstile.py --production. Реальный пользовательский токен/положительная отправка seller offer остаётся ручной проверкой.

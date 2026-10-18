@@ -42,7 +42,7 @@ Patch — `Saved/PersistentDownloadDir/Patch/Install/pakchunk500-Windows.pak`;
 Источник схемы — массив указателей на дескрипторы в EXE по offset 157219216:
 UserWidget, DeferredResourceObject, UnderlyingType, CachePolicy, AsyncLoad.
 UnderlyingType — вложенный enum-дескриптор, не самостоятельное свойство.
-Для TitleUI читается заголовок свойств [0,12,29]; только значение поля 0
+Для TitleUI читается заголовок свойств [0,12, 29]; только значение поля 0
 декодировано: два FName и строка subpath, диапазон байтов [6,26) экспорта
 TitlePanelUI (offset 7568). Получен путь
 `/Game/RED/UI/Lobby/WBP_TitlePanelUI.WBP_TitlePanelUI`. Хвост [26,35)

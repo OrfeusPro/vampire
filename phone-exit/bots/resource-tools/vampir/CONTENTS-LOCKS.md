@@ -3,7 +3,7 @@
 15 октября 2026. Читать после [главного файла разработки](../../vampir/README.md).
 Исследование файлов установленного клиента, без действий на телефоне.
 
-**Обновление:** нативный конвертер теперь подтвердил имена11 числовых типов;
+**Обновление:** нативный конвертер теперь подтвердил имена 11 числовых типов;
 Type1 — CompletedQuest. См. [CONDITION-TYPES.md](CONDITION-TYPES.md) и
 quest-graph/condition-types.json. Ниже сохранены границы прежнего соединения
 таблиц. Последующее исследование [CONDITION-PREDICATE.md](CONDITION-PREDICATE.md)
@@ -29,7 +29,7 @@ quest-graph/condition-types.json. Ниже сохранены границы п�
 `FRdContentsLockConditionInfoManagerTemplate::Load` (160659136),
 `ContentsLock.csv` (160660144), `FRdContentsLockInfoManagerTemplate::Load`
 (160660224). Полная диагностическая строка по смещению 160661442 объявляет
-ContentsLock.ContentsLockConditionGroupId → ContentsLockCondition.
+ContentsLock. ContentsLockConditionGroupId → ContentsLockCondition.
 Это файловые смещения строк, не адреса функций.
 Хеш исходного EXE — в CODE-CLUES.md; SHA256 CSV, PAK и смещения записей —
 в разделе sources каждого отчёта. Исходное имя CSV восстановлено по загрузчику

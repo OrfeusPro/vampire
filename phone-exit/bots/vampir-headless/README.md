@@ -5,7 +5,7 @@
 Выбранные send/receive пути, CRC/XOR/распаковка, queue ownership/partial send
 проверены native replay; portable pump прошёл local IPv4 TCP.
 [Transport и границы](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
-H04 начат:24 SDK symbols/34 LEA/24 roots,512 native escape calls, offline
+H04 начат: 24 SDK symbols/34 LEA/24 roots, 512 native escape calls, offline
 code/refresh token request plans. [Авторизация](../resource-tools/vampir/HEADLESS-AUTH.md).
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
@@ -93,8 +93,8 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/build-headless-network-inde
 Выход: `F:/PhoneExit Resources/Vampir/code-clues/headless-network-index.json`.
 Проверяет SHA EXE, точные строки и LEA на границах инструкций, хранит provenance.
 Не запускает игру, не читает память процесса и не отправляет запросы.
-Текущий результат:27 symbols / 31 xrefs / 27 roots / 32 fragments / 1020 instructions,
-missing=0,rejected=0,network_ready=false.
+Текущий результат: 27 symbols / 31 xrefs / 27 roots / 32 fragments / 1020 instructions,
+missing=0, rejected=0, network_ready=false.
 
 Проверка отчёта независимо от генератора:
 
@@ -111,11 +111,11 @@ python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_native_ent
 reader/writer targets; пять result registrations. Полный отчёт и таблицы:
 [HEADLESS-PACKET-BINDINGS.md](../resource-tools/vampir/HEADLESS-PACKET-BINDINGS.md).
 ID Login/LobbyLogin совпадают, их схемы/регистрация различны; учитывать контекст.
-Четыре независимых проверки, включая10native ID getter scenarios, прошли.
+Четыре независимых проверки, включая 10 native ID getter scenarios, прошли.
 Wire encoding и сеть этим не проверены.
 
-**H03a выполнен**: реальные native primitive/raw IO подтвердили Ping body16байт
-и Result12байт,126native scenarios/5tests; codec в `vampir-shared/vampir_core/ping.py`, только
+**H03a выполнен**: реальные native primitive/raw IO подтвердили Ping body16 байт
+и Result 12 байт, 126 native scenarios/5 tests; codec в `vampir-shared/vampir_core/ping.py`, только
 стандартная библиотека Python. [Доказательства и ограничения](../resource-tools/vampir/HEADLESS-PING-CODEC.md).
 Это тела сообщений, не complete frames и не рабочее подключение.
 
@@ -123,28 +123,28 @@ Wire encoding и сеть этим не проверены.
 output roots144aa9da0/144aaccf0 и helpers1445f1230/144aa6ca0 ещё разобрать.
 **H04**: SDK auth почта/пароль→сессия.
 
-H03b.1: CRC32/XOR helpers подтверждены252native executions/5tests;
+H03b.1: CRC32/XOR helpers подтверждены 252 native executions/5 tests;
 общий `vampir-shared/vampir_core/frame_primitives.py`.
 [Источники и ограничения](../resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md).
 Следом H03b.2: полный frame, receive validation, key/context/callbacks.
 
-H03b.2a: native цельный send-A slice подтвердил27байтовый Ping frame иsequence
-wrap (20scenarios/5tests). Общий `vampir_core/send_frame.py` умеет его собрать.
+H03b.2a: native цельный send-A slice подтвердил 27 байтовый Ping frame и sequence
+wrap (20 scenarios/5 tests). Общий `vampir_core/send_frame.py` умеет его собрать.
 [HEADLESS-SEND-FRAME.md](../resource-tools/vampir/HEADLESS-SEND-FRAME.md).
 Продолжение — receive validation/context/key H03b.2b; сетевого подключения нет.
 
-H03b.2b partial: length probe156native cases иwrapper13cases; статически связаны
-game peer callback иDispatch. Общий receive_frame.py проверяет полноту/лимиты,
-неCRC/packet fields. [Доказательства](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md).
-Следом transport caller, integrity/keyflow иполный входной layout.
+H03b.2b partial: length probe 156 native cases и wrapper 13 cases; статически связаны
+game peer callback и Dispatch. Общий receive_frame.py проверяет полноту/лимиты,
+не CRC/packet fields. [Доказательства](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md).
+Следом transport caller, integrity/keyflow и полный входной layout.
 
-Смена peer key теперь связана сPktKeyChangeNotify(ID11): ackPktKeyChanged(ID12)
-передаётся вsend доsetter, обаpayload8байт.20native flow cases/5tests;
+Смена peer key теперь связана с PktKeyChangeNotify(ID11): ackPktKeyChanged(ID12)
+передаётся в send до setter, оба payload8 байт. 20 native flow cases/5 tests;
 общий key_change.py. [Доказательства](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md).
-Первичная авторизация, полный receive layout иsend queue остаются unknown.
+Первичная авторизация, полный receive layout и send queue остаются unknown.
 
 Первый raw receive stage подтверждён 62 native сценариями / 5 тестами:
-size23/compressed flag, копирование/распаковка и compaction. Общий transport_header.py
+size 23/compressed flag, копирование/распаковка и compaction. Общий transport_header.py
 распознаёт признак сжатия, извлекает несжатые кадры; общий decompressor ещё не готов.
 [Доказательства](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md).
 Далее listener loop/второй framing и send queue; сетевого подключения нет.

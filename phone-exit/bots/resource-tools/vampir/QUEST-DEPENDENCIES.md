@@ -97,7 +97,7 @@ Quest 110150 **To a safe location** → задача 110150070 → Tutorial 4003
 В нём указаны Hud_Inventory → Inventory_EquipmentItem_Class1 → ItemInfoPopup_Equip.
 Для предмета задан TargetId: `11041002, 11031002, 11021002, 11011002, 11051001`;
 нельзя выбирать произвольный первый предмет сумки вместо этих целей.
-Для Equip целевой контрол — WBP_ItemInfoPopup.ButtonEquip.
+Для Equip целевой контрол — WBP_ItemInfoPopup. ButtonEquip.
 
 ## Проверки и ограничения
 

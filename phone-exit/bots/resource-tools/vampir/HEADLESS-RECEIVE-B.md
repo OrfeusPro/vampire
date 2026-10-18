@@ -29,7 +29,7 @@ Slot+0x38 сохраняет length probe; slot+0x40 вызывает wrapper `0
 PingResult OnHandler, как в предыдущем этапе. Указатель manager, registry,
 listener lifetime и значения ключа заданы явными fixtures.
 
-1. Wrapper берёт key64 из subobject+0x48 на `0x144aacb74` и вызывает
+1. Wrapper берёт key 64 из subobject+0x48 на `0x144aacb74` и вызывает
    XOR `0x144aa6ca0` на `0x144aacb83` для frame+3, length−3. Key0 выбирает
    ранее доказанный fallback. Первые три байта сохраняются.
 2. На `0x144aacb88` читается word frame+3 — тот же ID, который затем читает
@@ -72,7 +72,7 @@ snapshot lifetime fixtures, CRT memory shims, checked security cookie shim,
 Dispatch очищает current packet/TLS; внутренний кадр потреблён loop.
 
 В исполненном B пути нет CRC helper/сравнения checksum. Входной layout для
-этого пути: length3, после XOR ID2, затем body. Исходящий send-A CRC/sequence
+этого пути: length 3, после XOR ID2, затем body. Исходящий send-A CRC/sequence
 layout применять сюда нельзя. Это не доказательство отсутствия integrity во
 всём socket/library/server пути и не разрешение принимать повреждённые данные.
 Live server compatibility и смена ключа между реальными кадрами ещё не проверены.

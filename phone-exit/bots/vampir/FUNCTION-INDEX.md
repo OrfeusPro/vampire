@@ -6,7 +6,7 @@
 `authUrl/v1/sign-in`; NetmarbleID code/refresh roots1450e2640/1450e2f50 —
 `authTokenUrl/v2/access-token`, form client_id/device_key/code или refresh_token.
 POST helper14451c570→14451c600, form builder144586a30; native whitelist141c06750
-и uppercase hex1415ad670 исполнены512раз.24 SDK literals/34 LEA/24 roots.
+и uppercase hex1415ad670 исполнены 512 раз.24 SDK literals/34 LEA/24 roots.
 [Полные source/SHA/offsets и границы](../resource-tools/vampir/HEADLESS-AUTH.md).
 Общий auth_request.py — offline plan, не login. Config bases/browser code и
 SDK→game handoff ещё unknown; пароль не подставлять в PktLogin по догадке.
@@ -14,10 +14,10 @@ SDK→game handoff ещё unknown; пароль не подставлять в P
 ## Уточнение 18 октября: queue drain → send
 
 Для общего SHA Windows EXE ниже constructor `0x1445e2b7f/0x1445e2b86`
-связывает peer+50 с vtable `0x149503b58`, slot20 → `0x1445e8b70`.
+связывает peer+50 с vtable `0x149503b58`, slot 20 → `0x1445e8b70`.
 Drain вызывает ordinal WS2_32 import на `0x1445e8c0d`, имя send подтверждено
 export table локальной DLL (её SHA в JSON). Consume `0x1445e5ef0`, partial
-memmove; errors22/23/37 сохраняют очередь.61 native cases/5 tests.
+memmove; errors22/23/37 сохраняют очередь. 61 native cases/5 tests.
 [Source/offsets и границы](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
 Socket/error/close fixtures; real loopback TCP проверяет только portable pump.
 
@@ -138,11 +138,11 @@ CharacterSelect/Result=109/110, Ping/Result=16/17.
 **ID3/4 совпадают у разных типов**: использовать контекст, не единый глобальный
 ID→schema. Доказаны разные фабрики/registration targets; runtime selection ещё unknown.
 Name slot+0x38, ID+0x28; writer+0x10/reader+0x20 — targets, не wire-schema.
-10native ID сценариев/4audit tests прошли, сеть/игра не запускались.
+10 native ID сценариев/4 audit tests прошли, сеть/игра не запускались.
 
 Новые handler targets: LoginResult146765540, LobbyLoginResult14677ec50,
 CharacterListReadResult14675dce0, CharacterSelectResult14675e9a0,
-PingResult1467670c0 (VA, префикс0x). Getter/constructor/read/write VA и
+PingResult1467670c0 (VA, префикс 0x). Getter/constructor/read/write VA и
 registration callsites см. в подробной таблице, не выводить их из ID.
 
 ## Primitive IO и Ping payload: H03a, 18 октября
@@ -151,16 +151,16 @@ registration callsites см. в подробной таблице, не выво
 полную цепочку, provenance и `code-clues/headless-ping-codec.json`.
 Receive Dispatch14679f510 → reader ctor144aa6260 → vtable14961a520 →
 u64 reader144aa5bc0/u32 reader144aa59c0 → raw read144aa5ce0.
-Dispatch явно передаёт swap=0; тела little-endian16байт Ping/12байт Result.
+Dispatch явно передаёт swap=0; тела little-endian16 байт Ping/12 байт Result.
 Writer ctor144aa62f0 → vtable14961a5c0 → u64 writer144aa61e0/u32 writer144aa6090
 → raw write144aa6120. Counter helpers144aa68c0/1445ead30; bswap64/32
-1445d9f60/1445d9f30. Все адреса VA, префикс0x; полные source SHA выше.
+1445d9f60/1445d9f30. Все адреса VA, префикс 0x; полные source SHA выше.
 
 Primitive IO исполнен настоящими инструкциями, только CRT memcpy подменён
-bounded shim.126native cases/5tests,6дополнительных replays прошли.
+bounded shim. 126 native cases/5 tests, 6 дополнительных replays прошли.
 Переносимый stdlib codec: `vampir-shared/vampir_core/ping.py`.
 H03 остаётся частичным: output callers144aa9da0/144aaccf0, helpers1445f1230/
-144aa6ca0 и framing требуют разбора. Размер5до body относится к dispatcher
+144aa6ca0 и framing требуют разбора. Размер 5 до body относится к dispatcher
 input, не ко всему wire frame. Handler dispatch вызывает slot+8; связь с
 OnHandler+10 ещё проследить. Signedness/field timing semantics не установлены.
 
@@ -168,44 +168,44 @@ OnHandler+10 ещё проследить. Signedness/field timing semantics не
 
 Первый receive transport: `UxTcpPeer::_HandleRecvBuffer`, root0x1445ed3e0,
 диагностическая LEA0x1445ed4cc. Native slice0x1445ed403..0x1445ed562:
-length23/compressed bit23 → copy/decompress0x14141ba60 → второй буфер,
+length 23/compressed bit 23 → copy/decompress0x14141ba60 → второй буфер,
 append0x1445e4a90/resize0x1445de6e0/memmove. 62 native cases / 5 tests.
 [HEADLESS-TRANSPORT-STAGE.md](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md),
 report `code-clues/headless-transport-stage.json`, shared transport_header.py.
 Общий decompressor/listener loop/CRC и send queue ещё не готовы.
 Length probe0x144aa9a90 — второй уровень, не raw compressed framing.
 
-H03b.2b keyflow: бывший candidate0x144aab330 подтверждён какsetter peer+248.
-PktKeyChangeNotifyHandler0x146765050 строитPktKeyChanged, вызываетsend+38,
-затемsetter+40. IDs Notify11/ack12, тела raw64LE8байт;20native flow cases
-подтвердилиold key во время send иupdate после него, дажеприsend false.
+H03b.2b keyflow: бывший candidate0x144aab330 подтверждён как setter peer+248.
+PktKeyChangeNotifyHandler0x146765050 строит PktKeyChanged, вызывает send+38,
+затем setter+40. IDs Notify11/ack12, тела raw64LE8 байт; 20 native flow cases
+подтвердили old key во время send и update после него, даже при send false.
 [HEADLESS-KEY-CHANGE.md](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md),
 `code-clues/headless-key-change.json`; shared `vampir_core/key_change.py`.
-Полные packet/vtable/IO/registration адреса втаблице отчёта. Server key generation,
-initialauth/receive integrity/send queue всёещё неизвестны.
+Полные packet/vtable/IO/registration адреса в таблице отчёта. Server key generation,
+initialauth/receive integrity/send queue всё ещё неизвестны.
 
-H03b.2b partial: length probe0x144aa9a90 подтверждён156native cases;
-wrapperA0x144aa9c00 —13native cases доcallback. Vtables0x14961af58/0x14961b8f0
-уmain+200 имеютlength+38/receive+40. Factory0x14678ec40 черезsetter0x144aab300
-назначается вpeer+238; wrapperBcallback изтого же поля вызываетDispatch0x14679f510.
+H03b.2b partial: length probe0x144aa9a90 подтверждён 156 native cases;
+wrapperA0x144aa9c00 —13 native cases до callback. Vtables0x14961af58/0x14961b8f0
+у main+200 имеют length+38/receive+40. Factory0x14678ec40 через setter0x144aab300
+назначается в peer+238; wrapperBcallback из того же поля вызывает Dispatch0x14679f510.
 Статическая linkage доказана, end-to-end replay нет. Candidate keysetter0x144aab330
-ещё безcaller/source семантики. [HEADLESS-RECEIVE-ENVELOPE.md](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md),
+ещё без caller/source семантики. [HEADLESS-RECEIVE-ENVELOPE.md](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md),
 `code-clues/headless-receive-envelope.json`; shared receive_frame.py имеет
 дополнительную local bounds policy. CRC/incoming layout/keyflow ещё unknown.
 
-H03b.2a: native send-A slice0x144aa9e6a..0x144aa9f45 подтверждён20сценариями;
-length24+CRC32+(ID16+sequence16+body), XORотoffset3. Ping frame27байт.
-Sequence connection+228 обновляется native16bit сwrap65535→0.
+H03b.2a: native send-A slice0x144aa9e6a..0x144aa9f45 подтверждён 20 сценариями;
+length 24+CRC32+(ID16+sequence16+body), XOR от offset 3. Ping frame 27 байт.
+Sequence connection+228 обновляется native16bit с wrap 65535→0.
 Stream append0x144aa6330, buffer getter0x144aa5f80, word writer0x144aa6060;
 подробный provenance/[HEADLESS-SEND-FRAME.md](../resource-tools/vampir/HEADLESS-SEND-FRAME.md).
 Общий `vampir_core/send_frame.py`, `code-clues/headless-send-frame.json`.
-Receive/context/key ещё unknown; layout перед Dispatch не отождествлять сsend frame.
+Receive/context/key ещё unknown; layout перед Dispatch не отождествлять с send frame.
 
 H03b.1: CRC initializer0x1418ba360/update0x1445f1230/table0x1495046f0,
-XOR0x144aa6ca0. Подтверждены252native executions/5tests; общий модуль
+XOR0x144aa6ca0. Подтверждены 252 native executions/5 tests; общий модуль
 `vampir-shared/vampir_core/frame_primitives.py`. Send roots0x144aa9da0/0x144aaccf0,
-receive0x144aa9c00/0x144aacb50; XOR пропускает3байта. Session key source,
-полный frame иreceive validation ещё unknown.
+receive0x144aa9c00/0x144aacb50; XOR пропускает 3 байта. Session key source,
+полный frame и receive validation ещё unknown.
 [HEADLESS-FRAME-PRIMITIVES.md](../resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md),
 `code-clues/headless-frame-primitives.json` в общей библиотеке.
 
@@ -214,7 +214,7 @@ receive0x144aa9c00/0x144aacb50; XOR пропускает3байта. Session key
 | ContentsUnlockListReadResult / RequestResult | handlers 0x146763cd0 / 0x146763da0, registration 0x1467a7250 | Пары handler/packet, vtable и getters ID1007/1009; не сетевой API. [UNLOCK-REGISTRATION.md](../resource-tools/vampir/UNLOCK-REGISTRATION.md), `code-clues/lock-registration-events.json` |
 | PktCharacterSelectResultHandler::OnHandler | 0x14675e9a0 (LEA имени 0x14675e9d3) | Имя и отдельные readiness-вызовы; весь state initialization не доказан. Тот же отчёт |
 | Guard результата пакета | 0x1467a8e10 | Статические ветви результата/ошибок. [PACKET-RESULT-GUARD.md](../resource-tools/vampir/PACKET-RESULT-GUARD.md) |
-| PktStat reader / writer | 0x1457f0540 / 0x1457f4360 | key32/raw64 и native исполнения с synthetic primitive IO, wire неизвестен. [ATTRIBUTES.md](../resource-tools/vampir/ATTRIBUTES.md), `code-clues/stat-packet-evidence.json` |
+| PktStat reader / writer | 0x1457f0540 / 0x1457f4360 | key 32/raw64 и native исполнения с synthetic primitive IO, wire неизвестен. [ATTRIBUTES.md](../resource-tools/vampir/ATTRIBUTES.md), `code-clues/stat-packet-evidence.json` |
 | PktStatCategoryData reader / writer | 0x1457f0590 / 0x145784940 | category8/raw64, read clamp≤29; реальные категории не установлены. Тот же отчёт |
 | Форматирование значения характеристики | 0x145dda3a0 | Native ветви scaling/display; не формулы урона. ATTRIBUTES.md, `code-clues/stat-format-routes.json` |
 | Проекция координат на navmesh | 0x1452451b0 | Изолированное исполнение с explicit inputs; не live position. [MAP-ATLAS.md](../resource-tools/vampir/MAP-ATLAS.md) |
@@ -234,7 +234,7 @@ receive0x144aa9c00/0x144aacb50; XOR пропускает3байта. Session key
 
 В `native-enums.json`: EAICombatMode Auto=0/Target=1;
 ESupportModeBehaviorAutoCombatType CombatStatsRecord=0/LocationMemory=1/Area=2.
-В CSV: Skill.SyncAutoCombat (pakchunk1 entry1505), OnEntryAutoCombat/
+В CSV: Skill. SyncAutoCombat (pakchunk1 entry1505), OnEntryAutoCombat/
 AutoCombatLeaveWorld/movePacketIntervalTime (entry1574). Источники и SHA CSV —
 `table-study/index-pakchunk1-Windows.json`. Это данные/enum, не найденные
 реализации функций и не доказательство серверного автономного фарма.

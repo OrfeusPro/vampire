@@ -25,8 +25,8 @@ registration/IO-slot proofs, payload и handler slice vectors.
 
 Точная диагностика `PktKeyChangeNotifyHandler::OnHandler()` закреплена
 LEA `0x146765060` внутри handler root `0x146765050`.
-Factory `0x14678ec40` создаёт notify конструктором `0x1456d4c00` вcall
-`0x14678ee5e`, регистрирует пару вcall `0x14678ee71` → `0x1467a7250`.
+Factory `0x14678ec40` создаёт notify конструктором `0x1456d4c00` в call
+`0x14678ee5e`, регистрирует пару в call `0x14678ee71` → `0x1467a7250`.
 Handler table `0x149d81038` имеет target+10=`0x146765050`.
 
 | Тип | ID | Vtable | Constructor | Writer | Reader |
@@ -34,11 +34,11 @@ Handler table `0x149d81038` имеет target+10=`0x146765050`.
 | PktKeyChangeNotify | 11 | 0x1498d5f58 | 0x1456d4c00 | 0x1456b6770 | 0x1456b3360 |
 | PktKeyChanged | 12 | 0x1498d5e90 | 0x1456d4c20 | 0x1456e5740 | 0x1456d92f0 |
 
-Оба типа сериализуют raw64[obj+10] в8байт little-endian в доказанной swap=0
+Оба типа сериализуют raw64[obj+10] в 8 байт little-endian в доказанной swap=0
 ветке. Notify использует IO slots b8/50, ack — b0/48, но эти слоты текущих
 архивов указывают на те же реальные u64 primitive routines. ID getters
-`0x1421dbdf0`/`0x1414f51d0` реально исполнены и возвращают11/12.
-Name getters `0x1456e3320`/`0x1456e3350` связаны с точными строками иvtable+38.
+`0x1421dbdf0`/`0x1414f51d0` реально исполнены и возвращают 11/12.
+Name getters `0x1456e3320`/`0x1456e3350` связаны с точными строками и vtable+38.
 Signedness на уровне исходных типов не переименовывается; codec хранит raw bits.
 Найдено также имя PktKeyChangedResult, но его контракт здесь не разобран.
 
@@ -47,47 +47,49 @@ Signedness на уровне исходных типов не переимено
 Native диапазон `0x1467650c1..0x146765113`:
 
 1. Конструирует PktKeyChanged на стеке.
-2. Копирует notify[obj+10] вack[obj+10].
+2. Копирует notify[obj+10] в ack[obj+10].
 3. Получает peer handle через singleton getter `0x144aaa9d0`.
-4. Вызывает виртуальную отправку slot+38 сack.
-5. Снова получает handle, передаёт адрес raw64 изnotify вsetter slot+40.
+4. Вызывает виртуальную отправку slot+38 с ack.
+5. Снова получает handle, передаёт адрес raw64 из notify в setter slot+40.
 
-Таблица derived handle `0x149d84e50` ставится конструктором вroot
+Таблица derived handle `0x149d84e50` ставится конструктором в root
 `0x1467a79e0`; slot+40 равен `0x144aab330`. Base table `0x14961b740`
-имеет тот жеsetter. Он выполняет peer=[handle+10], key=[argument],
+имеет тот же setter. Он выполняет peer=[handle+10], key=[argument],
 [peer+248]=key. Этот же main+248 используется send-B; receive-B получает
-subobject main+200 ичитает subobject+48, то есть то же поле.
+subobject main+200 и читает subobject+48, то есть то же поле.
 
 Следовательно, **вызов отправки ack предшествует записи нового ключа**.
-Native код наэтом участке не проверяет return value отправки: новый ключ
-записывается ипри явно смоделированном false. Нельзя выводить изэтого доставку
+Native код на этом участке не проверяет return value отправки: новый ключ
+записывается и при явно смоделированном false. Нельзя выводить из этого доставку
 ack, синхронность сокета или корректную политику повторов будущего клиента.
 При асинхронной очереди важно не переупаковать уже созданный ack новым ключом;
 полный контракт очереди пока не восстановлен.
 
 ## Что реально исполнено
 
-- 10 roundtrips:2типа ×5raw64patterns, включая2^53+1 иall-ones;
-  native packet/primitive/raw IO безподмены, только внешняя CRT memcpy shim.
-- 16коротких read cases:0..7байт дляобоих типов, native false.
-- 20handler slice scenarios:2старых ключа ×5новых ×2send returns.
+- 10 roundtrips: 2 типа ×5raw64patterns, включая 2^53+1 и all-ones;
+  native packet/primitive/raw IO без подмены, только внешняя CRT memcpy shim.
+- 16 коротких read cases: 0..7 байт для обоих типов, native false.
+- 20 handler slice scenarios: 2 старых ключа ×5 новых ×2send returns.
   Настоящие constructor/singleton getter/setter; виртуальная отправка заменена
-  capture shim. Вмомент вызова захватываются старое состояние иack bits;
-  затем фиксируются вызов setter иитоговое состояние.
+  capture shim. В момент вызова захватываются старое состояние и ack bits;
+  затем фиксируются вызов setter и итоговое состояние.
 
-Логирование/cleanup handler исключены; handle/vtable/object graph иsingleton
-явно синтетические. Таблица дляэксперимента сохраняетдоказанные slot offsets,
-но slot отправки направлен вcapture shim. Сервер/сокет/реальные ключи неиспользованы.
-Пять тестов сверяют исходныеbytes/SHA, всеvectors иповторяют4native сценария.
+Логирование/cleanup handler исключены; handle/vtable/object graph и singleton
+явно синтетические. Таблица для эксперимента сохраняет доказанные slot offsets,
+но slot отправки направлен в capture shim. Сервер/сокет/реальные ключи не использованы.
+Пять тестов сверяют исходные bytes/SHA, все vectors и повторяют 4 native сценария.
 
-## Общий модуль ипродолжение
+<a id="общий-модуль-ипродолжение"></a>
+
+## Общий модуль и продолжение
 
 `vampir-shared/vampir_core/key_change.py`: IDs11/12 и `KeyChangePayload`,
-encode/decode точных8байт. Repr скрывает значение. Это не защищённое хранилище:
-живые ключи всёравно нельзя логировать, сериализовать втелеметрию илиproof отчёты.
-Модуль не переключаетсессии и не отправляет ack автоматически.
+encode/decode точных 8 байт. Repr скрывает значение. Это не защищённое хранилище:
+живые ключи всё равно нельзя логировать, сериализовать в телеметрию или proof отчёты.
+Модуль не переключает сессии и не отправляет ack автоматически.
 
-Далее: как Notify попадает вdispatcher изсырого транспорта, входной layout/
-CRC validation, transport buffering иполитика send queue. Генерация ключа на
-сервере ипервичная авторизация остаются неизвестными. `network_ready=false`.
+Далее: как Notify попадает в dispatcher из сырого транспорта, входной layout/
+CRC validation, transport buffering и политика send queue. Генерация ключа на
+сервере и первичная авторизация остаются неизвестными. `network_ready=false`.
 Ранее кандидат setter теперь подтверждён цепочкой Notify→ack→state update.

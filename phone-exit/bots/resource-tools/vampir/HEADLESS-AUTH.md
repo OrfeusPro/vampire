@@ -91,8 +91,8 @@ relative path, POST/content type и bytes body. Repr скрывает body, ош
 включают значения полей. Runtime не читает Saved, не запускает launcher/игру,
 не получает пароль/токен и не отправляет HTTP.
 
-Локальные ограничения: непустые printable ASCII values до4096 chars на поле,
-body до32768 bytes. Unicode и control chars отклоняются явно до отдельной
+Локальные ограничения: непустые printable ASCII values до 4096 chars на поле,
+body до 32768 bytes. Unicode и control chars отклоняются явно до отдельной
 проверки. Это budgets/границы поддержанного subset, не лимиты сервера.
 HTTP field order задан по caller pairs; byte-for-byte identity всего native
 map serializer не заявляется. Пять тестов проверяют provenance, LEA/call targets,

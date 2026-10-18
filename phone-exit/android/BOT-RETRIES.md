@@ -38,6 +38,6 @@ reason=retry_limit_reached. Снимки отдельных ошибок сох�
 Проверка UI через desktop.ps1 -UiTest прошла. Старый способ instrumentation
 перезапускал основной процесс и помечал службу управления crashed на vivo.
 Для проверки Python/Binder используется отдельная тестовая сборка с
--PphoneExitTestRunner=net.phoneexit.BotRuntimeInstrumentation и
--PphoneExitTestProcess=net.phoneexit:bot. Это затрагивает только тестовый APK;
+-PphoneExitTestRunner=net.phoneexit. BotRuntimeInstrumentation и
+-PphoneExitTestProcess=net.phoneexit: bot. Это затрагивает только тестовый APK;
 обычный runner по умолчанию остаётся в основном процессе для прежних тестов.

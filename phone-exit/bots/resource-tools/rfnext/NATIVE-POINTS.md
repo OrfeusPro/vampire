@@ -51,12 +51,12 @@ KO_KR даже у русских экземпляров: язык выбран �
 
 83 точки редактора извлечены из RF_MapInfoTable для **MapIndex 101 и 103**.
 Тестовые строки Map_Name_Test с нулевыми позициями исключены.
-Если Location значка нулевая, используется **RF_RegionTable.Location**
+Если Location значка нулевая, используется **RF_RegionTable. Location**
 по RegionIndex. Это обычный случай: знак ссылается на позицию своего региона.
 В каждой точке указано `location_source`, сохранены исходные X/Y/Z и индексы.
 
 Пример: **Черная равнина** имеет позицию
-`[-51177.6796875, 65617.3203125, 5812.83935546875]` из RF_RegionTable.Location.
+`[-51177.6796875, 65617.3203125, 5812.83935546875]` из RF_RegionTable. Location.
 Эти значения не являются пикселями экрана. Кнопки и путь персонажа ещё не проверены.
 
 Матрица world X/Y → пиксели чистой карты получена по одноимённым точкам
@@ -117,8 +117,8 @@ powershell -NoProfile -File phone-exit/pc/test-rf-map-editor.ps1
 
 ## Монстры в правом списке карты, 14 октября 2026
 
-`build-monster-catalog.py` соединяет RF_MapInfoTable_Spawn.NPCIndex с
-RF_NPCTable.NPCIndex и русским RF_StringTable по NameStringIndex.
+`build-monster-catalog.py` соединяет RF_MapInfoTable_Spawn. NPCIndex с
+RF_NPCTable. NPCIndex и русским RF_StringTable по NameStringIndex.
 Регион привязывается через RegionIndex, карта через MapIndex. Выбираются
 NPCType=2; это кандидаты списка монстров, а не доказательство доступности
 каждой строки в текущем клиенте. Сохранены все ненулевые TargetPosition1/2/3,

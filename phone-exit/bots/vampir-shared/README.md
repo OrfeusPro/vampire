@@ -47,16 +47,16 @@ length probe + fallback XOR, header сохраняется, вход не мен
 44 native loop cases и 5 tests: [доказательства](../resource-tools/vampir/HEADLESS-LISTENER-LOOP.md).
 Не raw transport, не CRC/packet schema; управление сессией ещё не реализовано.
 
-`vampir_core/transport_header.py` — первый уровень приёма: size23, признак
+`vampir_core/transport_header.py` — первый уровень приёма: size 23, признак
 сжатия и извлечение кадра с явными input/output limits. [Доказательства](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md).
 `block_decode.py` распаковывает literals/matches с ограниченным output;
 166 valid / 86 invalid native проверок: [доказательства](../resource-tools/vampir/HEADLESS-BLOCK-DECODE.md).
 `take_transport_frame` поддерживает обе ветки skip=3. `receive_frame.py` относится
 к следующему уровню; применять его прямо к raw stream нельзя.
 
-`vampir_core/key_change.py` — общие IDs11/12 иraw64codec уведомления/подтверждения
+`vampir_core/key_change.py` — общие IDs11/12 и raw64codec уведомления/подтверждения
 смены ключа, repr скрывает значение. [Доказательства и порядок вызовов](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md).
-Управление сессией иотправка подтверждения пока не реализованы.
+Управление сессией и отправка подтверждения пока не реализованы.
 
 `vampir_core/receive_frame.py` — проверка полноты входящего кадра с явным
 лимитом и защитой от недопустимой длины; [источники и отличия от клиента](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md).

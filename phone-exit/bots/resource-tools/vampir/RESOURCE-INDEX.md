@@ -15,11 +15,11 @@
 | Все картинки и варианты | `archive-image-catalog.json` | Источник и хеш каждой экспортированной картинки |
 | Предварительный выбор версии картинки | `archive-image-latest.json` | Выбор по наибольшему суффиксу `_sN`; сверка с телефоном обязательна |
 | Карты | `map-image-catalog.json` | 1422 изображения; это не готовые маршруты |
-| Атлас географии | `maps/atlas/index.json`, `maps/atlas/index.html`, `maps/atlas/worlds/` | 254 мира,154 настройки,точки/NPC/квесты/порталы; [MAP-ATLAS.md](MAP-ATLAS.md). Nocturne Map10/11: native-проекция и7 областей старого кадра; свежий Android/маршруты ещё не проверены |
-| Скрины на большой карте | `maps/atlas/screenshot-study/index.json`, `coverage.jpg` | Один участок Krvna Nest:463 детали, проверочный p95<1.3px; worldXY не доказаны |
-| Rate callbacks и размещения добычи | `code-clues/loot-record-links.json`, `maps/loot/npc-locations.json` | 2пустыхcallback,4227размещений776NPC,точные фильтрыItem/NPC+World; вероятность не доказана |
-| Native-загрузка rates и обратные источники | `code-clues/loot-rate-evidence.json`, `maps/loot/item-origins.json` | Load3таблиц/CRTatoi,793Item/35211цепочек; знаменатель шанса ещё не доказан |
-| Предметы и добыча NPC | `maps/loot/index.json`, `maps/loot/index.html`, `item-icons-float/index.json` | 941NPC/793Item,5827 предметов/3615 картинок. [NPC-LOOT.md](NPC-LOOT.md); rates сырые, не проценты |
+| Атлас географии | `maps/atlas/index.json`, `maps/atlas/index.html`, `maps/atlas/worlds/` | 254 мира, 154 настройки, точки/NPC/квесты/порталы; [MAP-ATLAS.md](MAP-ATLAS.md). Nocturne Map10/11: native-проекция и 7 областей старого кадра; свежий Android/маршруты ещё не проверены |
+| Скрины на большой карте | `maps/atlas/screenshot-study/index.json`, `coverage.jpg` | Один участок Krvna Nest: 463 детали, проверочный p95<1.3px; worldXY не доказаны |
+| Rate callbacks и размещения добычи | `code-clues/loot-record-links.json`, `maps/loot/npc-locations.json` | 2 пустых callback, 4227 размещений 776NPC, точные фильтры Item/NPC+World; вероятность не доказана |
+| Native-загрузка rates и обратные источники | `code-clues/loot-rate-evidence.json`, `maps/loot/item-origins.json` | Load3 таблиц/CRTatoi, 793Item/35211 цепочек; знаменатель шанса ещё не доказан |
+| Предметы и добыча NPC | `maps/loot/index.json`, `maps/loot/index.html`, `item-icons-float/index.json` | 941NPC/793Item, 5827 предметов/3615 картинок. [NPC-LOOT.md](NPC-LOOT.md); rates сырые, не проценты |
 | Общая карта Nocturne | `maps/nocturne-world.json`, `maps/nocturne-world.png` | 25 плиток, 10240×10240; происхождение плиток и проверка швов |
 | Просмотр карт и интерфейса | `index.html`, локально http://127.0.0.1:17945/ | Поиск и галерея; сервер должен быть запущен |
 | Деревья объектов интерфейса | `ui-layout-study/index.json`, указанные там JSON | 81 пакет WidgetBlueprint, включая WBP из TutorialUI; имена, типы и диапазоны сериализации |
@@ -88,7 +88,7 @@ unversioned properties: `geometry_schema_verified=false`. Имена кнопо�
 Пресеты масштаба и настройка: [UI-SCALE.md](UI-SCALE.md),
 `ui-geometry/ui-scale-reference.json`: EOptionType::DisplayUIScale137 →
 Option1429/record81 → OptionGroup32300 → SubTab32000 → MainTab30000;
-константы68/records329–353, подписи488/record67. 25 коэффициентов в 5 профилях.
+константы 68/records329–353, подписи 488/record67. 25 коэффициентов в 5 профилях.
 Default AOS=4, Win=2; активный масштаб телефона и DPI-кривая пока не установлены.
 Ограниченный поиск конфигурации сохранён в `code-clues/ui-scale-config/index.json`.
 
@@ -130,12 +130,12 @@ Nocturne XY→рельеф: `maps/atlas/projection.json`,
 `code-clues/map-projection-evidence.json`, инструмент `build-map-projection.py`.
 Происхождение/порядок/33 теста: [MAP-ATLAS.md](MAP-ATLAS.md).
 
-Большая карта всех36Nocturne-контекстов: `maps/atlas/nocturne.json`,
-`nocturne-manifest.json`, главный `index.html`; прежний просмотр254миров —
+Большая карта всех 36Nocturne-контекстов: `maps/atlas/nocturne.json`,
+`nocturne-manifest.json`, главный `index.html`; прежний просмотр 254 миров —
 `world.html`. Экспорт `nocturne-overview.png`10240×10635.
 Инструменты `build-world-map.py`, `world-map*.js/html`, `render-world-map.py`.
-Происхождение,51тест,исправлениеzoom и25плиток: [MAP-ATLAS.md](MAP-ATLAS.md).
+Происхождение, 51 тест, исправление zoom и 25 плиток: [MAP-ATLAS.md](MAP-ATLAS.md).
 
-КарточкиNPC:`maps/atlas/monster-manifest.json`,`monsters/<ID>.json`,
-`monster-verification.json`;сборщик`build-monster-details.py`.BattleCSV1545,
-native-связьBattleGroupId,количество/условныецепочки: [NPC-LOOT.md](NPC-LOOT.md).
+Карточки NPC:`maps/atlas/monster-manifest.json`,`monsters/<ID>.json`,
+`monster-verification.json`; сборщик `build-monster-details.py`.BattleCSV1545,
+native-связь BattleGroupId, количество/условные цепочки: [NPC-LOOT.md](NPC-LOOT.md).

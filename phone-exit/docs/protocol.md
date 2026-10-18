@@ -38,7 +38,7 @@ BIND отклоняется. UDP согласуется отдельно чер�
 ## UDP v1, APK 0.3.1
 
 Hello сохраняет version=1 и добавляет features:["udp-v1"],
-limits:{tcp:128,udp:64,mtu:1400}. Старый ПК игнорирует поля и продолжает TCP;
+limits:{tcp: 128, udp: 64, mtu: 1400}. Старый ПК игнорирует поля и продолжает TCP;
 новый ПК ограничивает старый APK прежними 32 TCP-сокетами. Для нового APK
 доступно 128 TCP и 64 UDP-ассоциации одновременно, 192 локальных SOCKS-сокета.
 
@@ -74,10 +74,10 @@ message=UTF8("phone-exit-directory-v1:" + bucket)), нижний hex.
 Внешний формат существующего PHP: type=candidate, value — метаданные каталога.
 Это отдельные комнаты; метаданные никогда не передаются в WebRTC как ICE.
 
-Телефон → ПК: value {directory:1,type:"presence",at:unixMilliseconds,
-country:"UA" или "",busy:boolean}. Каждые 15 с, TTL 45 с.
-ПК → телефон: value {directory:1,type:"connect",at:unixMilliseconds,
-request:32hex,pairing:{version:1,signal,token:новый64hex}}.
+Телефон → ПК: value {directory: 1, type:"presence", at: unixMilliseconds,
+country:"UA" или "", busy: boolean}. Каждые 15 с, TTL 45 с.
+ПК → телефон: value {directory: 1, type:"connect", at: unixMilliseconds,
+request: 32hex, pairing:{version: 1, signal, token: новый 64hex}}.
 Телефон принимает только свежие запросы и не исполняет повтор request;
 при занятом выходе новый запрос не заменяет уже подключённый ПК.
 Далее используется прежний протокол TCP v1 в отдельной одноразовой комнате.
@@ -93,11 +93,11 @@ APK даёт право регистрации в этот личный спис
 
 Комната регистрации: HMAC-SHA256(hexDecode(feedToken),
 UTF8("phone-exit-registration-v1:"+floor(unixMilliseconds/300000))).
-Телефон посылает candidate.value={directory:2,type:"register",box:{ephemeral,iv,data}}.
-ephemeral=base64 SPKI нового EC P-256 ключа, key=SHA256(ECDH(ephemeralPrivate,PCPublic));
+Телефон посылает candidate.value={directory: 2, type:"register", box:{ephemeral, iv, data}}.
+ephemeral=base64 SPKI нового EC P-256 ключа, key=SHA256(ECDH(ephemeralPrivate, PCPublic));
 iv=12 случайных байт, data=base64 AES-256-GCM(ciphertext||16-byte-tag),
 AAD=UTF8("phone-exit-registration-v1"). Зашифрованный JSON:
-{id,name,token,at:unixMilliseconds,country,busy}. Регистрация каждые 15 с.
+{id, name, token, at: unixMilliseconds, country, busy}. Регистрация каждые 15 с.
 ПК расшифровывает только своим закрытым ключом; свежесть 45 с. Неверный аккаунт,
 повреждённый GCM, старые сообщения, заблокированный id и смена ключа существующего
 id отклоняются. Новый допустимый id автоматически сохраняется в список (макс. 4).

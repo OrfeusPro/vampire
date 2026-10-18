@@ -39,7 +39,7 @@ Wi-Fi. Выход автоматически пересматривает выб
 сеть как на клиенте, так и на выходе; VPN-трафик IPv4-only на Android и Windows.
 Прежние Wi-Fi-only/IPv6-описания ниже относятся к ранним версиям.
 
-Обновление 0.9.1/code 41: `PhoneChoiceAdapter.java` рисует флаг 32dp, имя и
+Обновление 0.9.1/code 41: `PhoneChoiceAdapter.java` рисует флаг 32 dp, имя и
 русское название страны, сохраняет порядок списка/адресата и пометку занятости.
 Gradle `syncCountryFlags` переносит только PNG/справочник/лицензию из
 `pc/assets/flags` в генерируемые Android assets, без копирования других ресурсов.
@@ -314,7 +314,7 @@ APK SHA256 `48d24b326a6ec71999a50b75d6c91f79b17cee31d7ac35538bc840c10dd12e6e`.
 
 ClientVpnService больше не добавляет IPv6 address/route; hev-конфиг только IPv4.
 `allowFamily(AF_INET6)` и `allowBypass` не вызываются. Это означает блокировку
-IPv6 вместо прямого выхода по правилам [Android VpnService.Builder](https://developer.android.com/reference/android/net/VpnService.Builder#allowFamily(int)).
+IPv6 вместо прямого выхода по правилам [Android VpnService. Builder](https://developer.android.com/reference/android/net/VpnService.Builder#allowFamily(int)).
 TCP/UDP выход фильтрует разрешённые DNS-адреса до IPv4; ограничения PublicAddress
 для LAN/private остаются. IPv6-only назначения теперь не поддерживаются.
 
