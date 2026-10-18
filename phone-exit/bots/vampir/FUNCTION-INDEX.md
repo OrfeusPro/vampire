@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Секретные константы GMC2, 19 октября: H04b partial
+
+Общий SHA Windows EXE ниже. Root `0x14451d5c0`: Base64 wrapper `0x141523200`
+→ core `0x14150cd70`; private-key reader chain `0x148405720/0x148433880`;
+RSA wrapper `0x148404190`, OAEP `0x148405020`, digest getter `0x148404110`.
+Descriptor `0x14a722610` сопоставлен с SHA-256 в OpenSSL 1.1.1t.
+26 корректных и 8 граничных native Base64 входов, 16 подготовок аргументов OAEP.
+Вызов OAEP перехвачен; RSA/OAEP не исполнены. Общий bounded Base64 decoder,
+пять тестов. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SECRET.md).
+
 ## Строка GMC2 и передача DECKEY, 18 октября: H04b partial
 
 Общий SHA Windows EXE ниже. Constructor связывает manager+`0xB0` с именем

@@ -14,6 +14,8 @@ GMC2 config: 7 связанных функций и 256 native проверок 
 42 native проверки. [Доказательства](../resource-tools/vampir/HEADLESS-SDK-VALUES.md).
 Строковый unescape перед XOR и три составных искусственных JSON проверены
 отдельно; [ответ GMC2 и передача ключа](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+19 октября: [Base64 и параметры RSA секретной ветки](../resource-tools/vampir/HEADLESS-SDK-SECRET.md);
+RSA-расшифрование и настоящая конфигурация пока не проверены.
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

@@ -1,6 +1,6 @@
 # Vampir — общие компоненты и результаты
 
-Обновлено 18 октября 2026. Главный вход — [Vampir README](../vampir/README.md).
+Обновлено 19 октября 2026. Главный вход — [Vampir README](../vampir/README.md).
 Общие результаты предназначены для экранного бота, сетевого бота, 2D-карты
 и будущей Android-оболочки. Здесь единый указатель, без копирования доказательств.
 
@@ -23,6 +23,10 @@
 escape и сохраняет UTF-16 единицы. 43 корректных и 7 граничных native входов,
 три составных примера: [ответ GMC2](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
 Получение ключа, извлечение полей ответа и проверка схемы ещё не реализованы.
+`decode_sdk_base64` в том же модуле декодирует один ciphertext, до 2048 символов,
+с каноническим padding или без него. 26 корректных native входов и 8 граничных;
+[RSA-параметры и ограничения](../resource-tools/vampir/HEADLESS-SDK-SECRET.md).
+RSA backend в переносимое ядро пока не добавлен.
 
 `auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.
