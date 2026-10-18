@@ -1,5 +1,16 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Завершающая сборка CDN URL, 19 октября: H04b partial
+
+EXE SHA прежний. Initialize slice14563f758..f9d8, concat145630d40 и append/growth
+1445d8310 исполнены в16 сценариях с explicit ASCII fragments/SSO/heap capacity.
+Allocator/free/memcpy/memmove — bounded shims, сама concat настоящая.
+Форма base+platform+'/'+prefix+'/'+version_fragment+'/config.json'; между base и
+platform слеш не вставляется. Pointer14b149ba0 → literal1498b9eb8 подтверждён.
+Общий assemble_cdn_config_url_ascii; реальные values/preprocessing/HTTP открыты.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-URL.md).
+Следом version helper1445daf80 и platform getter1445e75b0, Game config/overrides.
+
 ## CDN base selector и Game config, 19 октября: H04b partial
 
 EXE SHA прежний. Find141428640 и comparator1414599a0 исполнены без shims;

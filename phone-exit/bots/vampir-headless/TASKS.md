@@ -54,6 +54,11 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 
 ## Текущее продолжение
 
+CDN URL tail: 16 native concat/growth сценариев и общий ASCII assembler готовы
+в offline объёме. [HEADLESS-CDN-URL](../resource-tools/vampir/HEADLESS-CDN-URL.md).
+Далее version preprocessing1445daf80/platform getter1445e75b0; реальные Game
+config/bases/prefix/late overrides остаются неизвестны, network_ready=false.
+
 CDN selection: 16 native Find/branch cases и общий helper с явными bases.
 [HEADLESS-CDN-SELECTION](../resource-tools/vampir/HEADLESS-CDN-SELECTION.md).
 Loader file-global связан с Game; текущие physical config/URLs неизвестны.

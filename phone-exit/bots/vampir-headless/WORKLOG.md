@@ -1,5 +1,37 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN URL tail
+
+После 2d30938 продолжен источник Game config и builder. File-global 14b2743f8
+по-прежнему logical Game; physical config/реальные bases/prefix не установлены.
+Ограниченные проверки кандидатов для encrypted PAK не дали подтверждённого
+ключа; зашифрованные записи не декодированы и не выданы за config.
+
+Native slice 0x14563f758..0x14563f9d8 исполнен с настоящими concat 0x145630d40
+и append/growth 0x1445d8310; только allocator/free/memcpy/memmove bounded shims.
+16 fixtures (8 наборов × exact/SSO либо spare capacity) подтверждают
+base+platform+'/'+prefix+'/'+version_fragment+'/config.json'. Между base и
+platform slash не добавляется, остальные separators/query text не нормализуются.
+Pointer 0x14b149ba0 → literal 0x1498b9eb8 подтверждает имя config.json.
+В fixtures 26 allocations/13 frees/91 memcpy/15 memmove, не продуктовый benchmark.
+
+Общий sdk_config.assemble_cdn_config_url_ascii требует четыре явных готовых
+printable ASCII fragments, ограничивает аргументы/результат 4096 байт; нет HTTP,
+platform inference или AppVersion conversion. Version 1.2.3 остаётся 1.2.3:
+preprocessing helper 0x1445daf80 ещё не исполнен, source/prefix неизвестны.
+Не-ASCII conversion остаётся открытым, runtime отклоняет его как local policy.
+Platform branch статически 1→ios/2→window/other→android, active getter ещё не проверен.
+
+Артефакт code-clues/headless-cdn-url.json SHA256
+8267c74f094ec5521f8488c4e4e41f06de20da0c1f5c164926e85c2f2bb2289e.
+HEADLESS-CDN-URL.md, README/shared index/FUNCTION-INDEX/TASKS обновлены.
+Четыре новых теста прошли: source/bytes/filename pointer, 16 native replay,
+select→assemble/slashes, ASCII/size policies и отсутствие implicit conversion.
+Полная регрессия 137/137 (75,1 с), синтаксис трёх изменённых Python-файлов,
+295 относительных ссылок и git diff --check прошли.
+Следом version preprocessing/platform getter, Game config/late overrides,
+получение подтверждённого CDN response и GMC2. network_ready=false.
+
 ## 19 октября 2026 — H04b-CDN selection: Game config и substring rule
 
 После 50e337d прослежен file-global 0x14b2743f8 из loader 0x1445bc080:

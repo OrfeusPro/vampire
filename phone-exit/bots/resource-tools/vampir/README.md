@@ -140,6 +140,14 @@ Oodle DLL из `F:/PhoneExit Resources/RF Online Next/tools`. Его проис�
 
 Текущее состояние бота и живые проверки: [../../vampir.md](../../vampir.md).
 
+## Сборка CDN URL из фрагментов, 19 октября
+
+16 native сценариев подтвердили завершающую сборку base+platform/prefix/version/
+config.json, включая std::string growth/move. Общий assemble_cdn_config_url_ascii
+принимает явные готовые ASCII-фрагменты, без HTTP и преобразования AppVersion.
+[Source/SHA/границы](HEADLESS-CDN-URL.md). Реальные базы, version preprocessing и platform getter
+ещё требуют проверки; действующий адрес не заявляется.
+
 ## Выбор CDN по ConfigPrefix, 19 октября
 
 16 native сценариев подтверждают поиск подстроки real без учёта ASCII-регистра:

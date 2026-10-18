@@ -14,6 +14,14 @@
 | Задачи/история сетевого бота | [TASKS](../vampir-headless/TASKS.md), [WORKLOG](../vampir-headless/WORKLOG.md) |
 | Экранный бот и карта | [Vampir TASKS](../vampir/TASKS.md), [MAP-ATLAS](../resource-tools/vampir/MAP-ATLAS.md) |
 
+## Сборка CDN URL из фрагментов, 19 октября
+
+16 native сценариев подтвердили завершающую сборку base+platform/prefix/version/
+config.json, включая std::string growth/move. Общий assemble_cdn_config_url_ascii
+принимает явные готовые ASCII-фрагменты, без HTTP и преобразования AppVersion.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-URL.md). Реальные базы, version preprocessing и platform getter
+ещё требуют проверки; действующий адрес не заявляется.
+
 ## Выбор CDN по ConfigPrefix, 19 октября
 
 16 native сценариев подтверждают поиск подстроки real без учёта ASCII-регистра:

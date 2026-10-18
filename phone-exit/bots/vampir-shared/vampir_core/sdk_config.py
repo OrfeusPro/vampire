@@ -40,6 +40,23 @@ def select_cdn_config_base(*, prefix: str, normal: str, qa: str) -> str:
     return normal if 'REAL' in _fold(prefix) else qa
 
 
+def assemble_cdn_config_url_ascii(*, base: str, platform: str, prefix: str, version_fragment: str) -> str:
+    """Repeat native URL tail with explicitly preprocessed printable ASCII parts.
+
+    No separator is inserted between base and platform. Other separators and
+    query/fragment characters are preserved. Does not acquire configuration,
+    convert AppVersion, infer platform, validate URL or send HTTP. Local budget:
+    4096 bytes per part and result. Evidence: HEADLESS-CDN-URL.md.
+    """
+    for value in (base, platform, prefix, version_fragment):
+        if not isinstance(value, str) or len(value) > 4096 or any(not 32 <= ord(c) <= 126 for c in value):
+            raise ValueError('Expected bounded printable ASCII CDN fragment')
+    result = base + platform + '/' + prefix + '/' + version_fragment + '/config.json'
+    if len(result) > 4096:
+        raise ValueError('Assembled CDN URL exceeds local budget')
+    return result
+
+
 def _key(key):
     if not isinstance(key, str) or not key or len(key) > 256 or '\0' in key:
         raise ValueError('Invalid SDK configuration key')
