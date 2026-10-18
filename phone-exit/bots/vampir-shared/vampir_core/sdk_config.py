@@ -57,6 +57,40 @@ def assemble_cdn_config_url_ascii(*, base: str, platform: str, prefix: str, vers
     return result
 
 
+def prepare_cdn_version_ascii(app_version: str) -> str:
+    """Native CDN preprocessing replaces every '.' with '_'; no version inference.
+
+    Explicit printable ASCII only, at most 4096 bytes (local policy). This is not
+    semantic version parsing. Evidence: HEADLESS-CDN-PREPARATION.md.
+    """
+    if not isinstance(app_version, str) or len(app_version) > 4096 or any(not 32 <= ord(c) <= 126 for c in app_version):
+        raise ValueError('Expected bounded printable ASCII AppVersion')
+    return app_version.replace('.', '_')
+
+
+def select_cdn_platform_label(platform_code: int) -> str:
+    """Repeat CDN caller's int32 mapping; code must be explicitly supplied.
+
+    Compiled Windows platform initialization returns 2, mapped to window. Other
+    code paths are verified with synthetic return tags, not Android/iOS builds.
+    """
+    if type(platform_code) is not int or not -(1 << 31) <= platform_code < (1 << 31):
+        raise ValueError('Expected explicit int32 platform code')
+    return 'ios' if platform_code == 1 else 'window' if platform_code == 2 else 'android'
+
+
+def prepare_cdn_config_url_ascii(*, normal: str, qa: str, prefix: str, app_version: str, platform_code: int) -> str:
+    """Compose proven offline CDN stages with explicit settings; no HTTP or defaults.
+
+    Neither this function nor the individual stages obtains current Game config,
+    validates the final URL or establishes server/platform compatibility.
+    """
+    return assemble_cdn_config_url_ascii(
+        base=select_cdn_config_base(prefix=prefix, normal=normal, qa=qa),
+        platform=select_cdn_platform_label(platform_code), prefix=prefix,
+        version_fragment=prepare_cdn_version_ascii(app_version))
+
+
 def _key(key):
     if not isinstance(key, str) or not key or len(key) > 256 or '\0' in key:
         raise ValueError('Invalid SDK configuration key')

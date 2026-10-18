@@ -1,5 +1,17 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN version preprocessing и compiled platform, 19 октября: H04b partial
+
+EXE SHA прежний. Caller14563f287 → replace1445daf80/copy1445d8e60/
+string-replace1445de490: 15 native ASCII cases dot→underscore, input unchanged.
+Allocator/CRT search/compare/copy/cookie bounded shims. Initializer1445eae1b..42
+создаёт platform object/global14b4f39c8/vtable1495045d0; getter1445e75b0
+→slot149504608→141484e40 возвращает 2; native caller выбирает window.
+Ещё 7 явных return-tag cases подтверждают 1→ios/2→window/other→android, не другие builds.
+Общие prepare_cdn_version_ascii/select_cdn_platform_label/prepare_cdn_config_url_ascii;
+интеграция с native URL tail offline. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-PREPARATION.md).
+Реальные Game config values/late overrides/HTTP request semantics/startup открыты.
+
 ## Завершающая сборка CDN URL, 19 октября: H04b partial
 
 EXE SHA прежний. Initialize slice14563f758..f9d8, concat145630d40 и append/growth

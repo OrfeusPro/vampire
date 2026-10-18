@@ -1,5 +1,37 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b: CDN version и Windows platform
+
+После 30c4373 исполнены version replacement 0x1445daf80, string copy
+0x1445d8e60 и replace helper 0x1445de490. В 15 ASCII fixtures подтверждена
+замена каждой точки на underscore, исходная строка не меняется. Caller
+0x14563f17e/195/275/27a/287 связывает именно поиск точки и замену underscore.
+Allocator/free/CRT search/compare/copy/security-cookie ограничены shims;
+весь replacement loop и helpers исполняются настоящими инструкциями.
+
+Прослежен platform getter 0x1445e75b0 → global 0x14b4f39c8 → vtable slot 0x38.
+Native initializer slice 0x1445eae1b..42 выделяет 8 байт, записывает объект/global
+и vtable 0x1495045d0; slot 0x149504608 → 0x141484e40 возвращает 2.
+Настоящий CDN caller выбирает window. Это compiled initialization, не live game.
+Дополнительно 7 branch cases с return-tag fixtures подтверждают 1→ios/2→window/
+otherandroid. Android/iOS binaries/перенос runtime не проверялись.
+
+Общий sdk_config.py дополнен prepare_cdn_version_ascii,
+select_cdn_platform_label и prepare_cdn_config_url_ascii с явными settings.
+Интеграционный offline тест сопоставляет результат с native preparation+URL tail.
+HTTP method/headers/действующий адрес не предполагаются. Реальные Game config
+values/AppVersion/late overrides/порядок callbacks остаются неизвестны.
+
+Новый отчёт code-clues/headless-cdn-preparation.json SHA256
+7df9b499766246bd408bf08ee47f47cf605f2960c694669630d649fa49ab4819.
+Источники/границы в HEADLESS-CDN-PREPARATION.md; общий реестр, README/shared
+указатель и TASKS обновлены. Пять новых тестов прошли. Полная регрессия 142/142
+(81,0 с), после дополнительных caller assertions отдельно повторены 5/5 (2,2 с).
+Синтаксис трёх изменённых Python-файлов, 299 относительных ссылок и diff check прошли.
+Игра/аккаунты/сеть не использовались. network_ready=false.
+Следом фактический Game config, late overrides, HTTP request semantics и callback
+order; затем подтверждённые CDN config/Zone → GMC2 → полный вход/игровая сессия.
+
 ## 19 октября 2026 — H04b-CDN URL tail
 
 После 2d30938 продолжен источник Game config и builder. File-global 14b2743f8

@@ -140,6 +140,14 @@ Oodle DLL из `F:/PhoneExit Resources/RF Online Next/tools`. Его проис�
 
 Текущее состояние бота и живые проверки: [../../vampir.md](../../vampir.md).
 
+## Подготовка CDN версии и Windows platform, 19 октября
+
+15 native replays подтверждают AppVersion dot→underscore. Исполнена цепочка
+compiled platform initializer→vtable getter→code 2→window; ещё 7 ветвей проверены
+с return-value fixtures. Общий prepare_cdn_config_url_ascii собирает URL из
+явных normal/qa/prefix/app_version/platform_code, без HTTP.
+[Source/SHA/границы](HEADLESS-CDN-PREPARATION.md). Actual config values и request semantics ещё открыты.
+
 ## Сборка CDN URL из фрагментов, 19 октября
 
 16 native сценариев подтвердили завершающую сборку base+platform/prefix/version/

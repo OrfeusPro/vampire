@@ -90,6 +90,9 @@ HTTP request и порядок callbacks также не проверены.
 ключа: зашифрованные записи не используются как восстановленный config.
 Старые offsets не применяются к новым архивам; library baseline не перезаписан.
 
+Продолжение: [native version preparation и compiled platform chain](HEADLESS-CDN-PREPARATION.md).
+Version replacement и Windows getter проверены; actual config/HTTP всё ещё неизвестны.
+
 ## Следующий шаг
 
 Исполнить version preprocessing и platform getter, продолжить источник Game
