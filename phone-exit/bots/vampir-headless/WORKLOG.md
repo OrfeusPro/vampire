@@ -1,5 +1,38 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN HTTP defaults и offline draft
+
+После 71a8a98 прослежена передача собранного URL в HTTP factory/queue:
+CDN call 0x14563fcda→0x1445e7be0→ctor 0x1445e21f0→context 0x1445e25d0,
+call 0x14563fd0d→0x1445ea140 с R8/R9=0→AddPendingRequest 0x1445e4870.
+Root headers builder 0x1445e4b20 вызывает request-line 0x1445ec6f0.
+Factory/queue/callback/URI links сохранены статически, lifecycle не исполнялся.
+
+Prefix ctor 0x1445e25d0..0x1445e26ac и настоящий request-line builder/append/
+growth исполнены на 16 fixtures: 8 parsed paths × poison 00/A5. Method code 1
+сопоставлен с GET; version 1.0, User-Agent field Aqua/1.0. Поле UA ещё не
+доказывает полный wire header. Empty query collection задана явно; URI parser,
+query/body/headers/TLS/status/response и поздние изменения defaults открыты.
+Allocator/CRT/cookie bounded shims; сама сборка native, game/network не используются.
+
+Общий cdn_request.py создаёт frozen CdnConfigRequestDraft URL/GET/1.0 из явных
+настроек; URL не попадает в repr, отправки/headers serializer нет. Strict local
+policy проверяет обе HTTPS bases до concat и результат после. Найден и исправлен
+случай hostless https:// → https://window/...; отдельно запрещена смена authority
+выбранной базы при concat без разделителя. Native string helper сохранён отдельно,
+не выдаётся за URL validation. Ошибки не включают URL или входные данные.
+
+Артефакт code-clues/headless-cdn-http.json SHA256
+e75b2e0bfdf86300f4d851a33dfa388e556c966f020e0aa2b868e2f1c3dd417c.
+12 roots/33 fragments/3131 instructions/16 native cases. HEADLESS-CDN-HTTP.md,
+общий реестр, README/shared указатель и TASKS обновлены.
+Четыре новых теста прошли; полный набор 146/146 (84,6 с). После добавления
+проверки authority отдельно повторены 4/4 (2,1 с). Синтаксис трёх новых Python-файлов,
+305 относительных ссылок и diff check прошли. Игра/аккаунты/сеть не использовались.
+Следом URI parser, full headers/body, response/status/limits/TLS/callback order,
+actual Game config values и поздние overrides. Полный вход/бот ещё не готовы,
+network_ready=false.
+
 ## 19 октября 2026 — H04b: CDN version и Windows platform
 
 После 30c4373 исполнены version replacement 0x1445daf80, string copy

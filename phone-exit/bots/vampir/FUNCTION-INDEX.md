@@ -1,5 +1,18 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN HTTP request defaults, 19 октября: H04b partial
+
+EXE SHA прежний. Ctor 1445e21f0 вызывает context ctor 1445e25d0 на owner+320;
+constructor prefix 1445e25d0..26ac задаёт method 1/version 1.0/UA field Aqua/1.0.
+Native request-line 1445ec6f0 + append 1445ddc80/growth 1445d8310: 16 cases,
+empty query collection/explicit parsed path; method 1→GET /… HTTP/1.0 CRLF.
+Allocator/CRT/cookie bounded shims. CDN call 14563fd0d→1445ea140 R8/R9=0→
+AddPendingRequest 1445e4870; headers builder 1445e4b20→request-line 1445ec6f0.
+Общий cdn_request.py: frozen offline draft URL/GET/1.0, strict local HTTPS policy,
+base validation до concat и authority preservation; без HTTP/headers serializer.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-HTTP.md).
+URI parser/late overrides/full headers/body/TLS/status/response/callback order открыты.
+
 ## CDN version preprocessing и compiled platform, 19 октября: H04b partial
 
 EXE SHA прежний. Caller14563f287 → replace1445daf80/copy1445d8e60/

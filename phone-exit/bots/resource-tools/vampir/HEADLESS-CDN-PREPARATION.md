@@ -84,6 +84,9 @@ Runtime совпал с этим результатом. Настройки об
 обнаружения, URL validation, HTTP method/headers/request или fallback CDN нет.
 Наличие готовой строки не делает запрос проверенным или совместимым с сервером.
 
+Продолжение: [constructor/request-line HTTP defaults и offline draft](HEADLESS-CDN-HTTP.md).
+GET/1.0 проверены в выбранном объёме; полный HTTP и реальные значения открыты.
+
 ## Продолжение
 
 Цепочка подготовки строки закрыта только для явных ASCII inputs. Нужно получить

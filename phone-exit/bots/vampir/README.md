@@ -4,6 +4,14 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## HTTP defaults CDN и offline draft, 19 октября
+
+16 native сценариев подтверждают constructor→method 1→GET request line HTTP/1.0,
+с пустой query collection и явными parsed-path fixtures. Общий cdn_request.py
+даёт immutable draft URL/GET/1.0 со строгой локальной проверкой HTTPS; HTTP нет.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-HTTP.md). Полные headers/body/TLS/response и реальные values
+ещё не проверены; native default не выдаётся за готовый сетевой клиент.
+
 ## Подготовка CDN версии и Windows platform, 19 октября
 
 15 native replays подтверждают AppVersion dot→underscore. Исполнена цепочка
