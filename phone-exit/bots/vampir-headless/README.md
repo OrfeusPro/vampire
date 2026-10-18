@@ -1,8 +1,21 @@
 # Vampir — самостоятельный сетевой бот
 
+## Текущее состояние самостоятельного клиента, 18 октября
+
+Выбранные send/receive пути, CRC/XOR/распаковка, queue ownership/partial send
+проверены native replay; portable pump прошёл local IPv4 TCP.
+[Transport и границы](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
+H04 начат:24 SDK symbols/34 LEA/24 roots,512 native escape calls, offline
+code/refresh token request plans. [Авторизация](../resource-tools/vampir/HEADLESS-AUTH.md).
+Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
+не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
+и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.
+
 Обновлено 18 октября 2026. **Сетевой клиент ещё не реализован.**
 Главный общий вход проекта — [Vampir README](../vampir/README.md).
 Найденные функции всех направлений — [общий FUNCTION-INDEX](../vampir/FUNCTION-INDEX.md).
+Общий исполняемый код и данные — [vampir-shared](../vampir-shared/README.md).
+Сетевой бот использует общий `vampir_core`, своей копии протокольного ядра нет.
 Продолжение работ — [TASKS.md](TASKS.md), история — [WORKLOG.md](WORKLOG.md).
 
 ## Требования пользователя
@@ -94,8 +107,46 @@ python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_native_ent
 Проверки повторно декодируют xrefs из оригинальных байтов и сверяют SHA
 фрагментов/строк. Отсутствие локальных данных означает skip, не подтверждение.
 
-Следующий конкретный шаг **H02**: от подтверждённых ссылок PktLogin/
-PktLobbyLogin/PktCharacterSelect проследить функции→vtable→reader/writer/ID;
-каждое поле отделять от неизвестного primitive wire encoding. Затем **H03**:
-receive→framing→decode→PacketDispatcher. Действующие данные не перезаписывать
+**H02 выполнен для 10 выбранных типов**: функции→vtable→constructor/ID и
+reader/writer targets; пять result registrations. Полный отчёт и таблицы:
+[HEADLESS-PACKET-BINDINGS.md](../resource-tools/vampir/HEADLESS-PACKET-BINDINGS.md).
+ID Login/LobbyLogin совпадают, их схемы/регистрация различны; учитывать контекст.
+Четыре независимых проверки, включая10native ID getter scenarios, прошли.
+Wire encoding и сеть этим не проверены.
+
+**H03a выполнен**: реальные native primitive/raw IO подтвердили Ping body16байт
+и Result12байт,126native scenarios/5tests; codec в `vampir-shared/vampir_core/ping.py`, только
+стандартная библиотека Python. [Доказательства и ограничения](../resource-tools/vampir/HEADLESS-PING-CODEC.md).
+Это тела сообщений, не complete frames и не рабочее подключение.
+
+Следующий конкретный шаг **H03b**: framing/send/receive/выбор dispatcher;
+output roots144aa9da0/144aaccf0 и helpers1445f1230/144aa6ca0 ещё разобрать.
+**H04**: SDK auth почта/пароль→сессия.
+
+H03b.1: CRC32/XOR helpers подтверждены252native executions/5tests;
+общий `vampir-shared/vampir_core/frame_primitives.py`.
+[Источники и ограничения](../resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md).
+Следом H03b.2: полный frame, receive validation, key/context/callbacks.
+
+H03b.2a: native цельный send-A slice подтвердил27байтовый Ping frame иsequence
+wrap (20scenarios/5tests). Общий `vampir_core/send_frame.py` умеет его собрать.
+[HEADLESS-SEND-FRAME.md](../resource-tools/vampir/HEADLESS-SEND-FRAME.md).
+Продолжение — receive validation/context/key H03b.2b; сетевого подключения нет.
+
+H03b.2b partial: length probe156native cases иwrapper13cases; статически связаны
+game peer callback иDispatch. Общий receive_frame.py проверяет полноту/лимиты,
+неCRC/packet fields. [Доказательства](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md).
+Следом transport caller, integrity/keyflow иполный входной layout.
+
+Смена peer key теперь связана сPktKeyChangeNotify(ID11): ackPktKeyChanged(ID12)
+передаётся вsend доsetter, обаpayload8байт.20native flow cases/5tests;
+общий key_change.py. [Доказательства](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md).
+Первичная авторизация, полный receive layout иsend queue остаются unknown.
+
+Первый raw receive stage подтверждён 62 native сценариями / 5 тестами:
+size23/compressed flag, копирование/распаковка и compaction. Общий transport_header.py
+распознаёт признак сжатия, извлекает несжатые кадры; общий decompressor ещё не готов.
+[Доказательства](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md).
+Далее listener loop/второй framing и send queue; сетевого подключения нет.
+Действующие данные не перезаписывать
 прогонами новых гипотез; новый результат ссылать в общем индексе и журнале.

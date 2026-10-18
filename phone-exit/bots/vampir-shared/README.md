@@ -1,0 +1,96 @@
+# Vampir — общие компоненты и результаты
+
+Обновлено 18 октября 2026. Главный вход — [Vampir README](../vampir/README.md).
+Общие результаты предназначены для экранного бота, сетевого бота, 2D-карты
+и будущей Android-оболочки. Здесь единый указатель, без копирования доказательств.
+
+| Что нужно | Единственный источник |
+|---|---|
+| Функции, адреса и степень подтверждения | [FUNCTION-INDEX](../vampir/FUNCTION-INDEX.md) |
+| Ресурсы, таблицы, карты и происхождение | [RESOURCE-INDEX](../resource-tools/vampir/RESOURCE-INDEX.md) |
+| Извлечение данных и доказательства | [resource-tools/vampir](../resource-tools/vampir/README.md) |
+| Общий переносимый исполняемый код | `vampir-shared/vampir_core/` |
+| Тяжёлые данные и машинные отчёты | `F:/PhoneExit Resources/Vampir/` |
+| Задачи/история сетевого бота | [TASKS](../vampir-headless/TASKS.md), [WORKLOG](../vampir-headless/WORKLOG.md) |
+| Экранный бот и карта | [Vampir TASKS](../vampir/TASKS.md), [MAP-ATLAS](../resource-tools/vampir/MAP-ATLAS.md) |
+
+## Общий код
+
+`auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
+explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.
+24 SDK roots/512 native byte primitive calls: [доказательства](../resource-tools/vampir/HEADLESS-AUTH.md).
+Нет получения/отправки credentials, browser login, HTTP или game session.
+
+`socket_send.py:drain_outbound` — bounded send на уже подключённом nonblocking
+socket; `OutboundFrames.peek_frame/consume_sent` сохраняют partial tail.
+61 native cases/5 tests и real local IPv4 TCP: [доказательства](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
+Connect/auth/readiness scheduler и session lifecycle пока не реализованы.
+
+`send_frame.py` содержит send-B encoders Ping/KeyChanged с explicit key/sequence.
+`outbound.py:OutboundFrames` ограничивает bytes/frames, хранит immutable ciphertext,
+ставит key ack под старым ключом до переключения следующего кадра.
+40 native cases/5 tests: [доказательства и локальная error policy](../resource-tools/vampir/HEADLESS-SEND-B.md).
+Это не socket transport; один session owner, без thread safety/авторизации.
+
+`receive_frame.py:take_receive_b_frame` / `receive_packet.py:decode_game_ping_result_b`
+используют явный unsigned64 peer key, не выполняют session bookkeeping.
+39 native cases: [доказательства](../resource-tools/vampir/HEADLESS-RECEIVE-B.md).
+Input immutable, body policy exact, raw transport layer обрабатывается отдельно.
+
+`receive_packet.py:decode_game_ping_result` — один receive-A game PingResult ID17,
+body12, явный frame limit. Exact body policy строже native trailing tolerance.
+24 native Dispatch scenarios: [доказательства](../resource-tools/vampir/HEADLESS-DISPATCH.md).
+Без игровых OnHandler side effects и без универсальной registry для lobby/game.
+
+`receive_frame.py:take_receive_a_frame` — один полный receive-A кадр:
+length probe + fallback XOR, header сохраняется, вход не меняется.
+44 native loop cases и 5 tests: [доказательства](../resource-tools/vampir/HEADLESS-LISTENER-LOOP.md).
+Не raw transport, не CRC/packet schema; управление сессией ещё не реализовано.
+
+`vampir_core/transport_header.py` — первый уровень приёма: size23, признак
+сжатия и извлечение кадра с явными input/output limits. [Доказательства](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md).
+`block_decode.py` распаковывает literals/matches с ограниченным output;
+166 valid / 86 invalid native проверок: [доказательства](../resource-tools/vampir/HEADLESS-BLOCK-DECODE.md).
+`take_transport_frame` поддерживает обе ветки skip=3. `receive_frame.py` относится
+к следующему уровню; применять его прямо к raw stream нельзя.
+
+`vampir_core/key_change.py` — общие IDs11/12 иraw64codec уведомления/подтверждения
+смены ключа, repr скрывает значение. [Доказательства и порядок вызовов](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md).
+Управление сессией иотправка подтверждения пока не реализованы.
+
+`vampir_core/receive_frame.py` — проверка полноты входящего кадра с явным
+лимитом и защитой от недопустимой длины; [источники и отличия от клиента](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md).
+Это ещё не packet decoder или CRC validation.
+
+`vampir_core/send_frame.py` — сборка полного исходящего Ping кадра send-A;
+[доказательства](../resource-tools/vampir/HEADLESS-SEND-FRAME.md).
+Приёмный decoder и подключение пока не реализованы.
+
+`vampir_core/frame_primitives.py` — подтверждённые CRC32 и XOR helpers;
+это не полный frame encoder. [Доказательства](../resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md).
+
+Первый модуль — `vampir_core/ping.py`, payload encode/decode для Ping/Result.
+Только стандартная библиотека Python; импорт `vampir_core.ping` одинаков для
+всех потребителей. Package root — `vampir-shared`; тесты подключают его через
+sys.path. Упаковка Windows/Android ещё не реализована. В сетевом боте второй
+копии нет. Сам модуль не подключается к серверу и не запускает игру.
+
+Доказательство/версия: [HEADLESS-PING-CODEC.md](../resource-tools/vampir/HEADLESS-PING-CODEC.md).
+Название `headless-*` у старого отчёта означает происхождение исследования,
+а не принадлежность результата только сетевому боту. Не переименовывать
+provenance-файлы без необходимости: на них завязаны хеши и проверки.
+
+Новые подтверждённые протокольные структуры, модели состояния, преобразования
+координат и общие алгоритмы размещать здесь по мере появления потребителей.
+UI, ключи аккаунтов, DPAPI/Keystore, foreground service и сценарии оболочки
+остаются у потребителей. EXE/PAK/эмулятор не включать в runtime.
+Совместимость нового выпуска игры проверяется отдельно; импорт модуля её не доказывает.
+
+## Продолжение работы
+
+Перед исследованием читать главный README и общий FUNCTION-INDEX. Новые связи
+с версией/SHA, инструментом и ограничениями добавлять в общий реестр, подробное
+доказательство хранить в resource-tools/общей библиотеке. Исполняемую реализацию
+держать в одном экземпляре, проверять общий модуль и затронутого потребителя.
+Запись о выполнении остаётся в журнале направления, со ссылкой на общий результат.
+Экранный бот не получает сетевые команды автоматически от появления кодека.

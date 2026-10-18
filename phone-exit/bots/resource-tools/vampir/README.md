@@ -1,11 +1,83 @@
 # Исследование ресурсов Vampir
 
+`build-headless-auth-index.py` → `code-clues/headless-auth-index.json`:
+24 selected SDK symbols/34 LEA/24 roots,143 constants,512 native escaping calls.
+[HEADLESS-AUTH.md](HEADLESS-AUTH.md), общий auth_request.py создаёт offline
+code/refresh form plans; нет получения пароля/токена, HTTP или игровой сессии.
+
+`build-headless-send-drain.py` → `code-clues/headless-send-drain.json`:
+61 native drain/partial/error cases, ordinal Winsock import проверен по local DLL.
+[HEADLESS-SEND-DRAIN.md](HEADLESS-SEND-DRAIN.md), shared socket_send.py,
+real local IPv4 TCP test. Connect/auth/live game этим не подтверждаются.
+
+`build-headless-send-b.py` → `code-clues/headless-send-b.json`:
+40 native send-B/CRC/keyed XOR/queue-copy cases, Ping/KeyChanged.
+[HEADLESS-SEND-B.md](HEADLESS-SEND-B.md), общий send_frame.py/outbound.py;
+allocator growth, drain/socket и весь Notify→wire остаются открытыми.
+
+`build-headless-receive-b.py` → `code-clues/headless-receive-b.json`:
+39 native B/keyed XOR/ID lookup-remove/Dispatch cases, notification list empty.
+[HEADLESS-RECEIVE-B.md](HEADLESS-RECEIVE-B.md), общие receive-B helpers;
+семантика manager/подписчиков и whole transport integrity остаются открытыми.
+
+`build-headless-dispatch.py` → `code-clues/headless-dispatch.json`:
+24 native receive-A→Dispatch→PingResult reader→OnHandler entry scenarios;
+handler body capture, registry/lifecycle fixtures, diagnostic formatting skip.
+[HEADLESS-DISPATCH.md](HEADLESS-DISPATCH.md), общий receive_packet.py.
+
+`build-headless-listener-loop.py` → `code-clues/headless-listener-loop.json`:
+44 native loop cases; real probe/broadcast/receive-A/XOR/compaction,
+container lifecycle fixtures и final callback capture.
+[HEADLESS-LISTENER-LOOP.md](HEADLESS-LISTENER-LOOP.md), shared take_receive_a_frame.
+
+`build-headless-block-decode.py` → `code-clues/headless-block-decode.json`:
+166 valid / 86 invalid native cases; shared block_decode.py и take_transport_frame.
+[HEADLESS-BLOCK-DECODE.md](HEADLESS-BLOCK-DECODE.md): распаковка с повторами,
+статическая связь listener slots +0x38/+0x40; полный receive pipeline ещё не готов.
+
 Начинать разработку с [главного файла модуля](../../vampir/README.md).
+
+`build-headless-transport-stage.py` → `code-clues/headless-transport-stage.json`:
+62 native receive-stage сценария, length23/compressed flag/native decompressor.
+[HEADLESS-TRANSPORT-STAGE.md](HEADLESS-TRANSPORT-STAGE.md), shared transport_header.py;
+распаковка расширена в HEADLESS-BLOCK-DECODE.md; доставка слушателям/CRC ещё требуют проверки.
+
+`build-headless-key-change.py` → `code-clues/headless-key-change.json`:
+Notify11/ack12,10native payload roundtrips/16shortcases/20handler slices.
+[HEADLESS-KEY-CHANGE.md](HEADLESS-KEY-CHANGE.md): send-before-key-update,
+registration/source/limitations; общий key_change.py неуправляетсессией.
+
+H03b.2b partial: `build-headless-receive-envelope.py` → `code-clues/headless-receive-envelope.json`.
+Length probe156cases, receive wrapper13cases, static callback→Dispatch;
+[HEADLESS-RECEIVE-ENVELOPE.md](HEADLESS-RECEIVE-ENVELOPE.md). Shared receive_frame.py
+добавляетlocalbounds, полный transport/CRC/keyflow ещёunknown.
+
+H03b.2a: `build-headless-send-frame.py` → `code-clues/headless-send-frame.json`.
+Цельная native сборка Ping send-A,20cases, shared `vampir_core/send_frame.py`.
+[HEADLESS-SEND-FRAME.md](HEADLESS-SEND-FRAME.md): length/CRC/ID/sequence/body/XOR,
+explicit environment иограничения; receive validation ещё H03b.2b.
+
+H03b.1: `build-headless-frame-primitives.py` → `code-clues/headless-frame-primitives.json`.
+252native executions CRC32/XOR, безshims; shared runtime в
+`vampir-shared/vampir_core/frame_primitives.py`.
+[HEADLESS-FRAME-PRIMITIVES.md](HEADLESS-FRAME-PRIMITIVES.md): callers и ограничения;
+полный frame/key/context ещё H03b.2.
 Общие найденные функции всех направлений — [FUNCTION-INDEX](../../vampir/FUNCTION-INDEX.md).
 Самостоятельный сетевой бот: [README/задачи/журнал](../../vampir-headless/README.md).
 `build-headless-network-index.py` строит SHA-bound индекс выбранных сетевых
 строк и проверенных LEA в `code-clues/headless-network-index.json` библиотеки.
 Это статические привязки, не готовый сетевой протокол.
+
+H02: `build-headless-packet-bindings.py` → `code-clues/headless-packet-bindings.json`.
+10типов/5регистраций, constructor/vtable/ID/IO targets, контекстные коллизии
+Login/LobbyLogin; [HEADLESS-PACKET-BINDINGS.md](HEADLESS-PACKET-BINDINGS.md).
+Не готовый wire codec; общий реестр обновляется вместе с отчётом.
+
+H03a: `build-headless-ping-codec.py` → `code-clues/headless-ping-codec.json`.
+Native constructors/primitive/raw buffer IO,126scenarios; только memcpy shim.
+Переносимые Ping payloads — `vampir-shared/vampir_core/ping.py`.
+[HEADLESS-PING-CODEC.md](HEADLESS-PING-CODEC.md): реальные bytes и границы
+подтверждения. Framing/transport остаются H03b/H03c.
 
 Данные: `F:/PhoneExit Resources/Vampir`.
 Установка: `C:/Program Files/Netmarble/Netmarble Game/VAMPIR`.

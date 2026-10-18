@@ -4,7 +4,44 @@
 Обновлено 18 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Текущее состояние самостоятельного клиента, 18 октября
+
+Выбранные send/receive пути, CRC/XOR/распаковка, queue ownership/partial send
+проверены native replay; portable pump прошёл local IPv4 TCP.
+[Transport и границы](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
+H04 начат:24 SDK symbols/34 LEA/24 roots,512 native escape calls, offline
+code/refresh token request plans. [Авторизация](../resource-tools/vampir/HEADLESS-AUTH.md).
+Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
+не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
+и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.
+
 ## Общие находки и самостоятельный сетевой бот
+
+18 октября: первый receive-stage `UxTcpPeer::_HandleRecvBuffer` подтверждён
+62 native сценариями / 5 тестами: size23, compression bit, copy/decompress,
+compaction. Shared transport_header.py; receive_frame.py относится ко второму
+слою, не raw stream. [Доказательства](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md).
+Цельный listener pipeline и send queue ещё не готовы;
+общий decoder с повторами добавлен следующим этапом выше.
+
+18 октября: источник сменыpeer key подтверждён — PktKeyChangeNotify11→
+ackPktKeyChanged12→setter0x144aab330, send вызван ещёпристаромключе.
+10native roundtrips/16shortcases/20handler slices и5tests прошли.
+[Доказательства](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md), общийkey_change.py;
+initialauth/receive integrity/transport ещёнеполные.
+
+18 октября, H03b.2b partial: incoming length probe156native cases/wrapper13cases,
+static game callback→Dispatch подтверждён; общий receive_frame.py проверяет
+полноту/локальные лимиты. [Доказательства](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md).
+ПриёмCRC/keyflow/transport ещёнеполные, сеть/игра неиспользовались.
+
+18 октября, H03b.2a: цельный native send-A slice собрал Ping frames в20сценариях,
+включая sequence wrap65535→0. Shared `vampir_core/send_frame.py`,5tests прошли.
+[Доказательства](../resource-tools/vampir/HEADLESS-SEND-FRAME.md), общий реестр
+обновлён. Приём/context/key иподключение ещё не готовы.
+
+Единый указатель общих компонентов: [vampir-shared/README.md](../vampir-shared/README.md).
+Общий переносимый код: `vampir-shared/vampir_core/`; без копий на каждого бота.
 
 Все направления используют [FUNCTION-INDEX.md](FUNCTION-INDEX.md) — общий
 указатель найденных функций, адресов, источников/SHA и границ подтверждения.
@@ -18,6 +55,24 @@
 [журнал](../vampir-headless/WORKLOG.md). Первый SHA-bound индекс:
 27 сетевых строк/31 проверенная LEA, 1020 инструкций; wire/login/фарм ещё не готовы.
 Экранный бот и исследование карты сохраняются отдельными направлениями.
+
+18 октября, H02: для10выбранных сетевых типов подтверждены constructor/
+vtable/ID/IO targets и5result registrations;4audit tests/10native ID executions.
+ID Login/LobbyLogin совпадают при разных схемах и регистрации; общий
+FUNCTION-INDEX и [подробный отчёт](../resource-tools/vampir/HEADLESS-PACKET-BINDINGS.md)
+обновлены. Следом H03 primitive wire IO/framing/context, H04 SDK auth.
+Самостоятельная сессия и бой по-прежнему не реализованы.
+
+18 октября, H03a: реальными native primitive/raw IO подтверждены payloads
+Ping16байт/Result12байт;126scenarios и5tests прошли, без primitive stubs
+(внешний memcpy — bounded shim). Первое переносимое ядро `vampir_core/ping.py`
+использует только stdlib. [Доказательства](../resource-tools/vampir/HEADLESS-PING-CODEC.md),
+общий FUNCTION-INDEX и журнал обновлены. Framing/transport/auth ещё не готовы.
+
+18 октября, H03b.1: CRC32 и повторяющийся XOR внешнего слоя подтверждены
+252native executions/5tests и вынесены вобщий `vampir_core/frame_primitives.py`.
+Найдены дваreceive wrappers; XOR пропускает3байта. Frame/validation/key ещё
+исследуются: [доказательства](../resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md).
 
 **При продолжении читать [таблицу задач TASKS.md](TASKS.md):** выполненные работы,
 частичные результаты, оставшиеся проверки и критерии завершения. После каждой

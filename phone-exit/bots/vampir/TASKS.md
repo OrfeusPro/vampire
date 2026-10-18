@@ -13,8 +13,41 @@
 с переносимым ядром Android, онлайн 2D-карту, небольшую нагрузку и обновление
 данных при еженедельных выпусках. Отдельные [задачи H/U/P/A](../vampir-headless/TASKS.md)
 и [журнал](../vampir-headless/WORKLOG.md); общий [индекс функций](FUNCTION-INDEX.md).
-H00/H01 выполнены в ограниченном статическом объёме; H02 частично, затем
-wire/auth/state. Карта и экранные задачи ниже сохраняют собственные статусы.
+H00/H01 выполнены в ограниченном статическом объёме; H02 закрыт для10типов/
+5ответов (vtable/constructor/ID/IO targets и регистрация,4audit tests).
+Далее H03 wire/context и H04 auth. Карта и экранные задачи ниже сохраняют собственные статусы.
+
+H03a: native Ping body IO и переносимый stdlib codec готовы в ограниченном
+объёме (126native cases/5tests), H03 всё ещё частично. Следом complete framing/
+send/receive H03b; подробности в задачах сетевого бота и FUNCTION-INDEX.
+
+H03b.2b-block: общий bounded decoder, 166 valid / 86 invalid native cases,
+статическая связь второго listener stage; [доказательства](../resource-tools/vampir/HEADLESS-BLOCK-DECODE.md).
+Полный receive/CRC/send queue/auth остаются в задачах сетевого бота.
+
+H03b.2b-listener: второй native receive loop (44 cases/5 tests), общий
+receive-A extractor. Container lifecycle fixtures/final capture; Dispatch/CRC ещё
+не проверены. [Доказательства](../resource-tools/vampir/HEADLESS-LISTENER-LOOP.md).
+
+H03b.2b-dispatch: 24 native cases/4 tests до PingResult OnHandler entry,
+wrapper8→10 и cleanup доказаны; body capture/registry fixtures.
+[Доказательства](../resource-tools/vampir/HEADLESS-DISPATCH.md). Receive-B/CRC/auth остаются.
+
+H03b.2b-receiveB:39 native cases/4 tests, keyed XOR→ID bookkeeping→Dispatch;
+remove до reader, без CRC в исследованном B пути. Полная сессия ещё не готова.
+[Доказательства](../resource-tools/vampir/HEADLESS-RECEIVE-B.md).
+
+H03b.2b-sendB:40 native cases/5 tests, Ping/KeyChanged и synchronous queue copy;
+общие encoders/byte-frame bounded queue. Drain/socket/auth ещё не готовы.
+[Доказательства](../resource-tools/vampir/HEADLESS-SEND-B.md).
+
+H03b.2b-drain:61 native cases/5 tests, queue→Winsock send/partial handling;
+portable pump прошёл real IPv4 loopback TCP. Connect/auth/session ещё не готовы.
+[Доказательства](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
+
+H04a:24 SDK symbols/34 LEA/24 roots,512native escape calls, offline auth plans;
+H04 остаётся partial: config/browser/response/game session не готовы.
+[Доказательства](../resource-tools/vampir/HEADLESS-AUTH.md).
 
 ## Текущий приоритет экранного бота: первоначальный запуск
 

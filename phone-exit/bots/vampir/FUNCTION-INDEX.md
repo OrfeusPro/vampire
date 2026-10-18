@@ -1,9 +1,80 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK auth, 18 октября: H04 partial
+
+Общий SHA Windows EXE ниже. FAuthImpl SignIn root1444fb800 использует
+`authUrl/v1/sign-in`; NetmarbleID code/refresh roots1450e2640/1450e2f50 —
+`authTokenUrl/v2/access-token`, form client_id/device_key/code или refresh_token.
+POST helper14451c570→14451c600, form builder144586a30; native whitelist141c06750
+и uppercase hex1415ad670 исполнены512раз.24 SDK literals/34 LEA/24 roots.
+[Полные source/SHA/offsets и границы](../resource-tools/vampir/HEADLESS-AUTH.md).
+Общий auth_request.py — offline plan, не login. Config bases/browser code и
+SDK→game handoff ещё unknown; пароль не подставлять в PktLogin по догадке.
+
+## Уточнение 18 октября: queue drain → send
+
+Для общего SHA Windows EXE ниже constructor `0x1445e2b7f/0x1445e2b86`
+связывает peer+50 с vtable `0x149503b58`, slot20 → `0x1445e8b70`.
+Drain вызывает ordinal WS2_32 import на `0x1445e8c0d`, имя send подтверждено
+export table локальной DLL (её SHA в JSON). Consume `0x1445e5ef0`, partial
+memmove; errors22/23/37 сохраняют очередь.61 native cases/5 tests.
+[Source/offsets и границы](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
+Socket/error/close fixtures; real loopback TCP проверяет только portable pump.
+
+## Уточнение 18 октября: send-B и очередь копии
+
+Общий SHA Windows EXE ниже. Slice `0x144aace6d..0x144aacf89`: ID/sequence/body,
+CRC/XOR key=peer+248, sequence=peer+240. Queue call `0x144aacf7d` → `0x1445eac20`
+→ append `0x1445e4a90` для peer+170: отдельная копия ciphertext до возврата.
+40 native cases/5 tests, preallocated capacities/CRT shims/wake capture;
+source overwrite и key variant не меняют queue. Shared send-B encoders/OutboundFrames.
+[Source/SHA/offsets и границы](../resource-tools/vampir/HEADLESS-SEND-B.md).
+Drain/socket и весь Notify→wire не проверены.
+
+## Уточнение 18 октября: receive-B и ID bookkeeping
+
+Общий SHA Windows EXE ниже. Wrapper `0x144aacb50`, key=subobject+0x48,
+XOR frame+3, IDword+3 → getter `0x144aa7c40` → lookup `0x144aa8120` →
+remove `0x144aa7f40` → sparse free `0x14142eff0`; empty-table notify `0x144aa7870`.
+39 native cases/4 tests, manager/listener/registry fixtures, notification list empty;
+OnHandler entry capture. Remove идёт до reader, даже для short body. CRC в
+исполненном B route не найден; не вывод обо всём транспорте.
+[Отчёт, source/SHA/offsets и границы](../resource-tools/vampir/HEADLESS-RECEIVE-B.md).
+
+## Уточнение 18 октября: Dispatch и wrapper OnHandler
+
+Общий SHA Windows EXE ниже: `0x14679f510` исполняет ID lookup/body reader и
+handler+8 → `0x141535f20` (`488b0148ff6010`) → handler+0x10.
+Для PingResult vtable `0x149d810f8` это OnHandler `0x1467670c0`; вход перехвачен,
+побочные действия не исполнены. 24 native cases/4 tests, synthetic registry,
+native TLS setter `0x144aa6240` и archive destructor chain. Shared receive_packet.py.
+[Отчёт, source/SHA/offsets и ограничения](../resource-tools/vampir/HEADLESS-DISPATCH.md).
+
+## Уточнение 18 октября: native второй receive loop
+
+Для общего SHA Windows EXE ниже исполнен slice `0x1445ed572..0x1445ed730`:
+helper `0x1445dede0`, thunks `0x1415f6848`/`0x1437113e4`, length probe
+`0x144aa9a90`, receive-A `0x144aa9c00`/XOR `0x144aa6ca0` и compaction.
+44 cases/5 tests; final callback capture, snapshot/cleanup/free/expired-cleanup
+заданы fixtures, не native lifecycle. Shared receive_frame.py: take_receive_a_frame.
+[Происхождение, отчёт и пределы](../resource-tools/vampir/HEADLESS-LISTENER-LOOP.md).
+
+## Уточнение 18 октября: block decoder и listener linkage
+
+Источник/SHA — общий Windows EXE, указанный ниже. Native decoder `0x14141ba60`:
+166 valid / 86 invalid executions, literal/match/LE16 offset/extended lengths;
+copy tables `0x14898cd78`. Общий код block_decode.py, explicit bounded output.
+Второй stage root `0x1445ed3e0`: call `0x1445ed723` → thunk `0x1415f6848`
+→ slot+0x38 length probe; LEA `0x1445ed65a` → thunk `0x1437113e4` → helper
+`0x1445dede0` / indirect call `0x1445def22` → slot+0x40 receive wrapper.
+Связь статическая; полный listener loop не replayed. [Provenance и границы](../resource-tools/vampir/HEADLESS-BLOCK-DECODE.md).
+
 Обновлено 18 октября 2026. Начинать с [README.md](README.md).
 Общий для экранного бота, [самостоятельного сетевого бота](../vampir-headless/README.md)
 и исследования карты. Это навигационный указатель, не полный список функций EXE.
 Подробные доказательства и инструменты остаются у соответствующего направления.
+
+Общие данные и исполняемые компоненты: [vampir-shared/README.md](../vampir-shared/README.md).
 
 ## Как пользоваться и обновлять
 
@@ -56,7 +127,87 @@ SHA256: `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 | PktSkillStart / Result / Notify | 0x14583eb00 / 0x14583eb90 / 0x14583eb60 | Строки/ссылки; серверный боевой цикл неизвестен |
 | PktActorCombatStateChangeNotify | 0x1456b5940 | Строка/ссылка; поля и применение ещё исследовать |
 
+## Сетевые пакеты: H02, 18 октября
+
+Подтверждены name→vtable→constructor/ID/reader/writer targets для 10 типов
+и registration для пяти ответов. Подробная таблица, доказательства, SHA и
+команды: [HEADLESS-PACKET-BINDINGS.md](../resource-tools/vampir/HEADLESS-PACKET-BINDINGS.md).
+Данные: `code-clues/headless-packet-bindings.json` в общей библиотеке.
+ID: Login/LobbyLogin=3, их Result=4; CharacterListRead/Result=101/102,
+CharacterSelect/Result=109/110, Ping/Result=16/17.
+**ID3/4 совпадают у разных типов**: использовать контекст, не единый глобальный
+ID→schema. Доказаны разные фабрики/registration targets; runtime selection ещё unknown.
+Name slot+0x38, ID+0x28; writer+0x10/reader+0x20 — targets, не wire-schema.
+10native ID сценариев/4audit tests прошли, сеть/игра не запускались.
+
+Новые handler targets: LoginResult146765540, LobbyLoginResult14677ec50,
+CharacterListReadResult14675dce0, CharacterSelectResult14675e9a0,
+PingResult1467670c0 (VA, префикс0x). Getter/constructor/read/write VA и
+registration callsites см. в подробной таблице, не выводить их из ID.
+
+## Primitive IO и Ping payload: H03a, 18 октября
+
+[HEADLESS-PING-CODEC.md](../resource-tools/vampir/HEADLESS-PING-CODEC.md) содержит
+полную цепочку, provenance и `code-clues/headless-ping-codec.json`.
+Receive Dispatch14679f510 → reader ctor144aa6260 → vtable14961a520 →
+u64 reader144aa5bc0/u32 reader144aa59c0 → raw read144aa5ce0.
+Dispatch явно передаёт swap=0; тела little-endian16байт Ping/12байт Result.
+Writer ctor144aa62f0 → vtable14961a5c0 → u64 writer144aa61e0/u32 writer144aa6090
+→ raw write144aa6120. Counter helpers144aa68c0/1445ead30; bswap64/32
+1445d9f60/1445d9f30. Все адреса VA, префикс0x; полные source SHA выше.
+
+Primitive IO исполнен настоящими инструкциями, только CRT memcpy подменён
+bounded shim.126native cases/5tests,6дополнительных replays прошли.
+Переносимый stdlib codec: `vampir-shared/vampir_core/ping.py`.
+H03 остаётся частичным: output callers144aa9da0/144aaccf0, helpers1445f1230/
+144aa6ca0 и framing требуют разбора. Размер5до body относится к dispatcher
+input, не ко всему wire frame. Handler dispatch вызывает slot+8; связь с
+OnHandler+10 ещё проследить. Signedness/field timing semantics не установлены.
+
 ## Более глубокие подтверждения
+
+Первый receive transport: `UxTcpPeer::_HandleRecvBuffer`, root0x1445ed3e0,
+диагностическая LEA0x1445ed4cc. Native slice0x1445ed403..0x1445ed562:
+length23/compressed bit23 → copy/decompress0x14141ba60 → второй буфер,
+append0x1445e4a90/resize0x1445de6e0/memmove. 62 native cases / 5 tests.
+[HEADLESS-TRANSPORT-STAGE.md](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md),
+report `code-clues/headless-transport-stage.json`, shared transport_header.py.
+Общий decompressor/listener loop/CRC и send queue ещё не готовы.
+Length probe0x144aa9a90 — второй уровень, не raw compressed framing.
+
+H03b.2b keyflow: бывший candidate0x144aab330 подтверждён какsetter peer+248.
+PktKeyChangeNotifyHandler0x146765050 строитPktKeyChanged, вызываетsend+38,
+затемsetter+40. IDs Notify11/ack12, тела raw64LE8байт;20native flow cases
+подтвердилиold key во время send иupdate после него, дажеприsend false.
+[HEADLESS-KEY-CHANGE.md](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md),
+`code-clues/headless-key-change.json`; shared `vampir_core/key_change.py`.
+Полные packet/vtable/IO/registration адреса втаблице отчёта. Server key generation,
+initialauth/receive integrity/send queue всёещё неизвестны.
+
+H03b.2b partial: length probe0x144aa9a90 подтверждён156native cases;
+wrapperA0x144aa9c00 —13native cases доcallback. Vtables0x14961af58/0x14961b8f0
+уmain+200 имеютlength+38/receive+40. Factory0x14678ec40 черезsetter0x144aab300
+назначается вpeer+238; wrapperBcallback изтого же поля вызываетDispatch0x14679f510.
+Статическая linkage доказана, end-to-end replay нет. Candidate keysetter0x144aab330
+ещё безcaller/source семантики. [HEADLESS-RECEIVE-ENVELOPE.md](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md),
+`code-clues/headless-receive-envelope.json`; shared receive_frame.py имеет
+дополнительную local bounds policy. CRC/incoming layout/keyflow ещё unknown.
+
+H03b.2a: native send-A slice0x144aa9e6a..0x144aa9f45 подтверждён20сценариями;
+length24+CRC32+(ID16+sequence16+body), XORотoffset3. Ping frame27байт.
+Sequence connection+228 обновляется native16bit сwrap65535→0.
+Stream append0x144aa6330, buffer getter0x144aa5f80, word writer0x144aa6060;
+подробный provenance/[HEADLESS-SEND-FRAME.md](../resource-tools/vampir/HEADLESS-SEND-FRAME.md).
+Общий `vampir_core/send_frame.py`, `code-clues/headless-send-frame.json`.
+Receive/context/key ещё unknown; layout перед Dispatch не отождествлять сsend frame.
+
+H03b.1: CRC initializer0x1418ba360/update0x1445f1230/table0x1495046f0,
+XOR0x144aa6ca0. Подтверждены252native executions/5tests; общий модуль
+`vampir-shared/vampir_core/frame_primitives.py`. Send roots0x144aa9da0/0x144aaccf0,
+receive0x144aa9c00/0x144aacb50; XOR пропускает3байта. Session key source,
+полный frame иreceive validation ещё unknown.
+[HEADLESS-FRAME-PRIMITIVES.md](../resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md),
+`code-clues/headless-frame-primitives.json` в общей библиотеке.
 
 | Функция/структура | Адреса VA | Подтверждение и подробный источник |
 |---|---|---|
