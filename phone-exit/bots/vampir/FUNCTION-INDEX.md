@@ -1,5 +1,17 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Свежие record indexes и CSV, 19 октября: U02 partial
+
+35 архивов проверены по полному SHA256 и заново проиндексированы: 127375
+записей, 125122 decoded/75 encrypted skipped/2178 size skipped, decode errors 0.
+Каталог PAK и промежутки не разобраны; пути — наблюдения, не доказанные bindings.
+Pakchunk1: 1565 CSV, 1267 exact historical content matches, 298 без совпадения.
+Уникальные схемы кандидатов Quest/QuestTask/QuestTaskAction: соответственно
+11/144/91 строк с изменением только ServerServiceGroupId; игровая идентичность
+по схеме не заявляется. Tutorial/Step/UI и WorldSpot совпали по SHA256.
+[Инструменты, отчёты и источники](../resource-tools/vampir/CLIENT-RELEASE-INDEX.md).
+Производные графы и актуальные UI/map bindings ещё требуют обновления.
+
 ## Обновление источников клиента, 19 октября: U01 partial
 
 EXE сохранил общий SHA256 ниже; 34 PAK изменились, один добавлен.
