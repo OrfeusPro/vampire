@@ -1,5 +1,14 @@
 # Vampir — самостоятельный сетевой бот
 
+## Начальный разбор ответа CDN, 19 октября
+
+52 native сценария подтвердили CRLFCRLF boundary, статус из первых 12 байт
+и число уже доступных байт тела. Общий cdn_response.py разбирает только head
+со строгой локальной HTTP/1.x политикой и лимитами; полнота тела не заявляется.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-HEAD.md).
+Повторный аудит установки совпал со снимком обновления: 34 изменённых архива,
+один новый, EXE прежний. TLS/body/JSON/actual settings ещё открыты.
+
 ## Полный базовый CDN GET header, 19 октября
 
 Native URI/context/header pipeline проверен на 7 default и 4 override сценариях.

@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: начало разбора ответа и сверка обновления
+
+После 12c7b23 проверены native boundary/status/available-body getters: 52 сценария,
+actual Windows CRT scanner с первыми 12 байтами, bounded strstr shim. Добавлен
+общий head-only parser с явной локальной политикой HTTP/1.x, 16 КиБ/64 поля,
+сохранением дубликатов. Полнота тела/Content-Length/chunked/JSON ещё неизвестны.
+Полный набор: 161/161 тест, 90,4 с; синтаксис трёх Python-файлов, кодировка,
+264 относительные ссылки изменённых документов и git diff --check прошли.
+Подробный source/SHA в
+[HEADLESS-CDN-RESPONSE-HEAD](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-HEAD.md).
+Повторный release audit дал тот же immutable снимок: 34 changed/1 added, EXE
+прежний. Сервер, игра и аккаунты не использовались; network_ready=false.
+
 ## 19 октября 2026 — H04b-CDN: полный базовый GET header
 
 После f5d12c8 исполнен full header builder 0x1445e4b20 после native URI parser

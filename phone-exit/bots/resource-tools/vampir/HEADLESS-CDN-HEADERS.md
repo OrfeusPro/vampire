@@ -104,6 +104,7 @@ oracle. Другие тесты проверяют override observations, proven
 
 ## Продолжение
 
+Начальный этап: [граница и статус ответа](HEADLESS-CDN-RESPONSE-HEAD.md).
 Далее проверить приём ответа: status/headers/body limits, Content-Length/chunked/
 compression, JSON и callback order, а также TLS/redirect handling и request queue.
 Фактические Game config values/late overrides ещё неизвестны. Сначала установить

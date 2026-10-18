@@ -1,5 +1,16 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN response boundary/status, 19 октября: H04b partial
+
+Native 1445e74f0/1445e75e0/1445e7440: 52 сценария boundary/status/available body.
+Getter 1445da5d0/1445da610, scan wrapper 1418732e0/options 141872810 исполнены.
+Первые 12 байт → actual Windows __stdio_common_vsscanf %*s %d; strstr bounded
+shim, fixtures явно NUL-terminated. Доступные байты не доказывают полное тело.
+Shared probe_cdn_response_head: strict local HTTP/1.x head policy, 16 КиБ/64 поля,
+дубликаты сохранены; body/Content-Length/decode/JSON не реализованы.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-HEAD.md).
+Receive 1445e95f0/header parser 1445edb30/CDN callback 145642a30 — static only.
+
 ## CDN full default GET header, 19 октября: H04b partial
 
 EXE SHA прежний. Header builder 1445e4b20 + URI/request-line и field builders
