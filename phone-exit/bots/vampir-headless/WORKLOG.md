@@ -1,5 +1,33 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-secret: native OAEP и один chunk
+
+После 45ec607 исполнен сам OAEP checker `0x148405020`: 24 корректных и
+69 ошибочных входов. Hash/MGF1/memory/error/stack helpers заменены ограниченными
+shims; клиентские RSA arithmetic и PEM reader не исполнялись. Независимый backend
+cryptography 48.0.0/OpenSSL 4.0.0 проверяет искусственные RSA 2048/3072/4096;
+raw pow используется только для аналитического encoded message. Проверены
+публичная RSA-связь, output bounds, неизменность при ошибке и освобождение буферов.
+
+Найден точный multiline PEM-формат `0x1494e2540` и caller `0x14451d6f2`:
+BEGIN RSA PRIVATE KEY / тело / END RSA PRIVATE KEY. Printable-only scanner
+его пропускал. Диагностические имена RSA/PEM/OAEP в caller также сохранены;
+прежнее косвенное сопоставление уточнено. Реальное значение DECKEY не получено.
+
+Общий sdk_secret.py расшифровывает один chunk через optional backend, с явными
+лимитами и ошибками без входных данных. Windows synthetic roundtrips проверены;
+Android и список secret constants/UTF-8/JSON/auth bindings ещё не готовы.
+requirements-crypto-analysis.txt закрепляет Windows wheels с SHA256 отдельно
+от native replay зависимостей; архивы и private keys в Git не входят.
+
+Отчёт code-clues/headless-sdk-oaep.json, SHA256
+f5bc01b7b1a68a7bacbc1dc9cb2a948bfd08321a0330be7c68d4a290f7b29fc5.
+Новые ключи генерируются при пересборке, хеш отчёта меняется; private material
+не сохраняется. Пять тестов и HEADLESS-SDK-OAEP.md фиксируют границы проверки.
+Далее полный secret list и auth bindings, lookup DECKEY. network_ready=false.
+Регрессия: 95/95 тестов без skip (55,3 с), синтаксис новых Python-файлов,
+199 относительных ссылок изменённых документов и git diff --check прошли.
+
 ## 19 октября 2026 — H04b-secret: Base64 и параметры RSA/OAEP
 
 После 5a545b0 продолжено исследование `0x14451d5c0`. Найдены private-key reader

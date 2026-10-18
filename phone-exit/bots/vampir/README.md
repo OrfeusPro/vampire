@@ -23,6 +23,9 @@ UTF-16 XOR GMC2: 42 native проверки, общий ограниченный
 [Ответ GMC2](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
 19 октября: общий Base64-декодер секретной ветки проверен; 16 native сценариев
 подтверждают аргументы OAEP. [Доказательства и границы](../resource-tools/vampir/HEADLESS-SDK-SECRET.md).
+OAEP checker исполнен на 24 корректных и 69 ошибочных входах; общий декодер
+одного secret chunk проверен на искусственных RSA-ключах Windows.
+[Исполнение и ограничения Android](../resource-tools/vampir/HEADLESS-SDK-OAEP.md).
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

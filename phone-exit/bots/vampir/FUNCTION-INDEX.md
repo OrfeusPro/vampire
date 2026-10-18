@@ -1,5 +1,16 @@
 # Vampir — общий указатель найденных функций и связей
 
+## OAEP checker и один secret chunk, 19 октября: H04b-secret partial
+
+Общий SHA Windows EXE ниже. `0x148405020` исполнен: 24 корректных и 69 ошибочных
+входов, SHA/MGF1/memory/error/stack shims, без клиентского RSA arithmetic.
+Caller `0x14451d6f2` → формат `0x1494e2540`: BEGIN RSA PRIVATE KEY, тело `%s`.
+Диагностики caller подтверждают названия PEM_read_bio_RSAPrivateKey,
+RSA_private_decrypt и RSA_padding_check_PKCS1_OAEP_mgf1.
+Общий sdk_secret.py: один chunk, optional cryptography backend, Windows synthetic
+RSA 2048/3072/4096; полный список/Android не проверены.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-OAEP.md).
+
 ## Секретные константы GMC2, 19 октября: H04b partial
 
 Общий SHA Windows EXE ниже. Root `0x14451d5c0`: Base64 wrapper `0x141523200`

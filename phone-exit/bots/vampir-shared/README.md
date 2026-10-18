@@ -26,7 +26,11 @@ escape и сохраняет UTF-16 единицы. 43 корректных и 7
 `decode_sdk_base64` в том же модуле декодирует один ciphertext, до 2048 символов,
 с каноническим padding или без него. 26 корректных native входов и 8 граничных;
 [RSA-параметры и ограничения](../resource-tools/vampir/HEADLESS-SDK-SECRET.md).
-RSA backend в переносимое ядро пока не добавлен.
+`sdk_secret.py:decrypt_sdk_secret_chunk` расшифровывает один secret chunk
+с явным телом RSA-ключа; optional cryptography backend загружается при вызове.
+Windows проверен на искусственных ключах, native OAEP — 24 корректных / 69
+ошибочных входов. [Доказательства и лимиты](../resource-tools/vampir/HEADLESS-SDK-OAEP.md).
+Полный список chunks, auth bindings и Android backend ещё не проверены.
 
 `auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.

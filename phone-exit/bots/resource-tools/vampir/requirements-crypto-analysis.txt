@@ -1,0 +1,5 @@
+# Offline RSA fixture generation, Windows x64 / CPython 3.14; not Android proof.
+--require-hashes
+cryptography==48.0.0 --hash=sha256:5b012212e08b8dd5edc78ef54da83dd9892fd9105323b3993eff6bea65dc21d7
+cffi==2.0.0 --hash=sha256:203a48d1fb583fc7d78a4c6655692963b860a417c0528492a6bc21f1aaefab25
+pycparser==3.0 --hash=sha256:b727414169a36b7d524c1c3e31839a521725078d7b2ff038656844266160a992
