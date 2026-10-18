@@ -1,5 +1,31 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-map: приоритет secret и чтение auth URL
+
+После ce19fbe прослежены normal/secret insertion calls в один map, helper
+`0x14150df70` и его existing-key replacement. Secret идёт вторым и заменяет
+key/value при совпадении. Native hash и comparator не различают регистр ASCII;
+для остальных единиц подтверждено точное сравнение.
+
+SDK getter `0x144553700` использует map+`0x310`, helper `0x144502730` и prefix
+checker `0x144584280`. Auth caller `0x1450e2895` передаёт authTokenUrl.
+24 native lookup, 3 отдельные replacement slices и 5 hash calls прошли.
+String/memory helpers shimmed, карта с одним bucket; весь insertion/growth,
+callback и lifetime не исполнены. Prefix принимает даже https:// без host;
+это не подтверждение готовности endpoint и не HTTP-запрос.
+
+Общий sdk_config.py объединяет только уже строковые карты, сохраняет новое
+написание заменённого ключа, не меняет входы. Aliases внутри одного input map,
+NUL/нестроковые значения/превышение бюджетов отклоняются. Stringify JSON-типов
+не подменяется str(). Отчёт code-clues/headless-sdk-map.json, SHA256
+3bfe3a2fffed8ef40037c6f5bcc9cbed857f727cc56c1a5a802c13accc050560.
+Пять тестов и HEADLESS-SDK-MAP.md фиксируют source/границы/replay.
+Общий реестр и задачи обновлены. Далее stringify `0x144476940`, callback →
+SDK map, path append `0x1450e2b01` → `0x14142c9d0` и DECKEY lookup.
+Игра/сеть/аккаунты не использовались; H04b частично, network_ready=false.
+Регрессия: 106/106 тестов без skip (64,0 с), синтаксис новых Python-файлов,
+207 относительных ссылок изменённых документов и git diff --check прошли.
+
 ## 19 октября 2026 — H04b-secret: список элементов → JSON
 
 После 5ff908c прослежен assembler `0x1444ddc10`: извлечение компактного списка,

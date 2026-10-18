@@ -34,7 +34,10 @@ Windows проверен на искусственных ключах, native OA
 проверяет типы/UTF-8/повторные ключи и отклоняет весь результат при ошибке.
 9 основных / 4 граничных native сценария orchestration, шесть тестов:
 [список и границы](../resource-tools/vampir/HEADLESS-SDK-SECRET-LIST.md).
-Объединение normal/secret constants, auth bindings и Android ещё открыты.
+`sdk_config.py` объединяет уже строковые normal/secret карты с приоритетом
+secret и читает значение по native HTTP(S) prefix check. 24 lookup / 3 replacement /
+5 hash native сценариев: [доказательства](../resource-tools/vampir/HEADLESS-SDK-MAP.md).
+Stringify прочих JSON-типов, весь callback → SDK map и Android ещё открыты.
 
 `auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.

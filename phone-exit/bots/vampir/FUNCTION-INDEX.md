@@ -1,5 +1,16 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Normal/secret map и auth URL getter, 19 октября: H04b partial
+
+Общий SHA Windows EXE ниже. Parser normal `0x1444f1250` → secret `0x1444f162f`
+используют insertion `0x14150df70`: existing-key slice заменяет key/value.
+Auth `0x1450e2895` → SDK getter `0x144553700` → map+`0x310` → `0x144502730`.
+Native hash `0x141420380`, lookup `0x141437e50`, URL prefix `0x144584280`
+→ `0x141432f20/0x1414599a0`. 24 lookup / 3 replacement / 5 hash сценариев;
+string/memory shims, без полного insertion/growth/callback. Общий sdk_config.py.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-MAP.md).
+Stringify `0x144476940` и path append `0x14142c9d0` — следующие зависимости.
+
 ## Список secret constants, 19 октября: H04b-secret partial
 
 Общий SHA Windows EXE ниже. `0x1444ddc10`: Mid(2,length−4), split `","`,
