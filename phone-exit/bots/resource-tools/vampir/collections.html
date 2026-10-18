@@ -1,0 +1,16 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vampir · коллекции</title>
+<link rel="stylesheet" href="../catalog.css"><link rel="stylesheet" href="collections.css?v=20261018-rows">
+<header><h1>Коллекции</h1><p class="muted">Нужные предметы, заточка и бонусы из данных клиента</p></header><script src="../catalog-nav.js"></script>
+<p id="error" role="alert"></p><main>
+<div id="listing"><div class="filters">
+<label>Коллекция, предмет или ID<input id="search" type="search" placeholder="Название коллекции или нужного предмета…" disabled></label>
+<label>Категория<select id="tab" disabled><option value="all">Все категории</option></select></label>
+<label>Редкость<select id="rarity" disabled><option value="all">Любая редкость</option></select></label>
+<label>Бонус<select id="bonus" disabled><option value="all">Все параметры</option></select></label>
+<label>Сортировка<select id="sort" disabled><option value="quality">Качество: от обычных к высшим</option><option value="source">Порядок данных клиента</option><option value="rank">Редкие сначала, затем по названию</option><option value="name">По названию</option></select></label>
+</div><p id="count" class="muted" role="status">Загрузка коллекций…</p>
+<div id="grid" class="collections-grid"></div><button id="more" hidden>Показать ещё</button></div>
+<div id="detail" class="detail-page" hidden><nav class="breadcrumbs"><a id="back" href="index.html">Все коллекции</a><span id="crumb"></span></nav><article id="collection" class="catalog-card"></article></div>
+<p class="muted collection-note">Справочник клиента: прогресс персонажа и текущая доступность на сервере здесь не проверяются. Бонусы показаны в исходных единицах.</p>
+<details class="collection-sources"><summary>Источники и границы данных</summary><p>Collection → CollectionGroup → StaticOperation. Предметы открывают полную карточку со свойствами и источниками получения. Названия — из английской локализации клиента.</p><a href="manifest.json">Таблицы, SHA256 и подтверждения связей</a></details>
+</main><script src="../catalog-data.js"></script><script src="collections-model.js?v=20261018-quality"></script><script src="collections.js?v=20261018-quality"></script></html>

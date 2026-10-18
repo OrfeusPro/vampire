@@ -5,6 +5,15 @@ spec=importlib.util.spec_from_file_location('readiness',Path(__file__).parent/'r
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 
 class ReadinessTests(unittest.TestCase):
+    def test_proven_rotation_changes_geometry_status_without_certifying_navigation(self):
+        report=module.assess([self.box(Yaw='30')],[],set(),rotation_verified=True)
+        self.assertEqual(report['summary']['rotated_unverified'],0)
+        self.assertEqual(report['summary']['rotated_verified'],1)
+        self.assertTrue(report['summary']['rotation_pivot_verified'])
+        self.assertFalse(report['summary']['navigation_ready'])
+        self.assertEqual(report['summary']['routes_verified'],0)
+        self.assertEqual(len(report['verified_rotated_boxes'][0]['polygon']),4)
+
     def box(self,**values):
         return dict(dict(Id='b',AreaBoxMinPos='x=0,y=0',AreaBoxMaxPos='x=10,y=20',Yaw='0'),**values)
 

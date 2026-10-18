@@ -1,1 +1,42 @@
 .npcPortraits{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}.npcPortraits figure{margin:0;max-width:200px}.npcPortraits a{display:flex;align-items:center;justify-content:center;width:180px;height:140px;background:#101925;border:1px solid #40516b;border-radius:9px;overflow:hidden}.npcPortraits img{width:100%;height:100%;object-fit:contain}.npcPortraits figcaption{font-size:11px;color:#aebfd2;margin-top:5px}.npcPortraits.compact{margin:0 0 12px;gap:6px}.npcPortraits.compact a{width:88px;height:76px}.npcPortraits.compact figcaption{display:none}
+#selection{scrollbar-width:thin;scrollbar-color:#50627b #131e2b}
+#selection #card>details{border:1px solid #34435a;border-radius:7px;margin-top:8px;background:#182433;overflow:hidden}
+#selection #card>details>summary{padding:11px 12px;font-size:12px;font-weight:600;color:#d9e4f0;min-height:40px}
+#selection #card>details>summary:hover{background:#243246;color:#62e7bc}
+#selection #card>details[open]>summary{border-bottom:1px solid #34435a;margin-bottom:10px}
+#selection #card>details>:not(summary){margin-left:12px;margin-right:12px}
+#selection #card>details>:last-child{margin-bottom:12px}
+#selection #card>details h3{font-size:13px;margin-top:10px}
+#selection .npc-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+#selection .npc-actions a{font-size:12px}
+#selection .monsterStats{margin:10px 0}
+#selection .item>a{margin:0;width:100%}
+@media(max-width:800px){#selection .items{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#selection .npc-reward-amounts{display:grid;gap:7px;margin:0 0 12px}
+#selection .npc-reward-amounts small{display:block;font-size:10px;color:#acbacb;margin-bottom:4px}
+#selection .npc-reward-amounts .badge{color:#e9d7a1;background:#243246;font-size:12px}
+#selection .npc-loot-block{margin-top:14px}
+#selection .npc-loot-block h3{font-size:12px;color:#acbacb;margin:0 0 8px}
+#selection .reward-icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:7px}
+#selection a.reward-icon{display:block;position:relative;aspect-ratio:1;margin:0;border:1px solid #45516a;background:#202839;border-radius:3px;overflow:hidden}
+#selection a.reward-icon:hover,#selection a.reward-icon:focus-visible{border-color:#62e7bc;box-shadow:0 0 0 1px #62e7bc}
+#selection .reward-icon .item-icon{display:block;width:100%;height:100%;background-size:100% 100%;background-position:center}
+#selection .reward-icon img{display:block;width:100%;height:100%;object-fit:contain}
+#selection .reward-missing{display:grid;place-items:center;height:100%;font-size:24px;color:#acbacb}
+#selection .npc-loot-block>button{margin-top:8px;width:100%;font-size:12px}
+.reward-tooltip{position:fixed;z-index:10000;width:320px;max-width:calc(100vw - 16px);overflow:auto;padding:12px;background:#101b2b;border:1px solid #657994;border-radius:7px;box-shadow:0 8px 28px #0009;color:#e7eef8;font:12px/1.5 system-ui}
+.reward-tooltip strong{display:block;color:#62e7bc;font-size:14px}
+.reward-tooltip p{white-space:pre-line;margin:6px 0}
+.reward-tooltip pre{white-space:pre-wrap;overflow-wrap:anywhere;font:10px/1.4 monospace;color:#acbacb;margin:8px 0 0}
+.reward-tooltip details{margin-top:8px;border-top:1px solid #34435a;padding-top:8px}
+.reward-tooltip summary{cursor:pointer;color:#acbacb;font-size:11px;padding:3px 0}
+.reward-tooltip summary:hover{color:#62e7bc}
+.reward-tooltip summary:focus-visible{outline:2px solid #62e7bc;outline-offset:2px}
+.npc-reward-grid{display:grid;grid-template-columns:repeat(auto-fill,72px);gap:8px;margin:14px 0}
+.npc-reward-icon{display:grid;place-items:center;width:72px;height:72px;background:#202839 center/100% 100% no-repeat;border:1px solid #45516a;border-radius:3px;overflow:hidden;text-decoration:none}
+.npc-reward-icon img{width:100%;height:100%;object-fit:contain}
+.npc-reward-icon:hover,.npc-reward-icon:focus-visible{border-color:#62e7bc;box-shadow:0 0 0 1px #62e7bc}
+#npc>.npc-reward-amounts{display:grid;gap:8px;margin:0 0 16px}
+#npc>.npc-reward-amounts small{display:block;font-size:11px;margin-bottom:4px}
+#npc>.npc-reward-amounts .badge{color:#e9d7a1}
+@media(max-width:650px){.npc-reward-grid{grid-template-columns:repeat(auto-fill,56px);gap:6px}.npc-reward-icon{width:56px;height:56px}}

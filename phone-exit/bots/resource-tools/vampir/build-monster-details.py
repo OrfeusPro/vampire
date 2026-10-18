@@ -454,14 +454,16 @@ def main(root=ROOT):
                       for sid in battle['SkillIdList'].split(',') if sid}
     display_names = {sid:skill_display_names(skill_names.get(sid,[]),skill_names_ko.get(sid,[]))
                      for sid in sorted(used_skill_ids)}
-    reverse_skills=skill_npc_index({nid:definitions[nid] for nid in scene['npcs']},battles)
+    reverse_skills=skill_npc_index(definitions,battles)
+    nocturne_reverse_skills=skill_npc_index({nid:definitions[nid] for nid in scene['npcs']},battles)
     skill_folder=out/'skills';skill_folder.mkdir(exist_ok=True)
     skill_entries={}
     for sid in sorted(set(skills)|set(reverse_skills)|set(book_index)|set(passive_item_index)):
         payload=skill_record(sid)
         path=skill_folder/(sid+'.json')
         path.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')),'utf-8')
-        skill_entries[sid]=dict(id=sid,npc_ids=reverse_skills.get(sid,[]),
+        skill_entries[sid]=dict(id=sid,npc_ids=nocturne_reverse_skills.get(sid,[]),
+            all_npc_ids=reverse_skills.get(sid,[]),
             display_names=payload['display_names'],images=payload['images'],book_count=len(payload['books']),passive_item_count=len(payload['passive_items']),
             detail=dict(file='skills/'+path.name,sha256=sha(path)))
     skill_index=dict(skills=skill_entries,
@@ -477,7 +479,7 @@ def main(root=ROOT):
                      passive_groups=item_details['passive_groups'],passive_diagnostics=item_details['passive_diagnostics'],
                      item_skill_binding=item_details['item_skill_binding_source']),
         limitations=['All client Battle variants retained; runtime skill use and current NPC visibility unverified.',
-                     'NPC reverse links cover Nocturne only; standalone definitions cover all Skill rows.',
+                     'all_npc_ids covers all client NPC definitions; npc_ids is the Nocturne map subset.',
                      'Book target IDs verified in client UI; acquisition and server restrictions unverified.'])
     skill_index_path=out/'skill-npcs.json'
     skill_index_path.write_text(json.dumps(skill_index,ensure_ascii=False,separators=(',',':')),'utf-8')

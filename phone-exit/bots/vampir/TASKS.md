@@ -23,6 +23,228 @@
 
 ## Выполненные и текущие работы
 
+18 октября: список книг навыков получил горизонтальные карточки как каталог
+навыков: иконка/фон редкости слева, имя, редкость/ID, класс и компактные
+источники-монстры. Поиск, фильтры, сортировка по редкости, ссылки и догрузка
+остались прежними. Данные не менялись.
+
+18 октября: для навыков без собственной подложки используется самый частый
+точный клиентский `ImgBg` у навыков с тем же raw `Skill.Rarity`; собственный
+ImgBg сохраняет приоритет. Это оформительское сходство по рангу, а не
+подтверждённая игровая связь; fallback есть у рангов с точным ImgBg-образцом.
+JS cache key обновлён; deployed и HTTP проверены.
+
+18 октября: добавлен приглушённый цветовой фон по рангу для иконок навыков
+без `ImgBg`; оригинальные подложки из клиента показываются поверх него.
+CSS cache key обновлён; каталог собран и deployed, HTTP проверен.
+
+18 октября: подложка навыка по единственному точному `ImgBg` растянута на
+всю площадь иконки; ранг задаёт только цвет нижней линии. Из 3447 навыков
+288 имеют ImgBg. CSS cache key обновлён; происхождение ресурса с SHA остаётся
+в индексе клиента. HTTP/deployed сверены.
+
+18 октября: сортировка навыков по рангу в обе стороны/алфавиту,
+по умолчанию выше→ниже, внутри ранга имя.5Node/syntax/HTTP проверены.
+
+18 октября: Registered-заглушки скрыты из обычного списка навыков,
+доступны через служебный фильтр.145точных совпадений по именам;
+4Node/syntax/HTTP/deployed проверены. CATALOG-STRUCTURE.md.
+
+18 октября: навыки NPC скрыты из списка без явного фильтра relation=npcs;
+точные связи всех миров, прямые URL прежние.3Node/syntax/HTTP проверены.
+
+18 октября: страница навыков получила компактные горизонтальные карточки,
+явный класс и тип по проверенным книжным описаниям.3446meta entries,
+97active/289passive/3060unknown; Type raw не подменён enum по числам.
+ВсеSHA/rows,2Node class tests/syntax/HTTP прошли; visual QA остаётся.
+Новый builder в build-catalog-pages.py; CATALOG-STRUCTURE.md.
+
+18 октября: результат крафта расположен под названием внутри заголовка;
+Min=Max отображается одним числом. Syntax/HTTP/deployed проверены.
+
+18 октября: стоимость крафта в валюте показана справа в заголовке
+рецепта, отдельно от сетки материалов. Syntax/HTTP/deployed проверены.
+
+18 октября: материалы крафта показаны горизонтальной адаптивной сеткой
+по новой разметке пользователя. Syntax/HTTP/deployed проверены.
+
+18 октября: материалы крафта видны сразу под наградами монстров, все
+рецепты без догрузки. Количества/заточка/валюта открыты, условия/JSON
+закрыты; данные не менялись. Syntax/HTTP/deployed проверены. NPC-LOOT.md.
+
+18 октября: все NPC в блоках «В наградах монстров» теперь видны сразу,
+без дополнительного раскрытия; JSON прежний. Syntax/HTTP/deployed проверены.
+
+18 октября: оформление карточки предмета — компактные характеристики,
+отдельный блок монстров под ними, сетка ссылок/уровней и одна кнопка карты.
+5Node/syntax/HTTP/deployed прошли; визуальная проверка остаётся. NPC-LOOT.md.
+
+18 октября: источники всех предметов вынесены из общего закрытого details:
+видно8NPC, продолжение/JSON сворачиваются.13073000 уже имел13NPC; это
+исправление заметности UI, не отсутствие данных. Syntax/5Node/HTTP прошли.
+
+18 октября: исправлен пустой переход книги22023005 на Nocturne — личные
+источники теперь открывают все миры. Список книг показывает NPC/уровни,
+карточка книги — полный список.3NPC/3размещения20301 и SHA проверены,
+5Node tests/syntax/HTTP прошли; visual QA остаётся. NPC-LOOT.md.
+
+18 октября: награды страницы NPC уплотнены до сетки иконок, подробности
+hover/focus, JSON по клику. Опыт/валюты перенесены под HP/атаку/защиту;
+разные источники не складываются. Syntax/HTTP/deployed и тесты каталога
+прошли; визуальная проверка остаётся. NPC-LOOT.md.
+
+18 октября: уровень NPC перенесён в начало заголовка («Ур. N Название»),
+повтор в метаданных убран. Syntax/HTTP/deployed JS проверены.
+
+18 октября: JSON в подсказке награды свёрнут под details/summary,
+открывается кликом; добавлено удержание подсказки при фокусе её контрола.
+Syntax/HTTP/deployed проверены; новая визуальная проверка остаётся.
+
+18 октября: уточнено оформление наград: открытая сетка иконок, информация
+hover/focus; валюты/опыт под основными показателями с отдельным источником
+NPC/область. Сортировка редкости и цепочки сохранены. 30 Node tests,
+syntax/HTTP/SHA прошли; визуальная проверка остаётся. MAP-ATLAS.md.
+
+18 октября: по новому скриншоту уплотнена карточка NPC: закрытые секции
+дропа/области со счётчиками, единый раздел источников/ограничений, отдельные
+условия размещения. 30 Node tests, syntax, HTTP и SHA четырёх UI-файлов
+прошли. Визуальная проверка остаётся; исследование формулы ACC/EVA ещё
+не дало подтверждённой новой формулы и продолжится отдельно. MAP-ATLAS.md.
+
+18 октября: special display routing14статов восстановлен по compact
+switch и native2307cases;16tests/HTTP/SHA прошли. Карточки показывают
+315/453/454–465масштабы без%. Типpercent приоритетен; game unit names
+не угадываются. Stat→Stat/formulas остаются неизвестны. Сборка
+build-stat-format-routes.py → build-catalog-pages.py; ATTRIBUTES.md.
+
+18 октября: display units процентных статов подтверждены nativebranch:
+100→1%,150→1,50%, только IsPercentage=1.1665native cases сfmodf shim,
+15tests/HTTP/SHA прошли;76карточек дополнены. Consumer StatDetailDataList
+и формулы Stat→Stat по-прежнему не найдены; непроцентные спецветки ещё
+не разобраны. Сборка build-stat-format-evidence.py → build-catalog-pages.py,
+источники/границы — ATTRIBUTES.md.
+
+18 октября: исследован формат детализации статов PktStat/Category/Extra/
+Detail через vtables;17anchors/16fragments,2792native reader/writer calls
+с primitive IO stubs,14tests/HTTP/SHA прошли. Формат/источник показан в fold
+карточки, имена категорий/живые данные/Stat→Stat формулы неизвестны.
+След — consumer StatDetailDataList, а не аналогия по имени категории.
+Сборка build-stat-packet-evidence.py → build-catalog-pages.py; ATTRIBUTES.md.
+
+18 октября: caller score найден — candidate/slot peer item comparison;
+EquipmentType+0x61 из parser, CMP/SETG signed, UI selector4/1.320+320native
+проверок с явными stub dependencies,13tests/HTTP/SHA прошли. Контекст в
+карточке уточнён. Общие stat formulas/character power и имя UIwidget ещё
+не доказаны; следующий след — StatType consumers. ATTRIBUTES.md.
+
+18 октября: native weight calculation найден (parser record+0x8a → три
+float32 multiply/floor/add блока).861cases/2583исполнения/12tests иHTTP/SHA
+прошли; карточка содержит ограниченный калькулятор. Полная мощь и owner
+context не доказаны; следующий след — caller145db6fb0 и StatType consumers.
+Подробности/ограничения/сборка — ATTRIBUTES.md; visual QA остаётся.
+
+18 октября: граф характеристик расширен до13описательных связей; добавлены
+3противодействия (критический шанс/урон/PvP Drain). Привязки StatType→EStat
+181mapped/4sentinel показаны и проверены по bytes.9tests/syntax/HTTP/SHA
+прошли. Native discovery tool сохранён; расчётные функции/коэффициенты
+не восстановлены, полное дерево и visual QA остаются. ATTRIBUTES.md.
+
+18 октября: карточка стата ?stat=ID и дерево одного шага готовы;10описательных
+связей с источниками (8усилений/2противопоставления), переходы соседей и возврат.
+8tests/syntax/HTTP/SHA прошли. Частично: численные native формулы, коэффициенты,
+полный граф185статов и visual QA ещё не выполнены. ATTRIBUTES.md.
+
+18 октября: ID характеристики теперь после имени; нижняя строка убрана. Syntax/HTTP/deployed проверены, игровые данные не менялись.
+
+18 октября: текстовые флаги характеристик заменены на `%`/перечёркнутый
+глаз возле имени, с пояснениями title/aria-label. Данные прежние,
+syntax/HTTP/deployed сверены; визуальная проверка остаётся. ATTRIBUTES.md.
+
+18 октября: компактные строки характеристик по замечанию пользователя;
+коллекции/источник — иконки возле имени, описание hover/focus. Данные
+не изменены. Syntax/HTTP/deployed сверены, visual QA остаётся. ATTRIBUTES.md.
+
+18 октября: «Характеристики» — справочник185строк OperationType, явные
+4вкладки/12групп клиента и49без группы. Поиск/фильтры/описания/источники,
+прямые якоря и коллекции по bonus.5tests/syntax/HTTP/deployed прошли;
+визуальная проверка остаётся, account значения не заявлены. ATTRIBUTES.md.
+
+18 октября: по уточнению пользователя default коллекций — повышение качества
+Rarity0→5, затем специальные/unknown, внутри DisplayOrder. Source/rank/name
+оставлены.8Node/syntax/HTTP/deployed прошли. Игровой comparator не заявлен;
+источники и детали — COLLECTIONS.md.
+
+18 октября: коллекции — DisplayOrder стал порядком по умолчанию внутри
+категории, совпадения сохраняют CSV sequence; редкость/имя — отдельные
+sort режимы в URL.7Node/syntax/HTTP/deployed проверки. Полный игровой
+компаратор/tie-break не подтверждён; COLLECTIONS.md.
+
+18 октября: оформление коллекций по примеру пользователя — широкие строки,
+имя/бонусы слева, иконки/заточка справа, подсказки и мобильный перенос.
+Данные/связи прежние; прогресс аккаунта не имитируется. Syntax/HTTP/deployed
+сверены; визуальная проверка остаётся. Подробности COLLECTIONS.md.
+
+18 октября: раздел «Коллекции» — готов в объёме справочника клиента:
+4079групп/6766требований, все предметы/бонусы связаны; отдельный URL,
+поиск/фильтры/сортировка/догрузка, иконки/заточка/количество, hover/focus
+описания бонусов и исходные условия.10целевых tests/HTTP/deployed проверки
+пройдены. Визуальная проверка не завершена после прежнего отказа browser
+URL policy; прогресс/расписание/runtime не заявлены. Источники и ограничения —
+COLLECTIONS.md. Навигационное исследование отложено пользователем.
+
+18 октября: native query-filter initializer/setter chain (26anchors/15fragments/
+10leaves),33native cases/12replays. Costs clamp travel>=1/entering>=0,
+excluded skips overrides; UI показывает сохранённое→применяемое значение.
+50Python+8Node/overlay/deployed checks прошли. Owner+0x400 копируется для
+class-specific query filter; его фактические base arrays/active preset всё ещё
+не подтверждены. Источники/порядок/shims — MAP-ATLAS.md.
+
+18 октября: найдены/извлечены4BP_NavQuery (7variants/15area records), native
+schema/constructor costs и area IDs закреплены48anchors/23fragments. Все14PAK
+parts повторно извлечены audit;25Python+7Node и deployed checks прошли.
+Карточка показывает исходные настройки фильтров. Active runtime filter/arrays,
+owner+0x400 selection, active coverage и путь остаются неизвестны. Источники/
+порядок — MAP-ATLAS.md, tools build/decode/audit-navigation-filter-*.
+
+18 октября: native area-priority builder найден через leaf setter14523d610 ←
+1452b4943.22anchors/14fragments,72native sum/sort/rank cases (50heap branches),
+12native replays прошли. Ранги уникальные0..63 даже при равных суммах; actual
+filter arrays ещё не извлечены, order11→63→10 остаётся сценарием.46Python+7Node,
+all62overlay/deployed audit прошли. Источники/ограничения — MAP-ATLAS.md.
+
+18 октября: BV/priority study1096queries и полный native endpoint attachment/
+link writer434пары на копиях тайлов.7сценариев приоритетов;11→63→10 точно
+воспроизводит обе baked points61перехода,9432без связей во всех7. Настройки
+сценария подобраны по данным; runtime binding не доказан. All434audit/28native
+replays,50Python+7Node/deployed checks прошли. Карточка содержит результат/
+proof link. Остаются активные параметры/area priorities, side/load-order
+dispatch, cluster links, Android и реальные маршруты. MAP-ATLAS.md.
+
+18 октября: native nearest fallback безBV —6synthetic/136real queries всех62
+переходов; A61candidate/60exact baked, B62candidate/60exact baked,3перехода
+расходятся. All136audit/16native replay,38Python+6Node и deployed map прошли.
+Карточка показывает предварительную проверку поверхности. Это не полный
+attachment: BV/preferred-area-priority/runtime side dispatch и путь остаются.
+Визуальная проверка всё ещё не завершена (URL policy). MAP-ATLAS.md.
+
+18 октября: recast-special-flags.py/build-recast-special-direction-evidence.py
+сверены с27native anchors/32fragments/11008native cases. Bit0x80 всех62точек
+обходит3direction gates в обоих направлениях; в карточке пояснение/proof link.
+35Python+5Node, повторный all62audit/manifest/deployed checks прошли.
+Это ещё не полный query/attachment/runtime route; +0x41c runtime configuration,
+остальные фильтры и визуальная проверка остаются. Подробности MAP-ATLAS.md.
+
+18 октября: предварительный слой62особых переходов и native layout80байт
+проверены95целевыми tests; audit-recast-special-links.py независимо сверил все
+записи/raw SHA/исходные и baked coordinates/39пространственных совпадений,
+scene/overlay SHA и4deployedfiles. ВсеID=0,61пара endpoints отличается от baked.
+Порядок/ограничения — MAP-ATLAS.md. Визуальная проверка не завершена из-за
+отказа URL policy браузера; runtime attachment/направление/проходимость остаются.
+
+18 октября: добавлен запуск карты двойным нажатием `Start-Vampir-Map.cmd`
+в корне проекта → `start-map-server.ps1`. Инструкция: [MAP-SERVER.md](MAP-SERVER.md).
+Проверены запуск на 127.0.0.1:17946, HTTP 200 и повторный вызов без второго сервера.
+
 | ID | Работа | Статус | Результат / что осталось | Где смотреть |
 |---|---|---|---|---|
 | V01 | Индекс ресурсов и происхождение | Готово | Индексы архивов, CSV, изображений; пути, SHA и процедура повторного извлечения | [RESOURCE-INDEX.md](../resource-tools/vampir/RESOURCE-INDEX.md) |
@@ -886,5 +1108,165 @@ ItemDetails сохраняют параметры/источники.68 тест
 Battle/навыки/личные цепочки/отдельные области/61307размещений сохранены.
 Меню/ссылки с карты/источников предметов ведут на новую страницу.
 32Python+35Node,5285detail SHA и несколько браузерных случаев пройдены.
-Новые runtime joins/проценты не заявлены; портреты NPC, свежий Android,
+Новые runtime joins/проценты не заявлены; портреты NPC продолжены ниже, свежий Android,
 подтверждение проходимости/поворотов и остальные системы остаются далее.
+
+### 18 октября — изображения NPC из явных полей клиента
+
+Npc.Img и NpcProfile.NpcInfoId→Npc.Id/Img связаны с точными texture basename.
+Каталог/карточка/карта используют общий MonsterCard.renderPortraits, фильтр
+«Изображения» отделяет найденные файлы.86NPC с изображениями,40missing,
+5159not_declared;55PNG. Семейство Blueprint не подменяет отсутствующий портрет.
+53целевых теста,5285detail SHA/55PNG SHA/7deployed UI файлов проверены.
+Браузер: профиль91001 и Larva100001 карта→полная карточка, PNG708×492.
+Подробности/источники/SHA — NPC-LOOT.md и CATALOG-STRUCTURE.md.
+Остаются поиск40указанных ресурсов, runtime-сверка внешности, свежий Android,
+повороты/проходимость; обычному100181052 картинка не приписана.
+
+### 18 октября — навыки → NPC всех миров
+
+Индекс расширен на все5285NPC:1344навыка/9610точных связей,
+отдельное all_npc_ids; прежнее npc_ids сохранено для395навыков Nocturne.
+Каталог/фильтр считают все миры, полная карточка показывает NPC с уровнем/
+мирами/ссылкой; догрузка60.20Python+34Node и сверка всех5285NPC/
+3447skill SHA/полноты обратных связей пройдены. Браузер: Sweep1002061
+4NPC вне Nocturne, переход99002000;50401 —201всего,170на карте,
+догрузка60→180, фильтр карты170NPC/177размещений. Новых native joins нет,
+runtime-применение навыков не доказано. См.CATALOG-STRUCTURE.md/NPC-LOOT.md.
+
+### 18 октября — поиск предметов по эффектам/пассивам/ограничениям
+
+items.html: EffectType, наличие PassiveSkillGroupId и LimitGroupId/ItemUseLimitId;
+фильтры пересекаются с поиском/редкостью/типом/классом книги, сохраняются в URL
+и возврате.56Effect1/39passive/42restriction declarations; код20 неизвестен,
+не None. Словарь эффекта экспортируется в loot/index из проверенного builder,
+без загрузки3.1MB item-details для общего списка.20Python+6Node/26tests,
+SHAисточников/4deployedassets и браузерные56/39/42/возврат/Viper102 проверены.
+Новых доказанных EffectParams→Effect или runtime-предикатов нет. Подробности
+и отклонённая native ветка14611f5f0 — NPC-LOOT.md.
+
+### 18 октября — подтверждённые материалы крафта
+
+Новая native-связь ItemCraft.Id=ItemCraftMaterial.GroupId, несмотря на пустой
+CraftInfoId; CostType2/CostParam→Item.Id доказан виджетом материалов.
+563рецепта/1733строки (1369Item+364Asset);38несвязанных строк сохранены отдельно.
+В861пути результатов441предмета и403книгах сохранены материалы/provenance,
+картинки/ссылки/количества/CostEnchantLevel; правила подгрупп и сервер не заявлены.
+build-craft-material-binding.py→build-npc-loot.py→build-world-map.py выполнены;
+64native+17data anchors,27Python+10Node/37tests, SHA/861пути/403books и браузер
+21011003 (10Page/100Trinity/250000Gold),11015007 (материал с13заточкой) проверены.
+Подробности/источники/границы — NPC-LOOT.md, CATALOG-STRUCTURE.md.
+
+### 18 октября — материал → рецепты → предметные результаты
+
+156материалов/1369связей, SHA-файлы craft-uses. Одна запись на рецепт сохраняет
+все строки затрат и каждый путь/исход результата отдельно; валюты и недоказанные
+target исключены. Карточки результатов с иконками/редкостью и ссылкой recipe=ID,
+которая раскрывает рецепт/переводит фокус и прокрутку. Порции40/автодогрузка.
+29Python+10Node/39tests,156SHA/все1369связей/5deployedfiles сверены. Браузер:
+Skill Book Page11рецептов, Essence6010001 раскрывается при переходе;Trinity265,
+40→80. Новых native joins нет; runtime/проценты остаются прежними неизвестными.
+Документация: NPC-LOOT.md/CATALOG-STRUCTURE.md.
+
+### 18 октября — повёрнутые AreaBox: точка вращения и направление
+
+Найден потребитель145dd3fa0→14568ed80: MinPos/MaxPos/Yaw→проверка XY-точки.
+Центр(Min+Max)/2 и положительный XY-поворот подтверждены11728точками1466случаев
+в ограниченной Unicorn2.1.4 эмуляции без игры/OScalls. Все772поворота таблицы
+и322Nocturne получают геометрию; карта603AreaBox/175Area labels/24074points.
+Две обратных записи не исправлены предположением, navigation_ready=false.
+16Python+30Node/46tests,SHA603polygons/772audit и браузерSquallHill945% прошли.
+build-area-box-code.py→build-area-transform-evidence.py→build-world-map.py;
+MAP-ATLAS.md содержит источники/anchors/отчёт/кеш/--fresh. Остались реальные
+полигональные nav-данные/маршруты и Android, а не поворот этих AreaBox.
+
+### 18 октября — извлечение generated-пакетов навигации Nocturne
+
+Дополнительный поиск147428UAsset headers/106PAK/789182486байт дал214кандидатов.
+34пакета с summary pathNocturne/_Generated_ подтверждены exports/body coverage/
+ownership RecastNavMeshDataChunk→NavigationDataChunkActor→Level→WorldNocturne.
+Извлечены34Recast payloads/17348530байт, все версии сохранены.37Python tests,
+34полных пары/214hit SHA/цепочка geometry→scene и браузерный счётчик проверены.
+Инструменты search-navigation-chunk-headers.py→build-navigation-generated-chunks.py
+→build-world-map.py. MAP-ATLAS.md: источник,лимиты,SHA. Далее custom serializer/
+полигоны/связи/выбор версии и маршруты; navigation_ready=false.
+
+### 18 октября — собственная сериализация Recast chunks
+
+build-recast-serialization-code.py закрепляет50опорных инструкций EXE,
+класс/constructor/vtable/Serialize и два tile/cache codecs. Native version20..26,
+uint64 length включает себя; int32 перед codec не является длиной байтов для skip.
+Во всех34экспортах по одному кандидату envelope (offset14/version26),
+tile_count суммарно19098. Не объявлять границу properties/полигоны разобранными.
+Найдена отдельная custom-version lookup по16байтному ключу с порогом97;
+значение архива ещё устанавливать. Отчёт/SHA/проверки в MAP-ATLAS.md.
+Четыре новых теста: начало отсчёта длины, версии/count, truncation и bounded search.
+Всего25целевых Python tests; независимо сверены15fragments/50anchors/34export SHA.
+Остались property boundary/custom version→восстановление buffers→полигональные
+связи/активная версия/маршруты/Android. navigation_ready=false.
+
+### 18 октября — восстановление буферов тайлов Recast
+
+extract-recast-tile-buffers.py:34полных экспорта/19098тайлов/27249848байт,
+изолированная Unicorn2.1.4, явные гипотезы property offset14/custom version97.
+Все записанные/вычисленные размеры равны, каждый поток завершён точно на EOF.
+Нативный lookup версии выполнен63раза; значение97 подставлено, не извлечено.
+validate-recast-tile-buffers.py независимо сверил source/proof/EXE/code-pages,
+все34buffer SHA/19098tile SHA, непрерывность исходных/выходных диапазонов.
+21navigation+7recast tests=28. Отчёт/SHA/команды — MAP-ATLAS.md.
+Следом: native-структура вершин/полигонов/соседей, property boundary/custom
+version и выбор активных пакетов, привязка координат и проходимость маршрутов.
+routes_verified=0/navigation_ready=false; готового навигационного графа нет.
+
+### 18 октября — геометрия и внутренние соседи тайлов
+
+build-recast-geometry-code.py закрепил47anchors serializer/присоединения
+тайла/именованного dtNavMeshQuery::raycast; непрочитанный tail явно opaque.
+decode-recast-geometry.py:214851вершина/104726полигонов/228354направленных
+internal links; все индексы в границах, все общие рёбра взаимны.
+34пакета/19098тайлов сохраняют гипотезы предыдущего этапа и все версии.
+21navigation+13recast tests=34, весь output JSON независимо сверен с buffers.
+MAP-ATLAS.md: layout/источники/SHA/порядок/ограничения. Далее108758high-bit
+рёбер и специальные переходы, coordinate conversion, active versions и путь;
+routes_verified=0/navigation_ready=false.
+
+### 18 октября — native координаты и отображение сетки на карте
+
+build-recast-coordinate-evidence.py:29anchors/69cases, native world→nav
+[-X,Z,-Y] и inverse[-X,-Z,Y] совпали побайтно, signed zero сохранён.
+build-recast-map-overlay.py (включён в build-world-map.py) создаёт SHA-bound
+слой18430ячеек/101090обычных полигонов;62special polygons пропущены.
+JS лениво загружает/валидирует geometry, clip по viewport, LOD ячейки→полигоны.
+Слой отключён по умолчанию и явно исследовательский, показывает все высоты.
+56Python+33Node=89tests, все207420vertices/101090faces/scene binding/deployed
+assets проверены; браузер233%/14413%/1375% и снимок19-navigation-overlay.png.
+Остаются active coverage/parameters, special transitions, runtime link limits/
+quantization и проходимость/Android. MAP-ATLAS.md содержит источники/порядок/SHA.
+
+### 18 октября — правила внешних рёбер и дубли сетки
+
+build-recast-portal-code.py:57anchors/26fragments, source side→opposite side,
+plane/overlap epsilon, height test с detail triangles, interval bytes и uint32
+length общей сетки. decode-recast-nav-params.py: один кандидат Nocturne offset443,
+height parameter35; property boundary/inheritance dispatch ещё не доказаны.
+build-recast-grid-inventory.py:19098→18430grid/layer,668идентичных повторов,
+конфликтов0, внутри package дублей0. Все19098grid/hash/source identities
+независимо сверены с native buffers.21navigation+20recast tests=41.
+MAP-ATLAS.md: sources/SHA/команды/ограничения. Следующий этап — полное native
+сопоставление внешних рёбер с detail height и подтверждёнными параметрами;
+active coverage/версии/координаты/special links/проходимость остаются.
+
+### 18 октября — native matcher на всей объединённой сетке кандидатов
+
+recast-portal-emulator.py: строго ограниченные клиентские portal/detail/triangle/
+array-fast-path инструкции в Unicorn2.1.4; только cookie call пропущен, никаких
+OS/import/game process.10synthetic cases и real reciprocal seam прошли.
+build-recast-external-graph.py --height 35:18430тайлов/104961boundary edges,
+106595native calls/125718направленных переходов/2953отклонённых пары.
+188detail/332triangle samples. audit-recast-external-graph.py проверил все
+125718границ/индексов/интервалов, reverse отсутствует у0пар;32native replay совпали.
+21navigation+24recast tests=45. MAP-ATLAS.md: SHA/порядок/ограничения.
+Порог35 и архивные/property assumptions явные; graph — candidate union.
+Остаются параметры активной сетки/coverage, special links, coordinate conversion,
+runtime link limits/quantization/порядок загрузки и реальные маршруты/Android.
+routes_verified=0/navigation_ready=false.

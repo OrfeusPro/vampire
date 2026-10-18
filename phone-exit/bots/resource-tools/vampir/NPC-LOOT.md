@@ -506,6 +506,112 @@ AttackPower25, WeaponAttackPowerMin10, HitValue12 — не прибавлено 
 12034006 также отображаются базовые значения и прибавки выбранного уровня.
 Warn/error нет. Снимок maps/loot/enchant-bonus-checked.png.
 
+### Компактные награды страницы NPC, 18 октября 2026
+
+#### Источники книг: исправление перехода на карту
+
+По следующему скриншоту количество результата помещено в craft-recipe-intro
+под названием, рядом с правой валютной стоимостью. Это устраняет промежуток
+между названием и количеством из-за высоты соседнего блока. Равные MinCount/
+MaxCount отображаются одним числом; данные не изменены. Syntax/HTTP/deployed
+item-details.js/css проверены; визуальная проверка нового состояния остаётся.
+
+По следующей разметке стоимость валюты (CostType1, без item_target_verified)
+перенесена из сетки в правую часть заголовка каждого исхода рецепта.
+Предметные затраты остаются в craft-material-grid. Суммы/строки не складываются;
+на узком экране заголовок переносится. Проверены syntax/HTTP/deployed2файлов.
+
+Новая разметка материалов: craft-material-grid оборачивает все строки
+конкретного исхода рецепта. CSS repeat(auto-fit,minmax(190px,1fr)), gap8px,
+карточки с иконкой/именем/количеством рядом; <=500px одна колонка.
+Строки валюты включены отдельно в ту же сетку, исходы не смешиваются.
+Таблицы/связи/значения прежние. Проверены JS syntax/HTTP/deployed bytes
+item-details.js/css; новой визуальной проверки нет.
+
+Уточнение крафта: прежний item_crafts теперь выводится открытым блоком
+«Из чего крафтится» сразу после наград NPC (items-catalog.js переносит
+craft-origins после sourceBlock). Все origins показаны без догрузки;
+материалы/иконки/количества/CostEnchantLevel видны, условия и JSON закрыты.
+Наличие предмета в fail-ветке не называется гарантированным изготовлением:
+Success/BigSuccess/Fail остаются отдельными результатами, количества не
+складываются. Обратный craft_uses («Где используется») остаётся отдельно.
+Для13073000 сверены manifest SHA и crafts/13073000.json:
+3050006 Success/BigSuccess, material_link_verified=true; пять предметных
+строк100000013×15,100000004×40,100000015×7,100000049×1,100000000×300,
+валюта Gold450000. Связи ItemCraft→Reward/ItemCraftMaterial прежние,
+таблицы200/202 и native proofs не менялись. Изменены2JS+item-details.css;
+syntax/HTTP/deployed bytes проверены, новая визуальная проверка остаётся.
+
+Последнее уточнение пользователя: все NPC в «В наградах монстров» видны
+сразу, в карточках предметов и списке книг. Лимиты3/8 и details «Ещё монстры»
+удалены; сетка/ссылки/состав источников прежние. JSON остаётся закрытым.
+Проверены syntax и HTTP/точные bytes развёрнутого items-catalog.js.
+
+Оформление после скриншота13073000: sources-block перенесён сразу после
+product-panels. Имена NPC представлены сеткой ссылок с отдельным уровнем,
+8видимых/остальные под раскрытием. Карта один раз в заголовке блока;
+JSON и объяснение непроверенной серверной выдачи внутри «Данные и условия».
+Источник и цепочки прежние. Список книг также использует компактные ссылки.
+item-details.css: stat-line min-height30/padding6, stat-name min-height0
+вместо наследования button42px; значение13px, панели12px и заточка30px.
+Данные статов/tooltip описаний/бонус заточки не менялись. Cacheitem-layout.
+Обновлены items/books HTML, items-catalog.js, catalog.css и item-details.css;
+штатное копирование через build-catalog-pages.py и сборщик item-details.
+5Node tests/syntax/HTTP/deployed bytes проверены; новая visual QA остаётся.
+
+Последующее уточнение для13073000 Crimson Lord's Ring: источники были в
+общем закрытом details «Источники: личные награды NPC», что пользователь
+подтвердил. Теперь showSources вызывается открыто для всех предметов:
+8NPC видны сразу, остальные под «Ещё монстры», JSON по клику. У кольца
+13существующих цепочек/13NPC, включая781без размещений и12NPC миров
+20300/20301/20302; никакие новые награды не выведены из совпадения имён.
+Проверены syntax,5tests каталога, HTTP/deployed bytes обновлённого JS.
+
+Для22023005 прежняя кнопка items-catalog.js вела в atlas/index.html,
+который показывает Nocturne. В item-origins.json для книги ровно3цепочки:
+NpcReward60314300→Reward60314306→NPC400004 Arto;
+60315300→60315306→400006 Eligo;60316300→60316306→400008 Lussem.
+Происхождение NpcRewardCSV1415 records2912/2921/2930 сохранено в origins;
+RewardRate5000/5500/7500, Rate576 остаются исходными единицами.
+Все3NPC уровня60, по одному размещению в мире20301 (npc-locations.json).
+Это личные клиентские награды, не подтверждение серверного шанса.
+
+Теперь при наличии личных origins ссылка открывает atlas/world.html?item=ID,
+существующий applyLoot использует origins→npc-locations→WorldInfoId и выбирает
+доступный мир, включая20301. На страницах books.html и items.html карточки
+SkillBook показывают3NPC с именем/уровнем и ссылкой на monsters.html?npc=ID;
+остальные под раскрытием. В подробностях книги полный список перед свойствами.
+Для других предметов список остаётся свёрнутым. Областные записи не превращаются
+в личный дроп монстров. Источники загружаются один раз с проверкой manifest SHA.
+
+Проверены SHA origins/npc-locations из loot/index.json, все3размещения книги,
+5Node tests (включая регрессию URL/точныхID/дедупликации), syntax и HTTP/bytes
+обновлённых items/books HTML,2JS и catalog.css. Cache20261018-book-sources.
+Копирование штатно build-catalog-pages.py; данные игры не изменялись.
+Визуальная проверка браузером не выполнена.
+
+По скриншоту monsters.html?min=60&images=yes&npc=400006 карточки предметов
+заменены сеткой иконок72px (56px на узком экране). MonsterCard.renderRewardIcon
+использует прежние items.icon.images/rarity.background.images; первый кандидат
+иконки с предупреждением о неоднозначности/несверенном цвете в подсказке.
+Сортировка редкости/имени и догрузка60сохранены. Hover/focus показывает имя,
+ID, редкость, количество и источник; JSON закрыт под details. Нажатие открывает
+предмет; Escape закрывает подсказку. В отсутствие hover подробности доступны
+на странице предмета. Ресурсы и таблицы заново не сопоставлялись.
+
+Опыт/валюты перенесены под HP/атаку/защиту. Отдельные группы NPC/каждой
+области не складываются и не объявляются гарантированной выдачей.
+Исходник maps/atlas/monsters/400006.json:59предметов, личная награда
+ERewardType::Asset/GehennaPoint220; Exp/Gold/Diamond/EventDiamond и
+area_candidates отсутствуют. Несуществующие суммы/нули не добавляются.
+Уровень показан в заголовке «Ур. N Имя» из прежнего catalog.row.level.
+
+Изменены monsters-catalog.js/html, monster-card.js/css; копирование штатно
+через build-catalog-pages.py, выполнено адресное обновление4UI-файлов.
+Cache20261018-catalog-rewards. JS syntax, тесты test_vampir_monsters_catalog.cjs,
+HTTP и точное совпадение развёрнутых4файлов проверены. Новая визуальная
+проверка не выполнена; отказ browser URL policy не обходился.
+
 ### Боевые параметры и навыки NPC, 17 октября 2026
 
 В карточке монстра вместо одного JSON в «Боевые параметры и навыки» показаны
@@ -2222,3 +2328,223 @@ atlas/monsters.html?npc=ID. Области и личный дроп раздел
 MonsterCard общий с картой; skill reverse по NPC остаётся Nocturne-only.
 32Python+35Node/5285SHA проверены, браузерные примеры200052/100201012/
 400001 и60→120 выполнены. Подробные URL/порядок/границы — CATALOG-STRUCTURE.md.
+
+## 18 октября — портреты NPC в каталоге и на карте
+
+Подтверждённые декларации изображений: Npc.Img и NpcProfile.Img только
+при точном NpcProfile.NpcInfoId=Npc.Id. Последняя ссылка подтверждается
+reference_validation_diagnostic в клиентском EXE, UTF-16LE file offset161056466.
+EXE SHA256: c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
+Это свидетельство ссылки таблиц, не доказательство конкретного runtime-экрана.
+Источник: table-study/pakchunk1-Windows-1414.csv,28строк NpcProfile,
+SHA256 dbe20905c0561bb36a7099828314e78f2019b08a72be0a301b7a5b788c728bf7.
+Путь/версия архива, export entry1414, offset9170944,size2486 и схема находятся
+в monster-manifest.sources.npc_images.profile_table. Полные записи и CSV record
+сохраняются в portraits.sources, в том числе GroupId/Order/UseSkillId.
+
+Img сопоставляется с точным basename текстуры из archive-image-latest.json,
+SHA256 186e151e17b6f1e2075cb2c8d96a20fefbab48fd702161ea0fbe31b6799cdf41.
+Разные полные asset paths сохраняются; общий файл объединяет field_sources,
+не теряя обе исходные ссылки. Выбор патча унаследован от resolve_icon и записан
+в каждой картинке вместе с archive/entry/offset/uasset_entry/PNG SHA.
+NpcButtonImg не используется как портрет. Blueprint/семейство/похожее имя
+не являются запасной связью: family_match_used=false,
+runtime_appearance_verified=false. Для100181052 явной картинки по-прежнему нет.
+
+Итог по5285NPC:86found,40missing,5159not_declared;55уникальныхPNG.
+Из них58NPC используют найденный Npc.Img, ещё28 — только NpcProfile;
+в Nocturne8NPC с изображениями.57уникальных указанных Img:55 найдены,
+2 пока отсутствуют; повторяющиеся ссылки дают40NPC без найденного ресурса.
+Карточки карты/каталога используют MonsterCard.renderPortraits, открывают
+полный PNG по нажатию. Каталог получил фильтр images=yes/no; yes означает
+наличие файла, а не просто непустой Img. Остальные NPC остаются в каталоге.
+
+Сборка: build-world-map.py → build-monster-details.py → build-catalog-pages.py;
+manifest закрепляет npc_catalog и detail SHA. Проверены все5285detail SHA,
+соответствие portraits в summary/detail, точные NpcInfoId и field_sources,
+55PNG SHA,7source/deployed UI файлов.19Python+34Node=53целевых теста прошли.
+В браузере: Gatekeeper Clamoviege91001 получает изображение из NpcProfile,
+группа90000/CSV record6, и Larva100001 получает Npc.Img; переход карта→карточка
+Larva сохраняет портрет. Оба PNG708×492 загружены. Снимки:
+phone-exit/.tools/ux-audit-321001/11-npc-portrait.png и12-map-npc-portrait.png.
+Серверная доступность, соответствие свежему игровому кадру и поиск недостающих
+ресурсов остаются отдельными проверками.
+
+## 18 октября — обратные ссылки навыков для всех NPC
+
+После расширения каталога до5285NPC оставалась неполная обратная выборка:
+skill-npcs.json собирался только по1785NPC Nocturne. Теперь существующая
+подтверждённая цепочка Npc.BattleGroupId→Battle.GroupId→Battle.SkillIdList
+обращается для всех определений Npc из atlas/tables.json. Каждый вариант
+Battle сохранён, IDs разделяются запятой/trim и объединяются как множество,
+совпадение имён и наличие размещения не являются условиями связи.
+Технические/неразмещённые NPC тоже сохраняются. Новых native joins нет.
+
+skill-npcs.skills[ID].all_npc_ids содержит полный набор, npc_ids остаётся
+прежним подмножеством Nocturne для карты. Всего1344навыка с NPC/9610связей;
+для Nocturne395навыков. Общее число3447карточек навыков не изменилось.
+Индекс и детали закреплены SHA в monster-manifest. Каталог/фильтр «Есть NPC
+во всех мирах» используют all_npc_ids; полная карточка загружает SHA-проверенный
+npc_catalog и показывает имена/уровни/миры/ссылки на отдельные страницы.
+Порции60 сортируются имя→ID; кнопка и авто-прокрутка догружают список.
+Кнопка «NPC на Nocturne» использует только npc_ids; геометрия не расширяется
+за пределы текущей карты. Версия skills-catalog.js в HTML обновлена, чтобы
+браузер не продолжал использовать прежний скрипт с неполным счётчиком.
+
+Сборка build-world-map.py затем build-catalog-pages.py выполнена.20Python+
+34Node=54целевых теста прошли; новый тест покрывает другую область, общего
+Battle, неразмещённый NPC, отсутствующий Skill и отсутствие Battle.
+Для всех5285detail независимо построены обратные множества, проверены полное
+равенство all_npc_ids и прежнего npc_ids, SHA3447skill и индекса, deployed HTML/JS.
+Браузер: Sweep1002061 —4NPC,0Nocturne; ссылка99002000 открывает размещения
+в50020/50021. Базовая атака50401 —201NPC,170Nocturne; догрузка60→180,
+карта подтверждает170NPC/177размещений. Снимок13-skill-all-world-npcs.png
+в phone-exit/.tools/ux-audit-321001/. Наличие Battle-ссылки не доказывает
+фактическое применение навыка в бою или серверную доступность NPC.
+
+## 18 октября — каталог эффектов и ссылок на ограничения предмета
+
+В items/books добавлены фильтры exact EffectType, указана/не указана группа
+PassiveSkillGroupId, указаны/не указаны LimitGroupId либо ItemUseLimitId.
+Это фильтры деклараций клиента: успешность пассива, существование всех целевых
+строк и разрешение действия из них не вычисляются. Поля с непустым0 не теряются;
+None подтверждён только явным словарным кодом0, а20 остаётся неизвестным.
+Остальные требования уровня/класса/флаги/описания по-прежнему в полной карточке.
+Параметры URL effect/passive/limits сохраняются при открытии/возврате, порции60
+и порядок редкость→имя→ID остаются. Источник EffectType — прежний native parser,
+отчёт code-clues/item-effect-semantics.json с SHA; build-npc-loot.py экспортирует
+его types/source в компактные item_effect_types/item_effect_type_source общего
+loot/index.json. Содержимое совпало с SHA-проверенным item-details/index.json.
+Новый items-catalog-model.js не использует EffectParams/названия для связей.
+
+Фактический состав5827Item по EffectType:
+1=56,2=644,4=420,6=180,8=1,9=36,10=21,11=9,12=22,13=350,
+14=12,15=4,16=12,17=3,18=1,19=3,20=4053. Из420SkillAcquire только403
+Type=SkillBook входят в книги;17SkillAcquirePotion не повышены до того же
+подтверждённого target lookup.39Item имеют PassiveSkillGroupId,42 имеют хотя бы
+одну из двух ссылок ограничений (14LimitGroupId и28ItemUseLimitId, без пересечения).
+Наличие Effect1 у56Item по-прежнему не доказывает Item.EffectParams→Effect.Id.
+
+Дополнительный native discovery на том же EXE SHA: ветка14611f5f0 читает
+байт+68, но получает запись через1459aa040, не Item getter145a80590;
+литералы EVENTATTENDANCE_REWARDTARGET_SERVER/CHARACTER и сравнения0/1 относятся
+к другому контексту. Ветка отвергнута как доказательство Item.EffectType1.
+Прямой145d65b40 — leaf возврата глобального указателя, сам по себе тоже не
+доказывает тип Item.145d63720 выбирает контейнер по входному байту16/17/прочее,
+а не подтверждает применение EffectParams. Discovery в игнорируемых
+.tools/item-effect-ui-trace.txt иitem-effect-dispatch-trace.txt; это указатели
+поиска, не воспроизводимый proof report и не новая подтверждённая связь.
+
+Проверки:20Python (item-details/item-boxes/catalog-classes)+6Node
+(items-catalog/class-model)=26tests.4новых проверки покрывают exact code,
+unknown20 против None0, отсутствие догадки по EffectParams/описанию, непустой0,
+пересечение фильтров и отсутствие мутации. Сверены5827Item/manifest SHA,
+совпадение словаря с деталями и SHAотчёта,4source/deployedUI файла.
+Браузер: Effect1→56,passive=yes→39,limits=yes→42,совместно passive+limits→0;
+Demon King's Firearm открывается с пассивом, возврат сохраняет passive=yes.
+Книги Viper после reload дают102 с прежним фильтром. Снимок14-item-restriction-filter.png
+в phone-exit/.tools/ux-audit-321001/. Общий Effect1 target binding,
+формулы и server enforcement остаются незавершёнными.
+
+## 18 октября — подтверждение GroupId материалов крафта
+
+Прежняя граница «CraftInfoId пуст, материалы не связаны» устранена отдельным
+native-путём. build-craft-material-binding.py проверяет тот же Windows client
+EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
+Capstone5.0.6,64instruction/literal anchors и17data anchors, полные unwind
+fragments. Отчёт code-clues/craft-material-binding.json SHA256
+fce21615278ee8cac00070df186e67698f486a554c0706d87d727d3714260a5b.
+
+Цепочка источников и выбора:
+
+- ItemCraft manager145a5e490 возвращает14b151fd0; secondary vtable1499825e0,
+  slot38→loader145a68ca0 с буквальным ItemCraft.csv. Getter145a565d0 использует
+  переданный ID для поиска записи рецепта145a5dc20.
+- ItemCraftMaterial manager145a5e510 возвращает14b152090; secondary vtable
+  1499834d0,slot38→loader145a69980 с ItemCraftMaterial.csv. Loader читает GroupId
+  в record+0xc (145a69dce); после загрузки145a6a3df читает container+0x14,
+  строит group map и в145a6a49d добавляет указатель на record(container+8).
+  Этот map находится по manager+0x68.145a56690 ищет точный ключ и возвращает
+  массив указателей группы, не группу по префиксу ID.
+- Потребитель145dd6920 сохраняет входной ID в[rbp-0x71], проверяет запись
+  ItemCraft через145a565d0 и передаёт тот же ID в145a56690 (145dd6a15), затем
+  перебирает полученные записи. Поэтому ItemCraft.Id=ItemCraftMaterial.GroupId
+  подтверждено выполнением клиента, независимо от пустого CraftInfoId.
+- Виджет материалов14634b4e0 выбирает этот же group map и создаёт
+  Craft/WBP_ItemCraftMaterialT. Инициализатор146335060 получает material record
+  через145a56750, ветвится по CostType+0x10:1Asset/2Item. Для2 читает CostParam
+  FString+0x18, вызывает _wtoi через IAT148945bb0 (14633517a), передаёт результат
+  Item getter145a80590 (14633518c), затем показывает найденную запись и
+  CostEnchantLevel+0x2c. Существующий item-skill-binding.json повторно проверен
+  как зависимость доказательства Item table lookup. Полный положительный int32
+  допускается в сборщике; строки с мусорным суффиксом не продвигаются в ссылки.
+
+Источник материалов: pakchunk1-Windows-202.csv,1771records,
+SHA256 067cf733a36be8926fac71383d2702a31ae0f43365bf9d894a3fd126350c5d06;
+PAK entry202,offset630784,size67935,полная версия/путь архива в sources.
+ItemCraft CSV200 и имена/результаты прежние. Все563рецепта получили1733строки:
+1369Item и364Asset.38строк с GroupId без рецепта сохранены полными в
+craft_material_issues, не подставлены по CraftInfoId или сходству ID.
+59связанных строк имеют непустой CostEnchantLevel. Все UsingGroupId=0,
+но это не доказательство правил сочетания/выбора будущих подгрупп.
+
+build-item-details.py проверяет SHA EXE/отчёта-зависимости и все anchor bytes,
+читает CSV202 со schema/SHA/count/provenance. Каждый из861путей результата
+для441предмета получает materials и material_link_verified=true; те же данные
+сохранены в403book payloads. item_id присваивается только CostType2 с полным
+положительным int32; пустой/0/отрицательный/overflow/суффикс не становятся ссылкой.
+Ни количества строк, ни исходы не суммируются, CostValue0 не заменяется на1
+в справочнике. UI прямо показывает исходные значения. Условия серверного
+списания, UsingGroupId, доступность и вероятности остаются непроверенными;
+runtime_cost_enforcement_verified=false. Asset показан исходным параметром,
+новая связь с таблицей валют не заявлена.
+
+Порядок воспроизведения: build-craft-material-binding.py перед
+build-npc-loot.py→build-world-map.py.27Python+10Node=37целевых тестов прошли:
+item-details/item-boxes/catalog-classes/loot-locations и item-stats/items-catalog/
+class-model. Два новых теста сохраняют exact group/пустой CraftInfoId/несвязанные
+строки/подгруппы/нулевые количества/заточку/provenance, запрещают неверный type,
+malformed и int32 overflow. Независимо сверены SHA всех441craft files и индекса,
+все861пути с CSV202 по порядку/полным записям и403books, потерянных Item targets0.
+В браузере21011003/6010001:10Skill Book Page,100Trinity,250000Gold; переход
+к100000026 работает.11015007/1040015 показывает Elottarvizian's Sword с исходной
+заточкой13. Снимок phone-exit/.tools/ux-audit-321001/15-craft-materials.png.
+
+## 18 октября — обратное применение предмета в крафте
+
+Обращена уже доказанная связь материалов без нового native join:
+craft_material_uses получает ItemCraft/ItemCraftName_en, группы материалов
+из craft-material-binding и подтверждённые item result paths. В обратный индекс
+включены только записи с item_target_verified=true/CostType2 и полным item_id.
+Asset, неизвестные targets, группы без рецепта не включаются в предметные ссылки.
+Для каждой пары material-item/recipe одна запись сохраняет все material_rows,
+полный craft и локализацию с provenance. Все предметные результаты содержат
+item_id/outcome/reward_chain/chance_percent=null; условные строки/разные исходы
+не объединяются и не суммируются. Порядок обхода result items сортируется для
+воспроизводимости независимо от порядка входного dict; результаты внутри UI
+сортируются существующим ItemRarity, затем имя/ID/исход.
+
+Результат:156предметов/1369связей с рецептами/1369исходных material rows.
+Файлы item-details/craft-uses/<item>.json закреплены SHA в index.craft_uses;
+метаданные CSV200/202/463 и native proof остаются прежними, см. предыдущий раздел.
+Ни новые CSV, ни выдуманные ID не добавлены. runtime_available_verified=false.
+Исходные GroupId/UsingGroupId/CostEnchantLevel/CostValue сохранены полностью.
+
+UI «Где используется в крафте» — список рецептов имя→ID, порции40, ручная
+кнопка и CatalogData.autoMore. В раскрытии отдельные таблицы затрат материала,
+предметные результаты с исходной иконкой/фоном редкости и подписью исхода/количества.
+Ссылка items.html?item=<result>&recipe=<craft> открывает страницу результата,
+раскрывает совпавший рецепт, загружает его при необходимости за первой порцией
+и переводит фокус/прокрутку на summary. Неизвестный recipe не выбирает другой.
+Отсутствие предметных результатов явно показано; raw группы/записи доступны.
+
+Сборка build-npc-loot.py→build-world-map.py выполнена.29Python+10Node=39tests;
+два новых теста проверяют несколько затрат одного материала/рецепта, разные
+исходы, точные12/123, неподтверждённые targets, валюты, orphan-группу,
+отсутствие мутации и независимость от порядка входного dict. Сверены156file SHA,
+равенство всех1369ссылок обратному индексу полных forward-путей, все строки/
+заточка/количества/цепочки,5source/deployedUI файлов. Браузер:100000026 Skill Book
+Page —11рецептов,6010001 показывает10материала и два исхода по1книге;
+переход к21011003&recipe=6010001 раскрыл оба исхода и сфокусировал summary
+у верхнего края viewport.100000000 Trinity —265рецептов, авто-догрузка40→80.
+Снимок phone-exit/.tools/ux-audit-321001/16-material-craft-uses.png.

@@ -1,3 +1,54 @@
 :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#10151f;color:#e7edf4;font:15px/1.5 system-ui}header{padding:20px 28px;border-bottom:1px solid #304057}h1{font-size:24px;margin:0 0 6px}h2{font-size:20px}a{color:#62e7bc}p{margin:8px 0}.muted,small{color:#aebfd2;font-size:13px}main{max-width:1280px;margin:auto;padding:24px}input,select,button,.button{font:inherit;color:inherit;background:#192332;border:1px solid #52647c;border-radius:7px;padding:10px 12px;min-height:42px}button,.button{cursor:pointer}.button{display:inline-block;text-decoration:none}input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #62e7bc;outline-offset:3px}.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;padding:16px;background:#192332;border:1px solid #304057;border-radius:10px}.filters label{display:flex;flex-direction:column;gap:5px}.filters label:first-child{flex:1;min-width:220px}.filters input{width:100%}.catalog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px 0}.catalog-card{background:#192332;border:1px solid #304057;border-radius:10px;padding:16px;min-width:0;overflow-wrap:anywhere}.catalog-card h3{font-size:16px;margin:8px 0}.catalog-card .item-icon{display:block;width:64px;height:64px;background-size:100% 100%;border-radius:7px;overflow:hidden}.item-icon img{width:100%;height:100%;object-fit:contain}.catalog-card img{max-width:100%;object-fit:contain}.detail-page{max-width:1100px;margin:auto}.breadcrumbs{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}.detail-actions{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}#error{color:#ffb8a8;margin:12px 28px}#error:empty{display:none}[hidden]{display:none!important}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;font-size:12px}summary{cursor:pointer;color:#62e7bc}#more{display:block;margin:20px auto}.skill-card-heading{margin-bottom:16px}.npcSkill{margin-top:16px}.item-rarity{font-size:13px;color:#b9c9dc}.empty{padding:30px;text-align:center;border:1px dashed #52647c;border-radius:10px}.stat-line{display:flex;justify-content:space-between}.item-full-details table{width:100%;border-collapse:collapse}.item-full-details th,.item-full-details td{text-align:left;border-bottom:1px solid #304057;padding:8px;overflow-wrap:anywhere}.item-full-details th{width:45%;font-weight:400;color:#b2c2d3}@media(max-width:650px){header{padding:16px}main{padding:16px}.filters label{width:100%}.catalog-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
 
 .badge{display:inline-block;border:1px solid #40516b;background:#243246;border-radius:6px;padding:4px 9px;font-size:13px;color:#dce9f5}.monsterStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}.monsterStats>div{padding:14px;border-radius:9px;background:#243246}.monsterStats small,.monsterStats strong{display:block}.monsterStats strong{font-size:23px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.rewardSummary{display:flex;gap:8px;flex-wrap:wrap}.npc-section{margin-top:24px;padding-top:16px;border-top:1px solid #304057}.npc-section h3{font-size:18px}.npc-section details{margin:12px 0}#minLevel,#maxLevel{width:115px}#npc>h2{font-size:27px;margin:0 0 8px}#npc .catalog-card h4{margin:12px 0 8px}@media(max-width:650px){#minLevel,#maxLevel{width:100%}.monsterStats{gap:6px}.monsterStats strong{font-size:18px}}
+.book-sources{border-top:1px solid #304057;margin-top:14px;padding-top:10px}
+.book-sources h4{margin:0 0 7px;font-size:13px;color:#aebfd2}
+.book-sources p{font-size:13px;margin:5px 0}
+.book-sources>a,.book-sources summary{font-size:13px}
+.source-heading{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.source-heading h3,.source-heading h4{margin:0;font-size:14px}
+.source-count{font-size:11px;border:1px solid #40516b;border-radius:20px;padding:1px 7px;color:#9db1c9}
+.source-map{margin-left:auto;font-size:12px;text-decoration:none;color:#62e7bc}
+.source-npc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px}
+.source-npc{display:flex;align-items:center;gap:9px;min-height:34px;padding:6px 9px;border:1px solid #304057;border-radius:6px;background:#ffffff03;text-decoration:none;font-size:12px}
+.source-npc:hover{border-color:#62e7bc;background:#62e7bc09}
+.source-level{flex:none;font-size:10px;color:#9babc0;font-variant-numeric:tabular-nums}
+.book-sources>details{margin-top:10px;font-size:11px}
+.book-sources>details .source-npc-grid{margin-top:8px}
+#product .book-sources{padding:14px;margin:14px 0;background:#10192599;border:1px solid #304057;border-radius:10px}
+#product .source-npc-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+#product .source-data{padding-top:9px;border-top:1px solid #2a374a}
+@media(max-width:550px){#product .source-npc-grid{grid-template-columns:1fr}.source-npc-grid{grid-template-columns:1fr}}
+.catalog-grid:has(>.skill-list-card){grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px}
+.skill-list-card{display:flex;align-items:flex-start;gap:14px;padding:14px;background:linear-gradient(120deg,#202d40,#172230);border-radius:9px}
+.skill-list-icon{display:grid;place-items:center;flex:none;width:84px;height:84px;background:#111c2c center/100% 100% no-repeat;border:1px solid #50627b;border-bottom:3px solid #8292a7;border-radius:5px;overflow:hidden;font-size:26px;color:#71859d;text-decoration:none}
+.skill-list-icon img{width:100%;height:100%;object-fit:contain}
+.skill-list-icon[data-rarity="1"]{background-color:#263d30;border-bottom-color:#8ab774}.skill-list-icon[data-rarity="2"]{background-color:#24394d;border-bottom-color:#80b5e4}.skill-list-icon[data-rarity="3"]{background-color:#3b2e49;border-bottom-color:#b887d4}.skill-list-icon[data-rarity="4"]{background-color:#473c29;border-bottom-color:#e2c16b}.skill-list-icon[data-rarity="5"]{background-color:#472d33;border-bottom-color:#e88779}
+.skill-list-body{flex:1;min-width:0}
+.skill-list-body h3{margin:0 0 5px;font-size:16px;line-height:1.3}
+.skill-list-body h3 a{color:#ecf2fa;text-decoration:none}.skill-list-body h3 a:hover{color:#62e7bc}
+.skill-list-class{margin:0 0 7px;font-size:12px;line-height:1.4;color:#b4cadf}
+.skill-list-tags{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:11px}
+.skill-kind{font-weight:600}.skill-kind.active{color:#f1d88e}.skill-kind.passive{color:#c4a2e1}.skill-kind.unknown{color:#91a1b6;font-weight:400}
+.skill-list-id{font-size:10px;color:#8a9db4}
+.skill-list-counts{display:flex;flex-wrap:wrap;gap:9px;font-size:10px;color:#8fa2b9;margin:8px 0 0}
+.skill-list-counts:empty{display:none}
+@media(max-width:650px){.catalog-grid:has(>.skill-list-card){grid-template-columns:1fr}.skill-list-card{gap:10px;padding:12px}.skill-list-icon{width:68px;height:68px}.skill-list-body h3{font-size:15px}}
+.catalog-grid:has(>.book-list-card){grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:10px}
+.book-list-card{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:start;gap:12px;padding:12px;background:linear-gradient(120deg,#202d40,#172230)}
+.book-list-visual{grid-row:1;grid-column:1;display:flex;flex-wrap:wrap;gap:4px}
+.book-list-visual .item-icon{width:76px;height:76px;border:1px solid #50627b;border-bottom:3px solid #8292a7;border-radius:5px;background-color:#111c2c;background-position:center;background-repeat:no-repeat;background-size:100% 100%;overflow:hidden}
+.book-list-body{grid-row:1;grid-column:2;min-width:0}
+.book-list-body h3{margin:0 0 5px;font-size:16px;line-height:1.3}
+.book-list-body h3 a{color:#ecf2fa;text-decoration:none}.book-list-body h3 a:hover{color:#62e7bc}
+.book-list-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px;color:#8fa2b9}
+.book-list-meta .item-rarity{font-size:11px;color:#c3d3e5}
+.book-list-id{font-size:10px;color:#8a9db4}
+.book-list-class{margin:5px 0 0;font-size:12px;color:#b4cadf}
+.book-list-effect{margin:5px 0 0;font-size:11px}
+.book-list-card .book-sources{grid-row:2;grid-column:1/-1;margin:0;padding-top:8px}
+.book-list-card .source-heading{margin-bottom:6px}
+.book-list-card .source-npc-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:5px}
+.book-list-card .source-npc{gap:6px;min-height:30px;padding:4px 7px;font-size:11px}
+.book-list-card .source-level{font-size:9px}
+@media(max-width:650px){.catalog-grid:has(>.book-list-card){grid-template-columns:1fr}.book-list-card{grid-template-columns:64px minmax(0,1fr);gap:9px;padding:10px}.book-list-visual .item-icon{width:64px;height:64px}.book-list-body h3{font-size:15px}.book-list-card .source-npc-grid{grid-template-columns:1fr}}

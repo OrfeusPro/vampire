@@ -77,6 +77,16 @@ class MonsterDetailsTests(unittest.TestCase):
         self.assertEqual(details.skill_npc_index(npcs,battles),
             {'1':['n1','n2'],'11':['n1','n2','n3'],'2':['n1','n2']})
 
+    def test_reverse_skill_index_all_worlds_keeps_unplaced_npc_and_missing_skill(self):
+        npcs={'local':dict(BattleGroupId='b'), 'remote':dict(BattleGroupId='b'),
+              'unplaced':dict(BattleGroupId='u'), 'no_battle':dict(BattleGroupId='missing')}
+        battles={'b':[dict(SkillIdList='12')], 'u':[dict(SkillIdList='12,999999')]}
+        all_worlds=details.skill_npc_index(npcs,battles)
+        local=details.skill_npc_index({'local':npcs['local']},battles)
+        self.assertEqual(all_worlds,{'12':['local','remote','unplaced'],'999999':['unplaced']})
+        self.assertEqual(local,{'12':['local']})
+        self.assertNotIn('999999',local)
+
     def test_skill_names_prefer_nonempty_english_and_preserve_korean_source(self):
         english=[dict(Name=''),dict(Name='Shield Wall',provenance=dict(csv_record=3))]
         korean=[dict(Name='###기본 공격 01',provenance=dict(csv_record=9))]

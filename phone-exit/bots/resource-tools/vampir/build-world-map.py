@@ -2,6 +2,7 @@
 import csv
 import hashlib
 import io
+import importlib.util
 import json
 import math
 import os
@@ -11,6 +12,8 @@ from pathlib import Path
 
 ROOT = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir'))
 HERE = Path(__file__).resolve().parent
+_area_spec=importlib.util.spec_from_file_location('world_area_math',HERE/'area-transform-math.py')
+area_math=importlib.util.module_from_spec(_area_spec);_area_spec.loader.exec_module(area_math)
 
 
 def sha(path):
@@ -44,15 +47,14 @@ def xy(row, x, y):
 def raw_box(row):
     """Read raw XY extents only. Do not guess a pivot for nonzero Yaw."""
     def pos(text):
-        values = dict(re.findall(r'([xy])\s*=\s*(-?[\d.]+)', text))
-        return xy(values, 'x', 'y')
+        return area_math.vector(text)
     low, high = pos(row['AreaBoxMinPos']), pos(row['AreaBoxMaxPos'])
     if low is None or high is None or low[0] > high[0] or low[1] > high[1]:
         return None
     return [low, [high[0], low[1]], high, [low[0], high[1]]]
 
 
-def scene(tables, scope, area_names, npc_names, npc_loot, loot_npcs):
+def scene(tables, scope, area_names, npc_names, npc_loot, loot_npcs,rotation_verified=False):
     world_ids = {w['id'] for w in scope}
     worlds = {w['Id']: w for w in tables['World'] if w['Id'] in world_ids}
     areas = {a['Id']: a for a in tables['Area'] if a['WorldInfoId'] in world_ids}
@@ -99,16 +101,22 @@ def scene(tables, scope, area_names, npc_names, npc_loot, loot_npcs):
         if box['WorldInfoId'] not in world_ids:
             continue
         vertices = raw_box(box)
-        if float(box['Yaw'] or '0') != 0:
-            rotated.append(box)
-            continue
+        try:yaw=float(box['Yaw'] or '0')
+        except ValueError:yaw=float('nan')
+        if not math.isfinite(yaw):vertices=None
         if vertices is None:
             invalid_boxes.append(dict(record=box, reason='Invalid or inverted raw Min/Max; not silently reordered'))
             continue
+        if yaw!=0:
+            if not rotation_verified:
+                rotated.append(box)
+                continue
+            vertices=area_math.vertices(vertices[0],vertices[2],yaw)
         boxes_by_area[box['AreaId']].append(vertices)
         polygons.append(dict(key='AreaBox:' + box['Id'], type='AreaBox', id=box['Id'],
             world_id=box['WorldInfoId'], area_id=box['AreaId'], vertices=vertices,
-            label=' / '.join(area_names.get(box['AreaId'], [])), provenance=box['provenance']))
+            label=' / '.join(area_names.get(box['AreaId'], [])), provenance=box['provenance'],
+            yaw=yaw,rotation_verified=rotation_verified if yaw else True))
     for area in areas.values():
         coordinate = xy(area, 'MapIconX', 'MapIconY')
         anchor = 'MapIconXY'
@@ -120,7 +128,7 @@ def scene(tables, scope, area_names, npc_names, npc_loot, loot_npcs):
             vertices = [p for box in boxes_by_area[area['Id']] for p in box]
             coordinate = [(min(p[0] for p in vertices) + max(p[0] for p in vertices)) / 2,
                           (min(p[1] for p in vertices) + max(p[1] for p in vertices)) / 2]
-            anchor = 'Label center of zero-Yaw AreaBox extents; not a destination'
+            anchor = 'Label center of verified AreaBox geometry; not a destination'
         add('Area', area, coordinate, ' / '.join(area_names.get(area['Id'], [])) or 'Area ' + area['Id'],
             icon_id=area['MapIconId'], anchor=anchor, waypoint_id=area['Waypoint'])
     for spot in spots.values():
@@ -221,7 +229,9 @@ def main(root=ROOT):
     # The scene references per-world records for on-demand detail display.
     for w in scope:
         verified(out / w['file'], w['sha256'])
-    result = scene(tables, scope, area_names, npc_names, npc_loot, {n['id']: n for n in loot_index['npcs']})
+    transform=area_math.validated_evidence(root,index['tables_sha256'])
+    result = scene(tables, scope, area_names, npc_names, npc_loot, {n['id']: n for n in loot_index['npcs']},rotation_verified=transform is not None)
+    if transform:result['area_transform_source']=transform
     area_ids = {r['Id'] for r in tables['Area'] if r['WorldInfoId'] in {w['id'] for w in scope}}
     result['localizations'] = dict(areas={iid: [r for r in area_rows if r['Id'] == iid] for iid in sorted(area_ids)},
         npcs={iid: [r for r in npc_rows if r['Id'] == iid] for iid in result['npcs']})
@@ -257,6 +267,7 @@ def main(root=ROOT):
         npc_ids=len(result['npcs']), portal_relations=len(result['portal_links']),
         quest_relations=len(result['quest_links']), unplaced=len(result['unplaced']),
         rotated_area_boxes_source_only=len(result['rotated_area_boxes']),
+        rotated_area_boxes_verified=sum(p['type']=='AreaBox' and bool(p.get('yaw')) and p.get('rotation_verified') for p in result['polygons']),
         invalid_area_boxes_source_only=len(result['invalid_area_boxes']),
         named_areas=sum(bool(area_names.get(a['Id'])) for a in tables['Area'] if a['WorldInfoId'] in {w['id'] for w in scope}))
     keys = [p['key'] for p in result['points']]
@@ -265,7 +276,7 @@ def main(root=ROOT):
     result.update(schema_version=1, navigation_ready=False, fresh_android_verified=False,
         limitations=['All36 source worlds are separate contexts; overlapping records are not simultaneous runtime spawns.',
             'Only Map10/11 share the proven Nocturne projection.',
-            'Nonzero-Yaw AreaBox records retained, not drawn: rotation pivot has not been proved.',
+            'AreaBox outlines use native-proven XY geometry only when matching transform evidence is available; outlines are not walkability.',
             'Quest area-only relations have no invented exact target point.',
             'Portal links show table destinations, not a walkable route or an evaluated activation condition.',
             'Raw rates remain raw; drop percentages unknown.'])
@@ -278,12 +289,16 @@ def main(root=ROOT):
     if (root/'maps/navigation-study/lift-blueprints/rotation-evidence.json').is_file():
         result['lift_preview']=lift_module.main(root)
     data_path = out / 'nocturne.json'
+    if (root/'code-clues/recast-coordinate-evidence.json').is_file() and (root/'maps/navigation-study/geometry-hypothesis-97/grid-inventory.json').is_file():
+        overlay_spec=importlib.util.spec_from_file_location('nav_map_overlay',HERE/'build-recast-map-overlay.py')
+        overlay_module=importlib.util.module_from_spec(overlay_spec);overlay_spec.loader.exec_module(overlay_module)
+        result['navigation_overlay']=overlay_module.main(root)
     data_path.write_text(json.dumps(result, ensure_ascii=False, separators=(',', ':')), 'utf-8')
     manifest = dict(file='nocturne.json', sha256=sha(data_path), stats=result['stats'], sources=result['sources'])
     (out / 'nocturne-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), 'utf-8')
     # Preserve the previous per-world viewer, with all the existing links intact.
     (out / 'world.html').write_text((HERE / 'map-atlas.html').read_text('utf-8'), 'utf-8')
-    for source, target in [('world-map.html', 'index.html'), ('world-map.js', 'world-map.js'), ('world-map-model.js', 'world-map-model.js')]:
+    for source, target in [('world-map.html', 'index.html'), ('world-map.js', 'world-map.js'), ('world-map-model.js', 'world-map-model.js'),('nav-overlay-model.js','nav-overlay-model.js')]:
         path = HERE / source
         if path.is_file():
             (out / target).write_text(path.read_text('utf-8'), 'utf-8')

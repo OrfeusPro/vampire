@@ -9,6 +9,13 @@ window.ItemDetails = (() => {
   function load(spec){if(!cache.has(spec.file))cache.set(spec.file,json(spec.file,spec.sha256));return cache.get(spec.file);}
   function raw(parent,value){const d=node('details'),s=node('summary','Источники и исходные значения'),pre=node('pre',JSON.stringify(value,null,2));d.append(s,pre);parent.append(d);}
   function table(parent,rows){const t=node('table');for(const [key,value]of rows){const tr=node('tr');tr.append(node('th',key),node('td',value));t.append(tr);}parent.append(t);}
+  function itemReference(parent,id,catalog,href){
+    const item=catalog[id],label=item?.names_en?.map(r=>r.Name).filter(Boolean).join(' / ')||'Предмет '+id;
+    const group=node('div');group.className='craft-item-reference';
+    for(const image of item?.icon?.images||[]){const a=node('a'),slot=node('span'),img=node('img');a.href=href;slot.className='item-icon';img.src='../../'+image.file;img.alt=label;img.loading='lazy';const backgrounds=item.rarity?.background?.images||[];if(backgrounds.length===1)slot.style.backgroundImage='url("../../'+backgrounds[0].file+'")';slot.append(img);a.append(slot);group.append(a);}
+    if(item){const a=node('a',label);a.href=href;group.append(a);}else group.append(node('span',label+' · запись не найдена'));
+    parent.append(group);
+  }
   let tooltip, tooltipOwner, closeTimer;
   function closeTooltip(){if(tooltip)tooltip.hidden=true;if(tooltipOwner)tooltipOwner.removeAttribute('aria-describedby');tooltipOwner=null;}
   function describe(button,text){
@@ -178,23 +185,70 @@ window.ItemDetails = (() => {
     }
     root.append(properties);root.append(node('p','Показаны параметры шаблона клиента. Уровни заточки не складываются. Условия дополнительных строк и эффекты конкретного экземпляра не вычисляются.'));
     if(index.item_crafts?.[id]){
-      const data=await load(index.item_crafts[id]),panel=node('section');panel.className='stat-panel';
-      panel.append(node('h3','В каких рецептах указан предмет'),node('p','Результаты крафта из таблиц клиента. Успех, большой успех и неудача показаны раздельно.'));
+      const data=await load(index.item_crafts[id]),panel=node('section');panel.className='stat-panel craft-origins';
+      panel.append(node('h3','Из чего крафтится'),node('p','Материалы по рецептам клиента. Разные исходы показаны отдельно.'));
       const outcomes={SuccessRewardGroupId:'Успех',BigSuccessRewardGroupId:'Большой успех',FailRewardGroupId:'Неудача'},alphabet=new Intl.Collator('ru',{numeric:true,sensitivity:'base'});
       const recipeName=origin=>origin.names_en.map(r=>r.Name).filter(Boolean).join(' / ')||'Рецепт '+origin.craft.Id;
       const origins=[...data.origins].sort((a,b)=>alphabet.compare(recipeName(a),recipeName(b))||alphabet.compare(a.craft.Id,b.craft.Id)||alphabet.compare(a.outcome,b.outcome));
-      const list=node('div'),more=node('button','Показать ещё рецепты');let shown=0;
-      function showMore(){
-        const batch=origins.slice(shown,shown+40);shown+=batch.length;
+      const list=node('div'),more=node('button','Показать ещё рецепты');let shown=0,selectedNode;
+      const selectedRecipe=new URLSearchParams(location.search).get('recipe'),selectedIndex=origins.findIndex(o=>o.craft.Id===selectedRecipe);
+      function showMore(take=40){
+        const batch=origins.slice(shown,shown+take);shown+=batch.length;
         for(const origin of batch){
-          const recipe=node('details'),caption=node('summary'),reward=origin.reward_chain.at(-1);
-          caption.textContent=recipeName(origin)+' · '+outcomes[origin.outcome];recipe.append(caption);
-          table(recipe,[['ID рецепта',origin.craft.Id],['Результат',outcomes[origin.outcome]],['Количество предмета',reward.MinCount+'–'+reward.MaxCount],['Уровень персонажа · CharacterLevel',origin.craft.CharacterLevel||'Не указан'],['FailRate / SuccessRate / BigSuccessRate (исходные)',[origin.craft.FailRate,origin.craft.SuccessRate,origin.craft.BigSuccessRate].map(v=>v===''?'—':v).join(' / ')],['Rate по цепочке (исходные)',origin.reward_chain.map(r=>r.Rate===''?'не указан':r.Rate).join(' → ')]]);
-          raw(recipe,origin);list.append(recipe);
+          const recipe=node('article'),caption=node('h4'),reward=origin.reward_chain.at(-1);recipe.className='craft-recipe';
+          caption.textContent=recipeName(origin)+' · '+outcomes[origin.outcome];
+          const recipeHeader=node('div'),recipeIntro=node('div'),costs=node('div');recipeHeader.className='craft-recipe-header';recipeIntro.className='craft-recipe-intro';costs.className='craft-recipe-costs';recipeIntro.append(caption,node('p','Результат: '+(reward.MinCount===reward.MaxCount?reward.MinCount:reward.MinCount+'–'+reward.MaxCount)+' шт.'));recipeHeader.append(recipeIntro,costs);recipe.append(recipeHeader);
+          if(origin.craft.Id===selectedRecipe&&!selectedNode)selectedNode=recipe;
+          const conditions=node('details');conditions.append(node('summary','Условия и данные рецепта'));
+          table(conditions,[['ID рецепта',origin.craft.Id],['Результат',outcomes[origin.outcome]],['Количество предмета',reward.MinCount+'–'+reward.MaxCount],['Уровень персонажа · CharacterLevel',origin.craft.CharacterLevel||'Не указан'],['FailRate / SuccessRate / BigSuccessRate (исходные)',[origin.craft.FailRate,origin.craft.SuccessRate,origin.craft.BigSuccessRate].map(v=>v===''?'—':v).join(' / ')],['Rate по цепочке (исходные)',origin.reward_chain.map(r=>r.Rate===''?'не указан':r.Rate).join(' → ')]]);
+          if(origin.material_link_verified){
+            recipe.append(node('h4','Материалы и затраты · '+origin.materials.length));
+            const materials=node('div');materials.className='craft-material-grid';recipe.append(materials);
+            if(!origin.materials.length)recipe.append(node('p','Связанные строки материалов не найдены. Это не означает бесплатный крафт.'));
+            for(const entry of origin.materials){
+              const row=entry.record,item=entry.item_target_verified?catalog[entry.item_id]:null,line=node('div'),body=node('div');line.className='craft-material-row';
+              if(item){
+                const label=item.names_en.map(r=>r.Name).filter(Boolean).join(' / ')||'Предмет '+entry.item_id,a=node('a',label);a.href='items.html?item='+encodeURIComponent(entry.item_id);
+                const pictures=node('span');pictures.className='craft-material-icons';
+                for(const image of item.icon?.images||[]){const link=node('a'),slot=node('span'),img=node('img');link.href=a.href;slot.className='item-icon';img.src='../../'+image.file;img.alt=label;img.loading='lazy';if(item.rarity?.background?.images?.length===1)slot.style.backgroundImage='url("../../'+item.rarity.background.images[0].file+'")';slot.append(img);link.append(slot);pictures.append(link);}line.append(pictures);body.append(a);
+              }else body.append(node('strong',entry.item_target_verified?'Предмет '+entry.item_id+' · запись не найдена':(row.CostType==='1'?'Валюта: ':'Тип затрат '+row.CostType+': ')+({Gold:'Золото',Diamond:'Алмазы',EventDiamond:'Ивент-алмазы'}[row.CostParam]||row.CostParam||'Параметр не указан')));
+              body.append(node('p','Количество по строке: '+(row.CostValue===''?'не указано':row.CostValue)));
+              if(row.CostEnchantLevel!=='')body.append(node('p','Заточка материала: '+row.CostEnchantLevel+' · значение клиента'));
+              line.title='Подгруппа '+row.UsingGroupId+' · строка материала '+row.Id;line.append(body);
+              if(!entry.item_target_verified&&row.CostType==='1')costs.append(line);else materials.append(line);
+            }
+            conditions.append(node('p','Каждая строка показана отдельно. Правила подгрупп, доступность рецепта и фактическое списание сервером не проверены.'));
+          }else recipe.append(node('p','Связь со списком материалов не подтверждена.'));
+          raw(conditions,origin);recipe.append(conditions);list.append(recipe);
         }
         more.hidden=shown>=origins.length;
       }
-      more.onclick=showMore;showMore();panel.append(list,more,node('p','Доступность рецепта, шансы в процентах и связь со списком материалов пока не подтверждены. Количества разных исходов и вложенных строк не складываются.'));root.append(panel);
+      more.onclick=()=>showMore();showMore(origins.length);panel.append(list,more);root.append(panel);
+      if(selectedNode)requestAnimationFrame(()=>{selectedNode.scrollIntoView({block:'start'});const summary=selectedNode.querySelector('summary');summary.focus({preventScroll:true});});
+    }
+    if(index.craft_uses?.[id]){
+      const data=await load(index.craft_uses[id]),panel=node('section');panel.className='stat-panel craft-uses';
+      const title=use=>use.names_en.map(r=>r.Name).filter(Boolean).join(' / ')||'Рецепт '+use.craft.Id,alphabet=new Intl.Collator('ru',{numeric:true,sensitivity:'base'});
+      const uses=[...data.uses].sort((a,b)=>alphabet.compare(title(a),title(b))||alphabet.compare(a.craft.Id,b.craft.Id));
+      panel.append(node('h3','Где используется в крафте · '+uses.length+' рецептов'),node('p','Предмет указан как материал. Количества, заточка и результаты каждой строки показаны отдельно.'));
+      const list=node('div'),more=node('button','Показать ещё применения');more.type='button';let shown=0;
+      const outcomes={SuccessRewardGroupId:'Успех',BigSuccessRewardGroupId:'Большой успех',FailRewardGroupId:'Неудача'};
+      function showMore(){
+        const batch=uses.slice(shown,shown+40);shown+=batch.length;
+        for(const use of batch){
+          const recipe=node('details');recipe.append(node('summary',title(use)+' · рецепт '+use.craft.Id));
+          for(const entry of use.material_rows){const row=entry.record;table(recipe,[['Количество этого материала',row.CostValue===''?'Не указано':row.CostValue],['Заточка материала · значение клиента',row.CostEnchantLevel===''?'Не указана':row.CostEnchantLevel],['Подгруппа / строка материала',row.UsingGroupId+' / '+row.Id]]);}
+          recipe.append(node('h4','Предметные результаты'));
+          if(!use.results.length)recipe.append(node('p','Предметные результаты в каталоге не найдены. Исходные группы наград сохранены ниже.'));
+          const label=result=>catalog[result.item_id]?.names_en?.map(r=>r.Name).filter(Boolean).join(' / ')||'Предмет '+result.item_id;
+          const results=[...use.results].sort((a,b)=>(window.ItemRarity?.compare(catalog[a.item_id],catalog[b.item_id])||0)||alphabet.compare(label(a),label(b))||alphabet.compare(a.item_id,b.item_id)||alphabet.compare(a.outcome,b.outcome));
+          for(const result of results){const line=node('div'),reward=result.reward_chain.at(-1);line.className='craft-result-row';itemReference(line,result.item_id,catalog,'items.html?item='+encodeURIComponent(result.item_id)+'&recipe='+encodeURIComponent(use.craft.Id));line.append(node('p',(outcomes[result.outcome]||result.outcome)+' · количество '+reward.MinCount+'–'+reward.MaxCount));recipe.append(line);}
+          raw(recipe,use);list.append(recipe);
+        }
+        more.hidden=shown>=uses.length;
+      }
+      more.onclick=showMore;showMore();panel.append(list,more,node('p','Наличие рецепта не подтверждает его доступность и успешный крафт на сервере. Правила подгрупп и шансы не установлены.'));root.append(panel);
+      window.CatalogData?.autoMore(more,showMore);
     }
     if(index.box_sources?.[id]?.length){
       const panel=node('section');panel.className='stat-panel';panel.append(node('h3','В каких коробках указан предмет'),node('p','Это записи содержимого коробок из клиента. Наличие записи не гарантирует получение предмета.'));

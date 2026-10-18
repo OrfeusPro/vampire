@@ -103,6 +103,46 @@ def craft_origins(wanted_items, crafts, rewards, names, max_depth=32, max_paths=
     return result,issues
 
 
+def craft_material_groups(crafts, materials, binding):
+    """Use the verified native group index, never the empty CraftInfoId or an ID prefix."""
+    if not binding.get('relation_verified') or not binding.get('item_target_verified'):
+        raise ValueError('Missing verified material binding')
+    groups={row['Id']:[] for row in crafts}
+    issues=[]
+    for row in materials:
+        if row['GroupId'] not in groups:
+            issues.append(dict(kind='material_without_recipe',record=row))
+            continue
+        param=row['CostParam']
+        item_id=str(int(param)) if row['CostType']=='2' and re.fullmatch(r'[0-9]+',param) and 0<int(param)<=2147483647 else None
+        groups[row['GroupId']].append(dict(record=row,item_id=item_id,item_target_verified=item_id is not None,
+            runtime_cost_enforcement_verified=False))
+    return groups,issues
+
+
+def craft_material_uses(crafts, names, material_groups, origins):
+    """Reverse proven material rows once per recipe, retaining every result path and cost row."""
+    labels=defaultdict(list)
+    for row in names:labels[row['Id']].append(row)
+    results=defaultdict(list)
+    for item_id in sorted(origins):
+        paths=origins[item_id]
+        for path in paths:
+            if path.get('relation_verified') is True:
+                results[path['craft']['Id']].append(dict(item_id=item_id,outcome=path['outcome'],
+                    reward_chain=path['reward_chain'],chance_percent=None))
+    uses=defaultdict(list)
+    for craft in crafts:
+        grouped=defaultdict(list)
+        for entry in material_groups.get(craft['Id'],[]):
+            if entry.get('item_target_verified') is True and entry.get('item_id') and entry['record']['CostType']=='2':
+                grouped[entry['item_id']].append(entry)
+        for item_id,rows in grouped.items():
+            uses[item_id].append(dict(craft=craft,names_en=labels[craft['Id']],material_rows=rows,
+                results=results[craft['Id']],relation_verified=True,runtime_available_verified=False))
+    return dict(uses)
+
+
 def restriction_groups(items, limits, use_limits, semantics):
     groups={r['LimitGroupId']:[] for r in items if r['LimitGroupId']}
     uses={r['ItemUseLimitId']:None for r in items if r['ItemUseLimitId']}
@@ -240,7 +280,6 @@ def main(root=ROOT):
         raw=bytes.fromhex(conversion[key+'_bytes']);offset=conversion[key+'_offset']
         if executable[offset:offset+len(raw)]!=raw:
             raise ValueError('Changed skill ID conversion import')
-    del executable
     restrictions=restriction_groups(items,load('ItemLimit',210),load('ItemUseLimit',213),limit_semantics)
     skills = load('Skill',1505)
     skill_names = load('SkillName_en',525)
@@ -285,7 +324,28 @@ def main(root=ROOT):
     (out/'boxes').mkdir(exist_ok=True)
     box_specs={iid:write(out/'boxes'/f'{iid}.json',box) for iid,box in sorted(box_groups.items())}
     books = skill_books(items,skills,skill_names,enums['EItemType'],skill_binding)
-    all_crafts,craft_issues = craft_origins({row['Id'] for row in items},load('ItemCraft',200),load('Reward',1475),load('ItemCraftName_en',463))
+    crafts=load('ItemCraft',200)
+    material_path=root/'code-clues/craft-material-binding.json'
+    material_binding=json.loads(material_path.read_text('utf-8'))
+    if material_binding['sha256']!=native['sha256']:
+        raise ValueError('Changed craft material executable')
+    for row in material_binding['anchors']+material_binding['data_anchors']:
+        raw=bytes.fromhex(row['bytes']);off=row['file_offset']
+        if executable[off:off+len(raw)]!=raw:raise ValueError('Changed craft material anchor')
+    dependency=material_binding['item_lookup_dependency']
+    if sha(root/dependency['file'])!=dependency['sha256']:raise ValueError('Changed material Item lookup proof')
+    del executable
+    material_groups,material_issues=craft_material_groups(crafts,load('ItemCraftMaterial',202),material_binding)
+    craft_names=load('ItemCraftName_en',463)
+    all_crafts,craft_issues = craft_origins({row['Id'] for row in items},crafts,load('Reward',1475),craft_names)
+    for origins in all_crafts.values():
+        for origin in origins:
+            origin['materials']=material_groups[origin['craft']['Id']]
+            origin['material_link_verified']=True
+    material_uses=craft_material_uses(crafts,craft_names,material_groups,all_crafts)
+    (out/'craft-uses').mkdir(exist_ok=True)
+    craft_use_specs={iid:write(out/'craft-uses'/f'{iid}.json',dict(item_id=iid,uses=uses))
+                     for iid,uses in sorted(material_uses.items())}
     (out/'crafts').mkdir(exist_ok=True)
     craft_specs={iid:write(out/'crafts'/f'{iid}.json',dict(item_id=iid,origins=origins))
                  for iid,origins in sorted(all_crafts.items()) if origins}
@@ -300,6 +360,13 @@ def main(root=ROOT):
                          issues=sum(len(b['issues']) for b in box_groups.values())),
         effect_types=effect_semantics['types'],effect_type_source=dict(file='code-clues/item-effect-semantics.json',sha256=sha(effect_type_path)),
         skill_books=books,craft_diagnostics=craft_diagnostics,craft_issues=craft_issues,
+        craft_material_source=dict(file='code-clues/craft-material-binding.json',sha256=sha(material_path)),
+        craft_material_issues=material_issues,
+        craft_uses=craft_use_specs,
+        craft_use_summary=dict(items=len(craft_use_specs),recipe_links=sum(len(v) for v in material_uses.values()),
+            material_rows=sum(len(u['material_rows']) for v in material_uses.values() for u in v)),
+        craft_material_summary=dict(recipe_groups=len(material_groups),groups_with_rows=sum(bool(v) for v in material_groups.values()),
+            linked_rows=sum(len(v) for v in material_groups.values()),unmatched_rows=len(material_issues)),
         item_crafts=craft_specs,craft_summary=dict(items=len(craft_specs),paths=sum(len(rows) for rows in all_crafts.values()),issues=len(craft_issues)),
         item_skill_binding_source=dict(file='code-clues/item-skill-binding.json',sha256=sha(skill_binding_path)),
         item_effect_candidates={row['Id']:candidate for row in items if (candidate:=effect_links.item_candidate(row,effects))},
@@ -312,6 +379,8 @@ def main(root=ROOT):
                'ItemBox.RewardGroupType = ERewardGroup.value (loader record+28 -> OnItemBoxUpdated reflected enum argument)',
                'SkillBook with EffectType=SkillAcquire: Item.EffectParams -> _wtoi -> Skill.Id (native already-learned UI check; acquisition not verified)',
                'ItemCraft.FailRewardGroupId/SuccessRewardGroupId/BigSuccessRewardGroupId = Reward.GroupId (native reference-validation diagnostics)',
+               'ItemCraft.Id = ItemCraftMaterial.GroupId (native group index and recipe consumer)',
+               'ItemCraftMaterial.CostType=Item -> CostParam -> Item.Id (native material widget lookup)',
                'ItemBox.ItemId = Item.Id; ItemBox.RewardGroupId = Reward.GroupId; ItemBox.KeyItemInfoId = Item.Id (native reference-validation diagnostics)',
                'Reward.Type=Item -> Reward.Param=Item.Id; Reward.Type=Reward -> Reward.Param=Reward.GroupId',
                'Item.ItemEnchantOperationGroupId = ItemEnchantOperation.GroupId',

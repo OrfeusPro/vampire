@@ -1,0 +1,13 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vampir · характеристики</title>
+<link rel="stylesheet" href="../catalog.css"><link rel="stylesheet" href="attributes.css?v=20261018-display-routes">
+<header><h1>Характеристики</h1><p class="muted">Все определения параметров и описания из клиента Vampir</p></header><script src="../catalog-nav.js"></script>
+<main><p id="error" role="alert"></p><div id="listing"><div class="filters">
+<label>Название, описание или ID<input id="search" type="search" placeholder="Например: ATK, HP, Critical…" disabled></label>
+<label>Раздел<select id="tab" disabled><option value="all">Все разделы</option></select></label>
+<label>Тип параметра<select id="unit" disabled><option value="all">Все типы</option><option value="percent">Процентные</option><option value="value">Остальные</option></select></label>
+</div><p id="count" class="muted" role="status">Загрузка характеристик…</p>
+<p class="muted">Разделы и порядок взяты из таблиц клиента. Это справочник: значения вашего персонажа здесь не загружены.</p>
+<div id="grid" class="attributes-grid"></div></div>
+<section id="statDetail" hidden></section>
+<details class="attribute-sources"><summary>Источники и единицы измерения</summary><p>OperationType → OperationTypeGroup → OperationTab. Названия и описания — из английской локализации клиента; русские подписи разделов — перевод для справочника. Параметры без назначенной группы показаны отдельно.</p><p>Знак % взят из IsPercentage. Для этой ветки найдена функция отображения с масштабом 100 → 1%; подтверждение доступно в карточке. Формулы итоговых шансов и урона ещё не восстановлены. Параметры с InvisibleStat также включены и отмечены.</p><a href="manifest.json">Таблицы, SHA256 и подтверждения связей</a></details>
+</main><script src="../catalog-data.js"></script><script src="attributes-model.js?v=20261018-display-routes"></script><script src="attributes.js?v=20261018-display-routes"></script></html>

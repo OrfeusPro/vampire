@@ -402,6 +402,65 @@ NpcRewardId,Reward-chainID и происхождениеCSV. Отсутстви�
 сервера и живые условия появления не подтверждены.
 
 
+### Иконки наград и валюты, 18.10
+
+Заголовок карточки NPC сокращён до «Ур. N Название» по новому скриншоту.
+Источник уровня прежний scene.points[].level; неизвестное значение — «—».
+Под заголовком остаются NPC ID и мир, без повтора уровня. Проверены syntax,
+HTTP и совпадение развёрнутого world-map.js; визуальная проверка остаётся.
+
+Уточнение: исходный JSON теперь внутри закрытого details с summary
+«Исходные данные · JSON». Открывается кликом/Enter/Space; перенос фокуса
+с иконки внутрь подсказки её не закрывает. Escape скрывает подсказку.
+Содержимое цепочек прежнее. Syntax и HTTP/deployed bytes проверены;
+новой визуальной проверки нет.
+
+Следующее уточнение пользователя заменяет закрытые списки дропа открытой
+компактной сеткой. world-map.js renderLoot выводит до30иконок, затем +24
+по кнопке; сортировка ItemRarity.compare сохранена. Используются существующие
+scene.items.icon.images и rarity.background.images (первый кандидат иконки,
+неоднозначность отмечена в подсказке). Нет нового поиска/сопоставления ресурсов.
+Вместо подписей/кнопок каждой карточки — hover/focus tooltip: имя, редкость,
+ID, источник, количество и исходные цепочки. Tooltip закреплён в viewport,
+с прокруткой длинных условий; Escape скрывает. Нажатие открывает предмет,
+где доступен обратный поиск источников. На устройстве без hover — переход
+на предмет. При отсутствии картинки — «?», ссылка и accessible name сохранены.
+
+Опыт и валюты вынесены сразу под HP/атаку/защиту, до боевых подробностей.
+Личные и областные строки не складываются, каждая группа подписана.
+Для Shelter Archer100181022 проверены существующие area_candidates100181020:
+EventDiamond1, Exp9817, Gold104–128; личных строк нет. EventDiamond переводится
+«Ивент-алмазы», исходное имя/RewardRate видны в title. Шансы не вычисляются.
+Все ограничения и неподтверждённость серверной выдачи сохраняются в разделе
+источников и подсказках. Это UI-изменение, новые связи не заявляются.
+
+Cache key20261018-reward-icons, те же4UI-файла и порядок копирования, что ниже.
+Проверены30существующих Node tests, JS syntax и HTTP/SHA развёрнутых файлов.
+Новая визуальная проверка не выполнена; browser URL policy не обходилась.
+
+### Компактная карточка NPC, 18.10
+
+По скриншоту Shelter Archer (NPC100181022, мир10018) изменено только
+представление существующих связей. Источники остаются MonsterCard/monster
+manifest, NpcReward и AreaReward; новых игровых связей или формул нет.
+В world-map.js личный дроп и награды области теперь в двух закрытых details
+с числом предметов в summary. Прежнее автооткрытие области при отсутствии
+личных наград убрано. Боевые параметры остаются свёрнутыми; HP/атака/защита
+видны сразу. Повторные общие оговорки заменены одним разделом «Источники и
+ограничения»; подтверждённость связи области указана внутри её секции.
+Условия размещения также закрыты. monster-card.js получил необязательный
+showNotice (default=true), поэтому другие каталоги сохраняют прежние пояснения.
+Стили ограничены #selection, на узком экране предметы в двух колонках.
+
+Развёрнуты четыре UI-файла без пересборки игровых данных:
+world-map.html→maps/atlas/index.html, world-map.js, monster-card.js/css.
+При полной сборке первые два копирует build-world-map.py, последние —
+build-catalog-pages.py. Cache key=20261018-compact-npc. Проверены syntax двух
+JS, все30test_vampir_world_map.cjs и HTTP/SHA четырёх развёрнутых файлов.
+Визуальная проверка нового состояния не выполнена: прежний отказ browser URL
+policy не обходился. Скриншот пользователя — источник требований, не проверка
+нового состояния. Статический поиск ACC/EVA пока новых формул не подтвердил.
+
 ### Исправление пустого дропа обычного монстра,17.10
 
 Скрин пользователя показалNPC100201042 Thirsty Vagrant,World10020:
@@ -1179,3 +1238,1064 @@ WorldMapModel.placeLabels получает измеренные CSS-pixel раз
 между собой не запрещены; видимость надписей зависит от масштаба и размера
 окна. Остальные разрешения отдельно не проверены. Навигационная готовность
 и неизвестные вращения остаются без изменений.
+
+## 18 октября — подтверждённое вращение AreaBox
+
+Неизвестная точка вращения322контуров Nocturne устранена через потребитель
+данных, без подгонки по картинке. Новый build-area-transform-evidence.py
+использует клиент EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8
+и прежнее доказательство хранения AreaBox (build-area-box-code.py).
+
+Связь и вычисления:
+
+- AreaBox manager145c38330 возвращает singleton14b159370; secondary vtable
+  1499ce970,slot38→145c3dae0 (проверенный AreaBox loader). Group getter145c30150
+  выбирает массив записей из этого manager. Байты pointer/loader закреплены.
+- Потребитель145dd3fa0 перебирает группы AreaBox, читает MinPos FString+0x10
+  и MaxPos+0x20 через1415892e0, упаковывает четыре double XY и читает float
+  Yaw+0x30 (145dd4105). Передаёт прямоугольник/точку/угол в14568ed80 на145dd4112.
+- 14568ed80 вычисляет середины(MinX+MaxX)*0.5 и(MinY+MaxY)*0.5, вычитает их
+  из проверяемой точки. Yaw умножается в float32 на0.01745329238474369
+  (байты35fa8e3c), затем переводится в double и передаётся в1487969e0.
+  Коэффициент0.5 подтверждён отдельными double-байтами000000000000e03f.
+  Для угла theta повёрнутые вершины имеют вид
+  x=cx+(x0-cx)*cos(theta)-(y0-cy)*sin(theta),
+  y=cy+(x0-cx)*sin(theta)+(y0-cy)*cos(theta).
+  Это положительное вращение в исходных XY, до проекции на canvas.
+
+Геометрия независимо проверена ограниченной офлайн-эмуляцией исходных
+инструкций14568ed80 и его математических trig-веток в Unicorn2.1.4. Только
+выбранные диапазоны кода/файловые страницы констант, локальный стек и входной
+буфер; запись в неизвестную память/переход за allowlist запрещены. Нет процесса
+игры, импорта OS-функций, live memory, сети, кликов или перемещения персонажа.
+Лимит10000инструкций и2000000µs на случай, обязательный возврат на sentinel.
+Все1458валидных недегенеративных AreaBox из CSV (включая772ненулевых Yaw)
+плюс8несимметричных синтетических прямоугольников с0/±30/±90/180/270/360:
+1466случаев по8точек,11728совпадений native predicate с area-transform-math.py.
+Точки включают центр, отдельное превышение каждой оси, отрицательную сторону
+и воспроизводимые случайные точки. Допуск на самой границе не сертифицирован.
+
+Отчёт code-clues/area-box-transform.json SHA256
+a732087c1fccd317a566b973fd06f788914e41523b90f1ed9ddf68449475df3b
+содержит34anchors,4константы/pointer bindings,полные native fragments и9страниц
+эмуляции с SHA/offset,все входы/результаты, SHAмодели/tables и dependency
+area-box-code.json. CSV10 SHA500c169afa60ffa2efe8538abffbe11f16c99eb2d6b408756ed92fc53239fbc9
+и происхождение каждой строки остаются в atlas sources. validated_evidence
+проверяет EXE SHA/anchors/constants/fragments/pages, SHA модели и таблиц перед
+разрешением поворота. Отсутствие отчёта сохраняет прежнюю карантинную ветку;
+устаревший/изменённый отчёт останавливает сборку.
+
+Повторный build-area-transform-evidence.py переиспользует результаты только
+при совпавших EXE/модели/tables/Unicorn-version и SHA всех прежних страниц;
+каждый набор входов/ожидаемых ответов должен полностью совпасть с сохранённым.
+Для полного повторения эмуляции использовать --fresh. После добавления
+manager-binding и storage anchors кеш1466идентичных случаев перепроверен;
+повторный выпуск отчёта сохранил тот же SHA. Это кеш числовой проверки, не
+проверка состояния игры. Для native-математики используется float32-угол,
+без принудительного округления90°/360° к идеальным double-углам.
+
+Сборка: build-area-box-code.py → build-area-transform-evidence.py →
+build-world-map.py. map-readiness.py теперь отмечает772проверенных поворота
+всех миров и0неизвестных. Nocturne:603AreaBox (281нулевой+322повёрнутых),
+две обратных Min/Max не переставлены и не рисуются. Три области получили
+допустимый anchor названия по геометрии; это подпись, не точка прибытия.
+175Area points/24074всего/2без точки (были172/24071/5).
+Источник proof включён в scene/geometry audit; каждый полигон сохраняет yaw,
+rotation_verified и CSV provenance. Флажок «Контуры областей» рисует эти вершины.
+
+Проверки:16Python (world-map/readiness/area-transform)+30Node world-map=46tests.
+Новые случаи: смещённый несимметричный прямоугольник, знак30°/−30°,90°,
+strict exponent/невалидные координаты, отсутствие/устаревший proof, разрешение
+полигона только через verified flag; навигация не становится готовой. Независимо
+сверены вершины всех603полигонов с моделью/CSV ID,322Nocturne/772audit, цепочка
+SHA proof→geometry→scene и source/deployed HTML/JS. В браузере10012/Squall Hill
+при945% контуры включены,415отметок/12подписей; статус322проверенных/0неизвестных.
+Снимок phone-exit/.tools/ux-audit-321001/17-rotated-area-contours.png.
+routes_verified=0/navigation_ready=false: нужны настоящие полигоны/связность
+навигации и проверка движения Android. AreaBox не выдан за граф проходимости.
+
+## 18 октября — найдены тела RecastNavMeshDataChunk в generated-пакетах
+
+Дополнен прежний поиск payload: он намеренно исключал UAsset headers, а
+nav-chunk-leaf-search.py искал GUID только в уже сохранённых paths. Новый
+search-navigation-chunk-headers.py читает все доступные незашифрованные заголовки
+до1MiB/record,128MiB/archive,1GiBвсего. До чтения каждого архива проверяются
+size/mtime/sample SHA, указатель entry и uncompressed size. Совпадения сохраняют
+archive/offset/record/SHA/offsetneedle; большие/зашифрованные записи отражены
+в отчёте. Матч GUID или class text сам по себе не доказывает object/payload.
+
+Итог106архивов:147428headers,789182486распакованных байт,errors0,214кандидатов.
+Точных20leaf GUID из WPRefNav не найдено; это ограниченный отрицательный
+результат, не отсутствие ресурсов в игре. Найдены170headers с текстом
+RecastNavMeshDataChunk;34имеют summary package path с точным префиксом
+/Game/RED/Level/Field/Nocturne/Nocturne/_Generated_/.
+Упоминание Nocturne среди импортов другого мира не принимается за идентичность:
+41header содержит такой путь где-либо, но в34он принадлежит самому пакету.
+Отчёт maps/navigation-study/chunk-header-search/index.json SHA256
+204ff92977cec0a81c08e2209c5e72e0f4040e5b0566ee76d71845288af46f87;
+214извлечённых headers рядом закреплены индивидуальными SHA.
+
+build-navigation-generated-chunks.py читает summary FString в offset32,
+проверяет длину/терминатор/отсутствие embedded NUL. Для каждого целевого header
+проверяет оба соседних body-кандидата через inspect-ui.py:exports и отдельный
+validate_exports. Требуются ровно одна подходящая пара, package-end tag
+c1832a9e, непрерывное неперекрывающееся покрытие всех export ranges до footer4,
+один root World с именем Nocturne и полная цепочка владельцев:
+RecastNavMeshDataChunk→NavigationDataChunkActor→Level→этот root World.
+Одно соседство и одинаковый размер не используются как подтверждение.
+
+Все34кандидата прошли проверку,34уникальных package identities,issues0.
+Источник pakchunk1000_s3-Windows (17),s4 (9),s5 (8); полные source PAK/version/
+size/mtime/sample SHA,entries SHA и raw record offsets сохранены на пакет.
+Извлечены asset/body,NavigationDataChunkActor export и RecastNavMeshDataChunk
+export; payload34Recast exports суммарно17348530байт.
+Пример: s3 header1179/body1178,summary package
+/Game/RED/Level/Field/Nocturne/Nocturne/_Generated_/0106W37QA7C89ZJJ8BEYT8WKL.
+24exports; Recast export22,offset30718,size199873,
+SHA303a29b589efa7211680624c2f4a0e1a24bb8c224e04c78eaf77e156a74f570d.
+Его outer15 — NavigationDataChunkActor, далее PersistentLevel и World Nocturne.
+Body1180 отвергнут полным учётом байтов. Это данные клиента, не исходный C++.
+
+Отчёт maps/navigation-study/generated-chunks/index.json SHA256
+51c725e29f0d9e374b3a95613c64fbfcc8e084efaacea6bdb99c9f5f5887160a.
+package_pair_verified/owner_chain_verified=true; selected_runtime_version_verified=false.
+Все34версии/пакета сохранены без предположения о выборе активного патча.
+Связь с20 ExternalActor paths из WPRefNav НЕ установлена: generated packages
+имеют другие package IDs и иной путь. Они не объединены в один готовый граф.
+Custom payload не объявлен форматом Detour только по классу; сигнатуры
+VAND/DNAV/MSET не найдены в первых проверенных экспортных данных. Начальные
+числа, похожие на версии/количества, до native serializer не подписываются.
+
+map-readiness.py сверяет SHA search-report и всех parts/exports, добавляет
+generated_navigation_source с file/SHA/summary и счётчики34/17348530 в geometry.
+build-world-map.py закрепляет новый geometry SHA. Страница показывает отдельный
+статус найденных данных и ссылку «Найденные данные навигации»; границы/точки
+не менялись, routes_verified=0/navigation_ready=false остаются.
+Порядок: search-navigation-chunk-headers.py → build-navigation-generated-chunks.py
+→ build-world-map.py. Не требуется повторять сканирование при неизменных
+источниках; устаревшая цепочка SHA останавливает сборку.
+
+Проверки:21Python navigation* +16Python world-map/readiness/area-transform=37.
+Четыре новых теста покрывают совпадение без /Game path, недопустимость объявления
+payload по имени, summary identity отдельно от импортов, gap/overlap/truncation,
+неверный parent/root World. Независимо перепроверены34пары/все экспортные
+диапазоны/ownership, все214hit SHA и source search→generated→geometry→scene.
+UI syntax и source/deployed HTML/JS совпали; браузер подтвердил34в статусе и
+ссылку на JSON. Снимок phone-exit/.tools/ux-audit-321001/18-navigation-payload-status.png.
+Следующий шаг — разобрать собственный serializer RecastNavMeshDataChunk,
+структуру тайлов/полигонов/связей и пригодность этих данных для пути; после
+этого серверные условия/лифты и реальный прогон Android.
+
+## 18 октября — подтверждена цепочка сериализации Recast chunks
+
+Инструмент `build-recast-serialization-code.py` читает только EXE и сохранённые
+экспорты. Проверяет SHA EXE из native-enums.json, точные инструкции через Capstone,
+chained unwind fragments с SHA, имена класса, constructor/vtable и SHA34exports.
+Код клиента ProjectRED-Win64-Shipping.exe, SHA256
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+
+Связи: регистрация1452c0380, точный литерал RecastNavMeshDataChunk и
+/Script/NavigationSystem; constructor1452c22a0 устанавливает vtable149733208.
+Слоты d8→1452df1c0 (wrapper) и e0→1452deff0; wrapper вызывает второй метод.
+После базовой UObject-сериализации1417521e0 читаются int32 version и uint64 length.
+Writer version26, loader принимает20..26. Tell перед чтением uint64 и seek/разность
+при записи доказывают, что length включает собственные8байт.
+Далее1452df1f0 читает int32 count и для каждого тайла int32 size, вызывает
+1452ba8b0; при ненулевом buffer затем1452ba2a0 для cache.
+
+Первый codec вычисляет размер буфера, записывает его обратно через указатель size,
+выделяет и заполняет буфер, читая поля по отдельности. Поэтому исходный size нельзя
+использовать как длину сериализованного блока. Есть gate версии23 и отдельная
+проверка custom version:1452bc14b берёт16байтный ключ,141597dd0 получает контейнер
+архива через vtable+58 и ищет ключ через14159a480. Контейнер сравнивает все4слова
+ключа, шаг записи40байт; результат версии берётся с+10, отсутствующий даёт-1.
+Diagnostic «Unused custom version» также закреплён. В codec сравнение с97.
+Ключ (сырой little-endian hex) `86181d60844f64acded316aad6c7ea0d`;
+его именованный enum и конкретное значение архива пока НЕ подтверждены.
+Cache codec читает отдельный signed int32, отрицательный завершает ветвь;
+при неотрицательном выделяет length+80 и читает хвост в buffer+80.
+
+Отчёт `code-clues/recast-serialization-code.json`, SHA256
+`90f783478799d9f5fd72c9cecef8c2a7daf926d870655334a979083d38ed65e8`:
+50anchors, точные file offsets/bytes, fragments, vtable bindings, ключ и34sample.
+Источник exports index SHA256
+`51c725e29f0d9e374b3a95613c64fbfcc8e084efaacea6bdb99c9f5f5887160a`.
+Ограниченный поиск первых256байт каждого export дал один кандидат envelope:
+offset14/version26 у всех34, count5..1177, сумма19098.
+Это совпадения с нативной формой заголовка, НЕ доказательство границы UObject
+properties и НЕ19098проверенных walkable tiles. Сумма включает все сохранённые
+версии пакетов. payload_decoded=false, routes_verified=0/navigation_ready=false.
+
+Порядок: имеющиеся generated-chunks → build-recast-serialization-code.py.
+Повторный полный поиск PAK не нужен. Новый отчёт исследовательский, не подменяет
+readiness и не меняет изображение карты. Следующие шаги: property boundary и
+custom versions архива, затем ограниченное восстановление native buffers,
+полигоны/соседи и проверка выбора версии/системы координат/проходимости.
+Тест `test_vampir_recast_serialization.py`:4проверки границ длины, версий/count,
+пустого блока/truncation и поиска без ложного утверждения property boundary.
+Проверено:21navigation +4новых Python tests=25. Отдельно сверены SHA всех15
+фрагментов с EXE, байты50anchors, исходный index и все34export SHA.
+
+## 18 октября — кандидатные native-буферы всех19098тайлов
+
+`extract-recast-tile-buffers.py --custom-version 97` исполняет только четыре
+закреплённых корня:1452ba8b0/1452ba2a0/141597dd0/14159a480 и их unwind fragments
+в Unicorn2.1.4. Проверяет SHA EXE, proof fragments, generated index и exports.
+Игра/процесс/ОС/imports не запускаются. Неожиданный код или native write вне
+локального scratch/выделенного буфера отклоняется. File-backed страницы только
+read/execute; SHA страниц записаны. Локальные callbacks заменяют145240ab0
+(bounded allocator),1487a2e25 (bounded memset) и archive vtable+58 (тестовый
+контейнер custom versions). Не более1млн инструкций на вызов, input≤16MiB,
+allocation≤8MiB, arena32MiB; virtual archive read проверяет source/destination.
+
+Гипотезы явно записаны: custom version97, property offset14, version26,
+little-endian loading archive. Actual native lookup получает тестовую запись
+с точным16байтным ключом; это НЕ извлечённое значение версии пакета.
+Сохранённые функции действительно запросили его63раза за полный прогон.
+Таким образом проверена ветвь >=97; её согласованность с байтами не доказывает
+точное значение97 или способ установки версии в runtime. Property boundary
+также остаётся гипотезой. Запуск с --custom-version -1 не завершает проверку
+первого пакета: попадает в nonempty-cache, который этот инструмент отклоняет;
+это не самостоятельное доказательство отсутствия такого cache в старых версиях.
+
+Результат:34экспорта прочитаны точно до конца,19098тайлов, все исходные int32
+size равны размеру восстановленного буфера. Сохранено27249848байт буферов;
+у проверенной ветви все cache markers отрицательны, cache memory size0.
+В каждом package отдельный *-buffers.bin; index хранит offset/size/SHA каждого
+тайла, исходный диапазон, первые88байт, SHA всего файла, страницы кода и источник.
+Полигональная структура внутри буферов ещё НЕ объявлена разобранной.
+
+Отчёт `maps/navigation-study/tile-buffer-hypothesis-97/index.json`, SHA256
+`67c1858afae1d18bab821f54269620a0cd35dd49713558b4ebb31196649bb7e9`.
+Generated source index SHA51c725e29f0d9e374b3a95613c64fbfcc8e084efaacea6bdb99c9f5f5887160a;
+serialization proof SHA90f783478799d9f5fd72c9cecef8c2a7daf926d870655334a979083d38ed65e8.
+Все версии пакетов остаются отдельно:19098 не число уникальных активных тайлов.
+readiness не меняется: routes_verified=0/navigation_ready=false.
+
+Воспроизведение: generated-chunks → build-recast-serialization-code.py →
+extract-recast-tile-buffers.py --custom-version 97 →
+validate-recast-tile-buffers.py "F:/PhoneExit Resources/Vampir/maps/navigation-study/tile-buffer-hypothesis-97/index.json".
+Независимый verifier проверяет EXE/proof/source/page SHA, все34buffer SHA и19098
+tile SHA, исходные int32 sizes/отрицательные cache markers, непрерывность
+source/output диапазонов и полное покрытие каждого файла.
+Проверки:21navigation +7recast Python tests=28. Три новых теста проверяют
+gap/overlap, размеры, изменённые bytes/header, truncation/trailing и cache marker.
+Дальше: доказать native layout вершин/полигонов/соседей и систему координат,
+границу UObject/custom version, выбор активных пакетов; затем граф и маршруты.
+
+## 18 октября — вершины, полигоны и внутренние связи тайлов
+
+Новый `build-recast-geometry-code.py` проверяет тот же SHA EXE и47опорных
+инструкций трёх корней. Помимо serializer1452ba8b0 найдены consumer14523c2a0
+(проверяет header version7 и присоединяет buffer к tile) и145252290, связанный
+с точными diagnostics «dtNavMeshQuery::raycast…» и проверкой polyIdx/maxPolys.
+Пути E:/Work/UE5/Release-5.5/...DetourNavMeshQuery.cpp — строки диагностики
+в EXE, не доступный исходный C++ проект.
+Фрагмент14523cdd4..14523ce30 сохранён opaque/raw/SHA и исключён из полного
+дизассемблирования: полный CFG присоединения тайла здесь не заявлен.
+
+Доказанный layout: header88байт, uint16 polyCount+4 и vertCount+6;
+vertices сразу после header,3double/24байта; polygons затем,32байта.
+Consumer14523c4a8..14523c509 назначает эти массивы в tile+18 и tile+10;
+raycast читает vertex indices с polygon+4 (6uint16 capacity), vertex count+1e,
+индексирует3*8байт vertex, использует double-координаты.
+Polygon+10 —6uint16 neighbor words, +1c flags_raw, +1f area_type_raw.
+Названия полей flags/area_type описывают сохранённое расположение; именованные
+значения областей/полная семантика flags пока не расшифрованы.
+
+В14523c6d7..14523c762 native builder обнуляет firstLink в-1, пропускает
+area_type_raw>=64 и нулевые/отрицательные int16 neighbor words; для остальных
+берёт neighbor-1 и OR с базой tile-ref. Это доказывает внутренние ссылки1..32767
+и исключение high-bit words. Первый uint32 из сериализованного polygon сохранён
+как first_link_serialized_raw, НЕ используется как готовая runtime-связь.
+High-bit matching и переходы special polygons (raw>=64) ещё не интерпретированы.
+
+Отчёт `code-clues/recast-geometry-code.json` SHA256
+`408dd42c9b0f730a426a9fe5d403f45c73358d82fb7860b1ac607826ab72aeb4`.
+`decode-recast-geometry.py` сначала запускает независимый verifier buffer reports,
+проверяет proof/EXE fragments и читает только доказанный geometry prefix.
+Хвосты buffers остаются uninterpreted, не пропускаются как якобы разобранные
+detail/BV/offmesh structures. Сохраняет один JSON на пакет, SHA каждого,
+tile buffer provenance, vertices, polygons/raw fields, directed internal links
+и high-bit edges отдельно. Карта/readiness не изменены.
+
+Результат всех34пакетов/19098тайлов:214851вершина,104726полигонов,
+228354направленных внутренних связей (114177пар внутри сохранённых тайлов),
+108758high-bit рёбер. Все active vertex/neighbor indices находятся в границах.
+Для каждой внутренней связи проверено единственное обратное ребро с обратным
+порядком тех же vertex IDs: mismatches0. Эти числа включают все сохранённые
+версии; это НЕ объём единственной активной сетки и НЕ доказательство маршрута.
+Raw area_type histogram:10→63841,63→40234,127→63,11→513,3→75.
+Vertex-count histogram:2→63,3→33586,4→47854,5→18168,6→5055.
+
+Отчёт `maps/navigation-study/geometry-hypothesis-97/index.json` SHA256
+`b5ec9f3e0f004be224a8ee9e33dbbc44f273a8a1085b34556f9366bdab1a3de0`.
+Source buffer report SHA67c1858afae1d18bab821f54269620a0cd35dd49713558b4ebb31196649bb7e9.
+Runtime archive version/property boundary остаются гипотезами предыдущего этапа.
+World/map coordinate conversion, active packages, cross-tile/special graph и
+routes ещё не подтверждены; routes_verified=0/navigation_ready=false.
+
+Порядок после извлечения buffer reports: build-recast-geometry-code.py →
+decode-recast-geometry.py. Повторная эмуляция не нужна при тех же source/SHA.
+Проверки:21navigation+13recast Python tests=34. Шесть новых тестов проверяют
+one-based neighbor/reversed edge, high-bit и inactive slots, malformed indices/
+count/truncation, nonfinite vertices, mismatched reverse geometry и special types.
+Дополнительно все34JSON SHA,19098tile SHA,214851vertices/104726polygons/raw
+fields/228354links независимо сверены с исходными native buffers.
+
+## 18 октября — правила внешних рёбер, параметры и инвентаризация grid
+
+`build-recast-portal-code.py` проверяет тот же EXE SHA,57anchors/26fragments.
+Источник external links14523f0e0: high-bit neighbor→low byte side, фильтр
+заданной стороны или-1, противоположная `(side-4)&7`, вызов145243d60.
+Target word сравнивается точно с0x8000|opposite. Native matcher проверяет
+совпадение плоскости и горизонтальное перекрытие с double-константой
+0.009999999776482582 (точные8байт/SHA-source в отчёте).
+Высотная часть использует navmesh+0x10, линейные высоты на концах overlap,
+их знаки/квадраты и в отдельных ветвях14524c4d0. Последний читает detail mesh,
+detail triangles и вызывает triangle-height helper145240c20; поэтому близость
+концов не заменяет native predicate. Стороны0/4 используют одну горизонтальную
+ось,2/6 другую. Интервал link кодируется clamped0..1 с множителем255.
+Полное сопоставление и runtime allocation/link limits пока не эмулированы.
+
+Параметры:14524dd50 копирует параметры в dt nav object, включая+10.
+Цепочка1452b8ff0→1452bc8b0→1452b9210 читает version/length/params;
+у общей сетки length —uint32, включая собственные4байта (Tell/разность writer).
+Это отличается от uint64 RecastNavMeshDataChunk. V26 parameter-only stream:
+int32 tile_count;5double (origin3/width2);2int32 capacities;6double parameters.
+Чтения +150/+158/+160 и передача этой структуры в14524dd50 закреплены.
+Portal-height gate читает третий double этой шестёрки (+10).
+Отчёт `code-clues/recast-portal-code.json` SHA256
+`e5aa1d297ffbd8d377d17cdb17582fd5c9b56d0c8b5b16d0f4742da4bffd5721`.
+
+`decode-recast-nav-params.py` проверяет level report/export SHA и native proof,
+ищет только bounded parameter-only V26 suffix с точным покрытием до EOF.
+Один кандидат в NnRecastNavMesh export3919 (size551,
+SHA78807cf7cd174e5365cd3045520c5fb148d84e40fa47ab6efbaa604a8f813400):
+offset443/version26/uint32 length104/tile_count0; origin[-0,0,-0], widths
+1000.0000133514404; capacities461168/2147483647; parameters144/35/35/
+0.02500000037252903/0.050999999046325684/0.050999999046325684.
+Порог height35 — КАНДИДАТ по совпадению структуры; boundary UObject properties,
+точный inheritance dispatch cooked NnRecastNavMesh и active runtime overrides
+ещё не подтверждены. Не применять его молча как доказанный параметр маршрута.
+Отчёт `maps/navigation-study/level/nav-parameter-candidates.json` SHA256
+`2811cbfed32b738a72ac343c84e22829116d6cd39de15fdc45393e1736f18272`.
+
+`build-recast-grid-inventory.py` сверяет SHA всех geometry JSON и группирует
+строго по(gridX,gridY,layer); не выбирает последний пакет по имени/номеру.
+Все источники сохраняются. Разные buffer SHA по одному ключу карантинируются,
+победитель не назначается. Результат:19098записей→18430уникальных ключей,
+668повторных записей имеют побайтно одинаковый buffer SHA; конфликтов0,
+внутри одного package повторов0. Это позволяет дедуплицировать candidate union,
+но не доказывает active coverage (в старой версии могли быть удалённые ячейки).
+High-bit side histogram:0→27195,2→27117,4→27266,6→27180.
+Отчёт `maps/navigation-study/geometry-hypothesis-97/grid-inventory.json` SHA256
+`b4a7431dceb87d50d042f81014b55a6034ed16acdcca58bc84e6ee0e09c78864`.
+
+Порядок: имеющаяся geometry→build-recast-grid-inventory.py; native EXE→
+build-recast-portal-code.py→decode-recast-nav-params.py (последний использует
+уже извлечённый level/export). Сканы PAK и эмуляцию19098buffers не повторять.
+Проверки:21navigation+20recast Python tests=41; новые4params tests проверяют
+uint32/не uint64, порядок, truncation/trailing, count, nonfinite/dimensions,
+zero threshold и bounded search.3grid tests проверяют сохранение дублей,
+карантин конфликтов без winner и независимость grid order/layer.
+Независимо проверены все26fragment SHA/57anchor bytes, source chains и
+все19098grid/hash/source identities непосредственно по native buffer headers.
+Cross-tile graph, special links, coordinate conversion, active versions и
+проходимость ещё не доказаны; routes_verified=0/navigation_ready=false.
+
+## 18 октября — native external matcher выполнен на18430тайлах
+
+`recast-portal-emulator.py` использует изолированный Unicorn2.1.4 и четыре
+закреплённых корня:145243d60 (portal matcher),14524c4d0 (detail height),
+145240c20 (triangle height),145255220 (resize/count). Проверяет EXE/proof/
+fragment SHA, разрешает исполнение только их unwind ranges. Сохраняет SHA
+всех10file-backed страниц. Клиентский процесс/OS/imports не вызываются.
+Пропущен только caller cookie call14524441c→148796040; численная логика,
+сэмплирование треугольников и resize fast path исполняются как код клиента.
+Output array заранее имеет capacity4096, поэтому native allocator не нужен;
+попытка перейти в неожиданный код отклоняется. Максимум2млн инструкций/вызов.
+
+Input buffers read-only,≤8MiB каждый, native reads за их концом отклоняются.
+Writes разрешены только в локальном scratch256KiB. Полный расклад native sections
+восстановлен по14523c4a8..14523c587 и проверен на точное покрытие каждого buffer:
+header88, vertices24*n, polygons32*n, links16*n, detail6*n align8,
+detail vertices24*n, triangles4*n align8, BV16*n, point80*n, segment112*n,
+cluster32*n, poly-cluster2*n align8. Это pointer layout для нативных readers,
+не полная семантика special/BV/cluster секций.
+Native salt/tile-ref bits синтетические для двух локальных tiles; из результата
+используются только target polygon index и double interval.
+
+Направления grid закреплены таблицей14523cdf0 (сырые32байта в provenance)
+и ветвями14523ca3f..14523ca5b:0(+1,0),1(+1,+1),2(0,+1),3(-1,+1),
+4(-1,0),5(-1,-1),6(0,-1),7(+1,-1). Использованы observed sides0/2/4/6,
+соседняя ячейка либо другая layer той же ячейки, как в native callers.
+Дубли668 исключены только при одинаковом полном buffer SHA, конфликты запрещены.
+
+`build-recast-portal-evidence.py` проверил10synthetic cases:flat, height69/71,
+sloped0/35/36→100, crossing heights, plane mismatch, wrong side, width<epsilon.
+Важное поведение: endpoint gate использует удвоенный parameter, отдельный
+detail sample сравнивается с самим parameter; поэтому35 не следует описывать
+как универсальное «максимальный перепад35» или переводить в игровые единицы.
+Проверена reciprocal seam первых двух extracted tiles.12native calls,
+6detail/6triangle calls. Отчёт `maps/navigation-study/portal-native-evidence.json`
+SHA256 `160f4dc7aa7cc571c3fd3e80d40a029c618eb13a8f189582b2159af6ed36a472`.
+
+`build-recast-external-graph.py --height 35` выполнил полный проход candidate
+union. Точный prefilter только plane/overlap/side; после него всегда native
+matcher, включая настоящий detail height (не линейная аппроксимация модели).
+Результат18430tiles/104961boundary edges,106595native calls,
+125718directed portals и2953rejected candidate pairs. Detail helper188calls,
+triangle helper332calls. Записан graph.json со source tile/hash, source polygon/
+edge, target tile/polygon и native interval. Порог35 задан явно; его кандидат
+в nav-parameter-candidates.json не превратился в подтверждённую runtime-привязку.
+Отчёт `maps/navigation-study/external-graph-height-35.0/index.json` SHA256
+`3a8889aca5ac29ee6646dd75c3175d7943440249ef6862241c76ff60422b7a24`.
+
+`audit-recast-external-graph.py` независимо сверяет graph/grid/buffer SHA,
+все source identities, polygon/vertex bounds, native grid directions/opposite
+side/plane и interval на пересечении source/target рёбер. Все125718порталов
+имеют reverse polygon pair (missing reverse0).32равномерно выбранных запроса
+повторены native matcher и дали точное совпадение результатов/порядка.
+Отчёт `maps/navigation-study/external-graph-height-35.0/audit.json` SHA256
+`12059a90589081ec552346d8086297779c640c831be53215fd2ec3bd3d00df1c`.
+
+Проверки21navigation+24recast Python tests=45.4новых tests: section alignment,
+changed counts/trailing/version и opposite directions. Native10synthetic gates
+и32replay — дополнительные функциональные проверки, не прибавлены к45.
+Порядок после native proofs/geometry/grid: build-recast-portal-evidence.py →
+build-recast-external-graph.py --height 35 → audit-recast-external-graph.py.
+Повторный PAK scan/extract/codec emulation не нужен при неизменных SHA.
+
+Границы: это полный результат matcher для сохранённой candidate union с явными
+archive/custom-version/property/height assumptions. Runtime active coverage и
+параметры не подтверждены; link allocation limits, load order, byte-quantized
+intervals, special links и преобразование world→map ещё не смоделированы.
+Не доказывает проходимость персонажем; routes_verified=0/navigation_ready=false.
+
+## 18 октября — native coordinate basis и исследовательский слой карты
+
+`build-recast-coordinate-evidence.py` проверяет тот же EXE SHA,29anchors двух
+raycast wrappers1452b6b30/14529c5c0, фрагменты и sign-bit mask (1<<63).
+В1452b6b69 R8 сохраняется в R12, RDX в stack+58;1452b6c99 берёт исходную точку,
+1452b6ca6..1452b6d04 формирует два массива(-X,Z,-Y), которые передаются
+dtNavMeshQuery::raycast145252290 через R8/R9.1452b6db6..1452b6ddc переводит
+возвращаемый вектор обратно(-X,-Z,Y). Второй wrapper независимо использует тот
+же порядок и sign-bit XOR. Масштаба/подгонки по рамке/смещения в блоках нет.
+`recast-coordinate-math.py` описывает именно этот базис; применение не выбирает
+runtime-версию данных. В изолированной Unicorn2.1.4 выполнены два непрерывных
+блока conversion:69basis/random/signed-zero cases, две forward-точки и inverse,
+все24байта каждой проверки совпали; неожиданный код/немаппируемый write запрещён.
+Отчёт `code-clues/recast-coordinate-evidence.json` SHA256
+`25dfb01b6fc816a9af3b5eea1082f35c04fbb3f68a6efa79d6bc9055a2336a52`.
+
+`build-recast-map-overlay.py` проверяет EXE/model/proof fragments, цепочку
+grid→geometry→buffer manifests и каждый buffer/tile SHA. Проецирует native
+vertices в мировыеXY по(-navX,-navZ), высоту сохраняет в height_range тайла.
+Все18430unique tiles/207420vertices,101090surface polygons;62special raw>=64
+не рисуются и не становятся обычными проходами. Vertex coordinates сохранены
+в double JSON без округления. Bounds вычислены по используемым вершинам.
+`maps/atlas/navigation-overlay.json`:12664988байт, SHA256
+`0f9587f3176ed02a75dce6607f38ca0aff9e35d681ccf36cd2150261217f61ca`.
+Manifest содержит file/SHA/stats/proof link и включён в scene.navigation_overlay.
+world-map builder создаёт overlay только при наличии координатного proof/grid;
+устаревшие SHA останавливают сборку. Source scene/manifest вновь закреплены.
+
+На странице отдельный checkbox «Навигационная сетка · исследование», по умолчанию
+выключен. JSON12.7MB грузится при первом включении через существующую SHA-проверку.
+`nav-overlay-model.js` валидирует schema/finite coords/bounds/indices и запрещает
+объявлять research data navigation_ready=true. Выбирает только viewport tiles;
+при размерности ячейки<6px рисуется coarse rectangle, иначе обычные полигоны.
+Цвет фиолетовый, фон/области/точки и карточки сохраняются; NPC/названия поверх.
+Панель явно сообщает all heights/непроверенные active version и проходимость.
+При ошибке загрузки слой снимается, статус показывает ошибку и допускает retry.
+Смена world context фильтрует прежние слои; сетка физического Nocturne остаётся
+общей. Полноценные пути или оценка высоты для персонажа этим UI не заявлены.
+
+Порядок после native geometry/grid: build-recast-coordinate-evidence.py →
+build-world-map.py (вызывает build-recast-map-overlay.py и развёртывает HTML/JS/model).
+Отдельно build-recast-map-overlay.py обновляет data/manifest; для включения ссылки
+в сцену и развёртывания UI нужен world-map builder. PAK scan/native codec/portal
+matcher повторять не нужно при неизменных входах.
+
+Проверки:27recast+21navigation+8world-map Python=56,30world-map+3nav-overlay Node=33,
+всего89.3новых Python tests — axes/inverse/signed zero/invalid coordinates;
+3Node — viewport/LOD, bad geometry, запрет false navigation readiness.
+Независимо все207420projected vertices и101090faces сверены с native buffers,
+scene→overlay manifest/data SHA,3deployed files и полная JS validation18430tiles.
+Браузер: checkbox сначалаfalse, lazy load успешен/error пуст;233% показывал9589
+viewport tiles,14413%24tiles,1375%849tiles. На Squall Hill контуры совпадают
+с дорогами/площадками проверенного участка, NPC и labels поверх, zoom не сдвигает
+геометрию относительно фона. Это визуальная сверка участка, не доказательство
+активной версии/всех областей/реальной проходимости.
+Снимок `phone-exit/.tools/ux-audit-321001/19-navigation-overlay.png`.
+World-map.js query version v=20261018-nav-overlay; routes_verified=0 и
+navigation_ready=false сохраняются.
+
+## 18 октября — особые переходы: исходные точки и предварительное отображение
+
+`build-recast-special-code.py` закрепляет42опорных инструкции/10фрагментов того
+же EXE с SHA256 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+Корни: codec1452ba8b0, start attachment14523da30, end attachment14523f590,
+optional custom predicate145250990. Point record80байт: start3double+0,
+end3double+24, horizontal radius double+48, search height double+56,
+identifier uint64+64, polygon uint16+72, side byte+74, flags byte+75.
+Последние4байта не интерпретированы. Serializer custom-version97 gate сохраняет
+uint64ID, старый путь zero-extends32bit; height пишется отдельным проходом
+для version>=11. Start/end attachment обращаются к двум вершинам специального
+полигона; эти baked vertices могут отличаться от исходных точек.
+НулевойID обходит один optional predicate; это не доказательство доступности.
+Отчёт `code-clues/recast-special-code.json` SHA256
+`b8611a50021f225d818cc241a5c7602cb903fc22bd13376d69268df5cf540d59`.
+
+`decode-recast-special-links.py` проверяет native EXE/fragments/coordinate model,
+цепочку grid→geometry→buffers и SHA каждого исходного буфера/тайла. На18430
+уникальных тайлах62point records,62с нулевымID,0неразобранных special polygons.
+Raw80байт, SHA, offset, polygon index, side/flags/tail и обе пары координат
+сохранены. Исходные nav→world[-X,-Z,Y] точки и baked vertices не подменяются
+друг другом;61пара endpoint отличается. Числовых совпаденийID с компонентами0.
+Для39записей оба упорядоченных endpoint совпадают с расчётом lift preview
+при tolerance1e-6. Это только пространственное совпадение: component binding
+и мировые координаты lift preview остаются неподтверждёнными.
+Отчёт `maps/navigation-study/special-links/index.json` SHA256
+`ec642d08a2c0b523dd06e7b33efcb4f6a4473fa95d0948ff7dd1218a035e63cd`.
+
+Overlay теперь содержит отдельный `special_links`, source report SHA и62записи;
+они по-прежнему исключены из обычных surface polygons. Новый размер12699722байт,
+SHA256 `2e25787eaf598b5e2203d8eba1470f81cc71b1b635e7ee791372f5ef9b95a8fc`.
+Прежний SHA выше относится к состоянию до добавления special layer.
+В UI отдельный checkbox «Особые переходы · предварительно», по умолчанию
+выключен; список/кнопка фокусировки, пунктир между исходнымиA/B, URL `navLink`.
+Карточка показывает исходныеXYZ/разницу высот, baked coordinates в раскрытии,
+источники и ссылку на расчёт лифта при пространственном совпадении.
+Направление не изображается стрелкой. Слой работает независимо от обычной сетки.
+Query version HTML: `v=20261018-nav-special`.
+
+Порядок при готовых geometry/grid/coordinate proofs и lift preview:
+
+```powershell
+python phone-exit/bots/resource-tools/vampir/build-recast-special-code.py
+python phone-exit/bots/resource-tools/vampir/decode-recast-special-links.py
+python phone-exit/bots/resource-tools/vampir/build-world-map.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-special-links.py
+```
+
+При изменении lift preview сначала обновить его, затем special report, затем
+overlay/world-map. Устаревший SHA останавливает сборку. Повторный PAK scan/
+извлечение/codec emulation не нужен при неизменных источниках.
+
+Независимый `audit-recast-special-links.py` вычисляет смещения секций отдельно
+от декодера; проверяет все62raw records, poly/vertices, original/bakedXYZ,
+39совпадений, source/native/buffer SHA, overlay/scene manifests и4deployedfiles.
+Результат сохранён в `special-links/audit.json`. Проверки:31recast+21navigation+
+8world-map Python=60,5nav-overlay+30world-map Node=35; всего95.
+Новые4Python: original/baked distinction, uint64zero/max, malformed fields,
+пространственное совпадение не является binding. Новые2Node: hit testing
+с учётом масштаба/вертикальныхXYсовпадающих точек и validation endpoints.
+
+Визуальная проверка special layer на этом этапе не завершена: браузерный
+инструмент отклонил доступ к текущей вкладке по URL policy. Screenshot20 не
+получен. Проверка ordinary overlay со снимком19 выше остаётся отдельной.
+Назначение переходов, direction/flags semantics, runtime attachment/условия,
+active coverage/property/custom-version assumptions и реальные маршруты
+ещё требуют исследования. routes_verified=0/navigation_ready=false.
+
+## 18 октября — флаги переходов и три проверки направления
+
+`recast-special-flags.py` описывает упаковку metadata и отдельный direction gate.
+`build-recast-special-direction-evidence.py` закрепляет27anchors/32fragments
+того же EXE SHA, проверяет SHA модели/исходного special report и histogram
+всех62записей: flags192 (0xC0). Point bit0x40 включает предварительный поиск
+поверхности145243b00 перед fallback145245510. Оба пути дополнительно проверяют
+горизонтальное расстояние к исходной точке против radius². Это не доказательство
+итоговой точки/доступности: весь attachment ещё не эмулирован.
+
+Start14523db9f..dbb3 преобразует старший бит point flags в metadata0x20;
+start→surface получает0xC0|direction|0x10, surface→start0xC0|direction.
+End14523f78c..f826 использует opposite side для end→surface и source side для
+surface→end; добавляет0x40 и direction0x20. Sentinel0x80 для того же тайла
+удаляется для разных тайлов. Без point bit0x80 обратная сторона получает0x10.
+Создание связи14524faf0 записывает endpoint index в link+12, metadata в link+13,
+ссылку на целевой polygon в+0, next list index в+8.
+
+Три query loops145245c06,145246795,1452484e4 читают link+13 и применяют
+ограничение только при `(metadata & 0x60) == 0x40`. В этой ветке наличие0x10
+сравнивается с boolean query field+0x41c. Runtime значение/настройка этого поля
+не установлены. Metadata с0x20 обходит именно этот gate в обоих направлениях.
+Затем остаются polygon/include/exclude/cost/custom filters и другие условия.
+Это уточняет прежнее «direction неизвестно»: сохранённый флаг двусторонности
+доказан на уровне указанных обработчиков, реальная доступность ещё неизвестна.
+
+Unicorn2.1.4 исполняет только ограниченные блоки без вызовов/игрового процесса:
+256start-packing,9216end-packing (256flags×9sides×2tile cases×2directions),
+1536query-gate cases (256metadata×2mode×3loops) — всего11008, все совпали.
+Кодовые страницы read/execute only; guard допускает только выбранный блок и
+явный reject exit, writes только в локальный stack, лимит200instructions/case.
+Report сохраняет EXE/fragments/pages/model/source SHA и digest результатов.
+`code-clues/recast-special-direction-evidence.json` SHA256
+`6f9d44d27b96ab8c90ef6b00b339257219dd688711f208ed6e9f22389dca2742`.
+
+Команда после special report (закреплённые зависимости в .tools):
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-special-direction-evidence.py
+python phone-exit/bots/resource-tools/vampir/build-world-map.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-special-links.py
+```
+
+Overlay builder проверяет EXE/fragments/model/source report SHA и histogram,
+добавляет `special_direction_evidence` и marker всем62записям. Карточка сообщает:
+флаг клиента не запрещает A→B/B→A; присоединение и остальные условия требуют
+проверки. Стрелки проходимого маршрута на карте не добавлены. Новый overlay
+12702314байт SHA256 `10820406a481e040160ca8cc9a46bbe0382cd17ce983a971b83aa5b617591bb2`.
+HTML query version `v=20261018-nav-direction`.
+
+35recast Python tests/5overlay Node tests прошли, JS syntax check успешен.
+4новых Python tests проверяют двусторонний gate, противоположные metadata без
+старшего бита, same/cross tile sentinel и запрет переполнения входов.
+Независимый all62audit дополнительно сверяет direction evidence SHA/model/source,
+markers и прежние buffer/coordinate/spatial/deployed проверки. Полный deployed
+overlay18430tiles/62special links прошёл JS validation, HTTP страницы200.
+Браузерная визуальная проверка по-прежнему не завершена из-за URL policy.
+Полный attachment, значение query field+0x41c, прочие filters, active coverage,
+component binding и реальные маршруты остаются. navigation_ready=false.
+
+## 18 октября — native nearest-surface fallback для концов переходов
+
+`recast-nearest-emulator.py` исполняет полные клиентские функции145245510
+(nearest fallback),1452513c0 (tile polygon query),14523e360 (closest point),
+1452427e0 (polygon/edge geometry),145240c20 (triangle height). Базовый harness —
+recast-portal-emulator.py, но разрешённый code set заменён nearest-фрагментами;
+пропускаются только cookie calls1452456f2/14523e8f6. Input buffers read-only,
+write только scratch, code pages read/execute,2млнinstructions/query.
+Каждый native tile query ограничен128polygons; насыщение отдельно помечается.
+
+Явный режим: указатель BV-tree в копии tile descriptor зануляется, исходный
+tile buffer не изменяется. Это нативная no-BV ветка145251681, не доказанный
+runtime режим. Она пропускает special raw type>=64 и polygons с flags0 при
+переданном skip-zero-flags=true. Выбирается минимальное квадратное3Dрасстояние
+по native closest-point, строгое улучшение сохраняет первого при равенстве.
+Затем `abs(candidateY-pointY) <= extentY`; вызывающий attachment дополнительно
+проверяет XZ-distance²<=radius². Предпочтительный поиск145243b00 с area-priority
+не воспроизведён: runtime priorities неизвестны.
+
+`build-recast-nearest-candidates.py` проверяет11anchors и source цепочку
+special/grid→geometry→buffers, EXE SHA и все tile SHA. ДляA проверяется только
+собственный тайл; дляB — все тайлы candidate union, чьи сохранённые3Dbounds
+пересекают endpoint±[radius,height,radius]. Это полный набор данного3Dbbox
+критерия, не native side/load-order dispatch. Совпадение с start polygon
+не считается отдельным end candidate. Поле attachment_verified вездеfalse.
+
+6native synthetic cases: inside, exact height boundary, above height,
+outside edge, special polygon exclusion, zero polygon flags exclusion.
+136real queries (62start+74end),142native calls вместе сsynthetics.
+ДляA61radius-accepted,60точных численных совпадений с baked points; дляB у62есть
+radius candidate и у60есть точное совпадение baked. Насыщённых query arrays0.
+Расхождения: special-8904-0/end10.8083499383ед.; special-9432-0/start не найден,
+end7.6387538271ед.; special-16660-0/start25.4790459851ед. Значения — расстояния
+между candidate и сохранённой вершиной, не ошибка карты или runtime test.
+Различия BV/area priorities/порядка/версий ещё требуют проверки.
+
+Отчёт `maps/navigation-study/special-links/nearest-candidates.json` SHA256
+`fb2b220ee678a9926984ad27e503987b3cec7256c06c0d00efdce86f8c50f5ae`.
+Содержит raw source IDs/SHA,11anchors/14native fragments/11pages SHA, synthetic
+inputs/results, все136results/indices/coordinates/radius status и ограничения.
+`audit-recast-nearest-candidates.py` независимо проверяет source/native/page SHA,
+все3Dbbox candidate sets, polygon type/flags, radius/distances и сохраняет
+audit;16равномерно выбранных native queries повторены с точным совпадением.
+
+Порядок после special report (закреплённые capstone5.0.6/Unicorn2.1.4):
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-nearest-candidates.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-nearest-candidates.py
+python phone-exit/bots/resource-tools/vampir/build-world-map.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-special-links.py
+```
+
+Overlay builder проверяет source/model/native/audit SHA; в62карточки добавлено
+раскрытие «Предварительная проверка поверхности», совпадения A/B и proof link.
+Результат без кандидата описывается как отсутствие в этом режиме; проходимость
+не выводится. JS validator не разрешает candidate превращать в confirmed
+attachment, или заявлять совпадение без найденной поверхности.
+Overlay12713031байт SHA256
+`99b6df18f39b4d28767aa2c176ca19bbffba3de4f87e43b5baf6f1d365195fc9`,
+query version `v=20261018-nav-nearest`. All62scene/overlay/deployed audit и
+полная JS validation18430tiles/62checks прошли, HTTP страницы200.
+38recast Python+6overlay Node tests прошли;3новых Python проверяют bbox height/
+touching bounds, XZ-radius boundary и invalid native inputs,1новый Node
+проверяет запрет ложного attachment/matched status. Визуальная проверка
+незавершённая из-за URL policy браузера. Полный attachment/активная сетка/
+runtime filters/параметры/порядок/реальные маршруты остаются неизвестными.
+
+## 18 октября — BV/priority study и native endpoint attachment
+
+`recast-bv-nearest-emulator.py` сохраняет BV-tree, включает native preferred
+query145243b00 и передаёт64явных priority bytes.20anchors/26fragments закрепляют
+цепочку сериализованных quantization doubles:1452b9771/97b8/97ff → stack+168/
+170/178, init14524dd50 копирует их в nav+24/+32/+40. Tile header byte+38
+выбирает scale index,1452514ee читает nav+24+index*8; minima quantization
+маскируются even, maxima odd. Кандидат параметров содержит
+[0.02500000037252903,0.050999999046325684,0.050999999046325684]; точные значения
+сохраняются в report, а property boundary/runtime binding остаются неизвестны.
+
+Preferred query берёт polygon area `(raw & 0x3f)` → byte nav+0x94+area,
+выбирает меньший priority и затем меньшее3Dрасстояние внутри одного priority.
+Это числовые категории10/11/63, их семантические названия не установлены.
+Во всех исследованных source/target tiles только эти3обычных area IDs.
+`build-recast-bv-nearest-study.py` выполняет8режимов: BV fallback, равные
+priorities и все6строгих порядков10/11/63. Это counterfactual inputs,
+не извлечённые runtime priorities.8synthetic cases (BV inside/edge/height
+boundary/height rejection × fallback/preferred),1088real queries (136×8),
+всего1096native queries, saturated0. При равных priorities ближайшие валидные
+результаты остаются прежними; предпочтение area63 воспроизводит end8904,
+предпочтение area11 — start16660. Preferred result сам по себе ещё не attachment:
+выбранная точка может нарушать radius, после чего вызывающий код берёт fallback.
+Отчёт `special-links/bv-priority-study.json` SHA256
+`ead2444f56f85990ad88f27b64d09e8c2e1e7a583b42b91dc8b20e44b2ab3bfd`.
+
+`recast-attachment-emulator.py` выполняет полные native functions14523da30
+(start),14523f590 (end) и14524faf0 (create link), включая preferred→fallback,
+radius/height checks, пропуск end без start и запрет end==start reference.
+14anchors/9fragments закрепляют эти вызовы/ветки. Native ближайшие точки
+пишутся в специальные vertices; создаются polygon list heads и16-byte links.
+Пропускаются только ранее закреплённые cookie calls, game process/OS/imports
+не вызываются. Input tile copies допускают запись только4-byte polygon heads
+и24-byte special vertices; прочие writes запрещены guard. Для каждой пары
+polygon heads сброшены в-1, runtime link pool64записи заранее выделен в scratch,
+synthetic ref bits/salts сохранены явно. Расширение пула/allocator не исполняется.
+Cluster linking отключён пятым аргументом end routine.
+
+`build-recast-attachment-study.py` выбирает target grid из stored side и
+закреплённых SIDE_STEPS; оставляет bbox-кандидатов из предыдущего исследования.
+Для каждого из62переходов ровно1target tile. Это явная модель dispatch для
+candidate union, а не доказательство active runtime load order/coverage.
+7наборов priorities (equal+6strict orders),434native pairs,868вызовов start/end
+плюс внутренние nearest/link helpers. Во всех сценариях61start/61both connected;
+special-9432-0 не создаёт ни одной связи, его endpoints остаются исходными.
+Это результат данных входов, не доказательство неработающего перехода в игре.
+
+Точных воспроизведений обеих baked vertices среди connected pairs:
+
+| Приоритеты от меньшего к большему | Совпавшие переходы |
+|---|---:|
+| Все равны | 59 |
+| 10 → 11 → 63 | 54 |
+| 10 → 63 → 11 | 53 |
+| 11 → 10 → 63 | 54 |
+| 11 → 63 → 10 | 61 |
+| 63 → 10 → 11 | 60 |
+| 63 → 11 → 10 | 60 |
+
+Таким образом, один из проверенных наборов восстанавливает все61подсоединённые
+геометрии. Он подобран по совпадениям, не подтверждён source property/runtime
+setter. Никакого активного порядка priorities или семантики area IDs из этого
+не следует. Остальные реальные настройки/граф загрузки требуют исследования.
+`special-links/attachment-study.json` SHA256
+`4ded6e282149eab03bd58f631e3c97112b62cc9ee13faf5708b98c26d0fdfe13`.
+
+`audit-recast-attachment-study.py` проверяет model/source/EXE/fragments/pages,
+все434графа: refs/indices/source identities, reciprocal links, start/end flags,
+совпадения vertices и summaries.28полных native pair replays дали точное
+совпадение links/vertices/write counts. Audit закреплён SHA исходного report.
+Native source EXE SHA прежний:
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+
+Порядок после no-BV nearest report/audit и special source reports:
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-bv-nearest-study.py
+python phone-exit/bots/resource-tools/vampir/build-recast-attachment-study.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-attachment-study.py
+python phone-exit/bots/resource-tools/vampir/build-world-map.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-special-links.py
+```
+
+Overlay builder проверяет source/model/native/audit SHA и выбирает единственный
+сценарий с наибольшим числом exact geometry matches. При неоднозначности сборка
+останавливается для пересмотра UI. Карточка содержит раскрытие «Воспроизведение
+присоединения · предварительно», условия/proof link и явную пометку о подобранных
+настройках. `runtime_verified=false` и прежний `attachment_verified=false`
+сохраняются. JS запрещает превратить сценарий в runtime evidence или заявить
+matches_baked без connected. Предыдущий блок переименован в «Упрощённая проверка
+поверхности», его данные не подменяются новым сценарием.
+Overlay12719090байт SHA256
+`84ecdec7cb03701592082004f525533c26ca05930c3c9d181925aeff74570225`, query version
+`v=20261018-nav-attachment`. All62overlay/scene/deployed audit, full JS validation
+18430tiles/62scenario markers и HTTP200 прошли.42recast+8world-map Python=50,
+7overlay Node tests;4новых Python проверяют write bounds, argument bounds и BV
+fixture alignment,1Node — запрет ложного runtime status. Визуальная проверка
+по-прежнему не завершена после URL policy отказа, новый screenshot не получен.
+Full route ещё не доказан: активная сетка/параметры/priorities, полный side/load
+dispatch, cluster links и реальные Android/world traversal остаются неизвестны.
+routes_verified=0/navigation_ready=false.
+
+## 18 октября — источник area-priority ranks в коде клиента
+
+Найден leaf setter14523d610..14523d63c (нет .pdata): четыре movups копируют
+64байта изRDX в nav RCX+0x94/+0xA4/+0xB4/+0xC4. Найден прямой CALL в .text —
+1452b4943; этот вызов подтверждён декодированным wrapper1452b4800.
+Граница leaf закреплена исходными байтами/SHA/полным disassembly доret,
+а не предположением о размере функции.
+
+Wrapper берёт `[wrapper]` → `[owner+0x400]` → `[value+0x10]`, затем
+`R14=filterPointer+8`. Цепочка статически подтверждена, имя UObject property
+owner+0x400 и активный объект пока не установлены. ИзR14+8 иR14+0x208
+читаются два массива64double (то есть filterPointer+16 и+528). Для каждого
+area ID0..63 вычисляется сумма, формируется16-byte запись double+int32 ID.
+1452b490c вызывает sort142405a70;1452b4920..4930 записывает позицию отсортированного
+элемента как rank[areaID],1452b4943 передаёт64byte array в setter.
+Native constructor145240ad0 отдельно зануляет все64rank bytes; это начальное
+состояние до пересчёта, не свидетельство активного фильтра.
+
+Сортировка выполняется по возрастанию суммы. Каждая категория получает отдельный
+ordinal0..63 даже при равной сумме; это не dense rank по уникальным стоимостям.
+Native quicksort/heap fallback не сохраняют порядок равных ключей по ID.
+В тесте всех одинаковых сумм IDs0/32 меняются местами, ранги11/63/10 равны
+11/63/10. Эти числа относятся к конкретному EXE/входам, не к активной карте.
+По одному порядку11→63→10 нельзя восстановить численные значения двух массивов
+или объявить семантические имена area IDs.
+
+`recast-area-priority-emulator.py` исполняет native sum loop, полный sort и
+heap fallback, rank loop и leaf copy; wrapper allocations/object lookup не
+исполняются.64sum rows заранее выделены в scratch; рост TArray не допускается.
+Imported stub1487a2ecd проверен через PE import descriptor/IAT:
+`api-ms-win-crt-math-l1-1-0.dll!logf`, slot148945d80. Единственный math shim
+разрешён только для float32 input64, результат1082463634bits; native float
+удвоение/truncation вычисляют depth8. Memset shim только обнуляет checked
+scratch744байта; cookie call142405c4c пропущен. Это объявленные harness shims,
+не выполнение внешней CRT/OS. Остальной неожиданный код запрещён,2млнinstructions
+на блок, native writes толькоscratch, входные cost arrays read-only и ограничены
+read guard. Исходный EXE SHA прежний c7552efd…713dfc8.
+
+`build-recast-area-priority-evidence.py` закрепляет22anchors/14fragments/6pages,
+эмулирует72набора: equal/increasing/decreasing/fixed-cost override/four tie groups/
+fractions+negatives/large finite/signed zero и64seeded random arrays.
+Все суммы, ascending ordering, ID permutation и ordinal copies проверены;
+heap fallback реально вызван50раз. Отчёт
+`code-clues/recast-area-priority-evidence.json` SHA256
+`a842b4d598a788019ed04a1013d6fe8a2fbc63ac05490c3a4f58d261432e96a1`.
+`audit-recast-area-priority.py` независимо сверяет source/model/native/page SHA,
+все72sum/order/rank outputs и повторяет12native cases с точным совпадением.
+Порядок после сохранённого native-enums/proof EXE:
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-area-priority-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-area-priority.py
+python phone-exit/bots/resource-tools/vampir/build-world-map.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-special-links.py
+```
+
+Карточка исследовательского присоединения дополнена ссылкой на расчёт priorities
+и указанием, что активные значения фильтра не найдены. Overlay builder проверяет
+report/audit/model/native SHA и сохраняет active_values_verified=false.
+Overlay12719285байт SHA256
+`850596cb90ac48d17deb0037add4ad5587428e4f2f960f17fea9cc595c44c68e`, query version
+`v=20261018-nav-priority`.46recast Python+7overlay Node tests, source/scene/
+4deployedfiles audit и HTTP200 прошли. Новые4Python tests проверяют cost shape/
+finite/sum overflow, read bounds и PE named/ordinal/missing import resolution.
+Визуальная проверка всё ещё не завершена из-за прежнего URL policy отказа.
+Следующая необходимая связь — активные filter arrays/класс и property owner+0x400,
+их создание/изменение перед загрузкой тайлов. Проходимость и runtime mesh ещё
+не доказаны: active_cost_arrays_verified=false/navigation_ready=false.
+
+## 18 октября — native area identities и сохранённые Blueprint-фильтры
+
+`build-navigation-filter-code.py` закрепляет48anchors/23fragments того же
+Windows EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
+Class getter1454c54e0 использует literal NnRecastNavMesh, constructor pointer
+1454ccdb0; leaf wrapper20байт заканчивается JMP1454d0020. Этот конструктор
+загружает точные классы BP_NavQuery_Default/ShortPath/ExcludeHiddenPath по
+`/Game/RED/Blueprint/Navigation/` и записывает ссылки в поля780/788/790hex.
+Эти ссылки ещё не соединены с активным shared filter owner+0x400.
+
+Constructor формирует SupportedArea records через14526edf0; R8d пишется в
+record+16, class pointer в+24. Проверены class getters/literals и ID arguments:
+
+| ID по native constructor | Класс | Запись DefaultCost при конструировании |
+|---:|---|---:|
+| 10 | NavArea_Obstacle | 1 000 000 |
+| 11 | NnNavArea_HiddenPath | 1 |
+| 12 | NnNavArea_MainRoad | 0,5 |
+| 13 | NnNavArea_Forbidden | 2 000 000 |
+| 63 | NavArea_Default | 1 |
+
+Для10/11 дополнительно найдены явные lookup branches1454e0230. ID63 связывает
+base constructor145297f60 с NavArea_Default getter иR8d0x3f. Поля DefaultCost
+float+48 и FixedAreaEnteringCost float+52 закреплены именованными native
+property descriptors. Base constructor записывает оба одним qword1.0/0.0;
+подклассы меняют DefaultCost. Это записи native construction, не применённые
+CDO/Blueprint/runtime значения. Constructor FixedAreaEnteringCost=0 остаётся
+отдельным фактом и не заполняет пропуски в cooked записях.
+
+Native NavigationQueryFilter class params14971fd60 содержат class getter
+145267a60 (подтверждённый literal NavigationQueryFilter) и property array
+14971f9d0. Construct-class function1452681d0 передаёт эти params в1417cbfb0.
+Array содержит вложенный struct Areas, собственно array Areas, IncludeFlags,
+ExcludeFlags. Inner Areas descriptor вызывает145268210; он ссылается на struct
+registry14b1333d0 с именем NavigationFilterArea и property array14971ee30.
+Порядок6полей: AreaClass, TravelCostOverride, EnteringCostOverride, bIsExcluded,
+bOverrideTravelCost, bOverrideEnteringCost. Это проверенная schema association,
+не порядок случайно соседних строк EXE.
+`code-clues/navigation-filter-code.json` SHA256
+`cfb3f005523fc3e296143a3033baff72dedec751c8c09833c1b45027c7c3f5ff`.
+
+`build-navigation-filter-resources.py` использует точный первый package path
+в entries.json, проверяет PAK path/stat/sample SHA и metadata SHA. Body выбирается
+из соседей только при единственном совпадении полной export accounting и
+generated class/CDO identity. Все версии сохранены, активная не выбирается:
+
+| PAK | Asset/body entries |
+|---|---|
+| pakchunk100-Windows | Combat2302/2303, Default2304/2305, ExcludeHiddenPath2306/2307, ShortPath2308/2309 |
+| ProjectRED-Windows | Default6070/6071, ExcludeHiddenPath6072/6073, ShortPath6074/6075 |
+
+`maps/navigation-study/filter-resources/index.json` SHA256
+`4d58e85d8607ce9e8bf73428e5d74e94fc9ebb6bf7041453251d95515f48cbdd`.
+7variants/4paths, superclass всех NavigationQueryFilter подтверждён import/export
+tables. Сохранены14parts, всеexport ranges/SHA и raw class imports.
+
+`decode-navigation-filter-resources.py` разбирает unversioned Areas array CDO
+по этой schema, сохраняя zero masks/indices/raw spans. Omitted fields остаются
+отсутствующими. Class references разрешаются через фактические import chains
+в /Script/NavigationSystem или /Script/NnFramework. Invalid bool/reference/
+nonfinite value/unknown field/truncated suffix завершают разбор ошибкой.
+Четыре хвостовых байта сохранены uninterpreted, их семантика не приписана.
+15explicit area records,0различий CDO hash для одинакового package path.
+
+| Фильтр | Явно включённые travel-cost overrides | Прочие явные записи |
+|---|---|---|
+| Default | Default=1, MainRoad=0,5 | bIsExcluded=false |
+| ShortPath | Default=1, MainRoad=0,5, Obstacle=1 | bIsExcluded=false |
+| Combat | MainRoad=1, Obstacle=1 | Default содержит travel value1 с override=false |
+| ExcludeHiddenPath | Нет | HiddenPath: bIsExcluded=true; travel value1 с override=false |
+
+Во всех этих записях EnteringCostOverride=0 явно сериализован zero mask,
+bOverrideEnteringCost=false. Неактивное значение TravelCostOverride не
+приравнивается к применённой стоимости. Таблица описывает CDO-данные, не
+подтверждает выбранный фильтр персонажа или исключение участка в текущей игре.
+`filter-resources/decoded.json` SHA256
+`2794b8c60f3364242a8a9785e27af313bae0a07681323623f193dbdd943770dc`.
+
+`audit-navigation-filter-resources.py` повторно извлекает все14parts из PAK,
+сверяет EXE/fragments/descriptors/class params/literals, imports/наследование,
+export tables/CDO SHA и все15decoded records; проверяет идентичность вариантов.
+Audit SHA привязан к decoded/native reports. Порядок:
+
+```powershell
+python phone-exit/bots/resource-tools/vampir/build-navigation-filter-code.py
+python phone-exit/bots/resource-tools/vampir/build-navigation-filter-resources.py
+python phone-exit/bots/resource-tools/vampir/decode-navigation-filter-resources.py
+python phone-exit/bots/resource-tools/vampir/audit-navigation-filter-resources.py
+python phone-exit/bots/resource-tools/vampir/build-world-map.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-special-links.py
+```
+
+Карточка перехода → «Воспроизведение присоединения» → «Фильтры из ресурсов
+клиента» показывает4presets и явные flags/overrides. Только идентичные CDO
+варианты объединяются по path; при различиях сборка останавливается для
+пересмотра UI. Omitted values не становятся нулями/constructor defaults.
+Активный preset не выбран, переключение маршрутов не добавлено.
+Overlay12721955байт SHA256
+`8608182279b7f1b80ab258bce7abb092d9d55b31671d8c2b0008bd2bd395e5e9`, query version
+`v=20261018-nav-filters`.25navigation Python+7overlay Node tests прошли,
+all62scene/overlay/4deployedfiles audit и полная JS validation18430tiles/4presets,
+HTTP decoded report200. Новые4Python tests проверяют masks/omission/raw suffix,
+finite/count/field/bool bounds и class import cycles/missing refs.
+Визуальная проверка не завершена после прежнего URL policy отказа.
+Дальше нужны binding780/788/790→owner+0x400, реализация установки flags/costs
+и актуальные instance/runtime overrides. Имена constructor areas теперь известны,
+но конкретный полный runtime64cost array и проходимость ещё не подтверждены.
+
+## 18 октября — применение фильтров: clamping, исключение и копия base filter
+
+Native NavigationQueryFilter constructor14526c480 устанавливает vtable1497269e8;
+slot+0x2c8 указывает на initializer145282960. В145281400 читаются shared filter
+изowner+0x400/+0x408,143850680 создаёт копию и вызывает implementation slot+0x80.
+Для concrete vtable14972b858 этот slot указывает на145294b10 — новый объект
+с копированием cost/flag state. Затем145281666 вызывает initializer для копии.
+Этот путь объясняет отношение Blueprint query presets к base filter; он не
+доказывает, что конкретный Blueprint выбран сейчас, и не восстанавливает все
+предыдущие SupportedArea/instance/runtime изменения base arrays.
+
+Initializer обходит24-byte NavigationFilterArea records. Class ancestry и
+class→ID TMap проверяются перед применением; missing/null/unregistered class
+пропускается. Bool-property setter callbacks из проверенных descriptors:
+1437aa5c0 OR[record+16],1 (bIsExcluded),145268270 OR…,2 (bOverrideTravelCost),
+145268280 OR…,4 (bOverrideEnteringCost). Поэтому соответствие bool names
+флагам обработчика закреплено кодом, а не выведено по порядку имён.
+
+| Условие записи | Native действие |
+|---|---|
+| bIsExcluded | вызов14145d5b0→virtual+0x20; остальные cost overrides этой записи пропущены |
+| bOverrideTravelCost | MAXSS(value,1.0f) →14145ae70→virtual+0x10 |
+| bOverrideEnteringCost | MAXSS(value,0.0f) →1414532b0→virtual+0x18 |
+
+Concrete setters145294560/4590 преобразуют float32 вdouble и пишут travel
+impl+16+area*8 или entering impl+528+area*8. Exclude1452945b0 записывает travel
+3.4028234663852886e38 (float max, double bits47efffffe0000000), не создаёт отдельный
+подтверждённый runtime запрет маршрута. Include/exclude polygon masks через
+wrappers14385f9c0/9b0 →slots+0x58/+0x68 пишутся в impl+0x420/+0x422.
+Начальные masks NavigationQueryFilter constructor:65535/0.
+
+`recast-filter-apply-emulator.py` исполняет full native concrete constructor
+145299c20→14523af10 и initializer145282960, все перечисленные wrappers/setters.
+Native constructor заполняет travel64ones, entering64zeroes, затем исключает
+area0; это локальное исходное состояние проверки. Class ancestry и TMap lookup
+layout синтетические и ограниченные, NavArea getter145267310 возвращает
+синтетический root через явно объявленный stub. Единственный CRT shim обнуляет
+512байт entering array при checked destination/value/count. Других UE/OS/import
+вызовов harness не выполняет. Writes только256KiB scratch, instruction limit2M.
+Cloning/default-filter selection/caching изучены статически и не исполняются.
+
+`build-recast-filter-apply-evidence.py` закрепляет26anchors/15fragments,
+10полностью декодированных leaf wrappers/setters,7vtable slots/3bool setters,
+clamp literal и12native pages.33native cases: все7cooked variants,8flag masks,
+7travel clamp values,5entering values, masks37/4, null/unregistered class,
+повторный override и оба порядка excluded↔override. Выключенный override
+сохраняет исходную стоимость, запись excluded пропускает entering/travel,
+последующие записи того же area применяются по порядку.33результата совпали
+с отдельной моделью;12native replay в audit совпали точно.
+Отчёт `code-clues/recast-filter-apply-evidence.json` SHA256
+`6e4626e4a0ff8d258b369bae4ee84218d0f0d635aef6e7a93126f39becd85d47`.
+Исходный EXE SHA прежний c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
+
+Для Default/ShortPath сохранённый MainRoad TravelCostOverride0.5 с override=true
+даёт setter value1.0; это отличается от constructor DefaultCost0.5 класса
+NnNavArea_MainRoad. Эти два этапа сохраняются отдельно. Не утверждается, что
+активная итоговая стоимость MainRoad или прочих областей в игре равна1.
+Начальное содержимое owner+0x400 может включать supported-area/CDO/runtime
+настройки, которых нет в свежем объекте harness. ExcludeHiddenPath вызывает
+exclude setter для11, при этом его сохранённое TravelCostOverride1 не применяется.
+
+Порядок после filter code/resources/decoded/audit:
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-filter-apply-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-filter-apply.py
+python phone-exit/bots/resource-tools/vampir/build-world-map.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-special-links.py
+```
+
+Overlay хранит исходные filter records и отдельные `application_check` setter
+effects, source/audit/model/native SHA. В карточке «Фильтры из ресурсов клиента»
+для MainRoad показано `0,5 → 1` и пояснение clamping/сферы проверки. Excluded
+не показывает проигнорированные cost overrides как действующие. Новая ссылка
+«Проверка применения настроек» открывает report. Полные64stock arrays в UI не
+выдаются за actual Nocturne settings; runtime_selection_verified=false.
+Overlay12722543байт SHA256
+`a1fafce6d8db708fec9694f20d45dd31e8960477641971f05c0252ec7bfb4f07`, query version
+`v=20261018-nav-filter-apply`.50recast Python+8overlay Node tests прошли,
+all62scene/overlay/4deployedfiles audit, full18430tiles/preset validation иHTTP200.
+4новых Python tests — invalid inputs/maps, preservation of existing base costs,
+exclusion/record ordering;1новый Node запрещает ложный active selection и
+cost effects, несовместимые с exclusion/clamps. Визуальная проверка остаётся
+незавершённой из-за прежнего URL policy отказа.
+Следующий источник — заполнение/изменение базового shared filter owner+0x400
+и выбор Blueprint class780/788/790 для запросов. Active coverage и реальные
+маршруты по-прежнему не подтверждены.

@@ -235,6 +235,8 @@ def main(root=ROOT):
     detail_spec=importlib.util.spec_from_file_location('item_details_builder',Path(__file__).with_name('build-item-details.py'))
     detail_module=importlib.util.module_from_spec(detail_spec);detail_spec.loader.exec_module(detail_module)
     detail_result=detail_module.main(root)
+    report['item_effect_types']=detail_result['effect_types']
+    report['item_effect_type_source']=detail_result['effect_type_source']
     for item_id,book in detail_result['skill_books'].items():
         item_catalog[item_id]['craft_source_count']=len(book['craft_origins'])
     dump(out/'items.json',item_catalog)

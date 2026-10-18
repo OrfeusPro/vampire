@@ -8,6 +8,60 @@ details=importlib.util.module_from_spec(spec);spec.loader.exec_module(details)
 
 
 class PassiveTests(unittest.TestCase):
+    def test_material_uses_group_exact_items_per_recipe_but_keep_separate_cost_rows_and_outcomes(self):
+        def material(iid,rowid,value):return dict(item_id=iid,item_target_verified=True,record=dict(Id=rowid,CostType='2',CostValue=value))
+        a,b=material('12','a','2'),material('12','b','9')
+        crafts=[dict(Id='r'),dict(Id='r2')]
+        paths={'out':[dict(craft=crafts[0],outcome='SuccessRewardGroupId',reward_chain=[dict(Id='1')],relation_verified=True),
+                      dict(craft=crafts[0],outcome='BigSuccessRewardGroupId',reward_chain=[dict(Id='2')],relation_verified=True)],
+               '12':[dict(craft=crafts[1],outcome='FailRewardGroupId',reward_chain=[dict(Id='3')],relation_verified=True)]}
+        uses=details.craft_material_uses(crafts,[dict(Id='r',Name='Recipe',provenance=dict(csv_record=2))],
+            {'r':[a,b,material('123','c','1')],'r2':[material('12','d','0')]},paths)
+        self.assertEqual(len(uses['12']),2)
+        first=uses['12'][0]
+        self.assertEqual([e['record']['CostValue'] for e in first['material_rows']],['2','9'])
+        self.assertEqual([e['outcome'] for e in first['results']],['SuccessRewardGroupId','BigSuccessRewardGroupId'])
+        self.assertEqual(first['names_en'][0]['provenance'],dict(csv_record=2))
+        self.assertFalse(first['runtime_available_verified'])
+        self.assertEqual(uses['123'][0]['material_rows'][0]['item_id'],'123')
+        self.assertNotIn('results',crafts[0])
+        reversed_uses=details.craft_material_uses(crafts,[dict(Id='r',Name='Recipe',provenance=dict(csv_record=2))],
+            {'r':[a,b,material('123','c','1')],'r2':[material('12','d','0')]},dict(reversed(list(paths.items()))))
+        self.assertEqual(uses,reversed_uses)
+
+    def test_material_uses_exclude_unproven_targets_assets_and_missing_recipe_groups(self):
+        craft=dict(Id='r')
+        bad=[dict(item_id='12',item_target_verified=False,record=dict(CostType='2')),
+             dict(item_id='12',item_target_verified=True,record=dict(CostType='1')),
+             dict(item_id=None,item_target_verified=True,record=dict(CostType='2'))]
+        orphan=dict(item_id='13',item_target_verified=True,record=dict(CostType='2'))
+        self.assertEqual(details.craft_material_uses([craft],[],{'r':bad,'orphan':[orphan]},{}),{})
+    def test_craft_materials_use_exact_group_not_empty_craft_info_or_id_prefix(self):
+        proof=dict(relation_verified=True,item_target_verified=True)
+        rows=[dict(Id='1',GroupId='12',CostType='2',CostParam='45',CostValue='9',CostEnchantLevel='3',UsingGroupId='0',CraftInfoId='',provenance=dict(csv_record=2)),
+              dict(Id='2',GroupId='123',CostType='1',CostParam='Gold',CostValue='0',CostEnchantLevel='',UsingGroupId='1',CraftInfoId='12'),
+              dict(Id='12suffix',GroupId='missing',CostType='2',CostParam='45',CostValue='2',CraftInfoId='12')]
+        groups,issues=details.craft_material_groups([dict(Id='12'),dict(Id='123'),dict(Id='empty')],rows,proof)
+        self.assertEqual([r['record']['Id'] for r in groups['12']],['1'])
+        self.assertEqual(groups['12'][0]['item_id'],'45')
+        self.assertEqual(groups['12'][0]['record']['provenance'],dict(csv_record=2))
+        self.assertEqual(groups['12'][0]['record']['CostEnchantLevel'],'3')
+        self.assertFalse(groups['12'][0]['runtime_cost_enforcement_verified'])
+        self.assertEqual(groups['123'][0]['record']['CostValue'],'0')
+        self.assertIsNone(groups['123'][0]['item_id'])
+        self.assertEqual(groups['empty'],[])
+        self.assertEqual(issues,[dict(kind='material_without_recipe',record=rows[2])])
+
+    def test_craft_material_item_targets_require_proof_type_and_complete_positive_int32(self):
+        base=dict(GroupId='c',CostType='2',CostValue='2',UsingGroupId='0')
+        params=['0','-1','12tail','2147483648','','0012']
+        rows=[dict(base,Id=str(i),CostParam=p) for i,p in enumerate(params)]
+        rows.append(dict(base,Id='other',CostType='3',CostParam='12'))
+        groups,_=details.craft_material_groups([dict(Id='c')],rows,dict(relation_verified=True,item_target_verified=True))
+        self.assertEqual([r['item_id'] for r in groups['c']],[None,None,None,None,None,'12',None])
+        self.assertNotIn('item_id',rows[0])
+        with self.assertRaises(ValueError):details.craft_material_groups([],rows,dict(relation_verified=False))
+
     def test_craft_sources_cover_nonbook_items_and_preserve_multiple_paths(self):
         craft=dict(Id='c',FailRewardGroupId='f',SuccessRewardGroupId='s',BigSuccessRewardGroupId='')
         rewards=[dict(Id='1',GroupId='f',Type='1',Param='material',MinCount='2',MaxCount='3',Rate='7'),

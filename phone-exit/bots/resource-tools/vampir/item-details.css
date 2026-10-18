@@ -16,10 +16,10 @@
 .blessing-panel h3{color:#d8bd95;margin-bottom:6px}.blessing-panel>p{margin:0 0 18px;font-size:12px;color:#99a9bb}
 .enchant-control{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #304057;color:#aabbce;font-size:12px}
 .item-full-details .enchant-control select{margin:0;min-width:80px;border-color:#52647c;padding:6px 10px;background:#253246;font-weight:600;color:#edf3fc}
-.stat-list{display:grid;gap:3px}.stat-line{align-items:center;padding:10px 8px;border:0;border-radius:6px;min-height:42px;gap:12px;font-size:13px}
+.stat-list{display:grid;gap:2px}.stat-line{align-items:center;padding:6px 8px;border:0;border-radius:5px;min-height:30px;gap:10px;font-size:12px}
 .stat-line:nth-child(odd){background:#ffffff04}.stat-line:hover,.stat-line:focus-within{background:#ffffff09}
-.stat-line strong{font-size:15px;font-variant-numeric:tabular-nums;color:#eef4fc;white-space:nowrap}
-.stat-name{display:flex;align-items:center;gap:7px;text-align:left;border:0;border-radius:4px;background:transparent;color:#bacadd;font:inherit;padding:0;min-width:0;cursor:help}
+.stat-line strong{font-size:13px;font-variant-numeric:tabular-nums;color:#eef4fc;white-space:nowrap}
+.stat-name{display:flex;align-items:center;gap:7px;text-align:left;border:0;border-radius:4px;background:transparent;color:#bacadd;font:inherit;padding:0;min-width:0;min-height:0;line-height:1.5;cursor:help}
 .stat-name:hover{color:#e6effb}.stat-name:focus-visible{outline:2px solid #62e7bc;outline-offset:5px}
 .stat-info{color:#71859d;font-size:12px;flex:none}
 .stat-panel>details,.stat-panel>div>details{margin-top:14px;padding-top:10px;border-top:1px solid #2a374a;font-size:11px}
@@ -42,3 +42,34 @@
 
 .stat-values{display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:6px}.stat-values .stat-bonus{font-size:12px;font-weight:500;color:#62e7bc}.stat-values .stat-bonus.negative{color:#f4ad98}.stat-panel>p{font-size:11px;color:#91a4bc;margin:0 0 12px}
 .passive-panel{margin-top:16px}.passive-skill{padding:14px 0;border-top:1px solid #304057}.passive-skill h4{margin:0 0 5px;color:#d9c4f5;font-size:15px}.passive-skill small{color:#91a4bc;font-size:11px}.passive-description{white-space:pre-line;font-size:13px;line-height:1.7;color:#c4d2e3}.passive-skill details{font-size:11px;margin-top:12px}
+.craft-material-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #304057;overflow-wrap:anywhere}.craft-material-row p{margin:4px 0;color:#c0cede;font-size:12px}.craft-material-row small{color:#91a4bc;font-size:11px}.craft-material-icons{display:flex;gap:4px;flex:none}.craft-material-icons .item-icon{display:block;width:44px;height:44px;margin:0;background-size:cover}.craft-material-icons img{width:100%;height:100%;object-fit:contain}
+.craft-uses{margin-top:16px}.craft-item-reference{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.craft-item-reference .item-icon{display:block;width:44px;height:44px;margin:0;background-size:cover}.craft-item-reference img{width:100%;height:100%;object-fit:contain}.craft-result-row{margin:10px 0;padding:10px;border:1px solid #304057;border-radius:8px}.craft-result-row p{margin:6px 0 0;font-size:12px;color:#b2c2d3}
+#product .stat-panel{padding:12px;border-radius:9px}
+#product .stat-panel h3{font-size:14px;margin-bottom:10px}
+#product .blessing-panel>p{margin-bottom:10px;font-size:11px}
+#product .enchant-control{margin-bottom:8px;padding-bottom:8px;font-size:11px}
+#product .enchant-control select{min-height:30px;min-width:68px;padding:4px 8px;font-size:12px}
+#product .stat-panel>details,#product .stat-panel>div>details{margin-top:9px;padding-top:8px}
+#product .product-panels{gap:12px}
+.craft-origins{margin-top:14px}.craft-recipe{padding:12px 0;border-top:1px solid #304057}
+.craft-recipe>h4{font-size:13px;margin:0 0 6px;color:#dce8f5}
+.craft-recipe>p{font-size:11px;color:#91a4bc;margin:4px 0 8px}
+.craft-recipe>h4+ p+ h4{font-size:11px;color:#91a4bc}
+.craft-recipe .craft-material-row{padding:6px 0;gap:9px}
+.craft-recipe .craft-material-row p{font-size:11px;margin:2px 0}
+.craft-recipe .craft-material-row a,.craft-recipe .craft-material-row strong{font-size:12px}
+.craft-recipe .craft-material-icons .item-icon{width:36px;height:36px}
+.craft-recipe>details{margin-top:9px;font-size:11px}
+.craft-material-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:8px 0 12px}
+.craft-recipe .craft-material-grid .craft-material-row{margin:0;padding:9px;border:1px solid #304057;border-radius:7px;background:#ffffff03;min-width:0;align-items:center}
+.craft-material-grid .craft-material-row>div{min-width:0}
+.craft-material-grid .craft-material-icons{align-self:center}
+@media(max-width:500px){.craft-material-grid{grid-template-columns:1fr}}
+.craft-recipe-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.craft-recipe-header>h4{font-size:13px;margin:2px 0 6px;color:#dce8f5;flex:1;min-width:180px}
+.craft-recipe-costs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.craft-recipe .craft-recipe-costs .craft-material-row{padding:7px 10px;margin:0;border:1px solid #4e4835;border-radius:7px;background:#d3ad5510;min-width:160px}
+.craft-recipe-costs strong{color:#e9d7a1}
+.craft-recipe-intro{flex:1;min-width:180px}
+.craft-recipe-intro>h4{font-size:13px;margin:2px 0 5px;color:#dce8f5}
+.craft-recipe-intro>p{font-size:11px;color:#91a4bc;margin:0}

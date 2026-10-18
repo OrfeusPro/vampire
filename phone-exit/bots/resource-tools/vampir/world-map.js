@@ -13,6 +13,8 @@ let skillIndexPending=null, skillFilter=null, skillId='', skillEpoch=0;
 const monsterCache = new Map();
 let areaTaskIndex = new Map(), spotTaskIndex = new Map();
 let liftPreview = null, selectedLift = null;
+let navOverlay=null, navOverlayPending=null;
+let selectedNavSpecial=null;
 
 function fail(error) { $('error').textContent = 'Не удалось загрузить данные: ' + error.message; }
 async function json(url, hash) {
@@ -60,6 +62,7 @@ function updateUrl() {
   if ($('directLootOnly').checked) params.set('npcLoot', '1');
   if (selected) { params.set('point', selected.key); if (selected.type === 'NpcSpawn') params.set('npc', selected.npc_id); }
   if (selectedLift && $('liftLayer').checked) params.set('lift', selectedLift.id);
+  if(selectedNavSpecial&&$('navSpecialLayer')?.checked)params.set('navLink',selectedNavSpecial.id);
   history.replaceState(null, '', location.pathname + (params.size ? '?' + params : ''));
 }
 function renderList() {
@@ -130,6 +133,89 @@ function drawPolygons() {
     ctx.lineWidth = polygon.type === 'World' ? 1.6 : 1; ctx.stroke();
   }
 }
+function drawNavigation(){
+  if(!navOverlay||!$('navLayer')?.checked)return;
+  const tiles=NavOverlayModel.visible(navOverlay.tiles,view,dimensions.width,dimensions.height);
+  ctx.save();ctx.strokeStyle='#bb9af0a6';ctx.fillStyle='#ad86ed24';ctx.lineWidth=.7;
+  for(const tile of tiles){
+    if(!NavOverlayModel.detailed(tile,view.s)){
+      const [x,y]=pointScreen({x:tile.bounds[0],y:tile.bounds[1]});
+      ctx.fillRect(x,y,(tile.bounds[2]-tile.bounds[0])*view.s,(tile.bounds[3]-tile.bounds[1])*view.s);
+      continue;
+    }
+    const vertices=tile.vertices.map(v=>pointScreen({x:v[0],y:v[1]}));
+    for(const face of tile.polygons){ctx.beginPath();face.forEach((id,i)=>{const [x,y]=vertices[id];i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.closePath();ctx.fill();ctx.stroke();}
+  }
+  ctx.restore();
+  $('navStatus').textContent=navOverlay.stats.tiles.toLocaleString('ru')+' ячеек · '+navOverlay.stats.surface_polygons.toLocaleString('ru')+' полигонов · в окне '+tiles.length.toLocaleString('ru')+' ячеек.';
+}
+function drawSpecialNavigation(){
+  if(!navOverlay||!$('navSpecialLayer')?.checked)return;
+  ctx.save();ctx.strokeStyle='#f6c566';ctx.fillStyle='#f6c566';
+  for(const p of navOverlay.special_links||[]){
+    const [ax,ay]=pointScreen({x:p.start[0],y:p.start[1]}),[bx,by]=pointScreen({x:p.end[0],y:p.end[1]});
+    ctx.lineWidth=p===selectedNavSpecial?3:1.7;ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();ctx.setLineDash([]);
+    for(const [x,y] of [[ax,ay],[bx,by]]){ctx.beginPath();ctx.arc(x,y,p===selectedNavSpecial?6:4,0,Math.PI*2);ctx.stroke();}
+    if(p===selectedNavSpecial){ctx.font='bold 13px system-ui';ctx.fillText('A',ax+10,ay-10);ctx.fillText('B',bx+10,by-10);}
+  }
+  ctx.restore();
+}
+function focusNavSpecial(p){
+  if(!p)return;
+  ++cardEpoch;selected=null;selectedLift=null;selectedNavSpecial=p;
+  $('worlds').value='all';$('search').value='';update();$('navSpecialLayer').checked=true;$('navSpecialChoice').value=p.id;
+  $('selection').hidden=false;const card=$('card'),fmt=v=>v.map(x=>x.toLocaleString('ru',{maximumFractionDigits:2})).join(' · ');
+  card.replaceChildren(el('h2',p.label),el('p','Назначение и фактическая доступность перехода не подтверждены.','muted'));
+  if(p.direction_gate_bypassed_by_flag&&navOverlay.special_direction_evidence){
+    card.append(el('h3','Направление по флагам клиента'),el('p','Флаг клиента не запрещает движение A → B и B → A. Присоединение к сетке и остальные условия ещё требуют проверки.','muted'),link('Проверка флагов и кода клиента',navOverlay.special_direction_evidence.file));
+  }else card.append(el('p','Направление перехода ещё не подтверждено.','muted'));
+  if(p.surface_candidate_check&&navOverlay.special_nearest_evidence){
+    const check=p.surface_candidate_check;
+    const status=(found,matched)=>!found?'в этом режиме поверхность не найдена':matched?'найдена поверхность; точка совпадает с сохранённой вершиной':'найдена поверхность; точка отличается от сохранённой вершины';
+    const detail=el('details');detail.append(el('summary','Упрощённая проверка поверхности'),
+      el('p','A: '+status(check.start_found,check.start_matches_baked)),el('p','B: '+status(check.end_candidate_count>0,check.end_matches_baked)),
+      el('p','Проверка использует упрощённый режим клиентского поиска. Фактическое присоединение и проходимость в игре не подтверждены.','muted'),
+      link('Расчёт точек и ограничения проверки',navOverlay.special_nearest_evidence.file));card.append(detail);
+  }
+  if(p.native_attachment_scenario&&navOverlay.special_attachment_evidence){
+    const check=p.native_attachment_scenario,detail=el('details');
+    detail.append(el('summary','Воспроизведение присоединения · предварительно'),
+      el('p',check.matches_baked?'Клиентский алгоритм создал обе связи и точно воспроизвёл сохранённые точки в исследовательском сценарии.':check.connected?'Клиентский алгоритм создал обе связи; координаты отличаются от сохранённых.':'В исследовательском сценарии связь не создана. Это не доказывает отсутствие перехода в игре.'),
+      el('p','Настройки сценария подобраны при сравнении данных. Активные настройки игры, загрузка участков и фактическая проходимость ещё не подтверждены.','muted'),
+      link('Сценарии, связи и условия проверки',navOverlay.special_attachment_evidence.file));card.append(detail);
+    if(navOverlay.area_priority_evidence)detail.append(el('p','Приоритеты рассчитываются из значений игрового фильтра. Его активные значения пока не найдены.','muted'),link('Как клиент рассчитывает приоритеты',navOverlay.area_priority_evidence.file));
+    if(navOverlay.navigation_filter_presets&&navOverlay.navigation_filter_evidence){
+      const presets=el('details');presets.append(el('summary','Фильтры из ресурсов клиента'),el('p','Это сохранённые настройки фильтров клиента. Какой из них активен в игре сейчас, не подтверждено.','muted'));
+      if(navOverlay.navigation_filter_application_evidence)presets.append(el('p','Стрелка показывает изменение сохранённого значения при применении переопределения клиентом. Стоимость прохода ограничивается минимумом 1, входа — минимумом 0.','muted'));
+      for(const preset of navOverlay.navigation_filter_presets){
+        presets.append(el('h3',preset.name.replace('BP_NavQuery_','')));
+        for(const [index,area] of preset.areas.entries()){
+          const name=(area.AreaClass||'Неизвестная область').split('.').pop().replace(/^NnNavArea_|^NavArea_/,'');
+          const check=preset.application_check?.[index],shown=(raw,written)=>!Number.isFinite(raw)?'неизвестно':raw.toLocaleString('ru')+(Number.isFinite(written)&&written!==raw?' → '+written.toLocaleString('ru'):'');
+          const values=[];if(area.bIsExcluded===true)values.push('флаг исключения');
+          else{
+            if(area.bOverrideTravelCost===true)values.push('проход: '+shown(area.TravelCostOverride,check?.travel_written));
+            if(area.bOverrideEnteringCost===true)values.push('вход: '+shown(area.EnteringCostOverride,check?.entering_written));
+          }
+          presets.append(el('p',name+': '+(values.join(' · ')||'без явного переопределения'),'muted'));
+        }
+      }
+      presets.append(link('Записи фильтров и источники',navOverlay.navigation_filter_evidence.file));detail.append(presets);
+      if(navOverlay.navigation_filter_application_evidence)presets.append(el('p','Исключение пропускает переопределения стоимости той же записи. Проверка выполнена на локальном объекте фильтра; активное состояние игры не прочитано.','muted'),link('Проверка применения настроек',navOverlay.navigation_filter_application_evidence.file));
+    }
+  }
+  card.append(el('h3','Сохранённые точки · X · Y · Z'),el('p','A: '+fmt(p.start)),el('p','B: '+fmt(p.end)),
+    el('p','Разница высоты: '+(p.end[2]-p.start[2]).toLocaleString('ru',{maximumFractionDigits:2})+' ед. клиента'));
+  if(p.spatial_lift_candidates.length){
+    card.append(el('p','Координаты совпадают с предварительным расчётом лифта. Связь объектов по идентификатору не установлена.','muted'));
+    for(const candidate of p.spatial_lift_candidates){const button=el('button','Посмотреть расчёт лифта #'+candidate.lift_id,'member');button.onclick=()=>focusLift(liftPreview?.lifts.find(l=>l.id===candidate.lift_id));card.append(button);}
+  }
+  const baked=el('details');baked.append(el('summary','Точки в сохранённом полигоне'),el('p','A: '+fmt(p.baked_start)),el('p','B: '+fmt(p.baked_end)),el('p','Уточнение концов на поверхности и условия перехода требуют проверки.','muted'));card.append(baked);
+  if(navOverlay.special_source)card.append(link('Записи и источники специальных переходов',navOverlay.special_source.file));
+  const bounds=model.extent([p.start,p.end].map(v=>({x:v[0],y:v[1]})),scene.projection.world_bounds),panel=$('selection').getBoundingClientRect().width,available=Math.max(300,dimensions.width-panel-40);
+  view.s=Math.min((available-60)/Math.max(bounds[2]-bounds[0],12000),(dimensions.height-65)/Math.max(bounds[3]-bounds[1],12000));
+  view.x=(bounds[0]+bounds[2])/2+(dimensions.width-available)/(2*view.s);view.y=(bounds[1]+bounds[3])/2;schedule();updateUrl();
+}
 function drawRelation() {
   if (!$('relations').checked || !selected) return;
   for (const edge of model.portalDestination(scene, selected)) {
@@ -175,6 +261,7 @@ function nearestLift(x,y) {
 }
 function focusLift(lift) {
   if(!lift)return;
+  selectedNavSpecial=null;
   ++cardEpoch;selected=null;$('worlds').value='all';update();
   selectedLift=lift;$('liftLayer').checked=true;$('liftChoice').value=lift.id;
   $('liftPanel').querySelector('details').open=true;
@@ -208,7 +295,7 @@ function draw() {
   const width = Math.round(dimensions.width * ratio), height = Math.round(dimensions.height * ratio);
   if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0); ctx.clearRect(0, 0, dimensions.width, dimensions.height);
-  background(); drawPolygons();
+  background(); drawNavigation(); drawPolygons();
   groups = model.clusters(visible, view, dimensions.width, dimensions.height);
   groups.sort((a, b) => priority(b.type) - priority(a.type));
   const labels = [], obstacles = [];
@@ -248,10 +335,11 @@ function draw() {
     ctx.fillStyle='#151718ed';ctx.fillRect(box.x,box.y,box.width,box.height);
     ctx.fillStyle='#ffe7b5';ctx.fillText(byKey.get(box.key).text,box.x+6,box.y+15);
   }
-  drawRelation(); drawLiftPreview();
+  drawRelation(); drawLiftPreview(); drawSpecialNavigation();
   $('viewScale').textContent = 'Масштаб ' + Math.round(view.s / (dimensions.height / 615000) * 100) + '% · ' + groups.length + ' отметок в окне'+($('labels').checked?' · названий '+placed.length+' из '+candidates.length:'');
 }
 function focus(p) {
+  selectedNavSpecial=null;
   selectedLift = null;
   if (!p) return;
   if($('directLootOnly').checked && !(p.type==='NpcSpawn' && p.loot_count>0)){$('directLootOnly').checked=false;update();}
@@ -299,74 +387,114 @@ async function areaRewards() {
   return areaRewardsPending;
 }
 const renderMonsterFacts=MonsterCard.renderFacts;
-function renderLoot(card, p, detail = null, areaCandidate = false) {
+let rewardTooltip;
+function rewardHint(anchor, item, id, chains, areaCandidate) {
+  let hideTimer, ownedTip;
+  const label = item?.label || id;
+  const text = [label, item?.rarity?.label, 'ID '+id,
+    areaCandidate ? 'Награды области' : 'Личные записи NPC',
+    'Количество: '+(chains.length ? model.dropAmounts(chains).join(' / ') : 'не установлено'),
+    'Шанс в процентах не установлен.',
+    item?.icon?.images?.some(image=>image.color_verified===false)?'Цвет иконки ещё не сверен с Android.':null].filter(Boolean).join('\n');
+  anchor.setAttribute('aria-label', text);
+  function hide(){clearTimeout(hideTimer);ownedTip?.remove();if(rewardTooltip===ownedTip)rewardTooltip=null;ownedTip=null;anchor.removeAttribute('aria-describedby');}
+  function deferHide(){hideTimer=setTimeout(hide,120);}
+  function show(){
+    clearTimeout(hideTimer);
+    rewardTooltip?.remove();
+    const tip=el('div',undefined,'reward-tooltip');tip.id='reward-tooltip';tip.setAttribute('role','tooltip');
+    tip.append(el('strong',label),el('p',text.split('\n').slice(1).join('\n')));
+    if(chains.length){
+      const source=el('details');source.append(el('summary','Исходные данные · JSON'),el('pre',JSON.stringify(chains,null,2)));tip.append(source);
+    }
+    if(!item?.icon?.images?.length)tip.append(el('p','Иконка не найдена'));
+    if(item?.icon?.status==='ambiguous_paths')tip.append(el('p','Ресурс иконки неоднозначен'));
+    document.body.append(tip);rewardTooltip=tip;ownedTip=tip;anchor.setAttribute('aria-describedby',tip.id);
+    tip.addEventListener('mouseenter',()=>clearTimeout(hideTimer));tip.addEventListener('mouseleave',deferHide);
+    tip.addEventListener('focusin',()=>clearTimeout(hideTimer));
+    tip.addEventListener('focusout',event=>{if(!tip.contains(event.relatedTarget)&&event.relatedTarget!==anchor)deferHide();});
+    tip.addEventListener('keydown',event=>{if(event.key==='Escape'){hide();anchor.focus();hide();}});
+    const box=anchor.getBoundingClientRect(), width=tip.getBoundingClientRect().width;
+    tip.style.left=Math.max(8,Math.min(box.left,innerWidth-width-8))+'px';
+    const below=innerHeight-box.bottom-12, above=box.top-12;
+    tip.style.maxHeight=Math.max(80,Math.min(360,Math.max(below,above)))+'px';
+    if(below>=Math.min(240,above))tip.style.top=(box.bottom+6)+'px';else tip.style.bottom=(innerHeight-box.top+6)+'px';
+  }
+  anchor.addEventListener('mouseenter',show);anchor.addEventListener('mouseleave',deferHide);
+  anchor.addEventListener('focus',show);anchor.addEventListener('blur',event=>{if(!ownedTip?.contains(event.relatedTarget))deferHide();});
+  anchor.addEventListener('click',hide);anchor.addEventListener('keydown',event=>{if(event.key==='Escape')hide();});
+}
+function renderLoot(card, p, detail = null, areaCandidate = false, showNotice = true) {
   const links = areaCandidate ? Object.entries(detail.drops || {}).map(([item_id, chains]) => ({ item_id, chains: chains.length, item: scene.items[item_id] })) : model.itemsForNpc(scene, p.npc_id);
   links.sort((a, b) => ItemRarity.compare(a.item, b.item));
-  card.append(el('h3', areaCandidate ? 'Предметы в наградах области · ' + links.length : links.length ? 'Личные записи NPC · ' + links.length + ' предметов' : 'Прямые награды NPC не найдены'));
-  if (!links.length) { card.append(el('p', 'В доступных клиентских строках предметы для этого NPC не найдены. Это не доказывает отсутствие дропа в игре.', 'muted')); return; }
-  const grid = el('div', undefined, 'items'); card.append(grid); let limit = 18;
+  if (!links.length) { const empty=el('p','Личные предметные награды не найдены.','muted');empty.title='В доступных клиентских строках предметы для этого NPC не найдены. Это не доказывает отсутствие дропа в игре.';card.append(empty);return; }
+  const grid = el('div', undefined, 'reward-icons'); card.append(grid); let limit = 30;
   const more = el('button', 'Показать ещё предметы'); card.append(more);
   function render() {
     grid.replaceChildren();
     for (const row of links.slice(0, limit)) {
-      const item = row.item, container = el('div', undefined, 'item');
-      const a = link('', '../loot/items.html?item=' + row.item_id);
-      for (const image of item?.icon.images || []) {
+      const item = row.item;
+      const a = link('', '../loot/items.html?item=' + row.item_id);a.className='reward-icon';
+      for (const image of (item?.icon?.images || []).slice(0,1)) {
         const slot = el('span', undefined, 'item-icon'), img = el('img');
         const backgrounds = item?.rarity?.background?.images || [];
         if (backgrounds.length === 1) slot.style.backgroundImage = 'url("../../' + backgrounds[0].file + '")';
         img.src = '../../' + image.file; img.alt = item.label; img.loading = 'lazy'; slot.append(img); a.append(slot);
       }
-      a.append(el('span', item?.label || row.item_id)); container.append(a);
-      if (item?.rarity) container.append(el('span', item.rarity.label, 'item-rarity'));
-      const chains = detail?.drops[row.item_id] || [];
-      container.append(el('span', 'Кол-во в строке: ' + (chains.length ? model.dropAmounts(chains).join(' / ') : 'не установлено')));
-      if (chains.length) {
-        const source = el('details'); source.append(el('summary', 'Условия · ' + chains.length + ' цеп.'), el('pre', JSON.stringify(chains, null, 2))); container.append(source);
-      }
-      if (item?.icon.status === 'missing') container.append(el('span', 'Иконка не найдена'));
-      if (item?.icon.status === 'ambiguous_paths') container.append(el('span', 'Несколько ресурсов'));
-      const show = el('button', areaCandidate ? 'Области с предметом' : 'NPC с предметом'); show.onclick = () => { $('lootItem').value = row.item_id; $('rewardScope').value = areaCandidate ? 'area' : 'npc'; applyItem().catch(fail); }; container.append(show); grid.append(container);
+      if(!item?.icon?.images?.length)a.append(el('span','?','reward-missing'));
+      const chains = detail?.drops?.[row.item_id] || [];
+      rewardHint(a,item,row.item_id,chains,areaCandidate);grid.append(a);
     }
     more.hidden = limit >= links.length;
   }
   more.onclick = () => { limit += 24; render(); }; render();
-  if (links.some(row => row.item?.icon.images.some(image => image.color_verified === false))) card.append(el('p', 'Цвет части декодированных иконок ещё не сверен с Android.', 'muted'));
-  card.append(el('p', 'RewardRate / Rate — исходные единицы. Шанс в процентах не установлен.', 'muted'));
+  if(showNotice)card.append(el('p', 'RewardRate / Rate — исходные единицы. Шанс в процентах не установлен.', 'muted'));
 }
 async function showPoint(p) {
+  rewardTooltip?.remove(); rewardTooltip=null;
   const epoch = ++cardEpoch; $('selection').hidden = false;
   let monster = null;
-  const card = $('card'); card.replaceChildren(el('h2', p.label));
+  const card = $('card'); card.replaceChildren(el('h2', p.type === 'NpcSpawn' ? 'Ур. ' + (p.level || '—') + ' ' + p.label : p.label));
   if (p.type !== 'NpcSpawn') {
     card.append(el('p', layerNames[p.type] + ' · ' + p.id, 'muted'), el('p', 'Мир ' + p.world_id + ' · X ' + Math.round(p.x) + ' · Y ' + Math.round(p.y), 'muted'));
     card.append(link('Мир отдельно', 'world.html?world=' + p.world_id));
   }
   if (p.type === 'NpcSpawn') {
-    card.append(el('p', 'Уровень ' + (p.level || '—') + ' · NPC ' + p.npc_id + ' · мир ' + p.world_id, 'muted'));
+    card.append(el('p', 'NPC ' + p.npc_id + ' · мир ' + p.world_id, 'muted'));
     card.append(link('Открыть страницу NPC','monsters.html?npc='+encodeURIComponent(p.npc_id)));
     const loading = el('p', 'Загрузка дропа и характеристик…', 'muted'); card.append(loading);
     const detail = await monsterDetails(p.npc_id); if (epoch !== cardEpoch) return; loading.remove();
     monster = detail;
     MonsterCard.renderPortraits(card,detail.portraits,p.npc_id,p.label);
-    renderMonsterFacts(card, detail);
+    renderMonsterFacts(card, detail, false, false, false);
     const candidate = model.areaCandidate(detail, p);
     const clientScope = detail.drop_ui_selection_verified ? model.clientRewardScope(p) : null;
-    if(clientScope)card.append(el('p',clientScope==='area'?'По коду окна наград клиента список предметов этого размещения берётся из области '+p.area_id+'. Серверная выдача и шансы не проверены.':'По коду окна наград клиента список этого размещения берётся из NpcReward. Серверная выдача и шансы не проверены.','muted'));
-    if (model.itemsForNpc(scene, p.npc_id).length) renderLoot(card, p, detail);
-    else if (!candidate) renderLoot(card, p, detail); else card.append(el('p', 'Личные предметные награды NPC не найдены. Ниже отдельно показаны записи области.', 'muted'));
-    if (candidate) {
-      const section = el('details'), sectionBody = el('div');
-      section.append(el('summary', clientScope==='area'?'Список дропа клиента · награды области':'Отдельно: награды области · не подтверждены для убийства'), sectionBody); card.append(section);
-      const area = scene.points.find(point => point.type === 'Area' && point.id === p.area_id);
-      sectionBody.append(el('h3', 'Награды области · ' + (area?.label || p.area_id)));
-      sectionBody.append(el('p', clientScope==='area'?'Связь размещения с AreaReward подтверждена кодом клиентского окна наград. Опыт, валюты и предметы ниже — отдельные строки этой таблицы; фактическая серверная выдача за убийство ещё не проверена.':'Ниже — записи с совпадающим ID области размещения. Их применение к убийству этого монстра пока не подтверждено.', 'muted'));
-      renderMonsterFacts(sectionBody, { rewards: candidate.rewards }, true);
-      renderLoot(sectionBody, p, candidate, true);
-      if (!detail.rewards.length) section.open = true;
+    const personalCount = model.itemsForNpc(scene, p.npc_id).length;
+    const rewardAmounts=el('div',undefined,'npc-reward-amounts');
+    for(const [label,rewards] of [['Награды NPC',detail.rewards],['Награды области',candidate?.rewards]]){
+      if(!rewards?.some(r=>r.type_name!=='ERewardType::Item'&&r.type_name!=='ERewardType::RewardGroup'))continue;
+      const group=el('div');group.append(el('small',label));
+      group.title=label==='Награды области'?(clientScope==='area'?'AreaReward: связь подтверждена кодом окна наград; серверная выдача не проверена.':'Совпадение ID области; применение к убийству не подтверждено.'):'NpcReward; серверная выдача не проверена.';
+      renderMonsterFacts(group,{rewards},true,false);rewardAmounts.append(group);
     }
-    card.append(link('Полная добыча и условия NPC', '../loot/index.html?npc=' + p.npc_id));
-    card.append(link('Мир отдельно', 'world.html?world=' + p.world_id + '&npc=' + p.npc_id + '&spawn=' + p.id));
+    card.insertBefore(rewardAmounts,card.querySelector('details'));
+    const loot = el('div', undefined, 'npc-loot-block');
+    if(personalCount)loot.append(el('h3', 'Дроп NPC · '+personalCount));
+    renderLoot(loot, p, detail, false, false); card.append(loot);
+    if (candidate) {
+      const section = el('div', undefined, 'npc-loot-block'), sectionBody = el('div');
+      const count = Object.keys(candidate.drops || {}).length;
+      const heading=el('h3','Награды области · '+count);section.append(heading, sectionBody); card.append(section);
+      const area = scene.points.find(point => point.type === 'Area' && point.id === p.area_id);
+      heading.title=(area?.label || p.area_id)+(clientScope==='area'?' · AreaReward: связь подтверждена кодом окна наград.':' · совпадение ID области; применение к убийству не подтверждено.');
+      renderLoot(sectionBody, p, candidate, true, false);
+    }
+    const notes = el('details', undefined, 'npc-fold'); notes.append(el('summary', 'Источники и ограничения'));
+    notes.append(el('p', 'Данные клиента: серверная выдача, условия и гарантированность наград не проверены. RewardRate / Rate — исходные единицы; шанс в процентах не установлен.', 'muted'));
+    if(clientScope)notes.append(el('p',clientScope==='area'?'Окно наград использует AreaReward области '+p.area_id+'. Личные записи NPC показаны отдельно.':'Окно наград использует личные записи NpcReward.','muted'));
+    notes.append(link('Полная добыча и условия NPC', '../loot/index.html?npc=' + p.npc_id)); card.append(notes);
+    const actions = el('div', undefined, 'npc-actions');
+    actions.append(link('Мир отдельно', 'world.html?world=' + p.world_id + '&npc=' + p.npc_id + '&spawn=' + p.id)); card.append(actions);
     const placements = scene.points.filter(point => point.type === 'NpcSpawn' && point.npc_id === p.npc_id);
     const positions = el('details'); positions.append(el('summary', 'Размещения на Nocturne · ' + placements.length));
     for (const point of placements) { const button = el('button', 'Мир ' + point.world_id + ' · ' + point.id + ' · X ' + Math.round(point.x) + ' / Y ' + Math.round(point.y), 'member'); button.onclick = () => focus(point); positions.append(button); }
@@ -408,7 +536,8 @@ async function showPoint(p) {
     const conditions = el('p', 'Радиус размещения: ' + (row.Radius || '0') + ' · перемещения: ' + (row.MoveRadius || '0')
       + (row.VisibleOnQuestTaskInfoId && row.VisibleOnQuestTaskInfoId !== '0' ? ' · видимость связана с задачей ' + row.VisibleOnQuestTaskInfoId : '')
       + (row.VisibleOffQuestTaskInfoId && row.VisibleOffQuestTaskInfoId !== '0' ? ' · скрытие связано с задачей ' + row.VisibleOffQuestTaskInfoId : ''), 'muted');
-    card.insertBefore(conditions, source);
+    const placement = el('details', undefined, 'npc-fold'); placement.append(el('summary', 'Условия размещения'), conditions);
+    card.insertBefore(placement, source);
   }
   pre.textContent = JSON.stringify({ coordinate_anchor: p.anchor, ...row,
     ...(monster ? { battle: monster.battle, npc_reward_rows: monster.rewards, area_reward_candidate: monster.area_candidates?.[p.area_id] } : {}),
@@ -418,6 +547,7 @@ async function showPoint(p) {
     ...(p.type === 'Waypoint' ? { waypoints: model.portalDestination(scene, p) } : {}) }, null, 2);
 }
 function showGroup(group) {
+  selectedNavSpecial=null;
   if (group.type === 'NpcSpawn') {
     const choices = model.monsterChoices(group.points);
     if (choices.length === 1) { focus(choices[0].points[0]); return; }
@@ -521,7 +651,7 @@ canvas.onpointermove = e => {
   const g = nearest(x, y);
   $('hover').textContent = g ? g.points[0].label + (g.points.length > 1 ? ' · записей ' + g.points.length : '') : 'X ' + Math.round((x - rect.width / 2) / view.s + view.x) + ' · Y ' + Math.round((y - rect.height / 2) / view.s + view.y);
 };
-canvas.onpointerup = e => { drag = null; if (distance > 5) return; const r = canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,lift=nearestLift(x,y);if(lift){focusLift(lift);return;}const g = nearest(x,y); if (g) showGroup(g); };
+canvas.onpointerup = e => { drag = null; if (distance > 5) return; const r = canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,lift=nearestLift(x,y);if(lift){focusLift(lift);return;}const g = nearest(x,y); if (g)showGroup(g);else if(navOverlay&&$('navSpecialLayer')?.checked)focusNavSpecial(NavOverlayModel.nearestSpecial(navOverlay.special_links||[],view,dimensions.width,dimensions.height,x,y)); };
 canvas.onpointercancel = () => { drag = null; };
 function zoom(factor, anchor) {
   const r = canvas.getBoundingClientRect(), x = anchor ? anchor[0] - r.width / 2 : 0, y = anchor ? anchor[1] - r.height / 2 : 0;
@@ -555,9 +685,27 @@ $('applySkill').onclick=()=>applySkill().catch(fail);$('clearSkill').onclick=cle
 $('skillSearch').onkeydown=e=>{if(e.key==='Enter')applySkill().catch(fail);};
 $('rewardScope').onchange = () => { if (itemId) applyItem().catch(fail); };
 $('lootItem').onkeydown = e => { if (e.key === 'Enter') applyItem().catch(fail); };
-$('closeCard').onclick = () => { ++cardEpoch; selected = null;selectedLift=null; $('selection').hidden = true; schedule(); updateUrl(); };
+$('closeCard').onclick = () => { rewardTooltip?.remove();rewardTooltip=null; ++cardEpoch; selected = null;selectedLift=null;selectedNavSpecial=null; $('selection').hidden = true; schedule(); updateUrl(); };
 $('showLift').onclick=()=>focusLift(liftPreview?.lifts.find(lift=>lift.id===$('liftChoice').value)||liftPreview?.lifts.find(lift=>lift.calculated_links.length));
 $('liftLayer').onchange=()=>{if(!$('liftLayer').checked&&selectedLift){selectedLift=null;$('selection').hidden=true;}schedule();updateUrl();};
+async function loadNavOverlay(){
+  if(!navOverlay){
+    $('navStatus').textContent='Загрузка геометрии сетки…';
+    try{navOverlayPending??=json(scene.navigation_overlay.file,scene.navigation_overlay.sha256).then(NavOverlayModel.validate);navOverlay=await navOverlayPending;
+      $('navStatus').textContent=navOverlay.stats.tiles.toLocaleString('ru')+' ячеек · '+navOverlay.stats.surface_polygons.toLocaleString('ru')+' полигонов.';
+      if($('navSpecialChoice')?.options.length===1)for(const p of navOverlay.special_links||[]){const option=el('option',p.label);option.value=p.id;$('navSpecialChoice').append(option);}
+    }catch(error){navOverlayPending=null;throw error;}
+  }
+  return navOverlay;
+}
+async function toggleNavOverlay(){
+  if(!$('navLayer').checked&&!$('navSpecialLayer')?.checked){if(selectedNavSpecial){selectedNavSpecial=null;$('selection').hidden=true;}schedule();updateUrl();return;}
+  try{await loadNavOverlay();if(!$('navSpecialLayer')?.checked&&selectedNavSpecial){selectedNavSpecial=null;$('selection').hidden=true;}schedule();updateUrl();}
+  catch(error){$('navLayer').checked=false;if($('navSpecialLayer'))$('navSpecialLayer').checked=false;$('navStatus').textContent='Сетка не загружена: '+error.message;}
+}
+if($('navLayer'))$('navLayer').onchange=toggleNavOverlay;
+if($('navSpecialLayer'))$('navSpecialLayer').onchange=toggleNavOverlay;
+if($('showNavSpecial'))$('showNavSpecial').onclick=async()=>{try{await loadNavOverlay();focusNavSpecial(navOverlay.special_links?.find(p=>p.id===$('navSpecialChoice').value)||navOverlay.special_links?.[0]);}catch(error){$('navStatus').textContent=error.message;}};
 for (const id of ['labels', 'worldBounds', 'areaBounds', 'relations']) $(id).onchange = schedule;
 $('share').onclick = async () => { try { await navigator.clipboard.writeText(location.href); $('share').textContent = 'Ссылка скопирована'; } catch { $('status').textContent = location.href; } };
 window.addEventListener('resize', schedule);
@@ -565,6 +713,8 @@ window.addEventListener('resize', schedule);
   const requested = new URLSearchParams(location.search), manifest = await json('nocturne-manifest.json');
   $('directLootOnly').checked=requested.get('npcLoot')==='1';
   scene = await json(manifest.file, manifest.sha256);
+  if(scene.navigation_overlay&&$('navPanel')){$('navPanel').hidden=false;$('navStatus').textContent=scene.navigation_overlay.stats.tiles.toLocaleString('ru')+' ячеек · '+scene.navigation_overlay.stats.surface_polygons.toLocaleString('ru')+' полигонов. Загрузка при включении.';}
+  if(scene.navigation_overlay?.stats.special_links&&$('navSpecialPanel')){$('navSpecialPanel').hidden=false;$('navSpecialStatus').textContent=scene.navigation_overlay.stats.special_links+' записей · нажмите пунктир или выберите из списка.';}
   if(scene.lift_preview){
     liftPreview=await json(scene.lift_preview.file,scene.lift_preview.sha256);$('liftPanel').hidden=false;
     $('liftStatus').textContent=liftPreview.summary.lifts+' размещения · '+liftPreview.summary.calculated_links+' расчётных связей: '+liftPreview.summary.fully_explicit_lifts+' по явным значениям, '+liftPreview.summary.inherited_initial_lifts+' с начальными настройками клиента. '+(liftPreview.summary.lifts-liftPreview.summary.calculated_lifts)+' ещё не рассчитаны.';
@@ -586,7 +736,8 @@ window.addEventListener('resize', schedule);
   for (const [id, item] of Object.entries(scene.items)) { const option = el('option'); option.value = id + ' · ' + item.label; $('lootItems').append(option); }
   $('totals').textContent = 'Вся карта · ' + scene.stats.worlds + ' миров · ' + scene.stats.point_types.NpcSpawn.toLocaleString('ru') + ' записей NPC · ' + scene.stats.named_areas + ' названий областей';
   const geometry=scene.geometry_audit?.summary;
-  $('geometryStatus').textContent='Nocturne: '+scene.rotated_area_boxes.length+' контуров с неизвестной точкой вращения. '+(geometry?.nav_files?.['Nocturne_Nav.bin']||0)+' пар начальной и конечной точек для проверки маршрутов; проходимость пока не подтверждена. '+(geometry?.exported_nav_files===0?'В библиотеке извлечённых ресурсов файлы *_Nav.bin не найдены. ':'')+(geometry?.reference_asset_records?'В архивах найдены '+geometry.reference_asset_records+' записей RefNavMesh; их наличие ещё не подтверждает проходимость. ':'')+(geometry?.decoded_navigation_chunks?'Разобраны заголовки '+geometry.decoded_navigation_chunks+' частей Nocturne: ссылки и габариты, без полигонов прохода. ':'')+'Прямые линии и связи порталов не доказывают доступность пути.';
+  $('geometryStatus').textContent='Nocturne: '+(scene.stats.rotated_area_boxes_verified||0)+' повёрнутых контуров построены по проверенной формуле клиента вокруг центра Min/Max; '+scene.rotated_area_boxes.length+' контуров с неизвестной точкой вращения. '+(geometry?.nav_files?.['Nocturne_Nav.bin']||0)+' пар начальной и конечной точек для проверки маршрутов; проходимость пока не подтверждена. '+(geometry?.exported_nav_files===0?'В библиотеке извлечённых ресурсов файлы *_Nav.bin не найдены. ':'')+(geometry?.reference_asset_records?'В архивах найдены '+geometry.reference_asset_records+' записей RefNavMesh; их наличие ещё не подтверждает проходимость. ':'')+(geometry?.decoded_navigation_chunks?'Разобраны заголовки '+geometry.decoded_navigation_chunks+' частей Nocturne: ссылки и габариты, без полигонов прохода. ':'')+(geometry?.generated_nav_packages?'Дополнительно извлечено '+geometry.generated_nav_packages+' пакета навигационных данных; их связь с заголовком и проходимость ещё не подтверждены. ':'')+'Прямые линии и связи порталов не доказывают доступность пути.';
+  if($('generatedNavReport'))$('generatedNavReport').hidden=!geometry?.generated_nav_packages;
   $('unplacedTitle').textContent = 'Исходные записи: ' + scene.unplaced.length + ' без точки · ' + scene.rotated_area_boxes.length + ' контуров с неподтверждённым поворотом · ' + scene.invalid_area_boxes.length + ' с обратными Min/Max';
   $('unplacedList').textContent = JSON.stringify({ unplaced: scene.unplaced, rotated_area_boxes: scene.rotated_area_boxes, invalid_area_boxes: scene.invalid_area_boxes }, null, 2);
   $('sources').textContent = JSON.stringify({ stats: scene.stats, sources: scene.sources, limitations: scene.limitations }, null, 2);
@@ -604,4 +755,5 @@ window.addEventListener('resize', schedule);
     || scene.points.find(p => p.type === 'NpcSpawn' && p.npc_id === requested.get('npc') && ($('worlds').value === 'all' || p.world_id === $('worlds').value));
   if (point && (!skillFilter || visible.includes(point))) focus(point);
   if(requested.has('lift'))focusLift(liftPreview?.lifts.find(lift=>lift.id===requested.get('lift')));
+  if(requested.has('navLink')&&scene.navigation_overlay){await loadNavOverlay();focusNavSpecial(navOverlay.special_links?.find(p=>p.id===requested.get('navLink')));}
 })().catch(fail);

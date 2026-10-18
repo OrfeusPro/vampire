@@ -73,6 +73,16 @@ class WorldMapTests(unittest.TestCase):
         task = next(p for p in scene['points'] if p['type'] == 'QuestTask')
         self.assertEqual((task['world_id'], task['x'], task['y']), ('b', 500, 700))
 
+    def test_verified_rotated_box_is_projected_around_its_center_and_can_anchor_a_label(self):
+        self.tables['AreaBox']=[row(Id='rotated',WorldInfoId='b',AreaId='unknown',Yaw='90',AreaBoxMinPos='x=100,y=200',AreaBoxMaxPos='x=120,y=260')]
+        scene=builder.scene(self.tables,self.scope,{}, {},{}, {},rotation_verified=True)
+        self.assertEqual(scene['rotated_area_boxes'],[])
+        poly=scene['polygons'][0]
+        self.assertTrue(poly['rotation_verified'])
+        for a,b in zip(poly['vertices'][0],[140,220]):self.assertAlmostEqual(a,b,places=5)
+        label=next(p for p in scene['points'] if p['key']=='Area:unknown')
+        self.assertEqual((label['x'],label['y']),(110,230))
+
     def test_area_only_quest_has_link_without_false_target_coordinate(self):
         self.tables['QuestTask'][0]['TargetSpotInfoId'] = ''
         scene = self.build()

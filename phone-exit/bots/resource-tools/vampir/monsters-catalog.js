@@ -23,26 +23,30 @@
     const rows=Object.entries(source).sort(([id,a],[other,b])=>ItemRarity.compare(items[id],items[other])||alphabet.compare(itemName(id),itemName(other))||alphabet.compare(id,other));
     const section=node('section',undefined,'npc-section');parent.append(section);section.append(node('h3',(area?'Предметы в записях области':'Личные предметные награды')+' · '+rows.length));
     if(!rows.length){section.append(node('p',area?'Предметные строки области не найдены.':'Личные предметные награды NPC в данных не найдены. Это не доказывает отсутствие дропа в игре.','muted'));return;}
-    section.append(node('p',area?'Записи AreaReward показаны отдельно. Они не добавлены к личному дропу NPC.':'Записи NpcReward. Условия серверной выдачи и шансы в процентах не подтверждены.','muted'));
-    const grid=node('div',undefined,'catalog-grid'),more=node('button','Показать ещё предметы');section.append(grid,more);let shown=0;
+    section.querySelector('h3').title=area?'Записи AreaReward показаны отдельно; применение к убийству не подтверждено.':'Записи NpcReward. Серверная выдача и шансы в процентах не подтверждены.';
+    const grid=node('div',undefined,'npc-reward-grid'),more=node('button','Показать ещё предметы');section.append(grid,more);let shown=0;
     function append(){for(const [id,chains]of rows.slice(shown,shown+60)){
-      const item=items[id],card=node('article',undefined,'catalog-card'),title=node('h4'),url='../loot/items.html?item='+encodeURIComponent(id);
-      for(const image of item?.icon?.images||[]){const link=a('',url),slot=node('span',undefined,'item-icon'),img=node('img');img.src='../../'+image.file;img.alt=itemName(id);img.loading='lazy';const backgrounds=item?.rarity?.background?.images||[];if(backgrounds.length===1)slot.style.backgroundImage='url("../../'+backgrounds[0].file+'")';slot.append(img);link.append(slot);card.append(link);}
-      title.append(a(itemName(id),url));card.append(title,node('p',item?.rarity?.label||'Редкость не указана','muted'),node('p','Количество по строкам: '+WorldMapModel.dropAmounts(chains).join(' / '),'muted'),node('p','Шанс: не установлен','muted'));
-      raw(card,'Условия и исходные цепочки · '+chains.length,chains);grid.append(card);
+      MonsterCard.renderRewardIcon(grid,items[id],id,itemName(id),chains,area);
     }shown=Math.min(rows.length,shown+60);more.hidden=shown>=rows.length;}
     more.onclick=append;append();CatalogData.autoMore(more,append);
   }
   async function detail(row){
     $('listing').hidden=true;$('detail').hidden=false;const back=new URLSearchParams(params);back.delete('npc');$('back').href='monsters.html'+(back.size?'?'+back:'');$('crumb').textContent=row.name;document.title=row.name+' · Vampir';
-    const data=await json(row.detail.file,row.detail.sha256),card=$('npc');card.append(node('h2',row.name),node('p','Уровень '+(row.level||'—')+' · NPC '+row.id,'muted'));
+    const data=await json(row.detail.file,row.detail.sha256),card=$('npc');card.append(node('h2','Ур. '+(row.level||'—')+' '+row.name),node('p','NPC '+row.id,'muted'));
     MonsterCard.renderPortraits(card,data.portraits,row.id,row.name);
     const actions=node('div',undefined,'detail-actions');card.append(actions);
     if(row.on_nocturne)actions.append(a('Показать на Nocturne','index.html?npc='+encodeURIComponent(row.id),'button'));
     else if(row.world_ids.length)actions.append(a('Показать в мире '+row.world_ids[0],'world.html?world='+encodeURIComponent(row.world_ids[0])+'&npc='+encodeURIComponent(row.id),'button'));
     actions.append(a('Исходные данные NPC',row.detail.file,'button'));
     const lootIndex=await json('../loot/index.json');items=await json('../loot/'+lootIndex.files.items.file,lootIndex.files.items.sha256);
-    MonsterCard.renderFacts(card,data);
+    MonsterCard.renderFacts(card,data,false,false,false);
+    const amounts=node('div',undefined,'npc-reward-amounts');
+    for(const [label,rewards] of [['Награды NPC',data.rewards],...Object.values(data.area_candidates||{}).map(area=>['Награды области '+area.area_id,area.rewards])]){
+      if(!rewards?.some(r=>r.type_name!=='ERewardType::Item'&&r.type_name!=='ERewardType::RewardGroup'))continue;
+      const group=node('div');group.append(node('small',label));group.title=label==='Награды NPC'?'NpcReward; серверная выдача не проверена.':'AreaReward; выбор зависит от размещения, серверная выдача не проверена.';
+      MonsterCard.renderFacts(group,{rewards},true,false);amounts.append(group);
+    }
+    const stats=card.querySelector('.monsterStats');if(stats)stats.after(amounts);else card.append(amounts);
     if(!data.battle.length)card.append(node('p','Боевые параметры по указанной группе не найдены.','muted'));
     const skills=Object.values(data.skills||{});if(skills.length){const section=node('section',undefined,'npc-section');section.append(node('h3','Навыки · '+skills.length));for(const skill of skills){const name=skill.display_names?.map(n=>n.text).join(' / ')||'Навык '+skill.id;const line=node('p');line.append(a(name,'skills.html?skill='+encodeURIComponent(skill.id)),document.createTextNode(' · ID '+skill.id));section.append(line);}card.append(section);}
     drops(card,data.drops||{});

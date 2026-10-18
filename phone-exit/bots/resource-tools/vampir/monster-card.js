@@ -25,7 +25,7 @@ function renderBattleDetails(card, variants, detail) {
   }
   const source=el('details');source.append(el('summary','Исходные боевые записи'),el('pre',JSON.stringify(variants,null,2)));panel.append(source);card.append(panel);
 }
-function renderMonsterFacts(card, detail, rewardsOnly = false) {
+function renderMonsterFacts(card, detail, rewardsOnly = false, showNotice = true, showRewards = true) {
   const stats = el('div', undefined, 'monsterStats');
   const variants = rewardsOnly ? [] : detail?.battle || [];
   if (variants.length === 1) {
@@ -39,16 +39,18 @@ function renderMonsterFacts(card, detail, rewardsOnly = false) {
     renderBattleDetails(card, variants, detail);
   }
   const rewards = (detail?.rewards || []).filter(r => r.type_name !== 'ERewardType::Item' && r.type_name !== 'ERewardType::RewardGroup');
-  if (rewards.length) {
+  if (showRewards && rewards.length) {
     const summary = el('div', undefined, 'rewardSummary');
     for (const r of rewards) {
-      const label = r.type_name === 'ERewardType::Exp' ? 'Опыт' : ({Gold:'Золото',Diamond:'Алмазы'}[r.RewardParam] || r.RewardParam) || r.type_name.replace('ERewardType::', '');
+      const label = r.type_name === 'ERewardType::Exp' ? 'Опыт' : ({Gold:'Золото',Diamond:'Алмазы',EventDiamond:'Ивент-алмазы'}[r.RewardParam] || r.RewardParam) || r.type_name.replace('ERewardType::', '');
       const amount = r.MinRewardValue === r.MaxRewardValue ? number(r.MinRewardValue) : number(r.MinRewardValue) + '–' + number(r.MaxRewardValue);
-      summary.append(el('span', label + ': ' + amount, 'badge'));
+      const badge=el('span', label + ': ' + amount, 'badge');
+      badge.title=(r.RewardParam || r.type_name)+' · RewardRate: '+(r.RewardRate || 'не указан')+' (исходные единицы, не проценты). Серверная выдача не проверена.';
+      summary.append(badge);
     }
     card.append(summary);
   }
-  card.append(el('p', 'Данные клиента: серверные изменения, условия и гарантированность наград не проверены.', 'muted'));
+  if(showNotice)card.append(el('p', 'Данные клиента: серверные изменения, условия и гарантированность наград не проверены.', 'muted'));
 }
 function renderPortraits(parent,portraits,id,label,compact=false){
   if(!portraits?.images?.length)return;
@@ -62,5 +64,33 @@ function renderPortraits(parent,portraits,id,label,compact=false){
   }
   parent.append(group);
 }
-return {renderFacts:renderMonsterFacts,renderPortraits};
+let rewardTip;
+function renderRewardIcon(parent,item,id,label,chains,area=false){
+  const a=el('a',undefined,'npc-reward-icon');a.href='../loot/items.html?item='+encodeURIComponent(id);
+  const image=item?.icon?.images?.[0],backgrounds=item?.rarity?.background?.images||[];
+  if(backgrounds.length===1)a.style.backgroundImage='url("../../'+backgrounds[0].file+'")';
+  if(image){const img=el('img');img.src='../../'+image.file;img.alt=label;img.loading='lazy';a.append(img);}else a.append(el('span','?'));
+  const text=[label,item?.rarity?.label||'Редкость не указана','ID '+id,area?'Награды области':'Награды NPC',
+    'Количество: '+WorldMapModel.dropAmounts(chains).join(' / '),'Шанс в процентах не установлен.',
+    item?.icon?.status==='ambiguous_paths'?'Ресурс иконки неоднозначен':null,
+    image?.color_verified===false?'Цвет иконки ещё не сверен с Android':null].filter(Boolean).join('\n');
+  a.setAttribute('aria-label',text);let timer,owned;
+  function hide(){clearTimeout(timer);owned?.remove();if(rewardTip===owned)rewardTip=null;owned=null;a.removeAttribute('aria-describedby');}
+  function later(){timer=setTimeout(hide,150);}
+  function show(){
+    clearTimeout(timer);rewardTip?.remove();const tip=el('div',undefined,'reward-tooltip');tip.id='npc-reward-tooltip';tip.setAttribute('role','dialog');tip.setAttribute('aria-label',label);
+    tip.append(el('strong',label),el('p',text.split('\n').slice(1).join('\n')));
+    const source=el('details');source.append(el('summary','Исходные данные · JSON'),el('pre',JSON.stringify(chains,null,2)));tip.append(source);
+    document.body.append(tip);owned=tip;rewardTip=tip;a.setAttribute('aria-describedby',tip.id);
+    const box=a.getBoundingClientRect(),width=tip.getBoundingClientRect().width,below=innerHeight-box.bottom-12,above=box.top-12;
+    tip.style.left=Math.max(8,Math.min(box.left,innerWidth-width-8))+'px';tip.style.maxHeight=Math.max(80,Math.min(360,Math.max(above,below)))+'px';
+    if(below>=Math.min(240,above))tip.style.top=(box.bottom+6)+'px';else tip.style.bottom=(innerHeight-box.top+6)+'px';
+    tip.onmouseenter=()=>clearTimeout(timer);tip.onmouseleave=later;tip.onfocusin=()=>clearTimeout(timer);
+    tip.onfocusout=event=>{if(!tip.contains(event.relatedTarget)&&event.relatedTarget!==a)later();};
+    tip.onkeydown=event=>{if(event.key==='Escape'){hide();a.focus();hide();}};
+  }
+  a.onmouseenter=show;a.onmouseleave=later;a.onfocus=show;a.onblur=event=>{if(!owned?.contains(event.relatedTarget))later();};a.onclick=hide;a.onkeydown=event=>{if(event.key==='Escape')hide();};
+  parent.append(a);
+}
+return {renderFacts:renderMonsterFacts,renderPortraits,renderRewardIcon};
 })();

@@ -8,7 +8,9 @@
     ['Монстры','atlas/monsters.html',/(?:\/atlas\/monsters|\/loot\/index)\.html$/],
     ['Предметы','loot/items.html',/\/loot\/items\.html$/],
     ['Книги','loot/books.html',/\/loot\/books\.html$/],
-    ['Навыки','atlas/skills.html',/\/atlas\/skills\.html$/]];
+    ['Навыки','atlas/skills.html',/\/atlas\/skills\.html$/],
+    ['Коллекции','collections/index.html',/\/collections\/index\.html$/],
+    ['Характеристики','attributes/index.html',/\/attributes\/index\.html$/]];
   for(const [name,url,match]of sections){const a=document.createElement('a');a.textContent=name;a.href=new URL(url,base);if(match.test(path))a.setAttribute('aria-current','page');nav.append(a);}
   const host=document.querySelector('header');if(host){const old=host.querySelector('nav');if(old)old.remove();host.append(nav);}
 })();
