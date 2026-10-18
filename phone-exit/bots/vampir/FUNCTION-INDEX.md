@@ -1,5 +1,17 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN config → SDK environment, 19 октября: H04b partial
+
+EXE SHA прежний. Ctor145631210/global14b575630/vtable1498bacd0 slot8 →
+145647da0 задаёт+48 dev; FNnCdnConfig::Initialize14563f080, HTTP callback
+145642a30 call145643110 → ReadJson14565a5d0. Lookup14563da10 получает section
+NetmarbleS/keyZone, conversion1415e48f0 → copy141421d80 в object+48.
+7 native cases с JSON/string/copy/free capture shims, missing branch14565f540;
+весь parser/error/HTTP не исполнены. Caller145618910 → InitSetting14561a930.
+NetworkSetting root144aa6f20 загружает CdnConfigUrl/QA/AppVersion/ConfigPrefix
+в globals14b520cf0/d00/d10/d20; реальные значения/файл и startup order неизвестны.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-CONFIG.md).
+
 ## NMSDKSettings и game override, 19 октября: H04b partial
 
 Общий EXE SHA ниже. Accessor1444ab740 → ctor thunk1444ac680 → ctor1444ac9f0;

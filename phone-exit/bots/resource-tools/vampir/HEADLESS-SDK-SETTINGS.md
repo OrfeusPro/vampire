@@ -95,6 +95,9 @@ Singleton, получение environment string, growth, memcpy и free огр�
 Root `0x145631210` присваивает singleton pointer на `0x145631232` и обнуляет +0x48;
 тип поля и последующая загрузка реального environment ещё требуют исследования.
 
+Продолжение: [CDN config и JSON NetmarbleS.Zone](HEADLESS-CDN-CONFIG.md).
+Запись поля прослежена; активное значение и порядок всего startup ещё неизвестны.
+
 ## Общий код и продолжение
 
 `vampir_core.sdk_config.select_game_sdk_zone(environment)` повторяет это правило

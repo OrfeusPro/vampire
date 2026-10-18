@@ -1,5 +1,14 @@
 # Vampir — самостоятельный сетевой бот
 
+## Источник окружения SDK, 19 октября
+
+Прослежена загрузка CDN config: ReadJson читает NetmarbleS → Zone и пишет
+поле, которое InitSetting использует для выбора SDKZone. 7 native slices
+с capture shims подтверждают аргументы lookup/ветку missing/destination.
+Начальное dev не выдаётся за активное окружение; CDN URLs берутся из
+NetworkSetting, реальные значения и полный startup order ещё неизвестны.
+[Доказательства и продолжение](../resource-tools/vampir/HEADLESS-CDN-CONFIG.md).
+
 ## SDK settings и game override, 19 октября
 
 Подтверждены 9 полей NMSDKSettings и начальные значения (4 native replays).

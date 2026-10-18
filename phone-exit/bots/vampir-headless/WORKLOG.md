@@ -1,5 +1,37 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: найден JSON источник environment
+
+После 2185611 продолжена цепочка singleton 14b575630+48. Constructor 145631210
+обнуляет поле, vtable 1498bacd0 slot 8 указывает 145647da0, где начальное dev
+передаётся в поле через 141421dd0. Default не выдан за active environment.
+Найдены FNnCdnConfig::Initialize 14563f080, OnHttpPageLoaded 145642a30 →
+ReadJson 14565a5d0 через call 145643110. ReadJson получает NetmarbleS/Zone
+через 14563da10, conversion 1415e48f0, copy 141421d80 в object+48.
+
+Новый build-headless-cdn-config.py сохраняет 11 roots/literals/bytes/SHA и
+7 native slices: lookup arguments/branch/copy destination. JSON lookup,
+conversion, FString copy/free capture shimmed; весь JSON parser не исполнен.
+Missing key уходит 14565f540 diagnostic, останавливаемся до error handling;
+это не успешная конфигурация с fallback dev.
+
+Найдены NetworkSetting.CdnConfigUrl/QA/AppVersion/ConfigPrefix и globals
+14b520cf0/d00/d10/d20. Loader 1445bc080 вызывает config virtual slot 0x58 с fileglobal,
+потом дополнительную обработку 1445bb3a0; текущий файл/значения/overrides неизвестны.
+Initializer 1411dca50 задаёт ConfigPrefix dev; полный CDN URL builder пока не исполнен.
+Caller 145618910 вызывает InitSetting 14561a930, но полный startup порядок
+CDN callback → InitSetting → GMC2 Start ещё не установлен.
+
+Артефакт code-clues/headless-cdn-config.json SHA256
+6fff1429a765f0be0d80b1d495f7c1db3846d5902887ff0178ea78dcad94c34a.
+Доказательства и границы в HEADLESS-CDN-CONFIG.md; главный README, общий реестр,
+задачи и журнал обновлены. Три новых теста проверяют source bytes/hash,
+7 native replays и static anchors. Полный набор 127/127 прошёл (66,0 с);
+после включения 11-го root отдельно повторены 3/3 (1,9 с).
+Игра/аккаунты/сеть/файлы профиля не использовались. network_ready=false.
+Далее source NetworkSetting, актуальные URLs/prefix, builder и callback order;
+после подтверждения адреса — публичный config/schema/Zone, затем GMC2/auth.
+
 ## 19 октября 2026 — H04b-settings: class defaults и game override
 
 После e37d580 продолжен auth-source flow на прежнем EXE SHA. Найдены

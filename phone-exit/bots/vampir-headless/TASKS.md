@@ -54,10 +54,15 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 
 ## Текущее продолжение
 
+H04b: найден CDN ReadJson → NetmarbleS.Zone → environment field+48,
+7 native slices; [HEADLESS-CDN-CONFIG](../resource-tools/vampir/HEADLESS-CDN-CONFIG.md).
+Далее actual NetworkSetting.CdnConfigUrl/QA/ConfigPrefix, источник настроек,
+полный URL builder и callback order до GMC2. Active environment пока неизвестен.
+
 H04b: constructor settings и game InitSetting исследованы, 4+13 native cases.
 [HEADLESS-SDK-SETTINGS](../resource-tools/vampir/HEADLESS-SDK-SETTINGS.md).
-Следующая auth-зависимость — заполнение singleton14b575630+48 до InitSetting,
-порядок с GMC2 Start, active environment и другие изменения globals/build.
+Заполнение singleton14b575630+48 из CDN JSON прослежено следующим этапом выше;
+порядок с GMC2 Start, active environment и поздние изменения globals/build открыты.
 
 После подтверждённого пользователем обновления U02 частичен: новые индексы
 34 изменённых и одного нового архива сохранены отдельно; 1565 CSV pakchunk1
