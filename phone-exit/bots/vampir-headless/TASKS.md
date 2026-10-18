@@ -1,6 +1,6 @@
 # Самостоятельный Vampir — задачи
 
-Обновлено 18 октября 2026. Контекст/ограничения — [README.md](README.md).
+Обновлено 19 октября 2026. Контекст/ограничения — [README.md](README.md).
 История — [WORKLOG.md](WORKLOG.md); общий реестр — [FUNCTION-INDEX](../vampir/FUNCTION-INDEX.md).
 Общие результаты и runtime package — [vampir-shared](../vampir-shared/README.md).
 H03a codec находится в `vampir-shared/vampir_core`, без копии в сетевом боте.
@@ -44,7 +44,7 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 | H09 | Онлайн 2D-карта и панель; H05 | Осталось | Проверенная world→map привязка, живые слои/выбор аккаунта, старт/стоп, stale indicator; пустые неизвестные данные не выдаются за координаты |
 | H10 | Движение и выбор точки на 2D-карте; H09 + H03 + подтверждённая навигация | Осталось | Проверить move schema, позиции/достижимость/остановку; выбор точки отправляет только доказанные команды |
 | H11 | Безопасное восстановление; H05/H07 | Осталось | После разрыва сначала sync state, ограниченный backoff; смерть/challenge/защитное/unknown→pause; без повторения неизвестных действий |
-| U01 | Manifest и снимки выпусков; H01 | Осталось | Source/build/SHA256 + зависимости генераторов, immutable snapshots, версия Windows/Android отдельно; неизвестная версия явно unknown |
+| U01 | Manifest и снимки выпусков; H01 | Частично: immutable аудит 163 архивов; 34 changed/1 added; EXE SHA прежний | Source/build/SHA256 + зависимости генераторов, immutable snapshots, версия Windows/Android отдельно; неизвестная версия явно unknown |
 | U02 | Инкрементальное извлечение и diff; U01/H02/H03 | Осталось | Сравнить packets/IDs/schema, auth, таблицы, world/map; пересобрать затронутые наборы, сохранить происхождение/прошлый выпуск |
 | U03 | Compatibility gate и обновление пакета; U02/H05/H07 | Осталось | Offline regression + ограниченный live canary, явный compatibility result, atomic switch, recovery; ошибочный/частичный update не заменяет проверенный |
 | P01 | Компактные runtime-данные и bounded resources; H03/H09 | Частично: OutboundFrames имеет byte/frame limits; общий runtime ещё не готов | В сборке нет EXE/PAK/analysis library, данные региона по требованию, ограничены очереди/кеш/история; UI не дублирует полный мир на каждый tick |
@@ -52,6 +52,12 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 | A01 | Android-служба и оболочка; H06/H07 | Осталось | Тот же core, foreground/notification/Stop, экран выключен/network changes; масштаб на телефоне определить измерениями |
 
 ## Текущее продолжение
+
+После подтверждённого пользователем обновления сначала U02: новые индексы
+34 изменённых и одного нового архива в отдельном снимке; прежние offsets
+не использовать. [Аудит и происхождение](../resource-tools/vampir/CLIENT-RELEASE-AUDIT.md).
+U01 частичен: нет полной SHA-проверки остальных архивов, game/Android version
+неизвестны, compatibility gate ещё не готов. EXE-bound исследования сохранены.
 
 H03b остаётся частичным: выбранные send/receive пути подтверждены offline,
 но нет server-compatible connection/session. Не повторять закрытые исследования.
