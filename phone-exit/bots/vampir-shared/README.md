@@ -14,6 +14,14 @@
 | Задачи/история сетевого бота | [TASKS](../vampir-headless/TASKS.md), [WORKLOG](../vampir-headless/WORKLOG.md) |
 | Экранный бот и карта | [Vampir TASKS](../vampir/TASKS.md), [MAP-ATLAS](../resource-tools/vampir/MAP-ATLAS.md) |
 
+## Полный базовый CDN GET header, 19 октября
+
+Native URI/context/header pipeline проверен на 7 default и 4 override сценариях.
+Default: GET/1.0, Host с port, Aqua/1.0 и конечный CRLF; пустые body/query/cookie/
+range, без Content-Length/Type/Connection. Общий encode_cdn_get_headers и
+Draft.header_bytes совпали побайтно с native. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-HEADERS.md).
+Transport/TLS/response и actual settings/late overrides пока открыты.
+
 ## URI parser и строка CDN запроса, 19 октября
 
 22 native URL→URI→GET-line сценария подтвердили scheme/host/uint16 port/path.

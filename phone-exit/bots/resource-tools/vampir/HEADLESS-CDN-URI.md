@@ -99,6 +99,9 @@ DNS, доверенности узла или доступности серви�
 шесть отклонены локальной политикой. Подозрительное native поведение не копируется
 в общий код как разрешённый URL для сети.
 
+Продолжение: [полный базовый GET header](HEADLESS-CDN-HEADERS.md).
+Default headers проверены, transport/response и actual config ещё открыты.
+
 ## Draft и продолжение
 
 CdnConfigRequestDraft теперь валидирует URI при создании, хранит frozen uri

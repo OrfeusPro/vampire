@@ -1,5 +1,19 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN full default GET header, 19 октября: H04b partial
+
+EXE SHA прежний. Header builder 1445e4b20 + URI/request-line и field builders
+1445ec230/1445ebbc0/1445eb970/1445ebed0/1445ec3d0 исполнены: 7 default+4 overrides.
+Native default GET/1.0 + Host:host:port + User-Agent:Aqua/1.0 + CRLFCRLF,
+empty body/query/cookie/range. Content-Type/Length/Connection default отсутствуют.
+Formatter 1445da240/options getter 141435030 исполнены; __stdio_common_vsprintf
+вызван в actual recorded Windows CRT с переводом одного pointer argument.
+Allocator/CRT memory/search/compare/cookie bounded shims, сами headers native.
+Общие encode_cdn_get_headers/Draft.header_bytes совпали с 7 native blocks.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-HEADERS.md).
+Nonempty body/query/cookie/range/raw headers, поздние overrides, transport/TLS/
+response/status/decode/actual values остаются открытыми.
+
 ## CDN URL→URI→GET-line, 19 октября: H04b partial
 
 EXE SHA прежний. URI ctor 1445e2d80 call 1445e2dfd→parser 1445e6460,

@@ -1,5 +1,38 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: полный базовый GET header
+
+После f5d12c8 исполнен full header builder 0x1445e4b20 после native URI parser
+и request-context prefix. Настоящие Host/port/Content-Type/Length/Cookie/Range
+builders выполняются на empty body/query/cookie/range fixtures; не подменяются
+готовыми полями. Native std::string append/growth и decimal port formatter
+также исполняются. Allocator/memory/search/compare/cookie-check bounded shims.
+
+Native format helper 0x1445da240/options getter 0x141435030 сохранены и исполнены.
+__stdio_common_vsprintf импорт подтверждён, вызван actual System32/ucrtbase.dll
+с переводом одного %s va_list argument в реальные bounded buffers. Это analysis
+мост для известных форматов, не общий variadic emulator. Путь/SHA CRT сохранены.
+
+11 native cases: 7 default+4 overrides. Default block GET/1.0, Host с decimal
+port даже 443/80, User-Agent Aqua/1.0, CRLFCRLF; нет Content-Length/Type/Connection.
+Overrides: +0xa8=true добавляет Connection: Keep-Alive; пустой UA убирает поле;
+custom UA заменяет значение; Referer появляется перед UA. Это fixtures, не
+утверждение о текущих settings и поздних изменениях запроса в живом клиенте.
+
+Общий encode_cdn_get_headers(url) и Draft.header_bytes выдают точные bytes
+default empty-body GET; 7 блоков совпали побайтно с native. Nonempty body/query/
+cookie/range/custom headers и override API не реализованы; URI policy/bounds/
+редактирование repr сохранены. Никаких HTTP/DNS/TLS/socket вызовов нет.
+
+Артефакт code-clues/headless-cdn-headers.json SHA256
+dda2fc591b6fc57441ec8fbde13699f2772507eb7ff80030370ad9ab2fb72bc6.
+17 roots/48 fragments/2888 instructions. HEADLESS-CDN-HEADERS.md,
+общие README/FUNCTION-INDEX/shared/TASKS обновлены. Пять новых тестов прошли;
+полный набор 156/156 (87,1 с), синтаксис трёх изменённых Python-файлов,
+317 относительных ссылок и diff check прошли. Игра/аккаунты/сеть не использованы.
+Далее HTTP receive/status/headers/body limits/chunked/compression/JSON/callback
+order, queue/TLS и actual Game config values/late overrides. network_ready=false.
+
 ## 19 октября 2026 — H04b-CDN URI parser → request line
 
 После cd90e6e исполнен parser 0x1445e6460, native string constructor 0x1421e1620
