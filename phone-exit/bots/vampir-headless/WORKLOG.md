@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: Content-Length и ожидание тела
+
+После c40e52b исполнены prefix parser с двумя lookups, native whitespace trim,
+atoi/write slice и receive unsigned comparison: 30 complete scenarios.
+Один folded fixture исчерпал instruction budget и сохранён как bounded abort.
+Range validation/diagnostics middle и полный receive loop не исполнялись.
+Общий take_cdn_length_response ждёт полное fixed-length тело, сохраняет trailing
+bytes через consumed; строгие local limits/status/duplicate/encoding правила.
+Полный набор: 167/167 тестов, 95,2 с. Синтаксис трёх Python-файлов,
+кодировка и 271 относительная ссылка изменённых документов, git diff --check
+прошли. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-LENGTH.md).
+Chunked/compression/EOF/JSON/settings/TLS ещё открыты, network_ready=false.
+
 ## 19 октября 2026 — H04b-CDN: начало разбора ответа и сверка обновления
 
 После 12c7b23 проверены native boundary/status/available-body getters: 52 сценария,

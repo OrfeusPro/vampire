@@ -69,5 +69,6 @@ parser ещё не исполнен; эти правила не выдаются
 неполное тело и ограничения. Наличие заголовка или status 200 не означает,
 что получен полный ответ или пригодный JSON.
 
+Продолжение: [Content-Length и ожидание тела](HEADLESS-CDN-RESPONSE-LENGTH.md).
 Далее: Content-Length/Range, тело/chunked/compression, JSON/callback acceptance,
 реальные настройки CDN, TLS и очередь запросов. `network_ready=false`.

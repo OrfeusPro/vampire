@@ -4,6 +4,15 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Content-Length и полнота тела CDN, 19 октября
+
+30 native сценариев подтверждают lookup/atoi/unsigned receive comparison;
+ещё один folded-field fixture остановлен по лимиту инструкций.
+Общий take_cdn_length_response ждёт полное тело по одному Content-Length,
+с локальными ограничениями 2 МиБ/status 200/без compression, range и chunked.
+[Доказательства и границы](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-LENGTH.md).
+Полный parser/receive loop, остальные framing/decode и JSON ещё не готовы.
+
 ## Начальный разбор ответа CDN, 19 октября
 
 52 native сценария подтвердили CRLFCRLF boundary, статус из первых 12 байт

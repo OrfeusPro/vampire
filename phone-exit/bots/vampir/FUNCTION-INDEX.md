@@ -1,5 +1,17 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN Content-Length и receive comparison, 19 октября: H04b partial
+
+Prefix 1445edb30..1445edc9b → lookup 1445ea4a0 → trim 1445dbe60/dc0f0/dbef0;
+slice 1445edf20..edf46 → actual CRT atoi → signed length owner+4d0.
+Receive slice 1445e968c..e96dd сравнивает младшие uint32 length с available body.
+30 complete native cases, один folded fixture bounded abort; range validation/
+diagnostics middle и целый receive loop не исполнялись. Initial length fixture,
+не lifecycle proof. _strnicmp/atoi actual Windows CRT, прочие bounded shims.
+Shared take_cdn_length_response: strict local fixed-length/uncompressed/status 200,
+2 МиБ, один length, без TE/range; не JSON/config acceptance.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-LENGTH.md).
+
 ## CDN response boundary/status, 19 октября: H04b partial
 
 Native 1445e74f0/1445e75e0/1445e7440: 52 сценария boundary/status/available body.
