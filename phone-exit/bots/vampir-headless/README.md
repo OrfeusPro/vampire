@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## URI parser и строка CDN запроса, 19 октября
+
+22 native URL→URI→GET-line сценария подтвердили scheme/host/uint16 port/path.
+Общий parse_cdn_uri_ascii поддерживает строгий ASCII subset; 16 совпадений,
+6 native quirks отклоняются. Draft хранит parsed URI и даёт request_line bytes,
+без полного HTTP. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-URI.md). Реальные settings/headers/TLS/
+response всё ещё открыты; network_ready=false.
+
 ## HTTP defaults CDN и offline draft, 19 октября
 
 16 native сценариев подтверждают constructor→method 1→GET request line HTTP/1.0,

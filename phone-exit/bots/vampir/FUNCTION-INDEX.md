@@ -1,5 +1,17 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN URL→URI→GET-line, 19 октября: H04b partial
+
+EXE SHA прежний. URI ctor 1445e2d80 call 1445e2dfd→parser 1445e6460,
+string ctor 1421e1620/copy и request-line 1445ec6f0 исполнены: 22 cases.
+Fields+8scheme/+28host/+48uint16 port/+50path; ровно один path slash удалён.
+Explicit port atoi импорт подтверждён, вызван actual ucrtbase на artificial ASCII,
+DLL path/SHA в отчёте; allocator/CRT memory/search/compare/cookie bounded shims.
+Native quirks HTTPS defaultport0, invalid/wrapped port0, query/fragment in path
+не разрешаются общим parse_cdn_uri_ascii. 16 supported/6 rejected cases.
+Draft parsed URI/request_line bytes; complete headers/body/TLS/network не готовы.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-URI.md).
+
 ## CDN HTTP request defaults, 19 октября: H04b partial
 
 EXE SHA прежний. Ctor 1445e21f0 вызывает context ctor 1445e25d0 на owner+320;

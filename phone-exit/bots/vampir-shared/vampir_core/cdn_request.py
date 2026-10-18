@@ -4,9 +4,8 @@ Headers, body handling, TLS, redirects and response acceptance are unresolved.
 Evidence: HEADLESS-CDN-HTTP.md. Never send this draft as raw HTTP automatically.
 """
 from dataclasses import dataclass, field
-from urllib.parse import urlsplit
-
 from .sdk_config import prepare_cdn_config_url_ascii, select_cdn_config_base
+from .cdn_uri import CdnUri, parse_cdn_uri_ascii
 
 
 @dataclass(frozen=True, slots=True)
@@ -15,20 +14,23 @@ class CdnConfigRequestDraft:
     url: str = field(repr=False)
     method: str = field(default='GET', init=False)
     http_version: str = field(default='1.0', init=False)
+    uri: CdnUri = field(init=False, repr=False)
+
+    def __post_init__(self):
+        object.__setattr__(self, 'uri', _checked_https_url(self.url))
+
+    @property
+    def request_line(self) -> bytes:
+        """Verified first line only; headers/blank line/body are not serialized."""
+        return ('GET ' + self.uri.request_target + ' HTTP/1.0\r\n').encode('ascii')
 
 
 def _checked_https_url(url):
-    if (not isinstance(url, str) or len(url) > 4096 or
-            any(c.isspace() or not 33 <= ord(c) <= 126 for c in url) or any(c in url for c in '\\?#')):
-        raise ValueError('Invalid CDN request URL')
     try:
-        parsed = urlsplit(url)
-        valid = (parsed.scheme.lower() == 'https' and bool(parsed.hostname) and
-                 parsed.username is None and parsed.password is None and not parsed.netloc.endswith(':'))
-        parsed.port
+        parsed = parse_cdn_uri_ascii(url)
     except ValueError:
         raise ValueError('Invalid CDN request URL') from None
-    if not valid:
+    if parsed.scheme != 'https':
         raise ValueError('Invalid CDN request URL')
     return parsed
 
@@ -47,6 +49,7 @@ def draft_cdn_config_request(*, normal: str, qa: str, prefix: str, app_version: 
                                      app_version=app_version, platform_code=platform_code)
     parsed = _checked_https_url(url)
     selected = select_cdn_config_base(normal=normal, qa=qa, prefix=prefix)
-    if parsed.netloc.lower() != urlsplit(selected).netloc.lower():
+    base = _checked_https_url(selected)
+    if (parsed.host.lower(), parsed.port) != (base.host.lower(), base.port):
         raise ValueError('CDN assembly changed the configured authority')
     return CdnConfigRequestDraft(url)

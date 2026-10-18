@@ -91,6 +91,9 @@ normal/qa/prefix/app_version/platform_code, собирает URL ранее пр
 иначе превращает имя host в hostwindow. Нормативная строковая concat остаётся
 в отдельном helper; draft отклоняет такой адрес до сетевого использования.
 
+Продолжение: [native URI parser и GET-line pipeline](HEADLESS-CDN-URI.md).
+URI strict subset проверен, полный HTTP и actual config ещё открыты.
+
 ## Продолжение
 
 Нужно проверить URI parsing, полные headers/body и поздние изменения defaults,

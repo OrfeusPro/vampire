@@ -1,5 +1,40 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN URI parser → request line
+
+После cd90e6e исполнен parser 0x1445e6460, native string constructor 0x1421e1620
+и существующий request-line 0x1445ec6f0 на 22 полных искусственных URL. Поля
+scheme+8/host+28/port16+48/path+50 передаются между этапами без подмены.
+Native parser снимает ровно один leading slash, не нормализует host case,
+percent escapes и dot segments. HTTP/HTTPS default ports 80/443 подтверждены.
+
+Port conversion на 0x1445e6b96 проверен как импорт atoi; вызов перенаправлен
+в настоящий Windows System32/ucrtbase.dll на bounded artificial ASCII.
+Путь и SHA256 DLL сохранены; запись результата в uint16 остаётся native.
+Allocator/CRT memory/search/compare/cookie ограничены shims. Никаких socket/API
+и аккаунтов не использовано, query collection owner остаётся явно пустой.
+
+Наблюдения native: uppercase HTTPS даёт port 0, :65536 оборачивается в 0,
+:abc/:0 дают 0; query/fragment остаются в path. Общий cdn_uri.py реализует
+ограниченный subset: lower-case http(s), ASCII host token, positive decimal port,
+без userinfo/IPv6/query/fragment/backslash/whitespace, max 4096 ASCII bytes.
+Из 22 fixtures 16 совпадают с common parser, 6 отклоняются local policy.
+CdnConfigRequestDraft валидируется при создании, хранит frozen CdnUri и выдаёт
+только request_line bytes, без headers/blank line/body. URL/host/path скрыты в repr.
+Проверка исходных HTTPS bases и authority preservation сохранена.
+
+Артефакт code-clues/headless-cdn-uri.json SHA256
+a64ddfdb123c1be323d140f0ea67afb7aa465e14be85610424c5598f952b9f02.
+10 roots/24 fragments/2246 instructions/22 cases. HEADLESS-CDN-URI.md,
+общие README/FUNCTION-INDEX/shared/TASKS обновлены. Пять новых тестов прошли;
+прежние четыре CDN HTTP tests отдельно прошли после parser integration.
+Полная регрессия: 151/151 (83,4 с), синтаксис четырёх изменённых Python-файлов,
+311 относительных ссылок и diff check прошли. Pinned Capstone 5.0.6/Unicorn 2.1.4
+дополнительно сверены в текущей среде.
+Следом full headers/body, late overrides/request queue, TLS и status/limits/
+decode/JSON/callback order; actual Game config values всё ещё неизвестны.
+network_ready=false, реальных запросов и полноценного входа пока нет.
+
 ## 19 октября 2026 — H04b-CDN HTTP defaults и offline draft
 
 После 71a8a98 прослежена передача собранного URL в HTTP factory/queue:
