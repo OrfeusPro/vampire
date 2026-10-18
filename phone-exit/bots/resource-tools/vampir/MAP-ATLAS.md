@@ -2835,3 +2835,573 @@ python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
 застреваниями. Проверенный offline pipeline не подключён к боту как готовый
 маршрутизатор: `same_vm_pipeline=true`, `routes_verified=0`,
 `navigation_ready=false`. Интерфейс карты в этом этапе не менялся.
+
+### Candidate grid parameters против всех тайлов и полного pipeline, 18 октября
+
+`build-recast-grid-parameter-evidence.py` проверяет точные bytes параметров
+Nocturne NnRecastNavMesh export3919 (size551,SHA
+`78807cf7cd174e5365cd3045520c5fb148d84e40fa47ab6efbaa604a8f813400`).
+Suffix offset443 целиком108bytes:version26,uint32length104,count0,
+origin[-0,0,-0],widths[1000.0000133514404,1000.0000133514404],
+capacities461168/2147483647,parameters144/35/35/0.02500000037252903/
+0.050999999046325684/0.050999999046325684. SHA source level/parameter
+candidate report и полные bytes suffix сохраняются. Это по-прежнему **candidate**:
+полная UObject property boundary, inheritance serializer dispatch и effective
+runtime overrides не доказаны. Сильное совпадение с геометрией не заменяет их.
+
+Все18430deduplicated tiles candidate union сверены с source package buffers
+и manifest/grid hashes. Для каждого независимо проверено:
+minX=originX+gridX*widthX, maxX=originX+(gridX+1)*widthX и аналогичноZ.
+С candidate parameters maximum absolute boundary error0.0 (точное совпадение
+double). Minimum bounds при floor((coordinate-origin)/width) возвращаются
+в свой header grid для всех18430. Rounded width1000 даёт максимальную ошибку
+0.0024967193603515625 **в координатных единицах**, а minimum corners13004
+тайлов попадают в соседнюю cell по одной или обеим осям. Это не число
+потерянных тайлов или неверных маршрутов: проверяется только minimum corner;
+projection с ненулевым extent часто захватывает обе клетки. Верхняя граница
+тайла естественно лежит на следующей cell, поэтому не считается ошибкой.
+
+Затем повторены все380pipeline cases с origin/width/height/quantization из
+этого suffix. Filter costs/priorities/hashmask0/TLS/callback restrictions
+сохраняются как прежние explicit scenarios; capacities из suffix к bounded
+VM не применяются. Native reference/portal/projection/query/funnel execution
+использует те же bounded pools, никаких новых allocation paths не разрешено.
+Все380results и constructed link/vertex states совпали с rounded-grid
+pipeline report. Это доказывает устойчивость именно прежних finite-extent
+cases, не всех boundary points. Ранее283line/24partial/73no-projection
+остаются; объём проверенных игровых маршрутов по-прежнему0.
+
+`audit-recast-grid-parameters.py` самостоятельно разбирает exact suffix,
+каждый source tile header/bounds, считает boundary errors и floor-cell mapping;
+проверяет manifests/bytes/SHA/dependencies/pages. Повторяет380native pipelines
+и сверяет outputs/state с текущим и pinned прежним report. Независимые
+геометрические проверки projection/corridor/line наследуются только после
+точного равенства прежним outputs и SHA проверенного pipeline audit + его
+4audit modules. Если результат меняется, audit останавливается вместо
+автоматического переноса прежнего доказательства.
+
+Report `code-clues/recast-grid-parameter-evidence.json` SHA256
+`7cce8f90d69d59d7cafac573309557aa0060956dadef6ba17e5c972ae3d4bb48`.
+Исходный EXE SHA по-прежнему
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+83recast tests прошли:3новых regression tests exact/rounded negative-cell
+boundary, positive/negative/nonzero-origin independent audit и nextafter
+ошибка без молчаливого epsilon. Новый инструментарий не меняет прежние
+emulators/reports и не включает navigation_ready в UI/боте.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-grid-parameter-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-grid-parameters.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Следующий пробел конкретизирован: подтвердить boundary/dispatch этого cooked
+nav actor и active selection/version coverage, effective filters и custom-link
+permissions; затем связать наблюдаемую позицию персонажа с grid. Пока
+`runtime_parameter_selection_verified=false`, `routes_verified=0`,
+`navigation_ready=false`. Сценарии с exact candidate params не live traversal.
+
+### Actor class→общий сериализатор; точный оставшийся prefix, 18 октября
+
+`build-recast-actor-dispatch-code.py` закрепляет ранее отсутствовавшую static
+связь cooked NnRecastNavMesh export3919 с native serializer: constructor
+1454d0020 вызывает145297f60, затем назначает primary vtable149872f38;
+базовый constructor назначает14972dc00. В **обеих** таблицах slotd8 содержит
+1452b91e0,slote0 —1452b8ff0. Wrapper1452b91e0 вызывает141599f90 для adapter
+архива, передаёт RAX как RDX в1452b8ff0. Конструкторная привязка и название
+NnRecastNavMesh закреплены прежним navigation-filter-code и selection proof;
+все4новых slot pointers сохранены bytes/file offsets и проверены независимо.
+Отдельного Nn serializer override на этих primary slots нет.
+
+1452b8ff0 сначала вызывает14381b2b0, и лишь **после возврата** читает uint32
+в actor+768 (version), сдвигает fast archive cursor+4, вызывает archive Tell
+slot28 и читает length uint32. В loading branch version20..26 передаёт
+archive/actor+770 в1452bc8b0; load/save branches/calls закреплены anchors.
+14381b2b0 регистрирует version callbacks slot218 и вызывает1417521e0,
+затем имеет дополнительные version/flags-dependent операции. Следовательно,
+даже полное понимание stream header не доказывает, где общий property serializer
+оставил cursor. Эти операции в этом этапе **статически разобраны, не исполнены**.
+
+Cooked export header независимо прочитан двумя реализациями unversioned
+fragment/zero-mask decoder: первые10bytes`1d0202082d0209023903`, поля
+29,32,33,34,35,81,91,149; все nonzero. Между pos10 и candidate offset443
+ровно433bytes. Они сохранены целиком в `unresolved_prefix`, не пропущены как
+якобы разобранные свойства. Ни индекс149, ни совпадение suffix с версиями
+не используются для назначения полям придуманных названий. Остаётся полный
+inherited schema с filtering transient/editor/nested descriptors, типами/размерами
+и потреблением значений до реальной stream boundary.
+
+Как воспроизводимая зацепка сохранены14native property descriptors
+NavigationData(table149720b20) и76RecastNavMesh(table14972b230), включая
+NavDataConfig/RuntimeGeneration/SupportedAreas и TileSizeUU/CellSize/
+NavMeshResolutionParams/AgentRadius/HeuristicScale. Для каждого — pointer,
+name,gen flags,raw object-offset field и56raw descriptor bytes. Эти таблицы
+содержат nested enum/array children и **не являются** готовым cooked property
+order. Классовая связь закреплена registry149720bc0/14972b4c0: first pointer
+на getter145266670/145293b20, pointer+40 на соответствующую property table;
+getter literals NavigationData/RecastNavMesh в UTF16 подтверждены bytes.
+Counts14/76 относятся к записанному bounded span native arrays, а не к числу
+сериализуемых полей экземпляра.
+
+Report `code-clues/recast-actor-dispatch-code.json` SHA256
+`c711ad9a7b75b0a4370b781bd4661478a78ce829f0b8a550d808761024ea947a`.
+EXE прежний SHA
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+`audit-recast-actor-dispatch.py` независимо сверяет sources/fragments/anchors,
+4vtable bindings/90descriptor bytes/registries/literals, exact header fields,
+неразобранные433bytes и suffix26/104/0 до EOF551.86recast tests прошли:
+3новых теста header без ложного value decode, truncated header/mask и отказ
+при несовпадении virtual slot. Прежние runtime readiness flags не изменены.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-actor-dispatch-code.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-actor-dispatch.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Итого serializer dispatch подтверждён статически, **property boundary ещё нет**.
+Следом нужны inherited schema/полное потребление prefix и effective active
+level/filter/link selection. `property_boundary_verified=false`,
+`runtime_parameter_selection_verified=false`, `routes_verified=0`,
+`navigation_ready=false`; это не готовая навигация бота.
+
+### Восемь explicit nav actor properties; остаток433→68bytes, 18 октября
+
+`decode-recast-actor-properties.py` строит индекс по native descriptor arrays:
+NnRecastNavMesh14985ca08(3), Recast14972b230(76), NavigationData149720b20(14),
+Actor1491696c0(88). Связь parent getter закреплена инструкциями:
+1454c551b→145293b20,145293b5b→145266670,1452666ab→143094460;
+последний —5byte thunk`e93bc17700`→1438105a0. Registry14985ccd0/14916aca0
+содержат соответствующие getters и property arrays+40. Прежние Recast/NavData
+registries подтверждены actor-dispatch proof. Для structs сохранены registry
+bytes/таблицы и функции getters NavMeshResolutionParam145293c90,
+NavDataConfig143861630,NavAgentProperties143830040,SupportedAreaData145268890;
+дескрипторы nested structs содержат эти указатели+56. NavDataConfig registry
+super+8 указывает NavAgentProperties getter.
+
+Порядок индексов этого экземпляра согласуется с derived-first class order,
+порядком reflected descriptor arrays, расширением ArrayDim и исключением
+nested enum/array children. Важная деталь: child `Actor.Children` имеет
+**ненулевые** PropertyFlags, поэтому одного теста flags0 недостаточно.
+Для наблюдаемых arrays child распознаётся как same-name descriptor перед
+kind22 array. Все descriptors/отброшенные children сохраняются. Это правило
+проверено на данном семействе/8explicit fields, не универсальный декодер
+всех классов. Native schema construction/SerializeUnversionedProperties здесь
+не исполнены, влияние остальных runtime flags не объявляется доказанным.
+
+Header29,32,33,34,35,81,91,149 теперь разбирается последовательно:
+
+| Индекс | Свойство | Bytes | Явное значение |
+|---|---|---|---|
+|29|Recast.CellSize|10..14|19.60784339904785|
+|32|NavMeshResolutionParams[0].CellSize|14..20|40|
+|33|NavMeshResolutionParams[1].CellSize|20..26|19.60784339904785|
+|34|NavMeshResolutionParams[2].CellSize|26..32|19.60784339904785|
+|35|AgentRadius|32..36|35|
+|81|NavDataConfig|36..110|DefaultQueryExtent100/100/500;AgentStepHeight35;NavDataClass/PreferredNavData|
+|91|SupportedAreas|110..371|9records|
+|149|Actor.RootComponent|371..375|local export5493|
+
+Nested resolution records имеют только CellSize, остальные поля не заполнены
+догадками. Config header2,3,6,8; DefaultQueryExtent —3double, class paths —
+два package FName tuples+пустой subpath. Name map10679 `/Script/NnFramework`,
+30826 `NnRecastNavMesh`: оба explicit class paths совпадают. FName number
+сохранён; имя не восстанавливается по похожим строкам. RootComponent5493
+разрешается полным package export table в SceneComponent`SceneComp`, outer3919,
+SHA`be9017560ba1db0e4d1f046968914e11f1e7e7cca6df5de7cc7dfb7c61b1133e`.
+
+SupportedAreaData имеет fields AreaClassName,AreaID,AreaClass; в9записанных
+строках **AreaClass указатель отсутствует**. Имена/ID сохранены без выдуманной
+object reference. Первая AreaID0 сериализована zero mask, поэтому4байта
+для неё не читаются. Полная saved таблица:
+
+|AreaClassName|AreaID|
+|---|---|
+|NavArea_Null|0|
+|NavArea_LowHeight|62|
+|NavArea_Default|63|
+|NavArea_Obstacle|10|
+|NnNavArea_HiddenPath|11|
+|BP_NavArea_MainRoad_C|1|
+|BP_NavArea_HiddenPath_C|2|
+|NnNavArea_Forbidden|3|
+|NnNavArea_MainRoad|4|
+
+Это существенное отличие от constructor registration IDs12/13 для MainRoad/
+Forbidden. Saved таблица не подменяет live area registration: load/remapping/
+active filter costs и соответствующие class pointers надо проверить отдельно.
+Прежние explicit native сценарии оставлены без изменений и не превращены в
+active настройки на основании этого экспорта.
+
+Дополнительное точное согласование:19.60784339904785*51 = candidate tile
+width1000.0000133514404. Float32(1/resolution.CellSize) для40/19.6078434/
+19.6078434 в точности совпали с candidate quantization .02500000037252903/
+.050999999046325684/.050999999046325684. Это арифметическая согласованность
+сериализованных значений; число51 не объявляется доказанной формулой native
+генерации или параметром действующей сетки.
+
+Property reader начинает с0, доходит до375 по типам/header/count/length,
+не использует443/EOF как условие остановки. После375 доcandidate443 остаются
+68bytes, сохранённые без семантического ярлыка. Исследованы статические
+зацепки superclass1417521e0→141752250→14173a560 и Actor14381b2b0 (bool/string/
+version branches), но их привязка к этим68bytes ещё не доказана. Поэтому
+`complete_actor_serialization_decoded=false` и boundary candidate остаётся.
+
+Report `code-clues/recast-actor-properties.json` SHA256
+`d918e13613629603b8951184fef3cbf7719c48223d563017c194dfabf3694387`.
+EXE прежний SHA
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+`audit-recast-actor-properties.py` независимо сверяет все descriptor/registry/
+fragment bytes, вывод индексов, точные offset ranges8records, имена из package,
+9area records/zero mask, root component и arithmetic parameter consistency,
+затем повторно декодирует properties.90recast tests прошли:4новых проверки
+непотребления неизвестного tail,float/kind/unknown-field rejection, bounded
+FString и zero AreaID/duplicate IDs. Неизвестные layouts завершают декодер
+ошибкой; omitted values и tail не заполняются.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/decode-recast-actor-properties.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-actor-properties.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Далее68bytes actor/superclass tail с доказанными flags/custom versions,
+затем load/remap/active filters/mesh selection и live position.
+`property_boundary_verified=false`, `runtime_area_ids_verified=false`,
+`routes_verified=0`, `navigation_ready=false`.
+
+### 18 октября: условный actor tail и несовпадающие пороги custom version
+
+`decode-recast-actor-tail.py` продолжает чтение export3919 с375, полученного
+предыдущим декодером свойств. Источник тот же EXE SHA256
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`,
+export SHA256 `78807cf7cd174e5365cd3045520c5fb148d84e40fa47ab6efbaa604a8f813400`.
+Полные canonical fragments/инструкции/file offsets закреплены в новом report.
+
+| Offset | Условное чтение | Основание в коде клиента |
+|---|---|---|
+|375–379|uint32=0, optional object GUID отсутствует|14173a5ad..14173a5f8, переход14173a9e2|
+|379–383|uint32=1, присутствует строка|14381b363/366/39d, после flags/version gate|
+|383–411|FString: length24, NnRecastNavMesh-Default с NUL|call14381b3be→141422070|
+|411–427|4uint32:384079d01be1c045b4e18c4e5dc2bbac (raw bytes)|144351d4b→141544ba0|
+|427–443|ещё4uint32, все0|144351d58→141544ba0|
+
+Два последних значения сохраняются GUID words без выдуманного gameplay
+назначения. Строка сама по себе не доказывает название actor в runtime UI.
+
+Ключ проверки строки: RIP-relative14381b321→1489c4b70,
+bytes `525dda5948493212785978b88be9b870`, cmp version>=4 на14381b330.
+Для двух GUID:14381b3e8→1489c4a80,
+bytes `86181d60844f64acded316aad6c7ea0d`, cmp version>=150 на14381b3f7.
+**Второй ключ тот же, что у ранее исследованного tile decoder с порогом97.**
+Подстановка97 в tile extraction не устанавливает настоящую версию архива
+и не включает actor GUID pair. Нельзя объявлять offset443 доказанным только
+потому, что conditional layout совпал с концом экспорта/candidate envelope.
+
+Unicorn2.1.4 исполняет optional flag fast block и Actor ветки после UObject
+return. Явные synthetic inputs: archive+28=3,+29=1,+68pointer=0.
+Custom-version lookup подставляет значения сценария; FString вызов заменён
+bounded ANSI reader без native allocator/conversion. Четыре DWORD каждого
+GUID и проверки границ читаются неизменёнными инструкциями клиента.
+Исполнение останавливается на144351d5d перед global registry side effects,
+либо14381b409 перед эпилогом. Wrapper/property serialization/alignment не
+исполнены. Шесть сценариев независимо повторены:
+
+| Version строки | Version второго ключа | Конец чтения |
+|---|---|---|
+|4|-1,97,149|411|
+|4|150,151|443|
+|3|97|379|
+
+Ни один ключ не встречается сырыми16bytes в извлечённом Nocturne asset;
+это только отрицательный поиск, не доказательство отсутствия версий во всех
+контейнерах/глобальных defaults/архивных adapters. Реальные flags/версии ещё
+нужно восстановить из загрузчика. Для единого сценария затем повторить
+tile decode с подтверждёнными версиями; эквивалентность97/150 не заявлена.
+
+Report `code-clues/recast-actor-tail.json` SHA256
+`03666af8a3bc8915e92417cc3f8b7bf17372032ad76f6c37509cfd71c79609c1`.
+`audit-recast-actor-tail.py` независимо сверяет source/export/property-report,
+fragment/page/anchor bytes, RIP GUID addresses, сырые поля/границы и все6
+native replays.94recast tests прошли:4новых проверки version thresholds,
+отсутствующей строки/младшей версии, truncation/present optional GUID и
+повреждённых/слишком длинных строк. Неподдержанные layouts вызывают ошибку.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/decode-recast-actor-tail.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-actor-tail.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+68bytes условно объяснены; `archive_versions_verified=false`,
+`complete_actor_serialization_executed=false`, `property_boundary_verified=false`.
+Следом archive version/flag source, полный UObject/schema/alignment, затем
+active area remapping/filter/mesh selection. Проходимость персонажем остаётся
+не проверенной: `routes_verified=0`, `navigation_ready=false`.
+
+### 18 октября: native default versions для unversioned packages
+
+`build-recast-archive-defaults.py` закрепляет источник значений вместо
+произвольного выбора97. EXE SHA256 тот же
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+
+| Native initializer | GUID raw bytes | Версия / имя регистрации |
+|---|---|---|
+|140ff4ae0|86181d60844f64acded316aad6c7ea0d|170 / FortniteMain|
+|140ff52b0|525dda5948493212785978b88be9b870|8 / UE5-PrivateFrosty|
+
+Оба initializer исполняются Unicorn2.1.4 до call14159bf30; аргументы GUID,
+version, UTF16 name и callback0 прочитаны из регистров/стека после исполнения
+инструкций клиента. Полные fragments, literal bytes и единственные .rdata
+pointer references1489477d0/148947868 закреплены. Сам global registry insert,
+CRT startup и OS locks не исполнялись.14159bf30 статически передаёт version,
+name и callback в общий registry через141599d80/141591bd0.
+
+У Nocturne и всех34generated packages первые поля package summary:
+tag9e2a83c1,legacy-8,discarded legacy UE3=0,UE4=0,UE5=0,licensee=0,
+custom-version count0. Каждый asset проверен по SHA из generated index;
+сохранены prefix32bytes, decoded fields, package identity и путь файла.
+Ни один пакет из исследованного набора не имеет собственной ненулевой версии.
+
+Native summary14175fa90 после чтения scalar fields проверяет три нуля:
+14175fc7b/85/8e. Если все0, записывает byte summary+f0=1, берёт текущие
+scalar versions из EXE и вызывает141599e50 на14175fcb5. Эта функция через
+141599d80 получает registry, при необходимости обновляет его14159c030 и
+копирует snapshot141593dc0. Summary затем переносит результат в свой
+custom-version container+10. Четыре bounded native gate replays подтвердили:
+
+|UE4 / UE5 / licensee на входе|Ветка|Scalar versions после ветки|
+|---|---|---|
+|0 / 0 / 0|registered snapshot call|522 / 1013 / 0|
+|1 / 0 / 0|обычное продолжение|без изменений|
+|0 / 1 / 0|обычное продолжение|без изменений|
+|0 / 0 / 1|обычное продолжение|без изменений|
+
+Начало gate replay находится после чтения summary fields; вызов snapshot
+служит stop boundary и не заменён выдуманным успешным глобальным registry.
+Кроме того, закреплён141599fa0: при archive+80 pending flag и loading bit
+archive+28&1 он лениво копирует registry rows (stride40) в archive+58;
+для другой ветки очищает count. Это static связь default archive getter,
+а не доказательство, что все wrappers конкретного export используют его.
+
+Native actor tail отдельно повторён с полученными registered170/8 и прежними
+explicit archive flags: end443, строка и два GUID words совпали. Это устраняет
+необходимость подбирать версии по желаемому offset, но **summary→export archive
+propagation, реальные flags, UObject schema/alignment и active mesh ещё не
+проверены**. Boundary443 сохраняет статус candidate до полного связывания.
+
+Report `code-clues/recast-archive-defaults.json` SHA256
+`cac7f221e3f45ef54fe957d12b7b516e28c296e16a444d6628b74183319d02e6`.
+`audit-recast-archive-defaults.py` независимо сверяет fragments/pages/anchors,
+UTF16 literals/initializer pointers,35asset prefixes/SHA и повторяет обе
+registration sequences,4gate cases и actor tail170/8.97recast tests прошли:
+3новых проверки каждого scalar gate, discarded legacy field и отказа на
+truncation/другом layout/custom entries/header bounds.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-archive-defaults.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-archive-defaults.py
+python phone-exit/bots/resource-tools/vampir/extract-recast-tile-buffers.py --custom-version 170
+python phone-exit/bots/resource-tools/vampir/validate-recast-tile-buffers.py 'F:/PhoneExit Resources/Vampir/maps/navigation-study/tile-buffer-hypothesis-170/index.json'
+python phone-exit/bots/resource-tools/vampir/compare-recast-version-buffers.py
+```
+
+Новый прогон сохраняется отдельно в `tile-buffer-hypothesis-170/`, результаты97
+и зависимые отчёты не перезаписываются. Название hypothesis сохранено намеренно:
+источник версии найден, а её передача в конкретный архив ещё не доказана.
+`runtime_archive_propagation_verified=false`, `full_property_boundary_verified=false`,
+`routes_verified=0`, `navigation_ready=false`.
+
+Повтор170 завершён:34packages/19098tiles/27249848buffer bytes, каждый export
+потреблён точно до EOF; независимый `validate-recast-tile-buffers.py` прошёл.
+Index `maps/navigation-study/tile-buffer-hypothesis-170/index.json` SHA256
+`915fdd20ff606779dba306022c9bef97d5cfb413ddecdb2bca0132073e36fc0f`.
+`compare-recast-version-buffers.py` сравнил все фактические buffers, полные
+tile records (source ranges/sizes/cache/buffer offsets/SHA), исходные export
+identities и source manifests97/170: всё совпало. Report
+`code-clues/recast-version-buffer-comparison.json` SHA256
+`3b63a810c69b18cea355ebc735cd01c768a935130dfa9d3ac1b648e2f9e9ae8f`.
+Равенство относится к этим34exports/этому EXE, не ко всем возможным версиям
+или пакетам. Старые geometry/graph97 сохраняются без пересборки; их независимые
+active mesh/property/archive ограничения по-прежнему действуют.
+
+### 18 октября: Linker summary → archive → прямой serializer актора
+
+`build-recast-archive-transfer.py` продолжает предыдущий default-version proof.
+Источники прежние: EXE SHA256
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`,
+`recast-archive-defaults.json` SHA256
+`cac7f221e3f45ef54fe957d12b7b516e28c296e16a444d6628b74183319d02e6`.
+Native class здесь идентифицируется конструктором/поведением Linker, не
+предположением, что весь cooked client является исходным C++ проектом.
+
+Цепочка инструкций:
+
+* 14172b5d0 конструирует archive по object+240 через141593500, затем
+  14172b61e/630 записывает vtable148a13918 именно по+240.
+* 14173af20 вызывает summary phase14173d870, затем version phase14173f9a0.
+  Summary phase передаёт object+a8 в14175fa90; custom container поэтому+b8.
+* 14173fa73..fb3e передаёт scalar versions из+ac/+b4 и engine version struct
+  из+150 в embedded archive и optional reader object+328. Container+b8
+  передаётся virtual slot60 обоих архивов. Actual embedded slot60→1415a0140.
+* 1415a0140 копирует source container в archive+58 через141594d70 либо
+  конструктор141593dc0 и очищает pending-default byte archive+80.
+* Slot58 embedded archive→141599fa0, возвращающий уже скопированный container.
+ 141597dd0→14159a480 ищет GUID rows stride40 и возвращает их версии.
+
+Unicorn2.1.4 исполнил phase block после compatibility gates и остановился
+перед package-object updates. Оба destination containers preallocated2rows;
+reserve1415337c0 заменён проверкой достаточной capacity, memcpy1487a2e19
+заменён ограниченной копией ровно80bytes. Сами вызовы setter, копирование
+полей/count, clearing pending byte, virtual dispatch/getter/GUID lookup
+исполнены клиентскими инструкциями. Все source/destination writes ограничены
+local scratch; OS/живого процесса нет. Engine version12bytes — явно synthetic
+fixture010000000200000003000000 для проверки сохранности, не версия игры.
+
+|Сценарий|Архивов проверено|Native lookup результатов для2keys и missing|
+|---|---|---|
+|registered170/8, reader есть|2|170,8,-1 в каждом|
+|registered170/8, reader отсутствует|1|170,8,-1|
+|контроль149/3, reader есть|2|149,3,-1 в каждом|
+
+Итого3transfer cases/15lookup calls. Встроенная vtable связана конструктором;
+для optional reader та же vtable задана как явный scenario input. Реальную
+factory/все wrappers reader ещё нужно связать, результат второго архива не
+выдаётся за runtime reader identity.
+
+Nocturne package flags лежат по asset offset76:0x90022200. Summary phase
+14173dc3e..dcaa берёт package bit9→virtualb8→archive byte28 bit1 (02),
+package bit13→virtuale0→archive byte28 bit6 (40). Leaf setters закреплены
+полными bytes доret, отдельно от.pdata functions. Native4cases:
+
+|Package flags|Initial archive byte28 (explicit)|Result byte28 в обоих|
+|---|---|---|
+|90022200|01|43|
+|0|01|01|
+|200|01|03|
+|2000|01|41|
+
+**Initial loading bit01 этим блоком не устанавливается и остаётся scenario
+input.** Actor byte29/version-string gate также ещё не восстановлен. Имена
+битов сверх доказанной механики не назначаются по памяти/сходству.
+
+Прямая ветка preload14173a9f0 использует RBP=embedded archive (при входе
+RCX; проверка owner черезRBP-240).14173ad9e передаёт его вRDX и14173adb0
+вызывает object vtable+e0. Replay блока14173ad9a до целевого1452b8ff0
+подтвердил RCX=nav actor,RDX=тот же embedded archive со скопированными
+версиями. Nav vtable149872f38 связан constructor1454d0034; slote0 фактически
+содержит1452b8ff0. Это прямая non-CDO ветка после проверок, а не исполнение
+полного preload или тела сериализатора. Чтение bytes embedded archive
+virtual170→14173cba0 переносится в archive+e8 (то естьLinker+328) и дальше
+в reader virtual170;17bytes forwarding thunk сохранены отдельно.
+
+Report `code-clues/recast-archive-transfer.json` SHA256
+`3dbbe1c8b28f5625e158aa89f89b7eacf99167ea110ada1e441749da4172170b`.
+`audit-recast-archive-transfer.py` независимо сверяет fragments/pages/anchors,
+vtable/leaf/thunk bytes, constructor RIP reference, package flags, сырые
+container rows/counters/engine fixture и повторяет3version/4flag cases,
+15lookups и прямой actor call.97recast tests прошли; дополнительные narrow
+unit tests ради повторения кода не добавлялись — новые пути проверены native
+replay и независимым byte/value audit.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-archive-transfer.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-archive-transfer.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Закрыта static/native связь versions→embedded archive→direct actor serializer.
+Полная runtime цепочка не объявлена закрытой: остаются gates/reader factory,
+initial loading/byte29 flags, UObject schema/alignment, затем active mesh/area
+remapping и live position. `full_export_archive_chain_verified=false`,
+`full_property_boundary_verified=false`, `routes_verified=0`,
+`navigation_ready=false`.
+
+### 18 октября: нативная инициализация флагов и structured archive
+
+`build-recast-archive-initialization.py` связывает previously explicit flags
+с кодом клиента, EXE SHA256
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+Входные archive-transfer/default/property reports закреплены SHA в новом
+report; helpers также закреплены по SHA. Это bounded offline выполнение,
+не процесс игры и не исходный C++ проект.
+
+Найден14173c480, вызываемый из loader paths1417345cb/141734e29.
+Его block14173c4cd..c4e9 передаёт1 virtual slotsb0 иf0 embedded archive:
+b0→1415a0530 устанавливает bit0 byte28 (чтение),
+f0→1415a0550 устанавливает bit0 byte29 (gate строки в Actor serializer).
+Хвост функции вызывает slot68→14159ca30, устанавливающий pending versions
+byte80=1. Slot bindings и полные leaf bytes доret закреплены отдельно.
+Native constructor141593500 обнуляет flag DWORD на141593582; в replay
+исходный нулевой state подан как вход, полный constructor не исполнен.
+
+Четыре native flag cases подтвердили точную маску initial|0101:
+
+|Initial word bytes28/29 (hex integer)|Result word|
+|---|---|
+|0000|0101|
+|FFFF|FFFF|
+|FEFE|FFFF|
+|0040|0141|
+
+Числа в таблице — little-endian uint16, поэтому0101 соответствует bytes01/01.
+Остальные биты сохраняются. Предшествующая scalar/engine setup часть
+14173c480 не исполнялась; исследуемые setter/virtual calls исполнялись.
+
+Также полностью исполнен14173eb10: записывает reader вLinker+328,
+создаёт16byte structured archive141593610 с полем+8=embedded archive,
+создаёт8byte slot и сохраняет его вLinker+2f8. Бounded allocator заменяет
+только вызовы1468e4100 на scratch allocations16/8bytes. При rebind
+существующий16byte объект сохранён, заменён лишь8byte slot. Native
+141599f90 выполняет три pointer reads и возвращает тот же embedded archive;
+обе проверки adapter прошли, synthetic reader vtable здесь не объявлена
+восстановленной factory.
+
+В одной VM выполнена последовательность:
+
+1. Structured binding и rebind; adapter identity проверен дважды.
+2. Flag initializer и pending reset: bytes28/29=01/01.
+3. Package flag transfer для реального Nocturne flags90022200:43/01.
+4. Version transfer170/8 в контейнер архива. Отрицательное signed package
+   flags значение включает ещё slot70→1414639e0 (byte2b bit10), а phase
+   пишет byte2a bit80. Итоговые bytes28..2b=43/01/80/10.
+5. Вход optional GUID function14173a560 с настоящим structured slot;
+   adapter/flag gates/чтение uint32=0 выполняются нативно, cursor375→379.
+6. Actor block14381b317 читает byte29, вызывает настоящий CustomVer
+   141597dd0→native getter/container lookup. Возвращены8 по строковому
+   ключу и170 по FortniteMain. Version lookup не заменяется callback.
+7. Строка NnRecastNavMesh-Default занимает383..411; оба GUID words читаются
+   141544ba0 в411..443. Stop перед global GUID registry side effects.
+
+Строковый вызов141422070 заменён bounded ANSI decoder без native
+allocation/conversion. Source registry rows170/8 поданы из предыдущего
+доказательства, global registry/CRT не исполняются. Source property-end375
+взят из pinned descriptor-based decoder, не получен полным native property
+serializer. Поэтому **end443 доказан для связанного tail replay после375,
+но full property boundary пока не объявлена доказанной**. Заголовки/flags
+и pointer identity больше не выбираются только ради совпадения с443.
+
+Report `code-clues/recast-archive-initialization.json` SHA256
+`cf51fc870726bf15b92abc3edce4ce59ff8f8a00cbd2bb9fbdf268bcbffe354f`.
+`audit-recast-archive-initialization.py` независимо сверяет source/helper/
+fragment/page SHA, vtable/leaf bytes, flags masks, raw actor ranges/GUID words,
+native version results и повторяет4flag cases/2adapter checks/связанный
+actor tail.97recast tests прошли; новые пути проверены native replay/audit.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-archive-initialization.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-archive-initialization.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Следом полная native property schema/alignment, preload/reader factory при
+необходимости для сквозного stream replay, затем active tile/area selection.
+`full_property_boundary_verified=false`, `active_mesh_verified=false`,
+`routes_verified=0`, `navigation_ready=false`.

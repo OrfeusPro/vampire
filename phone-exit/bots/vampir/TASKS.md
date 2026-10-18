@@ -7,7 +7,16 @@
 **Частично** — есть результат, но критерий завершения ещё не выполнен;
 **Осталось** — следующий объём работы. Проверка на кадрах не заменяет Android.
 
-## Текущий приоритет: первоначальный запуск
+## Отдельное направление: самостоятельный сетевой бот
+
+18 октября: пользователь запросил работу без игры, 10–20 аккаунтов, Windows
+с переносимым ядром Android, онлайн 2D-карту, небольшую нагрузку и обновление
+данных при еженедельных выпусках. Отдельные [задачи H/U/P/A](../vampir-headless/TASKS.md)
+и [журнал](../vampir-headless/WORKLOG.md); общий [индекс функций](FUNCTION-INDEX.md).
+H00/H01 выполнены в ограниченном статическом объёме; H02 частично, затем
+wire/auth/state. Карта и экранные задачи ниже сохраняют собственные статусы.
+
+## Текущий приоритет экранного бота: первоначальный запуск
 
 По решению пользователя сначала собираем имеющийся сценарий и проверяем его
 на коротком участке. Исследования V20–V37 продолжаются по конкретным препятствиям,
@@ -22,6 +31,64 @@
 | V41 | Проход входа до персонажа | Осталось | Связать найденные макеты со свежими кадрами Android и проверить последовательность; сейчас launch_buttons пуст |
 
 ## Выполненные и текущие работы
+
+18 октября: loading/string flags связаны с initializer14173c480, вызовы из
+двух loader paths закреплены;4native flag cases/audit прошли. Structured
+binding и adapter выполнены, rebind сохраняет embedded archive. Связанный
+init→package flags→version transfer→actor tail без подмены CustomVer lookup
+вернул8/170/end443.97recast tests прошли. Остаются native property schema/
+alignment (375взято из decoder), preload/reader factory и active tile/area
+selection; проходимость не проверена. MAP-ATLAS.md/navigation_ready=false.
+
+18 октября: native Linker version transfer в embedded archive+240 подтверждён
+конструктором/vtable и3cases/15lookups (170/8 и контроль149/3, missing=-1).
+4package flag cases подтверждают bits02/40; прямой preload branch передаёт
+этот archive в actor serializer1452b8ff0. Audit/97recast tests прошли.
+Следом полный preload gates/reader factory, loading иactor+29 flags, полный
+UObject/schema/alignment; затем active mesh/area remapping. MAP-ATLAS.md.
+routes_verified=0/navigation_ready=false.
+
+18 октября: восстановлен источник default versions — native registrations
+FortniteMain170/UE5-PrivateFrosty8. Zero-version prefixes Nocturne+34nav packages
+попадают в native summary fallback на registry snapshot; scalar522/1013/0.
+2registration/4gate replays/audit/97recast tests прошли. Registered170/8 даёт
+actor end443. Далее summary→реальный export archive/flags, full property
+schemas/alignment, active area remapping и live mesh selection. MAP-ATLAS.md.
+routes_verified=0/navigation_ready=false; это не проверка движения персонажа.
+
+Повтор tile codec с registered170:34packages/19098tiles/27249848bytes,
+validate и полное сравнение97/170 прошли; все output buffers/records равны.
+Прежняя geometry не перезаписана. Новый report и SHA — MAP-ATLAS.md.
+
+18 октября:68bytes tail имеют conditional decode и6native branch replays;
+optional flag прочитан нативно, FString заменён bounded ANSI reader, две GUID
+прочитаны клиентскими инструкциями.94recast tests/audit прошли. Найден общий
+custom-version key: tile threshold97, actor GUID threshold150. Version97 даёт
+end411,150 —443; это разные explicit scenarios, actual versions/flags unknown.
+Следом источник FArchive versions/flags, full UObject/schema/alignment и
+повтор tile decode с подтверждённой версией; active area remapping остаётся.
+MAP-ATLAS.md; routes_verified=0/navigation_ready=false.
+
+18 октября: explicit nav actor properties прочитаны до375без поиска EOF;
+остаток доcandidate443 сокращён433→68bytes. Связаны9saved area IDs и
+SceneComp5493; есть точное согласование cell/resolution с candidate params.
+90recast tests прошли. Остаются68bytes superclass/actor tail, native schema
+construction и active area remapping/filter selection; saved IDs не runtime.
+MAP-ATLAS.md; routes_verified=0/navigation_ready=false.
+
+18 октября: закрыта static цепочка actor→constructor vtable→shared serializer;
+неподтверждённый участок локализован в superclass property serialization.
+90native descriptors/8cooked header fields закреплены и независимо сверены;
+433bytes prefix values неизвестны.86recast tests прошли. Следом полный
+inherited cooked schema и потребление prefix без предположения offset443;
+active runtime selection/движение остаются. MAP-ATLAS.md.
+
+18 октября: candidate nav parameters Nocturne export3919 сопоставлены с18430
+тайлами: exact width совпал с XZ bounds без ошибки, rounded width дал13004
+minimum-corner grid mismatch.380pipeline replays с candidate params без
+изменений результатов/links;83recast tests прошли. Остаётся доказать property
+boundary/inheritance dispatch/active selection, затем live position/permissions.
+Не выдавать геометрическое совпадение за runtime proof. MAP-ATLAS.md.
 
 18 октября: общий coordinate→projection→corridor→straight pipeline в одной
 VM проверен380native cases+380replays; независимая геометрия/стоимость

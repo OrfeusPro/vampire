@@ -1,6 +1,11 @@
 # Исследование ресурсов Vampir
 
 Начинать разработку с [главного файла модуля](../../vampir/README.md).
+Общие найденные функции всех направлений — [FUNCTION-INDEX](../../vampir/FUNCTION-INDEX.md).
+Самостоятельный сетевой бот: [README/задачи/журнал](../../vampir-headless/README.md).
+`build-headless-network-index.py` строит SHA-bound индекс выбранных сетевых
+строк и проверенных LEA в `code-clues/headless-network-index.json` библиотеки.
+Это статические привязки, не готовый сетевой протокол.
 
 Данные: `F:/PhoneExit Resources/Vampir`.
 Установка: `C:/Program Files/Netmarble/Netmarble Game/VAMPIR`.

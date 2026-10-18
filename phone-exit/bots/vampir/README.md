@@ -4,11 +4,90 @@
 Обновлено 18 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Общие находки и самостоятельный сетевой бот
+
+Все направления используют [FUNCTION-INDEX.md](FUNCTION-INDEX.md) — общий
+указатель найденных функций, адресов, источников/SHA и границ подтверждения.
+Перед новым исследованием проверять его и подробный связанный отчёт; новые
+подтверждённые находки добавлять туда независимо от направления работ.
+
+18 октября 2026 открыто отдельное направление: [vampir-headless](../vampir-headless/README.md).
+Цель — Windows без запуска игры, вход по почте/паролю, 10–20 аккаунтов,
+лёгкая онлайн 2D-карта, переносимое ядро для Android и обновление данных вслед
+за выпусками игры. [Задачи](../vampir-headless/TASKS.md),
+[журнал](../vampir-headless/WORKLOG.md). Первый SHA-bound индекс:
+27 сетевых строк/31 проверенная LEA, 1020 инструкций; wire/login/фарм ещё не готовы.
+Экранный бот и исследование карты сохраняются отдельными направлениями.
+
 **При продолжении читать [таблицу задач TASKS.md](TASKS.md):** выполненные работы,
 частичные результаты, оставшиеся проверки и критерии завершения. После каждой
 работы обновлять соответствующую строку; историю сохранять в журнале.
 
 ## Атлас карты, 17 октября 2026
+
+18 октября: найден native initializer14173c480, устанавливающий loading bit
+archive+28&1 и actor-string gate archive+29&1.4native flag cases подтвердили
+сохранность прочих битов. Полный structured binding14173eb10/adapter141599f90
+исполнен с bounded allocation, включая rebind; adapter возвращает embedded
+archive. Связанный прогон init→package flags→version transfer→optional GUID→
+actor tail заканчивается443; native custom lookup вернул8/170 без подмены.
+Audit/97recast tests прошли. Свойства до375 ещё decoded descriptor-based,
+не full native schema execution; active mesh/live routes не проверены.
+Следом property schema/alignment и выбор активных тайлов. MAP-ATLAS.md.
+
+18 октября: прослежены Linker summary→встроенный archive+240→прямой actor
+serializer. Native setter/copy/getter вернули170/8, missing key=-1:3transfer
+cases/15lookups;4flag cases подтвердили package bits→archive bits02/40.
+Constructor закрепляет vtable148a13918; прямой preload call передаёт этот
+archive в1452b8ff0 Nn actor. Audit и97recast tests прошли. Полная цепочка
+всех wrappers/preload gates, loading/actor+29 flags и property serialization
+ещё не исполнена; runtime mesh/движение не проверены. MAP-ATLAS.md.
+
+18 октября: найдены native регистрации FortniteMain170 и UE5-PrivateFrosty8.
+Nocturne и34generated packages имеют zero serialized versions; native summary
+gate выбирает общий registry snapshot, устанавливает scalar versions522/1013/0.
+При registered170/8 actor tail заканчивается443.2registration/4summary gate
+replays и независимый audit прошли;97recast tests. Передачу этих versions/flags
+из summary в фактический export archive ещё проследить; property boundary и
+active mesh по-прежнему не объявлены доказанными. Источники/SHA — MAP-ATLAS.md.
+
+Повтор codec с170 завершён:34packages/19098tiles/27249848buffer bytes,
+независимая валидация прошла. Все buffers/records побайтно равны прогону97;
+геометрия и прежние reports97 сохранены. Новый output — hypothesis-170,
+так как archive propagation/property boundary ещё требуют проверки.
+
+18 октября:68bytes actor tail разобраны условно по native веткам: optional
+GUID flag, строка NnRecastNavMesh-Default и две группы4uint32 GUID.6native
+сценариев/audit/94recast tests прошли. Важное ограничение: ключ custom version
+тот же, что у tile threshold97, но GUID pair читается лишь при version>=150.
+При97 tail заканчивается411, при150 —443. Версии/flags архива не извлечены;
+offset443 остаётся candidate. Полный UObject/schema/alignment и active area
+remapping не исполнены. Следом восстановить источник archive versions/flags,
+затем сверить tile decoder с ним. Источники/SHA — MAP-ATLAS.md.
+
+18 октября: разобраны8explicit actor properties доoffset375 (из433unknown
+value bytes осталось68actor tail доcandidate443). Native descriptor-derived
+indices совпали:CellSize/resolution[3]/AgentRadius/NavDataConfig/SupportedAreas/
+RootComponent5493→SceneComp этого actor. Serialized IDs MainRoad4/Forbidden3
+не равны constructor12/13; это saved export, не active map. CellSize*51 точно
+даётcandidate width; float32 reciprocals resolutions совпали с quantization.
+90recast tests/audit прошли. Полный native schema builder/tail и runtime
+selection ещё не проверены. Подробности/SHA — MAP-ATLAS.md.
+
+18 октября: подтверждён shared serializer dispatch NnRecastNavMesh/Recast:
+оба primary vtables d8→1452b91e0,e0→1452b8ff0; перед stream вызывается
+14381b2b0→1417521e0. Закреплены90native descriptors NavigationData/Recast
+с registry/getter/name provenance. Cooked header8fields/10bytes известен,
+433bytes values до candidate offset443 ещё не разобраны.86recast tests
+прошли. Boundary и active selection остаются unknown. MAP-ATLAS.md.
+
+18 октября: candidate grid params из Nocturne export3919 сверены со всеми
+18430unique tiles: exact width1000.0000133514404 даёт0boundary error/
+0minimum-cell mismatches; rounded1000 —13004mismatches на minimum corners.
+380native pipelines при candidate origin/width/height/quantization повторены,
+outputs/links не изменились.83recast tests прошли. Property boundary/active
+runtime parameters пока не подтверждены; результат — consistency evidence.
+Источники/SHA/границы — MAP-ATLAS.md.
 
 18 октября: единый offline pipeline coordinate→projection→query→straight
 исполнен в одной VM380сценариями/380replays:283линии,24partial без линии,
