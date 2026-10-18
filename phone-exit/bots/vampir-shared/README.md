@@ -14,6 +14,14 @@
 | Задачи/история сетевого бота | [TASKS](../vampir-headless/TASKS.md), [WORKLOG](../vampir-headless/WORKLOG.md) |
 | Экранный бот и карта | [Vampir TASKS](../vampir/TASKS.md), [MAP-ATLAS](../resource-tools/vampir/MAP-ATLAS.md) |
 
+## Выбор CDN по ConfigPrefix, 19 октября
+
+16 native сценариев подтверждают поиск подстроки real без учёта ASCII-регистра:
+она выбирает CdnConfigUrl, иначе CdnConfigUrlQA. Это отличается от точного
+сравнения SDK Zone. Общий select_cdn_config_base требует явных prefix/normal/qa.
+Config loader связан с логической конфигурацией Game; текущие URLs неизвестны.
+[Доказательства и ограниченный поиск в pakchunk0](../resource-tools/vampir/HEADLESS-CDN-SELECTION.md).
+
 ## SDK settings и game override, 19 октября
 
 Подтверждены 9 полей NMSDKSettings и начальные значения (4 native replays).

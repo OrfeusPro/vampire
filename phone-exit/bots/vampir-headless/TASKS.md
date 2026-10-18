@@ -54,6 +54,12 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 
 ## Текущее продолжение
 
+CDN selection: 16 native Find/branch cases и общий helper с явными bases.
+[HEADLESS-CDN-SELECTION](../resource-tools/vampir/HEADLESS-CDN-SELECTION.md).
+Loader file-global связан с Game; текущие physical config/URLs неизвестны.
+Следом physical/cooked Game config и late parameter overrides, полный URL
+builder; поиск 4 markers в decoded pak0 результата не дал (75 encrypted skipped).
+
 H04b: найден CDN ReadJson → NetmarbleS.Zone → environment field+48,
 7 native slices; [HEADLESS-CDN-CONFIG](../resource-tools/vampir/HEADLESS-CDN-CONFIG.md).
 Далее actual NetworkSetting.CdnConfigUrl/QA/ConfigPrefix, источник настроек,

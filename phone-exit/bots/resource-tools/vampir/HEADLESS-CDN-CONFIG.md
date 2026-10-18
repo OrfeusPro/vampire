@@ -94,6 +94,9 @@ InitSetting caller обращается к SDK service и readiness до нас�
 порядок загрузки CDN, callback, InitSetting и GMC2 Start в полном startup
 ещё не доказан. Успех offline replay не закрывает эту зависимость.
 
+Продолжение: [native CDN selector и логическая конфигурация Game](HEADLESS-CDN-SELECTION.md).
+Find/base branch исполнены, физический источник/активные значения ещё неизвестны.
+
 ## Следующий шаг
 
 Проследить источник NetworkSetting и актуальные CdnConfigUrl/ConfigPrefix,

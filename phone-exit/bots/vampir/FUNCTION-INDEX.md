@@ -1,5 +1,18 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN base selector и Game config, 19 октября: H04b partial
+
+EXE SHA прежний. Find141428640 и comparator1414599a0 исполнены без shims;
+Initialize call14563f3d3 и branch14563f3e9..424: ConfigPrefix содержит real
+(ASCII ignore-case) → global14b520cf0, иначе14b520d00. 16 cases incl unreal/
+Unicode/space; общий select_cdn_config_base с явными строками. Не SDK Zone equality.
+File-global14b2743f8 из loader1445bc080 связан с literal Game/initialization
+14152ca91..cac4. Callback map registration1445bb3a0 сохранена статически.
+Новый pak0 проверен по fullSHA: 6912 decoded/75 encrypted skipped/10 size skipped,
+4 exact config markers ASCII/UTF16 не найдены, decode errors0; scope ограничен.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SELECTION.md).
+Physical config/actual values/late overrides/full URL builder/startup order открыты.
+
 ## CDN config → SDK environment, 19 октября: H04b partial
 
 EXE SHA прежний. Ctor145631210/global14b575630/vtable1498bacd0 slot8 →

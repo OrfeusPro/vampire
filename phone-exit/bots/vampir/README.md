@@ -4,6 +4,14 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Выбор CDN по ConfigPrefix, 19 октября
+
+16 native сценариев подтверждают поиск подстроки real без учёта ASCII-регистра:
+она выбирает CdnConfigUrl, иначе CdnConfigUrlQA. Это отличается от точного
+сравнения SDK Zone. Общий select_cdn_config_base требует явных prefix/normal/qa.
+Config loader связан с логической конфигурацией Game; текущие URLs неизвестны.
+[Доказательства и ограниченный поиск в pakchunk0](../resource-tools/vampir/HEADLESS-CDN-SELECTION.md).
+
 ## Источник окружения SDK, 19 октября
 
 Прослежена загрузка CDN config: ReadJson читает NetmarbleS → Zone и пишет

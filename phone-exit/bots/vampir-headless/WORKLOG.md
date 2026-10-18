@@ -1,5 +1,40 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN selection: Game config и substring rule
+
+После 50e337d прослежен file-global 0x14b2743f8 из loader 0x1445bc080:
+root 0x14152ca00 создаёт logical name Game на 0x14152ca91..cac4. Конкретный
+physical INI/cooked config и итоговые overrides ещё неизвестны.
+Post-load helper 0x1445bb3a0 создаёт map entry с параметром/callback/hash/bucket;
+lifecycle обновлений не исполнен. Открытого ProjectRED/Config нет,
+StagedBuild_ProjectRED.ini пуст, именованный Saved/Config/Game.ini не найден.
+Остальные файлы профиля не читались.
+
+Реальный Find 0x141428640/comparator 0x1414599a0 и ветвь Initialize 0x14563f3e9..424
+исполнены на 16 explicit prefix fixtures. Наличие ASCII-ignore-case подстроки
+real выбирает CdnConfigUrl, отсутствие — CdnConfigUrlQA. unreal/pre_real_post/
+real-space тоже выбирают normal; SDK Zone использует отдельное точное equality.
+😀real возвращает UTF16 index 2. Общий select_cdn_config_base требует явные
+prefix/normal/qa; никакого endpoint default/HTTP или active-config inference.
+Остальные режимы Find и полный URL builder не реализованы.
+
+Свежий pak0 проверен по полному SHA256
+7c1efc7b799dd27d2580b4eed279755e60a92a6ce8ace1e9863038137122d179.
+6912 decoded records проверены на NetworkSetting/CdnConfigUrl/QA/ConfigPrefix
+ASCII/UTF16, совпадений 0/errors 0, encrypted skipped 75/size skipped 10.
+Index и reader/Oodle dependencies сверены; это не поиск всех ресурсов.
+Старые индексы/CSV не перезаписаны.
+
+Новый отчёт code-clues/headless-cdn-selection.json SHA256
+6550ba9156fe7d998b1cf584ac24de0cda2d71abaf219969358c1fce698dbc77.
+HEADLESS-CDN-SELECTION.md, README, shared index, TASKS и FUNCTION-INDEX обновлены.
+Шесть новых тестов прошли: source/bytes, 16 native replays, distinction equality/
+substring, local limits, Game global linkage, повторный public marker scan.
+Полная регрессия: 133/133 (70,7 с); синтаксис трёх изменённых Python-файлов,
+289 относительных ссылок и git diff --check прошли.
+Следом physical Game config/actual URLs/prefix, late overrides и full builder,
+затем подтверждённый CDN response/Zone → GMC2/auth. network_ready=false.
+
 ## 19 октября 2026 — H04b-CDN: найден JSON источник environment
 
 После 2185611 продолжена цепочка singleton 14b575630+48. Constructor 145631210

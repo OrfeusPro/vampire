@@ -24,6 +24,22 @@ def select_game_sdk_zone(environment: str) -> int:
     return 2 if _fold(environment) == 'REAL' else 1
 
 
+def select_cdn_config_base(*, prefix: str, normal: str, qa: str) -> str:
+    """Select explicit CDN base by substring 'real', ignoring ASCII case.
+
+    Different from select_game_sdk_zone's exact equality. Both base values must
+    be supplied; no URL validation, defaults, acquisition or network IO. Local
+    budgets: prefix128/base4096 UTF-16 units each, no embedded NUL.
+    Evidence: HEADLESS-CDN-SELECTION.md.
+    """
+    for value, limit in [(prefix, 128), (normal, 4096), (qa, 4096)]:
+        if not isinstance(value, str) or len(value) > limit or '\0' in value:
+            raise ValueError('Invalid explicit CDN configuration value')
+        if len(value.encode('utf-16le', 'surrogatepass')) > limit * 2:
+            raise ValueError('CDN configuration value exceeds local budget')
+    return normal if 'REAL' in _fold(prefix) else qa
+
+
 def _key(key):
     if not isinstance(key, str) or not key or len(key) > 256 or '\0' in key:
         raise ValueError('Invalid SDK configuration key')
