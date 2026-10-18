@@ -46,6 +46,14 @@
 .book-list-id{font-size:10px;color:#8a9db4}
 .book-list-class{margin:5px 0 0;font-size:12px;color:#b4cadf}
 .book-list-effect{margin:5px 0 0;font-size:11px}
+.book-target-skill{display:flex;align-items:center;gap:8px;padding:6px 8px;margin-top:8px;border:1px solid #304057;border-radius:6px;background:#10192566;text-decoration:none;min-width:0}
+.book-target-skill:hover{border-color:#62e7bc;background:#62e7bc08}
+.book-target-icon{display:grid;place-items:center;flex:none;width:34px;height:34px;border:1px solid #40516b;border-radius:4px;background:#111c2c center/100% 100% no-repeat;overflow:hidden;color:#71859d}
+.book-target-icon img{width:100%;height:100%;object-fit:contain}
+.book-target-text{display:flex;flex-direction:column;gap:1px;min-width:0;line-height:1.35}
+.book-target-caption{font-size:9px;color:#8fa2b9}
+.book-target-name{font-size:12px;color:#bde5db;font-weight:600}
+.book-target-text .skill-kind{font-size:10px}
 .book-list-card .book-sources{grid-row:2;grid-column:1/-1;margin:0;padding-top:8px}
 .book-list-card .source-heading{margin-bottom:6px}
 .book-list-card .source-npc-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:5px}

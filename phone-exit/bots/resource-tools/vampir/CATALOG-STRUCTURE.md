@@ -193,6 +193,47 @@ Whirlpool110016; типSkillCard1585; пустой поиск; навык50250�
 
 ## 18 октября — классы, догрузка и уровни NPC
 
+### Книга → изучаемый навык
+
+`build-skill-catalog-meta.py` дополняет maps/skill-catalog-meta.json разделом
+books (403 строки). Target допускается только при явном relation_verified=true
+в SHA-проверенном item-details.skill_books и существующем Skill.Id CSV1505.
+Имена — только skill_names_en с совпадающим Id; совпадение candidate_skill
+само по себе не создаёт ссылку. Type — прежние точные маркеры [Active]/[Passive]
+через проверенные book targets, не догадка по Skill.Type/имени. Все имена,
+маркеры и номера записей сохранены. Acquisition/runtime eligibility не заявлены.
+
+Иконки Img/ImgBg разрешаются тем же resolve_icon из build-npc-loot.py через
+archive-image-latest.json; SHA каталога и источников сохранены в meta.sources,
+149 уникальных PNG проверяются до публикации meta manifest. Порядок сборки
+прежний: build-catalog-pages.py вызывает генератор. Новая зависимость от
+atlas/monster-manifest не добавляется: первичная сборка loot не зависит от
+готовности atlas. Независимая сверка после сборки: все 402 target существуют
+в SHA-bound skill index, оба поля картинок полностью совпадают.
+
+В items-catalog.js только для books.html загружается SHA-bound meta.books;
+список показывает ссылку с иконкой/именем/типом. Неизвестная связь остаётся
+текстом, не кликабельным кандидатом. Поиск включает имя/ID навыка. Фильтр
+kind=active/passive/unknown пересекается с source/class/rarity/q, сохраняется
+в ссылках книги/возврате/догрузке; смена сбрасывает limit60. Не путать его
+с прежним passive (наличие PassiveSkillGroupId у самого предмета).
+
+Текущие числа: 402/403 target, 113 active/289 passive/1 unknown (активных
+уникальных навыков меньше из-за разных книг на один target). Из 112 книг
+с NPC origins: 7 active/105 passive. Примеры: 21014000→110016 Whirlpool,
+22023005→223006 Boss DMG Increase I. 4 Python + 8 Node tests, syntax,
+проверка всех targets/маркеров/источников/image SHA и HTTP200 прошли.
+Новая визуальная проверка не выполнена.
+
+В books.html добавлен фильтр «Источник получения»: all/npcs/no-npcs;
+source сохраняется в URL, ссылках карточек, возврате и догрузке. Проверка
+через ItemsCatalogModel.matchesSource использует тот же непустой npc_id
+из SHA-проверенного loot item-origins, что и видимый список монстров.
+AreaReward и отсутствие записей не выдаются за личный дроп/его отсутствие
+в игре. В текущем наборе 112/403 книг с NPC origins и 291 без них.
+Фильтр пересекается с поиском, классом и редкостью; смена сбрасывает limit.
+6 тестов модели и syntax прошли. Новых игровых связей не добавлено.
+
 Каталог `maps/loot/books.html` использует горизонтальную карточку в стиле
 списка навыков: иконка с фоном редкости, название, редкость/ID, класс,
 источники монстров ниже. Layout задаётся `.book-list-card` в `catalog.css`;

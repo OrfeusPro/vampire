@@ -1,5 +1,28 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const model=require('./resource-tools/vampir/items-catalog-model.js');
+test('book kind requires a verified target, with explicit unknown rather than guessing from candidate data',()=>{
+  const active={relation_verified:true,target:{id:'110016'},kind:'active'};
+  assert.equal(model.matchesBookKind(active,'active'),true);
+  assert.equal(model.matchesBookKind(active,'passive'),false);
+  assert.equal(model.bookKind({...active,relation_verified:false}),'unknown');
+  assert.equal(model.bookKind({...active,target:null}),'unknown');
+  assert.equal(model.bookKind({...active,kind:'0'}),'unknown');
+  assert.equal(model.matchesBookKind(undefined,'unknown'),true);
+  assert.equal(model.matchesBookKind(undefined,'all'),true);
+  assert.equal(model.matchesBookKind({relation_verified:true,target:{id:'1'},kind:'passive'},'passive'),true);
+});
+test('book target name uses exact display text and falls back to its ID',()=>{
+  assert.equal(model.bookSkillName({target:{id:'110016',display_names:[{text:'Whirlpool'},{text:'Whirlpool'}]}}),'Whirlpool');
+  assert.equal(model.bookSkillName({target:{id:'110016',display_names:[]}}),'Навык 110016');
+});
+test('monster reward source filter requires an explicit NPC origin and supports empty sources',()=>{
+  assert.equal(model.matchesSource([{npc_id:'400006'}],'npcs'),true);
+  assert.equal(model.matchesSource([{area_id:'10020'}],'npcs'),false);
+  assert.equal(model.matchesSource(undefined,'npcs'),false);
+  assert.equal(model.matchesSource([],'no-npcs'),true);
+  assert.equal(model.matchesSource([{npc_id:'400006'}],'no-npcs'),false);
+  assert.equal(model.matchesSource(undefined,'all'),true);
+});
 test('book sources retain exact NPC IDs, deduplicate chains, and route beyond Nocturne',()=>{
   const origins=[{npc_id:'400004'},{npc_id:'400006'},{npc_id:'400008'},{npc_id:'400006'},{}];
   assert.deepEqual(model.sourceNpcIds(origins),['400004','400006','400008']);

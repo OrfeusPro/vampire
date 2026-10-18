@@ -2299,3 +2299,539 @@ cost effects, несовместимые с exclusion/clamps. Визуальна
 Следующий источник — заполнение/изменение базового shared filter owner+0x400
 и выбор Blueprint class780/788/790 для запросов. Active coverage и реальные
 маршруты по-прежнему не подтверждены.
+
+## 18 октября — выбор класса фильтра, порядок запросов и базовые стоимости
+
+`build-recast-filter-selection-evidence.py` закрепляет55опорных инструкций,
+26unwind-fragments того же EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
+Точные пути Blueprint и значения field offsets берутся из прежнего
+navigation-filter-code.json с проверкой SHA; новые связи не назначаются
+по сходству имён или расположению функций.
+
+Конструктор1454d0020 пишет primary vtable149872f38; её slot3a0 указывает
+на1454da500. Отражённое имя этой lifecycle-функции пока не установлено.
+Она вызывает base функцию143801260, затем последовательно читает классы
+из780(Default),788(ShortPath),790(ExcludeHiddenPath) и передаёт их selector
+1452818e0 с тем же nav owner. Selector проверяет ancestry относительно
+NavigationQueryFilter class getter145267a60, читает CDO из class+110hex
+(при нуле вызывает1416aaaf0), передаёт CDO/owner в145281400. Null или
+неподходящий класс даёт пустой16-byte shared result. Отдельные wrappers
+1454dedd0/1454e07b0/1454dee80 выполняют те же обращения780/788/790.
+
+После этих трёх запросов1454da500 читает owner+400; если он не null,
+четыре вызова14145ae70 задают travel costs для area10/11/12/13 равными1.
+Literal1.0 находится по VA14898d188, raw0000803f. Это отдельный этап после
+запросов; его нельзя переносить задним числом на уже подготовленные копии
+или выдавать за доказательство текущих costs. В145281400 статически
+подтверждены cache lookup, fallback clone shared owner+400 через143850680
+и вызов CDO initializer slot2c8. Cache hit/flags/lifetime и фактические
+содержимое/выбор активного фильтра не исполнены новой проверкой.
+
+`recast-filter-selection-emulator.py` исполняет selector, три wrappers,
+virtual lifecycle body и настоящие travel setters.16сценариев: каждый
+wrapper с valid/missing-CDO/null/wrong-parent class, два значения callback
+flag, смешанные классы и null-base branch. Synthetic ancestry/CDO storage,
+getter/CDO creation/class-pointer callback, base lifecycle и145281400
+query cache имеют явные bounded stubs. Query stub сохраняет входной snapshot
+и возвращает синтетический shared result с нулевым refcounter; создание
+и освобождение настоящих cache objects этим не проверяются. Базовое
+состояние harness создано прежним native constructor; заполнение из CDO
+в новой проверке не исполняется. Null-base case проверяет только финальный
+guard после stubbed query calls, не успех реальной инициализации с null.
+
+Byte flag14b35a640 лежит в PE zero-fill части .data; harness задаёт его
+как отдельный синтетический ввод0/1, не берёт значение из процесса игры.
+Нативные file-backed pages и эта входная страница перечисляются раздельно.
+Запись допускается только в256KiB scratch; каждая execution ограничена2M
+инструкций. Все query stub snapshots предшествуют base mutations; остальные
+60travel costs, все64entering costs и polygon masks сохраняются. Новый
+validator отвергает неправильный порядок/подмену класса/посторонние изменения
+и ложный runtime_verified=true. Это офлайн execution кода клиента, не игровой
+runtime или доказанная проходимость.
+
+Дополнительно найден источник заполнения base impl:1452b7120 — slot8e0
+как base vtable14972dc00 из145297f60, так и Nn primary vtable149872f38.
+Статическая цепь:14526ca50 создаёт shared wrapper и пишет owner+400;
+1452b7120 выделяет0x430bytes, вызывает145299c20, устанавливает impl в
+shared+10hex. Затем обходит SupportedArea array owner+460/count468,
+stride32: класс в record+24, area ID читается byte в+16. Travel берётся
+из CDO+30hex, entering — через CDO virtual slot2e8, оба передаются
+настоящим setter slots10/18. Также используются owner5bc/5d0/644 и
+глобальная маска; их actual instance values остаются неизвестными.
+Новая проверка фиксирует эти инструкции/два vtable slot, но не исполняет
+allocation/reference-count/CDO loop. Это ближайший следующий объём работы.
+
+Найден и клиентский query caller145688dd0: получает все три wrapper results
+и передаёт их далее в14569bcf0; простой выбор единственного «default для
+всех маршрутов» этим не подтверждается. Этот caller сохранён в fragments;
+его ветви/параметры и актуальные запросы ещё требуют отдельной проверки.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-filter-selection-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-filter-selection.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Report code-clues/recast-filter-selection-evidence.json SHA256
+`b9190ccc035c1e1ce785befcfeb52c33e386467056463cc61351026a595d7de6`.
+Independent audit повторно сверил EXE/fragments/55anchors/vtable/literal/
+dependencies/pages и все16native replay, включая порядок/сохранение полей.
+54recast Python tests прошли (4новые про bounds/selection/order/preservation).
+Внешние paths не публикуются как готовые маршруты; `routes_verified=0`,
+`runtime_selection_verified=false`, `navigation_ready=false`.
+
+## 18 октября — полное исполнение base initializer с явными CDO-входами
+
+`recast-base-filter-emulator.py` исполняет всю1452b7120, concrete constructor
+145299c20→14523af10, reference-move14146d9e0, прямые setters и NavArea getter.
+Объекты локальные, исходный shared impl ref=null. Два bounded allocator stubs
+предоставляют ровно0x430bytes для impl и0x18bytes для refcounter; native код
+сам заполняет vtable/счётчики и перемещает ссылку. После вызова shared+10/18hex
+содержат ожидаемые адреса, счётчики=[1,1]. Ветка освобождения старого объекта
+и нехватка памяти не исполнены; игровой allocator не вызывается.
+
+NavArea constructor14526ef70 пишет vtable149721c28; её slot2e8 указывает на
+14527f810. Точные6bytes `f30f104134c3`: MOVSS XMM0,[RCX+34hex]; RET.
+Это чтение FixedAreaEnteringCost52 по прежней подтверждённой property schema;
+DefaultCost48 читается непосредственно перед travel setter. В harness все
+синтетические area CDO используют эту базовую vtable; наличие переопределённых
+виртуальных getter у фактических классов/Blueprint здесь не устанавливается.
+
+Поддержаны явные записи SupportedArea: ID0..63, present/create/null_cdo/
+null_class и обе float32 стоимости. Пропуск полей, nonfinite, out-of-bounds
+и неизвестные состояния отвергаются до исполнения. Lazy CDO loading — явный
+stub1416aaaf0; null class/CDO не создаёт costs, повторный area ID обрабатывается
+по порядку записей. Native getters/setters читают/пишут исходные float32 values,
+расширяя их до double. Сохранены trace каждого вызова и исходная запись.
+
+В отличие от NavigationQueryFilter override initializer, base CDO loop не
+clamp-ит travel к1 или entering к0: проверенные synthetic0,5 и negative costs
+передаются напрямую. Это поведение кода на заданных входах, не утверждение
+о существовании отрицательных стоимостей в реальных данных. При повторе
+area cost последнее значение заменяет массив, но cached minimum_cost
+сохраняет минимальное историческое значение из setter calls.
+
+Дополнительные native записи сохранены без угадывания имён свойств:
+
+| Вход | Наблюдаемая запись |
+|---|---|
+| owner+5bc float32 | CVTTSS2SI → shared+20hex int32 |
+| owner+5d0 bit11 | impl+428hex byte0/1 |
+| owner+644 float32 | double в impl+410hex |
+| global word14b566bac | include_flags &= ~word (16bits) |
+
+Global word расположен в PE zero-fill .data и задаётся явно как synthetic
+input. Это не извлечённая настройка текущей игры. Для CVTTSS2SI проверены
+fractional/negative/out-of-int32 значения; при выходе за диапазон получается
+INT32_MIN, а не Python-style неограниченный integer. Начальные64travel/
+64entering/masks из concrete constructor и дополнительное исключение area0
+исполняются настоящими инструкциями; последующий явный SupportedArea может
+их заменить. Effective CDO/owner/global runtime values этим не получены.
+
+`build-recast-base-filter-evidence.py`:34anchors/28fragments того же Windows
+EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
+30cases включают пустой список, constructor-valued scenario (не actual CDO),
+4состояния class/CDO, оба порядка дублей, negative inputs, все64area IDs,
+5global masks,4owner bit patterns,5scale values,6integer-conversion values.
+Model сравнивает полный state и trace. Independent audit повторно проверяет
+все source/proof/dependency SHA, native fragments/pages/leaves/34anchors,
+area getter/vtable slots и все30native replay. Scratch ограничен256KiB,
+каждый вызов ограничен2M инструкций; UE/OS/game process не исполняются.
+Report `code-clues/recast-base-filter-evidence.json` SHA256
+`d602a33e394ed657283946228e016f33103b586abe12f0024121541673bf3d32`.
+
+## 18 октября — фильтр в клиентском запросе и порог XY
+
+В конкретном caller145688dd0 найден перенос результатов трёх wrappers
+в14569bcf0. Win64 stack args6/7/8 несут соответственно Default/ShortPath/
+ExcludeHiddenPath; захват register/stack stores и loads закреплён32anchors.
+В callee два endpoint callsites1452451b0 получают аргумент8. Перед вызовом
+1452457b0 значение аргумента6 заменяется на аргумент7 через CMOVB, когда
+`(start.X-end.X)^2+(start.Y-end.Y)^2 < 9000000`. На точной границе и выше
+остаётся Default; ниже используется ShortPath. Z в этой scalar ветви
+не читается. Порог — double по VA149877500,8bytes00000000882a6141.
+Речь о единицах входных координат; перевод в метры и все прочие callers
+не объявляются установленными. Нативные C++ символы этих функций здесь
+не восстановлены: роли описывают сохранённый argument/data flow.
+
+`recast-route-filter-emulator.py` исполняет только точный блок
+14569bf90..14569bffe (останавливается перед CALL). Входы — конечные3D точки
+в analysis bound abs<=1e9 и два разных synthetic filter pointers. Ни prologue,
+ни endpoint projection, ни graph search/выдача маршрута не выполняются.
+Выход фиксирует настоящий pointer из stack argument будущего вызова и
+distance_squared из XMM1. Bounds не выдаются за ограничения игровой карты.
+13native cases/replays проверяют nextafter до/после3000units, точную границу,
+диагональ1800/2400, отрицательные координаты, смещения и изменение только Z.
+
+`build-recast-route-filter-evidence.py`:12fragments/32anchors, исходный EXE
+тот же; report `code-clues/recast-route-filter-evidence.json` SHA256
+`b19f9f3fb1d452251b3a5f4b562e061882106a7bda3df20c3cb3d439f1e028ed`.
+Independent audit сверяет все sources/pages/anchors/literal и13native replay.
+60recast Python tests прошли: новые4base-input/model tests и2route coordinate/
+execution bounds tests дополняют прежние54. Это проверенный механизм выбора
+аргумента для одного caller, не подтверждение runtime запроса или маршрута.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-base-filter-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-base-filter.py
+python phone-exit/bots/resource-tools/vampir/build-recast-route-filter-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-route-filter.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Следующие необходимые звенья: effective SupportedArea/CDO inputs и active
+mesh/tile coverage; входная структура/полный graph-query1452457b0 и входы
+его вызовов. Offline candidate graph и отдельные native branches нельзя
+выдавать за проход персонажем. Пока `path_search_executed=false`,
+`runtime_request_verified=false`, `routes_verified=0`, `navigation_ready=false`.
+
+### Полный native polygon query на одном извлечённом тайле, 18 октября
+
+`recast-path-query-emulator.py` исполняет весь1452457b0, а не только ветвь
+выбора фильтра. Сначала исполняется блок14523c6c1..14523c77a native add-tile:
+он сбрасывает firstLink, проходит ordinary polygons и строит static links из
+neighbor words, исключая0/high-bit, с reference=tileRef|(word-1), edge,
+metadata128/0/0. Блок останавливается перед special attachment. Байты и
+SHA сверены с существующим recast-geometry-code.json и тем же EXE SHA256
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+
+Вход1452457b0: RCX synthetic query, RDX/R8 start/end polygon references,
+R9 start double[3]; stack+28 end double[3],+30 cost limit double,+38 filter,
++40 output array,+48 optional cost output. Query+0 nav pointer,+88 node pool,
++90 heap. Наблюдаемые pool fields: nodes+0/hash+8/next+10, hash size+1c,
+capacity+20/count+24; node stride56. В search filter передаётся impl+8,
+поэтому travel+8, entering+208, minimum+408, heuristic scale+410,
+include/exclude words+418/+41a, virtual-mode byte+420. Эти смещения относятся
+к переданному указателю, а не к началу wrapper или impl.
+
+Исполняются reference validation14524f8f0, node lookup/allocation14524c750,
+heap push14523dc40/pop145250a10/update14524fd10, portal endpoints14524d350,
+link predicate145250990 и output count helper1452553e0. Поиск проверяет
+флаги/стоимости, использует midpoint общего ребра и выдаёт corridor records
+stride48 (reference+0, разность накопленной стоимости+8). На конечном полигоне
+учитывает также отрезок от portal midpoint к goal. Entering cost добавляется
+при смене area. Полная оптимальность глобального маршрута этим не доказана.
+
+Заменены только bounded memset hash array (512 uint16=1024байта,255) и
+stack-cookie call145246305. Allocating branch output helper запрещена;
+выделены512nodes/512heap/512output slots, tile<=256polygons и<=1536static
+links. Инструкция search ограничена2M, link block200K. Native записи только
+в scratch256KiB, исходные tile buffers readonly. Отдельный guard ограничивает
+допустимые функции/блок; страницы EXE хешируются. Native flag/virtual/special
+и внешние branches вне заданных сценариев не выдаются за проверенные.
+
+`build-recast-path-query-evidence.py` выбирает по одному ordinary tile с>=4
+связными полигонами из33package exports, сверяя source manifest, buffer file
+и каждый выбранный tile SHA. В34-м подходящего тайла нет. По каждому —
+forward/reverse/same-poly; на первом также все пары, include=0, exclude=65535,
+capacity1, cost_limit0, scale2.5 и area-dependent costs. Итого121case,
+117полных/4partial результата, максимальная цепочка10,32heap updates.
+Synthetic tile salt1, tile bits16/poly bits24; endpoints — центры вершин
+полигонов. Это явно заданный query/filter, не активный объект игры.
+
+Report `code-clues/recast-path-query-evidence.json` SHA256
+`887cc1a415cba60740aa5a424a1beef1029fd00c8f50e8e00997f22f4ef10e15`.
+`audit-recast-path-query.py` независимо разбирает neighbor words/vertices,
+делает BFS с масками, проверяет каждый шаг и стоимость через midpoint и
+последний отрезок, затем повторяет все121native cases. Sources/fragments/
+pages/блок/инструменты/входы проверяются SHA. Для constrained cases partial
+не считается доказательством недостижимости. Самостоятельный global optimum
+не утверждается; routes_verified по-прежнему0.64recast tests прошли,
+включая4новых проверки независимой стоимости/ложного partial/масок,
+невалидных endpoints/лимитов и запрета исполнения неизвестного кода.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-path-query-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-path-query.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Следом нужны corridor через реальные external/special links, point projection
+и straight path/funnel; затем effective runtime filters/active tile coverage и
+живое движение. Нынешние endpoints/filter/pool синтетические; archive layout
+остаётся hypothesis97. `path_search_executed=true` только для указанного
+single-tile объёма, `runtime_request_verified=false`, `routes_verified=0`,
+`navigation_ready=false`. Интерфейс не менялся, визуальная проверка не заявлена.
+
+### Native путь через external и special links, 18 октября
+
+`recast-linked-path-emulator.py` продолжает single-tile harness без изменения
+его исходников/прежних evidence. В одной Unicorn instance строит2тайла:
+native ordinary-link block14523c6c1..14523c77a, затем external constructor
+14523f0e0 или special start/end14523da30/14523f590 и полный query1452457b0.
+Внешние ссылки больше не подставляются из candidate graph вручную: нативно
+исполняются145243d60 с detail heights, allocation static link pool и запись
+interval bytes14523f3c5/14523f3dc. Graph предыдущего этапа используется для
+выбора пар и независимой сверки результата.
+
+Для специальных связей нативно исполняются BV/priority nearest145243b00,
+fallback145245510, triangle/closest-point и14524faf0 с отдельным заранее
+выделенным runtime pool64links. Исходные polygons/vertices копируются в
+scratch: attachment может менять endpoint vertices; исходные buffers readonly.
+Каждый тайл допускает<=256polygons/512vertices/1536static links. Query использует
+512node/heap/output slots, instruction limit2M, scratch256KiB+отдельные256KiB.
+Runtime query callback pointer+8=null и cluster-link arg=false — это явные
+ограничения сценария, а не доказательство отсутствия условий в игре.
+
+External constructor временно запрашивает384bytes (16results*24). Заменены
+только этот проверенный malloc/free и прежний bounded hash memset, cookie
+checks пропущены. Reallocation/рост результатов/runtime pools запрещены.
+Allocation/free pointers/size и caller sites проверяются; таблица функций и
+исполняемые страницы закреплены EXE SHA. Входные salt1/tilebits16/polybits24
+и2loaded tiles синтетические; порядок загрузки настоящего уровня не утверждается.
+
+`build-recast-linked-path-evidence.py` выбирает24пары ordinary tiles по native
+matching graph: по3на каждую из8категорий (стороны0/2/4/6, full/partial overlap).
+В каждой паре проверены forward/reverse и2контроля: без external attachment,
+exclude65535. Все48связных запросов полные, все48контролей partial. Отдельно
+61из62special points имеют подходящую пару с baked endpoints в прежнем
+сценарии `priority_11_63_10`; для всех61 forward/reverse дали цепочку через
+special polygon —122запроса. Единственный непривязанный `special-9432-0`
+не исключён из учёта: он явно записан в unavailable_special, без выдуманного
+пути. Всего218сценариев:170complete/48partial, maximum corridor4polygons.
+Это локальные короткие цепочки, не проверка дальнего маршрута по миру.
+
+Height35, quantization из attachment-study и priorities выбранного сценария
+остаются hypotheses; новые native executions не превращают их в effective
+runtime values. Default costs здесь явно1, entering0, include65535, exclude0
+(кроме запрещающего контроля). Персонаж/сервер/активная сетка не использованы.
+
+Report `code-clues/recast-linked-path-evidence.json`, SHA256
+`540e17c36271e13ae3a5ab2553b4345032ec43525416039037b14c45d610cbf4`:
+input manifests/graph/attachment-study SHA,163source tile records (включая
+рассмотренные при выборе кандидаты), исходный EXE SHA,66native fragments,
+page SHA, emulators SHA, полные входы/snapshots/results. EXE тот же
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+
+`audit-recast-linked-path.py` независимо проверяет source manifest/grid
+association и bytes/SHA, ordinary links по neighbor words, external references
+по прежнему native graph и самостоятельно считает interval quantization:
+normalize→min/max→clamp0..1→truncate(*255). Special links/metadata/endpoint
+vertices сверяет с предыдущим attachment-study при тех же inputs. Затем BFS
+с flags/cost/metadata admission сверяется с complete/partial; каждый corridor
+step, clipped portal и его стоимость пересчитываются отдельно. Special
+portal учитывает endpoint выбранного edge, а не midpoint обычного полигона.
+В конце все218сценариев исполняются повторно: snapshots/results совпали.
+68recast tests прошли;4новых regression tests проверяют clip обоих концов,
+special forward/back endpoint, непрерывность/допуск cross-tile path и
+truncation interval bytes. Глобальная оптимальность маршрута не утверждается.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-linked-path-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-linked-path.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Следующий объём — endpoint projection/straight-path(funnel), затем effective
+active tiles/filters и runtime permission callbacks специальных связей.
+До живой проверки персонажем `routes_verified=0`, `navigation_ready=false`.
+Проверка кандидата в двух loaded tiles не доказывает проходимость в игре.
+
+### Полный endpoint projection и связка с query, 18 октября
+
+`recast-projection-emulator.py` исполняет1452451b0 и helper145250f50:
+координата±extent→grid cells→tile hash chain→1452519d0(BV/filter/candidates)
+→14523e910(XZ clamp/detail triangle height)→выбор ближайшего допустимого
+полигона. RCX query, RDX point double[3], R8 extent double[3], R9 filter;
+stack+28 output ref,+30 output point,+38 optional alternate reference (в
+проверенных сценариях null). Native clamp каждого extent минимумом1e-6
+закреплён literal bytes `8dedb5a0f7c6b03e`. Основной query после проекции
+получает фактические projected point/ref, а не центры полигонов.
+
+Входы mesh явно синтетические: origin[0,0,0]→nav+60, widths[1000,1000]→
++78/+80, hashmask0→+90, hash table+ d8, два loaded tile в цепочке tile+60.
+Header grid coordinates и все geometry/BV/detail данные сохранены из source
+buffers. Один hash bucket не отменяет native сравнение header grid X/Y.
+Это сценарий для проверки кода, не извлечённые active mesh parameters.
+Extents<=1000/widths>=1000 ограничивают число рассматриваемых ячеек; tile-list
+allocation запрещена (loaded tiles2<32). Candidate capacity128, saturation
+фиксируется; ни один из проверенных вызовов не достиг лимита. Native пишет
+только scratch; пропускаются cookie calls1452454ea/14523eee0. Другие ранее
+указанные пределы linked-path harness сохраняются.
+
+`build-recast-projection-evidence.py` берёт24external pairs предыдущего
+native construction/query evidence. Для каждой: start/end centers, смещение
+Y+20/Y-20, выход за vertical extent, за grid, point около vertex и все flags
+исключены.192сценария:120нашли projection/72не нашли; no-hit возвращает
+status40000000/ref0 и не пишет output point. Успешный status сам по себе
+не означает найденный полигон. Отдельно24маршрута startY+20/endY-20:
+обе проекции→полный corridor query через external link с переданными
+projected coordinates. Это24полных локальных corridor, без straight-path.
+
+`audit-recast-projection.py` проверяет источники/bytes/SHA/literal, независимо
+считает XZ point-in-polygon/ближайшее ребро и detail triangle barycentric
+height, extent/flags/area admission и расстояние до всех допустимых полигонов
+двух source tiles. Допустимы равные расстояния, выбранный point проверяется
+до1e-6. Затем192проекции и24связки повторяются native; linked corridor audit
+проверяет стоимость от настоящих projected endpoints, а не исходных centers.
+Для старых linked cases прежняя проверка centers остаётся по умолчанию.
+
+Report `code-clues/recast-projection-evidence.json` SHA256
+`4333c4ff56c8c1c1324a23c8f2154d36469e11fe95443476a9d05bda405f4445`;
+исходный EXE по-прежнему
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+Report хранит input linked-report SHA, hashes4emulators, source tile records,
+native fragments/pages, все inputs/results и24linked states.72recast tests
+прошли:4новых теста slope height/clamp, ложных height/flags, input bounds и
+допустимого нулевого extent до native minimum clamp. Нулевой extent здесь
+unit input check; отдельное native исполнение нулевого extent не заявляется.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-projection-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-projection.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-linked-path.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Для следующего этапа найден static caller14569c12f→145248b20 после polygon
+query; callee использует endpoint clamp14523df90/portal14524d350 и выдачу
+точек. Line/funnel в этом этапе ещё не исполнен/не проверен. Далее также
+нужны effective mesh/grid/filter/permissions и движение персонажа.
+`straight_path_executed=false`, `routes_verified=0`, `navigation_ready=false`.
+
+### Полный native straight-path/funnel, 18 октября
+
+`recast-straight-path-emulator.py` исполняет145248b20 целиком, а также
+endpoint clamp14523df90, poly validation14524d870, portal14524d350,
+point equality14522e870, area-crossing helper14523ce30 и output1452553e0.
+RCX query,RDX start,R8 end,R9 array uint64 polygon refs; stack+28 count,
++30 output dynamic-array header,+38 options. Выход row48: ref+0,
+point double[3]+16,flags uint32+40. End ref0; наблюдаемые flags1=start,
+2=end,4=вход в special polygon. Flag4 не определяет jump/teleport действие.
+Array capacity512 предвыделена, growth запрещён; instruction limit2M.
+Endpoint clamp cookie14523e349 пропускается; остальная геометрия исполняется.
+
+Новый явный synthetic environment нужен для thread-local static-init checks:
+GS base0x6000000, vector+1000,index0,block0x6100000,epoch at+0x101184=0.
+Client global TLS index0x14b6313f0=0, guard0x14b566190=0. Вместо исполнения
+Windows CRT initializer задано его инициализированное состояние: epsilon
+double3.725290298461914e-9 (2^-28), raw`000000000000303e` из literal
+0x149714d48→global0x14b566188. Эта связь подтверждена native load/store
+145249296/1452492a5, а также14522e903/14522e912 и14523d47a/14523d489.
+Обе global pages лежат в PE zero-fill, readonly; TLS/TEB также readonly.
+Попытка вызова CRT init14879656c/148796500 запрещена. Никакие live thread
+или active settings этим не прочитаны. Корректность CRT инициализации здесь
+не проверяется; проверяется геометрия при таком explicit initialized state.
+
+`build-recast-straight-path-evidence.py` использует upstream verified corridors:
+66single-tile forward/reverse,48external forward/reverse,122special
+forward/reverse. По каждому options0 и1, всего236scenes/472native calls.
+38обычных baseline путей имеют>2точек, поэтому проверены настоящие повороты,
+а не только прямые отрезки.244выходных отметки special входа в472результатах.
+Для специальных переходов оба endpoint остаются отдельными точками линии.
+Start/end — прежние arithmetic polygon centers, но native endpoint clamp
+исполнен. Projection→query→straight в одном вызове ещё не выполнялись;
+проверены соседние части с совместимыми структурами входа.
+
+`audit-recast-straight-path.py` независимо строит funnel по source vertices
+и quantized portal intervals, на special portals принудительно сохраняет
+endpoint. Options0 совпал по всем точкам (до1e-6); для options1 проверены
+start/end/special flags и последовательное положение дополнительных точек
+на независимо построенной XZ линии. Высоты дополнительных area-crossing
+точек options1 отдельно независимой моделью не сверяются; exact native
+replay проверяет их повторяемость. Шаг special link не считается обычной
+проходимой поверхностью. Replays472 совпали, включая refs/flags/coordinates
+и helper counts; source center/ref и constructed links также сверены.
+
+Report `code-clues/recast-straight-path-evidence.json` SHA256
+`1dbf508f1a5c1680725da84cf9ec2ec87f7bf1d716fabb98f27536035f66cca1`.
+Report хранит SHA upstream reports/emulators, fragments/pages, explicit TLS/
+static state и initializer literal, inputs/state/results каждого corridor.
+EXE SHA по-прежнему
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+76recast tests прошли:4новых теста inner-corner turn, open/degenerate gates,
+запрета shortcut/reverse order и endpoint/corridor/options bounds.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-straight-path-evidence.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-straight-path.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Далее необходим общий projection→query→straight сценарий и effective active
+mesh/grid/filter/permission inputs, затем движение/проверка застреваний на
+персонаже. Результат — native линия offline candidate corridor, не игровой
+маршрут. `straight_path_executed=true` в описанном объёме;
+`routes_verified=0`, `navigation_ready=false`.
+
+### Единая offline цепочка coordinate→projection→query→straight, 18 октября
+
+`recast-navigation-pipeline.py` объединяет проверенные этапы в одной Unicorn
+instance: построенные ordinary/external/special links, native projection
+1452451b0, native corridor query1452457b0 и native straight145248b20. Native
+указатели mesh/query/filter не пересоздаются между этими этапами. В query
+передаются refs и реальные projected coordinates; straight получает именно
+результат query и те же projected endpoints. Передача происходит через
+документированные harness adapters, а не ручной выбор заранее готового пути.
+
+Это analysis composition, **не исполнение целого gameplay wrapper14569bcf0**.
+У настоящего исследованного caller ранее установлены разные классы фильтров
+для endpoint/query и выбор Default/ShortPath. Здесь все этапы специально
+используют один explicit filter array для проверки совместимости данных.
+Runtime class/cache/filter selection, active load order и разрешения объектов
+этим не воспроизводятся. Origin0/width1000/hashmask0, TLS/init epsilon,
+quantization/priorities/height35 и callback/cluster restrictions прежние.
+Входы уже в nav coordinates: связь с наблюдаемой позицией персонажа не добавлена.
+
+Pipeline имеет явные результаты `projection_missing`, `query_failed`,
+`partial_corridor`, `line_built`, `line_failed`; `movement_verified=false`
+всегда. Нет projection обоих endpoints — query не вызывается. Partial
+corridor — straight до исходной цели не строится. Это политика инструмента
+анализа, не утверждение об исходном UI/контроллере клиента. Она не заменяет
+проверки доступности при реальном движении. Один и тот же ref допустим для
+start/end: native query выдаёт один polygon с cost0, совпавшая точка straight
+схлопывается в одну end row ref0/flag2 (без обязательного start flag1).
+
+`build-recast-navigation-pipeline.py` берёт236source scenes предыдущего
+straight evidence (66internal/48external/122special), добавляет offsets
+startY+20/endY-20, extent[25,50,25], затем выполняет всю цепочку. Для24external
+forward scenes добавлены6контролей: disconnected, exclude65535, start/end
+за grid, same-point/same-poly, options1 area crossings. Всего380сценариев:
+283line_built,24partial_corridor,73projection_missing.122линии имеют special
+flag;167из283линий содержат>2точек. Ни один отказ не выкинут из отчёта.
+
+235из236baseline scenes построили линию. Scene23 (single-tile source case34,
+grid[23,102], corridor3→2→0 предыдущего этапа) при новых endpoint offsets
+даёт no projection для goal[23147.05913257599,-547.8699692208611,
+102279.41313028336]. Independent closest для polygon0: X/Z совпали,
+Y delta+70 при extent50. Другие polygons выходят за horizontal extent.
+Оба этапа согласованно отвергли привязку; extent ради успеха не расширялся.
+Остальные72no-projection — ожидаемые24exclude/24start-outside/24end-outside.
+
+`audit-recast-navigation-pipeline.py` сверяет все source reports/tiles,
+EXE fragments/pages и6emulator hashes, каждую derived input/options/grid
+с upstream scene. Независимые модели проверяют projection/clamp/detail
+height/nearest, BFS admission/corridor cost от projected endpoints, funnel
+corners/special endpoints и ordered XZ crossings. Same-point collapse
+проверяется отдельно. Затем все380сценариев полностью повторяются в одной
+VM: projection/query/line outputs, refs/flags/cost/helper counts, constructed
+link snapshots совпали. Audit сохраняет также SHA4independent audit modules.
+Глобальная оптимальность и высота дополнительных options1 crossings по
+независимой модели не утверждаются, как и на предыдущем этапе.
+
+Report `code-clues/recast-navigation-pipeline-evidence.json` SHA256
+`4fdc427ec8694b4d4f6ca4c1d0a4b7c4836393cb6783e25817ff792d8d1dd08b`.
+EXE SHA по-прежнему
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
+80recast tests прошли:4новых regression tests projected-vs-requested point
+handoff, запрета линии при partial/failure, отсутствия query без обоих refs и
+запрета непроверенных options. Прежние native evidence/emulators не изменены.
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
+python phone-exit/bots/resource-tools/vampir/build-recast-navigation-pipeline.py
+python phone-exit/bots/resource-tools/vampir/audit-recast-navigation-pipeline.py
+python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
+```
+
+Следующий необходимый объём: effective active world/mesh/grid/filter/permissions
+и связь с текущей позицией персонажа, затем управление движением/остановкой/
+застреваниями. Проверенный offline pipeline не подключён к боту как готовый
+маршрутизатор: `same_vm_pipeline=true`, `routes_verified=0`,
+`navigation_ready=false`. Интерфейс карты в этом этапе не менялся.

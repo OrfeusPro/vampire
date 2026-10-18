@@ -11,7 +11,11 @@ const ItemsCatalogModel=(()=>{
   }
   function effectLabel(value,types={}){const entry=types[value];return entry?(labels[entry.name]||entry.name)+' · '+value:declared(value)?'Тип не расшифрован · '+value:'Тип не указан';}
   function sourceNpcIds(origins=[]){return [...new Set(origins.map(row=>row.npc_id).filter(Boolean).map(String))];}
+  function matchesSource(origins,source='all'){const hasNpc=sourceNpcIds(origins).length>0;return source==='npcs'?hasNpc:source==='no-npcs'?!hasNpc:true;}
+  function bookKind(book){return book?.relation_verified===true&&book.target&&['active','passive'].includes(book.kind)?book.kind:'unknown';}
+  function matchesBookKind(book,kind='all'){return kind==='all'||bookKind(book)===kind;}
+  function bookSkillName(book){return [...new Set((book?.target?.display_names||[]).map(n=>n.text).filter(Boolean))].join(' / ')||'Навык '+book?.target?.id;}
   function sourceMapUrl(id){return '../atlas/world.html?item='+encodeURIComponent(id);}
-  return {flags,matches,effectLabel,sourceNpcIds,sourceMapUrl};
+  return {flags,matches,effectLabel,sourceNpcIds,matchesSource,bookKind,matchesBookKind,bookSkillName,sourceMapUrl};
 })();
 if(typeof module!=='undefined')module.exports=ItemsCatalogModel;

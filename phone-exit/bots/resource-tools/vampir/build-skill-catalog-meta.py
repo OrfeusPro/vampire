@@ -1,8 +1,32 @@
 """Compact skill presentation from exact CSV fields and verified book targets."""
 import csv
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
+
+
+def book_presentations(book_rows, skill_rows, skill_meta, resolved):
+    """Expose only verified targets; matching candidate IDs are not enough."""
+    result = {}
+    for item_id, book in book_rows.items():
+        sid = book.get('skill_id')
+        row = skill_rows.get(sid)
+        linked = book.get('relation_verified') is True and row is not None
+        target = None
+        if linked:
+            target = dict(id=sid,
+                display_names=[dict(text=n['Name'], provenance=n.get('provenance'))
+                    for n in book.get('skill_names_en', []) if n.get('Id') == sid and n.get('Name')],
+                images={field: resolved.get(row[field], dict(key='', status='not_declared', images=[]))
+                    for field in ('Img', 'ImgBg')},
+                provenance=skill_meta[sid]['provenance'])
+        result[item_id] = dict(relation_verified=linked, target=target,
+            kind=skill_meta[sid]['kind'] if linked else 'unknown',
+            kind_evidence=skill_meta[sid]['kind_evidence'] if linked else [],
+            item_provenance=book.get('record', {}).get('provenance'),
+            acquisition_verified=False)
+    return result
 
 
 def main(root=Path('F:/PhoneExit Resources/Vampir')):
@@ -24,10 +48,12 @@ def main(root=Path('F:/PhoneExit Resources/Vampir')):
         raise ValueError('Changed Skill CSV')
     sources[path] = spec['sha256']
     with (root / path).open(encoding='utf-8-sig', newline='') as stream:
+        skill_rows = list(csv.DictReader(stream))
         skills = {row['Id']: dict(category=row['Category'], type_raw=row['Type'],
             rarity_raw=row['Rarity'], class_raw=row['ClassType'],
             provenance=dict(entry=1505, csv_record=line), kind='unknown', kind_evidence=[])
-            for line, row in enumerate(csv.DictReader(stream), 2)}
+            for line, row in enumerate(skill_rows, 2)}
+    skill_rows = {row['Id']: row for row in skill_rows}
     loot = read('maps/loot/index.json')
     items = read('maps/loot/' + loot['files']['items']['file'], loot['files']['items']['sha256'])
     details = read('maps/loot/' + loot['files']['item-details']['file'], loot['files']['item-details']['sha256'])
@@ -44,7 +70,30 @@ def main(root=Path('F:/PhoneExit Resources/Vampir')):
         kinds = {e['marker'] for e in skill['kind_evidence']}
         skill['kind'] = ('active' if kinds == {'[Active]'} else
                          'passive' if kinds == {'[Passive]'} else 'unknown')
-    result = dict(skills=skills, sources=sources,
+    keys = {skill_rows[b['skill_id']][field]
+        for b in details['skill_books'].values()
+        if b.get('relation_verified') is True and b.get('skill_id') in skill_rows
+        for field in ('Img', 'ImgBg') if skill_rows[b['skill_id']][field]}
+    image_rows = read('archive-image-latest.json')
+    by_name = {key: [] for key in keys}
+    for image in image_rows:
+        key = image['asset_path'].rsplit('/', 1)[-1]
+        if key in by_name:
+            by_name[key].append(image)
+    resolver_path = Path(__file__).with_name('build-npc-loot.py')
+    resolver_spec = importlib.util.spec_from_file_location('book_skill_icon_resolver', resolver_path)
+    resolver = importlib.util.module_from_spec(resolver_spec)
+    resolver_spec.loader.exec_module(resolver)
+    resolved = {key: resolver.resolve_icon(key, images) for key, images in by_name.items()}
+    checked = set()
+    for value in resolved.values():
+        for image in value['images']:
+            if image['file'] not in checked:
+                if hashlib.sha256((root / image['file']).read_bytes()).hexdigest() != image['sha256']:
+                    raise ValueError('Changed book skill image: ' + image['file'])
+                checked.add(image['file'])
+    books = book_presentations(details['skill_books'], skill_rows, skills, resolved)
+    result = dict(skills=skills, books=books, sources=sources,
         limitations=['Kind comes only from explicit book description markers through verified book targets.',
                      'Skill.Type is preserved raw; no enum binding is inferred from matching numeric values.',
                      'Class and rarity are template fields, not account progress or runtime eligibility.'])

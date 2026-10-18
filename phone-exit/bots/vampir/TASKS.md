@@ -23,6 +23,65 @@
 
 ## Выполненные и текущие работы
 
+18 октября: общий coordinate→projection→corridor→straight pipeline в одной
+VM проверен380native cases+380replays; независимая геометрия/стоимость
+совпала.283линии/24partial/73no-projection, включая один baseline с Y+70
+за extent50.80recast tests прошли. Следом effective active mesh/grid/filter/
+permissions и сверка позиции персонажа; управление движением не подключено.
+Synthetic analysis composition не выдаётся за gameplay caller; routes_verified=0.
+
+18 октября: straight-path/funnel145248b20 проверен472native cases+replays
+на236коридорах, options0/1. Независимая геометрия поворотов/дополнительных
+пересечений/спец.endpoint совпала;76recast tests прошли. TLS/init epoch и
+epsilon — документированный synthetic environment. Следующий объём:
+связать projection→query→straight на общих входах, effective live mesh/
+filters/custom-link permissions и управление персонажем; routes_verified=0.
+
+18 октября: endpoint projection1452451b0 исполнен192cases+192replays;
+независимо проверены XZ clamp/detail height/nearest selection.24связки
+исходные координаты→projection→corridor дополнительно повторены.72recast
+tests прошли. Следом straight-path/funnel (call14569c12f→145248b20),
+effective active grid/filters и движение персонажа. Grid synthetic;
+routes_verified=0, navigation_ready=false. MAP-ATLAS.md.
+
+18 октября: external/special corridor закрыты в bounded offline объёме:
+218native cases+218replays,24external pairs и61special point в обе стороны;
+1special без подходящей привязки. Проверены создание links/квантизация,
+стоимость и disconnected/excluded controls;68recast tests прошли. Следом
+point projection/funnel, effective filters/active tiles и живое движение.
+Runtime custom-link permission callbacks не исполнены; routes_verified=0.
+
+18 октября: полный native polygon search1452457b0 выполнен на33реальных
+извлечённых тайлах,121сценарий+121replay. Internal links также исполнены
+кодом клиента; независимый обход/расчёт подтвердил связность и возвращённую
+стоимость. Флаги, partial result, node/cost limits проверены;64recast tests
+прошли. Следующий объём:
+external/special corridor, point projection/funnel, effective filters и active
+tile coverage; реальные маршруты остаются routes_verified=0. MAP-ATLAS.md.
+
+18 октября: закрыты два локальных пробела навигации: base initializer/CDO
+cost loop исполнен30сценариями+30replays, XY-выбор ShortPath/Default —
+13сценариев+13replays.60recast tests прошли. Эти проверки не выполняют
+actual find-path на активной сетке и не подтверждают runtime CDO values.
+Следующий объём: клиентский graph-query1452457b0/его структура входа,
+effective SupportedArea/CDO и active tile coverage; routes_verified=0.
+
+18 октября: новое звено проверки маршрутов: native class fields780/788/790
+→CDO→query helper, три запроса перед base area10–13=1. 55anchors/26fragments,
+16native cases+16audit replays;54recast tests прошли. Найден initializer
+base impl1452b7120/slot8e0, SupportedArea/CDO loop пока только статический.
+Следом его исполнение с явными CDO inputs и проверка query caller145688dd0
+→14569bcf0; live coverage/filters/проходимость остаются. navigation_ready=false.
+
+18 октября: книги → изучаемый навык в списке: иконка/имя/ссылка, фильтр
+активных/пассивных/unknown, поиск по навыку и kind URL. 402/403 targets,
+113 active/289 passive/1 unknown. Проверены все связи/149 image SHA,
+12 целевых тестов/syntax/HTTP. Визуальная проверка остаётся.
+
+18 октября: фильтр источника книг по существующим личным наградам NPC:
+112/403 с npc_id, 291 без записей. Сочетается с поиском/классом/редкостью,
+сохраняется в source URL и возврате. 6 тестов модели и syntax прошли.
+
 18 октября: список книг навыков получил горизонтальные карточки как каталог
 навыков: иконка/фон редкости слева, имя, редкость/ID, класс и компактные
 источники-монстры. Поиск, фильтры, сортировка по редкости, ссылки и догрузка

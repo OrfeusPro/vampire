@@ -10,6 +10,75 @@
 
 ## Атлас карты, 17 октября 2026
 
+18 октября: единый offline pipeline coordinate→projection→query→straight
+исполнен в одной VM380сценариями/380replays:283линии,24partial без линии,
+73projection-missing без линии.122линии проходят special points.80recast
+tests прошли. Один baseline miss сохранён: ближайшая поверхность Y+70
+при extent50. Это анализ при explicit grid/filter/TLS, не восстановленный
+gameplay wrapper и не движение бота. Подробности/SHA — MAP-ATLAS.md.
+
+18 октября: full straight-path/funnel145248b20 исполнен472cases/472replays
+для236коридоров:66internal/48external/122special. Независимый funnel совпал,
+38обычных путей имеют повороты; special endpoints/flags сохранены.76recast
+tests прошли. TLS/static-init environment явно synthetic, epsilon из EXE.
+Далее effective active mesh/filters/permissions и управление персонажем;
+игровая проходимость не подтверждена. Источники/SHA — MAP-ATLAS.md.
+
+18 октября: полный coordinate→tile hash→BV/filter→closest/detail-height→
+nearest projection1452451b0 выполнен192сценариями на24парах, независимо
+сверен и повторён;24связки projection→polygon query также совпали.72recast
+tests прошли. Grid origin0/width1000/hashmask0 — явные synthetic inputs,
+не runtime параметры. Line/funnel и живое движение ещё не выполнены.
+Доказательства и границы — MAP-ATLAS.md.
+
+18 октября: native construction→query проверены через границы тайлов и special
+links:218cases/218replays,24пары (4стороны, полные/частичные интервалы),
+61special point в обе стороны;1из62 пока без подходящей привязки. Независимый
+audit сверил links, quantized intervals, достижимость и стоимость.68recast
+tests прошли. Height35/приоритеты/квантизация — явные offline scenarios;
+custom-link runtime callbacks и cluster links отключены. Проекция/funnel,
+active mesh/filters и движение персонажем ещё не проверены. MAP-ATLAS.md.
+
+18 октября: впервые исполнен полный polygon query1452457b0 на извлечённых
+тайлах:121сценарий/121replay,33тайла; internal links строятся native блоком
+14523c6c1..14523c77a. Независимо проверены достижимость и стоимость цепочек,
+флаги, лимиты узлов/стоимости; длина цепочки до10полигонов.64recast tests
+прошли. Это single-tile
+offline сценарии с явными фильтрами, без external/special links, проекции
+точек и движения. Active mesh/CDO и реальные маршруты остаются непроверенными.
+Инструменты, SHA и воспроизведение — MAP-ATLAS.md.
+
+18 октября: исполнен полный native base initializer1452b7120 с явными
+SupportedArea/CDO inputs:30cases/30audit replays,34anchors/28fragments.
+Стоимость0,5 из CDO не получает clamp1 из query override; entering также
+передаётся напрямую. Отдельно проверена XY-ветвь выбора фильтра у caller
+145688dd0→14569bcf0:13cases/replays, порог squared9000000, ниже ShortPath,
+на границе/выше Default; Z в этой ветви не участвует.60recast tests прошли.
+Фактический поиск пути/active mesh/реальные маршруты ещё не проверены.
+Источники, SHA и границы — MAP-ATLAS.md.
+
+18 октября: подтверждён путь полей классов фильтров 780/788/790 через
+class/CDO selector1452818e0 к query helper145281400; vtable NnRecastNavMesh
+slot3a0 вызывает три запроса, затем setter для base area10–13 со значением1.
+Новый report55anchors/26fragments,16native cases и независимых replay;
+54recast tests прошли. Найден base initializer1452b7120 (slot8e0), его
+создание impl и SupportedArea loop пока статическая проверка. Cached/active
+значения и реальные маршруты всё ещё не подтверждены. MAP-ATLAS.md.
+
+18 октября: в списке книг показан изучаемый навык (имя/иконка/переход),
+фильтр kind=active/passive/unknown и поиск по имени/ID навыка. В meta.books
+402 проверенных target из 403 книг: 113 active/289 passive/1 unknown;
+при source=npcs — 7 active/105 passive. Генератор сохраняет provenance,
+проверяет SHA входов и 149 файлов иконок. 12 целевых тестов/syntax/HTTP
+прошли; все targets/картинки сверены с независимым skill index. Подробности
+и границы — CATALOG-STRUCTURE.md. Новая визуальная проверка не выполнена.
+
+18 октября: в книгах добавлен фильтр «Источник получения»: все книги,
+в наградах монстров, без записей наград монстров. Использует прежние
+item-origins/npc_id (NpcReward), параметр source в URL/возврате/догрузке.
+112 из 403 книг имеют такие записи; это не подтверждение серверной выдачи.
+6 тестов модели и JS syntax прошли. CATALOG-STRUCTURE.md.
+
 18 октября: каталог книг (`maps/loot/books.html`) оформлен горизонтальными
 карточками в стиле каталога навыков: иконка с клиентским фоном редкости,
 название, редкость/ID, класс и компактный список монстров-источников.
