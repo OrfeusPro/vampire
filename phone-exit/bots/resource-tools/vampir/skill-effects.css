@@ -1,0 +1,6 @@
+.skill-effect-candidate{margin:14px 0;padding:14px;border:1px solid #67583e;border-radius:8px;background:#111a26;font-size:13px}
+.skill-effect-candidate>summary{color:#d9bd87;font-size:13px;font-weight:600;line-height:1.5}
+.skill-effect-candidate>p{font-size:12px;line-height:1.6;color:#aebed1}
+.skill-effect-candidate dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 16px;margin:16px 0}
+.skill-effect-candidate dt{color:#95a9c0}.skill-effect-candidate dd{margin:0;text-align:right;overflow-wrap:anywhere;color:#e1eaf5}
+.skill-effect-candidate details{font-size:11px;margin-top:12px}

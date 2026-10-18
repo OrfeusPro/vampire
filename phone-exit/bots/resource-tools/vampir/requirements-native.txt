@@ -1,3 +1,4 @@
 # Offline analysis only; Windows x64 wheel, not an Android dependency.
 --require-hashes
 capstone==5.0.6 --hash=sha256:761c3deae00b22ac697081cdae1383bb90659dd0d79387a09cf5bdbb22b17064
+unicorn==2.1.4 --hash=sha256:d7107500c64ce5c168fbff6bef9485b5db1350050036f4cea568650cf8bdbdf5

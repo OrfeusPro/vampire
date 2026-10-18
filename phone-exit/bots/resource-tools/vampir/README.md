@@ -131,6 +131,11 @@ verify-ui-links.py повторно проверяет native дескрипто
 Capstone из requirements-native.txt в игнорируемом .tools/vampir-analysis;
 build-native-entry-code.py читает EXE статически, учитывает chained unwind и
 проверяет инструкции. Runtime-переходы и Android-соответствие ещё не доказаны.
+Для изолированной проверки математики лифтов там же закреплён Unicorn2.1.4
+с SHA Windows x64 wheel. build-lift-rotation-evidence.py эмулирует только
+разрешённые диапазоны math-кода с константами EXE; игру не запускает.
+Установка: `python -m pip install --no-deps --target phone-exit/.tools/vampir-analysis -r phone-exit/bots/resource-tools/vampir/requirements-native.txt`.
+Результаты/ограничения и порядок построения карты — [MAP-ATLAS.md](MAP-ATLAS.md).
 
 Привязки кнопок к полям и сравнению в native: build-entry-button-links.py,
 [ENTRY-BUTTONS.md](ENTRY-BUTTONS.md). Генератор требует entry-reference и entry-code
@@ -223,3 +228,41 @@ TextMessage+0xa00 и вложенный ImageBackGround;4 cooked-вариант�
 ui-geometry/system-message-named-slot.json. Тип NamedSlotBinding/Name/Content
 подтверждён, но unversioned-индекс59 ещё не связан с полной схемой наследования.
 Два префикса сохранены с opaque-хвостом; ребро топологии и координаты не включены.
+
+
+## Атлас карты (17 октября 2026)
+
+[MAP-ATLAS.md](MAP-ATLAS.md): build-map-atlas.py собирает полные таблицы географии,
+связи, исходные точки, NPC/объекты, порталы и цели квестов в maps/atlas/ библиотеки.
+Генератор проверяет SHA CSV/PNG/EXE/Nocturne. query-map-atlas.py даёт запросы
+--world/--spot/--quest с проверкой производного JSON. map-atlas.html — исходник
+локального просмотрщика (копируется генератором). Изображение и координатная
+схема разделены до подтверждения преобразования. Маршруты/Android ещё не готовы.
+
+
+Скрины на большой карте: register-map-screenshot.py (несколько путей кадров),
+сохранённое совмещение/накопление наблюдений и ограничения — MAP-ATLAS.md.
+Добыча и изображения: [NPC-LOOT.md](NPC-LOOT.md), export-float-icons.py →
+build-npc-loot.py → query-npc-loot.py. Проценты выпадения не подтверждены;
+исходные rates/условия/источники сохранены. Отдельные справочники вне Git/APK.
+
+
+build-loot-rate-evidence.py проверяет именованныеLoad AreaReward/NpcReward/Reward,
+привязку rate к32-битному полю и PE-importatoi. Запускать доbuild-npc-loot.py,
+который включает компактное доказательство и item-origins.json (Item→NPC→цепочки).
+Native/CSV версии сверяются. Проценты всё ещё не вычисляются. NPC-LOOT.md.
+
+
+build-loot-record-links.py продолжает nativeLoad до создания объектов/vtable
+NpcReward/Reward:проверяет два пустых ratecallback и24опорныхинструкции.
+После негоbuild-npc-loot.py включаетrate-callbacks.json иnpc-locations.json.
+query-npc-loot.py поддерживает --item/--npc совместно с--world. NPC-LOOT.md.
+
+Nocturne Map10/11: `build-map-projection.py` создаёт проверку XY→атлас;
+затем `build-map-atlas.py`. Источники,7 областей исторического кадра,
+фильтр предметов и33 теста: [MAP-ATLAS.md](MAP-ATLAS.md).
+
+Единая большая Nocturne: `build-world-map.py` / `world-map.html` /
+`world-map.js` / `world-map-model.js`, экспорт `render-world-map.py`.
+Главныйindex открывает36контекстов вместе; старый просмотрщик —world.html.
+Порядок и51тест: [MAP-ATLAS.md](MAP-ATLAS.md).

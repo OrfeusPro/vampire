@@ -1,6 +1,6 @@
 # Vampir — таблица задач
 
-Обновлено: 16 октября 2026. Главная точка входа: [README.md](README.md).
+Обновлено: 18 октября 2026. Главная точка входа: [README.md](README.md).
 Это единый актуальный список; подробные доказательства и история — по ссылкам.
 
 Статусы: **Готово** — указанная работа выполнена и проверена в указанном объёме;
@@ -37,7 +37,7 @@
 | V10 | Окна сообщений | Частично | KICKOUT_FOR_INSPECT связан с точным текстовым ключом и паузой; конкретный вызываемый WBP и прочие попапы ещё связывать | ui-window-reference.json, [UI-CATALOG.md](../resource-tools/vampir/UI-CATALOG.md) |
 | V11 | Устойчивость на сохранённых кадрах | Готово | Последний целевой прогон: 180 тестов; магазин: 32/32 сценария, масштабы, сдвиг, неверная сумма, повтор и перезапуск | [SHOP-REPLAY.md](../resource-tools/vampir/SHOP-REPLAY.md) |
 | V12 | Сборка локального модуля 1.0.8 | Готово | Подписанный ZIP собран, основные файлы сверены с рабочими; публикации и установки нет | phone-exit/.tools/bot-release/vampir-1.0.8.zip |
-| V13 | Карты и точки | Частично | Изображения и данные извлечены; полная привязка точек к карте/экрану и маршрут фарма не подтверждены | [RESOURCE-INDEX.md](../resource-tools/vampir/RESOURCE-INDEX.md), библиотека maps/ |
+| V13 | Карты и точки | Частично | 17.10: атлас254 миров/154 настроек/588 точек/61307 размещенийNPC; Nocturne36контекстов/24071отметка, исправлен zoom, карточки NPC/предметов/дропа/навыков. Native-словарь40 FireCondition,43 явно неизвестен;66 тестов. Остались runtime-условия/время/урон, эффекты предметов, остальные карты, свежий Android и маршруты; MAP-ATLAS.md/NPC-LOOT.md | [RESOURCE-INDEX.md](../resource-tools/vampir/RESOURCE-INDEX.md), библиотека maps/ |
 
 ## Следующие задачи и критерии завершения
 
@@ -132,3 +132,759 @@
 
 | V63 | Общий исполнитель квестовых действий | Проверяется | quest_executor.py: 24 учебных правила + Guide-награда, геометрия, ожидание, резерв до IPC, неизвестный ответ без повтора; 7 новых тестов + 29 регрессий. QUEST-AUTOMATION.md |
 | V64 | Планировщик по наблюдениям компонентов и условиям графа | Осталось | Связать известные семейства интерфейса с условиями задачи/награды; не объявлять серверный прогресс по одному tap, сохранить неизвестные связи |
+
+
+## Продолжение карты, 17 октября 2026
+
+| ID | Работа | Статус | Результат / осталось |
+|---|---|---|---|
+| V65 | Единый атлас географии Vampir | Готово как справочник | 17 CSV,1422 PNG,SHA EXE/Nocturne;254 мира,154 настройки,полные размещения и связи;9 тестов;91 проблема источников сохранена. [MAP-ATLAS.md](../resource-tools/vampir/MAP-ATLAS.md) |
+| V66 | Привязка мира к изображению и Android | Частично: изображение V68 | Native-формула/плитки либо проверенная калибровка, независимые точки, свежие кадры/DPI; локальный API17842 пока недоступен |
+| V67 | Проходимость, маршруты и интеграция карты в бот | Частично: источники и предварительный слой | 63 ActorRoot/Blueprint chain проверены,62 PointLinks; в UI63 условных размещения/14 связей по явным transforms,49 неполных. Расчёт не считается маршрутом. Native CDO/frame/активация/граф/Android и pivot322 контуров остаются;20 header chunks без полигонов. MAP-ATLAS.md |
+
+| V68 | Прежние скрины на большой карте | Подтверждён один участок | 93 уникальных изображения,1WorldMap;SIFT/RANSAC463 детали,spatialholdout p95=1.247px;покрытие/фрагмент/сравнение и5 тестов. WorldXY и прочие области не подтверждены; MAP-ATLAS.md |
+| V69 | Каталог NPC-наград,предметов и изображений | Готово в доступном объёме | NativeNpcReward.GroupId→Npc;941NPC/793Item,5827Item общего каталога/3615 картинок;41FloatRGBA,790 однозначных+2 неоднозначных+1 пропущенная иконкаNPC. 6 тестов; NPC-LOOT.md |
+| V70 | Численные шансы и региональные награды | Осталось | NativeLoad трёх таблиц иatoi→32bit поля подтверждены;знаменатель/число попыток/модификаторы и GroupId entry11→Area ещё не доказаны,проценты не считать |
+| V71 | Закрыть пробелы иконок и цвет Android | Частично | Item11042015/IMG_Weapon_Orb_UnCommon_16 не найден в экспорте/entries;два неоднозначных пути;цветFloatRGBA и версияAndroid требуют сверки |
+
+| V72 | Native-загрузка rates и обратный индекс предметов | Готово в указанном объёме | 3именованныхLoad/6фрагментов/PE-importatoi;793Item/35211цепочек,NPC/миры/сырыеrates;9тестовNPC,всецепочки сверены. Визуальнаяпроверка новойUI недоступна(local browser use disabled). NPC-LOOT.md |
+
+| V73 | Rate callbacks иразмещения добычи | Готово вуказанномобъёме | NpcReward/Reward lookup→init→copy→vtable,24опоры/12фрагментов,ratecallbacksret0;4227размещений776NPC,фильтрItem/NPC+World,CRLFисправлен. 10+5тестов,всестрокисверены. Формула шанса не найдена;NPC-LOOT.md |
+
+| V74 | Проверка обновлённогоUI после включения браузера | Готово вуказанномобъёме | HTTP17946былостановлен,перезапущенloopback;Nocturne/покрытие,Item12013000→175NPC/244цепочки→NPC200052→spawn100177067/rates видны,ошибокнет. preview-checked.png;NPC-LOOT.md |
+
+17.10, V13 продолжение: Nocturne Map10/11 — проекция клиента и7 областей
+исторического кадра без подгонки; слой добычи Item→NPC→размещения,33 теста
+и браузерная проверка. Свежий Android/проходимость/навигация ещё остаются.
+
+17.10,V13:общая Nocturne всех36миров,24071отметка,карточки/имена/добыча/
+квесты/порталы,PNG10240×10635. Все25плиток попиксельно сверены послеисправления
+zoom;51тест. Подробности вMAP-ATLAS.md,свежийAndroid/маршруты остаются.
+
+17.10,V13:карточкаNPC сдропом/количеством/характеристикамиBattle,опытом/золотом.
+1785NPC/23329цепочек/56тестов. ФинальныйкомпактныйUI требуетповторногопросмотра
+послевключениябраузера;свежийAndroid/шансы/маршрутыостаются.
+
+17.10:по скринуобычногоNPC100201042 добавлены34кандидатапредметовизнаграды
+области100201040;прямыхNPCнаграднет. ПрименениеAreaRewardзакрыбийство
+ещёне доказано,статус раздела явноуказан;57тестов,браузеротключён.
+
+17.10:разделеныNPC/AreaRewardвкарточкахифильтре.323Area/941NPCгруппы
+совпадаютсдоменамиID,непересекаются;58тестов. Применениезаубийство/шансы
+остаютсянедоказанными,визуальнаяпроверканедоступна.
+
+17.10, V13: проверены native-потребители AreaReward/NpcReward:15 call/88фрагментов,
+3 связи с UI карты/подземелья; build-reward-scope-code.py и NPC-LOOT.md.
+Браузер доступен: NPC100201012/34 предмета области/фильтр43 областей проверены,
+сервер17946 восстановлен, 58 тестов прошли. Серверное правило наград за убийство,
+знаменатель вероятности и свежий Android по-прежнему не подтверждены.
+
+17.10, V13: Item.Rarity/8 исходных текстур фона/русские подписи в карте и каталоге;
+сортировка Mythic→Common, Unique/Seasonal/неизвестные в конце.5827 записей и
+8SHA проверены,59 тестов прошли. См.NPC-LOOT.md; runtime-связь с конкретным
+игровым виджетом и свежий Android пока не подтверждены.
+
+17.10,V13: полная страница предмета, выбор заточки, благословение и все поля Item.
+848 групп заточки+84 благословения,62583 строки/SHA проверены;браузер подтвердил
+Item11014006 +0/+15,59 тестов. Неразобранные эффекты/пассивы/ограничения доступны
+как ID; итоговый серверный эффект экземпляра не вычисляется. См.NPC-LOOT.md.
+
+17.10,V13: компактное оформление страницы предмета и плавающие описания
+параметров (наведение/фокус/нажатие, Escape). Браузером проверен шлем12014006
++15 и клавиатура, значения сохранены; синтаксис JS/console без ошибок.
+Данные не изменялись. См.NPC-LOOT.md, item-details-redesign.png.
+
+17.10,V13: базовые параметры+прибавка заточки в скобках, итог в подсказке;
+новый item-stat-model.js/4 теста сравнения, всего63 теста пройдены. Проверены
+карточки шлема12014006/перчаток12034006; данные клиента не изменялись.
+
+17.10,V13: боевые параметры и навыки NPC подписаны; новые Skill/SkillName_en/
+SkillOperation связи сохранены в NPC-LOOT.md и JSON provenance.1785 SHA/
+3039 операций проверены,63 теста прошли,браузер100181082/50160/50161 подтверждён.
+Формула урона, единицы времени и runtime-условия остаются неизвестными.
+
+17.10,V13: дроп — доказана native-ветка клиентского окна по NpcSpawn.AreaInfoId:
+ненулевой→AreaReward,0→NpcReward по NpcInfoId. Не зависит от отсутствия личных строк.
+build-drop-selection-code.py/NPC-LOOT.md;26 anchors/36фрагментов;1785карточек/
+17488размещений проверены,64теста. UI Glade Vagrant/29предметов области проверен.
+Серверная выдача/проценты/модификаторы пока неизвестны.
+
+17.10,V13: проверен NPC300041: пустой AreaInfoId, нет NpcReward; подтверждены
+квестовые ссылки130420090/130430070 через Param.npcInfoIdList. UI проверен,
+связи записаны вNPC-LOOT.md, серверный дроп остаётся неизвестным.
+
+17.10,V13: быстрый поиск личного дропа — фильтр npcLoot=1,554 размещения/
+470 NPC, ссылка Void Chronicler200052/29предметов.18Node-тестов карты прошли,
+данные наград не изменялись. См.NPC-LOOT.md.
+
+17.10,V13: проверка портрета100181052 — явной2D-связи нет, семейный Boss-портрет
+не назначен.8 прямых Img→PNG связей Nocturne; отчёт и источники вNPC-LOOT.md.
+
+17.10,V13: Skill.FireCondition→native parser→40 пар имён/кодов подтверждены
+указателями и bytes; build-skill-semantics.py/skill-semantics.json, связи вNPC-LOOT.md.
+Always=0, fallback43; у всех2632 вхождений навыков Nocturne43, поведение неизвестно.
+Добавлены подпись статуса/исходные параметры условия;1785 SHA/66 тестов проверены.
+Единицы времени, runtime-предикаты, формула Damage и оставшиеся эффекты предметов
+остаются. Визуальная проверка недоступна: local browser use отключён вWork settings.
+
+17.10,V13: подтверждены15 названий целей и15 условий выбора SkillOperation;
+Skill.TargetType использует тот же парсер целей. Новый build-skill-target-semantics.py,
+SHA/21 anchors/2 JMP и связи вNPC-LOOT.md. В карточках отдельные цель навыка,
+цель действия и выбор цели, неизвестные15/17 не интерпретируются.
+1785 SHA/3039 действий/67 тестов прошли; выбранный100171021→50288/50289→Enemy4.
+Runtime-фильтры, единицы времени, формула урона и эффекты предметов остаются.
+Визуальный просмотр недоступен из-за настройки Work.
+
+17.10,V13: пассивы39 предметов→19 SkillSet→19 Skill→35 действий,
+native-диагностики связей/SHA проверены. В карточке название/описание клиента,
+ID/исходные строки. build-item-details.py/build-npc-loot.py, источники вNPC-LOOT.md.
+69 тестов/39 ссылок прошли. Runtime-активация не проверена; числовые проценты
+не выведены из текста. Остались EffectType/EffectParams, вложенные эффекты,
+ограничения, время и урон. Визуальный просмотр отклонён политикой браузера URL.
+
+17.10,V13: сервер17946 восстановлен; браузером проверены Item11013010 +0/+15,
+иконка/редкость/благословение, Item11015000→Frenzy/описание. Ошибок console нет.
+Снимки maps/loot/server-check-item.png и passive-checked.png просмотрены;
+прежнее ограничение визуальной проверки для этих карточек снято.
+
+17.10,V13: ItemLimit/ItemUseLimit→native парсеры0/1/2,47anchors;
+14+28 предметных ссылок выведены,0 потерянных,71 тест/браузерные примеры прошли.
+build-item-limit-semantics.py перед build-npc-loot.py; все связи вNPC-LOOT.md.
+Навыки не завершены: вложенные эффекты, runtime-условия/код43, урон/время остаются.
+
+17.10,V13: Effect92→EffectOperation93 по EffectInfoId подтверждён native diagnostic.
+SkillOperation.Param1→Effect пока только кандидат:75 вхождений/37 ID у NPC,
+19 у пассивов; отдельная свёрнутая подпись «не подтверждена», relation_verified=false.
+skill-effect-links.py/JS/CSS, источники и отвергнутые native-зацепки вNPC-LOOT.md.
+74 теста/1785 SHA/визуальная проверка Impact прошли. Доказательство Param1,
+истечение/рекурсия, формула урона, время и runtime-условия остаются.
+
+17.10,V13: Effect.ActionType→56 native-имён, None0/Stun6/fallback56;
+408 известных из2027 определений. build-effect-action-semantics.py,
+источники/12anchors/JMP вNPC-LOOT.md. UI ActionType/сырые параметры/истечение,
+75 тестов/1785 SHA/визуальная проверка прошли. Param1→Effect не доказан,
+формула урона/единицы времени/точные runtime-условия остаются.
+
+17.10,V13: OverlayType5 имён/BuffType3 имён подтверждены native-парсерами,
+выведены раздельно;9 ключей истечения Skill/Die сохранены без интерпретации.
+build-effect-rule-semantics.py/14anchors/JMP, источники вNPC-LOOT.md;
+76 тестов/1785 SHA/2027 определений/браузерная проверка прошли. Накопление,
+refresh, истечение, Param1→Effect, время/урон/runtime-условия остаются открытыми.
+
+17.10,V13: найден и закреплён native-путь вычисления/вывода перезарядки
+WBP_SkillSummaryInfoT.TextSkillCoolTime; build-skill-time-code.py,
+32 anchors/2 float-константы/leaf/vtable/SHA/ресурс export27. Масштаб ×0,001,
+runtime-поправки, деление на заряды и %.1f подтверждены. Глобальная единица
+CSV не доказана; csv_time_unit=null, UI не переводился в секунды. Следующий
+шаг — фабрика Skill/уровневые overrides и независимая граница секунд.
+Источники, точные адреса и границы вNPC-LOOT.md.
+Повторная сборка дала одинаковый SHA;41 опорная запись/2999 инструкций26
+фрагментов побайтно сверены с EXE, SHA каталога совпал, Python syntax прошёл.
+Просмотрщики не менялись; новых UI/Android проверок не заявлено.
+
+17.10,V13: SkillLevel1511→Skill getters перезарядки подтверждён через
+native loader/индекс/vtable,33 anchors. Диапазон уровня включительный;
+первая подходящая строка, ноль/пусто сохраняет базовое значение.7 профилей,
+4 новых теста прошли; все1785 NPC/SHA сверены, среди395 навыков замен нет.
+build-skill-level-code.py/skill-level-code.json, источники вNPC-LOOT.md.
+Найден счётчик cooldown0x145596ec0, но источник входного интервала ещё неизвестен;
+секунды не объявлены доказанными. UI/Android не менялись и не проверялись заново.
+
+17.10,V13: источник интервала замкнут: UGameEngine::Tick/DeltaSeconds→
+диспетчер→vtable счётчика cooldown,33 anchors/27 fragments/1371 инструкция.
+build-skill-tick-code.py + контракт UE5.5 подтверждают ms у Min/MaxCoolTime;
+build-monster-details проверяет доказательства и маркирует только эти поля.
+Карточки показывают базовые min/max в секундах, сырые значения сохранены;
+TotalTime/эффекты/предметный CoolTime не пересчитываются.1785 SHA/2632 skill
+вхождения и81 тест прошли. Сервер17946 перезапущен, браузером100171031→
+50250/50251→2с/2с проверен, console чистая, screenshot сохранён.
+Источники вNPC-LOOT.md. Итоговые runtime-поправки/урон/остальное время остаются.
+
+17.10,V13: по просьбе пользователя добавлены доступные имена навыков:
+English525 приоритет, полная KO1020 fallback по точному Skill.Id.
+22en+267ko=289 подписей/395skills;106 без имени. Русский перевод только
+базовой атаки с оригиналом/флагом перевода/CSV record.1785 SHA/2632 skill
+вхождения,59Python тестов и браузер100171031→Базовая атака01/02 проверены.
+build-monster-details.py строит skill-names-verification.json; документация обновлена.
+TotalTime остаётся неизвестным:0x14568e9e0 отвергнут как ложная связь
+(slot0xb0 вызывается на объекте0x1456048e0, не на Skill).
+
+17.10,V13: TotalTime audit закреплён build-skill-total-time-code.py,
+5 anchors/4 fragments/2159 instructions + getter bytes/vtable, повторный SHA
+совпал. Скан264 FF90..97/B0-кандидатов — только discovery, не все формы dispatch.
+Тип получателя прямого вызова0x140d550ae также не доказан Skill; это исправляет
+возможное неверное прочтение прежней зацепки. Единица/runtime duration неизвестны.
+UI: TotalTime · исходное значение + title-пояснение вместо «Длительность»;
+JS syntax/браузер100171031/console прошли, screenshot total-time-checked.png.
+Полный регресс повторно не запускался: изменение текста/подсказки, без пересчёта
+или изменения исходных данных. Источники/ограничения вNPC-LOOT.md.
+
+17.10,V13: Effect timing: build-effect-time-code.py,23 anchors/7 fragments/
+2941 instructions/imports strtoul/_atoi64. Min/MaxDuration/Period хранятся64bit,
+но первичная загрузка zero-extends uint32; ModifyValue использует int64.
+Все2027 строк укладываются вuint32, Min/Max до2500000000;413 Duration внеграниц.
+Поля сохранены раздельно, DurationGrowthRate/пояснение добавлены в общийUI.
+load_effects проверяет источник;83 теста/1785 SHA/75 кандидатов/браузерFrenzy прошли.
+Единицы времени, приоритет Duration/MinMax и runtime-таймер не доказаны;
+SkillOperation.Param1→Effect остаётся кандидатом. Документация вNPC-LOOT.md.
+
+17.10,V13: native-проверка SkillOperation.Param1 не дала нового подтверждения,
+статус кандидата сохранён. Вместо повышения статуса добавлен обратный индекс
+подтверждённых Skill↔NPC:395skills/2632links, SHA вmonster-manifest.
+Карточка→«Показать NPC с этим навыком», боковой поиск, ?skill=ID, reset;
+учтены Battle-варианты/пересечение фильтров.85 тестов/1785 SHA/сверка индекса
+с каждой карточкой прошли; браузер50250→3NPC/147spawn, unknown→0 проверен.
+Источники/происхождение/границы вNPC-LOOT.md. Фактическое применение навыка
+монстром и связь Param1→Effect ещё неизвестны.
+
+17.10,V13: результаты skill-поиска сгруппированы по точному npc_id после
+применения мира/предмета/поиска/слоёв. Число размещений/список миров сохранены;
+клик открывает карточку и вписывает размещения NPC. Переключатель возвращает
+все исходные точки.50250→Field Corpse30/Field Wandering Corpse30/Wandering Corpse87.
+21Node-проверка прошла; браузер3NPC↔147записей/карточка проверен, screenshot
+npc-skill-groups-checked.png сохранён. Native/серверные связи не менялись.
+
+
+### 17 октября — каталог книг навыков
+
+Частично:403 книги Type31,112 с цепочками NPC-наград; отдельный фильтр,
+редкость, карточка и переход к источникам карты.402 совпадения EffectParams/Skill.Id
+помечены кандидатами. Осталось доказать обработчик изучения, магазины/крафт.
+62Python+25Node=87 тестов и браузер проверены. См.NPC-LOOT.md, раздел книг.
+
+
+### 17 октября — книги, результаты крафта
+
+Готово в указанном объёме:57 книг/107 отдельных путей ItemCraft→Reward→Item,
+проверка3 native diagnostic offsets, SHA/CSV provenance; карточка рецепта/исхода/
+количества, фильтр каталога.89 тестов и браузер6010001/57 книг прошли.
+Осталось: доказать Material.GroupId, Shop reward handler и EffectType4→Skill;
+проценты и серверную доступность не заявлять. Подробности вNPC-LOOT.md.
+
+
+### 17 октября — эффекты предметов и проверка геометрии
+
+Частично:19 названий Item.EffectType из native parser/43 anchors,1774 предмета
+с подписанным типом;20 fallback неNone. Форматы EffectParams, runtime пассивов
+и сочетание World/Room ограничений остаются. AreaBox loader15 anchors/vtable/ret0,
+без доказательства pivot. Отчёт геометрии/5160 навигационных inputs и статус карты,
+проходимость неизвестна.92 теста/браузер прошли. Источники и команды в
+NPC-LOOT.md и MAP-ATLAS.md; новых игровых действий/Android проверки не было.
+
+
+### 17 октября — V67, источники навигации
+
+Частично:15 native anchors путей/Nav loader/IsPathConnected,14 RefNavMesh headers
+и1 импорт; Nocturne header886/соседний кандидат887,20 ExternalActors с неизвестной
+связью. Воспроизводимая сборка navigation-study→geometry→scene,13Python+21Node
+и SHA проверены. Браузер отключён; маршруты/AreaBox pivot ещё не доказаны.
+Далее: схема exports/внешних chunks, навигационные полигоны/связи и IsPathConnected.
+Источники вMAP-ATLAS.md. Предметные эффекты остаются в предыдущем состоянии.
+
+
+### 17 октября — V67, подтверждённый пакет и20 частей Nocturne
+
+Частично: exports связывают886/887 (прежний candidate повышен после проверки
+диапазонов/класса/полного покрытия);20 ChunkRef/path/Bounds,6native descriptors,
+строгий decoder.16Python+21Node/SHA прошли. Сервер17946 запущен; браузер карта/
+status20/alert/console проверены. Маршруты/AreaBox pivot остаются неизвестны.
+Далее извлечение payload частей, полигоны/связность и проверка движения.
+
+
+### 17 октября — V67, payload и навигационные объекты уровня
+
+Частично:7PAK/21494 plain records/0ошибок,22 RecastNavMesh кандидата.
+Подтверждён Nocturne-level header1141/body1140 (обратное расположение),34206exports,
+49bounds/63link components/NavSystem/Recast/RefLoader со всемиSHA.19Python
+прошли. Это115 объектов,не готовый граф; polygons/runtime link conditions
+не разобраны. Далееcustom serializers/payload. MAP-ATLAS.md/level/index.json.
+
+
+### 17 октября — V67, относительные точки компонентов лифтов
+
+Частично:63link components→BP_Lift* поexport.outer,4native property descriptors/
+array и4constructor anchors.49стартов/40концов/27пар в relative координатах,
+IDuint64 без потери точности.6unknown fields14/22 ивсеsuffixbytes сохранены.
+23Pythonпроверки прошли. Сборка build-navigation-level.py→build-navigation-links.py.
+Остаютсяparent transforms/архетипы/direction/enabled/движение иполигоныchunks;
+никаких пеших рёбер графа не создано. Источники MAP-ATLAS.md/link-properties.json.
+
+
+### 18 октября — V67, SceneComponent размещения лифтов
+
+Частично:63Link.outer→Parent→единственныйSceneComponent,13nativeprefixdescriptors,
+явныеlocation63/rotation57/scale14/absolute-locationtrue7,потерянныхбайтовнет
+(неизвестный8-byte suffixсохранён).27Pythonпроверокпрошли. RootComponent,
+attachments/архетипы/полныеworldtransforms/условиядвижения остаются. Полигоны
+прохода и маршруты не заявлены. ИсточникиMAP-ATLAS.md/lift-placements.json.
+
+
+### 18 октября — V67, корень и наследование лифтов
+
+Частично:constructorNnLift создаётScene иназначаетвSceneRoot/Actor.RootComponent,
+7anchors/2native descriptors. ПакетыBP_Lift/Test/Type01 извлечены,SuperIndex/import
+подтвердилиNnLift→BP_Lift_C→Test/Type01.30Pythonтестовпрошли. Native defaultroot
+доказан,ноinstance overrides/архетипы/условиядвижения/worldpoints остаются.
+Отчётlift-blueprints/index.json,командаbuild-lift-blueprints.py;MAP-ATLAS.md.
+
+
+### 18 октября — V67, параметры экземпляров лифтов
+
+Частично: 63 явные ссылки SceneRoot/SmartLinkComp проверены по точным exports;
+22 native поля SplineActionParams и6 полей NnLift, Blueprint own count2/1/0,
+62 явных параметра движения,8 bAutoActivation=false. Unknown PointLinks/tail
+сохранены; отсутствующее не заменяется default.34 Python-теста прошли.
+Сборка build-lift-instance-settings.py; отчёт instance-settings.json.
+Остаются ActorRoot/attachments/PointLinks/runtime activation/единицы Duration.
+Доказательства в MAP-ATLAS.md. Проходимость не заявлена.
+
+### 18 октября — V67, PointLinks и ActorRoot экземпляров
+
+Частично:62 явных PointLinks массива/62 записи, Direction0=BothWays по native
+enum; отсутствующий массив не считается пустым. Проверен Actor serialized
+prefix и явное равенство Actor.RootComponent=SceneRoot всех63 экземпляров.
+Unknown actor fields/хвосты и raw SupportedAgents сохранены без назначения
+разрешений движения. Отчёт point-links.json, build-lift-point-links.py после
+build-lift-instance-settings.py.38 целевых Python-проверок прошли.
+
+build-scene-native-defaults.py отдельно проверил16anchors, getter/wrapper/ctor
+и2descriptors: native AttachParent=null, RelativeScale3D=1×1×1 до переопределений.
+Реальная сборка прошла; scene-native-defaults.json содержит SHA/смещения/байты.
+Эти defaults экземплярам не назначены. Далее архетипы/attachment/потребитель
+transform/runtime активация; мировые маршруты по-прежнему не подтверждены.
+Полные источники и ограничения — MAP-ATLAS.md. Эффекты предметов остаются частичными.
+
+### 18 октября — V67, прямые ссылки шаблонов SceneComponent
+
+Частично: build-lift-archetypes.py проверил63 цепочки template/outer ссылок
+через6 Scene-шаблонов в3 пакетах до native Default__NnLift.Scene.
+9 экземпляров с базовым шаблоном,8 Test,46 Type01;3 имени размещений устарели,
+фактические class/template ссылки согласуются. Все6 Blueprint Scene templates
+без явных свойств; native CDO/post-construction ещё не разрешены.
+Новый decode-package-references.py проверяет диапазоны, FName, таблицы и циклы.
+42 целевых Python-проверки прошли. Отчёт archetypes.json, SHA и таблицы/экспорты
+в MAP-ATLAS.md. Далее native effective defaults/transform/runtime conditions;
+готовые координаты переходов и проходимость не заявлены.
+Также build-lift-bounds-code.py проверил18anchors/4descriptors/vtable slot199:
+PointLinks stride0x70, Left+40/Right+58 входят в min/max bounds, затем читается
+RootComponent+1d0. Сборка прошла; bounds-code.json. Формула world endpoints/
+обновление кэша/навигационная выгрузка не доказаны; следующий поиск локализован.
+
+### 18 октября — V67, мировой кэш корневого компонента
+
+Частично:4 именованные native binding,32anchors/4descriptors и3полных leafgetter
+проверены build-component-transform-code.py на закреплённом EXE.
+Блок+1d0 подтверждён как мировой transform96bytes, location+1f0/scale+210;
+цепочка1425a78a0→143af8c00 читает RelativeLocation/Scale/AttachParent и пишет
+тот же блок, прослежена ветка без родителя. Реальная сборка прошла.
+Отчёт component-transform-code.json. Rotator conversion, итоговые CDO defaults,
+world endpoints/runtime state остаются; мировые переходы на карту не нанесены.
+Подробные адреса/байты/SHA/границы — MAP-ATLAS.md.
+
+### 18 октября — V67, формула вращения и преобразование bounds
+
+Частично: lift-transform-math.py и build-lift-rotation-evidence.py.
+Изолированная эмуляция1414fd980 с vector trig helper проверила195 вращений,
+включая57 явных rotation из проверенных компонентных bytes; ошибка≤5.56e-16.
+195 синтетических преобразований bounds14550d6c0 совпали с преобразованием
+углов локального AABB, включая negative/nonuniform/zero scale; ошибка≤1.17e-10.
+Начальный AABB[(0,0,-10),(0,0,10)] установлен по EXE и учтён в сравнении.
+49 целевых Python-тестов прошли. Отчёт rotation-evidence.json с полными
+результатами/страницами/SHA; Unicorn2.1.4 закреплён в requirements-native.txt.
+Реальные effective CDO/attachments/world endpoints и проходимость остаются.
+Это проверка математики, не195 игровых переходов. Источники MAP-ATLAS.md.
+
+### 18 октября — V67, предварительный слой лифтов на большой карте
+
+Частично: build-lift-map-preview.py→build-world-map.py публикует63 записи,
+14 связей из полностью явных transforms/endpoints;49 неполных без подстановки
+defaults. Прямые root/archetype ссылки и исходные export/SHA/PointLinks bytes
+повторно сверены. Слой отдельно от points/World.Id/навигационного графа,
+условие отсутствия parent transform/смещения уровня/runtime явно показано.
+world_transform_verified=false и walkable=null; это не14 проверенных маршрутов.
+UI: переключатель, выбор, клик по отметке, A/B/Z/разница высоты, native direction,
+сырьё/источники и URL?lift=1836. Камера учитывает ширину карточки.
+52Python+21Node/JS syntax прошли. В браузере проверены полный1836/неполный1818,
+reload по URL, zoom+/−,0console errors; снимок lift-preview-checked.png.
+Следом inherited defaults/attachments/frame/runtime activation. MAP-ATLAS.md.
+
+### 18 октября — V67, исходные настройки и57 расчётных связей
+
+build-lift-initial-values.py:26anchors/3native descriptors/3CDO checks,
+проверенные template chains, native scale1×1×1 и один начальный PointLinks
+[(0,-50,0),(0,50,0)] с Direction0. В Blueprint CDO нет PointLinks override,
+Scene templates не задают scale. Это initial values, не окончательное runtime.
+Слой57 связей:14 полностью явных+43 с provenance initial_fields;49 scale
+заполнены из initial (включая6 ещё неполных),1 PointLinks у1821.
+Явный0scale и пустой массив сохраняются;6 rotations не угаданы.
+55Python+21Node/JS syntax прошли. В браузере1818(scale),1821(scale+links),
+1819(unknown rotation),URL reload/console проверены. Снимок lift-inherited-checked.png.
+Далее6 rotations, frame/attachments/runtime activation; walkable=null,
+world_transform_verified=false. MAP-ATLAS.md/initial-values.json.
+После проверки браузер отключён в настройках Work; повторный снимок последней
+правки прозрачности/отступов A/B недоступен. Предыдущий снимок новых57links сохранён.
+
+### 18 октября — V67, нативная ветка обнуления объекта
+
+build-object-zero-init-code.py:24anchors и точная import/IAT цепочка
+1487a2e25→VCRUNTIME140.dll!memset. Default-subobject141746350→1417cd8a0→
+construct1417e0fc0→allocate1417e0420; zero branch перед class constructor,
+но reuse может пропустить обнуление, затем вызывается initializer finalization.
+Итоговый default rotation этим не доказан,6 missing не заполнены.
+59Python проверок прошли,4 новых защищают import target/terminator/ordinal/
+string/directory bounds. Report object-zero-init-code.json, SHA/bytes вMAP-ATLAS.md.
+Далее constructor/base callbacks и finalization1417c61a0; UI остаётся57links,
+готовая проходимость не заявлена.
+
+### 18 октября — V67, template copy после конструктора
+
+build-object-template-copy-code.py проверил43anchors, import memcpy,
+2Scene vtable slots и bytes пустого callback. Finalizer1417c61a0→1417d7840
+выбирает explicit template или class+110;1417d4d10 копирует свойства по
+runtime offset+44, длинам+30/+34, raw-copy flagbit30 либо virtual slot100.
+Для subobjects отдельный цикл; post-init Scene+50 ведёт к143a537b0→дальше,
+Scene+58 пустой. Реальная сборка прошла. Финальное вращение не доказано:
+не разрешены runtime FProperty/source CDO и последующие callbacks.
+Отчёт object-template-copy-code.json, источники/SHA вMAP-ATLAS.md.
+UI остаётся57links/6missing rotations. Следом реальные template values,
+а не подстановка нуля из первоначального memset.
+
+### 18 октября — предметы, коробки и обратные источники
+
+ItemBox CSV196/native diagnostics связаны с Item/Reward;644 коробки,
+10568 раздельных путей,0issues. Карточки: содержимое/изображения/редкость/
+количество/rawRate/вложенная цепочка, требуемый ключ,40наград за порцию.
+Обратные ссылки1396 предметов, включая133 книги; path_count не количество
+выпадения. Явные unknown режим/шансы/runtime сохраняются.27Python+4Node,
+JS syntax/SHA644boxes и manifest прошли. build-npc-loot.py и build-world-map.py
+пересобраны. Browser disabled вWork; визуальный результат пока не проверен.
+Подробности NPC-LOOT.md; прочие эффекты/пассивы/условия остаются.
+
+
+### 18 октября — порядок карточки и локальный сервер
+
+Блок «В каких коробках указан предмет» перенесён после характеристик,
+пассивных навыков, ограничений и общих свойств, перед исходными данными.
+Состав связей не менялся. build-npc-loot.py и build-world-map.py пересобраны;
+node --check, порядок секций и совпадение source/deployed JS проверены.
+Сервер запущен на127.0.0.1:17946, listening подтверждён. Browser tool
+отклонил доступ к вкладке по URL policy; визуальный вид не проверен.
+
+
+### 18 октября — названия режимов строк наград
+
+Reward.RewardGroup→ERewardGroup подтверждён ModifyValue/parser:7 имён,
+72 anchors, fallback7 не объявлен режимом. Названия показаны по всей цепочке
+в раскрытой награде коробки. ItemBox.RewardGroupType остаётся raw/unknown;
+его нельзя автоматически подписывать тем же enum.27Python+4Node прошли,
+SHA644boxes/report/deployedJS проверены, loot и большая карта пересобраны.
+Подробности и следующий шаг (binding поля коробки/условия выбора/проценты)
+в NPC-LOOT.md. Визуальная проверка не выполнена из-за browser URL policy.
+
+
+### 18 октября — привязка режима коробки к enum
+
+ItemBox.RewardGroupType подтверждён через native loader+28 и параметр
+OnItemBoxUpdated/ERewardGroup.644 коробки получили названия режимов,
+unknown/Max не объявляются режимом. Runtime выдачи/шансы остаются неизвестны.
+25native+22data anchors,28Python+4Node прошли;644 SHA/atlas loot manifest/JS
+проверены. Порядок сборки и подробные доказательства — NPC-LOOT.md.
+Визуальная проверка не выполнена (ранее browser URL policy отклонила вкладку).
+
+
+### 18 октября — картинки в обратном списке коробок
+
+По запросу пользователя каждая строка «В каких коробках указан предмет»
+получила44px иконку перед названием, фон редкости из каталога и общую ссылку
+картинка/название. Точные пути box.icon.images и rarity.background.images
+повторно используются из уже связанного каталога; новых числовых joins нет.
+623 коробки имеют1 картинку,1 имеет2 кандидата (показаны оба с title пути),
+20 не имеют картинки (placeholder ? с пояснением).625 локальных PNG
+проверены на наличие. Lazy loading/alt пустой при доступном имени ссылки;
+ошибка загрузки показывает placeholder. Сортировка,40строк за порцию и
+расположение после характеристик сохранены. JS syntax/source-deployed JS/CSS
+проверены; build-npc-loot.py и build-world-map.py пересобраны.
+Визуальная проверка не выполнялась после отказа browser URL policy.
+
+
+### 18 октября — порядок коробок: редкость и алфавит
+
+Обратный список коробок использует существующий ItemRarity.compare
+(высшие редкости первыми, специальные категории отдельно); при равной
+редкости — видимое имя через Intl.Collator ru/numeric:true/sensitivity:base,
+затем ID для однозначного порядка. Общая сортировка выполняется перед
+порциями40. Рейтинг не выдумывается. Тот же boxName используется в строке.
+Проверен фактический JS sort block на всех1396 списках, без потери строк;
+JS syntax и source/deployed совпадение прошли. Loot/atlas пересобраны.
+Новых связей и изменений данных нет; browser visual check не выполнялся.
+
+
+### 18 октября — книги и целевой навык
+
+Native проверка SkillAcquire и уже изученного навыка подтвердила
+EffectParams→_wtoi→Skill.Id.403 книги/402 найденных Skill,1missing201006
+для книги22001005. Карточки получили подтверждённое имя/ссылку на навык.
+Изучение/серверные условия не проверены;17 SkillAcquirePotion исключены
+из распространения этой связи.30Python+4Node/SHA/report/JS/atlas manifest
+прошли. Источники, новый builder и порядок — NPC-LOOT.md.
+
+
+### 18 октября — обычные эффекты предметов: кандидаты, связь ещё не доказана
+
+В текущем каталоге56 Item.EffectType=1 (Effect):50 CombatPotion Type26,
+3 Type5,2 Type55,1 Type48. У всех56 полный EffectParams совпадает с Effect.Id.
+Это числовое совпадение; native target binding пока не найден.
+`skill-effect-links.py:item_candidate` сохраняет origin=item, source_field,
+item_id/item_provenance, точный raw EffectParams, совпавший Effect definition
+и уже проверенные EffectOperation rows. relation_verified=false и
+runtime_application_verified=false. Прочие EffectType, пустой параметр и0
+не включаются. Prefix/leading zeros не преобразуются в совпадение.
+
+В item-details/index.json.item_effect_candidates сохранены56 записей;
+эффект/операции/режимы берутся из существующего verified load_effects,
+с CSV92/93 schema/SHA/provenance и native diagnostics; нового доказанного
+join Item→Effect не заявлено. skill-effects.js различает item и skill
+контекст: текст прямо называет совпадение ID и отсутствие установленного
+эффекта предмета. Блок свёрнут по умолчанию, раскрывается внутри секции
+типа эффекта. Единицы времени, период/длительность, проценты и runtime
+не угадываются; исходные параметры и операции сохранены отдельно.
+
+Исследование native EXE (тот же SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8):
+сравнения memory+68==1 часто относятся к другим структурам, они отвергнуты
+как доказательство Item.EffectType. Исследованы583 корня с direct call
+145a80590 (Item handle getter),2070 полностью декодированных фрагментов;
+6 фрагментов содержат не полностью декодируемый хвост и в доказательства
+не включены. Discovery только в игнорируемых .tools/item-get-functions.json
+и item-effect-get-paths.txt; это указатель поиска, не воспроизводимый proof report.
+
+Особенно важно не повторять ошибочную ветку1463759f0: она действительно
+читает Item.EffectParams+70 через _wtoi и вызывает145938880, однако этот
+lookup использует EffectOperation manager145940ee0, secondary vtable
+149946a38/loader14595b760 с literal EffectOperation.csv. Его UI caller
+14637fe50 проверяет Type по145db8d60, который допускает49/53/54/75/76
+(BloodSeal/CommonSeal/EventSeal/CommonSeal2/EventSeal2), а не EffectType1.
+В текущих57 предметах этих типов EffectParams пуст, EffectType20. Поэтому
+эта ветка НЕ повышает56 Effect1→Effect.Id до доказанной связи.
+Effect manager отдельно: singleton145940e50/global14b14e4f0,
+secondary vtable1499444b0/slot38→loader145959c60; direct handle lookup
+145938440. Среди исследованных Item-get корней прямой подходящий вызов
+с Item.EffectParams не найден. Следующий поиск: косвенные вызовы/общие
+UI effect helpers и server-fed item effect state, сохраняя тип входной записи.
+
+38Python+4Node прошли;2 новых теста проверяют item provenance/false flags,
+отсутствие recursive application, другие EffectType/sentinels и exact ID.
+Проверены56 кандидатных records, source/deployed shared JS, syntax,
+актуальный loot SHA в atlas. Loot/atlas пересобраны. Визуальная проверка
+не выполнялась после ранее полученного отказа browser URL policy.
+
+
+### 18 октября — отдельные карточки навыков и книги изучения
+
+3446 Skill+1missing target получили hash-linked JSON и карточку ?skill=ID.
+403 подтверждённых книг доступны с обратной стороны навыка; картинки,
+редкость, предмет/источники, отсутствие записи201006 сохраняются.
+Старая ссылка только фильтровала NPC; теперь параметры видны и у player
+skills без NPC на Nocturne.25Python+21Node прошли, SHA3447files/403books/
+изображения/source-deployed проверены. Порядок/источники — NPC-LOOT.md.
+Реальное изучение и визуальная проверка не подтверждены.
+
+
+### 18 октября — исходные ограничения применения навыков
+
+Общий renderSkillDetail показывает ClassType/UnusableRoomType/UsableWorldId,
+3 флага и группу стоимости повышения в свёрнутом блоке.3446 Skill records
+сверены с CSV1505/SHA,3447detail SHA и deployed JS проверены; syntax прошёл.
+Первичное изучение/серверные gates и комбинация ограничений не установлены.
+Подробности и статистика — NPC-LOOT.md; browser check не выполнялся.
+
+
+### 18 октября — SkillLevel в карточке навыка
+
+7 навыков/7 строк SkillLevel, уровни6–7: расчёт Min/MaxCoolTime по native
+первой включённой строке, нуль/empty→base. Other Change fields raw-only.
+20Python+23Node прошли;84 actual JSON/deployed JS/Python comparisons совпали,
+3447 detail SHA и источники проверены. Доступность уровня и runtime cooldown
+не подтверждены. Порядок/источники — NPC-LOOT.md; browser check не выполнялся.
+
+
+### 18 октября — SkillLevel Resource и StackCount
+
+Новый build-skill-level-extra-code.py → code-clues/skill-level-extra-code.json,
+SHA256 `a02f33083c80f3afb3e37142f1092cc65ff134802745aeb122bf9af69140ce37`.
+Проверены EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
+Capstone5.0.6,30instruction anchors,4 literals,2 Skill vtable slots.
+Sources Skill1505/SkillLevel1511 и их index/SHA остаются прежними.
+
+Skill loader145bc6470: Resource literal145bc67c4→FString record+f8
+(145bc7831/145bc7849), StackCount literal145bc6746→byte+d4 (145bc7612).
+SkillLevel loader145bc89c0: ChangeResource145bc8b71→FString+20/+28 length
+(145bc900e/145bc9023), ChangeStackCount145bc8bfd→byte+78 (145bc94f8).
+Getters Skill vtable1499b9440: slot138→145bba6b0 для Resource,
+slotd8→145bba990 для StackCount. Оба используют прежний подтверждённый
+lookup145bb2570 по Skill.Id и первую включённую строку диапазона.
+Resource: при FString length+28>1 возвращается row+20, иначе Skill+f8.
+StackCount: nonzero byte row+78 возвращается,0→base Skill+d4.
+На следующую пересекающуюся строку после нулевой/пустой замены не переходят.
+Пустой UTF16 string имеет length1 с терминатором; пробел не обрезается.
+
+extra_at_level(Python)/WorldMapModel.skillValuesAtLevel(JS) сохраняют
+origins table/field/provenance. JS расширяет прежний cooldown result только
+при отдельных resource_replacement_verified/stack_count_replacement_verified.
+Остальные Change-поля остаются raw-only. StackCount проверяется как byte
+0…255; malformed/negative/overflow отклоняются, не обрезаются по модулю256.
+Это не доказательство смысла счётчика как зарядов или фактической анимации.
+
+В данных6 ChangeResource:110018,120023,130023,140012,150022,1500221.
+Предыдущее commentary о5 ресурсах исправлено по фактической CSV-проверке.
+У110033 ChangeStackCount2 на уровнях6–7. UI сравнения показывает выбранные
+значения и источник; базовые snapshots не складываются, runtime=false.
+Другие изменения/рост/MP/окончательная перезарядка ещё не вычисляются.
+Следующий найденный кандидат: getter145bba160 читает row+6c и base+e4,
+но его точная привязка к MP и вариант Max пока не закреплены proof report.
+Leaf145bba1f0 читает только base+e4, поэтому нельзя автоматически считать
+его ChangeMpMax getter по соседству vtable slots. ChangeMpMin/Max/Growth
+в текущих7 строках пусты; их поддержку этим шагом не заявлять.
+
+Порядок: build-skill-level-code.py и build-skill-level-extra-code.py →
+build-world-map.py (внутри build-monster-details.py). Builder сверяет extra
+EXE SHA/verified flags/каждый anchor перед публикацией, сохраняет источники
+в monster-manifest и skill-npcs.json. Skill index SHA после сборки:
+`2506fbca42e4127ba17899f7077774f388f081b51513eef40b6302427f3722b2`.
+23Python+25Node прошли;3Python+2JS новых теста покрывают диапазоны/ID,
+нулевой fallback первой строки, отдельные поля, пробел в Resource,
+provenance, отсутствие verified flags и недопустимые bytes/levels.
+84 real Skill/level cases (7×0…10,32767) deployed JS совпали с Python
+по Resource/StackCount и origins; все3447detail SHA и source/deployed JS
+текст проверены. Дополнительно повторно побайтно сверены36 anchors отчёта.
+Визуальная проверка не выполнена после ранее полученного browser URL policy отказа.
+
+
+### 18 октября — MP по уровню и повторный запуск сервера
+
+build-skill-level-mp-code.py проверяет Skill MpMin/MpMax literals
+145bc677e/145bc678c→stores+e4/+e8 (145bc76a2/145bc76c5),
+SkillLevel ChangeMpMin/Max145bc8bd3/145bc8be1→+6c/+70
+(145bc94a2/145bc94be), Skill vtable1499b9440 slots100/110→
+getters145bba160/145bba0d0. Полные getter control-flow сохранены:
+lookup145bb2570, первая inclusive строка, ненулевой override или base.
+Report code-clues/skill-level-mp-code.json SHA256
+782b21ffc8d4db1766f2a92fa085a9dd4f5359a8d746da63e2f1f9a111c78d99;
+90instruction/4literal/2slot anchors, тот же EXE SHA/Capstone5.0.6.
+Builder перед использованием проверяет EXE/verified flags/каждый anchor,
+сохраняет MP evidence source в monster-manifest и skill index.
+Запускать proof builder перед build-world-map.py.
+
+Skill level comparison теперь показывает исходные MpMin/MpMax с отдельными
+verified flags/origins. Все7 MP overrides пусты, так что реальные записи
+возвращают базу. MpGrowth и фактическое потребление MP не вычисляются.
+Консервативная модель принимает только nonnegative decimal signed-int32
+replacement, malformed/negative/overflow отклоняет, не имитируя UB/partial parse.
+25Python+27Node прошли (2новых Python+2Node: независимые поля, first-range,
+нулевой fallback, происхождение, proof gate и malformed/overflow).
+Все3447 detail SHA/source-deployed JS сверены;84 MP real cases подготовлены
+для сравнения deployed модели с Python. Browser visual check не выполнялся.
+По запросу пользователя listener17946 проверен (отсутствовал), сервер запущен
+на127.0.0.1 из F:/PhoneExit Resources/Vampir. Зафиксированы HTTP200 для atlas,
+manifest, skill index и карточки навыка; favicon404 не относится к данным.
+
+
+### 18 октября — иконки навыков
+
+1101 unique Skill.Img ресурс показан в общей карточке навыка/NPC.188 missing,
+2157not_declared не подменяются похожими именами.4 image-поля и source SHA
+сохранены.298 PNG SHA/3447detail SHA/source-deployed HTML-JS проверены,
+28Python+27Node прошли. Сборка build-world-map.py обновлена без отдельного
+шага. Native widget/актуальный Android не проверены; подробности NPC-LOOT.md.
+
+
+### 18 октября — пассивный навык → предметы
+
+build-monster-details.py:skill_passive_item_index разворачивает существующую
+подтверждённую цепочку Item.PassiveSkillGroupId=SkillSet.GroupId,
+SkillSet.SkillInfoId=Skill.Id из item-details/passive groups.
+Каждый group JSON загружается через SHA из проверенного item-details index;
+каталог Items и index также читаются через loot manifest SHA. Native diagnostics
+не переисследуются: ссылки из item-details.passive_diagnostics сохраняются в
+skill-npcs.sources вместе с group specs. Новый native join не заявлен.
+
+Для каждого item и sid сохраняются group_id, все set_records/provenance,
+item provenance/name/icon/rarity. Несколько строк одного sid не создают
+несколько карточек предмета, но все исходные строки остаются; чужой GroupId
+исключается. Missing Skill definition не стирает подтверждённый target.
+Payload passive_items содержит relation_verified=true,
+runtime_activation_verified=false.39 items→19 Skill IDs/19groups/39links.
+Книги изучения остаются отдельным books блоком со своим acquisition flag.
+
+Общий Skill renderer показывает «Предметы с этим пассивным навыком»:
+иконки с исходным rarity background, названия/редкость/ID, group ID и число
+исходных строк, ссылки на свойства предмета и ?item=ID источники карты.
+Сортировка существующая rarity→алфавит→ID. Наличие ссылки не доказывает
+активацию, серверные модификаторы или реальную доступность источника.
+Блок появляется только при найденных связях, в отдельной карточке и у NPC.
+Пример ?skill=321001. Поиск навыков включает reverse passive target IDs,
+в текущих данных все они уже присутствуют в Skill table.
+
+Сборка build-world-map.py обновляет monster/skill JSON и manifests.
+Skill index SHA256:
+`4af0b6d0e30d490caae591fc3253f6b3404a30e9235c036506d5aa38f626b450`.
+19целевых Python tests прошли (monster-details/item-details), новый тест
+покрывает exact group, все строки, несколько items, provenance/false activation,
+чужую группу и пустой index. JS syntax прошёл. Сверены3447card SHA,
+все39items с PassiveSkillGroupId присутствуют в reverse sources без потерь,
+каждая SkillSet строка имеет правильные GroupId/SkillInfoId, source/deployed JS.
+Визуальная проверка не выполнялась после ранее полученного browser URL policy отказа.
+
+### 18 октября — навигация навыков в атласе
+
+После текущей визуальной проверки ?skill=ID перестал неявно скрывать отметки:
+фильтр NPC включается отдельным действием и сохраняется как skillNpc=1.
+Возврат к карте/раскрытие параметров проверены в браузере; Frenzy321001:
+5предметов, обычные24071запись;50250: явный фильтр3NPC/147размещений.
+Пустой раздел книг скрыт, SkillEffect отображается безопасно через textContent
+и strong; параметры и исходные данные доступны в details.17Python+27Node
+прошли. Осталось пересечение подписей на общем масштабе и адаптивная проверка.
+
+### 18 октября — читаемость подписей карты
+
+Полные прямоугольники подписей больше не пересекаются друг с другом,
+видимыми значками и панелью выбора; учитываются все края viewport.
+Приоритет выбранной области,4направления и смещения до120px с линиями
+к точке, длинные названия сокращены с многоточием. Записи/координаты/поиск
+не меняются.30Node tests и syntax прошли, реальные общий и увеличенный
+виды проверены в браузере; снимки .tools/ux-audit-321001/05-06*.
+Проходимость и неизвестные повороты остаются частичными.
+
+### 18 октября — структура справочника
+
+Исследование типов Item/Equipment/Skill/Quest и именованных систем из
+native diagnostics выполнено,17 CSV сверены по SHA,5827Item по типам.
+Результат CATALOG-STRUCTURE.md и maps/catalog-category-study.json;
+генератор study-catalog-categories.py. Отдельные каталоги и общее меню
+остаются к реализации. Новые native joins не заявлены.
+
+### 18 октября — отдельные каталоги и меню
+
+Реализованы навыки/предметы/книги с отдельными URL, поиском/фильтрами и
+подробными карточками, общая навигация. Общий SkillCard и существующий
+ItemDetails сохраняют параметры/источники.68 тестов данных/моделей и
+переходы в живом браузере пройдены. См.CATALOG-STRUCTURE.md.
+Монстры пока прежний NPC/rewards viewer; полноценная отдельная карточка
+монстра, Развитие/Задания и расширенные фильтры остаются следующей работой.
+
+### 18 октября — фильтр класса и прокрутка каталогов
+
+Книги/навыки: класс в фильтре/карточке/URL, Item.ClassInfoId не теряется
+при Skill.ClassType=All, unknown/conflict отделены. Догрузка по прокрутке
+(порции60) в новых каталогах и старом NPC viewer. NPC: уровень в списке,
+сортировка вверх/вниз/имя, диапазон.56 тестов и реальные60→102/120,
+уровни50–60 проверены в браузере. См.CATALOG-STRUCTURE.md. Native runtime
+допуск класса не заявлен; полная отдельная страница монстра остаётся далее.
+
+### 18 октября — отдельная страница монстра/NPC
+
+Каталог atlas/monsters.html и ?npc=ID реализованы для5285NPC;
+Battle/навыки/личные цепочки/отдельные области/61307размещений сохранены.
+Меню/ссылки с карты/источников предметов ведут на новую страницу.
+32Python+35Node,5285detail SHA и несколько браузерных случаев пройдены.
+Новые runtime joins/проценты не заявлены; портреты NPC, свежий Android,
+подтверждение проходимости/поворотов и остальные системы остаются далее.

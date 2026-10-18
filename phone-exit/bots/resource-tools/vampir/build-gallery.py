@@ -20,6 +20,10 @@ const rows=JSON.parse(document.getElementById('data').textContent),category=docu
 for(const c of [...new Set(rows.map(r=>r.category))]){const option=document.createElement('option');option.value=c;option.textContent=c;category.append(option)}
 function render(){grid.replaceChildren();const q=search.value.toLowerCase(),selected=rows.filter(r=>(!category.value||r.category===category.value)&&(!q||JSON.stringify(r).toLowerCase().includes(q)));document.getElementById('count').textContent=Math.min(limit,selected.length)+' / '+selected.length;more.hidden=selected.length<=limit;for(const r of selected.slice(0,limit)){const card=document.createElement('article'),link=document.createElement('a'),img=document.createElement('img'),title=document.createElement('strong'),meta=document.createElement('small');link.href=r.original||r.file;link.target='_blank';link.rel='noopener';img.src=r.file;img.loading='lazy';img.alt=r.asset_path;title.textContent=r.asset_path.split('/').pop();meta.textContent=r.width+'×'+r.height+' · '+r.source+' · '+r.asset_path;link.append(img);card.append(link,title,meta);grid.append(card)}}
 category.onchange=search.oninput=()=>{limit=48;render()};more.onclick=()=>{limit+=48;render()};category.value='Собранная карта';render();</script></html>'''
+if (ROOT / 'maps/atlas/index.json').is_file():
+    html = html.replace('<h1>Vampir · карты и ресурсы</h1>', '<h1>Vampir · карты и ресурсы</h1><a href="maps/atlas/index.html">Атлас миров, точек, NPC и квестов</a>')
+if (ROOT / 'maps/loot/index.json').is_file():
+    html = html.replace('<h1>Vampir · карты и ресурсы</h1>', '<h1>Vampir · карты и ресурсы</h1><a href="maps/loot/index.html">Предметы, изображения и добыча NPC</a> · ')
 html = html.replace('__DATA__', json.dumps(rows, ensure_ascii=False).replace('</', '<\\/'))
 (ROOT / 'index.html').write_text(html, encoding='utf-8')
 (ROOT / 'gallery-catalog.json').write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding='utf-8')

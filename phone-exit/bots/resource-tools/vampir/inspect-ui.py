@@ -16,7 +16,7 @@ ROOT = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources
 HERE = Path(__file__).resolve().parent
 
 
-def exports(asset, body):
+def exports(asset, body, max_exports=10000):
     if asset[:4] != bytes.fromhex('c1832a9e'):
         raise ValueError('Not a legacy cooked package')
     size = struct.unpack_from('<i', asset, 32)[0]
@@ -39,7 +39,7 @@ def exports(asset, body):
         names.append(raw[:-1].decode('utf-8') if n > 0 else raw[:-2].decode('utf-16le'))
         position += length + 4
     ec, eo, ic, io = struct.unpack_from('<iiii', asset, summary + 28)
-    if not 0 < ec <= 10000 or not 0 <= ic <= 10000 or eo + ec * 96 > len(asset) or io + ic * 32 > len(asset):
+    if not 0 < ec <= max_exports or not 0 <= ic <= 10000 or eo + ec * 96 > len(asset) or io + ic * 32 > len(asset):
         raise ValueError('Unsupported export/import table layout')
     result = []
     for i in range(ec):
