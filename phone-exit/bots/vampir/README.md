@@ -17,6 +17,10 @@ code/refresh token request plans. [Авторизация](../resource-tools/vam
 Уточнены строка SDK `5.2.11`, начальные строки build `A/B/C` и отдельный
 UTF-16 XOR GMC2: 42 native проверки, общий ограниченный модуль.
 [Параметры и границы](../resource-tools/vampir/HEADLESS-SDK-VALUES.md).
+Перед XOR подтверждён разбор строковых escape GMC2: 43 корректных, 7 граничных
+и 3 составных native сценария. Найдена статическая передача значения DECKEY;
+точный метод его получения ещё исследуется.
+[Ответ GMC2](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

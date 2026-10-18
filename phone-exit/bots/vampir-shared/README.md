@@ -19,7 +19,10 @@
 `sdk_constants.py:xor_sdk_utf16le` — отдельный XOR 16-битных единиц GMC2,
 с ограничением входа/ключа и сохранением нулей/суррогатов. 42 native проверки
 и пять тестов: [доказательства](../resource-tools/vampir/HEADLESS-SDK-VALUES.md).
-Получение ключа, внешний разбор ответа и проверка JSON ещё не реализованы.
+Модуль также разбирает содержимое JSON-строки перед XOR, отклоняет неверные
+escape и сохраняет UTF-16 единицы. 43 корректных и 7 граничных native входов,
+три составных примера: [ответ GMC2](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+Получение ключа, извлечение полей ответа и проверка схемы ещё не реализованы.
 
 `auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.

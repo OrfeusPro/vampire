@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Строка GMC2 и передача DECKEY, 18 октября: H04b partial
+
+Общий SHA Windows EXE ниже. Constructor связывает manager+`0xB0` с именем
+DECKEY. Root `0x1444c8c60`: lookup через virtual slot `0x28` → локальная строка
+ключа → parser `0x1444f0e80` на `0x1444c9587`. Метод lookup ещё не идентифицирован.
+Extractor `0x1444e3bc0` → unescape `0x1444f2670` → DecryptXOR `0x1444ddf50`.
+43 корректных и 7 граничных native входов, три составных искусственных JSON;
+общий sdk_constants.py, пять тестов. Secret constants требуют отдельной обработки.
+[Source/SHA/offsets и ограничения](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+
 ## Параметры SDK и XOR GMC2, 18 октября: H04b partial
 
 Для общего SHA Windows EXE ниже getter `0x144524390` возвращает литерал
