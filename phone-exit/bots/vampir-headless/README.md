@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK settings и game override, 19 октября
+
+Подтверждены 9 полей NMSDKSettings и начальные значения (4 native replays).
+Найдена игровая InitSetting: compiled globals market nmp/game thered/client ID,
+13 native сценариев сравнения environment → production при real без учёта ASCII
+регистра, иначе Dev. Общий select_game_sdk_zone требует явного environment.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SETTINGS.md). Активный environment и его загрузка пока неизвестны.
+
 ## Индексы обновлённых ресурсов, 19 октября
 
 Построены свежие SHA-bound индексы всех 35 изменённых/новых архивов:

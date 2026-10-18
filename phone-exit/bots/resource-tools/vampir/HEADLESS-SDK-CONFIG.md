@@ -4,6 +4,9 @@
 общий [реестр](../../vampir/FUNCTION-INDEX.md). Актуальные значения авторизации
 и игровой вход пока не получены.
 
+Продолжение 19 октября: [settings constructor и game override](HEADLESS-SDK-SETTINGS.md).
+Активный environment пока неизвестен; прежние границы ниже относятся к исходному этапу.
+
 ## Источник и воспроизведение
 
 Продолжение: [параметры SDK и проверка DecryptXOR](HEADLESS-SDK-VALUES.md).

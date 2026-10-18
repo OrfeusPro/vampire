@@ -1,5 +1,19 @@
 # Vampir — общий указатель найденных функций и связей
 
+## NMSDKSettings и game override, 19 октября: H04b partial
+
+Общий EXE SHA ниже. Accessor1444ab740 → ctor thunk1444ac680 → ctor1444ac9f0;
+registration1444ab7f0 → params1494c5e60 → property array1494c5cd0, 9 дескрипторов.
+Constructor prefix: 4 native replays, market empty/game thered/build0/zone1.
+Game InitSetting14561a930 копирует globals14b5740c0/4080/4090 из initializers
+141258b10/8ae0/8ab0 (nmp/thered/client ID); сравнивает environment с real через
+141459730 и пишет settings+49. 13 native cases, общий select_game_sdk_zone;
+base/string/growth/copy/free/environment/singleton shims явно ограничены.
+Getter14563d960 → global14b575630; объект+48 передаётся141433970.
+Ctor145631210 устанавливает singleton и обнуляет+48; реальное заполнение
+environment, порядок вызовов и active values ещё неизвестны.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SETTINGS.md).
+
 ## Свежие record indexes и CSV, 19 октября: U02 partial
 
 35 архивов проверены по полному SHA256 и заново проиндексированы: 127375

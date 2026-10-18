@@ -1,5 +1,40 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-settings: class defaults и game override
+
+После e37d580 продолжен auth-source flow на прежнем EXE SHA. Найдены
+NMSDKSettings registration/accessor1444ab740/1444ab7f0, ctor thunk1444ac680
+→1444ac9f0. Сохранены 9 property descriptors и array membership/packed offsets.
+Constructor prefix исполнен на 4 заполнениях объекта: market empty/game thered/
+build0/zone1/SDKType Global, email/client strings empty. Base UObject/FString
+constructors shimmed; config loading/CDO lifecycle не исполнялись.
+
+Поиск callers класса выявил game function с diagnostic
+FNnNetmarbleSDKService::_InitSetting(), root14561a930. Она копирует globals
+14b5740c0/4080/4090 в market/game/client ID. Initializers141258b10/8ae0/8ab0
+задают nmp/thered/public client ID, но поздние изменения globals не исключены.
+Environment getter14563d960 читает14b575630; поле singleton+48 передаётся
+141433970 и результат сравнивается с ASCII real через141459730.
+Реальные copy/compare/zone-write инструкции проверены на 13 входах:
+ASCII-case real→2 production, прочие проверенные строки→1 Dev.
+Environment conversion/singleton/growth/memcpy/free shimmed; активное значение
+не прочитано. Конструктор145631210 сохраняет singleton и обнуляет+48.
+
+Общий sdk_config.select_game_sdk_zone требует явного environment, ограничивает
+128 UTF16 units, отвергает NUL. Правило не получает конфигурацию и не выбирает
+реальный endpoint самостоятельно. Дополнены главный README, общий реестр,
+shared README, задачи и HEADLESS-SDK-SETTINGS.md. Артефакт
+code-clues/headless-sdk-settings.json SHA256
+dca370b3cb47525bc16879fad4a6e0e116ea70dbe9d7a7c27df9caaa26fce573.
+
+Четыре новых теста проверяют происхождение/bytes, descriptor offsets,
+4 constructor replays, 13 game replays и portable rule/ошибки входов.
+Полная регрессия124/124 (64,6 с), синтаксис трёх изменённых Python-файлов,
+279 относительных ссылок и diff check прошли. Игра/аккаунты/сеть не использованы.
+Следом заполнение environment singleton+48 до InitSetting, порядок с GMC2 Start,
+поздние изменения globals/build, затем подтверждённый config request plan.
+network_ready=false, полный email/password вход и игровая сессия ещё не готовы.
+
 ## 19 октября 2026 — U02: новые индексы и сравнение CSV
 
 После 4d4d5b2 добавлены index-release-archives.py и extract-release-tables.py.

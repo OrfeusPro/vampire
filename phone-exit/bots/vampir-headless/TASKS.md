@@ -34,6 +34,7 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 | H04 | Авторизация почта/пароль→игровая сессия; H01 | Частично: H04a static SDK/token-form evidence | Прослеженный SDK/HTTP/session flow, параметры/сроки/ошибки, ручные challenge; секреты защищены, игра не нужна |
 | H04a | SDK auth graph и token request forms | Готово в указанном объёме |24 symbols/34 LEA/24 roots, 143 constants, 512 native escaping calls/5 tests; offline code/refresh plans, не email/password login/config/response/game handoff |
 | H04b | Источник SDK config GMC2 и параметры | Частично | 256 native проверок окружения; SDK `5.2.11`, начальные build `A/B/C`, 42 проверки XOR; unescape: 43 корректных / 7 граничных / 3 составных native сценария, общий модуль; active settings/market, метод получения DECKEY, secret constants и auth bindings открыты |
+| H04b-settings | Class defaults и game overrides; H04b | Частично | 9 property descriptors, 4 constructor + 13 game native replays; market/game/client globals и environment→zone rule; actual singleton+48 load/call order неизвестны |
 | H04b-secret | Декодирование secret constants; H04b | Частично | Общий Base64/chunk/list JSON; native OAEP 24 корректных / 69 ошибочных, list orchestration 9 основных / 4 граничных; реальный DECKEY, полная привязка SDK и Android ещё открыты |
 | H04b-map | Merge строковых констант и auth URL getter; H04b-secret | Частично | 24 lookup / 3 replacement / 5 hash native сценариев, общий sdk_config.py; normal→secret priority, ASCII aliases, native prefix check; JSON value conversion и заполнение SDK map ещё открыты; path append вынесен в H04b-path |
 | H04b-path | Полный адрес token request; H04a/H04b-map | Готово в указанном offline-объёме | 70 native path scenarios, bind_token_request с явной картой и сохранённым body; acquisition/HTTP/browser code/session handoff не реализованы |
@@ -52,6 +53,11 @@ H03a codec находится в `vampir-shared/vampir_core`, без копии 
 | A01 | Android-служба и оболочка; H06/H07 | Осталось | Тот же core, foreground/notification/Stop, экран выключен/network changes; масштаб на телефоне определить измерениями |
 
 ## Текущее продолжение
+
+H04b: constructor settings и game InitSetting исследованы, 4+13 native cases.
+[HEADLESS-SDK-SETTINGS](../resource-tools/vampir/HEADLESS-SDK-SETTINGS.md).
+Следующая auth-зависимость — заполнение singleton14b575630+48 до InitSetting,
+порядок с GMC2 Start, active environment и другие изменения globals/build.
 
 После подтверждённого пользователем обновления U02 частичен: новые индексы
 34 изменённых и одного нового архива сохранены отдельно; 1565 CSV pakchunk1

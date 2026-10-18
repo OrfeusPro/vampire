@@ -10,6 +10,20 @@ def _fold(key):
     return key.translate(_ASCII_UPPER)
 
 
+def select_game_sdk_zone(environment: str) -> int:
+    """Game override: explicit environment 'real' (ASCII case ignored) -> 2, else 1.
+
+    Does not read or guess the active environment. Local input policy: at most
+    128 UTF-16 units, no embedded NUL; native C-string truncation is rejected.
+    Evidence: HEADLESS-SDK-SETTINGS.md, actual game comparison/zone-write slice.
+    """
+    if not isinstance(environment, str) or len(environment) > 128 or '\0' in environment:
+        raise ValueError('Invalid explicit game environment')
+    if len(environment.encode('utf-16le', 'surrogatepass')) > 256:
+        raise ValueError('Game environment exceeds local budget')
+    return 2 if _fold(environment) == 'REAL' else 1
+
+
 def _key(key):
     if not isinstance(key, str) or not key or len(key) > 256 or '\0' in key:
         raise ValueError('Invalid SDK configuration key')
