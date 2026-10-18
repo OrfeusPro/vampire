@@ -18,6 +18,8 @@ GMC2 config: 7 связанных функций и 256 native проверок 
 настоящая конфигурация пока не получена.
 Дополнение: [OAEP checker и декодер одного элемента](../resource-tools/vampir/HEADLESS-SDK-OAEP.md)
 проверены на искусственных ключах; полная конфигурация и Android ещё открыты.
+Общий [декодер списка secret constants](../resource-tools/vampir/HEADLESS-SDK-SECRET-LIST.md)
+возвращает JSON только после успешной обработки всех элементов.
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.

@@ -1,5 +1,16 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Список secret constants, 19 октября: H04b-secret partial
+
+Общий SHA Windows EXE ниже. `0x1444ddc10`: Mid(2,length−4), split `","`,
+chunk helper `0x14451d5c0`, append фрагментов и запятых, замена последней на `}`.
+Пустой chunk прерывает сборку; 9 основных и 4 граничных native сценария.
+String/RSA/UTF-8 helpers shimmed; native JSON parser/cleanup не исполнялись.
+Общий decode_sdk_secret_constants, шесть тестов; один trailing NUL снимается
+по связи `0x14451d9ce..0x14451d9dd`. Полная GMC2-конфигурация не получена.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SECRET-LIST.md).
+Дальше normal/secret merge и lookup `0x1450e2895` → `0x144553700` для authTokenUrl.
+
 ## OAEP checker и один secret chunk, 19 октября: H04b-secret partial
 
 Общий SHA Windows EXE ниже. `0x148405020` исполнен: 24 корректных и 69 ошибочных

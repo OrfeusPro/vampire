@@ -1,5 +1,33 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-secret: список элементов → JSON
+
+После 5ff908c прослежен assembler `0x1444ddc10`: извлечение компактного списка,
+split, вызов chunk helper, проверка непустого результата, append фрагментов
+и замена последней запятой на `}`. Native orchestration исполнен в 9 основных
+и 4 граничных сценариях с ограниченными string/crypto/UTF-8 shims.
+Захват останавливается до native JSON parser/пустого контейнера/cleanup.
+Они не объявляются исполненными. Пустые/ошибочные элементы прерывают сборку.
+
+Общий decode_sdk_secret_constants использует настоящий chunk backend,
+строгий UTF-8/JSON и один trailing NUL по chunk conversion path. Пустой список
+даёт {}; неоднозначные/ошибочные данные не возвращают частичный dict.
+Лимиты 2048 UTF-16 units / 16 chunks / 8192 plaintext bytes — локальная политика.
+Native допуски null/[""] не перенесены, повторные JSON keys отклоняются явно.
+
+Отчёт code-clues/headless-sdk-secret-list.json, SHA256
+75f5ff4b8b577929cc8fdabb2c335d77a744b2afd1f161de8c3e3522403d9d1a.
+Private test key не сохраняется, ciphertext меняется при пересборке.
+Шесть тестов сверяют source/code/anchors, native assembly/replay с plaintext
+fixtures, реальные multichunk RSA roundtrips и отказ без частичного результата.
+HEADLESS-SDK-SECRET-LIST.md/общий реестр/задачи обновлены; игра/сеть не использовались.
+Далее normal/secret merge и authTokenUrl lookup `0x1450e2895` → `0x144553700`,
+а также метод получения DECKEY. H04b частично, network_ready=false.
+Регрессия: полный набор 101/101 без skip (56,3 с); после добавления отказа
+на числовое переполнение JSON повторены 6/6 тестов нового декодера (2,8 с).
+Синтаксис изменённых Python-файлов, 203 относительные ссылки изменённых
+документов и git diff --check прошли.
+
 ## 19 октября 2026 — H04b-secret: native OAEP и один chunk
 
 После 45ec607 исполнен сам OAEP checker `0x148405020`: 24 корректных и

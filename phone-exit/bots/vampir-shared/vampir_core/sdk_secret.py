@@ -1,9 +1,11 @@
-"""One offline GMC2 secret chunk; optional cryptography backend loaded on demand.
+"""Offline GMC2 secret chunks/list; optional crypto backend loaded on demand.
 
 Evidence: HEADLESS-SDK-OAEP.md. Windows backend verified; Android not verified.
-No key acquisition, network, storage or full encSecretConstants list parsing.
+No key acquisition, network, storage or endpoint binding validation.
 """
 import base64
+import json
+import math
 
 from .sdk_constants import decode_sdk_base64
 
@@ -43,3 +45,55 @@ def decrypt_sdk_secret_chunk(ciphertext: str, key_body: str) -> bytes:
                                                   algorithm=hashes.SHA256(), label=None))
     except (ValueError, TypeError, UnsupportedAlgorithm):
         raise ValueError('Invalid SDK secret key or ciphertext') from None
+
+
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError('Duplicate SDK constant')
+        result[key] = value
+    return result
+
+
+def _reject_constant(value):
+    raise ValueError('Non-JSON SDK constant')
+
+
+def _finite_float(text):
+    value = float(text)
+    if not math.isfinite(value):
+        raise ValueError('Nonfinite SDK number')
+    return value
+
+
+def decode_sdk_secret_constants(decrypted_list: str, key_body: str) -> dict:
+    """Decode the secret-list JSON text after its outer UTF-16 XOR stage.
+
+    Limits: 2048 UTF-16 units, 16 chunks, 8192 plaintext bytes. Decode all chunks
+    before returning a dict. Strip one trailing NUL per chunk, as in the native
+    UTF-8 conversion path. JSON duplicates/nonfinite values and invalid UTF-8
+    are rejected explicitly; native tolerance for these is not asserted.
+    """
+    if not isinstance(decrypted_list, str) or len(decrypted_list) > 2048:
+        raise ValueError('Invalid SDK secret list')
+    if len(decrypted_list.encode('utf-16le', 'surrogatepass')) > 4096:
+        raise ValueError('SDK secret list exceeds local budget')
+    try:
+        chunks = json.loads(decrypted_list, parse_constant=_reject_constant)
+        if not isinstance(chunks, list) or len(chunks) > 16 or any(not isinstance(c, str) or not c for c in chunks):
+            raise ValueError
+        fragments, total = [], 0
+        for chunk in chunks:
+            raw = decrypt_sdk_secret_chunk(chunk, key_body).removesuffix(b'\0')
+            if not raw:
+                raise ValueError
+            total += len(raw)
+            if total > 8192:
+                raise ValueError
+            fragments.append(raw.decode('utf-8'))
+        text = '{'+','.join(fragments)+'}'
+        return json.loads(text, object_pairs_hook=_unique_object, parse_constant=_reject_constant,
+                          parse_float=_finite_float)
+    except (ValueError, TypeError, RecursionError):
+        raise ValueError('Invalid SDK secret configuration') from None

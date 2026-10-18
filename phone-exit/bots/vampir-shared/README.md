@@ -30,7 +30,11 @@ escape и сохраняет UTF-16 единицы. 43 корректных и 7
 с явным телом RSA-ключа; optional cryptography backend загружается при вызове.
 Windows проверен на искусственных ключах, native OAEP — 24 корректных / 69
 ошибочных входов. [Доказательства и лимиты](../resource-tools/vampir/HEADLESS-SDK-OAEP.md).
-Полный список chunks, auth bindings и Android backend ещё не проверены.
+`decode_sdk_secret_constants` собирает список расшифрованных элементов в JSON,
+проверяет типы/UTF-8/повторные ключи и отклоняет весь результат при ошибке.
+9 основных / 4 граничных native сценария orchestration, шесть тестов:
+[список и границы](../resource-tools/vampir/HEADLESS-SDK-SECRET-LIST.md).
+Объединение normal/secret constants, auth bindings и Android ещё открыты.
 
 `auth_request.py` создаёт offline TokenRequestPlan для code/refresh grants,
 explicit authTokenUrl config key/relative v2/access-token, bounded printable ASCII.

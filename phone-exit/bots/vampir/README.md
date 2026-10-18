@@ -26,6 +26,9 @@ UTF-16 XOR GMC2: 42 native проверки, общий ограниченный
 OAEP checker исполнен на 24 корректных и 69 ошибочных входах; общий декодер
 одного secret chunk проверен на искусственных RSA-ключах Windows.
 [Исполнение и ограничения Android](../resource-tools/vampir/HEADLESS-SDK-OAEP.md).
+Список secret chunks собирается общим кодом в JSON; native orchestration
+проверен на 9 основных и 4 граничных сценариях.
+[Сборка списка и границы](../resource-tools/vampir/HEADLESS-SDK-SECRET-LIST.md).
 Полный вход по почте/паролю, SDK→game session, серверные endpoints и бой ещё
 не реализованы. Все этапы/доказательства — в [TASKS](../vampir-headless/TASKS.md)
 и [WORKLOG](../vampir-headless/WORKLOG.md); не повторять закрытые исследования.
