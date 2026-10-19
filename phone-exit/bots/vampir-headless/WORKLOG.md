@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: общее правило и дополнительные инструменты
+
+AGENTS.md закрепляет выбор Ghidra/CUE4Parse/Dumper-7 перед ручным анализом.
+Установлены CUE4Parse1.2.2.202610 и отдельный SDK10.0.402; NuGet lock,
+архивы/SHA и повторная установка проверены. Три loose asset headers
+совпали с действующим layout, четыре PAK имеют encrypted index.
+Dumper-7 pinned commit собран x64/v143 через project вместо неполного solution;
+PE DLL проверена, injection/game SDK не выполнялись. Три смежных Ghidra tests
+и проверка 1100 локальных Markdown-ссылок прошли. Runtime бота не менялся.
+[Пути, результаты и границы](../resource-tools/vampir/ANALYSIS-TOOLS.md).
+
 ## 19 октября: Ghidra вместо дробного ручного анализа
 
 Официальные Ghidra 12.1.4 и Temurin21 закреплены SHA, импортирован EXE как

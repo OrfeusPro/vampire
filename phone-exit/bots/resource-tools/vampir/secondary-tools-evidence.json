@@ -1,0 +1,191 @@
+{
+  "install": {
+    "lock_sha256": "5fc147042b4d63706cf7340a84768ffdd189d201a66e70bd9b9188111232aced",
+    "package_lock_sha256": "84175a7fabe6770273a0860e6627493855e048eb9cb85388f0b8da48108253d0",
+    "msbuild": "C:\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe",
+    "scope": "Build only; game not launched or injected",
+    "outputs": [
+      {
+        "path": "F:\\PhoneExit Resources\\Vampir\\tools\\cue4parse-probe\\Cue4ParseProbe.dll",
+        "sha256": "4c4b5921a03cd2bbb2ec8d5e15ca8f07ca4028f7729b7c88d84a0ab4af89b50b"
+      },
+      {
+        "path": "F:\\PhoneExit Resources\\Vampir\\tools\\cue4parse-probe\\CUE4Parse.dll",
+        "sha256": "7eac7e70eac22d91f2597f7823127c7d413f903a404527f6c18bcd930dd2755c"
+      },
+      {
+        "path": "F:\\PhoneExit Resources\\Vampir\\tools\\dumper7\\Dumper-7-90d1f390d26e31a1f71d29af56c6bd2f240b7493\\Dumper\\x64\\Release\\Dumper-7.dll",
+        "sha256": "7f88848e0ce6db4a922f670494c6ff94e2c113e5218aa61362cbd0056965a99e"
+      }
+    ]
+  },
+  "results": [
+    {
+      "kind": "archive",
+      "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk103-Windows.pak",
+      "source_sha256": "62463a95fde442aa895aa9550e9eb1eb59138d004fd8679c3714df1673b648e3",
+      "package": "CUE4Parse 1.2.2.202610",
+      "profile": "GAME_UE5_5",
+      "version": 11,
+      "encrypted": true,
+      "count": null,
+      "samples": [],
+      "summary": null,
+      "error": "System.InvalidOperationException: Encrypted index: no keys supplied by probe",
+      "scope": "PAK mount/extraction or loose package header only; UObject properties not tested"
+    },
+    {
+      "kind": "archive",
+      "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk101-Windows.pak",
+      "source_sha256": "5af2d46a924f176606e4efb018cfc7079e905991c5b506924c81fb176058511c",
+      "package": "CUE4Parse 1.2.2.202610",
+      "profile": "GAME_UE5_5",
+      "version": 11,
+      "encrypted": true,
+      "count": null,
+      "samples": [],
+      "summary": null,
+      "error": "System.InvalidOperationException: Encrypted index: no keys supplied by probe",
+      "scope": "PAK mount/extraction or loose package header only; UObject properties not tested"
+    },
+    {
+      "kind": "archive",
+      "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Saved\\PersistentDownloadDir\\Patch\\Install\\pakchunk100-Windows.pak",
+      "source_sha256": "0d919ea09eea374fa17e4e8145a70570adb8ca9c48743926b1ee6938c46b3669",
+      "package": "CUE4Parse 1.2.2.202610",
+      "profile": "GAME_UE5_5",
+      "version": 11,
+      "encrypted": true,
+      "count": null,
+      "samples": [],
+      "summary": null,
+      "error": "System.InvalidOperationException: Encrypted index: no keys supplied by probe",
+      "scope": "PAK mount/extraction or loose package header only; UObject properties not tested"
+    },
+    {
+      "kind": "archive",
+      "source": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+      "source_sha256": "c10228ece0e1252bdd3ccf99fd4936e52d7a144f96c634080947d24c429e525b",
+      "package": "CUE4Parse 1.2.2.202610",
+      "profile": "GAME_UE5_5",
+      "version": 11,
+      "encrypted": true,
+      "count": null,
+      "samples": [],
+      "summary": null,
+      "error": "System.InvalidOperationException: Encrypted index: no keys supplied by probe",
+      "scope": "PAK mount/extraction or loose package header only; UObject properties not tested"
+    },
+    {
+      "kind": "loose_header",
+      "pak_source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+        "size": 420675245,
+        "modified_ns": 1789135616000000000,
+        "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+        "pak_version": 11
+      },
+      "entry": 1,
+      "independent_header_match": true,
+      "source": "F:\\PhoneExit Resources\\Vampir\\pak-extracted\\ProjectRED-Windows\\000001.uasset",
+      "source_sha256": "5c44564fa194f34d12450c282beb5810edee8d78dbdc5a43fe453ce3942c1371",
+      "package": "CUE4Parse 1.2.2.202610",
+      "profile": "GAME_UE5_5",
+      "version": null,
+      "encrypted": null,
+      "count": null,
+      "samples": [],
+      "summary": {
+        "Tag": 2653586369,
+        "TotalHeaderSize": 1039,
+        "NameCount": 10,
+        "NameOffset": 248,
+        "ExportCount": 1,
+        "ImportCount": 3,
+        "bUnversioned": true,
+        "consumed": 248
+      },
+      "error": null,
+      "scope": "PAK mount/extraction or loose package header only; UObject properties not tested"
+    },
+    {
+      "kind": "loose_header",
+      "pak_source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+        "size": 420675245,
+        "modified_ns": 1789135616000000000,
+        "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+        "pak_version": 11
+      },
+      "entry": 3,
+      "independent_header_match": true,
+      "source": "F:\\PhoneExit Resources\\Vampir\\pak-extracted\\ProjectRED-Windows\\000003.uasset",
+      "source_sha256": "e7884a931b935990831573fd0db8956fe315fddc51f7423e51bdeed684bf7497",
+      "package": "CUE4Parse 1.2.2.202610",
+      "profile": "GAME_UE5_5",
+      "version": null,
+      "encrypted": null,
+      "count": null,
+      "samples": [],
+      "summary": {
+        "Tag": 2653586369,
+        "TotalHeaderSize": 1129,
+        "NameCount": 10,
+        "NameOffset": 263,
+        "ExportCount": 1,
+        "ImportCount": 3,
+        "bUnversioned": true,
+        "consumed": 263
+      },
+      "error": null,
+      "scope": "PAK mount/extraction or loose package header only; UObject properties not tested"
+    },
+    {
+      "kind": "loose_header",
+      "pak_source": {
+        "path": "C:\\Program Files\\Netmarble\\Netmarble Game\\VAMPIR\\ProjectRED\\Content\\Paks\\ProjectRED-Windows.pak",
+        "size": 420675245,
+        "modified_ns": 1789135616000000000,
+        "sample_sha256": "33cae734aa603f22ff2f3cd0276086fec2d04e281c3eda2b3349bc9f4d211788",
+        "pak_version": 11
+      },
+      "entry": 7,
+      "independent_header_match": true,
+      "source": "F:\\PhoneExit Resources\\Vampir\\pak-extracted\\ProjectRED-Windows\\000007.uasset",
+      "source_sha256": "21794ae490411bef852cf9875eef2ba90962fd27c998d2f130438ef333ca54ad",
+      "package": "CUE4Parse 1.2.2.202610",
+      "profile": "GAME_UE5_5",
+      "version": null,
+      "encrypted": null,
+      "count": null,
+      "samples": [],
+      "summary": {
+        "Tag": 2653586369,
+        "TotalHeaderSize": 900,
+        "NameCount": 10,
+        "NameOffset": 263,
+        "ExportCount": 1,
+        "ImportCount": 3,
+        "bUnversioned": true,
+        "consumed": 263
+      },
+      "error": null,
+      "scope": "PAK mount/extraction or loose package header only; UObject properties not tested"
+    }
+  ],
+  "dumper7": {
+    "build_verified": true,
+    "pe_x64_dll": true,
+    "injected": false,
+    "game_compatibility_verified": false
+  },
+  "profile_basis": "NPC-LOOT.md: source-bound EXE literal E:/Work/UE5/Release-5.5; not complete asset version detection",
+  "limits": "No AES keys; no UObject property schemas; no game launch, injection, auth or network",
+  "recorded_date": "2026-10-19",
+  "tool_sources": {
+    "install-secondary-tools.py": "4a0185ec41135fdf54faac3b22725eb8d55f7a9a42c3f1dc9dc532d3e5fcfee5",
+    "check-secondary-tools.py": "1407c66b81291d4c3e5811471115bde62e7b3cb19d8ab88ea1296035ea939bb8",
+    "cue4parse-probe/Program.cs": "a62d25f1fe40bdc0341688eae535d85b55220b7a8e4d881f247f32f2452d12d0",
+    "cue4parse-probe/Cue4ParseProbe.csproj": "8089b00885fddff154cc8f241c9b66bbb6eed3a351c2237fdbe45c4996e8bd63"
+  }
+}

@@ -1,5 +1,11 @@
 # Исследование ресурсов Vampir
 
+## Готовые инструменты перед ручным разбором
+
+[ANALYSIS-TOOLS.md](ANALYSIS-TOOLS.md): когда использовать Ghidra, CUE4Parse
+и Dumper-7, воспроизводимые установка/проверка и установленные ограничения.
+Правило закреплено в корневом AGENTS.md.
+
 `build-headless-sdk-config.py` → `code-clues/headless-sdk-config.json`:
 7 SDK diagnostic literals, 8 LEA, 7 roots, 48 constants и 256 native mode cases.
 [HEADLESS-SDK-CONFIG.md](HEADLESS-SDK-CONFIG.md): GMC2 address selection и

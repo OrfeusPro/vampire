@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Инструменты и пределы автоматического анализа
+
+[Общее правило выбора](../resource-tools/vampir/ANALYSIS-TOOLS.md): Ghidra
+для native-кода, CUE4Parse для совместимых ресурсов, Dumper-7 для отдельно
+согласованного live reflection. Сборка инструмента не доказывает семантику
+функции, работоспособность SDK или полноту протокола.
+
 ## Пакетный анализ через Ghidra
 
 22 source-bound functions: Login/Version, reader/writer/handler, SDK getters,

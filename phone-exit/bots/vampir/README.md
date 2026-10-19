@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Выбор инструментов закреплён, 19 октября
+
+Правило Ghidra/CUE4Parse/Dumper-7 добавлено в корневой AGENTS.md.
+CUE4Parse установлена: три loose headers совпали с действующим parser;
+четыре PAK имеют encrypted index. Dumper-7 собран x64, live не проверен.
+[Версии, команды, результаты и ограничения](../resource-tools/vampir/ANALYSIS-TOOLS.md).
+
 ## Ghidra: сначала пакетный псевдокод, 19 октября
 
 Подключены Ghidra 12.1.4/JDK21. Экспортированы 22 функции Login/Version/SDK/

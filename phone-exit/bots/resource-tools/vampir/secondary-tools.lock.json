@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "sdk": {
+    "version": "10.0.402",
+    "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.402/dotnet-sdk-10.0.402-win-x64.zip",
+    "sha512": "ae4fd528cb7e9f6af6aaf7de36715a69f761f183744f1bb3025d19f5a92447090ec561410e46266c1d10a63781ed6f3de771760bc76c876d87daabc367b898cd",
+    "archive": "dotnet-sdk-10.0.402.zip",
+    "directory": "dotnet-10.0.402"
+  },
+  "cue4parse": {
+    "version": "1.2.2.202610",
+    "commit": "1e3293d4b3ecaf6ef3d73641b9ffe47fa4cf1562",
+    "url": "https://api.nuget.org/v3-flatcontainer/cue4parse/1.2.2.202610/cue4parse.1.2.2.202610.nupkg",
+    "sha256": "b64f9016b63abbff98a404d07bc4341b5fd8da7af324697cede7ba0fc2f8e80d",
+    "archive": "cue4parse.1.2.2.202610.nupkg"
+  },
+  "dumper7": {
+    "commit": "90d1f390d26e31a1f71d29af56c6bd2f240b7493",
+    "url": "https://codeload.github.com/Encryqed/Dumper-7/zip/90d1f390d26e31a1f71d29af56c6bd2f240b7493",
+    "sha256": "ec523015b93550dc371717697eb0599d8a9d6f2ca7d9137080a84843e2e0bf2e",
+    "archive": "dumper7-90d1f390.zip",
+    "directory": "dumper7",
+    "source_directory": "Dumper-7-90d1f390d26e31a1f71d29af56c6bd2f240b7493",
+    "toolset": "v143"
+  }
+}

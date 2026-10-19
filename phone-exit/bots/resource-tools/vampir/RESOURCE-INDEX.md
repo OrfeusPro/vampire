@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Выбор инструментов: Ghidra / CUE4Parse / Dumper-7
+
+[ANALYSIS-TOOLS.md](ANALYSIS-TOOLS.md): постоянное правило выбора, установка
+с закреплёнными SHA/lock-файлом, проверка четырёх PAK и трёх loose headers,
+сборка Dumper-7 без внедрения. Все дистрибутивы и отчёты вне Git.
+
 ## Ghidra batch / псевдокод и call graph
 
 install-ghidra-tools.py + pinned lock, build-ghidra-manifest.py, Java exporter,
