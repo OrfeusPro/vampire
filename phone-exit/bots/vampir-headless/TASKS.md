@@ -1,5 +1,40 @@
 # Самостоятельный Vampir — задачи
 
+## H04-character-list-extensions/handler: offline ветви закрыты
+
+Выполнено: actual appearance item read и optional map callback/insert/pair/value
+readers, 30 full bodies/489 short prefixes. Общий ID102 decoder поддерживает
+обе ветви с aggregate extension budget; last-value-wins и enum clamps проверены.
+45 body→handler cases: result/policy gates, raw state writes, предпочтительное
+первое совпадение/индекс0. Общий preferred_character_index — только подсказка
+после acceptance gates, empty/error→None, без отправки пакета.
+
+Следом: доказать источники raw10/raw18/raw20 ID109 и actual caller service
+virtual50; подключить writer к request handoff/frame; разобрать nested ID110
+body/handler/источник позиции; связать owner slot7b0 с engine lifecycle уровня.
+Затем настоящий SDK/device context, ручное подтверждение при необходимости и
+live вход на согласованном аккаунте. Реальная сессия пока не проверена.
+[Source, SHA, команды и ограничения fixtures](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
+
+## H04-character-codecs: основной профиль списка и body выбора
+
+Историческая запись первого этапа. Extensions/handler102 закрыты следующим
+offline этапом выше; продолжать с ID109 field sources/caller/frame и ID110.
+
+Выполнено: actual owner constructor/table/slot+a18=1 → caller/RequestA без
+policy fixture (2 cases); native ID102 reader/records (12 full/229 short cases),
+bounded общий decoder; native ID109 writer и общий encoder (16 vectors).
+Пять тестов прошли. Этап списка/выбора **остаётся частичным**.
+
+Ближайшее продолжение: appearance array `0x1498ef500`/item table
+`0x1498cff58`, optional map `0x1498d5038`/insert `0x1456b99b0` — callbacks
+уже экспортированы, далее actual element/value readers и native scenarios.
+Затем handler102/перенос списка/источники select raw fields; owner hook slot7b0
+→ engine lifecycle/CharacterSelect_02, ID109 frame и ID110 body/handler.
+Текущий decoder явно отклоняет непустой appearance array/present optional.
+Реальный вход, подтверждение устройства, выбор и позиция не проверены.
+[Источники, SHA, команды и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md).
+
 ## H04-request-caller: найти owner и его policy
 
 Выполнено: direct getter caller scan, actual caller 0x1468f1d70 и 32 native

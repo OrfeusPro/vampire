@@ -1,5 +1,26 @@
 # Vampir — главный файл разработки
 
+## ID102: обе вложенные схемы и handler, 20 октября
+
+Общий decoder списка теперь поддерживает непустой appearance array и optional
+map; проверены enum clamps, duplicate last-value-wins, коллизии и rehash.
+30 whole bodies/489 short prefixes. 45 native body→handler cases проверили
+result/policy gates, перенос списка и preferred index (первое совпадение, иначе0).
+Добавлен общий preferred_character_index без I/O; для empty/error возвращает None.
+Ghidra: 106 функций/53 warnings. Источники ID109 fields/caller/frame, ID110,
+owner lifecycle и live session остаются открытыми.
+[Схемы, SHA, команды и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
+
+## Список и выбор: native owner и body codecs, 20 октября
+
+Constructor подтвердил owner table и actual policy1 → caller → RequestA/ID101
+без policy fixture. ID102: 12 полных bodies (0/1/2/4 записи), 229 short inputs;
+общий bounded decoder поддерживает основной профиль, явно отвергает непустые
+appearance extensions и present optional. ID109: `<QIQ`/20 bytes, 16 native
+vectors и общий encoder. 5 тестов прошли; Ghidra 101 функция/53 warnings.
+Lifecycle hook/полные extensions/ID102 handler/ID110/live вход ещё открыты.
+[Источники, SHA, команды и точное продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md).
+
 ## Найден caller CharacterListRead slot90, 20 октября
 
 Функция 0x1468f1d70 при втором owner virtual+a18 == 1 вызывает

@@ -1,5 +1,25 @@
 # Vampir — самостоятельный сетевой бот
 
+## CharacterList ID102: полный body и covered handler, 20 октября
+
+Appearance items `<IBH`/clamp45 и optional map `<BBIIIQ`/value clamp9
+поддержаны общим decoder. Требуется max_extension_items — общий count budget
+на весь body, включая duplicate wire keys. 30 native bodies/489 short inputs;
+45 native reader→handler cases, preferred index и result/policy gates.
+preferred_character_index не отправляет выбор и не устанавливает сессию.
+Далее ID109 raw field sources/caller/frame, ID110 body/handler/позиция,
+owner lifecycle и реальный SDK/device context.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
+
+## Список/выбор: ограниченные codecs, 20 октября
+
+Actual owner constructor/table/policy1 → RequestA проверены без policy fixture.
+Общие character_list decoder и character_select encoder: 12 list bodies,
+229 short prefixes, 16 select vectors, 5 tests. List profile требует пустые
+appearance extensions и absent optional; остальные ветви явно отклоняются.
+Lifecycle/семантика полей/handler102/response110/live session ещё не завершены.
+[Источники, SHA и продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md).
+
 ## CharacterListRead: caller RequestA найден, 20 октября
 
 32 native cases связывают 0x1468f1d70 → singleton → slot90 → RequestA →

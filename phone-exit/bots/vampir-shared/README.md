@@ -1,5 +1,31 @@
 # Vampir — общие компоненты и результаты
 
+## CharacterList ID102: nested arrays/map и предпочтение
+
+decode_character_list читает appearance items и optional map, с обязательными
+max_payload_size/max_characters/max_extension_items. Последний ограничивает
+сумму всех wire entries, включая повторы. Appearance enum≤45, value enum≤9,
+optional map last-value-wins; immutable sorted tuples, absent=None/present-empty=().
+UnsupportedCharacterExtension удалён. preferred_character_index повторяет native
+первое совпадение/нулевой fallback после gates; empty/error→None — local policy.
+30 native full bodies/489 short prefixes и 45 native body→handler cases.
+Нет I/O, session readiness, автоматической отправки ID109 или координат.
+[Актуальные источники, API и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
+
+## Character list/select body codecs
+
+Первичный ограниченный профиль ниже заменён текущим decoder выше:
+обе extension ветви теперь поддержаны; третий aggregate budget обязателен.
+
+vampir_core.character_list.decode_character_list: обязательные byte/count budgets,
+frozen/redacted записи, exact body consumption. Основной профиль ID102 с пустыми
+appearance extensions и отсутствующим optional; другие ветви дают явный
+UnsupportedCharacterExtension. Native parity: 12 bodies, 229 short prefixes.
+vampir_core.character_select.CharacterSelectPayload: три raw integer fields
+→ `<QIQ`/20 bytes, 16 native vectors. Семантика полей/session state не выводится.
+Без I/O/автоматического выбора/frame/live входа.
+[Источник, поля, проверка и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md).
+
 ## PktLoginResult body decoder
 
 vampir_core.login_result.decode_login_result → frozen/redacted LoginResultBody:

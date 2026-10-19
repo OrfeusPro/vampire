@@ -1,5 +1,27 @@
 # Vampir — общий указатель найденных функций и связей
 
+## ID102 nested и handler, 20 октября
+
+Appearance item table `0x1498cff58`→reader `0x145771b40`: `<IBH`, enum clamp45.
+Optional callback `0x1456c3890`→insert `0x1456b99b0`→pair ctor `0x1456b7b90`
+→value table `0x1498d1a28`/reader `0x145782b30`: key+value `<BBIIIQ`, clamp9.
+Whole list native проверка 30 bodies/489 short inputs; duplicate last-value-wins.
+Handler `0x14675dce0`→gate `0x1467a8e10`/predicate `0x145c85d90`, 45 cases.
+Packet+38 сравнивается с record+8, первое совпадение; sentinel0/miss→index0.
+UI+3f8 native store, helper `0x1456140f0` получает DL6; backend actions captured.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
+
+## CharacterList owner и list/select IO, 20 октября
+
+Owner constructor `0x1468e29a0` ставит table `0x149e0e7c8`:
+slot7b0→caller `0x1468f1d70`, slota18→actual AL1 leaf `0x140bb4a10`.
+Native caller→RequestA/ID101 без policy fixture; lifecycle hook не установлен.
+ID102 reader `0x1456d8d80` → array `0x144aa5c50`/callback `0x1456da1a0`
+→ record ctor `0x14577d3d0`/reader `0x145781c80`. Основной профиль проверен;
+appearance/optional extensions пока unsupported. ID109 writer `0x1456e53a0`
+проверен: raw10/raw18/raw20 → `<QIQ`/20 bytes, 16 vectors.
+[Источники, SHA, nested readers и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md).
+
 ## CharacterListRead caller, 20 октября
 
 0x1468f1e48 → getter 0x1456048e0; 0x1468f1e53 → service slot90.

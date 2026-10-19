@@ -1,5 +1,20 @@
 # Vampir: где искать данные
 
+## ID102 extensions и body→handler, 20 октября
+
+Ghidra 106 функций/53 warnings. replay-character-list-extensions.py:
+30 whole bodies/489 short prefixes, actual appearance/optional readers и insert.
+replay-character-list-handler.py: 45 native cases до covered state/UI captures.
+Общие decoder обеих ветвей и preferred_character_index, три обязательных budgets.
+[Адреса, схемы, SHA и продолжение](HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
+
+## CharacterList/Select codecs и actual owner, 20 октября
+
+Ghidra 101 функция/53 предупреждения; actual constructor/policy1→RequestA,
+12 native list bodies/229 short prefixes, 16 select writer vectors и общие
+bounded codecs. Две list extensions остаются unsupported; lifecycle/handler102/
+ID110/live session открыты. [Источники и продолжение](HEADLESS-CHARACTER-CODECS.md).
+
 ## Прямой caller slot90, 20 октября
 
 Существующий E8 scanner: 505 checked getter calls, 16 unresolved, 9 root
