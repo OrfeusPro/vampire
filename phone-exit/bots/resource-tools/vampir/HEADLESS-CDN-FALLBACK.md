@@ -81,6 +81,7 @@ orchestration replay, key/IV/ciphertext capture, forced errors/cleanup,
 portable plaintext vectors, неверный padding, максимальный envelope, отсутствие
 backend и цепочку Content-Length → whole raw body → decrypt → Unicode text.
 
+Продолжение: [JSON flow и SDK environment](HEADLESS-CDN-JSON-FLOW.md).
 Следующий этап: реальное исполнение crypto primitives либо независимые native
 vectors, JSON parse/fallback/ReadJson acceptance, актуальные CDN settings/TLS,
 Content-Encoding/chunked/EOF. `network_ready=false`.

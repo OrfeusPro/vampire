@@ -1,5 +1,19 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: JSON document → SDK environment
+
+После 2b433c7 исполнены 12 native parser-return/object/ReadJson/validation
+branch slices. Full parser/ReadJson/validation имеют return fixtures, не native
+execution; secondary check и дальнейшие lifecycle ветви не выдаются за ready.
+Shared cdn_config.py связывает plain/AES body → bounded JSON object → exact
+NetmarbleS/Zone → существующий SDK selector. Missing не получает default dev.
+Policy: duplicates/nonfinite/invalid Unicode/depth/items/numbers отвергаются;
+полный набор: 188/188 тестов, 102,3 с. Синтаксис трёх Python-файлов,
+кодировка Markdown, 287 относительных ссылок и git diff --check прошли.
+TASKS разделён на HTTP acquisition, offline decode и полное acceptance/startup.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-JSON-FLOW.md).
+Whole ReadJson/validation/actual settings/TLS/startup order ещё открыты.
+
 ## 19 октября 2026 — H04b-CDN: fallback AES envelope
 
 После 2c81193 найдена запасная расшифровка 145653dd0 после неуспешного JSON.

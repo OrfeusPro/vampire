@@ -4,6 +4,15 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## JSON CDN и поле окружения SDK, 19 октября
+
+12 native slices уточнили parser/object → fallback/ReadJson и обязательную
+следующую validation. Общий decode_cdn_config_document разбирает plain либо
+AES-encrypted JSON; read_cdn_sdk_environment читает NetmarbleS/Zone без default.
+Проверена offline цепочка whole HTTP body → JSON → Zone → SDK mode.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-JSON-FLOW.md).
+Полный ReadJson/secondary validation, actual settings/TLS ещё открыты.
+
 ## Запасная расшифровка CDN, 19 октября
 
 Найдена fallback-ветка: IV16 + AES-256-CBC, key = SHA256 от compiled seed.

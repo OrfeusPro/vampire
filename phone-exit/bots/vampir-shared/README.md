@@ -14,6 +14,15 @@
 | Задачи/история сетевого бота | [TASKS](../vampir-headless/TASKS.md), [WORKLOG](../vampir-headless/WORKLOG.md) |
 | Экранный бот и карта | [Vampir TASKS](../vampir/TASKS.md), [MAP-ATLAS](../resource-tools/vampir/MAP-ATLAS.md) |
 
+## JSON CDN и поле окружения SDK, 19 октября
+
+12 native slices уточнили parser/object → fallback/ReadJson и обязательную
+следующую validation. Общий decode_cdn_config_document разбирает plain либо
+AES-encrypted JSON; read_cdn_sdk_environment читает NetmarbleS/Zone без default.
+Проверена offline цепочка whole HTTP body → JSON → Zone → SDK mode.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-JSON-FLOW.md).
+Полный ReadJson/secondary validation, actual settings/TLS ещё открыты.
+
 ## Запасная расшифровка CDN, 19 октября
 
 Найдена fallback-ветка: IV16 + AES-256-CBC, key = SHA256 от compiled seed.

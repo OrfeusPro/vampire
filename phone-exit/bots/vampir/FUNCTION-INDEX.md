@@ -1,5 +1,17 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN JSON result/ReadJson branches, 19 октября: H04b partial
+
+145642c79..2c88: native parser-return + object-pointer branch, 4 fixtures.
+145643107..3146: ReadJson call14565a5d0 → copy object+1a1 byte → validator
+145661a70 → error/next branch145643213, 8 fixtures. Calls имеют return shims;
+whole parser/ReadJson/validation не исполнялись. Next не означает callback ready.
+Shared decode_cdn_config_document: plain text JSON object, raw AES fallback,
+strict local JSON/resource policy. read_cdn_sdk_environment: exact NetmarbleS/
+Zone string → existing explicit SDK selector; missing не подменяется dev.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-JSON-FLOW.md).
+Full config acceptance/actual values/TLS/startup order ещё открыты.
+
 ## CDN fallback decrypt, 19 октября: H04b partial
 
 Native 145653dd0 whole orchestration: compiled 28-byte seed → SHA256 call
