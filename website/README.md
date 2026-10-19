@@ -224,3 +224,7 @@ SMTP уведомления помечены BUYBACK OFFER: отдельный �
 Локально проверены все 50 seller URL/метаданные/SSR/минимум/FAQ-ссылки, sitemap100, отказы API ниже 5000/неверная цена/нет Turnstile (check-sell.py), запуск общего JS без retail-контролов (check-sell-ui.cjs), HTML buyback-письма (check-order-email.php), прежние SEO/язык/Turnstile/feedback/loader проверки, PHP/JS syntax и 50×113 translation keys. Реальная заявка с пользовательским Turnstile-токеном не отправлялась. Визуальный browser QA недоступен при отключённом browser use.
 
 Публикация seller page завершена после повторного FTPS: 93 проверенных файла, backup website/var/ftp-backup-20261016T223430Z/. На HTTPS прошли check-sell.py --production (50 страниц/FAQ/SEO/sitemap100/API validation/Turnstile), check-seo.py --production, check-language-preference.py --production (включая /sell/ browser/cookie/bot/explicit paths) и check-turnstile.py --production. Реальный пользовательский токен/положительная отправка seller offer остаётся ручной проверкой.
+
+## Favicon для поиска, 19.10.2026
+
+Знак assets/brand-mark.svg растеризован на тёмном фоне: favicon.png 96×96, apple-touch-icon.png 180×180, favicon.ico 16/32/48/64/128/256 px. Общий head всех языков/страниц использует стабильные URL ICO/PNG/apple-touch-icon. SVG логотип сохранён. Локальный router разрешает новые статические файлы. HTTP/размеры проверены, PNG просмотрен. Google поддерживает PNG/ICO; показ в поиске зависит от повторного обхода и не гарантируется.

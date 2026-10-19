@@ -19,7 +19,9 @@ $clientI18n['messages'] = array_intersect_key($i18n['messages'], array_flip(['en
   <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf'], ENT_QUOTES) ?>">
   <meta name="theme-color" content="#0c0b0d">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="icon" href="/assets/brand-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256" type="image/x-icon">
+  <link rel="icon" href="/favicon.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="stylesheet" href="/styles.css?v=<?= filemtime(__DIR__ . '/styles.css') ?>"><script id="i18n-data" type="application/json"><?= json_encode($clientI18n, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) ?></script><script src="/app.js?v=<?= filemtime(__DIR__ . '/app.js') ?>" defer></script>
   <link rel="canonical" href="<?= site_escape($canonicalUrl) ?>">
   <?php foreach ($i18n['languages'] as $entry): ?><link rel="alternate" hreflang="<?= site_escape($entry['code']) ?>" href="<?= site_escape($productionOrigin . $entry['path']) ?>"><?php endforeach; ?>
