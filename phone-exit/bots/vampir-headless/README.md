@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Подтверждён XOR primitive GMC2, 19 октября
+
+Native helper/append: uint16 XOR по повторяющемуся key, zero outcomes
+пропускаются. 18 fixtures и общий gmc2_decode.xor_gmc2_utf16_units совпали.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-XOR.md).
+Ответ GMC2 целиком/DECKEY/auth/session ещё не разобраны.
+
 ## Подтверждены аргументы GET и headers GMC2, 19 октября
 
 16 native fixtures проверили шесть постоянных headers, eTag/token gates

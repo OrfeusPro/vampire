@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## GMC2 XOR: подтверждён primitive расшифровки, 19 октября
+
+Полный native DecryptXOR и FString append проверены на 18 fixtures.
+XOR идёт по uint16 units повторяющимся key; нулевые результаты append
+пропускает. Общий xor_gmc2_utf16_units возвращает raw units, без Unicode/JSON
+или получения ключа. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-XOR.md).
+Далее source decode/key/DECKEY/encSecretConstants и весь response contract.
+
 ## GMC2 GET: постоянные и условные headers, 19 октября
 
 16 native fixtures подтвердили header preparation и GET method argument:

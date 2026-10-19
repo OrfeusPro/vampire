@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## GMC2 DecryptXOR и actual FString append, 19 октября
+
+1444ddf50: source descriptor R8 count, key FString R9 period=count-1,
+word XOR 1444de015 → actual append 1414242a0. DX=0 пропускается; high units
+сохраняются. 18 native fixtures, growth shim/logging-disabled fixture,
+guards/terminator checks. Общий xor_gmc2_utf16_units, empty key reject.
+[Источник и границы](../resource-tools/vampir/HEADLESS-GMC2-XOR.md).
+Base64/DECKEY/key acquisition и вся response chain ещё открыты.
+
 ## RequestGMC2 header gates, 19 октября
 
 Native 1444f5560..1444f57b1: URL slot68/header slotb0/method slot60 captures,

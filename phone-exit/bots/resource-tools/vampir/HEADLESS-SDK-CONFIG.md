@@ -1,5 +1,9 @@
 # Vampir — источник конфигурации SDK GMC2
 
+19 октября: [полный native DecryptXOR + single-unit append](HEADLESS-GMC2-XOR.md)
+проверены на 18 fixtures. Общий primitive обрабатывает uint16 units и пропускает
+нулевые результаты; Base64/key/DECKEY/JSON response chain ещё не завершена.
+
 19 октября: [native URL assembly replay](HEADLESS-GMC2-URL.md) подтвердил
 сборку по 26 fixtures, включая literal ASCII append/getters/growth calls.
 Общий helper требует явные значения и не выполняет HTTP/URI validation.

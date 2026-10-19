@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## GMC2 XOR evidence, 19 октября
+
+18 native fixtures полного XOR helper/actual append, source bytes/offsets/SHA,
+raw uint16 inputs/outputs/guards. Общий primitive совпал. Это не весь response
+и не найденный DECKEY. [Доказательства](HEADLESS-GMC2-XOR.md).
+
 ## GMC2 GET/header evidence, 19 октября
 
 16 native header/method captures с source bytes/offsets/SHA, constructor name

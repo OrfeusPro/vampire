@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## GMC2 XOR primitive, 19 октября
+
+Общий vampir_core.gmc2_decode.xor_gmc2_utf16_units: raw LE uint16 XOR,
+повтор key без storage NUL, пропуск zero output units как в native append.
+18 native fixtures совпали; empty key/type/size отклоняются. Нет Base64/JSON,
+key acquisition или I/O. [Источник](../resource-tools/vampir/HEADLESS-GMC2-XOR.md).
+
 ## Offline GMC2 GET plan, 19 октября
 
 Общий vampir_core.gmc2_request.plan_gmc2_get_request: explicit URL/service/

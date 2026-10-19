@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04b native XOR helper/append подтверждены на 18 fixtures,
+общий raw uint16 primitive добавлен. Далее encConstants source decode,
+key/DECKEY, encSecretConstants и JSON/schema; byte XOR/UTF8 не подставлять.
+[Источник](../resource-tools/vampir/HEADLESS-GMC2-XOR.md).
+
 19 октября: H04b RequestGMC2 headers/method arguments проверены на 16 native
 fixtures с HTTP captures; общий immutable plan добавлен, без I/O/credentials
 acquisition. Следом response decode/encConstants/DECKEY/auth URL values;

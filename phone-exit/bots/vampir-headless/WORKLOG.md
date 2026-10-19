@@ -1,5 +1,21 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — полный DecryptXOR и native zero append gate
+
+После 647fb76 исполнены полный 1444ddf50 и append 1414242a0: word XOR по
+source count/повторяющемуся key count-1; zero output units пропускаются.
+18 fixtures: low/high units, surrogates, zeros, повтор ключа и 1024 units;
+output guards/terminator сохранены. Growth — shim, logging-disabled fixture.
+Общий bounded xor_gmc2_utf16_units принимает raw LE units, empty key reject;
+не делает Base64/Unicode/JSON или key acquisition. Четыре теста прошли.
+Далее preceding decode/key/DECKEY/secret constants/schema; сетевых запросов нет.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-XOR.md).
+Полный набор: 234/234 теста, 175,5 с. После уточнения diagnostic fixture
+address по RIP reference повторены 4 XOR tests: passed, 6,0 с. Ранее diagnostic
+путь также не выполнялся; неправильная запись в соседний байт устранена.
+Синтаксис трёх Python-файлов, кодировка девяти Markdown-файлов,
+366 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — RequestGMC2 header gates и offline request plan
 
 После 1c79cd1 исполнены constructor name prefix, RequestGMC2 header/method
