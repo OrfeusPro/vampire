@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## Selection lifecycle, 20 октября
+
+Пакетный экспорт Ghidra: 76 функций/42 предупреждения. Новый replay проверяет
+state40, dispatch/broadcast arguments и leaf callback → virtual38.
+Это ещё не доказанный caller CharacterListRead slot90.
+[Источники, SHA и ограничения](HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## World record/selection label после Ghidra
 
 replay-world-state-label.py → code-clues/world-state-label-replay.json:

@@ -1,5 +1,13 @@
 # Vampir: где искать данные
 
+## Selection lifecycle: общий результат, 20 октября
+
+Ghidra export расширен до 76 функций/42 предупреждений.
+replay-selection-lifecycle.py сохраняет 8 native cases с SHA участков в
+code-clues/selection-lifecycle-replay.json. Регистрация delegates статическая;
+слот90 и runtime завершение загрузки не подтверждены.
+[Источники, SHA и ограничения](HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## World.Id2 → CharacterSelect LevelPath
 
 replay-world-state-label.py: actual ctor/field-store/lookup/getter, real base

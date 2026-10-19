@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Selection lifecycle: обработчики событий, 20 октября
+
+Проверены 7 native event cases и singleton callback → virtual38.
+Регистрация двух delegates найдена статически; их emitters, связь с завершением
+загрузки CharacterSelect_02 и caller slot90 остаются открытыми. Ghidra: 76 функций,
+42 предупреждения.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## Raw2 связан с World.Id2/CharacterSelect level, 20 октября
 
 World CSV + native column/store/record/getter связали raw2 с

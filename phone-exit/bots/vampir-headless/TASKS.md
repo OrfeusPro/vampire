@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lifecycle: найти emitter и продолжение slot78
+
+Выполнено: source-bound Ghidra экспорт lifecycle, 7 event cases и leaf callback.
+Далее: emitter callbacks из slot08, продолжение 0x14561a8d0 из slot78,
+доказанный caller slot90. Response102, network и live session остаются открытыми.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## H04-world-label: source path подтверждён
 
 Raw2→World.Id2→Lobby/CharacterSelect/CharacterSelect_02. Native field-store/

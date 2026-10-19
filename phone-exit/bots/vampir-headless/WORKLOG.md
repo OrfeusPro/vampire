@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: selection lifecycle и virtual38 callback
+
+Экспорт Ghidra расширен до 76 функций/42 предупреждений. Проверены 7 значений
+raw32 event и callback leaf → singleton virtual38. Девять тестов прошли:
+три новых, три selection service и три Ghidra. Проверены 1298 локальных ссылок,
+битых нет. Полный набор тестов не повторялся;
+регистрация/emitters/backend dispatch остаются статическими или captures.
+Runtime и live session не менялись.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## 20 октября: World.Id2/CharacterSelect path связан с native getter
 
 Registry/source diagnostics и World parsers привязали LevelPath→record48.

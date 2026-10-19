@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Selection lifecycle, 20 октября
+
+Slot08 → 0x14560e7d0 регистрирует callbacks 0x14561af60/0x14561b000.
+Последний пишет state40 и вызывает dispatch/broadcast captures; первый передаёт
+UI callback 0x1455f7bb0 → singleton virtual38. 8 native cases, emitters неизвестны.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## World.Id2/LevelPath — selection label
 
 World parser literal LevelPath → FString48, World record vtable 0x1499d28a8

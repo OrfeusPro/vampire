@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Selection lifecycle: callbacks, 20 октября
+
+8 native cases подтверждают state40/dispatch/broadcast и singleton virtual38.
+Emitters зарегистрированных callbacks, загрузка CharacterSelect_02 и caller
+CharacterListRead slot90 пока не установлены.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## Selection level найден в World, 20 октября
 
 Raw2 связан с World.Id2/LevelPath через compiled parser/record/getter и CSV.

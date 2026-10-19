@@ -1,5 +1,12 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## Selection lifecycle, 20 октября
+
+Экспортировано 76 функций, сохранены 42 предупреждения. Добавлены service
+lifecycle slots и callbacks; leaf без unwind range проверяется отдельно native
+replay. Типы и аналитические имена не доказывают emitters или загрузку уровня.
+[Источники, SHA и ограничения](HEADLESS-SELECTION-LIFECYCLE.md).
+
 ## World record и LevelPath, 20 октября
 
 Пакет расширен до 63 функций/36 warnings: registry uses, World parsers,
