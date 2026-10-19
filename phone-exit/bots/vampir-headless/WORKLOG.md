@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: lower connect/resolver handoff
+
+12 native integrations, три новых и восемь смежных tests прошли.
+Peer fields, обе registration insert branches, lexical numeric/hex и job
+stores подтверждены. Reset/lookup/parser/scheduler — fixtures/captures;
+RAX сохранён cookie-check fixture для правильного bool результата.
+Runtime не менялся; полный suite 316 не повторялся. Game/profile/network не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECT-RESOLVER-HANDOFF.md).
+
 ## 19 октября: ConnectToServer endpoint mapping
 
 13 native integrations связали BeginGame target с primary/override

@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Lower connect/resolver selector
+
+0x1445ea1b0 копирует endpoint в peer+0x70/+0x90/+0x94/+0xc0, затем
+0x1445e6d70 выбирает lexical parse либо job+0x20 owner/+0x28 host.
+0x1445db8a0 — enqueue capture; реальное completion ещё открыто.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECT-RESOLVER-HANDOFF.md).
+
 ## ConnectToServer endpoint consumers
 
 0x144aabcc0 выбирает primary +0x278/+0x288 либо override +0x290/+0x2a0.

@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Connect resolver handoff replay
+
+replay-connect-resolver-handoff.py: 12 native scenarios, actual lower
+connect/registration insert/lexical helper/job stores. Resolver parser,
+queue/reset/lookup и lifecycle явно ограничены fixtures/captures.
+[Источники, SHA и границы](HEADLESS-CONNECT-RESOLVER-HANDOFF.md).
+
 ## Game connect target replay
 
 replay-game-connect-target.py: 13 native scenarios полного connect caller

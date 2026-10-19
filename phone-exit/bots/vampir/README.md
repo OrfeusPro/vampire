@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Нижний connect → resolver handoff, 19 октября
+
+12 native integrations связали lower connect, host/port copy, две
+регистрации и lexical выбор numeric/hex либо задания имени. Job enqueue/
+parser callbacks остаются captures; return true не доказывает готовый socket.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECT-RESOLVER-HANDOFF.md).
+
 ## Game connect: host/port consumers, 19 октября
 
 13 native scenarios связали BeginGame fields с ConnectToServer и реальным

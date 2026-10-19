@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lower-connect: setup и resolver handoff проверены
+
+Lower connect и lexical selector исполняются после endpoint construction.
+Далее resolver job source vtable → run/result callback → socket readiness
+и packet Login. Numeric parser, реальный DNS, duplicate/reset lifecycle
+и active session ещё открыты; bool enqueue не заменяет readiness.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECT-RESOLVER-HANDOFF.md).
+
 ## H04-connect-target: host/game-port связь подтверждена
 
 Основная пара +0x278/+0x288 и override +0x290/+0x2a0 связаны с
