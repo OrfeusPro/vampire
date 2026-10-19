@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK storage path, 19 октября
+
+Native directory getter проверен на 6 fixture paths. Каталог NetmarbleSDK
+добавляется к base persistent directory, который пока задан fixture.
+Найден отдельный NID device key, его web binding ещё открыт.
+[Save/Load source index и границы](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md).
+
 ## SetDeviceKey body проверен, 19 октября
 
 56 setter fixtures и 12 getter integrations: ключ может записываться даже

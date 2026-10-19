@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: SDK storage directory и NID key
+
+Добавлен static index из 26 fragments: Save/Load/path/Initialize/NID key.
+Шесть native path fixtures проверили predicate true, wrapper, join/slash append;
+base directory/FString helpers fixtures. Найден отдельный DeviceKeyForNetmarbleId
+в settings+0x628. Связь с web deviceKey не объявлялась. Реальные profiles/registry/
+keys не читались, Save/Load не исполнялись. Два regression tests прошли.
+Проверены также 11 device tests (10.579 с), 398 относительных Markdown-ссылок
+и git diff --check. Полный headless suite повторно не запускался.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md).
+
 ## 19 октября: native SetDeviceKey
 
 56 setter fixtures и 12 getter integrations исполнили native setter body

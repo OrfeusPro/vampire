@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## SDK storage directory и отдельный NID key, 19 октября
+
+6 native fixtures подтвердили каталог base persistent directory + NetmarbleSDK.
+Base getter — fixture; active path/filename ещё неизвестны. Save/Load/Initialize
+и отдельный DeviceKeyForNetmarbleId (+0x628) сохранены как static evidence.
+Не смешивать этот ключ с двумя уже известными полями.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md).
+
 ## Native SetDeviceKey и getter integration, 19 октября
 
 56 setter fixtures и 12 getter/setter integrations подтвердили native

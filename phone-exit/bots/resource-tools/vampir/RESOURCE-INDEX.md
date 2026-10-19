@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## SDK Save/Load/path и NID device key, 19 октября
+
+build-headless-sdk-storage.py: 26 static fragments и initializer bindings.
+replay-sdk-storage-path.py: 6 native directory fixtures с explicit base getter.
+[Отчёты/SHA и открытые зависимости](HEADLESS-SDK-STORAGE.md).
+
 ## SetDeviceKey compare/write body, 19 октября
 
 replay-device-key-setter.py: 56 native setter cases + 12 getter integrations.

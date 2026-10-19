@@ -68,8 +68,10 @@ Windows storage/GUID fallback разобраны статически, default G
 
 ## Следующие задачи
 
-1. После [native setter replay](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md)
-   проверить Save/load/path, active platform и SDKZone.
+1. После [storage path replay](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md)
+   проверить filename/Save/load и NID getter → web context. Отдельный
+   DeviceKeyForNetmarbleId пока не добавлен в schema без доказанного web binding.
+   Active platform и SDKZone также открыты.
 2. Получить согласованные реальные значения для основного аккаунта с provenance.
 3. Найти challenge/confirmation response и штатное завершение подтверждения.
 4. Связать login runner с реестром и остановкой на подтверждении/лимитах входа.

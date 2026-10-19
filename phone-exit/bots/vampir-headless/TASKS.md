@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-storage: каталог и NID identity
+
+Native directory join проверен шестью fixtures, base getter explicit fixture.
+Save/Load/Initialize и отдельный NID device key экспортированы статически.
+Два regression tests прошли. Открыто: полный filename, Save/load field mapping,
+NID getter caller → web deviceKey, active context и реальные keys.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md).
+
 ## H04-device-setter: сравнение и запись
 
 Native setter body/ASCII compare проверены в 56 fixtures, 12 интеграциях

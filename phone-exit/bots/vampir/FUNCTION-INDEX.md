@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK storage и DeviceKeyForNetmarbleId
+
+[Save/Load index и native directory replay](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md):
+каталог NetmarbleSDK под base persistent directory. Отдельный NID key в
+settings+0x628/DeviceKeyForNetmarbleId; web context связь ещё не доказана.
+Save/load и полный filename не исполнены.
+
 ## SetDeviceKey: native body
 
 [Setter compare/write и getter integration](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md):
