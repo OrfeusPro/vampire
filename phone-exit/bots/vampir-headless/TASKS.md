@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-Ghidra: пакетный анализ подключён
+
+22 функции успешно экспортированы и повторены из сохранённого проекта.
+Далее Login writer и request handoff читать через общий псевдокод/call graph,
+проверять целыми native scenarios. Межверсионное сопоставление ещё открыто.
+[Установка, команды и границы](../resource-tools/vampir/HEADLESS-GHIDRA.md).
+
 ## H04-login-fields: constructor и SDK consumers проверены
 
 Native Login prefix разделяет NetmarbleId/token/server fields и доходит

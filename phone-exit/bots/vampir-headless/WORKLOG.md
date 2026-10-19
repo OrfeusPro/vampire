@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: Ghidra вместо дробного ручного анализа
+
+Официальные Ghidra 12.1.4 и Temurin21 закреплены SHA, импортирован EXE как
+данные. Три exports по22 функции; C outputs совпали побайтно. 13 warnings
+сохранены. Три новых и три смежных Login tests прошли; game/profile не запускались.
+[Пути, команды и static findings](../resource-tools/vampir/HEADLESS-GHIDRA.md).
+
 ## 19 октября: Login constructor/SDK поля
 
 16 native scenarios, три новых и шесть смежных tests прошли. Native constructor/cached

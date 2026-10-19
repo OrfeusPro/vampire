@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Пакетный анализ через Ghidra
+
+22 source-bound functions: Login/Version, reader/writer/handler, SDK getters,
+request handoff/send и BeginGame/connect. Общий псевдокод/call graph: ресурсная
+библиотека ghidra/INDEX.md. Analyst names и decompiler types не source C++.
+[Команды, source/tool SHA и ограничения](../resource-tools/vampir/HEADLESS-GHIDRA.md).
+
 ## Login preparation и SDK field consumers
 
 0x1467a9700 → ctor0x1456d4c80 → handoff0x144aa8020. GetNetmarbleId

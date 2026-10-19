@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Ghidra batch / псевдокод и call graph
+
+install-ghidra-tools.py + pinned lock, build-ghidra-manifest.py, Java exporter,
+run-ghidra-export.py и verify-ghidra-export.py. 22 функции, отдельный reusable
+проект и immutable runs вне Git; стабильный ghidra/INDEX.md в библиотеке.
+[Инструкция и проверенные ограничения](HEADLESS-GHIDRA.md).
+
 ## Login packet field replay
 
 replay-login-packet-fields.py: 16 native scenarios prefix/constructor/cached

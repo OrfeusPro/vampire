@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Ghidra: сначала пакетный псевдокод, 19 октября
+
+Подключены Ghidra 12.1.4/JDK21. Экспортированы 22 функции Login/Version/SDK/
+транспорта с call graph; повторный export совпал побайтно. Сначала смотреть
+F:/PhoneExit Resources/Vampir/ghidra/INDEX.md, затем native evidence.
+13 decompiler warnings сохранены; типы и семантика не объявлены исходниками.
+[Установка, пути, команды и границы](../resource-tools/vampir/HEADLESS-GHIDRA.md).
+
 ## PktLogin: SDK поля разделены, 19 октября
 
 16 native scenarios исполнили Login constructor/assignments и cached SDK
