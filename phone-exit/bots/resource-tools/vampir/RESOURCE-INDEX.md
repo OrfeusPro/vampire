@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Login packet writer и переносимый body
+
+replay-login-packet-writer.py: 25 native vectors, 40 raw IO failure fixtures,
+packet writer/archive vtables, UTF-8 и raw bool bytes. LoginPayload общий,
+проверяет всё тело до возврата. Request handoff/frame/server ещё открыты.
+[Порядок полей, SHA и границы](HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## Выбор инструментов: Ghidra / CUE4Parse / Dumper-7
 
 [ANALYSIS-TOOLS.md](ANALYSIS-TOOLS.md): постоянное правило выбора, установка

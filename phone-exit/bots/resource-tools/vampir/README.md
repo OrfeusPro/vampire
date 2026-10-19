@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## Login writer после Ghidra
+
+replay-login-packet-writer.py → code-clues/login-packet-writer-replay.json:
+25 payload vectors/40 IO failure fixtures; extended preparation capture
++0x128, actual UTF-8/archive primitives, общий LoginPayload.
+[HEADLESS-LOGIN-PACKET-WRITER.md](HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## Готовые инструменты перед ручным разбором
 
 [ANALYSIS-TOOLS.md](ANALYSIS-TOOLS.md): когда использовать Ghidra, CUE4Parse

@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## PktLogin body encoder
+
+vampir_core.login_packet.LoginPayload: 15 strings, 4 uint32, 5 raw bytes и
+явный opaque uint64. Actual native parity на 25 vectors, 40 IO failure cases
+сохранены отдельно. Immutable fields, скрытый repr, обязательный byte budget.
+Нет I/O/default profile values/frame/server session.
+[Источник и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## PktVersion body encoder
 
 vampir_core.version_packet.VersionPayload: десять raw ordered strings и три

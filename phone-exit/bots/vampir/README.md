@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Login writer → переносимое тело, 19 октября
+
+25 native vectors проверили 15 строк/4 uint32/5 байтов/uint64 и UTF-8.
+40 IO failure fixtures показали разную propagation у строк и скаляров.
+Добавлен общий LoginPayload с явным byte budget; сети и сессии ещё нет.
+[Источники, SHA, проверенные байты и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## Выбор инструментов закреплён, 19 октября
 
 Правило Ghidra/CUE4Parse/Dumper-7 добавлено в корневой AGENTS.md.

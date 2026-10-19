@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## PktLogin body codec, 19 октября
+
+Общий LoginPayload повторяет native writer на 25 vectors; 40 IO failures
+проверили propagation. Поля явные, repr скрыт, byte budget обязателен.
+Frame/handoff/network/LoginResult/session остаются незавершёнными.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## SDK result handoff, 19 октября
 
 Проверены dispatcher, binder, virtual clone/invoke и deferred response pair.

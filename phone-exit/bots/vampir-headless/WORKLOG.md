@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: native Login writer и общий body encoder
+
+Прочитаны готовые Ghidra exports, затем исполнены writer/UTF-8/archive IO.
+25 успешных payload vectors и 40 IO failure fixtures: 30 строковых отказов
+игнорируются helper path, 10 скалярных останавливают writer. Расширенный
+capture снимает +0x128=0 в 16 прежних preparation cases. LoginPayload добавлен
+в общий Python core с immutable/redacted inputs и атомарным byte budget.
+Четыре новых tests, смежные Login fields/Version writer/Version send path
+проверены; полный suite не повторялся. Live runner/сессия ещё не подключены.
+[Отчёт, SHA, источники и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## 19 октября: общее правило и дополнительные инструменты
 
 AGENTS.md закрепляет выбор Ghidra/CUE4Parse/Dumper-7 перед ручным анализом.

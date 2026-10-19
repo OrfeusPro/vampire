@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-writer: body подтверждён
+
+Ghidra → actual writer/UTF-8/archive IO: 25 payload vectors, 40 failures.
+Общий LoginPayload готов для bounded offline encoding. +0x128 captured zero
+в 16 preparation fixtures; семантика неизвестна. Следующий участок:
+request handoff 0x144aa8020 → transport send, совместный prepare/writer/frame,
+потом LoginResult. Real profile/device inputs и live session ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## H04-tools: установка и границы совместимости
 
 Правило выбора инструментов закреплено в AGENTS.md. CUE4Parse: три headers

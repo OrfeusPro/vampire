@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## PktLogin body writer, 19 октября
+
+0x1456e57c0/vtable 0x1498d6058+0x10: 25 native payload vectors,
+40 raw IO failure fixtures. FString errors здесь могут быть проигнорированы;
+scalar errors останавливают writer. Порядок 15 strings/4 u32/5 bytes/u64
+перенесён в LoginPayload, frame/handoff/socket ещё не объединены.
+[Source/offsets/SHA и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md).
+
 ## Инструменты и пределы автоматического анализа
 
 [Общее правило выбора](../resource-tools/vampir/ANALYSIS-TOOLS.md): Ghidra
