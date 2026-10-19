@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Login handoff → кадр и очередь, 19 октября
+
+34 native scenarios исполнили request lookup/timeout/getter/virtual send,
+Login writer, CRC/XOR и queue append. 29 кадров сверены с shared codec;
+2 duplicate и 3 transport refusal cases не отправляют кадр. Insert/notify
+остаются captures; drain/socket/LoginResult/session ещё открыты.
+[Путь, SHA и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md).
+
 ## Login writer → переносимое тело, 19 октября
 
 25 native vectors проверили 15 строк/4 uint32/5 байтов/uint64 и UTF-8.

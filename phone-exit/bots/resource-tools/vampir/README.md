@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## Login handoff/send после Ghidra
+
+replay-login-send-path.py → code-clues/login-send-path-replay.json:
+34 native cases, 29 frames. Handoff/virtual send/writer/CRC/XOR/queue вместе;
+insert/notify captures, clocks/drain/socket/server response не проверены.
+[HEADLESS-LOGIN-SEND-PATH.md](HEADLESS-LOGIN-SEND-PATH.md).
+
 ## Login writer после Ghidra
 
 replay-login-packet-writer.py → code-clues/login-packet-writer-replay.json:

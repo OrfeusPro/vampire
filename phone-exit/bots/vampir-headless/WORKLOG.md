@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: Login handoff → native frame/queue
+
+Ghidra handoff/wrapper прочитаны перед native replay. 34 scenarios исполнили
+lookup/timeout/getter/virtual send/Login writer/CRC/XOR/queue. 29 кадров
+совпали с LoginPayload и frame primitives; 2 duplicate и 3 transport refusal
+подтвердили границы. Insert/notify captures, clocks/drain/socket не исполнены.
+Три новых и семь смежных tests прошли; полный suite не повторялся.
+Runtime не менялся; real profile/network/session не использованы.
+[Отчёт, SHA, источники и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md).
+
 ## 19 октября: native Login writer и общий body encoder
 
 Прочитаны готовые Ghidra exports, затем исполнены writer/UTF-8/archive IO.

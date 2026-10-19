@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Login send до очереди, 19 октября
+
+Native handoff → derived virtual send → Login writer → CRC/XOR → owning queue
+проверен на 34 cases. 29 frames совпали с portable body/frame primitives.
+Реального request lifecycle, socket/ответа/Login session ещё нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md).
+
 ## PktLogin body codec, 19 октября
 
 Общий LoginPayload повторяет native writer на 25 vectors; 40 IO failures

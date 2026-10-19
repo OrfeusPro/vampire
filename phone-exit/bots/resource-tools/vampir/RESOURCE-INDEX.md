@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Login request handoff и полный send до очереди
+
+replay-login-send-path.py: 34 native cases, 29 frame vectors, source-bound
+singleton getter/derived send table, lookup collision chain и timeout.
+Request container mutation/notify captured; drain/socket/LoginResult открыты.
+[HEADLESS-LOGIN-SEND-PATH.md](HEADLESS-LOGIN-SEND-PATH.md).
+
 ## Login packet writer и переносимый body
 
 replay-login-packet-writer.py: 25 native vectors, 40 raw IO failure fixtures,

@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-send: handoff → queue подтверждён
+
+34 native cases: 29 frames, 2 duplicate, 3 transport refusal. Проверены lookup,
+timeout selection, getter/virtual send/writer/CRC/XOR/owning queue вместе.
+Далее LoginResult reader/handler/result gates и стыковка с transport drain;
+insert/notify/timeout lifecycle, fresh SDK/device/profile inputs остаются.
+Live session/character selection ещё не подключены.
+[Источник, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md).
+
 ## H04-login-writer: body подтверждён
 
 Ghidra → actual writer/UTF-8/archive IO: 25 payload vectors, 40 failures.

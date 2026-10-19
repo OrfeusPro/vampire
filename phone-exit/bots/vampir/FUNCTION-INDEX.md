@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Request handoff → Login send, 19 октября
+
+0x144aa8020 → getter 0x144aaa9d0 → derived table 0x149d84e50+0x38 →
+wrapper 0x1467aaa10 → send-B → Login writer → frame/queue. 34 native cases,
+29 полных кадров; duplicate lookup и timeout selection подтверждены.
+Insert/notify helpers не исполнялись, expiry/socket/session неизвестны.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md).
+
 ## PktLogin body writer, 19 октября
 
 0x1456e57c0/vtable 0x1498d6058+0x10: 25 native payload vectors,
