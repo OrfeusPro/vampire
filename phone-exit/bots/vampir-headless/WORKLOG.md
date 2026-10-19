@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: SDK result dispatch
+
+Исполнены dispatcher, delegate copy/cleanup, binder, реальные virtual
+clone/invoke и queued thunk. 16 сценариев подтвердили response pair/refcount,
+очистку исходной привязки и AL=1 независимо от callback return.
+Реальные game receiver/task graph/lifetime completion пока не исполнены.
+Три новых и семь смежных tests прошли. Runtime не менялся; последний полный
+прогон 316 тестов не повторялся. Игра, профиль и HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-RESULT-DISPATCH.md).
+
 ## 19 октября: SDK sign-in completion и общий parser
 
 16 native сценариев проверили idpInfo, channel byte, сравнение player ID,

@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK result handoff, 19 октября
+
+Проверены dispatcher, binder, virtual clone/invoke и deferred response pair.
+Внутренний флаг и возврат bridge не доказывают сессию; реальный игровой
+callback остаётся следующим шагом. Общий runtime не менялся.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-RESULT-DISPATCH.md).
+
 ## SDK response: completion и parser, 19 октября
 
 16 native сценариев и общий строгий offline parser добавлены. Внутренний

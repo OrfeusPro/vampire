@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK result dispatch и native delegate
+
+auth+0x98 → dispatcher 0x1444dff20 → queued thunk 0x1444d83b0 → virtual
+slot+0x60 0x14423aaf0. Binder и vtable связаны с SignIn. AL=1 после вызова
+обработчика не означает успешную авторизацию.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-RESULT-DISPATCH.md).
+
 ## SDK sign-in completion
 
 SetSignIn 0x14454c3d0 записывает settings+0x400; idpInfo относится к playerInfo.

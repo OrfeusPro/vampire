@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## SDK result dispatcher и delegate bridge
+
+replay-sdk-result-dispatch.py: 8 базовых и 8 native binding сценариев.
+Фактические dispatcher/binder/clone/invoke; task scheduler и TFunction storage
+имеют явные fixture boundaries. Отчёт, SHA и дальнейшие связи сохранены.
+[Источники, SHA и границы](HEADLESS-SDK-RESULT-DISPATCH.md).
+
 ## SDK sign-in completion
 
 replay-sdk-sign-in-completion.py: 16 сценариев, фактический SetSignIn,

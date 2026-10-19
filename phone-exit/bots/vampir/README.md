@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## SDK result: очередь и callback, 19 октября
+
+16 сценариев проверили dispatcher, перенос делегата и исходного response pair.
+Native binder/virtual invoke подтверждены; обёртка возвращает true независимо
+от fixture callback result. Реальный игровой получатель и Login ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-RESULT-DISPATCH.md).
+
 ## SDK sign-in completion и общий parser, 19 октября
 
 16 native сценариев связали idpInfo, код провайдера, SetSignIn и место вызова

@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-result-dispatch: native handoff проверен
+
+16 сценариев связали SignIn binder, dispatcher, очередь и invoke bridge.
+Task graph и реальный bound function пока fixtures. Следующий приоритет:
+найти function/storage реального игрового callback, проследить до game Login;
+затем expiry/refresh и real identity/confirmation.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-RESULT-DISPATCH.md).
+
 ## H04-response-completion: частично завершено
 
 Проверены idpInfo, channel byte, native SetSignIn и вызов dispatcher.
