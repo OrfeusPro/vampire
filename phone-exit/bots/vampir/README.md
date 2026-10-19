@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Game success broadcast, 19 октября
+
+12 native сценариев проверили рассылку живым подписчикам. Source-bound title
+slot+0x30 вызывает дочерний virtual и очищает pointer; это ещё не packet Login.
+Следующий участок — отдельная game-instance ветвь успешного callback.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-SUCCESS-BROADCAST.md).
+
 ## Auth silent → игровой callback, 19 октября
 
 12 интеграционных native сценариев связали silent dispatcher, очередь,

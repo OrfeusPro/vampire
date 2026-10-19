@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-game-success: broadcast и title handler проверены
+
+Первый success action оказался общей рассылкой; title slot+0x30 обрабатывает
+child pointer и не доказывает Login. Далее game-instance getter 0x1450b11b0
+и virtual+0x10 в game callback, а также child action 0x14560f740.
+Registration реальных subscribers и network/session readiness ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-SUCCESS-BROADCAST.md).
+
 ## H04-silent-game: цепочка callback проверена
 
 Silent dispatcher → queued thunk → bridge → game callback проверены

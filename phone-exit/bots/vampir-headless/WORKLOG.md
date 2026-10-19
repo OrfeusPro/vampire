@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: game success broadcast
+
+12 native cases, три новых и шесть смежных regression tests проверили subscriber gates,
+реальный slot+0x30 из title vtable, child args (2,1) и очистку pointer.
+Registration/array ownership/prune/child virtual явно ограничены fixtures.
+Runtime не менялся; игра, профиль, credentials и HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-SUCCESS-BROADCAST.md).
+
 ## 19 октября: silent result до игрового callback
 
 12 интеграционных native cases исполнили silent dispatcher, bridge и

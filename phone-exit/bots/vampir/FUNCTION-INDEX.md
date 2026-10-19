@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Success action: broadcast → title slot
+
+0x1445f5330 → leaf 0x143b8bf10 → vtable+0x30. Title constructor stores
+связывают 0x149c4cda0 с object+0xa18; slot+0x30 равен 0x14641dbc0.
+Handler вызывает child+0x598 (2,1) и очищает interface+0x228.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-SUCCESS-BROADCAST.md).
+
 ## Silent result до game callback
 
 ExecSignInSilently 0x1444e02e0 → thunk 0x1444d8410 → bridge →

@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Game success broadcast replay
+
+replay-game-success-broadcast.py: 12 native integrations с empty/live/
+expired/null/mixed/two-live списками и child pointer null/non-null.
+Array lifecycle/prune и дочерний virtual target — fixtures/captures.
+[Источники, SHA и границы](HEADLESS-GAME-SUCCESS-BROADCAST.md).
+
 ## Silent dispatcher/game integration
 
 replay-silent-game-dispatch.py: 12 native cases, silent dispatcher/bridge/
