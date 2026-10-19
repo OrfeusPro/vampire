@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## PktVersion body encoder
+
+vampir_core.version_packet.VersionPayload: десять raw ordered strings и три
+uint32 → проверенное тело пакета. Native UTF-8/archive parity на14 vectors;
+immutable data/output, обязательный byte budget, без I/O/decoder/frame/session.
+[Источник и строгая локальная политика](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
+
 ## SDK sign-in response parser
 
 vampir_core.sdk_sign_in_response: неизменяемые данные, скрытые из repr

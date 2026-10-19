@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Version packet writer replay
+
+replay-version-packet-writer.py: 14 native vectors actual writer/UTF-8/archive.
+Тело пакета перенесено в общий version_packet.py, bounded strict local policy.
+Allocation/capacity fixtures; frame/send/server response ещё открыты.
+[Источники, SHA и границы](HEADLESS-VERSION-PACKET-WRITER.md).
+
 ## Connected version packet replay
 
 replay-connected-version-packet.py: 6 native scenarios, actual game callback

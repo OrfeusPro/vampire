@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-version-writer: переносимое тело проверено
+
+Actual writer/conversion/archive bytes совпали с VersionPayload на14 cases.
+Далее frame/send0x1467aaa10 → VersionResult handler → Login; реальные
+значения полей/weekly inputs и server negotiation ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
+
 ## H04-connected-packet: сначала PktVersion
 
 Game callback строит PktVersion/ID1 и вызывает send0x1467aaa10. Далее

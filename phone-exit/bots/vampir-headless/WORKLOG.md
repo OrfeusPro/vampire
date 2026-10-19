@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: PktVersion writer → общее ядро
+
+14 native vectors writer/UTF-8/archive совпали с переносимым VersionPayload.
+Три новых tests прошли. Полный headless suite: 379 tests за298.328s, OK.
+Getters/frame/server response не проверены.
+Игра/profile/process memory/credentials/network не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
+
 ## 19 октября: connected callback → PktVersion
 
 6 native scenarios исполнили game body/packet constructor; первый packet

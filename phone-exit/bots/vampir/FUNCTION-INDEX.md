@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## PktVersion writer и UTF-8
+
+Writer0x1456e5cf0 → FString0x144aa6a30 → length0x141446a50/convert0x141440af0/
+encoder0x141439820 → archive0x14961a5c0. String uint16-byte-length + UTF-8,
+три interleaved uint32; общий VersionPayload без frame/семантических имён.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
+
 ## Connected callback → PktVersion/ID1
 
 Game0x1467a9cd0 → ctor0x1456d53b0 → table0x1498d6990; name PktVersion,

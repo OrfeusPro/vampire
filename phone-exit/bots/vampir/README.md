@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## PktVersion writer → переносимое тело, 19 октября
+
+14 native vectors исполнили Version writer, UTF-8 conversion и archive IO.
+Общий VersionPayload кодирует десять строк/три uint32 с явным byte budget.
+Field semantics, frame/send/VersionResult и Login ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
+
 ## Первый connected packet — PktVersion, 19 октября
 
 6 native scenarios исполнили game callback и constructor PktVersion/ID1,
