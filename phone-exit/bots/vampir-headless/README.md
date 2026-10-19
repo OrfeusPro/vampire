@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## LoginResult body decoder, 19 октября
+
+Новый общий decoder совпал с native reader на 21 full bodies и отвергает
+332 short inputs. Вложенные time fields сохранены как raw bits, flags
+нормализованы. Result code 0 не подтверждает сессию; handler ещё не исполнен.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+
 ## Login send до очереди, 19 октября
 
 Native handoff → derived virtual send → Login writer → CRC/XOR → owning queue

@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## LoginResult body: native reader и общий decoder, 19 октября
+
+21 полный ответ и 332 short-input cases проверили вложенные TimeBase/
+PeriodServerDate, UTF-8 и bool normalization. Общий LoginResultBody требует
+точного потребления тела; code 0 не объявляет сессию. Ghidra: 32 функции,
+15 warnings. Handler пока прочитан статически; следующий этап — его gates.
+[Источники, SHA, порядок полей и границы](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+
 ## Login handoff → кадр и очередь, 19 октября
 
 34 native scenarios исполнили request lookup/timeout/getter/virtual send,

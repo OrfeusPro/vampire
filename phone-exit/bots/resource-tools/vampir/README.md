@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## LoginResult reader после Ghidra
+
+replay-login-result-reader.py → code-clues/login-result-reader-replay.json:
+21 full body vectors, 332 short inputs, actual nested TimeBase/PeriodServerDate
+и UTF-8 conversion. Общий строгий body decoder; handler пока static-only.
+[HEADLESS-LOGIN-RESULT-READER.md](HEADLESS-LOGIN-RESULT-READER.md).
+
 ## Login handoff/send после Ghidra
 
 replay-login-send-path.py → code-clues/login-send-path-replay.json:

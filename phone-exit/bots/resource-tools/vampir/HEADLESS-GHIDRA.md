@@ -1,5 +1,14 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## Расширение для LoginResult, 19 октября
+
+Текущий manifest/export содержит 32 функции, verifier: 15 warnings.
+Добавлены LoginResult constructor/writer, FString/StdString reader,
+nested TimeBase/PeriodServerDate и UTF-8 decode helpers. Исходный пакет
+из 22 функций ниже описывает первый запуск. Общий ghidra/INDEX.md
+указывает на последнюю успешную immutable run; команды прежние.
+[Связи с native-проверками и SHA](HEADLESS-LOGIN-RESULT-READER.md).
+
 19 октября 2026. Общий [указатель функций](../../vampir/FUNCTION-INDEX.md).
 Источник — собранный Windows клиент, не исходный C++ проект.
 EXE SHA256: `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.

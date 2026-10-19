@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-result-reader: body подтверждён
+
+21 full bodies, 332 short inputs, trailing policy. Ghidra расширена до
+32 функций для nested readers и UTF-8. Общий LoginResultBody готов для
+bounded offline decode. Далее actual handler 0x146765540/result gates,
+Listener/Dispatch body linkage и следующие запросы персонажей. Request
+lifecycle, fresh SDK/device/profile inputs и live session остаются открытыми.
+[Источник, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+
 ## H04-login-send: handoff → queue подтверждён
 
 34 native cases: 29 frames, 2 duplicate, 3 transport refusal. Проверены lookup,

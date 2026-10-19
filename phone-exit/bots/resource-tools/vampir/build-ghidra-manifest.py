@@ -21,7 +21,12 @@ SEEDS=[
  ('Request_Handoff',0x144aa8020),('SDK_TokenAccessor',0x1456039c0),
  ('SDK_NetmarbleIdAccessor',0x145604b90),('Settings_GetNetmarbleId',0x144524940),
  ('Archive_WriteFString',0x144aa6a30),('BeginGameImpl',0x146425730),
- ('Transport_ConnectToServer',0x144aabcc0),('SDK_SignInResponse',0x1444cc1a0)]
+ ('Transport_ConnectToServer',0x144aabcc0),('SDK_SignInResponse',0x1444cc1a0),
+ ('PktLoginResult_Constructor',0x1456d4da0),('PktLoginResult_Write',0x1456e5a20),
+ ('Archive_ReadFString',0x144aa66f0),('PktPeriodServerDate_Constructor',0x145794c20),
+ ('PktTimeBase_Read',0x1457f0a90),('PktPeriodServerDate_Read',0x1457986b0),
+ ('UTF8_DecodedLength',0x141446940),('UTF8_DecodeWrapper',0x141440ba0),
+ ('Archive_ReadStdString',0x144aa5ab0),('UTF8_DecodeCore',0x141436230)]
 
 
 def build():

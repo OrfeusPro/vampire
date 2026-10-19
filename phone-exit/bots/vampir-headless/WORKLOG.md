@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: native LoginResult reader и общий decoder
+
+Ghidra пакет расширен с 22 до 32 функций; export/verifier успешны, 15 warnings
+сохранены. Исполнены constructor/nested readers/stdstring/UTF-8, 21 full body
+vectors и 332 short inputs. Bool нормализуется; native trailing принимается,
+общий LoginResultBody требует точного потребления. Четыре новых и десять
+смежных Ghidra/VersionResult/Login writer tests прошли. Полный suite не
+повторялся; decoder не подключён к live runner. Handler только static-read.
+[Отчёт, SHA, источники и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+
 ## 19 октября: Login handoff → native frame/queue
 
 Ghidra handoff/wrapper прочитаны перед native replay. 34 scenarios исполнили

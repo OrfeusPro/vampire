@@ -35,7 +35,7 @@ class GhidraExportTests(unittest.TestCase):
     def test_every_requested_function_has_hash_verified_pseudocode(self):
         verifier=module('ghidra_verify_test','verify-ghidra-export.py')
         result=verifier.verify(self.out)
-        self.assertEqual(result['functions'],22)
+        self.assertEqual(result['functions'],len(self.tool.SEEDS))
         self.assertEqual(self.report['ghidra_version'],'12.1.4')
         self.assertFalse(self.report['game_executed'])
         self.assertFalse(self.report['whole_program_analysis'])
@@ -47,7 +47,10 @@ class GhidraExportTests(unittest.TestCase):
     def test_known_call_edges_resolve_to_shared_names(self):
         functions={f['name']:f for f in self.report['functions']}
         for caller,callee in (('VersionResult_Handler','Login_Prepare'),('Login_Prepare','PktLogin_Constructor'),
-            ('PktLogin_Write','Archive_WriteFString'),('Version_Prepare','PktVersion_Constructor')):
+            ('PktLogin_Write','Archive_WriteFString'),('Version_Prepare','PktVersion_Constructor'),
+            ('PktLoginResult_Read','Archive_ReadFString'),
+            ('PktLoginResult_Constructor','PktPeriodServerDate_Constructor'),
+            ('UTF8_DecodeWrapper','UTF8_DecodeCore')):
             targets={t.get('name') for c in functions[caller]['calls'] for t in c['targets']}
             self.assertIn(callee,targets)
             self.assertIn(callee+'(',(self.out/functions[caller]['pseudocode_file']).read_text('utf-8'))

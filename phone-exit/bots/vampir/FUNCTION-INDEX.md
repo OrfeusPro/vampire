@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## LoginResult reader и вложенные типы, 19 октября
+
+0x1456d9600 / constructor 0x1456d4da0 / vtable 0x1498d6218: 21 full bodies,
+332 truncated bodies. TimeBase reader 0x1457f0a90 и PeriodServerDate reader
+0x1457986b0 исполняются через actual tables. Общий decoder добавлен;
+handler 0x146765540 пока static-only. Пакет Ghidra расширен до 32 функций.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+
 ## Request handoff → Login send, 19 октября
 
 0x144aa8020 → getter 0x144aaa9d0 → derived table 0x149d84e50+0x38 →

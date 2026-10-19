@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## PktLoginResult body decoder
+
+vampir_core.login_result.decode_login_result → frozen/redacted LoginResultBody:
+7 strings, 3 u32, 2 u16, 8 raw64, 5 normalized flags. Native parity на 21 full
+bodies и 332 short inputs; strict trailing/text/budget policy, без I/O/session.
+[Source и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+
 ## PktLogin body encoder
 
 vampir_core.login_packet.LoginPayload: 15 strings, 4 uint32, 5 raw bytes и

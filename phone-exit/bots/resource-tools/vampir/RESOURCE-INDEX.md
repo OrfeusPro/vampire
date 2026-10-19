@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## LoginResult body / nested time readers
+
+replay-login-result-reader.py: 21 full vectors, 332 short inputs и trailing
+case. Actual constructor/readers/stdstring/UTF-8; assign/growth/alloc fixtures.
+Shared LoginResultBody decoder. Ghidra seeds/export: 32 функции/15 warnings.
+[Порядок полей, SHA и границы](HEADLESS-LOGIN-RESULT-READER.md).
+
 ## Login request handoff и полный send до очереди
 
 replay-login-send-path.py: 34 native cases, 29 frame vectors, source-bound
