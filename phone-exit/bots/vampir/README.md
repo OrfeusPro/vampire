@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Device getter branches проверены, 19 октября
+
+8 NM fixtures с повторным вызовом и 12 DeviceKey fixtures исполнили native
+выбор cache/storage/settings/generation. Отказы write/Save не мешают caller
+вернуть ключ; повторный NM вызов после write=false не повторяет запись.
+Parser/storage/platform/setter/Save остаются явными fixtures/captures.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md).
+
 ## Device identity: storage и native формат GUID, 19 октября
 
 Статически найдены отдельные постоянные nmDeviceKey и deviceKey, Windows

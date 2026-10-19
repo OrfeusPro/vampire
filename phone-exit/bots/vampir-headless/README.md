@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Native device getters, 19 октября
+
+20 fixtures исполнили cache/source/generation/save-gate ветви.
+Caller возвращает ключ даже при failure write/Save; persistence отдельно
+не доказана. Реальная identity основной почты ещё не получена.
+[Source/SHA и оставшиеся зависимости](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md).
+
 ## Происхождение device keys, 19 октября
 
 Windows SDK использует отдельные постоянные NMDeviceKey и DeviceKey.

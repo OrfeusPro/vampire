@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Native device lifecycle, 19 октября
+
+replay-device-key-lifecycle.py: 8 full NM getter fixtures с повторным вызовом,
+12 DeviceKey source/save-gate fixtures. Native constructor/default formatter
+и hex writer; storage/parser/platform/setter/Save fixtures/captures.
+[Отчёт/SHA/границы](HEADLESS-DEVICE-LIFECYCLE.md).
+
 ## SDK device identity, 19 октября
 
 build-headless-device-identity.py: static storage/getter/PE imports, 19 fragments.

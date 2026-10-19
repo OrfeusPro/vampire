@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: native device getter lifecycle
+
+Исполнен full GetNMDeviceKey без verbose logs и DeviceKey slice после выбора
+platform. 8 NM fixtures с повторным вызовом и 12 DeviceKey fixtures. Проверены
+приоритеты источников и отсутствие проверки write/Save return в caller.
+Native GUID constructor/default formatter/hex writer reused; storage/parser/
+platform/SetDeviceKey/Save — явные fixtures. Три regression tests прошли.
+Реальные registry/profile/identity не читались, авторизация не выполнялась.
+Полный headless suite: 282 теста, 190.412 с, OK. Проверены 389 относительных
+Markdown-ссылок; git diff --check без ошибок.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md).
+
 ## 19 октября: источники идентификаторов устройства
 
 Source-bound export сохранил 19 fragments и PE imports вне Git с SHA256.

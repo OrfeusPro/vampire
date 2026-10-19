@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Device getters: cache и persistence failure
+
+[Native getter lifecycle fixtures](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md):
+NM cache/StoredValue/parser-word gate и отдельный DeviceKey stored/settings/new
+выбор. Return write/Save игнорируется caller. Реальное хранение/active platform
+и server confirmation не подтверждены.
+
 ## GetDeviceKey / GetNMDeviceKey: происхождение
 
 [Windows storage, CoCreateGuid и GUID format=0](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).

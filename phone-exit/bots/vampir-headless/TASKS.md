@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-device-lifecycle: getter branches
+
+8 NM + 12 DeviceKey native fixtures подтвердили cache/source/save gate
+и продолжение caller после ошибок write/Save. Три regression tests прошли.
+Следующие зависимости: SetDeviceKey compare/write, active platform/environment,
+Save/load, реальные identity и server challenge. Storage/parser остаются fixtures.
+[Source/SHA/ограничения](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md).
+
 ## H04-device-source: storage и формат GUID
 
 Найдены Windows StoredValue, NMDeviceKey/DeviceKey, platform-dependent branches

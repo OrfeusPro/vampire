@@ -23,6 +23,9 @@ SHA256: `04aef4cc4b8d3619cfc6423dcb821290adc69d825388aff285784c9dcb48750e`.
 FString capacity и stack cookie — fixtures; security check — capture.
 Остальные ветви formatter, getters, генератор и storage не исполнялись.
 
+Дополнение: [getter branches исполнены на 20 fixtures](HEADLESS-DEVICE-LIFECYCLE.md).
+Storage/parser/platform/setter/Save остаются fixtures, реальные ключи не читались.
+
 ## nmDeviceKey
 
 `FDeviceInfo::GetNMDeviceKey` `0x1444e5ff0` сначала проверяет FString cache
