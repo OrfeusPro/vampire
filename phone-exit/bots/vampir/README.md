@@ -4,6 +4,15 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Поиск актуального источника CDN, 19 октября
+
+Новый CDN-derived key не подтвердился для закрытых ресурсов: 18 method-0
+records и encrypted directory без SHA1 match; 23 records пропущены по bounds,
+compressed payloads не проверялись. Восемь plain records прошли hash controls.
+Три EncryptionKey name xrefs сохранены как clues без доказанной PAK-связи.
+[Источник, воспроизведение и ограничения](../resource-tools/vampir/HEADLESS-CDN-SOURCE-PROBE.md).
+Реальные CDN URLs/version/prefix ещё неизвестны; key/config не восстановлены.
+
 ## Выбор сервера и поля лобби из CDN, 19 октября
 
 Установлено назначение 145661a70: _SetServerList. select_server/type выбирает

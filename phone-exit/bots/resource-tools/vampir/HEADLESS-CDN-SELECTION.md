@@ -99,6 +99,8 @@ PAK не исследованы, остальные архивы этим пои
 
 ## Продолжение
 
+Новый результат: [bounded key/source probe](HEADLESS-CDN-SOURCE-PROBE.md).
+
 Нужно установить физический источник Game config/актуальные URLs и prefix,
 дальнейшие parameter overrides, полный builder адреса и порядок загрузки
 CDN → InitSetting → GMC2 Start. Затем запросить подтверждённую публичную

@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN settings source: key trial и name clues, 19 октября
+
+Fresh pakchunk0/index full hashes проверены. Один compiled CDN-derived key
+не дал SHA1 match на 18 method-0 records и encrypted directory (trims 0–15).
+8 plain SHA1 controls passed; 23 bounds-skipped и 34 compressed не проверялись.
+Plaintext не сохранялся, PAK key/config не получены. Негативный результат scoped.
+EncryptionKey UTF16 literal 1491b7690 имеет три проверенные LEA: 143945735/
+144fddc73/145045f04. Roots 143944d90/144fdd9c0/1450457c0 содержат AssetRegistry/
+EOS context; связь с PAK key не доказана. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SOURCE-PROBE.md).
+
 ## CDN _SetServerList и lobby details, 19 октября: H04b partial
 
 ReadJson 14565a6b8..a753: select_server/type → config+28. Whole 145661a70

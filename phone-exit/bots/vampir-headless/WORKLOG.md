@@ -1,5 +1,19 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN-source: проверка нового key candidate
+
+После ff02e97 trial compiled CDN-derived key на свежем pakchunk0: 8 plain
+method-0 hash controls passed; 18 encrypted method-0 SHA1 mismatches; 23 records
+bounds-skipped и 34 compressed не проверены. Encrypted directory candidate
+также без hash match при trim 0–15. Никакой trial plaintext не сохранён или
+передан native decompressor. Actual source/key/config не заявляются найденными.
+Сохранены три verified EncryptionKey LEA/context roots как clues без PAK binding.
+Полный набор: 198/198 тестов, 107,2 с; после уточнения metadata повторены
+3 probe tests. Синтаксис трёх Python-файлов, кодировка Markdown, 298
+относительных ссылок и git diff --check прошли.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SOURCE-PROBE.md).
+Следующий приоритет — PAK-key registration/физический Game config/late overrides.
+
 ## 19 октября 2026 — H04b-CDN: server_list и raw lobby detail plan
 
 После d2b26cc установлен diagnostic _SetServerList у 145661a70. Type-load slice
