@@ -1,5 +1,12 @@
 # Атлас Vampir
 
+## World.Id2 связан с selection LevelPath, 20 октября
+
+Base и current audited patch CSV row2 имеют LevelPath
+Lobby/CharacterSelect/CharacterSelect_02. Native World parser/record/getter
+подтвердили связь с raw2 в selection transition. [Source/SHA и границы](HEADLESS-WORLD-STATE-LABEL.md).
+Это не проверка загрузки уровня, world position или навигации персонажа.
+
 17 октября 2026. Продолжение V13: единый справочник географии и локальный
 просмотрщик. Главный указатель: [README бота](../../vampir/README.md).
 

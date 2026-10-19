@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## World.Id2/LevelPath — selection label
+
+World parser literal LevelPath → FString48, World record vtable 0x1499d28a8
+slot20→getter 0x141482e60. Actual ctor/store/hash/accessor/getter с current
+indexed CSV возвращают Lobby/CharacterSelect/CharacterSelect_02 для key2.
+Runtime population/mount priority не доказаны. [Source/SHA](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
+
 ## Selection state registry lookup
 
 0x145c5d860 → hash 0x145c60180 → descriptor accessor 0x141482990 →

@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Raw2 связан с World.Id2/CharacterSelect level, 20 октября
+
+World CSV + native column/store/record/getter связали raw2 с
+Lobby/CharacterSelect/CharacterSelect_02. Base и current audited patch rows
+совпали; старый patch stamp заменён current SHA-bound snapshot. Runtime
+registry/mount/load lifecycle ещё не проверены. Ghidra: 63 functions/36 warnings.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
+
 ## Selection state lookup: actual hash/accessor, 20 октября
 
 13 native cases заменили lookup/accessor fixtures: key/bucket/collision и

@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Selection level найден в World, 20 октября
+
+Raw2 связан с World.Id2/LevelPath через compiled parser/record/getter и CSV.
+Путь Lobby/CharacterSelect/CharacterSelect_02 проверен base/current patch;
+реальный loader/завершение загрузки/slot90 dispatch ещё открыты.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
+
 ## Метка state2: граница данных, 20 октября
 
 Actual lookup/hash/accessor исполняются на 13 fixtures. Они подтверждают

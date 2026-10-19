@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## World.Id2 → CharacterSelect LevelPath
+
+replay-world-state-label.py: actual ctor/field-store/lookup/getter, real base
+и audited current patch CSV rows. Runtime map population не исполнялась.
+[HEADLESS-WORLD-STATE-LABEL.md](HEADLESS-WORLD-STATE-LABEL.md).
+
 ## Selection state lookup/data boundary
 
 replay-selection-state-lookup.py: 13 native hash/descriptor/label-caller cases.

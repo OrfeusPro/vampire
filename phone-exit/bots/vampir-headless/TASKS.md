@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-world-label: source path подтверждён
+
+Raw2→World.Id2→Lobby/CharacterSelect/CharacterSelect_02. Native field-store/
+lookup/getter и base/current patch CSV parity проверены. Следом actual
+cooked level/hooks завершения перехода и slot90/CharacterListRead dispatch.
+Полный runtime loader/mount priority, response 102/socket/live session открыты.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
+
 ## H04-state-lookup: actual hash, реальные contents открыты
 
 13 native cases lookup/hash/accessor→label caller. Дальше заполнение

@@ -38,7 +38,11 @@ SEEDS=[
  ('SelectionService_DeferredState',0x145600690),('SelectionState_Lookup',0x145c5d860),
  ('SelectionState_Registry',0x145c38ab0),('SelectionState_LoadRows',0x145c61030),
  ('SelectionState_LoadSource',0x145c60c10),('SelectionState_Register',0x145c6d670),
- ('SelectionState_Initialize',0x145c395b0)]
+ ('SelectionState_Initialize',0x145c395b0),('SelectionState_RecordSource',0x145c6d350),
+ ('SelectionState_RegistryUse',0x145c31110),('WorldRecord_ParseA',0x145c62130),
+ ('WorldRecord_ParseB',0x145c65ef0),('WorldRecord_ParseC',0x145c6aab0),
+ ('WorldRecord_FindOrAdd',0x145c5d390),('WorldRecord_Insert',0x145c5cca0),
+ ('WorldRecord_Construct',0x145c5c780),('WorldRecord_Copy',0x145c5d5a0)]
 
 
 def build():

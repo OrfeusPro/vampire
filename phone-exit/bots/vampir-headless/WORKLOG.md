@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: World.Id2/CharacterSelect path связан с native getter
+
+Registry/source diagnostics и World parsers привязали LevelPath→record48.
+Actual constructor/field-store/hash/accessor/virtual20 getter исполнились
+с rows1/2 из base и current patch CSV. Выход key2: CharacterSelect_02.
+Old patch source stamp stale; использован существующий audited release snapshot,
+CSV bytes совпали, полные SHA текущих архивов проверены. Ghidra: 63 functions/
+36 warnings. Три новых, три lookup и три Ghidra tests прошли. Runtime loader/
+mount priority/live session не проверялись; full suite не повторялся.
+[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
+
 ## 20 октября: state registry lookup и неизвестная реальная метка
 
 Ghidra lookup/registry/generic loader exports расширены: 54 functions/33 warnings.

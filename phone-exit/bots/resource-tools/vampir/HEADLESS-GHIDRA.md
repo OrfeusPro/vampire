@@ -1,5 +1,11 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## World record и LevelPath, 20 октября
+
+Пакет расширен до 63 функций/36 warnings: registry uses, World parsers,
+find-or-add/insert/record constructor/copy. [Source row2→native getter](HEADLESS-WORLD-STATE-LABEL.md).
+Generic SelectionState labels предыдущего этапа не считать исходными C++ именами.
+
 ## State registry lookup, 20 октября
 
 Пакет расширен до 54 функций/33 warnings: lookup, TLS/static registry getter

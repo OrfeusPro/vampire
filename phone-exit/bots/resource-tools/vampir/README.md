@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## World record/selection label после Ghidra
+
+replay-world-state-label.py → code-clues/world-state-label-replay.json:
+raw2→World.Id2→Lobby/CharacterSelect/CharacterSelect_02. Current archive
+SHA/CSV parity проверены; source field/lookup/getter native, loader backend fixtures.
+[HEADLESS-WORLD-STATE-LABEL.md](HEADLESS-WORLD-STATE-LABEL.md).
+
 ## Selection state lookup после Ghidra
 
 replay-selection-state-lookup.py → code-clues/selection-state-lookup-replay.json:
