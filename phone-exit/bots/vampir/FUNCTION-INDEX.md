@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## NID parser/channel: actual helpers вместо return fixtures, 19 октября
+
+Integer 1415dea40 → verified CRT imports _wtoi/_finite/iswspace → local ucrtbase.
+Channel 14452b060 + actual compare 1414596e0 + 13 native initializers: email20,
+ASCII folding, unknown0. 28 numeric/45 channel/6 caller fixtures.
+Общий nid_result: bounded ASCII channel mapper и decoded email result validator,
+canonical0 policy строже native prefix parsing. Нет URL/I/O/storage/session.
+[Источники и SHA](../resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md).
+
 ## OnResult validation/adoption caller, 19 октября
 
 Native slice 1450ee94a..1450ef437 и copy 141420cc0: 22 fixtures.

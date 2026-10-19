@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Native NID primitive replay, 19 октября
+
+replay-nid-result-primitives.py сохраняет parser/channel/init bytes и CRT import
+bindings. Native helpers + настоящий локальный CRT: 28 numeric, 45 channel,
+6 integration fixtures; explicit remaining shims/captures.
+[Отчёт/SHA/ограничения](HEADLESS-NID-PRIMITIVES.md). Никакого account/network I/O.
+
 ## OnResult native validation replay, 19 октября
 
 replay-nid-result-validation.py: 22 synthetic fixtures, настоящие caller branch/

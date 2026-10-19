@@ -1,5 +1,23 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — actual NID integer/channel и общий decoded result validator
+
+После 61cef92 исполнены parser 1415dea40, mapper 14452b060, compare leaf и
+13 compiled initializers. CRT imports связаны через существующий import_at;
+реальный локальный ucrtbase вызывается ctypes, DLL path/SHA сохранены.
+28 numeric и 45 channel fixtures с output guards, 6 OnResult integration
+fixtures уже без integer/channel return shims. Остальные map/settings и
+initializer allocation/atexit/free зависимости явно ограничены.
+mailUserKey=20; ASCII uppercase/swapcase работают, spaces не trim.
+Native parser принимает 0abc/0.1 как zero; общий nid_result требует точный
+canonical0. Добавлены source-bound channel mapper и decoded fields validator,
+redacted immutable provider credential, без URL/I/O/storage/session.
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md).
+Новых сетевых запросов/аккаунтов нет. Далее query/context, setters/persistence,
+post-adoption callback и SDK/game session.
+Полный набор: 262/262 теста, 166,2 с. Синтаксис трёх Python-файлов,
+UTF-8 восьми документов, 399 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — native OnResult caller validation и adoption arguments
 
 После fb522c3 исполнен slice 1450ee94a..1450ef437 и copy constructor 141420cc0.

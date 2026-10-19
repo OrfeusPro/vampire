@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04 integer/channel dependencies проверены actual native helpers,
+13 initializers/ASCII compare и локальным CRT. 28 numeric/45 channel/6 caller
+fixtures; mailUserKey=20, native numeric parser permissive. Общий nid_result
+принял только decoded dict, canonical0/presence/ASCII policy документирована.
+[Источники](../resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md).
+Далее query parser/encoding и context binding, settings/persistence/callback
+после 1450ef437 → SDK session → game Login. Android crypto/storage ещё открыты.
+
 19 октября: H04 получил 22 native OnResult caller/copy fixtures. Подтверждены
 caller gates и раздельные access/refresh/ID/country settings arguments; missing
 и empty различаются. Parser/channel return fixtures не доказывают accepted

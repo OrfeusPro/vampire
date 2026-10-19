@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Integer/channel helpers исполнены, общий result boundary добавлен, 19 октября
+
+28 numeric/45 channel/6 caller fixtures исполнили native helpers и локальный CRT.
+mailUserKey →20, ASCII case-insensitive. Native parser принимает 0abc как zero;
+общий nid_result требует точный resultCode="0" по явной локальной политике.
+Валидатор принимает decoded fields, проверяет presence и возвращает redacted
+provider credential. Query/origin, storage, setters/callback/session ещё открыты.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md).
+
 ## Native OnResult: проверки и аргументы принятия токенов, 19 октября
 
 22 fixtures исполнили caller validation/adoption slice и FString copy.

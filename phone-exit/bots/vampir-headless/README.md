@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Общий валидатор результата почтового входа, 19 октября
+
+Native parser/channel проверены: 28 numeric/45 channel/6 caller fixtures.
+Общий nid_result проверяет уже decoded fields, email channel20 и canonical0,
+возвращает redacted provider credential без I/O. Local policy строже native.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md).
+До готового входа остаются query/context, storage, setters/callback и session.
+
 ## Проверки OnResult подтверждены с явными dependencies, 19 октября
 
 22 native fixtures проверили caller gates и подготовку раздельных token/ID/

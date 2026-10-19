@@ -1,5 +1,15 @@
 # Vampir — общие компоненты и результаты
 
+## Общая NID channel table и decoded result boundary, 19 октября
+
+vampir_core.nid_result: channel_key_to_sdk_type (13 source-bound keys, ASCII)
+и validate_nid_email_result_fields → NidEmailCredential с redacted repr.
+Все lookup keys обязательны, refresh может быть пустым; canonical resultCode0
+и country format — явно более строгая локальная политика. Нет URL parsing,
+I/O, storage, SDK/game session. Windows/CRT нужны только research replay,
+общий runtime использует стандартную библиотеку Python.
+[Evidence/пределы](../resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md).
+
 ## Общий NID email request plan, 19 октября
 
 vampir_core.nid_email содержит nid_js_string_bytes, encrypt_nid_field и
