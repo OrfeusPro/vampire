@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Auth storage gate и общий state byte
+
+[Native auth path gate](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md):
+netmarble context включает extra directory и byte14b4f13fd. Save/Initialize
+читают тот же global; gate false не обнуляет ранее установленный byte.
+Активный context, suffix transformation и reset lifecycle неизвестны.
+
 ## Load fields и ServiceSetting.bin
 
 [Native field restoration/filename replay](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md):

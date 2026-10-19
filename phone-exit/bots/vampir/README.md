@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Auth-specific storage path gate, 19 октября
+
+8 native fixtures проверили Load path gate: auth type netmarble → extra
+directory и общий post-restore flag. Native compare/join; auth context/base/
+suffix fixtures. SetupServiceSettingPath и command-line parser только static.
+Save/Initialize читают тот же flag; active suffix/lifecycle ещё не доказаны.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md).
+
 ## Load device fields и filename defaults, 19 октября
 
 16 native fixtures подтвердили раздельное восстановление SDK/NID device keys

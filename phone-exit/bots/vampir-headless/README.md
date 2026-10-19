@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Auth-specific SDK directory, 19 октября
+
+Native Load gate подтверждён на 8 fixtures: netmarble auth context может
+добавлять отдельный каталог. Suffix и base пока fixture, reset lifecycle
+общего Save/Initialize flag не установлен.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md).
+
 ## Load device restoration, 19 октября
 
 Native slices восстанавливают SDK/NID keys раздельно. Constructor/path replay

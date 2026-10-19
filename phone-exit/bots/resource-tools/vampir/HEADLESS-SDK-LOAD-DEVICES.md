@@ -7,6 +7,9 @@
 `F:/PhoneExit Resources/Vampir/code-clues/headless-sdk-storage.json`, SHA256
 `7d262be2ea2d283dc96dd4070dd219a319fe5906b570307359010bcf0f86bb43`.
 
+Дополнение: [optional directory/auth gate](HEADLESS-SDK-AUTH-PATH.md) проверен
+отдельным replay; источник suffix найден статически, его преобразование ещё открыто.
+
 ## Отчёты и воспроизведение
 
 `replay-sdk-load-device-fields.py` →

@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## SDK auth-specific directory gate
+
+replay-sdk-storage-auth-path.py: 8 native Load gate/compare/join fixtures;
+SetupServiceSettingPath и auth command-context extraction статические sources.
+[Отчёт/SHA/границы](HEADLESS-SDK-AUTH-PATH.md).
+
 ## Load device fields и полный default filename
 
 replay-sdk-load-device-fields.py: 16 native field-copy/dispatch fixtures.

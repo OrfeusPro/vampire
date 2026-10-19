@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: auth-specific directory
+
+Исполнены auth gate, reused native compare и Load filename continuation.
+8 fixtures auth type/context success × prior shared flag. Выявлен netmarble
+gate и sticky byte14b4f13fd; Save/Initialize читают тот же byte (static refs).
+SetupServiceSettingPath и command-context extraction сохранены source-bound,
+суффикс/реальные аргументы не читались. Regression test прошёл.
+Четыре смежных storage/load tests также прошли; 415 относительных
+Markdown-ссылок и git diff --check проверены. Runtime не менялся, полный
+headless suite предыдущего этапа 290/290 повторно не запускался.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md).
+
 ## 19 октября: Load device fields и filename
 
 16 native fixtures исполнили две Load field-copy slices и post-restore gate/tag

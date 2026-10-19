@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-storage-auth-path: optional directory gate
+
+8 native auth-context gate/Load join fixtures прошли; извлечение auth context
+и suffix пока fixtures. SetupServiceSettingPath/parser сохранены статически.
+Shared flag связан с Initialize/Save/post-restore sources. Далее suffix
+transformations/reset lifecycle, active storage, SaveGame decode и SDK session.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md).
+
 ## H04-load-device-fields: восстановление и filename
 
 16 native Load field-copy/post-dispatch и 3 constructor/path fixtures прошли.
