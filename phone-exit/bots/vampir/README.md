@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Token payload и migration path, 19 октября
+
+16 native container fixtures подтвердили count/padding/object gates; split/
+decode/JSON primitives fixtures, signature validation этим не доказана.
+8 migration fixtures отделили channelKey path от sub suffix. Padding tail
+зависит от непроверенного allocator, готовой модели для unaligned ещё нет.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md).
+
 ## NID storage suffix восстановлен для aligned ASCII, 19 октября
 
 6 native fixtures: sub low-byte minus1 → actual AES-NI → HEX.

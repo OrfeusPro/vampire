@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: token payload и migration path
+
+Native caller проверен на 16 container fixtures; split/base64url/JSON
+primitive fixtures не выданы за полную проверку JWT. Helper не проверяет
+signature/alg/sub. Источник migration channelKey связан initializer/caller.
+8 native migration byte/AES/HEX fixtures показали rounded allocation и
+неизвестный tail contract для unaligned input. Runtime не менялся, real
+tokens/keys/registry/Saved/HTTP не использовались. Три regression tests OK.
+Также прошли 4 смежных suffix/auth-path tests; 427 относительных
+Markdown-ссылок и git diff --check проверены. Полный suite предыдущего
+этапа 296/296 не повторялся: runtime не менялся.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md).
+
 ## 19 октября: NID suffix byte/AES pipeline
 
 Исполнен caller transform sub low-byte minus1, AES-NI key expansion/rounds

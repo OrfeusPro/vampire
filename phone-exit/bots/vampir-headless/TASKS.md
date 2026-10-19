@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-token-container и migration field
+
+16 native container + 8 migration cases проверены. Decoder/JSON/split
+primitives остаются fixtures; true caller result не доказывает auth.
+ChannelKey source связан с migration branch. Далее allocator tail contract,
+migration config/lifecycle, full token decode и SDK sign-in response/session.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md).
+
 ## H04-NID-suffix: transform и common helper
 
 6 native suffix cases + independent AES/runtime comparison прошли.

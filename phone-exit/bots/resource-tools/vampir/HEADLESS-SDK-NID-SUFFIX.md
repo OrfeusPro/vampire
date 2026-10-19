@@ -12,6 +12,9 @@ SHA256 `92be8d8f2b35b5bd72f9bcde552e1f229f6daf178ff9397c57afec8d6b34bb2f`.
 Содержит decoded caller/AES/formatter/initializer fragments с bytes/file offsets,
 SHA и tool SHA; leaf wrapper bytes и SHA прежнего source report.
 
+Дополнение: [native token container и channelKey migration path](HEADLESS-SDK-TOKEN-PAYLOAD.md)
+проверены отдельно с явными границами split/JSON/подписи и allocation tail.
+
 ## Источники аргументов
 
 SetupServiceSettingPath на `0x14454cb60` проверяет поле global `0x14b4f1a38`,

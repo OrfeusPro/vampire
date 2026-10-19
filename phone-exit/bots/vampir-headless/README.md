@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Token container / migration path, 19 октября
+
+Native caller gates проверены; container decode не равен подтверждению
+подписи или login. Migration использует channelKey, новый suffix — sub.
+Unaligned migration tail ещё требует allocator evidence.
+[Source/SHA и ограничения](../resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md).
+
 ## NID storage suffix offline helper
 
 Native synthetic byte/AES pipeline совпал с common nid_storage_path

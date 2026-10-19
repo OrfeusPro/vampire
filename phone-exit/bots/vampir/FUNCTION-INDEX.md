@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Token payload / channelKey migration
+
+[Native container и migration slices](../resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md):
+parser output+0x38 — payload; подпись/claims acceptance не доказаны.
+Migration field channelKey отличается от sub; aligned AES primitive reused,
+unaligned allocation tail неизвестен, общего migration helper пока нет.
+
 ## NID suffix из sub и nmDeviceKey
 
 [Native suffix transform/AES](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md)

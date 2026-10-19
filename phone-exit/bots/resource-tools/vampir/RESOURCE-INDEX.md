@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Token container и channelKey migration
+
+replay-sdk-token-payload.py: 16 native caller fixtures с explicit primitives.
+replay-sdk-channel-migration-path.py: 8 native length/byte/AES/HEX cases.
+[Source/SHA/границы подписи и tail initialization](HEADLESS-SDK-TOKEN-PAYLOAD.md).
+
 ## NID suffix native byte/AES replay
 
 replay-sdk-nid-path-suffix.py: 6 synthetic cases, actual AES-NI code,
