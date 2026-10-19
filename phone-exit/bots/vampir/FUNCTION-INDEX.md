@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Public GMC2 response и source serviceCode, 19 октября
+
+Ctor manager+190=netmarbles → Refresh 1444f3f54 R8 → Request 1444f534d stack+60.
+Public constructor-default profile build 0/A + production/nmp/thered: GET 200,
+DECKEY в HTTP headers, normal93/secret1/merged 94. Общий gmc2_response decoder
+переиспользует bounded JSON/XOR/secret/map. Реальный key — PKCS8 RSA 3072;
+backend DER поддерживает canonical PKCS1/PKCS8. Никакой account auth не было.
+[Source/SHA/snapshot](../resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md).
+
 ## SDK constants pipeline: actual append вместо raw capture, 19 октября
 
 Общий decode_sdk_constants_string повторно использует existing unescape 1444f2670

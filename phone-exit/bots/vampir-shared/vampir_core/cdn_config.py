@@ -65,7 +65,7 @@ def _constant(_):
     raise ValueError('Non-JSON CDN constant')
 
 
-def _load_object(text):
+def _load_object(text, *, allow_nul_strings=False):
     _preflight(text)
     try:
         root = json.loads(text, object_pairs_hook=_object, parse_constant=_constant,
@@ -92,7 +92,7 @@ def _load_object(text):
                 value.encode('utf-8', 'strict')
             except UnicodeEncodeError:
                 raise ValueError('Invalid Unicode in CDN JSON') from None
-            if '\0' in value:
+            if '\0' in value and not allow_nul_strings:
                 raise ValueError('NUL in CDN JSON string')
     return root
 

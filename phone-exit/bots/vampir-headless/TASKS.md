@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: public GMC2 получен и декодирован полностью в local response profile:
+DECKEY HTTP header, 93 ordinary/1 secret/94 merged, auth endpoints доступны.
+ServiceCode=netmarbles подтверждён ctor/caller. Build 0/A — явный constructor-
+default probe, не доказанный active state. Далее email/password/browser code,
+token response/expiry и SDK→game session. [Источник](../resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md).
+
 19 октября: исправлен existing decode_sdk_constants_string: reused unescape
 → actual XOR/append zero omission, без дублирования decoder. Два regression tests
 и 18 новых native vectors через составной путь. DECKEY slot28/class method,
@@ -80,15 +86,15 @@ Base 1.12.14/real/True отличается от patch 0.1.1/dev/False.
 | H03b.2b-drain | Queue→socket и partial send | Готово в указанном объёме |61 native cases/5 tests, ordinal send provenance, partial consume/errors; portable bounded pump/real IPv4 loopback; connect/auth/shutdown/scheduler ещё открыты |
 | H04 | Авторизация почта/пароль→игровая сессия; H01 | Частично: H04a static SDK/token-form evidence | Прослеженный SDK/HTTP/session flow, параметры/сроки/ошибки, ручные challenge; секреты защищены, игра не нужна |
 | H04a | SDK auth graph и token request forms | Готово в указанном объёме |24 symbols/34 LEA/24 roots, 143 constants, 512 native escaping calls/5 tests; offline code/refresh plans, не email/password login/config/response/game handoff |
-| H04b | Источник SDK config GMC2 и параметры | Частично | 256 native проверок окружения; SDK `5.2.11`, начальные build `A/B/C`, 42 проверки XOR; unescape: 43 корректных / 7 граничных / 3 составных native сценария, общий модуль; active settings/market, метод получения DECKEY, secret constants и auth bindings открыты |
+| H04b | Источник SDK config GMC2 и параметры | Частично: real public response decoded | Source-bound build 0/A probe дал 200/errorCode=0/DECKEY HTTP header; 93 ordinary+1 secret=94 merged constants, auth URL fields и offline token binding. Active settings/native callback/email authorization остаются открыты; HEADLESS-PUBLIC-GMC2.md |
 | H04b-settings | Class defaults и game overrides; H04b | Частично | 9 property descriptors, 4 constructor + 13 game native replays; market/game/client globals и environment→zone rule; actual singleton+48 load/call order неизвестны |
 | H04b-CDN-source | Физический Game config и actual CDN values; H04b-settings | Частично | Generated key callback + точные directory SHA1; 7067 paths и два packed Game INI слоя восстановлены. Найдены defaults, active parameter/command-line/late overrides/scheme/CdnConfig ещё открыты; HEADLESS-PAK-CONFIG-RECOVERY.md |
-| H04b-CDN-HTTP | Получение CDN config; H04b-settings | Частично | Offline URL/URI/default GET header и fixed-length response body проверены; actual settings/endpoint, TLS, compression/chunked/EOF и реальное получение ещё открыты |
+| H04b-CDN-HTTP | Получение CDN config; H04b-settings | Частично: public HTTPS profile verified | Offline native URL/GET/response foundations плюс real 200/6000-byte public CDN snapshot; active settings/native TLS/lifecycle/прочие framing paths открыты; HEADLESS-PUBLIC-CDN.md |
 | H04b-CDN-decode | Body → JSON → SDK environment; H04b-CDN-HTTP | Готово в ограниченном offline-профиле | Bounded Unicode, AES fallback с optional backend, строгий JSON dict и exact NetmarbleS/Zone → SDK selector; native crypto/parser core и Android не проверены; HEADLESS-CDN-JSON-FLOW.md |
 | H04b-CDN-servers | Выбор server_list и raw lobby details; H04b-CDN-decode | Готово в ограниченном offline-профиле | 31 native replay (30 whole SetServerList), first ASCII-fold type match, четыре detail fields; общий изолированный raw plan, без endpoint validation/IO; HEADLESS-CDN-SERVER-LIST.md |
 | H04b-CDN-accept | Полный ReadJson/применение/startup; H04b-CDN-decode | Частично | SetServerList проверен с JSON/FString shims; осталось проверить остальные поля ReadJson, актуальные settings/документ, полный порядок применения/ready/lifecycle и endpoint/auth handoff |
-| H04b-secret | Декодирование secret constants; H04b | Частично | Общий Base64/chunk/list JSON; native OAEP 24 корректных / 69 ошибочных, list orchestration 9 основных / 4 граничных; реальный DECKEY, полная привязка SDK и Android ещё открыты |
-| H04b-map | Merge строковых констант и auth URL getter; H04b-secret | Частично | 24 lookup / 3 replacement / 5 hash native сценариев, общий sdk_config.py; normal→secret priority, ASCII aliases, native prefix check; JSON value conversion и заполнение SDK map ещё открыты; path append вынесен в H04b-path |
+| H04b-secret | Декодирование secret constants; H04b | Готово в локальном Windows profile | Existing native primitives + real public PKCS8 RSA 3072/OAEP SHA256/list decoded; native PEM parser acceptance и Android ещё не проверены; HEADLESS-PUBLIC-GMC2.md |
+| H04b-map | Merge строковых констант и auth URL getter; H04b-secret | Готово в данном response profile | Real 93 normal/1 secret ->94  string map, auth URL lookup и offline token binding; nonstring JSON отвергается local policy, full native callback/active values не доказаны |
 | H04b-path | Полный адрес token request; H04a/H04b-map | Готово в указанном offline-объёме | 70 native path scenarios, bind_token_request с явной картой и сохранённым body; acquisition/HTTP/browser code/session handoff не реализованы |
 | H05 | Один вход и модель персонажа; H02–H04 | Осталось | Выбрать правильный сервер/персонажа, получить ID/world/position/HP; живой тест без процесса игры |
 | H06 | Общий runtime на Windows/Android; минимальный H03 | Осталось | Один сетевой/codec smoke на двух платформах, зависимости закреплены; UI/OS вне ядра |

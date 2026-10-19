@@ -1,5 +1,9 @@
 # Vampir — объединение строковых констант и чтение auth URL
 
+19 октября: [real public response](HEADLESS-PUBLIC-GMC2.md) дал 93 ordinary/1 secret
+string values; общий merge получил 94 entries, auth URL getter и offline token
+binding проверены на этой карте. Native callback целиком/аккаунт ещё не проверены.
+
 19 октября 2026. Продолжение [secret list](HEADLESS-SDK-SECRET-LIST.md).
 Общий код объединяет уже строковые карты и повторяет найденную prefix-проверку
 адреса. Получение актуального GMC2 и создание игровой сессии ещё не готовы.

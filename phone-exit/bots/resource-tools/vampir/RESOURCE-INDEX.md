@@ -1,5 +1,13 @@
 # Vampir: где искать данные
 
+## Public GMC2 success snapshot, 19 октября
+
+Source serviceCode связан с ctor/caller. Один HTTPS GET без account/device
+credentials: 200/13788 bytes, DECKEY HTTP header. Immutable response snapshot
+вне Git; offline decode 93 ordinary+1 secret=94 string constants, auth URL keys.
+[Source/profile/SHA/ограничения](HEADLESS-PUBLIC-GMC2.md).
+Plaintext values/key не выводятся и не копируются в Git. Auth/session не выполнены.
+
 ## Уточнение SDK constants pipeline, 19 октября
 
 Старые unescape evidence повторно использованы; составной runtime decoder

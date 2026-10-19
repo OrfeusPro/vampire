@@ -1,5 +1,10 @@
 # Vampir — строка ответа GMC2 перед XOR
 
+Следующий результат: [public GMC2 success response](HEADLESS-PUBLIC-GMC2.md)
+дал DECKEY в HTTP headers и 93 normal/1 secret constants. Raw response decoder
+использует уже unescaped поля без повторного unescape; virtual method identity
+и whole native callback остаются непроверенными.
+
 ## Уточнение составного runtime decoder, 19 октября 2026
 
 Полный [native XOR и actual FString append](HEADLESS-GMC2-XOR.md) установили

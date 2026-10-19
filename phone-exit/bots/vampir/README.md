@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Получена и разобрана реальная GMC2-конфигурация SDK, 19 октября
+
+Source-bound public GET без account/device credentials вернул 200/errorCode=0.
+DECKEY наблюдался в HTTP response headers; offline decoder получил 93 ordinary
+и 1 secret constant, merged 94. Auth URL fields найдены, token-plan привязан
+offline с искусственным code; auth HTTP не выполнялся. PKCS8 DER backend
+поддержан наряду с PKCS1; encrypted outer NUL разрешён, plaintext policy прежняя.
+[Source/profile/snapshot/границы](../resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md).
+Active BuildCode/native callback и email/password→session остаются открыты.
+
 ## Исправлен составной decoder SDK constants, 19 октября
 
 Повторно использован ранее проверенный JSON-unescape. decode_sdk_constants_string

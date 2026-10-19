@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Реальная SDK-конфигурация получена, 19 октября
+
+Public GMC2 profile дал 200/errorCode0 и DECKEY HTTP response header.
+Общий offline decoder: 93 ordinary+1 secret=94 constants, auth URL fields найдены.
+Token plan связан с real config offline, только synthetic code/device/client inputs.
+[Source/SHA/snapshot/границы](../resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md).
+Авторизация/персонаж/бой не выполнялись. Дальше email/password/browser flow.
+
 ## Составной SDK constants decoder исправлен, 19 октября
 
 Existing unescape → actual XOR output теперь использует единый primitive

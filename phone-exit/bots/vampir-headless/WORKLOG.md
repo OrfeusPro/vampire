@@ -1,5 +1,26 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — real public GMC2 response и полный offline constants decode
+
+После f9b7c52 source serviceCode связан с ctor+190/Refresh R8/Request stack+60:
+netmarbles. Profile producer сохранил literals/offsets/SHA и явный build 0/A
+constructor-default profile с production/nmp/thered; active settings не заявлены.
+Выполнен один public HTTPS GET, без identity/account/token: 200/errorCode=0,
+13788 bytes, DECKEY в response header. Snapshot immutable вне Git.
+Общий bounded response decoder переиспользует JSON/XOR/RSA/list/map: 93 ordinary,
+1 secret (nidEncryptKey), 94 merged constants. Значения не логируются/не сохранены
+отдельным plaintext; key/geo metadata есть только в исходном snapshot вне Git.
+Backend исправлен для canonical DER PKCS1/PKCS8: реальный DECKEY — PKCS8 RSA 3072,
+старый жёсткий PEM label не принимал его. OAEP SHA256/MGF1 SHA256 подтвердился.
+Outer encrypted NUL разрешён отдельно; plaintext/CDN policy осталась строгой.
+Семь новых тестов проверяют source/real snapshot/synthetic formats/negative
+policy/transport/immutability. Token plan привязан offline к real config со
+synthetic inputs; HTTP auth не было. Следом email/password/browser/token/session.
+[Source/SHA/пределы](../resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md).
+Полный набор: 243/243 теста, 155,1 с. Offline CLI повторил тот же analysis SHA;
+синтаксис семи Python-файлов, кодировка двенадцати Markdown-файлов,
+395 относительных ссылок и diff check прошли. Сетевых запросов был ровно один.
+
 ## 19 октября 2026 — интеграция actual XOR в существующий SDK decoder
 
 После 52b70f5 сверены старые SDK-VALUES/UNESCAPE/SECRET/OAEP results.

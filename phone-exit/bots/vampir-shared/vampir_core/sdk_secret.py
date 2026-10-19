@@ -13,9 +13,12 @@ from .sdk_constants import decode_sdk_base64
 def decrypt_sdk_secret_chunk(ciphertext: str, key_body: str) -> bytes:
     """Decrypt standard Base64 ciphertext with the supplied RSA private-key body.
 
-    Local limits: 8192 ASCII key characters, RSA 2048/3072/4096 bits, one exact
-    modulus-sized ciphertext. Return raw plaintext bytes, without JSON/UTF-8
-    assumptions. Input key and plaintext are never included in errors.
+    Local limits: 8192 ASCII key characters, canonical PKCS1/PKCS8 DER body,
+    RSA 2048/3072/4096 bits, one exact modulus-sized ciphertext. The native PEM
+    wrapper remains source evidence; this backend reads DER to support the
+    PKCS8 body observed in the public GMC2 response without a misleading PEM
+    label. Native PEM parser acceptance is not claimed. Return raw plaintext
+    bytes. Input key and plaintext are never included in errors.
     """
     encrypted = decode_sdk_base64(ciphertext)
     if not isinstance(key_body, str) or not 0 < len(key_body) <= 8192:
@@ -34,10 +37,13 @@ def decrypt_sdk_secret_chunk(ciphertext: str, key_body: str) -> bytes:
         from cryptography.hazmat.primitives.asymmetric import padding, rsa
     except ImportError:
         raise RuntimeError('SDK secret decoding requires the optional cryptography backend') from None
-    pem = b'-----BEGIN RSA PRIVATE KEY-----\n'+body+b'\n-----END RSA PRIVATE KEY-----'
     try:
-        key = serialization.load_pem_private_key(pem, password=None)
+        key = serialization.load_der_private_key(key_der, password=None)
         if not isinstance(key, rsa.RSAPrivateKey) or key.key_size not in (2048, 3072, 4096):
+            raise ValueError
+        encodings = tuple(key.private_bytes(serialization.Encoding.DER, fmt, serialization.NoEncryption())
+                          for fmt in (serialization.PrivateFormat.TraditionalOpenSSL, serialization.PrivateFormat.PKCS8))
+        if key_der not in encodings:
             raise ValueError
         if len(encrypted) != key.key_size//8:
             raise ValueError

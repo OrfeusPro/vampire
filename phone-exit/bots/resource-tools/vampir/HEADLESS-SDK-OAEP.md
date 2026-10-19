@@ -1,5 +1,10 @@
 # Vampir — исполнение OAEP и декодирование одного secret chunk
 
+Уточнение 19 октября: [реальный public GMC2](HEADLESS-PUBLIC-GMC2.md) содержит
+PKCS8 DER body в DECKEY. Backend теперь читает canonical DER PKCS1/PKCS8,
+вместо принудительного RSA PRIVATE KEY PEM label. Старый native-format literal
+и synthetic OAEP evidence ниже сохранены; native PEM parser не исполнялся.
+
 19 октября 2026. Продолжение [секретной ветки GMC2](HEADLESS-SDK-SECRET.md).
 H04b-secret частично: один секретный элемент расшифровывается offline,
 но конфигурация с сервера и вход в игру ещё не получены.

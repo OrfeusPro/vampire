@@ -1,5 +1,9 @@
 # RequestGMC2: аргументы GET и условия заголовков
 
+Продолжение: [serviceCode source и public success response](HEADLESS-PUBLIC-GMC2.md).
+serviceCode=netmarbles подтверждён ctor manager+190/caller R8/Request stack+60;
+public probe без identity/account данных принят, real constants декодированы.
+
 19 октября 2026. Исполнен native участок `1444f5560..1444f57b1`: URL,
 шесть постоянных headers, optional eTag/session fields и метод GET захвачены
 через synthetic HTTP object/vtable. 16 fixtures проверяют четыре BuildCode

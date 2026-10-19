@@ -1,5 +1,14 @@
 # Vampir — общие компоненты и результаты
 
+## GMC2 response envelope, 19 октября
+
+Общий gmc2_response.decode_gmc2_configuration(body, headers) возвращает frozen
+SdkConfiguration/read-only map, скрывает values в repr, не хранит DECKEY.
+Real public response: 93 ordinary+1 secret=94 constants. Existing JSON/XOR/
+secret-list/map reused, DER PKCS1/PKCS8 поддержаны, strict input budgets.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md).
+Нет I/O/account/session или native callback readiness claim.
+
 ## SDK constants pipeline correction, 19 октября
 
 Existing sdk_constants.decode_sdk_constants_string повторно использует
