@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## LoginResult handler / result gates / state writes
+
+replay-login-result-handler.py: 38 body→handler cases, native memory-write
+trace, signed early exit, selected-server update, SDK и covered error gates.
+Ghidra: 33 функции, включая post-state target. Backends/callbacks captured.
+[HEADLESS-LOGIN-RESULT-HANDLER.md](HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## LoginResult body / nested time readers
 
 replay-login-result-reader.py: 21 full vectors, 332 short inputs и trailing

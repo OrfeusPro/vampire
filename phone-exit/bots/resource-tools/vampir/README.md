@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## LoginResult handler после Ghidra
+
+replay-login-result-handler.py → code-clues/login-result-handler-replay.json:
+38 body→handler cases, actual gate instructions и state writes.
+UI/SDK/state backends fixtures/captures; нет готовой сессии или character send.
+[HEADLESS-LOGIN-RESULT-HANDLER.md](HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## LoginResult reader после Ghidra
 
 replay-login-result-reader.py → code-clues/login-result-reader-replay.json:

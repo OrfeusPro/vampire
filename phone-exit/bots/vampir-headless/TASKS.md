@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-result-handler: covered native branches подтверждены
+
+38 body→handler scenarios: state stores/early exit/error/SDK/server ID.
+Следом actual virtual+0x28 после getter 0x146486a50 и доказанная цепочка
+к CharacterListRead/выбору персонажа. Post-state 0x1467259c0 добавлен в Ghidra,
+не считать его сетевой отправкой без продолжения. Request lifecycle/socket/
+fresh SDK/device inputs и live session остаются открытыми.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## H04-login-result-reader: body подтверждён
 
 21 full bodies, 332 short inputs, trailing policy. Ghidra расширена до

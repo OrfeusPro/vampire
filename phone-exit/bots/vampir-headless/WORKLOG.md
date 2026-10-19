@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: native LoginResult handler
+
+38 scenarios объединяют actual body reader и handler/covered gates. Проверены
+8 state stores, signed early exit, controller server updates, raw16 conversion,
+error/SDK branches. FString copies и UI/SDK/state backends явно captured.
+Ghidra дополнена post-state target: 33 functions/15 warnings. Четыре новых,
+четыре reader и три Ghidra tests прошли; полный suite не повторялся.
+Runtime не менялся. CharacterListRead send/session ещё не доказаны.
+[Отчёт, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## 19 октября: native LoginResult reader и общий decoder
 
 Ghidra пакет расширен с 22 до 32 функций; export/verifier успешны, 15 warnings

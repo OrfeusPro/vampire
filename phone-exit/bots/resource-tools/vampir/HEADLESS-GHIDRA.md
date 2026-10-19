@@ -1,5 +1,13 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## LoginResult post-state, 19 октября
+
+Добавлена аналитическая метка Login_PostState 0x1467259c0: последний экспорт
+содержит 33 функции, verifier подтверждает 15 warnings. Native handler
+достигает этой функции, backend пока capture; прямой запрос персонажей
+не доказан. Предыдущие sections сохраняют результаты прежних immutable runs.
+[Источник, SHA и проверки](HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## Расширение для LoginResult, 19 октября
 
 Текущий manifest/export содержит 32 функции, verifier: 15 warnings.

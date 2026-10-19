@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## LoginResult state path, 19 октября
+
+38 native scenarios проверили body reader→handler и covered result gates.
+State stores/server ID/signed ранний выход подтверждены, post-state callback
+пока capture. Runtime session/запрос персонажей ещё не подключены.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## LoginResult body decoder, 19 октября
 
 Новый общий decoder совпал с native reader на 21 full bodies и отвергает

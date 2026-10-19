@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## LoginResult handler: state writes и ветви, 19 октября
+
+38 native scenarios исполнили body reader → handler/covered result gates.
+Проверены raw state stores, signed early exit, server ID, SDK/error branches.
+Дальнейшие callbacks остаются captures; отправка CharacterListRead ещё не
+доказана. Ghidra расширена до 33 функций, 15 warnings сохранены.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## LoginResult body: native reader и общий decoder, 19 октября
 
 21 полный ответ и 332 short-input cases проверили вложенные TimeBase/

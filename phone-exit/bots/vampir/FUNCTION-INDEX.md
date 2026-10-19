@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## LoginResult handler, 19 октября
+
+0x146765540 → gate 0x1467a8e10: 38 native scenarios после actual body reader.
+Подтверждены state stores, signed+0x48/peer flag early return, controller ID,
+raw16 calculation и covered error/SDK branches. Post-state 0x1467259c0
+экспортирован в Ghidra, execution capture; CharacterListRead не доказан.
+[Отчёт, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md).
+
 ## LoginResult reader и вложенные типы, 19 октября
 
 0x1456d9600 / constructor 0x1456d4da0 / vtable 0x1498d6218: 21 full bodies,
