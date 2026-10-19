@@ -1,5 +1,18 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN fallback decrypt, 19 октября: H04b partial
+
+Native 145653dd0 whole orchestration: compiled 28-byte seed → SHA256 call
+1483f9cd0 → IV first16/ciphertext rest → getter14840a8b0 → EVP calls.
+Descriptors 14a723e80/14a723e20, nid 427 связаны с compiled AES-256-CBC name record.
+21 replay: 17 обычных +3 forced crypto failure +1 second CPU descriptor.
+SHA/EVP primitives — backend shims, actual native crypto core не исполнен.
+Shared decrypt_cdn_fallback: strict bounded envelope/PKCS7, optional crypto,
+raw bytes; ошибки не превращаются в пустой plaintext. Android не проверен.
+Callback branch145642c82→145643110 или fallback call145642d52 — static only.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-FALLBACK.md).
+JSON/ReadJson acceptance/actual settings/TLS/HTTP compression остаются открытыми.
+
 ## CDN body/BOM и status gate, 19 октября: H04b partial
 
 Native body 1445e6fc0 + wide ctor 144416f20 + converters 1445eb700/eb7f0:

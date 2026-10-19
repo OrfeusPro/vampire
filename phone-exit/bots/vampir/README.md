@@ -4,6 +4,15 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Запасная расшифровка CDN, 19 октября
+
+Найдена fallback-ветка: IV16 + AES-256-CBC, key = SHA256 от compiled seed.
+21 native orchestration replay проверяет аргументы, descriptor и error cleanup;
+SHA/EVP primitives — явные backend shims, native crypto core не исполнялся.
+Общий decrypt_cdn_fallback возвращает bounded raw bytes через optional crypto.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-FALLBACK.md).
+JSON acceptance/реальный config/settings/TLS и HTTP compression ещё открыты.
+
 ## Декодирование тела CDN и BOM, 19 октября
 
 31 native body replay и 9 status-gate slices подтвердили BOM-ветки и вход

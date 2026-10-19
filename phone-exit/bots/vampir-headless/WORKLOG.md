@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: fallback AES envelope
+
+После 2c81193 найдена запасная расшифровка 145653dd0 после неуспешного JSON.
+Static compiled seed/descriptor/name binding и 21 native orchestration replay
+подтвердили key/IV/ciphertext arguments, getter и error cleanup. SHA/EVP crypto
+primitives заменены явными hashlib/cryptography backend shims; native core
+не исполнялся. Shared decrypt_cdn_fallback bounded to 2 МиБ, strict PKCS7,
+raw bytes, optional crypto; Android ещё не проверен. Полный набор: 181/181
+тест, 98,6 с. Синтаксис трёх Python-файлов, кодировка Markdown, 281 относительная
+ссылка изменённых документов и git diff --check прошли.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-FALLBACK.md).
+JSON acceptance/актуальные settings/TLS/HTTP compression ещё открыты.
+
 ## 19 октября 2026 — H04b-CDN: body/BOM decoder и status gate
 
 После 706a88e исполнен whole body helper + wide ctor/per-unit converter:

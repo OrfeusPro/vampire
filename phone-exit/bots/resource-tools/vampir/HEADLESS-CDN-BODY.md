@@ -68,5 +68,6 @@ Native чтение guard и некорректные Unicode sequences не п�
 ошибки, лимит и цепочку HTTP Content-Length → complete body → decoded text.
 Общий код использует только stdlib; Android runtime ещё не проверен.
 
+Следующий результат: [fallback AES envelope](HEADLESS-CDN-FALLBACK.md).
 Далее: Content-Encoding/сжатие и fallback после неуспешного JSON, chunked/EOF,
 полное принятие CDN config, реальные settings и TLS. `network_ready=false`.
