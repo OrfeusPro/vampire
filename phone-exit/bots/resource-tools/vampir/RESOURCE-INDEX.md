@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## GMC2 URL assembly evidence, 19 октября
+
+26 native fixtures: source offsets/bytes/SHA, getters, actual ASCII append,
+явные allocation/copy/growth shims. Общий ASCII helper совпал по строкам.
+[Инструмент/отчёт/границы](HEADLESS-GMC2-URL.md).
+Active values/RequestGMC2 HTTP/response ещё не установлены.
+
 ## SDK bootstrap values, 19 октября
 
 Native getters/initializers: SDK version5.2.11, BuildCode labels A/B/C,

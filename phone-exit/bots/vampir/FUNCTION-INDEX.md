@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## GMC2 URL assembly slice, 19 октября
+
+1444f3a68..1444f3d7d: manager+1e8/base,+1c8/group, version getter144524390,
+settings+48/build getter14452b820, settings+28/market. Native ASCII-view
+append14175be40 исполнен; allocation/copy/free/growth/singleton — shims.
+26 fixtures, общий assemble_gmc2_config_url_ascii, без escaping/URI validation/IO.
+[Источник и границы](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
+
 ## SDK bootstrap getters и build labels, 19 октября
 
 144524390 → compiled SDK version 5.2.11. Initializers 1411b3220/3250/3280

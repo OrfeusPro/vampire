@@ -1,5 +1,9 @@
 # Vampir — источник конфигурации SDK GMC2
 
+19 октября: [native URL assembly replay](HEADLESS-GMC2-URL.md) подтвердил
+сборку по 26 fixtures, включая literal ASCII append/getters/growth calls.
+Общий helper требует явные значения и не выполняет HTTP/URI validation.
+
 19 октября: [native getters SDK version/BuildCode](HEADLESS-SDK-BOOTSTRAP-VALUES.md)
 уточнили параметры схемы: version=5.2.11; BuildCode byte1 → B, 2 → C,
 остальные → A. Active BuildCode и весь HTTP builder ещё не проверены.

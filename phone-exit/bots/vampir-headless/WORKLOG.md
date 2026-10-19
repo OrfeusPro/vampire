@@ -1,5 +1,19 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — GMC2 URL assembly native replay
+
+После a63298f исполнен Refresh URL slice1444f3a68..3d7d, version/build getters
+и actual ASCII-view append14175be40. Первичный literal-view shim неверно
+предполагал UTF-16; заменён native append до фиксации результата. 26 fixtures
+подтвердили строки, лишние слэши, пустые фрагменты, raw query characters,
+вызовы growth для длинного base. FString/allocator/copy/free/growth/singleton
+остаются явными shims; весь Refresh/HTTP не исполнен. Общий ASCII helper
+добавлен в sdk_config.py, четыре теста прошли. Active values не выбраны,
+сетевых обращений нет. Далее RequestGMC2 headers/response decode/DECKEY/auth URLs.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
+Полный набор: 226/226 тестов, 145,8 с; синтаксис трёх Python-файлов,
+кодировка десяти Markdown-файлов, 357 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — native SDK version/BuildCode и общий selector
 
 После 0f759fe прослежены два getter из GMC2 Refresh/Request callsites.

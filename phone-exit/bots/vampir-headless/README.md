@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Подтверждена сборка URL GMC2, 19 октября
+
+Native assembly slice/getters/ASCII-view append проверены на 26 fixtures;
+общий assemble_gmc2_config_url_ascii в sdk_config.py совпал со строками.
+Нет нормализации слэшей/escaping; inputs явные, HTTP/URI trust отдельно.
+[Доказательства](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
+Далее RequestGMC2 headers/response/DECKEY и auth endpoints.
+
 ## Уточнены параметры SDK bootstrap, 19 октября
 
 SDK getter version=5.2.11, BuildCode byte1→B/2→C/остальные→A.

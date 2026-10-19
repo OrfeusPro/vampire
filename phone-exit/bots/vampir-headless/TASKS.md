@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04b native URL assembly/getters/ASCII-view append подтверждены
+26 fixtures; общий assemble_gmc2_config_url_ascii добавлен. Active inputs
+и HTTP ещё не установлены. Следом RequestGMC2 headers/response decode/DECKEY.
+[Source/SHA/ограничения](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
+
 19 октября: H04b bootstrap getters проверены native. Version=5.2.11,
 BuildCode byte1→B/2→C/elseA (256 fixtures), общий selector добавлен.
 [Источник](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).

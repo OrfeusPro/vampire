@@ -22,6 +22,27 @@ def select_sdk_build_code(build_code: int) -> str:
     return 'B' if build_code == 1 else 'C' if build_code == 2 else 'A'
 
 
+def assemble_gmc2_config_url_ascii(*, base: str, group: str, sdk_version: str,
+                                   build_code: int, market: str) -> str:
+    """Assemble explicit GMC2 fragments; preserve slashes/raw query characters.
+
+    No URL validation/escaping, active defaults or HTTP. Native getter yields
+    SDK version 5.2.11 for the pinned client; pass it explicitly rather than
+    confusing it with game AppVersion. Local subset: printable ASCII, each
+    fragment/result at most 4096 characters. Empty fragments remain empty.
+    Evidence: HEADLESS-GMC2-URL.md, native assembly/getters/ASCII-view append.
+    """
+    for value in (base, group, sdk_version, market):
+        if not isinstance(value, str) or len(value) > 4096 or any(not 32 <= ord(c) <= 126 for c in value):
+            raise ValueError('Invalid explicit GMC2 ASCII fragment')
+    build = select_sdk_build_code(build_code)
+    result = (base + '/template-groups/' + group + '/' + sdk_version +
+              '?game=v5&country=G9&build=' + build + '&engine=unreal&market=' + market)
+    if len(result) > 4096:
+        raise ValueError('GMC2 URL exceeds local budget')
+    return result
+
+
 def select_game_sdk_zone(environment: str) -> int:
     """Game override: explicit environment 'real' (ASCII case ignored) -> 2, else 1.
 

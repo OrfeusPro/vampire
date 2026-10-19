@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## GMC2 URL assembly, 19 октября
+
+vampir_core.sdk_config.assemble_gmc2_config_url_ascii собирает только строку
+из явных base/group/sdk_version/build_code/market. 26 native fixtures совпали.
+Не нормализует слэши/не экранирует/не выполняет HTTP; printable ASCII subset,
+4096 chars fragment/result. [Доказательства](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
+
 ## SDK BuildCode selector, 19 октября
 
 Общий vampir_core.sdk_config.select_sdk_build_code принимает явный byte int:

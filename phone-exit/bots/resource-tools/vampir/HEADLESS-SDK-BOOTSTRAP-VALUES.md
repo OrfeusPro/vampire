@@ -1,5 +1,8 @@
 # SDK bootstrap: версия SDK и BuildCode
 
+Продолжение: [native сборка URL GMC2](HEADLESS-GMC2-URL.md) использует эти
+getters в 26 fixtures; весь HTTP request/response по-прежнему не проверен.
+
 19 октября 2026. Getter `144524390` возвращает compiled SDK version `5.2.11`,
 а `14452b820` выбирает строку build по входному байту. Проверены все 256
 входов. Это уточняет два параметра [GMC2 request schema](HEADLESS-SDK-CONFIG.md).

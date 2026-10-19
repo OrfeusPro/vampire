@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## GMC2 URL: native сборка и общий helper, 19 октября
+
+26 native fixtures подтвердили base/group/SDK version/build/market сборку,
+включая actual ASCII-view append и getters. Общий assemble_gmc2_config_url_ascii
+сохраняет слэши/raw characters, не делает HTTP или выбор active settings.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
+Далее RequestGMC2 headers/response decode и auth URL values.
+
 ## SDK bootstrap: версия и BuildCode, 19 октября
 
 Native getters подтвердили SDK version 5.2.11 и BuildCode byte1→B/2→C/остальные→A.
