@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## SetDeviceKey body проверен, 19 октября
+
+56 setter fixtures и 12 getter integrations: ключ может записываться даже
+при getter flag=false; settings меняется и после write failure.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md).
+Реальные ключи пока не получены, Save/load/active context — следующий этап.
+
 ## Native device getters, 19 октября
 
 20 fixtures исполнили cache/source/generation/save-gate ветви.

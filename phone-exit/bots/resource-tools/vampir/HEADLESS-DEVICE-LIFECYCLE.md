@@ -12,6 +12,9 @@ SHA256: `b1c63c292ce95f7eb5a9205da16fa8896f7014e5e796fb8ef8d9b5c4e8c12871`.
 `748e7c99379916d565e73c1873efe740484bd4456a6ce9f7c6b36d1231356ba1`.
 Оба отчёта содержат SHA инструмента и ссылки на исходный EXE.
 
+Дополнение: [native setter/compare и getter integration](HEADLESS-DEVICE-SETTER.md)
+проверены отдельным replay; первоначальный отчёт ниже сохраняет прежние границы.
+
 ## Что исполнено
 
 В Unicorn исполнен полный `GetNMDeviceKey` `0x1444e5ff0` с выключенным verbose

@@ -68,8 +68,8 @@ Windows storage/GUID fallback разобраны статически, default G
 
 ## Следующие задачи
 
-1. После [getter replay](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md)
-   проверить native setter compare/write, active platform и реальный Save/load.
+1. После [native setter replay](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md)
+   проверить Save/load/path, active platform и SDKZone.
 2. Получить согласованные реальные значения для основного аккаунта с provenance.
 3. Найти challenge/confirmation response и штатное завершение подтверждения.
 4. Связать login runner с реестром и остановкой на подтверждении/лимитах входа.

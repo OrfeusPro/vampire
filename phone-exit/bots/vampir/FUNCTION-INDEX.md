@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SetDeviceKey: native body
+
+[Setter compare/write и getter integration](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md):
+force=false пишет различающееся значение, force=true принуждает запись;
+write=false не предотвращает обновление settings. 56+12 fixtures.
+Save/path экспортированы только статически, active storage ещё открыт.
+
 ## Device getters: cache и persistence failure
 
 [Native getter lifecycle fixtures](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md):

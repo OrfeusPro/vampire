@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-device-setter: сравнение и запись
+
+Native setter body/ASCII compare проверены в 56 fixtures, 12 интеграциях
+с getter. Write failure не предотвращает изменение settings. Три regression
+теста прошли. Дальше Save/load/path и active platform/SDKZone, реальная
+identity основной почты, затем server challenge protocol.
+[Source/SHA](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md).
+
 ## H04-device-lifecycle: getter branches
 
 8 NM + 12 DeviceKey native fixtures подтвердили cache/source/save gate

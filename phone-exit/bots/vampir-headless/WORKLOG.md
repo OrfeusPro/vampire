@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: native SetDeviceKey
+
+56 setter fixtures и 12 getter integrations исполнили native setter body
+и ранее проверенный native ASCII compare/table. Platform/TLS block явно
+заменён переходом; StoredValue/FString остаются fixtures. Проверены force gate,
+сравнение и settings update после write=false. Save/path fragments сохранены
+статически, реальные registry/Saved/keys не читались. Три regression tests OK.
+Все 11 device tests прошли за 9.299 с; 398 относительных Markdown-ссылок
+проверены. Общий suite в предыдущем этапе: 282/282; повторно не запускался.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md).
+
 ## 19 октября: native device getter lifecycle
 
 Исполнен full GetNMDeviceKey без verbose logs и DeviceKey slice после выбора

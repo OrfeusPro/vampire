@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Native SetDeviceKey и getter integration, 19 октября
+
+56 setter fixtures и 12 getter/setter integrations подтвердили native
+case-insensitive ASCII compare, force write и изменение settings даже после
+write=false. Getter flag=false не запрещает запись внутри setter.
+Platform/storage остаются fixtures; Save/path пока статические sources.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md).
+
 ## Device getter branches проверены, 19 октября
 
 8 NM fixtures с повторным вызовом и 12 DeviceKey fixtures исполнили native

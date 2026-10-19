@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## SetDeviceKey compare/write body, 19 октября
+
+replay-device-key-setter.py: 56 native setter cases + 12 getter integrations.
+Native ASCII compare/table reused; platform/storage/FString dependencies
+ограничены явно. Save/path source fragments сохранены для следующего этапа.
+[Отчёт/SHA/границы](HEADLESS-DEVICE-SETTER.md).
+
 ## Native device lifecycle, 19 октября
 
 replay-device-key-lifecycle.py: 8 full NM getter fixtures с повторным вызовом,
