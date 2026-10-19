@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Title state/BeginGame gate replay
+
+replay-title-auth-state.py: 10 native сценариев отдельных title head/tail
+и реального IsSignIn wrapper/getter/call-site gate. UI middle/blacklist,
+context/string effects и полный BeginGameImpl остаются за границей.
+[Источники, SHA и границы](HEADLESS-TITLE-AUTH-STATE.md).
+
 ## Title auth-success notification replay
 
 replay-title-auth-notification.py: семь native сценариев полного

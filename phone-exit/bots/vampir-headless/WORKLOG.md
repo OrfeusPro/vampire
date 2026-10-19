@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: title state и BeginGame SDK gate
+
+10 native scenarios и три новых/шесть смежных tests прошли. Title
+country/state slices отделены от IsSignIn SDK byte gate. Skip-middle
+явно сохранён, полный title/button flow не заявлен. Runtime не менялся;
+полный suite 316 из runtime milestone не повторялся. Игра/профиль/HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-STATE.md).
+
 ## 19 октября: title auth-success notification
 
 Семь native scenarios связали manager-child/router с точным title

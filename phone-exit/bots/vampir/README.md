@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Title state и BeginGame SDK gate, 19 октября
+
+10 native сценариев проверили отдельные head/tail slices title handler
+и IsSignIn gate BeginGame. Title flag interface+0x230 и SDK+0x400 независимы
+в этих slices. Средняя UI/policy часть пропущена явно; полного входа нет.
+Далее BeginGameImpl/server selection → packet Login.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-STATE.md).
+
 ## Manager-child → title auth-success, 19 октября
 
 Семь native сценариев связали manager-child/router с рассылкой slot+0x08

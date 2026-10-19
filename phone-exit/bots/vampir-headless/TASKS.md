@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-entry-gate: разделение title/SDK state
+
+Title head/tail и отдельный BeginGame IsSignIn gate проверены.
+Далее BeginGameImpl 0x146425730, server selection и packet Login.
+UI middle/blacklist и активная session validation не закрыты; клиентские
+флаги не заменяют доказательства серверного входа.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-STATE.md).
+
 ## H04-title-notify: переход найден
 
 Условная цепочка manager-child → router → slot+0x08 →

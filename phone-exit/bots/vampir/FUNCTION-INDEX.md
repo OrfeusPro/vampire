@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Title flag и SDK IsSignIn не тождественны
+
+OnSuccess head передаёт GetCountryCode в ConnectCountryCode capture;
+tail пишет interface+0x230. BeginGame 0x14641809c → wrapper 0x145609b00 →
+IsSignIn 0x14452afb0 читает settings+0x400. Slices разделены skip-middle.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-STATE.md).
+
 ## Title success notification: slot+0x08
 
 0x14560f740 → 0x14560eef0 → broadcast 0x1445f5330 → action
