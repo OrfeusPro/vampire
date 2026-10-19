@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## NID storage suffix восстановлен для aligned ASCII, 19 октября
+
+6 native fixtures: sub low-byte minus1 → actual AES-NI → HEX.
+Aligned outputs совпали с AES-256 ECB и общим nid_storage_path.
+nmDeviceKey используется как 32 ASCII bytes с сохранением регистра.
+Token/sub acquisition, migration/active path и real identity ещё открыты.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md).
+
 ## Auth-specific storage path gate, 19 октября
 
 8 native fixtures проверили Load path gate: auth type netmarble → extra

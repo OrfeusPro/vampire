@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## nid_storage_path: offline suffix derivation
+
+derive_nid_storage_suffix: verified aligned ASCII subset, subject bytes minus1
+→ AES-256 ECB с 32 ASCII bytes nmDeviceKey → uppercase hex. Case key важен.
+Optional cryptography, без token parsing/validation, I/O или active profile.
+[Native source/local policy](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md).
+
 ## DeviceRegistry schema v2, 19 октября
 
 Отдельные nid_device_key/nid_identity_source для NID web/OAuth, не alias

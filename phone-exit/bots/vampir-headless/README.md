@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## NID storage suffix offline helper
+
+Native synthetic byte/AES pipeline совпал с common nid_storage_path
+для aligned ASCII inputs. Это только storage suffix, не login/device proof.
+Real identity и active storage context остаются неизвестными.
+[Source/SHA и ограничения](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md).
+
 ## Auth-specific SDK directory, 19 октября
 
 Native Load gate подтверждён на 8 fixtures: netmarble auth context может

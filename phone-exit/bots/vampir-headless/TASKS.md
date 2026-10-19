@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-NID-suffix: transform и common helper
+
+6 native suffix cases + independent AES/runtime comparison прошли.
+Aligned printable ASCII derivation реализован в nid_storage_path, optional
+crypto backend; Android пока не проверен. Следующее: source token/sub parsing,
+migration branch/active path, SaveGame serialization и SDK auth response.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md).
+
 ## H04-storage-auth-path: optional directory gate
 
 8 native auth-context gate/Load join fixtures прошли; извлечение auth context

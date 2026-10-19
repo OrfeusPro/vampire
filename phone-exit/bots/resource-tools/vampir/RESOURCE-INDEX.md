@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## NID suffix native byte/AES replay
+
+replay-sdk-nid-path-suffix.py: 6 synthetic cases, actual AES-NI code,
+caller transform и hex writer loop. AES dispatch/key conversion/formatting
+fixtures явно ограничены. [Source/SHA](HEADLESS-SDK-NID-SUFFIX.md).
+
 ## SDK auth-specific directory gate
 
 replay-sdk-storage-auth-path.py: 8 native Load gate/compare/join fixtures;

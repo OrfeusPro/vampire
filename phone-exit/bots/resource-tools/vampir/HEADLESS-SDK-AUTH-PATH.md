@@ -11,6 +11,10 @@ SHA256 `614161a0b43583363975f20f982d7cf5e08f3a6a036882e537bb74826f9d7eaf`.
 Сохранены source fragment bytes/file offsets/SHA, diagnostic literals,
 compare leaf/table и SHA инструментов/переиспользованных отчётов.
 
+Дополнение: [sub → byte/AES → HEX suffix](HEADLESS-SDK-NID-SUFFIX.md)
+проверен отдельным native replay для aligned ASCII, без real auth data.
+Ниже сохраняются границы исходного gate replay.
+
 ## Native gate и Load path
 
 Load вызывает `0x14452adc0` на `0x14452c78c`; возвращённый AL определяет,

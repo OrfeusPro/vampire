@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: NID suffix byte/AES pipeline
+
+Исполнен caller transform sub low-byte minus1, AES-NI key expansion/rounds
+и byte-hex writer loop. Dispatch, key conversion, allocation и formatting
+fixtures; real token/sub acquisition не исполнялись. 6 cases, aligned outputs
+совпали с независимым AES-256 ECB. Добавлен общий strict ASCII aligned helper
+nid_storage_path без I/O, keys не нормализуются. Три regression tests прошли.
+Полный headless suite: 296 тестов, 216.125 с, OK; 480 относительных
+Markdown-ссылок проверены, git diff --check без ошибок.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md).
+
 ## 19 октября: auth-specific directory
 
 Исполнены auth gate, reused native compare и Load filename continuation.

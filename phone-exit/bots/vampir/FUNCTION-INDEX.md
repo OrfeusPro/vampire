@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## NID suffix из sub и nmDeviceKey
+
+[Native suffix transform/AES](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md)
+для aligned ASCII совпал с AES-256 ECB. Поле sub и getter nmDeviceKey
+подтверждены source anchors; реальные tokens/keys не получены.
+Общий nid_storage_path ограничен проверенным subset, без token validation/I/O.
+
 ## Auth storage gate и общий state byte
 
 [Native auth path gate](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md):
