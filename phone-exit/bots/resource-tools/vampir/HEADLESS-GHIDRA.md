@@ -1,5 +1,11 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## Selection service, 19 октября
+
+Пакет расширен до 43 функций/30 warnings: base singleton ctor, derived
+constructor и virtual40/50 targets. [Native evidence и границы](HEADLESS-SELECTION-SERVICE.md).
+Последний export указан в общем INDEX, прошлые runs сохранены.
+
 ## WaitingEndNotify caller, 19 октября
 
 Пакет расширен до 39 функций/26 warnings. Caller 0x146768540 получил

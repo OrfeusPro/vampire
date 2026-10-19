@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## Selection service после Ghidra
+
+replay-selection-service.py → code-clues/selection-service-replay.json:
+actual constructor prefix/getter, derived table slots40/50/90 и 4 actual
+CharacterSelect field/handoff cases. Нет writer/frame/socket/response110.
+[HEADLESS-SELECTION-SERVICE.md](HEADLESS-SELECTION-SERVICE.md).
+
 ## WaitingEndNotify после Ghidra
 
 replay-waiting-end-character-request.py → code-clues/waiting-end-character-request-replay.json:

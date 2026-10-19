@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Selection service derived slots
+
+Base ctor 0x1455f9ee0 и derived prefix 0x145dc6b20 публикуют service global.
+Table 0x1499f11f0: +0x40→0x145dbba60, +0x50→0x145dc05f0,
++0x90→requestA 0x145dbd4b0. Virtual50 actual packet109→handoff110 проверен;
+writer/socket/result и real slot90 caller остаются открытыми.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
+
 ## WaitingEndNotify инициирует CharacterListRead
 
 Handler 0x146768540/table 0x149d811a0, packet table 0x1498d6b50/ID 27.

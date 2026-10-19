@@ -30,7 +30,9 @@ SEEDS=[
  ('Login_PostState',0x1467259c0),('LoginContinuation_SingletonInit',0x14647f9f0),
  ('LoginContinuation_Virtual28',0x1464846c0),
  ('CharacterList_RequestA',0x145dbd4b0),('CharacterList_RequestB',0x145dbfe50),
- ('CharacterList_RequestCaller',0x146768540),('CharacterList_SelectionPredicate',0x145c85d90)]
+ ('CharacterList_RequestCaller',0x146768540),('CharacterList_SelectionPredicate',0x145c85d90),
+ ('SelectionService_SingletonInit',0x1455f9ee0),('SelectionService_DerivedInit',0x145dc6b20),
+ ('SelectionService_Virtual40',0x145dbba60),('SelectionService_Virtual50',0x145dc05f0)]
 
 
 def build():

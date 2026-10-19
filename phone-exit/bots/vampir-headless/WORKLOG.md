@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: derived selection service и CharacterSelect handoff
+
+Ghidra ctor/derived prefix/table связали requestA с slot90. Native prefix
+allocation success/failure и base singleton getter проверены. Actual virtual50
+передаёт raw64/raw32/state+f0 в packet109→handoff110; 4 vectors совпали.
+Ghidra: 43 functions/30 warnings. Три новых, три WaitingEnd и три Ghidra tests
+прошли; full suite не повторялся. Runtime не менялся; сеть/ответ/выбор не готовы.
+[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
+
 ## 19 октября: WaitingEndNotify инициирует requestB
 
 Caller diagnostic идентифицировал WaitingEndNotify/ID 27, registration/table

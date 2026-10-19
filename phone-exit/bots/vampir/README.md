@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Selection service → CharacterSelect handoff, 19 октября
+
+Constructor prefix связал global 0x14b574a90 с derived table 0x1499f11f0.
+Slot+0x90 — requestA; slot+0x50 создаёт PktCharacterSelect/ID 109 и передаёт
+raw64/raw32/state+0xf0 в handoff kind 110. 4 native cases; handoff captured.
+Slot+0x40 и инициатор+0x90 ещё открыты. Ghidra: 43 функции/30 warnings.
+[Источник, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
+
 ## WaitingEndNotify → запрос персонажей, 19 октября
 
 ID 27/handler 0x146768540 привязан к регистрации и diagnostic literal.

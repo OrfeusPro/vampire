@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-selection-service: targets и select handoff подтверждены
+
+Derived table 0x1499f11f0: slot90=requestA, slot50=CharacterSelect builder.
+Далее slot40 SDK guard/base helper/virtual+c8/state-transition helper и
+доказанный caller slot90. Отдельно packet109 writer/frame/response110.
+Full owner ctor, свежие SDK/device inputs и live session ещё открыты.
+[Источник, SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
+
 ## H04-waiting-end: один инициатор CharacterListRead подтверждён
 
 ID 27/WaitingEndNotify handler 0x146768540 → predicate → requestB 0x145dbfe50

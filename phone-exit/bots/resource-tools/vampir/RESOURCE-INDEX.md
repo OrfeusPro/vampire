@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Selection singleton/derived table/CharacterSelect handoff
+
+replay-selection-service.py: 2 constructor-prefix outcomes и 4 native select
+cases. Derived slot90=requestA, slot50→actual packet109/handoff110 capture;
+slot40 пока static-only. [HEADLESS-SELECTION-SERVICE.md](HEADLESS-SELECTION-SERVICE.md).
+
 ## WaitingEndNotify handler → CharacterList request
 
 replay-waiting-end-character-request.py: 24 cases, registration/table/ID 27,

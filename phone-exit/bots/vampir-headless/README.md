@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Выбор персонажа: handoff boundary, 19 октября
+
+Derived service table подтверждена constructor prefix. Actual virtual50
+строит PktCharacterSelect/ID 109 и передаёт его в handoff kind 110 (capture).
+Raw fields проверены на 4 vectors, реальные значения/ответ/выбор ещё неизвестны.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
+
 ## WaitingEndNotify → список персонажей, 19 октября
 
 Native ID 27 handler при peer flag/policy 1 вызывает CharacterListRead/ID 101.
