@@ -35,7 +35,10 @@ SEEDS=[
  ('SelectionService_Virtual40',0x145dbba60),('SelectionService_Virtual50',0x145dc05f0),
  ('SelectionService_BaseReset',0x14560a6f0),('SelectionService_SetState',0x14560a400),
  ('SelectionService_StateLabel',0x145dc3f30),('SelectionService_AuthGuard',0x145609b00),
- ('SelectionService_DeferredState',0x145600690)]
+ ('SelectionService_DeferredState',0x145600690),('SelectionState_Lookup',0x145c5d860),
+ ('SelectionState_Registry',0x145c38ab0),('SelectionState_LoadRows',0x145c61030),
+ ('SelectionState_LoadSource',0x145c60c10),('SelectionState_Register',0x145c6d670),
+ ('SelectionState_Initialize',0x145c395b0)]
 
 
 def build():

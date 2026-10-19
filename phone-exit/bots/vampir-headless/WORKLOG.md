@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: state registry lookup и неизвестная реальная метка
+
+Ghidra lookup/registry/generic loader exports расширены: 54 functions/33 warnings.
+13 native cases проверили exact key/hash collision/inline record+8/accessor,
+label caller. Registry getter/record contents всё ещё fixtures; фактическая
+строка key2 не установлена. Три новых, три state transition и три Ghidra tests
+прошли; full suite/runtime/network не менялись.
+[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## 20 октября: selection state preparation и deferred callback
 
 Ghidra virtual40 dependencies/callback экспортированы: 48 functions/32 warnings.

@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-state-lookup: actual hash, реальные contents открыты
+
+13 native cases lookup/hash/accessor→label caller. Дальше заполнение
+registry storage+0x18 и actual record vtable/virtual20/source string key2.
+Generic TLS/static registry exports не доказывают contents. Slot90 lifecycle,
+response102/socket/full session остаются открытыми.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## H04-selection-state: preparation/deferred boundary
 
 10 native virtual40/SetState cases + 12 independent callback cases проверены.

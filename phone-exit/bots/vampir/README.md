@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Selection state lookup: actual hash/accessor, 20 октября
+
+13 native cases заменили lookup/accessor fixtures: key/bucket/collision и
+inline record+8 подтверждены. Actual state2 label остаётся неизвестной;
+registry population/source ещё не связаны. Ghidra: 54 functions/33 warnings.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## Selection state2 и deferred callback, 20 октября
 
 10 native preparation cases и 12 callback cases проверили virtual40→SetState:

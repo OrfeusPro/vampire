@@ -1,5 +1,11 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## State registry lookup, 20 октября
+
+Пакет расширен до 54 функций/33 warnings: lookup, TLS/static registry getter
+и generic record loader routines. Аналитические имена не доказывают источник
+данных. [Native lookup и unknown contents](HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## Selection state dependencies, 20 октября
 
 Пакет расширен до 48 функций/32 warnings: base reset/SetState/state label,

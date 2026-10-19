@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Метка state2: граница данных, 20 октября
+
+Actual lookup/hash/accessor исполняются на 13 fixtures. Они подтверждают
+inline record addressing и null/miss policy; строка состояния2 ещё неизвестна.
+Новый runtime state/map default не добавлен.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## Переход состояния перед персонажами, 20 октября
 
 Virtual40/state2 и deferred callback проверены native: 10+ 12 scenarios.

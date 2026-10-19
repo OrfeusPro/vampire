@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Selection state lookup/data boundary
+
+replay-selection-state-lookup.py: 13 native hash/descriptor/label-caller cases.
+Key2 label остаётся unknown; generic registry loaders только static-export.
+[HEADLESS-SELECTION-STATE-LOOKUP.md](HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## Selection state2/deferred boundary
 
 replay-selection-state-transition.py: 10 preparation + 12 callback native cases,

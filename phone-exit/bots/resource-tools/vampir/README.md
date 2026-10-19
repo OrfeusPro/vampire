@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## Selection state lookup после Ghidra
+
+replay-selection-state-lookup.py → code-clues/selection-state-lookup-replay.json:
+13 native cases, exact key match/inline record address. Actual label key2
+не установлена, runtime map name не подставляется.
+[HEADLESS-SELECTION-STATE-LOOKUP.md](HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## Selection state transition после Ghidra
 
 replay-selection-state-transition.py → code-clues/selection-state-transition-replay.json:

@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Selection state registry lookup
+
+0x145c5d860 → hash 0x145c60180 → descriptor accessor 0x141482990 →
+record virtual20. Native lookup/accessor проверены на 13 cases; registry и
+record contents fixtures. Возврат — inline node+8/stride150, не stored pointer.
+Actual key2 label/source неизвестны. [Source/SHA](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
+
 ## Selection virtual40/state transition
 
 0x145dbba60 → base 0x14560a6f0 / label 0x145dc3f30 / SetState 0x14560a400.
