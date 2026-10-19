@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04: следующий приоритет — SDK sign-in response
+
+Migration wrappers проверены в 10 native cases; zero-tail guarantee отсутствует
+в рассмотренном wrapper path. Реальный backend/полная миграция остаются открыты.
+Это отдельная задача совместимости, не доказанная предпосылка нового входа.
+Продолжать callback1444d85f0 leaf →1444cc1a0, response schema/errors →
+SDK token/player/expiry →game Login, затем real identity/confirmation integration.
+[Границы migration evidence](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md).
+
 ## H04-token-container и migration field
 
 16 native container + 8 migration cases проверены. Decoder/JSON/split

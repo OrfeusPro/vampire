@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: migration allocator wrapper chain
+
+10 native scenarios исполнили allocation/count/capacity/quantize/realloc
+wrappers с fixture backend. Zeroing rounded tail в wrapper path отсутствует;
+реальный backend policy не установлен. Cipher results совпали с independent
+AES при explicit tail bytes. Regression test прошёл. Runtime не менялся.
+Также прошли 6 смежных token/suffix tests, 431 относительных
+Markdown-ссылок проверены, git diff --check OK. Полный suite 296/296
+из предыдущего runtime milestone повторно не запускался.
+Приоритет возвращён к SDK sign-in response/session для первого нового
+профиля; миграция не выдана за завершённую и остаётся в задачах.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md).
+
 ## 19 октября: token payload и migration path
 
 Native caller проверен на 16 container fixtures; split/base64url/JSON

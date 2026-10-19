@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Migration allocation wrappers
+
+[Native allocator chain](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md):
+141431680 → quantize →141431210 →14148c8d0 →backend virtual slot38.
+10 cases не показали zeroing wrapper; backend fill fixture, реальная policy
+неизвестна. Далее для нового профиля — SDK sign-in response/session.
+
 ## Token payload / channelKey migration
 
 [Native container и migration slices](../resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md):

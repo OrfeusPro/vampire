@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Migration wrappers и приоритет SDK response
+
+Native wrappers не гарантируют zero padding; real allocator остаётся открытым.
+Поддержка старых сохранений не заявлена. Для первого нового профиля далее
+SDK sign-in response/session →game Login.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md).
+
 ## Token container / migration path, 19 октября
 
 Native caller gates проверены; container decode не равен подтверждению

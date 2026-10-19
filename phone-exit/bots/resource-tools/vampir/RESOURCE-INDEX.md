@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Native migration allocation wrapper chain
+
+replay-sdk-migration-allocation.py: 10 cases native wrappers → fixture backend,
+затем native byte/AES/HEX. Wrapper не гарантирует zero tail; реальный backend
+не установлен. [Отчёт/SHA/границы](HEADLESS-SDK-MIGRATION-ALLOCATION.md).
+
 ## Token container и channelKey migration
 
 replay-sdk-token-payload.py: 16 native caller fixtures с explicit primitives.

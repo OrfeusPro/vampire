@@ -5,6 +5,9 @@
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Использованы код/данные клиента, не исходный C++ проект или реальные токены.
 
+Дополнение: [allocation wrappers исполнены отдельно](HEADLESS-SDK-MIGRATION-ALLOCATION.md).
+Zeroing в wrapper path не найден, actual backend policy остаётся неизвестной.
+
 ## Token container caller
 
 Инструмент `replay-sdk-token-payload.py` →

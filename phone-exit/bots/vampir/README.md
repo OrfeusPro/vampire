@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Migration allocator wrappers: граница уточнена, 19 октября
+
+10 native scenarios подтвердили: проверенные allocation wrappers не обнуляют
+rounded tail. Реальный allocator backend остаётся fixture, zero padding
+не доказан. Миграция старых сохранений остаётся отдельной открытой задачей.
+Следующий приоритет первого входа: SDK sign-in response/session → game Login.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md).
+
 ## Token payload и migration path, 19 октября
 
 16 native container fixtures подтвердили count/padding/object gates; split/
