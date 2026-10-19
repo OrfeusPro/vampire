@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: игровой AutoSignIn callback
+
+15 native сценариев и три regression tests прошли. Найдены diagnostic,
+вложенный logging callback, weak-owner result callback и descriptor caller.
+Точные diagnostic literals связали GetChannelManager owner+0x170
+с FChannelManagerImpl::SignInSilently; связь с GetAuth ещё не доказана.
+Также прошли три смежных SDK result-dispatch tests.
+Runtime не менялся; полный suite 316 из предыдущего runtime milestone
+не повторялся. Игра, профиль и HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-AUTO-SIGN-IN.md).
+
 ## 19 октября: SDK result dispatch
 
 Исполнены dispatcher, delegate copy/cleanup, binder, реальные virtual

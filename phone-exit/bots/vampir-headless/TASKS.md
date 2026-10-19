@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-game-callback: следующая связь
+
+Проверены AutoSignIn callback gates и отдельный SDK route owner+0x170.
+Getter назван по diagnostic: GetChannelManager, target — SignInSilently.
+Далее provider selection в 0x1444feac0, success manager action
+и virtual callback → реальная credential/session цепочка → game Login.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-AUTO-SIGN-IN.md).
+
 ## H04-result-dispatch: native handoff проверен
 
 16 сценариев связали SignIn binder, dispatcher, очередь и invoke bridge.

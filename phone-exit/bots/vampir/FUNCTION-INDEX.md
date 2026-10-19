@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Game AutoSignIn: callback и route
+
+Diagnostic → logging root 0x1455f7bd0 → caller 0x1455fbb80.
+Descriptor приходит через leaf 0x1456007b0 и wrapper 0x1444fea30.
+GetChannelManager owner+0x170 → SignInSilently 0x1444feac0 подтверждены
+точными diagnostic literals; отделены от GetAuth owner+0x150.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-AUTO-SIGN-IN.md).
+
 ## SDK result dispatch и native delegate
 
 auth+0x98 → dispatcher 0x1444dff20 → queued thunk 0x1444d83b0 → virtual

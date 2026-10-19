@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Игровой AutoSignIn callback, 19 октября
+
+15 native сценариев проверили weak-owner gates и ветви raw result.
+Найден отдельный SDK getter owner+0x170; его связь с auth+0x150 ещё открыта.
+Дальнейший success callback и packet Login не исполнены.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-AUTO-SIGN-IN.md).
+
 ## SDK result: очередь и callback, 19 октября
 
 16 сценариев проверили dispatcher, перенос делегата и исходного response pair.

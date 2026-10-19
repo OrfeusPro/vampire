@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Game AutoSignIn result replay
+
+replay-game-auto-sign-in-result.py: 15 native cases, leaf getters,
+weak-owner/result branches и source-bound descriptor chain.
+Внешние действия и success game instance — captures/fixture.
+[Источники, SHA и границы](HEADLESS-GAME-AUTO-SIGN-IN.md).
+
 ## SDK result dispatcher и delegate bridge
 
 replay-sdk-result-dispatch.py: 8 базовых и 8 native binding сценариев.
