@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-version-result: native переход к Login entry
+
+VersionResult reader/handler/gate → 0x1467a9700 проверены. Далее actual
+Login construction/SDK field sources/writer/send/LoginResult. Error helper
+branches вне covered codes, live negotiation/transport ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
+
 ## H04-version-send: полный native путь до очереди
 
 Wrapper/send-B/writer/frame/append проверены вместе на18 scenarios. Далее

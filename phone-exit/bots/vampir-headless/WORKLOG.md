@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: VersionResult → Login entry
+
+39 native scenarios read/dispatch/handler/bounded gate проверили переход
+в 0x1467a9700 для code0; PktLogin ctor связан статически. Три новых и семь смежных tests
+прошли. Runtime не менялся; full suite379 не повторялся. Actual game/network/
+profile/credentials не использованы, Login body ещё capture.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
+
 ## 19 октября: Version wrapper → полный кадр/очередь
 
 18 native scenarios: 14 exact ciphertext frames и 4 pre-frame gates.

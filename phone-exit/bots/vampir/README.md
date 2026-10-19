@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## VersionResult → Login routine, 19 октября
+
+39 native scenarios связали ID2/reader17 bytes/handler/result gate с
+входом 0x1467a9700. При covered code0 достигается Login routine; её PktLogin
+constructor пока только static-bound. Runtime/live negotiation не менялись.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
+
 ## PktVersion: wrapper → frame → очередь, 19 октября
 
 18 native scenarios: 14 полных кадров и 4 pre-frame отказа. Wrapper/send-B/

@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## VersionResult reader/handler → Login entry
+
+Table0x1498d69f0 ID2 reader0x1456d9b10, handler0x146768360 через
+registration0x14678ecaf/table0x149d81170. Native gate0x1467a8e10 covered
+code0 → 0x1467a9700; внутри static call к PktLogin ctor0x1456d4c80.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
+
 ## Version send wrapper → send-B
 
 0x1467aaa10 → thunk0x144aab2f0 ([wrapper+0x10]) → 0x144aaccf0

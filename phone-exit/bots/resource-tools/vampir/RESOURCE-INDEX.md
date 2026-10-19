@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## VersionResult native handler replay
+
+replay-version-result-handler.py: 39 scenarios ID2/read17/Dispatch/handler/
+bounded result gate. Constructor/registration/table/name source-bound;
+Login routine captured at entry, full body/SDK inputs не исполнены.
+[Источники, SHA и границы](HEADLESS-VERSION-RESULT-HANDLER.md).
+
 ## Version full send path replay
 
 replay-version-send-path.py: 18 scenarios wrapper/thunk/send-B/Version writer/
