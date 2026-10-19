@@ -52,7 +52,7 @@ Prefix ctor `0x1445e25d0..0x1445e26ac` устанавливает:
 конструктора. Назначение этого дальнейшего значения пока не заявляется.
 HTTP owner ctor затем устанавливает context.owner; в replay это явный fixture.
 
-Настоящий request-line builder `0x1445ec6f0` сопоставляет method code1 с
+Настоящий request-line builder `0x1445ec6f0` сопоставляет method code 1 с
 literal `GET /` на `0x1445ec8ad`, добавляет path, ` HTTP/`, version и CRLF.
 Исполняются native std::string append `0x1445ddc80` и growth `0x1445d8310`.
 Allocator/free/memcpy/memmove/cookie check — ограниченные shims. Сама сборка

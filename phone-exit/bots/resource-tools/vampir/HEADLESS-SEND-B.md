@@ -33,7 +33,7 @@ CRC32, XOR и возврат из очереди. На выходе Ping име�
 - После XOR внутри: CRC32 LE32 от ID16+sequence16+body; затем ID16,
   sequence16 и body. Plain offsets: CRC+3, ID+7, sequence+9, body+11.
 - Sequence берётся из peer+0x240 на `0x144aace99` и увеличивается с wrap 16.
-- Ping ID16/body16 и KeyChanged ID12/body8 используют исходные vtables
+- Ping ID16/body 16 и KeyChanged ID12/body 8 используют исходные vtables
   `0x1498d66c0` / `0x1498d5e90`, настоящие ID getters и writers.
 - Key читается на `0x144aacf36`, XOR вызывается на `0x144aacf63`.
 

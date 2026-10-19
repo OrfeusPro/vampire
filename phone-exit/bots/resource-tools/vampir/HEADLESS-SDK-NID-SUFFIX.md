@@ -55,8 +55,8 @@ fixtures. Их native source также сохранён для последую
 
 ## Шесть synthetic cases
 
-- Пустой sub и длина31: сохраняют `old-suffix-fixture`, crypto не вызывается.
-- Длины32/48/64 с одинаковыми символами и known fixture key: совпадают с
+- Пустой sub и длина 31: сохраняют `old-suffix-fixture`, crypto не вызывается.
+- Длины 32/48/64 с одинаковыми символами и known fixture key: совпадают с
   независимой ECB моделью. Повторные блоки дают повторные encrypted blocks.
 - Другая 32-byte строка и другой key: отдельный совпадающий результат.
 
@@ -69,8 +69,8 @@ fixtures. Их native source также сохранён для последую
 [nid_storage_path.py](../../vampir-shared/vampir_core/nid_storage_path.py):
 `derive_nid_storage_suffix(subject=..., nm_device_key=...)`.
 Только offline derivation, без сети, токен-парсинга, выбора аккаунта или I/O.
-Local policy ограничивает subject printable ASCII, длиной32..1024 и кратностью16;
-nmDeviceKey — ровно32 ASCII HEX characters с сохранением регистра.
+Local policy ограничивает subject printable ASCII, длиной 32..1024 и кратностью 16;
+nmDeviceKey — ровно 32 ASCII HEX characters с сохранением регистра.
 Более широкий native input domain отвергается, а не молча дополняется padding.
 Опциональный cryptography backend уже используется в проекте; Windows проверен,
 Android backend пока не проверен. Это воспроизведение хранения клиента, не выбор

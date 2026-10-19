@@ -31,7 +31,7 @@ ID getter имеет bytes `b801000000c3` (MOV EAX1; RET), здесь прове
 
 Callback и constructor теперь исполняются после реальной цепочки delegate
 из предыдущего replay. Сам send target **0x1467aaa10** остаётся capture:
-его связь подтверждена wrapper table0x149d84e50 slot+0x38 и call site
+его связь подтверждена wrapper table 0x149d84e50 slot+0x38 и call site
 **0x1467a9fc4**. Writer, frame encoding и Winsock send не исполнялись.
 
 ## Raw поля до отправки
@@ -44,24 +44,24 @@ Globals в replay явно заменены fixtures. Даже имя version_as
 
 | Packet offset | Подтверждённый источник в callback | Граница проверки |
 | --- | --- | --- |
-| +0x10 | FString global0x14b520d10 / count0x14b520d18 | Fixture global, native copy |
+| +0x10 | FString global 0x14b520d10 / count 0x14b520d18 | Fixture global, native copy |
 | +0x20 | Constructor zero | Raw DWORD0 |
 | +0x28 | Результат string helpers0x141426250/0x141426180 | Helpers выдают явный combined fixture |
-| +0x38 | Getter0x1414476a0 | Getter fixture, native copy |
-| +0x48 | Getter0x1445c63a0 → copy0x14143c260 | Getter и copy fixtures |
+| +0x38 | Getter 0x1414476a0 | Getter fixture, native copy |
+| +0x48 | Getter 0x1445c63a0 → copy0x14143c260 | Getter и copy fixtures |
 | +0x58 | Входной FString connected callback | Пустой из прежнего endpoint getter fixture |
 | +0x68/+0x78/+0x88/+0xa0 | Zero/empty в покрытом path | Нет утверждения о других branches |
-| +0x98 | Store на0x1467a9f78 | Raw DWORD207 (0xcf), семантика не установлена |
-| +0xb0 | Char pointer global0x14b14ae28 → FString | ASCII constructor fixture |
-| +0xc0 | DWORD global0x14b125530 | Native copy fixture enum, смысл unknown |
+| +0x98 | Store на 0x1467a9f78 | Raw DWORD207 (0xcf), семантика не установлена |
+| +0xb0 | Char pointer global 0x14b14ae28 → FString | ASCII constructor fixture |
+| +0xc0 | DWORD global 0x14b125530 | Native copy fixture enum, смысл unknown |
 
 Не присваивать этим строкам имена userID/token/deviceID/country по offsets
 или test values. Например provider_text — лишь имя fixture getter output.
 Ни одно значение реального SDK профиля не использовано.
 
-Callback читает context selector через0x1445c77a0, затем context store через
+Callback читает context selector через 0x1445c77a0, затем context store через
 0x1445bdfe0. В replay selector fixture7, store fixture null: покрыт только
-absent-store branch. Present-store path с0x1416d7af0 не исполнен.
+absent-store branch. Present-store path с 0x1416d7af0 не исполнен.
 Комбинирование строк, исходные getters и конверсия — fixtures; общий codec
 или семантическая модель PktVersion по ним пока не реализованы.
 

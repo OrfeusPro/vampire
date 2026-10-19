@@ -6,7 +6,7 @@ EXE SHA256: `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 
 ## Источники и воспроизведение
 
-Сначала прочитан Ghidra virtual40 **0x145dbba60**, затем экспортированы
+Сначала прочитан Ghidra virtual 40 **0x145dbba60**, затем экспортированы
 base-reset **0x14560a6f0**, SetState **0x14560a400**, state-label virtual+c8
 **0x145dc3f30**, auth guard **0x145609b00** и callback **0x145600690**.
 Ghidra: 48 функций, 32 warnings, run `run-576f3c3d5267`.
@@ -27,7 +27,7 @@ python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_headless_s
 ## Virtual40 и guard
 
 Actual derived constructor prefix создаёт synthetic service, затем native
-virtual40 запускается с этим this. Prefix/body bounds прежние; full owner
+virtual 40 запускается с этим this. Prefix/body bounds прежние; full owner
 construction и lifetime не добавлены. Virtual40 исполняет:
 
 1. SDK flag **0x14b520cc3**, actual manager getter **0x1456048a0**,
@@ -36,7 +36,7 @@ construction и lifetime не добавлены. Virtual40 исполняет:
    через cached getter fixture **0x1444aacb0**, проверяет module+0x110,
    затем native tail target **0x14452afb0** читает module+0x400.
    Logging выключен явно; отсутствие module вызывает init capture и return 0.
-3. Guard false завершает virtual40 до state preparation. SDK disabled,
+3. Guard false завершает virtual 40 до state preparation. SDK disabled,
    manager absent или auth context absent пропускают guard и продолжают путь.
 
 Наличие module и byte+0x400 заданы fixtures. Они не считаются настоящим SDK
@@ -86,7 +86,7 @@ ready null/false/true и label absent/present. Actual base/state-label/SetState
   FString копируется в client+0x738 (copy fixture).
 - При отсутствии player native field+0x718 становится 0; при наличии player
   вызывается virtual+0x800 со строкой и raw 0 (capture).
-- При phase 2/busy 1 callback может вернуть1 и поставить flag 2, **не выполняя**
+- При phase 2/busy 1 callback может вернуть 1 и поставить flag 2, **не выполняя**
   copy/player action. Return1 не доказывает загрузку, состояние игры или сессию.
 
 12 callback cases перебирают player absent/present, ready false/true и
@@ -106,10 +106,10 @@ callback conditions/return/flag/field/captured arguments. Три смежных 
 service и три Ghidra tests прошли; полный suite не повторялся.
 
 Slot+0x90 (requestA) остаётся source-bound к derived table, но **его вызов
-после state/world перехода ещё не установлен**. Проверенные virtual40/
+после state/world перехода ещё не установлен**. Проверенные virtual 40/
 callback paths непосредственно его не вызывают. Следом — фактическая state-label
 lookup mapping и lifecycle/client hooks после отложенного действия, затем
-доказанный dispatch slot90. Не добавлять произвольный auto-request в runtime.
+доказанный dispatch slot 90. Не добавлять произвольный auto-request в runtime.
 
 Runtime не менялся; game/profile/process memory/credentials/network/Android
 не использованы. Полный SDK→Login→CharacterList flow, response 102, socket и

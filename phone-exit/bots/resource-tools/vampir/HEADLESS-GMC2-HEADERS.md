@@ -37,15 +37,15 @@ Request virtual slot+68 получает URL, +b0 — пары header-name/value
 | Accept | literal application/json, call `1444f55d8` | Всегда |
 | serviceCode | переданный FString pointer stack+60, call `1444f55f9` | Всегда |
 | gameCode | SDK settings+38, call `1444f563a` | Всегда |
-| buildCode | settings+48 → native build getter14452b820, call `1444f5684` | Всегда |
-| nmDeviceKey | helper1444e5ff0, diagnostic FDeviceInfo::GetNMDeviceKey, call `1444f56b7` | Всегда |
+| buildCode | settings+48 → native build getter 14452b820, call `1444f5684` | Всегда |
+| nmDeviceKey | helper 1444e5ff0, diagnostic FDeviceInfo::GetNMDeviceKey, call `1444f56b7` | Всегда |
 | eTag | переданный FString R12, call `1444f56e1` | FString count+8 >1 на `1444f56c7` |
-| playerId | helper144524d80, diagnostic UNMServiceSettings::GetPlayerId, call `1444f5754` | AccessToken FString count>1 |
+| playerId | helper 144524d80, diagnostic UNMServiceSettings::GetPlayerId, call `1444f5754` | AccessToken FString count>1 |
 | accessToken | account object+78, call `1444f5775` | Count account+80 >1 на `1444f5708` |
 
 ServiceCode — явный вход; не подменён GameCode или guessed constant.
 BuildCode labels подтверждены [отдельным native getter](HEADLESS-SDK-BOOTSTRAP-VALUES.md).
-Пустые eTag/token fixtures представлены allocated empty FString с count1;
+Пустые eTag/token fixtures представлены allocated empty FString с count 1;
 их ветки пропускаются. PlayerId без accessToken не добавляется.
 При непустом token helper может вернуть пустой playerId: slice сам не требует
 его непустоты. Содержимое device/player helpers здесь return fixtures,

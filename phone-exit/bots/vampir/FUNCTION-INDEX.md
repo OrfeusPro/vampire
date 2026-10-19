@@ -2,27 +2,27 @@
 
 ## ID110 nonempty arrays, 20 октября
 
-Whole reader:34 full/465 short cases, все11 arrays. Readers main+1c8:
-1457f0540; +1f8:14578b840→optional1456b2ce0→3float reader145817d60;
-+250:145782c40. Vtable slot20 readers, slot10 writers; имена исправлены по
-dispatch. Array168 resize1456b6000 — reviewed28byte leaf без unwind.
-Map98 value ctor145793d90→table1498cf350→reader145796480 (экспорт ещё нужен).
+Whole reader:34 full/465 short cases, все 11 arrays. Readers main+1c8:
+1457f0540; +1f8:14578b840→optional 1456b2ce0→3float reader 145817d60;
++250:145782c40. Vtable slot 20 readers, slot 10 writers; имена исправлены по
+dispatch. Array168 resize1456b6000 — reviewed28 byte leaf без unwind.
+Map98 value ctor 145793d90→table 1498cf350→reader 145796480 (экспорт ещё нужен).
 [Схемы всех callbacks, SHA и продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-COLLECTIONS.md).
 
 ## ID110 reader и raw vector apply, 20 октября
 
-Outer ctor1456d4a40/reader1456d8f80→main reader145780eb0. Минимум203bytes:
-wire+61 триfloat32→main+188 триdouble; wire+73 heading→reader145818150→
+Outer ctor 1456d4a40/reader 1456d8f80→main reader 145780eb0. Минимум 203 bytes:
+wire+61 триfloat32→main+188 триdouble; wire+73 heading→reader 145818150→
 direction141507880→SSE2 sincos1487969e0/guarded fmod141444d00.
 Apply145d61e60: raw24→player+20; direction→1415055b0/guarded atan214143fd00
-→player+38 angles. 268 reader+22 apply cases; handler14675e9a0 и semantic
+→player+38 angles. 268 reader+22 apply cases; handler 14675e9a0 и semantic
 position consumer ещё не проверены. Непустые коллекции остаются открытыми.
 [Источники, SHA, callbacks и продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-RESULT.md).
 
 ## CharacterSelect callers и rawF0, 20 октября
 
 Caller `0x145d43290` читает UI+3f8→leaf `0x145c847c0`: signed bounds,
-global `0x14b57f180` records+70/count+78, stride170. Record+8→service virtual50.
+global `0x14b57f180` records+70/count+78, stride 170. Record+8→service virtual 50.
 State getter `0x145c859f0` читает тот же global; setter `0x145c930d0`
 получает ID102 packet+40 и пишет state+f0→ID109 raw20. Current state изменяемый.
 WaitingEnd/quick helper и indexed caller до native handoff/writer/frame/queue:
@@ -31,19 +31,19 @@ WaitingEnd/quick helper и indexed caller до native handoff/writer/frame/queue
 
 ## ID102 nested и handler, 20 октября
 
-Appearance item table `0x1498cff58`→reader `0x145771b40`: `<IBH`, enum clamp45.
+Appearance item table `0x1498cff58`→reader `0x145771b40`: `<IBH`, enum clamp 45.
 Optional callback `0x1456c3890`→insert `0x1456b99b0`→pair ctor `0x1456b7b90`
-→value table `0x1498d1a28`/reader `0x145782b30`: key+value `<BBIIIQ`, clamp9.
+→value table `0x1498d1a28`/reader `0x145782b30`: key+value `<BBIIIQ`, clamp 9.
 Whole list native проверка 30 bodies/489 short inputs; duplicate last-value-wins.
 Handler `0x14675dce0`→gate `0x1467a8e10`/predicate `0x145c85d90`, 45 cases.
-Packet+38 сравнивается с record+8, первое совпадение; sentinel0/miss→index0.
+Packet+38 сравнивается с record+8, первое совпадение; sentinel0/miss→index 0.
 UI+3f8 native store, helper `0x1456140f0` получает DL6; backend actions captured.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
 
 ## CharacterList owner и list/select IO, 20 октября
 
 Owner constructor `0x1468e29a0` ставит table `0x149e0e7c8`:
-slot7b0→caller `0x1468f1d70`, slota18→actual AL1 leaf `0x140bb4a10`.
+slot 7b0→caller `0x1468f1d70`, slota18→actual AL1 leaf `0x140bb4a10`.
 Native caller→RequestA/ID101 без policy fixture; lifecycle hook не установлен.
 ID102 reader `0x1456d8d80` → array `0x144aa5c50`/callback `0x1456da1a0`
 → record ctor `0x14577d3d0`/reader `0x145781c80`. Основной профиль проверен;
@@ -53,34 +53,34 @@ appearance/optional extensions пока unsupported. ID109 writer `0x1456e53a0`
 
 ## CharacterListRead caller, 20 октября
 
-0x1468f1e48 → getter 0x1456048e0; 0x1468f1e53 → service slot90.
-Полный caller 0x1468f1d70 исполнен на 32 fixtures: второе policy value1
-ведёт в actual RequestA/constructor и send capture; первое value2 отдельно
-вызывает slot98/owner a00. Owner type и enum names неизвестны.
+0x1468f1e48 → getter 0x1456048e0; 0x1468f1e53 → service slot 90.
+Полный caller 0x1468f1d70 исполнен на 32 fixtures: второе policy value 1
+ведёт в actual RequestA/constructor и send capture; первое value 2 отдельно
+вызывает slot 98/owner a00. Owner type и enum names неизвестны.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
 
 ## Selection lifecycle, 20 октября
 
 Slot08 → 0x14560e7d0 регистрирует callbacks 0x14561af60/0x14561b000.
 Последний пишет state40 и вызывает dispatch/broadcast captures; первый передаёт
-UI callback 0x1455f7bb0 → singleton virtual38. 8 native cases, emitters неизвестны.
+UI callback 0x1455f7bb0 → singleton virtual 38. 8 native cases, emitters неизвестны.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
 
 ## World.Id2/LevelPath — selection label
 
 World parser literal LevelPath → FString48, World record vtable 0x1499d28a8
-slot20→getter 0x141482e60. Actual ctor/store/hash/accessor/getter с current
-indexed CSV возвращают Lobby/CharacterSelect/CharacterSelect_02 для key2.
+slot 20→getter 0x141482e60. Actual ctor/store/hash/accessor/getter с current
+indexed CSV возвращают Lobby/CharacterSelect/CharacterSelect_02 для key 2.
 Runtime population/mount priority не доказаны. [Source/SHA](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
 
 ## Selection state registry lookup
 
 0x145c5d860 → hash 0x145c60180 → descriptor accessor 0x141482990 →
-record virtual20. Native lookup/accessor проверены на 13 cases; registry и
-record contents fixtures. Возврат — inline node+8/stride150, не stored pointer.
-Actual key2 label/source неизвестны. [Source/SHA](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
+record virtual 20. Native lookup/accessor проверены на 13 cases; registry и
+record contents fixtures. Возврат — inline node+8/stride 150, не stored pointer.
+Actual key 2 label/source неизвестны. [Source/SHA](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
 
-## Selection virtual40/state transition
+## Selection virtual 40/state transition
 
 0x145dbba60 → base 0x14560a6f0 / label 0x145dc3f30 / SetState 0x14560a400.
 Guard 0x145609b00/0x14452afb0; schedule callback 0x145600690→0x144328fe0.
@@ -92,8 +92,8 @@ Guard 0x145609b00/0x14452afb0; schedule callback 0x145600690→0x144328fe0.
 
 Base ctor 0x1455f9ee0 и derived prefix 0x145dc6b20 публикуют service global.
 Table 0x1499f11f0: +0x40→0x145dbba60, +0x50→0x145dc05f0,
-+0x90→requestA 0x145dbd4b0. Virtual50 actual packet109→handoff110 проверен;
-writer/socket/result и real slot90 caller остаются открытыми.
++0x90→requestA 0x145dbd4b0. Virtual50 actual packet 109→handoff110 проверен;
+writer/socket/result и real slot 90 caller остаются открытыми.
 [Source/SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
 
 ## WaitingEndNotify инициирует CharacterListRead
@@ -160,43 +160,43 @@ request handoff/send и BeginGame/connect. Общий псевдокод/call gr
 
 ## Login preparation и SDK field consumers
 
-0x1467a9700 → ctor0x1456d4c80 → handoff0x144aa8020. GetNetmarbleId
+0x1467a9700 → ctor 0x1456d4c80 → handoff0x144aa8020. GetNetmarbleId
 0x145604b90/0x144524940 → packet+0x30; module+0x78 accessor0x1456039c0
-→ packet+0xa0. Actual server getter0x144aaaa10 → packet+0xb0.
+→ packet+0xa0. Actual server getter 0x144aaaa10 → packet+0xb0.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md).
 
 ## VersionResult reader/handler → Login entry
 
-Table0x1498d69f0 ID2 reader0x1456d9b10, handler0x146768360 через
-registration0x14678ecaf/table0x149d81170. Native gate0x1467a8e10 covered
-code0 → 0x1467a9700; внутри static call к PktLogin ctor0x1456d4c80.
+Table0x1498d69f0 ID2 reader 0x1456d9b10, handler 0x146768360 через
+registration0x14678ecaf/table 0x149d81170. Native gate0x1467a8e10 covered
+code 0 → 0x1467a9700; внутри static call к PktLogin ctor 0x1456d4c80.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
 
 ## Version send wrapper → send-B
 
 0x1467aaa10 → thunk0x144aab2f0 ([wrapper+0x10]) → 0x144aaccf0
-→ Version writer → frame → queue0x1445eac20. Gates global0x14b520cb4,
+→ Version writer → frame → queue0x1445eac20. Gates global 0x14b520cb4,
 raw helper return2, peer+0x2a5. Metadata lookup и failure helper captures.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
 
 ## PktVersion writer и UTF-8
 
-Writer0x1456e5cf0 → FString0x144aa6a30 → length0x141446a50/convert0x141440af0/
+Writer0x1456e5cf0 → FString0x144aa6a30 → length 0x141446a50/convert0x141440af0/
 encoder0x141439820 → archive0x14961a5c0. String uint16-byte-length + UTF-8,
 три interleaved uint32; общий VersionPayload без frame/семантических имён.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
 
 ## Connected callback → PktVersion/ID1
 
-Game0x1467a9cd0 → ctor0x1456d53b0 → table0x1498d6990; name PktVersion,
-ID1, writer0x1456e5cf0. Wrapper send slot38 → 0x1467aaa10 capture.
+Game0x1467a9cd0 → ctor 0x1456d53b0 → table 0x1498d6990; name PktVersion,
+ID1, writer 0x1456e5cf0. Wrapper send slot 38 → 0x1467aaa10 capture.
 Raw field+0x98=207; смысл значения и getter semantics ещё открыты.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md).
 
 ## Делегат OnTcpPeerConnected → game callback
 
-Tail0x144aaae8d → allocator0x1414276b0 → table0x14900a528 slot60
-→ bridge0x14370c510 → action0x1437113ec virtual48 → game0x1467a9cd0.
+Tail0x144aaae8d → allocator 0x1414276b0 → table 0x14900a528 slot 60
+→ bridge0x14370c510 → action0x1437113ec virtual 48 → game0x1467a9cd0.
 P+0x310 содержит units storage, не owner count. Callback body ещё capture.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
 
@@ -358,7 +358,7 @@ full callback/errorCode/session acceptance ещё открыты.
 ## Migration allocation wrappers
 
 [Native allocator chain](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md):
-141431680 → quantize →141431210 →14148c8d0 →backend virtual slot38.
+141431680 → quantize →141431210 →14148c8d0 →backend virtual slot 38.
 10 cases не показали zeroing wrapper; backend fill fixture, реальная policy
 неизвестна. Далее для нового профиля — SDK sign-in response/session.
 
@@ -379,7 +379,7 @@ unaligned allocation tail неизвестен, общего migration helper п
 ## Auth storage gate и общий state byte
 
 [Native auth path gate](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md):
-netmarble context включает extra directory и byte14b4f13fd. Save/Initialize
+netmarble context включает extra directory и byte 14b4f13fd. Save/Initialize
 читают тот же global; gate false не обнуляет ранее установленный byte.
 Активный context, suffix transformation и reset lifecycle неизвестны.
 
@@ -393,7 +393,7 @@ Global gate/tag semantics и active path ещё открыты.
 ## NID deviceKey / OAuth device_key
 
 [Native pair assembly](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md)
-подтверждает вызов getter144522b50 с bool=true для web/code/refresh.
+подтверждает вызов getter 144522b50 с bool=true для web/code/refresh.
 Registry v2 хранит NID key отдельно от SDK key/nmDeviceKey. Полные
 web URL/JS context и реальные значения не проверены.
 
@@ -434,7 +434,7 @@ Real keys/active platform/confirmation protocol ещё открыты.
 
 ## FAuthImpl SignIn JSON и CreatePost headers, 19 октября
 
-1444fb800 body slices/constructor1444bc380: 4 fixtures подтвердили 4 base fields,
+1444fb800 body slices/constructor 1444bc380: 4 fixtures подтвердили 4 base fields,
 optional playerId и credential. Key playerId связан service+150 → wrapper ctor
 → leaf+30 → SignIn. CreatePost14451c600 header/method slices: 8 fixtures,
 application/json/gameCode/buildCode и optional accessToken/authToken alias.
@@ -446,7 +446,7 @@ application/json/gameCode/buildCode и optional accessToken/authToken alias.
 1450ef437 → 14453cdf0 = UNMServiceSettings::Save; return caller игнорирует.
 Затем GetChannelManager → RemoveAllCredentials → base ctor с DL=33 →
 credential+58=accessToken → SetCredential wrapper/impl, map key из +50=33.
-Vtable1496e16f0 slot1 →1450e50d0 → base1444e6570: channelAccessToken/channelCode.
+Vtable1496e16f0 slot 1 →1450e50d0 → base1444e6570: channelAccessToken/channelCode.
 Четыре native fixtures с Save false/true и двумя tokens; storage/JSON/map —
 явные captures. [Source/SHA](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
 
@@ -529,7 +529,7 @@ Base64/DECKEY/key acquisition и вся response chain ещё открыты.
 
 ## RequestGMC2 header gates, 19 октября
 
-Native 1444f5560..1444f57b1: URL slot68/header slotb0/method slot60 captures,
+Native 1444f5560..1444f57b1: URL slot 68/header slotb0/method slot 60 captures,
 constructor prefix 1444bd970..bda2e header names, build getter native. 16 fixtures:
 eTag count>1 и accessToken count>1 gates. Device 1444e5ff0 / player 144524d80
 return fixtures. Общий plan_gmc2_get_request, frozen headers/repr redaction.
@@ -537,8 +537,8 @@ return fixtures. Общий plan_gmc2_get_request, frozen headers/repr redaction
 
 ## GMC2 URL assembly slice, 19 октября
 
-1444f3a68..1444f3d7d: manager+1e8/base,+1c8/group, version getter144524390,
-settings+48/build getter14452b820, settings+28/market. Native ASCII-view
+1444f3a68..1444f3d7d: manager+1e8/base,+1c8/group, version getter 144524390,
+settings+48/build getter 14452b820, settings+28/market. Native ASCII-view
 append14175be40 исполнен; allocation/copy/free/growth/singleton — shims.
 26 fixtures, общий assemble_gmc2_config_url_ascii, без escaping/URI validation/IO.
 [Источник и границы](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
@@ -554,7 +554,7 @@ DL2→C, остальные→A; 256 fixtures/guards. Refresh1444f3c70 и Reques
 ## Публичный CDN body и module descriptors, 19 октября
 
 Base-profile HTTPS GET: 200, 6000 bytes, body SHA 15a9b8d4…62e5d.
-Общий decoder -> Zone real -> SDK mode2; select_cdn_server -> index6/REAL,
+Общий decoder -> Zone real -> SDK mode 2; select_cdn_server -> index 6/REAL,
 lobbyPort=12000. Это реальный публичный документ, не account/session response.
 [SHA/provenance/offline replay](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).
 ProjectRED.uproject/NkPatch.uplugin побайтно совпали base/patch; обе runtime
@@ -618,7 +618,7 @@ Actual config/endpoint validity/connection и полный ReadJson ещё от�
 ## CDN JSON result/ReadJson branches, 19 октября: H04b partial
 
 145642c79..2c88: native parser-return + object-pointer branch, 4 fixtures.
-145643107..3146: ReadJson call14565a5d0 → copy object+1a1 byte → validator
+145643107..3146: ReadJson call 14565a5d0 → copy object+1a1 byte → validator
 145661a70 → error/next branch145643213, 8 fixtures. Calls имеют return shims;
 whole parser/ReadJson/validation не исполнялись. Next не означает callback ready.
 Shared decode_cdn_config_document: plain text JSON object, raw AES fallback,
@@ -630,13 +630,13 @@ Full config acceptance/actual values/TLS/startup order ещё открыты.
 ## CDN fallback decrypt, 19 октября: H04b partial
 
 Native 145653dd0 whole orchestration: compiled 28-byte seed → SHA256 call
-1483f9cd0 → IV first16/ciphertext rest → getter14840a8b0 → EVP calls.
+1483f9cd0 → IV first16/ciphertext rest → getter 14840a8b0 → EVP calls.
 Descriptors 14a723e80/14a723e20, nid 427 связаны с compiled AES-256-CBC name record.
 21 replay: 17 обычных +3 forced crypto failure +1 second CPU descriptor.
 SHA/EVP primitives — backend shims, actual native crypto core не исполнен.
 Shared decrypt_cdn_fallback: strict bounded envelope/PKCS7, optional crypto,
 raw bytes; ошибки не превращаются в пустой plaintext. Android не проверен.
-Callback branch145642c82→145643110 или fallback call145642d52 — static only.
+Callback branch145642c82→145643110 или fallback call 145642d52 — static only.
 [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-FALLBACK.md).
 JSON/ReadJson acceptance/actual settings/TLS/HTTP compression остаются открытыми.
 
@@ -720,8 +720,8 @@ URI parser/late overrides/full headers/body/TLS/status/response/callback order �
 EXE SHA прежний. Caller14563f287 → replace1445daf80/copy1445d8e60/
 string-replace1445de490: 15 native ASCII cases dot→underscore, input unchanged.
 Allocator/CRT search/compare/copy/cookie bounded shims. Initializer1445eae1b..42
-создаёт platform object/global14b4f39c8/vtable1495045d0; getter1445e75b0
-→slot149504608→141484e40 возвращает 2; native caller выбирает window.
+создаёт platform object/global 14b4f39c8/vtable1495045d0; getter 1445e75b0
+→slot 149504608→141484e40 возвращает 2; native caller выбирает window.
 Ещё 7 явных return-tag cases подтверждают 1→ios/2→window/other→android, не другие builds.
 Общие prepare_cdn_version_ascii/select_cdn_platform_label/prepare_cdn_config_url_ascii;
 интеграция с native URL tail offline. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-PREPARATION.md).
@@ -730,21 +730,21 @@ Allocator/CRT search/compare/copy/cookie bounded shims. Initializer1445eae1b..42
 ## Завершающая сборка CDN URL, 19 октября: H04b partial
 
 EXE SHA прежний. Initialize slice14563f758..f9d8, concat145630d40 и append/growth
-1445d8310 исполнены в16 сценариях с explicit ASCII fragments/SSO/heap capacity.
+1445d8310 исполнены в 16 сценариях с explicit ASCII fragments/SSO/heap capacity.
 Allocator/free/memcpy/memmove — bounded shims, сама concat настоящая.
 Форма base+platform+'/'+prefix+'/'+version_fragment+'/config.json'; между base и
-platform слеш не вставляется. Pointer14b149ba0 → literal1498b9eb8 подтверждён.
+platform слеш не вставляется. Pointer14b149ba0 → literal 1498b9eb8 подтверждён.
 Общий assemble_cdn_config_url_ascii; реальные values/preprocessing/HTTP открыты.
 [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-URL.md).
-Следом version helper1445daf80 и platform getter1445e75b0, Game config/overrides.
+Следом version helper 1445daf80 и platform getter 1445e75b0, Game config/overrides.
 
 ## CDN base selector и Game config, 19 октября: H04b partial
 
 EXE SHA прежний. Find141428640 и comparator1414599a0 исполнены без shims;
-Initialize call14563f3d3 и branch14563f3e9..424: ConfigPrefix содержит real
-(ASCII ignore-case) → global14b520cf0, иначе14b520d00. 16 cases incl unreal/
+Initialize call 14563f3d3 и branch14563f3e9..424: ConfigPrefix содержит real
+(ASCII ignore-case) → global 14b520cf0, иначе 14b520d00. 16 cases incl unreal/
 Unicode/space; общий select_cdn_config_base с явными строками. Не SDK Zone equality.
-File-global14b2743f8 из loader1445bc080 связан с literal Game/initialization
+File-global 14b2743f8 из loader 1445bc080 связан с literal Game/initialization
 14152ca91..cac4. Callback map registration1445bb3a0 сохранена статически.
 Новый pak0 проверен по fullSHA: 6912 decoded/75 encrypted skipped/10 size skipped,
 4 exact config markers ASCII/UTF16 не найдены, decode errors0; scope ограничен.
@@ -753,26 +753,26 @@ Physical config/actual values/late overrides/full URL builder/startup order от
 
 ## CDN config → SDK environment, 19 октября: H04b partial
 
-EXE SHA прежний. Ctor145631210/global14b575630/vtable1498bacd0 slot8 →
+EXE SHA прежний. Ctor145631210/global 14b575630/vtable1498bacd0 slot 8 →
 145647da0 задаёт+48 dev; FNnCdnConfig::Initialize14563f080, HTTP callback
-145642a30 call145643110 → ReadJson14565a5d0. Lookup14563da10 получает section
+145642a30 call 145643110 → ReadJson14565a5d0. Lookup14563da10 получает section
 NetmarbleS/keyZone, conversion1415e48f0 → copy141421d80 в object+48.
 7 native cases с JSON/string/copy/free capture shims, missing branch14565f540;
 весь parser/error/HTTP не исполнены. Caller145618910 → InitSetting14561a930.
-NetworkSetting root144aa6f20 загружает CdnConfigUrl/QA/AppVersion/ConfigPrefix
+NetworkSetting root 144aa6f20 загружает CdnConfigUrl/QA/AppVersion/ConfigPrefix
 в globals14b520cf0/d00/d10/d20; реальные значения/файл и startup order неизвестны.
 [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-CONFIG.md).
 
 ## NMSDKSettings и game override, 19 октября: H04b partial
 
-Общий EXE SHA ниже. Accessor1444ab740 → ctor thunk1444ac680 → ctor1444ac9f0;
+Общий EXE SHA ниже. Accessor1444ab740 → ctor thunk1444ac680 → ctor 1444ac9f0;
 registration1444ab7f0 → params1494c5e60 → property array1494c5cd0, 9 дескрипторов.
 Constructor prefix: 4 native replays, market empty/game thered/build0/zone1.
 Game InitSetting14561a930 копирует globals14b5740c0/4080/4090 из initializers
 141258b10/8ae0/8ab0 (nmp/thered/client ID); сравнивает environment с real через
 141459730 и пишет settings+49. 13 native cases, общий select_game_sdk_zone;
 base/string/growth/copy/free/environment/singleton shims явно ограничены.
-Getter14563d960 → global14b575630; объект+48 передаётся141433970.
+Getter 14563d960 → global 14b575630; объект+48 передаётся 141433970.
 Ctor145631210 устанавливает singleton и обнуляет+48; реальное заполнение
 environment, порядок вызовов и active values ещё неизвестны.
 [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SETTINGS.md).
@@ -886,10 +886,10 @@ callback `0x1444edbb0`, parser `0x1444f0e80`, DecryptXOR `0x1444ddf50`.
 
 ## SDK auth, 18 октября: H04 partial
 
-Общий SHA Windows EXE ниже. FAuthImpl SignIn root1444fb800 использует
+Общий SHA Windows EXE ниже. FAuthImpl SignIn root 1444fb800 использует
 `authUrl/v1/sign-in`; NetmarbleID code/refresh roots1450e2640/1450e2f50 —
 `authTokenUrl/v2/access-token`, form client_id/device_key/code или refresh_token.
-POST helper14451c570→14451c600, form builder144586a30; native whitelist141c06750
+POST helper 14451c570→14451c600, form builder144586a30; native whitelist141c06750
 и uppercase hex1415ad670 исполнены 512 раз.24 SDK literals/34 LEA/24 roots.
 [Полные source/SHA/offsets и границы](../resource-tools/vampir/HEADLESS-AUTH.md).
 Общий auth_request.py — offline plan, не login. Config bases/browser code и
@@ -1033,10 +1033,10 @@ registration callsites см. в подробной таблице, не выво
 
 [HEADLESS-PING-CODEC.md](../resource-tools/vampir/HEADLESS-PING-CODEC.md) содержит
 полную цепочку, provenance и `code-clues/headless-ping-codec.json`.
-Receive Dispatch14679f510 → reader ctor144aa6260 → vtable14961a520 →
-u64 reader144aa5bc0/u32 reader144aa59c0 → raw read144aa5ce0.
+Receive Dispatch14679f510 → reader ctor 144aa6260 → vtable14961a520 →
+u64 reader 144aa5bc0/u32 reader 144aa59c0 → raw read 144aa5ce0.
 Dispatch явно передаёт swap=0; тела little-endian16 байт Ping/12 байт Result.
-Writer ctor144aa62f0 → vtable14961a5c0 → u64 writer144aa61e0/u32 writer144aa6090
+Writer ctor 144aa62f0 → vtable14961a5c0 → u64 writer 144aa61e0/u32 writer 144aa6090
 → raw write144aa6120. Counter helpers144aa68c0/1445ead30; bswap64/32
 1445d9f60/1445d9f30. Все адреса VA, префикс 0x; полные source SHA выше.
 
@@ -1050,7 +1050,7 @@ OnHandler+10 ещё проследить. Signedness/field timing semantics не
 
 ## Более глубокие подтверждения
 
-Первый receive transport: `UxTcpPeer::_HandleRecvBuffer`, root0x1445ed3e0,
+Первый receive transport: `UxTcpPeer::_HandleRecvBuffer`, root 0x1445ed3e0,
 диагностическая LEA0x1445ed4cc. Native slice0x1445ed403..0x1445ed562:
 length 23/compressed bit 23 → copy/decompress0x14141ba60 → второй буфер,
 append0x1445e4a90/resize0x1445de6e0/memmove. 62 native cases / 5 tests.
@@ -1070,7 +1070,7 @@ initialauth/receive integrity/send queue всё ещё неизвестны.
 
 H03b.2b partial: length probe0x144aa9a90 подтверждён 156 native cases;
 wrapperA0x144aa9c00 —13 native cases до callback. Vtables0x14961af58/0x14961b8f0
-у main+200 имеют length+38/receive+40. Factory0x14678ec40 через setter0x144aab300
+у main+200 имеют length+38/receive+40. Factory0x14678ec40 через setter 0x144aab300
 назначается в peer+238; wrapperBcallback из того же поля вызывает Dispatch0x14679f510.
 Статическая linkage доказана, end-to-end replay нет. Candidate keysetter0x144aab330
 ещё без caller/source семантики. [HEADLESS-RECEIVE-ENVELOPE.md](../resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md),
@@ -1080,12 +1080,12 @@ wrapperA0x144aa9c00 —13 native cases до callback. Vtables0x14961af58/0x14961
 H03b.2a: native send-A slice0x144aa9e6a..0x144aa9f45 подтверждён 20 сценариями;
 length 24+CRC32+(ID16+sequence16+body), XOR от offset 3. Ping frame 27 байт.
 Sequence connection+228 обновляется native16bit с wrap 65535→0.
-Stream append0x144aa6330, buffer getter0x144aa5f80, word writer0x144aa6060;
+Stream append0x144aa6330, buffer getter 0x144aa5f80, word writer 0x144aa6060;
 подробный provenance/[HEADLESS-SEND-FRAME.md](../resource-tools/vampir/HEADLESS-SEND-FRAME.md).
 Общий `vampir_core/send_frame.py`, `code-clues/headless-send-frame.json`.
 Receive/context/key ещё unknown; layout перед Dispatch не отождествлять с send frame.
 
-H03b.1: CRC initializer0x1418ba360/update0x1445f1230/table0x1495046f0,
+H03b.1: CRC initializer0x1418ba360/update0x1445f1230/table 0x1495046f0,
 XOR0x144aa6ca0. Подтверждены 252 native executions/5 tests; общий модуль
 `vampir-shared/vampir_core/frame_primitives.py`. Send roots0x144aa9da0/0x144aaccf0,
 receive0x144aa9c00/0x144aacb50; XOR пропускает 3 байта. Session key source,

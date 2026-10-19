@@ -42,8 +42,8 @@ Report включает tool/source/upstream hashes, 16 fragments/325 instructio
 
 | Участок | Адрес VA | Подтверждено |
 |---|---|---|
-| Reader u64, archive slot+50 | 0x144aa5bc0 | Raw read8; при flag+38≠0 выполняет bswap64 |
-| Reader u32, archive slot+58 | 0x144aa59c0 | Raw read4; при flag+38≠0 выполняет bswap32 |
+| Reader u64, archive slot+50 | 0x144aa5bc0 | Raw read 8; при flag+38≠0 выполняет bswap64 |
+| Reader u32, archive slot+58 | 0x144aa59c0 | Raw read 4; при flag+38≠0 выполняет bswap32 |
 | Raw read, archive slot+90 | 0x144aa5ce0 | Копирует min(available, requested), двигает cursor, возвращает полноту чтения |
 | Read bookkeeping | 0x144aa68c0 | Сохраняет фактически прочитанное количество |
 | Writer constructor | 0x144aa62f0 | Через 144aa5dd0 создаёт output state, устанавливает vptr14961a5c0 |
@@ -60,7 +60,7 @@ read/write, cursor/counter и swap-код. Единственная замена
 Shim ограничен выделенной scratch memory и 256 байтами; остальные неизвестные
 переходы запрещены, число инструкций ограничено.
 
-Writer state имеет явный заранее выделенный buffer256: native allocation/growth
+Writer state имеет явный заранее выделенный buffer 256: native allocation/growth
 не исполнялись. Source buffers и конфигурационный аргумент 1 — explicit inputs,
 не восстановленное состояние живой сессии. Это не инструкция выделять 256 байт
 для всех будущих пакетов. Конструкторы исполняются настоящими инструкциями.

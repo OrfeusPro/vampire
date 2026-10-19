@@ -72,8 +72,8 @@ packet hierarchy; порядок полей, primitive encoding и полные 
 | PktLobbyLoginResult | 0x149d802e8 | 0x14677ec50 | 0x14678e80a |
 
 Для каждого проверены constructor call, handler-table LEA/store, packet/handler
-аргументы в RDX/R8 и вызов регистрации. У первых четырёх factory root14678ec40
-и target1467a7250; у LobbyLoginResult factory root14678e750 и target1467a7150.
+аргументы в RDX/R8 и вызов регистрации. У первых четырёх factory root 14678ec40
+и target 1467a7250; у LobbyLoginResult factory root 14678e750 и target 1467a7150.
 Оба регистратора вызывают packet slot+0x28, сохраняют AX как word key и
 передают пару в 14678e3e0. У варианта 1467a7150 дополнительно явно вызывается
 name slot+0x38 в диагностической ветке. Эти факты подтверждают назначение
@@ -93,7 +93,7 @@ name slot+0x38 в диагностической ветке. Эти факты �
 slots, границы вызовов/запись vptr, регистрацию и коллизии контекстов.
 10 native ID getter executions прошли. Это не запуск игры и не live packet test.
 
-При попытке линейного декодирования всех vtable refs встречен root1457491b0,
+При попытке линейного декодирования всех vtable refs встречен root 1457491b0,
 который не декодируется полностью существующим helper. Он не включён в
 доказательства: использованы прямые вызовы конструкторов и проверенные
 фабрики. Отсутствие unwind у leaf не считалось отсутствием функции.

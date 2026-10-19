@@ -1,19 +1,19 @@
 # Самостоятельный Vampir — журнал работы
 
-## 20 октября: caller RequestA/slot90 подтверждён
+## 20 октября: caller RequestA/slot 90 подтверждён
 
 Проверено 505 direct getter calls, 16 candidates unresolved, 9 roots не
 декодировались. Найден caller 0x1468f1d70. 32 native cases исполнили caller →
-getter → slot90 → RequestA/constructor/send capture. Owner/lifecycle неизвестны.
+getter → slot 90 → RequestA/constructor/send capture. Owner/lifecycle неизвестны.
 Ghidra: 80 функций/44 предупреждения. Девять тестов прошли: три новых,
 три CharacterList boundary и три Ghidra. Проверены 1311 локальных ссылок,
 битых нет; полный набор тестов не повторялся. Runtime/network не менялись.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
 
-## 20 октября: selection lifecycle и virtual38 callback
+## 20 октября: selection lifecycle и virtual 38 callback
 
 Экспорт Ghidra расширен до 76 функций/42 предупреждений. Проверены 7 значений
-raw32 event и callback leaf → singleton virtual38. Девять тестов прошли:
+raw32 event и callback leaf → singleton virtual 38. Девять тестов прошли:
 три новых, три selection service и три Ghidra. Проверены 1298 локальных ссылок,
 битых нет. Полный набор тестов не повторялся;
 регистрация/emitters/backend dispatch остаются статическими или captures.
@@ -23,8 +23,8 @@ Runtime и live session не менялись.
 ## 20 октября: World.Id2/CharacterSelect path связан с native getter
 
 Registry/source diagnostics и World parsers привязали LevelPath→record48.
-Actual constructor/field-store/hash/accessor/virtual20 getter исполнились
-с rows1/2 из base и current patch CSV. Выход key2: CharacterSelect_02.
+Actual constructor/field-store/hash/accessor/virtual 20 getter исполнились
+с rows1/2 из base и current patch CSV. Выход key 2: CharacterSelect_02.
 Old patch source stamp stale; использован существующий audited release snapshot,
 CSV bytes совпали, полные SHA текущих архивов проверены. Ghidra: 63 functions/
 36 warnings. Три новых, три lookup и три Ghidra tests прошли. Runtime loader/
@@ -36,25 +36,25 @@ mount priority/live session не проверялись; full suite не пов�
 Ghidra lookup/registry/generic loader exports расширены: 54 functions/33 warnings.
 13 native cases проверили exact key/hash collision/inline record+8/accessor,
 label caller. Registry getter/record contents всё ещё fixtures; фактическая
-строка key2 не установлена. Три новых, три state transition и три Ghidra tests
+строка key 2 не установлена. Три новых, три state transition и три Ghidra tests
 прошли; full suite/runtime/network не менялись.
 [Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
 
 ## 20 октября: selection state preparation и deferred callback
 
-Ghidra virtual40 dependencies/callback экспортированы: 48 functions/32 warnings.
+Ghidra virtual 40 dependencies/callback экспортированы: 48 functions/32 warnings.
 10 native preparation cases проверяют guard/ready/pending/state2/schedule;
 12 independent callback cases — player/phase/busy/flags/raw field writes.
-Scheduler/load/text/lookup backends explicit fixtures. Direct slot90 вызов
+Scheduler/load/text/lookup backends explicit fixtures. Direct slot 90 вызов
 на covered paths не найден. Три новых, три selection service и три Ghidra tests
 прошли; runtime не менялся, полный suite/live session не проверялись.
 [Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
 
 ## 19 октября: derived selection service и CharacterSelect handoff
 
-Ghidra ctor/derived prefix/table связали requestA с slot90. Native prefix
-allocation success/failure и base singleton getter проверены. Actual virtual50
-передаёт raw64/raw32/state+f0 в packet109→handoff110; 4 vectors совпали.
+Ghidra ctor/derived prefix/table связали requestA с slot 90. Native prefix
+allocation success/failure и base singleton getter проверены. Actual virtual 50
+передаёт raw64/raw32/state+f0 в packet 109→handoff110; 4 vectors совпали.
 Ghidra: 43 functions/30 warnings. Три новых, три WaitingEnd и три Ghidra tests
 прошли; full suite не повторялся. Runtime не менялся; сеть/ответ/выбор не готовы.
 [Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
@@ -133,7 +133,7 @@ PE DLL проверена, injection/game SDK не выполнялись. Тр�
 ## 19 октября: Ghidra вместо дробного ручного анализа
 
 Официальные Ghidra 12.1.4 и Temurin21 закреплены SHA, импортирован EXE как
-данные. Три exports по22 функции; C outputs совпали побайтно. 13 warnings
+данные. Три exports по 22 функции; C outputs совпали побайтно. 13 warnings
 сохранены. Три новых и три смежных Login tests прошли; game/profile не запускались.
 [Пути, команды и static findings](../resource-tools/vampir/HEADLESS-GHIDRA.md).
 
@@ -148,7 +148,7 @@ path. Handoff capture, без writer/network. Runtime не менялся; full 
 ## 19 октября: VersionResult → Login entry
 
 39 native scenarios read/dispatch/handler/bounded gate проверили переход
-в 0x1467a9700 для code0; PktLogin ctor связан статически. Три новых и семь смежных tests
+в 0x1467a9700 для code 0; PktLogin ctor связан статически. Три новых и семь смежных tests
 прошли. Runtime не менялся; full suite379 не повторялся. Actual game/network/
 profile/credentials не использованы, Login body ещё capture.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
@@ -164,7 +164,7 @@ Runtime не менялся; полный suite379 не повторялся. Re
 ## 19 октября: PktVersion writer → общее ядро
 
 14 native vectors writer/UTF-8/archive совпали с переносимым VersionPayload.
-Три новых tests прошли. Полный headless suite: 379 tests за298.328s, OK.
+Три новых tests прошли. Полный headless suite: 379 tests за 298.328s, OK.
 Getters/frame/server response не проверены.
 Игра/profile/process memory/credentials/network не использованы.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
@@ -180,7 +180,7 @@ DWORD и send-false/gate; три новых и шесть смежных tests �
 ## 19 октября: connected delegate → game target
 
 12 native scenarios исполнили binding slice/allocator wrapper/bridge/action.
-Game vtable source-bound, callback0x1467a9cd0 пока capture. Уточнено поле
+Game vtable source-bound, callback 0x1467a9cd0 пока capture. Уточнено поле
 P+0x310 как units storage, не owner count. Три новых и шесть смежных tests прошли.
 Runtime не менялся; full suite не повторялся; network/game/profile не использованы.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
@@ -438,7 +438,7 @@ Markdown-ссылок проверены, git diff --check без ошибок.
 
 Исполнены auth gate, reused native compare и Load filename continuation.
 8 fixtures auth type/context success × prior shared flag. Выявлен netmarble
-gate и sticky byte14b4f13fd; Save/Initialize читают тот же byte (static refs).
+gate и sticky byte 14b4f13fd; Save/Initialize читают тот же byte (static refs).
 SetupServiceSettingPath и command-context extraction сохранены source-bound,
 суффикс/реальные аргументы не читались. Regression test прошёл.
 Четыре смежных storage/load tests также прошли; 415 относительных
@@ -539,7 +539,7 @@ helpers reused. AuthUrl связан с real public GMC2 offline, active profile
 Далее response1444d85f0/token/player/expiry/errors → SDK/game session.
 Полный набор: 274/274 теста, 180,0 с. Синтаксис трёх Python-файлов,
 UTF-8 восьми документов, 420 относительных ссылок и diff check прошли.
-Для следующего этапа: callback1444d85f0 — leaf JMP в 1444cc1a0 (777 instructions).
+Для следующего этапа: callback 1444d85f0 — leaf JMP в 1444cc1a0 (777 instructions).
 Static investigation сохранена вне Git в code-clues/sdk-sign-in-response-investigation.json;
 response handler ещё не исполнялся, его schema не заявлена готовой.
 
@@ -548,7 +548,7 @@ response handler ещё не исполнялся, его schema не заявл
 После d18b9e1 установлено: 14453cdf0 — UNMServiceSettings::Save, не session
 создание. OnResult игнорирует его return и продолжает clear credentials,
 base ctor DL=33, accessToken copy в +58 и SetCredential/manager insert33.
-GetObject по vtable slot1 и base GetObject исполнены: channelAccessToken и
+GetObject по vtable slot 1 и base GetObject исполнены: channelAccessToken и
 channelCode33. Email provider20 и SDK credential33 не взаимозаменяемы.
 Четыре fixtures: Save false/true × два tokens; Save/clear/JSON/map insertion
 и retain count явно captured/shim, persistence/SDK SignIn не исполнялись.
@@ -754,7 +754,7 @@ ProjectRED.uproject/NkPatch.uplugin совпали, NnNetwork/NkPatchRuntime о�
 Default. Runtime module order этим не определён. Выполнены два public HTTPS
 GET по base INI profile (первичный probe и воспроизводимый producer), оба
 200/6000 bytes/одинаковый body SHA. Общий decoder разобрал документ:
-Zone real -> mode2, select server index6/REAL/lobbyPort12000. Body/headers/
+Zone real -> mode 2, select server index 6/REAL/lobbyPort12000. Body/headers/
 source profile сохранены отдельно; snapshot offline replay не вызывает сеть.
 HTTPS добавлен локальной политикой, native HTTP wire/TLS не воспроизводился.
 Auth/лобби не запускались; active INI/full native validation ещё открыты.
@@ -1155,15 +1155,15 @@ build0/zone1/SDKType Global, email/client strings empty. Base UObject/FString
 constructors shimmed; config loading/CDO lifecycle не исполнялись.
 
 Поиск callers класса выявил game function с diagnostic
-FNnNetmarbleSDKService::_InitSetting(), root14561a930. Она копирует globals
+FNnNetmarbleSDKService::_InitSetting(), root 14561a930. Она копирует globals
 14b5740c0/4080/4090 в market/game/client ID. Initializers141258b10/8ae0/8ab0
 задают nmp/thered/public client ID, но поздние изменения globals не исключены.
-Environment getter14563d960 читает14b575630; поле singleton+48 передаётся
-141433970 и результат сравнивается с ASCII real через141459730.
+Environment getter 14563d960 читает 14b575630; поле singleton+48 передаётся
+141433970 и результат сравнивается с ASCII real через 141459730.
 Реальные copy/compare/zone-write инструкции проверены на 13 входах:
 ASCII-case real→2 production, прочие проверенные строки→1 Dev.
 Environment conversion/singleton/growth/memcpy/free shimmed; активное значение
-не прочитано. Конструктор145631210 сохраняет singleton и обнуляет+48.
+не прочитано. Конструктор 145631210 сохраняет singleton и обнуляет+48.
 
 Общий sdk_config.select_game_sdk_zone требует явного environment, ограничивает
 128 UTF16 units, отвергает NUL. Правило не получает конфигурацию и не выбирает
@@ -1174,7 +1174,7 @@ dca370b3cb47525bc16879fad4a6e0e116ea70dbe9d7a7c27df9caaa26fce573.
 
 Четыре новых теста проверяют происхождение/bytes, descriptor offsets,
 4 constructor replays, 13 game replays и portable rule/ошибки входов.
-Полная регрессия124/124 (64,6 с), синтаксис трёх изменённых Python-файлов,
+Полная регрессия 124/124 (64,6 с), синтаксис трёх изменённых Python-файлов,
 279 относительных ссылок и diff check прошли. Игра/аккаунты/сеть не использованы.
 Следом заполнение environment singleton+48 до InitSetting, порядок с GMC2 Start,
 поздние изменения globals/build, затем подтверждённый config request plan.
@@ -1191,7 +1191,7 @@ decode errors 0. Все проходы достигли index_offset; 62167 gaps
 Сводка SHA256 0880bdc08270fdea077372c8985b6597882c7646cb4369ba6f568adee8679463.
 Подробные зависимости/границы — CLIENT-RELEASE-INDEX.md.
 
-Pakchunk1: 1565 новых CSV, errors/skipped 0 при лимите16 MiB. 1267 имеют точный
+Pakchunk1: 1565 новых CSV, errors/skipped 0 при лимите 16 MiB. 1267 имеют точный
 старый content hash, 298 нет. По уникальной схеме выделены 389 кандидатов,
 для 73 изменённых проверены строки; 62 compared, 11 duplicate_first_column.
 Кандидаты прежних Quest1448/QuestTask1454/Action1455 изменили только поле
@@ -1491,7 +1491,7 @@ Content-Type form-urlencoded. Caller1450e2d80/1450e36e1→14451c570→CreatePost
 Native byte whitelist141c06750 и uppercase hex1415ad670 исполнены для 256 байтов
 каждый (512 executions); безопасные -.A-Z_a-z0-9~, пробел %20, плюс %2B.
 Общий auth_request.py создаёт redacted offline TokenRequestPlan, ASCII subset,
-field4096/body32768 budgets; no HTTP. Unicode/full native map serializer не
+field4096/body 32768 budgets; no HTTP. Unicode/full native map serializer не
 проверены. Browser password/code, config base URL/client IDs/region, responses,
 SDK session и game Login handoff остаются неизвестными. Кодовые токены не
 выдаются за игровой пароль. 5 tests/provenance/source/call anchors/escaping/plans.
@@ -1509,7 +1509,7 @@ ParseConstantsTemplateGroups/DecryptXOR уже видны в EXE; их roots е�
 
 ## 18 октября 2026 — native drain и portable partial socket send
 
-Constructor table149503b58/peer+50 slot 20→1445e8b70 доказан по instructions.
+Constructor table 149503b58/peer+50 slot 20→1445e8b70 доказан по instructions.
 Native drain читает ту же queue178/180, исключает NUL, вызывает ordinal import.
 PE import + export установленной WS2_32.dll подтверждают имя send; DLL SHA/bytes
 в отчёте. 61 native cases: partial/full/zero, error query 22/23/37 без consume,
@@ -1564,7 +1564,7 @@ Python файлов, 267 локальных ссылок и git diff --check —
 ## 18 октября 2026 — keyed receive-B и ID bookkeeping
 
 Реальный wrapper 144aacb50 после XOR(frame+3, key=subobject+48) читает IDword+3,
-вызывает singleton getter144aa7c40 и table lookup144aa8120. При совпадении
+вызывает singleton getter 144aa7c40 и table lookup 144aa8120. При совпадении
 native remove144aa7f40/sparse free14142eff0 удаляет запись; если таблица пуста,
 вызывается notify144aa7870. Затем тот же pointer/size передаётся в Dispatch.
 Не CRC/sequence header. Семантика manager/подписчиков не объявляется ACK flow.
@@ -1586,15 +1586,15 @@ HEADLESS-RECEIVE-B.md/общий реестр/задачи обновлены. �
 полный lifecycle и оставшиеся integrity/error branches.
 Проверка: 57/57 тестов без skip (27.3 с), syntax четырёх изменённых/новых
 Python файлов, 260 локальных ссылок и git diff --check — успешно.
-Следующая точка: send-B call0x144aacf7d→0x1445eac20 после XOR0x144aacf63;
+Следующая точка: send-B call 0x144aacf7d→0x1445eac20 после XOR0x144aacf63;
 проверить ownership/copy очереди до archive cleanup0x144aacf89. Пока unknown.
 
 ## 18 октября 2026 — native Dispatch до PingResult OnHandler entry
 
 Предыдущий этап дал проверенный listener loop, поэтому callback capture заменён
 на настоящий Dispatch14679f510. Synthetic registry ID17→native PingResult object→
-handler table149d810f8. Native constructor/reader/archive ctor/destructors, ID hash
-lookup, TLS setter144aa6240, current packet и cleanup исполнены. Wrapper141535f20
+handler table 149d810f8. Native constructor/reader/archive ctor/destructors, ID hash
+lookup, TLS setter 144aa6240, current packet и cleanup исполнены. Wrapper141535f20
 переходит со slot 8 на slot 10; PingResult OnHandler1467670c0 перехвачен на входе,
 args/decoded fields/context проверены, gameplay side effects не выполнялись.
 
@@ -1604,7 +1604,7 @@ Snapshot lifetime/registry fixtures, checked cookie shim, unknown logger capture
 Reader failure diagnostic formatting пропущен; native cleanup возобновлён.
 Receive-A изолированно передаёт вход в game Dispatch, не доказывает выбор A в сети.
 
-Общий receive_packet.py: decode_game_ping_result, exact body12 и один frame —
+Общий receive_packet.py: decode_game_ping_result, exact body 12 и один frame —
 локальная политика строже native trailing tolerance. 4 tests, включая mixed
 повторные native replays после ошибок. Report code-clues/headless-dispatch.json,
 SHA256 d0db813874494cf8da7edb77fded572505f8e1da2554b7b24ad625296859a20b.
@@ -1649,7 +1649,7 @@ extended lengths, несколько matches, exact output capacity. 166 усп�
 Offset0 отклоняется локально; malformed parity на всех входах не заявляется.
 
 Статически доказана связь второго stage: length slot 38 через 1415f6848,
-callback slot 40 через 1437113e4/helper1445dede0; native full listener loop
+callback slot 40 через 1437113e4/helper 1445dede0; native full listener loop
 ещё не исполнен. Несколько compressed blocks дополнительно прошли
 native staging→append→compact. Native decoder errors проверены отдельно,
 peer diagnostic/error path после них остаётся. Сеть и игра не использовались.
@@ -1665,7 +1665,7 @@ HEADLESS-BLOCK-DECODE.md содержит offsets/anchors/границы/reprodu
 
 ## 18 октября 2026 — первый транспортный этап приёма
 
-Точная строка UxTcpPeer::_HandleRecvBuffer привела к root0x1445ed3e0.
+Точная строка UxTcpPeer::_HandleRecvBuffer привела к root 0x1445ed3e0.
 Raw header содержит size 23 и compression bit 23. Native цикл работает с
 NUL-terminated byte vectors, копирует/распаковывает кадр во второй buffer,
 сдвигает неполный остаток. Это раньше length probe0x144aa9a90: прежние
@@ -1691,7 +1691,7 @@ network_ready=false, игра/аккаунты/сеть не использов�
 
 ## 18 октября 2026 — Notify→ack→новый ключ соединения
 
-Найден реальный virtualcall setter через регистр r8 в handler0x146765050;
+Найден реальный virtualcall setter через регистр r8 в handler 0x146765050;
 поиск только прямого call[rax+40] пропускал его. Exact diagnostic
 PktKeyChangeNotifyHandler::OnHandler() подтверждает имя. IDNotify11/ack12,
 vtable/ctors/readers/writers/name/IDgetters и registration в factory связаны.
@@ -1715,7 +1715,7 @@ layout/transport и sendqueue; initialauth/keygeneration unknown, network_ready=
 ## 18 октября 2026 — H03b.2b partial: длина/receive/dispatcher
 
 Прочитаны README/TASKS, vtable pointers и конструкторы peer implementations.
-Length probe0x144aa9a90 в slot+38 двух table0x14961af58/0x14961b8f0,
+Length probe0x144aa9a90 в slot+38 двух table 0x14961af58/0x14961b8f0,
 receive wrapper в+40; ctor назначает table subobjectmain+200.
 156 native length vectors подтвердили available<5→0 без read и LE24declared,
 причём declared1..4 допускается при available≥5. Локальный helper намеренно
@@ -1723,7 +1723,7 @@ receive wrapper в+40; ctor назначает table subobjectmain+200.
 
 WrapperA исполнен 13 буферами 0..512 до исходного callbackcall; nativeXOR без shim,
 callbackobject/context синтетические. Проверены pointer/length/аргументы.
-Найдена static цепочка factory0x14678ec40→setter0x144aab300→peer+238→wrapperB
+Найдена static цепочка factory0x14678ec40→setter 0x144aab300→peer+238→wrapperB
 callbackslot8→Dispatch0x14679f510. Полный end-to-end replay не исполнялся.
 Найден keysetter candidate0x144aab330/pointertables0x14961b780/0x149d84e90;
 caller/источник 64 бит/semantics ещё unknown, runtime не использует его.
@@ -1750,7 +1750,7 @@ sequence, payload, length, CRC, append и XOR. Archives созданы native ct
 explicit preallocated buffers, allocator/socket/prologue/cleanup исключены;
 только внешний CRTmemcpy shim. Первая попытка потребовала добавить IDgetter
 code page0x1414079a0; после mapping и bounded evidence slice прошёл 20 cases.
-Подтверждены length24LE (полная длина), CRC32 внутреннего ID16+seq16+body,
+Подтверждены length 24LE (полная длина), CRC32 внутреннего ID16+seq16+body,
 XOR от offset 3. Ping frame 27 bytes, connection counter+228 wrap 65535→0.
 
 Shared `vampir-shared/vampir_core/send_frame.py`: encode_ping_frame, только
@@ -1771,8 +1771,8 @@ network_ready=false; игра/аккаунты/сеть не использов�
 ## 18 октября 2026 — H03b.1: CRC32/XOR и receive wrappers
 
 Создан `build-headless-frame-primitives.py`. CRC init0x1418ba360/update0x1445f1230,
-table0x1495046f0 (все 256entries сверены по polynomialEDB88320). XOR0x144aa6ca0
-использует LE64 key/fallback0x9ab378c9d02084a7. Entry boundaries доказаны E8calls.
+table 0x1495046f0 (все 256entries сверены по polynomialEDB88320). XOR0x144aa6ca0
+использует LE64 key/fallback 0x9ab378c9d02084a7. Entry boundaries доказаны E8calls.
 21CRC/210XOR=252 native executions с init, без shims. Проверены длины 0..512,
 граничные byte patterns, ключи, in-place/disjoint и sentinel. Первый disjoint
 эксперимент выявил ошибку аргументов в эксперименте: RCX=source/R8=destination;
@@ -1818,7 +1818,7 @@ UNLOCK-REGISTRATION/RESULTS, ATTRIBUTES, код генераторов/Android b
 Текущий EXE SHA256:
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 С исходным файлом независимо сверены байты трёх старых отчётов:
-entry-code2060, lock-registration-events1109, stat-packet-evidence483 диапазона;
+entry-code 2060, lock-registration-events1109, stat-packet-evidence483 диапазона;
 всего 3652, расхождений 0. Stat IO в прежних 1392 roundtrips синтетический,
 поэтому эти прогоны не объявляются decoder реальных пакетов.
 
@@ -1826,7 +1826,7 @@ entry-code2060, lock-registration-events1109, stat-packet-evidence483 диапа
 Capstone-инструментарий с проверкой версии 5.0.6 и полного SHA EXE. Выход:
 `F:/PhoneExit Resources/Vampir/code-clues/headless-network-index.json`.
 27 точных literals/31 проверенная LEA/27 roots/32 fragments/1020 instructions;
-missing0/rejected0. В том числе Dispatch root14679f510,
+missing0/rejected0. В том числе Dispatch root 14679f510,
 GetPacketHandler14679f7b0; это ссылки на диагностику, не доказанный end-to-end
 приём. Адреса и ссылки включены в общий FUNCTION-INDEX, а не спрятаны в журнале.
 
@@ -1854,7 +1854,7 @@ packet/handler аргументами. Отчёт содержит 17 fragments/
 таблицы, IO targets и статические фабрики/registration functions1467a7250 и
 1467a7150. Нельзя делать глобальную ID→schema таблицу без контекста. Runtime
 выбор соединения остаётся unknown. Вариант 1467a7150 также подтверждает name
-slot+0x38; оба регистратора ID slot+0x28 и word key. Неразобранный root1457491b0
+slot+0x38; оба регистратора ID slot+0x28 и word key. Неразобранный root 1457491b0
 из широкого поиска vtable refs не включён в доказательства.
 
 Новый `test_vampir_headless_packet_bindings.py`: 4/4 проверки прошли,
@@ -1875,9 +1875,9 @@ Syntax parse новых Python-файлов, 22 локальные ссылки 
 
 Прочитаны актуальные указатели/задачи H02; прослежены Ping/Result IO calls до
 конкретных buffer archive vtables. Receive Dispatch14679f510 передаёт body+5,
-length−5, swap=0 в ctor144aa6260 и вызывает packet reader+20. Подтверждены
-raw read144aa5ce0, u64/u32 readers, cursor/counters и optional bswap. Writer
-ctor144aa62f0/vtable14961a5c0→primitive writers→raw write144aa6120.
+length−5, swap=0 в ctor 144aa6260 и вызывает packet reader+20. Подтверждены
+raw read 144aa5ce0, u64/u32 readers, cursor/counters и optional bswap. Writer
+ctor 144aa62f0/vtable14961a5c0→primitive writers→raw write144aa6120.
 
 Создан `build-headless-ping-codec.py`: реальные native constructors и primitive/
 raw IO исполнены в Unicorn. Только внешний VCRUNTIME140.dll!memcpy заменён

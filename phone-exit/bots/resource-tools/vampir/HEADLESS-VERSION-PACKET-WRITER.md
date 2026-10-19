@@ -16,7 +16,7 @@ bytes/file offsets/SHA и 14 native payload vectors.
 
 ## Что исполнено
 
-Writer **0x1456e5cf0** связан с packet table0x1498d6990 slot+0x10 в
+Writer **0x1456e5cf0** связан с packet table 0x1498d6990 slot+0x10 в
 предыдущем report. Новый replay исполняет его целиком, включая:
 
 - FString helper **0x144aa6a30**: проверка count, поиск UTF-16 terminator,
@@ -28,8 +28,8 @@ Writer **0x1456e5cf0** связан с packet table0x1498d6990 slot+0x10 в
   а также native raw IO и archive constructor из [Ping codec](HEADLESS-PING-CODEC.md).
 
 Allocator/resize/free, cookie и bounded CRT memcpy — fixtures. Archive после
-actual constructor получает явный buffer/capacity8192, без проверки growth.
-Instruction budget writer200000. Native layout сравнивается с независимой
+actual constructor получает явный buffer/capacity 8192, без проверки growth.
+Instruction budget writer 200000. Native layout сравнивается с независимой
 сборкой struct/UTF-8, которая не подаёт байты в эмулятор.
 
 Это **отдельный native serialization run**, которому переданы snapshots полей
@@ -79,20 +79,20 @@ Strings — десять полей в порядке writer, integers — тр�
 - Не допускаются embedded NUL, surrogate code points, U+FFFE/U+FFFF.
   Native string helper ищет NUL, а scalar encoder умеет замены недопустимых
   значений; переносимый helper не имитирует неоднозначные замены/усечение.
-- Каждая строка максимум65535 UTF-8 bytes, без uint16 truncation.
-  Проверка encoder на65535 bytes — локальный boundary test; native vectors
-  ограничены меньшими строками, поэтому native parity на65535 не заявлена.
+- Каждая строка максимум 65535 UTF-8 bytes, без uint16 truncation.
+  Проверка encoder на 65535 bytes — локальный boundary test; native vectors
+  ограничены меньшими строками, поэтому native parity на 65535 не заявлена.
 - Нет decoder, пока соответствующий reader не проверен.
 
 [Три regression tests](../../test_vampir_headless_version_packet_writer.py)
-проверяют source/report reproducibility, portable bytes для всех14 native cases,
+проверяют source/report reproducibility, portable bytes для всех 14 native cases,
 неоднозначные/изменяемые inputs, Unicode/length/budget bounds и redacted repr.
-Полный headless suite прошёл: **379 tests за298.328s**, команда
+Полный headless suite прошёл: **379 tests за 298.328s**, команда
 `python -X utf8 -m unittest discover -s phone-exit/bots -p 'test_vampir_headless*.py'`.
 
 ## Осталось до обмена с сервером
 
-Native writer при успешном preallocated archive возвращает1. Failure propagation,
+Native writer при успешном preallocated archive возвращает 1. Failure propagation,
 невалидные native descriptors, allocator failures и archive overflow здесь не
 проверялись. В частности string archive method содержит безусловный AL1 после
 внутренних calls; это статическое наблюдение, а не выполненные failure scenarios.

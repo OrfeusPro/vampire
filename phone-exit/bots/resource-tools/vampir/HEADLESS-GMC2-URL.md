@@ -32,7 +32,7 @@ base + /template-groups/ + group + / + sdk_version
 | base | manager+1e8, загрузка `1444f3a68` |
 | group | manager+1c8, `1444f3b35` |
 | SDK version | call `1444f3bb3` → `144524390`, compiled 5.2.11 |
-| Build label | settings+48, call `1444f3c70` → `14452b820`, byte1→B/2→C/elseA |
+| Build label | settings+48, call `1444f3c70` → `14452b820`, byte 1→B/2→C/elseA |
 | market | settings+28, `1444f3d1e..3d2a` |
 
 Native ASCII-view append исполняется: он расширяет байты литерала в UTF-16.

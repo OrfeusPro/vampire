@@ -44,13 +44,13 @@ Getter `0x145c859f0` читает global `0x14b57f180`. Это state с records+
 count+78 и raw+f0; его нельзя отождествлять с другими globals по близким offsets.
 
 ID102 handler `0x14675dce0` передаёт packet+40 в `0x145c930d0`.
-Actual setter всегда записывает аргумент в this+f0. Если прежнее значение не0
+Actual setter всегда записывает аргумент в this+f0. Если прежнее значение не 0
 и отличается от нового, перед store выполняется persistence path через
 `0x145c860c0`/`0x1445d0530`; эти внешние действия — captures.
 45 full body→handler cases теперь исполняют setter, заменяя прежний capture.
 12 дополнительных переходов проверяют ноль, повтор, изменение и uint64 max.
 
-Selection service virtual50 `0x145dc05f0` читает тот же state+f0 и записывает
+Selection service virtual 50 `0x145dc05f0` читает тот же state+f0 и записывает
 его в ID109 packet+20. Это устанавливает происхождение, но не имя поля.
 Дополнительный UI action caller `0x145f434a0`, case9, также вызывает setter;
 он экспортирован статически, его полный UI/persistence flow не исполнен.
@@ -64,14 +64,14 @@ Actual handler `0x146768540`, predicate `0x145c85d90`, quick helper
 
 | Peer flag | Policy | Действие |
 | --- | --- | --- |
-| 0 | 0 и stored raw+28 не0 | helper → service virtual50; ID109 raw10 = stored+28 |
-| 0 | 0 и stored raw+28 равен0 | service virtual40 continuation (capture) |
+| 0 | 0 и stored raw+28 не 0 | helper → service virtual 50; ID109 raw10 = stored+28 |
+| 0 | 0 и stored raw+28 равен 0 | service virtual 40 continuation (capture) |
 | 0 | 1/2/4 | return, без ID109 |
-| 1 | 0 | virtual40 continuation (capture) |
+| 1 | 0 | virtual 40 continuation (capture) |
 | 1 | 1 | actual RequestB → ID101 writer/frame/queue |
-| 1 | 2/4 | service virtual50; ID109 raw10 = notify+10 |
+| 1 | 2/4 | service virtual 50; ID109 raw10 = notify+10 |
 
-Disabled/missing policy object возвращает native fallback4. Lookup/type objects
+Disabled/missing policy object возвращает native fallback 4. Lookup/type objects
 и policy virtual являются fixtures; значения enum не названы по догадке.
 Stored+28/notify+10 здесь raw inputs; реальное получение notify после Login и
 жизненный цикл сохранённого значения не доказаны.
@@ -87,7 +87,7 @@ Leaf проверен инструкциями и native исполнением:
 EDX>=global-state+78 дают null; иначе возвращает state+70 + index*0x170.
 Он читает тот же global `0x14b57f180`, а не массив внутри UI object из RCX.
 Его диапазон 34 байта включает оба RET и обе ветви signed bounds check.
-Caller при nonnull результате передаёт record+8 в service virtual50.
+Caller при nonnull результате передаёт record+8 в service virtual 50.
 Таким образом ID109 raw10 связан с полем записи, ранее использованным для
 preferred index в ID102 handler. Название CharacterId отдельным символом не доказано.
 
@@ -100,25 +100,25 @@ duplicate request и transport refusals. UI objects/type metadata/records — fi
 
 Для обоих covered caller paths:
 
-- raw10 — выбранный выше raw64; native virtual50 переносит его в packet.
+- raw10 — выбранный выше raw64; native virtual 50 переносит его в packet.
 - raw18 — uint32 constant `0x14961a380`, фактическое значение **0**.
-  Сам virtual50 принимает произвольный raw32; это не универсальное ограничение ID109.
+  Сам virtual 50 принимает произвольный raw32; это не универсальное ограничение ID109.
 - raw20 — текущий state+f0; initial accepted ID102 присваивает его из packet+40.
 
 Далее actual constructor → handoff `0x144aa8020` с kind110 → actual wrapper
 `0x1467aaa10` → lower sendB → actual writer `<QIQ`/20 bytes → CRC32/XOR/queue.
 Kind110 не подменяется отправляемым packet ID109. Handoff выполняет pending lookup
-и duplicate/collision traversal, выбирает default timeout для переданного0,
+и duplicate/collision traversal, выбирает default timeout для переданного 0,
 вызывает insert/notify captures до virtual send. Duplicate110 останавливает отправку.
 
 19 полных кадров: 11 из WaitingEnd cases (9 ID109 + 2 ID101) и 8 indexed ID109.
 Проверены fallback/явный XOR key, seq65535 wrap, wake, metadata byte и owning copy.
 Каждый frame побайтно совпал с переносимым body codec, CRC32 и XOR:
 LE24 length + XOR(LE32 CRC32 + LE16 ID + LE16 sequence + body).
-Disabled/mode2/special и duplicate cases не вызывают writer/queue и не меняют sequence.
+Disabled/mode 2/special и duplicate cases не вызывают writer/queue и не меняют sequence.
 
 Request insert/notify не мутируют настоящий pending store. Metadata/name/allocator/
-cleanup/wake и UI/base helper действия захвачены. Queue/archive capacity4096,
+cleanup/wake и UI/base helper действия захвачены. Queue/archive capacity 4096,
 без growth; drain/socket/timeout expiry/session lifecycle не входят в эти проверки.
 Indexed cases используют native state snapshot предыдущего ID102 replay, а не
 один непрерывный run от ID102 body до ID109 queue. Это граница интеграции.
@@ -131,7 +131,7 @@ Indexed cases используют native state snapshot предыдущего 
 должны обновлять состояние клиента через доказанные setter/result paths.
 Builder не молча подставляет старый body.tail[3] после изменения состояния.
 
-Локальные preconditions: decoded list с code0 и существующий integer index;
+Локальные preconditions: decoded list с code 0 и существующий integer index;
 bool/negative/empty/out-of-range/error list отвергаются. Session/policy/readiness
 проверяет вызывающий session owner. Здесь только immutable payload, без I/O,
 автоматической отправки или утверждения, что персонаж выбран на сервере.
@@ -139,6 +139,6 @@ bool/negative/empty/out-of-range/error list отвергаются. Session/poli
 ## Продолжение
 
 Далее ID110 nested body/handler, состояние после выбора и источник позиции;
-owner slot7b0→engine lifecycle/загрузка CharacterSelect_02; real SDK/device context
+owner slot 7b0→engine lifecycle/загрузка CharacterSelect_02; real SDK/device context
 и подтверждение устройства. Реальная сессия и runtime reconnect ещё открыты.
 Не называть эти offline replays работающим входом на аккаунте или готовым ботом.

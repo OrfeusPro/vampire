@@ -172,10 +172,10 @@ node --check. Новую версию интерфейса визуально н
 Проверено 24 опорных инструкции в 12 unwind-фрагментах; источники и SHA EXE
 в `code-clues/loot-record-links.json`, компактная копия `maps/loot/rate-callbacks.json`.
 
-- NpcReward: Load0x145b6b950 → lookup0x145b59a70 →0x145b58940 →
+- NpcReward: Load0x145b6b950 → lookup 0x145b59a70 →0x145b58940 →
   init0x145b57b10 →copy0x145b5ae40 →vtable0x1499b01c0.
   После записи RewardRate+0x48 вызывается слот 0x58.
-- Reward: Load0x145b70fc0 →lookup0x145b59c80 →0x145b59750 →
+- Reward: Load0x145b70fc0 →lookup 0x145b59c80 →0x145b59750 →
   init0x145b57dc0 →copy0x145b5b8d0 →vtable0x1499aed48.
   После записи Rate+0x50 вызывается слот 0x70.
 - Оба слота содержат 0x1413fe190, точные байты **c2 00 00** (`ret 0`).
@@ -670,7 +670,7 @@ AreaReward, если AreaInfoId выбранной записи NpcSpawn не р
 
 Воспроизводимый инструмент: `build-drop-selection-code.py`. Он читает EXE,
 сверяет SHA256 c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
-проверяет Capstone5.0.6, полностью декодирует 36 unwind-фрагментов, проверяет 26
+проверяет Capstone 5.0.6, полностью декодирует 36 unwind-фрагментов, проверяет 26
 опорных инструкций, 3 указателя и 2 leaf-getter. Отчёт:
 `code-clues/drop-selection-code.json`, SHA256 и ссылка включены в
 `monster-manifest.json.sources.drop_selection`. В отчёте сохранены file offsets,
@@ -679,15 +679,15 @@ bytes и SHA256 каждого фрагмента. Серверное приме
 Проверенная цепочка:
 1. Accessor NpcSpawn `0x145ad95c0` вызывает менеджер `0x145ae1080` и поиск
    `0x1459dc780`. Singleton `0x14b153bd0` содержит vtable `0x149994680`;
-   его slot0x80 указывает на getter `0x145ae18a0`, строка `NpcSpawnInfo`.
+   его slot 0x80 указывает на getter `0x145ae18a0`, строка `NpcSpawnInfo`.
 2. ModifyValue сравнивает имя `AreaInfoId` в `0x145afc4d4`, читает прежнее поле
    и после atoi сохраняет EAX в `[RDI+0xf0]` в `0x145afc4f2`. При неуспешной
    проверке ссылки есть откат, поэтому запись не выдана за безусловный setter.
    Аналогично `NpcInfoId` в `0x145afba95` сохраняется в `[RDI+0x20]` в
    `0x145afbab0`. Создание записи `0x145ad8b10→0x145ad7dd0→0x145ad68b0`
-   использует vtable `0x149994428`; slot0x38→`0x141977130` возвращает `[RCX+0x20]`.
+   использует vtable `0x149994428`; slot 0x38→`0x141977130` возвращает `[RCX+0x20]`.
 3. Окно `0x1460b31f0` получает NpcSpawn через `0x145ad95c0`. Leaf `0x141482990`
-   возвращает pointer из handle+8. В `0x1460b3276` виртуальный getter0x38
+   возвращает pointer из handle+8. В `0x1460b3276` виртуальный getter 0x38
    получает NpcInfoId, сохранённый в window+0xe78. Поле spawn+0xf0 загружается
    в `0x1460b3289` и сохраняется в window+0xe7c в `0x1460b328f`.
 4. Сравнение `0x1460b3441` с проверенным нулевым sentinel `0x14961a380`:
@@ -954,7 +954,7 @@ maps/loot/server-check-item.png и passive-checked.png просмотрены.
 
 ### Ограничения предметов ItemLimit и ItemUseLimit, 17 октября 2026
 
-Новый build-item-limit-semantics.py проверяет тот же клиент EXE/SHA, Capstone5.0.6,
+Новый build-item-limit-semantics.py проверяет тот же клиент EXE/SHA, Capstone 5.0.6,
 47 anchors и полные фрагменты. Отчёт code-clues/item-limit-semantics.json,
 SHA256 `cdff2e763adc27b91886c0ffc7d40ff84003c377734ce3b3f382bb53b8c9b1e9`.
 
@@ -1043,13 +1043,13 @@ Impact в SkillName_en указывает 2.5sec, но оно не доказы�
 Native-исследование сохранено в ignored code-clues: effect-manager-discovery.json,
 effect-lookup-callers.json (38 call-кандидатов/28 корней), skillop-integrity-discovery.json,
 operation-effect-discovery.json, operation-effect-word-discovery.json.
-EffectInfo getter0x145941830→vtable0x149944478+0x80, singleton0x14b14e4f0,
-accessor0x145940e50, lookup0x1459407e0. Проверка функции 0x145bd9ad0 выявила
+EffectInfo getter 0x145941830→vtable0x149944478+0x80, singleton 0x14b14e4f0,
+accessor0x145940e50, lookup 0x1459407e0. Проверка функции 0x145bd9ad0 выявила
 диагностику SoulEssence. RewardEffect (offset 161199232), а не SkillOperation;
 она **не используется как доказательство Param1**. SkillOperation loader пишет
-Param1 в record+0x24 (0x145bc9e19), callback0xc0. Создание
+Param1 в record+0x24 (0x145bc9e19), callback 0xc0. Создание
 0x145bb10b0→0x145baff50→0x145baf1a0→0x145bb2700 использует vtable0x1499bae00:
-callback0xc0→ret0 (0x1413fe190), CheckInfoIntegrity0x178→0x140bb4a10.
+callback 0xc0→ret0 (0x1413fe190), CheckInfoIntegrity0x178→0x140bb4a10.
 Эти пустые проверки не доказывают роль Param1. Общий поиск immediate2001 затронул
 68 корней, 8 не полностью декодируются; результат не объявлен исчерпывающим.
 
@@ -1091,7 +1091,7 @@ Buff0, Duration500/MinMax30000, EffectOperation2015/MaxHpRateBarrier и
 Effect. ActionType. Инструмент build-effect-action-semantics.py, отчёт
 code-clues/effect-action-semantics.json, SHA256
 `d798afcc03320dfe50be789abe76f5048aaba4af9947cc6a2f0de02e2e63dc29`.
-Тот же EXE/SHA, Capstone5.0.6;12 anchors, проверенный JMP, полные фрагменты,
+Тот же EXE/SHA, Capstone 5.0.6;12 anchors, проверенный JMP, полные фрагменты,
 file offsets/bytes всех 56 пар. Общий extractor расширен для dword и явной
 передачи доказанной регистровой константы; прежние skill/target-отчёты после
 пересборки сохранили свои SHA.
@@ -1117,7 +1117,7 @@ load_effects проверяет источник/SHA/JMP/bytes/строки но
 параметр. Роль этих параметров, триггеры и runtime-поведение не выводятся из
 имени; рекурсивные ссылки по истечении не создаются. Duration хранится
 в record+0x58 (store0x1459762e1); MinDuration проходит через 0x1457f9f60
-(call0x145976357). Ни один из этих путей не доказывает секунды/миллисекунды.
+(call 0x145976357). Ни один из этих путей не доказывает секунды/миллисекунды.
 
 Порядок: build-effect-action-semantics.py перед build-npc-loot.py и
 build-monster-details.py (или build-world-map.py). Новый 53-й Python-тест
@@ -1139,22 +1139,22 @@ maps/atlas/effect-rules-verification.json. Назначение Param1 и пор
 Восстановлены два отдельных словаря: BuffType и OverlayType. Инструмент
 build-effect-rule-semantics.py, отчёт code-clues/effect-rule-semantics.json,
 SHA256 `5880ff64ec161ced6380334cfc98d0711a46aa0744c37e164ce60d6772f12cf4`.
-Источник — тот же EXE/SHA; Capstone5.0.6,14 anchors/JMP, пары указателей/bytes,
+Источник — тот же EXE/SHA; Capstone 5.0.6,14 anchors/JMP, пары указателей/bytes,
 исходные строки и полные фрагменты. Extractor теперь поддерживает отрицательные
 и десятичные stack offsets; прежние skill/target/action отчёты после пересборки
 имеют прежние SHA.
 
-Effect ModifyValue0x145975db0: BuffType literal0x145976250→call0x145976296
+Effect ModifyValue0x145975db0: BuffType literal 0x145976250→call 0x145976296
 в 0x1457f5e50→store AL record+0x55 в 0x14597629b. Словарь содержит
-Deadly0, DeadlyBuff1, Adrenaline2; fallback3 в 0x1457f5ef7. Инициализация
+Deadly0, DeadlyBuff1, Adrenaline2; fallback 3 в 0x1457f5ef7. Инициализация
 строк 0x1457f5f50…0x1457f5fc0,3 пары[rbp+0x17, rbp+0x47), вставка
 0x14450dc60 в 0x1457f5fd7. Это другой домен, чем Effect. Type (Buff/DeBuff).
 
-OverlayType literal0x145976596→call0x1459765dc в 0x1457f7ac0→store AL
+OverlayType literal 0x145976596→call 0x1459765dc в 0x1457f7ac0→store AL
 record+0x88 в 0x1459765e1. Проверенный JMP ведёт в 0x1457ad640. Инициализатор
 0x1457ad73f…0x1457ad7f7 создаёт 5 пар[rbp-9, rbp+0x47), вставка
 0x14450dc60 в 0x1457ad80e. Словарь: Allow0, Deny1, Accum2, ForceAllow3,
-PrioritySuccession4; fallback5 в 0x1457ad6e6. Код 3 означает неизвестный ключ
+PrioritySuccession4; fallback 5 в 0x1457ad6e6. Код 3 означает неизвестный ключ
 для BuffType, но ForceAllow для OverlayType; домены не смешиваются.
 
 Из 2027 определений Effect: OverlayType 2008 с известным именем/19fallback;
@@ -1186,7 +1186,7 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/build-skill-time-code.py
 Результат `F:/PhoneExit Resources/Vampir/code-clues/skill-time-code.json`.
 Источник — установленный `ProjectRED-Win64-Shipping.exe`, SHA256
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
-Инструмент проверяет SHA/Capstone5.0.6,32 опорные инструкции, константы,
+Инструмент проверяет SHA/Capstone 5.0.6,32 опорные инструкции, константы,
 leaf-код, vtable и ресурс контрола; сохраняет полные native-фрагменты и file offsets.
 SHA256 отчёта:
 `142fdbe3ce50d2dd0ff0a8c2fd1b9a8c06d2445823b37a9966c285fc0a40b015`.
@@ -1206,18 +1206,18 @@ Native-цепочка:
 
 - Bind0x1466ab180: literal `TextSkillCoolTime` в 0x1466ab1bf,
   адрес widget+0xa98 в 0x1466ab1d0, вызов привязки 0x144a76510 в 0x1466ab1df.
-  Конструктор 0x146696010 устанавливает vtable0x149d29730; slot0x530 указывает
+  Конструктор 0x146696010 устанавливает vtable0x149d29730; slot 0x530 указывает
   на этот Bind. При поиске нельзя брать ближайшую предыдущую таблицу:
   соседний класс имеет похожие поля.
-- Регистрация 0x1466ba8d0 ссылается на callback0x1466bcad0. Его leaf-код
+- Регистрация 0x1466ba8d0 ссылается на callback 0x1466bcad0. Его leaf-код
   читает SkillID из widget+0xa80 и уровень из+0xa84, затем JMP0x1466b5ae0.
 - Отрисовка вызывает 0x14568a410 в 0x1466b5d09, делит возвращённое значение
   на max(число зарядов, 1), форматирует `%.1f` через 0x14142d840.
   В 0x1466b5d87 загружается тот же widget+0xa98;0x1466b5daa вызывает setter текста.
 - Вычисление 0x14568a410 вызывает виртуальные getters0xb8/0xc8/0xe8,
-  helper0x1456693b0, затем в 0x14568a4df умножает результат на float32
+  helper 0x1456693b0, затем в 0x14568a4df умножает результат на float32
   `0.0010000000474974513` (bytes6f12833a, VA0x14898ee08,
-  file offset0x898da08). Далее есть поправки по runtime-параметрам,
+  file offset 0x898da08). Далее есть поправки по runtime-параметрам,
   коэффициент float32 около 0,0001 и ограничение снизу нулём.
 - В Skill vtable0x1499b9440 slots0xb8/0xc8 указывают на 0x145bb9f90/
   0x145bba020. Они ищут запись для уровня; читают override+0x64/+0x60,
@@ -1226,8 +1226,8 @@ Native-цепочка:
 
 Это доказывает масштаб **вычисленного значения конкретного окна**, а не
 глобальную единицу всех времён. `%.1f` не содержит суффикса секунд. Регистрация
-runtime-фабрики найдена:0x145bbc897→leaf0x145bb4a20→lookup0x145bb95d0;
-callable переносится в global0x14b571ab0 через MOVAPS0x145bbc991.
+runtime-фабрики найдена:0x145bbc897→leaf0x145bb4a20→lookup 0x145bb95d0;
+callable переносится в global 0x14b571ab0 через MOVAPS0x145bbc991.
 Полное заполнение объектов фабрики и таблица level overrides ещё не прослежены.
 Поэтому отчёт содержит `csv_time_unit=null`, `shared_time_unit_verified=false`;
 он пока не используется для преобразования цифр NPC/предметов в просмотрщиках.
@@ -1264,7 +1264,7 @@ CSV record и исходные значения сохранены в отчёт
   сохраняется при добавлении. Строки не объединяются по значениям перезарядки.
 - Lookup0x145bb2570 инициализирует manager0x14b157720;
   primary vtable0x1499b9fb8, secondary vtable0x1499ba058 в manager+8.
-  Её slot0x38 указывает на loader0x145bc89c0. Индекс читается через global
+  Её slot 0x38 указывает на loader 0x145bc89c0. Индекс читается через global
   0x14b157748 в 0x145bb25eb; это тот же map manager+0x28.
 - Skill vtable0x1499b9440 slots0xb8/0xc8 ведут в getters0x145bb9f90/
   0x145bba020. Они вызывают lookup с Skill. Id, затем перебирают записи до
@@ -1304,7 +1304,7 @@ XMM1 в XMM6, преобразует float→double и в 0x145597035 приба
 
 Новый `build-skill-tick-code.py` строит `code-clues/skill-tick-code.json`.
 SHA256 `7271f543c326188918fb755aa4a5b466aa29aac013e513a9122e4a4aac18c823`.
-Тот же установленный EXE/SHA и Capstone5.0.6;33 anchors, 2 identity literals,
+Тот же установленный EXE/SHA и Capstone 5.0.6;33 anchors, 2 identity literals,
 vtable slot, полные 27 фрагментов/1371 инструкция. Побайтная сверка прошла.
 Доказательство единиц объединяет native-поток данных с публичным контрактом
 UE5.5; это статический вывод о коде клиента, не тест на Android/сервере.
@@ -1317,7 +1317,7 @@ Native-граница и связывание:
   (UTF16 literal в 0x143c2833b). Это идентифицирует engine tick, а не соседний
   игровой класс. Входной floatXMM1 сохраняется в XMM6 в 0x143c2826b;
   инструмент отвергает изменения XMM6 до вызова диспетчера. В 0x143c28745
-  он передаётся как четвёртый параметр XMM3, call0x1442b8f70 в 0x143c2874e.
+  он передаётся как четвёртый параметр XMM3, call 0x1442b8f70 в 0x143c2874e.
 - Официальные контракты UE5.5:
   [UGameEngine](https://dev.epicgames.com/documentation/en-us/unreal-engine/API/Runtime/Engine/Engine/UGameEngine?application_version=5.5),
   Tick(float DeltaSeconds, bool bIdleMode), и
@@ -1329,15 +1329,15 @@ Native-граница и связывание:
   в 0x1442b903d передаёт XMM1 и вызывает virtual slot 0 в 0x1442b9043.
   Нет умножения/деления интервала между этими точками.
 - Конструктор менеджера 0x14557fdb0 регистрирует интерфейс manager+0x28
-  через 0x144280630 (общий singleton0x144297c30), затем устанавливает
+  через 0x144280630 (общий singleton 0x144297c30), затем устанавливает
   vtable0x1498abbb8 в manager+0x28. Её slot 0 =0x145596ec0.
   Tick берёт map из interface+8, то есть manager+0x30 — тот же map,
-  куда setter0x145595e60 пишет длительность и прошедшее время.
+  куда setter 0x145595e60 пишет длительность и прошедшее время.
 - Tick0x145596ec0 сохраняет входной интервал в 0x145596eda, преобразует
   float→double0x145597014 и прибавляет к elapsed в 0x145597035/03b;
   0x14559704d/053 сравнивают elapsed с длительностью.
 - Расчёт 0x14568a410 вызывается в 0x14559661c; его результат без масштаба
-  float→double передаётся XMM3 в setter0x145595e60 (call0x145596652).
+  float→double передаётся XMM3 в setter 0x145595e60 (call 0x145596652).
   Setter сохраняет duration+8 и elapsed+0x10. Предыдущий отчёт
   skill-time-code.json доказывает getters Skill. Min/MaxCoolTime и ×0,001
   перед возвратом вычисленной длительности. Вместе это устанавливает:
@@ -1406,7 +1406,7 @@ coverage воспроизводится build-monster-details.py. Все 1785 SH
 исходные KO/ID, 2 с/2 с; console чистая. Снимок maps/atlas/skill-names-checked.png
 сохранён и просмотрен. Android не проверялся.
 
-Параллельное исследование TotalTime не завершено. Getter Skill slot0xb0
+Параллельное исследование TotalTime не завершено. Getter Skill slot 0xb0
 0x1438cbd10 читает record+0xc8 (прежняя подтверждённая связь), но вызов
 0x14568ea04 внутри 0x14568e9e0 обращается к объекту из 0x1456048e0;
 это не Skill и не доказательство единицы. Прямая ссылка 0x140d550ae только
@@ -1419,7 +1419,7 @@ coverage воспроизводится build-monster-details.py. Все 1785 SH
 Воспроизводимый `build-skill-total-time-code.py` сохраняет
 `code-clues/skill-total-time-code.json`, SHA256
 `05e1cee47bc80752b3c1d2e398b124135bb866114d65243f4dca0fd7b0f88e09`.
-Источник — тот же EXE/SHA и Capstone5.0.6. Две сборки дали одинаковый SHA;
+Источник — тот же EXE/SHA и Capstone 5.0.6. Две сборки дали одинаковый SHA;
 5 anchors, getter/vtable bytes и 2159 инструкций 4 фрагментов сверены побайтно.
 Зависимость skill-semantics.json связывает Skill. TotalTime с record+0xc8.
 
@@ -1429,7 +1429,7 @@ Loader0x145bc6470 сохраняет integer в+0xc8 инструкцией 0x14
 `mov eax,[rcx+0xc8]; ret`. Это устанавливает поле/getter конкретной записи,
 но не доказывает смысл длительности выполнения, время анимации или единицу.
 
-Прямые callers getter-адреса и slot0xb0 отдельно не доказывают Skill-тип:
+Прямые callers getter-адреса и slot 0xb0 отдельно не доказывают Skill-тип:
 одинаковая leaf-функция может использоваться другими vtable. Например,
 0x140d550ae получает receiver из[rcx+0x190], вызывает getter и сравнивает с 1;
 тип этого receiver не доказан Skill.0x14568ea04 относится к объекту, полученному
@@ -1456,7 +1456,7 @@ JS syntax check прошёл; браузер 100171031 показывает ис
 
 `build-effect-time-code.py` строит `code-clues/effect-time-code.json`;
 SHA256 `cbe23aa0df6a26910df5fca946866e0265283854953f06494b5b2282408ffed9`.
-Источник — тот же EXE/SHA/Capstone5.0.6.23 anchors, 7 полных фрагментов/
+Источник — тот же EXE/SHA/Capstone 5.0.6.23 anchors, 7 полных фрагментов/
 2941 инструкция, converter leaf bytes, IAT import identity, literals и CSV
 Effect92 проверены; повторная сборка дала тот же SHA. Полные метаданные CSV/PAK,
 статистика полей и список 413 отличающихся строк с csv_record сохранены в отчёте.
@@ -1774,9 +1774,9 @@ node --check, порядок секций и совпадение source/deploye
 
 Новый `build-reward-group-semantics.py` проверяет EXE SHA
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`,
-Capstone5.0.6,72 anchors и значения ERewardGroup из native-enums.json.
+Capstone 5.0.6,72 anchors и значения ERewardGroup из native-enums.json.
 Цепочка: FRdRewardInfoManagerTemplate::ModifyValue145b7ef30, literal
-RewardGroup145b7f3f7, compare length 11/строки, call145b7f43e→1457fd300,
+RewardGroup145b7f3f7, compare length 11/строки, call 145b7f43e→1457fd300,
 прямой thunk→1457dd970, запись AL в Reward record+38 по 145b7f443.
 Dictionary construction1457dda6f..1457ddb9f сохраняет полные stack pairings
 имя/байт и вызов 14450dc60; неизвестная строка→7 по 1457dda16.
@@ -1799,7 +1799,7 @@ UI показывает «Режимы строк наград по цепочк
 Это счётчики строк в путях, не частоты выпадения.644 box files не изменены.
 
 **Ограничение:** связь ItemBox. RewardGroupType с этим enum этим исследованием
-не доказана. Его loader145a65f20 читает третью именованную колонку и сохраняет
+не доказана. Его loader 145a65f20 читает третью именованную колонку и сохраняет
 байт+28 (145a66405), но общего кода недостаточно для подписи словарём Reward.
 Поэтому поле коробки остаётся исходным кодом с reward_group_mode_verified=false.
 Имена режимов Reward не доказывают фактический runtime выбор, class gates,
@@ -1818,19 +1818,19 @@ UI показывает «Режимы строк наград по цепочк
 Это новое подтверждение заменяет unknown о поле коробки из предыдущих записей.
 `build-item-box-mode-binding.py` сверяет тот же EXE SHA
 c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
-Capstone5.0.6,25 instruction anchors и 22 data anchors.
+Capstone 5.0.6,25 instruction anchors и 22 data anchors.
 
 Цепочка: ItemBox.csv/FRdItemBoxInfoManagerTemplate::Load145a65f20,
 колонка RewardGroupType145a660d6→третья позиция→145a66400 read byte→
-145a66405 store record+28. Getter145a55db0 берёт singleton145a5e200,
-map entries по+18/stride70 и возвращает record+8 в handle+8. Singleton
+145a66405 store record+28. Getter 145a55db0 берёт singleton 145a5e200,
+map entries по+18/stride 70 и возвращает record+8 в handle+8. Singleton
 14b151c60, secondary vtable+8=14997fc80 содержит Load145a65f20 по+38;
 loader принимает этот подобъект, поэтому его map+10 совпадает с base+18.
-Handle getter141482990 точно mov rax,[rcx+8]; ret.
+Handle getter 141482990 точно mov rax,[rcx+8]; ret.
 
 146370b50: вызов 145a55db0 по 146370c56; unwrap146370c6f; чтение
 record+28 по 146370c74; запись первого байта event params rsp+30 по 146370c78.
-146370c94 берёт FName global14b5899c0; initializer 141275560 связывает его
+146370c94 берёт FName global 14b5899c0; initializer 141275560 связывает его
 с UTF16 OnItemBoxUpdated149c0e4f0; find function1417d0080 и ProcessEvent
 virtual+278 получают адрес params по 146370ca6/146370cb1.
 Регистрация функции 14b15c480 с именем 149c0e6b8 использует property list
@@ -1904,7 +1904,7 @@ JS syntax и source/deployed совпадение прошли. Loot/atlas пе�
 подтверждённым target lookup. Это не подтверждение успешного изучения.
 Новый `build-item-skill-binding.py` проверяет EXE
 c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
-Capstone5.0.6,38 instructions/12 data anchors, named conversion import.
+Capstone 5.0.6,38 instructions/12 data anchors, named conversion import.
 Отчёт `code-clues/item-skill-binding.json`, SHA256
 `e04d7ac949a425fcbf3c45457ebc5393c20488bf88721528b4f8794abcfc765a`.
 
@@ -1913,10 +1913,10 @@ Capstone5.0.6,38 instructions/12 data anchors, named conversion import.
   FString construction141421150, assignment в record+70, length+78;
   копирование через memcpy145aa2b69. Тип эффекта+68 уже закреплён
   item-effect-semantics.json (SkillAcquire=4).
-- Item lookup145a80590→singleton145a88700→lookup145a883c0.
-  Singleton14b152710/secondary vtable1499885e0 slot 38→loader145a8ec10
+- Item lookup 145a80590→singleton 145a88700→lookup 145a883c0.
+  Singleton14b152710/secondary vtable1499885e0 slot 38→loader 145a8ec10
   с literal Item.csv и именем FRdItemInfoManagerTemplate::Load.
-  Lookup leaf использует map+18/stride158 и возвращает entry+8 в handle+8.
+  Lookup leaf использует map+18/stride 158 и возвращает entry+8 в handle+8.
 - UI146375440 получает Item по 145a80590; unwrap141482990 (точные bytes
   mov rax,[rcx+8]; ret).1463754a5 проверяет EffectType+68==4;
   1463754b8 исключает Type+50==58 (EItemType::SkillAcquirePotion).
@@ -1924,8 +1924,8 @@ Capstone5.0.6,38 instructions/12 data anchors, named conversion import.
   IAT148945bb0. Import directory/thunk/name подтверждают
   api-ms-win-crt-convert-l1-1-0.dll!_wtoi.
 - Возвращённый EAX передаётся как ID в 145bb1eb0 по 1463754df/1463754e5.
-  Skill handle getter вызывает singleton145bb9bd0→lookup145bb95d0,
-  map+18/stride218, сравнение ключа ID и возврат entry+8. Singleton14b157570,
+  Skill handle getter вызывает singleton 145bb9bd0→lookup 145bb95d0,
+  map+18/stride 218, сравнение ключа ID и возврат entry+8. Singleton14b157570,
   secondary vtable1499b9a00 slot 38→145bc6470 с literal Skill.csv.
   Leaf lookup сохранён полностью, включая ранние и успешный return.
 - Ненулевая запись проверяется по 1463754f3. Затем вызов record vtable+8,
@@ -1993,13 +1993,13 @@ join Item→Effect не заявлено. skill-effects.js различает it
 Особенно важно не повторять ошибочную ветку 1463759f0: она действительно
 читает Item. EffectParams+70 через _wtoi и вызывает 145938880, однако этот
 lookup использует EffectOperation manager145940ee0, secondary vtable
-149946a38/loader14595b760 с literal EffectOperation.csv. Его UI caller
+149946a38/loader 14595b760 с literal EffectOperation.csv. Его UI caller
 14637fe50 проверяет Type по 145db8d60, который допускает 49/53/54/75/76
 (BloodSeal/CommonSeal/EventSeal/CommonSeal2/EventSeal2), а не EffectType1.
 В текущих 57 предметах этих типов EffectParams пуст, EffectType20. Поэтому
 эта ветка НЕ повышает 56 Effect1→Effect. Id до доказанной связи.
-Effect manager отдельно: singleton145940e50/global14b14e4f0,
-secondary vtable1499444b0/slot 38→loader145959c60; direct handle lookup
+Effect manager отдельно: singleton 145940e50/global 14b14e4f0,
+secondary vtable1499444b0/slot 38→loader 145959c60; direct handle lookup
 145938440. Среди исследованных Item-get корней прямой подходящий вызов
 с Item. EffectParams не найден. Следующий поиск: косвенные вызовы/общие
 UI effect helpers и server-fed item effect state, сохраняя тип входной записи.
@@ -2150,16 +2150,16 @@ cooldown_at_level. Сверены 3447 detail SHA, source/deployed HTML/JS и т
 Новый build-skill-level-extra-code.py → code-clues/skill-level-extra-code.json,
 SHA256 `a02f33083c80f3afb3e37142f1092cc65ff134802745aeb122bf9af69140ce37`.
 Проверены EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
-Capstone5.0.6,30instruction anchors, 4 literals, 2 Skill vtable slots.
+Capstone 5.0.6,30 instruction anchors, 4 literals, 2 Skill vtable slots.
 Sources Skill 1505/SkillLevel1511 и их index/SHA остаются прежними.
 
-Skill loader145bc6470: Resource literal145bc67c4→FString record+f8
-(145bc7831/145bc7849), StackCount literal145bc6746→byte+d4 (145bc7612).
-SkillLevel loader145bc89c0: ChangeResource145bc8b71→FString+20/+28 length
+Skill loader 145bc6470: Resource literal 145bc67c4→FString record+f8
+(145bc7831/145bc7849), StackCount literal 145bc6746→byte+d4 (145bc7612).
+SkillLevel loader 145bc89c0: ChangeResource145bc8b71→FString+20/+28 length
 (145bc900e/145bc9023), ChangeStackCount145bc8bfd→byte+78 (145bc94f8).
 Getters Skill vtable1499b9440: slot 138→145bba6b0 для Resource,
 slotd8→145bba990 для StackCount. Оба используют прежний подтверждённый
-lookup145bb2570 по Skill. Id и первую включённую строку диапазона.
+lookup 145bb2570 по Skill. Id и первую включённую строку диапазона.
 Resource: при FString length+28>1 возвращается row+20, иначе Skill+f8.
 StackCount: nonzero byte row+78 возвращается, 0→base Skill+d4.
 На следующую пересекающуюся строку после нулевой/пустой замены не переходят.
@@ -2177,7 +2177,7 @@ origins table/field/provenance. JS расширяет прежний cooldown re
 У 110033 ChangeStackCount2 на уровнях 6–7. UI сравнения показывает выбранные
 значения и источник; базовые snapshots не складываются, runtime=false.
 Другие изменения/рост/MP/окончательная перезарядка ещё не вычисляются.
-Следующий найденный кандидат: getter145bba160 читает row+6c и base+e4,
+Следующий найденный кандидат: getter 145bba160 читает row+6c и base+e4,
 но его точная привязка к MP и вариант Max пока не закреплены proof report.
 Leaf145bba1f0 читает только base+e4, поэтому нельзя автоматически считать
 его ChangeMpMax getter по соседству vtable slots. ChangeMpMin/Max/Growth
@@ -2204,10 +2204,10 @@ build-skill-level-mp-code.py проверяет Skill MpMin/MpMax literals
 SkillLevel ChangeMpMin/Max145bc8bd3/145bc8be1→+6c/+70
 (145bc94a2/145bc94be), Skill vtable1499b9440 slots100/110→
 getters145bba160/145bba0d0. Полные getter control-flow сохранены:
-lookup145bb2570, первая inclusive строка, ненулевой override или base.
+lookup 145bb2570, первая inclusive строка, ненулевой override или base.
 Report code-clues/skill-level-mp-code.json SHA256
 782b21ffc8d4db1766f2a92fa085a9dd4f5359a8d746da63e2f1f9a111c78d99;
-90instruction/4 literal/2slot anchors, тот же EXE SHA/Capstone5.0.6.
+90 instruction/4 literal/2slot anchors, тот же EXE SHA/Capstone 5.0.6.
 Builder перед использованием проверяет EXE/verified flags/каждый anchor,
 сохраняет MP evidence source в monster-manifest и skill index.
 Запускать proof builder перед build-world-map.py.
@@ -2448,7 +2448,7 @@ Type=SkillBook входят в книги; 17SkillAcquirePotion не повыш�
 Наличие Effect1 у 56Item по-прежнему не доказывает Item. EffectParams→Effect. Id.
 
 Дополнительный native discovery на том же EXE SHA: ветка 14611f5f0 читает
-байт+68, но получает запись через 1459aa040, не Item getter145a80590;
+байт+68, но получает запись через 1459aa040, не Item getter 145a80590;
 литералы EVENTATTENDANCE_REWARDTARGET_SERVER/CHARACTER и сравнения 0/1 относятся
 к другому контексту. Ветка отвергнута как доказательство Item. EffectType1.
 Прямой 145d65b40 — leaf возврата глобального указателя, сам по себе тоже не
@@ -2473,17 +2473,17 @@ Demon King's Firearm открывается с пассивом, возврат 
 Прежняя граница «CraftInfoId пуст, материалы не связаны» устранена отдельным
 native-путём. build-craft-material-binding.py проверяет тот же Windows client
 EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
-Capstone5.0.6,64instruction/literal anchors и 17data anchors, полные unwind
+Capstone 5.0.6,64 instruction/literal anchors и 17data anchors, полные unwind
 fragments. Отчёт code-clues/craft-material-binding.json SHA256
 fce21615278ee8cac00070df186e67698f486a554c0706d87d727d3714260a5b.
 
 Цепочка источников и выбора:
 
 - ItemCraft manager145a5e490 возвращает 14b151fd0; secondary vtable1499825e0,
-  slot 38→loader145a68ca0 с буквальным ItemCraft.csv. Getter145a565d0 использует
+  slot 38→loader 145a68ca0 с буквальным ItemCraft.csv. Getter 145a565d0 использует
   переданный ID для поиска записи рецепта 145a5dc20.
 - ItemCraftMaterial manager145a5e510 возвращает 14b152090; secondary vtable
-  1499834d0, slot 38→loader145a69980 с ItemCraftMaterial.csv. Loader читает GroupId
+  1499834d0, slot 38→loader 145a69980 с ItemCraftMaterial.csv. Loader читает GroupId
   в record+0xc (145a69dce); после загрузки 145a6a3df читает container+0x14,
   строит group map и в 145a6a49d добавляет указатель на record(container+8).
   Этот map находится по manager+0x68.145a56690 ищет точный ключ и возвращает
@@ -2496,7 +2496,7 @@ fce21615278ee8cac00070df186e67698f486a554c0706d87d727d3714260a5b.
   Craft/WBP_ItemCraftMaterialT. Инициализатор 146335060 получает material record
   через 145a56750, ветвится по CostType+0x10:1Asset/2Item. Для 2 читает CostParam
   FString+0x18, вызывает _wtoi через IAT148945bb0 (14633517a), передаёт результат
-  Item getter145a80590 (14633518c), затем показывает найденную запись и
+  Item getter 145a80590 (14633518c), затем показывает найденную запись и
   CostEnchantLevel+0x2c. Существующий item-skill-binding.json повторно проверен
   как зависимость доказательства Item table lookup. Полный положительный int32
   допускается в сборщике; строки с мусорным суффиксом не продвигаются в ссылки.

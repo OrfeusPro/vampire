@@ -71,7 +71,7 @@ endpoint не выбирается по похожему домену и не п
 | Content-Type | application/json |
 | Accept | application/json |
 | gameCode | явное settings GameCode |
-| buildCode | native BuildCode byte1→B/2→C/elseA |
+| buildCode | native BuildCode byte 1→B/2→C/elseA |
 | accessToken | module account field+0x78, если FString непуст |
 | authToken | тот же field+0x78 при том же gate |
 

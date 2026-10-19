@@ -60,7 +60,7 @@ ctypes `_wtoi` с c_wchar_p → c_int. Это тот же CRT, ранее исп
 [NID primitives](HEADLESS-NID-PRIMITIVES.md); locale не изменялась.
 Его Android/прочие CRT semantics не заявляются.
 
-При fixture string conversion `0`, `0abc`, пустая строка, `oops`, ` 0` дали0;
+При fixture string conversion `0`, `0abc`, пустая строка, `oops`, ` 0` дали 0;
 `1`, `-1`, `200` дали ненулевое и остановились до token adoption.
 Это native caller/Windows CRT compatibility evidence, не policy нового runtime.
 Нельзя считать malformed value корректным успешным ответом или доверять ему.
@@ -73,7 +73,7 @@ JSON string/number/bool/прочих типов. В этом replay helper за�
 ## 18 fixtures и связанный результат
 
 4 raw-predicate combinations, 3 JSON non-objects, 8 строк errorCode и 3 status
-boundaries199/206/207. Native status range200..206 подтверждён как прежде,
+boundaries199/206/207. Native status range 200..206 подтверждён как прежде,
 но теперь status взят native leaf из fixture объекта, не просто начальный R12.
 Body FString также взят actual native getter.
 
@@ -91,4 +91,4 @@ SDK token →game Login. После определения всего boundary �
 
 Проверка:
 `python -X utf8 -m unittest discover -s phone-exit/bots -p 'test_vampir_headless_sdk_response_gates.py' -v`.
-Три regression tests воспроизводят report и проверяют все18 native outcomes.
+Три regression tests воспроизводят report и проверяют все 18 native outcomes.

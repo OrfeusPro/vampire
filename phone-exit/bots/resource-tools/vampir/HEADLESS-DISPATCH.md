@@ -41,7 +41,7 @@ Receive-A используется как изолированный вход в
   wrapper `0x141535f20`: bytes `488b0148ff6010`, то есть
   `mov rax,[rcx]; jmp qword ptr [rax+0x10]`.
 - Slot+0x10 ведёт на PingResult OnHandler `0x1467670c0`. На входе проверяются
-  handler/context/packet arguments, разобранные result32/value64, active pointer
+  handler/context/packet arguments, разобранные result32/value 64, active pointer
   и TLS. Затем capture shim возвращает управление без игровых побочных действий.
 - Исполняются возврат, native TLS reset, очистка dispatcher+0x48, reader archive
   destructor chain `0x144aa62a0→0x144aa58f0→0x144aa6560→0x144aa6520` и epilogue.
@@ -60,7 +60,7 @@ ID нельзя использовать как глобальный тип бе
 Дополнительные mixed replays проверяют повторное использование после ошибки.
 
 Snapshot/container lifecycle fixtures и CRT memory shims унаследованы из
-предыдущего harness. Registry/TLS index0/archive flags0 заданы явно. Для TLS
+предыдущего harness. Registry/TLS index 0/archive flags0 заданы явно. Для TLS
 выделена отдельная область, поскольку slot context находится после 1 MiB.
 Security cookie check заменён shim с проверкой ожидаемого аргумента; unknown-ID
 logger сохраняет только synthetic ID. При reader=false диагностическое создание
@@ -79,7 +79,7 @@ reader исчерпал весь body: native допускает trailing bytes.
 `vampir-shared/vampir_core/receive_packet.py:decode_game_ping_result` принимает
 ровно один receive-A кадр ID17 и возвращает PingResultPayload. Максимальный
 frame size обязателен. Короткий вход, чужой ID, extra frames и trailing body
-отклоняются. Exact body12 — явная локальная политика строже native reader.
+отклоняются. Exact body 12 — явная локальная политика строже native reader.
 Только stdlib; нет запуска игры, sockets или дублирования ядра по ботам.
 Четыре теста сверяют исходные bytes, все vectors, native mixed replay и общий decoder.
 

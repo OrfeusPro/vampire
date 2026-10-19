@@ -8,7 +8,7 @@ cooked-ресурсы Windows-клиента; полное решение гео
 
 `python phone-exit/bots/resource-tools/vampir/decode-message-named-slot.py`
 создаёт `F:/PhoneExit Resources/Vampir/ui-geometry/system-message-named-slot.json`.
-Закреплён Capstone5.0.6. EXE SHA256:
+Закреплён Capstone 5.0.6. EXE SHA256:
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 
 Два проверенных пакета: pakchunk500-Windows entry575 и ProjectRED-Windows entry7883.

@@ -22,7 +22,7 @@ frame helpers), 18 scenarios и итоговые байты очереди.
 
 `0x1467aaa10 → 0x144aab2f0 → 0x144aaccf0 → writer0x1456e5cf0 → queue0x1445eac20`.
 
-Wrapper вызывает actual packet name getter0x1456e3a10. Его FString constructor
+Wrapper вызывает actual packet name getter 0x1456e3a10. Его FString constructor
 fixture принимает только source ASCII **PktVersion**, проверяет имя и выдаёт
 terminated UTF-16 descriptor. Затем **0x14597e370** (lookup) и **0x141493d10**
 (получение metadata pointer) заменены явными captures/fixtures. Если pointer
@@ -50,7 +50,7 @@ Global **0x14b520db0** содержит pointer на block, выбранный �
 Нельзя считать эту конфигурацию значением настоящего клиента или общей
 политикой разрешённых пакетов. Diagnostic formatting/metadata lookup fixtures.
 
-Archives получают capacity4096 после native constructors. Byte queue также
+Archives получают capacity 4096 после native constructors. Byte queue также
 preallocated4096, начинается с пустого NUL sentinel. Growth/failure/capacity
 выбор настоящего allocator не проверены. Allocator/free/cookie и bounded CRT
 memcpy остаются fixtures, archive cleanup0x144aa6320 — capture.
@@ -59,7 +59,7 @@ memcpy остаются fixtures, archive cleanup0x144aa6320 — capture.
 
 Подтверждён формат именно PktVersion в данном send-B пути:
 
-- LE24 total size, затем XOR от offset3.
+- LE24 total size, затем XOR от offset 3.
 - До XOR: CRC32 LE32 от ID16+sequence16+Version body.
 - ID1 LE16, sequence LE16, затем [проверенное тело Version](HEADLESS-VERSION-PACKET-WRITER.md).
 - Sequence peer+0x240 используется до increment, wrap16.
@@ -67,8 +67,8 @@ memcpy остаются fixtures, archive cleanup0x144aa6320 — capture.
 
 В 14 успешных сценариях полный ciphertext совпал с независимой сборкой
 VersionPayload/struct/zlib/XOR. Есть sequence0/65535, metadata null/present,
-wake/no-wake, empty/BMP/emoji и inline/heap строки из предыдущих14 vectors.
-Metadata byte7 действительно записывается при present fixture, но не меняет
+wake/no-wake, empty/BMP/emoji и inline/heap строки из предыдущих 14 vectors.
+Metadata byte 7 действительно записывается при present fixture, но не меняет
 payload в покрытом пути. Другие metadata policies этим не установлены.
 
 Native append делает отдельную копию до возврата wrapper. Replay перезаписывает

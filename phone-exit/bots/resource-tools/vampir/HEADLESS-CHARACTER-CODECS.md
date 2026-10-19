@@ -38,7 +38,7 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/verify-ghidra-export.py
 | character-list-reader-replay.json | `00bfdaed831215dec4c530328a78d6d5da85275997e908dfe61b98796e6266d1` | 12 полных bodies, 38+191 short inputs, trailing |
 | character-select-writer-replay.json | `75dd034248d44abb165e057f574cf3f7735fec4f934a660ab463998c41f6da14` | 16 writer vectors |
 
-## Owner: actual policy1 → CharacterListRead
+## Owner: actual policy 1 → CharacterListRead
 
 Ранее найденная ссылка на caller `0x1468f1d70` находится в
 `0x149e0ef78`. Таблица `0x149e0e7c8` установлена native constructor
@@ -47,13 +47,13 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/verify-ghidra-export.py
 
 - Table+`0x7b0` → caller `0x1468f1d70`.
 - Table+`0xa18` → `0x140bb4a10`, точные байты `b0 01 c3` (AL=1; RET).
-- Table+`0xa00` → `0x1468f09a0`, helper затем virtual+a20; при actual policy1
+- Table+`0xa00` → `0x1468f09a0`, helper затем virtual+a20; при actual policy 1
   эта ветка caller не исполняется.
 
 Два replay (lookup disabled/enabled с null fixture) исполняют constructor,
 actual caller, actual policy и RequestA/packet constructor до send capture ID101.
 Базовый constructor, выделение member storage и UI helpers остаются fixtures.
-Класс, назначение engine slot7b0, связь с загрузкой CharacterSelect_02 и реальный
+Класс, назначение engine slot 7b0, связь с загрузкой CharacterSelect_02 и реальный
 вызов этого lifecycle hook пока не доказаны. Поэтому нельзя автоматически
 посылать ID101 сразу после LoginResult, ссылаясь только на этот результат.
 
@@ -101,8 +101,8 @@ bytes, строгий UTF-8 и полное потребление тела. Nat
 Модели frozen, поля записей скрыты из repr. Код результата сам по себе не
 устанавливает состояние сессии.
 
-12 полных vectors: 0/1/2/4 записи, ASCII/кириллица/CJK/emoji, UTF-8 length128,
-uint32/64 maxima, enum clamps и normalization byte255. 229 short prefixes
+12 полных vectors: 0/1/2/4 записи, ASCII/кириллица/CJK/emoji, UTF-8 length 128,
+uint32/64 maxima, enum clamps и normalization byte 255. 229 short prefixes
 отвергнуты native и общим decoder. Есть отдельный native trailing case.
 Пять тестов воспроизводят отчёты, проверяют parity, limits и явный отказ extensions.
 
@@ -110,7 +110,7 @@ uint32/64 maxima, enum clamps и normalization byte255. 229 short prefixes
 
 Writer `0x1456e53a0`: raw packet+10 uint64 → +18 uint32 → +20 uint64,
 ровно 20 байт `<QIQ`. Native writer/archive IO проверены на 16 vectors,
-включая четыре raw field snapshots из ранее исполненного virtual50 handoff.
+включая четыре raw field snapshots из ранее исполненного virtual 50 handoff.
 Это отдельный writer replay, не цельный handoff→frame→socket.
 
 Общий `vampir_core.character_select.CharacterSelectPayload` кодирует immutable
@@ -126,7 +126,7 @@ raw поля с явным byte budget и uint range checks, без сети и 
    read `0x1456c3890` → value reader через объект+8; insert `0x1456b99b0`.
    Экспорт callbacks уже готов; полного native/общего decoder этих ветвей нет.
 3. Проверить actual ID102 handler/result gate, перенос списка, preferred selection
-   по packet+38/record+8 и источники полей virtual50. Псевдокод handler показывает
+   по packet+38/record+8 и источники полей virtual 50. Псевдокод handler показывает
    эти обращения, но runtime семантика пока не проверена.
 4. Связать owner hook с lifecycle уровня; завершить ID109 frame и ID110 nested
    body/handler. Экспорт ID110 reader/handler уже есть, native проверок ещё нет.

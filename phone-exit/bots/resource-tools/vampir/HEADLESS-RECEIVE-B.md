@@ -61,7 +61,7 @@ remove перед OnHandler. Для empty/miss пакет всё равно до
 
 Notification list в fixtures пуст. Native notify loop исполняет пустую ветку;
 его array cleanup `0x1445bb240` заменён shim, который допускает только
-pointer0/count0. Подписчики, nonempty notification allocation/callbacks,
+pointer 0/count 0. Подписчики, nonempty notification allocation/callbacks,
 collision chains/multi-entry removal/concurrency остаются непроверенными.
 Native manager lookup/remove/sparse free не подменены.
 
@@ -85,7 +85,7 @@ Live server compatibility и смена ключа между реальными
 maximum сохранены. Это второй уровень; raw bytes сначала проходят transport header.
 
 `receive_packet.py:decode_game_ping_result_b` возвращает типизированный
-PingResultPayload. Политика exact body12/один кадр, как у A helper; ID17 относится
+PingResultPayload. Политика exact body 12/один кадр, как у A helper; ID17 относится
 к game context. Общее ядро не выполняет session bookkeeping и не обновляет мир.
 Четыре теста сверяют source/provenance, все native vectors, partial/coalesced
 input, explicit keys, повторные native replays с изменением тестового ключа.

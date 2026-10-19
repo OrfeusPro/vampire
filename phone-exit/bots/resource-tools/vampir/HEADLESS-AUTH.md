@@ -77,7 +77,7 @@ FNetworkManagerImpl::CreatePost и строкой POST (`0x14451d0ca`).
 Form builder `0x144586a30` использует шаблон `{0}={1}` и separator `&`.
 Value escaping проходит через `0x141c13850`: `%`, byte whitelist и hex helper.
 Native whitelist `0x141c06750` и uppercase hex `0x1415ad670` исполнены для
-каждого byte0..255 (512 вызовов). Без escaping остаются только ASCII
+каждого byte 0..255 (512 вызовов). Без escaping остаются только ASCII
 `-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~`.
 Space становится `%20`, плюс `%2B`, слэш `%2F`; generic quote_plus здесь не
 копирует наблюдаемую форму. Полный Unreal string/map/HTTP builder не replayed;

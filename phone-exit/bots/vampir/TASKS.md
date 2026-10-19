@@ -140,7 +140,7 @@ filters/custom-link permissions и управление персонажем; ro
 18 октября: endpoint projection 1452451b0 исполнен 192 cases+192 replays;
 независимо проверены XZ clamp/detail height/nearest selection. 24 связки
 исходные координаты→projection→corridor дополнительно повторены. 72 recast
-tests прошли. Следом straight-path/funnel (call14569c12f→145248b20),
+tests прошли. Следом straight-path/funnel (call 14569c12f→145248b20),
 effective active grid/filters и движение персонажа. Grid synthetic;
 routes_verified=0, navigation_ready=false. MAP-ATLAS.md.
 
@@ -169,8 +169,8 @@ effective SupportedArea/CDO и active tile coverage; routes_verified=0.
 18 октября: новое звено проверки маршрутов: native class fields780/788/790
 →CDO→query helper, три запроса перед base area 10–13=1. 55 anchors/26 fragments,
 16 native cases+16 audit replays; 54 recast tests прошли. Найден initializer
-base impl1452b7120/slot8e0, SupportedArea/CDO loop пока только статический.
-Следом его исполнение с явными CDO inputs и проверка query caller145688dd0
+base impl1452b7120/slot 8e0, SupportedArea/CDO loop пока только статический.
+Следом его исполнение с явными CDO inputs и проверка query caller 145688dd0
 →14569bcf0; live coverage/filters/проходимость остаются. navigation_ready=false.
 
 18 октября: книги → изучаемый навык в списке: иконка/имя/ссылка, фильтр
@@ -299,7 +299,7 @@ EquipmentType+0x61 из parser, CMP/SETG signed, UI selector 4/1.320+320 native
 18 октября: native weight calculation найден (parser record+0x8a → три
 float32 multiply/floor/add блока).861 cases/2583 исполнения/12 tests и HTTP/SHA
 прошли; карточка содержит ограниченный калькулятор. Полная мощь и owner
-context не доказаны; следующий след — caller145db6fb0 и StatType consumers.
+context не доказаны; следующий след — caller 145db6fb0 и StatType consumers.
 Подробности/ограничения/сборка — ATTRIBUTES.md; visual QA остаётся.
 
 18 октября: граф характеристик расширен до 13 описательных связей; добавлены
@@ -365,14 +365,14 @@ parts повторно извлечены audit; 25Python+7 Node и deployed che
 owner+0x400 selection, active coverage и путь остаются неизвестны. Источники/
 порядок — MAP-ATLAS.md, tools build/decode/audit-navigation-filter-*.
 
-18 октября: native area-priority builder найден через leaf setter14523d610 ←
+18 октября: native area-priority builder найден через leaf setter 14523d610 ←
 1452b4943.22 anchors/14 fragments, 72 native sum/sort/rank cases (50heap branches),
 12 native replays прошли. Ранги уникальные 0..63 даже при равных суммах; actual
 filter arrays ещё не извлечены, order11→63→10 остаётся сценарием.46Python+7 Node,
 all62overlay/deployed audit прошли. Источники/ограничения — MAP-ATLAS.md.
 
 18 октября: BV/priority study1096queries и полный native endpoint attachment/
-link writer434 пары на копиях тайлов. 7 сценариев приоритетов; 11→63→10 точно
+link writer 434 пары на копиях тайлов. 7 сценариев приоритетов; 11→63→10 точно
 воспроизводит обе baked points61 перехода, 9432 без связей во всех 7. Настройки
 сценария подобраны по данным; runtime binding не доказан. All434 audit/28 native
 replays, 50Python+7 Node/deployed checks прошли. Карточка содержит результат/
@@ -455,9 +455,9 @@ scene/overlay SHA и 4deployedfiles. Все ID=0,61 пара endpoints отли�
 | V30 | Поля ContentsLock и соединение со справочником | Готово | Пять полей связаны загрузчиком, 18 опорных инструкций, 24 фрагмента и 5 прямых вызовов; все 269 SaveType=2. referenceRevision4 хранит клиентский путь отдельно от evaluator. Источники состояния/назначение callers и Android остаются в V03. [CONTENTS-LOCK-FIELDS.md](../resource-tools/vampir/CONTENTS-LOCK-FIELDS.md) |
 | V31 | Обновление контекста блокировок | Частично |32 опорные инструкции, 15 фрагментов: сброс флагов/уровней, входной список, readiness и refresh перед пересчётом. При закрытом gate старые уровни не обнуляются. Источник массива/таблица gate продолжены в V32/V33. Остались события setter, регистрация OnHandler, getters и Android. [CONDITION-STATE.md](../resource-tools/vampir/CONDITION-STATE.md) |
 | V32 | Именованные результаты разблокировки → update | Готово | Два точных OnHandler-литерала, 21 опорная инструкция, 2 обработчика и 2 tail-wrapper: полная замена и добавление ID. Регистрация/guard/сериализация не входят в подтверждённый путь. [UNLOCK-RESULTS.md](../resource-tools/vampir/UNLOCK-RESULTS.md) |
-| V33 | Инициализация и изменение готовности типов | Частично |37 опорных инструкций, 4 фрагмента и getter: reset0..10 (true только 10), общий setter и EnterArea. Готовность не равна выполнению; Семь прямых событий связаны в V34; другие пути/callback и Android остаются. [CONDITION-GATE.md](../resource-tools/vampir/CONDITION-GATE.md) |
+| V33 | Инициализация и изменение готовности типов | Частично |37 опорных инструкций, 4 фрагмента и getter: reset 0..10 (true только 10), общий setter и EnterArea. Готовность не равна выполнению; Семь прямых событий связаны в V34; другие пути/callback и Android остаются. [CONDITION-GATE.md](../resource-tools/vampir/CONDITION-GATE.md) |
 | V34 | Регистрация unlock-handler и события готовности | Частично |29 опорных инструкций: 2 регистрации в PacketDispatcher, packet-vtable/ID, 7 прямых setter-вызовов. Имена CharacterSelect/Engraving подтверждены. Полная принимающая диспетчеризация, guard и 3 неизвестных корня ещё не связаны. [UNLOCK-REGISTRATION.md](../resource-tools/vampir/UNLOCK-REGISTRATION.md) |
-| V35 | Guard результата и сообщения из ресурсов | Частично |25 опорных инструкций, 252 инструкции кода отдельно от compact table227; обычные 0/4503 и специальный режим различены. 5 ключей EXE→CSV405 связаны, UI-ограничения сохранены. Остались WBP, полные side effects и принимающая диспетчеризация. [PACKET-RESULT-GUARD.md](../resource-tools/vampir/PACKET-RESULT-GUARD.md) |
+| V35 | Guard результата и сообщения из ресурсов | Частично |25 опорных инструкций, 252 инструкции кода отдельно от compact table 227; обычные 0/4503 и специальный режим различены. 5 ключей EXE→CSV405 связаны, UI-ограничения сохранены. Остались WBP, полные side effects и принимающая диспетчеризация. [PACKET-RESULT-GUARD.md](../resource-tools/vampir/PACKET-RESULT-GUARD.md) |
 | V36 | Общий error-path → SystemMessageUI | Частично |17 опорных инструкций, 7 литералов, 11 фрагментов, 4 cooked-варианта; superclass/vtable/TextMessage+0xa00 и фон связаны. Отдельный справочник без привязки KICKOUT; 176 тестов прошли. Абсолютная геометрия/анимация/Android и принимающая диспетчеризация остаются. [SYSTEM-MESSAGE-UI.md](../resource-tools/vampir/SYSTEM-MESSAGE-UI.md) |
 | V37 | Именованное содержимое TextMessage | Частично | Native Name/Content→NamedSlotBinding→NamedSlotBindings связаны; 2 cooked-префикса NamedSlotContent→TextMessage и обратный Slot6 проверены. Индекс 59 схемы класса ещё кандидат, хвост opaque, топология/геометрия не включены. 180 тестов прошли. [MESSAGE-NAMED-SLOT.md](../resource-tools/vampir/MESSAGE-NAMED-SLOT.md) |
 
@@ -603,7 +603,7 @@ build-drop-selection-code.py/NPC-LOOT.md; 26 anchors/36 фрагментов; 17
 
 17.10, V13: Skill. FireCondition→native parser→40 пар имён/кодов подтверждены
 указателями и bytes; build-skill-semantics.py/skill-semantics.json, связи в NPC-LOOT.md.
-Always=0, fallback43; у всех 2632 вхождений навыков Nocturne43, поведение неизвестно.
+Always=0, fallback 43; у всех 2632 вхождений навыков Nocturne43, поведение неизвестно.
 Добавлены подпись статуса/исходные параметры условия; 1785 SHA/66 тестов проверены.
 Единицы времени, runtime-предикаты, формула Damage и оставшиеся эффекты предметов
 остаются. Визуальная проверка недоступна: local browser use отключён в Work settings.
@@ -640,7 +640,7 @@ skill-effect-links.py/JS/CSS, источники и отвергнутые nativ
 74 теста/1785 SHA/визуальная проверка Impact прошли. Доказательство Param1,
 истечение/рекурсия, формула урона, время и runtime-условия остаются.
 
-17.10, V13: Effect. ActionType→56 native-имён, None0/Stun6/fallback56;
+17.10, V13: Effect. ActionType→56 native-имён, None0/Stun6/fallback 56;
 408 известных из 2027 определений. build-effect-action-semantics.py,
 источники/12 anchors/JMP в NPC-LOOT.md. UI ActionType/сырые параметры/истечение,
 75 тестов/1785 SHA/визуальная проверка прошли. Param1→Effect не доказан,
@@ -688,7 +688,7 @@ English525 приоритет, полная KO1020 fallback по точному 
 вхождения, 59Python тестов и браузер 100171031→Базовая атака 01/02 проверены.
 build-monster-details.py строит skill-names-verification.json; документация обновлена.
 TotalTime остаётся неизвестным:0x14568e9e0 отвергнут как ложная связь
-(slot0xb0 вызывается на объекте 0x1456048e0, не на Skill).
+(slot 0xb0 вызывается на объекте 0x1456048e0, не на Skill).
 
 17.10, V13: TotalTime audit закреплён build-skill-total-time-code.py,
 5 anchors/4 fragments/2159 instructions + getter bytes/vtable, повторный SHA
@@ -747,7 +747,7 @@ npc-skill-groups-checked.png сохранён. Native/серверные свя�
 
 Частично: 19 названий Item. EffectType из native parser/43 anchors, 1774 предмета
 с подписанным типом; 20 fallback не None. Форматы EffectParams, runtime пассивов
-и сочетание World/Room ограничений остаются. AreaBox loader15 anchors/vtable/ret0,
+и сочетание World/Room ограничений остаются. AreaBox loader 15 anchors/vtable/ret0,
 без доказательства pivot. Отчёт геометрии/5160 навигационных inputs и статус карты,
 проходимость неизвестна. 92 теста/браузер прошли. Источники и команды в
 NPC-LOOT.md и MAP-ATLAS.md; новых игровых действий/Android проверки не было.
@@ -770,14 +770,14 @@ NPC-LOOT.md и MAP-ATLAS.md; новых игровых действий/Android 
 Частично: exports связывают 886/887 (прежний candidate повышен после проверки
 диапазонов/класса/полного покрытия); 20 ChunkRef/path/Bounds, 6 native descriptors,
 строгий decoder.16Python+21 Node/SHA прошли. Сервер 17946 запущен; браузер карта/
-status20/alert/console проверены. Маршруты/AreaBox pivot остаются неизвестны.
+status 20/alert/console проверены. Маршруты/AreaBox pivot остаются неизвестны.
 Далее извлечение payload частей, полигоны/связность и проверка движения.
 
 
 ### 17 октября — V67, payload и навигационные объекты уровня
 
 Частично: 7PAK/21494 plain records/0 ошибок, 22 RecastNavMesh кандидата.
-Подтверждён Nocturne-level header 1141/body1140 (обратное расположение), 34206 exports,
+Подтверждён Nocturne-level header 1141/body 1140 (обратное расположение), 34206 exports,
 49bounds/63link components/NavSystem/Recast/RefLoader со всеми SHA.19Python
 прошли. Это 115 объектов, не готовый граф; polygons/runtime link conditions
 не разобраны. Далее custom serializers/payload. MAP-ATLAS.md/level/index.json.
@@ -814,7 +814,7 @@ attachments/архетипы/полные worldtransforms/условия дви�
 ### 18 октября — V67, параметры экземпляров лифтов
 
 Частично: 63 явные ссылки SceneRoot/SmartLinkComp проверены по точным exports;
-22 native поля SplineActionParams и 6 полей NnLift, Blueprint own count2/1/0,
+22 native поля SplineActionParams и 6 полей NnLift, Blueprint own count 2/1/0,
 62 явных параметра движения, 8 bAutoActivation=false. Unknown PointLinks/tail
 сохранены; отсутствующее не заменяется default.34 Python-теста прошли.
 Сборка build-lift-instance-settings.py; отчёт instance-settings.json.
@@ -849,7 +849,7 @@ transform/runtime активация; мировые маршруты по-пр�
 в MAP-ATLAS.md. Далее native effective defaults/transform/runtime conditions;
 готовые координаты переходов и проходимость не заявлены.
 Также build-lift-bounds-code.py проверил 18 anchors/4 descriptors/vtable slot 199:
-PointLinks stride0x70, Left+40/Right+58 входят в min/max bounds, затем читается
+PointLinks stride 0x70, Left+40/Right+58 входят в min/max bounds, затем читается
 RootComponent+1d0. Сборка прошла; bounds-code.json. Формула world endpoints/
 обновление кэша/навигационная выгрузка не доказаны; следующий поиск локализован.
 
@@ -873,7 +873,7 @@ world endpoints/runtime state остаются; мировые переходы 
 углов локального AABB, включая negative/nonuniform/zero scale; ошибка≤1.17e-10.
 Начальный AABB[(0,0,-10),(0,0, 10)] установлен по EXE и учтён в сравнении.
 49 целевых Python-тестов прошли. Отчёт rotation-evidence.json с полными
-результатами/страницами/SHA; Unicorn2.1.4 закреплён в requirements-native.txt.
+результатами/страницами/SHA; Unicorn 2.1.4 закреплён в requirements-native.txt.
 Реальные effective CDO/attachments/world endpoints и проходимость остаются.
 Это проверка математики, не 195 игровых переходов. Источники MAP-ATLAS.md.
 
@@ -959,7 +959,7 @@ node --check, порядок секций и совпадение source/deploye
 ### 18 октября — названия режимов строк наград
 
 Reward. RewardGroup→ERewardGroup подтверждён ModifyValue/parser: 7 имён,
-72 anchors, fallback7 не объявлен режимом. Названия показаны по всей цепочке
+72 anchors, fallback 7 не объявлен режимом. Названия показаны по всей цепочке
 в раскрытой награде коробки. ItemBox. RewardGroupType остаётся raw/unknown;
 его нельзя автоматически подписывать тем же enum.27Python+4 Node прошли,
 SHA644boxes/report/deployedJS проверены, loot и большая карта пересобраны.
@@ -1045,13 +1045,13 @@ join Item→Effect не заявлено. skill-effects.js различает it
 Особенно важно не повторять ошибочную ветку 1463759f0: она действительно
 читает Item. EffectParams+70 через _wtoi и вызывает 145938880, однако этот
 lookup использует EffectOperation manager145940ee0, secondary vtable
-149946a38/loader14595b760 с literal EffectOperation.csv. Его UI caller
+149946a38/loader 14595b760 с literal EffectOperation.csv. Его UI caller
 14637fe50 проверяет Type по 145db8d60, который допускает 49/53/54/75/76
 (BloodSeal/CommonSeal/EventSeal/CommonSeal2/EventSeal2), а не EffectType1.
 В текущих 57 предметах этих типов EffectParams пуст, EffectType20. Поэтому
 эта ветка НЕ повышает 56 Effect1→Effect. Id до доказанной связи.
-Effect manager отдельно: singleton145940e50/global14b14e4f0,
-secondary vtable1499444b0/slot 38→loader145959c60; direct handle lookup
+Effect manager отдельно: singleton 145940e50/global 14b14e4f0,
+secondary vtable1499444b0/slot 38→loader 145959c60; direct handle lookup
 145938440. Среди исследованных Item-get корней прямой подходящий вызов
 с Item. EffectParams не найден. Следующий поиск: косвенные вызовы/общие
 UI effect helpers и server-fed item effect state, сохраняя тип входной записи.
@@ -1097,16 +1097,16 @@ skills без NPC на Nocturne.25Python+21 Node прошли, SHA3447files/403b
 Новый build-skill-level-extra-code.py → code-clues/skill-level-extra-code.json,
 SHA256 `a02f33083c80f3afb3e37142f1092cc65ff134802745aeb122bf9af69140ce37`.
 Проверены EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8,
-Capstone5.0.6,30instruction anchors, 4 literals, 2 Skill vtable slots.
+Capstone 5.0.6,30 instruction anchors, 4 literals, 2 Skill vtable slots.
 Sources Skill 1505/SkillLevel1511 и их index/SHA остаются прежними.
 
-Skill loader145bc6470: Resource literal145bc67c4→FString record+f8
-(145bc7831/145bc7849), StackCount literal145bc6746→byte+d4 (145bc7612).
-SkillLevel loader145bc89c0: ChangeResource145bc8b71→FString+20/+28 length
+Skill loader 145bc6470: Resource literal 145bc67c4→FString record+f8
+(145bc7831/145bc7849), StackCount literal 145bc6746→byte+d4 (145bc7612).
+SkillLevel loader 145bc89c0: ChangeResource145bc8b71→FString+20/+28 length
 (145bc900e/145bc9023), ChangeStackCount145bc8bfd→byte+78 (145bc94f8).
 Getters Skill vtable1499b9440: slot 138→145bba6b0 для Resource,
 slotd8→145bba990 для StackCount. Оба используют прежний подтверждённый
-lookup145bb2570 по Skill. Id и первую включённую строку диапазона.
+lookup 145bb2570 по Skill. Id и первую включённую строку диапазона.
 Resource: при FString length+28>1 возвращается row+20, иначе Skill+f8.
 StackCount: nonzero byte row+78 возвращается, 0→base Skill+d4.
 На следующую пересекающуюся строку после нулевой/пустой замены не переходят.
@@ -1124,7 +1124,7 @@ origins table/field/provenance. JS расширяет прежний cooldown re
 У 110033 ChangeStackCount2 на уровнях 6–7. UI сравнения показывает выбранные
 значения и источник; базовые snapshots не складываются, runtime=false.
 Другие изменения/рост/MP/окончательная перезарядка ещё не вычисляются.
-Следующий найденный кандидат: getter145bba160 читает row+6c и base+e4,
+Следующий найденный кандидат: getter 145bba160 читает row+6c и base+e4,
 но его точная привязка к MP и вариант Max пока не закреплены proof report.
 Leaf145bba1f0 читает только base+e4, поэтому нельзя автоматически считать
 его ChangeMpMax getter по соседству vtable slots. ChangeMpMin/Max/Growth
@@ -1151,10 +1151,10 @@ build-skill-level-mp-code.py проверяет Skill MpMin/MpMax literals
 SkillLevel ChangeMpMin/Max145bc8bd3/145bc8be1→+6c/+70
 (145bc94a2/145bc94be), Skill vtable1499b9440 slots100/110→
 getters145bba160/145bba0d0. Полные getter control-flow сохранены:
-lookup145bb2570, первая inclusive строка, ненулевой override или base.
+lookup 145bb2570, первая inclusive строка, ненулевой override или base.
 Report code-clues/skill-level-mp-code.json SHA256
 782b21ffc8d4db1766f2a92fa085a9dd4f5359a8d746da63e2f1f9a111c78d99;
-90instruction/4 literal/2slot anchors, тот же EXE SHA/Capstone5.0.6.
+90 instruction/4 literal/2slot anchors, тот же EXE SHA/Capstone 5.0.6.
 Builder перед использованием проверяет EXE/verified flags/каждый anchor,
 сохраняет MP evidence source в monster-manifest и skill index.
 Запускать proof builder перед build-world-map.py.
@@ -1335,7 +1335,7 @@ Skill Book Page11 рецептов, Essence6010001 раскрывается пр
 
 Найден потребитель 145dd3fa0→14568ed80: MinPos/MaxPos/Yaw→проверка XY-точки.
 Центр(Min+Max)/2 и положительный XY-поворот подтверждены 11728 точками 1466 случаев
-в ограниченной Unicorn2.1.4 эмуляции без игры/OScalls. Все 772 поворота таблицы
+в ограниченной Unicorn 2.1.4 эмуляции без игры/OScalls. Все 772 поворота таблицы
 и 322Nocturne получают геометрию; карта 603AreaBox/175Area labels/24074points.
 Две обратных записи не исправлены предположением, navigation_ready=false.
 16Python+30 Node/46 tests, SHA603polygons/772 audit и браузер SquallHill945% прошли.
@@ -1371,7 +1371,7 @@ tile_count суммарно 19098. Не объявлять границу proper
 ### 18 октября — восстановление буферов тайлов Recast
 
 extract-recast-tile-buffers.py: 34 полных экспорта/19098 тайлов/27249848 байт,
-изолированная Unicorn2.1.4, явные гипотезы property offset 14/custom version 97.
+изолированная Unicorn 2.1.4, явные гипотезы property offset 14/custom version 97.
 Все записанные/вычисленные размеры равны, каждый поток завершён точно на EOF.
 Нативный lookup версии выполнен 63 раза; значение 97 подставлено, не извлечено.
 validate-recast-tile-buffers.py независимо сверил source/proof/EXE/code-pages,
@@ -1422,7 +1422,7 @@ active coverage/версии/координаты/special links/проходим
 ### 18 октября — native matcher на всей объединённой сетке кандидатов
 
 recast-portal-emulator.py: строго ограниченные клиентские portal/detail/triangle/
-array-fast-path инструкции в Unicorn2.1.4; только cookie call пропущен, никаких
+array-fast-path инструкции в Unicorn 2.1.4; только cookie call пропущен, никаких
 OS/import/game process.10synthetic cases и real reciprocal seam прошли.
 build-recast-external-graph.py --height 35:18430 тайлов/104961 boundary edges,
 106595 native calls/125718 направленных переходов/2953 отклонённых пары.

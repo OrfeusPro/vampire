@@ -6,13 +6,13 @@ Native WaitingEnd и UI-index paths исполняются до owning queue; 61
 19 byte-matched frames (ID109/ID101), duplicate/refusal/seq-wrap cases.
 ID102 packet+40 реально пишет state+f0 через setter; indexed raw10=record+8,
 raw18=constant0, raw20=current state+f0. Общий builder from_character_list
-требует state_raw_f0; результат code0 и valid index не означают готовую сессию.
+требует state_raw_f0; результат code 0 и valid index не означают готовую сессию.
 Далее nested ID110/handler/позиция, owner lifecycle и actual SDK/device context.
 [Source, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
 
 ## CharacterList ID102: полный body и covered handler, 20 октября
 
-Appearance items `<IBH`/clamp45 и optional map `<BBIIIQ`/value clamp9
+Appearance items `<IBH`/clamp 45 и optional map `<BBIIIQ`/value clamp 9
 поддержаны общим decoder. Требуется max_extension_items — общий count budget
 на весь body, включая duplicate wire keys. 30 native bodies/489 short inputs;
 45 native reader→handler cases, preferred index и result/policy gates.
@@ -23,38 +23,38 @@ owner lifecycle и реальный SDK/device context.
 
 ## Список/выбор: ограниченные codecs, 20 октября
 
-Actual owner constructor/table/policy1 → RequestA проверены без policy fixture.
+Actual owner constructor/table/policy 1 → RequestA проверены без policy fixture.
 Общие character_list decoder и character_select encoder: 12 list bodies,
 229 short prefixes, 16 select vectors, 5 tests. List profile требует пустые
 appearance extensions и absent optional; остальные ветви явно отклоняются.
-Lifecycle/семантика полей/handler102/response110/live session ещё не завершены.
+Lifecycle/семантика полей/handler 102/response110/live session ещё не завершены.
 [Источники, SHA и продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md).
 
 ## CharacterListRead: caller RequestA найден, 20 октября
 
-32 native cases связывают 0x1468f1d70 → singleton → slot90 → RequestA →
-packet constructor/send capture при втором policy value1. Owner/lifecycle,
+32 native cases связывают 0x1468f1d70 → singleton → slot 90 → RequestA →
+packet constructor/send capture при втором policy value 1. Owner/lifecycle,
 response102 и live session остаются открытыми.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
 
 ## Selection lifecycle: callbacks, 20 октября
 
-8 native cases подтверждают state40/dispatch/broadcast и singleton virtual38.
+8 native cases подтверждают state40/dispatch/broadcast и singleton virtual 38.
 Emitters зарегистрированных callbacks, загрузка CharacterSelect_02 и caller
-CharacterListRead slot90 пока не установлены.
+CharacterListRead slot 90 пока не установлены.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
 
 ## Selection level найден в World, 20 октября
 
 Raw2 связан с World.Id2/LevelPath через compiled parser/record/getter и CSV.
 Путь Lobby/CharacterSelect/CharacterSelect_02 проверен base/current patch;
-реальный loader/завершение загрузки/slot90 dispatch ещё открыты.
+реальный loader/завершение загрузки/slot 90 dispatch ещё открыты.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
 
 ## Метка state2: граница данных, 20 октября
 
 Actual lookup/hash/accessor исполняются на 13 fixtures. Они подтверждают
-inline record addressing и null/miss policy; строка состояния2 ещё неизвестна.
+inline record addressing и null/miss policy; строка состояния 2 ещё неизвестна.
 Новый runtime state/map default не добавлен.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
 
@@ -67,7 +67,7 @@ Callback return 1 не означает выполненную загрузку/
 
 ## Выбор персонажа: handoff boundary, 19 октября
 
-Derived service table подтверждена constructor prefix. Actual virtual50
+Derived service table подтверждена constructor prefix. Actual virtual 50
 строит PktCharacterSelect/ID 109 и передаёт его в handoff kind 110 (capture).
 Raw fields проверены на 4 vectors, реальные значения/ответ/выбор ещё неизвестны.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
@@ -320,7 +320,7 @@ Native assembly slice/getters/ASCII-view append проверены на 26 fixtu
 
 ## Уточнены параметры SDK bootstrap, 19 октября
 
-SDK getter version=5.2.11, BuildCode byte1→B/2→C/остальные→A.
+SDK getter version=5.2.11, BuildCode byte 1→B/2→C/остальные→A.
 256 native getter fixtures и compiled initializers проверены; общий
 select_sdk_build_code находится в vampir_core.sdk_config.
 [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
@@ -330,8 +330,8 @@ select_sdk_build_code находится в vampir_core.sdk_config.
 
 Base Game config содержит 1.12.14/real/CdnConfig=True, patch — 0.1.1/dev/False;
 active слой и startup precedence ещё не доказаны. По base профилю выполнен
-public HTTPS GET: 200/6000 байт; общий decoder получил Zone real/mode2 и
-server index6/REAL с lobby details. Body/source/headers сохранены, offline
+public HTTPS GET: 200/6000 байт; общий decoder получил Zone real/mode 2 и
+server index 6/REAL с lobby details. Body/source/headers сохранены, offline
 verification не обращается к сети. [Доказательства](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).
 ProjectRED.uproject/NkPatch.uplugin совпали base/patch; обе runtime декларации
 имеют LoadingPhase=Default, порядок не установлен.
@@ -623,7 +623,7 @@ ID Login/LobbyLogin совпадают, их схемы/регистрация �
 Четыре независимых проверки, включая 10 native ID getter scenarios, прошли.
 Wire encoding и сеть этим не проверены.
 
-**H03a выполнен**: реальные native primitive/raw IO подтвердили Ping body16 байт
+**H03a выполнен**: реальные native primitive/raw IO подтвердили Ping body 16 байт
 и Result 12 байт, 126 native scenarios/5 tests; codec в `vampir-shared/vampir_core/ping.py`, только
 стандартная библиотека Python. [Доказательства и ограничения](../resource-tools/vampir/HEADLESS-PING-CODEC.md).
 Это тела сообщений, не complete frames и не рабочее подключение.

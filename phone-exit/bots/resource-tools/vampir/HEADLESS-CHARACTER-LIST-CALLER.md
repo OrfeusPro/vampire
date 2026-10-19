@@ -1,4 +1,4 @@
-# Прямой caller slot90 → CharacterListRead
+# Прямой caller slot 90 → CharacterListRead
 
 20 октября 2026. Подтверждён caller RequestA; lifecycle его владельца ещё открыт.
 
@@ -44,7 +44,7 @@ RequestA создаёт packet через `0x1456d4780`, vtable `0x1498d84d8`, I
 ## Native проверка
 
 `replay-character-list-caller.py` исполняет полный caller, actual singleton getter,
-RequestA и packet constructor. Взята копия настоящей service table; только slot98
+RequestA и packet constructor. Взята копия настоящей service table; только slot 98
 заменён capture. Slot90 сохраняет actual target. Внешние helpers и owner policy
 virtual — fixtures; отправка захватывается без сети.
 
@@ -65,15 +65,15 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/replay-character-list-calle
 python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_headless_character_list_caller.py
 ```
 
-Ghidra также экспортировала продолжение slot78 `0x14561a8d0`, base helper
-`0x14560d7b0` и delegate callback `0x145dc5ae0`. В них прямой slot90 не найден;
+Ghidra также экспортировала продолжение slot 78 `0x14561a8d0`, base helper
+`0x14560d7b0` и delegate callback `0x145dc5ae0`. В них прямой slot 90 не найден;
 это статическое наблюдение, не доказательство отсутствия косвенных путей.
 
 ## Продолжение и границы
 
 Найти owner/vtable функции `0x1468f1d70`, источник virtual+a18 и lifecycle её вызова.
-Затем связать actual owner policy1 с загрузкой CharacterSelect_02, обработать
-ответ102 и подтвердить сетевую сессию. Native fixture не доказывает, что функция
+Затем связать actual owner policy 1 с загрузкой CharacterSelect_02, обработать
+ответ 102 и подтвердить сетевую сессию. Native fixture не доказывает, что функция
 была вызвана работающим клиентом. Frame/socket/server response, живой профиль,
 память игры и Android не использовались.
 

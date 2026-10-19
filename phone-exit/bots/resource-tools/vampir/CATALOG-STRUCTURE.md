@@ -263,7 +263,7 @@ Bloodstained/SwordMan, Akasha/Fighter. Для книги конкретный It
 полях статус conflict исключается из конкретного класса, неизвестные ID/
 токены не угадываются. Текущие 403 книги: 375specified, 27all, 1unknown;
 конфликтов нет. По 102 книги на класс с учётом 27 общих. Skill 3446:
-929specified, 263all, 2254unknown; отсутствующий target201006 тоже показывается
+929specified, 263all, 2254unknown; отсутствующий target 201006 тоже показывается
 в неизвестных в каталоге. Viper460/GrimReaper448/Carnage426/
 Bloodstained459/Akasha460 навыков, включая общие записи.
 

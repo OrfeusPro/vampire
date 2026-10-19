@@ -6,7 +6,7 @@ EXE SHA256: `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 
 ## Подтверждённая связь
 
-Raw 2, переданный selection virtual40 в предыдущем исследовании, используется
+Raw 2, переданный selection virtual 40 в предыдущем исследовании, используется
 как ключ **World.Id**. В текущей patch-таблице и базовой таблице:
 
 | Id | GroupId | LevelPath |
@@ -96,7 +96,7 @@ lookup/getter вернули две строки выше. Отсутствую�
 
 Теперь следующий переход можно искать по реальному уровню
 **Lobby/CharacterSelect/CharacterSelect_02**: cooked world/level и клиентские
-hooks его завершения, затем инициатор slot90/CharacterListRead. Полное
+hooks его завершения, затем инициатор slot 90/CharacterListRead. Полное
 заполнение runtime registry и применение patch source ещё открыты, как и
 response 102/socket/session. Game/profile/process memory/credentials/network/
 Android не использованы. Уровень не загружался в игре.

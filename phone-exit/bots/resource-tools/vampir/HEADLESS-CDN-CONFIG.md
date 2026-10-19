@@ -48,7 +48,7 @@ ReadJson создаёт строки Zone (`0x14565a753`) и NetmarbleS (`0x1456
 передаёт их как R9/R8 в lookup `0x14563da10` на `0x14565a788`.
 RDX — исходный объект JSON, RCX — объект конфигурации. Lookup сначала ищет
 section по ASCII-folded hash через `0x141420380/0x14158a730`, затем получает
-вложенное значение через virtual slot0 и child lookup `0x1415edc20`.
+вложенное значение через virtual slot 0 и child lookup `0x1415edc20`.
 Точная семантика child-key comparison и JSON типов пока не исполнена.
 
 При найденном значении вызывается `0x1415e48f0`, полученный FString передаётся

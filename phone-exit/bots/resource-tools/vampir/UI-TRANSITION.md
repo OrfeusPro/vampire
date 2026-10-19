@@ -8,7 +8,7 @@
 ## Воспроизведение
 
 `python phone-exit/bots/resource-tools/vampir/build-ui-transition-code.py`
-после build-ui-manager-code.py. Используется закреплённый Capstone5.0.6.
+после build-ui-manager-code.py. Используется закреплённый Capstone 5.0.6.
 Отчёт: `F:/PhoneExit Resources/Vampir/code-clues/ui-transition-code.json`.
 Десять корней, двадцать фрагментов + leaf-wrapper, 919 инструкций, семь групп
 проверенных связей, 15 ссылок на текстовые литералы. Хеши EXE/отчёта, диапазоны,

@@ -57,7 +57,7 @@ Getter `0x1445e75b0` читает global `0x14b4f39c8`, получает vtable 
 
 По адресу slot `0x149504608` лежит target `0x141484e40`:
 `mov eax,2; ret`. Исполнена вся названная цепочка, включая настоящий getter
-и target, затем CDN branch `0x14563f555..0x14563f580`. Итог — code2/label window.
+и target, затем CDN branch `0x14563f555..0x14563f580`. Итог — code 2/label window.
 Только allocator ограничен shim. Это compiled initialization, а не чтение памяти
 запущенной игры; последующие изменения global в живом процессе не проверялись.
 

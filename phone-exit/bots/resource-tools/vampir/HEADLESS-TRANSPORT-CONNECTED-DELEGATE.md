@@ -20,7 +20,7 @@ slot bindings и одиннадцать проверяемых constructor/call/
 Raw offsets и два условия были верны, но новый allocator source уточняет
 семантику: это **pointer на storage делегата и число 16-байтовых единиц**,
 а не число владельцев или refcount. P — начало NnPeerImpl.
-Объект-цель находится в самом delegate storage по offset0x18.
+Объект-цель находится в самом delegate storage по offset 0x18.
 Прежние fixture names owner_present/owner_count сохранены для сравнения gates;
 они не являются именами восстановленных полей клиента.
 
@@ -35,17 +35,17 @@ allocation/initialization peer и startup не исполнялись; wrapper/p
 В этом slice native код:
 
 1. Читает P из wrapper+0x10, пишет wrapper в **P+0x230**.
-2. Готовит размер0x30 и descriptor **P+0x308** для **0x1414276b0**.
+2. Готовит размер 0x30 и descriptor **P+0x308** для **0x1414276b0**.
 3. Этот actual allocator wrapper округляет размер к 16-байтовым единицам,
-   получает3, вызывает resize backend и записывает3 в descriptor+8 = P+0x310.
+   получает 3, вызывает resize backend и записывает 3 в descriptor+8 = P+0x310.
 4. При ненулевом allocation устанавливает delegate vtable **0x14900a528**,
    target wrapper в delegate+0x18 и method pair в +0x20/+0x28.
 
 Resize backend **0x1414311c0** — ограниченный fixture, получает units3/unit16.
-Instance identity getter **0x141429520** тоже fixture (значение17); identity
+Instance identity getter **0x141429520** тоже fixture (значение 17); identity
 не используется проверяемым invoke path. Native allocator wrapper и все
 stores delegate реально исполняются. Alloc-fail — намеренно synthetic backend
-response: storage pointer0, units всё равно3 в данном source body.
+response: storage pointer 0, units всё равно 3 в данном source body.
 Это не утверждение о политике реального allocator при нехватке памяти.
 
 ## Native invoke и игровой target
@@ -59,11 +59,11 @@ leaf **0x14141cbc0** получает исходный pointer, прибавля
 Binding записал adjust0 и method **0x1437113ec**, bytes `488b01ff6048`:
 это virtual+0x48 для target wrapper. Game construction root **0x1467a79e0**
 на 0x1467a7ac4/0x1467a7acb загружает/сохраняет wrapper vtable
-**0x149d84e50**. Её slot+8 = root0x1467aa0e0, slot+0x48 =
+**0x149d84e50**. Её slot+8 = root 0x1467aa0e0, slot+0x48 =
 **0x1467a9cd0**. Так source связывает initializer, binder и получателя;
 это не выбор адреса по похожему имени.
 
-В replay actual table0x149d84e50 установлена synthetic wrapper. Делегат
+В replay actual table 0x149d84e50 установлена synthetic wrapper. Делегат
 доходит до **0x1467a9cd0**, проверяются this == wrapper и RDX FString.
 **Тело игрового получателя ещё capture на входе**, packet/Login не исполнялись.
 Его code fragment сохранён для следующего исследования. Из предыдущего

@@ -5,8 +5,8 @@
 CharacterSelectPayload.from_character_list(body,index,state_raw_f0=...):
 record.u64[0]→raw10, constant0→raw18 и explicit current state→raw20.
 Initial state_raw_f0 приходит из accepted ID102 tail[3], но может изменяться;
-его нельзя заменять неявным stale snapshot. Native index caller/lookup/virtual50/
-handoff/frame подтверждены, 61 cases/19 frames. Pure builder проверяет code0 и
+его нельзя заменять неявным stale snapshot. Native index caller/lookup/virtual 50/
+handoff/frame подтверждены, 61 cases/19 frames. Pure builder проверяет code 0 и
 index, не заменяет session/policy/readiness gates и ничего не отправляет.
 [Source и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
 
@@ -54,7 +54,7 @@ vampir_core.login_packet.LoginPayload: 15 strings, 4 uint32, 5 raw bytes и
 ## PktVersion body encoder
 
 vampir_core.version_packet.VersionPayload: десять raw ordered strings и три
-uint32 → проверенное тело пакета. Native UTF-8/archive parity на14 vectors;
+uint32 → проверенное тело пакета. Native UTF-8/archive parity на 14 vectors;
 immutable data/output, обязательный byte budget, без I/O/decoder/frame/session.
 [Источник и строгая локальная политика](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
 
@@ -375,7 +375,7 @@ Connect/auth/readiness scheduler и session lifecycle пока не реализ
 Input immutable, body policy exact, raw transport layer обрабатывается отдельно.
 
 `receive_packet.py:decode_game_ping_result` — один receive-A game PingResult ID17,
-body12, явный frame limit. Exact body policy строже native trailing tolerance.
+body 12, явный frame limit. Exact body policy строже native trailing tolerance.
 24 native Dispatch scenarios: [доказательства](../resource-tools/vampir/HEADLESS-DISPATCH.md).
 Без игровых OnHandler side effects и без универсальной registry для lobby/game.
 

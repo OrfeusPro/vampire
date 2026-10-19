@@ -18,7 +18,7 @@ SHA256 `abcea122600cdb7678b0124e2396af54d03a04fd30c41e7bff00e6820219937e`.
 Полный native caller `0x144537b20`:
 
 1. Вызывает split по `.` с bool=true; требует ровно три элемента.
-2. Для каждого из трёх рассчитывает padding до кратности4; если нужно3 символа
+2. Для каждого из трёх рассчитывает padding до кратности 4; если нужно 3 символа
    padding (длина mod4=1), отклоняет весь container до decode.
 3. Дописывает 0/1/2 символа `=` в каждый сегмент.
 4. Декодирует только первый и второй сегменты, превращает их в JSON и проверяет
@@ -59,14 +59,14 @@ SHA256 `3e2007c90553a656e98d69fba8c70fa512d7d29f4f23466eb0167faaeb541d96`.
 Переиспользует source-bound Setup/AES/formatter fragments из NID suffix report
 и записывает его SHA. Native slice `0x14454c9a1..0x14454cac1`:
 
-- Размер channelKey округляется вверх до кратности16.
-- Native loop переносит low-byte каждой wide unit минус1 в byte buffer.
+- Размер channelKey округляется вверх до кратности 16.
+- Native loop переносит low-byte каждой wide unit минус 1 в byte buffer.
 - Native AES-NI и byte-hex writer формируют строку в global `0x14b4f1ed0`.
 
-Восемь fixtures: длины0/16/17/32 × allocation fill00/AA. Обе aligned непустые
+Восемь fixtures: длины 0/16/17/32 × allocation fill 00/AA. Обе aligned непустые
 длины дают одинаковый результат независимо от fill и совпадают с независимым
-AES-256 ECB. Для длины17 caller пишет первые17 bytes, а оставшиеся15 bytes
-зависят от **allocation fixture**; результаты fill00 и AA различаются.
+AES-256 ECB. Для длины 17 caller пишет первые 17 bytes, а оставшиеся 15 bytes
+зависят от **allocation fixture**; результаты fill 00 и AA различаются.
 Сам allocator `0x141431680` не исполнен, его initialization contract неизвестен.
 Поэтому это не доказательство утечки/случайности в игре и не готовая модель
 padding миграции. Нельзя молча считать tail zero-padding или PKCS7.

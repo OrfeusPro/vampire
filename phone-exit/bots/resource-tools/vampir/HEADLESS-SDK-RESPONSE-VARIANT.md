@@ -35,8 +35,8 @@ Vtable pointers происходят из decoded factory LEA/stores; type tags 
 сами factories не исполнялись. Fixtures используют соответствующий tag/layout,
 FString по object+`0x10` и настоящий vtable из EXE.
 
-Для tag2 converter вызывает native AsString wrapper →virtual slot58.
-Для tag3 он пробует native virtual slot58, получает true и переносит FString.
+Для tag2 converter вызывает native AsString wrapper →virtual slot 58.
+Для tag3 он пробует native virtual slot 58, получает true и переносит FString.
 Сам TryGetString копирует object+0x10 в output и возвращает true.
 Numeric double fallback/форматирование и bool/null/array/object ветви не исполнены.
 
@@ -61,7 +61,7 @@ Numeric double fallback/форматирование и bool/null/array/object �
 | 2147483648 | 2147483647 | nonzero_errorCode |
 
 Строковые JSON `"0"` и `"oops"` используют tag2, сохраняют исходный текст,
-дают0 в CRT. Это compatibility observations в Windows fixture domain.
+дают 0 в CRT. Это compatibility observations в Windows fixture domain.
 Не считать дробный/malformed numeric text корректным server response и не
 переносить permissive _wtoi в новый runtime как универсальную success policy.
 

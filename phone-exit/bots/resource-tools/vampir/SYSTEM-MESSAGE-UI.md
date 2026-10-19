@@ -46,7 +46,7 @@ Native registration0x144a61920 содержит точные NkSystemMessageUI �
 | +0xa00 | TextMessage | NkRichTextBlock в обоих WBP; запись 0x144a7ad1d |
 | +0xa08 | ImageBackGround | Поиск CommonMessageNotifyLightUI, затем ImageBackGround внутри его дерева; запись 0x144a7adc0 |
 
-Text writer0x144a832e0 читает ровно+0xa00. При null выходит; иначе подготавливает
+Text writer 0x144a832e0 читает ровно+0xa00. При null выходит; иначе подготавливает
 значение и вызывает метод текстового объекта. Совпали именованный поиск,
 поле хранения, потребитель поля и тип элемента в ресурсе. Это сильнее одного
 совпадения имени TextMessage среди многих окон.

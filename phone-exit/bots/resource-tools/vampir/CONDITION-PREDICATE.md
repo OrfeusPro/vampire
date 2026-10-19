@@ -11,7 +11,7 @@ EXE: `ProjectRED-Win64-Shipping.exe`, SHA256
 
 `python phone-exit/bots/resource-tools/vampir/build-lock-predicate-code.py`
 создаёт `F:/PhoneExit Resources/Vampir/code-clues/lock-predicate-code.json`.
-Нужны закреплённый Capstone5.0.6 и отчёт quest-graph/condition-types.json.
+Нужны закреплённый Capstone 5.0.6 и отчёт quest-graph/condition-types.json.
 Проверяются хеш EXE, 30 опорных инструкций, таблица из 11 переходов и попадание
 каждой цели на границу инструкции. Сохранены два отдельных диапазона кода,
 девять unwind-фрагментов вспомогательных функций и исходные байты таблицы.

@@ -9,7 +9,7 @@
 Общий helper требует явные значения и не выполняет HTTP/URI validation.
 
 19 октября: [native getters SDK version/BuildCode](HEADLESS-SDK-BOOTSTRAP-VALUES.md)
-уточнили параметры схемы: version=5.2.11; BuildCode byte1 → B, 2 → C,
+уточнили параметры схемы: version=5.2.11; BuildCode byte 1 → B, 2 → C,
 остальные → A. Active BuildCode и весь HTTP builder ещё не проверены.
 
 18 октября 2026. H04b частично. Предыдущий этап — [авторизация SDK](HEADLESS-AUTH.md),

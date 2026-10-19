@@ -3,8 +3,8 @@
 ## Непроцентные специальные масштабы
 
 18 октября: разобрана compact dispatch таблица в formatter145dda3a0:
-код 145dda4ed вычитает 315, unsigned range-check≤150; затем 151byte selectors
-145dda798 и 4target RVAs145dda788 выбирают реальные instruction boundaries.
+код 145dda4ed вычитает 315, unsigned range-check≤150; затем 151 byte selectors
+145dda798 и 4 target RVAs145dda788 выбирают реальные instruction boundaries.
 Targets145dda51b/145dda5f3/145dda684/145dda698. Данные jump-table сохраняются
 как data anchors, а не декодируются инструкциями.
 
@@ -50,14 +50,14 @@ routes proof SHA `a9a1dca3ce1e75315973c847d9d1b3a61550bd40196056c89361b6be9be212
 ## Процентная ветка отображения восстановлена
 
 18 октября: при поиске consumer детализации проверены pointer references
-на handler146767e10 и соседние реализации; новая цепочка применения
+на handler 146767e10 и соседние реализации; новая цепочка применения
 StatDetailDataList не доказана. Перспективнее оказался уже найденный
 вызов 145eacdab→145dda3a0: это форматирование значения OperationType.
 
 `build-stat-format-evidence.py` воспроизводит и сохраняет
 `code-clues/stat-format-evidence.json`.10 anchors/11 fragments связывают:
 CSV loader IsPercentage → byte record+0x8c (`145af0d2b`),
-lookup145b03700 → CMP byte[record+0x8c], 0 (`145dda3eb`). Если ненулевой:
+lookup 145b03700 → CMP byte[record+0x8c], 0 (`145dda3eb`). Если ненулевой:
 
 1. signed int32 аргумент из EBX → float32 (`145dda400/404`);
 2. float32 multiplication на 0.01 (`145dda407`, constant14898d13c bytes0ad7233c);
@@ -67,11 +67,11 @@ lookup145b03700 → CMP byte[record+0x8c], 0 (`145dda3eb`). Если ненул�
 
 Константы/форматные строки закреплены bytes/SHA. CRT import1487a2f03
 подтверждён через IAT как api-ms-win-crt-math-l1-1-0.dll!fmodf.
-Эмулятор выполняет настоящую branch/scaling code145dda3eb до трёх terminal
+Эмулятор выполняет настоящую branch/scaling code 145dda3eb до трёх terminal
 адресов, fmodf заменён явным Python math.fmod+float32 shim с denominator1.
 CRT text formatting/allocations/весь formatter не исполнялись.
 
-Важная граница дизассемблирования: .pdata range145dda3a0…145dda82f содержит
+Важная граница дизассемблирования: .pdata range 145dda3a0…145dda82f содержит
 switch data после RET145dda787. Code span явно 145dda3a0…145dda788;
 таблицы не считаются инструкциями. Непроцентная ветка имеет отдельный
 switch и scales; её правила здесь не реконструированы и не распространяются
@@ -110,11 +110,11 @@ PktStatDetailData. Результат `code-clues/stat-packet-evidence.json`:
 
 | Структура | Подтверждено в коде |
 |---|---|
-| PktStat | key dword+8, raw qword value+0x10; reader1457f0540/writer1457f4360 |
-| PktStatCategoryData | category byte+8, raw qword value+0x10; reader1457f0590/writer145784940; read category clamp≤29 |
-| PktStatExtraCategoryData | raw qword value+8; writer14579af70/reader145798060; отдельное поле category не найдено |
-| PktStatDetailData | key+8, массив category+0x10, массив extra+0x20; reader1457f0660/writer1457f4430 |
-| PktStatDetailInfoReadResult | literal StatDetailDataList, reader1456c1f20 и field-name1456cba12 |
+| PktStat | key dword+8, raw qword value+0x10; reader 1457f0540/writer 1457f4360 |
+| PktStatCategoryData | category byte+8, raw qword value+0x10; reader 1457f0590/writer 145784940; read category clamp≤29 |
+| PktStatExtraCategoryData | raw qword value+8; writer 14579af70/reader 145798060; отдельное поле category не найдено |
+| PktStatDetailData | key+8, массив category+0x10, массив extra+0x20; reader 1457f0660/writer 1457f4430 |
+| PktStatDetailInfoReadResult | literal StatDetailDataList, reader 1456c1f20 и field-name1456cba12 |
 
 Типы связаны name getter и read/write slots одной vtable:
 PktStat1498d1b30, Category1498d2638, Extra1498d2680, Detail1498d26d0.
@@ -125,7 +125,7 @@ PktStat1498d1b30, Category1498d2638, Extra1498d2680, Detail1498d26d0.
 Формат показывает наличие категории/значения, не формулу между статами.
 
 Есть точная строка `PktStatDetailInfoReadResultHandler::OnHandler()`:
-offset0x9d67220, RIP LEA146767e14. Полностью декодированная функция 146767e10
+offset 0x9d67220, RIP LEA146767e14. Полностью декодированная функция 146767e10
 с этой строкой выполняет построение/логирование строки; переноса packet
 данных в модель персонажа в ней нет. Другой обработчик/consumer не исключён.
 Нельзя из этого заключать, что детализация работает в текущем клиенте,
@@ -164,15 +164,15 @@ packet proof SHA `58aa8bbca328285a2e1aacda2a63652f9faaaadcff06d8ea1623f8427d9148
 
 ## Установлен потребитель оценки: сравнение предметов
 
-18 октября: caller145db6fb0 найден через direct E8 callers145d2da30.
+18 октября: caller 145db6fb0 найден через direct E8 callers145d2da30.
 Полная цепочка в `code-clues/attribute-score-context.json`:
 
 - Candidate owner+0x18 →145a80590 (существующая проверенная Item lookup
   binding из item-skill-binding.json повторно сверена по SHA/anchors/data).
 - Проверки 145db9d00/145db73c0/1455baad0 предшествуют сравнению. Их полные
   правила не восстановлены в этом этапе, в эмуляции они задаются Boolean.
-- Item. EquipmentType: literal145aa2969, parsed byte write145aa29b4→info+0x61;
-  caller145db7034 передаёт это поле в R8 lookup1455b5b10.
+- Item. EquipmentType: literal 145aa2969, parsed byte write145aa29b4→info+0x61;
+  caller 145db7034 передаёт это поле в R8 lookup 1455b5b10.
 - Полученная запись слота →+8identifier →145d342d0, затем score145d2da30
   вызывается для найденного peer и candidate.145db706e CMP EAX, EBX;
   145db7075 SETG AL: **signed candidate score > peer score**, равенство false.
@@ -188,7 +188,7 @@ packet proof SHA `58aa8bbca328285a2e1aacda2a63652f9faaaadcff06d8ea1623f8427d9148
 Сборка `build-attribute-score-context.py` → `build-catalog-pages.py`.
 Отчёт 16 anchors/16 fragments, literal EquipmentType и inherited binding SHA;
 native comparator исполняется целиком с 9 явными stub-callees (lookups,
-допуск, score). Существующий handle pointer getter141482990 исполняется
+допуск, score). Существующий handle pointer getter 141482990 исполняется
 из клиентских байтов. 320 cases =64 комбинации 6gates ×5 пар scores, включая
 равенство и signed int32 endpoints; отдельно 320 исполнений UI selector
 1463b77ac…1463b77b5. Все совпали с ожидаемой truth table. Stubs не доказывают
@@ -219,12 +219,12 @@ weight native replays/JS comparisons. Syntax/HTTP/deployed/data+proof SHA
 StatType145af05e4, CombatPowerWeight145af064e; массив заголовков и word
 индексов связывает StatType со вторым столбцом, CombatPowerWeight с восьмым.
 Прочитанный StatType пишется dword в record+0x0c (`145af08ad`),
-CombatPowerWeight читается через reader1445ef9f0,
+CombatPowerWeight читается через reader 1445ef9f0,
 вызов 145af0d06, затем запись word в record+0x8a (`145af0d0b`).
 Полные байты/инструкции, а не только эти строки, сохранены в evidence.
 
 Конструктор node145ad69f0 задаёт vtable14999acc0 и начальный StatType0xcf;
-lookup145b03700 возвращает shared info, потребитель 145d2da30 обращается к
+lookup 145b03700 возвращает shared info, потребитель 145d2da30 обращается к
 OperationType info и трижды читает **signed int16** record+0x8a, умножает
 на int32 значение и суммирует вклад. Три участка:
 
@@ -237,7 +237,7 @@ ADD ESI. Результат локально кэшируется в owner+0xf0,
 **Идентичность owner, связь со всей боевой мощью персонажа, применимость
 каждого стата в каждой ветке и полный вызов не доказаны.** Это численная
 зацепка из реального кода, не новое ребро Stat→CombatPower и не расчёт
-шанса попадания/урона. Native caller145db6fb0 вызывает 145d2da30 дважды;
+шанса попадания/урона. Native caller 145db6fb0 вызывает 145d2da30 дважды;
 полный его контекст ещё предстоит разобрать.
 
 Воспроизведение:

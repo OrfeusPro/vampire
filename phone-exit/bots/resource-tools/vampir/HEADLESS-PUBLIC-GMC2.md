@@ -39,7 +39,7 @@ SHA256 `ed169b12eb7f0f0ccd0a83c93aa16f4e683212eb088bce82df27a0d712456abb`.
 GMC2 URL/header plan. Разрешён один точный public URL, GET, empty nmDeviceKey;
 Authorization/Cookie/accessToken/playerId отвергаются до I/O. Нет retries,
 redirect follow, environment proxy, device identity или account acquisition.
-TLS certificate/hostname verification обычная; timeout 10 с, между read1
+TLS certificate/hostname verification обычная; timeout 10 с, между read 1
 проверяется budget 30 с (текущая операция может добавить до 10 с), body ≤2 МиБ.
 Content-Length/identity encoding и полнота тела проверяются. Это urllib transport,
 не исполнение native HTTP object. User-Agent Research/1 и Accept-Encoding identity
@@ -90,7 +90,7 @@ existing bounded JSON/XOR/RSA/list/map primitives. Требует один не�
 integer errorCode 0, resultData object и обе encrypted strings. Локальная политика
 rejects duplicate/nonfinite/depth/Unicode/shape ошибок. В outer encrypted strings
 NUL разрешён: реальный ciphertext содержит escaped NUL. Plaintext/CDN JSON
-сохраняет прежний запрет NUL. Body≤2МиБ, DECKEY ≤4096 ASCII chars, headers ≤256;
+сохраняет прежний запрет NUL. Body≤2 МиБ, DECKEY ≤4096 ASCII chars, headers ≤256;
 дальнейшие map/secret-list budgets прежние. Это local supported subset.
 
 Возвращается отдельная frozen SdkConfiguration с read-only merged map; repr

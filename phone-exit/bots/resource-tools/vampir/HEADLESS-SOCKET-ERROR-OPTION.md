@@ -32,25 +32,25 @@ fixtures. Ни один сокет ОС не создаётся.
 На входе engine метода EDX содержит handle, R8D — raw level selector,
 R9D — raw option selector; два stack arguments указывают output и size.
 Worker передаёт level selector 0, option selector 1, размер 4.
-На границе getsockopt это **handle42, level65535, option4103, size4**.
+На границе getsockopt это **handle42, level65535, option4103, size 4**.
 Символьные названия констант из Windows headers здесь не заявлены;
 numeric translation и имя PE import проверены независимо.
 
 Engine возвращает AL как `(syscall result != -1)`. Затем worker отдельно
 проверяет DWORD в output. Нулевой output при true даёт state2 → state6,
-completion code1. Ненулевой output либо syscall=-1 дают code2, state остаётся2.
-В частности, raw output10035 здесь идёт в ошибку, хотя тот же номер,
+completion code 1. Ненулевой output либо syscall=-1 дают code 2, state остаётся 2.
+В частности, raw output 10035 здесь идёт в ошибку, хотя тот же номер,
 полученный другим путём через WSAGetLastError после connect, ранее допускался
 connect wrapper. Не переносить правила между двумя разными call sites.
 
-Диагностические fixtures с syscall return1 и изменённым output size0
-при output0 тоже проходят gate: engine принимает любой result кроме -1,
+Диагностические fixtures с syscall return1 и изменённым output size 0
+при output 0 тоже проходят gate: engine принимает любой result кроме -1,
 а worker не перепроверяет изменённый size. Это наблюдение о коде клиента,
 не утверждение, что ОС выдаёт такие ответы, и не рекомендация повторять
 такую обработку в собственном клиенте.
 
 No-write не вызывает getter и не выдаёт completion; exception-ready
-без write-ready даёт code2 без getsockopt.
+без write-ready даёт code 2 без getsockopt.
 
 ## Raw selectors
 
@@ -97,6 +97,6 @@ dispatch recipients и lifetime остаются captures из предыдущ�
 server-compatible session нет. Игра не запускалась; profile/process memory,
 credentials и сеть не использованы. Runtime бота не изменён.
 
-Следующий шаг: completion code1 → source-bound socket subscriber → peer
+Следующий шаг: completion code 1 → source-bound socket subscriber → peer
 transport notification → packet Login. Проверка готовности сама по себе
 не доказывает серверную авторизацию.

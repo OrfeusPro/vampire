@@ -61,7 +61,7 @@ NUL отклоняется; prefix128/base4096 UTF-16 units — локальны
 
 ## Логическое имя конфигурации
 
-Helper `0x1445bc080` передаёт global string `0x14b2743f8` в config virtual slot0x58.
+Helper `0x1445bc080` передаёт global string `0x14b2743f8` в config virtual slot 0x58.
 Root `0x14152ca00` создаёт для этого global строку Game: literal на
 `0x14152ca91`, constructor на `0x14152ca9c`, move в global на `0x14152cac4`.
 Это подтверждает связь с логической конфигурацией Game, но не конкретный

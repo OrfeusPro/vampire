@@ -31,7 +31,7 @@ CRC init/update/stream append/XOR. Выходная граница до cleanup,
 Explicit environment: правильный PktPing vptr, native ctor output archives
 с заранее выделенными 256 байтовыми буферами, заданное connection sequence.
 Allocator/growth, cookie/prologue/cleanup, сокеты и вся остальная сессия исключены.
-Первый replay показал недостающую code page ID getter0x1414079a0 в эмуляторе;
+Первый replay показал недостающую code page ID getter 0x1414079a0 в эмуляторе;
 она добавлена вместе с bounded body, не заменена stub.
 
 ## Формат исходящего кадра A
@@ -70,7 +70,7 @@ layout/CRC scope/валидацию аргументов и 2 дополните
 ## Оставшееся receive/context
 
 Проверен static pointer на Dispatch0x14679f510 в таблице 0x149d80538, slot+8;
-LEA на это начало есть в factory root0x14678ec40 и destructor root0x14679f270.
+LEA на это начало есть в factory root 0x14678ec40 и destructor root 0x14679f270.
 Это ещё не доказательство, что callback receive wrappers указывает на эту таблицу.
 
 У Dispatch ID читается из input+3, body из input+5; у исходящего полного кадра

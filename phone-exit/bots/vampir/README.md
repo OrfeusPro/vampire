@@ -1,20 +1,20 @@
 # Vampir — главный файл разработки
 
-## ID110: все11 массивов с непустыми данными, 20 октября
+## ID110: все 11 массивов с непустыми данными, 20 октября
 
-Actual whole reader разобрал34 bodies с1/2/8 записями и совместным заполнением
-всех11 массивов; отклонил465 коротких префиксов. Проверены enum clamps, bool,
-optional3float32, signed zero и отсутствие сдвига spatial vector. Ghidra165
+Actual whole reader разобрал 34 bodies с 1/2/8 записями и совместным заполнением
+всех 11 массивов; отклонил 465 коротких префиксов. Проверены enum clamps, bool,
+optional 3 float32, signed zero и отсутствие сдвига spatial vector. Ghidra 165
 функций/63 warnings. Дальше крупная optional map+98, совместная проверка maps,
 полный bounded decoder, handler и semantic position consumer; live вход открыт.
 [Адреса, схемы, SHA, команды и границы](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-COLLECTIONS.md).
 
 ## ID110: минимальное тело и raw vector, 20 октября
 
-Проверены actual constructor/readers на268 минимальных bodies, включая все256
-wire headings; 3float32→3double, actual SSE2 math и нормализация heading.
-Отдельно22 native apply cases: raw24→player+20, direction→pitch/yaw/roll0.
-Ghidra151 функций/63 warnings; math export отдельно с source/tool/range SHA.
+Проверены actual constructor/readers на 268 минимальных bodies, включая все 256
+wire headings; 3 float32→3 double, actual SSE2 math и нормализация heading.
+Отдельно 22 native apply cases: raw24→player+20, direction→pitch/yaw/roll0.
+Ghidra 151 функций/63 warnings; math export отдельно с source/tool/range SHA.
 Полные непустые collections, handler/session и семантический источник позиции
 ещё открыты. Это промежуточный этап, shared ID110 decoder пока не добавлен.
 [Источники, команды, SHA и точное продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-RESULT.md).
@@ -35,7 +35,7 @@ Ghidra 109 функций/58 warnings. Далее ID110 body/handler/позиц�
 Общий decoder списка теперь поддерживает непустой appearance array и optional
 map; проверены enum clamps, duplicate last-value-wins, коллизии и rehash.
 30 whole bodies/489 short prefixes. 45 native body→handler cases проверили
-result/policy gates, перенос списка и preferred index (первое совпадение, иначе0).
+result/policy gates, перенос списка и preferred index (первое совпадение, иначе 0).
 Добавлен общий preferred_character_index без I/O; для empty/error возвращает None.
 Ghidra: 106 функций/53 warnings. Источники ID109 fields/caller/frame, ID110,
 owner lifecycle и live session остаются открытыми.
@@ -43,7 +43,7 @@ owner lifecycle и live session остаются открытыми.
 
 ## Список и выбор: native owner и body codecs, 20 октября
 
-Constructor подтвердил owner table и actual policy1 → caller → RequestA/ID101
+Constructor подтвердил owner table и actual policy 1 → caller → RequestA/ID101
 без policy fixture. ID102: 12 полных bodies (0/1/2/4 записи), 229 short inputs;
 общий bounded decoder поддерживает основной профиль, явно отвергает непустые
 appearance extensions и present optional. ID109: `<QIQ`/20 bytes, 16 native
@@ -51,19 +51,19 @@ vectors и общий encoder. 5 тестов прошли; Ghidra 101 функ�
 Lifecycle hook/полные extensions/ID102 handler/ID110/live вход ещё открыты.
 [Источники, SHA, команды и точное продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md).
 
-## Найден caller CharacterListRead slot90, 20 октября
+## Найден caller CharacterListRead slot 90, 20 октября
 
 Функция 0x1468f1d70 при втором owner virtual+a18 == 1 вызывает
-selection service slot90 → RequestA → actual packet constructor/send capture.
+selection service slot 90 → RequestA → actual packet constructor/send capture.
 32 native cases; owner class/lifecycle ещё не установлены. Ghidra: 80 функций,
 44 предупреждения.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
 
 ## Selection lifecycle: обработчики событий, 20 октября
 
-Проверены 7 native event cases и singleton callback → virtual38.
+Проверены 7 native event cases и singleton callback → virtual 38.
 Регистрация двух delegates найдена статически; их emitters, связь с завершением
-загрузки CharacterSelect_02 и caller slot90 остаются открытыми. Ghidra: 76 функций,
+загрузки CharacterSelect_02 и caller slot 90 остаются открытыми. Ghidra: 76 функций,
 42 предупреждения.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
 
@@ -84,9 +84,9 @@ registry population/source ещё не связаны. Ghidra: 54 functions/33 w
 
 ## Selection state2 и deferred callback, 20 октября
 
-10 native preparation cases и 12 callback cases проверили virtual40→SetState:
+10 native preparation cases и 12 callback cases проверили virtual 40→SetState:
 pending flag либо state2/schedule. Actual deferred callback проверяет player/
-phase/busy и ставит flags; загрузка и backend actions captured. Direct slot90
+phase/busy и ставит flags; загрузка и backend actions captured. Direct slot 90
 на covered paths не найден. Ghidra: 48 functions/32 warnings.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
 
@@ -169,8 +169,8 @@ getters. NetmarbleId → packet+0x30, SDK token →+0xa0, server ID →+0xb0.
 
 ## VersionResult → Login routine, 19 октября
 
-39 native scenarios связали ID2/reader17 bytes/handler/result gate с
-входом 0x1467a9700. При covered code0 достигается Login routine; её PktLogin
+39 native scenarios связали ID2/reader 17 bytes/handler/result gate с
+входом 0x1467a9700. При covered code 0 достигается Login routine; её PktLogin
 constructor пока только static-bound. Runtime/live negotiation не менялись.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
 
@@ -204,7 +204,7 @@ bridge и virtual+0x48 → 0x1467a9cd0. P+0x308/+0x310 — storage делега�
 
 ## Socket ready → transport recipient, 19 октября
 
-10 native scenarios связали completion code1 с двумя broadcasts и
+10 native scenarios связали completion code 1 с двумя broadcasts и
 NnPeerImpl::OnTcpPeerConnected. Проверены peer flag, transport resets
 и gated owner virtual+0x60. Owner target/packet Login ещё capture; сети нет.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md).
@@ -213,16 +213,16 @@ NnPeerImpl::OnTcpPeerConnected. Проверены peer flag, transport resets
 
 Восемь native integrations заменили option capture реальным engine body.
 95 direct calls проверили raw selector translation. Worker вызывает
-getsockopt с level65535/option4103; failure и output error → code2.
-Syscall остаётся fixture; readiness/session не доказаны. Далее code1 recipients.
+getsockopt с level65535/option4103; failure и output error → code 2.
+Syscall остаётся fixture; readiness/session не доказаны. Далее code 1 recipients.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md).
 
 ## Socket readiness job, 19 октября
 
 14 native scenarios проверили mode helper/ioctl, одну select iteration
 и completion routes. Write-ready + нулевой option output дают state2→6
-и code1. Syscalls/option/scheduler fixtures; реальной readiness/session нет.
-Далее recipients code1 и transport notification → Login.
+и code 1. Syscalls/option/scheduler fixtures; реальной readiness/session нет.
+Далее recipients code 1 и transport notification → Login.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md).
 
 ## Winsock → engine error mapping, 19 октября
@@ -571,7 +571,7 @@ XOR идёт по uint16 units повторяющимся key; нулевые р
 
 ## SDK bootstrap: версия и BuildCode, 19 октября
 
-Native getters подтвердили SDK version 5.2.11 и BuildCode byte1→B/2→C/остальные→A.
+Native getters подтвердили SDK version 5.2.11 и BuildCode byte 1→B/2→C/остальные→A.
 Исполнены compiled initializers и 256 getter fixtures, общий select_sdk_build_code
 добавлен в vampir_core. Это отдельные поля от game AppVersion и SDKZone.
 [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
@@ -813,7 +813,7 @@ compaction. Shared transport_header.py; receive_frame.py относится ко
 общий decoder с повторами добавлен следующим этапом выше.
 
 18 октября: источник смены peer key подтверждён — PktKeyChangeNotify 11→
-ackPktKeyChanged12→setter0x144aab330, send вызван ещё при старом ключе.
+ackPktKeyChanged12→setter 0x144aab330, send вызван ещё при старом ключе.
 10 native roundtrips/16 shortcases/20 handler slices и 5 tests прошли.
 [Доказательства](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md), общий key_change.py;
 initialauth/receive integrity/transport ещё неполные.
@@ -980,10 +980,10 @@ SupportedArea/CDO inputs: 30 cases/30 audit replays, 34 anchors/28 fragments.
 Источники, SHA и границы — MAP-ATLAS.md.
 
 18 октября: подтверждён путь полей классов фильтров 780/788/790 через
-class/CDO selector 1452818e0 к query helper145281400; vtable NnRecastNavMesh
-slot3a0 вызывает три запроса, затем setter для base area 10–13 со значением 1.
+class/CDO selector 1452818e0 к query helper 145281400; vtable NnRecastNavMesh
+slot 3a0 вызывает три запроса, затем setter для base area 10–13 со значением 1.
 Новый report 55 anchors/26 fragments, 16 native cases и независимых replay;
-54 recast tests прошли. Найден base initializer 1452b7120 (slot8e0), его
+54 recast tests прошли. Найден base initializer 1452b7120 (slot 8e0), его
 создание impl и SupportedArea loop пока статическая проверка. Cached/active
 значения и реальные маршруты всё ещё не подтверждены. MAP-ATLAS.md.
 
@@ -1139,7 +1139,7 @@ raw64bit; имена категорий/runtime consumer ещё не найде�
 build-stat-packet-evidence.py перед build-catalog-pages.py. Формулы Stat→Stat
 этим не доказаны; полный порядок/источники/границы — ATTRIBUTES.md.
 
-18 октября: контекст weight score уточнён: caller145db6fb0 сравнивает candidate
+18 октября: контекст weight score уточнён: caller 145db6fb0 сравнивает candidate
 и peer предмет из слота Item. EquipmentType; signed greater, equal=false,
 no-peer=true только после gates. 16 anchors/16 fragments, 320 native comparator
 и 320UI selector cases со stub dependencies; 13 tests/HTTP/SHA прошли.
@@ -1149,7 +1149,7 @@ build-attribute-score-context.py → build-catalog-pages.py. ATTRIBUTES.md.
 
 18 октября: найдена native численная зацепка использования CombatPowerWeight:
 загрузчик 145af0430 пишет word record+0x8a, потребитель 145d2da30 использует
-3float32 multiply/floor/int32-add blocks. 861 cases/2583 native executions,
+3 float32 multiply/floor/int32-add blocks. 861 cases/2583 native executions,
 12 tests включая 18 replays/857JS-native comparisons прошли. В карточках
 локальный калькулятор вклада, 171weight/14blank. Это не полная боевая мощь
 и не Stat→Stat формула; контекст owner/caller остаётся. Новый порядок:
@@ -1243,8 +1243,8 @@ decode-navigation-filter-resources.py → audit-navigation-filter-resources.py �
 build-world-map.py. Связь выбранного Blueprint с owner+0x400/runtime и реальные
 маршруты ещё не подтверждены; [MAP-ATLAS.md](../resource-tools/vampir/MAP-ATLAS.md).
 
-18 октября: найдена native цепочка расчёта area priorities: два массива 64double →
-сумма → native sort → ordinal ranks0..63 →64byte nav+0x94.22 anchors/14 fragments,
+18 октября: найдена native цепочка расчёта area priorities: два массива 64 double →
+сумма → native sort → ordinal ranks0..63 →64 byte nav+0x94.22 anchors/14 fragments,
 72 native cases/50heap fallbacks, независимый audit/12 replays прошли. Даже при
 равных суммах ранги разные; подобранный 11→63→10 ещё не доказывает actual costs.
 Новые recast-area-priority-emulator.py/build-recast-area-priority-evidence.py →
@@ -1327,7 +1327,7 @@ build-recast-grid-inventory.py: 18430 уникальных grid/layer из 19098
 привязки properties/версий и полное соединение остаются. Подробности MAP-ATLAS.md.
 
 18 октября: native geometry layout закреплён 47 anchors: 88 байт header,
-24 байта/vertex (3double), 32 байта/polygon, индексы и internal neighbor-1.
+24 байта/vertex (3 double), 32 байта/polygon, индексы и internal neighbor-1.
 build-recast-geometry-code.py→decode-recast-geometry.py разобрали 34 пакета:
 214851 вершина/104726 полигонов/228354 направленных внутренних связей, все
 общие рёбра взаимны. 34 целевых Python tests и полная сверка JSON с буферами.
@@ -1335,7 +1335,7 @@ build-recast-geometry-code.py→decode-recast-geometry.py разобрали 34 
 гипотезы исходных буферов сохранены. Подробности — MAP-ATLAS.md.
 
 18 октября: extract-recast-tile-buffers.py восстановил кандидатные буферы всех
-19098 тайлов/34 экспортов (27249848 байт) в изолированной Unicorn2.1.4 эмуляции.
+19098 тайлов/34 экспортов (27249848 байт) в изолированной Unicorn 2.1.4 эмуляции.
 При явных гипотезах offset 14/custom-version 97 все размеры совпали, каждый
 экспорт прочитан до конца; отдельный validate-recast-tile-buffers.py проверил
 все диапазоны/SHA.28 целевых Python tests. Это ещё не подтверждение версии
@@ -1487,7 +1487,7 @@ CSV1505 проверен по SHA, все 3447 detail SHA/исходные по�
 JS syntax прошёл. build-world-map.py пересобран. Подробности — NPC-LOOT.md.
 
 18 октября: ?skill=<ID> теперь открывает отдельную карточку навыка,
-а также сохраняет фильтр NPC.3446 Skill definitions +1missing target201006;
+а также сохраняет фильтр NPC.3446 Skill definitions +1missing target 201006;
 403 книги связаны обратно с target ID, с картинками/редкостью/ссылками на
 предмет и карту источников. Поиск включает все Skill, не только NPC Nocturne.
 Общий renderSkillDetail используется и внутри NPC.25Python+21 Node прошли;
@@ -1606,7 +1606,7 @@ rotation-evidence; отчёт maps/atlas/lift-preview.json.52Python+21 Node пр
 с изолированной эмуляцией кода клиента: 195 вращений (включая 57 из размещений),
 195 преобразований bounds; ошибки≤5.56e-16/1.17e-10. Начальные bounds клиента
 [(0,0,-10),(0,0, 10)] учтены по константам EXE.49 целевых Python-тестов прошли.
-Отчёт `lift-blueprints/rotation-evidence.json`, Unicorn2.1.4 закреплён с SHA
+Отчёт `lift-blueprints/rotation-evidence.json`, Unicorn 2.1.4 закреплён с SHA
 в requirements-native.txt. Это проверка математики на синтетических transforms;
 effective CDO/attachments и реальные world endpoints ещё не разрешены.
 Источники/SHA/границы в MAP-ATLAS.md.
@@ -1678,17 +1678,17 @@ maps/navigation-study/level/link-properties.json.23Python проверки пр�
 
 Продолжение payload:search-navigation-payloads.py проверил 21494 записи/7PAK,
 нашёл 22 RecastNavMesh-кандидата. build-navigation-level.py подтвердил пару
-Nocturne header 1141/body1140 и 34206 exports, извлёк 49NavMeshBoundsVolume,
+Nocturne header 1141/body 1140 и 34206 exports, извлёк 49NavMeshBoundsVolume,
 63NnNavLinkCustomComponent, NavSystem/Recast/RefLoader. 115 точных exports с SHA
 в maps/navigation-study/level/. Полигоны/доступность связей ещё не разобраны.
 inspect-ui.exports допускает явный max_exports=40000 для этого уровня,
 default10000 сохранён.19Python тестов прошли. Команды/SHA/границы в MAP-ATLAS.md.
 
-Продолжение: export-table проверка подтвердила header 886/body887 Nocturne_WPRefNav,
+Продолжение: export-table проверка подтвердила header 886/body 887 Nocturne_WPRefNav,
 разобраны 20 записей ChunkRef/AssetFilePath/Bounds с полным учётом байтов и 6 native
 property descriptors. Новый decode-navigation-header.py; report package/decoded_header
 в navigation-study/index.json. Геометрия прохода/связность ещё не извлечены.
-Сервер 17946 запущен, браузер снова доступен: карта/status20/alert/console проверены.
+Сервер 17946 запущен, браузер снова доступен: карта/status 20/alert/console проверены.
 16Python+21 Node/SHA прошли. Сборка build-navigation-sources.py → build-world-map.py;
 подробные SHA/смещения/границы — последний раздел MAP-ATLAS.md.
 
@@ -1750,7 +1750,7 @@ Min/Max достигают 2500000000.413 Duration лежат вне Min/Max, п
 проверены. Источник/порядок сборки — раздел времени Effect в NPC-LOOT.md.
 
 Проверка TotalTime закреплена в `build-skill-total-time-code.py` /
-`code-clues/skill-total-time-code.json`: поле Skill+0xc8/getter slot0xb0
+`code-clues/skill-total-time-code.json`: поле Skill+0xc8/getter slot 0xb0
 подтверждены, единица и runtime-потребитель остаются неизвестными.
 Исправлена преждевременная подпись «Длительность»: теперь «TotalTime · исходное
 значение» с пояснением при наведении. 5 anchors/2159 инструкций сверены с EXE,
@@ -1763,7 +1763,7 @@ Min/Max достигают 2500000000.413 Duration лежат вне Min/Max, п
 У 100171031 теперь «Базовая атака 01/02». Sources/SHA/CSV record и происхождение
 перевода сохранены; отчёт maps/atlas/skill-names-verification.json строится
 build-monster-details.py.59Python тестов/1785 SHA и браузерная карточка прошли.
-TotalTime по-прежнему не переведён: virtual slot0xb0 другого класса не доказательство
+TotalTime по-прежнему не переведён: virtual slot 0xb0 другого класса не доказательство
 времени Skill. Подробности — новый раздел названий в NPC-LOOT.md.
 
 Единицы базовой перезарядки подтверждены: `build-skill-tick-code.py` замыкает
@@ -2359,7 +2359,7 @@ skill-effect-links.py + общий skill-effects.js/css; сборка прежн
 урон, время и runtime-условия также остаются.
 
 17.10: Effect. ActionType→native parser→56 имён подтверждены; 408 определений
-с именем/1619 с fallback56. None=0, Stun=6;56 не интерпретируется как None.
+с именем/1619 с fallback 56. None=0, Stun=6;56 не интерпретируется как None.
 build-effect-action-semantics.py запускать до сборщиков loot/monster/world.
 UI показывает действие/ActionParam/исходные поля истечения. Источники и
 [границы](../resource-tools/vampir/NPC-LOOT.md#effectactiontype-56-названий-действий-17-октября-2026).

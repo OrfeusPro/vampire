@@ -1,6 +1,6 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
-## Caller slot90 и продолжения slot78, 20 октября
+## Caller slot 90 и продолжения slot 78, 20 октября
 
 Экспорт расширен до 80 функций/44 предупреждений. Request90Caller
 0x1468f1d70 найден сканированием direct getter calls, затем декомпилирован
@@ -35,7 +35,7 @@ auth guard и deferred callback. [Native проверки и ограничен�
 ## Selection service, 19 октября
 
 Пакет расширен до 43 функций/30 warnings: base singleton ctor, derived
-constructor и virtual40/50 targets. [Native evidence и границы](HEADLESS-SELECTION-SERVICE.md).
+constructor и virtual 40/50 targets. [Native evidence и границы](HEADLESS-SELECTION-SERVICE.md).
 Последний export указан в общем INDEX, прошлые runs сохранены.
 
 ## WaitingEndNotify caller, 19 октября
@@ -84,7 +84,7 @@ EXE SHA256: `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 
 Официальные источники: [Ghidra release](https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_12.1.4_build),
 [Temurin release](https://github.com/adoptium/temurin21-binaries/releases/tag/jdk-21.0.12.1%2B1).
-Requirements самого выбранного Ghidra release требуют Java минимум21;
+Requirements самого выбранного Ghidra release требуют Java минимум 21;
 имеющийся JDK17 для Android не заменён. Системные Java/PATH не менялись.
 
 Фактически импортирован EXE и выгружены **22 из 22 функций**: Login Prepare,
@@ -145,7 +145,7 @@ auto-analyzers; это **не** отсутствие disassembly/decompilation �
 Импорт всё равно читает PE и обрабатывает его структуру/импорты. Первичный импорт
 тяжелее повторного process сохранённого проекта.
 
-[Runner](run-ghidra-export.py): JVM heap2G, max-cpu2, decompile timeout45s/function;
+[Runner](run-ghidra-export.py): JVM heap2G, max-cpu2, decompile timeout 45s/function;
 user.home Ghidra изолирован в игнорируемой `phone-exit/.tools/vampir-ghidra-home`.
 Это ресурсы инструмента анализа, не будущего runtime бота. Игра не запускается,
 инъекция/чтение процесса/профиля не используются.
@@ -158,7 +158,7 @@ user.home Ghidra изолирован в игнорируемой `phone-exit/.t
 bindings/native vectors, а не угадывать по восстановленному C type.
 
 `Request_Handoff.c` показывает статический путь: проверка записи в контейнере
-по raw short kind, при совпадении ранний return; timeout0 заменяется полем
+по raw short kind, при совпадении ранний return; timeout 0 заменяется полем
 объекта+0x30; затем container helpers и вызов transport virtual+0x38.
 Это **статическая подсказка Ghidra**, пока не native replay всего handoff.
 Kind4 из Login preparation не следует путать с packet ID3.
@@ -168,7 +168,7 @@ Kind4 из Login preparation не следует путать с packet ID3.
 
 ## Ограничения и новый порядок работы
 
-У всех22 decompilations completed=true, но есть **13 warnings**:
+У всех 22 decompilations completed=true, но есть **13 warnings**:
 12 о перекрывающихся global symbols и 1 `Type propagation algorithm not settling`
 у SDK_SignInResponse. Предупреждения оставлены в `.c`; completed не означает
 корректность всех типов/параметров/ветвей. В коде остаются undefined types,

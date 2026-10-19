@@ -44,10 +44,10 @@ slot+8 → actual wrapper **0x141535f20**, slot+0x10 → **0x146768360**.
 Read table **0x14961a520** slots+0x58/+0x60 используют **0x144aa59c0**,
 slot+0x88 → **0x144aa5c10**. Actual reader/native archive IO исполняются
 с swap0; DWORD little-endian, значения фиксируются как unsigned bit patterns.
-Bool reader нормализует любой ненулевой input byte в1 (проверены0/1/2/255).
+Bool reader нормализует любой ненулевой input byte в 1 (проверены 0/1/2/255).
 Названия остальных fields/enum semantics пока unknown.
 
-Для всех17 коротких prefix lengths0..16 reader=false, OnHandler не вызывается.
+Для всех 17 коротких prefix lengths0..16 reader=false, OnHandler не вызывается.
 Полное тело с extra bytes принимается: exact body exhaustion не проверяется
 этим native path. Это не основание допускать произвольный мусор в будущем API.
 Неизвестные IDs0/1/3/17/65535 не вызывают reader/handler найденной записи.
@@ -66,10 +66,10 @@ ID2 как EDX, временный нулевой struct и raw R9D0 в **0x1467
 не выдаём данные таблицы за инструкции и не заявляем полное исследование helper.
 
 Getter **0x14558edf0** возвращает synthetic state object с byte+8 = fixture0/1.
-При flag1 код сразу различает нулевой/ненулевой result. При flag0 исследованы
-codes0/1/42/708/1304/0xffffffff. В этих paths **только code0 возвращает AL1**.
-Code42 даёт false без error helper. Codes1/708/1304/0xffffffff при flag0
-вызывают **0x145f8a7a0(code,0)**, затем false; при flag1 этот call пропускается.
+При flag 1 код сразу различает нулевой/ненулевой result. При flag 0 исследованы
+codes0/1/42/708/1304/0xffffffff. В этих paths **только code 0 возвращает AL1**.
+Code42 даёт false без error helper. Codes1/708/1304/0xffffffff при flag 0
+вызывают **0x145f8a7a0(code,0)**, затем false; при flag 1 этот call пропускается.
 Error helper capture, его UI/policy effects не исполнялись. Другие codes,
 ветви и семантика state getter остаются открытыми; не обобщать выбранные cases
 на все error policies игры.
@@ -84,7 +84,7 @@ Error helper capture, его UI/policy effects не исполнялись. Др
 который [packet bindings](HEADLESS-PACKET-BINDINGS.md) связывают с constructor
 **PktLogin**, vtable0x1498d6058/ID3. Выбранная запись и SHA report включены
 в новый результат. Поэтому определён следующий конкретный участок Login,
-но **тело0x1467a9700 и сам Login constructor этим replay не исполнялись**.
+но **тело 0x1467a9700 и сам Login constructor этим replay не исполнялись**.
 Нет доказательства заполнения, отправки или принятия Login сервером.
 
 ## Проверки и границы

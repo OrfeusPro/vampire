@@ -54,19 +54,19 @@ Write set заполняется, когда state==2 либо interest+0x5c н�
 Select import, ioctlsocket и __WSAFDIsSet проверены по local WS2_32 exports.
 FDIsSet JMP thunk bytes отдельно связаны с IAT. Все три системных вызова fixtures.
 
-Ветка operation mode0/state2: при write-ready вызывается engine option
-slot+0x60 с selector1 и размером результата4. Его target/системная семантика
+Ветка operation mode 0/state2: при write-ready вызывается engine option
+slot+0x60 с selector 1 и размером результата 4. Его target/системная семантика
 ещё не исполнены: это raw output capture, не доказанный SO_ERROR translation.
 Успех getter и нулевое output значение дают **state |= 4**, clear interest,
-completion code1. В fixture state2 → state6.
+completion code 1. В fixture state2 → state6.
 
 Ошибка option getter, ненулевое option значение либо exception-ready дают
-completion code2. No-ready не выдаёт code; select=-1 завершает run без code
+completion code 2. No-ready не выдаёт code; select=-1 завершает run без code
 в исследованной ветви. Эти факты не определяют всю recovery policy клиента.
 
-При operation mode0/state6 read-ready даёт code4, write-ready — code3
+При operation mode 0/state6 read-ready даёт code 4, write-ready — code 3
 и очищает interest. При обоих событиях сохраняется порядок [4,3].
-При operation mode1 read-ready даёт code0. Имена режимов/событий не выводятся
+При operation mode 1 read-ready даёт code 0. Имена режимов/событий не выводятся
 из чисел без отдельного исследования recipients.
 
 ## Native completion routing
@@ -109,6 +109,6 @@ Winsock/FD readiness, scheduler/allocation/base job ctor, prepare/option getter
 сетевой сессии, thread races, удаления job или Android parity.
 Игра не запускалась; process memory, Saved/profile, credentials и сеть не использованы.
 
-Далее engine option selector1 → настоящий syscall/translation; recipients
-completion code1/state6 → transport notification → packet Login. Client flags
+Далее engine option selector 1 → настоящий syscall/translation; recipients
+completion code 1/state6 → transport notification → packet Login. Client flags
 и положительный select fixture не заменяют live connection/session evidence.

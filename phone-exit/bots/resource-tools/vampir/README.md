@@ -4,14 +4,14 @@
 
 build-selection-service-callers.py использует существующий E8 scanner.
 replay-character-list-caller.py исполняет 32 случая actual caller → getter →
-slot90 → RequestA/constructor/send capture. Ghidra: 80 функций/44 предупреждения.
+slot 90 → RequestA/constructor/send capture. Ghidra: 80 функций/44 предупреждения.
 [Источники, SHA и ограничения](HEADLESS-CHARACTER-LIST-CALLER.md).
 
 ## Selection lifecycle, 20 октября
 
 Пакетный экспорт Ghidra: 76 функций/42 предупреждения. Новый replay проверяет
-state40, dispatch/broadcast arguments и leaf callback → virtual38.
-Это ещё не доказанный caller CharacterListRead slot90.
+state40, dispatch/broadcast arguments и leaf callback → virtual 38.
+Это ещё не доказанный caller CharacterListRead slot 90.
 [Источники, SHA и ограничения](HEADLESS-SELECTION-LIFECYCLE.md).
 
 ## World record/selection label после Ghidra
@@ -24,7 +24,7 @@ SHA/CSV parity проверены; source field/lookup/getter native, loader bac
 ## Selection state lookup после Ghidra
 
 replay-selection-state-lookup.py → code-clues/selection-state-lookup-replay.json:
-13 native cases, exact key match/inline record address. Actual label key2
+13 native cases, exact key match/inline record address. Actual label key 2
 не установлена, runtime map name не подставляется.
 [HEADLESS-SELECTION-STATE-LOOKUP.md](HEADLESS-SELECTION-STATE-LOOKUP.md).
 
@@ -203,7 +203,7 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/build-gallery.py
 ```
 
 `scan-resources.py` сохраняет инвентаризацию `.pak/.utoc/.ucas`, размер,
-mtime_ns и SHA256 первых+последних 64KiB. Это отпечаток для обнаружения изменения,
+mtime_ns и SHA256 первых+последних 64 KiB. Это отпечаток для обнаружения изменения,
 а не полный SHA256 исходного архива. Читает записи PAKv11, ограничивает
 декодирование существующим reader RF; шифрованные записи пропускает.
 `source.json` рядом с entries.json предотвращает использование старых
@@ -384,7 +384,7 @@ verify-ui-links.py повторно проверяет native дескрипто
 Capstone из requirements-native.txt в игнорируемом .tools/vampir-analysis;
 build-native-entry-code.py читает EXE статически, учитывает chained unwind и
 проверяет инструкции. Runtime-переходы и Android-соответствие ещё не доказаны.
-Для изолированной проверки математики лифтов там же закреплён Unicorn2.1.4
+Для изолированной проверки математики лифтов там же закреплён Unicorn 2.1.4
 с SHA Windows x64 wheel. build-lift-rotation-evidence.py эмулирует только
 разрешённые диапазоны math-кода с константами EXE; игру не запускает.
 Установка: `python -m pip install --no-deps --target phone-exit/.tools/vampir-analysis -r phone-exit/bots/resource-tools/vampir/requirements-native.txt`.
@@ -450,7 +450,7 @@ refresh перед пересчётом. Происхождение входно
 code-clues/lock-packet-links.json — точные OnHandler чтения списка и результата
 запроса, два tail-jump в update; это приём результата, не отправка запросов.
 [CONDITION-GATE.md](CONDITION-GATE.md), build-lock-gate-code.py,
-code-clues/lock-gate-code.json — reset0..10, getter/setter готовности и EnterArea.
+code-clues/lock-gate-code.json — reset 0..10, getter/setter готовности и EnterArea.
 Готовность не равна выполнению условия; события setter/dispatcher ещё искать.
 
 

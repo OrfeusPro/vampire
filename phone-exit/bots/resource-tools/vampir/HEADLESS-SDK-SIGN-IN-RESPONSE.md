@@ -84,7 +84,7 @@ idpInfo находится вне проверенного player slice: дал�
 
 ## Тринадцать fixtures
 
-Numeric status199/200/201/206/207: native диапазонный gate допускает200..206
+Numeric status 199/200/201/206/207: native диапазонный gate допускает 200..206
 к дальнейшему field traversal; вне диапазона уходит в другой branch.
 Status — явный fixture return-context: получение/привязка к HTTP response
 helper до входа в slice не исполнялись. Сам диапазон не доказывает login success.

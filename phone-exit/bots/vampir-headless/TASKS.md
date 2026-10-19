@@ -2,12 +2,12 @@
 
 ## H04-select-collections: непустые массивы проверены offline
 
-34 whole ID110 bodies: все11 arrays по1/2/8 элементов и совместно;465 short
+34 whole ID110 bodies: все 11 arrays по 1/2/8 элементов и совместно;465 short
 prefixes rejected. Actual item readers/constructors/append, bounded allocator/
 cleanup fixtures; enum clamps/bool/optional float vector подтверждены.
-Ghidra165 функций/63 warnings. Полный ID110 этап остаётся незавершённым.
+Ghidra 165 функций/63 warnings. Полный ID110 этап остаётся незавершённым.
 
-Продолжить optional map+98: table1498cf350→reader145796480 и nested1498cf308
+Продолжить optional map+98: table 1498cf350→reader 145796480 и nested 1498cf308
 →145796df0 (ещё экспортировать). Insert/find/copy/destroy уже экспортированы.
 Затем обе непустые maps вместе с arrays, portable decoder/budgets, actual handler,
 position consumer и lifecycle/SDK/device/live. Игру/сетевой вход этап не запускал.
@@ -16,27 +16,27 @@ position consumer и lifecycle/SDK/device/live. Игру/сетевой вход
 ## H04-select-result: минимальный native профиль, этап частичный
 
 268 ID110 bodies (all256 heading bytes +12 vector/code cases) прошли actual
-constructor/readers/math; отдельно22 player apply cases. Экспорт151 функций,
+constructor/readers/math; отдельно 22 player apply cases. Экспорт 151 функций,
 math discovery через Ghidra machine blocks, provenance и regression checks.
 Raw main+188→player+20 подтверждён; world position semantics ещё не доказаны.
 
 Продолжить с уже экспортированных nonempty callbacks/map98 insert, затем
-полный bounded decoder/short inputs, handler14675e9a0→player и position consumer.
-После этого lifecycle/SDK/device confirmation/live вход. Минимальное тело203bytes
+полный bounded decoder/short inputs, handler 14675e9a0→player и position consumer.
+После этого lifecycle/SDK/device confirmation/live вход. Минимальное тело 203 bytes
 не заменяет полный decoder и не доказывает успешный выбор/готовую сессию.
 [Адреса, отчёты, SHA, команды и границы](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-RESULT.md).
 
 ## H04-select-send: два callers и источники полей подтверждены offline
 
-Выполнено: WaitingEnd→actual service virtual50 и UI-index caller
-`0x145d43290`→signed record lookup `0x145c847c0`→virtual50→handoff→writer/
+Выполнено: WaitingEnd→actual service virtual 50 и UI-index caller
+`0x145d43290`→signed record lookup `0x145c847c0`→virtual 50→handoff→writer/
 framing/queue, 27+34 cases/19 full frames. Raw10=record+8 (indexed path),
 raw18=constant0, raw20=current state+f0. 45 ID102→actual setter и 12 setter
 transitions связали initial packet+40 с rawF0; UI также может менять этот state.
 Shared from_character_list(body,index,state_raw_f0=...) без I/O/readiness.
 
 Ближайшее продолжение: nested ID110 reader/handler, состояние после выбора и
-точный источник позиции. Затем engine owner hook slot7b0/CharacterSelect_02
+точный источник позиции. Затем engine owner hook slot 7b0/CharacterSelect_02
 lifecycle, фактические SDK/device inputs/подтверждение и live вход. Pending-store/
 timeouts/drain/socket/runtime reconnect не доказаны этими очередными replays.
 [Точные адреса, SHA, команды и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
@@ -47,19 +47,19 @@ timeouts/drain/socket/runtime reconnect не доказаны этими оче�
 readers, 30 full bodies/489 short prefixes. Общий ID102 decoder поддерживает
 обе ветви с aggregate extension budget; last-value-wins и enum clamps проверены.
 45 body→handler cases: result/policy gates, raw state writes, предпочтительное
-первое совпадение/индекс0. Общий preferred_character_index — только подсказка
+первое совпадение/индекс 0. Общий preferred_character_index — только подсказка
 после acceptance gates, empty/error→None, без отправки пакета.
 
 Следом: доказать источники raw10/raw18/raw20 ID109 и actual caller service
-virtual50; подключить writer к request handoff/frame; разобрать nested ID110
-body/handler/источник позиции; связать owner slot7b0 с engine lifecycle уровня.
+virtual 50; подключить writer к request handoff/frame; разобрать nested ID110
+body/handler/источник позиции; связать owner slot 7b0 с engine lifecycle уровня.
 Затем настоящий SDK/device context, ручное подтверждение при необходимости и
 live вход на согласованном аккаунте. Реальная сессия пока не проверена.
 [Source, SHA, команды и ограничения fixtures](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
 
 ## H04-character-codecs: основной профиль списка и body выбора
 
-Историческая запись первого этапа. Extensions/handler102 закрыты следующим
+Историческая запись первого этапа. Extensions/handler 102 закрыты следующим
 offline этапом выше; продолжать с ID109 field sources/caller/frame и ID110.
 
 Выполнено: actual owner constructor/table/slot+a18=1 → caller/RequestA без
@@ -70,7 +70,7 @@ bounded общий decoder; native ID109 writer и общий encoder (16 vector
 Ближайшее продолжение: appearance array `0x1498ef500`/item table
 `0x1498cff58`, optional map `0x1498d5038`/insert `0x1456b99b0` — callbacks
 уже экспортированы, далее actual element/value readers и native scenarios.
-Затем handler102/перенос списка/источники select raw fields; owner hook slot7b0
+Затем handler 102/перенос списка/источники select raw fields; owner hook slot 7b0
 → engine lifecycle/CharacterSelect_02, ID109 frame и ID110 body/handler.
 Текущий decoder явно отклоняет непустой appearance array/present optional.
 Реальный вход, подтверждение устройства, выбор и позиция не проверены.
@@ -80,46 +80,46 @@ bounded общий decoder; native ID109 writer и общий encoder (16 vector
 
 Выполнено: direct getter caller scan, actual caller 0x1468f1d70 и 32 native
 cases до RequestA/send capture. Следом owner/vtable, actual virtual+a18,
-lifecycle policy1 и связь с CharacterSelect_02. Response102/network/live session
+lifecycle policy 1 и связь с CharacterSelect_02. Response102/network/live session
 остаются открытыми.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
 
-## H04-lifecycle: найти emitter и продолжение slot78
+## H04-lifecycle: найти emitter и продолжение slot 78
 
 Выполнено: source-bound Ghidra экспорт lifecycle, 7 event cases и leaf callback.
-Далее: emitter callbacks из slot08, продолжение 0x14561a8d0 из slot78,
-доказанный caller slot90. Response102, network и live session остаются открытыми.
+Далее: emitter callbacks из slot 08, продолжение 0x14561a8d0 из slot 78,
+доказанный caller slot 90. Response102, network и live session остаются открытыми.
 [Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
 
 ## H04-world-label: source path подтверждён
 
 Raw2→World.Id2→Lobby/CharacterSelect/CharacterSelect_02. Native field-store/
 lookup/getter и base/current patch CSV parity проверены. Следом actual
-cooked level/hooks завершения перехода и slot90/CharacterListRead dispatch.
+cooked level/hooks завершения перехода и slot 90/CharacterListRead dispatch.
 Полный runtime loader/mount priority, response 102/socket/live session открыты.
 [Source/SHA и границы](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
 
 ## H04-state-lookup: actual hash, реальные contents открыты
 
 13 native cases lookup/hash/accessor→label caller. Дальше заполнение
-registry storage+0x18 и actual record vtable/virtual20/source string key2.
+registry storage+0x18 и actual record vtable/virtual 20/source string key 2.
 Generic TLS/static registry exports не доказывают contents. Slot90 lifecycle,
 response102/socket/full session остаются открытыми.
 [Source/SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
 
 ## H04-selection-state: preparation/deferred boundary
 
-10 native virtual40/SetState cases + 12 independent callback cases проверены.
+10 native virtual 40/SetState cases + 12 independent callback cases проверены.
 Следом actual state-label lookup mapping и client/lifecycle hooks после
-отложенного действия, доказанный slot90 dispatch. Полный scheduler/closure
+отложенного действия, доказанный slot 90 dispatch. Полный scheduler/closure
 lifetime, response102/network/fresh SDK/device inputs и live session открыты.
 [Source/SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
 
 ## H04-selection-service: targets и select handoff подтверждены
 
-Derived table 0x1499f11f0: slot90=requestA, slot50=CharacterSelect builder.
-Далее slot40 SDK guard/base helper/virtual+c8/state-transition helper и
-доказанный caller slot90. Отдельно packet109 writer/frame/response110.
+Derived table 0x1499f11f0: slot 90=requestA, slot 50=CharacterSelect builder.
+Далее slot 40 SDK guard/base helper/virtual+c8/state-transition helper и
+доказанный caller slot 90. Отдельно packet 109 writer/frame/response110.
 Full owner ctor, свежие SDK/device inputs и live session ещё открыты.
 [Источник, SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
 
@@ -209,14 +209,14 @@ branches вне covered codes, live negotiation/transport ещё открыты.
 
 ## H04-version-send: полный native путь до очереди
 
-Wrapper/send-B/writer/frame/append проверены вместе на18 scenarios. Далее
+Wrapper/send-B/writer/frame/append проверены вместе на 18 scenarios. Далее
 VersionResult reader/registration/handler → Login; отдельные задачи actual
 queue drain/socket и реальные weekly inputs. Server negotiation ещё нет.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
 
 ## H04-version-writer: переносимое тело проверено
 
-Actual writer/conversion/archive bytes совпали с VersionPayload на14 cases.
+Actual writer/conversion/archive bytes совпали с VersionPayload на 14 cases.
 Далее frame/send0x1467aaa10 → VersionResult handler → Login; реальные
 значения полей/weekly inputs и server negotiation ещё открыты.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
@@ -237,7 +237,7 @@ packet constructor/field sources и virtual send+0x38 → Login. Units storage
 
 ## H04-ready-notification: transport recipient исполнен
 
-Completion code1 → socket listener → peer broadcast → OnTcpPeerConnected
+Completion code 1 → socket listener → peer broadcast → OnTcpPeerConnected
 и owner virtual+0x60 call site проверены. Далее actual owner P+0x308/+0x310
 vtable/target → packet Login; endpoint/configuration/retry ещё открыты.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md).
@@ -245,14 +245,14 @@ vtable/target → packet Login; endpoint/configuration/retry ещё открыт
 ## H04-socket-option: actual engine body проверен
 
 Raw level/option translation → getsockopt и readiness gates исполнены.
-Далее completion code1 recipients → peer transport notification → Login.
+Далее completion code 1 recipients → peer transport notification → Login.
 Live socket/scheduler/lifetime/session ещё открыты.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md).
 
 ## H04-readiness-job: code/state gates проверены
 
 Mode helper, одна worker iteration и completion mapping проверены.
-Далее option selector1 → syscall/translation и code1 recipients →
+Далее option selector 1 → syscall/translation и code 1 recipients →
 transport notification → packet Login. Live readiness/threads/lifetime
 и server-compatible session остаются открытыми.
 [Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md).
@@ -412,7 +412,7 @@ tests прошли. Далее network/JSON/errorCode validation до slice, idp
 Migration wrappers проверены в 10 native cases; zero-tail guarantee отсутствует
 в рассмотренном wrapper path. Реальный backend/полная миграция остаются открыты.
 Это отдельная задача совместимости, не доказанная предпосылка нового входа.
-Продолжать callback1444d85f0 leaf →1444cc1a0, response schema/errors →
+Продолжать callback 1444d85f0 leaf →1444cc1a0, response schema/errors →
 SDK token/player/expiry →game Login, затем real identity/confirmation integration.
 [Границы migration evidence](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md).
 
@@ -500,7 +500,7 @@ login runner gate, transfer/backup и Android adapter.
 и 8 header/method fixtures. Общий sdk_sign_in offline plan добавлен; authUrl
 из real public GMC2 связан только с synthetic context. Auth HTTP нет.
 [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
-Следующая зависимость: callback1444d85f0, network/SDK result schema, SDK access
+Следующая зависимость: callback 1444d85f0, network/SDK result schema, SDK access
 token/playerId/expiry/errors → game Login. Active context/storage/refresh открыты.
 
 19 октября: H04 OnResult continuation/GetObject проверены четырьмя fixtures.
@@ -562,7 +562,7 @@ token response/expiry и SDK→game session. [Источник](../resource-tool
 
 19 октября: исправлен existing decode_sdk_constants_string: reused unescape
 → actual XOR/append zero omission, без дублирования decoder. Два regression tests
-и 18 новых native vectors через составной путь. DECKEY slot28/class method,
+и 18 новых native vectors через составной путь. DECKEY slot 28/class method,
 outer response и auth остаются следующими зависимостями.
 [Источник](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
 
@@ -583,13 +583,13 @@ serviceCode/active device identity остаются отдельными зав�
 [Source/SHA/ограничения](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
 
 19 октября: H04b bootstrap getters проверены native. Version=5.2.11,
-BuildCode byte1→B/2→C/elseA (256 fixtures), общий selector добавлен.
+BuildCode byte 1→B/2→C/elseA (256 fixtures), общий selector добавлен.
 [Источник](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
 Следующая зависимость — полный GMC2 URL builder/request и response decode;
 active BuildCode не подменять game AppVersion или SDKZone.
 
 19 октября: H04b получил реальный public CDN config по профилю base INI.
-Общий decoder подтверждён: Zone real/mode2, index6/REAL с lobby details.
+Общий decoder подтверждён: Zone real/mode 2, index 6/REAL с lobby details.
 [Snapshot/offline verification](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).
 Далее SDK bootstrap/auth parameters/session response; active INI/native full
 validation остаются открыты. Module descriptors base/patch совпали и имеют
@@ -624,7 +624,7 @@ Base 1.12.14/real/True отличается от patch 0.1.1/dev/False.
 | H02 | Packet name→vtable→ID/read/write; H01 | Готово для 10 выбранных типов | 10vtable/constructor/ID/IO targets, 5 result registrations, 10 native ID cases/4 audit tests; HEADLESS-PACKET-BINDINGS.md. Не wire-schema |
 | H03 | Транспорт и wire encoding; H02 | Частично: H03a готов | Реальный Ping body IO/126 native scenarios; framing, transport и остальные поля ещё unknown |
 | H03a | Ping/Result primitive IO и переносимый payload codec | Готово для исследованной ветки | `<QQ`/16 байт и `<IQ`/12 байт, native constructors/primitive/raw IO; только внешний memcpy shim; 5 tests/6 replays |
-| H03b | Complete framing/send/receive; H03a | Частично | Найдены output roots144aa9da0/144aaccf0 и helper144aa6ca0; нужны доказанные размер/checksum/transform/context и complete-frame vectors |
+| H03b | Complete framing/send/receive; H03a | Частично | Найдены output roots144aa9da0/144aaccf0 и helper 144aa6ca0; нужны доказанные размер/checksum/transform/context и complete-frame vectors |
 | H03c | Остальной codec и bounded transport; H03b | Осталось | Primitive strings/arrays/limits/таймауты, send/receive контекст без смешивания IDs; offline vectors и локальный transport test |
 | H03b.1 | CRC/XOR helpers и общий код | Готово в указанном объёме | CRC32+LE64 repeating XOR, 4send/receive roots, 252 native executions/5 tests; full frame ещё unknown |
 | H03b.2 | Frame bounds/integrity/context и связь receive→Dispatch | Частично | Send-A Ping frame закрыт H03b.2a; receive/лимиты/key/callback targets остаются H03b.2b |
@@ -704,7 +704,7 @@ H04b: найден CDN ReadJson → NetmarbleS.Zone → environment field+48,
 
 H04b: constructor settings и game InitSetting исследованы, 4+13 native cases.
 [HEADLESS-SDK-SETTINGS](../resource-tools/vampir/HEADLESS-SDK-SETTINGS.md).
-Заполнение singleton14b575630+48 из CDN JSON прослежено следующим этапом выше;
+Заполнение singleton 14b575630+48 из CDN JSON прослежено следующим этапом выше;
 порядок с GMC2 Start, active environment и поздние изменения globals/build открыты.
 
 После подтверждённого пользователем обновления U02 частичен: новые индексы

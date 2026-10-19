@@ -22,7 +22,7 @@ base/prefix/version и Windows platform code=2 → window.
 с обычной проверкой сертификата/hostname, без environment proxy, redirects,
 cookies, авторизации и retry. User-Agent=Aqua/1.0, Accept-Encoding=identity.
 На операцию установлен timeout 10 с, бюджет чтения 30 с проверяется между
-read1 (текущая операция может добавить до 10 с), body максимум 2 МиБ.
+read 1 (текущая операция может добавить до 10 с), body максимум 2 МиБ.
 Content-Length проверяется при наличии, duplicate/negative/oversize и
 неполное тело отклоняются. Native HTTP/1.0 wire/header этим не воспроизводится.
 

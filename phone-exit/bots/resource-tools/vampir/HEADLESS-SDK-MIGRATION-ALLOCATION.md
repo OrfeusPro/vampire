@@ -23,7 +23,7 @@ capacity в array+`0xc` и вызывает `0x141431210`.
 virtual slot+`0x38`. Quantize leaf обращается к тому же объекту, slot+`0x60`.
 Этот backend object/vtable в replay — явная fixture, активный allocator игры
 не установлен. Quantize возвращает запрошенный size; realloc возвращает новую
-память с заполнением00 или AA. Настоящая память процессов не читается.
+память с заполнением 00 или AA. Настоящая память процессов не читается.
 
 Цепочка wrappers, их ветвления/аргументы/count/capacity исполняются native.
 В рассмотренном пути нет дополнительных записей, обнуляющих новые byte buffers.
@@ -32,7 +32,7 @@ virtual slot+`0x38`. Quantize leaf обращается к тому же объ�
 
 ## Десять synthetic scenarios
 
-Длины16/17/31/32/33 × fill00/AA. Quantize и realloc получают округлённые16/32/48
+Длины 16/17/31/32/33 × fill 00/AA. Quantize и realloc получают округлённые 16/32/48
 bytes, alignment1. Native byte-minus1/AES-NI/HEX pipeline исполнен как ранее;
 результаты совпали с независимым AES-256 ECB с **явно заданными** tail bytes.
 Для aligned значений fill не влияет; для unaligned влияние сохраняется.

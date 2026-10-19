@@ -62,11 +62,11 @@ Registry getter **0x145c38ab0** статически связан с TLS/static 
 global **0x14b57e8b0** и guard **0x14b57eaf8**. Он создаёт пустые структуры,
 а не hardcoded имена состояний. Table **0x1499cec40** и secondary table
 **0x1499cec78** связаны с initialize/load routines. Их Ghidra exports показывают
-итерацию records и зависимые lookups, но источник содержимого записи key2
+итерацию records и зависимые lookups, но источник содержимого записи key 2
 этим не установлен. Эти generic loaders не исполнялись в новом replay.
 
 Доступные CSV indices и ранее извлечённые DefaultGame.ini просмотрены:
-подтверждённой цепочки к фактической строке key2 не найдено. Похожие map/table
+подтверждённой цепочки к фактической строке key 2 не найдено. Похожие map/table
 имена не подставлялись. Это не доказательство отсутствия данных во всех PAK.
 В тестах `registry-label-fixture` — искусственная строка, **не map path**,
 не state name и не основание для runtime конфигурации.

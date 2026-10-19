@@ -53,7 +53,7 @@ Actual cached SDK getters и GetNetmarbleId исполняются. Low-level FS
 copy/assign/constructor/resize остаются fixtures. Null object init helper
 **0x1416aaaf0** capture не создаёт отсутствующий объект.
 
-При отсутствии module getter0x1456039c0 может вернуть прежний context+0x58.
+При отсутствии module getter 0x1456039c0 может вернуть прежний context+0x58.
 Два fixtures различаются только начальным кешем: empty → empty token field,
 old-cache-fixture → тот же old value в Login. Это не свежая авторизация;
 не считать наличие непустой строки подтверждением response/expiry/session.
@@ -65,18 +65,18 @@ old-cache-fixture → тот же old value в Login. Это не свежая �
 | --- | --- |
 | +0x10 / +0x20 | wrapper+0xf0 / wrapper+0xe0, FString copies |
 | +0x30 | GetNetmarbleId result, при SDK gates |
-| +0x40 | FString global0x14b520d10 |
-| +0x50 | DWORD global0x14b520cb8 |
-| +0x78 | getter0x1445c63a0 fixture output |
+| +0x40 | FString global 0x14b520d10 |
+| +0x50 | DWORD global 0x14b520cb8 |
+| +0x78 | getter 0x1445c63a0 fixture output |
 | +0x88 | wrapper+0x100 FString |
-| +0x98 | selector0/1/2/3/4 → byte0/1/2/3/5; 5/255 →0 |
+| +0x98 | selector 0/1/2/3/4 → byte 0/1/2/3/5; 5/255 →0 |
 | +0x99 | Android literal match →0, IOS →1, Windows fixture →3 |
 | +0xa0 | SDK token accessor result, при SDK gates |
-| +0xb0 | actual getter0x144aaaa10: peer=[wrapper+0x10], DWORD peer+0x270 |
+| +0xb0 | actual getter 0x144aaaa10: peer=[wrapper+0x10], DWORD peer+0x270 |
 | +0xd8 | collector0x145604bf0 fixture output, при manager+0x48 gate |
 | +0xf8 | raw DWORD207 (0xcf) |
-| +0x110 | char pointer global0x14b14ae28 → FString fixture |
-| +0x120 | raw DWORD global0x14b125530 |
+| +0x110 | char pointer global 0x14b14ae28 → FString fixture |
+| +0x120 | raw DWORD global 0x14b125530 |
 | +0x124 | byte policy getter result+0x18, fixture7 |
 | +0x130 / +0x131 | separate policy-helper bool fixtures, SDK-dependent gates |
 

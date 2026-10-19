@@ -2,17 +2,17 @@
 
 ## ID110 nonempty arrays, 20 октября
 
-Ghidra165 функций/63 warnings; replay-character-select-collections.py:
-34 whole bodies/465 short prefixes, все11 arrays, actual append/construct/read.
+Ghidra 165 функций/63 warnings; replay-character-select-collections.py:
+34 whole bodies/465 short prefixes, все 11 arrays, actual append/construct/read.
 Bounded allocator/cleanup captures; both maps/portable decoder/handler/live
 остаются открытыми. Следующие map98 readers указаны без повторного поиска.
 [Адреса, схемы, отчёты, SHA и команды](HEADLESS-CHARACTER-SELECT-COLLECTIONS.md).
 
 ## ID110 минимальный reader и spatial apply, 20 октября
 
-Ghidra151 функций/63 warnings. Отдельный math export через собственные Ghidra
+Ghidra 151 функций/63 warnings. Отдельный math export через собственные Ghidra
 machine blocks, source/tool/file/range SHA. replay-character-select-result.py:
-268 минимальных203byte bodies/all256 headings, actual SSE2 math/CRT imports.
+268 минимальных 203 byte bodies/all256 headings, actual SSE2 math/CRT imports.
 replay-character-select-apply.py:22 cases/raw vector copy/angles. Непустые
 collections/полный decoder/handler/session/world position semantics открыты.
 [Отчёты, SHA, адреса и границы](HEADLESS-CHARACTER-SELECT-RESULT.md).
@@ -36,12 +36,12 @@ replay-character-list-handler.py: 45 native cases до covered state/UI captures
 
 ## CharacterList/Select codecs и actual owner, 20 октября
 
-Ghidra 101 функция/53 предупреждения; actual constructor/policy1→RequestA,
+Ghidra 101 функция/53 предупреждения; actual constructor/policy 1→RequestA,
 12 native list bodies/229 short prefixes, 16 select writer vectors и общие
-bounded codecs. Две list extensions остаются unsupported; lifecycle/handler102/
+bounded codecs. Две list extensions остаются unsupported; lifecycle/handler 102/
 ID110/live session открыты. [Источники и продолжение](HEADLESS-CHARACTER-CODECS.md).
 
-## Прямой caller slot90, 20 октября
+## Прямой caller slot 90, 20 октября
 
 Существующий E8 scanner: 505 checked getter calls, 16 unresolved, 9 root
 decode failures. Найден caller 0x1468f1d70. Новый native replay проверяет
@@ -53,7 +53,7 @@ decode failures. Найден caller 0x1468f1d70. Новый native replay пр�
 Ghidra export расширен до 76 функций/42 предупреждений.
 replay-selection-lifecycle.py сохраняет 8 native cases с SHA участков в
 code-clues/selection-lifecycle-replay.json. Регистрация delegates статическая;
-слот90 и runtime завершение загрузки не подтверждены.
+слот 90 и runtime завершение загрузки не подтверждены.
 [Источники, SHA и ограничения](HEADLESS-SELECTION-LIFECYCLE.md).
 
 ## World.Id2 → CharacterSelect LevelPath
@@ -77,8 +77,8 @@ SDK/readiness gates, actual state/pending/flags и schedule capture.
 ## Selection singleton/derived table/CharacterSelect handoff
 
 replay-selection-service.py: 2 constructor-prefix outcomes и 4 native select
-cases. Derived slot90=requestA, slot50→actual packet109/handoff110 capture;
-slot40 пока static-only. [HEADLESS-SELECTION-SERVICE.md](HEADLESS-SELECTION-SERVICE.md).
+cases. Derived slot 90=requestA, slot 50→actual packet 109/handoff110 capture;
+slot 40 пока static-only. [HEADLESS-SELECTION-SERVICE.md](HEADLESS-SELECTION-SERVICE.md).
 
 ## WaitingEndNotify handler → CharacterList request
 
@@ -143,7 +143,7 @@ string/policy/collector/handoff fixtures, old cache не fresh auth proof.
 
 ## VersionResult native handler replay
 
-replay-version-result-handler.py: 39 scenarios ID2/read17/Dispatch/handler/
+replay-version-result-handler.py: 39 scenarios ID2/read 17/Dispatch/handler/
 bounded result gate. Constructor/registration/table/name source-bound;
 Login routine captured at entry, full body/SDK inputs не исполнены.
 [Источники, SHA и границы](HEADLESS-VERSION-RESULT-HANDLER.md).

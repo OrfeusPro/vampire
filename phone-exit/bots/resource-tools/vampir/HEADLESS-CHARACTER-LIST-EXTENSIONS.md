@@ -43,7 +43,7 @@ python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_headless_g
 
 Record+`0xb0` → reader `0x1457812a0` → callback table `0x1498ef500`.
 Array resize `0x1456b60e0`; item callback `0x145737650` создаёт item через
-leaf `0x14576f080`. Item table `0x1498cff58`, reader slot20 `0x145771b40`.
+leaf `0x14576f080`. Item table `0x1498cff58`, reader slot 20 `0x145771b40`.
 
 После уже проверенных appearance fields: uint16 count, затем для каждого item:
 `<IBH` — raw uint32, byte enum с clamp до 45, raw uint16. Item stride в памяти
@@ -62,12 +62,12 @@ Absent и present-empty различаются. Callback table `0x1498d5038`, ca
 `0x1498d1a28` в node+8. Value constructor `0x14577dd50`, reader `0x145782b30`.
 После ключа value содержит byte enum clamp≤9, три raw uint32 и вложенный
 TimeBase raw uint64. Полная запись wire — `<BBIIIQ`, 22 байта. Память node имеет
-stride0x38, padding/vptr/bucket links не передаются по wire.
+stride 0x38, padding/vptr/bucket links не передаются по wire.
 
 Actual callback ищет существующий ключ по hash chain. Повторное значение
 перезаписывает прежнее, без вставки второго node; общий decoder использует
 last-value-wins. Проверены ключи 0/255, коллизии, rehash, повтор до и после
-rehash, uint32/64 границы, present byte255 и смешанные appearance+optional bodies.
+rehash, uint32/64 границы, present byte 255 и смешанные appearance+optional bodies.
 Счётчик вставок отдельно подтверждает отсутствие нового node при повторе.
 
 Native callback/insert/pair/value constructors/readers исполняются. Выделение
@@ -95,10 +95,10 @@ Native allocator/lifetime/реальный UObject registry этим не про
 
 Handler `0x14675dce0`, native result gate `0x1467a8e10`, selection predicate
 `0x145c85d90`. 45 сценариев исполняют reader→gate→predicate→handler вместе.
-В covered cases code0 проходит gate, десять проверенных error codes не проходят.
+В covered cases code 0 проходит gate, десять проверенных error codes не проходят.
 Проверенные ошибки: 1/14/22/37/54/9400/9818/9819/90021/0xffffffff.
-При gate false handler вызывает service virtual38 и не применяет список.
-При gate true список применяется только при predicate==1; policy0/2/4,
+При gate false handler вызывает service virtual 38 и не применяет список.
+При gate true список применяется только при predicate==1; policy 0/2/4,
 disabled lookup и отсутствующий policy object оставляют state без изменений.
 Type metadata/policy virtual в этих сценариях — fixtures.
 
@@ -109,10 +109,10 @@ packet+30 → state+80 и low32(packet+28) → state+84; packet+40 переда�
 
 Предпочтение — packet+38, сравнение с record+8. Sentinel по actual constant
 `0x14961a378` равен **0**: при нуле поиск пропускается. Для ненулевого ключа
-берётся первое совпадение, при отсутствии совпадения остаётся индекс0.
+берётся первое совпадение, при отсутствии совпадения остаётся индекс 0.
 Проверены first/middle/last/missing, duplicate record keys и нулевой record key.
 Native UI store `UI+3f8` проверен, отсутствие UI не блокирует остальные действия.
-Даже для пустого списка native UI stores index0.
+Даже для пустого списка native UI stores index 0.
 
 Далее covered путь вызывает owner virtual+a00 (если owner есть), UI finish,
 selection helper с **DL=6** и transport setter с 0. Верхние биты RDX для события
@@ -122,7 +122,7 @@ selection helper с **DL=6** и transport setter с 0. Верхние биты R
 Общий `preferred_character_index(body)` повторяет правило поиска после
 acceptance/policy gates. Он только предлагает индекс; ничего не отправляет и не
 объявляет readiness. Явная локальная политика: для пустого списка и error code
-возвращает None, чтобы native UI index0 не стал выбором несуществующей записи.
+возвращает None, чтобы native UI index 0 не стал выбором несуществующей записи.
 Функция не заменяет session gates. Идентификаторы/имена enum/координаты из
 сходства offsets не выводятся.
 
@@ -130,7 +130,7 @@ acceptance/policy gates. Он только предлагает индекс; н
 
 ID102 body и covered handler теперь проверены offline, но цепочка входа ещё
 не завершена. Следующие обязательные участки: источники трёх raw полей ID109,
-реальный caller service virtual50 и его gates; request handoff→ID109 frame;
-ID110 nested body/handler и источник позиции; owner hook slot7b0→engine
+реальный caller service virtual 50 и его gates; request handoff→ID109 frame;
+ID110 nested body/handler и источник позиции; owner hook slot 7b0→engine
 lifecycle/CharacterSelect_02; actual SDK/device context и подтверждение устройства.
 Ни один из этих пунктов нельзя считать закрытым по успешному body decoder.

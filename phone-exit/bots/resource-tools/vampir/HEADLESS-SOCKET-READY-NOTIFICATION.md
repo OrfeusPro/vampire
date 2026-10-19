@@ -41,8 +41,8 @@ registration и snapshot acquisition не исполняются: подписч
 
 ## Две реальные native рассылки
 
-После fixture write-ready/успешного getsockopt с output0 worker получает
-state2→6 и completion code1. Actual completion вызывает **0x1445de8b0**
+После fixture write-ready/успешного getsockopt с output 0 worker получает
+state2→6 и completion code 1. Actual completion вызывает **0x1445de8b0**
 с socket owner и action **0x14370ae90**. Этот bounded leaf — virtual+0x10.
 Dispatcher читает snapshot socket+8, проверяет weak reference/strong count
 и вызывает action для живого ненулевого listener.
@@ -59,7 +59,7 @@ ASCII diagnostic по 0x14961bcb0 и UTF-16 string по 0x14961bcf0
 называют функцию **NnPeerImpl::OnTcpPeerConnected()**. Bytes/encoding/refs
 сохранены в report. Это source name, не вывод из совпадения адресов.
 
-Один action pointer применяется к разным интерфейсам: первый code1
+Один action pointer применяется к разным интерфейсам: первый code 1
 сам по себе не определяет смысл virtual+0x10 во всех остальных рассылках.
 
 ## Что делает transport recipient
@@ -96,8 +96,8 @@ null-peer-listener, special-flag.
 не меняются; удаление expired/null listener — prune capture.
 Три новых и шесть смежных tests option/readiness прошли.
 
-При отсутствии socket listener state socket всё равно6, но P+0x108 остаётся2.
-Если socket listener жив, а peer listener отсутствует, P+0x108 становится1,
+При отсутствии socket listener state socket всё равно 6, но P+0x108 остаётся 2.
+Если socket listener жив, а peer listener отсутствует, P+0x108 становится 1,
 но transport fields и owner callback не затрагиваются. Ни один из этих
 client flags не доказывает серверную авторизацию.
 

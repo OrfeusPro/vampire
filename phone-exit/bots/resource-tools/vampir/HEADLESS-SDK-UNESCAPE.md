@@ -25,7 +25,7 @@ output vectors через JSON escape → старый unescape → actual appen
 isolated surrogate и длинный source. Прежние native unescape evidence/tests
 повторно используются; helper 1444f2670 уже был исследован, это не Base64.
 
-Источник DECKEY по slot28 и полная response chain всё ещё не доказаны.
+Источник DECKEY по slot 28 и полная response chain всё ещё не доказаны.
 Не трактовать статическую передачу ключа как доказанный HTTP header API.
 
 18 октября 2026. H04b частично. Продолжение [параметров SDK и XOR](HEADLESS-SDK-VALUES.md).

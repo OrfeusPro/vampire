@@ -199,7 +199,7 @@ CenterX/Y0, MapTextureReadingStandard1, MiniMapTextureCount/WorldMapTextureCount
 
 Инструмент `build-map-projection.py` проверяет EXE SHA256
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`,
-Capstone5.0.6,21 опорную инструкцию и 3 текстовых ключа. Полные декодированные
+Capstone 5.0.6,21 опорную инструкцию и 3 текстовых ключа. Полные декодированные
 unwind-фрагменты с SHA/offset и цепочка полей сохранены в
 `code-clues/map-projection-evidence.json`:
 
@@ -608,7 +608,7 @@ NnDataAssetRefNavMeshHeader/пакетных exports→внешние chunks→�
 ## Экспорт Nocturne_WPRefNav и 20 заголовков частей, 17 октября
 
 Это уточняет предыдущий статус adjacent_record_candidate_only. Переиспользован
-проверяющий cooked-package reader inspect-ui.py: exports. Asset886 и body887
+проверяющий cooked-package reader inspect-ui.py: exports. Asset886 и body 887
 содержат один export Nocturne_WPRefNav типа NnDataAssetRefNavMeshHeader,
 offset 743, size 2935, SHA b13d25fe34c33c380b7f3d3d71dc453ef9e6d55296a2730b7631c1b8c13940bb.
 Размер asset743+export 2935+сигнатура 4 полностью покрывает 2939 байт body;
@@ -618,7 +618,7 @@ pair_relation_verified=true. SHA asset/body и PAK источники прежн
 
 Новый decode-navigation-header.py читает наблюдаемую unversioned-схему с полным
 учётом байтов. Outer header индексы 1/2/3, NumMaxTiles24056, NumChunks20,
-array count20. Каждая запись имеет ChunkRef, AssetFilePath, Bounds; refs0..19,
+array count 20. Каждая запись имеет ChunkRef, AssetFilePath, Bounds; refs0..19,
 все paths /Game/__ExternalActors__/RED/Level/Field/Nocturne/Nocturne/... .
 Bounds —6 double координат и 1 byte valid; после всех 20 записей object suffix0,
 неучтённых байтов 0. Запись сохраняет body_offset/serialized_size. Проверяются
@@ -656,7 +656,7 @@ UAsset/texture признаков в pakchunk100 и pakchunk1000/base+s1..s5. Д
 PAK сверяются size/mtime/sample SHA. Лимиты 700 MiB/archive и 128 MiB/record,
 байты/offset/entry/SHA каждого совпадения сохранены. Проверено 21494 records,
 2574751792 распакованных байт, ошибок 0.24 совпадения: 22 записи с RecastNavMesh,
-1 cMSET (только кандидат сигнатуры), 1 — уже разобранный header-body887 с 20 tokens.
+1 cMSET (только кандидат сигнатуры), 1 — уже разобранный header-body 887 с 20 tokens.
 Магические байты не считаются доказанным tile header. Отчёт
 maps/navigation-study/payload-search.json SHAe4c9e91bd31ca4ba46c3c1da010de8ac698d5556fc36249677bce02b91633b41.
 Отсутствие VAND и неизвестных токенов в этом объёме не доказывает отсутствие
@@ -702,15 +702,15 @@ BP_Lift_Type01_C (43). Имена test не доказывают активно�
 Эти компоненты не являются обычными пешими рёбрами графа.
 
 В EXE прежнего SHA подтверждена native property pointer array149729510:
-index1→descriptor149728f90 CustomLinkId, index2→149728fd0 AuxiliaryCustomLinkId,
-index6→1497290f0 LinkRelativeStart, index7→149729130 LinkRelativeEnd.
+index 1→descriptor 149728f90 CustomLinkId, index 2→149728fd0 AuxiliaryCustomLinkId,
+index 6→1497290f0 LinkRelativeStart, index 7→149729130 LinkRelativeEnd.
 Сверяются 4 descriptor prefix56 bytes, имена, gen_flags25, указатели массива и offsets.
 Custom constructor 145458c80 вызывает базовый 145299d50 на 145458c94;
 базовый вызывает 1452c35d0, записывает vtable145299d70, derived заменяет vtable145458ca0.
 4 anchors/полные fragments сохранены. Это код клиента, не доступные C++ декларации.
 
-Наблюдаемая unversioned-сериализация ID: вложенный header index0/false и uint64,
-ID сохраняется десятичной строкой без потери точности JS. Точки —3double,
+Наблюдаемая unversioned-сериализация ID: вложенный header index 0/false и uint64,
+ID сохраняется десятичной строкой без потери точности JS. Точки —3 double,
 не worldXY. Декодер читает лишь явно присутствующие поля 1/2/6/7; zero-mask
 отличает явно заданный ноль от отсутствующего значения. Отсутствующие точки,
 LinkDirection/LinkEnabled и значения архетипа не подставляются автоматически.
@@ -754,10 +754,10 @@ AttachParent, AttachSocketName, AttachChildren inner/outer, ClientAttachedChildr
 inner/outer, RelativeLocation, RelativeRotation, RelativeScale3D, ComponentVelocity,
 bComponentToWorldUpdated, bAbsoluteLocation. Вложенные array elements не становятся
 отдельными serialized properties: после исключения inner дескрипторов совпадают
-index5Location/6Rotation/7Scale/10AbsoluteLocation. Имена, flags, bytes descriptors
+index 5Location/6Rotation/7Scale/10AbsoluteLocation. Имена, flags, bytes descriptors
 и pointerbytes сверяет сборщик. Дескрипторы 14912a480/14912a4c0/14912a500/14912a5c0.
 
-decode-lift-placements.py читает только явно заданные 5/6/7 (3double) и 10(bool).
+decode-lift-placements.py читает только явно заданные 5/6/7 (3 double) и 10(bool).
 Все 63 имеют RelativeLocation, 57RelativeRotation, 14RelativeScale3D; 7 явно true
 bAbsoluteLocation. У 56 значение флага отсутствует, это не false. Поворот/масштаб
 при отсутствии не подставлены из default. Zero-mask scale остаётся[0,0, 0],
@@ -839,7 +839,7 @@ Type01 собственных 0: cumulative prefix соответственно 
 Это не подбор сдвига по совпадению числовых ID.
 
 `decode-spline-action-params.py` читает только явные поля структуры: float32,
-byte enum/bool, bounded FString UTF8/UTF16, исходный object index/FName и 3double
+byte enum/bool, bounded FString UTF8/UTF16, исходный object index/FName и 3 double
 vectors там, где подтверждены flags. Проверяются bool/finite/length/terminator;
 неизвестный индекс отклоняется. Omitted не заменяется default; zero-struct хранит
 serialized_zero=true без выдуманных значений всех членов. Числа хранят исходную
@@ -887,7 +887,7 @@ SupportedAgents сохранён как raw_u32 с interpretation_verified=false
 Native NnLift PointLinks/SegmentLinks подтверждены inner/array descriptors
 через VA14987d470; внутренние описатели не считаются самостоятельными полями.
 Полный Actor prefix из 63 указателей до RootComponent (VA1491698b0) после
-исключения 4 UnderlyingType и Children inner даёт serialized index57.
+исключения 4 UnderlyingType и Children inner даёт serialized index 57.
 С учётом 8 полей NnLift и Blueprint prefix2/3/2 индекс Actor. RootComponent
 экземпляров равен 67/68/67. У всех 63 он явно совпал с ранее проверенным
 SceneRoot export. Теперь роль корня подтверждена и для cooked экземпляров,
@@ -916,16 +916,16 @@ Unknown actor fields/suffix hex сохранены; мировая систем�
 ## Начальные значения SceneComponent в коде клиента, 18 октября
 
 `build-scene-native-defaults.py` проверяет SHA EXE и 16 native anchors.
-NnLift вызывает getter1437d4d80 (call1454fd4eb), передаёт результат в r8/r9
+NnLift вызывает getter 1437d4d80 (call 1454fd4eb), передаёт результат в r8/r9
 и создаёт SceneRoot через 141746350. Getter содержит буквальный SceneComponent
 и указатель wrapper 1437d48b0 (lea1437d4de7). Все 20 bytes wrapper проверены,
 включая tail jump к конструктору 143ac1400. Полные unwind fragments сохранены.
 
 В конструкторе после вызова базы 143a28f20 явно записывается null по+0xb0
-(xor143ac1423, mov143ac142c). Native descriptor14912a300 подтверждает,
+(xor143ac1423, mov143ac142c). Native descriptor 14912a300 подтверждает,
 что это AttachParent. Константа double1.0 загружается в 143ac1495 и
 записывается по+158/+160/+168 (143ac1517/151e/1525), то есть в RelativeScale3D,
-что подтверждено descriptor14912a500. Это начальные значения до
+что подтверждено descriptor 14912a500. Это начальные значения до
 Blueprint/archetype/instance/runtime overrides; они не подставлены экземплярам.
 Нулевые RelativeLocation/RelativeRotation и absolute flags этим исследованием
 не доказаны. Отсутствие явного поля по-прежнему не считается identity transform.
@@ -995,11 +995,11 @@ export layout. Реальная сборка разрешила 63 цепочк�
 на 14550d6c0. Символьное имя метода не назначается по одному номеру слота.
 
 Метод читает количество по+3e8 (14550d749), массив по+3e0 (14550d772),
-шагает по 0x70 bytes (14550d779) и включает обе 3double точки в min/max
+шагает по 0x70 bytes (14550d779) и включает обе 3 double точки в min/max
 границы (14550d77f..14550d813). Native descriptors14987d370/1490c1370/
 1490c13b0 подтверждают PointLinks+3e0, Left+40, Right+58; это не поиск
 по похожим числам. Затем 14550d9fa читает Actor. RootComponent+1b8
-(descriptor149168fe0), 14550da0c выбирает storage корня+1d0 и последующие
+(descriptor 149168fe0), 14550da0c выбирает storage корня+1d0 и последующие
 инструкции читают блоки+0/+10/+40/+50. Этот потребитель сужает поиск
 перевода локальных bounds; точная layout/формула/своевременность обновления
 storage, отдельные world endpoints и выгрузка навигационных связей ещё
@@ -1031,14 +1031,14 @@ leaf getters без unwind записей. Полные unwind fragments ост�
 описывает эти getters как мировые location/rotation/scale/component-to-world.
 Сама связь имён с конкретными bytes проверена в EXE SHA c7552efd….
 GetComponentToWorld копирует 96 bytes начиная с component+1d0; location getter
-читает 3double по+1f0/+1f8/+200, scale — по+210/+218/+220.
+читает 3 double по+1f0/+1f8/+200, scale — по+210/+218/+220.
 Таким образом, ранее найденное чтение RootComponent+1d0 потребителем bounds
 теперь связано с именованным мировым преобразованием. Формат вращения в первых
 32 bytes пока не переведён в формулу; целая 96-byte структура сохраняется отдельно
 от 24-byte возвращаемых мировых Euler-углов.
 
 Обновление прослежено через 1425a78a0: relative rotation+140/+150 преобразуется
-через 1414fd980 в 32-byte rotation storage, затем в call143af8c00 передаются
+через 1414fd980 в 32-byte rotation storage, затем в call 143af8c00 передаются
 AttachParent(+b0), AttachSocketName(+b8) и ссылка на rotation storage.
 В 143af8c00 проверены чтения RelativeLocation+128/+138, RelativeScale3D+158/+168,
 собственного AttachParent+b0 и ветка null→143af94de. При отсутствии родителя
@@ -1061,7 +1061,7 @@ SceneRoot и потребитель отдельной точки. UI/Android э
 `lift-transform-math.py` реализует pitch/yaw/roll→XYZW и scale→rotate→translate.
 `build-lift-rotation-evidence.py` сравнил 195 вращений, включая 57 явных из
 экспортов компонентов, с изолированной эмуляцией 1414fd980 и vector trig
-helper148796aa0→148799250. Максимальная ошибка quaternion5.551115123125783e-16.
+helper 148796aa0→148799250. Максимальная ошибка quaternion5.551115123125783e-16.
 Дополнительно 195 синтетических transforms проверены через native bounds
 consumer14550d6c0: min/max восьми преобразованных углов локального AABB,
 negative/nonuniform/zero scale; ошибка 1.1641532182693481e-10.
@@ -1072,10 +1072,10 @@ negative/nonuniform/zero scale; ошибка 1.1641532182693481e-10.
 дают X=CR·SP·SY−SR·CP·CY, Y=−CR·SP·CY−SR·CP·SY,
 Z=CR·CP·SY−SR·SP·CY, W=CR·CP·CY+SR·SP·SY.
 Порядок входа/градусы соответствует [Epic TRotator](https://dev.epicgames.com/documentation/unreal-engine/API/Runtime/Core/TRotator).
-Эмулятор Unicorn2.1.4 закреплён с SHA wheel в requirements-native.txt;
+Эмулятор Unicorn 2.1.4 закреплён с SHA wheel в requirements-native.txt;
 разрешены только адреса проверенных функций, 100000 instructions/2seconds на случай,
 file-backed страницы EXE/отдельные stack/input/output. Единственный пропущенный
-call1414fdaad→148796040 — stack-cookie check после вычислений. Код самой
+call 1414fdaad→148796040 — stack-cookie check после вычислений. Код самой
 тригонометрии эмулируется; игра/ОС/API/imports/живая память не используются.
 Inputs/results/page SHA/model SHA и offsets/bytes/fragments сохранены в
 `maps/navigation-study/lift-blueprints/rotation-evidence.json`, SHA256
@@ -1102,7 +1102,7 @@ walkable=null. Предполагаются отсутствие parent transfor
 EXE, 26 anchors, 3 descriptors NavigationLink, полные фрагменты NnLift constructor
 и копирования base link, 42 bytes leaf constructor 1438369b0. В NnLift constructor
 PointLinks+3e0/count+3e8 сначала обнуляется (r14=rsi+3e0, edi=0), затем добавляется
-одна запись stride0x70. Стековые координаты задаются из проверенных констант
+одна запись stride 0x70. Стековые координаты задаются из проверенных констант
 1454fd6c9→[0,-50] и 1454fd6d8→[50,0], zero block1454fd6e7.
 Store1454fd748/755/762/76f задают Left[0,-50,0], Right[0,50,0].
 Base link constructor 1438369e4 записывает word0x200 по+28, то есть Directionbyte0;
@@ -1111,7 +1111,7 @@ Left+40/Right+58/Direction+28 сверены с native descriptors.
 
 Все 3 Blueprint default objects проверены по SHA/exports: TemplateIndex base
 ведёт к `/Script/NnFramework.Default__NnLift`, Test/Type01 — к базовому CDO.
-Их unversioned headers не содержат PointLinks property index8/9/8 с учётом
+Их unversioned headers не содержат PointLinks property index 8/9/8 с учётом
 подтверждённых Blueprint prefix counts. Все 6 Scene templates по предыдущей
 проверке без явных полей. Native scale1×1×1 доказан constructor stores
 SceneComponent+158/+160/+168. Это подтверждённые начальные значения до
@@ -1217,7 +1217,7 @@ runtime FProperty RelativeRotation и источник 24 bytes CDO здесь �
 Поэтому generic property-copy branch не означает доказанный default0rotation.
 
 Post-init calls: 1417d7c2c использует subobject vtable+58,
-1417d7c88 — object vtable+50. Scene ctor143ac140e/1415 назначает table14912fde8;
+1417d7c88 — object vtable+50. Scene ctor 143ac140e/1415 назначает table 14912fde8;
 её slot+58→1413fe190 содержит `ret0`, slot+50→143a537b0 вызывает 1417d7d10
 и условно переходит 1438002a0 после чтения component+90. Дальнейшие вызовы
 и callbacks пока не объявлены не влияющими на rotation/attachments.
@@ -1267,8 +1267,8 @@ WorldMapModel.placeLabels получает измеренные CSS-pixel раз
 
 Связь и вычисления:
 
-- AreaBox manager145c38330 возвращает singleton14b159370; secondary vtable
-  1499ce970, slot 38→145c3dae0 (проверенный AreaBox loader). Group getter145c30150
+- AreaBox manager145c38330 возвращает singleton 14b159370; secondary vtable
+  1499ce970, slot 38→145c3dae0 (проверенный AreaBox loader). Group getter 145c30150
   выбирает массив записей из этого manager. Байты pointer/loader закреплены.
 - Потребитель 145dd3fa0 перебирает группы AreaBox, читает MinPos FString+0x10
   и MaxPos+0x20 через 1415892e0, упаковывает четыре double XY и читает float
@@ -1283,7 +1283,7 @@ WorldMapModel.placeLabels получает измеренные CSS-pixel раз
   Это положительное вращение в исходных XY, до проекции на canvas.
 
 Геометрия независимо проверена ограниченной офлайн-эмуляцией исходных
-инструкций 14568ed80 и его математических trig-веток в Unicorn2.1.4. Только
+инструкций 14568ed80 и его математических trig-веток в Unicorn 2.1.4. Только
 выбранные диапазоны кода/файловые страницы констант, локальный стек и входной
 буфер; запись в неизвестную память/переход за allowlist запрещены. Нет процесса
 игры, импорта OS-функций, live memory, сети, кликов или перемещения персонажа.
@@ -1338,7 +1338,7 @@ routes_verified=0/navigation_ready=false: нужны настоящие поли
 Дополнен прежний поиск payload: он намеренно исключал UAsset headers, а
 nav-chunk-leaf-search.py искал GUID только в уже сохранённых paths. Новый
 search-navigation-chunk-headers.py читает все доступные незашифрованные заголовки
-до 1 MiB/record, 128 MiB/archive, 1GiB всего. До чтения каждого архива проверяются
+до 1 MiB/record, 128 MiB/archive, 1 GiB всего. До чтения каждого архива проверяются
 size/mtime/sample SHA, указатель entry и uncompressed size. Совпадения сохраняют
 archive/offset/record/SHA/offsetneedle; большие/зашифрованные записи отражены
 в отчёте. Матч GUID или class text сам по себе не доказывает object/payload.
@@ -1368,7 +1368,7 @@ RecastNavMeshDataChunk→NavigationDataChunkActor→Level→этот root World.
 size/mtime/sample SHA, entries SHA и raw record offsets сохранены на пакет.
 Извлечены asset/body, NavigationDataChunkActor export и RecastNavMeshDataChunk
 export; payload34Recast exports суммарно 17348530 байт.
-Пример: s3 header 1179/body1178, summary package
+Пример: s3 header 1179/body 1178, summary package
 /Game/RED/Level/Field/Nocturne/Nocturne/_Generated_/0106W37QA7C89ZJJ8BEYT8WKL.
 24 exports; Recast export 22, offset 30718, size 199873,
 SHA303a29b589efa7211680624c2f4a0e1a24bb8c224e04c78eaf77e156a74f570d.
@@ -1440,7 +1440,7 @@ Cache codec читает отдельный signed int32, отрицательн
 Источник exports index SHA256
 `51c725e29f0d9e374b3a95613c64fbfcc8e084efaacea6bdb99c9f5f5887160a`.
 Ограниченный поиск первых 256 байт каждого export дал один кандидат envelope:
-offset 14/version 26 у всех 34, count5..1177, сумма 19098.
+offset 14/version 26 у всех 34, count 5..1177, сумма 19098.
 Это совпадения с нативной формой заголовка, НЕ доказательство границы UObject
 properties и НЕ 19098 проверенных walkable tiles. Сумма включает все сохранённые
 версии пакетов. payload_decoded=false, routes_verified=0/navigation_ready=false.
@@ -1461,7 +1461,7 @@ custom versions архива, затем ограниченное восстан
 
 `extract-recast-tile-buffers.py --custom-version 97` исполняет только четыре
 закреплённых корня: 1452ba8b0/1452ba2a0/141597dd0/14159a480 и их unwind fragments
-в Unicorn2.1.4. Проверяет SHA EXE, proof fragments, generated index и exports.
+в Unicorn 2.1.4. Проверяет SHA EXE, proof fragments, generated index и exports.
 Игра/процесс/ОС/imports не запускаются. Неожиданный код или native write вне
 локального scratch/выделенного буфера отклоняется. File-backed страницы только
 read/execute; SHA страниц записаны. Локальные callbacks заменяют 145240ab0
@@ -1516,7 +1516,7 @@ gap/overlap, размеры, изменённые bytes/header, truncation/trail
 дизассемблирования: полный CFG присоединения тайла здесь не заявлен.
 
 Доказанный layout: header 88 байт, uint16 polyCount+4 и vertCount+6;
-vertices сразу после header, 3double/24 байта; polygons затем, 32 байта.
+vertices сразу после header, 3 double/24 байта; polygons затем, 32 байта.
 Consumer14523c4a8..14523c509 назначает эти массивы в tile+18 и tile+10;
 raycast читает vertex indices с polygon+4 (6uint16 capacity), vertex count+1e,
 индексирует 3*8 байт vertex, использует double-координаты.
@@ -1574,7 +1574,7 @@ Target word сравнивается точно с 0x8000|opposite. Native match
 0.009999999776482582 (точные 8 байт/SHA-source в отчёте).
 Высотная часть использует navmesh+0x10, линейные высоты на концах overlap,
 их знаки/квадраты и в отдельных ветвях 14524c4d0. Последний читает detail mesh,
-detail triangles и вызывает triangle-height helper145240c20; поэтому близость
+detail triangles и вызывает triangle-height helper 145240c20; поэтому близость
 концов не заменяет native predicate. Стороны 0/4 используют одну горизонтальную
 ось, 2/6 другую. Интервал link кодируется clamped0..1 с множителем 255.
 Полное сопоставление и runtime allocation/link limits пока не эмулированы.
@@ -1583,7 +1583,7 @@ detail triangles и вызывает triangle-height helper145240c20; поэто
 Цепочка 1452b8ff0→1452bc8b0→1452b9210 читает version/length/params;
 у общей сетки length —uint32, включая собственные 4 байта (Tell/разность writer).
 Это отличается от uint64 RecastNavMeshDataChunk. V26 parameter-only stream:
-int32 tile_count; 5double (origin 3/width 2); 2int32 capacities; 6double parameters.
+int32 tile_count; 5 double (origin 3/width 2); 2int32 capacities; 6 double parameters.
 Чтения +150/+158/+160 и передача этой структуры в 14524dd50 закреплены.
 Portal-height gate читает третий double этой шестёрки (+10).
 Отчёт `code-clues/recast-portal-code.json` SHA256
@@ -1629,18 +1629,18 @@ Cross-tile graph, special links, coordinate conversion, active versions и
 
 ## 18 октября — native external matcher выполнен на 18430 тайлах
 
-`recast-portal-emulator.py` использует изолированный Unicorn2.1.4 и четыре
+`recast-portal-emulator.py` использует изолированный Unicorn 2.1.4 и четыре
 закреплённых корня: 145243d60 (portal matcher), 14524c4d0 (detail height),
 145240c20 (triangle height), 145255220 (resize/count). Проверяет EXE/proof/
 fragment SHA, разрешает исполнение только их unwind ranges. Сохраняет SHA
 всех 10file-backed страниц. Клиентский процесс/OS/imports не вызываются.
-Пропущен только caller cookie call14524441c→148796040; численная логика,
+Пропущен только caller cookie call 14524441c→148796040; численная логика,
 сэмплирование треугольников и resize fast path исполняются как код клиента.
-Output array заранее имеет capacity4096, поэтому native allocator не нужен;
+Output array заранее имеет capacity 4096, поэтому native allocator не нужен;
 попытка перейти в неожиданный код отклоняется. Максимум 2 млн инструкций/вызов.
 
 Input buffers read-only,≤8 MiB каждый, native reads за их концом отклоняются.
-Writes разрешены только в локальном scratch256KiB. Полный расклад native sections
+Writes разрешены только в локальном scratch 256 KiB. Полный расклад native sections
 восстановлен по 14523c4a8..14523c587 и проверен на точное покрытие каждого buffer:
 header 88, vertices24*n, polygons32*n, links16*n, detail6*n align8,
 detail vertices24*n, triangles4*n align8, BV16*n, point80*n, segment112*n,
@@ -1668,8 +1668,8 @@ SHA256 `160f4dc7aa7cc571c3fd3e80d40a029c618eb13a8f189582b2159af6ed36a472`.
 union. Точный prefilter только plane/overlap/side; после него всегда native
 matcher, включая настоящий detail height (не линейная аппроксимация модели).
 Результат 18430 tiles/104961 boundary edges, 106595 native calls,
-125718directed portals и 2953rejected candidate pairs. Detail helper188calls,
-triangle helper332calls. Записан graph.json со source tile/hash, source polygon/
+125718directed portals и 2953rejected candidate pairs. Detail helper 188calls,
+triangle helper 332calls. Записан graph.json со source tile/hash, source polygon/
 edge, target tile/polygon и native interval. Порог 35 задан явно; его кандидат
 в nav-parameter-candidates.json не превратился в подтверждённую runtime-привязку.
 Отчёт `maps/navigation-study/external-graph-height-35.0/index.json` SHA256
@@ -1706,7 +1706,7 @@ dtNavMeshQuery::raycast145252290 через R8/R9.1452b6db6..1452b6ddc пере�
 возвращаемый вектор обратно(-X,-Z, Y). Второй wrapper независимо использует тот
 же порядок и sign-bit XOR. Масштаба/подгонки по рамке/смещения в блоках нет.
 `recast-coordinate-math.py` описывает именно этот базис; применение не выбирает
-runtime-версию данных. В изолированной Unicorn2.1.4 выполнены два непрерывных
+runtime-версию данных. В изолированной Unicorn 2.1.4 выполнены два непрерывных
 блока conversion: 69basis/random/signed-zero cases, две forward-точки и inverse,
 все 24 байта каждой проверки совпали; неожиданный код/немаппируемый write запрещён.
 Отчёт `code-clues/recast-coordinate-evidence.json` SHA256
@@ -1760,8 +1760,8 @@ navigation_ready=false сохраняются.
 `build-recast-special-code.py` закрепляет 42 опорных инструкции/10 фрагментов того
 же EXE с SHA256 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Корни: codec1452ba8b0, start attachment14523da30, end attachment14523f590,
-optional custom predicate145250990. Point record80 байт: start3double+0,
-end3double+24, horizontal radius double+48, search height double+56,
+optional custom predicate145250990. Point record80 байт: start3 double+0,
+end3 double+24, horizontal radius double+48, search height double+56,
 identifier uint64+64, polygon uint16+72, side byte+74, flags byte+75.
 Последние 4 байта не интерпретированы. Serializer custom-version 97 gate сохраняет
 uint64ID, старый путь zero-extends32bit; height пишется отдельным проходом
@@ -1829,7 +1829,7 @@ active coverage/property/custom-version assumptions и реальные марш
 `build-recast-special-direction-evidence.py` закрепляет 27 anchors/32 fragments
 того же EXE SHA, проверяет SHA модели/исходного special report и histogram
 всех 62 записей: flags192 (0xC0). Point bit0x40 включает предварительный поиск
-поверхности 145243b00 перед fallback145245510. Оба пути дополнительно проверяют
+поверхности 145243b00 перед fallback 145245510. Оба пути дополнительно проверяют
 горизонтальное расстояние к исходной точке против radius². Это не доказательство
 итоговой точки/доступности: весь attachment ещё не эмулирован.
 
@@ -1849,7 +1849,7 @@ surface→end; добавляет 0x40 и direction0x20. Sentinel0x80 для т�
 Это уточняет прежнее «direction неизвестно»: сохранённый флаг двусторонности
 доказан на уровне указанных обработчиков, реальная доступность ещё неизвестна.
 
-Unicorn2.1.4 исполняет только ограниченные блоки без вызовов/игрового процесса:
+Unicorn 2.1.4 исполняет только ограниченные блоки без вызовов/игрового процесса:
 256start-packing, 9216end-packing (256 flags×9sides×2tile cases×2directions),
 1536query-gate cases (256metadata×2mode×3loops) — всего 11008, все совпали.
 Кодовые страницы read/execute only; guard допускает только выбранный блок и
@@ -1928,7 +1928,7 @@ inputs/results, все 136results/indices/coordinates/radius status и огра�
 все 3Dbbox candidate sets, polygon type/flags, radius/distances и сохраняет
 audit; 16 равномерно выбранных native queries повторены с точным совпадением.
 
-Порядок после special report (закреплённые capstone5.0.6/Unicorn2.1.4):
+Порядок после special report (закреплённые capstone5.0.6/Unicorn 2.1.4):
 
 ```powershell
 $env:PYTHONPATH = (Resolve-Path phone-exit/.tools/vampir-analysis).Path
@@ -1993,7 +1993,7 @@ Cluster linking отключён пятым аргументом end routine.
 
 `build-recast-attachment-study.py` выбирает target grid из stored side и
 закреплённых SIDE_STEPS; оставляет bbox-кандидатов из предыдущего исследования.
-Для каждого из 62 переходов ровно 1target tile. Это явная модель dispatch для
+Для каждого из 62 переходов ровно 1 target tile. Это явная модель dispatch для
 candidate union, а не доказательство active runtime load order/coverage.
 7 наборов priorities (equal+6strict orders), 434 native pairs, 868 вызовов start/end
 плюс внутренние nearest/link helpers. Во всех сценариях 61start/61both connected;
@@ -2058,7 +2058,7 @@ routes_verified=0/navigation_ready=false.
 
 ## 18 октября — источник area-priority ranks в коде клиента
 
-Найден leaf setter14523d610..14523d63c (нет .pdata): четыре movups копируют
+Найден leaf setter 14523d610..14523d63c (нет .pdata): четыре movups копируют
 64 байта из RDX в nav RCX+0x94/+0xA4/+0xB4/+0xC4. Найден прямой CALL в .text —
 1452b4943; этот вызов подтверждён декодированным wrapper 1452b4800.
 Граница leaf закреплена исходными байтами/SHA/полным disassembly до ret,
@@ -2067,10 +2067,10 @@ routes_verified=0/navigation_ready=false.
 Wrapper берёт `[wrapper]` → `[owner+0x400]` → `[value+0x10]`, затем
 `R14=filterPointer+8`. Цепочка статически подтверждена, имя UObject property
 owner+0x400 и активный объект пока не установлены. Из R14+8 и R14+0x208
-читаются два массива 64double (то есть filterPointer+16 и+528). Для каждого
+читаются два массива 64 double (то есть filterPointer+16 и+528). Для каждого
 area ID0..63 вычисляется сумма, формируется 16-byte запись double+int32 ID.
 1452b490c вызывает sort142405a70;1452b4920..4930 записывает позицию отсортированного
-элемента как rank[areaID], 1452b4943 передаёт 64byte array в setter.
+элемента как rank[areaID], 1452b4943 передаёт 64 byte array в setter.
 Native constructor 145240ad0 отдельно зануляет все 64rank bytes; это начальное
 состояние до пересчёта, не свидетельство активного фильтра.
 
@@ -2087,9 +2087,9 @@ heap fallback, rank loop и leaf copy; wrapper allocations/object lookup не
 исполняются.64sum rows заранее выделены в scratch; рост TArray не допускается.
 Imported stub1487a2ecd проверен через PE import descriptor/IAT:
 `api-ms-win-crt-math-l1-1-0.dll!logf`, slot 148945d80. Единственный math shim
-разрешён только для float32 input64, результат 1082463634bits; native float
+разрешён только для float32 input 64, результат 1082463634bits; native float
 удвоение/truncation вычисляют depth8. Memset shim только обнуляет checked
-scratch744 байта; cookie call142405c4c пропущен. Это объявленные harness shims,
+scratch 744 байта; cookie call 142405c4c пропущен. Это объявленные harness shims,
 не выполнение внешней CRT/OS. Остальной неожиданный код запрещён, 2 млн instructions
 на блок, native writes только scratch, входные cost arrays read-only и ограничены
 read guard. Исходный EXE SHA прежний c7552efd…713dfc8.
@@ -2130,7 +2130,7 @@ finite/sum overflow, read bounds и PE named/ordinal/missing import resolution.
 
 `build-navigation-filter-code.py` закрепляет 48 anchors/23 fragments того же
 Windows EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
-Class getter1454c54e0 использует literal NnRecastNavMesh, constructor pointer
+Class getter 1454c54e0 использует literal NnRecastNavMesh, constructor pointer
 1454ccdb0; leaf wrapper 20 байт заканчивается JMP1454d0020. Этот конструктор
 загружает точные классы BP_NavQuery_Default/ShortPath/ExcludeHiddenPath по
 `/Game/RED/Blueprint/Navigation/` и записывает ссылки в поля 780/788/790hex.
@@ -2194,8 +2194,8 @@ nonfinite value/unknown field/truncated suffix завершают разбор �
 |---|---|---|
 | Default | Default=1, MainRoad=0,5 | bIsExcluded=false |
 | ShortPath | Default=1, MainRoad=0,5, Obstacle=1 | bIsExcluded=false |
-| Combat | MainRoad=1, Obstacle=1 | Default содержит travel value1 с override=false |
-| ExcludeHiddenPath | Нет | HiddenPath: bIsExcluded=true; travel value1 с override=false |
+| Combat | MainRoad=1, Obstacle=1 | Default содержит travel value 1 с override=false |
+| ExcludeHiddenPath | Нет | HiddenPath: bIsExcluded=true; travel value 1 с override=false |
 
 Во всех этих записях EnteringCostOverride=0 явно сериализован zero mask,
 bOverrideEnteringCost=false. Неактивное значение TravelCostOverride не
@@ -2269,10 +2269,10 @@ wrappers14385f9c0/9b0 →slots+0x58/+0x68 пишутся в impl+0x420/+0x422.
 145299c20→14523af10 и initializer 145282960, все перечисленные wrappers/setters.
 Native constructor заполняет travel64ones, entering64zeroes, затем исключает
 area 0; это локальное исходное состояние проверки. Class ancestry и TMap lookup
-layout синтетические и ограниченные, NavArea getter145267310 возвращает
+layout синтетические и ограниченные, NavArea getter 145267310 возвращает
 синтетический root через явно объявленный stub. Единственный CRT shim обнуляет
 512 байт entering array при checked destination/value/count. Других UE/OS/import
-вызовов harness не выполняет. Writes только 256KiB scratch, instruction limit2M.
+вызовов harness не выполняет. Writes только 256 KiB scratch, instruction limit2M.
 Cloning/default-filter selection/caching изучены статически и не исполняются.
 
 `build-recast-filter-apply-evidence.py` закрепляет 26 anchors/15 fragments,
@@ -2288,7 +2288,7 @@ clamp literal и 12 native pages. 33 native cases: все 7cooked variants, 8 fl
 Исходный EXE SHA прежний c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
 
 Для Default/ShortPath сохранённый MainRoad TravelCostOverride0.5 с override=true
-даёт setter value1.0; это отличается от constructor DefaultCost0.5 класса
+даёт setter value 1.0; это отличается от constructor DefaultCost0.5 класса
 NnNavArea_MainRoad. Эти два этапа сохраняются отдельно. Не утверждается, что
 активная итоговая стоимость MainRoad или прочих областей в игре равна 1.
 Начальное содержимое owner+0x400 может включать supported-area/CDO/runtime
@@ -2331,12 +2331,12 @@ cost effects, несовместимые с exclusion/clamps. Визуальна
 navigation-filter-code.json с проверкой SHA; новые связи не назначаются
 по сходству имён или расположению функций.
 
-Конструктор 1454d0020 пишет primary vtable149872f38; её slot3a0 указывает
+Конструктор 1454d0020 пишет primary vtable149872f38; её slot 3a0 указывает
 на 1454da500. Отражённое имя этой lifecycle-функции пока не установлено.
 Она вызывает base функцию 143801260, затем последовательно читает классы
 из 780(Default), 788(ShortPath), 790(ExcludeHiddenPath) и передаёт их selector
 1452818e0 с тем же nav owner. Selector проверяет ancestry относительно
-NavigationQueryFilter class getter145267a60, читает CDO из class+110hex
+NavigationQueryFilter class getter 145267a60, читает CDO из class+110hex
 (при нуле вызывает 1416aaaf0), передаёт CDO/owner в 145281400. Null или
 неподходящий класс даёт пустой 16-byte shared result. Отдельные wrappers
 1454dedd0/1454e07b0/1454dee80 выполняют те же обращения 780/788/790.
@@ -2347,7 +2347,7 @@ Literal1.0 находится по VA14898d188, raw0000803f. Это отдель
 запросов; его нельзя переносить задним числом на уже подготовленные копии
 или выдавать за доказательство текущих costs. В 145281400 статически
 подтверждены cache lookup, fallback clone shared owner+400 через 143850680
-и вызов CDO initializer slot2c8. Cache hit/flags/lifetime и фактические
+и вызов CDO initializer slot 2c8. Cache hit/flags/lifetime и фактические
 содержимое/выбор активного фильтра не исполнены новой проверкой.
 
 `recast-filter-selection-emulator.py` исполняет selector, три wrappers,
@@ -2365,26 +2365,26 @@ guard после stubbed query calls, не успех реальной иниц�
 Byte flag 14b35a640 лежит в PE zero-fill части .data; harness задаёт его
 как отдельный синтетический ввод 0/1, не берёт значение из процесса игры.
 Нативные file-backed pages и эта входная страница перечисляются раздельно.
-Запись допускается только в 256KiB scratch; каждая execution ограничена 2M
+Запись допускается только в 256 KiB scratch; каждая execution ограничена 2M
 инструкций. Все query stub snapshots предшествуют base mutations; остальные
 60travel costs, все 64entering costs и polygon masks сохраняются. Новый
 validator отвергает неправильный порядок/подмену класса/посторонние изменения
 и ложный runtime_verified=true. Это офлайн execution кода клиента, не игровой
 runtime или доказанная проходимость.
 
-Дополнительно найден источник заполнения base impl: 1452b7120 — slot8e0
+Дополнительно найден источник заполнения base impl: 1452b7120 — slot 8e0
 как base vtable14972dc00 из 145297f60, так и Nn primary vtable149872f38.
 Статическая цепь: 14526ca50 создаёт shared wrapper и пишет owner+400;
 1452b7120 выделяет 0x430 bytes, вызывает 145299c20, устанавливает impl в
-shared+10hex. Затем обходит SupportedArea array owner+460/count468,
-stride32: класс в record+24, area ID читается byte в+16. Travel берётся
-из CDO+30hex, entering — через CDO virtual slot2e8, оба передаются
+shared+10hex. Затем обходит SupportedArea array owner+460/count 468,
+stride 32: класс в record+24, area ID читается byte в+16. Travel берётся
+из CDO+30hex, entering — через CDO virtual slot 2e8, оба передаются
 настоящим setter slots10/18. Также используются owner5bc/5d0/644 и
 глобальная маска; их actual instance values остаются неизвестными.
 Новая проверка фиксирует эти инструкции/два vtable slot, но не исполняет
 allocation/reference-count/CDO loop. Это ближайший следующий объём работы.
 
-Найден и клиентский query caller145688dd0: получает все три wrapper results
+Найден и клиентский query caller 145688dd0: получает все три wrapper results
 и передаёт их далее в 14569bcf0; простой выбор единственного «default для
 всех маршрутов» этим не подтверждается. Этот caller сохранён в fragments;
 его ветви/параметры и актуальные запросы ещё требуют отдельной проверки.
@@ -2414,7 +2414,7 @@ dependencies/pages и все 16 native replay, включая порядок/с�
 содержат ожидаемые адреса, счётчики=[1,1]. Ветка освобождения старого объекта
 и нехватка памяти не исполнены; игровой allocator не вызывается.
 
-NavArea constructor 14526ef70 пишет vtable149721c28; её slot2e8 указывает на
+NavArea constructor 14526ef70 пишет vtable149721c28; её slot 2e8 указывает на
 14527f810. Точные 6 bytes `f30f104134c3`: MOVSS XMM0,[RCX+34hex]; RET.
 Это чтение FixedAreaEnteringCost52 по прежней подтверждённой property schema;
 DefaultCost48 читается непосредственно перед travel setter. В harness все
@@ -2440,7 +2440,7 @@ area cost последнее значение заменяет массив, н�
 | Вход | Наблюдаемая запись |
 |---|---|
 | owner+5bc float32 | CVTTSS2SI → shared+20hex int32 |
-| owner+5d0 bit 11 | impl+428hex byte0/1 |
+| owner+5d0 bit 11 | impl+428hex byte 0/1 |
 | owner+644 float32 | double в impl+410hex |
 | global word14b566bac | include_flags &= ~word (16bits) |
 
@@ -2459,14 +2459,14 @@ EXE SHA c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8.
 5global masks, 4owner bit patterns, 5scale values, 6integer-conversion values.
 Model сравнивает полный state и trace. Independent audit повторно проверяет
 все source/proof/dependency SHA, native fragments/pages/leaves/34 anchors,
-area getter/vtable slots и все 30 native replay. Scratch ограничен 256KiB,
+area getter/vtable slots и все 30 native replay. Scratch ограничен 256 KiB,
 каждый вызов ограничен 2M инструкций; UE/OS/game process не исполняются.
 Report `code-clues/recast-base-filter-evidence.json` SHA256
 `d602a33e394ed657283946228e016f33103b586abe12f0024121541673bf3d32`.
 
 ## 18 октября — фильтр в клиентском запросе и порог XY
 
-В конкретном caller145688dd0 найден перенос результатов трёх wrappers
+В конкретном caller 145688dd0 найден перенос результатов трёх wrappers
 в 14569bcf0. Win64 stack args6/7/8 несут соответственно Default/ShortPath/
 ExcludeHiddenPath; захват register/stack stores и loads закреплён 32 anchors.
 В callee два endpoint callsites1452451b0 получают аргумент 8. Перед вызовом
@@ -2524,24 +2524,24 @@ SHA сверены с существующим recast-geometry-code.json и те
 R9 start double[3]; stack+28 end double[3],+30 cost limit double,+38 filter,
 +40 output array,+48 optional cost output. Query+0 nav pointer,+88 node pool,
 +90 heap. Наблюдаемые pool fields: nodes+0/hash+8/next+10, hash size+1c,
-capacity+20/count+24; node stride56. В search filter передаётся impl+8,
+capacity+20/count+24; node stride 56. В search filter передаётся impl+8,
 поэтому travel+8, entering+208, minimum+408, heuristic scale+410,
 include/exclude words+418/+41a, virtual-mode byte+420. Эти смещения относятся
 к переданному указателю, а не к началу wrapper или impl.
 
 Исполняются reference validation14524f8f0, node lookup/allocation14524c750,
 heap push14523dc40/pop145250a10/update14524fd10, portal endpoints14524d350,
-link predicate145250990 и output count helper1452553e0. Поиск проверяет
+link predicate145250990 и output count helper 1452553e0. Поиск проверяет
 флаги/стоимости, использует midpoint общего ребра и выдаёт corridor records
-stride48 (reference+0, разность накопленной стоимости+8). На конечном полигоне
+stride 48 (reference+0, разность накопленной стоимости+8). На конечном полигоне
 учитывает также отрезок от portal midpoint к goal. Entering cost добавляется
 при смене area. Полная оптимальность глобального маршрута этим не доказана.
 
 Заменены только bounded memset hash array (512 uint16=1024 байта, 255) и
-stack-cookie call145246305. Allocating branch output helper запрещена;
+stack-cookie call 145246305. Allocating branch output helper запрещена;
 выделены 512nodes/512heap/512output slots, tile<=256polygons и<=1536static
 links. Инструкция search ограничена 2M, link block200K. Native записи только
-в scratch256KiB, исходные tile buffers readonly. Отдельный guard ограничивает
+в scratch 256 KiB, исходные tile buffers readonly. Отдельный guard ограничивает
 допустимые функции/блок; страницы EXE хешируются. Native flag/virtual/special
 и внешние branches вне заданных сценариев не выдаются за проверенные.
 
@@ -2549,7 +2549,7 @@ links. Инструкция search ограничена 2M, link block200K. Nati
 связными полигонами из 33package exports, сверяя source manifest, buffer file
 и каждый выбранный tile SHA. В 34-м подходящего тайла нет. По каждому —
 forward/reverse/same-poly; на первом также все пары, include=0, exclude=65535,
-capacity1, cost_limit0, scale2.5 и area-dependent costs. Итого 121case,
+capacity 1, cost_limit0, scale2.5 и area-dependent costs. Итого 121case,
 117 полных/4 partial результата, максимальная цепочка 10,32heap updates.
 Synthetic tile salt1, tile bits16/poly bits24; endpoints — центры вершин
 полигонов. Это явно заданный query/filter, не активный объект игры.
@@ -2591,11 +2591,11 @@ interval bytes14523f3c5/14523f3dc. Graph предыдущего этапа ис�
 выбора пар и независимой сверки результата.
 
 Для специальных связей нативно исполняются BV/priority nearest145243b00,
-fallback145245510, triangle/closest-point и 14524faf0 с отдельным заранее
+fallback 145245510, triangle/closest-point и 14524faf0 с отдельным заранее
 выделенным runtime pool64 links. Исходные polygons/vertices копируются в
 scratch: attachment может менять endpoint vertices; исходные buffers readonly.
 Каждый тайл допускает<=256polygons/512vertices/1536static links. Query использует
-512node/heap/output slots, instruction limit2M, scratch256KiB+отдельные 256KiB.
+512node/heap/output slots, instruction limit2M, scratch 256 KiB+отдельные 256 KiB.
 Runtime query callback pointer+8=null и cluster-link arg=false — это явные
 ограничения сценария, а не доказательство отсутствия условий в игре.
 
@@ -2656,7 +2656,7 @@ active tiles/filters и runtime permission callbacks специальных св
 
 ### Полный endpoint projection и связка с query, 18 октября
 
-`recast-projection-emulator.py` исполняет 1452451b0 и helper145250f50:
+`recast-projection-emulator.py` исполняет 1452451b0 и helper 145250f50:
 координата±extent→grid cells→tile hash chain→1452519d0(BV/filter/candidates)
 →14523e910(XZ clamp/detail triangle height)→выбор ближайшего допустимого
 полигона. RCX query, RDX point double[3], R8 extent double[3], R9 filter;
@@ -2671,7 +2671,7 @@ Header grid coordinates и все geometry/BV/detail данные сохране
 buffers. Один hash bucket не отменяет native сравнение header grid X/Y.
 Это сценарий для проверки кода, не извлечённые active mesh parameters.
 Extents<=1000/widths>=1000 ограничивают число рассматриваемых ячеек; tile-list
-allocation запрещена (loaded tiles2<32). Candidate capacity128, saturation
+allocation запрещена (loaded tiles2<32). Candidate capacity 128, saturation
 фиксируется; ни один из проверенных вызовов не достиг лимита. Native пишет
 только scratch; пропускаются cookie calls1452454ea/14523eee0. Другие ранее
 указанные пределы linked-path harness сохраняются.
@@ -2680,7 +2680,7 @@ allocation запрещена (loaded tiles2<32). Candidate capacity128, saturat
 native construction/query evidence. Для каждой: start/end centers, смещение
 Y+20/Y-20, выход за vertical extent, за grid, point около vertex и все flags
 исключены. 192 сценария: 120 нашли projection/72 не нашли; no-hit возвращает
-status40000000/ref0 и не пишет output point. Успешный status сам по себе
+status 40000000/ref0 и не пишет output point. Успешный status сам по себе
 не означает найденный полигон. Отдельно 24 маршрута startY+20/endY-20:
 обе проекции→полный corridor query через external link с переданными
 projected coordinates. Это 24 полных локальных corridor, без straight-path.
@@ -2711,7 +2711,7 @@ python phone-exit/bots/resource-tools/vampir/audit-recast-linked-path.py
 python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
 ```
 
-Для следующего этапа найден static caller14569c12f→145248b20 после polygon
+Для следующего этапа найден static caller 14569c12f→145248b20 после polygon
 query; callee использует endpoint clamp 14523df90/portal14524d350 и выдачу
 точек. Line/funnel в этом этапе ещё не исполнен/не проверен. Далее также
 нужны effective mesh/grid/filter/permissions и движение персонажа.
@@ -2721,20 +2721,20 @@ query; callee использует endpoint clamp 14523df90/portal14524d350 и �
 
 `recast-straight-path-emulator.py` исполняет 145248b20 целиком, а также
 endpoint clamp 14523df90, poly validation14524d870, portal14524d350,
-point equality14522e870, area-crossing helper14523ce30 и output1452553e0.
+point equality14522e870, area-crossing helper 14523ce30 и output 1452553e0.
 RCX query, RDX start, R8 end, R9 array uint64 polygon refs; stack+28 count,
 +30 output dynamic-array header,+38 options. Выход row48: ref+0,
 point double[3]+16, flags uint32+40. End ref0; наблюдаемые flags1=start,
 2=end, 4=вход в special polygon. Flag4 не определяет jump/teleport действие.
-Array capacity512 предвыделена, growth запрещён; instruction limit2M.
+Array capacity 512 предвыделена, growth запрещён; instruction limit2M.
 Endpoint clamp cookie14523e349 пропускается; остальная геометрия исполняется.
 
 Новый явный synthetic environment нужен для thread-local static-init checks:
-GS base0x6000000, vector+1000, index0, block0x6100000, epoch at+0x101184=0.
-Client global TLS index0x14b6313f0=0, guard0x14b566190=0. Вместо исполнения
+GS base0x6000000, vector+1000, index 0, block0x6100000, epoch at+0x101184=0.
+Client global TLS index 0x14b6313f0=0, guard0x14b566190=0. Вместо исполнения
 Windows CRT initializer задано его инициализированное состояние: epsilon
 double3.725290298461914e-9 (2^-28), raw`000000000000303e` из literal
-0x149714d48→global0x14b566188. Эта связь подтверждена native load/store
+0x149714d48→global 0x14b566188. Эта связь подтверждена native load/store
 145249296/1452492a5, а также 14522e903/14522e912 и 14523d47a/14523d489.
 Обе global pages лежат в PE zero-fill, readonly; TLS/TEB также readonly.
 Попытка вызова CRT init14879656c/148796500 запрещена. Никакие live thread
@@ -2864,7 +2864,7 @@ python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
 `build-recast-grid-parameter-evidence.py` проверяет точные bytes параметров
 Nocturne NnRecastNavMesh export 3919 (size 551, SHA
 `78807cf7cd174e5365cd3045520c5fb148d84e40fa47ab6efbaa604a8f813400`).
-Suffix offset 443 целиком 108 bytes: version 26, uint32length104, count0,
+Suffix offset 443 целиком 108 bytes: version 26, uint32length104, count 0,
 origin[-0,0,-0], widths[1000.0000133514404,1000.0000133514404],
 capacities461168/2147483647, parameters144/35/35/0.02500000037252903/
 0.050999999046325684/0.050999999046325684. SHA source level/parameter
@@ -2956,13 +2956,13 @@ inherited schema с filtering transient/editor/nested descriptors, типами/
 и потреблением значений до реальной stream boundary.
 
 Как воспроизводимая зацепка сохранены 14 native property descriptors
-NavigationData(table149720b20) и 76RecastNavMesh(table14972b230), включая
+NavigationData(table 149720b20) и 76RecastNavMesh(table 14972b230), включая
 NavDataConfig/RuntimeGeneration/SupportedAreas и TileSizeUU/CellSize/
 NavMeshResolutionParams/AgentRadius/HeuristicScale. Для каждого — pointer,
 name, gen flags, raw object-offset field и 56raw descriptor bytes. Эти таблицы
 содержат nested enum/array children и **не являются** готовым cooked property
 order. Классовая связь закреплена registry149720bc0/14972b4c0: first pointer
-на getter145266670/145293b20, pointer+40 на соответствующую property table;
+на getter 145266670/145293b20, pointer+40 на соответствующую property table;
 getter literals NavigationData/RecastNavMesh в UTF16 подтверждены bytes.
 Counts14/76 относятся к записанному bounded span native arrays, а не к числу
 сериализуемых полей экземпляра.
@@ -2998,7 +2998,7 @@ level/filter/link selection. `property_boundary_verified=false`,
 NnRecastNavMesh14985ca08(3), Recast14972b230(76), NavigationData149720b20(14),
 Actor 1491696c0(88). Связь parent getter закреплена инструкциями:
 1454c551b→145293b20,145293b5b→145266670,1452666ab→143094460;
-последний —5byte thunk`e93bc17700`→1438105a0. Registry14985ccd0/14916aca0
+последний —5 byte thunk`e93bc17700`→1438105a0. Registry14985ccd0/14916aca0
 содержат соответствующие getters и property arrays+40. Прежние Recast/NavData
 registries подтверждены actor-dispatch proof. Для structs сохранены registry
 bytes/таблицы и функции getters NavMeshResolutionParam145293c90,
@@ -3030,7 +3030,7 @@ Header29,32, 33,34, 35,81, 91,149 теперь разбирается после
 |149|Actor. RootComponent|371..375|local export 5493|
 
 Nested resolution records имеют только CellSize, остальные поля не заполнены
-догадками. Config header 2,3, 6,8; DefaultQueryExtent —3double, class paths —
+догадками. Config header 2,3, 6,8; DefaultQueryExtent —3 double, class paths —
 два package FName tuples+пустой subpath. Name map10679 `/Script/NnFramework`,
 30826 `NnRecastNavMesh`: оба explicit class paths совпадают. FName number
 сохранён; имя не восстанавливается по похожим строкам. RootComponent5493
@@ -3110,7 +3110,7 @@ export SHA256 `78807cf7cd174e5365cd3045520c5fb148d84e40fa47ab6efbaa604a8f813400`
 |---|---|---|
 |375–379|uint32=0, optional object GUID отсутствует|14173a5ad..14173a5f8, переход 14173a9e2|
 |379–383|uint32=1, присутствует строка|14381b363/366/39d, после flags/version gate|
-|383–411|FString: length 24, NnRecastNavMesh-Default с NUL|call14381b3be→141422070|
+|383–411|FString: length 24, NnRecastNavMesh-Default с NUL|call 14381b3be→141422070|
 |411–427|4uint32:384079d01be1c045b4e18c4e5dc2bbac (raw bytes)|144351d4b→141544ba0|
 |427–443|ещё 4uint32, все 0|144351d58→141544ba0|
 
@@ -3126,7 +3126,7 @@ bytes `86181d60844f64acded316aad6c7ea0d`, cmp version>=150 на 14381b3f7.
 и не включает actor GUID pair. Нельзя объявлять offset 443 доказанным только
 потому, что conditional layout совпал с концом экспорта/candidate envelope.
 
-Unicorn2.1.4 исполняет optional flag fast block и Actor ветки после UObject
+Unicorn 2.1.4 исполняет optional flag fast block и Actor ветки после UObject
 return. Явные synthetic inputs: archive+28=3,+29=1,+68pointer=0.
 Custom-version lookup подставляет значения сценария; FString вызов заменён
 bounded ANSI reader без native allocator/conversion. Четыре DWORD каждого
@@ -3179,8 +3179,8 @@ active area remapping/filter/mesh selection. Проходимость персо
 |140ff4ae0|86181d60844f64acded316aad6c7ea0d|170 / FortniteMain|
 |140ff52b0|525dda5948493212785978b88be9b870|8 / UE5-PrivateFrosty|
 
-Оба initializer исполняются Unicorn2.1.4 до call14159bf30; аргументы GUID,
-version, UTF16 name и callback0 прочитаны из регистров/стека после исполнения
+Оба initializer исполняются Unicorn 2.1.4 до call 14159bf30; аргументы GUID,
+version, UTF16 name и callback 0 прочитаны из регистров/стека после исполнения
 инструкций клиента. Полные fragments, literal bytes и единственные .rdata
 pointer references1489477d0/148947868 закреплены. Сам global registry insert,
 CRT startup и OS locks не исполнялись.14159bf30 статически передаёт version,
@@ -3188,7 +3188,7 @@ name и callback в общий registry через 141599d80/141591bd0.
 
 У Nocturne и всех 34generated packages первые поля package summary:
 tag9e2a83c1, legacy-8, discarded legacy UE3=0, UE4=0, UE5=0, licensee=0,
-custom-version count0. Каждый asset проверен по SHA из generated index;
+custom-version count 0. Каждый asset проверен по SHA из generated index;
 сохранены prefix32 bytes, decoded fields, package identity и путь файла.
 Ни один пакет из исследованного набора не имеет собственной ненулевой версии.
 
@@ -3209,7 +3209,7 @@ custom-version container+10. Четыре bounded native gate replays подтв
 Начало gate replay находится после чтения summary fields; вызов snapshot
 служит stop boundary и не заменён выдуманным успешным глобальным registry.
 Кроме того, закреплён 141599fa0: при archive+80 pending flag и loading bit
-archive+28&1 он лениво копирует registry rows (stride40) в archive+58;
+archive+28&1 он лениво копирует registry rows (stride 40) в archive+58;
 для другой ветки очищает count. Это static связь default archive getter,
 а не доказательство, что все wrappers конкретного export используют его.
 
@@ -3269,7 +3269,7 @@ Native class здесь идентифицируется конструктор�
 
 * 14172b5d0 конструирует archive по object+240 через 141593500, затем
   14172b61e/630 записывает vtable148a13918 именно по+240.
-* 14173af20 вызывает summary phase14173d870, затем version phase14173f9a0.
+* 14173af20 вызывает summary phase 14173d870, затем version phase 14173f9a0.
   Summary phase передаёт object+a8 в 14175fa90; custom container поэтому+b8.
 * 14173fa73..fb3e передаёт scalar versions из+ac/+b4 и engine version struct
   из+150 в embedded archive и optional reader object+328. Container+b8
@@ -3277,9 +3277,9 @@ Native class здесь идентифицируется конструктор�
 * 1415a0140 копирует source container в archive+58 через 141594d70 либо
   конструктор 141593dc0 и очищает pending-default byte archive+80.
 * Slot58 embedded archive→141599fa0, возвращающий уже скопированный container.
- 141597dd0→14159a480 ищет GUID rows stride40 и возвращает их версии.
+ 141597dd0→14159a480 ищет GUID rows stride 40 и возвращает их версии.
 
-Unicorn2.1.4 исполнил phase block после compatibility gates и остановился
+Unicorn 2.1.4 исполнил phase block после compatibility gates и остановился
 перед package-object updates. Оба destination containers preallocated2 rows;
 reserve1415337c0 заменён проверкой достаточной capacity, memcpy1487a2e19
 заменён ограниченной копией ровно 80 bytes. Сами вызовы setter, копирование
@@ -3300,11 +3300,11 @@ factory/все wrappers reader ещё нужно связать, результ�
 выдаётся за runtime reader identity.
 
 Nocturne package flags лежат по asset offset 76:0x90022200. Summary phase
-14173dc3e..dcaa берёт package bit 9→virtualb8→archive byte28 bit 1 (02),
-package bit 13→virtuale0→archive byte28 bit 6 (40). Leaf setters закреплены
+14173dc3e..dcaa берёт package bit 9→virtualb8→archive byte 28 bit 1 (02),
+package bit 13→virtuale0→archive byte 28 bit 6 (40). Leaf setters закреплены
 полными bytes до ret, отдельно от.pdata functions. Native4 cases:
 
-|Package flags|Initial archive byte28 (explicit)|Result byte28 в обоих|
+|Package flags|Initial archive byte 28 (explicit)|Result byte 28 в обоих|
 |---|---|---|
 |90022200|01|43|
 |0|01|01|
@@ -3312,7 +3312,7 @@ package bit 13→virtuale0→archive byte28 bit 6 (40). Leaf setters закре�
 |2000|01|41|
 
 **Initial loading bit 01 этим блоком не устанавливается и остаётся scenario
-input.** Actor byte29/version-string gate также ещё не восстановлен. Имена
+input.** Actor byte 29/version-string gate также ещё не восстановлен. Имена
 битов сверх доказанной механики не назначаются по памяти/сходству.
 
 Прямая ветка preload14173a9f0 использует RBP=embedded archive (при входе
@@ -3322,8 +3322,8 @@ RCX; проверка owner через RBP-240).14173ad9e передаёт ег�
 версиями. Nav vtable149872f38 связан constructor 1454d0034; slote0 фактически
 содержит 1452b8ff0. Это прямая non-CDO ветка после проверок, а не исполнение
 полного preload или тела сериализатора. Чтение bytes embedded archive
-virtual170→14173cba0 переносится в archive+e8 (то есть Linker+328) и дальше
-в reader virtual170;17 bytes forwarding thunk сохранены отдельно.
+virtual 170→14173cba0 переносится в archive+e8 (то есть Linker+328) и дальше
+в reader virtual 170;17 bytes forwarding thunk сохранены отдельно.
 
 Report `code-clues/recast-archive-transfer.json` SHA256
 `3dbbe1c8b28f5625e158aa89f89b7eacf99167ea110ada1e441749da4172170b`.
@@ -3343,7 +3343,7 @@ python -m unittest discover -s phone-exit/bots -p 'test_vampir_recast_*.py'
 
 Закрыта static/native связь versions→embedded archive→direct actor serializer.
 Полная runtime цепочка не объявлена закрытой: остаются gates/reader factory,
-initial loading/byte29 flags, UObject schema/alignment, затем active mesh/area
+initial loading/byte 29 flags, UObject schema/alignment, затем active mesh/area
 remapping и live position. `full_export_archive_chain_verified=false`,
 `full_property_boundary_verified=false`, `routes_verified=0`,
 `navigation_ready=false`.
@@ -3359,10 +3359,10 @@ report; helpers также закреплены по SHA. Это bounded offline
 
 Найден 14173c480, вызываемый из loader paths1417345cb/141734e29.
 Его block14173c4cd..c4e9 передаёт 1 virtual slotsb0 и f0 embedded archive:
-b0→1415a0530 устанавливает bit 0 byte28 (чтение),
-f0→1415a0550 устанавливает bit 0 byte29 (gate строки в Actor serializer).
+b0→1415a0530 устанавливает bit 0 byte 28 (чтение),
+f0→1415a0550 устанавливает bit 0 byte 29 (gate строки в Actor serializer).
 Хвост функции вызывает slot 68→14159ca30, устанавливающий pending versions
-byte80=1. Slot bindings и полные leaf bytes до ret закреплены отдельно.
+byte 80=1. Slot bindings и полные leaf bytes до ret закреплены отдельно.
 Native constructor 141593500 обнуляет flag DWORD на 141593582; в replay
 исходный нулевой state подан как вход, полный constructor не исполнен.
 
@@ -3380,10 +3380,10 @@ Native constructor 141593500 обнуляет flag DWORD на 141593582; в repl
 14173c480 не исполнялась; исследуемые setter/virtual calls исполнялись.
 
 Также полностью исполнен 14173eb10: записывает reader в Linker+328,
-создаёт 16byte structured archive 141593610 с полем+8=embedded archive,
-создаёт 8byte slot и сохраняет его в Linker+2f8. Б ounded allocator заменяет
+создаёт 16 byte structured archive 141593610 с полем+8=embedded archive,
+создаёт 8 byte slot и сохраняет его в Linker+2f8. Б ounded allocator заменяет
 только вызовы 1468e4100 на scratch allocations16/8 bytes. При rebind
-существующий 16byte объект сохранён, заменён лишь 8byte slot. Native
+существующий 16 byte объект сохранён, заменён лишь 8 byte slot. Native
 141599f90 выполняет три pointer reads и возвращает тот же embedded archive;
 обе проверки adapter прошли, synthetic reader vtable здесь не объявлена
 восстановленной factory.
@@ -3394,11 +3394,11 @@ Native constructor 141593500 обнуляет flag DWORD на 141593582; в repl
 2. Flag initializer и pending reset: bytes28/29=01/01.
 3. Package flag transfer для реального Nocturne flags90022200:43/01.
 4. Version transfer170/8 в контейнер архива. Отрицательное signed package
-   flags значение включает ещё slot 70→1414639e0 (byte2b bit 10), а phase
-   пишет byte2a bit 80. Итоговые bytes28..2b=43/01/80/10.
+   flags значение включает ещё slot 70→1414639e0 (byte 2b bit 10), а phase
+   пишет byte 2a bit 80. Итоговые bytes28..2b=43/01/80/10.
 5. Вход optional GUID function14173a560 с настоящим structured slot;
    adapter/flag gates/чтение uint32=0 выполняются нативно, cursor375→379.
-6. Actor block14381b317 читает byte29, вызывает настоящий CustomVer
+6. Actor block14381b317 читает byte 29, вызывает настоящий CustomVer
    141597dd0→native getter/container lookup. Возвращены 8 по строковому
    ключу и 170 по FortniteMain. Version lookup не заменяется callback.
 7. Строка NnRecastNavMesh-Default занимает 383..411; оба GUID words читаются
