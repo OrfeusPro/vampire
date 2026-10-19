@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Game PGS branch replay
+
+replay-game-pgs-branch.py: четыре native интеграции, реальный provider
+virtual call/Windows SignIn body, diagnostic/vtable provenance. Acquisition,
+result constructor/helper и TFunction lifecycle имеют явные fixture boundaries.
+[Источники, SHA и границы](HEADLESS-GAME-PGS-BRANCH.md).
+
 ## Game success broadcast replay
 
 replay-game-success-broadcast.py: 12 native integrations с empty/live/

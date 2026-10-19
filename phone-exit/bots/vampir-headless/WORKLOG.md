@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: optional Google PGS branch
+
+Четыре native scenarios и три новых/шесть смежных tests прошли. Точные
+diagnostics/vtables связали game-instance getter с Google PGS. Native
+Windows SignIn передал unsupported result args; constructor/helper captures.
+Original SDK result сохранён отдельно. Runtime не менялся; полный suite
+316 из предыдущего runtime milestone не повторялся. Игра/профиль/HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-PGS-BRANCH.md).
+
 ## 19 октября: game success broadcast
 
 12 native cases, три новых и шесть смежных regression tests проверили subscriber gates,

@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-game-instance: PGS ветвь отделена
+
+Game-instance virtual+0x10 оказался Google PGS SignIn с unsupported Windows
+result, не game Login. Далее manager-child 0x14560f740 и реальные title
+success notification/OnSuccessNetmarbleSDKAuth; затем packet Login.
+Android parity, первый credential-вход и полная session validation открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-PGS-BRANCH.md).
+
 ## H04-game-success: broadcast и title handler проверены
 
 Первый success action оказался общей рассылкой; title slot+0x30 обрабатывает

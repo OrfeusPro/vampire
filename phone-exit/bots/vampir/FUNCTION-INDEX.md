@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Game success: optional PGS provider
+
+0x1450b11b0 = Google::FPGSIDProvider::GetOrCreate; vtable 0x1496de728
+slot+0x10 = SignIn 0x1450c35e0. Windows caller передаёт unsupported args
+(400, 30020000, 1), исходный SDK result не подменяется fixture PGS result.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-PGS-BRANCH.md).
+
 ## Success action: broadcast → title slot
 
 0x1445f5330 → leaf 0x143b8bf10 → vtable+0x30. Title constructor stores

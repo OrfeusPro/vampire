@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Game-instance success ветвь — Google PGS, 19 октября
+
+Getter 0x1450b11b0 и virtual+0x10 названы по diagnostic/vtable:
+FPGSIDProvider::GetOrCreate/SignIn. Windows body готовит отдельный unsupported
+result. Четыре native интеграции исключили эту ветвь из прямого game Login.
+Далее manager-child action и реальные title success notifications.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-PGS-BRANCH.md).
+
 ## Game success broadcast, 19 октября
 
 12 native сценариев проверили рассылку живым подписчикам. Source-bound title
