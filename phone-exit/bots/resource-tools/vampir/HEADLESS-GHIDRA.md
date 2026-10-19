@@ -1,5 +1,11 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## Selection state dependencies, 20 октября
+
+Пакет расширен до 48 функций/32 warnings: base reset/SetState/state label,
+auth guard и deferred callback. [Native проверки и ограничения](HEADLESS-SELECTION-STATE-TRANSITION.md).
+Общий INDEX указывает на последний успешный run, предыдущие exports сохранены.
+
 ## Selection service, 19 октября
 
 Пакет расширен до 43 функций/30 warnings: base singleton ctor, derived

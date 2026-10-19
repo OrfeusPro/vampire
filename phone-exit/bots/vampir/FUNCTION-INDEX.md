@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Selection virtual40/state transition
+
+0x145dbba60 → base 0x14560a6f0 / label 0x145dc3f30 / SetState 0x14560a400.
+Guard 0x145609b00/0x14452afb0; schedule callback 0x145600690→0x144328fe0.
+10 preparation + 12 independent callback cases. Slot90 dispatch остаётся
+неизвестным; schedule/load/lookup backend fixtures.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
+
 ## Selection service derived slots
 
 Base ctor 0x1455f9ee0 и derived prefix 0x145dc6b20 публикуют service global.

@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: selection state preparation и deferred callback
+
+Ghidra virtual40 dependencies/callback экспортированы: 48 functions/32 warnings.
+10 native preparation cases проверяют guard/ready/pending/state2/schedule;
+12 independent callback cases — player/phase/busy/flags/raw field writes.
+Scheduler/load/text/lookup backends explicit fixtures. Direct slot90 вызов
+на covered paths не найден. Три новых, три selection service и три Ghidra tests
+прошли; runtime не менялся, полный suite/live session не проверялись.
+[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
+
 ## 19 октября: derived selection service и CharacterSelect handoff
 
 Ghidra ctor/derived prefix/table связали requestA с slot90. Native prefix

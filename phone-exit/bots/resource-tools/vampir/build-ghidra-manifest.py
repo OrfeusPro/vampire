@@ -32,7 +32,10 @@ SEEDS=[
  ('CharacterList_RequestA',0x145dbd4b0),('CharacterList_RequestB',0x145dbfe50),
  ('CharacterList_RequestCaller',0x146768540),('CharacterList_SelectionPredicate',0x145c85d90),
  ('SelectionService_SingletonInit',0x1455f9ee0),('SelectionService_DerivedInit',0x145dc6b20),
- ('SelectionService_Virtual40',0x145dbba60),('SelectionService_Virtual50',0x145dc05f0)]
+ ('SelectionService_Virtual40',0x145dbba60),('SelectionService_Virtual50',0x145dc05f0),
+ ('SelectionService_BaseReset',0x14560a6f0),('SelectionService_SetState',0x14560a400),
+ ('SelectionService_StateLabel',0x145dc3f30),('SelectionService_AuthGuard',0x145609b00),
+ ('SelectionService_DeferredState',0x145600690)]
 
 
 def build():

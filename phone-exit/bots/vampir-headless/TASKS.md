@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-selection-state: preparation/deferred boundary
+
+10 native virtual40/SetState cases + 12 independent callback cases проверены.
+Следом actual state-label lookup mapping и client/lifecycle hooks после
+отложенного действия, доказанный slot90 dispatch. Полный scheduler/closure
+lifetime, response102/network/fresh SDK/device inputs и live session открыты.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
+
 ## H04-selection-service: targets и select handoff подтверждены
 
 Derived table 0x1499f11f0: slot90=requestA, slot50=CharacterSelect builder.

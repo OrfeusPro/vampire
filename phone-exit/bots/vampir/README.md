@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Selection state2 и deferred callback, 20 октября
+
+10 native preparation cases и 12 callback cases проверили virtual40→SetState:
+pending flag либо state2/schedule. Actual deferred callback проверяет player/
+phase/busy и ставит flags; загрузка и backend actions captured. Direct slot90
+на covered paths не найден. Ghidra: 48 functions/32 warnings.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
+
 ## Selection service → CharacterSelect handoff, 19 октября
 
 Constructor prefix связал global 0x14b574a90 с derived table 0x1499f11f0.

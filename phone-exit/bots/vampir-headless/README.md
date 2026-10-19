@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Переход состояния перед персонажами, 20 октября
+
+Virtual40/state2 и deferred callback проверены native: 10+ 12 scenarios.
+Ready false оставляет pending, ready true достигает schedule capture.
+Callback return 1 не означает выполненную загрузку/session. Slot90 caller открыт.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
+
 ## Выбор персонажа: handoff boundary, 19 октября
 
 Derived service table подтверждена constructor prefix. Actual virtual50

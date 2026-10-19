@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Selection state2/deferred boundary
+
+replay-selection-state-transition.py: 10 preparation + 12 callback native cases,
+SDK/readiness gates, actual state/pending/flags и schedule capture.
+[HEADLESS-SELECTION-STATE-TRANSITION.md](HEADLESS-SELECTION-STATE-TRANSITION.md).
+
 ## Selection singleton/derived table/CharacterSelect handoff
 
 replay-selection-service.py: 2 constructor-prefix outcomes и 4 native select

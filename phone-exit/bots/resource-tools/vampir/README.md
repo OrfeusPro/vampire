@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## Selection state transition после Ghidra
+
+replay-selection-state-transition.py → code-clues/selection-state-transition-replay.json:
+10 preparation и 12 independent callback cases. Native guards/state writes,
+scheduler/lookup/player backends fixtures; нет direct CharacterList send.
+[HEADLESS-SELECTION-STATE-TRANSITION.md](HEADLESS-SELECTION-STATE-TRANSITION.md).
+
 ## Selection service после Ghidra
 
 replay-selection-service.py → code-clues/selection-service-replay.json:
