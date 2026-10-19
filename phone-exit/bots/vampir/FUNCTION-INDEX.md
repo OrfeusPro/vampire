@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## ConnectToServer endpoint consumers
+
+0x144aabcc0 выбирает primary +0x278/+0x288 либо override +0x290/+0x2a0.
+0x1445e2a50 реально пишет endpoint port+0x28 и field+0x2c=0.
+0x1445ea1b0 ещё capture; word+0x28a consumer остаётся открытым.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-CONNECT-TARGET.md).
+
 ## BeginGame server target mapping
 
 0x146425730 → lookup 0x145d39440 (map entry+8) → setters

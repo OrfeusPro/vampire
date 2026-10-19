@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Game connect: host/port consumers, 19 октября
+
+13 native scenarios связали BeginGame fields с ConnectToServer и реальным
+endpoint constructor. +0x278/+0x288 — основная host/game-port пара; есть
+override +0x290/+0x2a0. Нижний connect capture; сети и Login ещё нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-CONNECT-TARGET.md).
+
 ## BeginGame: сервер → transport target, 19 октября
 
 11 native сценариев связали last server ID, fallback/lookup, busy gate

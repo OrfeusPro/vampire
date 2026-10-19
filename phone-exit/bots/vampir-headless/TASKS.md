@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-connect-target: host/game-port связь подтверждена
+
+Основная пара +0x278/+0x288 и override +0x290/+0x2a0 связаны с
+ConnectToServer. Далее lower connect 0x1445ea1b0 → socket/readiness
+и callback packet Login. Второй word+0x28a, active endpoints/lifecycle
+и server-compatible session остаются открытыми.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-CONNECT-TARGET.md).
+
 ## H04-server-target: source mapping проверен
 
 BeginGame last ID/fallback/lookup/busy и target stores подтверждены.

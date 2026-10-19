@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Game connect target replay
+
+replay-game-connect-target.py: 13 native scenarios полного connect caller
+после BeginGame target setters, primary/override/port guards, inline/heap
+string и endpoint constructor. ASCII primitives/lower connect fixtures.
+[Источники, SHA и границы](HEADLESS-GAME-CONNECT-TARGET.md).
+
 ## BeginGame server lookup/target replay
 
 replay-begin-game-server-target.py: 11 native scenarios, actual collision

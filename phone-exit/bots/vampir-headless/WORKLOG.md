@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: ConnectToServer endpoint mapping
+
+13 native integrations связали BeginGame target с primary/override
+host/port и реальным endpoint constructor. Signed port guard подтверждён,
+lower connect и ASCII/lifetime primitives fixtures. Три новых и восемь
+смежных tests прошли. Runtime не менялся; полный suite 316 не повторялся.
+Реальных game/profile/credentials/network connect не было.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-CONNECT-TARGET.md).
+
 ## 19 октября: BeginGame server target
 
 11 native cases, три новых и семь смежных tests прошли. Реальные
