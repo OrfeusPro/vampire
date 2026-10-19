@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Socket engine option getter → getsockopt
+
+Vtable 0x149504668 slot+0x60 → 0x1445f0b10 → IAT0x148945b30,
+WS2_32 ordinal7 getsockopt. Worker raw selectors0/1 → level65535/option4103.
+Actual translation исполняется в readiness replay; syscall fixture.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md).
+
 ## Mode job/select → completion codes
 
 0x1445eab70 → engine ioctl 0x1445f0c60 → job vtable 0x1495042d0.

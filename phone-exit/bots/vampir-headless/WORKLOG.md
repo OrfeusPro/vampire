@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: socket option translation
+
+8 native integrations и 95 direct selector calls: engine slot+0x60
+исполняется вместо option capture. Getsockopt import/export и raw arguments
+проверены; failure/output gates различены. Три новых и шесть смежных tests прошли.
+Runtime не менялся; полный suite 316 не повторялся. Реальной сети/session нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md).
+
 ## 19 октября: socket mode/readiness job
 
 14 native scenarios, три новых и шесть смежных tests прошли. Mode

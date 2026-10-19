@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Socket error option: engine → getsockopt, 19 октября
+
+Восемь native integrations заменили option capture реальным engine body.
+95 direct calls проверили raw selector translation. Worker вызывает
+getsockopt с level65535/option4103; failure и output error → code2.
+Syscall остаётся fixture; readiness/session не доказаны. Далее code1 recipients.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md).
+
 ## Socket readiness job, 19 октября
 
 14 native scenarios проверили mode helper/ioctl, одну select iteration

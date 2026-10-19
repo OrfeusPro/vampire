@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Socket error option replay
+
+replay-socket-error-option.py: 8 native readiness integrations и 95 direct
+selector calls, source vtable/PE import/DLL export. Code и switch data
+разделены; syscall/notification recipients остаются fixtures.
+[Источники, SHA и границы](HEADLESS-SOCKET-ERROR-OPTION.md).
+
 ## Socket readiness job replay
 
 replay-socket-readiness-job.py: 14 native scenarios, mode scheduling,

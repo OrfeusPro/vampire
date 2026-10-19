@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-socket-option: actual engine body проверен
+
+Raw level/option translation → getsockopt и readiness gates исполнены.
+Далее completion code1 recipients → peer transport notification → Login.
+Live socket/scheduler/lifetime/session ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md).
+
 ## H04-readiness-job: code/state gates проверены
 
 Mode helper, одна worker iteration и completion mapping проверены.
