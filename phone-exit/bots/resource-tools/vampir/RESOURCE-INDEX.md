@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Channel silent handoff
+
+replay-channel-silent-handoff.py: 8 channel и 4 Auth gate scenarios.
+Native support/GetAuth, forwarding player/callback и проверка No PlayerID.
+Provider selection и request/response silent path ещё открыты.
+[Источники, SHA и границы](HEADLESS-CHANNEL-SILENT-HANDOFF.md).
+
 ## Game AutoSignIn result replay
 
 replay-game-auto-sign-in-result.py: 15 native cases, leaf getters,

@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-channel-silent: handoff подтверждён
+
+Переход ChannelManager → Auth silent и обязательный сохранённый player ID
+проверены. Далее response callback Auth impl+0xa8 → Channel/game callback;
+обычный credential-first вход, expiry/refresh и game Login остаются открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CHANNEL-SILENT-HANDOFF.md).
+
 ## H04-game-callback: следующая связь
 
 Проверены AutoSignIn callback gates и отдельный SDK route owner+0x170.

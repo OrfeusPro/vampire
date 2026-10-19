@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## ChannelManager → Auth silent, 19 октября
+
+12 native сценариев связали ChannelManager::SignInSilently с GetAuth и
+FAuthImpl::SignInSilently. Сохранённый player ID и callback передаются дальше.
+Пустой ID принимается верхней обёрткой, но отвергается Auth: первый вход
+без сохранённого профиля этим не реализован.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CHANNEL-SILENT-HANDOFF.md).
+
 ## Игровой AutoSignIn callback, 19 октября
 
 15 native сценариев проверили weak-owner gates и ветви raw result.

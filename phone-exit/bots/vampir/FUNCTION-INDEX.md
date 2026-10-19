@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Channel silent → Auth silent
+
+0x1444fee6b → 0x1444fdd00 подтверждён исполнением caller. GetAuth возвращает
+service+0x150; callback в Auth silent хранится по impl+0xa8. Пустой player ID
+отклоняется отдельным native gate, ChannelManager AL=1 не доказывает вход.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CHANNEL-SILENT-HANDOFF.md).
+
 ## Game AutoSignIn: callback и route
 
 Diagnostic → logging root 0x1455f7bd0 → caller 0x1455fbb80.

@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: ChannelManager silent handoff
+
+12 native сценариев подтвердили GetAuth route, передачу player/callback
+и Auth gate No PlayerID. Три новых и шесть смежных tests прошли.
+Context/settings/storage/TFunction и error object dispatch явно ограничены
+fixtures/stops. Provider selection ещё не восстановлен. Runtime не менялся,
+последний полный suite 316 не повторялся; игра/профиль/HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CHANNEL-SILENT-HANDOFF.md).
+
 ## 19 октября: игровой AutoSignIn callback
 
 15 native сценариев и три regression tests прошли. Найдены diagnostic,
