@@ -1,5 +1,19 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — native SDK version/BuildCode и общий selector
+
+После 0f759fe прослежены два getter из GMC2 Refresh/Request callsites.
+144524390 возвращает 5.2.11, 14452b820 выбирает B/C/A по settings BuildCode.
+Три compiled initializers и 256 getter fixtures исполнены с явными FString/
+allocation/copy/atexit shims; guards сохранены. Source bytes/offsets/SHA и
+полный replay сохранены. В общем sdk_config.py добавлен select_sdk_build_code.
+Четыре новых теста прошли. Active BuildCode и весь GMC2 builder/response
+ещё не установлены, сетевых запросов нет. Следом request/response decode →
+auth URLs/DECKEY → auth session.
+[Доказательства](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+Полный набор: 222/222 теста, 149,0 с; синтаксис трёх Python-файлов,
+кодировка девяти Markdown-файлов, 345 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — реальный public CDN и module descriptor snapshots
 
 После 7f0e824 сохранены четыре verified descriptor payload из base/patch:

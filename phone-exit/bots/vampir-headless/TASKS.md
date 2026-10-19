@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04b bootstrap getters проверены native. Version=5.2.11,
+BuildCode byte1→B/2→C/elseA (256 fixtures), общий selector добавлен.
+[Источник](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+Следующая зависимость — полный GMC2 URL builder/request и response decode;
+active BuildCode не подменять game AppVersion или SDKZone.
+
 19 октября: H04b получил реальный public CDN config по профилю base INI.
 Общий decoder подтверждён: Zone real/mode2, index6/REAL с lobby details.
 [Snapshot/offline verification](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).

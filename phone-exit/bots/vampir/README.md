@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## SDK bootstrap: версия и BuildCode, 19 октября
+
+Native getters подтвердили SDK version 5.2.11 и BuildCode byte1→B/2→C/остальные→A.
+Исполнены compiled initializers и 256 getter fixtures, общий select_sdk_build_code
+добавлен в vampir_core. Это отдельные поля от game AppVersion и SDKZone.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+Active BuildCode, полный GMC2 URL builder/response и авторизация ещё открыты.
+
 ## Получена публичная CDN-конфигурация, 19 октября
 
 HTTPS GET по base INI профилю вернул 200/6000 байт. Общие декодеры разобрали

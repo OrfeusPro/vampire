@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## SDK BuildCode selector, 19 октября
+
+Общий vampir_core.sdk_config.select_sdk_build_code принимает явный byte int:
+1→B, 2→C, остальные→A; bool/вне диапазона отклоняются. Все 256 значений
+совпали с native getter на compiled initializer defaults. Активный BuildCode
+не угадывается по Zone/версии. [Доказательства](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+
 Обновлено 19 октября 2026. Главный вход — [Vampir README](../vampir/README.md).
 Общие результаты предназначены для экранного бота, сетевого бота, 2D-карты
 и будущей Android-оболочки. Здесь единый указатель, без копирования доказательств.

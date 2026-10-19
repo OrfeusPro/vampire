@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Уточнены параметры SDK bootstrap, 19 октября
+
+SDK getter version=5.2.11, BuildCode byte1→B/2→C/остальные→A.
+256 native getter fixtures и compiled initializers проверены; общий
+select_sdk_build_code находится в vampir_core.sdk_config.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+Активный BuildCode и полный GMC2 request/response ещё открыты.
+
 ## Реальный публичный CDN config и два слоя INI, 19 октября
 
 Base Game config содержит 1.12.14/real/CdnConfig=True, patch — 0.1.1/dev/False;

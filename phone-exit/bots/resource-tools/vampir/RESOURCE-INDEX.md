@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## SDK bootstrap values, 19 октября
+
+Native getters/initializers: SDK version5.2.11, BuildCode labels A/B/C,
+256 входов byte проверены; source bytes/offsets/callsites сохранены.
+[Отчёт/инструмент/ограничения](HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+Game AppVersion/SDKZone — другие поля; active BuildCode не установлен.
+
 ## Публичная CDN-конфигурация и module descriptors, 19 октября
 
 Отдельные immutable snapshots: реальный HTTPS CDN body (6000 bytes), разобранный

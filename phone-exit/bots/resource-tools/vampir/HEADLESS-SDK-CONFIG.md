@@ -1,5 +1,9 @@
 # Vampir — источник конфигурации SDK GMC2
 
+19 октября: [native getters SDK version/BuildCode](HEADLESS-SDK-BOOTSTRAP-VALUES.md)
+уточнили параметры схемы: version=5.2.11; BuildCode byte1 → B, 2 → C,
+остальные → A. Active BuildCode и весь HTTP builder ещё не проверены.
+
 18 октября 2026. H04b частично. Предыдущий этап — [авторизация SDK](HEADLESS-AUTH.md),
 общий [реестр](../../vampir/FUNCTION-INDEX.md). Актуальные значения авторизации
 и игровой вход пока не получены.

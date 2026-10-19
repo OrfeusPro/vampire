@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK bootstrap getters и build labels, 19 октября
+
+144524390 → compiled SDK version 5.2.11. Initializers 1411b3220/3250/3280
+задают globals 14b4f1658/1668/1678 = A/B/C. Native 14452b820: DL1→B,
+DL2→C, остальные→A; 256 fixtures/guards. Refresh1444f3c70 и RequestGMC2
+1444f5675 получают settings+48 BuildCode. Общий select_sdk_build_code,
+без active settings/I/O. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+
 ## Публичный CDN body и module descriptors, 19 октября
 
 Base-profile HTTPS GET: 200, 6000 bytes, body SHA 15a9b8d4…62e5d.

@@ -10,6 +10,18 @@ def _fold(key):
     return key.translate(_ASCII_UPPER)
 
 
+def select_sdk_build_code(build_code: int) -> str:
+    """Compiled initializer/getter mapping: byte 1 -> B, 2 -> C, others -> A.
+
+    Requires an explicit settings BuildCode; never infers it from SDKZone or
+    game/SDK version. Native late global overrides are not reproduced.
+    Evidence: HEADLESS-SDK-BOOTSTRAP-VALUES.md, 256 native getter fixtures.
+    """
+    if type(build_code) is not int or not 0 <= build_code <= 255:
+        raise ValueError('Invalid explicit SDK BuildCode byte')
+    return 'B' if build_code == 1 else 'C' if build_code == 2 else 'A'
+
+
 def select_game_sdk_zone(environment: str) -> int:
     """Game override: explicit environment 'real' (ASCII case ignored) -> 2, else 1.
 
