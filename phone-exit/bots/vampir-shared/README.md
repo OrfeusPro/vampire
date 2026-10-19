@@ -1,5 +1,18 @@
 # Vampir — общие компоненты и результаты
 
+## Ответ выбора персонажа ID110
+
+`character_select_result.decode_character_select_result` принимает тело ответа
+и обязательные `max_payload_size` / `max_collection_items`. Он читает все
+подтверждённые поля и коллекции; общий лимит учитывает вложенные элементы
+и повторные ключи. Результат неизменяемый, данные скрыты из `repr`.
+
+Неизвестные поля доступны по смещениям через `SelectionRecord.at(offset)`.
+`WireVector3` сохраняет биты трёх float32; `WireHeading` — исходный байт
+направления. Мировая позиция, принятие выбора и готовность сессии не выводятся
+из успешного разбора тела.
+[Источники, API и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-DECODER.md).
+
 ## CharacterSelect: builder из выбранной записи
 
 CharacterSelectPayload.from_character_list(body,index,state_raw_f0=...):

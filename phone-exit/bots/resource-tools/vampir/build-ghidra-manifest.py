@@ -138,7 +138,11 @@ SEEDS=[
  ('CharacterSelect_Array1F8NestedRead',0x145817d60),
  ('CharacterSelect_Map98ValueConstruct',0x145793d90),
  ('CharacterSelect_Map98ValueCopy',0x1456bbcf0),
- ('CharacterSelect_Map98ValueDestroy',0x145794f70)]
+ ('CharacterSelect_Map98ValueDestroy',0x145794f70),
+ ('CharacterSelect_Map98ValueRead',0x145796480),
+ ('CharacterSelect_Map98NestedRead',0x145796df0),
+ ('CharacterSelect_Map98Array50Item',0x145798b60),
+ ('CharacterSelect_Map98Array50Read',0x145796d60)]
 
 # This source-bound callback has no PE unwind entry: two straight blocks and
 # one internal conditional branch, ending at RET after an allocator tail jump.

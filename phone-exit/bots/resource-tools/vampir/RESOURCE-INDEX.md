@@ -1,5 +1,13 @@
 # Vampir: где искать данные
 
+## ID110: обе таблицы и общий декодер, 20 октября
+
+`replay-character-select-maps.py` проверяет обе необязательные таблицы, вложенные
+массивы и повторные ключи. `replay-character-select-fields.py` проверяет скаляры
+и строки, включая Unicode. Общий `character_select_result.py` читает всё тело
+ответа с явными лимитами. Принятие выбора и реальная сессия ещё требуют проверки.
+[Источники, схемы, API и воспроизведение](HEADLESS-CHARACTER-SELECT-DECODER.md).
+
 ## ID110 nonempty arrays, 20 октября
 
 Ghidra 165 функций/63 warnings; replay-character-select-collections.py:
