@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: socket mode/readiness job
+
+14 native scenarios, три новых и шесть смежных tests прошли. Mode
+helper/source ioctl body/job slots/select state gates/completion routes
+исполнены. Worker stop перед второй iteration и manual completion drain
+явно записаны. Syscalls/queue/option/recipient captures, real sockets нет.
+Runtime не менялся; полный suite 316 не повторялся. Game/profile/credentials/network не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md).
+
 ## 19 октября: WSA error mapping
 
 43 native cases, три новых и шесть смежных tests прошли. Mapper

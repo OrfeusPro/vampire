@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Mode job/select → completion codes
+
+0x1445eab70 → engine ioctl 0x1445f0c60 → job vtable 0x1495042d0.
+Run 0x1445e8080, completion 0x1445e7d80: source-backed codes0..4
+и state2→6 после option gate. Downstream recipients ещё capture.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md).
+
 ## WSAGetLastError mapper
 
 Engine constructor 0x1445ef620 → global 0x14b4f39d0/vtable 0x149504668;

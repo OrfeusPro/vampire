@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Socket readiness job, 19 октября
+
+14 native scenarios проверили mode helper/ioctl, одну select iteration
+и completion routes. Write-ready + нулевой option output дают state2→6
+и code1. Syscalls/option/scheduler fixtures; реальной readiness/session нет.
+Далее recipients code1 и transport notification → Login.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md).
+
 ## Winsock → engine error mapping, 19 октября
 
 43 native cases связали WSAGetLastError с engine slot+0x68 и connect wrapper.

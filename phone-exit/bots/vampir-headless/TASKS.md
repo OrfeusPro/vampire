@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-readiness-job: code/state gates проверены
+
+Mode helper, одна worker iteration и completion mapping проверены.
+Далее option selector1 → syscall/translation и code1 recipients →
+transport notification → packet Login. Live readiness/threads/lifetime
+и server-compatible session остаются открытыми.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md).
+
 ## H04-error-mapping: native таблица подтверждена
 
 Mapper engine slot+0x68 и WSA inputs → wrapper acceptance проверены.

@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Socket readiness job replay
+
+replay-socket-readiness-job.py: 14 native scenarios, mode scheduling,
+real ioctl wrapper/select caller и completion leaf. Worker ограничен
+одной iteration; syscall/scheduler/option/dispatch fixtures.
+[Источники, SHA и границы](HEADLESS-SOCKET-READINESS-JOB.md).
+
 ## Winsock error mapping replay
 
 replay-winsock-error-mapping.py: 43 native integrations mapper/wrapper,
