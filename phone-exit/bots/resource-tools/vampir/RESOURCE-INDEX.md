@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Transport connected delegate replay
+
+replay-transport-connected-delegate.py: 12 native scenarios, constructor tail,
+actual allocator wrapper/bridge/action и source-bound game vtable target.
+Resize/identity fixtures; game callback body/Login не исполнялись.
+[Источники, SHA и границы](HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
+
 ## Socket ready notification replay
 
 replay-socket-ready-notification.py: 10 native scenarios, две реальные

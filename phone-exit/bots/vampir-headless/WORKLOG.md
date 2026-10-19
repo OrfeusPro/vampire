@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: connected delegate → game target
+
+12 native scenarios исполнили binding slice/allocator wrapper/bridge/action.
+Game vtable source-bound, callback0x1467a9cd0 пока capture. Уточнено поле
+P+0x310 как units storage, не owner count. Три новых и шесть смежных tests прошли.
+Runtime не менялся; full suite не повторялся; network/game/profile не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
+
 ## 19 октября: socket ready → transport recipient
 
 10 native scenarios связали две broadcasts с OnTcpPeerConnected и

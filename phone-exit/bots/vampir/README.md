@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Connected delegate → игровой получатель, 19 октября
+
+12 native scenarios связали constructor tail, delegate allocator wrapper,
+bridge и virtual+0x48 → 0x1467a9cd0. P+0x308/+0x310 — storage делегата
+и units, уточнение прежнего owner/count. Body получателя/Login ещё capture.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
+
 ## Socket ready → transport recipient, 19 октября
 
 10 native scenarios связали completion code1 с двумя broadcasts и

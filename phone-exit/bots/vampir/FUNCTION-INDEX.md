@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Делегат OnTcpPeerConnected → game callback
+
+Tail0x144aaae8d → allocator0x1414276b0 → table0x14900a528 slot60
+→ bridge0x14370c510 → action0x1437113ec virtual48 → game0x1467a9cd0.
+P+0x310 содержит units storage, не owner count. Callback body ещё capture.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
+
 ## Socket readiness → OnTcpPeerConnected
 
 0x1445de8b0/action virtual+0x10 → interface P+0x50/0x1445e8900 →

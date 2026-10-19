@@ -1,5 +1,10 @@
 # Готовность сокета → NnPeerImpl::OnTcpPeerConnected
 
+Уточнение следующего исследования: поля P+0x308/+0x310 оказались storage
+делегата и числом 16-байтовых единиц. Условное имя owner/count ниже относится
+к прежним fixtures; [actual binding/bridge и игровой target](HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md)
+теперь проверены отдельно.
+
 19 октября 2026. Продолжение [option translation](HEADLESS-SOCKET-ERROR-OPTION.md)
 и [readiness job](HEADLESS-SOCKET-READINESS-JOB.md).
 Источник — собранный Windows клиент, не исходный C++ проект.

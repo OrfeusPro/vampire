@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-connected-delegate: игровой target связан
+
+Native binding/bridge → game0x1467a9cd0 подтверждены. Далее тело получателя,
+packet constructor/field sources и virtual send+0x38 → Login. Units storage
+не refcount; AL1 bridge не server success. Live session остаётся открытой.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
+
 ## H04-ready-notification: transport recipient исполнен
 
 Completion code1 → socket listener → peer broadcast → OnTcpPeerConnected
