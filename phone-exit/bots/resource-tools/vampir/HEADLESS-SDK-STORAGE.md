@@ -42,6 +42,10 @@ Windows base без завершающего разделителя. Native join
 Save/Load отдельно дописывают filename из service settings+`0x2f8` и
 условные значения. Их окончательный формат и active filename ещё открыты.
 
+Дополнение: [NID web/token mapping проверен native pair replay](HEADLESS-NID-DEVICE-CONTEXT.md).
+Registry v2 теперь хранит отдельный NID key; исходный static index ниже
+сохраняет прежние границы исследования.
+
 ## Отдельный DeviceKeyForNetmarbleId
 
 | Поле | Getter | Setter | Settings offset | Storage key |
@@ -56,10 +60,10 @@ settings+`0x628` и вызывает соответствующий setter (`0x1
 Эти ветви пока только декодированы, отдельный native replay ещё не выполнен.
 
 Нельзя объявлять этот NID key равным nmDeviceKey либо deviceKey из SDK sign-in.
-Также нельзя по одному имени функции доказать, что web email header/deviceKey
-получает именно его: нужно проследить caller и web context.
-Реестр бота пока хранит два ранее подтверждённых поля; третье добавить после
-установления связи с конкретным запросом и lifecycle, с отдельным provenance.
+Одного имени функции недостаточно для web binding. В последующем
+[NID context replay](HEADLESS-NID-DEVICE-CONTEXT.md) проверены caller/getter/pair
+для web и OAuth. Schema v2 теперь хранит отдельный NID key/source, без real
+значений. Полный web URL → JS context и getter lifecycle ещё открыты.
 
 ## Save/Load: подтверждённые границы
 

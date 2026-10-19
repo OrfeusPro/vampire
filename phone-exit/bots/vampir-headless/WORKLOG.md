@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: NID web/token device identity
+
+Native key/getter/pair slices web/code/refresh подтвердили отдельный NID getter,
+body getter и real identity остаются fixtures/unknown. Добавлены schema v2,
+nid_device_key/source и идемпотентная запись без замены. Миграция сохраняет
+профиль и прежние поля; первое NID identity сбрасывает confirmed по local policy.
+Основная локальная база мигрирована, значения ключей не генерировались.
+5 registry tests и native context regression прошли; HTTP/registry/Saved нет.
+Полный headless suite: 290 тестов, 270.284 с, OK. 465 относительных
+Markdown-ссылок проверены; git diff --check без ошибок.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md).
+
 ## 19 октября: SDK storage directory и NID key
 
 Добавлен static index из 26 fragments: Save/Load/path/Initialize/NID key.

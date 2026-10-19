@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## NID context использует отдельный device key, 19 октября
+
+Три native pair slices связали NID web deviceKey и OAuth device_key с
+GetDeviceKeyForNetmarbleId, а SDK sign-in использует другой getter.
+Registry schema v2 добавляет отдельные nid_device_key/source, миграция
+сохраняет прежние данные. Реальные ключи пустые, HTTP не выполнялся.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md).
+
 ## SDK storage directory и отдельный NID key, 19 октября
 
 6 native fixtures подтвердили каталог base persistent directory + NetmarbleSDK.

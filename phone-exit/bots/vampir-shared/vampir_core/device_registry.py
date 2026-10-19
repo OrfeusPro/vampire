@@ -17,10 +17,16 @@ class DeviceBinding:
     identity_source: str = field(repr=False)
     confirmation: str
     confirmation_evidence: str = field(repr=False)
+    nid_device_key: str = field(default='', repr=False)
+    nid_identity_source: str = field(default='', repr=False)
 
     @property
     def identity_recorded(self):
         return bool(self.device_key and self.nm_device_key and self.identity_source)
+
+    @property
+    def nid_identity_recorded(self):
+        return bool(self.nid_device_key and self.nid_identity_source)
 
 
 def _text(value, limit=8192):
@@ -52,8 +58,9 @@ class DeviceRegistry:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self._db() as db:
+            db.execute('BEGIN IMMEDIATE')
             version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version not in (0, 1):
+            if version not in (0, 1, 2):
                 raise ValueError('Unsupported device registry version')
             db.execute('''CREATE TABLE IF NOT EXISTS bindings (
                 email TEXT PRIMARY KEY COLLATE NOCASE,
@@ -69,7 +76,10 @@ class DeviceRegistry:
                 updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
             )''')
             db.execute('CREATE UNIQUE INDEX IF NOT EXISTS one_main ON bindings(is_main) WHERE is_main=1')
-            db.execute('PRAGMA user_version=1')
+            if version < 2:
+                db.execute("ALTER TABLE bindings ADD COLUMN nid_device_key TEXT NOT NULL DEFAULT ''")
+                db.execute("ALTER TABLE bindings ADD COLUMN nid_identity_source TEXT NOT NULL DEFAULT ''")
+            db.execute('PRAGMA user_version=2')
 
     @contextmanager
     def _db(self):
@@ -98,7 +108,8 @@ class DeviceRegistry:
     def get(self, email):
         with self._db() as db:
             row = db.execute('''SELECT email,profile_id,kind,is_main,device_key,
-                nm_device_key,identity_source,confirmation,confirmation_evidence
+                nm_device_key,identity_source,confirmation,confirmation_evidence,
+                nid_device_key,nid_identity_source
                 FROM bindings WHERE email=?''', (_email(email),)).fetchone()
         if row is None:
             raise KeyError('Account is not registered')
@@ -117,6 +128,25 @@ class DeviceRegistry:
                 raise ValueError('Identity is already fixed; explicit transfer is required')
             db.execute('''UPDATE bindings SET device_key=?,nm_device_key=?,identity_source=?,
                 updated_at=CURRENT_TIMESTAMP WHERE email=?''', (*values, email))
+        return self.get(email)
+
+    def record_real_nid_identity(self, email, *, nid_device_key, source):
+        """Record observed NID identity independently of SDK sign-in deviceKey."""
+        values = tuple(_text(v) for v in (nid_device_key, source))
+        email = _email(email)
+        with self._db() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row = db.execute('SELECT kind,nid_device_key,nid_identity_source FROM bindings WHERE email=?', (email,)).fetchone()
+            if row is None:
+                raise KeyError('Account is not registered')
+            if row[0] != 'real':
+                raise ValueError('Only a real device profile accepts observed NID identity')
+            if any(row[1:]) and row[1:] != values:
+                raise ValueError('NID identity is already fixed; explicit transfer is required')
+            if not any(row[1:]):
+                db.execute('''UPDATE bindings SET nid_device_key=?,nid_identity_source=?,
+                    confirmation=CASE WHEN confirmation='confirmed' THEN 'unknown' ELSE confirmation END,
+                    confirmation_evidence='',updated_at=CURRENT_TIMESTAMP WHERE email=?''', (*values, email))
         return self.get(email)
 
     def require_confirmation(self, email):

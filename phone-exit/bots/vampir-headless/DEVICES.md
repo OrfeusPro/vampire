@@ -16,6 +16,8 @@
 | is_main | Не более одного основного аккаунта в базе |
 | device_key | Отдельное значение SDK deviceKey; пока пусто |
 | nm_device_key | Отдельное значение SDK nmDeviceKey; пока пусто |
+| nid_device_key | Отдельное значение DeviceKeyForNetmarbleId для NID web/OAuth; пока пусто |
+| nid_identity_source | Отдельное происхождение наблюдения NID key |
 | identity_source | Происхождение наблюдения: устройство, метод, версия и дата; без секретов |
 | confirmation | `unknown`, `required` или `confirmed` |
 | confirmation_evidence | Краткая ссылка/пометка о ручном подтверждении, без кода и содержимого письма |
@@ -39,7 +41,12 @@ Android-адаптер и защита данных на Android ещё не р�
 
 `record_real_identity` сохраняет явно переданные наблюдаемые deviceKey и
 nmDeviceKey вместе с источником. Вызов не доказывает подлинность этих данных.
-`identity_recorded` означает лишь заполненность записи, не готовность входа.
+`identity_recorded` означает заполненность SDK пары, `nid_identity_recorded` —
+отдельной NID identity, ни одно не доказывает готовность входа.
+Schema v2 добавляет пустые NID поля к v1 без замены прежних ключей.
+`record_real_nid_identity` сохраняет отдельный NID key/source; первое добавление
+сбрасывает confirmed → unknown и очищает evidence, required сохраняется.
+Повтор той же NID записи идемпотентен, замена запрещена.
 `require_confirmation` фиксирует запрос нового подтверждения, даже если раньше
 устройство было подтверждено. `record_confirmation` требует заполненной identity
 и явной пометки об основании; сам письма и сервер не проверяет.
@@ -68,15 +75,14 @@ Windows storage/GUID fallback разобраны статически, default G
 
 ## Следующие задачи
 
-1. После [storage path replay](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md)
-   проверить filename/Save/load и NID getter → web context. Отдельный
-   DeviceKeyForNetmarbleId пока не добавлен в schema без доказанного web binding.
-   Active platform и SDKZone также открыты.
+1. После [NID device context replay](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md)
+   проверить NID getter lifecycle, filename/Save/load и полный web context.
+   Schema v2 уже разделяет NID/SDK ключи; active platform и SDKZone открыты.
 2. Получить согласованные реальные значения для основного аккаунта с provenance.
 3. Найти challenge/confirmation response и штатное завершение подтверждения.
 4. Связать login runner с реестром и остановкой на подтверждении/лимитах входа.
 5. Добавить безопасный перенос/backup и отдельный Android storage adapter.
 
 Проверка: `python -X utf8 -m unittest discover -s phone-exit/bots -p 'test_vampir_headless_device_registry.py' -v`.
-Три теста проверяют перезапуск, повторную регистрацию, единственный основной
+Пять registry tests проверяют миграцию v1/v2, отдельный NID key, перезапуск, повторную регистрацию, единственный основной
 аккаунт, запрет замены identity, изоляцию аккаунтов и повторное подтверждение.

@@ -1,5 +1,6 @@
 """Persistence and isolation of local device bindings, no game access."""
 from pathlib import Path
+from contextlib import closing
 import sqlite3
 import sys
 import tempfile
@@ -56,6 +57,48 @@ class DeviceRegistryTests(unittest.TestCase):
             self.registry.record_real_identity(b.email, device_key='x', nm_device_key='y', source='fixture')
         with self.assertRaises(KeyError):
             self.registry.require_confirmation('missing@example.invalid')
+
+    def test_nid_identity_is_separate_stable_and_invalidates_old_confirmation(self):
+        a = self.registry.register('main@example.invalid', kind='real')
+        self.registry.record_real_identity(a.email, device_key='sdk-fixture', nm_device_key='nm-fixture', source='fixture')
+        self.registry.record_confirmation(a.email, evidence='Old fixture confirmation')
+        b = self.registry.record_real_nid_identity(a.email, nid_device_key='nid-fixture', source='nid-observation-fixture')
+        self.assertEqual(b.device_key, 'sdk-fixture')
+        self.assertEqual(b.nm_device_key, 'nm-fixture')
+        self.assertTrue(b.nid_identity_recorded)
+        self.assertEqual(b.confirmation, 'unknown')
+        self.assertNotIn('nid-fixture', repr(b))
+        self.registry.record_confirmation(a.email, evidence='New fixture confirmation')
+        self.registry.record_real_nid_identity(a.email, nid_device_key='nid-fixture', source='nid-observation-fixture')
+        restored = DeviceRegistry(self.path).get(a.email)
+        self.assertEqual(restored.confirmation, 'confirmed')
+        self.assertEqual(restored.profile_id, a.profile_id)
+        with self.assertRaises(ValueError):
+            self.registry.record_real_nid_identity(a.email, nid_device_key='replacement', source='fixture')
+        other = self.registry.register('planned@example.invalid')
+        with self.assertRaises(ValueError):
+            self.registry.record_real_nid_identity(other.email, nid_device_key='nid-fixture', source='fixture')
+
+    def test_v1_migration_preserves_profile_and_never_invents_nid_identity(self):
+        legacy = Path(self.temp.name) / 'legacy.sqlite3'
+        with closing(sqlite3.connect(legacy)) as db, db:
+            db.execute('''CREATE TABLE bindings (
+                email TEXT PRIMARY KEY COLLATE NOCASE, profile_id TEXT UNIQUE, kind TEXT,
+                is_main INTEGER, device_key TEXT, nm_device_key TEXT, identity_source TEXT,
+                confirmation TEXT, confirmation_evidence TEXT, updated_at TEXT)''')
+            db.execute('INSERT INTO bindings VALUES(?,?,?,?,?,?,?,?,?,?)',
+                       ('legacy@example.invalid','stable-fixture','real',1,'sdk','nm','fixture','required','','2026-10-19'))
+            db.execute('PRAGMA user_version=1')
+        registry = DeviceRegistry(legacy)
+        bound = registry.get('legacy@example.invalid')
+        self.assertEqual(bound.profile_id, 'stable-fixture')
+        self.assertEqual(bound.device_key, 'sdk')
+        self.assertEqual(bound.confirmation, 'required')
+        self.assertEqual(bound.nid_device_key, '')
+        self.assertFalse(bound.nid_identity_recorded)
+        self.assertEqual(DeviceRegistry(legacy).get(bound.email), bound)
+        with closing(sqlite3.connect(legacy)) as db:
+            self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0], 2)
 
 
 if __name__ == '__main__':

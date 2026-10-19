@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## NID deviceKey / OAuth device_key
+
+[Native pair assembly](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md)
+подтверждает вызов getter144522b50 с bool=true для web/code/refresh.
+Registry v2 хранит NID key отдельно от SDK key/nmDeviceKey. Полные
+web URL/JS context и реальные значения не проверены.
+
 ## SDK storage и DeviceKeyForNetmarbleId
 
 [Save/Load index и native directory replay](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md):

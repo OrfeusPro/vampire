@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Три разных device identity поля, 19 октября
+
+NID web/token device key отделён от SDK sign-in deviceKey и nmDeviceKey.
+Native pair replay подтверждает getter mapping, registry schema v2 сохраняет
+NID key/source независимо, без выдуманных реальных значений.
+[Source/SHA и миграция](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md).
+
 ## SDK storage path, 19 октября
 
 Native directory getter проверен на 6 fixture paths. Каталог NetmarbleSDK

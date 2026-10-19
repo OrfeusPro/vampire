@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-NID-device: источник web/token ключа
+
+Три native slices проверили deviceKey/device_key → NID getter. Registry v2
+с отдельными NID key/source и миграцией v1 готов; основная локальная база
+мигрирована с пустыми real values. Проверены native report и 5 registry tests.
+Далее NID getter lifecycle, filename/Save/load и full web-context binding.
+[Source/SHA](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md).
+
 ## H04-storage: каталог и NID identity
 
 Native directory join проверен шестью fixtures, base getter explicit fixture.

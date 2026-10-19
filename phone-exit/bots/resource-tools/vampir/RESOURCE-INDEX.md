@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## NID web/token device key mapping, 19 октября
+
+replay-nid-device-context.py: 3 native key/getter/pair slices. Web deviceKey
+и OAuth device_key берут NID-specific getter, не SDK sign-in DeviceKey.
+[Source/SHA/границы](HEADLESS-NID-DEVICE-CONTEXT.md).
+
 ## SDK Save/Load/path и NID device key, 19 октября
 
 build-headless-sdk-storage.py: 26 static fragments и initializer bindings.

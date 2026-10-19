@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## DeviceRegistry schema v2, 19 октября
+
+Отдельные nid_device_key/nid_identity_source для NID web/OAuth, не alias
+SDK device_key. Миграция сохраняет данные v1 и добавляет пустые поля.
+record_real_nid_identity закрепляет наблюдаемое значение; первая запись
+сбрасывает старое confirmed, повтор идемпотентен. Реальных ключей ещё нет.
+[Source/схема/границы](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md).
+
 ## Общий реестр устройств, 19 октября
 
 device_registry.DeviceRegistry хранит постоянную связь почты и устройства
