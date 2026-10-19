@@ -1,5 +1,23 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — native credential adoption после Save
+
+После d18b9e1 установлено: 14453cdf0 — UNMServiceSettings::Save, не session
+создание. OnResult игнорирует его return и продолжает clear credentials,
+base ctor DL=33, accessToken copy в +58 и SetCredential/manager insert33.
+GetObject по vtable slot1 и base GetObject исполнены: channelAccessToken и
+channelCode33. Email provider20 и SDK credential33 не взаимозаменяемы.
+Четыре fixtures: Save false/true × два tokens; Save/clear/JSON/map insertion
+и retain count явно captured/shim, persistence/SDK SignIn не исполнялись.
+Narrow ASCII key ctor 141420f70 проверен отдельно от wide 141421150;
+исправлена capture-модель до сохранения итогового отчёта.
+Общий nid_sdk_credential builder возвращает redacted immutable object,
+перепроверяет email inputs, не хранит refresh и не выполняет I/O.
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
+Далее full SDK SignIn request/response/context → SDK token → game Login.
+Полный набор: 270/270 тестов, 173,7 с. Синтаксис трёх Python-файлов,
+UTF-8 восьми документов, 414 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — native percent loop и общая callback boundary
 
 После 4b89a90 статически связаны URI/query getter/OnResult map builder.

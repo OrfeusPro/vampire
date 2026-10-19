@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## OnResult continuation и credential GetObject, 19 октября
+
+1450ef437 → 14453cdf0 = UNMServiceSettings::Save; return caller игнорирует.
+Затем GetChannelManager → RemoveAllCredentials → base ctor с DL=33 →
+credential+58=accessToken → SetCredential wrapper/impl, map key из +50=33.
+Vtable1496e16f0 slot1 →1450e50d0 → base1444e6570: channelAccessToken/channelCode.
+Четыре native fixtures с Save false/true и двумя tokens; storage/JSON/map —
+явные captures. [Source/SHA](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
+
 ## Query getter и percent byte loop, 19 октября
 
 GetQuery 1445255e0 читает owner+58/+60 → decoder 141c13390; OnResult вызывает

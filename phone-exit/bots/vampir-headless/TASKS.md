@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04 OnResult continuation/GetObject проверены четырьмя fixtures.
+Provider20 преобразуется в SDK credential33 с channelAccessToken. Native Save
+return не проверяется; storage/clear/JSON/map insertion — explicit captures.
+Общий nid_sdk_credential builder готов только в названном объёме.
+[Source/SHA](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
+Следующая зависимость: FAuthImpl::SignIn 1444fb800, полный authUrl/v1/sign-in
+request/header/device/client context и response → SDK token → game Login.
+Auto caller после result/active auth attempt, persistence и refresh ещё открыты.
+
 19 октября: H04 percent loop проверен 147 native fixtures, UTF conversions
 остаются отдельной границей. Общий sdk_percent и callback parser используют
 strict ASCII/route/duplicate policy; URL → provider credential без сети/storage.

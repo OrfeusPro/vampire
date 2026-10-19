@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Provider20 → SDK credential33, 19 октября
+
+Native OnResult продолжен до регистрации credential: Save return не проверяется,
+следом clear credentials и insert по SDK channel33. GetObject добавляет
+channelAccessToken из provider access token и numeric channelCode33.
+Общий nid_sdk_credential повторяет эти два поля без HTTP/storage/login success.
+Provider email channel20 остаётся отдельным значением.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
+Далее полный FAuthImpl SignIn request/response и SDK→game session.
+
 ## Callback URL: percent loop и строгая общая граница, 19 октября
 
 147 native byte-loop fixtures: + остаётся плюсом, decode однократный;

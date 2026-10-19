@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## Provider email → SDK credential object, 19 октября
+
+nid_sdk_credential.build_nid_sdk_credential повторно проверяет NidEmailCredential
+и возвращает frozen/redacted NidSdkCredential. as_object → channelAccessToken
+и channelCode33. Provider channel20 не переносится как SDK credential channel.
+Нет HTTP/storage/SDK mutation или готовой session.
+[Native caller/GetObject evidence](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
+
 ## SDK percent subset и callback route boundary, 19 октября
 
 sdk_percent.decode_sdk_percent_ascii: корректные %HH, decode один раз,

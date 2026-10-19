@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK credential после почтового результата, 19 октября
+
+Четыре native continuation fixtures подтвердили clear→register33 после Save
+и GetObject fields channelAccessToken/channelCode33. Общий builder добавлен.
+Provider channel20 и SDK credential33 разделены. Save/JSON/map — captures,
+не проверенная persistence. [Источник](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
+Далее полный authUrl/v1/sign-in request/response, SDK token и game Login.
+
 ## Callback URL → provider credential, 19 октября
 
 147 native percent byte-loop fixtures подтвердили single decode/+ preservation.

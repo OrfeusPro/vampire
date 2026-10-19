@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## NID credential adoption continuation, 19 октября
+
+replay-nid-credential-adoption.py исполняет OnResult continuation/ctor/manager/
+GetObject с Save/clear/JSON/map captures. Четыре fixtures подтвердили
+provider20 → SDK credential33 и два JSON fields; persistence не выполнялась.
+[Отчёт/SHA/границы](HEADLESS-NID-CREDENTIAL.md). SDK SignIn/request остаётся следующим.
+
 ## SDK percent byte loop / callback query, 19 октября
 
 replay-sdk-percent-decode.py сохраняет decoder/URI/getter/map fragments и
