@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## CharacterList boundary после Ghidra
+
+replay-character-list-boundary.py → code-clues/character-list-boundary-replay.json:
+8 reset cases и 2 independent request routines. Пустой writer ID 101 проверен;
+после LoginResult найден reset, прямой запрос списка не доказан.
+[HEADLESS-CHARACTER-LIST-BOUNDARY.md](HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 ## LoginResult handler после Ghidra
 
 replay-login-result-handler.py → code-clues/login-result-handler-replay.json:

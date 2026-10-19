@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-character-list-boundary: reset и request разделены
+
+8 native reset cases + 2 независимых CharacterList request entries.
+После LoginResult подтверждён reset 0x1464846c0, а не direct character send.
+Следующий участок: callers 0x145dbd4b0/0x145dbfe50, регистрация/условия и связь
+с завершением Login; затем full ID 101 frame и reader/handler ID 102.
+Живой transport/request lifecycle/fresh SDK/device inputs остаются открытыми.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 ## H04-login-result-handler: covered native branches подтверждены
 
 38 body→handler scenarios: state stores/early exit/error/SDK/server ID.

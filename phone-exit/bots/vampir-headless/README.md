@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Граница Login → список персонажей, 19 октября
+
+После LoginResult virtual+0x28 сбрасывает коллекции/флаги. Native constructor/
+reset и две отдельные CharacterList request routines проверены, empty body
+writer ID 101 подтверждён. Связь к callers/реальная сессия ещё открыты.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 ## LoginResult state path, 19 октября
 
 38 native scenarios проверили body reader→handler и covered result gates.

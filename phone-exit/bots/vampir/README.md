@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## После LoginResult: reset и отдельный CharacterListRead, 19 октября
+
+Virtual+0x28 через global-object подтверждён как reset коллекций/флагов.
+8 native reset scenarios; отдельно 2 request entrypoints создают ID 101,
+вызывают virtual send. Writer тела пустой. Связь Login→request callers
+остаётся открытой; Ghidra: 37 функций, 19 warnings.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 ## LoginResult handler: state writes и ветви, 19 октября
 
 38 native scenarios исполнили body reader → handler/covered result gates.

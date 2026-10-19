@@ -1,5 +1,12 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## CharacterList boundary, 19 октября
+
+Текущий пакет: 37 функций, 19 warnings. Добавлены constructor global-object
+после LoginResult, actual virtual+0x28 reset и две CharacterList request routines.
+[Связи и native-проверки](HEADLESS-CHARACTER-LIST-BOUNDARY.md). Предыдущие
+sections описывают прошлые immutable runs, latest INDEX обновлён verifier.
+
 ## LoginResult post-state, 19 октября
 
 Добавлена аналитическая метка Login_PostState 0x1467259c0: последний экспорт

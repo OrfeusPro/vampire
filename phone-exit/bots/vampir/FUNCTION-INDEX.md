@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Login continuation и CharacterListRead boundaries
+
+Getter 0x146486a50 → global 0x14b58b930; ctor 0x14647f9f0 ставит derived
+vtable 0x149c5f828, slot+0x28→reset 0x1464846c0. Отдельные request entries
+0x145dbd4b0/0x145dbfe50 создают PktCharacterListRead/ID 101; writer 0x140bb4a10
+не пишет тело. Native reset/request проверены отдельно; edge между ними неизвестен.
+[Sources/SHA и границы](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 ## LoginResult handler, 19 октября
 
 0x146765540 → gate 0x1467a8e10: 38 native scenarios после actual body reader.

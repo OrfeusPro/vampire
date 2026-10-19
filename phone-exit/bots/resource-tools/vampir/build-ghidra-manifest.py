@@ -27,7 +27,9 @@ SEEDS=[
  ('PktTimeBase_Read',0x1457f0a90),('PktPeriodServerDate_Read',0x1457986b0),
  ('UTF8_DecodedLength',0x141446940),('UTF8_DecodeWrapper',0x141440ba0),
  ('Archive_ReadStdString',0x144aa5ab0),('UTF8_DecodeCore',0x141436230),
- ('Login_PostState',0x1467259c0)]
+ ('Login_PostState',0x1467259c0),('LoginContinuation_SingletonInit',0x14647f9f0),
+ ('LoginContinuation_Virtual28',0x1464846c0),
+ ('CharacterList_RequestA',0x145dbd4b0),('CharacterList_RequestB',0x145dbfe50)]
 
 
 def build():

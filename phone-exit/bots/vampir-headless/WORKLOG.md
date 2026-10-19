@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: post-Login reset и CharacterList request boundary
+
+Ghidra singleton ctor/table→virtual+0x28 подтвердили reset коллекций/флагов.
+8 native reset variants и 2 independent CharacterList request routines исполнены.
+ID 101 и empty writer leaf проверены; Login→request caller edge не доказан.
+Ghidra: 37 functions/19 warnings. Три новых, четыре LoginResult handler и три
+Ghidra tests прошли. Runtime не менялся; полный suite не повторялся.
+[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 ## 19 октября: native LoginResult handler
 
 38 scenarios объединяют actual body reader и handler/covered gates. Проверены

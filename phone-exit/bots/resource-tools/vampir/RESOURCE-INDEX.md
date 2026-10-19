@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Post-Login reset и отдельные CharacterList requests
+
+replay-character-list-boundary.py: 8 reset cases, 2 request entries,
+actual singleton ctor/getter/derived slot, ID 101/empty writer leaf.
+Send/container backends captured, Login→request caller edge ещё не доказан.
+[HEADLESS-CHARACTER-LIST-BOUNDARY.md](HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 ## LoginResult handler / result gates / state writes
 
 replay-login-result-handler.py: 38 body→handler cases, native memory-write

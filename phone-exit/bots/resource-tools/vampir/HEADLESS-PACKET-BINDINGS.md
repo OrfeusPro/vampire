@@ -1,5 +1,12 @@
 # Vampir: пакеты входа, персонажа и heartbeat — H02
 
+## Уточнение CharacterListRead, 19 октября
+
+Writer ID 101 теперь проверен native-исполнением: leaf 0x140bb4a10 возвращает 1
+и не меняет archive. Две actual request routines создают packet и вызывают
+virtual send (capture). Старое замечание ниже описывает пределы исходного
+статического этапа. [Новые источники и границы](HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+
 18 октября 2026. Общий [указатель функций](../../vampir/FUNCTION-INDEX.md),
 [задачи сетевого бота](../../vampir-headless/TASKS.md). Статическое исследование
 собранного Windows-клиента; не исходный C++ проект и не готовый протокол.
