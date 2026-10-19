@@ -1,5 +1,13 @@
 # Vampir: где искать данные
 
+## ID110 nonempty arrays, 20 октября
+
+Ghidra165 функций/63 warnings; replay-character-select-collections.py:
+34 whole bodies/465 short prefixes, все11 arrays, actual append/construct/read.
+Bounded allocator/cleanup captures; both maps/portable decoder/handler/live
+остаются открытыми. Следующие map98 readers указаны без повторного поиска.
+[Адреса, схемы, отчёты, SHA и команды](HEADLESS-CHARACTER-SELECT-COLLECTIONS.md).
+
 ## ID110 минимальный reader и spatial apply, 20 октября
 
 Ghidra151 функций/63 warnings. Отдельный math export через собственные Ghidra

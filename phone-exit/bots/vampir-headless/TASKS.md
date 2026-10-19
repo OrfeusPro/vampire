@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — задачи
 
+## H04-select-collections: непустые массивы проверены offline
+
+34 whole ID110 bodies: все11 arrays по1/2/8 элементов и совместно;465 short
+prefixes rejected. Actual item readers/constructors/append, bounded allocator/
+cleanup fixtures; enum clamps/bool/optional float vector подтверждены.
+Ghidra165 функций/63 warnings. Полный ID110 этап остаётся незавершённым.
+
+Продолжить optional map+98: table1498cf350→reader145796480 и nested1498cf308
+→145796df0 (ещё экспортировать). Insert/find/copy/destroy уже экспортированы.
+Затем обе непустые maps вместе с arrays, portable decoder/budgets, actual handler,
+position consumer и lifecycle/SDK/device/live. Игру/сетевой вход этап не запускал.
+[Точные схемы, SHA, команды и отчёты](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-COLLECTIONS.md).
+
 ## H04-select-result: минимальный native профиль, этап частичный
 
 268 ID110 bodies (all256 heading bytes +12 vector/code cases) прошли actual

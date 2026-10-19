@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## ID110 nonempty arrays, 20 октября
+
+Whole reader:34 full/465 short cases, все11 arrays. Readers main+1c8:
+1457f0540; +1f8:14578b840→optional1456b2ce0→3float reader145817d60;
++250:145782c40. Vtable slot20 readers, slot10 writers; имена исправлены по
+dispatch. Array168 resize1456b6000 — reviewed28byte leaf без unwind.
+Map98 value ctor145793d90→table1498cf350→reader145796480 (экспорт ещё нужен).
+[Схемы всех callbacks, SHA и продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-COLLECTIONS.md).
+
 ## ID110 reader и raw vector apply, 20 октября
 
 Outer ctor1456d4a40/reader1456d8f80→main reader145780eb0. Минимум203bytes:

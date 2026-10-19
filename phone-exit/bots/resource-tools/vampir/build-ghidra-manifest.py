@@ -124,12 +124,26 @@ SEEDS=[
  ('CharacterSelect_Array178Read',0x1457f0170),
  ('CharacterSelect_Array178NestedRead',0x1457f0220),
  ('CharacterSelect_Array1D8Read',0x145780300),
- ('CharacterSelect_Map98FindValue',0x1456d37a0)]
+ ('CharacterSelect_Map98FindValue',0x1456d37a0),
+ ('CharacterSelect_Array1C8WriteValue',0x1457f4360),
+ ('CharacterSelect_Array168Resize',0x1456b6000),
+ ('CharacterSelect_Array1F8WriteValue',0x145790690),
+ ('CharacterSelect_Array1F8Construct',0x145788960),
+ ('CharacterSelect_Array250WriteValue',0x145787470),
+ ('CharacterSelect_Map98Insert',0x1456d33f0),
+ ('CharacterSelect_Array1C8ReadValue',0x1457f0540),
+ ('CharacterSelect_Array1F8ReadValue',0x14578b840),
+ ('CharacterSelect_Array250ReadValue',0x145782c40),
+ ('CharacterSelect_Array1F8OptionalRead',0x1456b2ce0),
+ ('CharacterSelect_Array1F8NestedRead',0x145817d60),
+ ('CharacterSelect_Map98ValueConstruct',0x145793d90),
+ ('CharacterSelect_Map98ValueCopy',0x1456bbcf0),
+ ('CharacterSelect_Map98ValueDestroy',0x145794f70)]
 
 # This source-bound callback has no PE unwind entry: two straight blocks and
 # one internal conditional branch, ending at RET after an allocator tail jump.
 # Its reviewed 28-byte range includes both paths; do not manufacture .pdata.
-REVIEWED_LEAF_RANGES={0x1456fa260:28}
+REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28}
 
 
 def build():

@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## ID110: все11 массивов с непустыми данными, 20 октября
+
+Actual whole reader разобрал34 bodies с1/2/8 записями и совместным заполнением
+всех11 массивов; отклонил465 коротких префиксов. Проверены enum clamps, bool,
+optional3float32, signed zero и отсутствие сдвига spatial vector. Ghidra165
+функций/63 warnings. Дальше крупная optional map+98, совместная проверка maps,
+полный bounded decoder, handler и semantic position consumer; live вход открыт.
+[Адреса, схемы, SHA, команды и границы](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-COLLECTIONS.md).
+
 ## ID110: минимальное тело и raw vector, 20 октября
 
 Проверены actual constructor/readers на268 минимальных bodies, включая все256
