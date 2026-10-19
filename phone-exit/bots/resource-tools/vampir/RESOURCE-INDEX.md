@@ -6,6 +6,15 @@
 `F:/PhoneExit Resources/Vampir`. Данные клиента Windows — cooked-ресурсы,
 а не исходный проект игры. Совпадение версии с Android не подтверждено.
 
+## Подтверждённый каталог pakchunk0 и Game config, 19 октября
+
+Generated key callback и plaintext SHA1 main/full directories подтвердили
+каталог 593 directories/7067 paths для archive SHA 7c1efc7b… . Это реальные
+имена из PAK directory, не observed strings прежнего record scan. Отдельный
+immutable snapshot содержит directory.json, DefaultGame.ini и WindowsGame.ini.
+[Source/SHA/границы/исправление record hash basis](HEADLESS-PAK-CONFIG-RECOVERY.md).
+Остальные архивы и прежние связи этим ещё не переиндексированы.
+
 ## Индексы обновлённых ресурсов, 19 октября
 
 Построены свежие SHA-bound индексы всех 35 изменённых/новых архивов:

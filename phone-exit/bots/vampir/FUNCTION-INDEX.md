@@ -1,11 +1,23 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Generated PAK key callback и Game config recovery, 19 октября
+
+Static initializer 141291600 → binder 14155fd00 → getter 141553580; zero-GUID
+consumer 142518910 использует этот delegate. Actual callback 1468e62d0 исполнен
+на 4 guard/offset fixtures; AES-ECB output дал точные main/full directory SHA1.
+7067 directory paths, 593 directories; extracted DefaultGame.ini/WindowsGame.ini
+source-bound. Native crypto core не исполнялся; decoder small config profile.
+Record header SHA1 проверяет ciphertext, не trial plaintext: старый record probe
+не исключает ключ. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+Packed NetworkSetting defaults найдены; active overrides/scheme/startup неизвестны.
+
 ## CDN settings source: key trial и name clues, 19 октября
 
 Fresh pakchunk0/index full hashes проверены. Один compiled CDN-derived key
-не дал SHA1 match на 18 method-0 records и encrypted directory (trims 0–15).
+не дал directory SHA1 match (trims 0–15). Record plaintext comparisons не
+проверяют ключ: encrypted headers хешируют ciphertext.
 8 plain SHA1 controls passed; 23 bounds-skipped и 34 compressed не проверялись.
-Plaintext не сохранялся, PAK key/config не получены. Негативный результат scoped.
+Этот прежний probe key/config не получил; recovery generated callback описан выше.
 EncryptionKey UTF16 literal 1491b7690 имеет три проверенные LEA: 143945735/
 144fddc73/145045f04. Roots 143944d90/144fdd9c0/1450457c0 содержат AssetRegistry/
 EOS context; связь с PAK key не доказана. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SOURCE-PROBE.md).

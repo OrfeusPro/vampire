@@ -29,6 +29,9 @@ class CdnPakKeyProbeTests(unittest.TestCase):
         self.assertEqual(sum(c['sha1_matches'] is None for c in report['trials']), 23)
         self.assertEqual(report['encrypted_records_total'], 75)
         self.assertEqual(report['matches'], 0)
+        self.assertTrue(all(c['ciphertext_sha1_matches'] for c in report['trials']))
+        self.assertTrue(all(c['key_validated_by_record'] is False for c in report['trials']))
+        self.assertFalse(report['record_plaintext_comparison_validates_key'])
         self.assertFalse(report['directory_trial']['ciphertext_sha1_matches'])
         self.assertEqual(report['directory_trial']['matching_plaintext_trims'], [])
         self.assertFalse(report['network_ready'])
@@ -41,16 +44,21 @@ class CdnPakKeyProbeTests(unittest.TestCase):
             if encrypted:
                 encryptor = Cipher(algorithms.AES(key), modes.ECB()).encryptor()
                 stored = encryptor.update(plain.ljust(32, b'\0')) + encryptor.finalize()
-            header = struct.pack('<qqqI', 0, len(plain), len(plain), 0) + hashlib.sha1(plain).digest()
+            header = struct.pack('<qqqI', 0, len(plain), len(plain), 0) + hashlib.sha1(stored[:len(plain)]).digest()
             raw = header + bytes([encrypted]) + bytes(4) + stored
             row = dict(entry=1, offset=0, end=len(raw), bytes=len(plain), uncompressed=len(plain),
                        method=0, encrypted=encrypted, stored_record_sha256=hashlib.sha256(raw).hexdigest())
             result = self.module.probe_record(io.BytesIO(raw), row, len(raw), key)
-            self.assertTrue(result['sha1_matches'])
+            self.assertEqual(result['sha1_matches'], not encrypted)
+            self.assertTrue(result['ciphertext_sha1_matches'])
+            self.assertFalse(result['key_validated_by_record'])
             self.assertEqual(result['candidate_plaintext_sha256'], hashlib.sha256(plain).hexdigest())
             self.assertFalse(result['plaintext_saved'])
             if encrypted:
-                self.assertFalse(self.module.probe_record(io.BytesIO(raw), row, len(raw), bytes(32))['sha1_matches'])
+                wrong = self.module.probe_record(io.BytesIO(raw), row, len(raw), bytes(32))
+                self.assertFalse(wrong['sha1_matches'])
+                self.assertTrue(wrong['ciphertext_sha1_matches'])
+                self.assertFalse(wrong['key_validated_by_record'])
                 truncated = raw[:53 + len(plain)]
                 short_row = {**row, 'end': len(truncated), 'stored_record_sha256': hashlib.sha256(truncated).hexdigest()}
                 result = self.module.probe_record(io.BytesIO(truncated), short_row, len(truncated), key)

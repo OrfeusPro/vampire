@@ -4,14 +4,24 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
-## Поиск актуального источника CDN, 19 октября
+## Восстановлены PAK-каталог и packed Game config, 19 октября
 
-Новый CDN-derived key не подтвердился для закрытых ресурсов: 18 method-0
-records и encrypted directory без SHA1 match; 23 records пропущены по bounds,
-compressed payloads не проверялись. Восемь plain records прошли hash controls.
+Generated key callback исполнен native; SHA1 расшифрованных main/full directory
+совпали. Получены directory-backed имена 7067 файлов и DefaultGame.ini +
+WindowsGame.ini в отдельном immutable снимке. Найдены NetworkSetting defaults:
+CDN bases без scheme, AppVersion 0.1.1, prefix dev, CdnConfig=False.
+Это packed layers, не доказанные active settings; overrides ещё открыты.
+[Источник, SHA, исправление record hash semantics](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+Ключ подтверждён хешами каталогов; сетевые запросы ещё не выполнялись.
+
+## Предыдущий поиск актуального источника CDN, 19 октября
+
+CDN-derived candidate не подтвердился для encrypted directory. У encrypted
+records SHA1 относится к ciphertext: прежнее сравнение с plaintext не проверяет
+ключ. 23 records пропущены по bounds, compressed payloads не проверялись. Восемь plain records прошли hash controls.
 Три EncryptionKey name xrefs сохранены как clues без доказанной PAK-связи.
 [Источник, воспроизведение и ограничения](../resource-tools/vampir/HEADLESS-CDN-SOURCE-PROBE.md).
-Реальные CDN URLs/version/prefix ещё неизвестны; key/config не восстановлены.
+Этот прежний probe не восстановил key/config; новый результат описан выше.
 
 ## Выбор сервера и поля лобби из CDN, 19 октября
 

@@ -43,6 +43,8 @@ def probe_record(stream, row, limit, key):
     stored_size = ((size + 15) // 16) * 16 if encrypted else size
     if encrypted and 0 < size <= len(raw) - 53 < stored_size:
         return dict(entry=row['entry'], offset=start, encrypted=True, sha1_matches=None,
+                    ciphertext_sha1_matches=hashlib.sha1(raw[53:53 + size]).digest() == raw[28:48],
+                    key_validated_by_record=False,
                     skipped='aligned_ciphertext_exceeds_record_index_bounds',
                     ciphertext_bytes_required=stored_size, indexed_payload_bytes=len(raw) - 53,
                     plaintext_saved=False)
@@ -58,7 +60,9 @@ def probe_record(stream, row, limit, key):
     return dict(entry=row['entry'], offset=start, record_sha256=hashlib.sha256(raw).hexdigest(),
                 encrypted=bool(encrypted), payload_size=size, header_sha1=raw[28:48].hex(),
                 candidate_plaintext_sha256=hashlib.sha256(decoded).hexdigest(),
-                sha1_matches=hashlib.sha1(decoded).digest() == raw[28:48], plaintext_saved=False)
+                sha1_matches=hashlib.sha1(decoded).digest() == raw[28:48],
+                ciphertext_sha1_matches=hashlib.sha1(stored[:size]).digest() == raw[28:48],
+                key_validated_by_record=False, plaintext_saved=False)
 
 
 def probe_directory(stream, file_size, key):
@@ -126,16 +130,18 @@ def build():
     after = archive.stat()
     if (after.st_size, after.st_mtime_ns) != (stamp.st_size, stamp.st_mtime_ns):
         raise ValueError('Archive changed during key trial')
-    return dict(schema_version=1, source=source, index=str(INDEX), index_sha256=INDEX.parent.name,
+    return dict(schema_version=2, source=source, index=str(INDEX), index_sha256=INDEX.parent.name,
                 fallback_report_sha256=file_hash(fallback_path), tool_sha256=file_hash(Path(__file__)),
                 key_source_exe_sha256=fallback['sha256'], seed_literal=literal,
                 candidate_key_sha256=hashlib.sha256(key).hexdigest(), controls=checked, trials=trials,
                 directory_trial=directory_trial,
                 encrypted_records_total=sum(bool(r['encrypted']) for r in entries),
                 matches=sum(r['sha1_matches'] is True for r in trials), network_ready=False,
+                record_plaintext_comparison_validates_key=False,
                 limitations=['One CDN-derived candidate tested with AES256-ECB on bounded method-0 records and encrypted directory; directory is not parsed.',
                     'Compressed payloads/gaps and records with insufficient indexed ciphertext bounds remain untested.',
-                    'SHA1 controls validate header semantics for checked uncompressed records, not all PAK variants.',
+                    'Correction: encrypted record SHA1 authenticates stored ciphertext, not trial plaintext; plaintext comparison cannot reject a key.',
+                    'Unencrypted SHA1 controls do not establish encrypted-record hash semantics. The directory trial is the independent key check.',
                     'Negative result does not establish a PAK key or absence of configuration.',
                     'No trial plaintext saved or passed to native decompression; no game process, account or network access.'])
 

@@ -1,10 +1,12 @@
 # Актуальный источник CDN: ограниченные проверки, 19 октября 2026
 
-Реальные NetworkSetting/CdnConfigUrl/AppVersion/ConfigPrefix пока не получены.
+Этот этап описывает прежний ограниченный поиск. Следующий результат:
+[generated key callback, каталоги и packed Game config](HEADLESS-PAK-CONFIG-RECOVERY.md).
 После [выбора lobby details](HEADLESS-CDN-SERVER-LIST.md) проверен один новый
 кандидат ключа для закрытых ресурсов: SHA256 от уже подтверждённого compiled
-CDN seed. На проверенных записях/каталоге он не подтвердился. Это отрицательное
-наблюдение, не найденный PAK-ключ и не подтверждение отсутствия config.
+CDN seed. Для directory его plaintext SHA1 не подтвердился. У encrypted
+records header SHA1 относится к ciphertext: прежнее сравнение с plaintext
+не проверяет и не исключает ключ. Это исправлено в schema 2 отчёта ниже.
 
 ## Источник и воспроизведение
 
@@ -25,7 +27,7 @@ PAK: `C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Saved/Persiste
 после — неизменность размера/mtime. Старые кеши и offsets не используются.
 
 Отчёт: `F:/PhoneExit Resources/Vampir/code-clues/cdn-pak-key-probe.json`.
-SHA256: `91677a2183ab982e8ab41ba29396a9fc5a7af861f12bb85e78aa4753ac79539b`.
+SHA256: `2c2ea86253a8a0f8915a0873b7fa6d675cfaea44926b863672287a5f2cb61618`.
 Содержит источник, seed provenance, record hashes, header SHA1 и результаты;
 plaintext не сохраняется, включая потенциальное совпадение.
 
@@ -33,8 +35,10 @@ plaintext не сохраняется, включая потенциальное
 
 - Восемь несжатых незашифрованных записей подтвердили соответствие header SHA1
   фактическому payload. Это control только для проверенного method-0 формата.
-- Из 75 encrypted records 41 имеет method 0. У 18 полные cipher bytes входят
-  в свежие границы записи: AES-256-ECB с CDN-кандидатом не дал совпадений SHA1.
+- Из 75 encrypted records 41 имеет method 0. У всех 41 header SHA1 совпадает
+  со stored ciphertext до Entry.Size, независимо от ключа. У 18 полные cipher
+  bytes входят в свежие границы записи и plaintext comparison записан только
+  как диагностический результат, без проверки ключа.
 - У 23 индекс не покрывает весь округлённый до блока ciphertext. Они явно
   пропущены, без чтения за границами и без признания неправильного ключа.
   34 compressed records этим способом не проверялись.
@@ -48,9 +52,9 @@ plaintext не сохраняется, включая потенциальное
 пробных данных. Границы/gaps/остальные архивы и методы не охвачены.
 Нет сетевых запросов, процесса игры или чтения файлов аккаунтов.
 
-Три теста проверяют повтор actual pinned report, положительные artificial
-plain/encrypted record controls, ошибочный ключ, hash mismatch/stale bounds,
-отсутствующий cipher padding в индексе и directory hash/padding/bounds.
+Три теста проверяют повтор actual pinned report, artificial plain/ciphertext
+hash controls, независимость ciphertext hash от ключа, hash mismatch/stale
+bounds, отсутствующий cipher padding и directory hash/padding/bounds.
 
 ## Сохранённые clues по имени EncryptionKey
 

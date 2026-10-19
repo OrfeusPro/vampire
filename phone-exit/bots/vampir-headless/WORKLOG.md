@@ -1,5 +1,21 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — PAK key callback → directory → packed Game config
+
+После 1572295 через missing-key diagnostic прослежены zero-GUID delegate,
+initializer 141291600/binder 14155fd00 и generated callback 1468e62d0. Callback
+исполнен native на четырёх fixtures; его output подтвердил plaintext SHA1 main
+и full directory. Получены 7067 names/593 directories и два Game INI слоя.
+Уточнено: encrypted record header SHA1 относится к ciphertext; прежний record
+plaintext candidate comparison не проверяет ключ. Directory trial остаётся
+независимым контролем. Producer/probe/tests/documentation исправлены.
+Packed defaults дают scheme-less CDN bases, AppVersion 0.1.1, dev/False;
+active overrides не доказаны, HTTP запросов нет. Старые кеши сохранены.
+Полный набор: 203/203 теста, 112,3 с. Синтаксис четырёх Python-файлов,
+кодировка Markdown, 315 относительных ссылок и git diff --check прошли.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+Следующий шаг — parameter/command-line/late overrides и actual prefix/base/scheme.
+
 ## 19 октября 2026 — H04b-CDN-source: проверка нового key candidate
 
 После ff02e97 trial compiled CDN-derived key на свежем pakchunk0: 8 plain
