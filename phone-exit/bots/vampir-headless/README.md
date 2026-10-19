@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Load device restoration, 19 октября
+
+Native slices восстанавливают SDK/NID keys раздельно. Constructor/path replay
+показал ServiceSetting.bin как default Load filename. Active filename,
+полный SaveGame decode и успешное хранение ещё не проверены.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md).
+
 ## Три разных device identity поля, 19 октября
 
 NID web/token device key отделён от SDK sign-in deviceKey и nmDeviceKey.

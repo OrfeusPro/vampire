@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: Load device fields и filename
+
+16 native fixtures исполнили две Load field-copy slices и post-restore gate/tag
+dispatch. 3 constructor/path fixtures установили разные ServiceSettings.bin
+и ServiceSetting.bin; Load continuation использует второе поле +0x2f8.
+UObject/config/file I/O не исполнялись, active path не заявлен. Реальные
+Saved/registry/keys не читались. Два regression tests прошли.
+Смежные 2 storage tests также прошли; 412 относительных Markdown-ссылок
+проверены, git diff --check OK. Runtime не менялся; полный suite
+предыдущего этапа 290/290 повторно не запускался.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md).
+
 ## 19 октября: NID web/token device identity
 
 Native key/getter/pair slices web/code/refresh подтвердили отдельный NID getter,

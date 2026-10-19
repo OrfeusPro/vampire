@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-load-device-fields: восстановление и filename
+
+16 native Load field-copy/post-dispatch и 3 constructor/path fixtures прошли.
+Разные SDK/NID поля и default ServiceSetting.bin подтверждены в указанном
+объёме. Дальше optional directory, active filename overrides, file parsing/type
+checks/Save read-back; реальные identity и device confirmation ещё открыты.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md).
+
 ## H04-NID-device: источник web/token ключа
 
 Три native slices проверили deviceKey/device_key → NID getter. Registry v2

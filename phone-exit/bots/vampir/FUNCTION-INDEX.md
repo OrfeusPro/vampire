@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Load fields и ServiceSetting.bin
+
+[Native field restoration/filename replay](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md):
+Save object+0x208 → SDK settings+0x618, +0x5a0 → NID settings+0x628.
+Load filename default ServiceSetting.bin из +0x2f8, соседний +0x2e8 иной.
+Global gate/tag semantics и active path ещё открыты.
+
 ## NID deviceKey / OAuth device_key
 
 [Native pair assembly](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md)

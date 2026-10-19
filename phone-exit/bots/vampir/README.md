@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Load device fields и filename defaults, 19 октября
+
+16 native fixtures подтвердили раздельное восстановление SDK/NID device keys
+из Save object и post-restore dispatch. Три constructor/path fixtures дали
+ServiceSetting.bin (+0x2f8), отдельно от ServiceSettings.bin (+0x2e8).
+Active path/optional directory и реальные Save/Load операции ещё открыты.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md).
+
 ## NID context использует отдельный device key, 19 октября
 
 Три native pair slices связали NID web deviceKey и OAuth device_key с

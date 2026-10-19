@@ -76,7 +76,9 @@ Windows storage/GUID fallback разобраны статически, default G
 ## Следующие задачи
 
 1. После [NID device context replay](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md)
-   проверить NID getter lifecycle, filename/Save/load и полный web context.
+   проверить NID getter lifecycle, active filename/Save/load и полный web context.
+   [Load fields/default filename](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md)
+   проверены отдельно; файловый parsing/read-back ещё открыты.
    Schema v2 уже разделяет NID/SDK ключи; active platform и SDKZone открыты.
 2. Получить согласованные реальные значения для основного аккаунта с provenance.
 3. Найти challenge/confirmation response и штатное завершение подтверждения.

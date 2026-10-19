@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Load device fields и полный default filename
+
+replay-sdk-load-device-fields.py: 16 native field-copy/dispatch fixtures.
+replay-sdk-storage-filename.py: 3 constructor/default filename/join fixtures.
+[Source/SHA](HEADLESS-SDK-LOAD-DEVICES.md). Active context и файловый I/O не проверены.
+
 ## NID web/token device key mapping, 19 октября
 
 replay-nid-device-context.py: 3 native key/getter/pair slices. Web deviceKey
