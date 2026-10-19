@@ -1,5 +1,11 @@
 # Vampir — параметры SDK и XOR конфигурации GMC2
 
+Уточнение 19 октября: этот отчёт захватывает raw XOR arguments до append.
+[Полный helper/actual append](HEADLESS-GMC2-XOR.md) пропускает zero outcome.
+Составной [SDK constants decoder исправлен](HEADLESS-SDK-UNESCAPE.md) и использует
+единственный общий actual-output primitive. Исторические raw vectors сохранены;
+они не подтверждают конечную native FString при нулевом результате.
+
 18 октября 2026. Продолжение [исследования GMC2](HEADLESS-SDK-CONFIG.md).
 H04b остаётся частично выполненным: получение конфигурации, её внешняя упаковка
 и переход к игровой сессии ещё не восстановлены.

@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Исправлен составной decoder SDK constants, 19 октября
+
+Повторно использован ранее проверенный JSON-unescape. decode_sdk_constants_string
+теперь вызывает actual-output XOR с пропуском нулей; прежний raw XOR helper
+остаётся только отдельной capture-моделью. Два regression tests проверяют
+zero outcome и все 18 новых native fixtures через составной путь.
+[Источник и границы](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+DECKEY lookup/полный response/auth остаются открытыми.
+
 ## GMC2 XOR: подтверждён primitive расшифровки, 19 октября
 
 Полный native DecryptXOR и FString append проверены на 18 fixtures.

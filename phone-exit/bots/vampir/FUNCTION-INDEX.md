@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK constants pipeline: actual append вместо raw capture, 19 октября
+
+Общий decode_sdk_constants_string повторно использует existing unescape 1444f2670
+и canonical xor_gmc2_utf16_units. Zero outcomes теперь пропускаются; старые
+4096/1024 bytes budgets сохранены, empty key отклоняется. xor_sdk_utf16le
+остаётся pre-append mathematical/capture transform. 18 actual-output vectors
+проверены через JSON escape/unescape/composed decoder.
+[Подробности](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+
 ## GMC2 DecryptXOR и actual FString append, 19 октября
 
 1444ddf50: source descriptor R8 count, key FString R9 period=count-1,

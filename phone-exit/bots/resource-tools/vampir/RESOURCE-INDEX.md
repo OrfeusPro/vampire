@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Уточнение SDK constants pipeline, 19 октября
+
+Старые unescape evidence повторно использованы; составной runtime decoder
+переключён с raw append capture на проверенный actual FString output.
+Исторические отчёты сохранены, их границы явно исправлены.
+[Интеграция/регрессии](HEADLESS-SDK-UNESCAPE.md).
+
 ## GMC2 XOR evidence, 19 октября
 
 18 native fixtures полного XOR helper/actual append, source bytes/offsets/SHA,

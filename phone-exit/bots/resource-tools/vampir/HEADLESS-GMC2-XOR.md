@@ -1,5 +1,9 @@
 # GMC2 DecryptXOR: 16-битные единицы и пропуск нуля
 
+Интеграция: [существующий unescape → constants decoder](HEADLESS-SDK-UNESCAPE.md)
+теперь использует этот primitive, включая zero omission. Исторический raw XOR
+capture helper не используется в составном runtime decoder.
+
 19 октября 2026. Полный helper `1444ddf50` и actual FString append `1414242a0`
 исполнены на 18 fixtures. Преобразование использует повторяющиеся 16-битные
 единицы ключа и пропускает нулевые результаты через штатную ветку append.

@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Составной SDK constants decoder исправлен, 19 октября
+
+Existing unescape → actual XOR output теперь использует единый primitive
+с пропуском нулевых units. 18 native fixtures сверены через composed path;
+старые raw-capture результаты сохранены как история.
+[Ограничения](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+Полный DECKEY lookup/response/auth ещё не готов.
+
 ## Подтверждён XOR primitive GMC2, 19 октября
 
 Native helper/append: uint16 XOR по повторяющемуся key, zero outcomes

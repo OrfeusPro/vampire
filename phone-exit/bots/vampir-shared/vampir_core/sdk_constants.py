@@ -1,24 +1,34 @@
 """Bounded GMC2 string unescape and XOR; response extraction is unresolved.
 
-Evidence: HEADLESS-SDK-VALUES.md. Inputs are explicit UTF-16LE bytes, without
-an added FString terminator. This is separate from the TCP frame XOR.
+Evidence: HEADLESS-SDK-VALUES.md / HEADLESS-SDK-UNESCAPE.md / HEADLESS-GMC2-XOR.md.
+The historical xor_sdk_utf16le preserves the raw pre-append XOR units. Actual
+constants decoding uses the verified FString append behavior (drops zero).
+Inputs have no added storage terminator. Separate from TCP frame XOR.
 """
 import base64
 import json
 
+from .gmc2_decode import xor_gmc2_utf16_units
 
-def xor_sdk_utf16le(data: bytes, key: bytes) -> bytes:
-    """Transform at most 2048 code units with at most 512 repeating key units.
 
-    Preserve zero units and isolated surrogates. Callers must separately verify
-    the response envelope, key source, text encoding and JSON schema.
-    """
+def _check_xor_inputs(data, key):
     if not isinstance(data, bytes) or not isinstance(key, bytes):
         raise ValueError('Expected immutable UTF-16LE byte strings')
     if len(data) > 4096 or len(key) > 1024 or len(data) % 2 or len(key) % 2:
         raise ValueError('SDK XOR input exceeds local bounds or has a partial code unit')
     if data and not key:
         raise ValueError('Nonempty SDK XOR input requires a key')
+
+
+def xor_sdk_utf16le(data: bytes, key: bytes) -> bytes:
+    """Transform at most 2048 code units with at most 512 repeating key units.
+
+    Preserve zero units and isolated surrogates, matching the historical raw
+    append-call capture. This is not the client's resulting FString: actual
+    append drops zero units. Use decode_sdk_constants_string for escaped
+    constants, or xor_gmc2_utf16_units for already unescaped source units.
+    """
+    _check_xor_inputs(data, key)
     result = bytearray(len(data))
     for offset in range(0, len(data), 2):
         key_offset = offset % len(key)
@@ -46,10 +56,15 @@ def unescape_sdk_utf16le(content: bytes) -> bytes:
 def decode_sdk_constants_string(content: bytes, key: bytes) -> bytes:
     """Unescape an extracted encrypted string, then XOR its UTF-16 units.
 
-    Returns plaintext UTF-16LE bytes. Does not extract response fields, acquire
-    a key, parse JSON, validate endpoints or decode encSecretConstants.
+    Uses the actual FString zero-unit omission, unlike the historical raw
+    XOR capture helper. Returns units, not necessarily valid Unicode/JSON.
+    Does not extract response fields, acquire a key, validate endpoints or
+    decode encSecretConstants. Existing 4096/1024 byte bounds are retained;
+    empty key is rejected even when the escaped content is empty.
     """
-    return xor_sdk_utf16le(unescape_sdk_utf16le(content), key)
+    source = unescape_sdk_utf16le(content)
+    _check_xor_inputs(source, key)
+    return xor_gmc2_utf16_units(source, key)
 
 
 def decode_sdk_base64(text: str) -> bytes:

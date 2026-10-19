@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: исправлен existing decode_sdk_constants_string: reused unescape
+→ actual XOR/append zero omission, без дублирования decoder. Два regression tests
+и 18 новых native vectors через составной путь. DECKEY slot28/class method,
+outer response и auth остаются следующими зависимостями.
+[Источник](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+
 19 октября: H04b native XOR helper/append подтверждены на 18 fixtures,
 общий raw uint16 primitive добавлен. Далее encConstants source decode,
 key/DECKEY, encSecretConstants и JSON/schema; byte XOR/UTF8 не подставлять.

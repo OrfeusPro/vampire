@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## SDK constants pipeline correction, 19 октября
+
+Existing sdk_constants.decode_sdk_constants_string повторно использует
+unescape_sdk_utf16le и canonical gmc2_decode.xor_gmc2_utf16_units с zero omission.
+Raw xor_sdk_utf16le сохранён как mathematical/pre-append capture transform,
+не конечный decoder. Старые budgets сохранены; empty key reject уточнён.
+[Регрессии и источник](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+
 ## GMC2 XOR primitive, 19 октября
 
 Общий vampir_core.gmc2_decode.xor_gmc2_utf16_units: raw LE uint16 XOR,

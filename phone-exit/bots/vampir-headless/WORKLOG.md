@@ -1,5 +1,20 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — интеграция actual XOR в существующий SDK decoder
+
+После 52b70f5 сверены старые SDK-VALUES/UNESCAPE/SECRET/OAEP results.
+Unescape 1444f2670 и static DECKEY flow уже исследованы, повторное исследование
+остановлено. Найдено расхождение: existing constants decoder использовал raw
+append capture XOR, сохранявший zero outcomes. Исправлен только составной путь:
+unescape → canonical xor_gmc2_utf16_units. Старый математический raw helper/
+его historical reports сохранены с явными границами. Existing local budgets
+сохранены; empty key reject уточнён. Два новых regression tests: zero omission
+и 18 full native-output vectors через composed decoder. Все 7 unescape tests
+прошли. DECKEY class/method и whole response/auth остаются открыты.
+[Источник](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+Полный набор: 236/236 тестов, 171,8 с; синтаксис двух Python-файлов,
+кодировка десяти Markdown-файлов, 376 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — полный DecryptXOR и native zero append gate
 
 После 647fb76 исполнены полный 1444ddf50 и append 1414242a0: word XOR по

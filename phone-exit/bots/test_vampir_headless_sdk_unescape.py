@@ -18,6 +18,28 @@ def packed(units):
 
 
 class SDKUnescapeLimitsTests(unittest.TestCase):
+    def test_constants_pipeline_matches_full_native_xor_append_fixtures(self):
+        root = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir'))
+        report = json.loads((root / 'code-clues/headless-gmc2-xor.json').read_text('utf-8'))
+        for case in report['cases']:
+            text = packed(case['source_units']).decode('utf-16le', 'surrogatepass')
+            escaped = json.dumps(text, ensure_ascii=True)[1:-1].encode('utf-16le')
+            self.assertEqual(decode_sdk_constants_string(escaped, packed(case['key_units'])), packed(case['output_units']))
+
+    def test_constants_pipeline_uses_actual_append_zero_omission(self):
+        from vampir_core.sdk_constants import xor_sdk_utf16le
+        from vampir_core.gmc2_decode import xor_gmc2_utf16_units
+        content = r'\u0041\u0042\u0041'.encode('utf-16le')
+        key = packed([0x41])
+        self.assertEqual(xor_sdk_utf16le(unescape_sdk_utf16le(content), key), packed([0, 3, 0]))
+        self.assertEqual(decode_sdk_constants_string(content, key), packed([3]))
+        self.assertEqual(decode_sdk_constants_string(content, key), xor_gmc2_utf16_units(unescape_sdk_utf16le(content), key))
+        self.assertEqual(decode_sdk_constants_string(r'\ud800'.encode('utf-16le'), packed([0])), packed([0xd800]))
+        self.assertEqual(decode_sdk_constants_string(b'', key), b'')
+        for data, key in ((b'', b''), (b'', bytes(1026)), (b'xx', b'x'), (b'xx', None)):
+            with self.assertRaises(ValueError):
+                decode_sdk_constants_string(data, key)
+
     def test_strict_inputs_and_limits(self):
         for invalid in [None, 'text', bytearray(b'xx'), b'x', b'xx'*2049]:
             with self.assertRaises(ValueError):

@@ -1,5 +1,28 @@
 # Vampir — строка ответа GMC2 перед XOR
 
+## Уточнение составного runtime decoder, 19 октября 2026
+
+Полный [native XOR и actual FString append](HEADLESS-GMC2-XOR.md) установили
+пропуск нулевых результатов. Прежние 42 XOR fixtures и три pipeline examples
+этого файла захватывали аргументы append; они не доказывали конечную FString
+при zero outcome. Исторические отчёты сохранены без подмены.
+
+decode_sdk_constants_string в общем sdk_constants.py теперь вызывает единственный
+подтверждённый xor_gmc2_utf16_units после существующего unescape. Повторной
+реализации escape/XOR нет. Старые локальные bounds 4096/1024 байта сохранены;
+empty key теперь отклоняется даже для empty content. Результат — raw units,
+не гарантия корректного Unicode/JSON. Исторический xor_sdk_utf16le сохраняет
+pre-append units только как математическое преобразование/capture model,
+а не конечную строку native decoder.
+
+Два новых теста проверяют zero-outcome regression и все 18 новых native
+output vectors через JSON escape → старый unescape → actual append XOR, включая
+isolated surrogate и длинный source. Прежние native unescape evidence/tests
+повторно используются; helper 1444f2670 уже был исследован, это не Base64.
+
+Источник DECKEY по slot28 и полная response chain всё ещё не доказаны.
+Не трактовать статическую передачу ключа как доказанный HTTP header API.
+
 18 октября 2026. H04b частично. Продолжение [параметров SDK и XOR](HEADLESS-SDK-VALUES.md).
 Следующее исследование: [Base64 и параметры RSA секретной ветки](HEADLESS-SDK-SECRET.md).
 Восстановлены отдельное строковое преобразование и статическая передача ключа;
@@ -76,7 +99,8 @@ Unwind range включает таблицы переходов после RET. 
 Некорректные escape, необработанные кавычки и управляющие символы отклоняются
 без вывода содержимого в ошибку. Эта политика намеренно строже native helper.
 Если весь ответ уже разобран JSON-декодером, строка уже unescaped: повторно
-применять этот шаг нельзя, нужен только `xor_sdk_utf16le`.
+применять этот шаг нельзя, нужен только `xor_gmc2_utf16_units` из gmc2_decode.py
+для результата actual append. Прежний xor_sdk_utf16le моделирует raw XOR units.
 
 Пять тестов проверяют provenance, все native результаты, три составных примера,
 повторное исполнение 16 сценариев и строгие ограничения. Следующий шаг — доказать
