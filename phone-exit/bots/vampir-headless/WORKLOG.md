@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: реестр почта — устройство
+
+По указанию пользователя основная почта — ранее созданная тестовая.
+Добавлен общий SQLite device_registry, создана её локальная запись real/main.
+Реальные identity не подставлялись, confirmation=unknown. База исключена из Git.
+Три теста проверили restart, idempotence, main uniqueness, запрет замены identity,
+изоляцию и повторный запрос подтверждения. Авторизация/подтверждение не выполнялись.
+[Поля, источники и оставшиеся задачи](DEVICES.md).
+
 ## 19 октября 2026 — SDK SignIn JSON/default headers и request plan
 
 После fe0512e разобран FAuthImpl::SignIn. Четыре native caller fixtures:

@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Общие привязки аккаунтов и устройств
+
+[device_registry и локальная SQLite-схема](../vampir-headless/DEVICES.md):
+постоянная запись на почту, один основной аккаунт, provenance двух device keys,
+ручной статус подтверждения. Это локальная модель бота, не восстановленная
+серверная схема. Реальные device keys и автоматизация challenge ещё открыты.
+
 ## FAuthImpl SignIn JSON и CreatePost headers, 19 октября
 
 1444fb800 body slices/constructor1444bc380: 4 fixtures подтвердили 4 base fields,

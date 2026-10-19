@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## Общий реестр устройств, 19 октября
+
+device_registry.DeviceRegistry хранит постоянную связь почты и устройства
+в SQLite: один основной аккаунт, неизменяемые наблюдаемые identity, отдельный
+статус подтверждения. Без генерации fingerprint, сети, паролей и токенов.
+[Схема и границы](../vampir-headless/DEVICES.md).
+
 ## SDK sign-in offline request plan, 19 октября
 
 sdk_sign_in.plan_nid_sdk_sign_in принимает explicit context/constants и

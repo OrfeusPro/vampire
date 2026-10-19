@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Постоянная привязка почты к устройству, 19 октября
+
+Добавлен общий локальный SQLite-реестр account → device profile → confirmation.
+Основная тестовая почта зарегистрирована в игнорируемой базе; реальные deviceKey
+и nmDeviceKey ещё не получены. Профили сохраняются между запусками/обновлениями.
+[Схема, источники и дальнейшие задачи](../vampir-headless/DEVICES.md).
+
 ## SDK sign-in request plan: JSON и headers, 19 октября
 
 Native caller подтвердил body nmDeviceKey/deviceKey/countryCode/os, optional

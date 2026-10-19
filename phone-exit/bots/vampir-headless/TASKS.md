@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-device: постоянные привязки
+
+Локальный SQLite-реестр реализован; основная тестовая почта зарегистрирована.
+Три теста persistence/isolation/confirmation прошли. Открыто: source-bound
+генерация и хранение обоих device keys, реальная identity, challenge protocol,
+login runner gate, transfer/backup и Android adapter.
+[Подробности](DEVICES.md).
+
 19 октября: H04 SDK sign-in request preparation подтверждена: 4 native body
 и 8 header/method fixtures. Общий sdk_sign_in offline plan добавлен; authUrl
 из real public GMC2 связан только с synthetic context. Auth HTTP нет.
