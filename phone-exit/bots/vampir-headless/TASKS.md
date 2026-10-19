@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-version-send: полный native путь до очереди
+
+Wrapper/send-B/writer/frame/append проверены вместе на18 scenarios. Далее
+VersionResult reader/registration/handler → Login; отдельные задачи actual
+queue drain/socket и реальные weekly inputs. Server negotiation ещё нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
+
 ## H04-version-writer: переносимое тело проверено
 
 Actual writer/conversion/archive bytes совпали с VersionPayload на14 cases.

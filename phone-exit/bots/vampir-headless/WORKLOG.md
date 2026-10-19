@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: Version wrapper → полный кадр/очередь
+
+18 native scenarios: 14 exact ciphertext frames и 4 pre-frame gates.
+Wrapper/send-B/Version writer/CRC/XOR/queue append исполняются вместе.
+Queue copy сохраняется после archive overwrite; три новых и шесть смежных tests прошли.
+Runtime не менялся; полный suite379 не повторялся. Real network/session нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
+
 ## 19 октября: PktVersion writer → общее ядро
 
 14 native vectors writer/UTF-8/archive совпали с переносимым VersionPayload.

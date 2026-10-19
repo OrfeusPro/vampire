@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## PktVersion: wrapper → frame → очередь, 19 октября
+
+18 native scenarios: 14 полных кадров и 4 pre-frame отказа. Wrapper/send-B/
+writer/CRC/XOR/append исполнены вместе; очередь владеет копией. Metadata/
+policy/allocator fixtures; drain/socket/VersionResult/session ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
+
 ## PktVersion writer → переносимое тело, 19 октября
 
 14 native vectors исполнили Version writer, UTF-8 conversion и archive IO.

@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Version send wrapper → send-B
+
+0x1467aaa10 → thunk0x144aab2f0 ([wrapper+0x10]) → 0x144aaccf0
+→ Version writer → frame → queue0x1445eac20. Gates global0x14b520cb4,
+raw helper return2, peer+0x2a5. Metadata lookup и failure helper captures.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
+
 ## PktVersion writer и UTF-8
 
 Writer0x1456e5cf0 → FString0x144aa6a30 → length0x141446a50/convert0x141440af0/

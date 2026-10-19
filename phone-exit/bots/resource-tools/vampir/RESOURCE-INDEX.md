@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Version full send path replay
+
+replay-version-send-path.py: 18 scenarios wrapper/thunk/send-B/Version writer/
+CRC/XOR/owning queue. 14 frames независимо сверены, 4 gates без writer/queue.
+Metadata/filter/allocator/cleanup fixtures; actual socket/server response нет.
+[Источники, SHA и границы](HEADLESS-VERSION-SEND-PATH.md).
+
 ## Version packet writer replay
 
 replay-version-packet-writer.py: 14 native vectors actual writer/UTF-8/archive.
