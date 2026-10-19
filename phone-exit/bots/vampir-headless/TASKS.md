@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04 percent loop проверен 147 native fixtures, UTF conversions
+остаются отдельной границей. Общий sdk_percent и callback parser используют
+strict ASCII/route/duplicate policy; URL → provider credential без сети/storage.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-PERCENT.md).
+Далее full query/map semantics и связь с активной попыткой входа, затем settings
+setters/persistence и callback после 1450ef437 → SDK session → game Login.
+Не считать локальный callback parser подтверждением подлинности токенов.
+
 19 октября: H04 integer/channel dependencies проверены actual native helpers,
 13 initializers/ASCII compare и локальным CRT. 28 numeric/45 channel/6 caller
 fixtures; mailUserKey=20, native numeric parser permissive. Общий nid_result

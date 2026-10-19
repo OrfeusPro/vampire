@@ -1,5 +1,15 @@
 # Vampir — общие компоненты и результаты
 
+## SDK percent subset и callback route boundary, 19 октября
+
+sdk_percent.decode_sdk_percent_ascii: корректные %HH, decode один раз,
++ не превращается в space; malformed/%u/controls/non-ASCII отвергаются.
+nid_result.parse_nid_email_callback требует explicit expected_game_code,
+проверяет route/duplicates/budgets, вызывает existing fields validator.
+Результат — provider credential с redacted repr. Это strict local boundary,
+без nonce/token validity, I/O, storage или SDK/game session.
+[Source/SHA/пределы](../resource-tools/vampir/HEADLESS-SDK-PERCENT.md).
+
 ## Общая NID channel table и decoded result boundary, 19 октября
 
 vampir_core.nid_result: channel_key_to_sdk_type (13 source-bound keys, ASCII)

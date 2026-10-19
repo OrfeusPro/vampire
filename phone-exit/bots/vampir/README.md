@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Callback URL: percent loop и строгая общая граница, 19 октября
+
+147 native byte-loop fixtures: + остаётся плюсом, decode однократный;
+malformed escapes/NUL обрабатываются permissive в native. Общий sdk_percent
+использует строгий printable ASCII subset. parse_nid_email_callback проверяет
+явно заданную game route и поля → redacted provider credential, без I/O.
+Это local policy, не full native URI/map или доказательство действительности
+токенов/активной попытки входа. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-PERCENT.md).
+Далее full query/context, settings/persistence и SDK callback/session.
+
 ## Integer/channel helpers исполнены, общий result boundary добавлен, 19 октября
 
 28 numeric/45 channel/6 caller fixtures исполнили native helpers и локальный CRT.

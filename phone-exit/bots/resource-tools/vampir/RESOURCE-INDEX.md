@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## SDK percent byte loop / callback query, 19 октября
+
+replay-sdk-percent-decode.py сохраняет decoder/URI/getter/map fragments и
+147 fixtures настоящего byte loop/strlen. UTF conversions — явные границы.
+[Отчёт/SHA/ограничения](HEADLESS-SDK-PERCENT.md). Native duplicate/full URI
+поведение ещё не исполнено; общий callback parser использует local policy.
+
 ## Native NID primitive replay, 19 октября
 
 replay-nid-result-primitives.py сохраняет parser/channel/init bytes и CRT import

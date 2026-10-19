@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Callback URL → provider credential, 19 октября
+
+147 native percent byte-loop fixtures подтвердили single decode/+ preservation.
+Общий parser callback проверяет explicit game route и strict fields policy,
+возвращает redacted credential. Нет full URI/map parity, проверки token validity
+или активной попытки входа. [Источник](../resource-tools/vampir/HEADLESS-SDK-PERCENT.md).
+Далее query/context, settings/persistence/callback и SDK/game session.
+
 ## Общий валидатор результата почтового входа, 19 октября
 
 Native parser/channel проверены: 28 numeric/45 channel/6 caller fixtures.

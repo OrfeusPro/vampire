@@ -1,5 +1,24 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — native percent loop и общая callback boundary
+
+После 4b89a90 статически связаны URI/query getter/OnResult map builder.
+GetQuery декодирует whole query до повторного split в OnResult; generic
+unquote_plus не подходит: + остаётся плюсом. Исполнены native byte loop,
+append NUL и strlen на 147 fixtures; UTF8 buffers/capacity заданы явно,
+%u conversion/memcpy — shims, full Unicode/URI/map не исполнялись.
+Malformed escapes дают permissive outcomes, NUL сокращает видимую строку.
+Общий sdk_percent строго принимает printable ASCII/%HH, single decode;
+parse_nid_email_callback проверяет explicit game route и decoded fields,
+reject duplicates/ambiguous extra fields, возвращает redacted credential.
+Это local policy, не full native URI parser или nonce/token-validity check.
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-SDK-PERCENT.md).
+Новых сетевых запросов/аккаунтов нет. Далее query/context, setters/persistence,
+post-adoption callback и SDK/game session.
+Полный набор: 266/266 тестов, 169,7 с. После уточнения reject %26
+повторены восемь affected field/callback tests: passed, 6,1 с. Синтаксис
+четырёх Python-файлов, UTF-8 восьми документов, 406 ссылок и diff check прошли.
+
 ## 19 октября 2026 — actual NID integer/channel и общий decoded result validator
 
 После 61cef92 исполнены parser 1415dea40, mapper 14452b060, compare leaf и

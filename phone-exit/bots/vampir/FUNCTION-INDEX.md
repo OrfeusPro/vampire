@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Query getter и percent byte loop, 19 октября
+
+GetQuery 1445255e0 читает owner+58/+60 → decoder 141c13390; OnResult вызывает
+map builder 144591880. Decoder byte loop 141c13495..141c13764 исполнен на
+147 fixtures, UTF conversion и growth вне исполнения. Whole-query decode
+предшествует &/= split по static caller chain; native duplicate policy открыта.
+Общий sdk_percent + parse_nid_email_callback вводят strict ASCII/route policy,
+не заменяют проверку токенов сервером или активного sign-in context.
+[Источники и SHA](../resource-tools/vampir/HEADLESS-SDK-PERCENT.md).
+
 ## NID parser/channel: actual helpers вместо return fixtures, 19 октября
 
 Integer 1415dea40 → verified CRT imports _wtoi/_finite/iswspace → local ucrtbase.
