@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## WSAGetLastError mapper
+
+Engine constructor 0x1445ef620 → global 0x14b4f39d0/vtable 0x149504668;
+slot+0x68 = mapper 0x1445f0680 → WSAGetLastError ordinal 111.
+Native range 10035..10071, default30; accepted mappings в новом report.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-WINSOCK-ERROR-MAPPING.md).
+
 ## Endpoint connect lower/wrapper
 
 0x1445e5c60 → 0x1445ecbb0: native sockaddr + Winsock connect boundary.

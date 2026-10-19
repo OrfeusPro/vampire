@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Winsock error mapping replay
+
+replay-winsock-error-mapping.py: 43 native integrations mapper/wrapper,
+constructor/global/vtable binding, отдельно code/switch table и DLL export.
+Системный last error/прочие engine slots — fixtures, real readiness не проверена.
+[Источники, SHA и границы](HEADLESS-WINSOCK-ERROR-MAPPING.md).
+
 ## Socket connect result replay
 
 replay-socket-connect-result.py: 16 native scenarios lower/wrapper,

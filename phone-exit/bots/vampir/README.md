@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Winsock → engine error mapping, 19 октября
+
+43 native cases связали WSAGetLastError с engine slot+0x68 и connect wrapper.
+10035/10036/10037 → 37/23/22; именно они проходят wrapper после lower false.
+Constructor/vtable/import source-bound; ready/session этим не доказаны.
+Далее mode job/completion → readiness → Login.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-WINSOCK-ERROR-MAPPING.md).
+
 ## Native connect result и wrapper acceptance, 19 октября
 
 16 native сценариев проверили sockaddr IPv4/IPv6, connect call sites

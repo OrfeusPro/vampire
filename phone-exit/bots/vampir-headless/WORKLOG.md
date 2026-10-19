@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: WSA error mapping
+
+43 native cases, три новых и шесть смежных tests прошли. Mapper
+связан с engine constructor/global/vtable и WSAGetLastError export.
+Code и switch data разделены; accepted inputs 10035/10036/10037 подтверждены
+через реальный wrapper. Runtime не менялся; полный suite 316 не повторялся.
+Game/profile/credentials/network и реальные DLL calls не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-WINSOCK-ERROR-MAPPING.md).
+
 ## 19 октября: endpoint connect/result wrapper
 
 16 native scenarios, три новых и шесть смежных tests прошли. Native

@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-error-mapping: native таблица подтверждена
+
+Mapper engine slot+0x68 и WSA inputs → wrapper acceptance проверены.
+Далее helper 0x1445eab70 и actual job run/completion, readiness notification
+и packet Login. Системный last-error source, active mode/network и
+server-compatible session остаются открытыми.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-WINSOCK-ERROR-MAPPING.md).
+
 ## H04-connect-result: syscall boundary и bool semantics
 
 Native endpoint connect lower/wrapper проверены. Дальше engine virtual
