@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Уточнён путь результата почтового входа, 19 октября
+
+Email web flow передаёт nmidprovider/result с accessToken, а не доказанный
+здесь authorization code. Перед result требуется обработка профиля.
+12 JS fixtures и static native OnResult/dispatcher bindings сохранены.
+[Доказательства](../resource-tools/vampir/HEADLESS-NID-RESULT.md).
+Далее проверить native query validation/token adoption; реального входа нет.
+
 ## Локальный план входа NID по почте, 19 октября
 
 Из сохранённых публичных HTML/JS подтверждены endpoint, поля и RSA encoding.

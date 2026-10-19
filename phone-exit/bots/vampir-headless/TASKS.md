@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04 — email result path уточнён. Обычная web ветка проходит
+profile processing → nmidprovider/result с accessToken. Отдельный signin/
+authorization_code не подставлять вместо неё. 12 JS fixtures и native static
+OnResult/14 initializer bindings сохранены; четыре targeted tests прошли.
+[Источники](../resource-tools/vampir/HEADLESS-NID-RESULT.md).
+Следующая зависимость: native OnResult query parser/resultCode validation,
+token adoption/SendSignInCallback → SDK session → game Login.
+По просьбе пользователя создан bot-test@vampir.top (100 МБ) в DirectAdmin;
+доставка писем и регистрация Netmarble не проверены. Пароль не хранить в Git.
+
 19 октября: H04 остаётся частичным. Найдены отдельные legacy EmailAuth/NID
 SDK ветки и публичный NID web contract. Общий encrypted request plan готов
 локально; POST, reCAPTCHA acquisition, response/callback не выполнялись.

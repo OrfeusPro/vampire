@@ -1,5 +1,13 @@
 # Vampir: где искать данные
 
+## Email result: web replay и compiled dispatcher, 19 октября
+
+inspect-nid-auth-result.py проверяет сохранённый web snapshot и исполняет
+выбранные helpers с synthetic state. build-headless-nid-result.py сохраняет
+OnDeepLink/OnResult и 14 global initializer bindings из pinned EXE.
+[Отчёты, SHA256 и ограничения](HEADLESS-NID-RESULT.md). Новых запросов нет.
+Native token adoption и SDK session пока не доказаны.
+
 ## Публичный NID web snapshot и email contract, 19 октября
 
 capture-netmarble-auth-web.py сохраняет HTML и объявленный module script;

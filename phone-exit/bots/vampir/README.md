@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Почтовый вход передаёт отдельный NID result, 19 октября
+
+Проверены выбранные JS helpers: четыре комбинации refresh policy и восемь
+переходов authType/profile gate. Email branch передаёт accessToken через
+nmidprovider/result после обработки профиля; authorization_code не подставлять.
+В EXE найден OnResult и 14 связей globals → initializer literals. Это static
+native evidence, принятие токенов SDK ещё не проверено.
+[Источники и воспроизведение](../resource-tools/vampir/HEADLESS-NID-RESULT.md).
+Далее native OnResult parsing/validation/token adoption → SDK/game session.
+
 ## Найден контракт входа NID по почте, 19 октября
 
 Публичные HTML/JS по authWebViewUrl из GMC2 сохранены с SHA256 вне Git.
@@ -8,7 +18,7 @@ reCAPTCHA action members_signin и заголовки interceptor. Общий ni
 готовит только локальный зашифрованный план запроса; login POST не выполнялся.
 Legacy FEmailAuth и Netmarble ID разобраны отдельно, выбор провайдера игрой
 ещё не доказан. [Источники, воспроизведение и границы](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
-Далее: ответ входа → callback → authorization code → SDK/game session.
+Уточнение следующего этапа: email result → native OnResult → SDK/game session.
 
 ## Получена и разобрана реальная GMC2-конфигурация SDK, 19 октября
 

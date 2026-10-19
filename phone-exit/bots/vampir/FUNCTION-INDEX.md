@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## NID email result и native dispatcher, 19 октября
+
+Web W → doneSignInDeepLink → nmidprovider/result; channelKey=mailUserKey,
+accessToken/refreshToken/netmarbleId/joinedCountryCode. Profile gate обязателен
+в обычной ветке. 12 JS fixtures, profile/policy/delivery заменены явными captures.
+Native OnDeepLink 1450ed4f0: result global 14b564508 → call 1450ed92b →
+OnResult 1450ee6b0; signin отдельно → OnSignIn 1450f08a0. 14 initializer
+bindings подтверждены статически; native handlers не исполнялись.
+[Byte offsets/SHA/ограничения](../resource-tools/vampir/HEADLESS-NID-RESULT.md).
+
 ## NID email и отдельная legacy EmailAuth, 19 октября
 
 EXE index: 19 symbols, 20 проверенных LEA, 18 roots; native execution здесь нет.

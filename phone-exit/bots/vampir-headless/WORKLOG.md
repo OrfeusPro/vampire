@@ -1,5 +1,23 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — email result path и native OnResult binding
+
+После 9fd66fd проверен сохранённый public JS, новых запросов нет.
+Почтовый вход: profile processing → W → doneSignInDeepLink → result command.
+Это отдельная ветка с accessToken; прежний следующий шаг через обязательный
+authorization_code уточнён. Получение профиля и policy checks нельзя пропускать.
+Четыре refresh/query fixtures и восемь dispatch fixtures исполнены из actual
+helpers; profile/policy/delivery/timer fixtures явно ограничены.
+В pinned EXE выделен OnResult 1450ee6b0, найден caller 1450ed92b и 14 global
+initializer bindings. Native handlers ещё не исполнялись. Четыре targeted
+теста прошли. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-RESULT.md).
+По отдельной просьбе пользователя в DirectAdmin создан bot-test@vampir.top,
+квота 100 МБ. Success page и строка списка проверены браузером; пароль оставлен
+на вкладке подтверждения, в репозиторий не записан. Доставка писем и Netmarble
+registration/login не проверены. Далее native result validation/token/session.
+Полный набор: 254/254 теста, 162,1 с. Синтаксис трёх Python-файлов,
+UTF-8 семи документов, 336 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — публичный NID email contract и локальный план входа
 
 После b8582e0 сохранён EXE index: 19 symbols / 20 LEA / 18 roots, без native
