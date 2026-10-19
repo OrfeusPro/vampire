@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: socket ready → transport recipient
+
+10 native scenarios связали две broadcasts с OnTcpPeerConnected и
+owner callback gate. Source constructor/registration/table/diagnostic bindings
+проверены. Три новых и шесть смежных tests прошли. Runtime не менялся; полного suite не было.
+Owner target/endpoint/configuration fixtures, actual session/network нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md).
+
 ## 19 октября: socket option translation
 
 8 native integrations и 95 direct selector calls: engine slot+0x60

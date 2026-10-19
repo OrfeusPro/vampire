@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Socket readiness → OnTcpPeerConnected
+
+0x1445de8b0/action virtual+0x10 → interface P+0x50/0x1445e8900 →
+peer broadcast/action virtual+0x18 → P+0x200/0x144aac520. Diagnostic name
+NnPeerImpl::OnTcpPeerConnected, owner P+0x308 virtual+0x60 остаётся capture.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md).
+
 ## Socket engine option getter → getsockopt
 
 Vtable 0x149504668 slot+0x60 → 0x1445f0b10 → IAT0x148945b30,

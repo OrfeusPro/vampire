@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Socket ready → transport recipient, 19 октября
+
+10 native scenarios связали completion code1 с двумя broadcasts и
+NnPeerImpl::OnTcpPeerConnected. Проверены peer flag, transport resets
+и gated owner virtual+0x60. Owner target/packet Login ещё capture; сети нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md).
+
 ## Socket error option: engine → getsockopt, 19 октября
 
 Восемь native integrations заменили option capture реальным engine body.

@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-ready-notification: transport recipient исполнен
+
+Completion code1 → socket listener → peer broadcast → OnTcpPeerConnected
+и owner virtual+0x60 call site проверены. Далее actual owner P+0x308/+0x310
+vtable/target → packet Login; endpoint/configuration/retry ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md).
+
 ## H04-socket-option: actual engine body проверен
 
 Raw level/option translation → getsockopt и readiness gates исполнены.

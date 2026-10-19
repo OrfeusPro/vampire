@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Socket ready notification replay
+
+replay-socket-ready-notification.py: 10 native scenarios, две реальные
+рассылки и transport recipient, source-bound constructor/registration/vtables.
+Owner callback, configuration/endpoint helpers остаются captures/fixtures.
+[Источники, SHA и границы](HEADLESS-SOCKET-READY-NOTIFICATION.md).
+
 ## Socket error option replay
 
 replay-socket-error-option.py: 8 native readiness integrations и 95 direct
