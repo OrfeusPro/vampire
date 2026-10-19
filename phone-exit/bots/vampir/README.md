@@ -4,6 +4,16 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Выбор сервера и поля лобби из CDN, 19 октября
+
+Установлено назначение 145661a70: _SetServerList. select_server/type выбирает
+первый ASCII-case-insensitive match в server_list. Читаются detail/lobbyAddress,
+lobbyPort, patchURL, dataURL. 31 replay, включая целую функцию для 30 входов.
+Общий select_cdn_server возвращает отдельный raw detail plan без globals;
+missing fields — None, без наследования адресов другого аккаунта.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SERVER-LIST.md).
+Реальные config values, пригодность endpoint и подключение ещё не проверены.
+
 ## JSON CDN и поле окружения SDK, 19 октября
 
 12 native slices уточнили parser/object → fallback/ReadJson и обязательную

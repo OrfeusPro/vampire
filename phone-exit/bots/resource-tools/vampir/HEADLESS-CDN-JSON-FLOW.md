@@ -72,6 +72,7 @@ selection, ошибки encrypted JSON, отсутствие обязатель�
 policy, Unicode/duplicates/numbers/depth/items/body limits и trailing bytes.
 Данные только искусственные; реального CDN запроса и входа аккаунта не было.
 
+Назначение следующей функции: [SetServerList и lobby details](HEADLESS-CDN-SERVER-LIST.md).
 Далее: содержание всего ReadJson и проверки `0x145661a70`, реальные config
 values/URL и полный startup order, native crypto primitives/Android backend,
 TLS и остальные HTTP response modes. `network_ready=false`.

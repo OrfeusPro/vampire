@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: server_list и raw lobby detail plan
+
+После d2b26cc установлен diagnostic _SetServerList у 145661a70. Type-load slice
+select_server/type → config+28 и 30 whole SetServerList executions (31 cases
+всего) подтвердили первый ASCII-fold match и четыре detail fields. Native
+comparator/moves/port _wtoi исполнялись; JSON/FString/diagnostic helpers — shims,
+reference-control pointers — zero fixtures. Missing fields сохраняют прежнее
+synthetic состояние; shared raw plan вместо него возвращает None без globals.
+Полный набор: 195/195 тестов, 106,2 с. Синтаксис трёх Python-файлов,
+кодировка Markdown, 290 относительных ссылок и git diff --check прошли.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SERVER-LIST.md).
+Actual config/endpoint readiness/full ReadJson/startup/auth handoff ещё открыты.
+
 ## 19 октября 2026 — H04b-CDN: JSON document → SDK environment
 
 После 2b433c7 исполнены 12 native parser-return/object/ReadJson/validation

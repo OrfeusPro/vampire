@@ -1,5 +1,18 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN _SetServerList и lobby details, 19 октября: H04b partial
+
+ReadJson 14565a6b8..a753: select_server/type → config+28. Whole 145661a70
+_SetServerList: server_list → first ASCII-fold type match → detail fields.
+Lookups lobbyAddress 145661ded / lobbyPort 145661fa7 / patchURL 145662105 /
+dataURL 14566225f → FString config+d0/e0/f0/100. Comparator 1414596e0 и fold
+table native; actual CRT _wtoi at 1456623bf. 31 replays, 30 whole SetServerList;
+JSON/FString/diag shims,
+zero refcount-control fixtures. Missing fields preserve synthetic old strings.
+Shared CdnServerSelection/select_cdn_server: isolated raw plan, missing=None,
+no globals/port coercion/readiness. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SERVER-LIST.md).
+Actual config/endpoint validity/connection и полный ReadJson ещё открыты.
+
 ## CDN JSON result/ReadJson branches, 19 октября: H04b partial
 
 145642c79..2c88: native parser-return + object-pointer branch, 4 fixtures.
