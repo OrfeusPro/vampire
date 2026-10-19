@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Connected callback → PktVersion/ID1
+
+Game0x1467a9cd0 → ctor0x1456d53b0 → table0x1498d6990; name PktVersion,
+ID1, writer0x1456e5cf0. Wrapper send slot38 → 0x1467aaa10 capture.
+Raw field+0x98=207; смысл значения и getter semantics ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md).
+
 ## Делегат OnTcpPeerConnected → game callback
 
 Tail0x144aaae8d → allocator0x1414276b0 → table0x14900a528 slot60

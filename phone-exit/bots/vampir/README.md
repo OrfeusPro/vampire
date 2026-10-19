@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Первый connected packet — PktVersion, 19 октября
+
+6 native scenarios исполнили game callback и constructor PktVersion/ID1,
+передав packet в source-bound send target. Raw fields и test getters разделены.
+Сначала обмен версиями; Login здесь не исполняется. Wire/server response открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md).
+
 ## Connected delegate → игровой получатель, 19 октября
 
 12 native scenarios связали constructor tail, delegate allocator wrapper,

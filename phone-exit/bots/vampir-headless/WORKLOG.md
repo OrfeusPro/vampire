@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: connected callback → PktVersion
+
+6 native scenarios исполнили game body/packet constructor; первый packet
+PktVersion/ID1, send target capture. Проверены raw fields, empty/Unicode/max
+DWORD и send-false/gate; три новых и шесть смежных tests прошли. Getter meanings/wire/session
+открыты. Runtime не менялся; полного suite не было; сеть/game/profile не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md).
+
 ## 19 октября: connected delegate → game target
 
 12 native scenarios исполнили binding slice/allocator wrapper/bridge/action.

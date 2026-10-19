@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-connected-packet: сначала PktVersion
+
+Game callback строит PktVersion/ID1 и вызывает send0x1467aaa10. Далее
+send/writer/VersionResult → Login; реальные источники raw fields и weekly
+version inputs ещё открыты. Live negotiation/session не доказаны.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md).
+
 ## H04-connected-delegate: игровой target связан
 
 Native binding/bridge → game0x1467a9cd0 подтверждены. Далее тело получателя,

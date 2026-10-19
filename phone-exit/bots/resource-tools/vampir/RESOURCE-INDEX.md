@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Connected version packet replay
+
+replay-connected-version-packet.py: 6 native scenarios, actual game callback
+и PktVersion ctor/name/ID/send binding. Getters/string primitives/send fixtures;
+packet writer и VersionResult/Login не исполнялись.
+[Источники, SHA и границы](HEADLESS-CONNECTED-VERSION-PACKET.md).
+
 ## Transport connected delegate replay
 
 replay-transport-connected-delegate.py: 12 native scenarios, constructor tail,
