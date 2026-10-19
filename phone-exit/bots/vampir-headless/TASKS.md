@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04 получил 22 native OnResult caller/copy fixtures. Подтверждены
+caller gates и раздельные access/refresh/ID/country settings arguments; missing
+и empty различаются. Parser/channel return fixtures не доказывают accepted
+numeric syntax или email enum. Settings/callback ещё не исполнялись.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-VALIDATION.md).
+Следующая зависимость: parser 1415dea40/channel mapper 14452b060 и query parser,
+затем setters/persistence и post-adoption call 1450ef437 → SDK/game session.
+
 19 октября: H04 — email result path уточнён. Обычная web ветка проходит
 profile processing → nmidprovider/result с accessToken. Отдельный signin/
 authorization_code не подставлять вместо неё. 12 JS fixtures и native static

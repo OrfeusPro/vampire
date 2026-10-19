@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## OnResult validation/adoption caller, 19 октября
+
+Native slice 1450ee94a..1450ef437 и copy 141420cc0: 22 fixtures.
+resultCode presence/length → parser ok+zero → mode bit gate → fields/channel
+→ settings captures. Access 14454a480, ID 14454ba20, channel 14454a870,
+refresh 14454c470; country assignment receiver settings+b0.
+Missing versus empty проверены отдельно. Integer/channel returns — fixtures,
+setters/persistence/callback не исполнены.
+[Подробности и SHA](../resource-tools/vampir/HEADLESS-NID-VALIDATION.md).
+
 ## NID email result и native dispatcher, 19 октября
 
 Web W → doneSignInDeepLink → nmidprovider/result; channelKey=mailUserKey,

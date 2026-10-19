@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## OnResult native validation replay, 19 октября
+
+replay-nid-result-validation.py: 22 synthetic fixtures, настоящие caller branch/
+copy instructions; map/hash/parser/channel/SDK dependencies явно ограничены.
+Сохранены missing/empty outcomes и раздельные settings arguments.
+[Отчёт, SHA и границы](HEADLESS-NID-VALIDATION.md). Аккаунт/сеть не используются.
+
 ## Email result: web replay и compiled dispatcher, 19 октября
 
 inspect-nid-auth-result.py проверяет сохранённый web snapshot и исполняет

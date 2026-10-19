@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Проверки OnResult подтверждены с явными dependencies, 19 октября
+
+22 native fixtures проверили caller gates и подготовку раздельных token/ID/
+country settings calls. Пустой refreshToken проходит; отсутствие поля — отдельный
+fixture outcome. Integer/channel returns и map/settings заменены shims/captures.
+[Источник и ограничения](../resource-tools/vampir/HEADLESS-NID-VALIDATION.md).
+Реальной SDK/game session нет. Далее parser/channel/query/setters/callback.
+
 ## Уточнён путь результата почтового входа, 19 октября
 
 Email web flow передаёт nmidprovider/result с accessToken, а не доказанный

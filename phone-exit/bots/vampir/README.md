@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Native OnResult: проверки и аргументы принятия токенов, 19 октября
+
+22 fixtures исполнили caller validation/adoption slice и FString copy.
+Access/refresh/ID/country передаются раздельно; пустой refreshToken допустим,
+отсутствующий ключ не равен пустому. Missing fields сохранили null-read outcome
+в fixture map contract, без заявления о crash живой игры. Parser/channel/map/
+settings остаются явными shims/captures.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-VALIDATION.md).
+Далее parser/channel/query semantics, setters/callback → SDK/game session.
+
 ## Почтовый вход передаёт отдельный NID result, 19 октября
 
 Проверены выбранные JS helpers: четыре комбинации refresh policy и восемь

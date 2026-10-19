@@ -1,5 +1,24 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — native OnResult caller validation и adoption arguments
+
+После fb522c3 исполнен slice 1450ee94a..1450ef437 и copy constructor 141420cc0.
+22 fixtures: missing/empty каждого поля, integer return failure/nonzero,
+channel return zero и несколько owner auth mode values. Map/hash/allocation/
+memcpy/parser/channel/getters — explicit shims, settings/country — captures.
+Missing access/refresh/channel/ID/country при map return -1 дали null-read
+address 0x18; записан fixture outcome, не заявлен crash живого клиента.
+Изначальный copy shim, подменявший missing refresh пустой строкой, заменён
+исполнением настоящего copy constructor до сохранения итогового evidence.
+Пустой refreshToken достигает settings call; остальные обязательные empty
+поля отклоняются. Access/refresh/ID/country идут в разные settings calls;
+точные setter diagnostics сохранены статически. До callbacks replay остановлен.
+Четыре targeted tests прошли. Новых сетевых запросов/аккаунтов нет.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-VALIDATION.md).
+Далее реальный parser/channel/query, setters/persistence/callback/session.
+Полный набор: 258/258 тестов, 169,3 с. Синтаксис двух Python-файлов,
+UTF-8 семи документов, 341 относительная ссылка и diff check прошли.
+
 ## 19 октября 2026 — email result path и native OnResult binding
 
 После 9fd66fd проверен сохранённый public JS, новых запросов нет.
