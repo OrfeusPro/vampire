@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-response-gates: native boundaries partial
+
+18 native cases связали response raw predicates/body/status getters, JSON
+object/errorCode gates и field traversal. _wtoi исполнился в actual Windows
+CRT; JSON/variant — fixtures. Далее native numeric variant conversion,
+error dispatch, idpInfo/final callback/IsSignIn/SDK →game session.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md).
+
 ## H04-SDK-response: field mapping partial
 
 13 native cases и auth constructor подтвердили playerInfo/player keys,

@@ -5,6 +5,9 @@
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Image base 0x140000000; исходного C++ проекта нет.
 
+Дополнение: [response predicates/JSON/errorCode gates](HEADLESS-SDK-RESPONSE-GATES.md)
+связаны с field slice отдельным replay; variant conversion и callback финал открыты.
+
 ## Evidence и native replay
 
 Инструмент `replay-sdk-sign-in-response-fields.py` →

@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## SDK response gates связаны с field traversal, 19 октября
+
+18 native cases: actual raw predicates/body/status getters → JSON/object
+gate → string errorCode/_wtoi → player fields. CRT импорт и DLL SHA проверены.
+Variant/JSON conversions fixtures; numeric JSON errorCode и error dispatch
+ещё открыты. Slice completion не равен login/session.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md).
+
 ## SDK response player fields, 19 октября
 
 13 native response-slice fixtures связали resultData.accessToken с SDK

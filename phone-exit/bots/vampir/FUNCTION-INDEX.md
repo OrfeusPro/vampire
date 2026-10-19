@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Response predicates/JSON/errorCode
+
+[Native SDK response gates](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md)
+связаны с player traversal. _wtoi допускает malformed zero strings; общий
+response parser не подключён. Numeric JSON variant, full error dispatch
+и session acceptance ещё открыты.
+
 ## SDK SignIn response: player и token
 
 [Native response field slices](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md):

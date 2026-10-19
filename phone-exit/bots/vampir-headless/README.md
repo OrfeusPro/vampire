@@ -1,5 +1,11 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK response gate replay, 19 октября
+
+Native predicates/body/status →JSON/errorCode →player fields проверены
+на 18 cases; JSON/variant fixtures и actual Windows _wtoi. Полный callback
+и session не завершены. [Source/SHA](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md).
+
 ## SDK sign-in response mapping, 19 октября
 
 Native slices связали SDK token и nested player fields с соответствующими

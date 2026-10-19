@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: SDK response gates
+
+18 native cases связали predicates/body/status/JSON/errorCode →player slice.
+4 leaf helpers исполнены. _wtoi IAT подтверждён, вызван actual local CRT с SHA.
+String errorCode domain явно ограничен: JSON/variant fixtures, numeric JSON
+path не выдан за готовый. Три теста OK, auth POST/storage/keys не использованы.
+Также прошли 7 смежных response/request tests; 444 относительных
+Markdown-ссылок и git diff --check проверены. Runtime не менялся, полный
+suite последнего runtime milestone 296/296 не повторялся.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md).
+
 ## 19 октября: SDK sign-in response fields
 
 Native auth constructor и response field slice проверены на 13 cases.

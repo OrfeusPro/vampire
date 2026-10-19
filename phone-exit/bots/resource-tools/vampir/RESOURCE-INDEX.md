@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## SDK response validation gates
+
+replay-sdk-sign-in-response-gates.py: 18 native cases, 4 leaf getters/predicates
+и actual Windows _wtoi import. Variant converter только static, JSON fixtures.
+[Source/SHA/границы](HEADLESS-SDK-RESPONSE-GATES.md).
+
 ## SDK sign-in response field traversal
 
 replay-sdk-sign-in-response-fields.py: auth constructor и 13 native status/
