@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## PktLogin: SDK поля разделены, 19 октября
+
+16 native scenarios исполнили Login constructor/assignments и cached SDK
+getters. NetmarbleId → packet+0x30, SDK token →+0xa0, server ID →+0xb0.
+Старый token cache может сохраниться. Request handoff capture; сети ещё нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md).
+
 ## VersionResult → Login routine, 19 октября
 
 39 native scenarios связали ID2/reader17 bytes/handler/result gate с

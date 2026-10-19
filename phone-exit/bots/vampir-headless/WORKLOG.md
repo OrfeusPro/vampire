@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: Login constructor/SDK поля
+
+16 native scenarios, три новых и шесть смежных tests прошли. Native constructor/cached
+getters/assignments разделили NetmarbleId и SDK token, показали old-cache
+path. Handoff capture, без writer/network. Runtime не менялся; full suite379
+не повторялся. Реальные profile/credentials не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md).
+
 ## 19 октября: VersionResult → Login entry
 
 39 native scenarios read/dispatch/handler/bounded gate проверили переход

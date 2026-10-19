@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-fields: constructor и SDK consumers проверены
+
+Native Login prefix разделяет NetmarbleId/token/server fields и доходит
+до request handoff. Далее writer/encoding и handoff0x144aa8020 → send,
+device/profile input sources и полный SDK response→Login ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md).
+
 ## H04-version-result: native переход к Login entry
 
 VersionResult reader/handler/gate → 0x1467a9700 проверены. Далее actual

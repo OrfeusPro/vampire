@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Login preparation и SDK field consumers
+
+0x1467a9700 → ctor0x1456d4c80 → handoff0x144aa8020. GetNetmarbleId
+0x145604b90/0x144524940 → packet+0x30; module+0x78 accessor0x1456039c0
+→ packet+0xa0. Actual server getter0x144aaaa10 → packet+0xb0.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md).
+
 ## VersionResult reader/handler → Login entry
 
 Table0x1498d69f0 ID2 reader0x1456d9b10, handler0x146768360 через

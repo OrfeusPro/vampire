@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Login packet field replay
+
+replay-login-packet-fields.py: 16 native scenarios prefix/constructor/cached
+SDK getters/field copies. Source NetmarbleId/token consumers разделены;
+string/policy/collector/handoff fixtures, old cache не fresh auth proof.
+[Источники, SHA и границы](HEADLESS-LOGIN-PACKET-FIELDS.md).
+
 ## VersionResult native handler replay
 
 replay-version-result-handler.py: 39 scenarios ID2/read17/Dispatch/handler/
