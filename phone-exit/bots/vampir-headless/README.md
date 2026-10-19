@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Response variant converter, 19 октября
+
+Native string/number-string conversion подтверждена в 10 fixtures с actual
+vtable target и CRT. Parser/type selection остаётся fixture boundary.
+Далее idpInfo/final callback и связь SDK session с game Login.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-VARIANT.md).
+
 ## SDK response gate replay, 19 октября
 
 Native predicates/body/status →JSON/errorCode →player fields проверены

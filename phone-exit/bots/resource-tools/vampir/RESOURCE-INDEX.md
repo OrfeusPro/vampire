@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## Native response variant/string conversion
+
+replay-sdk-response-variant.py: 10 cases, реальный converter/AsString/
+TryGetString и _wtoi. JSON object/factory selection/FString assignment fixtures.
+[Source/SHA/границы](HEADLESS-SDK-RESPONSE-VARIANT.md).
+
 ## SDK response validation gates
 
 replay-sdk-sign-in-response-gates.py: 18 native cases, 4 leaf getters/predicates

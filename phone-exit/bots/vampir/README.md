@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Native response variant conversion, 19 октября
+
+10 cases исполнили converter/AsString/actual virtual TryGetString и CRT.
+String и number-string representations связаны с source factories/vtables.
+JSON parser type selection и double/bool/прочие ветви ещё открыты.
+Далее idpInfo и final callback/SetSignIn →SDK/game session.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-VARIANT.md).
+
 ## SDK response gates связаны с field traversal, 19 октября
 
 18 native cases: actual raw predicates/body/status getters → JSON/object

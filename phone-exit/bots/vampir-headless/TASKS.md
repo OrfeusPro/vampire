@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-response-variant: conversion boundary reduced
+
+10 native cases проверили converter/AsString/real TryGetString/CRT для
+string и number-string fixtures. Три regression tests OK. Native JSON parser
+и double/bool/другие variants открыты. Далее idpInfo/final callback/SetSignIn
+и SDK token →game Login, затем полный runtime authorization boundary.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-VARIANT.md).
+
 ## H04-response-gates: native boundaries partial
 
 18 native cases связали response raw predicates/body/status getters, JSON

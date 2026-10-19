@@ -11,6 +11,10 @@ SHA256 `0d5f378d45acd0c846a39f7f0c47c2b2ba2cadfbf6978903b77b5fb012b8edbf`.
 Report ссылается SHA на прежние response fragments/constructor; сохраняет
 leaf bytes/file offsets/SHA, import descriptors и статический variant converter.
 
+Дополнение: [variant converter и actual virtual TryGetString](HEADLESS-SDK-RESPONSE-VARIANT.md)
+проверены в отдельном replay для string/number-string representations;
+полный parser selection и прочие value classes ещё открыты.
+
 ## Что исполнялось
 
 Native цепочка `0x1444cc2e9` → response predicates → body/status getters →

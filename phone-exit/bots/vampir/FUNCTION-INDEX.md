@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## errorCode variant conversion
+
+[Native converter и vtable dispatch](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-VARIANT.md):
+source-bound tag2 string/tag3 number-text →native TryGetString →CRT.
+Parser selection и double fallback не доказаны. Это не полный SDK success
+contract; далее idpInfo/final callback/session.
+
 ## Response predicates/JSON/errorCode
 
 [Native SDK response gates](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md)
