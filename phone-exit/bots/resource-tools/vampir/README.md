@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## CharacterListRead caller, 20 октября
+
+build-selection-service-callers.py использует существующий E8 scanner.
+replay-character-list-caller.py исполняет 32 случая actual caller → getter →
+slot90 → RequestA/constructor/send capture. Ghidra: 80 функций/44 предупреждения.
+[Источники, SHA и ограничения](HEADLESS-CHARACTER-LIST-CALLER.md).
+
 ## Selection lifecycle, 20 октября
 
 Пакетный экспорт Ghidra: 76 функций/42 предупреждения. Новый replay проверяет

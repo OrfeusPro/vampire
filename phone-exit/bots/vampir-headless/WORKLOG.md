@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: caller RequestA/slot90 подтверждён
+
+Проверено 505 direct getter calls, 16 candidates unresolved, 9 roots не
+декодировались. Найден caller 0x1468f1d70. 32 native cases исполнили caller →
+getter → slot90 → RequestA/constructor/send capture. Owner/lifecycle неизвестны.
+Ghidra: 80 функций/44 предупреждения. Девять тестов прошли: три новых,
+три CharacterList boundary и три Ghidra. Проверены 1311 локальных ссылок,
+битых нет; полный набор тестов не повторялся. Runtime/network не менялись.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
+
 ## 20 октября: selection lifecycle и virtual38 callback
 
 Экспорт Ghidra расширен до 76 функций/42 предупреждений. Проверены 7 значений

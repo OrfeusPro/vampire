@@ -50,7 +50,10 @@ SEEDS=[
  ('SelectionLifecycle_WorldEvent',0x14561b000),
  ('SelectionLifecycle_StateDispatch',0x145619e40),
  ('SelectionLifecycle_Virtual70',0x145dc2930),('SelectionLifecycle_Virtual38',0x145dbbb10),
- ('SelectionLifecycle_Virtual78',0x145dbcbe0)]
+ ('SelectionLifecycle_Virtual78',0x145dbcbe0),
+ ('SelectionLifecycle_Complete',0x14561a8d0),('SelectionLifecycle_Base78',0x14560d7b0),
+ ('SelectionLifecycle_DelegateComplete',0x145dc5ae0),
+ ('SelectionLifecycle_Request90Caller',0x1468f1d70)]
 
 
 def build():

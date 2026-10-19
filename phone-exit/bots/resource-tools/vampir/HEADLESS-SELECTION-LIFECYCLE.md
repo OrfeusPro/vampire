@@ -2,6 +2,9 @@
 
 20 октября 2026. Анализ кода установленного клиента, без запуска игры.
 
+Продолжение: [caller slot90 найден отдельно](HEADLESS-CHARACTER-LIST-CALLER.md).
+Ниже сохранены результаты и границы первоначального этапа.
+
 ## Источник и воспроизведение
 
 EXE: `C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe`.

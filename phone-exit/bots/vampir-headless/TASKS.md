@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-request-caller: найти owner и его policy
+
+Выполнено: direct getter caller scan, actual caller 0x1468f1d70 и 32 native
+cases до RequestA/send capture. Следом owner/vtable, actual virtual+a18,
+lifecycle policy1 и связь с CharacterSelect_02. Response102/network/live session
+остаются открытыми.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
+
 ## H04-lifecycle: найти emitter и продолжение slot78
 
 Выполнено: source-bound Ghidra экспорт lifecycle, 7 event cases и leaf callback.

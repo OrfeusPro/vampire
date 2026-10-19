@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Найден caller CharacterListRead slot90, 20 октября
+
+Функция 0x1468f1d70 при втором owner virtual+a18 == 1 вызывает
+selection service slot90 → RequestA → actual packet constructor/send capture.
+32 native cases; owner class/lifecycle ещё не установлены. Ghidra: 80 функций,
+44 предупреждения.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
+
 ## Selection lifecycle: обработчики событий, 20 октября
 
 Проверены 7 native event cases и singleton callback → virtual38.

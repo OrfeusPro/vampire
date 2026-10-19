@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CharacterListRead caller, 20 октября
+
+0x1468f1e48 → getter 0x1456048e0; 0x1468f1e53 → service slot90.
+Полный caller 0x1468f1d70 исполнен на 32 fixtures: второе policy value1
+ведёт в actual RequestA/constructor и send capture; первое value2 отдельно
+вызывает slot98/owner a00. Owner type и enum names неизвестны.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
+
 ## Selection lifecycle, 20 октября
 
 Slot08 → 0x14560e7d0 регистрирует callbacks 0x14561af60/0x14561b000.

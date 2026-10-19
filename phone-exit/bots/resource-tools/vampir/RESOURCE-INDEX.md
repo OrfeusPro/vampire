@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Прямой caller slot90, 20 октября
+
+Существующий E8 scanner: 505 checked getter calls, 16 unresolved, 9 root
+decode failures. Найден caller 0x1468f1d70. Новый native replay проверяет
+32 комбинации до actual RequestA/constructor/send capture.
+[Источники, SHA и ограничения](HEADLESS-CHARACTER-LIST-CALLER.md).
+
 ## Selection lifecycle: общий результат, 20 октября
 
 Ghidra export расширен до 76 функций/42 предупреждений.

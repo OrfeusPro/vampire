@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## CharacterListRead: caller RequestA найден, 20 октября
+
+32 native cases связывают 0x1468f1d70 → singleton → slot90 → RequestA →
+packet constructor/send capture при втором policy value1. Owner/lifecycle,
+response102 и live session остаются открытыми.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
+
 ## Selection lifecycle: callbacks, 20 октября
 
 8 native cases подтверждают state40/dispatch/broadcast и singleton virtual38.
