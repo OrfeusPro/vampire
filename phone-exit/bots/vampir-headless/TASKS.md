@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-SDK-response: field mapping partial
+
+13 native cases и auth constructor подтвердили playerInfo/player keys,
+SDK accessToken assignment и optional field preservation. Три regression
+tests прошли. Далее network/JSON/errorCode validation до slice, idpInfo
+и final callback/IsSignIn/expiry/SDK →game session. Runtime response parser
+пока не подключён. [Source/SHA](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md).
+
 ## H04: следующий приоритет — SDK sign-in response
 
 Migration wrappers проверены в 10 native cases; zero-tail guarantee отсутствует

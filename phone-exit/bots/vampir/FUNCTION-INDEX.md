@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK SignIn response: player и token
+
+[Native response field slices](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md):
+resultData.accessToken →module+0x78, nested playerInfo/player fields.
+Provider token отличается от SDK token. Optional fields не очищаются caller,
+full callback/errorCode/session acceptance ещё открыты.
+
 ## Migration allocation wrappers
 
 [Native allocator chain](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md):

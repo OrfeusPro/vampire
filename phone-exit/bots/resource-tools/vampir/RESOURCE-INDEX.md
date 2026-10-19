@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## SDK sign-in response field traversal
+
+replay-sdk-sign-in-response-fields.py: auth constructor и 13 native status/
+resultData/playerInfo/player cases. Earlier errors/full callback не исполнены.
+[Отчёт/SHA/границы](HEADLESS-SDK-SIGN-IN-RESPONSE.md).
+
 ## Native migration allocation wrapper chain
 
 replay-sdk-migration-allocation.py: 10 cases native wrappers → fixture backend,

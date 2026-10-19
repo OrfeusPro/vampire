@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: SDK sign-in response fields
+
+Native auth constructor и response field slice проверены на 13 cases.
+Подтверждены nested player keys и отдельный resultData.accessToken →module78.
+JSON/settings/Save/module writes fixture captures, status source explicit
+fixture. Network/errorCode/full callback не исполнены. Три tests OK;
+реальные credentials, storage и auth POST не использованы.
+Также прошли 4 SDK request tests; 435 относительных Markdown-ссылок
+и git diff --check проверены. Runtime не менялся; полный suite последнего
+runtime milestone 296/296 повторно не запускался.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md).
+
 ## 19 октября: migration allocator wrapper chain
 
 10 native scenarios исполнили allocation/count/capacity/quantize/realloc

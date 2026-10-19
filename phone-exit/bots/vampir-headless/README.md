@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK sign-in response mapping, 19 октября
+
+Native slices связали SDK token и nested player fields с соответствующими
+settings/module captures. Это ещё не полный response acceptance или session.
+Далее network/errorCode validation и завершение callback.
+[Source/SHA](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md).
+
 ## Migration wrappers и приоритет SDK response
 
 Native wrappers не гарантируют zero padding; real allocator остаётся открытым.

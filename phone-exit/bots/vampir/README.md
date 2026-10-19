@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## SDK response player fields, 19 октября
+
+13 native response-slice fixtures связали resultData.accessToken с SDK
+module token, а playerInfo/player — с playerId/country/region/status.
+Constructor keys исполнены, JSON/settings/storage — fixtures/captures.
+Network/errorCode gates и полный callback/session ещё открыты.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md).
+
 ## Migration allocator wrappers: граница уточнена, 19 октября
 
 10 native scenarios подтвердили: проверенные allocation wrappers не обнуляют
