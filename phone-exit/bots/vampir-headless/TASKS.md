@@ -6,6 +6,12 @@
 H03a codec находится в `vampir-shared/vampir_core`, без копии в сетевом боте.
 Не создавать подагентов без прямой просьбы пользователя.
 
+19 октября: H04b startup callback уточнён. FNnNetworkVar loader вызывается
+сразу при registration, до registry insertion (8 native fixtures).
+Найдены owner factory/vtable и отдельная patch init chain. Следующая зависимость:
+module load → PAK mount → GConfig Game cache/overrides.
+[Источники и ограничения](../resource-tools/vampir/HEADLESS-CONFIG-STARTUP.md).
+
 19 октября: H04b получил оба Game config слоя с проверенными хешами.
 Base 1.12.14/real/True отличается от patch 0.1.1/dev/False.
 Следующая незавершённая зависимость — порядок startup/mount/GConfig cache

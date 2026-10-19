@@ -4,6 +4,14 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## NetworkSetting читается при регистрации callback, 19 октября
+
+Прослежены factory/vtable владельца → FNnNetworkVar → callback → загрузчик
+Game config. Восемь native slices подтвердили немедленный вызов callback
+до вставки в реестр; тело загрузчика и вставка — capture shims.
+[Источники, воспроизведение и ограничения](../resource-tools/vampir/HEADLESS-CONFIG-STARTUP.md).
+Порядок относительно PAK mounting/GConfig cache ещё открыт; active слой не выбран.
+
 ## Основной Game config отличается от patch-слоя, 19 октября
 
 Отдельно проверен ProjectRED-Windows.pak: подтверждены каталоги и 12425 имён,

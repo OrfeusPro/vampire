@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## NetworkVar registration и немедленный config load, 19 октября
+
+Factory 144aa5810 → vtable 14961a318 slot+8 → owner 144aa4810 →
+144aa6e70/FNnNetworkVar → helper 1445cd6c0. Native slice 1445cd6f9..739
+вызывает callback до map insert 1445bb590. Actual context getter 141408910,
+thunk 144aa7500 → loader 144aa6f20. Восемь fixtures inline/external;
+loader/map insertion capture, TLS и полный startup не исполнены.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CONFIG-STARTUP.md).
+PAK mounting/GConfig cache/active layer остаются неизвестными.
+
 ## Base/patch Game config: расхождение источников, 19 октября
 
 Generated callback подтвердил main/full directory и основного

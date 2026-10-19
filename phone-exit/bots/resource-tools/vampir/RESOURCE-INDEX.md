@@ -6,6 +6,14 @@
 `F:/PhoneExit Resources/Vampir`. Данные клиента Windows — cooked-ресурсы,
 а не исходный проект игры. Совпадение версии с Android не подтверждено.
 
+## Startup callback конфигурации, 19 октября
+
+Найден владелец FNnNetworkVar и immediate callback branch registration helper.
+Восемь native fixtures подтверждают callback до registry insertion; есть
+factory/vtable/source offsets и отдельная статическая patch init chain.
+[Отчёт/инструмент/границы](HEADLESS-CONFIG-STARTUP.md).
+Module/PAK/GConfig order и active INI ещё не доказаны.
+
 ## Game config основного архива и patch, 19 октября
 
 Отдельный producer recover-base-game-config.py получил 12425 подтверждённых

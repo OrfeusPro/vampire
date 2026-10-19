@@ -1,5 +1,8 @@
 # PAK: ключ callback, каталог и упакованный Game config
 
+Продолжение startup-цепочки: [немедленный callback FNnNetworkVar](HEADLESS-CONFIG-STARTUP.md).
+Порядок загрузки base/patch этим ещё не установлен.
+
 ## Дополнение: основной архив и расхождение слоёв
 
 Инструмент [recover-base-game-config.py](recover-base-game-config.py) отдельно

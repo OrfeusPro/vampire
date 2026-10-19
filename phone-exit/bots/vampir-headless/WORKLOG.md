@@ -1,5 +1,19 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — NetworkVar callback вызывается сразу при регистрации
+
+После e100595 найдены FNnNetworkVar constructor, leaf thunk, owner factory/
+vtable и registration helper. Native slice helper, actual context getter и
+thunk исполнены в 8 inline/external fixtures: loader callback раньше map insert.
+Loader body и registry insertion — capture shims, TLS/static-init не исполнялись.
+Сохранена отдельная статическая patch init chain; порядок её вызова относительно
+NetworkVar пока неизвестен. Добавлены producer/report и четыре теста.
+Полный набор: 210/210 тестов, 117,4 с; синтаксис двух Python-файлов,
+кодировка семи Markdown-файлов, 239 относительных ссылок и diff check прошли.
+Следом module loading/PAK mounting/GConfig Game cache/reload/late overrides;
+active слой из двух INI не выбран, сетевых обращений нет.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CONFIG-STARTUP.md).
+
 ## 19 октября 2026 — base Game config и сравнение с patch
 
 recover-base-game-config.py подтвердил полный SHA основного архива, native key
