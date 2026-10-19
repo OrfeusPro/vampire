@@ -4,6 +4,15 @@
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
 
+## Основной Game config отличается от patch-слоя, 19 октября
+
+Отдельно проверен ProjectRED-Windows.pak: подтверждены каталоги и 12425 имён,
+извлечены DefaultGame.ini и WindowsGame.ini. Base NetworkSetting содержит
+AppVersion 1.12.14, prefix real, CdnConfig=True; patch pakchunk0 — 0.1.1/dev/False.
+Оба слоя сохранены с SHA и source offsets. Порядок загрузки и active settings
+ещё не доказаны; версия INI не объявляется версией релиза.
+[Инструмент, снимок и сравнение](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+
 ## Восстановлены PAK-каталог и packed Game config, 19 октября
 
 Generated key callback исполнен native; SHA1 расшифрованных main/full directory

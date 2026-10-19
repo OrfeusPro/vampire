@@ -6,6 +6,14 @@
 `F:/PhoneExit Resources/Vampir`. Данные клиента Windows — cooked-ресурсы,
 а не исходный проект игры. Совпадение версии с Android не подтверждено.
 
+## Game config основного архива и patch, 19 октября
+
+Отдельный producer recover-base-game-config.py получил 12425 подтверждённых
+путей основного ProjectRED-Windows.pak и два Game INI. Base 1.12.14/real/True
+отличается от patch 0.1.1/dev/False; WindowsGame.ini совпал.
+Оба snapshot сохранены отдельно. Порядок runtime-загрузки ещё не установлен.
+[Source/SHA/сравнение/воспроизведение](HEADLESS-PAK-CONFIG-RECOVERY.md).
+
 ## Подтверждённый каталог pakchunk0 и Game config, 19 октября
 
 Generated key callback и plaintext SHA1 main/full directories подтвердили

@@ -1,5 +1,45 @@
 # PAK: ключ callback, каталог и упакованный Game config
 
+## Дополнение: основной архив и расхождение слоёв
+
+Инструмент [recover-base-game-config.py](recover-base-game-config.py) отдельно
+проверяет `ProjectRED/Content/Paks/ProjectRED-Windows.pak`, SHA256
+`c10228ece0e1252bdd3ccf99fd4936e52d7a144f96c634080947d24c429e525b`,
+420675245 байт. Он использует тот же native key callback, bounded index/config
+парсеры и закреплённые reader/Oodle. Проверены plaintext SHA1 main/full directory,
+получены 12425 имён. Path-hash side index не используется и не проверен.
+Перед загрузкой native зависимостей проверяются источник и хеши зависимостей.
+
+Запуск: `python -X utf8 phone-exit/bots/resource-tools/vampir/recover-base-game-config.py`.
+Отдельный указатель: `F:/PhoneExit Resources/Vampir/code-clues/base-game-config-recovery.json`.
+Снимок: `F:/PhoneExit Resources/Vampir/resource-config-snapshots/393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db/manifest.json`.
+SHA256 manifest равен имени каталога. Старый patch snapshot и его указатель
+сохранены; отдельный файл ключа не создаётся, сетевых запросов нет.
+
+Base DefaultGame.ini имеет SHA256
+`7a50c4ccbdfddbf691ca4177156f4175618b9f650ac4dd40722fded013ffd792`.
+WindowsGame.ini побайтно совпал с patch-слоем, NetworkSetting в нём нет.
+В manifest сохранены source offsets, header ciphertext SHA1, payload SHA256,
+исходные строки параметров и сравнение с проверенным patch snapshot.
+
+| NetworkSetting | Основной архив | pakchunk0 обновления |
+|---|---|---|
+| AppVersion | 1.12.14 | 0.1.1 |
+| ConfigPrefix | real | dev |
+| CdnConfig | True | False |
+| CdnConfigEd | False | False |
+| CdnConfigUrl / QA | Те же базы без scheme | Те же базы без scheme |
+
+Нельзя выбирать слой по похожему на production значению. Порядок mount,
+момент заполнения GConfig cache и поздние overrides ещё не доказаны.
+`1.12.14` — значение в конкретном INI, не установленный номер всего релиза.
+`config_precedence_verified=false`, `active_runtime_settings_verified=false`,
+`network_ready=false`. Следующий шаг — доказать startup/config precedence.
+Три теста воспроизводят snapshot/различия и проверяют ранний отказ при
+изменении архива либо patch reference до загрузки native зависимостей.
+
+## Предыдущее извлечение pakchunk0
+
 19 октября 2026. Найден compiled key callback, с результатом которого совпали
 SHA1 основного и полного файлового каталогов свежего pakchunk0. Получены
 подтверждённые имена 7067 файлов и два Game INI слоя. Активное состояние

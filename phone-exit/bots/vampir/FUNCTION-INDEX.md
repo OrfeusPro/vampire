@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Base/patch Game config: расхождение источников, 19 октября
+
+Generated callback подтвердил main/full directory и основного
+ProjectRED-Windows.pak (SHA c10228ec…525b), 12425 путей. Base DefaultGame.ini:
+1.12.14/real/CdnConfig=True; patch pakchunk0: 0.1.1/dev/False.
+WindowsGame.ini совпал. Snapshot хранит полные SHA/offsets/сравнение;
+runtime precedence/GConfig cache/late overrides неизвестны.
+[Общий источник и воспроизведение](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+
 ## Generated PAK key callback и Game config recovery, 19 октября
 
 Static initializer 141291600 → binder 14155fd00 → getter 141553580; zero-GUID

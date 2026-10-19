@@ -1,5 +1,19 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — base Game config и сравнение с patch
+
+recover-base-game-config.py подтвердил полный SHA основного архива, native key
+callback и SHA1 main/full directory; 12425 имён. Два Game INI сохранены
+отдельно, старые данные не менялись. Base AppVersion=1.12.14,
+ConfigPrefix=real, CdnConfig=True отличаются от patch 0.1.1/dev/False.
+WindowsGame.ini совпадает. Три новых теста проверяют воспроизведение snapshot
+и ранний отказ при изменении источников. Полный набор: 206/206 тестов,
+117,4 с; синтаксис двух Python-файлов, кодировка Markdown, 230 относительных
+ссылок и git diff --check прошли. Номер релиза, active settings и
+runtime precedence не доказаны. Далее startup/mount/GConfig cache/overrides;
+не подменять их выбором внешне подходящего INI.
+[Source/SHA/снимок](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+
 ## 19 октября 2026 — повторная сверка обновления по сообщению пользователя
 
 Повторно запущен audit-client-release.py на установленном клиенте. Получен
