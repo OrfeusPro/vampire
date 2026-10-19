@@ -1,5 +1,8 @@
 # GMC2: native сборка URL из явных значений
 
+Следующий подтверждённый участок: [RequestGMC2 GET/header arguments](HEADLESS-GMC2-HEADERS.md).
+Virtual HTTP methods проверены captures, wire/transport ещё не исполнены.
+
 19 октября 2026. Исполнен участок RefreshSDKConstants `1444f3a68..1444f3d7d`,
 включая native version/build getters и ASCII-view append `14175be40`.
 Общий assemble_gmc2_config_url_ascii совпал с 26 native fixtures.

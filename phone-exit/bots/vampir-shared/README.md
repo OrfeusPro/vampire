@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## Offline GMC2 GET plan, 19 октября
+
+Общий vampir_core.gmc2_request.plan_gmc2_get_request: explicit URL/service/
+game/build/device, optional eTag/player/token; frozen tuple headers/repr redaction.
+16 native captures совпали. Нет I/O/device creation/credential acquisition.
+[Source и локальная input policy](../resource-tools/vampir/HEADLESS-GMC2-HEADERS.md).
+
 ## GMC2 URL assembly, 19 октября
 
 vampir_core.sdk_config.assemble_gmc2_config_url_ascii собирает только строку

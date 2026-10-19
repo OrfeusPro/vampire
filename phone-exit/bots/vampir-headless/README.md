@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Подтверждены аргументы GET и headers GMC2, 19 октября
+
+16 native fixtures проверили шесть постоянных headers, eTag/token gates
+и GET method. Общий gmc2_request.plan_gmc2_get_request хранит immutable
+headers, скрывает значения в repr, не получает/не передаёт credentials.
+[Источник и границы](../resource-tools/vampir/HEADLESS-GMC2-HEADERS.md).
+HTTP object methods — captures; device/player fixtures, вход ещё не готов.
+
 ## Подтверждена сборка URL GMC2, 19 октября
 
 Native assembly slice/getters/ASCII-view append проверены на 26 fixtures;

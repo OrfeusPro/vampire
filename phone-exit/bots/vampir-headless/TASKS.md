@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04b RequestGMC2 headers/method arguments проверены на 16 native
+fixtures с HTTP captures; общий immutable plan добавлен, без I/O/credentials
+acquisition. Следом response decode/encConstants/DECKEY/auth URL values;
+serviceCode/active device identity остаются отдельными зависимостями.
+[Доказательства](../resource-tools/vampir/HEADLESS-GMC2-HEADERS.md).
+
 19 октября: H04b native URL assembly/getters/ASCII-view append подтверждены
 26 fixtures; общий assemble_gmc2_config_url_ascii добавлен. Active inputs
 и HTTP ещё не установлены. Следом RequestGMC2 headers/response decode/DECKEY.

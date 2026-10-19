@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — RequestGMC2 header gates и offline request plan
+
+После 1c79cd1 исполнены constructor name prefix, RequestGMC2 header/method
+slice и build getter. 16 fixtures: шесть постоянных headers, eTag и token gates;
+playerId/accessToken добавляются вместе по token. Device/player getters —
+return fixtures, HTTP vtable calls — captures. Реальные профили/ключи/токены
+не читались, сети нет. Общий frozen Gmc2RequestPlan с явными inputs,
+header tuple/repr redaction/local HTTPS+ASCII budgets. Четыре теста прошли.
+Далее response decode/DECKEY/auth URL values; active service/device inputs
+и игровая сессия открыты. [Источник](../resource-tools/vampir/HEADLESS-GMC2-HEADERS.md).
+Полный набор: 230/230 тестов, 168,0 с; синтаксис трёх Python-файлов,
+кодировка девяти Markdown-файлов, 357 относительных ссылок и diff check прошли.
+
 ## 19 октября 2026 — GMC2 URL assembly native replay
 
 После a63298f исполнен Refresh URL slice1444f3a68..3d7d, version/build getters

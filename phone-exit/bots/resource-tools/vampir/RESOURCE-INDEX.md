@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## GMC2 GET/header evidence, 19 октября
+
+16 native header/method captures с source bytes/offsets/SHA, constructor name
+prefix и build getter. Общий offline request plan совпал с captures.
+[Источник/инструмент/границы](HEADLESS-GMC2-HEADERS.md).
+Device/player getters synthetic, HTTP transport/auth не исполнялись.
+
 ## GMC2 URL assembly evidence, 19 октября
 
 26 native fixtures: source offsets/bytes/SHA, getters, actual ASCII append,

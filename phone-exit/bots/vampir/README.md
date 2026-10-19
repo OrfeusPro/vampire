@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## GMC2 GET: постоянные и условные headers, 19 октября
+
+16 native fixtures подтвердили header preparation и GET method argument:
+шесть постоянных headers, eTag при непустом значении и playerId/accessToken
+по token gate. HTTP virtual methods — captures, device/player — return fixtures.
+Общий immutable план скрывает URL/headers в repr и не выполняет сеть.
+[Источник/ограничения](../resource-tools/vampir/HEADLESS-GMC2-HEADERS.md).
+Далее response decode/DECKEY/auth URLs; active settings/device identity открыты.
+
 ## GMC2 URL: native сборка и общий helper, 19 октября
 
 26 native fixtures подтвердили base/group/SDK version/build/market сборку,

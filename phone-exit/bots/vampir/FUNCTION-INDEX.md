@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## RequestGMC2 header gates, 19 октября
+
+Native 1444f5560..1444f57b1: URL slot68/header slotb0/method slot60 captures,
+constructor prefix 1444bd970..bda2e header names, build getter native. 16 fixtures:
+eTag count>1 и accessToken count>1 gates. Device 1444e5ff0 / player 144524d80
+return fixtures. Общий plan_gmc2_get_request, frozen headers/repr redaction.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-HEADERS.md).
+
 ## GMC2 URL assembly slice, 19 октября
 
 1444f3a68..1444f3d7d: manager+1e8/base,+1c8/group, version getter144524390,
