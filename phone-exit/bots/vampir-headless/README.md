@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## WaitingEndNotify → список персонажей, 19 октября
+
+Native ID 27 handler при peer flag/policy 1 вызывает CharacterListRead/ID 101.
+24 scenarios проверены; selection/next/send backends captured. Общий runtime
+не менялся, факт получения notify после реального Login не подтверждён.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## Граница Login → список персонажей, 19 октября
 
 После LoginResult virtual+0x28 сбрасывает коллекции/флаги. Native constructor/

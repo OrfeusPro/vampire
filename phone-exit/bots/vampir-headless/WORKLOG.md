@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: WaitingEndNotify инициирует requestB
+
+Caller diagnostic идентифицировал WaitingEndNotify/ID 27, registration/table
+проверены. 24 native handler/predicate cases: две комбинации достигают
+CharacterListRead constructor/virtual send capture. Quick-select/next virtual
+paths различаются по peer flag/policy/selected value. Ghidra: 39 functions,
+26 warnings. Три новых, три boundary и три Ghidra tests прошли. Runtime не
+менялся; full suite/live lifecycle/response 102 не проверены.
+[Отчёт, SHA и границы](../resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## 19 октября: post-Login reset и CharacterList request boundary
 
 Ghidra singleton ctor/table→virtual+0x28 подтвердили reset коллекций/флагов.

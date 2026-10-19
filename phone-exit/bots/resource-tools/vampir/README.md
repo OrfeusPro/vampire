@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## WaitingEndNotify после Ghidra
+
+replay-waiting-end-character-request.py → code-clues/waiting-end-character-request-replay.json:
+24 native branches, ID 27 и requestB→CharacterListRead. Send/selection backends
+captured; requestA class/slot и server lifecycle ещё открыты.
+[HEADLESS-WAITING-END-CHARACTER-REQUEST.md](HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## CharacterList boundary после Ghidra
 
 replay-character-list-boundary.py → code-clues/character-list-boundary-replay.json:

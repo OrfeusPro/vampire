@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-waiting-end: один инициатор CharacterListRead подтверждён
+
+ID 27/WaitingEndNotify handler 0x146768540 → predicate → requestB 0x145dbfe50
+→ actual CharacterListRead constructor/send capture. 24 native cases.
+Далее requestA 0x145dbd4b0 owner/slot (pointer 0x1499f1280), actual selection
+virtual+0x40/+0x50 и response 102. Server notify timing и связь с обычным
+Login success, frame/socket/session остаются открытыми.
+[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## H04-character-list-boundary: reset и request разделены
 
 8 native reset cases + 2 независимых CharacterList request entries.

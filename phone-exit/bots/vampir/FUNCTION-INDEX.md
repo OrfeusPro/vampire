@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## WaitingEndNotify инициирует CharacterListRead
+
+Handler 0x146768540/table 0x149d811a0, packet table 0x1498d6b50/ID 27.
+Predicate 0x145c85d90 и tail jump 0x14676864f → requestB 0x145dbfe50:
+24 native branch scenarios, две request send captures. Policy backend и
+selection virtual calls fixtures; requestA owner/полный Login lifecycle открыты.
+[Source/SHA и границы](../resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## Login continuation и CharacterListRead boundaries
 
 Getter 0x146486a50 → global 0x14b58b930; ctor 0x14647f9f0 ставит derived

@@ -29,7 +29,8 @@ SEEDS=[
  ('Archive_ReadStdString',0x144aa5ab0),('UTF8_DecodeCore',0x141436230),
  ('Login_PostState',0x1467259c0),('LoginContinuation_SingletonInit',0x14647f9f0),
  ('LoginContinuation_Virtual28',0x1464846c0),
- ('CharacterList_RequestA',0x145dbd4b0),('CharacterList_RequestB',0x145dbfe50)]
+ ('CharacterList_RequestA',0x145dbd4b0),('CharacterList_RequestB',0x145dbfe50),
+ ('CharacterList_RequestCaller',0x146768540),('CharacterList_SelectionPredicate',0x145c85d90)]
 
 
 def build():

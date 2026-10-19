@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## WaitingEndNotify → запрос персонажей, 19 октября
+
+ID 27/handler 0x146768540 привязан к регистрации и diagnostic literal.
+24 native scenarios исполнили handler/predicate; при peer flag и policy 1
+достигается requestB → CharacterListRead/ID 101 → send capture.
+Срок/условия получения notify от сервера и requestA owner ещё неизвестны.
+[Источник, SHA и ограничения](../resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## После LoginResult: reset и отдельный CharacterListRead, 19 октября
 
 Virtual+0x28 через global-object подтверждён как reset коллекций/флагов.

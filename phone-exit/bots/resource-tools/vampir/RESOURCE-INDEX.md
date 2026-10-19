@@ -1,5 +1,11 @@
 # Vampir: где искать данные
 
+## WaitingEndNotify handler → CharacterList request
+
+replay-waiting-end-character-request.py: 24 cases, registration/table/ID 27,
+actual predicate type gates, tail requestB→ID 101 send capture.
+[HEADLESS-WAITING-END-CHARACTER-REQUEST.md](HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## Post-Login reset и отдельные CharacterList requests
 
 replay-character-list-boundary.py: 8 reset cases, 2 request entries,

@@ -1,5 +1,12 @@
 # Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций
 
+## WaitingEndNotify caller, 19 октября
+
+Пакет расширен до 39 функций/26 warnings. Caller 0x146768540 получил
+аналитическую метку CharacterList_RequestCaller; diagnostic доказывает
+PktWaitingEndNotifyHandler. Predicate 0x145c85d90 экспортирован отдельно.
+[Native связь с requestB](HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+
 ## CharacterList boundary, 19 октября
 
 Текущий пакет: 37 функций, 19 warnings. Добавлены constructor global-object
