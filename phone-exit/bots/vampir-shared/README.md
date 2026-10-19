@@ -14,6 +14,15 @@
 | Задачи/история сетевого бота | [TASKS](../vampir-headless/TASKS.md), [WORKLOG](../vampir-headless/WORKLOG.md) |
 | Экранный бот и карта | [Vampir TASKS](../vampir/TASKS.md), [MAP-ATLAS](../resource-tools/vampir/MAP-ATLAS.md) |
 
+## Декодирование тела CDN и BOM, 19 октября
+
+31 native body replay и 9 status-gate slices подтвердили BOM-ветки и вход
+в CDN body branch для 200–299. Найдено чтение UTF-16LE за длиной тела на
+искусственных guard fixtures; общий код его не повторяет: строгий bounded
+UTF-8/UTF-16LE decoder, корректные surrogate pairs, запрет NUL, лимит 2 МиБ.
+[Источники, SHA и отличия](../resource-tools/vampir/HEADLESS-CDN-BODY.md).
+Сжатие/chunked/EOF/полный JSON callback/settings/TLS ещё открыты.
+
 ## Content-Length и полнота тела CDN, 19 октября
 
 30 native сценариев подтверждают lookup/atoi/unsigned receive comparison;

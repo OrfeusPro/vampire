@@ -1,4 +1,4 @@
-"""Bounded offline HTTP response head probe, without body framing or IO.
+"""Bounded offline CDN response parsing and body text decoding, without IO.
 
 Native delimiter/status evidence: HEADLESS-CDN-RESPONSE-HEAD.md. The strict
 HTTP/1.x syntax, field parsing and budgets below are local policy, not a
@@ -75,6 +75,10 @@ class CdnLengthResponse:
     body: bytes = field(repr=False)
     consumed: int
 
+    def decode_text(self) -> str:
+        """Decode this complete body using the bounded local Unicode policy."""
+        return decode_cdn_body_text(self.body)
+
 
 def take_cdn_length_response(data: bytes) -> CdnLengthResponse | None:
     """Take a complete, uncompressed status-200 fixed-length response.
@@ -110,3 +114,31 @@ def take_cdn_length_response(data: bytes) -> CdnLengthResponse | None:
     if len(data) < consumed:
         return None
     return CdnLengthResponse(head, data[head.header_bytes:consumed], consumed)
+
+
+def decode_cdn_body_text(body: bytes) -> str:
+    """Decode UTF-8, one leading UTF-8 BOM, or BOM-marked UTF-16LE.
+
+    Native BOM branches are verified in HEADLESS-CDN-BODY.md. Local policy
+    bounds reads to the supplied body, validates Unicode strictly, combines
+    surrogate pairs and rejects NUL instead of silently truncating at the
+    callback's C-string boundary. This intentionally corrects the observed
+    native UTF-16LE byte-count/unit-count mismatch; it is not byte-compatible
+    with that out-of-buffer behavior. UTF-16BE/unmarked UTF-16 are unsupported.
+    Content-Encoding/decompression, JSON parsing and config acceptance are not
+    performed. Do not pass a partial body; use response framing first.
+    """
+    if not isinstance(body, bytes) or len(body) > MAX_BODY_BYTES:
+        raise ValueError('Invalid CDN body or local budget exceeded')
+    codec = 'utf-8'
+    if body.startswith(b'\xef\xbb\xbf'):
+        body = body[3:]
+    elif body.startswith(b'\xff\xfe'):
+        codec, body = 'utf-16le', body[2:]
+    try:
+        text = body.decode(codec, errors='strict')
+    except UnicodeDecodeError:
+        raise ValueError('Invalid CDN body text encoding') from None
+    if '\0' in text:
+        raise ValueError('NUL in CDN body text')
+    return text

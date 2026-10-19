@@ -1,5 +1,18 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN body/BOM и status gate, 19 октября: H04b partial
+
+Native body 1445e6fc0 + wide ctor 144416f20 + converters 1445eb700/eb7f0:
+31 fixture replay. Raw bytes/один UTF-8 BOM; FF FE branch передаёт byte count
+как wide units, читает synthetic guard; результат зависит от guard. Per-unit
+UTF-8 не объединяет surrogate pairs. Bounded CRT memory/search/allocator shims.
+CDN callback prefix 145642a30..2a7b: 9 status cases, body branch только 200–299.
+Call 145642aad→body и NUL scan 145642ae0..ae7 — static only после prefix.
+Shared decode_cdn_body_text/LengthResponse.decode_text: local strict Unicode,
+UTF-16LE bounded to body/correct surrogate pairs/NUL rejection, 2 МиБ.
+[Source/SHA/отличия](../resource-tools/vampir/HEADLESS-CDN-BODY.md).
+Decompression/chunked/EOF/JSON acceptance/settings/TLS ещё открыты.
+
 ## CDN Content-Length и receive comparison, 19 октября: H04b partial
 
 Prefix 1445edb30..1445edc9b → lookup 1445ea4a0 → trim 1445dbe60/dc0f0/dbef0;

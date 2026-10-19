@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — H04b-CDN: body/BOM decoder и status gate
+
+После 706a88e исполнен whole body helper + wide ctor/per-unit converter:
+31 fixture replay и 9 CDN status prefix slices. UTF-16LE byte/unit mismatch
+подтверждён synthetic guard зависимостью; реальная память игры не читалась.
+Shared decode_cdn_body_text/LengthResponse.decode_text строго ограничен body,
+исправляет UTF-16LE units/surrogate pairs, отклоняет NUL и malformed Unicode.
+Это явная local policy, а не побайтная копия native overread.
+Полный набор: 174/174 теста, 116,1 с. Синтаксис трёх Python-файлов,
+кодировка Markdown, 275 относительных ссылок и git diff --check прошли.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-BODY.md).
+Compression/chunked/EOF/JSON acceptance/settings/TLS ещё открыты; network_ready=false.
+
 ## 19 октября 2026 — H04b-CDN: Content-Length и ожидание тела
 
 После c40e52b исполнены prefix parser с двумя lookups, native whitespace trim,

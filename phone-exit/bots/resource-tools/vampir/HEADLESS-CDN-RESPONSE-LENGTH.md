@@ -75,5 +75,6 @@ bounded abort, независимый unsigned compare, каждую точку 
 бинарное тело/NUL, trailing bytes, bounds, дубликаты и unsupported framing.
 Body bytes ещё не означают пригодный JSON или применённый config.
 
+Следующий результат: [body/BOM decoder и отличия](HEADLESS-CDN-BODY.md).
 Продолжение: native body decoding/BOM, Content-Encoding и chunked/EOF paths,
 JSON/callback acceptance, фактические CDN settings и TLS. `network_ready=false`.
