@@ -1,5 +1,20 @@
 # Самостоятельный Vampir — задачи
 
+## H04-select-send: два callers и источники полей подтверждены offline
+
+Выполнено: WaitingEnd→actual service virtual50 и UI-index caller
+`0x145d43290`→signed record lookup `0x145c847c0`→virtual50→handoff→writer/
+framing/queue, 27+34 cases/19 full frames. Raw10=record+8 (indexed path),
+raw18=constant0, raw20=current state+f0. 45 ID102→actual setter и 12 setter
+transitions связали initial packet+40 с rawF0; UI также может менять этот state.
+Shared from_character_list(body,index,state_raw_f0=...) без I/O/readiness.
+
+Ближайшее продолжение: nested ID110 reader/handler, состояние после выбора и
+точный источник позиции. Затем engine owner hook slot7b0/CharacterSelect_02
+lifecycle, фактические SDK/device inputs/подтверждение и live вход. Pending-store/
+timeouts/drain/socket/runtime reconnect не доказаны этими очередными replays.
+[Точные адреса, SHA, команды и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
+
 ## H04-character-list-extensions/handler: offline ветви закрыты
 
 Выполнено: actual appearance item read и optional map callback/insert/pair/value

@@ -1,5 +1,15 @@
 # Vampir — общие компоненты и результаты
 
+## CharacterSelect: builder из выбранной записи
+
+CharacterSelectPayload.from_character_list(body,index,state_raw_f0=...):
+record.u64[0]→raw10, constant0→raw18 и explicit current state→raw20.
+Initial state_raw_f0 приходит из accepted ID102 tail[3], но может изменяться;
+его нельзя заменять неявным stale snapshot. Native index caller/lookup/virtual50/
+handoff/frame подтверждены, 61 cases/19 frames. Pure builder проверяет code0 и
+index, не заменяет session/policy/readiness gates и ничего не отправляет.
+[Source и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
+
 ## CharacterList ID102: nested arrays/map и предпочтение
 
 decode_character_list читает appearance items и optional map, с обязательными

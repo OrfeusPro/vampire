@@ -1,5 +1,15 @@
 # Vampir — самостоятельный сетевой бот
 
+## CharacterSelect ID109: callers/field sources/frame, 20 октября
+
+Native WaitingEnd и UI-index paths исполняются до owning queue; 61 cases,
+19 byte-matched frames (ID109/ID101), duplicate/refusal/seq-wrap cases.
+ID102 packet+40 реально пишет state+f0 через setter; indexed raw10=record+8,
+raw18=constant0, raw20=current state+f0. Общий builder from_character_list
+требует state_raw_f0; результат code0 и valid index не означают готовую сессию.
+Далее nested ID110/handler/позиция, owner lifecycle и actual SDK/device context.
+[Source, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
+
 ## CharacterList ID102: полный body и covered handler, 20 октября
 
 Appearance items `<IBH`/clamp45 и optional map `<BBIIIQ`/value clamp9

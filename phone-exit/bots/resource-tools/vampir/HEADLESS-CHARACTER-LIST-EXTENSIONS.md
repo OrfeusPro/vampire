@@ -1,5 +1,8 @@
 # ID102: вложенные схемы, обработчик и предпочтительный индекс
 
+Продолжение: [ID109 callers, источники полей и полный send frame](HEADLESS-CHARACTER-SELECT-SEND.md)
+теперь проверены offline. Следующий участок — ID110/lifecycle/реальная сессия.
+
 20 октября 2026. Продолжение [первичного body codec](HEADLESS-CHARACTER-CODECS.md).
 Ранее неподдерживаемые ветви appearance array и optional map теперь разобраны и
 проверены native-исполнением целых ID102 bodies. Обработчик ID102 проверен после

@@ -79,7 +79,10 @@ SEEDS=[
  ('CharacterList_OptionalInsert',0x1456b99b0),
  ('CharacterList_OptionalPairConstruct',0x1456b7b90),
  ('CharacterList_OptionalValueConstruct',0x14577dd50),
- ('CharacterList_OptionalValueRead',0x145782b30)]
+ ('CharacterList_OptionalValueRead',0x145782b30),
+ ('CharacterState_SetRawF0',0x145c930d0),
+ ('CharacterState_F0ActionCaller',0x145f434a0),
+ ('CharacterSelect_StoredCaller',0x145d43290)]
 
 
 def build():

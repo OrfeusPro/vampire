@@ -6,7 +6,8 @@ Appearance/optional ветви и covered ID102 handler проверены сл�
 [актуальная схема, SHA, API budgets и preferred index](HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
 Замечания ниже об UnsupportedCharacterExtension и отсутствующих extensions
 описывают первичный этап; текущий decoder поддерживает эти ветви. Lifecycle,
-ID109 field sources/frame и ID110/live session остаются открытыми.
+ID109 field sources/frame проверены [следующим этапом](HEADLESS-CHARACTER-SELECT-SEND.md);
+ID110/live session остаются открытыми.
 
 20 октября 2026. Работа без запуска игры. Ближайший этап **частично выполнен**:
 owner policy больше не fixture; основной профиль списка и body выбора проверены.

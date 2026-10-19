@@ -1,5 +1,16 @@
 # Vampir — главный файл разработки
 
+## ID109: index/notify callers → полный кадр, 20 октября
+
+Проверены actual WaitingEnd и UI-index caller до handoff/writer/CRC/XOR/queue:
+27+34 native cases, 19 полных кадров. Индекс берётся из UI+3f8, native lookup
+проверяет границы global state records; raw10=record+8, raw18=constant0.
+45 ID102→actual setter и 12 переходов подтвердили packet+40→state+f0→raw20.
+Общий from_character_list требует явно передать текущий rawF0; I/O не выполняет.
+Ghidra 109 функций/58 warnings. Далее ID110 body/handler/позиция и lifecycle,
+затем реальные SDK/device inputs и live session.
+[Источник, SHA, команды и границы](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
+
 ## ID102: обе вложенные схемы и handler, 20 октября
 
 Общий decoder списка теперь поддерживает непустой appearance array и optional

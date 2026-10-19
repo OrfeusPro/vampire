@@ -1,5 +1,14 @@
 # Vampir: где искать данные
 
+## ID109 callers/send и rawF0 source, 20 октября
+
+Ghidra 109 функций/58 warnings. Existing validated E8 scanner: state getter
+105 calls/0 failures; +f0 candidates не означают receiver identity.
+replay-character-state-f0.py: ID102→actual setter, 45+12 cases.
+replay-character-select-send.py: WaitingEnd и signed index callers до полной
+очереди, 27+34 cases/19 frames. Shared selected-record builder без I/O.
+[Источники, SHA, callback/field addresses и продолжение](HEADLESS-CHARACTER-SELECT-SEND.md).
+
 ## ID102 extensions и body→handler, 20 октября
 
 Ghidra 106 функций/53 warnings. replay-character-list-extensions.py:

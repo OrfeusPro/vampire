@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CharacterSelect callers и rawF0, 20 октября
+
+Caller `0x145d43290` читает UI+3f8→leaf `0x145c847c0`: signed bounds,
+global `0x14b57f180` records+70/count+78, stride170. Record+8→service virtual50.
+State getter `0x145c859f0` читает тот же global; setter `0x145c930d0`
+получает ID102 packet+40 и пишет state+f0→ID109 raw20. Current state изменяемый.
+WaitingEnd/quick helper и indexed caller до native handoff/writer/frame/queue:
+61 cases/19 frames; UI emitter и real socket/session остаются открытыми.
+[Точные пути, SHA и границы](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
+
 ## ID102 nested и handler, 20 октября
 
 Appearance item table `0x1498cff58`→reader `0x145771b40`: `<IBH`, enum clamp45.
