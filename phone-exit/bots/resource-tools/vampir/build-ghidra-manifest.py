@@ -82,7 +82,54 @@ SEEDS=[
  ('CharacterList_OptionalValueRead',0x145782b30),
  ('CharacterState_SetRawF0',0x145c930d0),
  ('CharacterState_F0ActionCaller',0x145f434a0),
- ('CharacterSelect_StoredCaller',0x145d43290)]
+ ('CharacterSelect_StoredCaller',0x145d43290),
+ ('PktCharacterSelectResult_Construct',0x1456d4a40),
+ ('PktCharacterSelectResult_Write',0x1456e5410),
+ ('CharacterSelect_ApplyPlayer',0x145d61e60),
+ ('CharacterSelect_ServiceResult',0x145dbe660),
+ ('CharacterSelect_PlayerConstruct',0x14577ce10),
+ ('CharacterSelect_Block2B8Construct',0x145789c10),
+ ('CharacterSelect_DirectionToAngles',0x1415055b0),
+ ('CharacterSelect_Block290Read',0x1457f0c90),
+ ('CharacterSelect_PlayerRead',0x145780eb0),
+ ('CharacterSelect_Player90Read',0x1457817e0),
+ ('CharacterSelect_Player98Read',0x1456d7ae0),
+ ('CharacterSelect_Block2B8Read',0x14578ecd0),
+ ('CharacterSelect_Block290ArrayRead',0x1457f1720),
+ ('CharacterSelect_Block290ArrayResize',0x1456b6020),
+ ('CharacterSelect_Player40Read',0x145798990),
+ ('CharacterSelect_Player1A0Read',0x145818150),
+ ('CharacterSelect_ReadVector',0x144aa6660),
+ ('CharacterSelect_DirectionVector',0x141507880),
+ ('Archive_ReadScalar20',0x144aa5b90),
+ ('CharacterSelect_Array168Read',0x1456b0ca0),
+ ('CharacterSelect_Array1C8Read',0x145731010),
+ ('CharacterSelect_Array1F8Read',0x14577b860),
+ ('CharacterSelect_Array250Read',0x1456e6280),
+ ('CharacterSelect_Array158Item',0x145784180),
+ ('CharacterSelect_Array178Item',0x145784210),
+ ('CharacterSelect_Array178Resize',0x145784760),
+ ('CharacterSelect_Array1D8Item',0x1456b3730),
+ ('CharacterSelect_Array238Item',0x1456ef840),
+ ('CharacterSelect_Array238Resize',0x1456fa260),
+ ('CharacterSelect_Map98Item',0x1456da4b0),
+ ('CharacterSelect_Map98Resize',0x1456e3f60),
+ ('CharacterSelect_Block290ItemRead',0x1457f0c00),
+ ('CharacterSelect_Array168Item',0x1456b3640),
+ ('CharacterSelect_Array1C8Item',0x145738b70),
+ ('CharacterSelect_Array1F8Item',0x145783f30),
+ ('CharacterSelect_Array1F8Resize',0x1457846e0),
+ ('CharacterSelect_Array250Item',0x1456f0170),
+ ('CharacterSelect_Array158Read',0x14578bd80),
+ ('CharacterSelect_Array178Read',0x1457f0170),
+ ('CharacterSelect_Array178NestedRead',0x1457f0220),
+ ('CharacterSelect_Array1D8Read',0x145780300),
+ ('CharacterSelect_Map98FindValue',0x1456d37a0)]
+
+# This source-bound callback has no PE unwind entry: two straight blocks and
+# one internal conditional branch, ending at RET after an allocator tail jump.
+# Its reviewed 28-byte range includes both paths; do not manufacture .pdata.
+REVIEWED_LEAF_RANGES={0x1456fa260:28}
 
 
 def build():
@@ -94,7 +141,15 @@ def build():
     image=native.Image(raw);functions=[]
     for name,address in SEEDS:
         containing=image.containing(address)
-        if containing is None:raise ValueError('Missing seed unwind range '+name)
+        if containing is None:
+            length=REVIEWED_LEAF_RANGES.get(address)
+            if length is None:raise ValueError('Missing seed unwind range '+name)
+            off=image.offset(address-image.pe.base);data=raw[off:off+length]
+            if len(data)!=length or data[-1]!=0xc3:raise ValueError('Reviewed leaf boundary changed '+name)
+            functions.append(dict(name=name,address=hex(address),name_origin='analyst_hint_from_shared_evidence',
+                ranges=[dict(start=hex(address),end_exclusive=hex(address+length),file_offset=off,
+                    sha256=hashlib.sha256(data).hexdigest(),unwind_rva=None,range_origin='reviewed_bounded_leaf')]))
+            continue
         root=image.roots[containing]
         if root[0]+image.pe.base!=address:raise ValueError('Seed does not match unwind root '+name)
         ranges=[]

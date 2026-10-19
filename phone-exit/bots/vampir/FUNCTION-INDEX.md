@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## ID110 reader и raw vector apply, 20 октября
+
+Outer ctor1456d4a40/reader1456d8f80→main reader145780eb0. Минимум203bytes:
+wire+61 триfloat32→main+188 триdouble; wire+73 heading→reader145818150→
+direction141507880→SSE2 sincos1487969e0/guarded fmod141444d00.
+Apply145d61e60: raw24→player+20; direction→1415055b0/guarded atan214143fd00
+→player+38 angles. 268 reader+22 apply cases; handler14675e9a0 и semantic
+position consumer ещё не проверены. Непустые коллекции остаются открытыми.
+[Источники, SHA, callbacks и продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-RESULT.md).
+
 ## CharacterSelect callers и rawF0, 20 октября
 
 Caller `0x145d43290` читает UI+3f8→leaf `0x145c847c0`: signed bounds,

@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## ID110: минимальное тело и raw vector, 20 октября
+
+Проверены actual constructor/readers на268 минимальных bodies, включая все256
+wire headings; 3float32→3double, actual SSE2 math и нормализация heading.
+Отдельно22 native apply cases: raw24→player+20, direction→pitch/yaw/roll0.
+Ghidra151 функций/63 warnings; math export отдельно с source/tool/range SHA.
+Полные непустые collections, handler/session и семантический источник позиции
+ещё открыты. Это промежуточный этап, shared ID110 decoder пока не добавлен.
+[Источники, команды, SHA и точное продолжение](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-RESULT.md).
+
 ## ID109: index/notify callers → полный кадр, 20 октября
 
 Проверены actual WaitingEnd и UI-index caller до handoff/writer/CRC/XOR/queue:

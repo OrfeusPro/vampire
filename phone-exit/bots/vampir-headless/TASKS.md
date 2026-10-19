@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — задачи
 
+## H04-select-result: минимальный native профиль, этап частичный
+
+268 ID110 bodies (all256 heading bytes +12 vector/code cases) прошли actual
+constructor/readers/math; отдельно22 player apply cases. Экспорт151 функций,
+math discovery через Ghidra machine blocks, provenance и regression checks.
+Raw main+188→player+20 подтверждён; world position semantics ещё не доказаны.
+
+Продолжить с уже экспортированных nonempty callbacks/map98 insert, затем
+полный bounded decoder/short inputs, handler14675e9a0→player и position consumer.
+После этого lifecycle/SDK/device confirmation/live вход. Минимальное тело203bytes
+не заменяет полный decoder и не доказывает успешный выбор/готовую сессию.
+[Адреса, отчёты, SHA, команды и границы](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-RESULT.md).
+
 ## H04-select-send: два callers и источники полей подтверждены offline
 
 Выполнено: WaitingEnd→actual service virtual50 и UI-index caller

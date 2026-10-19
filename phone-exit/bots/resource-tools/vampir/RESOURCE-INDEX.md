@@ -1,5 +1,14 @@
 # Vampir: где искать данные
 
+## ID110 минимальный reader и spatial apply, 20 октября
+
+Ghidra151 функций/63 warnings. Отдельный math export через собственные Ghidra
+machine blocks, source/tool/file/range SHA. replay-character-select-result.py:
+268 минимальных203byte bodies/all256 headings, actual SSE2 math/CRT imports.
+replay-character-select-apply.py:22 cases/raw vector copy/angles. Непустые
+collections/полный decoder/handler/session/world position semantics открыты.
+[Отчёты, SHA, адреса и границы](HEADLESS-CHARACTER-SELECT-RESULT.md).
+
 ## ID109 callers/send и rawF0 source, 20 октября
 
 Ghidra 109 функций/58 warnings. Existing validated E8 scanner: state getter
