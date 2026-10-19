@@ -1,5 +1,26 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — SDK SignIn JSON/default headers и request plan
+
+После fe0512e разобран FAuthImpl::SignIn. Четыре native caller fixtures:
+nmDeviceKey/deviceKey/countryCode/os и optional playerId/credential. Key playerId
+прослежен service+150 → wrapper ctor → leaf1444bc380 impl+30 → SignIn;
+leaf без unwind исполнен, factory/getter/wrapper chain сохранена статически.
+Восемь CreatePost default header/method fixtures с build0/1/2/255 и empty/nonempty
+SDK account field: Content-Type/Accept JSON, gameCode/buildCode, optional
+accessToken/authToken из одного поля; provider token не смешивается с ними.
+JSON/maps/getters/credential/HTTP — explicit fixtures/captures; actual HTTP нет.
+Общий sdk_sign_in plan: explicit context/credential33/constants, HTTPS/local
+ASCII/body/header budgets, redacted immutable output. Existing SDK path/build
+helpers reused. AuthUrl связан с real public GMC2 offline, active profile не заявлен.
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+Далее response1444d85f0/token/player/expiry/errors → SDK/game session.
+Полный набор: 274/274 теста, 180,0 с. Синтаксис трёх Python-файлов,
+UTF-8 восьми документов, 420 относительных ссылок и diff check прошли.
+Для следующего этапа: callback1444d85f0 — leaf JMP в 1444cc1a0 (777 instructions).
+Static investigation сохранена вне Git в code-clues/sdk-sign-in-response-investigation.json;
+response handler ещё не исполнялся, его schema не заявлена готовой.
+
 ## 19 октября 2026 — native credential adoption после Save
 
 После d18b9e1 установлено: 14453cdf0 — UNMServiceSettings::Save, не session

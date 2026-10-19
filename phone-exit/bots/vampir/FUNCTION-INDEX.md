@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## FAuthImpl SignIn JSON и CreatePost headers, 19 октября
+
+1444fb800 body slices/constructor1444bc380: 4 fixtures подтвердили 4 base fields,
+optional playerId и credential. Key playerId связан service+150 → wrapper ctor
+→ leaf+30 → SignIn. CreatePost14451c600 header/method slices: 8 fixtures,
+application/json/gameCode/buildCode и optional accessToken/authToken alias.
+Общий sdk_sign_in offline plan bind authUrl/v1/sign-in, без auth HTTP/session.
+[Источники и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+
 ## OnResult continuation и credential GetObject, 19 октября
 
 1450ef437 → 14453cdf0 = UNMServiceSettings::Save; return caller игнорирует.

@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK sign-in JSON/header plan готов offline, 19 октября
+
+4 body/8 header native fixtures проверены. Общий sdk_sign_in связывает
+credential33 и explicit device/game/build/country/os с authUrl/v1/sign-in.
+Optional playerId key подтверждён source chain, SDK token headers отделены
+от provider token. [Source/SHA](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+POST не выполнялся. Далее response schema/token/player/expiry и game Login.
+
 ## SDK credential после почтового результата, 19 октября
 
 Четыре native continuation fixtures подтвердили clear→register33 после Save

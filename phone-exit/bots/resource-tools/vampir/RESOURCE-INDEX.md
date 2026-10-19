@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## SDK SignIn request preparation, 19 октября
+
+replay-sdk-sign-in-body.py: 4 native body + 8 native default header/method
+fixtures, key/build initializers и auth constructor leaf; JSON/getters/network
+зависимости явно ограничены. [Отчёт/SHA](HEADLESS-SDK-SIGN-IN.md).
+Real public authUrl binding проверен offline. SDK response — следующий этап.
+
 ## NID credential adoption continuation, 19 октября
 
 replay-nid-credential-adoption.py исполняет OnResult continuation/ctor/manager/

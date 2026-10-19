@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04 SDK sign-in request preparation подтверждена: 4 native body
+и 8 header/method fixtures. Общий sdk_sign_in offline plan добавлен; authUrl
+из real public GMC2 связан только с synthetic context. Auth HTTP нет.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+Следующая зависимость: callback1444d85f0, network/SDK result schema, SDK access
+token/playerId/expiry/errors → game Login. Active context/storage/refresh открыты.
+
 19 октября: H04 OnResult continuation/GetObject проверены четырьмя fixtures.
 Provider20 преобразуется в SDK credential33 с channelAccessToken. Native Save
 return не проверяется; storage/clear/JSON/map insertion — explicit captures.

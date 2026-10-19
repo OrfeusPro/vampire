@@ -1,5 +1,14 @@
 # Vampir — общие компоненты и результаты
 
+## SDK sign-in offline request plan, 19 октября
+
+sdk_sign_in.plan_nid_sdk_sign_in принимает explicit context/constants и
+NidSdkCredential33. Формирует JSON body/headers/POST authUrl/v1/sign-in,
+optional player_id и отдельный existing_sdk_token. Не подставляет provider
+access token как SDK headers. Frozen plan скрывает URL/body/headers в repr.
+Portable stdlib only; нет I/O/storage/SDK response/game session.
+[Native source/SHA/local policy](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+
 ## Provider email → SDK credential object, 19 октября
 
 nid_sdk_credential.build_nid_sdk_credential повторно проверяет NidEmailCredential

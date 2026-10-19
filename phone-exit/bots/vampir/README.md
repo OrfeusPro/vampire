@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## SDK sign-in request plan: JSON и headers, 19 октября
+
+Native caller подтвердил body nmDeviceKey/deviceKey/countryCode/os, optional
+playerId и credential33. 4 body/8 header fixtures: POST JSON, gameCode/buildCode,
+optional accessToken/authToken из отдельного SDK token context.
+Общий sdk_sign_in формирует immutable plan по explicit inputs и authUrl из
+SDK constants; real public config binding проверен offline, POST не отправлялся.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+Далее response callback 1444d85f0 → SDK token/player/expiry → game Login.
+
 ## Provider20 → SDK credential33, 19 октября
 
 Native OnResult продолжен до регистрации credential: Save return не проверяется,
