@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: resolved recipient/socket creator
+
+7 native scenarios, три новых и шесть смежных tests прошли. Source
+vtable stores связали resolver callback с peer recipient и socket creator.
+WS2_32 ordinal 23 проверен по local export socket с SHA. Syscall/engine
+options/mode/connect — captures; реальные сокеты не открывались.
+Runtime не менялся; полный suite 316 не повторялся. Game/profile/credentials не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVED-SOCKET-SETUP.md).
+
 ## 19 октября: resolver job results
 
 8 native scenarios, три новых и шесть смежных tests прошли. Vtable

@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Resolver result → socket creator, 19 октября
+
+7 native integrations связали real resolver dispatch/peer recipient
+и socket creator. Winsock ordinal 23 подтверждён как socket; аргументы
+IPv4/IPv6 и отказы проверены. Syscall и endpoint connect остаются captures,
+реального соединения и Login ещё нет.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVED-SOCKET-SETUP.md).
+
 ## Resolver run/completion проверены, 19 октября
 
 8 native scenarios исполнили job run/completion с fixture Winsock responses.

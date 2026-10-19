@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Resolved peer recipient и socket creation
+
+Action 0x141423088 → peer+0x38 vtable+0x08 → 0x1445e8400.
+Socket peer+0x110 vtable+0x08 → 0x1445e5cb0 → WS2_32 socket ordinal 23.
+Constructor stores/import/export source-bound; connect/readiness ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVED-SOCKET-SETUP.md).
+
 ## Resolver job results и callback gates
 
 Vtable 0x149503a80: run+0x10 0x1445e7e00, completion+0x18 0x1445e7cf0.

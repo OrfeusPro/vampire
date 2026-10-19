@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-socket-create: recipient и creator проверены
+
+Resolver recipient и source socket creator исполняются вместе.
+Далее helper 0x1445eab70 и endpoint connect 0x1445e5c60 → 0x1445ecbb0,
+реальные pending/error/readiness и callback packet Login. Socket syscall
+и active network/session не проверены.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVED-SOCKET-SETUP.md).
+
 ## H04-resolver-results: run/completion проверены
 
 Job run/completion и адресные callback gates проверены на 8 fixtures.

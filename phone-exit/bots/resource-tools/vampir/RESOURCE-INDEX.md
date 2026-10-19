@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Resolved socket setup replay
+
+replay-resolved-socket-setup.py: 7 native scenarios, listener dispatch,
+recipient и socket creator. Source-bound vtables и local DLL export SHA;
+Winsock/mode/connect/options и lifetime primitives — fixtures/captures.
+[Источники, SHA и границы](HEADLESS-RESOLVED-SOCKET-SETUP.md).
+
 ## Resolver job run/results replay
 
 replay-resolver-job-results.py: 8 native integrations с source-bound
