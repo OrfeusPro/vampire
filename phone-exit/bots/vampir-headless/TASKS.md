@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-resolver-results: run/completion проверены
+
+Job run/completion и адресные callback gates проверены на 8 fixtures.
+Далее recipient action 0x141423088 → first socket/connect/readiness,
+затем packet Login. Реальный DNS/vector parsing, scheduling/lifetime
+и server-compatible session остаются открытыми.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVER-JOB-RESULTS.md).
+
 ## H04-lower-connect: setup и resolver handoff проверены
 
 Lower connect и lexical selector исполняются после endpoint construction.

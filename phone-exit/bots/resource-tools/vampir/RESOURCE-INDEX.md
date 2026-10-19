@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Resolver job run/results replay
+
+replay-resolver-job-results.py: 8 native integrations с source-bound
+job slots/imports, family traversal/order swap и completion gates.
+Winsock/vector/dispatch/scheduler остаются fixtures/captures.
+[Источники, SHA и границы](HEADLESS-RESOLVER-JOB-RESULTS.md).
+
 ## Connect resolver handoff replay
 
 replay-connect-resolver-handoff.py: 12 native scenarios, actual lower

@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Resolver job results и callback gates
+
+Vtable 0x149503a80: run+0x10 0x1445e7e00, completion+0x18 0x1445e7cf0.
+getaddrinfo/inet_ntop imports подтверждены; непустой payload → dispatch
+0x1445de9f0/action 0x141423088, empty/error → 0x1445de8b0.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVER-JOB-RESULTS.md).
+
 ## Lower connect/resolver selector
 
 0x1445ea1b0 копирует endpoint в peer+0x70/+0x90/+0x94/+0xc0, затем

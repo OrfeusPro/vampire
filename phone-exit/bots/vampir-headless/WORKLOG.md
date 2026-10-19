@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: resolver job results
+
+8 native scenarios, три новых и шесть смежных tests прошли. Vtable
+run/completion и PE imports getaddrinfo/inet_ntop связаны с source.
+Native family traversal/swap и empty/error gates исполнены; Winsock,
+vector append, scheduler и callback dispatch fixtures/captures.
+Runtime не менялся; полный suite 316 не повторялся. Game/profile/network не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVER-JOB-RESULTS.md).
+
 ## 19 октября: lower connect/resolver handoff
 
 12 native integrations, три новых и восемь смежных tests прошли.

@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Resolver run/completion проверены, 19 октября
+
+8 native scenarios исполнили job run/completion с fixture Winsock responses.
+Проверены family traversal, native IPv6-first swap и failure/empty callbacks.
+Импорты getaddrinfo/inet_ntop source-bound; DNS и socket readiness ещё не исполнялись.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVER-JOB-RESULTS.md).
+
 ## Нижний connect → resolver handoff, 19 октября
 
 12 native integrations связали lower connect, host/port copy, две
