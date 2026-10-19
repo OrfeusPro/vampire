@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## SDK sign-in completion и общий parser, 19 октября
+
+16 native сценариев связали idpInfo, код провайдера, SetSignIn и место вызова
+финального dispatcher. Внутренний флаг может быть true при неполных данных.
+Общий offline parser требует свежие token/player ID и явный errorCode 0.
+Dispatcher, игровой Login и живая авторизация остаются открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+
 ## Native response variant conversion, 19 октября
 
 10 cases исполнили converter/AsString/actual virtual TryGetString и CRT.

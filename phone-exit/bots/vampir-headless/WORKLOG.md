@@ -1,5 +1,21 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: SDK sign-in completion и общий parser
+
+16 native сценариев проверили idpInfo, channel byte, сравнение player ID,
+фактический SetSignIn и место вызова финального dispatcher. Сам dispatcher
+и его делегаты остаются captures. Флаг входа может выставляться при неполном
+ответе и не доказывает игровую сессию.
+
+Общий offline parser требует canonical errorCode 0 и свежие token/player ID,
+отклоняет дубли JSON-ключей и некорректные поля. Чувствительные значения скрыты
+из repr, raw idpInfo не сохраняется. HTTP авторизации не выполнялся;
+реальные credentials, registry/Saved и память процесса не читались.
+
+Полный набор: 316 тестов, 230.600 с, OK. Проверены 475 относительных
+Markdown-ссылок, UTF-8 и SHA отчёта; git diff --check без ошибок.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+
 ## 19 октября: native variant converter
 
 Исполнены converter144476940, AsString1415e48f0, actual virtual TryGetString

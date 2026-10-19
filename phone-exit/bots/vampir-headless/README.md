@@ -1,5 +1,11 @@
 # Vampir — самостоятельный сетевой бот
 
+## SDK response: completion и parser, 19 октября
+
+16 native сценариев и общий строгий offline parser добавлены. Внутренний
+SetSignIn не доказывает готовую сессию. Живой login runner пока не подключён.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+
 ## Response variant converter, 19 октября
 
 Native string/number-string conversion подтверждена в 10 fixtures с actual

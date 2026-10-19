@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## SDK sign-in response parser
+
+vampir_core.sdk_sign_in_response: неизменяемые данные, скрытые из repr
+идентификаторы и token, обязательный canonical errorCode 0 и свежие поля.
+Это строгая локальная политика без I/O и без доказательства игровой сессии.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+
 ## nid_storage_path: offline suffix derivation
 
 derive_nid_storage_suffix: verified aligned ASCII subset, subject bytes minus1

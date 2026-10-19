@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## SDK sign-in completion
+
+SetSignIn 0x14454c3d0 записывает settings+0x400; idpInfo относится к playerInfo.
+Место вызова final dispatcher подтверждено, делегаты ещё не исполнены.
+Общий parser использует отдельную строгую локальную политику.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+
 ## errorCode variant conversion
 
 [Native converter и vtable dispatch](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-VARIANT.md):

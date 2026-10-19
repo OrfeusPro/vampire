@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## SDK sign-in completion
+
+replay-sdk-sign-in-completion.py: 16 сценариев, фактический SetSignIn,
+idpInfo/channel и capture вызова dispatcher. Общий offline parser отделён
+от более разрешающего поведения native callback.
+[Источники, SHA и границы](HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+
 ## Native response variant/string conversion
 
 replay-sdk-response-variant.py: 10 cases, реальный converter/AsString/

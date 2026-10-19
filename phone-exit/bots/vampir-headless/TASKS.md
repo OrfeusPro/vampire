@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-response-completion: частично завершено
+
+Проверены idpInfo, channel byte, native SetSignIn и вызов dispatcher.
+Добавлен общий строгий parser без I/O. Следующий шаг: исполнение dispatcher
+и привязки делегатов → игровой Login; затем expiry/refresh и реальное устройство.
+Подтверждение входа по одному внутреннему флагу запрещено контрактом parser.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+
 ## H04-response-variant: conversion boundary reduced
 
 10 native cases проверили converter/AsString/real TryGetString/CRT для
