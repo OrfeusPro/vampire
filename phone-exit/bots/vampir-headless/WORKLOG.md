@@ -1,5 +1,24 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — публичный NID email contract и локальный план входа
+
+После b8582e0 сохранён EXE index: 19 symbols / 20 LEA / 18 roots, без native
+execution. Legacy FEmailAuth не смешивается с Netmarble ID. По authWebViewUrl
+из проверенного GMC2 получены публичные HTML/JS: три GET с первичным осмотром,
+без cookies/account parameters/POST. Assets и immutable manifest вне Git.
+Подтверждены RSA PKCS1v1.5, charCodeAt/CESU-8, members_signin/reCAPTCHA,
+endpoint /api/signin/netmarble и context headers. Из выбранных JS helpers
+воспроизведены девять padding и три interceptor fixtures; RNG/state/BigInteger
+явно заменены fixtures, полное приложение не запускалось.
+Общий nid_email шифрует явные email/password, требует context/public key/
+captcha token, скрывает содержимое плана в repr. Предел encoded bytes k-11
+строже исходного character-count guard. Семь новых тестов проверяют источник,
+replay, synthetic RSA roundtrip, headers, границы и immutable captures.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+Реальной авторизации нет; далее response/callback/code/token/session.
+Полный набор: 250/250 тестов, 174,1 с. Синтаксис пяти Python-файлов,
+UTF-8 восьми документов, 382 относительных ссылки и diff check прошли.
+
 ## 19 октября 2026 — real public GMC2 response и полный offline constants decode
 
 После f9b7c52 source serviceCode связан с ctor+190/Refresh R8/Request stack+60:

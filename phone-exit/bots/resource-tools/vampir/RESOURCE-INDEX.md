@@ -1,5 +1,14 @@
 # Vampir: где искать данные
 
+## Публичный NID web snapshot и email contract, 19 октября
+
+capture-netmarble-auth-web.py сохраняет HTML и объявленный module script;
+inspect-nid-auth-web.py проверяет SHA и воспроизводит выбранные JS helpers.
+build-headless-email-auth.py индексирует отдельные EmailAuth/NID SDK функции.
+Тяжёлые assets и отчёты находятся вне Git; пути/SHA записаны в
+[HEADLESS-NID-EMAIL.md](HEADLESS-NID-EMAIL.md). Login POST не выполнялся.
+Web assets обновляются отдельно от EXE: новый snapshot требует сверки anchors.
+
 ## Public GMC2 success snapshot, 19 октября
 
 Source serviceCode связан с ctor/caller. Один HTTPS GET без account/device

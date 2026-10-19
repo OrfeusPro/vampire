@@ -1,5 +1,14 @@
 # Vampir — общие компоненты и результаты
 
+## Общий NID email request plan, 19 октября
+
+vampir_core.nid_email содержит nid_js_string_bytes, encrypt_nid_field и
+plan_nid_email_sign_in. Повторяет наблюдаемый charCodeAt/CESU-8, использует
+RSA PKCS1v1.5 через optional cryptography и возвращает immutable plan со
+скрытыми в repr URL/body/headers. Context/public key/captcha token передаются
+явно; нет HTTP, cookies или хранения пароля. Android backend не проверен.
+[Источник и локальные пределы](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+
 ## GMC2 response envelope, 19 октября
 
 Общий gmc2_response.decode_gmc2_configuration(body, headers) возвращает frozen

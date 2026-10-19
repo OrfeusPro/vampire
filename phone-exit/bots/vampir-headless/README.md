@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Локальный план входа NID по почте, 19 октября
+
+Из сохранённых публичных HTML/JS подтверждены endpoint, поля и RSA encoding.
+Общий nid_email формирует зашифрованный запрос с явными context/reCAPTCHA token;
+HTTP и получение captcha не реализованы. Ответ входа и callback ещё не разобраны.
+[Источники, SHA и воспроизведение](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+Авторизации аккаунта, выбора персонажа и боя пока нет.
+
 ## Реальная SDK-конфигурация получена, 19 октября
 
 Public GMC2 profile дал 200/errorCode0 и DECKEY HTTP response header.

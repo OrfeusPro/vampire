@@ -1,5 +1,16 @@
 # Vampir — общий указатель найденных функций и связей
 
+## NID email и отдельная legacy EmailAuth, 19 октября
+
+EXE index: 19 symbols, 20 проверенных LEA, 18 roots; native execution здесь нет.
+Публичный web snapshot: doSignInByEmail → RSA PKCS1v1.5 → POST
+/api/signin/netmarble; request interceptor добавляет /api и context headers.
+Девять padding fixtures и три interceptor fixtures исполнены из выбранных
+JS helpers с явными заглушками. Общий nid_email повторяет CESU-8 encoding,
+шифрует поля и требует явные context/reCAPTCHA token, без I/O.
+[Адреса, SHA256 и ограничения](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+Ответ, callback и активный провайдер остаются открыты.
+
 ## Public GMC2 response и source serviceCode, 19 октября
 
 Ctor manager+190=netmarbles → Refresh 1444f3f54 R8 → Request 1444f534d stack+60.

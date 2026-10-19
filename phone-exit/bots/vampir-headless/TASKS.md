@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04 остаётся частичным. Найдены отдельные legacy EmailAuth/NID
+SDK ветки и публичный NID web contract. Общий encrypted request plan готов
+локально; POST, reCAPTCHA acquisition, response/callback не выполнялись.
+[Источники](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+Следующая зависимость: разобрать response → callback → authorization code,
+сверить native обработку и context/provider selection. Затем token/session.
+При обновлениях сверять web snapshot отдельно от EXE/PAK.
+
 19 октября: public GMC2 получен и декодирован полностью в local response profile:
 DECKEY HTTP header, 93 ordinary/1 secret/94 merged, auth endpoints доступны.
 ServiceCode=netmarbles подтверждён ctor/caller. Build 0/A — явный constructor-

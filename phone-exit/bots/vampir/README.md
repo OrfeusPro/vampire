@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Найден контракт входа NID по почте, 19 октября
+
+Публичные HTML/JS по authWebViewUrl из GMC2 сохранены с SHA256 вне Git.
+Подтверждены POST /api/signin/netmarble, RSA PKCS1v1.5 для email/password,
+reCAPTCHA action members_signin и заголовки interceptor. Общий nid_email
+готовит только локальный зашифрованный план запроса; login POST не выполнялся.
+Legacy FEmailAuth и Netmarble ID разобраны отдельно, выбор провайдера игрой
+ещё не доказан. [Источники, воспроизведение и границы](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+Далее: ответ входа → callback → authorization code → SDK/game session.
+
 ## Получена и разобрана реальная GMC2-конфигурация SDK, 19 октября
 
 Source-bound public GET без account/device credentials вернул 200/errorCode=0.
