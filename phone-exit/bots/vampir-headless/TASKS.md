@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-server-target: source mapping проверен
+
+BeginGame last ID/fallback/lookup/busy и target stores подтверждены.
+Далее consumers transport+0x270/+0x278/+0x288/+0x28a → connection setup
+и packet Login. Реальные server records/sentinel/busy lifecycle и
+server-compatible session остаются открытыми.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-BEGIN-GAME-SERVER-TARGET.md).
+
 ## H04-entry-gate: разделение title/SDK state
 
 Title head/tail и отдельный BeginGame IsSignIn gate проверены.

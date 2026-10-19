@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## BeginGame: сервер → transport target, 19 октября
+
+11 native сценариев связали last server ID, fallback/lookup, busy gate
+и четыре target setters транспорта. Коллизии/отказы/точные raw fields
+проверены. Endpoint/protocol роли fields и реальное соединение ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-BEGIN-GAME-SERVER-TARGET.md).
+
 ## Title state и BeginGame SDK gate, 19 октября
 
 10 native сценариев проверили отдельные head/tail slices title handler

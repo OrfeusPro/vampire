@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: BeginGame server target
+
+11 native cases, три новых и семь смежных tests прошли. Реальные
+lookup collision walk и target setters связаны с BeginGame caller.
+Missing/busy paths сохраняют прежнюю цель; raw words не названы портами
+без consumers. Runtime не менялся; полный suite 316 не повторялся.
+Реальные profile/credentials/game/HTTP/socket connect не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-BEGIN-GAME-SERVER-TARGET.md).
+
 ## 19 октября: title state и BeginGame SDK gate
 
 10 native scenarios и три новых/шесть смежных tests прошли. Title

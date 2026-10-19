@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## BeginGame server lookup/target replay
+
+replay-begin-game-server-target.py: 11 native scenarios, actual collision
+walk/value+8 и четыре setters. Sentinel/map/state inputs — fixtures;
+успешный stop до connection/UI tail и socket calls.
+[Источники, SHA и границы](HEADLESS-BEGIN-GAME-SERVER-TARGET.md).
+
 ## Title state/BeginGame gate replay
 
 replay-title-auth-state.py: 10 native сценариев отдельных title head/tail

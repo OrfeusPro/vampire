@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## BeginGame server target mapping
+
+0x146425730 → lookup 0x145d39440 (map entry+8) → setters
+0x144aab510/500/520/4f0: transport impl+0x270 ID, +0x278 string,
++0x288/+0x28a raw words. Названия портов/протоколов пока не доказаны.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-BEGIN-GAME-SERVER-TARGET.md).
+
 ## Title flag и SDK IsSignIn не тождественны
 
 OnSuccess head передаёт GetCountryCode в ConnectCountryCode capture;
