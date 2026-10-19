@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Silent dispatcher/game integration
+
+replay-silent-game-dispatch.py: 12 native cases, silent dispatcher/bridge/
+game callback в одной цепочке. Response JSON gates и scheduler — отдельные
+неисполненные границы; source/SHA и дальнейшие задачи сохранены.
+[Источники, SHA и границы](HEADLESS-SILENT-GAME-DISPATCH.md).
+
 ## Channel silent handoff
 
 replay-channel-silent-handoff.py: 8 channel и 4 Auth gate scenarios.

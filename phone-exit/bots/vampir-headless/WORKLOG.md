@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: silent result до игрового callback
+
+12 интеграционных native cases исполнили silent dispatcher, bridge и
+реальный игровой callback. Source-bound request/response jump сохранён.
+Три новых и девять смежных tests прошли. Runtime не менялся, полный suite
+316 из предыдущего runtime milestone не повторялся. Реальные scheduler,
+response JSON/session, profile/credentials/HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SILENT-GAME-DISPATCH.md).
+
 ## 19 октября: ChannelManager silent handoff
 
 12 native сценариев подтвердили GetAuth route, передачу player/callback

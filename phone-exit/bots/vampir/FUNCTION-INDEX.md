@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Silent result до game callback
+
+ExecSignInSilently 0x1444e02e0 → thunk 0x1444d8410 → bridge →
+leaf 0x1456007b0 → callback 0x1455fbb80 исполнены вместе. Request callback
+0x1444d8610 → response root 0x1444cdb30 связан статически.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SILENT-GAME-DISPATCH.md).
+
 ## Channel silent → Auth silent
 
 0x1444fee6b → 0x1444fdd00 подтверждён исполнением caller. GetAuth возвращает

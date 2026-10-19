@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Auth silent → игровой callback, 19 октября
+
+12 интеграционных native сценариев связали silent dispatcher, очередь,
+реальный delegate bridge и игровой AutoSignIn callback. Передаётся исходный
+response pair; error/expired owner не превращают AL=1 в успешную сессию.
+HTTP response validation и переход от success actions к Login ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SILENT-GAME-DISPATCH.md).
+
 ## ChannelManager → Auth silent, 19 октября
 
 12 native сценариев связали ChannelManager::SignInSilently с GetAuth и

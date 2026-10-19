@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+## H04-silent-game: цепочка callback проверена
+
+Silent dispatcher → queued thunk → bridge → game callback проверены
+вместе. Далее success action 0x143b8bf10 и ненулевой game instance → Login.
+Silent response JSON/session contract и credential-first вход ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SILENT-GAME-DISPATCH.md).
+
 ## H04-channel-silent: handoff подтверждён
 
 Переход ChannelManager → Auth silent и обязательный сохранённый player ID
