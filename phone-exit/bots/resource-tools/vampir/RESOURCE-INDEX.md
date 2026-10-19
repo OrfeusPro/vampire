@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Socket connect result replay
+
+replay-socket-connect-result.py: 16 native scenarios lower/wrapper,
+sockaddr bytes, imports/exports, raw error allowlist и wait gates.
+Platform/mode/error/wait/lifetime остаются fixtures/captures.
+[Источники, SHA и границы](HEADLESS-SOCKET-CONNECT-RESULT.md).
+
 ## Resolved socket setup replay
 
 replay-resolved-socket-setup.py: 7 native scenarios, listener dispatch,

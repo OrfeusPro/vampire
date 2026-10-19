@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Native connect result и wrapper acceptance, 19 октября
+
+16 native сценариев проверили sockaddr IPv4/IPv6, connect call sites
+и ветвь ожидания. Wrapper принимает raw engine codes 22/23/37 даже
+после lower false; это не connected/session proof. Winsock/wait fixtures.
+Далее error mapping и mode/job completion → readiness → Login.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-CONNECT-RESULT.md).
+
 ## Resolver result → socket creator, 19 октября
 
 7 native integrations связали real resolver dispatch/peer recipient

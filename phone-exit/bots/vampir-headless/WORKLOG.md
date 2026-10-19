@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: endpoint connect/result wrapper
+
+16 native scenarios, три новых и шесть смежных tests прошли. Native
+sockaddr layout/connect call, lower/wrapper расхождение и wait gates
+проверены. Raw engine codes не названы WSA errors без mapping evidence.
+Runtime не менялся; полный suite 316 не повторялся. Реальные game/profile/
+credentials/network/OS wait не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-CONNECT-RESULT.md).
+
 ## 19 октября: resolved recipient/socket creator
 
 7 native scenarios, три новых и шесть смежных tests прошли. Source

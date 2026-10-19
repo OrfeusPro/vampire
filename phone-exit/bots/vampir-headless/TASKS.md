@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-connect-result: syscall boundary и bool semantics
+
+Native endpoint connect lower/wrapper проверены. Дальше engine virtual
++0x68 error mapping, actual helper 0x1445eab70 и job/completion/readiness,
+затем packet Login. Не считать wrapper acceptance готовой сессией;
+реальные OS connect/wait и активный mode не проверены.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-CONNECT-RESULT.md).
+
 ## H04-socket-create: recipient и creator проверены
 
 Resolver recipient и source socket creator исполняются вместе.

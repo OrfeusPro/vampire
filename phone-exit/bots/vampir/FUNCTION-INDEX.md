@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Endpoint connect lower/wrapper
+
+0x1445e5c60 → 0x1445ecbb0: native sockaddr + Winsock connect boundary.
+Wrapper raw errors 22/23/37 даёт true; имена WSA errors ещё не связаны.
+Mode/wait branch и state+0x50=2 не доказывают готовое соединение.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-CONNECT-RESULT.md).
+
 ## Resolved peer recipient и socket creation
 
 Action 0x141423088 → peer+0x38 vtable+0x08 → 0x1445e8400.
