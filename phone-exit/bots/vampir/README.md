@@ -1,5 +1,12 @@
 # Vampir — главный файл разработки
 
+## Manager-child → title auth-success, 19 октября
+
+Семь native сценариев связали manager-child/router с рассылкой slot+0x08
+и OnSuccessNetmarbleSDKAuth 0x14641d560. Переход условный; idp/policy/channel
+inputs явные fixtures. Тело title handler и packet Login ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-NOTIFICATION.md).
+
 ## Game-instance success ветвь — Google PGS, 19 октября
 
 Getter 0x1450b11b0 и virtual+0x10 названы по diagnostic/vtable:

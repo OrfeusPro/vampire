@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Title auth-success notification replay
+
+replay-title-auth-notification.py: семь native сценариев полного
+silent/game manager routing с реальным broadcast/action и source-bound
+title target. CDO/channel/idp/policy и UI handler явно ограничены fixtures.
+[Источники, SHA и границы](HEADLESS-TITLE-AUTH-NOTIFICATION.md).
+
 ## Game PGS branch replay
 
 replay-game-pgs-branch.py: четыре native интеграции, реальный provider

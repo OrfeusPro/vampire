@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Title success notification: slot+0x08
+
+0x14560f740 → 0x14560eef0 → broadcast 0x1445f5330 → action
+0x141423088 → title vtable+0x08 = OnSuccessNetmarbleSDKAuth 0x14641d560.
+Router NID channel getter отделён от module+0x88; handler entry capture.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-NOTIFICATION.md).
+
 ## Game success: optional PGS provider
 
 0x1450b11b0 = Google::FPGSIDProvider::GetOrCreate; vtable 0x1496de728

@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-title-notify: переход найден
+
+Условная цепочка manager-child → router → slot+0x08 →
+OnSuccessNetmarbleSDKAuth подтверждена. Далее значимые переходы handler
+0x14641d560 и существующая entry/packet Login цепочка. Активный NID
+channel/policy, первый вход и полная session validation ещё открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-NOTIFICATION.md).
+
 ## H04-game-instance: PGS ветвь отделена
 
 Game-instance virtual+0x10 оказался Google PGS SignIn с unsupported Windows

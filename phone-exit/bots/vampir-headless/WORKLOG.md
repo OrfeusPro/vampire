@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: title auth-success notification
+
+Семь native scenarios связали manager-child/router с точным title
+slot+0x08. Три новых и шесть смежных tests прошли. Channel getter/idp/CDO/
+policy остаются fixtures, тело OnSuccessNetmarbleSDKAuth — entry capture.
+Runtime не менялся, полный suite 316 из runtime milestone не повторялся.
+Реальный профиль, credentials, игра и HTTP не использованы.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-NOTIFICATION.md).
+
 ## 19 октября: optional Google PGS branch
 
 Четыре native scenarios и три новых/шесть смежных tests прошли. Точные
