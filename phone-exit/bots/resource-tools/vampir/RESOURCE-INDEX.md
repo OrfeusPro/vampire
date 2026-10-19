@@ -1,5 +1,14 @@
 # Vampir: где искать данные
 
+## Публичная CDN-конфигурация и module descriptors, 19 октября
+
+Отдельные immutable snapshots: реальный HTTPS CDN body (6000 bytes), разобранный
+общим ядром, и четыре descriptor payload из base/patch. Zone=real/server REAL;
+NnNetwork/NkPatchRuntime LoadingPhase=Default, descriptor слои совпали.
+[CDN source/SHA/offline replay](HEADLESS-PUBLIC-CDN.md),
+[module source/SHA/JSON pointers](HEADLESS-MODULE-DESCRIPTORS.md).
+Active settings, module order и игровая сессия ещё не установлены.
+
 Главная точка входа разработки: [README модуля](../../vampir/README.md).
 
 Обновлено 19 октября 2026. Основная библиотека:

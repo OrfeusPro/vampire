@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — задачи
 
+19 октября: H04b получил реальный public CDN config по профилю base INI.
+Общий decoder подтверждён: Zone real/mode2, index6/REAL с lobby details.
+[Snapshot/offline verification](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).
+Далее SDK bootstrap/auth parameters/session response; active INI/native full
+validation остаются открыты. Module descriptors base/patch совпали и имеют
+Default phase; это не runtime order. [Источники](../resource-tools/vampir/HEADLESS-MODULE-DESCRIPTORS.md).
+
 Обновлено 19 октября 2026. Контекст/ограничения — [README.md](README.md).
 История — [WORKLOG.md](WORKLOG.md); общий реестр — [FUNCTION-INDEX](../vampir/FUNCTION-INDEX.md).
 Общие результаты и runtime package — [vampir-shared](../vampir-shared/README.md).

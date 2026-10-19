@@ -1,5 +1,23 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября 2026 — реальный public CDN и module descriptor snapshots
+
+После 7f0e824 сохранены четыре verified descriptor payload из base/patch:
+ProjectRED.uproject/NkPatch.uplugin совпали, NnNetwork/NkPatchRuntime объявлены
+Default. Runtime module order этим не определён. Выполнены два public HTTPS
+GET по base INI profile (первичный probe и воспроизводимый producer), оба
+200/6000 bytes/одинаковый body SHA. Общий decoder разобрал документ:
+Zone real -> mode2, select server index6/REAL/lobbyPort12000. Body/headers/
+source profile сохранены отдельно; snapshot offline replay не вызывает сеть.
+HTTPS добавлен локальной политикой, native HTTP wire/TLS не воспроизводился.
+Auth/лобби не запускались; active INI/full native validation ещё открыты.
+Добавлены два producer и восемь тестов. Следом SDK bootstrap/auth params/
+session response. [CDN доказательства](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md),
+[module evidence](../resource-tools/vampir/HEADLESS-MODULE-DESCRIPTORS.md).
+Полный набор: 218/218 тестов, 163,8 с. Offline CLI snapshot verification,
+синтаксис четырёх Python-файлов, кодировка девяти Markdown-файлов,
+296 относительных ссылок и git diff --check прошли.
+
 ## 19 октября 2026 — NetworkVar callback вызывается сразу при регистрации
 
 После e100595 найдены FNnNetworkVar constructor, leaf thunk, owner factory/

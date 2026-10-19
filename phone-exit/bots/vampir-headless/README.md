@@ -1,5 +1,17 @@
 # Vampir — самостоятельный сетевой бот
 
+## Реальный публичный CDN config и два слоя INI, 19 октября
+
+Base Game config содержит 1.12.14/real/CdnConfig=True, patch — 0.1.1/dev/False;
+active слой и startup precedence ещё не доказаны. По base профилю выполнен
+public HTTPS GET: 200/6000 байт; общий decoder получил Zone real/mode2 и
+server index6/REAL с lobby details. Body/source/headers сохранены, offline
+verification не обращается к сети. [Доказательства](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).
+ProjectRED.uproject/NkPatch.uplugin совпали base/patch; обе runtime декларации
+имеют LoadingPhase=Default, порядок не установлен.
+[Module descriptors](../resource-tools/vampir/HEADLESS-MODULE-DESCRIPTORS.md).
+Подключения к лобби/авторизации не выполнялись; далее SDK bootstrap/auth/session.
+
 ## Восстановлены PAK-каталог и packed Game config, 19 октября
 
 Generated key callback исполнен native; SHA1 расшифрованных main/full directory

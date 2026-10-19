@@ -1,5 +1,10 @@
 # NetworkSetting: callback вызывается при регистрации
 
+Продолжение: [base/patch module descriptors](HEADLESS-MODULE-DESCRIPTORS.md)
+объявляют NnNetwork и NkPatchRuntime в одной фазе Default, порядок неизвестен.
+По base INI профилю отдельно [получен публичный CDN config](HEADLESS-PUBLIC-CDN.md).
+Это не доказательство active Game cache или порядка mount.
+
 19 октября 2026. Порядок загрузки base/patch INI ещё не установлен.
 Уточнено промежуточное звено: загрузчик NetworkSetting вызывается сразу
 из registration helper, до вставки callback в реестр. Предположение о том,

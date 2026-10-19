@@ -1,5 +1,15 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Публичный CDN body и module descriptors, 19 октября
+
+Base-profile HTTPS GET: 200, 6000 bytes, body SHA 15a9b8d4…62e5d.
+Общий decoder -> Zone real -> SDK mode2; select_cdn_server -> index6/REAL,
+lobbyPort=12000. Это реальный публичный документ, не account/session response.
+[SHA/provenance/offline replay](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).
+ProjectRED.uproject/NkPatch.uplugin побайтно совпали base/patch; обе runtime
+декларации LoadingPhase=Default, порядок не установлен.
+[Descriptors и JSON pointers](../resource-tools/vampir/HEADLESS-MODULE-DESCRIPTORS.md).
+
 ## NetworkVar registration и немедленный config load, 19 октября
 
 Factory 144aa5810 → vtable 14961a318 slot+8 → owner 144aa4810 →

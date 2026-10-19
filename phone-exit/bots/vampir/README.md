@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Получена публичная CDN-конфигурация, 19 октября
+
+HTTPS GET по base INI профилю вернул 200/6000 байт. Общие декодеры разобрали
+реальный документ: SDK Zone=real, server index=6/type=REAL, поля лобби заполнены.
+Снимок с SHA/HTTP provenance сохранён, offline replay не требует сети.
+[Инструмент, снимок и ограничения](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md).
+Active INI/native acceptance не доказаны; подключений к лобби/аккаунтам нет.
+Оба module descriptor совпали base/patch: NnNetwork и NkPatchRuntime имеют
+фазу Default. [Источник/границы порядка](../resource-tools/vampir/HEADLESS-MODULE-DESCRIPTORS.md).
+
 **Начинать здесь при любом продолжении работы над ботом Vampir.**
 Обновлено 19 октября 2026. Исполняемая точка входа — `bot.py`, документационная
 точка входа — этот файл. Здесь хранится карта проекта, подробности — по ссылкам.
