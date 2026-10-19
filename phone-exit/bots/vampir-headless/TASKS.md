@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-device-source: storage и формат GUID
+
+Найдены Windows StoredValue, NMDeviceKey/DeviceKey, platform-dependent branches
+и CoCreateGuid. Native default formatter проверен тремя fixtures, два regression
+теста прошли. Открыто: getter/cache/storage replay, platform/environment и
+Save/load lifecycle, получение реальной identity и server challenge.
+[Источники и границы](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+
 ## H04-device: постоянные привязки
 
 Локальный SQLite-реестр реализован; основная тестовая почта зарегистрирована.

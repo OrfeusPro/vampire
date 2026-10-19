@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## SDK device identity, 19 октября
+
+build-headless-device-identity.py: static storage/getter/PE imports, 19 fragments.
+replay-device-guid-format.py: три native format=0 fixtures.
+[Источник, SHA и открытые зависимости](HEADLESS-DEVICE-IDENTITY.md).
+Фактическая identity не читалась; Android/server challenge не доказаны.
+
 ## SDK SignIn request preparation, 19 октября
 
 replay-sdk-sign-in-body.py: 4 native body + 8 native default header/method

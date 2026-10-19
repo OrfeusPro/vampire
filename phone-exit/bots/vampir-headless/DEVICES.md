@@ -55,8 +55,10 @@ Native SDK sign-in передаёт **два отдельных поля** devic
 [цепочка функций, версия EXE, SHA256 и воспроизведение](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
 Email web flow также передаёт deviceKey и контекстные headers:
 [JS источники и границы](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
-Связь этих значений с физическим устройством, генерация, постоянное хранение,
-дополнительные характеристики и серверная политика привязки пока не восстановлены.
+Windows storage/GUID fallback разобраны статически, default GUID formatter
+исполнен на synthetic fixtures: [source/SHA](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+Связь с физическим устройством, полный active storage lifecycle,
+дополнительные характеристики и серверная политика привязки пока не доказаны.
 Нельзя заменять оба поля одним UUID или считать любой Android ID их значением.
 
 Отдельные стабильные профили для остальных почт запланированы. Создание виртуальных
@@ -66,7 +68,8 @@ Email web flow также передаёт deviceKey и контекстные h
 
 ## Следующие задачи
 
-1. Восстановить GetNMDeviceKey/GetDeviceKey и их storage/generation из клиента.
+1. Проверить getter/cache/storage ветви native replay, active platform и Save/load
+   после статического разбора GetNMDeviceKey/GetDeviceKey.
 2. Получить согласованные реальные значения для основного аккаунта с provenance.
 3. Найти challenge/confirmation response и штатное завершение подтверждения.
 4. Связать login runner с реестром и остановкой на подтверждении/лимитах входа.

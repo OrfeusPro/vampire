@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 19 октября: источники идентификаторов устройства
+
+Source-bound export сохранил 19 fragments и PE imports вне Git с SHA256.
+NMDeviceKey имеет cache/StoredValue/GUID fallback; DeviceKey — отдельный
+settings/storage lifecycle. CoCreateGuid import подтверждён, не вызывался.
+Native default format=0 и hex writer проверены на трёх synthetic fixtures.
+Два regression tests прошли, реальные identity/profile/registry не читались.
+[Source/SHA и следующие действия](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+
 ## 19 октября: реестр почта — устройство
 
 По указанию пользователя основная почта — ранее созданная тестовая.

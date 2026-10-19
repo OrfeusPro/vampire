@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## Происхождение device keys, 19 октября
+
+Windows SDK использует отдельные постоянные NMDeviceKey и DeviceKey.
+Default GUID formatter подтверждён native execution на synthetic words.
+Это ещё не получение реальной identity основной почты.
+[Storage, source/SHA и границы](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+
 ## Реестр устройств, 19 октября
 
 Основная тестовая почта внесена в локальную SQLite-базу с типом real.

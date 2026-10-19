@@ -1,5 +1,12 @@
 # Vampir — общий указатель найденных функций и связей
 
+## GetDeviceKey / GetNMDeviceKey: происхождение
+
+[Windows storage, CoCreateGuid и GUID format=0](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+Getter branches разобраны статически; default formatter/hex writer исполнены
+на synthetic words. Отдельные поля, cache и сохранение не смешивать.
+Real keys/active platform/confirmation protocol ещё открыты.
+
 ## Общие привязки аккаунтов и устройств
 
 [device_registry и локальная SQLite-схема](../vampir-headless/DEVICES.md):

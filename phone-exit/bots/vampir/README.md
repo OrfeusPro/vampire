@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## Device identity: storage и native формат GUID, 19 октября
+
+Статически найдены отдельные постоянные nmDeviceKey и deviceKey, Windows
+registry helpers и CoCreateGuid. Default formatter и hex writer исполнены
+на трёх synthetic fixtures: 32 uppercase hex без дефисов. Реальные ключи
+не читались; getter/platform/Save branches ещё требуют replay.
+[Source/SHA/границы](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+
 ## Постоянная привязка почты к устройству, 19 октября
 
 Добавлен общий локальный SQLite-реестр account → device profile → confirmation.
