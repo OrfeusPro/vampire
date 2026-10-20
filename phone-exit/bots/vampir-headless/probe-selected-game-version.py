@@ -21,10 +21,12 @@ def module(name, filename):
     return value
 
 
-def choose_target(server_list, *, server_id=None, selection=None, region=None):
+def choose_target(server_list, *, server_id=None, selection=None, region=None, joined_country_code=None):
     if (server_id is None) == (selection is None): raise ValueError('Choose one explicit server selection policy')
     if selection is not None and selection != 'lowest-valid-id': raise ValueError('Unsupported local server selection policy')
-    if region is not None: return select_game_server_in_region(server_list, region=region, server_id=server_id)
+    if region is not None:
+        return select_game_server_in_region(server_list, region=region, server_id=server_id,
+            joined_country_code=joined_country_code)
     if server_id is not None: return select_game_server_target(server_list, server_id=server_id)
     if selection != 'lowest-valid-id': raise ValueError('Unsupported local server selection policy')
     # A local diagnostic policy, not native availability/region/character logic.

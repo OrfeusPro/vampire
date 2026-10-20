@@ -17,6 +17,20 @@ def is_game_server_state_excluded(record):
     return record.enums[1] in (2, 3)
 
 
+def game_server_allows_joined_country(record, *, joined_country_code):
+    """Native array50 country predicate, using an explicit fresh SDK country.
+
+    Empty arrays impose no country restriction. For nonempty arrays, local
+    policy requires a two-letter ASCII country, with no network-country fallback.
+    Native permits empty-string matches; that unsupported context is rejected.
+    """
+    if not record.array50: return True
+    if type(joined_country_code) is not str or re.fullmatch(r'[A-Za-z]{2}', joined_country_code) is None:
+        raise ValueError('Explicit SDK joined country required for server country policy')
+    code = joined_country_code.upper()
+    return any(value.isascii() and value.upper() == code for value in record.array50)
+
+
 @dataclass(frozen=True, slots=True)
 class GameServerTarget:
     server_id: int
@@ -59,12 +73,13 @@ def select_game_server_target(server_list, *, server_id):
     return GameServerTarget(server_id, record.u32[0], host, port, record.u16[1])
 
 
-def select_game_server_in_region(server_list, *, region, server_id=None):
+def select_game_server_in_region(server_list, *, region, server_id=None, joined_country_code=None):
     """Explicit region gate by group +20, matching native master Update.
 
     With no ID, choose the lowest valid unique ID inside that region as a
     local diagnostic policy. Exclude native saved-server states 2/3; no fallback
     region or claim that remaining records permit entry/character creation.
+    Nonempty array50 requires the current SDK joined country, not exit country.
     See HEADLESS-SERVER-REGION-SELECTION.md for enum and gate native evidence.
     """
     if type(region) is not str or region not in SERVER_REGION_CODES:
@@ -84,6 +99,14 @@ def select_game_server_in_region(server_list, *, region, server_id=None):
             if is_game_server_state_excluded(record):
                 if server_id is not None:
                     raise ValueError('Selected server state is excluded by native saved-server policy')
+                continue
+            try: country_allowed = game_server_allows_joined_country(record, joined_country_code=joined_country_code)
+            except ValueError:
+                if server_id is not None: raise
+                continue
+            if not country_allowed:
+                if server_id is not None:
+                    raise ValueError('Selected server does not allow the SDK joined country')
                 continue
             return target
     raise ValueError('No unique valid endpoint in the explicitly selected region')

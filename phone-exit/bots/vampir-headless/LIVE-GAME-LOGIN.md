@@ -1,5 +1,16 @@
 # Реальный игровой Login: ответ с кодом 58
 
+## Отдельная проверка страны без повторного игрового Login
+
+После подтверждения native country predicate свежий SDK вернул HK.
+Все JP server ID 251–270 допускают HK по array50; selector выбрал 251.
+SDK / lobby вход и ID 104 приняты: 55 групп, 98 записей, body 11 338 байт,
+send 545 / recv 11 466. Использован --server-list-only: игрового сокета,
+Version / Login и запроса персонажей в этой проверке не было. Лобби закрыто,
+JP-клиент завершён с exit 0, stderr пуст. Предыдущий BlockedIp не объясняется
+несовпадением HK с проверенным country list.
+[Снимки и границы](../resource-tools/vampir/HEADLESS-SERVER-COUNTRY-POLICY.md).
+
 ## Проверка состояния JP-серверов
 
 Свежая попытка с native-фильтром record+0x35 получила 20 JP-записей ID 251–270.

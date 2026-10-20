@@ -54,15 +54,17 @@ SDK player settings+0x210. В этой функции проверен точн�
 по 0x1494e2150: `class FString __cdecl UNMPlayer::GetJoinedCountryCode(void) const`.
 Это связь с кодом страны регистрации, а не со списком отдельных аккаунтов.
 Сравнение использует регистронезависимый ASCII-путь 0x1414596e0 после проверки
-длины FString. Заполнение settings+0x210 ответом SDK и fallback country ещё
-нужно связать; полный predicate пока не воспроизведён. В runtime не добавлен
-неподтверждённый fallback или запрет по содержимому array50. Строки из него
-не выводятся в диагностику, сохраняется только количество элементов.
+длины FString. Последующее [дополнение о country policy](HEADLESS-SERVER-COUNTRY-POLICY.md)
+подтвердило запись settings+0x210 ответом SDK и полный predicate. Его реальный
+fallback country ещё не связан; runtime использует только свежую SDK-страну.
+Строки array50 не выводятся в диагностику, сохраняется количество элементов
+и результат сравнения с SDK country.
 
 [build-server-entry-index.py](build-server-entry-index.py) связывает точные
 диагностические литералы с native roots 0x146429c90 / 0x14642a1e0 и обработчиком
 LoginResult. Отчёт: `F:/PhoneExit Resources/Vampir/code-clues/server-entry-index.json`.
-SHA256: `279e40aed400c687877e6a7f479490625840442452532a80e0a51b212c230bac`.
+После расширения setter diagnostic текущий SHA256:
+`eb71020d69d3e24f75d011582031268ddbdda1a66e86960ef330f30c658054f2`.
 Эти точки и caller 0x146417800 проверены в Ghidra; пользовательский доступ
 не выводится только из их аналитических имён.
 

@@ -21,7 +21,8 @@ def build():
             ('UServerSelectMyCharacterT::_BeginGame() - ServerId( %d )', 'utf-16le'),
             ('UServerSelectPopup::_InitServerList()', 'utf-16le'),
             ('COMMON_SERVER_WATING_FULL', 'utf-16le'),
-            ('class FString __cdecl UNMPlayer::GetJoinedCountryCode(void) const', 'ascii')):
+            ('class FString __cdecl UNMPlayer::GetJoinedCountryCode(void) const', 'ascii'),
+            ('void __cdecl UNMPlayer::SetJoinedCountryCode(const class FString &,bool)', 'ascii')):
         data = (text + '\0').encode(encoding)
         offset = raw.find(data)
         if offset < 0 or raw.find(data, offset + 1) >= 0:

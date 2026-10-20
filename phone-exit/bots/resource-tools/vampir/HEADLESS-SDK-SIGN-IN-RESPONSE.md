@@ -1,5 +1,9 @@
 # SDK sign-in response: структура player и SDK accessToken
 
+Дополнение 20 октября: [настоящий country setter и полный server predicate](HEADLESS-SERVER-COUNTRY-POLICY.md)
+исполнены вместе с этим field slice в 15 отдельных сценариях. Ниже сохранены
+исходные границы response-only replay, где setter был capture.
+
 19 октября 2026. Продолжение [request preparation](HEADLESS-SDK-SIGN-IN.md).
 Источник — собранный Windows EXE SHA256
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.

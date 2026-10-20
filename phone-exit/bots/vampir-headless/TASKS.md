@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-server-country: SDK HK проходит проверку JP array50
+
+15 native-сценариев связали SDK response field с настоящим country setter,
+getters и полным predicate. Свежий SDK вернул HK; array50 всех JP 251–270
+допускает эту страну. Добавлен фильтр и --server-list-only. 20 проверок прошли;
+в реальной проверке игрового подключения не было, лобби / JP-транспорт закрыты.
+Далее — оставшийся контекст соединения / Login и причина BlockedIp до входа,
+списка / выбора персонажа и позиции.
+[Источники и границы](../resource-tools/vampir/HEADLESS-SERVER-COUNTRY-POLICY.md).
+
 ## H04-server-entry-state: известное условие сброса проверено
 
 Byte server+0x35 со значениями 2/3 сбрасывает оба сохранённых server ID;

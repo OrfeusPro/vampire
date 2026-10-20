@@ -50,7 +50,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         self.assertNotIn('private-list-identity-fixture', str(result))
         self.assertNotIn('private-record-text', str(result))
         self.assertEqual(result['region_server_states'], [dict(server_id=42, enums=(0, 1, 0),
-            flags=(False,) * 5, array50_count=1, excluded_by_native_state=False)])
+            flags=(False,) * 5, array50_count=1, excluded_by_native_state=False, sdk_joined_country_allowed=None)])
         self.assertEqual(result['game']['login_result_code'], 0)
         self.assertEqual(repr(self.tool.AuthForGame(**{k: inputs[k] for k in ('binding', 'sdk_data', 'netmarble_id')})), 'AuthForGame()')
 
