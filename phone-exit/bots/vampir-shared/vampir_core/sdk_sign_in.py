@@ -64,3 +64,18 @@ def plan_nid_sdk_sign_in(*, constants: dict, credential: NidSdkCredential, game_
     if sum(len(k) + len(v) for k, v in headers) > 32768:
         raise ValueError('SDK sign-in headers exceed local byte budget')
     return SdkSignInRequestPlan(append_sdk_path(base, 'v1/sign-in'), body, tuple(headers))
+
+
+def plan_nid_sdk_sign_up(*, constants: dict, credential: NidSdkCredential, game_code: str,
+                         build_code: int, nm_device_key: str, device_key: str, country_code: str,
+                         os_type: str) -> SdkSignInRequestPlan:
+    """Explicit first-player creation; never an automatic retry of sign-in.
+
+    Verified SignUp body slices use the same four fields and optional credential
+    as SignIn, without playerId. Header/POST factory is shared by the client.
+    """
+    plan = plan_nid_sdk_sign_in(constants=constants, credential=credential, game_code=game_code,
+        build_code=build_code, nm_device_key=nm_device_key, device_key=device_key,
+        country_code=country_code, os_type=os_type)
+    return SdkSignInRequestPlan(append_sdk_path(lookup_sdk_url_value(constants, 'authUrl'), 'v1/sign-up'),
+                                plan.body, plan.headers)

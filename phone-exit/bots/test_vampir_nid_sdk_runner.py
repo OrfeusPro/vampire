@@ -63,5 +63,18 @@ class NidSdkRunnerTests(unittest.TestCase):
         self.assertFalse(stored['active_runtime_settings_verified'])
         self.assertEqual((stored['profile']['os_type'], stored['profile']['game_code']), ('PC', 'thered'))
 
+    def test_sdk_player_creation_is_explicit_and_does_not_retry_sign_in(self):
+        calls = []
+        def execute(plan, **kwargs):
+            calls.append(plan.url)
+            self.assertEqual(kwargs['expected_url'], 'https://sdk.example.invalid/v1/sign-up')
+            self.assertNotIn('playerId', json.loads(plan.body))
+            return 'registered-fixture'
+        with patch.object(self.runner, 'load_inputs', return_value=(self.binding, self.profile, self.constants)):
+            result = self.runner.run('test@example.invalid', create_sdk_player=True,
+                _capture=lambda *a, **k: self.provider, _execute=execute)
+        self.assertEqual(result, 'registered-fixture')
+        self.assertEqual(calls, ['https://sdk.example.invalid/v1/sign-up'])
+
 
 if __name__ == '__main__': unittest.main()

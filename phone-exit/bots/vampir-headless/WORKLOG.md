@@ -1,5 +1,26 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: отдельный SDK SignUp и фактический отказ по стране
+
+Уточнено сообщение SignIn 1203: `not exist player channel`. Найдены diagnostics
+FAuthImpl::SignUp / ExecSignUp, Ghidra расширен до 281 функции / 112 предупреждений.
+Callback invoke без unwind оказался одним JMP; экспортирован настоящий target.
+Четыре bounded native-сценария SignUp подтвердили четыре поля и credential,
+без playerId. Endpoint — authUrl + v1/sign-up; общий POST wrapper сохранён.
+Добавлены явный режим создания, отдельный parser player_id без access_token
+и запрет смешения transport endpoints. Ошибка входа не включает SignUp сама.
+
+Две реальные попытки SignUp получили HTTP 400 / 1602; диагностическая попытка
+уточнила сообщение `not allowed country for game`. Игрок не создан, SignIn
+после этого не запускался. Native country getter читает settings+0x3f0;
+источник записи пока неизвестен. Сохранённый GMC2 geoIp.isoCountry — UA.
+Страну не подменяли. Пользователю задан вопрос о доступе установленной версии
+из текущей сети. Пользователь подтвердил: напрямую игра на этом ПК не работает,
+подходят Япония и Гонконг. В личном каталоге Phone Exit найден доступный
+незанятый выход HK; подключение ещё не выполнено. Четыре теста SignUp,
+четыре runner, шесть HTTP, три Ghidra, четыре прежних SignIn и четыре parser
+прошли. [Происхождение и ограничения](../resource-tools/vampir/HEADLESS-SDK-SIGN-UP.md).
+
 ## 20 октября: настоящий NID callback из встроенного окна и отказ SDK
 
 Добавлен отдельный script формы signin, привязанный к точному HTTPS origin

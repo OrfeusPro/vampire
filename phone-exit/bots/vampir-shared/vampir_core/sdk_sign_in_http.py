@@ -12,6 +12,7 @@ from urllib.parse import urlsplit
 
 from .sdk_sign_in import SdkSignInRequestPlan
 from .sdk_sign_in_response import parse_sdk_sign_in_response
+from .sdk_sign_up_response import parse_sdk_sign_up_response
 
 
 class SdkSignInHttpError(RuntimeError):
@@ -55,6 +56,20 @@ def _read_error_code(response, *, limit, budget, clock):
 
 def execute_sdk_sign_in(plan, *, expected_url, timeout=10, read_budget=30, max_response_bytes=65536,
                         _open=None, _clock=time.monotonic):
+    return _execute_sdk_auth(plan, expected_url=expected_url, suffix='/v1/sign-in', timeout=timeout,
+        read_budget=read_budget, max_response_bytes=max_response_bytes, _open=_open, _clock=_clock,
+        parse_response=parse_sdk_sign_in_response)
+
+
+def execute_sdk_sign_up(plan, *, expected_url, timeout=10, read_budget=30, max_response_bytes=65536,
+                        _open=None, _clock=time.monotonic):
+    """One explicit first-player POST; no fallback/retry or implicit creation."""
+    return _execute_sdk_auth(plan, expected_url=expected_url, suffix='/v1/sign-up', timeout=timeout,
+        read_budget=read_budget, max_response_bytes=max_response_bytes, _open=_open, _clock=_clock,
+        parse_response=parse_sdk_sign_up_response)
+
+
+def _execute_sdk_auth(plan, *, expected_url, suffix, timeout, read_budget, max_response_bytes, _open, _clock, parse_response):
     """Execute a plan against the SAME explicitly trusted SDK endpoint.
 
     Parent owns provider origin/account/freshness and confirmation gates.
@@ -65,7 +80,7 @@ def execute_sdk_sign_in(plan, *, expected_url, timeout=10, read_budget=30, max_r
     if not isinstance(plan, SdkSignInRequestPlan) or plan.method != 'POST' or plan.url != expected_url:
         raise ValueError('SDK sign-in requires the bound expected endpoint')
     if (type(expected_url) is not str or not expected_url.startswith('https://')
-            or '?' in expected_url or '#' in expected_url or not expected_url.endswith('/v1/sign-in')):
+            or '?' in expected_url or '#' in expected_url or not expected_url.endswith(suffix)):
         raise ValueError('Unsupported SDK sign-in endpoint')
     try:
         parts = urlsplit(expected_url)
@@ -119,7 +134,7 @@ def execute_sdk_sign_in(plan, *, expected_url, timeout=10, read_budget=30, max_r
                 if len(body) > max_response_bytes: raise SdkSignInHttpError('response_limit', status)
             if declared is not None and len(body) != declared: raise SdkSignInHttpError('truncated_response', status)
             try:
-                return parse_sdk_sign_in_response(status=status, body=bytes(body))
+                return parse_response(status=status, body=bytes(body))
             except ValueError:
                 raise SdkSignInHttpError('sdk_response_rejected', status) from None
     except urllib.error.HTTPError as exc:
