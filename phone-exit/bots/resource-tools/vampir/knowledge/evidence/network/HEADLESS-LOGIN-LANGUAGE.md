@@ -197,3 +197,56 @@ GMC2 manifest SHA256 `4873c99651890ef0df8499c008d297691f287601c747fdbec2f548e5bb
 0x15fae / 0x2740 и попадает в общий вызов `0x145f8a550` и status text.
 Это отдельный helper от прежде исполненного игрового mapper. Его связь с
 таблицей / локализацией — следующий конкретный вопрос для отказа лобби.
+
+## Расшифровка 10036: IsInspect / технические работы
+
+Этот вопрос закрыт последующим разбором. Helper `0x145f8a550` сначала ищет
+table override через `0x145bdcfe0` / `0x145be66c0`, а при отсутствии записи
+вызывает **другой mapper**, `0x1458050e0`. Прежний `0x1458091b0` относится к
+игровому домену и не был достаточен для ответа об ошибке лобби.
+
+Настоящий mapper лобби исполнен от входа до возврата для трёх значений:
+
+| Код лобби | Ключ из code literal |
+| --- | --- |
+| 0 | Success |
+| 10036 | **IsInspect** |
+| 10048 | BlockedInfo |
+
+Для 10036 достигнут ASCII literal `0x1498ffc68`, file offset 160 426 088.
+SHA256 bytes с NUL: `7d7640a2fc27b7a711e79c57b9ef3721214916c4c8b6a7a4a19e9918b08edf9e`.
+В проверенной `ProjectRED-Windows-6106.csv` key IsInspect уникален, data row 97,
+текст **Under maintenance**. Таблица SHA256
+`0139351e6a9c56a86903c24f55d3d90933167661e60994e203b34c34e97110c3`.
+
+Это подтверждает тип нынешнего отказа лобби: клиент расшифровывает его как
+технические работы. Масштаб, длительность и серверная причина не установлены.
+Table override и реальный popup не исполнялись; время следующей попытки из
+одного кода не выводится. Прежний Game Login 16 этим не объяснён. Добавление
+страны / metadata было проверено на отправку, но его достаточность для успешного
+входа нельзя оценить по отказам IsInspect.
+
+Runtime `vampir_core.lobby_login_error` теперь возвращает понятное описание для
+10036 и 10048, отдельно от игровых кодов и Winsock. `lobby_login_probe` включает
+ключ / сообщение в summary, не меняет повторные попытки и не продолжает вход
+при отказе. Socket-тест проверяет IsInspect и отсутствие session consumer.
+
+[replay-lobby-result-error.py](../../../replay-lobby-result-error.py) повторно
+использует прежний bounded native harness с явным другим ENTRY. FString
+constructor остаётся fixture, switch data декодируются только по достигнутым
+инструкциям; нет игры, сети или чтения памяти процесса.
+Отчёт `F:/PhoneExit Resources/Vampir/code-clues/lobby-result-error-replay.json`,
+SHA256 `380a994d732294cd10c231db74eb902173c36a8b02258c088ca3ba5ddf743a4e`.
+
+Ghidra export `export-c7552efd2125/run-ce75022de8a3`: 424 функции,
+192 предупреждения. Manifest SHA256
+`292f74128e40da34ec5092e9bd889eb90e624d0cec7285775a73d2662d866100`;
+functions.json SHA256
+`057f8b3b932a92762760e946ec2befa37266067c22c14520cc2a225f8a8d57b5`.
+Проверены provenance и SHA файлов, старые exports не изменялись.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-lobby-result-error.py
+python -X utf8 phone-exit/bots/test_vampir_lobby_result_error.py
+python -X utf8 phone-exit/bots/test_vampir_lobby_login_probe.py
+```

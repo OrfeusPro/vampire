@@ -1,6 +1,18 @@
 {
   "source_sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
   "roles": {
+    "0x1458050e0": {
+      "role": "Mapper кодов результата лобби в строковые ключи",
+      "evidence": "knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md",
+      "status": "bounded_native",
+      "limits": "Полные вызовы для 0/10036/10048: Success/IsInspect/BlockedInfo. FString constructor — fixture; table override и popup не исполнены. Не является игровым mapper 0x1458091b0."
+    },
+    "0x145f8a550": {
+      "role": "Общий показ ошибки лобби: table override, затем fallback 0x1458050e0",
+      "evidence": "knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md",
+      "status": "static",
+      "limits": "Связь разобрана в Ghidra; весь helper, table lookup и UI не исполнены. Специальная ветвь 10036/10048 отличается от общего popup."
+    },
     "0x145570240": {
       "role": "FNnLocalizationManager::UpdateLanguageCode",
       "evidence": "knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md",

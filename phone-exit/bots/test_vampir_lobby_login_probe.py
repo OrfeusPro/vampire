@@ -23,7 +23,7 @@ class LobbyLoginProbeTests(unittest.TestCase):
         report = json.loads(Path('F:/PhoneExit Resources/Vampir/code-clues/lobby-server-list-reader-replay.json').read_text('utf-8'))
         body = bytes(4) + bytes.fromhex(report['cases'][-1]['payload_hex'])[4:]
         for list_code, selected_id, login_code, consumer_error in (
-                (0, 251, 0, False), (0, 251, 16, False), (16, 251, 0, False),
+                (0, 251, 0, False), (0, 251, 16, False), (0, 251, 10036, False), (16, 251, 0, False),
                 (0, 0, 0, False), (0, 251, 0, True)):
             with self.subTest(list_code=list_code, selected_id=selected_id, login_code=login_code):
                 client, server = socket.socketpair()
@@ -63,6 +63,9 @@ class LobbyLoginProbeTests(unittest.TestCase):
                     expected.append(((3, 2), replace(initial, integers=(2, 0, selected_id, 0)).encode(max_payload_size=4096)))
                     self.assertEqual(result.summary['login_result_code'], login_code)
                     self.assertEqual(result.summary['login_server_id'], selected_id)
+                    if login_code==10036:
+                        self.assertEqual(result.summary['login_result_key'],'IsInspect')
+                        self.assertIn('технических работах',result.summary['login_error_message'])
                 else:
                     self.assertFalse(result.summary['login_sent'])
                     self.assertIsNone(result.response)

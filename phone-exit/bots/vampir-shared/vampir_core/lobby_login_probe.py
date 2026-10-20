@@ -6,6 +6,7 @@ import time
 
 from .lobby_packets import LobbyVersionPayload, LobbyLoginPayload, LobbyServerListPayload, decode_lobby_version_result
 from .lobby_login_result import decode_lobby_login_result
+from .lobby_login_error import describe_lobby_login_error
 from .lobby_server_list import decode_lobby_server_list
 from .receive_stream import ReceiveLimits, ReceiveStream
 from .send_frame import encode_lobby_version_frame, encode_lobby_login_frame, encode_lobby_server_list_frame
@@ -45,10 +46,13 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, 
     def result(status, response=None, error=None, list_response=None):
         if response is None: response = login_response
         if list_response is None: list_response = selected_list
+        detail=describe_lobby_login_error(response.result_code) if response is not None else None
         summary = dict(status=status, stage=stage, bytes_sent=sent, bytes_received=received,
             packet_ids=ids.copy(), version_result_code=version_code, login_sent=login_sent,
             login_result_received=response is not None,
             login_result_code=response.result_code if response is not None else None,
+            login_result_key=detail[0] if detail else None,
+            login_error_message=detail[1] if detail else None,
             last_body_size=last_body_size,
             server_list_sent=list_sent,
             server_list_result_code=list_response.result_code if list_response is not None else None,

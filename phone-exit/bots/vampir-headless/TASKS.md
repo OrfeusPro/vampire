@@ -44,11 +44,13 @@
 `--language-code`. Encoder с DeviceKey воспроизвёл официальные 791 байт, но свежие
 поля ещё нужно собрать. [Продолжение и live результаты](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md).
 Две сравнительные попытки с языком 1 получили LobbyLoginResult 10036 до игры.
-Нужно проверить условие этого отказа; смешивать его с ошибкой Winsock нельзя.
+Mapper лобби расшифровал этот код как IsInspect / технические работы;
+смешивать его с ошибкой Winsock или прежним Game Login 16 нельзя.
 Свежая страна и частичная metadata из шести подтверждённых полей уже подключены
 и проверены по отдельности: выбранное лобби в обеих попытках вернуло 10036.
-Следующий участок — helper отказа `0x145f8a550` из LobbyLoginResult handler;
-полные неизвестные поля metadata пока не заполнять догадками.
+Helper отказа `0x145f8a550` связан с отдельным mapper `0x1458050e0`, а его
+код 10036 — с IsInspect. Полные неизвестные поля metadata пока не заполнять
+догадками; проверку игрового входа продолжить после изменения ответа лобби.
 [Запись и границы разбора](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md).
 [Результаты](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 
