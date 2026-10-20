@@ -2,6 +2,27 @@
 $script:diagnosticState=$null
 $script:diagnosticMessage=''
 $script:diagnosticPending=$false
+function ConvertToDiagnosticFilters([string[]]$lines) {
+    $filters=@();foreach($line in $lines){
+        $value=$line.Trim();if(!$value){continue}
+        if($value -notmatch '^([a-zA-Z0-9.-]{1,253}):([0-9]{1,5})$' -or [int]$Matches[2] -lt 1 -or [int]$Matches[2] -gt 65535){throw 'Нужны точные адреса хост:порт, без URL и масок.'}
+        $filters+=@{host=$Matches[1];port=[int]$Matches[2]}
+    }
+    if($filters.Count -lt 1 -or $filters.Count -gt 16){throw 'Укажите от 1 до 16 адресов игры.'}
+    return $filters
+}
+function ReadDiagnosticFilterFile([string]$path) {
+    $file=[IO.File]::OpenRead($path)
+    try{
+        if($file.Length -gt 4096){throw 'Файл фильтра слишком большой.'}
+        $bytes=New-Object byte[] 4097;$count=0
+        while($count -lt $bytes.Length){$n=$file.Read($bytes,$count,($bytes.Length-$count));if(!$n){break};$count+=$n}
+        if($count -gt 4096){throw 'Файл фильтра слишком большой.'}
+        $text=([Text.UTF8Encoding]::new($false,$true)).GetString($bytes,0,$count).TrimStart([char]0xfeff)
+        $lines=@($text -split "`r?`n");$null=@(ConvertToDiagnosticFilters $lines)
+        return ($lines -join "`r`n")
+    }finally{$file.Dispose()}
+}
 function SendDiagnosticCommand($request) {
     if(!$script:client -or $script:client.HasExited -or $script:stopping -or !$script:transportReady){throw 'Подключите телефон перед записью.'}
     $script:client.StandardInput.WriteLine(($request|ConvertTo-Json -Depth 5 -Compress))
@@ -15,7 +36,9 @@ function ShowTcpDiagnostics([switch]$Preview) {
     $note=[Windows.Forms.Label]::new();$note.Text="Только новые TCP-соединения к адресам ниже.`r`nЗапись может содержать токены. Храните её локально.`r`nЛимиты: 3 минуты · 8 МиБ · 16 соединений."
     $note.SetBounds((UiPixel 24),(UiPixel 62),(UiPixel 592),(UiPixel 72));$window.Controls.Add($note)
     $label=[Windows.Forms.Label]::new();$label.Text='Адреса игры: хост:порт, по одному в строке'
-    $label.SetBounds((UiPixel 24),(UiPixel 143),(UiPixel 592),(UiPixel 26));$window.Controls.Add($label)
+    $label.SetBounds((UiPixel 24),(UiPixel 143),(UiPixel 446),(UiPixel 26));$window.Controls.Add($label)
+    $load=[PhoneExit.DarkButton]::new();$load.Text='Загрузить…';$load.AccessibleName='Загрузить фильтр TCP'
+    $load.SetBounds((UiPixel 484),(UiPixel 139),(UiPixel 132),(UiPixel 32));$window.Controls.Add($load)
     $filter=[Windows.Forms.TextBox]::new();$filter.Multiline=$true;$filter.ScrollBars='Vertical';$filter.MaxLength=4096;$filter.AccessibleName='Фильтр адресов игры'
     $filter.SetBounds((UiPixel 24),(UiPixel 176),(UiPixel 592),(UiPixel 104));$window.Controls.Add($filter)
     $state=[Windows.Forms.Label]::new();$state.AccessibleName='Состояние записи';$state.SetBounds((UiPixel 24),(UiPixel 292),(UiPixel 592),(UiPixel 76));$window.Controls.Add($state)
@@ -30,7 +53,7 @@ function ShowTcpDiagnostics([switch]$Preview) {
     $update={
         $live=$script:client -and !$script:client.HasExited -and !$script:stopping -and $script:transportReady
         $recording=$live -and ($script:diagnosticPending -or ($script:diagnosticState -and $script:diagnosticState.state -in @('active','stopping')))
-        $begin.Enabled=$live -and !$recording -and !$Preview;$end.Enabled=$recording -and !$Preview;$filter.Enabled=!$recording
+        $begin.Enabled=$live -and !$recording -and !$Preview;$end.Enabled=$recording -and !$Preview;$filter.Enabled=!$recording;$load.Enabled=!$recording -and !$Preview
         $text=if(!$live){'Запись выключена. Подключите телефон.'}elseif(!$script:diagnosticState){'Запись выключена.'}else{
             $name=switch($script:diagnosticState.state){'active'{'ИДЁТ ЗАПИСЬ'}'stopping'{'Завершаю запись'}'stopped'{'Запись остановлена'}'failed'{'Ошибка записи'}default{'Запись выключена'}}
             $reason=switch($script:diagnosticState.reason){'byte_limit'{'Лимит данных'}'file_limit'{'Лимит файла'}'queue_limit'{'Диск не успевает'}'time_limit'{'Лимит времени'}'flow_limit'{'Лимит соединений'}'record_limit'{'Лимит событий'}'io_error'{'Ошибка диска'}'transport_stopped'{'Соединение остановлено'}default{''}}
@@ -43,16 +66,18 @@ function ShowTcpDiagnostics([switch]$Preview) {
     }
     $begin.Add_Click({
         try{
-            $filters=@();foreach($line in @($filter.Lines)){
-                $value=$line.Trim();if(!$value){continue}
-                if($value -notmatch '^([a-zA-Z0-9.-]{1,253}):([0-9]{1,5})$' -or [int]$Matches[2] -lt 1 -or [int]$Matches[2] -gt 65535){throw 'Нужны точные адреса хост:порт, без URL и масок.'}
-                $filters+=@{host=$Matches[1];port=[int]$Matches[2]}
-            }
-            if($filters.Count -lt 1 -or $filters.Count -gt 16){throw 'Укажите от 1 до 16 адресов игры.'}
+            $filters=@(ConvertToDiagnosticFilters $filter.Lines)
             SendDiagnosticCommand @{op='capture-start';filters=@($filters)}
             $script:diagnosticPending=$true
             $script:diagnosticMessage='Запуск записи…';$begin.Enabled=$false
         }catch{$script:diagnosticMessage=$_.Exception.Message}
+    })
+    $load.Add_Click({
+        $picker=[Windows.Forms.OpenFileDialog]::new();$picker.Filter='Фильтр TCP (*.txt)|*.txt';$picker.Title='Адреса игровых соединений'
+        $initial=Join-Path $script:profileDirectory 'diagnostic-filters';if(Test-Path -LiteralPath $initial){$picker.InitialDirectory=$initial}
+        try{if($picker.ShowDialog($window) -eq 'OK'){$filter.Text=ReadDiagnosticFilterFile $picker.FileName;$script:diagnosticMessage='Фильтр загружен. Запись не включена.'}}
+        catch{$script:diagnosticMessage='Не удалось прочитать фильтр. Нужен UTF-8 файл до 4096 байт с адресами хост:порт.'}
+        finally{$picker.Dispose()}
     })
     $end.Add_Click({try{SendDiagnosticCommand @{op='capture-stop'};$script:diagnosticMessage='Останавливаю…'}catch{$script:diagnosticMessage='Транспорт уже остановлен.'}})
     $close.Add_Click({$window.Close()})

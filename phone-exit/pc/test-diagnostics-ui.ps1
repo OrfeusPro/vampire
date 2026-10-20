@@ -44,6 +44,14 @@ $exercise.Add_Tick({
     }catch{$script:diagnosticUiError=$_.Exception.Message;$exercise.Stop();$dialog.Close()}
 })
 try{
+    $null=[IO.Directory]::CreateDirectory($script:profileDirectory)
+    $fixture=Join-Path $script:profileDirectory 'filter.txt'
+    [IO.File]::WriteAllText($fixture,"lobby.example:12000`ngame.example:12001`n",[Text.UTF8Encoding]::new($false))
+    $loaded=ReadDiagnosticFilterFile $fixture
+    if(@(ConvertToDiagnosticFilters ($loaded -split "`r?`n")).Count -ne 2){throw 'Filter import lost endpoints'}
+    [IO.File]::WriteAllText($fixture,('x'*4097));$rejected=$false
+    try{$null=ReadDiagnosticFilterFile $fixture}catch{$rejected=$true}
+    if(!$rejected){throw 'Oversized filter accepted'}
     $exercise.Start();ShowTcpDiagnostics
     if($script:diagnosticUiError){throw $script:diagnosticUiError}
     if($script:diagnosticUiStep -ne 2){throw 'Capture controls did not finish test'}
