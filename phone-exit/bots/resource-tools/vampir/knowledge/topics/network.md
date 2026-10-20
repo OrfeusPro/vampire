@@ -17,6 +17,8 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 Новый явный launcher flow принят SDK и лобби, но Game Login на ID 256 через
 два других JP-телефона и HK вернул 58 / BlockedIp. Изменились также выходы;
 смена кода не доказывает причину прежнего InvalidState.
+После последней замены телефонов launcher flow на новом JP снова дал
+16 / InvalidState; со вторым новым JP прямой транспорт не установился.
 [Проверка launcher flow](../evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 
 ## Открыто

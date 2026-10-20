@@ -23,6 +23,8 @@ Metadata collector и writer разобраны в bounded сценариях: �
 подтвердила SignInByLauncher для канала 200 и отдельный GetLauncherToken
 с существующим credential, включая NID 33. Реальный launcher-токен и последующий
 SDK sign-in приняты через два JP-телефона и HK; Game Login получил 58 / BlockedIp.
+После новой замены телефонов launcher flow принят SDK, но Game Login на новом JP
+вернул 16 / InvalidState. Изменение auth flow не устранило этот отказ.
 [Реальная проверка](../evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 
 Источник первоначального заполнения common data, их значения перед Login,
@@ -51,7 +53,7 @@ Credentials и локальные профили не переносить в д
 - [Game success: рассылка подписчикам и title interface slot+0x30](../evidence/auth/HEADLESS-GAME-SUCCESS-BROADCAST.md)
 - [Launcher-вход: отдельный credential и два HTTP-вызова](../evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md)
 - [ChannelManager: выбор SignIn и отдельное получение launcher-токена](../evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md)
-- [Реальный launcher-вход: SDK принят, Game Login возвращает BlockedIp](../evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md)
+- [Реальный launcher-вход: SDK принят, Game Login отклонён](../evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md)
 - [Launcher-токен: заголовок, ответы и отдельный номер канала](../evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md)
 - [UserInfo оказался FCommonLogData: создание и потребители](../evidence/auth/HEADLESS-NID-COMMON-LOG-DATA.md)
 - [После OnResult: Save, channel manager и credential SDK](../evidence/auth/HEADLESS-NID-CREDENTIAL.md)
