@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Настоящий LobbyLoginResult 0 и начальный server ID, 20 октября
+
+GamePeer constructor 0x144aab540 пишет dword peer+0x270 = 0;
+явный SDK-only headless context (kind 0, NID UserInfo absent) получил
+LobbyVersionResult 0 и LobbyLoginResult 0 через HK. Login body 90 байт.
+Индекс сохраняет 49 calls lobby getter / server setter; candidate +0x64
+не объявлен kind без идентичности объекта. Игровой вход ещё открыт.
+[Источники, SHA и проверка](../vampir-headless/LIVE-LOBBY-LOGIN.md).
+
 ## LobbyLogin preparation и constructor, 20 октября
 
 0x1467a9360 → constructor 0x145744fa0 → sender boundary 0x144aa89b0:

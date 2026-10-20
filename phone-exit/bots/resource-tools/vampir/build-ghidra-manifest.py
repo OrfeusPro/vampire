@@ -304,7 +304,10 @@ SEEDS=[
  ('LobbyNID_LoadUserInfo',0x145604090),
  ('LobbyNID_UserInfoWrite',0x144551060),
  ('LobbySDK_PlayerSettings',0x144524d80),
- ('LobbyNID_SelectField',0x1455fb550)]
+ ('LobbyNID_SelectField',0x1455fb550),
+ ('GameWrapper_BaseConstruct',0x144aaa530),
+ ('GamePeer_Construct',0x144aab540),
+ ('LobbyContext_Configure',0x145d404f0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

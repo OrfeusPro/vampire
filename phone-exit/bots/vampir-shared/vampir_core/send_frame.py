@@ -33,6 +33,13 @@ def encode_lobby_version_frame(payload, sequence: int, *, max_payload_size: int)
     return _encode(1, payload.encode(max_payload_size=max_payload_size), sequence, 0)
 
 
+def encode_lobby_login_frame(payload, sequence: int, *, max_payload_size: int) -> bytes:
+    """Separate lobby ID3/send-A, not the game Login schema."""
+    from .lobby_packets import LobbyLoginPayload
+    if not isinstance(payload, LobbyLoginPayload): raise TypeError('Expected LobbyLoginPayload')
+    return _encode(3, payload.encode(max_payload_size=max_payload_size), sequence, 0)
+
+
 def encode_lobby_server_list_frame(payload, sequence: int, *, max_payload_size: int) -> bytes:
     """Lobby ID103/send-A; readiness and source of fields belong to the owner."""
     from .lobby_packets import LobbyServerListPayload

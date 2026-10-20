@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — задачи
 
+## H04-live-lobby-login: настоящий LoginResult с кодом 0
+
+Явная source-supported ветвь SDK auth без NID UserInfo принята лобби через HK.
+Свежий SDK SignIn → LobbyVersionResult 0 → LobbyLoginResult 0, body 90 байт;
+send 460 / recv 123. Kind 0 — локальная политика клиента, server ID 0 связан
+с constructor. Полная metadata остаётся дополнительной ветвью, а не условием
+проверенного SDK-входа. Прошли 27 проверок. Сокет / HK-клиент остановлены.
+Далее — запрос / decoder списка серверов ID 103 / 104 → игровой endpoint →
+игровой вход → список / выбор персонажа → позиция.
+[Подробности](LIVE-LOBBY-LOGIN.md).
+
 ## H04-lobby-login-preparation: числовая ветвь и raw byte проверены
 
 Preparation / constructor / selected-server getter исполнены до sender:

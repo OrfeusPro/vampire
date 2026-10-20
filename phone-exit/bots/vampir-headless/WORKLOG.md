@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: реальный SDK-only LobbyLogin через HK
+
+Проверен constructor initial server ID 0; kind 0 выбран явно как локальная
+политика собственного клиента. Использована уже исполненная native ветвь
+SDK auth present / NID UserInfo absent, country / metadata пусты. Добавлен
+ограниченный Version → result → Login probe с сохранением credential только
+в памяти. Свежий SDK SignIn принят; настоящие ID 2 / 4 имеют code 0.
+Обмен: send 460 / recv 123, Login body 90 байт. Список серверов не запрошен,
+игровой Login не отправлен. Сокет закрыт, HK-клиент остановлен, exit 0.
+Прошли 27 проверок. Далее — ID 103 / 104 до игрового endpoint и персонажей.
+[Источники и границы](LIVE-LOBBY-LOGIN.md).
+
 ## 20 октября: native LobbyLogin preparation до sender
 
 Исполнены preparation prefix, настоящий constructor и getter server ID на
