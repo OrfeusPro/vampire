@@ -64,3 +64,36 @@ class LoginPayload:
         return b''.join((*strings[:4], integers[0], *strings[4:8], raw[0], raw[1],
             strings[8], integers[1], *strings[9:13], integers[2], *strings[13:],
             integers[3], raw[2], struct.pack('<Q', self.raw_128), raw[3], raw[4]))
+
+
+def decode_login_payload(body, *, max_payload_size):
+    """Strict inverse of the verified writer; never infer field semantics."""
+    if type(max_payload_size) is not int or not 59 <= max_payload_size <= 0xffffff:
+        raise ValueError('Login payload budget must be 59..16777215 bytes')
+    if type(body) is not bytes or len(body) < 59:
+        raise ValueError('Expected complete immutable Login body')
+    if len(body) > max_payload_size:
+        raise BufferError('Login payload exceeds local byte budget')
+    position = 0
+    def take(size):
+        nonlocal position
+        end = position + size
+        if end > len(body): raise ValueError('Truncated Login field')
+        result = body[position:end];position = end
+        return result
+    def number(size): return int.from_bytes(take(size), 'little')
+    def text():
+        try: value = take(number(2)).decode('utf-8')
+        except UnicodeDecodeError: raise ValueError('Invalid Login UTF-8') from None
+        _utf8(value)
+        return value
+    strings = [text() for _ in range(4)]
+    integers = [number(4)]
+    strings.extend(text() for _ in range(4))
+    raw = [number(1), number(1)]
+    strings.append(text());integers.append(number(4))
+    strings.extend(text() for _ in range(4));integers.append(number(4))
+    strings.extend(text() for _ in range(2));integers.append(number(4))
+    raw.append(number(1));raw_128 = number(8);raw.extend((number(1), number(1)))
+    if position != len(body): raise ValueError('Trailing bytes after Login body')
+    return LoginPayload(tuple(strings), tuple(integers), tuple(raw), raw_128)

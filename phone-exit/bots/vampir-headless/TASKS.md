@@ -37,7 +37,9 @@
 По запросу пользователя добавлена [локальная запись TCP в Phone Exit](../../pc/DIAGNOSTICS.md).
 21 октября получена официальная запись: игровой Login 0, список с одним персонажем,
 выбор ID 109 → 110 и последующий обмен. Framing / исходящие CRC проверены;
-позиция ещё не извлечена. Следом — сравнение полей официального Login с ботом.
+позиция ещё не извлечена. Сравнение Login выявило непустую metadata +0xd8
+(791 байт, включая I_DeviceKey) и policy byte +0x124 = 1 вместо 7 у бота.
+Следом — источники актуальных metadata и policy перед исправлением runtime.
 [Запись и границы разбора](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md).
 [Результаты](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 
