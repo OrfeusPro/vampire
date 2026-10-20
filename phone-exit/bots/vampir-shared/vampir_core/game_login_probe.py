@@ -6,6 +6,7 @@ import time
 from .game_connection import GameConnection, PumpBudget
 from .receive_stream import ReceiveLimits
 from .selection_flow import SelectionLimits
+from .game_login_error import describe_game_login_error
 
 
 def exchange_game_login(sock, version, login, *, timeout=10):
@@ -23,9 +24,12 @@ def exchange_game_login(sock, version, login, *, timeout=10):
     counts_complete = True
     flow = None
     def result(status):
+        detail = describe_game_login_error(flow.login_result_code) if flow and flow.login_result_code is not None else None
         return dict(status=status, version_result_code=flow.version_result_code if flow else None,
             login_result_received=flow is not None and flow.login_result_code is not None,
             login_result_code=flow.login_result_code if flow else None,
+            login_result_key=detail[0] if detail else None,
+            login_error_message=detail[1] if detail else None,
             last_body_size=flow.last_body_size if flow else None,
             bytes_sent=sent, bytes_received=received, other_packet_ids=unknown.copy(),
             byte_counts_complete=counts_complete,

@@ -50,6 +50,14 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertEqual((result['version_result_code'], result['login_result_code']), (0, 12345))
         self.assertEqual(result['login_error'], 'unsupported_result_code')
 
+    def test_blocked_ip_is_reported_without_guessing_region_or_retry(self):
+        body = struct.pack('<I', 58) + bytes.fromhex(FIXTURE['login_result_hex'])[4:]
+        result, captures = self.attempt(login_body=body)
+        self.assertEqual(captures, [(1, 0), (3, 1)])
+        self.assertEqual(result['login_result_key'], 'BlockedIp')
+        self.assertEqual(result['login_error_message'], 'Доступ с этого IP ограничен сервером.')
+        self.assertFalse(result['character_list_sent'])
+
     def test_version_refusal_never_sends_login(self):
         result, captures = self.attempt(version_body=struct.pack('<I', 23456) + RESULT[4:], wait_for_login=False)
         self.assertEqual(captures, [(1, 0)])

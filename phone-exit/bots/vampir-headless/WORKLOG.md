@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: расшифровка BlockedIp и повторная проверка через JP
+
+Ghidra: 354 функции / 165 предупреждений. Семь native вызовов mapper от
+входа до возврата дали в том числе 58 → BlockedIp; текст связан с CSV key.
+Добавлено безопасное runtime-сообщение, 11 проверок прошли. Первый JP peer
+не установил транспорт; другой прошёл country probe / GMC2 geoIp JP.
+Свежие SDK / lobby вход и список серверов успешны; на server ID 101 снова
+Version 0 / Login 58, body 131 байт, send 650 / recv 94. JP остановлен с exit 0.
+В CDN включены UseRegion / UseNetmarbleJoinedCountry; их потребители ещё
+нужно связать. Причина IP-ограничения не угадана, список персонажей не запрошен.
+[Источники](../resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md),
+[реальная проверка](LIVE-GAME-LOGIN.md).
+
 ## 20 октября: настоящий игровой LoginResult 58
 
 Добавлены callback передачи SDK / lobby контекста в памяти, ограниченный

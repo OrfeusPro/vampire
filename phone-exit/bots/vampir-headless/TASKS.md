@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-error-58: подтверждён BlockedIp
+
+Native mapper 58 → BlockedIp и статическая локализация связаны; runtime
+показывает понятную ошибку, не повторяет вход. 11 проверок прошли.
+Через другой, подтверждённый JP-маршрут server ID 101 снова вернул 58,
+Version 0, body 131 байт; транспорт закрыт. Причина ограничения не доказана.
+Далее — UseRegion / UseNetmarbleJoinedCountry и их потребители в контексте
+SDK / выбранного сервера / Login до успешного входа и персонажей.
+[Расшифровка](../resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md),
+[реальная проверка](LIVE-GAME-LOGIN.md).
+
 ## H04-live-game-login: получен ответ с кодом 58
 
 Свежая цепочка SDK → лобби → ID 104 → server ID 101 → игровой Version 0

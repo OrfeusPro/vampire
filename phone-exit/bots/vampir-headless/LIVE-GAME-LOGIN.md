@@ -1,5 +1,32 @@
 # Реальный игровой Login: ответ с кодом 58
 
+Уточнение: [код 58 подтверждён как BlockedIp](../resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md).
+Ниже сохранён результат первой реальной попытки до этой расшифровки.
+
+## Дополнительная проверка через JP
+
+После расшифровки кода проверен другой маршрут. Первый выбранный JP-выход
+не установил SOCKS, завершился с exit 1; запросов к игре через него не было.
+Другой доступный JP-выход установил транспорт: внешний country probe вернул
+JP, свежий GMC2 geoIp также указал JP. Адреса выходов не сохранялись.
+
+На прежнем server ID 101 / group ID 1 с прежним начальным контекстом и
+extra_number 0 снова пройдены свежие SDK / lobby вход и ID 104. Игровые
+VersionResult 0 и **LoginResult 58 / BlockedIp**, body 131 байт; send 650 /
+recv 94. Список персонажей не запрошен. Сокеты закрыты, временный JP-клиент
+остановлен с exit 0, stderr пуст. Это не доказывает блокировку всех JP-сетей
+и не устанавливает причину ограничения именно этих выходов.
+
+Снимки этой попытки:
+
+- CDN: `F:/PhoneExit Resources/Vampir/public-cdn-snapshots/60d42cdbcd2d7e1ae71ba238f2d50d8b22f38c9e575542303cef0f600c11d723/manifest.json`, 6000 байт.
+- GMC2: `F:/PhoneExit Resources/Vampir/public-gmc2-snapshots/a5a1b79d68d849cb6cbbe89aa842746b2a71dc543fb0610da027d84b9f248add/manifest.json`, HTTP 200, 13 773 байта.
+
+В расшифрованном CDN включены NetmarbleS.UseRegion и UseNetmarbleJoinedCountry.
+ContinueBillingCountryCodes содержит KR, JP, TW, HK, MO; поле о billing не
+объявляется whitelist сетевого входа. Связь этих флагов с выбранным регионом
+и полями игрового Login остаётся следующим источником для проверки.
+
 20 октября 2026. Проверка выполнена без запуска игры через личный HK-транспорт.
 Источник пакетов — код установленного клиента с EXE SHA256
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.

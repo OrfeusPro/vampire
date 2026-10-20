@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Result code 58 → BlockedIp, 20 октября
+
+ResultError_Text 0x1458091b0: целое native-исполнение code 58 достигает
+ASCII 0x1498ff2b0 BlockedIp. Ключ уникально связан с CSV 6106, строка данных 992.
+Семь mapper calls; popup 0x145f8a7a0 показывает table override / fallback path.
+Runtime получил понятное сообщение; JP-проверка вновь вернула 58.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md).
+
 ## Игровой Login: реальный отказ 58, 20 октября
 
 Свежие SDK / lobby поля связаны с runtime builder; один GameConnection
