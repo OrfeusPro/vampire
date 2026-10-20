@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Login: getters настроек и режима, 20 октября
+
+0x145564550 → global 0x14b573398, object+0x18 → Login+0x124.
+0x145cb2f60 / 0x145cb95e0: mode+8 == 3 → Login+0x130.
+0x144ff8cd0: SDK object+0x39 → Login+0x131. Конструктор режима
+0x145ca7240 ставит mode+8 = 0; constructor настроек 0x145556120 не пишет +0x18.
+43 native-сценария. BeginGame 0x146425acb → global 0x14b520cb8 → Login+0x50.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-POLICY-INPUTS.md).
+
 ## Игровой Version: подтверждение реальным сервером, 20 октября
 
 Связь record+0x0c / host+0x20 / port+0x30 применена к свежему ID 104.

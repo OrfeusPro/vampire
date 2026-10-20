@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: поля настроек игрового Login
+
+Ghidra: 349 функций / 157 предупреждений. Реальные getter leaves и два
+constructor проверены вместе с подготовкой Login в 43 сценариях.
+Установлены сохранение двух raw bytes, сравнение mode+8 с 3, SDK gates
+и пустая metadata без NID UserInfo. Mode constructor ставит 0, policy+0x18
+сохраняет заполнение объекта; его дальнейшие записи ещё открыты.
+Найдена связь BeginGame `_wtoi` → global → Login uint32 +0x50.
+Четыре новые проверки прошли, сети не было. Далее — оставшиеся поля Login.
+[Источники и границы](../resource-tools/vampir/HEADLESS-LOGIN-POLICY-INPUTS.md).
+
 ## 20 октября: настоящий игровой VersionResult с кодом 0
 
 После свежих SDK SignIn / LobbyLogin / ID 104 выбран server ID 101,

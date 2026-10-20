@@ -11,6 +11,9 @@ native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
 ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Vampir'))
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
+ ('Login_PolicySingleton',0x145564550),('Login_ModeSingleton',0x145cb2f60),
+ ('Login_ModeFlag',0x145cb95e0),('Login_Manager68Flag',0x144ff8cd0),
+ ('Login_PolicyConstruct',0x145556120),('Login_ModeConstruct',0x145ca7240),
  ('Login_Prepare',0x1467a9700),('PktLogin_Constructor',0x1456d4c80),
  ('PktLogin_Write',0x1456e57c0),('PktLogin_Read',0x1456d9370),
  ('PktLoginResult_Read',0x1456d9600),('LoginResult_Handler',0x146765540),
@@ -323,6 +326,10 @@ SEEDS=[
 # stores ending at RET (71/23 bytes); request constructor is 25 bytes of stores.
 # Do not manufacture .pdata for these leaves.
 REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28,0x145608fb0:71,0x145601570:23,0x1456bb2a0:25,
+    0x145564550:8, 0x145cb2f60:8,  # RIP singleton pointer loads and RET.
+    0x145cb95e0:8,  # Compare object+8 with 3, SETE AL, RET.
+    0x144ff8cd0:5,  # Raw byte object+0x39 load, RET.
+    0x145ca7240:48,  # Mode singleton/zero stores, MOV byte +8,0, RET.
     0x145842880:18,  # WorldMoveFinish: straight vptr/flag stores and RET.
     0x1414596e0:71,  # UTF-16 comparison: reviewed loop, ASCII table, three RETs.
     0x145596150:17,  # Compare/store manager+0x2728, two paths to one RET.

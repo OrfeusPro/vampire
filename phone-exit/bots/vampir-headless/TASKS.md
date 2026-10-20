@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-policy: getters и конструкторы проверены
+
+Login bytes +0x124 / +0x130 / +0x131 проверены в 43 native-сценариях.
+Режим после constructor равен 0; policy+0x18 constructor не заполняет.
+Начальная metadata остаётся пустой при отсутствии manager+0x48.
+Найдена запись uint32 +0x50 через `_wtoi` в BeginGame, но контрол и его
+текст ещё не связаны. Четыре новые проверки прошли. Далее — policy writes,
+wrapper+0x100 и оставшиеся входы до реального игрового Login / персонажей.
+[Подробности](../resource-tools/vampir/HEADLESS-LOGIN-POLICY-INPUTS.md).
+
 ## H04-live-game-version: игровой сервер принял Version
 
 Получен ID 2 с кодом 0 после свежего SDK / lobby входа и списка ID 104.
