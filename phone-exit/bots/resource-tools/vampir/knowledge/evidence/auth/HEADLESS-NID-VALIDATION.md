@@ -95,3 +95,20 @@ settings adoption/persistence и вызов после 0x1450ef437 → callback 
 Использован existing import_at из build-object-zero-init-code.py; compiled
 parser и системный CRT пока не исполнялись. Исследовательская запись вне Git:
 `F:/PhoneExit Resources/Vampir/code-clues/nid-integer-parser-investigation.json`.
+
+## Setter Netmarble ID: подготовка проверки 21 октября 2026
+
+После сравнения официального и headless-входа отдельно экспортирован ранее
+захваченный setter `0x14454ba20`, метка `Settings_SetNetmarbleId`.
+Новый экспорт Ghidra — `export-c7552efd2125/run-8786ff13eeb2`,
+419 функций / 190 предупреждений; manifest SHA256
+`cbe760aaa0a724254d7a6d3aee89ee2b4f1d80ac6833830e1ac791f671fca238`,
+functions.json SHA256 `1c9fab81947a2baa4e6b31b97c998663c64194d158fc0f86942dfc00fab8d750`.
+Псевдокод setter SHA256
+`f40452fb4aa8ebb78b7481577127f07803c318f509515e1a5faedf6c8ac0bf8d`.
+
+Это дополнительный статический источник для вопроса `login-invalid-state`:
+нужно сопоставить запись settings+0x4a8 и её источник в launcher-ветви.
+Новое native-исполнение setter не проводилось; успешная декомпиляция
+не доказывает активное значение в официальном процессе и причину отказа.
+Прежний NID caller и getter игрового поля уже разобраны, повторять их не нужно.

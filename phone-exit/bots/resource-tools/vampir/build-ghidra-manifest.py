@@ -11,6 +11,7 @@ native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
 ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Vampir'))
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
+ ('Settings_SetNetmarbleId',0x14454ba20),
  ('SDK_LauncherTokenCaller',0x1444e5560),('SDK_LauncherSignInCaller',0x1444fc5f0),
  ('SDK_LauncherTokenDispatch',0x1444dec50),
  ('SDK_LauncherTokenKeyInitialize',0x1411b0460),
