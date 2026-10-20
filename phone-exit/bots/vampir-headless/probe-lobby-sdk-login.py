@@ -21,7 +21,8 @@ def module(name, filename):
     return value
 
 
-def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None):
+def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
+        _progress=None):
     if context != 'sdk-without-nid-info': raise ValueError('Explicit source-supported SDK context required')
     if type(read_server_list) is not bool: raise ValueError('Explicit server-list operation required')
     if read_server_list and (type(server_policy_byte) is not int or not 0 <= server_policy_byte <= 255):
@@ -35,8 +36,10 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     browser = module('lobby_sdk_browser', 'nid-browser.py')
     captured = {}
     def capture(*args, **kwargs):
+        if _progress: _progress('nid_browser')
         value = browser.capture_nid_credential(*args, **kwargs)
         captured['provider'] = value
+        if _progress: _progress('sdk_sign_in')
         return value
     data = sdk.run(email, timeout=180, password=password, socks_port=socks_port, _capture=capture)
     password = None
@@ -53,8 +56,10 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     request = (LobbyServerListPayload((binding.nm_device_key, provider.netmarble_id), 2, (server_policy_byte, 0))
         if read_server_list else None)
     provider = None
+    if _progress: _progress('lobby_connect')
     connection = route.connect(*endpoint, timeout=10)
     try:
+        if _progress: _progress('lobby_exchange')
         result = exchange_lobby_login(connection, version, login, timeout=15, server_list=request)
         result.summary.update(context=context, sdk_response_accepted=True)
         return result

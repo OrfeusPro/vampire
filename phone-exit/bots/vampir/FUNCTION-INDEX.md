@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Игровой Version: подтверждение реальным сервером, 20 октября
+
+Связь record+0x0c / host+0x20 / port+0x30 применена к свежему ID 104.
+Игровой endpoint server ID 101 принял Version: ID 2, код 0, обмен 199 / 25
+байт. Поля собирает существующий Windows builder; локальный IPv4 берётся
+из текущего соединения. Login и персонажи остаются следующим шагом.
+[Источники, SHA и реальная проверка](../vampir-headless/LIVE-GAME-VERSION.md).
+
 ## ID 104 record → игровой endpoint, 20 октября
 
 Update key source 0x145d4b585 читает record+0x0c; copy slice
