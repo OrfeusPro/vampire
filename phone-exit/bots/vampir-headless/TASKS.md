@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lobby-handshake: отдельные Version и запрос списка серверов
+
+ID 1 / 2 у LobbyVersion отличаются схемами от игровых Version. Найдены
+ID 103 / 104 списка серверов, два sender callers и таблица RdLobbyPeer.
+Два writer / VersionResult reader проверены: 20 bodies, четыре ответа,
+23 коротких префикса; добавлены отдельные bounded runtime codecs.
+Полный ID 104 reader пока только экспортирован; его коллекции не перенесены.
+Далее — connect / flush send-A и полная preparation перед сетью,
+затем decoder списка серверов и настоящий игровой endpoint.
+[Источники и границы](../resource-tools/vampir/HEADLESS-LOBBY-HANDSHAKE.md).
+
 ## H04-lobby-login: отдельный ответ и два поля для игрового Login
 
 Подтверждены Lobby Login → send-A и отдельный ServerListReadResult handler →

@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Найден отдельный handshake лобби, 20 октября
+
+Подтверждены LobbyVersion / Result (ID 1 / 2) и ServerListRead / Result
+(ID 103 / 104), отличные от игровых схем. Два writer и VersionResult reader
+исполнены native: 20 исходящих bodies, четыре ответа, 23 коротких префикса.
+Runtime получил отдельные codecs; таблица lobby peer и источник имени
+компьютера связаны с preparation. Новых сетевых попыток нет. Далее —
+connect / flush лобби и коллекции ответа списка серверов до игрового входа.
+[Источники, проверки и границы](../resource-tools/vampir/HEADLESS-LOBBY-HANDSHAKE.md).
+
 ## Лобби передаёт два поля игрового Login, 20 октября
 
 Найдены отдельный Lobby Login и обработчик списка игровых серверов.

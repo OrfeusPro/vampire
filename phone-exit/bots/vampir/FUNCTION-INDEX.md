@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Handshake лобби и список серверов, 20 октября
+
+PktLobbyVersion writer 0x145757490, Result reader 0x14574b170;
+ServerListRead writer 0x145757260, Result reader 0x14574ae20.
+Таблица peer 0x149d84d78: slot +0x40 → 0x1467aae20 (preparation),
+установлена construction 0x1467a79e0. Getter 0x1415be7e0 — GetComputerNameW.
+Два writer и VersionResult reader проверены native; ID 104 collections открыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOBBY-HANDSHAKE.md).
+
 ## Лобби: Login и загрузка списка серверов, 20 октября
 
 Lobby Login 0x1467a9360 → sender 0x144aa89b0 (send-A).

@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: отдельный LobbyVersion и codecs запроса списка серверов
+
+Ghidra расширен до 318 функций / 145 предупреждений. Связаны четыре lobby
+packet tables, исполнены ID getters. Таблица lobby peer доказана через
+construction stores: её slot +0x40 создаёт LobbyVersion; поле +0x40 пакета
+происходит из GetComputerNameW. Это отдельный handshake от игрового Version.
+Два writer и VersionResult reader прошли 20 исходящих bodies, четыре ответа
+и 23 коротких префикса. Добавлены bounded codecs без выбора неизвестных
+settings. Новых сетевых попыток и запуска игры нет; decoder коллекций ID 104
+и полный connect / flush лобби остаются открытыми.
+[Подробности](../resource-tools/vampir/HEADLESS-LOBBY-HANDSHAKE.md).
+
 ## 20 октября: схема LobbyLoginResult и связь с игровым Login
 
 Экспорт Ghidra расширен до 309 функций / 142 предупреждений. Discovery
