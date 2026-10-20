@@ -51,9 +51,27 @@
     },
     "0x1444fd270": {
       "role": "FAuthImpl::SignInByLauncher",
-      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
       "status": "diagnostic_and_static",
-      "limits": "Проверены endpoint и отдельная token map. Её ключ, HTTP и callback пока не закрыты."
+      "limits": "Ключ launcherToken и подготовка custom header проверены native slice. Полный HTTP, получение токена и маршрутизация пока не закрыты."
+    },
+    "0x1411b0460": {
+      "role": "Initializer FString launcherToken",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
+      "status": "bounded_native",
+      "limits": "Native initializer выполнен; FString constructor и atexit — fixtures."
+    },
+    "0x1444c5910": {
+      "role": "Обработчик launcher/token: строковый resultData",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
+      "status": "diagnostic_and_static",
+      "limits": "Схема и dispatcher прослежены по коду. JSON gates, HTTP и consumer результата не исполнены."
+    },
+    "0x1444cce90": {
+      "role": "Обработчик launcher/sign-in: SDK-поля и канал из credential+0x68",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
+      "status": "bounded_native",
+      "limits": "Исполнен только null gate и перенос byte +0x68 в module+0x88; остальные поля и dispatch — статические связи."
     }
   }
 }

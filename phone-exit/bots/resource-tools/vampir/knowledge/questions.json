@@ -7,7 +7,7 @@
       "question": "Почему игровой Login бота возвращает 16, когда официальный клиент доходит до создания персонажа?",
       "known": "SDK и лобби принимают вход. На ID 251 и 256 Game Version 0, Game Login 16. Franz2 в таблицах — 256, группа Franz — 253. Персонаж пользователем не создан. Launcher credential использует channelCode 200 и base GetObject; NID credential использует 33 и отдельный token override. Найдены отдельные launcher HTTP methods; обязательность этой ветви не доказана.",
       "unknown": "Какое условие игрового сервера не выполнено; числовой код не доказывает конкретную причину.",
-      "next_action": "Установить ключ map 0x14b4f0a70, ответы launcher/token и launcher/sign-in, затем выбор SDK-маршрута. Только после подтверждённого изменения контекста повторить игровой вход.",
+      "next_action": "Проследить выбор launcher / обычного SDK-входа через roots 0x1444e5560 / 0x1444fc5f0 и consumer ответа launcher/token. Фактический путь официального запуска пока не установлен; новый вход только после подтверждённого изменения.",
       "decision_rule": "Повторять вход только если найдено конкретное отличие поля или порядка обмена с доказанным источником. Одинаковый отказ сам по себе не основание для новой попытки.",
       "do_not_repeat": "Повторять те же credentials/context/server без изменения условий; считать JP-выход доказательством совпадения устройства или адреса.",
       "addresses": [
@@ -17,7 +17,8 @@
       "evidence": [
         "evidence/network/HEADLESS-FRANZ2-LOGIN.md",
         "evidence/network/HEADLESS-OFFICIAL-CLIENT-JP.md",
-        "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md"
+        "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
+        "evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md"
       ]
     },
     {
@@ -81,20 +82,24 @@
       "id": "launcher-auth-contract",
       "status": "open",
       "question": "Как launcher-контекст превращается в SDK-сессию и влияет ли он на игровой Login?",
-      "known": "Gate 0x1444eb1c0 проверен на 10 native fixtures. Credential имеет channelCode 200, token +0x58 и base GetObject. Найдены отдельные launcher/token и launcher/sign-in.",
-      "unknown": "Ключ token map 0x14b4f0a70, маршрутизация методов, callbacks и влияние на игровой Login.",
-      "next_action": "Сначала найти initializer ключа; затем разобрать callbacks 0x1444d8510 / 0x1444d8600 и callers launcher методов через реестр и Ghidra.",
+      "known": "Gate проверен на 10 native fixtures. Credential channelCode 200 отделён от channel +0x68. Native initializer и header slice подтверждают ключ launcherToken; 10 fixtures подтверждают перенос +0x68 в module+0x88. Обработчик launcher/token читает resultData строковым getter, обработчик launcher/sign-in читает объект SDK-полей; реальные ответы этой ветви не получены.",
+      "unknown": "Выбор launcher / обычного SDK-входа, consumer строкового результата, получение токена и chc; фактическая ветвь официального запуска и влияние на игровой Login.",
+      "next_action": "Проверить caller roots 0x1444e5560 / 0x1444fc5f0 и dispatcher 0x1444dec50 через реестр и Ghidra. Связать результат launcher/token с источником credential и полем chc.",
       "decision_rule": "До новой сетевой попытки доказать источник и назначение launcher-токена, схему запроса и передачу результата в SDK. Один channelCode не заменяет эту цепочку.",
-      "do_not_repeat": "Не повторять gate и не заменять NID channelCode 33 на 200 без полного контракта. Не читать реальные launch arguments ради статического вопроса.",
+      "do_not_repeat": "Не повторять gate и не заменять NID channelCode 33 на 200 без полного контракта. Не читать реальные launch arguments ради статического вопроса. Ключ launcherToken и перенос +0x68 уже проверены; не искать их заново.",
       "addresses": [
         "0x1444eb1c0",
         "0x1444dd8a0",
         "0x1444e8130",
-        "0x1444fd270"
+        "0x1444fd270",
+        "0x1411b0460",
+        "0x1444c5910",
+        "0x1444cce90"
       ],
       "evidence": [
         "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
-        "evidence/auth/HEADLESS-NID-CREDENTIAL.md"
+        "evidence/auth/HEADLESS-NID-CREDENTIAL.md",
+        "evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md"
       ]
     }
   ]

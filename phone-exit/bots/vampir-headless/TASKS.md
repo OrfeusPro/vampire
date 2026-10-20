@@ -23,8 +23,9 @@
 Не расширять log replay без связи с недостающим полем или записью common data.
 
 Проверено различие launcher credential / NID credential и launcher gate.
-Следом — ключ передачи launcher-токена, callbacks и выбор способа SDK-входа:
-[разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md).
+Ключ launcherToken и отдельные схемы ответов установлены; внутренний канал
+берётся из другого поля credential. Следом — выбор пути и consumer токена:
+[разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md).
 
 ## Как не повторять исследования
 

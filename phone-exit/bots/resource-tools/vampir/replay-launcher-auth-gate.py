@@ -13,6 +13,7 @@ ROOT = ping.native.ROOT
 BASE = 0x140000000
 GATE = 0x1444eb1c0
 ROOTS = (0x1444fd270, 0x1444e8130, 0x1444dd8a0, GATE)
+GHIDRA_EXPORT = 'export-c7552efd2125/run-2af5fa68a59a'
 
 
 def digest(path):
@@ -120,10 +121,10 @@ def build():
     cases = [run_gate(gate_rows, compare, dict(auth_type=kind, context_ok=ok, prior_flag=flag))
              for kind, ok in (('nmlauncher', True), ('NMLAUNCHER', True), ('netmarble', True),
                               ('other-fixture', True), ('', False)) for flag in (0, 1)]
-    latest = json.loads((ROOT / 'ghidra/latest-export.json').read_text('utf-8'))
-    output = Path(latest['output'])
+    output = ROOT / 'ghidra' / GHIDRA_EXPORT
     report_path = output / 'functions.json'
-    if digest(report_path) != latest['report_sha256']:
+    provenance = json.loads((output / 'provenance.json').read_text('utf-8'))
+    if digest(report_path) != provenance['files']['functions.json']:
         raise ValueError('Launcher Ghidra report hash changed')
     report = json.loads(report_path.read_text('utf-8'))
     if report['source_sha256'] != prior['sha256']:
@@ -131,6 +132,8 @@ def build():
     functions = [f for f in report['functions'] if int(f['address'], 16) in ROOTS]
     if len(functions) != 4 or not all(f['completed'] for f in functions):
         raise ValueError('Incomplete launcher Ghidra export')
+    if any(digest(output / f['pseudocode_file']) != provenance['files'][f['pseudocode_file']] for f in functions):
+        raise ValueError('Launcher Ghidra pseudocode hash changed')
     return dict(source=prior['source'], source_sha256=prior['sha256'], tool_sha256=digest(Path(__file__)),
                 auth_report_sha256=digest(auth_path), compare_report_sha256=digest(compare_path),
                 ghidra_output=str(output), ghidra_report_sha256=digest(report_path),

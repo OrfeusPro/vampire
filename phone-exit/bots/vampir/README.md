@@ -13,8 +13,9 @@
 не создан, пользователь закрыл игру. Это разные способы авторизации.
 
 У launcher-ветви подтверждены отдельный credential и два HTTP-вызова;
-условие выбора проверено локально. Точный ключ передачи токена и обработка
-ответов ещё открыты. [Разбор различий](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md).
+условие выбора проверено локально. Установлены заголовок launcherToken и
+различие ответов; выбор пути и получение токена ещё открыты.
+[Разбор передачи токена](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md).
 
 [Сводка по темам](../resource-tools/vampir/knowledge/TOPICS.md) отделяет рабочее,
 проверенное локально, статические связи и незавершённое. Актуальные вопросы:

@@ -1,5 +1,8 @@
 # Launcher-вход: отдельный credential и два HTTP-вызова
 
+Продолжение: [launcherToken, ответы и внутренний канал](HEADLESS-LAUNCHER-TOKEN-CONTEXT.md).
+Ключ ниже больше не является открытым вопросом; сохранены границы первого этапа.
+
 20 октября 2026. Продолжение [первичного индекса авторизации](HEADLESS-AUTH.md).
 Установлено конкретное различие между NID-входом бота и launcher-ветвью кода.
 Оно пока не доказывает причину игрового `LoginResult = 16` и не разрешает
@@ -21,7 +24,8 @@ functions.json SHA256
 
 Отчёт [replay-launcher-auth-gate.py](../../../replay-launcher-auth-gate.py):
 `F:/PhoneExit Resources/Vampir/code-clues/launcher-auth-gate-replay.json`, SHA256
-`4426c48d5bf536237969d34b9e6fbefea9fbae6b9c0a9fc6dd030f6a102f181b`.
+`df0b8cdd500fa22a2d6b900806343f1f66f961c662a45a667ebfb56fd7c46895`.
+После закрепления immutable export SHA отчёта обновлён; 10 fixtures не изменились.
 Сохраняет исходные инструкции, строки, vtable, SHA зависимостей и псевдокода.
 Каждый исходный фрагмент сверяется с EXE до исполнения.
 
