@@ -221,7 +221,20 @@ SEEDS=[
  ('OptionSet_Read',0x145735cf0),
  ('OptionSet_Name',0x14576d910),
  ('OptionSet_ArrayWrite',0x1456e6460),
- ('OptionSet_ItemWrite',0x145787410)]
+ ('OptionSet_ItemWrite',0x145787410),
+ ('SelectedPlayer_RecordLookup',0x1458819c0),
+ ('CharacterSelect_PostSecondaryManager',0x145d6cc70),
+ ('SelectedPlayer_ManagerGetOrCreate',0x1456627f0),
+ ('SelectedPlayer_ManagerBaseConstruct',0x1455807d0),
+ ('SelectedPlayer_RecordManager',0x145889c80),
+ ('SelectedPlayer_RecordFind',0x145889510),
+ ('SelectedPlayer_CreateForSelection',0x1468ea580),
+ ('SelectedPlayer_DataConstruct',0x145d5b0e0),
+ ('SelectedPlayer_RecordSource',0x14588b390),
+ ('SelectedPlayer_RecordLoad',0x14588b600),
+ ('SelectedPlayer_DataBaseConstruct',0x145d5ae60),
+ ('SelectedPlayer_ClassGetter',0x145d65a60),
+ ('SelectedPlayer_MetadataGetter',0x145206320)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
@@ -230,7 +243,10 @@ SEEDS=[
 REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28,0x145608fb0:71,0x145601570:23,0x1456bb2a0:25,
     0x145842880:18,  # WorldMoveFinish: straight vptr/flag stores and RET.
     0x1414596e0:71,  # UTF-16 comparison: reviewed loop, ASCII table, three RETs.
-    0x145596150:17}  # Compare/store manager+0x2728, two paths to one RET.
+    0x145596150:17,  # Compare/store manager+0x2728, two paths to one RET.
+    0x1455807d0:69,  # Singleton/vptr/zero stores, reviewed straight leaf.
+    0x145889510:118,  # Bounded hash-chain lookup leaf, reviewed both returns.
+    0x145206320:34}  # Copy weak descriptor; optional weak ref increment; RET.
 
 
 def build():
