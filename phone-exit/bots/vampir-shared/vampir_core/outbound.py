@@ -6,7 +6,9 @@ and local differences from native error behavior: HEADLESS-SEND-B.md.
 from collections import deque
 from .ping import PingPayload
 from .key_change import KeyChangePayload
-from .send_frame import encode_ping_frame_b, encode_key_changed_frame_b
+from .send_frame import (encode_ping_frame_b, encode_key_changed_frame_b,
+                         encode_character_list_frame_b, encode_character_select_frame_b)
+from .character_select import CharacterSelectPayload
 
 
 class OutboundFrames:
@@ -23,6 +25,7 @@ class OutboundFrames:
         self._frames: deque[bytes] = deque()
         self._queued_bytes = 0
         self._head_offset = 0
+        self._closed = False
 
     def __repr__(self):
         return f'OutboundFrames(frames={self.queued_frames}, bytes={self.queued_bytes}, key=<redacted>)'
@@ -40,6 +43,8 @@ class OutboundFrames:
         return len(self._frames)
 
     def _append(self, frame: bytes) -> bytes:
+        if self._closed:
+            raise RuntimeError('Outbound connection is closed')
         if len(self._frames) >= self._max_frames or self._queued_bytes + len(frame) > self._max_bytes:
             raise BufferError('Outbound frame queue limit reached')
         self._frames.append(frame)
@@ -49,6 +54,19 @@ class OutboundFrames:
 
     def queue_ping(self, payload: PingPayload) -> bytes:
         return self._append(encode_ping_frame_b(payload, self._sequence, self._key_bits))
+
+    def queue_character_list(self) -> bytes:
+        return self._append(encode_character_list_frame_b(self._sequence, self._key_bits))
+
+    def queue_character_select(self, payload: CharacterSelectPayload) -> bytes:
+        return self._append(encode_character_select_frame_b(payload, self._sequence, self._key_bits))
+
+    def close(self) -> None:
+        """Invalidate the connection queue, including every unsent partial tail."""
+        self._closed = True
+        self._frames.clear()
+        self._queued_bytes = 0
+        self._head_offset = 0
 
     def acknowledge_key_change(self, payload: KeyChangePayload) -> bytes:
         """Queue ack under old key, then switch. Failure leaves state unchanged.

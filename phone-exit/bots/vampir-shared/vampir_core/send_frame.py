@@ -6,6 +6,7 @@ import struct
 from .ping import PingPayload, SOURCE_SHA256
 from .frame_primitives import payload_crc32, xor_transform
 from .key_change import KeyChangePayload, KEY_CHANGED_ID
+from .character_select import CharacterSelectPayload
 
 
 def _encode(packet_id: int, body: bytes, sequence: int, key_bits: int) -> bytes:
@@ -44,3 +45,15 @@ def encode_world_move_finish_frame_b(sequence: int, key_bits: int) -> bytes:
     sequence/key and must establish the world-move completion conditions.
     """
     return _encode(205, b'', sequence, key_bits)
+
+
+def encode_character_list_frame_b(sequence: int, key_bits: int) -> bytes:
+    """Verified ID101 empty request; lifecycle permission belongs to the owner."""
+    return _encode(101, b'', sequence, key_bits)
+
+
+def encode_character_select_frame_b(payload: CharacterSelectPayload, sequence: int, key_bits: int) -> bytes:
+    """Verified ID109 body/frame; does not infer readiness or a character ID."""
+    if not isinstance(payload, CharacterSelectPayload):
+        raise TypeError('Expected CharacterSelectPayload')
+    return _encode(109, payload.encode(max_payload_size=20), sequence, key_bits)

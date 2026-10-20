@@ -1,5 +1,14 @@
 # Vampir — самостоятельный сетевой бот
 
+## Runtime списка и выбора, 20 октября
+
+`CharacterSelectionFlow` связывает ID101 / ID102 и ID109 / ID110 с общей
+очередью соединения. Есть состояния, ограничения, таймаут и очистка при разрыве.
+12 новых и 15 прежних тестов прошли; 19 кадров совпали с native-векторами.
+Внешний lifecycle должен явно разрешить запрос списка. Сокет, SDK / device
+context, реальный вход и мировая позиция остаются открытыми.
+[API, источники и проверки](SELECTION-FLOW.md).
+
 ## CharacterSelect ID109: callers/field sources/frame, 20 октября
 
 Native WaitingEnd и UI-index paths исполняются до owning queue; 61 cases,
