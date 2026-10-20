@@ -176,7 +176,11 @@ SEEDS=[
  ('OwnerDispatch_CandidateA',0x143c1ce70),
  ('OwnerDispatch_CandidateB',0x143c1cfd0),
  ('OwnerDispatch_CandidateC',0x14430da70),
- ('OwnerDispatch_CandidateD',0x14432beb0)]
+ ('OwnerDispatch_CandidateD',0x14432beb0),
+ ('GameMode_RegisterInGame',0x1468de1b0),
+ ('GameMode_RegisterArena',0x1468de400),
+ ('GameMode_RegisterConquest',0x1468de8f0),
+ ('GameMode_RegisterCharacterSelect',0x1468e0810)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

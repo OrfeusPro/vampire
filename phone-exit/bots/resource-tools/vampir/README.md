@@ -1,5 +1,12 @@
 # Исследование ресурсов Vampir
 
+## GameMode и владельцы загрузки, 20 октября
+
+Текущий PAK: восемь Blueprint, четыре связи native-регистрации с таблицами
+владельцев. Статически найдены две записи `world+0x158`. Выбор класса уровнем
+и фабрика `provider+0x3d0` ещё открыты. Ghidra: 207 функций, 86 предупреждений.
+[Источники, команды и границы](HEADLESS-WORLD-OWNER-RESOURCES.md).
+
 ## CharacterListRead caller, 20 октября
 
 build-selection-service-callers.py использует существующий E8 scanner.
