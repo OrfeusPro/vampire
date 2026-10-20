@@ -11,7 +11,7 @@ sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.game_login_probe import exchange_game_login
 from vampir_core.login_context import prepare_initial_windows_game_login
-from vampir_core.socks_route import SocksRoute
+from vampir_core.socks_route import SocksRoute, socks_game_address_context
 from vampir_core.game_server_target import SERVER_REGION_CODES, is_game_server_state_excluded, game_server_allows_joined_country
 
 
@@ -107,8 +107,10 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
     phase('game_connect')
     connection = SocksRoute(socks_port).connect(target.host, target.port, timeout=10)
     try:
+        address_context = socks_game_address_context(connection)
+        state['game_address_source'] = address_context.source
         version = prepare_version(app_version=source.app_version, nm_device_key=credentials.binding.nm_device_key,
-            local_address=connection.getsockname()[0], cpu=cpu, windows_version=windows)
+            local_address=address_context.address, cpu=cpu, windows_version=windows)
         phase('game_login_preparation')
         login = prepare_initial_windows_game_login(version, binding=credentials.binding,
             sdk_data=credentials.sdk_data, netmarble_id=credentials.netmarble_id,

@@ -1,10 +1,38 @@
 """Explicit loopback SOCKS5 route; remote DNS and verified end-to-end TLS."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import http.client
+import ipaddress
 import socket
 import ssl
 import urllib.error
 import urllib.request
+
+
+@dataclass(frozen=True, slots=True)
+class GameAddressContext:
+    address: str | None = field(repr=False)
+    source: str
+
+
+def socks_game_address_context(connection):
+    """Use the SOCKS CONNECT bound endpoint, never the loopback proxy hop.
+
+    Phone Exit currently returns 0.0.0.0:0, meaning unavailable. Represent
+    that as None so Version can use the proven empty-address native branch.
+    SOCKS routing is our policy, not a feature recovered from the game client.
+    """
+    endpoint = connection.get_proxy_sockname()
+    if type(endpoint) is not tuple or len(endpoint) != 2:
+        raise ValueError('Invalid SOCKS bound endpoint metadata')
+    host, port = endpoint
+    if type(host) is not str or type(port) is not int or not 0 <= port <= 65535:
+        raise ValueError('Invalid SOCKS bound endpoint metadata')
+    try: address = ipaddress.IPv4Address(host)
+    except ipaddress.AddressValueError:
+        raise ValueError('SOCKS bound endpoint is not IPv4') from None
+    if port == 0 or address.is_unspecified or address.is_loopback or address.is_link_local or address.is_multicast:
+        return GameAddressContext(None, 'socks_bound_unavailable')
+    return GameAddressContext(str(address), 'socks_bound_ipv4')
 
 
 @dataclass(frozen=True, slots=True)

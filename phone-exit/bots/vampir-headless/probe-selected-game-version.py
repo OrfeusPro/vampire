@@ -10,7 +10,7 @@ sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.game_server_target import select_game_server_target, select_game_server_in_region
 from vampir_core.device_registry import DeviceRegistry
-from vampir_core.socks_route import SocksRoute
+from vampir_core.socks_route import SocksRoute, socks_game_address_context
 from vampir_core.version_probe import exchange_version
 
 
@@ -81,8 +81,10 @@ def _run(email, *, selected_profile, manifest_path, socks_port, password, server
     phase('game_connect')
     connection = SocksRoute(socks_port).connect(target.host, target.port, timeout=10)
     try:
+        address_context = socks_game_address_context(connection)
+        state['game_address_source'] = address_context.source
         version = prepare(app_version=source.app_version, nm_device_key=binding.nm_device_key,
-            local_address=connection.getsockname()[0], cpu=cpu, windows_version=windows)
+            local_address=address_context.address, cpu=cpu, windows_version=windows)
         phase('game_version_exchange')
         summary = exchange_version(connection, version, timeout=10)
         return dict(status='game_version_probe', selection=selection or 'explicit-id',

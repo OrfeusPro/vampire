@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Локальный адрес соединения в Version, 20 октября
+
+Пять native-сценариев настоящего endpoint getter до Version; SOCKS bound
+metadata отделены от loopback proxy hop. JP 251 с пустым контекстом снова
+вернул Login 58; 20 проверок прошли. Причина отказа не доказана.
+[Источники, SHA и границы](HEADLESS-CONNECTED-LOCAL-ADDRESS.md).
+
 ## Проверка SDK-страны по серверной записи, 20 октября
 
 15 native-сценариев SDK response → country setter / getters → полный predicate.

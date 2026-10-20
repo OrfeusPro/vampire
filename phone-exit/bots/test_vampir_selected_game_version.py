@@ -57,6 +57,7 @@ class SelectedGameVersionTests(unittest.TestCase):
         payload = SimpleNamespace(prepare_version=prepare)
         connection = Mock()
         connection.getsockname.return_value = ('127.0.0.1', 1234)
+        connection.get_proxy_sockname.return_value = ('0.0.0.0', 0)
         with patch.object(self.tool, 'module', side_effect=[source, lobby, system, payload]), \
                 patch.object(self.tool, 'DeviceRegistry') as registry, \
                 patch.object(self.tool, 'SocksRoute') as route, \
@@ -67,6 +68,8 @@ class SelectedGameVersionTests(unittest.TestCase):
                 manifest_path=Path('fixture'), socks_port=17948, server_policy_byte=0, server_id=42)
         route.return_value.connect.assert_called_once_with('game.example.com', 12001, timeout=10)
         connection.close.assert_called_once()
+        self.assertIsNone(prepare.call_args.kwargs['local_address'])
+        connection.getsockname.assert_not_called()
         self.assertEqual(result['stage'], 'game_version_exchange')
         self.assertEqual(result['selected_server_id'], 42)
         self.assertEqual(result['lobby'], {'server_list_result_code': 0})

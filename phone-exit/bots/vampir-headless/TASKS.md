@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-connected-address: proxy hop отделён от игрового endpoint
+
+Настоящий local endpoint getter → callback → Version проверены в пяти
+native-сценариях. Runner использует SOCKS bound metadata; неизвестный адрес
+кодирует пустой строкой. Через JP на том же server ID 251 снова Version 0 /
+Login 58, send 641 / recv 94. 20 проверок прошли, сокеты / транспорт закрыты.
+Далее — оставшиеся условия доступности сервера и полный контекст Login
+до успешного входа, списка / выбора персонажа и позиции.
+[Источники и границы](../resource-tools/vampir/HEADLESS-CONNECTED-LOCAL-ADDRESS.md).
+
 ## H04-server-country: SDK HK проходит проверку JP array50
 
 15 native-сценариев связали SDK response field с настоящим country setter,

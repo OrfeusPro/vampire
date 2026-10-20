@@ -29,18 +29,23 @@ class SelectedGameLoginTests(unittest.TestCase):
             return SimpleNamespace(response=inputs['lobby_result'],
                 server_list_response=SimpleNamespace(servers=(record,), groups=(group,)),
                 summary={'login_result_code': 0})
+        prepare = Mock(return_value=version)
         modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14')),
             SimpleNamespace(run=lobby), SimpleNamespace(choose_target=lambda *args, **kwargs:
                 SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001)),
             SimpleNamespace(observe_inputs=lambda: ('cpu', 'windows')),
-            SimpleNamespace(prepare_version=lambda **kwargs: version)]
+            SimpleNamespace(prepare_version=prepare)]
         connection = Mock()
         connection.getsockname.return_value = ('127.0.0.1', 1234)
+        connection.get_proxy_sockname.return_value = ('0.0.0.0', 0)
         with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route, \
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
             result = self.tool.run('fixture@example.invalid', **self.kwargs())
         packet = exchange.call_args.args[2]
+        self.assertIsNone(prepare.call_args.kwargs['local_address'])
+        connection.getsockname.assert_not_called()
+        self.assertEqual(result['game_address_source'], 'socks_bound_unavailable')
         self.assertEqual(packet.strings[8], 'sdk-token-fixture')
         self.assertEqual(packet.strings[:2], ('lobby-first-fixture', 'lobby-second-fixture'))
         self.assertEqual(packet.integers[:2], (123, 42))
