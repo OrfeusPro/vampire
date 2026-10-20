@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: recovered-base AppVersion и настоящий TCP connect к лобби
+
+Выбран явный source profile собственного клиента; это не определение active
+GConfig игры. Loader проверяет текущие EXE / PAK / INI и неизменяемый snapshot,
+AppVersion привязывается к Version+0x10 / Login+0x40 с отказом при конфликте.
+CDN fetch получил общий SOCKS-маршрут без direct fallback. Через HK заново
+получен CDN HTTP 200 / 6000 байт, real / REAL. Один TCP connect к выбранному
+лобби прошёл; за три секунды данных нет, игровых отправок нет, socket закрыт.
+Все 16 целевых тестов прошли. Временный HK-клиент остановлен, exit 0.
+[Источники и границы](GAME-SOURCE-PROFILE.md).
+
 ## 20 октября: собственный CPUID helper и чтение CPU текущего ПК
 
 Собрана DLL из собственного C++ с закреплёнными MSVC / SDK, размер 104 КиБ.

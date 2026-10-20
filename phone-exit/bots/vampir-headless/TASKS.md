@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-base-profile-lobby: AppVersion выбран явно, TCP лобби доступен
+
+Добавлен явный recovered-base профиль для собственного клиента, с проверкой
+текущего EXE / PAK / snapshot / INI и row provenance. AppVersion 1.12.14
+переносится в два доказанных поля. Свежий CDN получен через HK; один TCP connect
+к его лобби успешен, recv timeout без данных. Пакеты / credentials не отправлялись.
+16 тестов прошли; HK-клиент остановлен. Далее — callback string Version,
+игровой server record и прочие Login inputs. Native active cache не заявляется.
+[Подробности](GAME-SOURCE-PROFILE.md).
+
 ## H04-observed-cpu: реальные CPU inputs доступны владельцу Version
 
 Собран маленький собственный DLL helper CPUID. Adapter проверяет build receipt

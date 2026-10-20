@@ -12,9 +12,11 @@ import urllib.request
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent.parent / 'vampir-shared'))
+sys.path.insert(0, str(HERE.parents[2] / '.tools/vampir-python-runtime'))
 from vampir_core.cdn_config import decode_cdn_config_document, read_cdn_sdk_environment
 from vampir_core.cdn_servers import select_cdn_server
 from vampir_core.sdk_config import prepare_cdn_config_url_ascii, select_game_sdk_zone
+from vampir_core.socks_route import SocksRoute
 
 ROOT = Path('F:/PhoneExit Resources/Vampir')
 PROFILE_ID = '393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db'
@@ -50,11 +52,12 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def fetch(url):
+def fetch(url, *, route=None):
     if url != PUBLIC_URL:
         raise ValueError('Only the recovered public CDN URL is supported')
+    if route is not None and not isinstance(route, SocksRoute): raise TypeError('Expected an explicit SOCKS route')
     context = ssl.create_default_context()
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect(),
+    opener = route.opener(NoRedirect()) if route else urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect(),
                                          urllib.request.HTTPSHandler(context=context))
     request = urllib.request.Request(url, headers={'User-Agent': 'Aqua/1.0', 'Accept-Encoding': 'identity'})
     deadline = time.monotonic() + 30
@@ -82,9 +85,11 @@ def fetch(url):
         if expected is not None and len(body) != expected:
             raise ValueError('Incomplete public CDN body')
         headers = list(response.headers.items())
-    return bytes(body), dict(status=200, headers=headers, tls_certificate_verification=True,
+    transport = dict(status=200, headers=headers, tls_certificate_verification=True,
         redirects_followed=False, proxy_environment_used=False, timeout_per_operation_seconds=10,
         read_budget_seconds=30, max_body_bytes=MAX_BODY, transport='Python urllib HTTPS; not native HTTP wire replay')
+    if route: transport['socks5_loopback_port'] = route.port
+    return bytes(body), transport
 
 
 def analyze(body):
@@ -119,10 +124,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fetch', action='store_true', help='Perform one public HTTPS GET; no redirects or account credentials')
     parser.add_argument('--snapshot', type=Path, help='Decode an existing snapshot offline')
+    parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for the public fetch')
     args = parser.parse_args()
     if args.fetch == bool(args.snapshot):
         parser.error('Select --fetch or --snapshot')
     if args.snapshot:
+        if args.socks_port is not None: parser.error('Snapshot verification does not open a SOCKS route')
         manifest = args.snapshot.read_bytes()
         if digest(manifest) != args.snapshot.parent.name:
             raise ValueError('Public CDN manifest changed')
@@ -133,7 +140,8 @@ def main():
         print(json.dumps(dict(offline_verified=True, body_bytes=len(body), environment=report['analysis']['environment'])))
         return
     provenance = profile()
-    body, transport = fetch(provenance['url'])
+    route = SocksRoute(args.socks_port) if args.socks_port is not None else None
+    body, transport = fetch(provenance['url'], route=route)
     report = dict(schema_version=1, fetched_utc=datetime.now(timezone.utc).isoformat(),
         tool_sha256=digest(Path(__file__).read_bytes()), profile=provenance,
         transport=transport, body_sha256=digest(body), body_bytes=len(body), analysis=analyze(body),

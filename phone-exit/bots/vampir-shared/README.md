@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## AppVersion игрового профиля
+
+`login_context.bind_game_app_version` переносит явно выбранный AppVersion
+в Version+0x10 / Login+0x40, сохраняя другие поля и отклоняя конфликтующие
+значения. Не выбирает INI-слой и не объявляет активный cache игры.
+[Профиль, источники и проверка](../vampir-headless/GAME-SOURCE-PROFILE.md).
+
 ## Windows CPUID reader
 
 `windows_cpu.observe_windows_cpu` читает реальные vendor / brand через

@@ -27,6 +27,18 @@ class Response(io.BytesIO):
 
 
 class PublicCdnTests(unittest.TestCase):
+    def test_explicit_socks_route_does_not_use_a_direct_opener(self):
+        route = module.SocksRoute(17948)
+        opener = Mock()
+        opener.open.return_value = Response(headers=[('Content-Length', '3')])
+        with patch.object(module.SocksRoute, 'opener', return_value=opener) as selected, \
+                patch.object(module.urllib.request, 'build_opener', side_effect=AssertionError('Direct fallback')):
+            body, metadata = module.fetch(module.PUBLIC_URL, route=route)
+        self.assertEqual(body, b'abc')
+        self.assertEqual(metadata['socks5_loopback_port'], 17948)
+        self.assertIsInstance(selected.call_args.args[0], module.NoRedirect)
+        with self.assertRaises(TypeError): module.fetch(module.PUBLIC_URL, route='17948')
+
     def test_saved_real_document_decodes_offline_with_source_profile(self):
         pointer = json.loads((module.ROOT / 'code-clues/public-cdn-recovery.json').read_text('utf-8'))
         manifest = Path(pointer['manifest'])

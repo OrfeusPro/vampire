@@ -35,6 +35,18 @@ def bind_nm_device_key(version, login, *, nm_device_key):
     return replace(version, strings=version_strings), replace(login, strings=login_strings)
 
 
+def bind_game_app_version(version, login, *, app_version):
+    """One explicit NetworkSetting AppVersion -> Version+0x10 / Login+0x40.
+
+    Does not choose a config layer or claim the game's active cache. Sources:
+    HEADLESS-CDN-CONFIG, HEADLESS-CONNECTED-VERSION-PACKET, HEADLESS-LOGIN-PACKET-FIELDS.
+    """
+    if not isinstance(version, VersionPayload) or not isinstance(login, LoginPayload):
+        raise TypeError('Expected explicit Version and Login templates')
+    return (replace(version, strings=_bind(version.strings, 0, app_version)),
+        replace(login, strings=_bind(login.strings, 3, app_version)))
+
+
 def bind_sdk_login_fields(login, *, sdk_data, netmarble_id):
     """SDK response accessToken -> Login+0xa0; separate NID -> Login+0x30.
 

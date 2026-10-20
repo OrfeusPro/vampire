@@ -7,7 +7,7 @@ from dataclasses import replace
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / 'vampir-shared'))
-from vampir_core.login_context import bind_nm_device_key, bind_sdk_login_fields, prepare_registered_login
+from vampir_core.login_context import bind_nm_device_key, bind_sdk_login_fields, prepare_registered_login, bind_game_app_version
 from vampir_core.device_registry import DeviceBinding
 from vampir_core.login_packet import LoginPayload
 from vampir_core.version_packet import VersionPayload
@@ -38,6 +38,19 @@ class LoginContextTests(unittest.TestCase):
         self.assertNotIn('different-player-fixture', result.strings)
         self.assertNotIn('sdk-token-fixture', repr(result))
         with self.assertRaises(ValueError): bind_sdk_login_fields(result, sdk_data=data, netmarble_id='other-account')
+
+    def test_one_explicit_app_version_binds_only_proven_fields(self):
+        version, login = self.templates()
+        a, b = bind_game_app_version(version, login, app_version='1.12.14')
+        self.assertEqual(a.strings[0], '1.12.14')
+        self.assertEqual(b.strings[3], '1.12.14')
+        self.assertEqual(sum(bool(value) for value in a.strings), 1)
+        self.assertEqual(sum(bool(value) for value in b.strings), 1)
+        self.assertEqual((a.integers, b.integers, b.raw_bytes, b.raw_128),
+            (version.integers, login.integers, login.raw_bytes, login.raw_128))
+        self.assertEqual(version.strings[0], '')
+        with self.assertRaises(ValueError): bind_game_app_version(a, b, app_version='0.1.1')
+        with self.assertRaises(ValueError): bind_game_app_version(version, login, app_version='')
 
     def test_empty_and_invalid_context_is_rejected(self):
         version, login = self.templates()

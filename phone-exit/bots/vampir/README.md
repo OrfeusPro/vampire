@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Явный AppVersion и доступность лобби через HK, 20 октября
+
+Проверенный recovered-base профиль нашего клиента задаёт AppVersion 1.12.14;
+SHA EXE / PAK / INI сверяются до использования, оба поля Version / Login связаны.
+Свежий CDN через HK вернул real / REAL. TCP connect к его лобби успешен,
+первое чтение завершилось timeout без данных; игровых пакетов не отправляли.
+Все 16 целевых тестов прошли. Native config precedence и игровой вход не закрыты.
+[Источники, профиль и TCP-проверка](../vampir-headless/GAME-SOURCE-PROFILE.md).
+
 ## Реальные CPU inputs подключены к Version, 20 октября
 
 Собран собственный CPUID helper Windows x64 (104 КиБ), без игровых SDK
