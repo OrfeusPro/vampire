@@ -1,5 +1,12 @@
 # Vampir — общие компоненты и результаты
 
+## Windows CPUID reader
+
+`windows_cpu.observe_windows_cpu` читает реальные vendor / brand через
+собственную SHA-проверенную DLL. Она не содержит игровой код или SDK анализа.
+Загрузка выполняется только на Windows x64 по явному пути / hash; результат
+проходит VersionCpuInput. [Сборка и границы](../vampir-headless/WINDOWS-SYSTEM-INPUTS.md).
+
 ## Windows / CPU inputs для Version
 
 `version_cpu.VersionCpuInput` форматирует явные vendor / brand в проверенном

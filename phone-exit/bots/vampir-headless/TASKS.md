@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-observed-cpu: реальные CPU inputs доступны владельцу Version
+
+Собран маленький собственный DLL helper CPUID. Adapter проверяет build receipt
+и SHA до загрузки, наблюдает CPU / Windows version и заполняет только два
+проверенных поля явного Version template. Реальные значения не логируются.
+Повторная сборка воспроизводима в текущем workspace; 19 тестов прошли.
+До сетевого входа остаются AppVersion / config, соединение и другие Login
+inputs. [Подробности](WINDOWS-SYSTEM-INPUTS.md).
+
 ## H04-version-input-binding: два поля Version связаны с проверенными источниками
 
 CPU text подтверждён полной native цепочкой на девяти сценариях. Source

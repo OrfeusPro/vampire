@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Реальные CPU inputs подключены к Version, 20 октября
+
+Собран собственный CPUID helper Windows x64 (104 КиБ), без игровых SDK
+и инструментов анализа в runtime. SHA-проверенный reader получил реальные
+vendor / brand; результат совпал с native CPU-цепочкой на этих входах.
+Повторная сборка дала тот же SHA. Все 19 целевых тестов прошли.
+Далее — AppVersion, параметры соединения и другие Login inputs.
+[Сборка, API, происхождение и границы](../vampir-headless/WINDOWS-SYSTEM-INPUTS.md).
+
 ## Version: CPU text и platform form проверены, 20 октября
 
 Полная native CPU-цепочка с trim и formatter прошла девять сценариев.

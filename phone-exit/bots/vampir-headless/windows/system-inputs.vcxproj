@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D97A416A-4A46-4647-A2CD-9AF7837976AA}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType><PlatformToolset>v143</PlatformToolset>
+    <VCToolsVersion>14.44.35207</VCToolsVersion><UseDebugLibraries>false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup><TargetName>vampir_system_inputs</TargetName><LinkIncremental>false</LinkIncremental></PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile><Optimization>MaxSpeed</Optimization><WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError><RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <SDLCheck>true</SDLCheck><DebugInformationFormat>None</DebugInformationFormat>
+      <AdditionalOptions>/Brepro %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link><GenerateDebugInformation>false</GenerateDebugInformation><AdditionalOptions>/Brepro %(AdditionalOptions)</AdditionalOptions></Link>
+  </ItemDefinitionGroup>
+  <ItemGroup><ClCompile Include="system-inputs.cpp" /></ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

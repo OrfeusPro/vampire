@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: собственный CPUID helper и чтение CPU текущего ПК
+
+Собрана DLL из собственного C++ с закреплёнными MSVC / SDK, размер 104 КиБ.
+Две сборки дали SHA 6a63c280d35ee267e0bea29ab0c64dda2f8a7d8fd07d84115c285144d69b964d.
+Reader проверяет binary SHA и source receipt; runtime не требует analysis SDK.
+Реальные vendor / brand прочитаны без вывода значений и сверены с существующим
+native replay при передаче этих строк в CPUID fixtures. Binding с наблюдениями
+готов для явного Version template; другие поля не угадываются. Все 19 целевых
+тестов прошли, включая настоящие C ABI проверки коротких / null buffers.
+Игрового запроса ещё нет. [Сборка и границы](WINDOWS-SYSTEM-INPUTS.md).
+
 ## 20 октября: CPU formatter, enum form и привязка двух полей Version
 
 Исполнена полная CPU-цепочка initializer / getters / trim / formatter:
