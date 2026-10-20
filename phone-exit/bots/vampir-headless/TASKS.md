@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-server-region: явный фильтр перед игровым входом
+
+Enum KR=1 / ASIA=2 / TW=3 / JP=4 и group+0x20 gate подтверждены native;
+country tables совпали в двух PAK-извлечениях. Выбор JP больше не попадает
+на прежний KR-сервер 101. Свежий JP server ID 251 получил Version 0 / Login 58;
+сокеты и транспорт закрыты. 16 проверок прошли. Далее — SDK gameRegion /
+UseNetmarbleJoinedCountry и оставшийся контекст Login до успешного входа.
+[Источники](../resource-tools/vampir/HEADLESS-SERVER-REGION-SELECTION.md),
+[проверка](LIVE-GAME-LOGIN.md).
+
 ## H04-login-error-58: подтверждён BlockedIp
 
 Native mapper 58 → BlockedIp и статическая локализация связаны; runtime

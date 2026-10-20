@@ -11,6 +11,9 @@ native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
 ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Vampir'))
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
+ ('GameSDK_Configure',0x14565a5d0),
+ ('ServerRegion_PolicyGet',0x145564f70),('ServerRegion_PolicySet',0x14556d660),
+ ('ServerRegion_AsiaReferenceA',0x1457c7780),('ServerRegion_AsiaReferenceB',0x1457e8ee0),
  ('ResultError_Popup',0x145f8a7a0),('ResultError_Text',0x1458091b0),
  ('Login_PolicySingleton',0x145564550),('Login_ModeSingleton',0x145cb2f60),
  ('Login_ModeFlag',0x145cb95e0),('Login_Manager68Flag',0x144ff8cd0),

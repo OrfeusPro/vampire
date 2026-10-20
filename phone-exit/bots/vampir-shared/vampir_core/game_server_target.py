@@ -5,6 +5,8 @@ import re
 
 from .lobby_server_list import LobbyServerListResult
 
+SERVER_REGION_CODES = {'KR': 1, 'ASIA': 2, 'TW': 3, 'JP': 4}
+
 
 @dataclass(frozen=True, slots=True)
 class GameServerTarget:
@@ -46,3 +48,27 @@ def select_game_server_target(server_list, *, server_id):
     else:
         if address.version != 4 or not address.is_global: raise ValueError('Expected public game IPv4 destination')
     return GameServerTarget(server_id, record.u32[0], host, port, record.u16[1])
+
+
+def select_game_server_in_region(server_list, *, region, server_id=None):
+    """Explicit region gate by group +20, matching native master Update.
+
+    With no ID, choose the lowest valid unique ID inside that region as a
+    local diagnostic policy. No availability interpretation or fallback region.
+    See HEADLESS-SERVER-REGION-SELECTION.md for enum and gate native evidence.
+    """
+    if type(region) is not str or region not in SERVER_REGION_CODES:
+        raise ValueError('Explicit supported server region required')
+    if not isinstance(server_list, LobbyServerListResult): raise TypeError('Expected decoded lobby server list')
+    if server_id is not None and (type(server_id) is not int or not 1 <= server_id <= 0xffffffff):
+        raise ValueError('Invalid explicit server ID')
+    identifiers = [server_id] if server_id is not None else sorted({r.u32[1] for r in server_list.servers})
+    for identifier in identifiers:
+        try: target = select_game_server_target(server_list, server_id=identifier)
+        except ValueError:
+            if server_id is not None: raise
+            continue
+        groups = [g for g in server_list.groups if g.raw_08 == target.group_id]
+        if len(groups) == 1 and groups[0].raw_20 == SERVER_REGION_CODES[region]:
+            return target
+    raise ValueError('No unique valid endpoint in the explicitly selected region')

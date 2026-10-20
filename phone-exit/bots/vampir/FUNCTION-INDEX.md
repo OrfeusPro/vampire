@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Региональный выбор сервера, 20 октября
+
+0x1457c7780 initializer: Common=0 / KR=1 / ASIA=2 / TW=3 / JP=4.
+ServerList_Update: 0x145d4b575 сравнивает group+0x20 с policy+0xa8;
+32 native-сценария, фактический singleton getter. GameSDK_Configure
+сохраняет UseRegion в config+0x228. Runtime фильтрует группы перед endpoint.
+В реальной проверке server 101 — KR, выбран JP server 251; Login всё ещё 58.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SERVER-REGION-SELECTION.md).
+
 ## Result code 58 → BlockedIp, 20 октября
 
 ResultError_Text 0x1458091b0: целое native-исполнение code 58 достигает

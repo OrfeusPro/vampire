@@ -1,5 +1,34 @@
 # Реальный игровой Login: ответ с кодом 58
 
+## Проверка явного региона JP
+
+Следующая свежая попытка использовала `--region JP`, а не прежний минимальный
+ID общего списка. Связи региона подтверждены [native-проверкой и таблицами](../resource-tools/vampir/HEADLESS-SERVER-REGION-SELECTION.md).
+Свежий ID 104 показал: старый server ID 101 имеет region code 1 / KR.
+Новый selector выбрал **server ID 251 / group ID 251, JP / 4**.
+
+SDK / lobby вход и список серверов приняты. На выбранном JP-сервере получены
+VersionResult 0 и LoginResult 58 / BlockedIp, body 131 байт; send 650 / recv 94.
+Контекст остался windows-sdk-initial-reset, extra_number 0. Выход подтверждён
+как JP. Сокеты закрыты; временный JP-клиент остановлен с exit 0, stderr пуст.
+Список персонажей ещё не отправлялся. Неправильный регион прежнего выбора
+устранён, но причина оставшегося отказа не доказана.
+
+Снимки: CDN `7b820d47c6cdd663834ea7bfcfe8bb4e45925cfa4945b158c0fa440dd52e032c`
+(6000 байт), GMC2 `0637c3934c505e0a60074e8d3cfe9539e38fdf4a94347b665c372c6c335cc723`
+(HTTP 200, 13 773 байта), каталоги `public-cdn-snapshots` / `public-gmc2-snapshots`
+в `F:/PhoneExit Resources/Vampir`, файл manifest.json. Имена каталогов — SHA256 manifest.
+
+Текущий пример запуска после подготовки свежего маршрута / снимков:
+
+```powershell
+python -X utf8 phone-exit/bots/vampir-headless/probe-selected-game-login.py `
+  --email bot-hk-test@vampir.top --profile recovered-base `
+  --manifest 'F:/PhoneExit Resources/Vampir/public-cdn-snapshots/7b820d47c6cdd663834ea7bfcfe8bb4e45925cfa4945b158c0fa440dd52e032c/manifest.json' `
+  --socks-port 17948 --server-policy-byte 0 --region JP --selection lowest-valid-id `
+  --context windows-sdk-initial-reset --extra-number 0 --password-stdin
+```
+
 Уточнение: [код 58 подтверждён как BlockedIp](../resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md).
 Ниже сохранён результат первой реальной попытки до этой расшифровки.
 
@@ -112,7 +141,7 @@ LoginFlow сохраняет безопасные коды обоих ответ
 python -X utf8 phone-exit/bots/vampir-headless/probe-selected-game-login.py `
   --email bot-hk-test@vampir.top --profile recovered-base `
   --manifest 'F:/PhoneExit Resources/Vampir/public-cdn-snapshots/a99fa14b0d01326fa187d48fb66e366f181d46f0ba7418e2e68b319f12adc6e8/manifest.json' `
-  --socks-port 17948 --server-policy-byte 0 --selection lowest-valid-id `
+  --socks-port 17948 --server-policy-byte 0 --region KR --selection lowest-valid-id `
   --context windows-sdk-initial-reset --extra-number 0 --password-stdin
 ```
 

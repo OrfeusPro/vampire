@@ -12,6 +12,7 @@ sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.game_login_probe import exchange_game_login
 from vampir_core.login_context import prepare_initial_windows_game_login
 from vampir_core.socks_route import SocksRoute
+from vampir_core.game_server_target import SERVER_REGION_CODES
 
 
 @dataclass(frozen=True)
@@ -29,7 +30,8 @@ def module(name, filename):
 
 
 def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
-        extra_number, context, server_id=None, selection=None, password='', _progress=None):
+        extra_number, context, region, server_id=None, selection=None, password='', _progress=None):
+    if type(region) is not str or region not in SERVER_REGION_CODES: raise ValueError('Explicit server region required')
     if context != 'windows-sdk-initial-reset': raise ValueError('Explicit game Login context required')
     if type(extra_number) is not int or not 0 <= extra_number <= 0xffffffff: raise ValueError('Explicit uint32 extra number required')
     if (server_id is None) == (selection is None): raise ValueError('One explicit selection policy required')
@@ -43,7 +45,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
     try:
         return _run(email, selected_profile=selected_profile, manifest_path=manifest_path,
             socks_port=socks_port, server_policy_byte=server_policy_byte, extra_number=extra_number,
-            context=context, server_id=server_id, selection=selection, password=password, state=state, phase=phase)
+            context=context, region=region, server_id=server_id, selection=selection, password=password, state=state, phase=phase)
     except (OSError, ValueError, RuntimeError, KeyError) as error:
         result = dict(state, status='selected_game_login_not_completed', error_type=type(error).__name__)
         for name, attribute in (('http_status', 'status'), ('sdk_error_code', 'sdk_code')):
@@ -57,7 +59,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
 
 
 def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
-         extra_number, context, server_id, selection, password, state, phase):
+         extra_number, context, region, server_id, selection, password, state, phase):
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     auth = {}
@@ -74,8 +76,12 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
     credentials = auth.pop('context')
     phase('game_target_selection')
     target = module('game_login_target', 'probe-selected-game-version.py').choose_target(
-        lobby.server_list_response, server_id=server_id, selection=selection)
-    state.update(selected_server_id=target.server_id, selected_group_id=target.group_id)
+        lobby.server_list_response, server_id=server_id, selection=selection, region=region)
+    state.update(selected_server_id=target.server_id, selected_group_id=target.group_id, selected_region=region)
+    reference = [r for r in lobby.server_list_response.servers if r.u32[1] == 101]
+    if len(reference) == 1:
+        groups = [g for g in lobby.server_list_response.groups if g.raw_08 == reference[0].u32[0]]
+        if len(groups) == 1: state['reference_server_101_region_code'] = groups[0].raw_20
     phase('game_system_inputs')
     cpu, windows = module('game_login_system', 'windows-system-inputs.py').observe_inputs()
     prepare_version = module('game_login_version', 'probe-game-version.py').prepare_version
@@ -108,6 +114,7 @@ if __name__ == '__main__':
     parser.add_argument('--server-policy-byte', type=int, required=True)
     parser.add_argument('--extra-number', type=int, required=True)
     parser.add_argument('--context', choices=['windows-sdk-initial-reset'], required=True)
+    parser.add_argument('--region', choices=list(SERVER_REGION_CODES), required=True)
     choice = parser.add_mutually_exclusive_group(required=True)
     choice.add_argument('--server-id', type=int)
     choice.add_argument('--selection', choices=['lowest-valid-id'])
@@ -118,7 +125,7 @@ if __name__ == '__main__':
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
         result = run(args.email, selected_profile=args.profile, manifest_path=args.manifest,
             socks_port=args.socks_port, server_policy_byte=args.server_policy_byte,
-            extra_number=args.extra_number, context=args.context, server_id=args.server_id,
+            extra_number=args.extra_number, context=args.context, region=args.region, server_id=args.server_id,
             selection=args.selection, password=password,
             _progress=lambda stage: print(json.dumps(dict(event='phase', stage=stage)), file=sys.stderr, flush=True))
         password = None

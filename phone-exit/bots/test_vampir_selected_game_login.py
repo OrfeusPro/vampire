@@ -17,13 +17,13 @@ class SelectedGameLoginTests(unittest.TestCase):
 
     def kwargs(self):
         return dict(selected_profile='recovered-base', manifest_path=Path('fixture'), socks_port=17948,
-            server_policy_byte=0, extra_number=123, context='windows-sdk-initial-reset', server_id=42)
+            server_policy_byte=0, extra_number=123, context='windows-sdk-initial-reset', region='JP', server_id=42)
 
     def test_auth_stays_in_memory_and_same_lobby_result_supplies_login(self):
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
             kwargs['_consume_auth'](**{name: inputs[name] for name in ('binding', 'sdk_data', 'netmarble_id')})
-            return SimpleNamespace(response=inputs['lobby_result'], server_list_response=object(), summary={'login_result_code': 0})
+            return SimpleNamespace(response=inputs['lobby_result'], server_list_response=SimpleNamespace(servers=(), groups=()), summary={'login_result_code': 0})
         modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14')),
             SimpleNamespace(run=lobby), SimpleNamespace(choose_target=lambda *args, **kwargs:
                 SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001)),
@@ -55,7 +55,7 @@ class SelectedGameLoginTests(unittest.TestCase):
 
     def test_policy_validation_happens_before_auth_and_error_text_is_hidden(self):
         with patch.object(self.tool, 'module') as load:
-            for changed in ({'extra_number': -1}, {'context': ''}, {'server_id': 0}):
+            for changed in ({'extra_number': -1}, {'context': ''}, {'server_id': 0}, {'region': 'unknown'}):
                 with self.assertRaises(ValueError): self.tool.run('fixture@example.invalid', **dict(self.kwargs(), **changed))
             load.assert_not_called()
         with patch.object(self.tool, 'module', side_effect=RuntimeError('secret-auth-context')):
