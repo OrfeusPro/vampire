@@ -1,5 +1,22 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Актуальный реестр и открытые вопросы
+
+Правила ведения: [база знаний](../resource-tools/vampir/knowledge/README.md).
+Машинный реестр: `F:/PhoneExit Resources/Vampir/knowledge/function-registry.json`;
+читаемый список: `F:/PhoneExit Resources/Vampir/knowledge/INDEX.md`.
+Он объединяет последний Ghidra export, calls, уточнённые роли и ссылки на
+подробные разборы по VA. Это исследованный набор, не все функции EXE.
+Перед новым разбором искать адрес/имя через `function-registry.py --query`.
+Текущие unknown / next_action / do_not_repeat — в knowledge/questions.json.
+
+Текст ниже — тематическая история результатов. Старые коды отказа и состояния
+не заменяют текущие вопросы. В частности, 0x14453cdf0 уже определена как
+UNMServiceSettings::Save; 0x144548cb0 — FPlatformLogImpl::SendSignIn;
+0x144546880 — FLogImpl::SendPlatformLog. SendSignIn с доступным сервисом
+проверен с capture sink, а не с реальной отправкой.
+[Границы последней проверки](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md).
+
 ## Региональный выбор сервера, 20 октября
 
 0x1457c7780 initializer: Common=0 / KR=1 / ASIA=2 / TW=3 / JP=4.

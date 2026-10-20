@@ -1,5 +1,13 @@
 # Vampir: где искать данные
 
+## Единая база функций и текущих вопросов
+
+[Правила и структура](knowledge/README.md), [вопросы](knowledge/questions.json).
+`function-registry.py --build` объединяет последний Ghidra export, calls,
+уточнённые роли и адресные ссылки на существующие разборы. Query по VA/имени
+обязателен до повторного исследования; SHA входов проверяются при чтении базы.
+Generated JSON / INDEX: `F:/PhoneExit Resources/Vampir/knowledge/`.
+
 ## FCommonLogData и создание SDK metadata, 20 октября
 
 Compiled diagnostics уточнили имена writer / JSON export / push consumer.

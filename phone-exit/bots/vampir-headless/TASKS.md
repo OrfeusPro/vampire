@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — задачи
 
+## Текущие вопросы
+
+Актуальные known / unknown / next_action / do_not_repeat ведутся в
+[knowledge/questions.json](../resource-tools/vampir/knowledge/questions.json).
+[Правила ведения и поиск функций](../resource-tools/vampir/knowledge/README.md).
+Перед новым исследованием проверять реестр по адресу, чтобы не повторять
+уже установленную роль под прежним аналитическим именем.
+
+Ближайшая цель остаётся прежней: устранить Game Login 16, получить список
+персонажей и перейти к созданию / выбору. Исторические отчёты ниже не являются
+очередью на повтор. SendSignIn с доступным сервисом уже проверен до captured
+sink: [границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md).
+
 ## H04-sign-in-log: уточнена роль двух вызовов после SignIn
 
 Getter owner+0x78 и wrapper связаны с FPlatformLogImpl::SendSignIn.

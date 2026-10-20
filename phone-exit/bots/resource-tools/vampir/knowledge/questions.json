@@ -1,0 +1,53 @@
+{
+  "source_sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+  "questions": [
+    {
+      "id": "login-invalid-state",
+      "status": "open",
+      "question": "Почему игровой Login бота возвращает 16, когда официальный клиент доходит до создания персонажа?",
+      "known": "SDK и лобби принимают вход. На ID 251 и 256 Game Version 0, Game Login 16. Franz2 в таблицах — 256, группа Franz — 253. Персонаж пользователем не создан.",
+      "unknown": "Какое условие игрового сервера не выполнено; числовой код не доказывает конкретную причину.",
+      "next_action": "Сопоставить поля Login и источники SDK / launcher context по существующим данным. Новая сетевая попытка — после конкретного проверенного изменения.",
+      "decision_rule": "Повторять вход только если найдено конкретное отличие поля или порядка обмена с доказанным источником. Одинаковый отказ сам по себе не основание для новой попытки.",
+      "do_not_repeat": "Повторять те же credentials/context/server без изменения условий; считать JP-выход доказательством совпадения устройства или адреса.",
+      "addresses": ["0x1467a9700", "0x1444cc1a0"],
+      "evidence": ["../HEADLESS-FRANZ2-LOGIN.md", "../HEADLESS-OFFICIAL-CLIENT-JP.md"]
+    },
+    {
+      "id": "common-data-population",
+      "status": "open",
+      "question": "Где после создания заполняются 37 полей FCommonLogData и какие значения доступны перед Login?",
+      "known": "Factory/owner/getters создают 37 пустых строк. Writer и ключи разобраны. Save после player ID — сохранение settings. SendSignIn — событие platform log; sink копирует существующие common data.",
+      "unknown": "Первоначальные writers значений в owner inner+0x28 и фактическая заполненность перед игровым Login. Обязательность metadata для сервера не доказана.",
+      "next_action": "Искать записи в common-data объект через lifecycle логирования, сначала сверив найденные адреса с реестром; потребителей и copy не выдавать за setters.",
+      "decision_rule": "До следующего большого replay найти статическую запись в целевой объект. Если кандидат лишь копирует или экспортирует данные, записать это и перейти к другому источнику, не расширять его replay ради самого покрытия.",
+      "do_not_repeat": "Заново разбирать Save, factory, ToMap или SendSignIn как неизвестные функции; запускать уже исполненные fixtures без изменившихся входов.",
+      "addresses": ["0x14450f420", "0x14450f5d0", "0x144551060", "0x14453cdf0", "0x144548cb0", "0x144546880"],
+      "evidence": ["../HEADLESS-NID-OWNER-FACTORY.md", "../HEADLESS-NID-USER-INFO-FIELDS.md", "../HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md"]
+    },
+    {
+      "id": "dumper-live-access",
+      "status": "blocked_experiment",
+      "question": "Совместима ли Dumper-7 с работающим Vampir?",
+      "known": "DLL собрана и SHA проверен. Обычный запуск не получил load rights; повышенный получил отказ EnumProcessModules до загрузки DLL. В клиенте есть подписанный XIGNCODE3.",
+      "unknown": "Причина отказа доступа и совместимость поиска объектов; причинная связь XIGNCODE3 с отказом и Login 16 не установлена.",
+      "next_action": "Не повторять загрузку при тех же условиях. Продолжать исследование по коду клиента и имеющимся экспортам.",
+      "decision_rule": "Повтор возможен при документированном изменении условий доступа; наличие открытой игры или перезапуск без изменения условий недостаточны.",
+      "do_not_repeat": "Считать наличие защиты доказательством причины; считать сборку DLL подтверждением совместимости.",
+      "addresses": [],
+      "evidence": ["../HEADLESS-DUMPER7-LIVE.md"]
+    },
+    {
+      "id": "sign-in-event-fields",
+      "status": "bounded_answer",
+      "question": "Что делает SendSignIn при доступном SDK-сервисе?",
+      "known": "Четыре native fixtures передают GameCode и raw ChannelCode в sink owner с аргументами 1/2; optional PlatformType отсутствует. Отправитель связан с FLogImpl::SendPlatformLog.",
+      "unknown": "Полная ветвь PlatformType, фактический сетевой транспорт и первоначальное заполнение common data.",
+      "next_action": "Использовать готовый результат как границу события. Полный sink исследовать только для конкретного вопроса, влияющего на Login.",
+      "decision_rule": "Не наращивать покрытие log sink, пока не показана связь конкретной ветви с недостающим полем Login или с записью common data.",
+      "do_not_repeat": "Возвращаться к SendSignIn только потому, что название похоже на авторизацию; объявлять raw 1/2 игровыми packet IDs.",
+      "addresses": ["0x144524d70", "0x144548cb0", "0x144546880", "0x144547040"],
+      "evidence": ["../HEADLESS-SDK-SIGN-IN-LOG.md", "../HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md"]
+    }
+  ]
+}

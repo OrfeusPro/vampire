@@ -1,5 +1,23 @@
 # Vampir — главный файл разработки
 
+## База функций и порядок исследования
+
+Перед новым разбором читать [правила базы знаний](../resource-tools/vampir/knowledge/README.md)
+и текущий вопрос в [questions.json](../resource-tools/vampir/knowledge/questions.json).
+Общий реестр по VA объединяет Ghidra export, calls, уточнённые роли и ссылки
+на прежние доказательства. Поиск: `function-registry.py --query <адрес-или-имя>`.
+Данные и generated index: `F:/PhoneExit Resources/Vampir/knowledge/`.
+Подробнее — [FUNCTION-INDEX.md](FUNCTION-INDEX.md). Исторические записи ниже
+сохраняют прежние результаты; актуальные неизвестные и следующие действия
+ведутся в базе, чтобы не повторять уже выполненные исследования.
+
+Текущий результат: официальный клиент дошёл до Class Selection, персонаж
+не создан; бот на ID 256 получает Login 16 после успешных SDK / lobby.
+SendSignIn с доступным сервисом проверен в четырёх fixtures: событие передаёт
+GameCode / ChannelCode в captured log sink. Источник заполнения common data
+и причина отказа пока не установлены.
+[Последняя проверка события](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md).
+
 ## Вызовы после SignIn связаны с platform log, 20 октября
 
 Getter 0x144524d70 возвращает компонент owner+0x78; следующий wrapper ведёт
