@@ -1,5 +1,7 @@
 # ChannelManager: выбор SignIn и отдельное получение launcher-токена
 
+Продолжение: [реальный launcher-вход через JP / HK](HEADLESS-LAUNCHER-LIVE-LOGIN.md).
+
 20 октября 2026. Продолжение [токена и двух ответов](HEADLESS-LAUNCHER-TOKEN-CONTEXT.md).
 Разобраны найденные caller roots. Это публичные для SDK операции
 `FChannelManagerImpl::SignIn` и `FChannelManagerImpl::GetLauncherToken`.

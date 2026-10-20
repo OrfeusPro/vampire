@@ -22,6 +22,7 @@ class SelectedGameLoginTests(unittest.TestCase):
     def test_auth_stays_in_memory_and_same_lobby_result_supplies_login(self):
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
+            self.assertEqual(kwargs['auth_flow'], 'launcher')
             kwargs['_consume_auth'](**{name: inputs[name] for name in ('binding', 'sdk_data', 'netmarble_id')})
             record = SimpleNamespace(u32=(7, 42, 0, 0), enums=(0, 1, 0), flags=(False,) * 5,
                 array50=('private-list-identity-fixture',), strings=('private-record-text',))
@@ -47,7 +48,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route, \
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
-            result = self.tool.run('fixture@example.invalid', **self.kwargs())
+            result = self.tool.run('fixture@example.invalid', auth_flow='launcher', **self.kwargs())
         packet = exchange.call_args.args[2]
         self.assertIsNone(prepare.call_args.kwargs['local_address'])
         connection.getsockname.assert_not_called()
@@ -63,6 +64,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         self.assertEqual(result['region_server_states'], [dict(server_id=42, enums=(0, 1, 0),
             flags=(False,) * 5, array50_count=1, excluded_by_native_state=False, sdk_joined_country_allowed=None)])
         self.assertEqual(result['game']['login_result_code'], 0)
+        self.assertEqual(result['sdk_auth_flow'], 'launcher')
         self.assertEqual(repr(self.tool.AuthForGame(**{k: inputs[k] for k in ('binding', 'sdk_data', 'netmarble_id')})), 'AuthForGame()')
 
     def test_missing_auth_does_not_connect_to_game(self):

@@ -17,7 +17,9 @@ from vampir_core.nid_web_context import prepare_nid_sign_in_context
 from vampir_core.nid_web_url import bind_nid_web_url
 from vampir_core.nid_sdk_credential import build_nid_sdk_credential
 from vampir_core.sdk_sign_in import plan_nid_sdk_sign_in, plan_nid_sdk_sign_up
-from vampir_core.sdk_sign_in_http import execute_sdk_sign_in, execute_sdk_sign_up, SdkSignInHttpError
+from vampir_core.sdk_launcher_auth import plan_nid_launcher_token, plan_launcher_sign_in
+from vampir_core.sdk_sign_in_http import (execute_sdk_sign_in, execute_sdk_sign_up, SdkSignInHttpError,
+    execute_launcher_token, execute_launcher_sign_in)
 from vampir_core.socks_route import SocksRoute
 from vampir_core.windows_version import observe_windows_version
 
@@ -61,8 +63,11 @@ def load_inputs(email, *, route=None):
     return binding, profile, dict(config.constants)
 
 
-def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=None, _capture=None, _execute=None):
+def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=None, auth_flow='nid',
+        _capture=None, _execute=None, _execute_token=None, _progress=None):
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')
+    if auth_flow not in ('nid', 'launcher') or (auth_flow == 'launcher' and create_sdk_player):
+        raise ValueError('Unsupported explicit SDK auth flow')
     route = SocksRoute(socks_port) if socks_port is not None else None
     binding, profile, constants = load_inputs(email, route=route)
     context = prepare_nid_sign_in_context(binding=binding, **profile)
@@ -76,11 +81,21 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=
                         data_directory=HERE / ('.local/nid-sign-in-webview' + ('-socks-' + str(route.port) if route else '')),
                         expected_email=email, sign_in_password=password, socks_port=socks_port)
     # SDK DeviceKey differs from the NID DeviceKey used by the preceding page.
-    planner = plan_nid_sdk_sign_up if create_sdk_player else plan_nid_sdk_sign_in
-    request = planner(constants=constants, credential=build_nid_sdk_credential(provider),
-        game_code=profile['game_code'], build_code=profile['build_code'], nm_device_key=binding.nm_device_key,
+    inputs = dict(constants=constants, game_code=profile['game_code'], build_code=profile['build_code'], nm_device_key=binding.nm_device_key,
         device_key=binding.device_key, country_code=profile['country_code'] if route else provider.joined_country_code,
         os_type=profile['os_type'])
+    credential = build_nid_sdk_credential(provider)
+    if auth_flow == 'launcher':
+        # Deliberately selected experiment; never a fallback from ordinary SignIn.
+        if _progress: _progress('sdk_launcher_token')
+        request = plan_nid_launcher_token(credential=credential, **inputs)
+        token = (_execute_token or execute_launcher_token)(request, expected_url=request.url, route=route)
+        if _progress: _progress('sdk_launcher_sign_in')
+        request = plan_launcher_sign_in(launcher_token=token, **inputs)
+        token = credential = provider = None
+        return (_execute or execute_launcher_sign_in)(request, expected_url=request.url, route=route)
+    planner = plan_nid_sdk_sign_up if create_sdk_player else plan_nid_sdk_sign_in
+    request = planner(credential=credential, **inputs)
     executor = _execute or (execute_sdk_sign_up if create_sdk_player else execute_sdk_sign_in)
     return executor(request, expected_url=request.url, route=route)
 
@@ -92,14 +107,15 @@ if __name__ == '__main__':
     parser.add_argument('--password-stdin', action='store_true', help='Read the password from stdin, never from process arguments')
     parser.add_argument('--create-sdk-player', action='store_true', help='Explicit SDK SignUp instead of SignIn; never automatic on errors')
     parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for both browser and SDK HTTPS')
+    parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid', help='Explicit SDK flow, no automatic fallback')
     args = parser.parse_args()
     try:
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
         data = run(args.email, timeout=args.timeout, password=password, create_sdk_player=args.create_sdk_player,
-                   socks_port=args.socks_port)
+                   socks_port=args.socks_port, auth_flow=args.auth_flow)
         password = None
-        print(json.dumps(dict(sdk_response_accepted=True, operation='sign-up' if args.create_sdk_player else 'sign-in',
+        print(json.dumps(dict(sdk_response_accepted=True, operation='sign-up' if args.create_sdk_player else 'sign-in', auth_flow=args.auth_flow,
                               player_id_present=bool(data.player_id),
                               sdk_token_present=False if args.create_sdk_player else bool(data.access_token), game_session_ready=False)))
     except SdkSignInHttpError as error:

@@ -14,6 +14,11 @@ GameConnection. Локальные/native-сценарии не заменяют
 Game Version 0, Game Login 16. Franz2 — строка сервера 256, группа Franz 253;
 прежний 251 — Monty1. [Проверка](../evidence/network/HEADLESS-FRANZ2-LOGIN.md).
 
+Новый явный launcher flow принят SDK и лобби, но Game Login на ID 256 через
+два других JP-телефона и HK вернул 58 / BlockedIp. Изменились также выходы;
+смена кода не доказывает причину прежнего InvalidState.
+[Проверка launcher flow](../evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
+
 ## Открыто
 
 Успешный Game Login и вся последующая длительная сессия, reconnect,

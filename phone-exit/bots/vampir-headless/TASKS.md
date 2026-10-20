@@ -5,7 +5,7 @@
 
 | Порядок | Результат, который нужен | Что есть / что остаётся |
 | --- | --- | --- |
-| 1. Вход | Game Login принят, затем реальный список персонажей | NID / SDK / выбранное лобби и Game Version проходят; Game Login 16 на ID 256 |
+| 1. Вход | Game Login принят, затем реальный список персонажей | SDK / выбранное лобби и Game Version проходят; старый flow дал 16, launcher flow на двух JP / HK дал 58 на ID 256 |
 | 2. Персонаж | При пустом списке создать первого; выбрать, получить позицию | Локальные codecs / состояния есть; live создание, выбор и позиция не выполнены |
 | 3. Сессия | Поддержание, ответы, разрыв и восстановление с понятными состояниями | Bounded GameConnection и локальные проверки есть; полный live lifecycle не проверен |
 | 4. Карта и UI | Движущийся персонаж, цель перемещения, игровые меню | Использовать существующий атлас / nav study / UI geometry; live слоя ещё нет |
@@ -25,8 +25,10 @@
 Проверено различие launcher credential / NID credential и launcher gate.
 Ключ launcherToken и отдельные схемы ответов установлены; внутренний канал
 берётся из другого поля credential. Проверен GetLauncherToken с NID credential 33.
-Следом — явные планы обоих launcher-запросов, parser и отдельный JP-эксперимент:
-[разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md).
+Планы, parser и runner реализованы; реальные launcher token / sign-in приняты.
+Через два JP-телефона и HK Game Login вернул 58 / BlockedIp.
+Следом — сравнение официального клиента на том же выходе.
+[Результаты](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 
 ## Как не повторять исследования
 

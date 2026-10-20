@@ -8,15 +8,17 @@
 
 На 20 октября 2026 бот проходит NID / SDK-вход, получает список серверов и
 успешный ответ выбранного лобби. Игровой Version принят; Game Login на ID 256
-возвращает 16 / InvalidState. Список персонажей из реальной сессии не получен.
+ранее возвращал 16 / InvalidState. Новый launcher-вход принят SDK / лобби,
+но Game Login через два JP-телефона и HK вернул 58 / BlockedIp.
+Список персонажей из реальной сессии не получен.
 Официальный клиент через JP дошёл до Class Selection на Franz 2; персонаж
 не создан, пользователь закрыл игру. Совпадение контекста авторизации не проверено.
 
 У launcher-ветви подтверждены отдельный credential и два HTTP-вызова;
 условие выбора проверено локально. Установлены заголовок launcherToken и
 различие ответов. Выбор backend по каналу и GetLauncherToken с существующим
-NID credential проверены локально; реальный launcher-токен ещё не получен.
-[Маршрутизация SDK](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md).
+NID credential проверены локально. Явный runtime launcher flow проверен на
+сервере до отказа Game Login. [Реальные результаты и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 
 [Сводка по темам](../resource-tools/vampir/knowledge/TOPICS.md) отделяет рабочее,
 проверенное локально, статические связи и незавершённое. Актуальные вопросы:

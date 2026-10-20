@@ -5,9 +5,9 @@
       "id": "login-invalid-state",
       "status": "open",
       "question": "Почему игровой Login бота возвращает 16, когда официальный клиент доходит до создания персонажа?",
-      "known": "SDK и лобби принимают вход. На ID 251 и 256 Game Version 0, Game Login 16. Franz2 в таблицах — 256, группа Franz — 253. Персонаж пользователем не создан. Launcher credential использует channelCode 200 и base GetObject; NID credential использует 33 и отдельный token override. Найдены отдельные launcher HTTP methods; обязательность этой ветви не доказана.",
-      "unknown": "Какое условие игрового сервера не выполнено; числовой код не доказывает конкретную причину.",
-      "next_action": "Подготовить source-bound планы launcher/token и launcher/sign-in, parser и тесты; затем отдельный JP-эксперимент с новым SDK-контекстом. Фактический официальный маршрут неизвестен. Старую попытку без изменения входов не повторять.",
+      "known": "SDK и лобби принимают вход. На ID 251 и 256 Game Version 0, Game Login 16. Franz2 в таблицах — 256, группа Franz — 253. Персонаж пользователем не создан. Launcher credential использует channelCode 200 и base GetObject; NID credential использует 33 и отдельный token override. Найдены отдельные launcher HTTP methods; обязательность этой ветви не доказана. Новый явный launcher flow принят SDK и лобби; через два других JP-телефона и HK Game Login 58 / BlockedIp. Изменились также выход и свежая сессия, причина смены кода не доказана.",
+      "unknown": "Причина прежнего InvalidState и нынешнего BlockedIp; какое условие не выполнено и какие различия остаются относительно официального клиента на том же выходе.",
+      "next_action": "Сравнить официальный клиент на том же выбранном выходе и зафиксировать достигнутый экран; затем сопоставить оставшийся контекст. Старые NID / launcher попытки без нового условия не повторять.",
       "decision_rule": "Повторять вход только если найдено конкретное отличие поля или порядка обмена с доказанным источником. Одинаковый отказ сам по себе не основание для новой попытки.",
       "do_not_repeat": "Повторять те же credentials/context/server без изменения условий; считать JP-выход доказательством совпадения устройства или адреса.",
       "addresses": [
@@ -19,7 +19,8 @@
         "evidence/network/HEADLESS-OFFICIAL-CLIENT-JP.md",
         "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
         "evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
-        "evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md"
+        "evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md",
+        "evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md"
       ]
     },
     {
@@ -83,11 +84,11 @@
       "id": "launcher-auth-contract",
       "status": "open",
       "question": "Как launcher-контекст превращается в SDK-сессию и влияет ли он на игровой Login?",
-      "known": "Gate проверен на 10 native fixtures. Credential channelCode 200 отделён от channel +0x68. Native initializer и header slice подтверждают ключ launcherToken; 10 fixtures подтверждают перенос +0x68 в module+0x88. Обработчик launcher/token читает resultData строковым getter, обработчик launcher/sign-in читает объект SDK-полей; реальные ответы этой ветви не получены. 26 native fixtures проверили ChannelManager::SignIn / GetLauncherToken: канал 200 выбирает launcher sign-in, NID 33 может отдельно запрашивать launcherToken; прежний канал 100 имеет особую ветвь с сохранённым player ID и нулевым credential. ExecGetTokenResult доставляет result через отдельный callback slot.",
-      "unknown": "Реальное получение launcherToken для своего NID credential, принятие отдельного launcher sign-in и влияние нового SDK-контекста на Game Login. Автоматический порядок и фактическая ветвь официального запуска не установлены; bound consumer и реальный chc не наблюдались.",
-      "next_action": "Подготовить явные request plans launcher/token с NID credential 33 и launcher/sign-in с отдельным header, строгий parser строкового resultData и тесты контекста. Затем выполнить отдельный JP-эксперимент; не считать его штатным порядком официального запуска.",
-      "decision_rule": "До сетевого эксперимента подтвердить и протестировать источники полей, планы запросов и разбор ответов. Не подменять NID credential каналом 200; не включать автоматический fallback. Расширять scheduler или getters только ради конкретного недостающего auth-поля.",
-      "do_not_repeat": "Не повторять gate и не заменять NID channelCode 33 на 200 без полного контракта. Не читать реальные launch arguments ради статического вопроса. Ключ launcherToken и перенос +0x68 уже проверены; не искать их заново. SignIn и GetLauncherToken уже разобраны; dispatcher scheduler не расширять ради покрытия.",
+      "known": "Native gate, launcherToken header, раздельные credential channelCode 200 / channel +0x68 и маршрутизация ChannelManager проверены. Реализован явный runtime flow: NID credential 33 → launcher/token → launcher/sign-in. Реальные токен и SDK sign-in приняты через два JP-телефона и HK, лобби принято. Game Login на ID 256 во всех трёх попытках вернул 58 / BlockedIp; список персонажей не запрашивался. ExecGetTokenResult статически доставляет result через отдельный callback slot; runtime flow вызывает следующий запрос явно.",
+      "unknown": "Причина Game Login 58 на проверенных выходах, влияние launcher flow относительно смены выхода и сессии; штатная ветвь официального запуска и контекст устройства пока не сопоставлены.",
+      "next_action": "Сравнить официальный клиент на том же явно выбранном выходе, зафиксировать достигнутый экран; затем проверять конкретное оставшееся отличие игрового контекста. Новые токены и те же запросы без нового условия не повторять.",
+      "decision_rule": "Launcher token и SDK sign-in уже приняты реальным сервером. Не повторять ради подтверждения этого факта; следующий тест должен различать транспорт / официальный клиент / конкретное поле. BlockedIp не доказывает конкретное правило серверной блокировки.",
+      "do_not_repeat": "Не повторять gate и не заменять NID channelCode 33 на 200 без полного контракта. Не читать реальные launch arguments ради статического вопроса. Ключ launcherToken и перенос +0x68 уже проверены; не искать их заново. SignIn и GetLauncherToken уже разобраны; dispatcher scheduler не расширять ради покрытия. Не повторять реализованную цепочку на тех же выходах без нового условия; не объявлять её причиной смены 16 на 58.",
       "addresses": [
         "0x1444eb1c0",
         "0x1444dd8a0",
@@ -104,7 +105,8 @@
         "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
         "evidence/auth/HEADLESS-NID-CREDENTIAL.md",
         "evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
-        "evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md"
+        "evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md",
+        "evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md"
       ]
     }
   ]

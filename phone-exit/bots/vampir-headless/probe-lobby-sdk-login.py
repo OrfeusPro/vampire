@@ -23,7 +23,8 @@ def module(name, filename):
 
 
 def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
-        _progress=None, _consume_auth=None, _select_server=None, _use_session=None):
+        auth_flow='nid', _progress=None, _consume_auth=None, _select_server=None, _use_session=None):
+    if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
     if _consume_auth is not None and not callable(_consume_auth): raise TypeError('Expected in-memory auth consumer')
     if _select_server is not None and (not callable(_select_server) or not read_server_list):
         raise TypeError('Server selection requires a callback and server list')
@@ -47,7 +48,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         captured['provider'] = value
         if _progress: _progress('sdk_sign_in')
         return value
-    data = sdk.run(email, timeout=180, password=password, socks_port=socks_port, _capture=capture)
+    data = sdk.run(email, timeout=180, password=password, socks_port=socks_port, _capture=capture,
+        auth_flow=auth_flow, _progress=_progress)
     password = None
     provider = captured.pop('provider')
     version_tool = module('lobby_sdk_version_inputs', 'probe-lobby-version.py')
@@ -74,14 +76,14 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
             if _progress: _progress('selected_lobby_login')
             return replace(login, integers=(login.integers[0], login.integers[1], server_id, login.integers[3]))
         def use_session(completed):
-            completed.summary.update(context=context, sdk_response_accepted=True, lobby_open_during_game=True)
+            completed.summary.update(context=context, sdk_response_accepted=True, lobby_open_during_game=True, sdk_auth_flow=auth_flow)
             if _consume_auth:
                 _consume_auth(binding=binding, sdk_data=data, netmarble_id=netmarble_id)
             _use_session(completed)
         result = exchange_lobby_login(connection, version, login, timeout=15, server_list=request,
             select_login=selected_login if _select_server is not None else None,
             on_selected_login=use_session if _use_session is not None else None)
-        result.summary.update(context=context, sdk_response_accepted=True)
+        result.summary.update(context=context, sdk_response_accepted=True, sdk_auth_flow=auth_flow)
         if _use_session is None and _consume_auth and result.response is not None and result.response.result_code == 0:
             _consume_auth(binding=binding, sdk_data=data, netmarble_id=netmarble_id)
         return result
@@ -98,13 +100,14 @@ if __name__ == '__main__':
     parser.add_argument('--password-stdin', action='store_true')
     parser.add_argument('--read-server-list', action='store_true')
     parser.add_argument('--server-policy-byte', type=int)
+    parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid')
     args = parser.parse_args()
     try:
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
         result = run(args.email, selected_profile=args.profile, manifest_path=args.manifest,
             socks_port=args.socks_port, context=args.context, password=password,
-            read_server_list=args.read_server_list, server_policy_byte=args.server_policy_byte)
+            read_server_list=args.read_server_list, server_policy_byte=args.server_policy_byte, auth_flow=args.auth_flow)
         password = None
         print(json.dumps(result.summary))
     except (OSError, ValueError, RuntimeError, KeyError) as error:

@@ -31,7 +31,8 @@ def module(name, filename):
 
 
 def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
-        extra_number, context, region, server_id=None, selection=None, password='', server_list_only=False, _progress=None):
+        extra_number, context, region, server_id=None, selection=None, password='', server_list_only=False, auth_flow='nid', _progress=None):
+    if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
     if type(server_list_only) is not bool: raise ValueError('Explicit server-list-only policy required')
     if type(region) is not str or region not in SERVER_REGION_CODES: raise ValueError('Explicit server region required')
     if context != 'windows-sdk-initial-reset': raise ValueError('Explicit game Login context required')
@@ -40,7 +41,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
     if selection is not None and selection != 'lowest-valid-id': raise ValueError('Unsupported selection policy')
     if server_id is not None and (type(server_id) is not int or not 1 <= server_id <= 0xffffffff):
         raise ValueError('Invalid selected server ID')
-    state = dict(stage='source_validation', game_session_ready=False)
+    state = dict(stage='source_validation', game_session_ready=False, sdk_auth_flow=auth_flow)
     def phase(value):
         state['stage'] = value
         if _progress: _progress(value)
@@ -48,7 +49,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
         return _run(email, selected_profile=selected_profile, manifest_path=manifest_path,
             socks_port=socks_port, server_policy_byte=server_policy_byte, extra_number=extra_number,
             context=context, region=region, server_id=server_id, selection=selection, password=password,
-            server_list_only=server_list_only, state=state, phase=phase)
+            server_list_only=server_list_only, auth_flow=auth_flow, state=state, phase=phase)
     except (OSError, ValueError, RuntimeError, KeyError) as error:
         result = dict(state, status='selected_game_login_not_completed', error_type=type(error).__name__)
         for name, attribute in (('http_status', 'status'), ('sdk_error_code', 'sdk_code')):
@@ -62,7 +63,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
 
 
 def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
-         extra_number, context, region, server_id, selection, password, server_list_only, state, phase):
+         extra_number, context, region, server_id, selection, password, server_list_only, auth_flow, state, phase):
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     auth = {}
@@ -82,7 +83,7 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
     phase('lobby_preparation')
     lobby = module('game_login_lobby', 'probe-lobby-sdk-login.py').run(email,
         selected_profile=selected_profile, manifest_path=manifest_path, socks_port=socks_port,
-        context='sdk-without-nid-info', password=password, read_server_list=True,
+        context='sdk-without-nid-info', password=password, read_server_list=True, auth_flow=auth_flow,
         server_policy_byte=server_policy_byte, _progress=phase, _consume_auth=consume,
         _select_server=None if server_list_only else select_server,
         _use_session=None if server_list_only else use_session)
@@ -175,6 +176,7 @@ if __name__ == '__main__':
     choice.add_argument('--selection', choices=['lowest-valid-id'])
     parser.add_argument('--password-stdin', action='store_true')
     parser.add_argument('--server-list-only', action='store_true', help='Check region/state/country policy without a game connection')
+    parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid')
     args = parser.parse_args()
     try:
         extra_number = args.extra_number
@@ -186,7 +188,7 @@ if __name__ == '__main__':
         result = run(args.email, selected_profile=args.profile, manifest_path=args.manifest,
             socks_port=args.socks_port, server_policy_byte=args.server_policy_byte,
             extra_number=extra_number, context=args.context, region=args.region, server_id=args.server_id,
-            selection=args.selection, password=password, server_list_only=args.server_list_only,
+            selection=args.selection, password=password, server_list_only=args.server_list_only, auth_flow=args.auth_flow,
             _progress=lambda stage: print(json.dumps(dict(event='phase', stage=stage)), file=sys.stderr, flush=True))
         password = None
         print(json.dumps(result))
