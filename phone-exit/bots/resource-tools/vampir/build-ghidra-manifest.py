@@ -214,7 +214,14 @@ SEEDS=[
  ('CharacterSelect_PostManagerDerived48',0x145cb5ae0),
  ('CharacterSelect_PostManagerDerived58',0x145cb9e90),
  ('CharacterSelect_PostManagerDerived60',0x145cc64e0),
- ('CharacterSelect_PostManagerRecordLookup',0x145b03920)]
+ ('CharacterSelect_PostManagerRecordLookup',0x145b03920),
+ ('CharacterSelect_PostManagerPacketPrepare',0x145758a70),
+ ('CharacterSelect_PostManagerBaseApply',0x1455967f0),
+ ('OptionSet_Write',0x145730250),
+ ('OptionSet_Read',0x145735cf0),
+ ('OptionSet_Name',0x14576d910),
+ ('OptionSet_ArrayWrite',0x1456e6460),
+ ('OptionSet_ItemWrite',0x145787410)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
