@@ -162,7 +162,8 @@ SEEDS=[
  ('WorldMoveFinishResult_ArrayE8Resize',0x145784520),
  ('WorldMoveFinishResult_ArrayE8Read',0x145771940),
  ('WorldMoveFinishResult_ArrayE8NestedRead',0x1457989f0),
- ('WorldMoveFinishResult_ArrayE8Construct',0x14576efc0)]
+ ('WorldMoveFinishResult_ArrayE8Construct',0x14576efc0),
+ ('WorldFinishSupport_SpatialConstruct',0x145794d70)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

@@ -1,5 +1,14 @@
 # Vampir — общие компоненты и результаты
 
+## Ответ завершения перемещения ID206
+
+`world_move_finish_result.decode_world_move_finish_result` принимает тело ответа
+и обязательные `max_payload_size` / `max_collection_items`. Поддержаны все пять
+массивов, вложенные необязательные данные и строки. Лимит элементов общий.
+Результат неизменяемый, поля доступны по native-смещениям, данные скрыты из `repr`.
+Успешное чтение не означает принятие ответа или готовность сессии.
+[Источники, API и границы](../resource-tools/vampir/HEADLESS-WORLD-MOVE-FINISH-DECODER.md).
+
 ## Запрос завершения перемещения ID205
 
 `send_frame.encode_world_move_finish_frame_b(sequence, key_bits)` кодирует
