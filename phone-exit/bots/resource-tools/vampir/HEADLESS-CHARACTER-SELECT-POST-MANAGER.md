@@ -1,5 +1,9 @@
 # Продолжение ID110: отдельный менеджер и обход получателей
 
+Уточнение: [найдены производная factory и переопределение слота `+0x58`](HEADLESS-CHARACTER-SELECT-DERIVED-MANAGER.md).
+Сценарии ниже проверяют базовую таблицу и не описывают все эффекты производного
+менеджера. Динамический тип настоящей сессии ещё не подтверждён.
+
 20 октября 2026. Продолжение [обработчика выбора](HEADLESS-CHARACTER-SELECT-HANDLER.md).
 После применения данных ID110 обработчик получает отдельный singleton,
 сохраняет значение из ответа, вызывает его слот `+0x58`, затем обновляет
@@ -32,7 +36,7 @@ python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_headless_g
 ```
 
 Отчёт: `F:/PhoneExit Resources/Vampir/code-clues/character-select-post-manager-replay.json`.
-SHA256: `409073227c675e2aced17ef161116e01d9122737f44f85c5e5a77a07e1fb8b7f`.
+SHA256: `d5e60ad1f34c27accf1888e1f26aa3ab04354c1d3c1d21b9d3c8a07cd86c8afc`.
 Сохранены диапазоны и SHA кода, getter / таблица, данные чтения ID110,
 события, записи тестовых получателей и конечное состояние.
 Capstone 5.0.6 / Unicorn 2.1.4 остаются инструментами исследования вне runtime.

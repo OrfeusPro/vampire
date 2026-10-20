@@ -20,6 +20,11 @@ HANDLER = 0x14675e9a0
 
 
 class Emulator(base.Emulator):
+    expected_table = TABLE
+
+    def construct_manager(self):
+        self.invoke(CTOR, self.context + 0xa000)
+
     def __init__(self):
         self.defer_handler = False
         super().__init__()
@@ -100,10 +105,10 @@ class Emulator(base.Emulator):
         body = base.base.base.profile_body('', code)
         self.defer_handler = True
         prepared = self.execute(body, fixture)
-        self.invoke(CTOR, self.context + 0xa000)
+        self.construct_manager()
         if int.from_bytes(self.uc.mem_read(GLOBAL, 8), 'little') != self.context + 0xa000:
             raise ValueError('Constructor did not bind actual manager singleton')
-        if int.from_bytes(self.uc.mem_read(self.context + 0xa000, 8), 'little') != TABLE:
+        if int.from_bytes(self.uc.mem_read(self.context + 0xa000, 8), 'little') != self.expected_table:
             raise ValueError('Constructor did not install actual manager table')
         initial = bytes(self.uc.mem_read(self.context + 0xa050, 205 * 0x30))
         if any(initial[i * 0x30] != 205 or initial[i * 0x30 + 0x18:i * 0x30 + 0x1a] != b'\0\0'

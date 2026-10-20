@@ -205,7 +205,16 @@ SEEDS=[
  ('CharacterSelect_PostManagerConstruct',0x1455808c0),
  ('CharacterSelect_PostManagerSourceA',0x1455813c0),
  ('CharacterSelect_PostManagerSourceB',0x145587020),
- ('CharacterSelect_PostManagerVirtual58',0x1455910d0)]
+ ('CharacterSelect_PostManagerVirtual58',0x1455910d0),
+ ('CharacterSelect_PostManagerDerivedConstruct',0x145cadba0),
+ ('CharacterSelect_PostManagerDerived18',0x145cad8c0),
+ ('CharacterSelect_PostManagerDerived30',0x145ccab10),
+ ('CharacterSelect_PostManagerDerived38',0x145ccad50),
+ ('CharacterSelect_PostManagerDerived40',0x145cb9ce0),
+ ('CharacterSelect_PostManagerDerived48',0x145cb5ae0),
+ ('CharacterSelect_PostManagerDerived58',0x145cb9e90),
+ ('CharacterSelect_PostManagerDerived60',0x145cc64e0),
+ ('CharacterSelect_PostManagerRecordLookup',0x145b03920)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
