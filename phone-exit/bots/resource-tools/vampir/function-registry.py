@@ -51,6 +51,8 @@ def build():
             raise ValueError('Relocated document missing')
         if entry['topic'] != 'history':
             navigation_topics[str(path)] = entry['topic']
+    for path in (KNOWLEDGE / 'evidence').glob('*/*.md'):
+        navigation_topics[str(path.resolve())] = path.parent.name
     source_sha = report['source_sha256']
     if any(value != source_sha for value in (manifest['source_sha256'], roles['source_sha256'], questions['source_sha256'])):
         raise ValueError('Registry inputs belong to different client builds')

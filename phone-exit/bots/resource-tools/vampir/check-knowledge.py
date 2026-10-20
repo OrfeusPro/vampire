@@ -27,6 +27,10 @@ def build_topic_lists():
         if not target.is_file() or (workspace / row['old']).exists():
             raise ValueError('Migration source/destination invariant failed')
         groups.setdefault(row['topic'], []).append(target)
+    # The migration map preserves old locations; new evidence is discovered
+    # from its topic directory without inventing a historical source path.
+    for topic in groups:
+        groups[topic] = sorted(set(groups[topic]) | set((HERE / 'knowledge/evidence' / topic).glob('*.md')))
     for topic, paths in groups.items():
         page = HERE / 'knowledge/topics' / (topic + '.md')
         if not page.is_file():

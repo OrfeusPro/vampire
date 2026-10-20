@@ -30,6 +30,30 @@
       "evidence": "knowledge/evidence/auth/HEADLESS-NID-OWNER-FACTORY.md",
       "status": "bounded_native",
       "limits": "Проверены успешные allocations; начальные 37 полей пусты, последующее заполнение не проверено."
+    },
+    "0x1444eb1c0": {
+      "role": "FChannelManagerImpl::IsRunningOnLauncher",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
+      "status": "diagnostic_and_bounded_native",
+      "limits": "10 fixtures; auth helper и comparison global заданы явно, initializer и настоящий command line не исполнялись."
+    },
+    "0x1444dd8a0": {
+      "role": "FChannelManagerImpl::CreateLauncherCredential",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
+      "status": "diagnostic_and_static",
+      "limits": "Проверены записи полей и vtable; полный constructor, token parsing и SetCredential не исполнялись в новом replay."
+    },
+    "0x1444e8130": {
+      "role": "FAuthImpl::GetTokenByLauncher",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
+      "status": "diagnostic_and_static",
+      "limits": "Проверены endpoint и поля запроса по коду. HTTP и callback не исполнялись; полный ответ не установлен."
+    },
+    "0x1444fd270": {
+      "role": "FAuthImpl::SignInByLauncher",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
+      "status": "diagnostic_and_static",
+      "limits": "Проверены endpoint и отдельная token map. Её ключ, HTTP и callback пока не закрыты."
     }
   }
 }

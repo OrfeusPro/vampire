@@ -26,6 +26,10 @@ class FunctionRegistryTests(unittest.TestCase):
         self.assertIn('common-data-population', direct[0]['questions'])
         self.assertTrue(any('HEADLESS-NID-CREDENTIAL.md' in r['path'] for r in direct[0]['references']))
         self.assertTrue(module.query(saved, 'SendSignIn'))
+        launcher = module.query(saved, '1444eb1c0')[0]
+        self.assertIn('auth', launcher['navigation_topics'])
+        self.assertIn('launcher-auth-contract', launcher['questions'])
+        self.assertTrue(any('HEADLESS-LAUNCHER-AUTH-CONTEXT.md' in r['path'] for r in launcher['references']))
         self.assertEqual(module.query(saved, '0x1ffffffff'), [])
         self.assertEqual(module.query(saved, '0x140000000')[0]['address_kind'],
                          'documented_address_type_unverified')

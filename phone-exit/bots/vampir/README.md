@@ -12,6 +12,10 @@
 Официальный клиент через JP дошёл до Class Selection на Franz 2; персонаж
 не создан, пользователь закрыл игру. Это разные способы авторизации.
 
+У launcher-ветви подтверждены отдельный credential и два HTTP-вызова;
+условие выбора проверено локально. Точный ключ передачи токена и обработка
+ответов ещё открыты. [Разбор различий](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md).
+
 [Сводка по темам](../resource-tools/vampir/knowledge/TOPICS.md) отделяет рабочее,
 проверенное локально, статические связи и незавершённое. Актуальные вопросы:
 [questions.json](../resource-tools/vampir/knowledge/questions.json).

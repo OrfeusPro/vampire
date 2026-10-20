@@ -16,6 +16,11 @@ Metadata collector и writer разобраны в bounded сценариях: �
 
 ## Открыто
 
+У launcher credential подтверждён отдельный channelCode 200 и базовый GetObject;
+найдены запросы launcher/token и launcher/sign-in. Gate проверен на 10 native
+сценариях. Точный ключ передачи токена, ответы и маршрутизация ещё открыты.
+[Различия launcher и NID](../evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md).
+
 Источник первоначального заполнения common data, их значения перед Login,
 обязательность metadata на сервере и различие SDK-only / launcher context.
 Реальный отказ Game Login 16 не доказывает причину. Не расширять replay журнала
@@ -40,6 +45,7 @@ Credentials и локальные профили не переносить в д
 - [Игровой AutoSignIn: привязка callback и ветви результата](../evidence/auth/HEADLESS-GAME-AUTO-SIGN-IN.md)
 - [Game-instance ветвь success callback: Google PGS](../evidence/auth/HEADLESS-GAME-PGS-BRANCH.md)
 - [Game success: рассылка подписчикам и title interface slot+0x30](../evidence/auth/HEADLESS-GAME-SUCCESS-BROADCAST.md)
+- [Launcher-вход: отдельный credential и два HTTP-вызова](../evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md)
 - [UserInfo оказался FCommonLogData: создание и потребители](../evidence/auth/HEADLESS-NID-COMMON-LOG-DATA.md)
 - [После OnResult: Save, channel manager и credential SDK](../evidence/auth/HEADLESS-NID-CREDENTIAL.md)
 - [NID deviceKey отличается от SDK sign-in deviceKey](../evidence/auth/HEADLESS-NID-DEVICE-CONTEXT.md)

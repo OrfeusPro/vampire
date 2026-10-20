@@ -5,9 +5,9 @@
       "id": "login-invalid-state",
       "status": "open",
       "question": "Почему игровой Login бота возвращает 16, когда официальный клиент доходит до создания персонажа?",
-      "known": "SDK и лобби принимают вход. На ID 251 и 256 Game Version 0, Game Login 16. Franz2 в таблицах — 256, группа Franz — 253. Персонаж пользователем не создан.",
+      "known": "SDK и лобби принимают вход. На ID 251 и 256 Game Version 0, Game Login 16. Franz2 в таблицах — 256, группа Franz — 253. Персонаж пользователем не создан. Launcher credential использует channelCode 200 и base GetObject; NID credential использует 33 и отдельный token override. Найдены отдельные launcher HTTP methods; обязательность этой ветви не доказана.",
       "unknown": "Какое условие игрового сервера не выполнено; числовой код не доказывает конкретную причину.",
-      "next_action": "Сопоставить поля Login и источники SDK / launcher context по существующим данным. Новая сетевая попытка — после конкретного проверенного изменения.",
+      "next_action": "Установить ключ map 0x14b4f0a70, ответы launcher/token и launcher/sign-in, затем выбор SDK-маршрута. Только после подтверждённого изменения контекста повторить игровой вход.",
       "decision_rule": "Повторять вход только если найдено конкретное отличие поля или порядка обмена с доказанным источником. Одинаковый отказ сам по себе не основание для новой попытки.",
       "do_not_repeat": "Повторять те же credentials/context/server без изменения условий; считать JP-выход доказательством совпадения устройства или адреса.",
       "addresses": [
@@ -16,7 +16,8 @@
       ],
       "evidence": [
         "evidence/network/HEADLESS-FRANZ2-LOGIN.md",
-        "evidence/network/HEADLESS-OFFICIAL-CLIENT-JP.md"
+        "evidence/network/HEADLESS-OFFICIAL-CLIENT-JP.md",
+        "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md"
       ]
     },
     {
@@ -74,6 +75,26 @@
       "evidence": [
         "evidence/auth/HEADLESS-SDK-SIGN-IN-LOG.md",
         "evidence/auth/HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md"
+      ]
+    },
+    {
+      "id": "launcher-auth-contract",
+      "status": "open",
+      "question": "Как launcher-контекст превращается в SDK-сессию и влияет ли он на игровой Login?",
+      "known": "Gate 0x1444eb1c0 проверен на 10 native fixtures. Credential имеет channelCode 200, token +0x58 и base GetObject. Найдены отдельные launcher/token и launcher/sign-in.",
+      "unknown": "Ключ token map 0x14b4f0a70, маршрутизация методов, callbacks и влияние на игровой Login.",
+      "next_action": "Сначала найти initializer ключа; затем разобрать callbacks 0x1444d8510 / 0x1444d8600 и callers launcher методов через реестр и Ghidra.",
+      "decision_rule": "До новой сетевой попытки доказать источник и назначение launcher-токена, схему запроса и передачу результата в SDK. Один channelCode не заменяет эту цепочку.",
+      "do_not_repeat": "Не повторять gate и не заменять NID channelCode 33 на 200 без полного контракта. Не читать реальные launch arguments ради статического вопроса.",
+      "addresses": [
+        "0x1444eb1c0",
+        "0x1444dd8a0",
+        "0x1444e8130",
+        "0x1444fd270"
+      ],
+      "evidence": [
+        "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
+        "evidence/auth/HEADLESS-NID-CREDENTIAL.md"
       ]
     }
   ]

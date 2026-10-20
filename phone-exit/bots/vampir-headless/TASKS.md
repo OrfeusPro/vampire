@@ -22,6 +22,10 @@
 остаётся отдельным unknown; обязательность metadata на сервере не доказана.
 Не расширять log replay без связи с недостающим полем или записью common data.
 
+Проверено различие launcher credential / NID credential и launcher gate.
+Следом — ключ передачи launcher-токена, callbacks и выбор способа SDK-входа:
+[разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md).
+
 ## Как не повторять исследования
 
 Перед новым разбором искать VA/имя в реестре и читать вопрос / decision_rule.
