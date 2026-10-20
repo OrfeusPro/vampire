@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Новый ответ Login 16 / InvalidState, 20 октября
+
+После сообщённой замены телефонов на прежнем аккаунте / JP 251 получен
+Version 0 / Login 16. Полный native mapper связал код с InvalidState;
+runtime label и закрытие без запроса персонажей проверены. 13 проверок прошли.
+[Источники, SHA и границы](HEADLESS-RESULT-ERROR-16.md).
+
 ## Локальный адрес соединения в Version, 20 октября
 
 Пять native-сценариев настоящего endpoint getter до Version; SOCKS bound

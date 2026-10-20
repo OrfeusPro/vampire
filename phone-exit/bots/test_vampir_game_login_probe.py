@@ -58,6 +58,16 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertEqual(result['login_error_message'], 'Доступ с этого IP ограничен сервером.')
         self.assertFalse(result['character_list_sent'])
 
+    def test_invalid_state_is_reported_without_retry_or_character_request(self):
+        body = struct.pack('<I', 16) + bytes.fromhex(FIXTURE['login_result_hex'])[4:]
+        result, captures = self.attempt(login_body=body)
+        self.assertEqual(captures, [(1, 0), (3, 1)])
+        self.assertEqual(result['login_result_code'], 16)
+        self.assertEqual(result['login_result_key'], 'InvalidState')
+        self.assertEqual(result['login_error_message'], 'Недопустимое состояние при входе.')
+        self.assertFalse(result['character_list_sent'])
+        self.assertFalse(result['game_session_ready'])
+
     def test_version_refusal_never_sends_login(self):
         result, captures = self.attempt(version_body=struct.pack('<I', 23456) + RESULT[4:], wait_for_login=False)
         self.assertEqual(captures, [(1, 0)])

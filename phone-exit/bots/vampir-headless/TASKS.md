@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-error-16: после замены выходов получен InvalidState
+
+Свежие SDK / lobby / ID 104 приняты, прежний HK-аккаунт на JP 251 получил
+Version 0 / Login 16 вместо 58. Native mapper подтвердил InvalidState;
+добавлена русская ошибка, 13 проверок прошли. Новая почта и профиль устройства
+не создавались. Сокеты / JP-транспорт закрыты. Далее — полный SDK / player
+state и контекст Login до успешного входа, списка / выбора персонажа и позиции.
+[Источники и границы](../resource-tools/vampir/HEADLESS-RESULT-ERROR-16.md).
+
 ## H04-connected-address: proxy hop отделён от игрового endpoint
 
 Настоящий local endpoint getter → callback → Version проверены в пяти
