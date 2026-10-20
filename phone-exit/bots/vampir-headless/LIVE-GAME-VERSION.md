@@ -43,7 +43,7 @@ EXE SHA256:
   HTTP 200, 13 777 байт.
 
 Имена каталогов — SHA256 manifest. Источник полей endpoint и ограничения
-selector описаны в [связи записи лобби с игровым адресом](../resource-tools/vampir/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
+selector описаны в [связи записи лобби с игровым адресом](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
 Схема Version и обработка ключа — в [предыдущем исследовании](VERSION-PROBE.md).
 В этой проверке использован игровой адрес из ID 104, поэтому старый timeout
 игрового Version на адресе CDN-лобби к этому результату не относится.

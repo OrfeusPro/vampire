@@ -103,7 +103,7 @@ Adrenaline Gauge. 1.0.1 добавила обработчик этой подс�
 
 Найдены ссылки собранного клиента на таблицы Quest.csv, QuestTask.csv,
 TutorialStep.csv и TutorialUI.csv и поля связей с контролами:
-[CODE-CLUES.md](resource-tools/vampir/CODE-CLUES.md).
+[CODE-CLUES.md](resource-tools/vampir/knowledge/evidence/tools/CODE-CLUES.md).
 Полный автономный квестовый прогон, автозапуск после закрытия игры и часовая
 проверка пока не выполнены. Кадры и хеши: библиотека `phone-tests/index.json`.
 
@@ -121,7 +121,7 @@ TutorialStep.csv и TutorialUI.csv и поля связей с контрола�
 Координаты задач извлечены; преобразование на экран Android не проверено.
 
 Полные источники, ограничения, проверки и схема:
-[QUEST-DEPENDENCIES.md](resource-tools/vampir/QUEST-DEPENDENCIES.md).
+[QUEST-DEPENDENCIES.md](resource-tools/vampir/knowledge/evidence/scenarios/QUEST-DEPENDENCIES.md).
 Граф хранится в библиотеке на F:, не в пакете бота. Текущая версия 1.0.3
 ещё использует шаблонный сценарий, а не найденные таблицы.
 
@@ -133,7 +133,7 @@ TutorialStep.csv и TutorialUI.csv и поля связей с контрола�
 значения повторно сверены с байтами дескрипторов и SHA256 EXE.
 QuestTask 901030010 подтверждён как NpcShopBuy; соединены категория 3,
 вкладка 5 и восемь товаров с ценами/условиями. ContentsLockKeyword=76 пока
-не разрешён. Полный источник — resource-tools/vampir/NATIVE-SEMANTICS.md.
+не разрешён. Полный источник — resource-tools/vampir/knowledge/evidence/game-data/NATIVE-SEMANTICS.md.
 
 Геометрия: 2013 Canvas + 2050 других слотов; для 1945 родителей найден
 уникальный исходный массив из 4063 ссылок. Неподтверждённые классы и SafeZone
@@ -721,7 +721,7 @@ Pixel пока offline. Повтор покупки не отправлялся,
 maps/atlas/. Сверены SHA17CSV/1422PNG/EXE/Nocturne. Добавлены генератор,
 запросы --world/--spot/--quest, локальный просмотрщик и 9 тестов (пройдены).
 91 проблема источников сохранена, включая отсутствующие тестовые миры/Map3
-и 5 несовпадений регистра ресурса. [MAP-ATLAS.md](resource-tools/vampir/MAP-ATLAS.md).
+и 5 несовпадений регистра ресурса. [MAP-ATLAS.md](resource-tools/vampir/knowledge/evidence/maps/MAP-ATLAS.md).
 Координатные слои пока отдельно от текстур; navigation_ready=false.
 Проверка управляющего API17842: connection refused; доступность самого Pixel 5
 не установлена. Нажатий/публикаций/новой установки не выполняли.

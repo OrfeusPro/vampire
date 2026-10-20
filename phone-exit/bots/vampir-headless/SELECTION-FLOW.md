@@ -75,10 +75,10 @@ Source SHA256 клиента:
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Источники полей и wire-формата:
 
-- [Запрос списка через WaitingEndNotify](../resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
-- [Полный ID102 и обработчик](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
-- [RawF0, выбор по индексу и native-кадры](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md).
-- [Полный ID110](../resource-tools/vampir/HEADLESS-CHARACTER-SELECT-DECODER.md).
+- [Запрос списка через WaitingEndNotify](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+- [Полный ID102 и обработчик](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-LIST-EXTENSIONS.md).
+- [RawF0, выбор по индексу и native-кадры](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-SEND.md).
+- [Полный ID110](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-DECODER.md).
 
 В `phone-exit/bots/fixtures/vampir-selection-flow.json` сохранены 19 кадров
 из `character-select-send-replay.json` и минимальное полное тело ID110 из

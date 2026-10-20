@@ -13,10 +13,10 @@
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Пути установлены по коду клиента:
 
-- [DeviceKey / NMDeviceKey](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
-- [Отдельный NID key](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md).
-- [Связь NMDeviceKey с Version / Login](../resource-tools/vampir/HEADLESS-VERSION-DEVICE-INPUT.md).
-- [GameCode и SDKZone](../resource-tools/vampir/HEADLESS-SDK-SETTINGS.md).
+- [DeviceKey / NMDeviceKey](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-IDENTITY.md).
+- [Отдельный NID key](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-DEVICE-CONTEXT.md).
+- [Связь NMDeviceKey с Version / Login](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-DEVICE-INPUT.md).
+- [GameCode и SDKZone](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SETTINGS.md).
 
 | HKCU path | Value | Результат наблюдения |
 | --- | --- | --- |

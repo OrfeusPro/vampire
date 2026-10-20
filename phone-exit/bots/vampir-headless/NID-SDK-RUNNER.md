@@ -2,7 +2,7 @@
 
 Windows osVersion теперь заполняется наблюдением GetVersionExW собственного
 процесса бота. Отказ API сохраняет пустое поле. Повторный SDK SignIn через HK
-с заполненным значением успешен. [Источник и границы](../resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
+с заполненным значением успешен. [Источник и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
 
 Актуальный результат 20 октября: отдельный аккаунт зарегистрирован через HK;
 его SDK SignUp и SignIn приняты, получены player ID и SDK token.
@@ -19,7 +19,7 @@ GMC2 перед ним нужно заново получить через то�
 создание вместо входа; без автоматического fallback или последующего SignIn.
 Две попытки получили HTTP 400 / 1602, `not allowed country for game`.
 Создание SDK-игрока и игровая сессия не подтверждены.
-[Источники, countryCode и проверки](../resource-tools/vampir/HEADLESS-SDK-SIGN-UP.md).
+[Источники, countryCode и проверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-UP.md).
 
 20 октября 2026. Добавлен `run-nid-sdk-sign-in.py`: проверка источников и
 локального устройства → окно NID → один SDK sign-in с результатом окна.

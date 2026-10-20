@@ -70,7 +70,7 @@ pipe. Watchdog ограничивает время host и завершает т
 
 Происхождение NID URL, ключей устройства и SDK endpoint сохранено
 в [описании окна](NID-BROWSER.md), [Windows identity](WINDOWS-IDENTITY.md)
-и [SDK SignUp](../resource-tools/vampir/HEADLESS-SDK-SIGN-UP.md).
+и [SDK SignUp](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-UP.md).
 Новые привязки контролов проверены на актуальных штатных страницах,
 показанных собственным WebView2 через HK.
 

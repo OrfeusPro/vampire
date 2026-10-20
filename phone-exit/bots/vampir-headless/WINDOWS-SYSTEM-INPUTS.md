@@ -9,8 +9,8 @@ DLL и Python reader, наблюдены реальные vendor / brand и по
 
 Порядок CPUID и формат строк установлены по собранному клиенту SHA256
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
-Сначала использованы уже проверенные [initializer / getters](../resource-tools/vampir/HEADLESS-GAME-LOGIN-INPUTS.md)
-и [полная CPU-цепочка / binding](../resource-tools/vampir/HEADLESS-VERSION-CPU-STRING.md).
+Сначала использованы уже проверенные [initializer / getters](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GAME-LOGIN-INPUTS.md)
+и [полная CPU-цепочка / binding](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-CPU-STRING.md).
 DLL не содержит игровой код и не загружает его: это собственная реализация
 простого чтения CPUID с установленным порядком регистров.
 

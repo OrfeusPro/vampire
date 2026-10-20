@@ -16,7 +16,7 @@ SDK SignUp / SignIn. [Запуск и ограничения](NID-REGISTRATION.m
 Адаптер: `nid-browser.py`, host: `windows/nid-browser.ps1` / `nid-browser.cs`.
 `capture_nid_credential(plan, expected_game_code=..., data_directory=...,
 timeout=300, expected_email='', sign_in_password='')` принимает `NidWebUrl` из
-[проверенного builder](../resource-tools/vampir/HEADLESS-NID-WEB-URL.md).
+[проверенного builder](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-WEB-URL.md).
 Поддерживается первоначальный signin с webViewType=sdk и ожидаемым gameCode.
 Подмена host, game scope и режима отклоняется до запуска окна.
 Необязательный expected_email показывается как подсказка пользователю;

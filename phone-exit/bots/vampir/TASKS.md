@@ -22,32 +22,32 @@ H03a: native Ping body IO и переносимый stdlib codec готовы в
 send/receive H03b; подробности в задачах сетевого бота и FUNCTION-INDEX.
 
 H03b.2b-block: общий bounded decoder, 166 valid / 86 invalid native cases,
-статическая связь второго listener stage; [доказательства](../resource-tools/vampir/HEADLESS-BLOCK-DECODE.md).
+статическая связь второго listener stage; [доказательства](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-BLOCK-DECODE.md).
 Полный receive/CRC/send queue/auth остаются в задачах сетевого бота.
 
 H03b.2b-listener: второй native receive loop (44 cases/5 tests), общий
 receive-A extractor. Container lifecycle fixtures/final capture; Dispatch/CRC ещё
-не проверены. [Доказательства](../resource-tools/vampir/HEADLESS-LISTENER-LOOP.md).
+не проверены. [Доказательства](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LISTENER-LOOP.md).
 
 H03b.2b-dispatch: 24 native cases/4 tests до PingResult OnHandler entry,
 wrapper 8→10 и cleanup доказаны; body capture/registry fixtures.
-[Доказательства](../resource-tools/vampir/HEADLESS-DISPATCH.md). Receive-B/CRC/auth остаются.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-DISPATCH.md). Receive-B/CRC/auth остаются.
 
 H03b.2b-receiveB: 39 native cases/4 tests, keyed XOR→ID bookkeeping→Dispatch;
 remove до reader, без CRC в исследованном B пути. Полная сессия ещё не готова.
-[Доказательства](../resource-tools/vampir/HEADLESS-RECEIVE-B.md).
+[Доказательства](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RECEIVE-B.md).
 
 H03b.2b-sendB: 40 native cases/5 tests, Ping/KeyChanged и synchronous queue copy;
 общие encoders/byte-frame bounded queue. Drain/socket/auth ещё не готовы.
-[Доказательства](../resource-tools/vampir/HEADLESS-SEND-B.md).
+[Доказательства](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SEND-B.md).
 
 H03b.2b-drain: 61 native cases/5 tests, queue→Winsock send/partial handling;
 portable pump прошёл real IPv4 loopback TCP. Connect/auth/session ещё не готовы.
-[Доказательства](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md).
+[Доказательства](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SEND-DRAIN.md).
 
 H04a: 24 SDK symbols/34 LEA/24 roots, 512 native escape calls, offline auth plans;
 H04 остаётся partial: config/browser/response/game session не готовы.
-[Доказательства](../resource-tools/vampir/HEADLESS-AUTH.md).
+[Доказательства](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-AUTH.md).
 
 ## Текущий приоритет экранного бота: первоначальный запуск
 
@@ -407,16 +407,16 @@ scene/overlay SHA и 4deployedfiles. Все ID=0,61 пара endpoints отли�
 | ID | Работа | Статус | Результат / что осталось | Где смотреть |
 |---|---|---|---|---|
 | V01 | Индекс ресурсов и происхождение | Готово | Индексы архивов, CSV, изображений; пути, SHA и процедура повторного извлечения | [RESOURCE-INDEX.md](../resource-tools/vampir/RESOURCE-INDEX.md) |
-| V02 | Цепочка квестов и обучения | Готово | Справочник: 1353 квеста, 5944 задачи, 3892 действия, 139 учебных шагов, 94 UI-ключа; это данные, не готовое прохождение | [QUEST-DEPENDENCIES.md](../resource-tools/vampir/QUEST-DEPENDENCIES.md), quest-runtime.json |
-| V03 | Награды и блокировки | Частично | Награды и ссылки соединены; найден клиентский dispatch и обычный AND с ранними исключениями. Остались gate/состояния, источники разрешений, вызовы и Android | [CONTENTS-LOCKS.md](../resource-tools/vampir/CONTENTS-LOCKS.md), [CONDITION-PREDICATE.md](../resource-tools/vampir/CONDITION-PREDICATE.md) |
-| V04 | Нативные типы и связи | Частично | Enum и часть дескрипторов подтверждены в EXE; продолжить поиск обработчиков и условий | [NATIVE-SEMANTICS.md](../resource-tools/vampir/NATIVE-SEMANTICS.md) |
-| V05 | Каталог окон, попапов и элементов | Готово | 1764 ресурсных пути, 363 пути попапов; контролы и происхождение. Наличие в каталоге не означает поддержку ботом | [UI-CATALOG.md](../resource-tools/vampir/UI-CATALOG.md) |
-| V06 | Геометрия интерфейса | Частично | Слоты, родители, SizeBox, ScaleBox и пресеты найдены; абсолютные зоны кликов, DPI, SafeZone и видимость ещё не подтверждены | [UI-SCALE.md](../resource-tools/vampir/UI-SCALE.md) |
-| V07 | Вход по макетам клиента | Частично | 10 окон / 20 вариантов; ссылка TitleUI → TitlePanelUI подтверждена свойством UserWidget в двух архивах. Остались кадры Android, сервер/персонаж и переходы; launch_buttons пуст | [ENTRY-FLOW.md](../resource-tools/vampir/ENTRY-FLOW.md) |
-| V08 | Исполнение квестов и обучения | Частично | 18 учебных действий; часть Bloodshape проверена на телефоне. Нужен полный проход цепочки с распознаванием текущего этапа | [RUNTIME-CHAIN.md](../resource-tools/vampir/RUNTIME-CHAIN.md), quests.py |
-| V09 | Магазинный Guide 901030 | Частично | Обработчик, сверка источников и журнал покупки готовы локально; успешная покупка, результат и награда на Android не подтверждены | shop.py, [SHOP-REPLAY.md](../resource-tools/vampir/SHOP-REPLAY.md) |
-| V10 | Окна сообщений | Частично | KICKOUT_FOR_INSPECT связан с точным текстовым ключом и паузой; конкретный вызываемый WBP и прочие попапы ещё связывать | ui-window-reference.json, [UI-CATALOG.md](../resource-tools/vampir/UI-CATALOG.md) |
-| V11 | Устойчивость на сохранённых кадрах | Готово | Последний целевой прогон: 180 тестов; магазин: 32/32 сценария, масштабы, сдвиг, неверная сумма, повтор и перезапуск | [SHOP-REPLAY.md](../resource-tools/vampir/SHOP-REPLAY.md) |
+| V02 | Цепочка квестов и обучения | Готово | Справочник: 1353 квеста, 5944 задачи, 3892 действия, 139 учебных шагов, 94 UI-ключа; это данные, не готовое прохождение | [QUEST-DEPENDENCIES.md](../resource-tools/vampir/knowledge/evidence/scenarios/QUEST-DEPENDENCIES.md), quest-runtime.json |
+| V03 | Награды и блокировки | Частично | Награды и ссылки соединены; найден клиентский dispatch и обычный AND с ранними исключениями. Остались gate/состояния, источники разрешений, вызовы и Android | [CONTENTS-LOCKS.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONTENTS-LOCKS.md), [CONDITION-PREDICATE.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-PREDICATE.md) |
+| V04 | Нативные типы и связи | Частично | Enum и часть дескрипторов подтверждены в EXE; продолжить поиск обработчиков и условий | [NATIVE-SEMANTICS.md](../resource-tools/vampir/knowledge/evidence/game-data/NATIVE-SEMANTICS.md) |
+| V05 | Каталог окон, попапов и элементов | Готово | 1764 ресурсных пути, 363 пути попапов; контролы и происхождение. Наличие в каталоге не означает поддержку ботом | [UI-CATALOG.md](../resource-tools/vampir/knowledge/evidence/interface/UI-CATALOG.md) |
+| V06 | Геометрия интерфейса | Частично | Слоты, родители, SizeBox, ScaleBox и пресеты найдены; абсолютные зоны кликов, DPI, SafeZone и видимость ещё не подтверждены | [UI-SCALE.md](../resource-tools/vampir/knowledge/evidence/interface/UI-SCALE.md) |
+| V07 | Вход по макетам клиента | Частично | 10 окон / 20 вариантов; ссылка TitleUI → TitlePanelUI подтверждена свойством UserWidget в двух архивах. Остались кадры Android, сервер/персонаж и переходы; launch_buttons пуст | [ENTRY-FLOW.md](../resource-tools/vampir/knowledge/evidence/interface/ENTRY-FLOW.md) |
+| V08 | Исполнение квестов и обучения | Частично | 18 учебных действий; часть Bloodshape проверена на телефоне. Нужен полный проход цепочки с распознаванием текущего этапа | [RUNTIME-CHAIN.md](../resource-tools/vampir/knowledge/evidence/scenarios/RUNTIME-CHAIN.md), quests.py |
+| V09 | Магазинный Guide 901030 | Частично | Обработчик, сверка источников и журнал покупки готовы локально; успешная покупка, результат и награда на Android не подтверждены | shop.py, [SHOP-REPLAY.md](../resource-tools/vampir/knowledge/evidence/scenarios/SHOP-REPLAY.md) |
+| V10 | Окна сообщений | Частично | KICKOUT_FOR_INSPECT связан с точным текстовым ключом и паузой; конкретный вызываемый WBP и прочие попапы ещё связывать | ui-window-reference.json, [UI-CATALOG.md](../resource-tools/vampir/knowledge/evidence/interface/UI-CATALOG.md) |
+| V11 | Устойчивость на сохранённых кадрах | Готово | Последний целевой прогон: 180 тестов; магазин: 32/32 сценария, масштабы, сдвиг, неверная сумма, повтор и перезапуск | [SHOP-REPLAY.md](../resource-tools/vampir/knowledge/evidence/scenarios/SHOP-REPLAY.md) |
 | V12 | Сборка локального модуля 1.0.8 | Готово | Подписанный ZIP собран, основные файлы сверены с рабочими; публикации и установки нет | phone-exit/.tools/bot-release/vampir-1.0.8.zip |
 | V13 | Карты и точки | Частично | 17.10: атлас 254 миров/154 настроек/588 точек/61307 размещений NPC; Nocturne36 контекстов/24071 отметка, исправлен zoom, карточки NPC/предметов/дропа/навыков. Native-словарь 40 FireCondition, 43 явно неизвестен; 66 тестов. Остались runtime-условия/время/урон, эффекты предметов, остальные карты, свежий Android и маршруты; MAP-ATLAS.md/NPC-LOOT.md | [RESOURCE-INDEX.md](../resource-tools/vampir/RESOURCE-INDEX.md), библиотека maps/ |
 
@@ -430,8 +430,8 @@ scene/overlay SHA и 4deployedfiles. Все ID=0,61 пара endpoints отли�
 | V17 | Длительная автономность и восстановление | Осталось | Проверены потеря связи, выключенный ПК, перезапуск, отмена, настройки, неизвестный результат действия и длительная работа |
 | V18 | Выпуск следующего проверенного пакета | Осталось | Пройдены необходимые проверки, зафиксированы ограничения, пакет опубликован и версия на телефоне подтверждена |
 | V19 | Ссылки отложенных вложенных панелей | Готово | Проверены 958 экспортов: 957 явных ссылок, одно свойство не задано явно, 0 ошибок; хвосты экспортов не интерпретируются. Отчёт ui-geometry/deferred-panels.json, генератор decode-deferred-panels.py; 11 тестов декодера и защиты связей |
-| V20 | Нативные ветви входа | Частично | Проверены 16 ссылок на диагностику, 13 фрагментов шести корней с unwind-цепочками, пять проверок/ветвей. Кнопки связаны в V21; остаются имена Sequence, функции проверок, окна и Android. [NATIVE-ENTRY.md](../resource-tools/vampir/NATIVE-ENTRY.md) |
-| V21 | Кнопки титульной панели → нативные поля и сравнения | Готово | 11 именованных кнопок из двух макетов связаны с полями и 12 сравнениями; подтверждены смещение подобъекта и слот таблицы методов. Полный путь события, видимость и Android не входят в эту проверку. [ENTRY-BUTTONS.md](../resource-tools/vampir/ENTRY-BUTTONS.md) |
+| V20 | Нативные ветви входа | Частично | Проверены 16 ссылок на диагностику, 13 фрагментов шести корней с unwind-цепочками, пять проверок/ветвей. Кнопки связаны в V21; остаются имена Sequence, функции проверок, окна и Android. [NATIVE-ENTRY.md](../resource-tools/vampir/knowledge/evidence/interface/NATIVE-ENTRY.md) |
+| V21 | Кнопки титульной панели → нативные поля и сравнения | Готово | 11 именованных кнопок из двух макетов связаны с полями и 12 сравнениями; подтверждены смещение подобъекта и слот таблицы методов. Полный путь события, видимость и Android не входят в эту проверку. [ENTRY-BUTTONS.md](../resource-tools/vampir/knowledge/evidence/interface/ENTRY-BUTTONS.md) |
 
 16 октября 2026 пользователь разрешил первый живой прогон. На Pixel 5 · JP
 подтверждены установка 1.0.8 и применённая редакция 2. Бот распознал оставшееся
@@ -444,22 +444,22 @@ scene/overlay SHA и 4deployedfiles. Все ID=0,61 пара endpoints отли�
 
 | ID | Работа | Статус | Результат / осталось |
 |---|---|---|---|
-| V22 | Индекс ссылок кода на окна | Частично | 1203 проверенные ссылки на 942 макета, включая 279 путей попапов; query-native-ui.py с SHA-проверкой. 38 кандидатов в 11 корнях требуют CFG-разбора; вызовы загрузчика/видимость ещё не доказаны. [NATIVE-UI-LINKS.md](../resource-tools/vampir/NATIVE-UI-LINKS.md) |
-| V23 | Получение и показ входных окон | Частично | Шесть ссылок на пять окон, 12 прямых вызовов; сохранены проверки UI-менеджера и два accessor глобальных флагов. Остались контракты проверок, виртуальные пути, Sequence и Android. [ENTRY-WINDOWS.md](../resource-tools/vampir/ENTRY-WINDOWS.md) |
-| V24 | Семантика UI-проверки перед показом | Частично | Найдены удаление, dispatch/очистка очереди, отдельный reset и синхронный путь завершения; callbacks идут до изменения state, вторая очередь может запустить новый переход. Десять корней, 24 фрагмента + leaf, 1523 инструкции. Остались обычный триггер завершения, reentrancy, контракт отмены, виртуальные методы и Android. [UI-MANAGER.md](../resource-tools/vampir/UI-MANAGER.md) |
-| V25 | Обычный переход и easing callback | Частично | Tick→update→завершение→callback связан по слотам; найдены повторный запуск и пять прямых callers stop. Очистка callback отделена от выполнения. WBP_FaderUI связан в V26; остались reset→stop, имена флагов, reentrancy и Android. [UI-TRANSITION.md](../resource-tools/vampir/UI-TRANSITION.md) |
-| V26 | Fader: cooked superclass → native class → методы | Готово | В четырёх вариантах прочитаны superclass imports; Fader/Media различены. Регистрация NkFaderUI связана с инициализатором и vtable слотов настройки/сброса. Только Windows; Android/видимость/reset→stop остаются в V25. [FADER-CLASS.md](../resource-tools/vampir/FADER-CLASS.md) |
-| V27 | Native-имена типов ContentsLockCondition | Готово | Карта 11 типов извлечена из инициализации конвертера и связана с 330 CSV-условиями; имена включены в runtime referenceRevision3 с проверкой хешей/строк. Type1=CompletedQuest. Это имена/схема хранения; evaluator, сравнения, AND/OR и Android остаются в V03. [CONDITION-TYPES.md](../resource-tools/vampir/CONDITION-TYPES.md) |
-| V28 | Загрузка нативных условий | Частично | Проверены шаг записи 56, подобъект+8, пять именованных полей и пять пустых post-load методов; 22 опорные инструкции, три фрагмента. Подтверждено построение индекса GroupId → массив указателей условий, второй контейнер manager+0x60. Evaluator и AND/OR не найдены. Следующий шаг — потребители массивов групп. [CONDITION-TYPES.md](../resource-tools/vampir/CONDITION-TYPES.md) |
-| V29 | Клиентский предикат условий и групп | Частично | Найдены dispatch11 типов, 30 опорных инструкций и обычный AND с коротким замыканием. ForcedLock проверяется до разрешений; сохранены ранние true-ветви и gate. Helper завершения квестов зависит от состояния. Проверки Android/полей ContentsLock/вызывающих мест остаются. [CONDITION-PREDICATE.md](../resource-tools/vampir/CONDITION-PREDICATE.md) |
-| V30 | Поля ContentsLock и соединение со справочником | Готово | Пять полей связаны загрузчиком, 18 опорных инструкций, 24 фрагмента и 5 прямых вызовов; все 269 SaveType=2. referenceRevision4 хранит клиентский путь отдельно от evaluator. Источники состояния/назначение callers и Android остаются в V03. [CONTENTS-LOCK-FIELDS.md](../resource-tools/vampir/CONTENTS-LOCK-FIELDS.md) |
-| V31 | Обновление контекста блокировок | Частично |32 опорные инструкции, 15 фрагментов: сброс флагов/уровней, входной список, readiness и refresh перед пересчётом. При закрытом gate старые уровни не обнуляются. Источник массива/таблица gate продолжены в V32/V33. Остались события setter, регистрация OnHandler, getters и Android. [CONDITION-STATE.md](../resource-tools/vampir/CONDITION-STATE.md) |
-| V32 | Именованные результаты разблокировки → update | Готово | Два точных OnHandler-литерала, 21 опорная инструкция, 2 обработчика и 2 tail-wrapper: полная замена и добавление ID. Регистрация/guard/сериализация не входят в подтверждённый путь. [UNLOCK-RESULTS.md](../resource-tools/vampir/UNLOCK-RESULTS.md) |
-| V33 | Инициализация и изменение готовности типов | Частично |37 опорных инструкций, 4 фрагмента и getter: reset 0..10 (true только 10), общий setter и EnterArea. Готовность не равна выполнению; Семь прямых событий связаны в V34; другие пути/callback и Android остаются. [CONDITION-GATE.md](../resource-tools/vampir/CONDITION-GATE.md) |
-| V34 | Регистрация unlock-handler и события готовности | Частично |29 опорных инструкций: 2 регистрации в PacketDispatcher, packet-vtable/ID, 7 прямых setter-вызовов. Имена CharacterSelect/Engraving подтверждены. Полная принимающая диспетчеризация, guard и 3 неизвестных корня ещё не связаны. [UNLOCK-REGISTRATION.md](../resource-tools/vampir/UNLOCK-REGISTRATION.md) |
-| V35 | Guard результата и сообщения из ресурсов | Частично |25 опорных инструкций, 252 инструкции кода отдельно от compact table 227; обычные 0/4503 и специальный режим различены. 5 ключей EXE→CSV405 связаны, UI-ограничения сохранены. Остались WBP, полные side effects и принимающая диспетчеризация. [PACKET-RESULT-GUARD.md](../resource-tools/vampir/PACKET-RESULT-GUARD.md) |
-| V36 | Общий error-path → SystemMessageUI | Частично |17 опорных инструкций, 7 литералов, 11 фрагментов, 4 cooked-варианта; superclass/vtable/TextMessage+0xa00 и фон связаны. Отдельный справочник без привязки KICKOUT; 176 тестов прошли. Абсолютная геометрия/анимация/Android и принимающая диспетчеризация остаются. [SYSTEM-MESSAGE-UI.md](../resource-tools/vampir/SYSTEM-MESSAGE-UI.md) |
-| V37 | Именованное содержимое TextMessage | Частично | Native Name/Content→NamedSlotBinding→NamedSlotBindings связаны; 2 cooked-префикса NamedSlotContent→TextMessage и обратный Slot6 проверены. Индекс 59 схемы класса ещё кандидат, хвост opaque, топология/геометрия не включены. 180 тестов прошли. [MESSAGE-NAMED-SLOT.md](../resource-tools/vampir/MESSAGE-NAMED-SLOT.md) |
+| V22 | Индекс ссылок кода на окна | Частично | 1203 проверенные ссылки на 942 макета, включая 279 путей попапов; query-native-ui.py с SHA-проверкой. 38 кандидатов в 11 корнях требуют CFG-разбора; вызовы загрузчика/видимость ещё не доказаны. [NATIVE-UI-LINKS.md](../resource-tools/vampir/knowledge/evidence/interface/NATIVE-UI-LINKS.md) |
+| V23 | Получение и показ входных окон | Частично | Шесть ссылок на пять окон, 12 прямых вызовов; сохранены проверки UI-менеджера и два accessor глобальных флагов. Остались контракты проверок, виртуальные пути, Sequence и Android. [ENTRY-WINDOWS.md](../resource-tools/vampir/knowledge/evidence/interface/ENTRY-WINDOWS.md) |
+| V24 | Семантика UI-проверки перед показом | Частично | Найдены удаление, dispatch/очистка очереди, отдельный reset и синхронный путь завершения; callbacks идут до изменения state, вторая очередь может запустить новый переход. Десять корней, 24 фрагмента + leaf, 1523 инструкции. Остались обычный триггер завершения, reentrancy, контракт отмены, виртуальные методы и Android. [UI-MANAGER.md](../resource-tools/vampir/knowledge/evidence/interface/UI-MANAGER.md) |
+| V25 | Обычный переход и easing callback | Частично | Tick→update→завершение→callback связан по слотам; найдены повторный запуск и пять прямых callers stop. Очистка callback отделена от выполнения. WBP_FaderUI связан в V26; остались reset→stop, имена флагов, reentrancy и Android. [UI-TRANSITION.md](../resource-tools/vampir/knowledge/evidence/interface/UI-TRANSITION.md) |
+| V26 | Fader: cooked superclass → native class → методы | Готово | В четырёх вариантах прочитаны superclass imports; Fader/Media различены. Регистрация NkFaderUI связана с инициализатором и vtable слотов настройки/сброса. Только Windows; Android/видимость/reset→stop остаются в V25. [FADER-CLASS.md](../resource-tools/vampir/knowledge/evidence/interface/FADER-CLASS.md) |
+| V27 | Native-имена типов ContentsLockCondition | Готово | Карта 11 типов извлечена из инициализации конвертера и связана с 330 CSV-условиями; имена включены в runtime referenceRevision3 с проверкой хешей/строк. Type1=CompletedQuest. Это имена/схема хранения; evaluator, сравнения, AND/OR и Android остаются в V03. [CONDITION-TYPES.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-TYPES.md) |
+| V28 | Загрузка нативных условий | Частично | Проверены шаг записи 56, подобъект+8, пять именованных полей и пять пустых post-load методов; 22 опорные инструкции, три фрагмента. Подтверждено построение индекса GroupId → массив указателей условий, второй контейнер manager+0x60. Evaluator и AND/OR не найдены. Следующий шаг — потребители массивов групп. [CONDITION-TYPES.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-TYPES.md) |
+| V29 | Клиентский предикат условий и групп | Частично | Найдены dispatch11 типов, 30 опорных инструкций и обычный AND с коротким замыканием. ForcedLock проверяется до разрешений; сохранены ранние true-ветви и gate. Helper завершения квестов зависит от состояния. Проверки Android/полей ContentsLock/вызывающих мест остаются. [CONDITION-PREDICATE.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-PREDICATE.md) |
+| V30 | Поля ContentsLock и соединение со справочником | Готово | Пять полей связаны загрузчиком, 18 опорных инструкций, 24 фрагмента и 5 прямых вызовов; все 269 SaveType=2. referenceRevision4 хранит клиентский путь отдельно от evaluator. Источники состояния/назначение callers и Android остаются в V03. [CONTENTS-LOCK-FIELDS.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONTENTS-LOCK-FIELDS.md) |
+| V31 | Обновление контекста блокировок | Частично |32 опорные инструкции, 15 фрагментов: сброс флагов/уровней, входной список, readiness и refresh перед пересчётом. При закрытом gate старые уровни не обнуляются. Источник массива/таблица gate продолжены в V32/V33. Остались события setter, регистрация OnHandler, getters и Android. [CONDITION-STATE.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-STATE.md) |
+| V32 | Именованные результаты разблокировки → update | Готово | Два точных OnHandler-литерала, 21 опорная инструкция, 2 обработчика и 2 tail-wrapper: полная замена и добавление ID. Регистрация/guard/сериализация не входят в подтверждённый путь. [UNLOCK-RESULTS.md](../resource-tools/vampir/knowledge/evidence/scenarios/UNLOCK-RESULTS.md) |
+| V33 | Инициализация и изменение готовности типов | Частично |37 опорных инструкций, 4 фрагмента и getter: reset 0..10 (true только 10), общий setter и EnterArea. Готовность не равна выполнению; Семь прямых событий связаны в V34; другие пути/callback и Android остаются. [CONDITION-GATE.md](../resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-GATE.md) |
+| V34 | Регистрация unlock-handler и события готовности | Частично |29 опорных инструкций: 2 регистрации в PacketDispatcher, packet-vtable/ID, 7 прямых setter-вызовов. Имена CharacterSelect/Engraving подтверждены. Полная принимающая диспетчеризация, guard и 3 неизвестных корня ещё не связаны. [UNLOCK-REGISTRATION.md](../resource-tools/vampir/knowledge/evidence/scenarios/UNLOCK-REGISTRATION.md) |
+| V35 | Guard результата и сообщения из ресурсов | Частично |25 опорных инструкций, 252 инструкции кода отдельно от compact table 227; обычные 0/4503 и специальный режим различены. 5 ключей EXE→CSV405 связаны, UI-ограничения сохранены. Остались WBP, полные side effects и принимающая диспетчеризация. [PACKET-RESULT-GUARD.md](../resource-tools/vampir/knowledge/evidence/scenarios/PACKET-RESULT-GUARD.md) |
+| V36 | Общий error-path → SystemMessageUI | Частично |17 опорных инструкций, 7 литералов, 11 фрагментов, 4 cooked-варианта; superclass/vtable/TextMessage+0xa00 и фон связаны. Отдельный справочник без привязки KICKOUT; 176 тестов прошли. Абсолютная геометрия/анимация/Android и принимающая диспетчеризация остаются. [SYSTEM-MESSAGE-UI.md](../resource-tools/vampir/knowledge/evidence/interface/SYSTEM-MESSAGE-UI.md) |
+| V37 | Именованное содержимое TextMessage | Частично | Native Name/Content→NamedSlotBinding→NamedSlotBindings связаны; 2 cooked-префикса NamedSlotContent→TextMessage и обратный Slot6 проверены. Индекс 59 схемы класса ещё кандидат, хвост opaque, топология/геометрия не включены. 180 тестов прошли. [MESSAGE-NAMED-SLOT.md](../resource-tools/vampir/knowledge/evidence/interface/MESSAGE-NAMED-SLOT.md) |
 
 ## Обработка окна отключения по новому указанию
 
@@ -519,7 +519,7 @@ scene/overlay SHA и 4deployedfiles. Все ID=0,61 пара endpoints отли�
 
 | ID | Работа | Статус | Результат / осталось |
 |---|---|---|---|
-| V65 | Единый атлас географии Vampir | Готово как справочник | 17 CSV, 1422 PNG, SHA EXE/Nocturne; 254 мира, 154 настройки, полные размещения и связи; 9 тестов; 91 проблема источников сохранена. [MAP-ATLAS.md](../resource-tools/vampir/MAP-ATLAS.md) |
+| V65 | Единый атлас географии Vampir | Готово как справочник | 17 CSV, 1422 PNG, SHA EXE/Nocturne; 254 мира, 154 настройки, полные размещения и связи; 9 тестов; 91 проблема источников сохранена. [MAP-ATLAS.md](../resource-tools/vampir/knowledge/evidence/maps/MAP-ATLAS.md) |
 | V66 | Привязка мира к изображению и Android | Частично: изображение V68 | Native-формула/плитки либо проверенная калибровка, независимые точки, свежие кадры/DPI; локальный API17842 пока недоступен |
 | V67 | Проходимость, маршруты и интеграция карты в бот | Частично: источники и предварительный слой | 63 ActorRoot/Blueprint chain проверены, 62 PointLinks; в UI63 условных размещения/14 связей по явным transforms, 49 неполных. Расчёт не считается маршрутом. Native CDO/frame/активация/граф/Android и pivot322 контуров остаются; 20 header chunks без полигонов. MAP-ATLAS.md |
 

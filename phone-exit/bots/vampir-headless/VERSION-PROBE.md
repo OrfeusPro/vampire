@@ -37,7 +37,7 @@ Login и запросы персонажей этот путь не отправ
 наблюдённых CPU / Windows / NMDeviceKey и getsockname текущего соединения.
 Четыре неиспользуемые строки остаются пустыми; integers — 0, 207, 1;
 compiled tag — `AC7F34E3AFA91ED417BE86CD45BF18C8`. Происхождение остальных
-полей описано в [индексе входов](../resource-tools/vampir/HEADLESS-GAME-LOGIN-INPUTS.md).
+полей описано в [индексе входов](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GAME-LOGIN-INPUTS.md).
 При SOCKS локальный адрес относится к соединению ПК с прокси.
 
 Пять новых тестов проверяют настоящий socketpair, дробление key notification,
@@ -61,12 +61,12 @@ endpoint. Timeout не устанавливает ни совместимост�
 Теперь CLI требует явный `--diagnostic-cdn-lobby` и сообщает непроверенную роль
 адреса. Повторная внешняя попытка без новых источников не выполнялась.
 
-[BeginGameImpl](../resource-tools/vampir/HEADLESS-BEGIN-GAME-SERVER-TARGET.md)
+[BeginGameImpl](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-BEGIN-GAME-SERVER-TARGET.md)
 берёт игровую запись из master model; её host и порт использует
-[ConnectToServer](../resource-tools/vampir/HEADLESS-GAME-CONNECT-TARGET.md).
+[ConnectToServer](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GAME-CONNECT-TARGET.md).
 У LobbyLogin / LobbyLoginResult отдельные схемы и регистраторы, хотя ID 3 / 4
 совпадают с игровыми Login / LoginResult. Смешивать эти контексты нельзя.
-[Native drain](../resource-tools/vampir/HEADLESS-SEND-DRAIN.md) передаёт очередь
+[Native drain](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SEND-DRAIN.md) передаёт очередь
 прямо в Winsock send, без дополнительной оболочки на этом этапе.
 
 Далее — цепочка лобби, загрузка игровых server records и остальные Login inputs.

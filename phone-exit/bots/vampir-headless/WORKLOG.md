@@ -10,7 +10,7 @@ JP server ID 251 / group ID 251. Version 0, Login 58, body 131 байт,
 send 650 / recv 94. 16 проверок прошли; JP остановлен с exit 0, сокеты закрыты.
 SDK gameRegion сохраняется отдельно от токена, его потребитель ещё не связан.
 Далее — этот контекст и причина оставшегося отказа, затем персонажи.
-[Источники](../resource-tools/vampir/HEADLESS-SERVER-REGION-SELECTION.md).
+[Источники](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SERVER-REGION-SELECTION.md).
 
 ## 20 октября: расшифровка BlockedIp и повторная проверка через JP
 
@@ -22,7 +22,7 @@ Ghidra: 354 функции / 165 предупреждений. Семь native �
 Version 0 / Login 58, body 131 байт, send 650 / recv 94. JP остановлен с exit 0.
 В CDN включены UseRegion / UseNetmarbleJoinedCountry; их потребители ещё
 нужно связать. Причина IP-ограничения не угадана, список персонажей не запрошен.
-[Источники](../resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md),
+[Источники](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESULT-ERROR-58.md),
 [реальная проверка](LIVE-GAME-LOGIN.md).
 
 ## 20 октября: настоящий игровой LoginResult 58
@@ -46,7 +46,7 @@ Version → Login probe через GameConnection и безопасные код
 extra_number остаётся обязательным отдельным входом. Ghidra: 352 функции /
 159 предупреждений. 15 целевых проверок прошли, сети не было.
 Далее — сохранение свежего SDK / lobby context в памяти и игровой Login.
-[Источники и границы](../resource-tools/vampir/HEADLESS-LOGIN-INITIAL-CONTEXT.md).
+[Источники и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-INITIAL-CONTEXT.md).
 
 ## 20 октября: поля настроек игрового Login
 
@@ -57,7 +57,7 @@ constructor проверены вместе с подготовкой Login в 4
 сохраняет заполнение объекта; его дальнейшие записи ещё открыты.
 Найдена связь BeginGame `_wtoi` → global → Login uint32 +0x50.
 Четыре новые проверки прошли, сети не было. Далее — оставшиеся поля Login.
-[Источники и границы](../resource-tools/vampir/HEADLESS-LOGIN-POLICY-INPUTS.md).
+[Источники и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-POLICY-INPUTS.md).
 
 ## 20 октября: настоящий игровой VersionResult с кодом 0
 
@@ -78,7 +78,7 @@ HK-клиент остановлен с exit 0. Далее — Login на том
 строку+0x20 / word+0x30 как endpoint. Добавлен явный bounded selector,
 без automatic first-server. Прошли десять целевых тестов, сети не было.
 Далее — свежий выбор сервера и настоящий игровой Version.
-[Источники и границы](../resource-tools/vampir/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
+[Источники и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
 
 ## 20 октября: настоящий список игровых серверов ID 104
 
@@ -112,7 +112,7 @@ SDK auth present / NID UserInfo absent, country / metadata пусты. Доба�
 Добавлен Windows builder с явными kind / server ID / metadata; их live-значения
 не угаданы. Все 18 целевых проверок прошли. Новых сетевых попыток нет;
 полная metadata / lifecycle context остаются перед настоящим LobbyLogin.
-[Источники и границы](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-PREPARATION.md).
+[Источники и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-LOGIN-PREPARATION.md).
 
 ## 20 октября: writer LobbyLogin и SDK / NID inputs
 
@@ -123,7 +123,7 @@ Ghidra расширен до 331 функции / 151 предупреждени
 27 обращений к 26 ключам, включая параметры игры / SDK / устройства.
 Полная сериализация и numeric context пока не перенесены. Прошла 21 целевая
 проверка; сетевых попыток и передачи реальных Login tokens не было.
-[Источники и ограничения](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-WRITER.md).
+[Источники и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-LOGIN-WRITER.md).
 
 ## 20 октября: реальный LobbyVersionResult через HK
 
@@ -148,7 +148,7 @@ Callback сохраняет sequence. Настоящий send-A assembly с lobb
 смежных тестов прошли; три проверки экспорта также прошли. Внешних сетевых
 попыток нет. Следующая граница — config globals, preparation / connect /
 pending queue вместе и decoder ответа списка серверов.
-[Источники и ограничения](../resource-tools/vampir/HEADLESS-LOBBY-CONNECT-FLOW.md).
+[Источники и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-CONNECT-FLOW.md).
 
 ## 20 октября: отдельный LobbyVersion и codecs запроса списка серверов
 
@@ -160,7 +160,7 @@ construction stores: её slot +0x40 создаёт LobbyVersion; поле +0x40
 и 23 коротких префикса. Добавлены bounded codecs без выбора неизвестных
 settings. Новых сетевых попыток и запуска игры нет; decoder коллекций ID 104
 и полный connect / flush лобби остаются открытыми.
-[Подробности](../resource-tools/vampir/HEADLESS-LOBBY-HANDSHAKE.md).
+[Подробности](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-HANDSHAKE.md).
 
 ## 20 октября: схема LobbyLoginResult и связь с игровым Login
 
@@ -172,7 +172,7 @@ Reader исполнен на семи bodies и 72 коротких префик
 bounded decoder и binder без подмены другого контекста. Все 19 целевых тестов
 прошли. Сетевых попыток и запуска игры не было; lobby connect и decoder
 списка серверов остаются следующими шагами.
-[Источники и ограничения](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN.md).
+[Источники и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-LOGIN.md).
 
 ## 20 октября: Version probe и уточнение границы лобби
 
@@ -219,7 +219,7 @@ native replay при передаче этих строк в CPUID fixtures. Bin
 Runtime helper заполняет два поля явного Version template без изменения
 прочих inputs и с отказом на конфликт. Все 16 целевых проверок прошли.
 Ghidra: 295 функций / 121 предупреждение. Реального игрового запроса нет.
-[Источники](../resource-tools/vampir/HEADLESS-VERSION-CPU-STRING.md).
+[Источники](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-CPU-STRING.md).
 
 ## 20 октября: Windows suffix в runtime и повтор SDK SignIn через HK
 
@@ -232,7 +232,7 @@ Source descriptor platform context установлен как ENnOsType; 12 nat
 selector / lookup scenarios проверяют обе ветви scoped flag. Сам flag ещё
 не перенесён как известный в Version. Ghidra: 293 функции / 121 предупреждение.
 Все 15 целевых проверок прошли.
-[Источники и границы](../resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
+[Источники и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
 
 ## 20 октября: CPU inputs и оставшиеся источники игрового входа
 
@@ -242,7 +242,7 @@ initializer двух строк Version: CPUID vendor и brand. Native initializ
 Уточнены compiled pointer tag, raw DWORD 1 и источник AppVersion; значения
 не объявляются неизменными active globals. Экспорт расширен до 289 функций,
 120 предупреждений; три новых проверки прошли. Runtime не менялся,
-игровой вход не выполнялся. [Источники](../resource-tools/vampir/HEADLESS-GAME-LOGIN-INPUTS.md).
+игровой вход не выполнялся. [Источники](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GAME-LOGIN-INPUTS.md).
 
 ## 20 октября: новый HK-аккаунт и успешные SDK SignUp / SignIn
 
@@ -305,7 +305,7 @@ Callback invoke без unwind оказался одним JMP; экспорти�
 подходят Япония и Гонконг. В личном каталоге Phone Exit найден доступный
 незанятый выход HK; подключение ещё не выполнено. Четыре теста SignUp,
 четыре runner, шесть HTTP, три Ghidra, четыре прежних SignIn и четыре parser
-прошли. [Происхождение и ограничения](../resource-tools/vampir/HEADLESS-SDK-SIGN-UP.md).
+прошли. [Происхождение и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-UP.md).
 
 ## 20 октября: настоящий NID callback из встроенного окна и отказ SDK
 
@@ -374,7 +374,7 @@ encoder совпали с общим escape; whitelist / hex исполняют�
 Runtime связывает context с точным SDK endpoint, ограничивает размер и
 поддержанный профиль. Публичный источник endpoint повторно проверен offline.
 Браузер / реальная авторизация не запускались.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-NID-WEB-URL.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-WEB-URL.md).
 
 ## 20 октября: контекст штатного окна NID
 
@@ -382,7 +382,7 @@ Ghidra расширен до 276 функций / 110 warnings. Проверен
 сборки десяти базовых пар на восьми профилях и весь getter webViewType
 на 256 значениях. Runtime возвращает неизменяемый контекст, без сериализации
 непроверенного query. Real identity / browser / account не использовались.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-NID-WEB-CONTEXT.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-WEB-CONTEXT.md).
 
 ## 20 октября: три ключа Windows-устройства и gate профиля
 
@@ -400,7 +400,7 @@ required для подготовки Login. 20 тестов прошли; реа
 Runtime связывает ключ с обоими payload, SDK token и отдельный NID — с Login.
 В Windows найдена точная запись NMDeviceKey; значение не логировалось,
 к основной почте не привязывалось. SDK-пара / NID identity ещё не получены.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-DEVICE-INPUT.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-DEVICE-INPUT.md).
 
 ## 20 октября: Version → Login через сокет
 
@@ -451,7 +451,7 @@ getter → slot 90 → RequestA/constructor/send capture. Owner/lifecycle неи
 Ghidra: 80 функций/44 предупреждения. Девять тестов прошли: три новых,
 три CharacterList boundary и три Ghidra. Проверены 1311 локальных ссылок,
 битых нет; полный набор тестов не повторялся. Runtime/network не менялись.
-[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md).
+[Источники, SHA и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-LIST-CALLER.md).
 
 ## 20 октября: selection lifecycle и virtual 38 callback
 
@@ -461,7 +461,7 @@ raw32 event и callback leaf → singleton virtual 38. Девять тестов
 битых нет. Полный набор тестов не повторялся;
 регистрация/emitters/backend dispatch остаются статическими или captures.
 Runtime и live session не менялись.
-[Источники, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md).
+[Источники, SHA и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-LIFECYCLE.md).
 
 ## 20 октября: World.Id2/CharacterSelect path связан с native getter
 
@@ -472,7 +472,7 @@ Old patch source stamp stale; использован существующий au
 CSV bytes совпали, полные SHA текущих архивов проверены. Ghidra: 63 functions/
 36 warnings. Три новых, три lookup и три Ghidra tests прошли. Runtime loader/
 mount priority/live session не проверялись; full suite не повторялся.
-[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md).
+[Отчёт, SHA и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-STATE-LABEL.md).
 
 ## 20 октября: state registry lookup и неизвестная реальная метка
 
@@ -481,7 +481,7 @@ Ghidra lookup/registry/generic loader exports расширены: 54 functions/3
 label caller. Registry getter/record contents всё ещё fixtures; фактическая
 строка key 2 не установлена. Три новых, три state transition и три Ghidra tests
 прошли; full suite/runtime/network не менялись.
-[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md).
+[Отчёт, SHA и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-STATE-LOOKUP.md).
 
 ## 20 октября: selection state preparation и deferred callback
 
@@ -491,7 +491,7 @@ Ghidra virtual 40 dependencies/callback экспортированы: 48 functio
 Scheduler/load/text/lookup backends explicit fixtures. Direct slot 90 вызов
 на covered paths не найден. Три новых, три selection service и три Ghidra tests
 прошли; runtime не менялся, полный suite/live session не проверялись.
-[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md).
+[Отчёт, SHA и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-STATE-TRANSITION.md).
 
 ## 19 октября: derived selection service и CharacterSelect handoff
 
@@ -500,7 +500,7 @@ allocation success/failure и base singleton getter проверены. Actual v
 передаёт raw64/raw32/state+f0 в packet 109→handoff110; 4 vectors совпали.
 Ghidra: 43 functions/30 warnings. Три новых, три WaitingEnd и три Ghidra tests
 прошли; full suite не повторялся. Runtime не менялся; сеть/ответ/выбор не готовы.
-[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md).
+[Отчёт, SHA и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-SERVICE.md).
 
 ## 19 октября: WaitingEndNotify инициирует requestB
 
@@ -510,7 +510,7 @@ CharacterListRead constructor/virtual send capture. Quick-select/next virtual
 paths различаются по peer flag/policy/selected value. Ghidra: 39 functions,
 26 warnings. Три новых, три boundary и три Ghidra tests прошли. Runtime не
 менялся; full suite/live lifecycle/response 102 не проверены.
-[Отчёт, SHA и границы](../resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
+[Отчёт, SHA и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WAITING-END-CHARACTER-REQUEST.md).
 
 ## 19 октября: post-Login reset и CharacterList request boundary
 
@@ -519,7 +519,7 @@ Ghidra singleton ctor/table→virtual+0x28 подтвердили reset колл
 ID 101 и empty writer leaf проверены; Login→request caller edge не доказан.
 Ghidra: 37 functions/19 warnings. Три новых, четыре LoginResult handler и три
 Ghidra tests прошли. Runtime не менялся; полный suite не повторялся.
-[Отчёт, SHA и ограничения](../resource-tools/vampir/HEADLESS-CHARACTER-LIST-BOUNDARY.md).
+[Отчёт, SHA и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-LIST-BOUNDARY.md).
 
 ## 19 октября: native LoginResult handler
 
@@ -529,7 +529,7 @@ error/SDK branches. FString copies и UI/SDK/state backends явно captured.
 Ghidra дополнена post-state target: 33 functions/15 warnings. Четыре новых,
 четыре reader и три Ghidra tests прошли; полный suite не повторялся.
 Runtime не менялся. CharacterListRead send/session ещё не доказаны.
-[Отчёт, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md).
+[Отчёт, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-RESULT-HANDLER.md).
 
 ## 19 октября: native LoginResult reader и общий decoder
 
@@ -539,7 +539,7 @@ vectors и 332 short inputs. Bool нормализуется; native trailing п
 общий LoginResultBody требует точного потребления. Четыре новых и десять
 смежных Ghidra/VersionResult/Login writer tests прошли. Полный suite не
 повторялся; decoder не подключён к live runner. Handler только static-read.
-[Отчёт, SHA, источники и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+[Отчёт, SHA, источники и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-RESULT-READER.md).
 
 ## 19 октября: Login handoff → native frame/queue
 
@@ -549,7 +549,7 @@ lookup/timeout/getter/virtual send/Login writer/CRC/XOR/queue. 29 кадров
 подтвердили границы. Insert/notify captures, clocks/drain/socket не исполнены.
 Три новых и семь смежных tests прошли; полный suite не повторялся.
 Runtime не менялся; real profile/network/session не использованы.
-[Отчёт, SHA, источники и ограничения](../resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md).
+[Отчёт, SHA, источники и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-SEND-PATH.md).
 
 ## 19 октября: native Login writer и общий body encoder
 
@@ -560,7 +560,7 @@ capture снимает +0x128=0 в 16 прежних preparation cases. LoginPay
 в общий Python core с immutable/redacted inputs и атомарным byte budget.
 Четыре новых tests, смежные Login fields/Version writer/Version send path
 проверены; полный suite не повторялся. Live runner/сессия ещё не подключены.
-[Отчёт, SHA, источники и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md).
+[Отчёт, SHA, источники и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-PACKET-WRITER.md).
 
 ## 19 октября: общее правило и дополнительные инструменты
 
@@ -578,7 +578,7 @@ PE DLL проверена, injection/game SDK не выполнялись. Тр�
 Официальные Ghidra 12.1.4 и Temurin21 закреплены SHA, импортирован EXE как
 данные. Три exports по 22 функции; C outputs совпали побайтно. 13 warnings
 сохранены. Три новых и три смежных Login tests прошли; game/profile не запускались.
-[Пути, команды и static findings](../resource-tools/vampir/HEADLESS-GHIDRA.md).
+[Пути, команды и static findings](../resource-tools/vampir/knowledge/evidence/tools/HEADLESS-GHIDRA.md).
 
 ## 19 октября: Login constructor/SDK поля
 
@@ -586,7 +586,7 @@ PE DLL проверена, injection/game SDK не выполнялись. Тр�
 getters/assignments разделили NetmarbleId и SDK token, показали old-cache
 path. Handoff capture, без writer/network. Runtime не менялся; full suite379
 не повторялся. Реальные profile/credentials не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-PACKET-FIELDS.md).
 
 ## 19 октября: VersionResult → Login entry
 
@@ -594,7 +594,7 @@ path. Handoff capture, без writer/network. Runtime не менялся; full 
 в 0x1467a9700 для code 0; PktLogin ctor связан статически. Три новых и семь смежных tests
 прошли. Runtime не менялся; full suite379 не повторялся. Actual game/network/
 profile/credentials не использованы, Login body ещё capture.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-RESULT-HANDLER.md).
 
 ## 19 октября: Version wrapper → полный кадр/очередь
 
@@ -602,7 +602,7 @@ profile/credentials не использованы, Login body ещё capture.
 Wrapper/send-B/Version writer/CRC/XOR/queue append исполняются вместе.
 Queue copy сохраняется после archive overwrite; три новых и шесть смежных tests прошли.
 Runtime не менялся; полный suite379 не повторялся. Real network/session нет.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-SEND-PATH.md).
 
 ## 19 октября: PktVersion writer → общее ядро
 
@@ -610,7 +610,7 @@ Runtime не менялся; полный suite379 не повторялся. Re
 Три новых tests прошли. Полный headless suite: 379 tests за 298.328s, OK.
 Getters/frame/server response не проверены.
 Игра/profile/process memory/credentials/network не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-PACKET-WRITER.md).
 
 ## 19 октября: connected callback → PktVersion
 
@@ -618,7 +618,7 @@ Getters/frame/server response не проверены.
 PktVersion/ID1, send target capture. Проверены raw fields, empty/Unicode/max
 DWORD и send-false/gate; три новых и шесть смежных tests прошли. Getter meanings/wire/session
 открыты. Runtime не менялся; полного suite не было; сеть/game/profile не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-CONNECTED-VERSION-PACKET.md).
 
 ## 19 октября: connected delegate → game target
 
@@ -626,7 +626,7 @@ DWORD и send-false/gate; три новых и шесть смежных tests �
 Game vtable source-bound, callback 0x1467a9cd0 пока capture. Уточнено поле
 P+0x310 как units storage, не owner count. Три новых и шесть смежных tests прошли.
 Runtime не менялся; full suite не повторялся; network/game/profile не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md).
 
 ## 19 октября: socket ready → transport recipient
 
@@ -634,7 +634,7 @@ Runtime не менялся; full suite не повторялся; network/game/
 owner callback gate. Source constructor/registration/table/diagnostic bindings
 проверены. Три новых и шесть смежных tests прошли. Runtime не менялся; полного suite не было.
 Owner target/endpoint/configuration fixtures, actual session/network нет.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-READY-NOTIFICATION.md).
 
 ## 19 октября: socket option translation
 
@@ -642,7 +642,7 @@ Owner target/endpoint/configuration fixtures, actual session/network нет.
 исполняется вместо option capture. Getsockopt import/export и raw arguments
 проверены; failure/output gates различены. Три новых и шесть смежных tests прошли.
 Runtime не менялся; полный suite 316 не повторялся. Реальной сети/session нет.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-ERROR-OPTION.md).
 
 ## 19 октября: socket mode/readiness job
 
@@ -651,7 +651,7 @@ helper/source ioctl body/job slots/select state gates/completion routes
 исполнены. Worker stop перед второй iteration и manual completion drain
 явно записаны. Syscalls/queue/option/recipient captures, real sockets нет.
 Runtime не менялся; полный suite 316 не повторялся. Game/profile/credentials/network не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-READINESS-JOB.md).
 
 ## 19 октября: WSA error mapping
 
@@ -660,7 +660,7 @@ Runtime не менялся; полный suite 316 не повторялся. G
 Code и switch data разделены; accepted inputs 10035/10036/10037 подтверждены
 через реальный wrapper. Runtime не менялся; полный suite 316 не повторялся.
 Game/profile/credentials/network и реальные DLL calls не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-WINSOCK-ERROR-MAPPING.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-WINSOCK-ERROR-MAPPING.md).
 
 ## 19 октября: endpoint connect/result wrapper
 
@@ -669,7 +669,7 @@ sockaddr layout/connect call, lower/wrapper расхождение и wait gates
 проверены. Raw engine codes не названы WSA errors без mapping evidence.
 Runtime не менялся; полный suite 316 не повторялся. Реальные game/profile/
 credentials/network/OS wait не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SOCKET-CONNECT-RESULT.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-CONNECT-RESULT.md).
 
 ## 19 октября: resolved recipient/socket creator
 
@@ -678,7 +678,7 @@ vtable stores связали resolver callback с peer recipient и socket creat
 WS2_32 ordinal 23 проверен по local export socket с SHA. Syscall/engine
 options/mode/connect — captures; реальные сокеты не открывались.
 Runtime не менялся; полный suite 316 не повторялся. Game/profile/credentials не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVED-SOCKET-SETUP.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESOLVED-SOCKET-SETUP.md).
 
 ## 19 октября: resolver job results
 
@@ -687,7 +687,7 @@ run/completion и PE imports getaddrinfo/inet_ntop связаны с source.
 Native family traversal/swap и empty/error gates исполнены; Winsock,
 vector append, scheduler и callback dispatch fixtures/captures.
 Runtime не менялся; полный suite 316 не повторялся. Game/profile/network не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-RESOLVER-JOB-RESULTS.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESOLVER-JOB-RESULTS.md).
 
 ## 19 октября: lower connect/resolver handoff
 
@@ -696,7 +696,7 @@ Peer fields, обе registration insert branches, lexical numeric/hex и job
 stores подтверждены. Reset/lookup/parser/scheduler — fixtures/captures;
 RAX сохранён cookie-check fixture для правильного bool результата.
 Runtime не менялся; полный suite 316 не повторялся. Game/profile/network не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CONNECT-RESOLVER-HANDOFF.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-CONNECT-RESOLVER-HANDOFF.md).
 
 ## 19 октября: ConnectToServer endpoint mapping
 
@@ -705,7 +705,7 @@ host/port и реальным endpoint constructor. Signed port guard подтв
 lower connect и ASCII/lifetime primitives fixtures. Три новых и восемь
 смежных tests прошли. Runtime не менялся; полный suite 316 не повторялся.
 Реальных game/profile/credentials/network connect не было.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-CONNECT-TARGET.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GAME-CONNECT-TARGET.md).
 
 ## 19 октября: BeginGame server target
 
@@ -714,7 +714,7 @@ lookup collision walk и target setters связаны с BeginGame caller.
 Missing/busy paths сохраняют прежнюю цель; raw words не названы портами
 без consumers. Runtime не менялся; полный suite 316 не повторялся.
 Реальные profile/credentials/game/HTTP/socket connect не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-BEGIN-GAME-SERVER-TARGET.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-BEGIN-GAME-SERVER-TARGET.md).
 
 ## 19 октября: title state и BeginGame SDK gate
 
@@ -722,7 +722,7 @@ Missing/busy paths сохраняют прежнюю цель; raw words не н
 country/state slices отделены от IsSignIn SDK byte gate. Skip-middle
 явно сохранён, полный title/button flow не заявлен. Runtime не менялся;
 полный suite 316 из runtime milestone не повторялся. Игра/профиль/HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-STATE.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-TITLE-AUTH-STATE.md).
 
 ## 19 октября: title auth-success notification
 
@@ -731,7 +731,7 @@ slot+0x08. Три новых и шесть смежных tests прошли. Ch
 policy остаются fixtures, тело OnSuccessNetmarbleSDKAuth — entry capture.
 Runtime не менялся, полный suite 316 из runtime milestone не повторялся.
 Реальный профиль, credentials, игра и HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-TITLE-AUTH-NOTIFICATION.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-TITLE-AUTH-NOTIFICATION.md).
 
 ## 19 октября: optional Google PGS branch
 
@@ -740,7 +740,7 @@ diagnostics/vtables связали game-instance getter с Google PGS. Native
 Windows SignIn передал unsupported result args; constructor/helper captures.
 Original SDK result сохранён отдельно. Runtime не менялся; полный suite
 316 из предыдущего runtime milestone не повторялся. Игра/профиль/HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-PGS-BRANCH.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GAME-PGS-BRANCH.md).
 
 ## 19 октября: game success broadcast
 
@@ -748,7 +748,7 @@ Original SDK result сохранён отдельно. Runtime не менялс
 реальный slot+0x30 из title vtable, child args (2,1) и очистку pointer.
 Registration/array ownership/prune/child virtual явно ограничены fixtures.
 Runtime не менялся; игра, профиль, credentials и HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-SUCCESS-BROADCAST.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GAME-SUCCESS-BROADCAST.md).
 
 ## 19 октября: silent result до игрового callback
 
@@ -757,7 +757,7 @@ Runtime не менялся; игра, профиль, credentials и HTTP не 
 Три новых и девять смежных tests прошли. Runtime не менялся, полный suite
 316 из предыдущего runtime milestone не повторялся. Реальные scheduler,
 response JSON/session, profile/credentials/HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SILENT-GAME-DISPATCH.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SILENT-GAME-DISPATCH.md).
 
 ## 19 октября: ChannelManager silent handoff
 
@@ -766,7 +766,7 @@ response JSON/session, profile/credentials/HTTP не использованы.
 Context/settings/storage/TFunction и error object dispatch явно ограничены
 fixtures/stops. Provider selection ещё не восстановлен. Runtime не менялся,
 последний полный suite 316 не повторялся; игра/профиль/HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-CHANNEL-SILENT-HANDOFF.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-CHANNEL-SILENT-HANDOFF.md).
 
 ## 19 октября: игровой AutoSignIn callback
 
@@ -777,7 +777,7 @@ fixtures/stops. Provider selection ещё не восстановлен. Runtime
 Также прошли три смежных SDK result-dispatch tests.
 Runtime не менялся; полный suite 316 из предыдущего runtime milestone
 не повторялся. Игра, профиль и HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-AUTO-SIGN-IN.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GAME-AUTO-SIGN-IN.md).
 
 ## 19 октября: SDK result dispatch
 
@@ -787,7 +787,7 @@ clone/invoke и queued thunk. 16 сценариев подтвердили respo
 Реальные game receiver/task graph/lifetime completion пока не исполнены.
 Три новых и семь смежных tests прошли. Runtime не менялся; последний полный
 прогон 316 тестов не повторялся. Игра, профиль и HTTP не использованы.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-RESULT-DISPATCH.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-RESULT-DISPATCH.md).
 
 ## 19 октября: SDK sign-in completion и общий parser
 
@@ -803,7 +803,7 @@ clone/invoke и queued thunk. 16 сценариев подтвердили respo
 
 Полный набор: 316 тестов, 230.600 с, OK. Проверены 475 относительных
 Markdown-ссылок, UTF-8 и SHA отчёта; git diff --check без ошибок.
-[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
+[Источники, SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-COMPLETION.md).
 
 ## 19 октября: native variant converter
 
@@ -815,7 +815,7 @@ variants не исполнялись. Три regression tests OK; runtime/auth P
 Также прошли 6 смежных response gates/fields tests, 450 относительных
 Markdown-ссылок проверены, git diff --check OK. Полный suite последнего
 runtime milestone 296/296 повторно не запускался.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-VARIANT.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-RESPONSE-VARIANT.md).
 
 ## 19 октября: SDK response gates
 
@@ -826,7 +826,7 @@ path не выдан за готовый. Три теста OK, auth POST/storag
 Также прошли 7 смежных response/request tests; 444 относительных
 Markdown-ссылок и git diff --check проверены. Runtime не менялся, полный
 suite последнего runtime milestone 296/296 не повторялся.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-RESPONSE-GATES.md).
 
 ## 19 октября: SDK sign-in response fields
 
@@ -838,7 +838,7 @@ fixture. Network/errorCode/full callback не исполнены. Три tests O
 Также прошли 4 SDK request tests; 435 относительных Markdown-ссылок
 и git diff --check проверены. Runtime не менялся; полный suite последнего
 runtime milestone 296/296 повторно не запускался.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-RESPONSE.md).
 
 ## 19 октября: migration allocator wrapper chain
 
@@ -851,7 +851,7 @@ Markdown-ссылок проверены, git diff --check OK. Полный suit
 из предыдущего runtime milestone повторно не запускался.
 Приоритет возвращён к SDK sign-in response/session для первого нового
 профиля; миграция не выдана за завершённую и остаётся в задачах.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-MIGRATION-ALLOCATION.md).
 
 ## 19 октября: token payload и migration path
 
@@ -864,7 +864,7 @@ tokens/keys/registry/Saved/HTTP не использовались. Три regres
 Также прошли 4 смежных suffix/auth-path tests; 427 относительных
 Markdown-ссылок и git diff --check проверены. Полный suite предыдущего
 этапа 296/296 не повторялся: runtime не менялся.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-TOKEN-PAYLOAD.md).
 
 ## 19 октября: NID suffix byte/AES pipeline
 
@@ -875,7 +875,7 @@ fixtures; real token/sub acquisition не исполнялись. 6 cases, align
 nid_storage_path без I/O, keys не нормализуются. Три regression tests прошли.
 Полный headless suite: 296 тестов, 216.125 с, OK; 480 относительных
 Markdown-ссылок проверены, git diff --check без ошибок.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-NID-SUFFIX.md).
 
 ## 19 октября: auth-specific directory
 
@@ -887,7 +887,7 @@ SetupServiceSettingPath и command-context extraction сохранены source-
 Четыре смежных storage/load tests также прошли; 415 относительных
 Markdown-ссылок и git diff --check проверены. Runtime не менялся, полный
 headless suite предыдущего этапа 290/290 повторно не запускался.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-AUTH-PATH.md).
 
 ## 19 октября: Load device fields и filename
 
@@ -899,7 +899,7 @@ Saved/registry/keys не читались. Два regression tests прошли.
 Смежные 2 storage tests также прошли; 412 относительных Markdown-ссылок
 проверены, git diff --check OK. Runtime не менялся; полный suite
 предыдущего этапа 290/290 повторно не запускался.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-LOAD-DEVICES.md).
 
 ## 19 октября: NID web/token device identity
 
@@ -911,7 +911,7 @@ nid_device_key/source и идемпотентная запись без заме
 5 registry tests и native context regression прошли; HTTP/registry/Saved нет.
 Полный headless suite: 290 тестов, 270.284 с, OK. 465 относительных
 Markdown-ссылок проверены; git diff --check без ошибок.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-DEVICE-CONTEXT.md).
 
 ## 19 октября: SDK storage directory и NID key
 
@@ -922,7 +922,7 @@ base directory/FString helpers fixtures. Найден отдельный DeviceK
 keys не читались, Save/Load не исполнялись. Два regression tests прошли.
 Проверены также 11 device tests (10.579 с), 398 относительных Markdown-ссылок
 и git diff --check. Полный headless suite повторно не запускался.
-[Source/SHA и границы](../resource-tools/vampir/HEADLESS-SDK-STORAGE.md).
+[Source/SHA и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-STORAGE.md).
 
 ## 19 октября: native SetDeviceKey
 
@@ -933,7 +933,7 @@ keys не читались, Save/Load не исполнялись. Два regres
 статически, реальные registry/Saved/keys не читались. Три regression tests OK.
 Все 11 device tests прошли за 9.299 с; 398 относительных Markdown-ссылок
 проверены. Общий suite в предыдущем этапе: 282/282; повторно не запускался.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-DEVICE-SETTER.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-SETTER.md).
 
 ## 19 октября: native device getter lifecycle
 
@@ -945,7 +945,7 @@ platform/SetDeviceKey/Save — явные fixtures. Три regression tests пр
 Реальные registry/profile/identity не читались, авторизация не выполнялась.
 Полный headless suite: 282 теста, 190.412 с, OK. Проверены 389 относительных
 Markdown-ссылок; git diff --check без ошибок.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-LIFECYCLE.md).
 
 ## 19 октября: источники идентификаторов устройства
 
@@ -954,7 +954,7 @@ NMDeviceKey имеет cache/StoredValue/GUID fallback; DeviceKey — отдел
 settings/storage lifecycle. CoCreateGuid import подтверждён, не вызывался.
 Native default format=0 и hex writer проверены на трёх synthetic fixtures.
 Два regression tests прошли, реальные identity/profile/registry не читались.
-[Source/SHA и следующие действия](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+[Source/SHA и следующие действия](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-IDENTITY.md).
 
 ## 19 октября: реестр почта — устройство
 
@@ -978,7 +978,7 @@ JSON/maps/getters/credential/HTTP — explicit fixtures/captures; actual HTTP н
 Общий sdk_sign_in plan: explicit context/credential33/constants, HTTPS/local
 ASCII/body/header budgets, redacted immutable output. Existing SDK path/build
 helpers reused. AuthUrl связан с real public GMC2 offline, active profile не заявлен.
-Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN.md).
 Далее response1444d85f0/token/player/expiry/errors → SDK/game session.
 Полный набор: 274/274 теста, 180,0 с. Синтаксис трёх Python-файлов,
 UTF-8 восьми документов, 420 относительных ссылок и diff check прошли.
@@ -999,7 +999,7 @@ Narrow ASCII key ctor 141420f70 проверен отдельно от wide 1414
 исправлена capture-модель до сохранения итогового отчёта.
 Общий nid_sdk_credential builder возвращает redacted immutable object,
 перепроверяет email inputs, не хранит refresh и не выполняет I/O.
-Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md).
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-CREDENTIAL.md).
 Далее full SDK SignIn request/response/context → SDK token → game Login.
 Полный набор: 270/270 тестов, 173,7 с. Синтаксис трёх Python-файлов,
 UTF-8 восьми документов, 414 относительных ссылок и diff check прошли.
@@ -1016,7 +1016,7 @@ Malformed escapes дают permissive outcomes, NUL сокращает види�
 parse_nid_email_callback проверяет explicit game route и decoded fields,
 reject duplicates/ambiguous extra fields, возвращает redacted credential.
 Это local policy, не full native URI parser или nonce/token-validity check.
-Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-SDK-PERCENT.md).
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-PERCENT.md).
 Новых сетевых запросов/аккаунтов нет. Далее query/context, setters/persistence,
 post-adoption callback и SDK/game session.
 Полный набор: 266/266 тестов, 169,7 с. После уточнения reject %26
@@ -1035,7 +1035,7 @@ mailUserKey=20; ASCII uppercase/swapcase работают, spaces не trim.
 Native parser принимает 0abc/0.1 как zero; общий nid_result требует точный
 canonical0. Добавлены source-bound channel mapper и decoded fields validator,
 redacted immutable provider credential, без URL/I/O/storage/session.
-Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md).
+Четыре targeted tests прошли. [Source/SHA](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-PRIMITIVES.md).
 Новых сетевых запросов/аккаунтов нет. Далее query/context, setters/persistence,
 post-adoption callback и SDK/game session.
 Полный набор: 262/262 теста, 166,2 с. Синтаксис трёх Python-файлов,
@@ -1055,7 +1055,7 @@ address 0x18; записан fixture outcome, не заявлен crash живо
 поля отклоняются. Access/refresh/ID/country идут в разные settings calls;
 точные setter diagnostics сохранены статически. До callbacks replay остановлен.
 Четыре targeted tests прошли. Новых сетевых запросов/аккаунтов нет.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-VALIDATION.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-VALIDATION.md).
 Далее реальный parser/channel/query, setters/persistence/callback/session.
 Полный набор: 258/258 тестов, 169,3 с. Синтаксис двух Python-файлов,
 UTF-8 семи документов, 341 относительная ссылка и diff check прошли.
@@ -1070,7 +1070,7 @@ authorization_code уточнён. Получение профиля и policy c
 helpers; profile/policy/delivery/timer fixtures явно ограничены.
 В pinned EXE выделен OnResult 1450ee6b0, найден caller 1450ed92b и 14 global
 initializer bindings. Native handlers ещё не исполнялись. Четыре targeted
-теста прошли. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-RESULT.md).
+теста прошли. [Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-RESULT.md).
 По отдельной просьбе пользователя в DirectAdmin создан bot-test@vampir.top,
 квота 100 МБ. Success page и строка списка проверены браузером; пароль оставлен
 на вкладке подтверждения, в репозиторий не записан. Доставка писем и Netmarble
@@ -1092,7 +1092,7 @@ endpoint /api/signin/netmarble и context headers. Из выбранных JS he
 captcha token, скрывает содержимое плана в repr. Предел encoded bytes k-11
 строже исходного character-count guard. Семь новых тестов проверяют источник,
 replay, synthetic RSA roundtrip, headers, границы и immutable captures.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-EMAIL.md).
 Реальной авторизации нет; далее response/callback/code/token/session.
 Полный набор: 250/250 тестов, 174,1 с. Синтаксис пяти Python-файлов,
 UTF-8 восьми документов, 382 относительных ссылки и diff check прошли.
@@ -1113,7 +1113,7 @@ Outer encrypted NUL разрешён отдельно; plaintext/CDN policy ос
 Семь новых тестов проверяют source/real snapshot/synthetic formats/negative
 policy/transport/immutability. Token plan привязан offline к real config со
 synthetic inputs; HTTP auth не было. Следом email/password/browser/token/session.
-[Source/SHA/пределы](../resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md).
+[Source/SHA/пределы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PUBLIC-GMC2.md).
 Полный набор: 243/243 теста, 155,1 с. Offline CLI повторил тот же analysis SHA;
 синтаксис семи Python-файлов, кодировка двенадцати Markdown-файлов,
 395 относительных ссылок и diff check прошли. Сетевых запросов был ровно один.
@@ -1129,7 +1129,7 @@ unescape → canonical xor_gmc2_utf16_units. Старый математичес
 сохранены; empty key reject уточнён. Два новых regression tests: zero omission
 и 18 full native-output vectors через composed decoder. Все 7 unescape tests
 прошли. DECKEY class/method и whole response/auth остаются открыты.
-[Источник](../resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md).
+[Источник](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-UNESCAPE.md).
 Полный набор: 236/236 тестов, 171,8 с; синтаксис двух Python-файлов,
 кодировка десяти Markdown-файлов, 376 относительных ссылок и diff check прошли.
 
@@ -1142,7 +1142,7 @@ output guards/terminator сохранены. Growth — shim, logging-disabled f
 Общий bounded xor_gmc2_utf16_units принимает raw LE units, empty key reject;
 не делает Base64/Unicode/JSON или key acquisition. Четыре теста прошли.
 Далее preceding decode/key/DECKEY/secret constants/schema; сетевых запросов нет.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-XOR.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GMC2-XOR.md).
 Полный набор: 234/234 теста, 175,5 с. После уточнения diagnostic fixture
 address по RIP reference повторены 4 XOR tests: passed, 6,0 с. Ранее diagnostic
 путь также не выполнялся; неправильная запись в соседний байт устранена.
@@ -1158,7 +1158,7 @@ return fixtures, HTTP vtable calls — captures. Реальные профили
 не читались, сети нет. Общий frozen Gmc2RequestPlan с явными inputs,
 header tuple/repr redaction/local HTTPS+ASCII budgets. Четыре теста прошли.
 Далее response decode/DECKEY/auth URL values; active service/device inputs
-и игровая сессия открыты. [Источник](../resource-tools/vampir/HEADLESS-GMC2-HEADERS.md).
+и игровая сессия открыты. [Источник](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GMC2-HEADERS.md).
 Полный набор: 230/230 тестов, 168,0 с; синтаксис трёх Python-файлов,
 кодировка девяти Markdown-файлов, 357 относительных ссылок и diff check прошли.
 
@@ -1172,7 +1172,7 @@ header tuple/repr redaction/local HTTPS+ASCII budgets. Четыре теста �
 остаются явными shims; весь Refresh/HTTP не исполнен. Общий ASCII helper
 добавлен в sdk_config.py, четыре теста прошли. Active values не выбраны,
 сетевых обращений нет. Далее RequestGMC2 headers/response decode/DECKEY/auth URLs.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-GMC2-URL.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GMC2-URL.md).
 Полный набор: 226/226 тестов, 145,8 с; синтаксис трёх Python-файлов,
 кодировка десяти Markdown-файлов, 357 относительных ссылок и diff check прошли.
 
@@ -1186,7 +1186,7 @@ allocation/copy/atexit shims; guards сохранены. Source bytes/offsets/SH
 Четыре новых теста прошли. Active BuildCode и весь GMC2 builder/response
 ещё не установлены, сетевых запросов нет. Следом request/response decode →
 auth URLs/DECKEY → auth session.
-[Доказательства](../resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
+[Доказательства](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-BOOTSTRAP-VALUES.md).
 Полный набор: 222/222 теста, 149,0 с; синтаксис трёх Python-файлов,
 кодировка девяти Markdown-файлов, 345 относительных ссылок и diff check прошли.
 
@@ -1202,8 +1202,8 @@ source profile сохранены отдельно; snapshot offline replay не
 HTTPS добавлен локальной политикой, native HTTP wire/TLS не воспроизводился.
 Auth/лобби не запускались; active INI/full native validation ещё открыты.
 Добавлены два producer и восемь тестов. Следом SDK bootstrap/auth params/
-session response. [CDN доказательства](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md),
-[module evidence](../resource-tools/vampir/HEADLESS-MODULE-DESCRIPTORS.md).
+session response. [CDN доказательства](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PUBLIC-CDN.md),
+[module evidence](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-MODULE-DESCRIPTORS.md).
 Полный набор: 218/218 тестов, 163,8 с. Offline CLI snapshot verification,
 синтаксис четырёх Python-файлов, кодировка девяти Markdown-файлов,
 296 относительных ссылок и git diff --check прошли.
@@ -1220,7 +1220,7 @@ NetworkVar пока неизвестен. Добавлены producer/report и 
 кодировка семи Markdown-файлов, 239 относительных ссылок и diff check прошли.
 Следом module loading/PAK mounting/GConfig Game cache/reload/late overrides;
 active слой из двух INI не выбран, сетевых обращений нет.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CONFIG-STARTUP.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONFIG-STARTUP.md).
 
 ## 19 октября 2026 — base Game config и сравнение с patch
 
@@ -1234,7 +1234,7 @@ WindowsGame.ini совпадает. Три новых теста проверя�
 ссылок и git diff --check прошли. Номер релиза, active settings и
 runtime precedence не доказаны. Далее startup/mount/GConfig cache/overrides;
 не подменять их выбором внешне подходящего INI.
-[Source/SHA/снимок](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+[Source/SHA/снимок](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PAK-CONFIG-RECOVERY.md).
 
 ## 19 октября 2026 — повторная сверка обновления по сообщению пользователя
 
@@ -1245,7 +1245,7 @@ sample_matches_unverified, EXE matches_research=true. Полные хеши 35 �
 Старые данные сохранены. Полная идентичность остальных архивов, версия релиза
 и совместимость с сервером не установлены. U02 остаётся частичным:
 следом сверка производных карт и связей с новыми таблицами/ресурсами.
-[Объём проверки и манифест](../resource-tools/vampir/CLIENT-RELEASE-AUDIT.md).
+[Объём проверки и манифест](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 ## 19 октября 2026 — PAK key callback → directory → packed Game config
 
@@ -1260,7 +1260,7 @@ Packed defaults дают scheme-less CDN bases, AppVersion 0.1.1, dev/False;
 active overrides не доказаны, HTTP запросов нет. Старые кеши сохранены.
 Полный набор: 203/203 теста, 112,3 с. Синтаксис четырёх Python-файлов,
 кодировка Markdown, 315 относительных ссылок и git diff --check прошли.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PAK-CONFIG-RECOVERY.md).
 Следующий шаг — parameter/command-line/late overrides и actual prefix/base/scheme.
 
 ## 19 октября 2026 — H04b-CDN-source: проверка нового key candidate
@@ -1274,7 +1274,7 @@ bounds-skipped и 34 compressed не проверены. Encrypted directory can
 Полный набор: 198/198 тестов, 107,2 с; после уточнения metadata повторены
 3 probe tests. Синтаксис трёх Python-файлов, кодировка Markdown, 298
 относительных ссылок и git diff --check прошли.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SOURCE-PROBE.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-SOURCE-PROBE.md).
 Следующий приоритет — PAK-key registration/физический Game config/late overrides.
 
 ## 19 октября 2026 — H04b-CDN: server_list и raw lobby detail plan
@@ -1287,7 +1287,7 @@ reference-control pointers — zero fixtures. Missing fields сохраняют 
 synthetic состояние; shared raw plan вместо него возвращает None без globals.
 Полный набор: 195/195 тестов, 106,2 с. Синтаксис трёх Python-файлов,
 кодировка Markdown, 290 относительных ссылок и git diff --check прошли.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-SERVER-LIST.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-SERVER-LIST.md).
 Actual config/endpoint readiness/full ReadJson/startup/auth handoff ещё открыты.
 
 ## 19 октября 2026 — H04b-CDN: JSON document → SDK environment
@@ -1301,7 +1301,7 @@ Policy: duplicates/nonfinite/invalid Unicode/depth/items/numbers отверга�
 полный набор: 188/188 тестов, 102,3 с. Синтаксис трёх Python-файлов,
 кодировка Markdown, 287 относительных ссылок и git diff --check прошли.
 TASKS разделён на HTTP acquisition, offline decode и полное acceptance/startup.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-JSON-FLOW.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-JSON-FLOW.md).
 Whole ReadJson/validation/actual settings/TLS/startup order ещё открыты.
 
 ## 19 октября 2026 — H04b-CDN: fallback AES envelope
@@ -1314,7 +1314,7 @@ primitives заменены явными hashlib/cryptography backend shims; nat
 raw bytes, optional crypto; Android ещё не проверен. Полный набор: 181/181
 тест, 98,6 с. Синтаксис трёх Python-файлов, кодировка Markdown, 281 относительная
 ссылка изменённых документов и git diff --check прошли.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-FALLBACK.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-FALLBACK.md).
 JSON acceptance/актуальные settings/TLS/HTTP compression ещё открыты.
 
 ## 19 октября 2026 — H04b-CDN: body/BOM decoder и status gate
@@ -1327,7 +1327,7 @@ Shared decode_cdn_body_text/LengthResponse.decode_text строго ограни
 Это явная local policy, а не побайтная копия native overread.
 Полный набор: 174/174 теста, 116,1 с. Синтаксис трёх Python-файлов,
 кодировка Markdown, 275 относительных ссылок и git diff --check прошли.
-[Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-BODY.md).
+[Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-BODY.md).
 Compression/chunked/EOF/JSON acceptance/settings/TLS ещё открыты; network_ready=false.
 
 ## 19 октября 2026 — H04b-CDN: Content-Length и ожидание тела
@@ -1340,7 +1340,7 @@ Range validation/diagnostics middle и полный receive loop не испол
 bytes через consumed; строгие local limits/status/duplicate/encoding правила.
 Полный набор: 167/167 тестов, 95,2 с. Синтаксис трёх Python-файлов,
 кодировка и 271 относительная ссылка изменённых документов, git diff --check
-прошли. [Source/SHA/границы](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-LENGTH.md).
+прошли. [Source/SHA/границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-RESPONSE-LENGTH.md).
 Chunked/compression/EOF/JSON/settings/TLS ещё открыты, network_ready=false.
 
 ## 19 октября 2026 — H04b-CDN: начало разбора ответа и сверка обновления
@@ -1352,7 +1352,7 @@ actual Windows CRT scanner с первыми 12 байтами, bounded strstr s
 Полный набор: 161/161 тест, 90,4 с; синтаксис трёх Python-файлов, кодировка,
 264 относительные ссылки изменённых документов и git diff --check прошли.
 Подробный source/SHA в
-[HEADLESS-CDN-RESPONSE-HEAD](../resource-tools/vampir/HEADLESS-CDN-RESPONSE-HEAD.md).
+[HEADLESS-CDN-RESPONSE-HEAD](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-RESPONSE-HEAD.md).
 Повторный release audit дал тот же immutable снимок: 34 changed/1 added, EXE
 прежний. Сервер, игра и аккаунты не использовались; network_ready=false.
 
@@ -2303,7 +2303,7 @@ slot+0x38; оба регистратора ID slot+0x28 и word key. Нераз�
 Новый `test_vampir_headless_packet_bindings.py`: 4/4 проверки прошли,
 включая 10 native исполнений ID-getters в Unicorn, независимый разбор PE и
 сверку байтов/слотов/коллизий/constructor calls. Подробности и VA:
-`resource-tools/vampir/HEADLESS-PACKET-BINDINGS.md`, общий FUNCTION-INDEX обновлён.
+`resource-tools/vampir/knowledge/evidence/network/HEADLESS-PACKET-BINDINGS.md`, общий FUNCTION-INDEX обновлён.
 Выход `F:/PhoneExit Resources/Vampir/code-clues/headless-packet-bindings.json`,
 SHA256 `35d1a72b6302a66cd19548b3da7caef362ccbd67d98eb8d26621d3c04512c508`.
 

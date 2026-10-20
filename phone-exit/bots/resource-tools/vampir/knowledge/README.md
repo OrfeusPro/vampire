@@ -17,13 +17,15 @@
 | Установленная роль функции и её границы | [function-roles.json](function-roles.json) | По VA и SHA клиента; только проверенные утверждения |
 | Все выбранные функции, входящие/исходящие calls, ссылки на разборы | `F:/PhoneExit Resources/Vampir/knowledge/function-registry.json` | Генерируется `function-registry.py --build`, вручную не редактируется |
 | Псевдокод и source-bound диапазоны | `F:/PhoneExit Resources/Vampir/ghidra/` | Существующие manifest / immutable export / verifier |
-| Подробный разбор, native fixtures, тесты, границы вывода | `HEADLESS-*.md`, scripts / tests | Существующие пути сохраняются; уточнения явно ссылаются на продолжение |
+| Подробный разбор и границы вывода | `knowledge/evidence/<тема>/*.md` | Уточнения явно ссылаются на продолжение; scripts / tests остаются в прежних кодовых каталогах |
 | Сырые выгрузки, большие отчёты, tools, SDK | `F:/PhoneExit Resources/Vampir/` | Вне Git; SHA и команды в подробном разборе |
 
-Legacy-документы не перемещаются массово: пути используются кодом, тестами и
-ссылками. Новые тематические подразделы создавать по необходимости, а не по
-одному каталогу на каждый небольшой шаг. При переносе сначала проверить и
-обновить все ссылки и зависимости; хранить одну авторитетную копию результата.
+Подробные документы разнесены по девяти темам; старые и новые пути сохранены в
+[document-locations.json](document-locations.json). При переносе пересчитаны
+Markdown-ссылки, evidence в JSON и указатели. Новые тематические подразделы
+создавать по необходимости, а не по одному каталогу на каждый небольшой шаг.
+Хранить одну авторитетную копию результата; старые накопительные указатели
+сохранены как история, актуальное состояние — в [TOPICS.md](TOPICS.md) и темах.
 Секреты, credentials, профили и реальные device keys в базе не хранить.
 
 ## Перед следующим исследованием
@@ -47,8 +49,14 @@ Legacy-документы не перемещаются массово: пути
 python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --build
 python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --query 14453cdf0
 python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --query SendSignIn
+python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --topic auth
 python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --question common-data-population
 ```
+
+`--topic` группирует функции по документам-доказательствам; одна функция может
+относиться к нескольким темам. Это навигация, а не автоматическое доказательство
+её семантики. Полный список разборов каждой темы строит
+`check-knowledge.py --build-topic-lists`; тот же инструмент проверяет Markdown-ссылки.
 
 ## Как оценивать доказательства
 

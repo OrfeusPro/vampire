@@ -66,11 +66,11 @@ Schema v2 добавляет пустые NID поля к v1 без замены
 ## Что известно из данных клиента
 
 Native SDK sign-in передаёт **два отдельных поля** deviceKey и nmDeviceKey:
-[цепочка функций, версия EXE, SHA256 и воспроизведение](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md).
+[цепочка функций, версия EXE, SHA256 и воспроизведение](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN.md).
 Email web flow также передаёт deviceKey и контекстные headers:
-[JS источники и границы](../resource-tools/vampir/HEADLESS-NID-EMAIL.md).
+[JS источники и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-EMAIL.md).
 Windows storage/GUID fallback разобраны статически, default GUID formatter
-исполнен на synthetic fixtures: [source/SHA](../resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md).
+исполнен на synthetic fixtures: [source/SHA](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-IDENTITY.md).
 Связь с физическим устройством, полный active storage lifecycle,
 дополнительные характеристики и серверная политика привязки пока не доказаны.
 Нельзя заменять оба поля одним UUID или считать любой Android ID их значением.
@@ -82,9 +82,9 @@ Windows storage/GUID fallback разобраны статически, default G
 
 ## Следующие задачи
 
-1. После [NID device context replay](../resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md)
+1. После [NID device context replay](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-DEVICE-CONTEXT.md)
    проверить NID getter lifecycle, active filename/Save/load и полный web context.
-   [Load fields/default filename](../resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md)
+   [Load fields/default filename](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-LOAD-DEVICES.md)
    проверены отдельно; файловый parsing/read-back ещё открыты.
    Schema v2 уже разделяет NID/SDK ключи; active platform и SDKZone открыты.
 2. Получить согласованные реальные значения для основного аккаунта с provenance.

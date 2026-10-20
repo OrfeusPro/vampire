@@ -13,7 +13,7 @@ patch INI — 0.1.1 / dev / False. Их native порядок применени
 Профиль recovered-base — явный выбор конфигурации собственного клиента для
 сетевой проверки. Он не объявляется снимком активного GConfig игры; поле
 active_game_cache_verified остаётся false. Это продолжение ранее выбранного
-[публичного base CDN-профиля](../resource-tools/vampir/HEADLESS-PUBLIC-CDN.md),
+[публичного base CDN-профиля](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PUBLIC-CDN.md),
 а не новый алгоритм выбора по внешнему виду строки версии.
 
 `game-source-profile.py` требует `selected_profile='recovered-base'`.
@@ -29,7 +29,7 @@ Snapshot находится в `F:/PhoneExit Resources/Vampir/resource-config-sn
 Дубликат или изменённые source bytes отклоняются. Старое извлечение нельзя
 молча перенести на обновившийся EXE / PAK. Runtime не извлекает PAK заново,
 не загружает Ghidra / Oodle и не пытается восстановить весь Unreal startup.
-Проверенное извлечение остаётся [отдельным инструментом](../resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md).
+Проверенное извлечение остаётся [отдельным инструментом](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PAK-CONFIG-RECOVERY.md).
 
 ```powershell
 python -X utf8 phone-exit/bots/vampir-headless/game-source-profile.py --profile recovered-base --check
@@ -41,9 +41,9 @@ python -X utf8 phone-exit/bots/vampir-headless/game-source-profile.py --profile 
 заполняет Version+0x10 и Login+0x40, то есть strings[0] / strings[3].
 Source chain уже установлена: NetworkSetting/AppVersion → global 0x14b520d10
 → оба packet preparation paths. Источники:
-[global loader](../resource-tools/vampir/HEADLESS-CDN-CONFIG.md),
-[Version fields](../resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md),
-[Login fields](../resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md).
+[global loader](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-CONFIG.md),
+[Version fields](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-CONNECTED-VERSION-PACKET.md),
+[Login fields](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-PACKET-FIELDS.md).
 
 Binding сохраняет все остальные строки / integers / bytes и исходные immutable
 templates. Пустая версия и несовпадающий уже заполненный контекст отклоняются.

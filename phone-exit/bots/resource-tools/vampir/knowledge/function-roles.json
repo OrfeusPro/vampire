@@ -3,31 +3,31 @@
   "roles": {
     "0x14453cdf0": {
       "role": "UNMServiceSettings::Save",
-      "evidence": "HEADLESS-SDK-STORAGE.md",
+      "evidence": "knowledge/evidence/auth/HEADLESS-SDK-STORAGE.md",
       "status": "diagnostic_and_static",
       "limits": "Полная сериализация и успех файловых операций не проверены. Не является доказательством заполнения common data."
     },
     "0x144548cb0": {
       "role": "FPlatformLogImpl::SendSignIn",
-      "evidence": "HEADLESS-SDK-SIGN-IN-LOG.md",
+      "evidence": "knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-LOG.md",
       "status": "diagnostic_and_bounded_native",
       "limits": "Проверены ветвь без сервиса и capture события при доступном сервисе. Optional PlatformType и конечный log transport не проверены. Продолжение — HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md."
     },
     "0x144546880": {
       "role": "FLogImpl::SendPlatformLog",
-      "evidence": "HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md",
+      "evidence": "knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md",
       "status": "diagnostic_and_static",
       "limits": "Копирует common data и вызывает writer; полный sink и реальная сетевая отправка не исполнялись."
     },
     "0x144524d70": {
       "role": "Getter компонента platform log: owner+0x78",
-      "evidence": "HEADLESS-SDK-SIGN-IN-LOG.md",
+      "evidence": "knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-LOG.md",
       "status": "bounded_native",
       "limits": "Не возвращает структуру common data из 37 строк."
     },
     "0x14450f420": {
       "role": "Factory owner для common data",
-      "evidence": "HEADLESS-NID-OWNER-FACTORY.md",
+      "evidence": "knowledge/evidence/auth/HEADLESS-NID-OWNER-FACTORY.md",
       "status": "bounded_native",
       "limits": "Проверены успешные allocations; начальные 37 полей пусты, последующее заполнение не проверено."
     }

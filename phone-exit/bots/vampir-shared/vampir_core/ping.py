@@ -1,6 +1,6 @@
 """Shared Vampir Ping payload bits for the investigated build, excluding framing.
 
-Source and native reference vectors: resource-tools/vampir/HEADLESS-PING-CODEC.md.
+Source and native reference vectors: resource-tools/vampir/knowledge/evidence/network/HEADLESS-PING-CODEC.md.
 Values are unsigned bit patterns; field semantics and session timing are unknown.
 """
 import struct

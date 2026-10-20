@@ -20,7 +20,7 @@
 
 ## Ghidra
 
-[Полная инструкция](HEADLESS-GHIDRA.md), закрепление в `ghidra-tools.lock.json`.
+[Полная инструкция](knowledge/evidence/tools/HEADLESS-GHIDRA.md), закрепление в `ghidra-tools.lock.json`.
 Ghidra 12.1.4 и отдельная Temurin JDK21 установлены вне Git. Общие результаты:
 `F:/PhoneExit Resources/Vampir/ghidra/INDEX.md`.
 Для очередного участка сначала читать `.c` и call graph, затем дополнять manifest
@@ -74,7 +74,7 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/check-secondary-tools.py
 Probe читает файлы, не запускает клиент и не получает ключи или профиль аккаунта.
 Профиль `GAME_UE5_5` выбран по ранее найденному литералу EXE
 `E:/Work/UE5/Release-5.5/.../GameEngine.cpp`;
-[привязка и границы](NPC-LOOT.md). Это не полное определение cooked custom versions.
+[привязка и границы](knowledge/evidence/game-data/NPC-LOOT.md). Это не полное определение cooked custom versions.
 Предварительные пробы `UE4_27/UE5_0` дали overflow на loose header;
 некоторые другие UE5 profiles тоже читают этот header, поэтому сам успех
 чтения не доказывает версию движка.
@@ -108,7 +108,7 @@ UObject properties, DataTable и карта этим тестом не подт�
 20 октября пользователь разрешил live-эксперимент. Повышенный helper получил
 отказ 5 при перечислении модулей, до загрузки DLL. SDK не получен; причина
 отказа и совместимость не установлены.
-[Точные условия и отчёты](HEADLESS-DUMPER7-LIVE.md).
+[Точные условия и отчёты](knowledge/evidence/tools/HEADLESS-DUMPER7-LIVE.md).
 
 DLL: `tools/dumper7/Dumper-7-90d1f390d26e31a1f71d29af56c6bd2f240b7493/Dumper/x64/Release/Dumper-7.dll`
 относительно библиотеки Vampir. Проверены сигнатуры MZ/PE, machine `0x8664`,

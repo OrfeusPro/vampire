@@ -9,7 +9,7 @@ send 545 / recv 11 466, socket сохранялся во время игрово
 Игра вернула Version 0 / Login 16, body 131, send 641 / recv 94 байта,
 других ID нет. Персонажи не запрашивались; сокеты и JP-транспорт закрыты,
 exit 0, stderr пуст. Изменение ревизии пока не устранило отказ.
-[Связи ClientVersion, SHA и снимки](../resource-tools/vampir/HEADLESS-PATCH-CLIENT-VERSION.md).
+[Связи ClientVersion, SHA и снимки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PATCH-CLIENT-VERSION.md).
 
 ## Login в лобби для JP 251 и сохранение соединения
 
@@ -20,7 +20,7 @@ exit 0, stderr пуст. Изменение ревизии пока не уст�
 Обе проверки получили игровой Version 0 / Login 16, InvalidState, body 131,
 send 641 / recv 94 байта. Персонажи не запрашивались. Сокеты и JP-транспорт
 закрыты, exit 0, stderr пуст. Изменённый порядок сам по себе отказ не устранил.
-[Связи, исправление и снимки конфигураций](../resource-tools/vampir/HEADLESS-SELECTED-LOBBY-LOGIN.md).
+[Связи, исправление и снимки конфигураций](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SELECTED-LOBBY-LOGIN.md).
 
 ## Повтор с новой SDK-сессией: снова InvalidState
 
@@ -61,7 +61,7 @@ send 641 / recv 94. Native mapper подтвердил InvalidState. Код 58 �
 попытке не получен; причина изменения ещё не доказана. Windows-профиль
 Netmarble и аккаунт сохранены. Персонажи не запрашивались, сокеты и JP-клиент
 закрыты, exit 0, stderr пуст. Новая почта пока не создавалась.
-[Снимки, расшифровка и границы](../resource-tools/vampir/HEADLESS-RESULT-ERROR-16.md).
+[Снимки, расшифровка и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESULT-ERROR-16.md).
 
 ## Version с неизвестным адресом исходящего SOCKS-соединения
 
@@ -71,7 +71,7 @@ Netmarble и аккаунт сохранены. Персонажи не запр
 Получены Version 0 / Login 58, body 131 байт, send 641 / recv 94.
 Отказ сохраняется; влияние правильного адреса и полная причина ещё неизвестны.
 Персонажи не запрашивались. Сокеты и JP-клиент закрыты, exit 0, stderr пуст.
-[Native-проверка, снимки и границы](../resource-tools/vampir/HEADLESS-CONNECTED-LOCAL-ADDRESS.md).
+[Native-проверка, снимки и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-CONNECTED-LOCAL-ADDRESS.md).
 
 ## Отдельная проверка страны без повторного игрового Login
 
@@ -82,7 +82,7 @@ send 545 / recv 11 466. Использован --server-list-only: игрово�
 Version / Login и запроса персонажей в этой проверке не было. Лобби закрыто,
 JP-клиент завершён с exit 0, stderr пуст. Предыдущий BlockedIp не объясняется
 несовпадением HK с проверенным country list.
-[Снимки и границы](../resource-tools/vampir/HEADLESS-SERVER-COUNTRY-POLICY.md).
+[Снимки и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SERVER-COUNTRY-POLICY.md).
 
 ## Проверка состояния JP-серверов
 
@@ -93,12 +93,12 @@ JP-клиент завершён с exit 0, stderr пуст. Предыдущи�
 JP 251 снова получил Version 0 / Login 58, body 131 байт, send 650 / recv 94.
 Найденное условие сброса выбранного сервера не объясняет этот отказ.
 Сокеты и временный JP-клиент закрыты, exit 0, stderr пуст.
-[Native-проверка, снимки и границы](../resource-tools/vampir/HEADLESS-SERVER-ENTRY-STATE.md).
+[Native-проверка, снимки и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SERVER-ENTRY-STATE.md).
 
 ## Проверка явного региона JP
 
 Следующая свежая попытка использовала `--region JP`, а не прежний минимальный
-ID общего списка. Связи региона подтверждены [native-проверкой и таблицами](../resource-tools/vampir/HEADLESS-SERVER-REGION-SELECTION.md).
+ID общего списка. Связи региона подтверждены [native-проверкой и таблицами](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-SERVER-REGION-SELECTION.md).
 Свежий ID 104 показал: старый server ID 101 имеет region code 1 / KR.
 Новый selector выбрал **server ID 251 / group ID 251, JP / 4**.
 
@@ -124,7 +124,7 @@ python -X utf8 phone-exit/bots/vampir-headless/probe-selected-game-login.py `
   --context windows-sdk-initial-reset --extra-number 0 --password-stdin
 ```
 
-Уточнение: [код 58 подтверждён как BlockedIp](../resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md).
+Уточнение: [код 58 подтверждён как BlockedIp](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESULT-ERROR-58.md).
 Ниже сохранён результат первой реальной попытки до этой расшифровки.
 
 ## Дополнительная проверка через JP
@@ -184,7 +184,7 @@ ContinueBillingCountryCodes содержит KR, JP, TW, HK, MO; поле о bil
 
 ## Контекст запроса
 
-Использован [сборщик начального Windows SDK-контекста](../resource-tools/vampir/HEADLESS-LOGIN-INITIAL-CONTEXT.md):
+Использован [сборщик начального Windows SDK-контекста](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-INITIAL-CONTEXT.md):
 `windows-sdk-initial-reset`, без NID UserInfo / manager68, byte настроек 7,
 начальная строка wrapper пустая. Дополнительное uint32 +0x50 явно выбрано
 равным 0 как локальная политика собственного клиента. Это не утверждение
@@ -227,7 +227,7 @@ LoginFlow сохраняет безопасные коды обоих ответ
 `de4290a628e2f548d75e64bd4b9cae5eb32a7dd3e6b2bd19ff9237f00ec9a76b`
 и GMC2 `3659971df64f275cbf8f64cd3be0b2df38510268703ff6c687429c6a2b2580cd`.
 Поля Version описаны в [реальной проверке версии](LIVE-GAME-VERSION.md),
-схема ответа — в [LoginResult reader](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
+схема ответа — в [LoginResult reader](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-RESULT-READER.md).
 
 Из корня проекта, пароль только через stdin; перед новой внешней попыткой
 нужны действующий HK-транспорт и новые снимки:

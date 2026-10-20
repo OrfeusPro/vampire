@@ -7,7 +7,7 @@
 
 ## Выбранный контекст собственного клиента
 
-Прежний [native replay preparation](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-PREPARATION.md)
+Прежний [native replay preparation](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-LOGIN-PREPARATION.md)
 проверил отдельную ветвь: SDK auth присутствует, NID UserInfo отсутствует.
 Она передаёт SDK player ID / SDK access token / NMDeviceKey / отдельный NID,
 оставляя country и metadata пустыми. Для первой headless-попытки выбран

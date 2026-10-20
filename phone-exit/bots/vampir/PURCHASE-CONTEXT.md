@@ -3,8 +3,8 @@
 16 октября 2026. Модуль 1.0.21. Один общий бот, без условий по имени персонажа.
 
 Источники действия остаются прежними: [shop-reference.json](shop-reference.json),
-[SHOP-REPLAY.md](../resource-tools/vampir/SHOP-REPLAY.md) и
-[NATIVE-SEMANTICS.md](../resource-tools/vampir/NATIVE-SEMANTICS.md).
+[SHOP-REPLAY.md](../resource-tools/vampir/knowledge/evidence/scenarios/SHOP-REPLAY.md) и
+[NATIVE-SEMANTICS.md](../resource-tools/vampir/knowledge/evidence/game-data/NATIVE-SEMANTICS.md).
 Guide 901030 → task 901030010 (CSV 1454, запись 5816) → NpcShopBuy,
 NPC 1101101 / категория 3 → продукт 10500003 → предмет 91100005,
 одна штука за 75 Gold. Полные пути и SHA256 таблиц находятся в shop-reference.json.

@@ -1,0 +1,53 @@
+# Версии, snapshots и обновления данных
+
+## Установлено
+
+Есть аудит установленного клиента, release / patch snapshots, индексы
+извлечений и источников, проверка SHA и повторное извлечение изменившихся данных.
+Полный SHA и выборочный отпечаток в доказательствах различаются.
+[Аудит](../evidence/updates/CLIENT-RELEASE-AUDIT.md),
+[индекс релиза](../evidence/updates/CLIENT-RELEASE-INDEX.md).
+
+ClientVersion из windows.manifestlist связан с числом Login; для теста
+использована ревизия 258392. Отдельные pakchunk revisions не равны автоматически
+общей ревизии клиента. [Связь](../evidence/updates/HEADLESS-PATCH-CLIENT-VERSION.md).
+CDN / GMC2 probes сохраняют свежие публичные snapshots; это не доказательство
+полной совместимости всех ресурсов и протокола новой версии.
+
+## Открыто
+
+Единый продуктовый процесс: версия / SHA → diff источников → переизвлечение →
+проверка затронутых таблиц, адресов, UI и геометрии → runtime-регрессии.
+Проверка только заголовка архива или части файлов не закрывает весь pipeline.
+Windows / Android parity и перенос старых mappings требуют отдельной проверки.
+
+<!-- evidence-inventory -->
+## Подробные разборы
+
+Это источники и история проверок; наличие документа не означает завершённую live-функцию.
+
+- [Проверка обновления клиента, 19 октября 2026](../evidence/updates/CLIENT-RELEASE-AUDIT.md)
+- [Новые индексы и CSV после обновления, 19 октября 2026](../evidence/updates/CLIENT-RELEASE-INDEX.md)
+- [CDN: тело ответа и BOM, 19 октября 2026](../evidence/updates/HEADLESS-CDN-BODY.md)
+- [Источник окружения SDK: CDN config](../evidence/updates/HEADLESS-CDN-CONFIG.md)
+- [CDN: запасная расшифровка тела, 19 октября 2026](../evidence/updates/HEADLESS-CDN-FALLBACK.md)
+- [CDN: полный базовый GET header block](../evidence/updates/HEADLESS-CDN-HEADERS.md)
+- [CDN HTTP: default GET/1.0 и offline draft](../evidence/updates/HEADLESS-CDN-HTTP.md)
+- [CDN: JSON, fallback и окружение SDK, 19 октября 2026](../evidence/updates/HEADLESS-CDN-JSON-FLOW.md)
+- [CDN: AppVersion, Windows platform и общий offline URL](../evidence/updates/HEADLESS-CDN-PREPARATION.md)
+- [CDN: граница и статус ответа, 19 октября 2026](../evidence/updates/HEADLESS-CDN-RESPONSE-HEAD.md)
+- [CDN: Content-Length и ожидание тела, 19 октября 2026](../evidence/updates/HEADLESS-CDN-RESPONSE-LENGTH.md)
+- [Выбор базы CDN и конфигурация Game](../evidence/updates/HEADLESS-CDN-SELECTION.md)
+- [CDN: выбор сервера и данные лобби, 19 октября 2026](../evidence/updates/HEADLESS-CDN-SERVER-LIST.md)
+- [Актуальный источник CDN: ограниченные проверки, 19 октября 2026](../evidence/updates/HEADLESS-CDN-SOURCE-PROBE.md)
+- [CDN URI parser → GET request line](../evidence/updates/HEADLESS-CDN-URI.md)
+- [CDN URL: завершающая сборка строки](../evidence/updates/HEADLESS-CDN-URL.md)
+- [NetworkSetting: callback вызывается при регистрации](../evidence/updates/HEADLESS-CONFIG-STARTUP.md)
+- [RequestGMC2: аргументы GET и условия заголовков](../evidence/updates/HEADLESS-GMC2-HEADERS.md)
+- [GMC2: native сборка URL из явных значений](../evidence/updates/HEADLESS-GMC2-URL.md)
+- [GMC2 DecryptXOR: 16-битные единицы и пропуск нуля](../evidence/updates/HEADLESS-GMC2-XOR.md)
+- [Описания модулей base и patch](../evidence/updates/HEADLESS-MODULE-DESCRIPTORS.md)
+- [PAK: ключ callback, каталог и упакованный Game config](../evidence/updates/HEADLESS-PAK-CONFIG-RECOVERY.md)
+- [ClientVersion из manifestlist до числа игрового Login](../evidence/updates/HEADLESS-PATCH-CLIENT-VERSION.md)
+- [Публичная CDN-конфигурация получена и разобрана](../evidence/updates/HEADLESS-PUBLIC-CDN.md)
+- [Реальный публичный GMC2 response и SDK constants](../evidence/updates/HEADLESS-PUBLIC-GMC2.md)

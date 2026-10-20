@@ -1,0 +1,1218 @@
+{
+  "version": 1,
+  "documents": [
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/ATTRIBUTES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/game-data/ATTRIBUTES.md",
+      "topic": "game-data",
+      "old_sha256": "a43ea0fef2c7d5a117ed17163ca075aa027c7e3db4f6930727c6b4919b5ddd4c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CATALOG-STRUCTURE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/game-data/CATALOG-STRUCTURE.md",
+      "topic": "game-data",
+      "old_sha256": "fdf186766a61748094f544a118b5c7850c32a341c64227506c00bb96952d23af"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CLIENT-RELEASE-AUDIT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md",
+      "topic": "updates",
+      "old_sha256": "28c881c830631ea616761921dcf1cc52b516b0980cb54b522942821b483d6940"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CLIENT-RELEASE-INDEX.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-INDEX.md",
+      "topic": "updates",
+      "old_sha256": "8303dab90dffeee19da8635032f8c3ed572480e7596b12b7b2de71a86889c9fb"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CODE-CLUES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/tools/CODE-CLUES.md",
+      "topic": "tools",
+      "old_sha256": "c977b2d6878dd724162ff1deb2c9b9b608f4d542c57907b3e95614f83b1cc977"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/COLLECTIONS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/game-data/COLLECTIONS.md",
+      "topic": "game-data",
+      "old_sha256": "a2e44a2d01073abd4cbfd397b4c9e811b569c4b4871f0b9ef000fe475b8558ba"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CONDITION-GATE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-GATE.md",
+      "topic": "scenarios",
+      "old_sha256": "280c2ad45ae735a294bc1953c251f5b08e31cdafef8549e2d85b9ce78cecc5f0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CONDITION-PREDICATE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-PREDICATE.md",
+      "topic": "scenarios",
+      "old_sha256": "01546408827d711184f9e6578b15b3aad33cbab4a7bd3b9396422d31c20f6349"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CONDITION-STATE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-STATE.md",
+      "topic": "scenarios",
+      "old_sha256": "ba2c77d8076fb9baea193d75b028ee306e35ab714198d473ad4620843bc17360"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CONDITION-TYPES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/CONDITION-TYPES.md",
+      "topic": "scenarios",
+      "old_sha256": "cd3b05363c51c82a47838e50fdfca80332770dcc1fc960f44b470dda3571bf10"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CONTENTS-LOCK-FIELDS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/CONTENTS-LOCK-FIELDS.md",
+      "topic": "scenarios",
+      "old_sha256": "3ff141fec89e90f1b7271f55981d1df5bfdf733cfd970a3724b2d459be2a0f3b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/CONTENTS-LOCKS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/CONTENTS-LOCKS.md",
+      "topic": "scenarios",
+      "old_sha256": "ee8a624b2063ab867e9a3fadaad357323b6b631e70a4198af84f940533bcf522"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/ENTRY-BUTTONS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/ENTRY-BUTTONS.md",
+      "topic": "interface",
+      "old_sha256": "48424f43a3a7f48c957b74421ec4b376348205b689df4352fd954f02666f21c9"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/ENTRY-FLOW.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/ENTRY-FLOW.md",
+      "topic": "interface",
+      "old_sha256": "20a979cf80b05d64d8cecc7fc612d5398684d80a90dcefc69e47c5192345b18c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/ENTRY-WINDOWS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/ENTRY-WINDOWS.md",
+      "topic": "interface",
+      "old_sha256": "2fda59ae39cafa9ea04645f6b8d1938ee8847f567f82d1e6f8a33f5c9406c022"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/FADER-CLASS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/FADER-CLASS.md",
+      "topic": "interface",
+      "old_sha256": "282cd7a0b11b48acd757ef5db56fee9a20aebbbe79b9b908c8868c4ccb7b3ff8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-AUTH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-AUTH.md",
+      "topic": "auth",
+      "old_sha256": "2a72f07cd4f0ca496e6e5f93d6e3873d34511a27ff21bdf7d715c3bd88e1bcd8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-BEGIN-GAME-SERVER-TARGET.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-BEGIN-GAME-SERVER-TARGET.md",
+      "topic": "network",
+      "old_sha256": "3cb9597e23ee4b12392a208eb0492fa78fce39de8f6d4c8b9bb61584075e1b5b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-BLOCK-DECODE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-BLOCK-DECODE.md",
+      "topic": "network",
+      "old_sha256": "c055ecb584ab3ff1433edaa2b51b30b7a79fcfd4a9fec3c60f50ff7f10cfd7b8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-BODY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-BODY.md",
+      "topic": "updates",
+      "old_sha256": "ed55681b151a596095360c2070f1bfcf31b199529339beeeda07923907bd1e23"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-CONFIG.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-CONFIG.md",
+      "topic": "updates",
+      "old_sha256": "b1da5bbad711b2a1e65d669bb6e27e701ba3eea36950870d8d4e9580a3be7df8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-FALLBACK.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-FALLBACK.md",
+      "topic": "updates",
+      "old_sha256": "4e3ac0886ca24df4bf98f4562b0bdc613714b2b7d653472a6cfb9aa747d4c6ff"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-HEADERS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-HEADERS.md",
+      "topic": "updates",
+      "old_sha256": "52518ee8bf611754b96c4cb75f678f1375822904479f8bdfcbd9c389b4838766"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-HTTP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-HTTP.md",
+      "topic": "updates",
+      "old_sha256": "f8c44d4fc3d482283f4c09805b80d0fd957951a33e7f76c49067bea2b9326add"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-JSON-FLOW.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-JSON-FLOW.md",
+      "topic": "updates",
+      "old_sha256": "1f0df19d1616d14f396e96c5af7e5479a5782b5528786ae06d0d80ad07d57205"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-PREPARATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-PREPARATION.md",
+      "topic": "updates",
+      "old_sha256": "e9abfb68b10ef2486f1917a3999d10f218a00c05e46da5bc73fd75b5e93f9076"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-RESPONSE-HEAD.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-RESPONSE-HEAD.md",
+      "topic": "updates",
+      "old_sha256": "b57b955d2b7b8460214246c19b832591ce811a5db89f6134dfa0043fd980d384"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-RESPONSE-LENGTH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-RESPONSE-LENGTH.md",
+      "topic": "updates",
+      "old_sha256": "b5353a32275a93e785807b9590e39d7357b64db072a80deec335394799875219"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-SELECTION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-SELECTION.md",
+      "topic": "updates",
+      "old_sha256": "6dc93f979de273c048aa8c7190a0d7b67395f8049c82cede325e532df736ac6b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-SERVER-LIST.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-SERVER-LIST.md",
+      "topic": "updates",
+      "old_sha256": "ca54a4a5231d14261bd17a42967117ab4b8c12714dcc5bf4252d812d1d4eccaf"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-SOURCE-PROBE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-SOURCE-PROBE.md",
+      "topic": "updates",
+      "old_sha256": "e9e0afafef70a86780e555505f57d1f1fc54da9e121497bd0b8d12e0eb020f74"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-URI.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-URI.md",
+      "topic": "updates",
+      "old_sha256": "090336b6e72ec0a82b2e661afc75ab252d9b2ef16b551eb4498ac8e749b99bf0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CDN-URL.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CDN-URL.md",
+      "topic": "updates",
+      "old_sha256": "5a541ab1717fd4366d053f49a05787e61971794520b9f4e4ed06853abaeb52e5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHANNEL-SILENT-HANDOFF.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-CHANNEL-SILENT-HANDOFF.md",
+      "topic": "auth",
+      "old_sha256": "d08ee297d4cca8b2d2e54a65175ed1d7dfbad23a9f24f0e850426d7eb1ef4d2a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-CODECS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-CODECS.md",
+      "topic": "characters",
+      "old_sha256": "f958827e5f11d3690ad775b03e672e86c58055163893d2043629eacb2d454a92"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-LIST-BOUNDARY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-LIST-BOUNDARY.md",
+      "topic": "characters",
+      "old_sha256": "9364a859e765a9340ec20641d5488811f1d2d46c9d47c0c0995fbc612e1c404b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-LIST-CALLER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-LIST-CALLER.md",
+      "topic": "characters",
+      "old_sha256": "38f20812b6a8e9c65d9847bfcde2454fda32a8ac715c2bf31f19774dd877c40b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-LIST-EXTENSIONS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-LIST-EXTENSIONS.md",
+      "topic": "characters",
+      "old_sha256": "813a5359e4353149abb703f3994cd9aaee52afa4049e0a7af805a7f7cdc8983c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-COLLECTIONS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-COLLECTIONS.md",
+      "topic": "characters",
+      "old_sha256": "e28cf9bab06ad18618ad58c35684b9ca56f8514dffe8f43cf976c303dc9d8658"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-DECODER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-DECODER.md",
+      "topic": "characters",
+      "old_sha256": "1a04599d66ad363edba84c4150005c01b8f9d2ccd0a5f20016e6907e9389e66c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-DERIVED-MANAGER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-DERIVED-MANAGER.md",
+      "topic": "characters",
+      "old_sha256": "b34b9b3b98ca70b0b05676bd6f0cfc6964bec1f9f45dd8a77bf2f6560df57a0d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-HANDLER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-HANDLER.md",
+      "topic": "characters",
+      "old_sha256": "b578f0a158ad7a63f31276427b384235b2500de5da8fbbeaedaacecbb6d802a3"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-OPTION-SEND.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-OPTION-SEND.md",
+      "topic": "characters",
+      "old_sha256": "d6c0e8e9a3bde2a6a8c8c5e5d23fc95058c1c1f745890ec0e95de17f5f1dbd6a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-POST-MANAGER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-POST-MANAGER.md",
+      "topic": "characters",
+      "old_sha256": "93c7b1c1abe36b41a7689cf1a3266bbfb87a040ff3813d2a4f5bf49ecf4cfabd"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-RESULT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-RESULT.md",
+      "topic": "characters",
+      "old_sha256": "f27453d3fb79c26c91cc35576385cdf633ba477f73fc1d3fb30ec3884b7a546d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CHARACTER-SELECT-SEND.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-SELECT-SEND.md",
+      "topic": "characters",
+      "old_sha256": "91a0a49df2c4f28e8a6d1f9c5b7147f56baa5d8f8fec3362eae70d3309fc56b8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CONFIG-STARTUP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONFIG-STARTUP.md",
+      "topic": "updates",
+      "old_sha256": "cc476a4aee8a1cac4645abb52cb3cc9e5d495f3b4daa177766ae170b47200cb9"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CONNECT-RESOLVER-HANDOFF.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-CONNECT-RESOLVER-HANDOFF.md",
+      "topic": "network",
+      "old_sha256": "bff03409140eaa8f33d56b0d8353cf867d1170657cf5abf54f022926c63dabd1"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CONNECTED-LOCAL-ADDRESS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-CONNECTED-LOCAL-ADDRESS.md",
+      "topic": "network",
+      "old_sha256": "dc4bfe09ef1ec488b5c7a24f3e2d08688639bc1f2726ebbf5c1780713aa0bc95"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-CONNECTED-VERSION-PACKET.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-CONNECTED-VERSION-PACKET.md",
+      "topic": "network",
+      "old_sha256": "d8567b163a834bd4384e6bcfa4726aab590f43b6ecf0f2fd94ac8f62da2b3a06"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-DEVICE-IDENTITY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-IDENTITY.md",
+      "topic": "auth",
+      "old_sha256": "3999e6454c28db073712bf3bfdf3830fe82e65b46952dc166d8bcca1b09bcc27"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-DEVICE-LIFECYCLE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-LIFECYCLE.md",
+      "topic": "auth",
+      "old_sha256": "e617ebfd1e5fc424a5e95223fcbb53a4f14d45767025fd99fbdf867a079f6ea5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-DEVICE-SETTER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-DEVICE-SETTER.md",
+      "topic": "auth",
+      "old_sha256": "342aae9e97659f3f7daf90eac849d555fc1ba03a727b0255b34690bde1ceb70b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-DISPATCH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-DISPATCH.md",
+      "topic": "network",
+      "old_sha256": "7fbc46db680f48370edcc0d2b0b6e7e4e871efc5cba2f2f543f841ec60a8daf7"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-DUMPER7-LIVE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/tools/HEADLESS-DUMPER7-LIVE.md",
+      "topic": "tools",
+      "old_sha256": "d0c0fda73acd5bf29a9280a734ae4848ee0187e998a5ccc8ff2448cdd21b60ce"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-FRAME-PRIMITIVES.md",
+      "topic": "network",
+      "old_sha256": "da6555046eb43d729fc313395ca949470f12bac6319f6e276be78b7c6bbaf81e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-FRANZ2-LOGIN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-FRANZ2-LOGIN.md",
+      "topic": "network",
+      "old_sha256": "265f49f8803aa5e8964b53603067e8358fe9fa77b298c8d8be16f0e967c4335f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GAME-AUTO-SIGN-IN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GAME-AUTO-SIGN-IN.md",
+      "topic": "auth",
+      "old_sha256": "8ca65369410d12ee25aaa4f888f30c9e628c5101ba7396c5efd69165d17a9e00"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GAME-CONNECT-TARGET.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-GAME-CONNECT-TARGET.md",
+      "topic": "network",
+      "old_sha256": "1477b8bbc4dd2ba9459f6a6bfc44eb15973c154b83c528d39cf6d67398055932"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GAME-LOGIN-INPUTS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-GAME-LOGIN-INPUTS.md",
+      "topic": "network",
+      "old_sha256": "e803a860d79975f3d595a14ff21d77a71a8e9e0e7ac2c31fbf6e0f9d2183556d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GAME-PGS-BRANCH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GAME-PGS-BRANCH.md",
+      "topic": "auth",
+      "old_sha256": "268e9d332c25bc0092992d2dbe15ec046f600168cf3f11536fe85cad8fe4825e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GAME-SUCCESS-BROADCAST.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GAME-SUCCESS-BROADCAST.md",
+      "topic": "auth",
+      "old_sha256": "1bbc1aa8917907c99e0f8b0e807884c125ba380c6dfcaff1b7f1adab07e9283a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GHIDRA.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/tools/HEADLESS-GHIDRA.md",
+      "topic": "tools",
+      "old_sha256": "9765bf5e832b0521c0ac90290f0c63146f97f6bfc6b9661dbf88d877c57cef58"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GMC2-HEADERS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GMC2-HEADERS.md",
+      "topic": "updates",
+      "old_sha256": "69a4bced9166297e24e1f588a975387e856634537f3c25645e150ee596c1846f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GMC2-URL.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GMC2-URL.md",
+      "topic": "updates",
+      "old_sha256": "53320e845cab0283675a1f9ca7958cb0ec651c15cc965f158b974d5001d7b2f0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-GMC2-XOR.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-GMC2-XOR.md",
+      "topic": "updates",
+      "old_sha256": "9dbca04dd3a55706f843bf98496caab7cdbd7debaaf62aa4aa302efcafcb6b3f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-KEY-CHANGE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-KEY-CHANGE.md",
+      "topic": "network",
+      "old_sha256": "4de22ef318d5015e63f7c6e145a773e9c1741838c132b908082c3a4cbfd958fb"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LISTENER-LOOP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LISTENER-LOOP.md",
+      "topic": "network",
+      "old_sha256": "f4069f2ff05b51f58abd68d08d680ea67f711ab2bc86279826fdf6301b41fd63"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOBBY-CONNECT-FLOW.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-CONNECT-FLOW.md",
+      "topic": "network",
+      "old_sha256": "56eee9be3125757f52d0fb0c2a4bdde84d117935aaa3c4170ec0eae224774e9f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOBBY-HANDSHAKE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-HANDSHAKE.md",
+      "topic": "network",
+      "old_sha256": "bc380f9eff6e8c6d454331f5887458de9651bf28af05d0409d230a306ec43849"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOBBY-LOGIN-PREPARATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-LOGIN-PREPARATION.md",
+      "topic": "network",
+      "old_sha256": "2d27825bb13f371ef252506941ea3dad7a39cf56a9d0cc52781b3011e22d292a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOBBY-LOGIN-WRITER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-LOGIN-WRITER.md",
+      "topic": "network",
+      "old_sha256": "f0df19469565e8561a3772451507187d5afcb2b9f0d0fbe8759093ad12a00f7d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOBBY-LOGIN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-LOGIN.md",
+      "topic": "network",
+      "old_sha256": "ba9b6ac85eeb6a546fc062e8a6c6d892637192ddad4844fd563d0fd4a704c0a1"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOBBY-RECORD-ENDPOINT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-RECORD-ENDPOINT.md",
+      "topic": "network",
+      "old_sha256": "0200c4045c322f0fcb7f445e14fceab469467ad05a35ab760261f9c1d47aecfa"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOBBY-WINDOWS-CONTINUATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOBBY-WINDOWS-CONTINUATION.md",
+      "topic": "network",
+      "old_sha256": "da6fc46564fa77f4d5a3cf6544478e64502f518ed2c586867e08f61ad1b46c43"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-INITIAL-CONTEXT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-INITIAL-CONTEXT.md",
+      "topic": "network",
+      "old_sha256": "e934200f1b87660ffdacb7ffdea1f3a1b849bd01c523b99870bcbeef0e6dcf0c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-PACKET-FIELDS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-PACKET-FIELDS.md",
+      "topic": "network",
+      "old_sha256": "755b437794bffd8253050977a38071ad612a09f05f0de429d867e7b54c881ec6"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-PACKET-WRITER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-PACKET-WRITER.md",
+      "topic": "network",
+      "old_sha256": "dea773624fd8adc1ac42d10b5cd118f807c6891593e0be5ef55c7ee6f70ba9e7"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-POLICY-INPUTS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-POLICY-INPUTS.md",
+      "topic": "network",
+      "old_sha256": "e61751e535fd7e56da662932eacb09f2c5bdb96e9088b32c4bb5408f283129cd"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-RESULT-HANDLER.md",
+      "topic": "network",
+      "old_sha256": "087ca95613bc8bcbce4297858b30ee0e3fd0c13663bedc9f44725d459bdb9eb0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-RESULT-READER.md",
+      "topic": "network",
+      "old_sha256": "559a4124bbd068d2aaa432efb9b670b9122ce39dbc08e1cf5d558e5f40c543d7"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-REVISION-INPUT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-REVISION-INPUT.md",
+      "topic": "network",
+      "old_sha256": "97e8ad4a5461ed22bffd78e49179781967a04c05ef96d0f25c8b613b0aa1770f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-SEND-PATH.md",
+      "topic": "network",
+      "old_sha256": "fc88c92f4c10fb97532abab0d4846e236452dccc41c629472332bc676be9fbe6"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-MODULE-DESCRIPTORS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-MODULE-DESCRIPTORS.md",
+      "topic": "updates",
+      "old_sha256": "513818d55e5c1d2463b70f1e2a1049545b15b91ef0725cc500b50d67add393e8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-COMMON-LOG-DATA.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-COMMON-LOG-DATA.md",
+      "topic": "auth",
+      "old_sha256": "3505a0b0d75fec17f40c6a6397a2d4a4a13442cd7596458f74da768bb8747fa9"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-CREDENTIAL.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-CREDENTIAL.md",
+      "topic": "auth",
+      "old_sha256": "7359a33c175fc048679b054acf71d8abe046fe3be55bd28ea33720033b6bc91d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-DEVICE-CONTEXT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-DEVICE-CONTEXT.md",
+      "topic": "auth",
+      "old_sha256": "b372eeccee1b47614e5a22750fafa113d376ddbee9bc983cca9c4582cde12ca5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-EMAIL.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-EMAIL.md",
+      "topic": "auth",
+      "old_sha256": "1a08ac5a1ca52deabf1ec071747a8265a17d3a914bcff21d918fe669eb366dc5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-METADATA.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-METADATA.md",
+      "topic": "auth",
+      "old_sha256": "2e287844520cc962f52a75f283426a149bc4a7de83ed3b44306ec2ffe85b51cb"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-OWNER-FACTORY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-OWNER-FACTORY.md",
+      "topic": "auth",
+      "old_sha256": "7351bc1f35afbec78acc514e55841e1740d8109e952e435462a7a0b133455f02"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-PRIMITIVES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-PRIMITIVES.md",
+      "topic": "auth",
+      "old_sha256": "48a7250d02cdef08b1536db05359550f758962fbf1ab7fc7edeaf8c3e35925bb"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-RESULT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-RESULT.md",
+      "topic": "auth",
+      "old_sha256": "e9e67edddca62f7e7073f1ef5dd1b84210e2e8a4238b1fe26af41afb0ab41d6b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-USER-INFO-FIELDS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-USER-INFO-FIELDS.md",
+      "topic": "auth",
+      "old_sha256": "38b9ef81e5cc16924f8467d260e65b564e7b8b8eea4061ebbe604fec2fd94c96"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-VALIDATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-VALIDATION.md",
+      "topic": "auth",
+      "old_sha256": "01f59b4792e36fba81d62ab8b0e48de781472a02a56cad4f37ca0a9f3bda6f6d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-WEB-CONTEXT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-WEB-CONTEXT.md",
+      "topic": "auth",
+      "old_sha256": "5da6bb17e0f16937897b69d7f020ca6e1a6bc632ab2210ca875c8cbd31344ea8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-NID-WEB-URL.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-WEB-URL.md",
+      "topic": "auth",
+      "old_sha256": "83174a146d4efcc951039263232974b9a3adc747689080b575b8ac57102d8bd1"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-OFFICIAL-CLIENT-JP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-OFFICIAL-CLIENT-JP.md",
+      "topic": "network",
+      "old_sha256": "3b12a6ad9889f234eafdc1d0ec613f60c1c49b163e4dadae63d4d3087d8a527e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-PACKET-BINDINGS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-PACKET-BINDINGS.md",
+      "topic": "network",
+      "old_sha256": "b452cfbbc1c77f4bde594125dc6585100d931f87e89781dfa7657b54f0d5a359"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-PAK-CONFIG-RECOVERY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PAK-CONFIG-RECOVERY.md",
+      "topic": "updates",
+      "old_sha256": "d34cd9a41e899904a40290e33535f8a77449a00b18128b83e65463dcd6fc8d35"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-PATCH-CLIENT-VERSION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PATCH-CLIENT-VERSION.md",
+      "topic": "updates",
+      "old_sha256": "be4a1a218d4de471b2087799e1095025c13d0fe6f15fd66df826ef2267e4bfa0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-PING-CODEC.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-PING-CODEC.md",
+      "topic": "network",
+      "old_sha256": "b37e3883267ef80e02290a96ba45ce46b2a99b2f529f3b08f1c0729fb425600d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-PUBLIC-CDN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PUBLIC-CDN.md",
+      "topic": "updates",
+      "old_sha256": "f9d478969e9bd300eb15e5b392e0d3b906c1187096bc36055c7ade14f2473b32"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-PUBLIC-GMC2.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PUBLIC-GMC2.md",
+      "topic": "updates",
+      "old_sha256": "b2a6cf789d8c3e0a5997de45352a1dc552fa2b71567bce90b2e5ea68296d3d8e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-RECEIVE-B.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-RECEIVE-B.md",
+      "topic": "network",
+      "old_sha256": "fe241daa7bb5355a40bab6975b9babfaedfde606393e15a921e2548010e63cbf"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-RECEIVE-ENVELOPE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-RECEIVE-ENVELOPE.md",
+      "topic": "network",
+      "old_sha256": "dcfabd1b4a3cdadf23b0fecab9d6f0aa51d22465e873b7c2ca2ad0648fd4e8e8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-RESOLVED-SOCKET-SETUP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESOLVED-SOCKET-SETUP.md",
+      "topic": "network",
+      "old_sha256": "9f3c2c5b31358ce60ecf13d8f39964ba7d8ad6860d2d71acdc34cc3bd36bea6f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-RESOLVER-JOB-RESULTS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESOLVER-JOB-RESULTS.md",
+      "topic": "network",
+      "old_sha256": "3003e07eb16cc159c21fa43098435cd8c3cc21250bcfb4ca9f1407d146eab752"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-RESULT-ERROR-16.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESULT-ERROR-16.md",
+      "topic": "network",
+      "old_sha256": "f956a9ae8b8d8065eebb82b39622e12f6a0cfbfb6c6ac3a2ffabef201f172c2e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-RESULT-ERROR-58.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-RESULT-ERROR-58.md",
+      "topic": "network",
+      "old_sha256": "5415b7bd093c41e76fc0ef1fed0a57009e549f899279ff994920bd209083a6e0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-AUTH-PATH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-AUTH-PATH.md",
+      "topic": "auth",
+      "old_sha256": "1780af351fd78639e11c6419756598836b27dee6be094c8d020225e427cc871e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-BOOTSTRAP-VALUES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-BOOTSTRAP-VALUES.md",
+      "topic": "auth",
+      "old_sha256": "ccc7726e4634dc21400c95da4641eed2548fe81e27f97815c6e52e06d527d0c5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-CONFIG.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-CONFIG.md",
+      "topic": "auth",
+      "old_sha256": "a7834c689ab8b3a310211b22264a23132c98ba56b991241648567ebbdee3f857"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-LOAD-DEVICES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-LOAD-DEVICES.md",
+      "topic": "auth",
+      "old_sha256": "6689665c52dd01dba2a54efdccba7c2648d961636cebd42943875b7dcd4e2932"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-MAP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-MAP.md",
+      "topic": "auth",
+      "old_sha256": "6dae2a82d2d3f535f0bc9e83c07db47a4ef0e13a60a4a07d65e16154a9a2e55a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-MIGRATION-ALLOCATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-MIGRATION-ALLOCATION.md",
+      "topic": "auth",
+      "old_sha256": "ba50e60314d28891206a8ede240f547112f4d4aeba3b51a358ddc99b3b8c4997"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-NID-SUFFIX.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-NID-SUFFIX.md",
+      "topic": "auth",
+      "old_sha256": "83025daea22abbfc6ff85e34956eaca59632e781fce91cb2f553841c546dd9b3"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-OAEP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-OAEP.md",
+      "topic": "auth",
+      "old_sha256": "8d4cea2ae9f268a1fe2282473f705fe39218f8047e53e8c1787f60ac89cd0be5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-PATH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-PATH.md",
+      "topic": "auth",
+      "old_sha256": "7c96a606d542c66211c313ac044a67bc5ac73914185a1f827d4cb6ba14bdb3d9"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-PERCENT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-PERCENT.md",
+      "topic": "auth",
+      "old_sha256": "7139f098352c3dd79984cd01471165fdab278d522cf9655793b9b55e142730be"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-RESPONSE-GATES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-RESPONSE-GATES.md",
+      "topic": "auth",
+      "old_sha256": "eca2810edfb23fe831af4c13bb974fe43b2e7c30bb32dbcd6e51e92b2057ca27"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-RESPONSE-VARIANT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-RESPONSE-VARIANT.md",
+      "topic": "auth",
+      "old_sha256": "9159e72bd7f2cf2975ddc8fe3ef2eded77a41416c0b230c5d11572882fed6cf9"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-RESULT-DISPATCH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-RESULT-DISPATCH.md",
+      "topic": "auth",
+      "old_sha256": "10fdba927b48af1db4995b232e732c8a335b911c6d3e4c78cae43c201bc89b29"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SECRET-LIST.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SECRET-LIST.md",
+      "topic": "auth",
+      "old_sha256": "4d25908c622bb07b413cd749d52e0d5ce904648d7e94133ac2b88634eb30becb"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SECRET.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SECRET.md",
+      "topic": "auth",
+      "old_sha256": "e814ac06ef8a3c6140b5ccff77f93104d59b940f7598ea0aee3609be745fda99"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SETTINGS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SETTINGS.md",
+      "topic": "auth",
+      "old_sha256": "1d0b10032544f0d73c485b6042ea64ea82b4a3dc03eb67243e7a791de5436fe0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SIGN-IN-COMPLETION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-COMPLETION.md",
+      "topic": "auth",
+      "old_sha256": "5f2f40259fbe9f654499922fdbeb94ec50cf772214208221b7aa924ce9f2a313"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-LOG-PRESENT.md",
+      "topic": "auth",
+      "old_sha256": "6c2d386befb78979e04562986d5f336f0fd3150b908984b8dd3bf4fe14531180"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SIGN-IN-LOG.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-LOG.md",
+      "topic": "auth",
+      "old_sha256": "4d68f6afb7f5e0c33191e4fa8df6a917f699ad4ece63776c1b29ec6289e69131"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SIGN-IN-RESPONSE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN-RESPONSE.md",
+      "topic": "auth",
+      "old_sha256": "168f1ac13402c421e6855d5b1847b4ba5a05f1cc8ec33c6fb97793d2b7531251"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SIGN-IN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-IN.md",
+      "topic": "auth",
+      "old_sha256": "82099b6cc5125cd9a4abe7bd2118ea462a802c2dafc483edd92f530b79fd113c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-SIGN-UP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-SIGN-UP.md",
+      "topic": "auth",
+      "old_sha256": "d52cf72455bfa2750fbeefed4ec316bae18a00181ea577ad9b4517630c8b85b3"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-STORAGE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-STORAGE.md",
+      "topic": "auth",
+      "old_sha256": "38433793397b4a5086faac9d946170fa0e6b0d3826c894736d26f27d8826d39f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-TOKEN-PAYLOAD.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-TOKEN-PAYLOAD.md",
+      "topic": "auth",
+      "old_sha256": "d2228e45cc52ca979db5c7d8045caf226733037f4f1e72b349119d4a40f6edc3"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-UNESCAPE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-UNESCAPE.md",
+      "topic": "auth",
+      "old_sha256": "cef2a79beca8e61f2726eed551c23afe5bd8a173344e0991d0ca19e1ef55238a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SDK-VALUES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-VALUES.md",
+      "topic": "auth",
+      "old_sha256": "9ee71b3b39c8cac1444b4a25b40a9d343196a1d3eb562a8665f7987a7529bb9e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTED-LOBBY-LOGIN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SELECTED-LOBBY-LOGIN.md",
+      "topic": "network",
+      "old_sha256": "16deee6e145a23c1803d3cb02efdbf976cd58a83b20653c690d2922b49194572"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTED-PLAYER-RECORD.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTED-PLAYER-RECORD.md",
+      "topic": "characters",
+      "old_sha256": "01017842a5c4a4b50489219887332a78ba6c2d9627ac8eb9f94085dcad3f7023"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTION-LIFECYCLE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-LIFECYCLE.md",
+      "topic": "characters",
+      "old_sha256": "21694172f5d6754a611c71d55270acdf939a49050ec196297678859b96d21113"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTION-SERVICE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-SERVICE.md",
+      "topic": "characters",
+      "old_sha256": "ec35a3d25f0698b7e18e4c54b9682de6b68c9c9f39df204853427b17000f30c6"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTION-STATE-LOOKUP.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-STATE-LOOKUP.md",
+      "topic": "characters",
+      "old_sha256": "7ae4e65cd9b587f2b2810e1d0b145aa7b084b1cd30d87f23850359cc9a855285"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTION-STATE-TRANSITION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-STATE-TRANSITION.md",
+      "topic": "characters",
+      "old_sha256": "cf40b88279f4a235be5beff7f70b664d104c22cae7ace4e7c536d1677cef10fb"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTION-STATUS-CONSUMER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-STATUS-CONSUMER.md",
+      "topic": "characters",
+      "old_sha256": "044280c4e9a366241925263d5884b830dce13424a8d7148efa28d66b86f5ab0c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SELECTION-STATUS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SELECTION-STATUS.md",
+      "topic": "characters",
+      "old_sha256": "1b0850120f71286eb322a109c53855c0634a4eafc1cb09f0d28c03bb476b6e5a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SEND-B.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SEND-B.md",
+      "topic": "network",
+      "old_sha256": "83a8c1d7911fc0c449ba97484c63ac8b5bdbde59e2d27f73e117489ed29868d0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SEND-DRAIN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SEND-DRAIN.md",
+      "topic": "network",
+      "old_sha256": "ce2f1d6d3577f59e4a9a8cc47912ec9075d79e740dad898ff7204d78230d8ea5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SEND-FRAME.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SEND-FRAME.md",
+      "topic": "network",
+      "old_sha256": "b93173e60f6b34029b5976e9f6d068af1adaa4c02ec510df9f0cbd93edaeefe6"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SERVER-COUNTRY-POLICY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SERVER-COUNTRY-POLICY.md",
+      "topic": "network",
+      "old_sha256": "3ec68bd9d810977a18b544229a5e7ffb2ae838b03210b33ccd3e851dad18cf2c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SERVER-ENTRY-STATE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SERVER-ENTRY-STATE.md",
+      "topic": "network",
+      "old_sha256": "0f3286e0620ddda6e928e66b7ba121d6d43a24deef12e1ece46cad261dc4524c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SERVER-REGION-SELECTION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SERVER-REGION-SELECTION.md",
+      "topic": "network",
+      "old_sha256": "e531c277fd84d3c222598a5bbb2226e4b585bcd78d967d2a2154230c4ac000b3"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SILENT-GAME-DISPATCH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SILENT-GAME-DISPATCH.md",
+      "topic": "auth",
+      "old_sha256": "f3168b25fa9b6d6eb46c5b203a78033bac5b98aecd31c803edc25c52f58b4ae9"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SOCKET-CONNECT-RESULT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-CONNECT-RESULT.md",
+      "topic": "network",
+      "old_sha256": "e77def7dcb1ea16d3a34b17a6914db8ec6cf693ba4ef2b949ae27442d378daf3"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SOCKET-ERROR-OPTION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-ERROR-OPTION.md",
+      "topic": "network",
+      "old_sha256": "c62b2e2b4f619b7faafaa8fbf82a4a6d366f224188ec8b83ff673f77f7c3f922"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SOCKET-READINESS-JOB.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-READINESS-JOB.md",
+      "topic": "network",
+      "old_sha256": "b2a2ca0b52a4f6227df7ca10c336e2afe5b77e8f82d328b33469cd7c9723fd50"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-SOCKET-READY-NOTIFICATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-SOCKET-READY-NOTIFICATION.md",
+      "topic": "network",
+      "old_sha256": "4bda6e73b11a7a1d4324952fb4cc4a652d461cd61bbfe3b572882b761d1dc1bc"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-TITLE-AUTH-NOTIFICATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-TITLE-AUTH-NOTIFICATION.md",
+      "topic": "auth",
+      "old_sha256": "0ffb084a2d04b1fac7dfeb6a02657733e4f3d087f1a22503d8c07f09ed4c1e20"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-TITLE-AUTH-STATE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-TITLE-AUTH-STATE.md",
+      "topic": "auth",
+      "old_sha256": "87fe6773fe7eb1efa5da7881a6c0dff94fbc8b5e91c613f2e6a6217fc1d29569"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-TRANSPORT-CONNECTED-DELEGATE.md",
+      "topic": "network",
+      "old_sha256": "ad81a80e0701238fda370995f8510db7666051c7125c70b15bc44156769313a5"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-TRANSPORT-STAGE.md",
+      "topic": "network",
+      "old_sha256": "7d12a7deb620481c3521ac6e9ff4968aee21131b3389cb92f028a78cb1822a84"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-VERSION-CPU-STRING.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-CPU-STRING.md",
+      "topic": "network",
+      "old_sha256": "73ab11d852b9af8e2dbd9cb152cb89a6a2f46c6c767791456f00f33e3c94003a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-VERSION-DEVICE-INPUT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-DEVICE-INPUT.md",
+      "topic": "network",
+      "old_sha256": "7a3912d3ae373e2868618026d92d7577844c2b1ade9e2dd05886ff0a594a838c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-VERSION-PACKET-WRITER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-PACKET-WRITER.md",
+      "topic": "network",
+      "old_sha256": "74b458f448c8841e5a2da194b8acccf6efeb076078a12a870e395d9dd2ef6a15"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-RESULT-HANDLER.md",
+      "topic": "network",
+      "old_sha256": "d11a259b5184627081f2212b44ba20745b6d4bc1f6ff6a9ed32584b21bae7a2a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-SEND-PATH.md",
+      "topic": "network",
+      "old_sha256": "05fb51884845faac07b9652dc30fa4577e8b877dd0ef271d26b039d39e255782"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-WINDOWS-CONTEXT.md",
+      "topic": "network",
+      "old_sha256": "08e5050891e4715ffd390eb480ba820343042b8caa86408fe186a2f0f1f908e8"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WAITING-END-CHARACTER-REQUEST.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WAITING-END-CHARACTER-REQUEST.md",
+      "topic": "characters",
+      "old_sha256": "688bc1d7fceb07424d61871aa80a6a5816a60b2a927c416315d8bebbaead9d6b"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WINSOCK-ERROR-MAPPING.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/network/HEADLESS-WINSOCK-ERROR-MAPPING.md",
+      "topic": "network",
+      "old_sha256": "0d9e89939a9c1a8aaf9127d28fcac2622423911e22882e93829c6e84b5cc8272"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-FINISH-OWNER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-FINISH-OWNER.md",
+      "topic": "characters",
+      "old_sha256": "bf36ad3dab6938b59b30e8961e4a32755e6c4e0e27730c2be0a4e2a045f50270"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-LOAD-PREDICATE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-LOAD-PREDICATE.md",
+      "topic": "characters",
+      "old_sha256": "4f6f017e8e170d8b21f28bd4f3185d9f6d504561f73d6287bdb2575ad9d095ce"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-MOVE-FINISH-DECODER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-MOVE-FINISH-DECODER.md",
+      "topic": "characters",
+      "old_sha256": "54e49c773de8e00b9a131ad1b116c5340084bcb0aa8ab7ab59b6d86610efe38e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-MOVE-FINISH-READER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-MOVE-FINISH-READER.md",
+      "topic": "characters",
+      "old_sha256": "0ff489036e6149ddd78733854037971a4e8873dcb464af2ed67c41bbe9b36720"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-MOVE-FINISH-SEND.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-MOVE-FINISH-SEND.md",
+      "topic": "characters",
+      "old_sha256": "b42e68764d03f7ad44fa3996e228e5b2b55e64e795c72cd76b44c5a05157244e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-MOVE-FINISH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-MOVE-FINISH.md",
+      "topic": "characters",
+      "old_sha256": "b0c7b2583f3cc72b9d84f7029d9a3bff0c40ab70b32b55abb8f7f8574bf49f54"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-MOVE-START-PIPELINE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-MOVE-START-PIPELINE.md",
+      "topic": "characters",
+      "old_sha256": "15e2bbe607740e7d0d0221af754be84dd1944897b56892a8408f5d2f088d1d14"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-MOVE-START.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-MOVE-START.md",
+      "topic": "characters",
+      "old_sha256": "b44550a5a9f18250fac456cdd240552f85ad56450aecd5c404be7ec9b0bc1e4a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-OWNER-DISPATCH.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-OWNER-DISPATCH.md",
+      "topic": "characters",
+      "old_sha256": "26dd9b214a3c282fb91587e143cf7d2d01ee165683b09036e9f8effa3fc33cf1"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-OWNER-PROVIDER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-OWNER-PROVIDER.md",
+      "topic": "characters",
+      "old_sha256": "f4b67dd9dabc9184a7eec41844c837ea5a5f080362595454708c3b9c5554fdd1"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-OWNER-RESOURCES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-OWNER-RESOURCES.md",
+      "topic": "characters",
+      "old_sha256": "718a8c2da7b7e53046711b37800de1c76135f2197abf64613d3e8aa5ece5f58f"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/HEADLESS-WORLD-STATE-LABEL.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-STATE-LABEL.md",
+      "topic": "characters",
+      "old_sha256": "8cc136017e24bfd62e2f13532ec391c297e93a8a5055ec974af7dd73739f865c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/MAP-ATLAS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/maps/MAP-ATLAS.md",
+      "topic": "maps",
+      "old_sha256": "6f81e829c85b035b2a90fac918551243417472c5cf3992764361ffaa4e557415"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/MESSAGE-NAMED-SLOT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/MESSAGE-NAMED-SLOT.md",
+      "topic": "interface",
+      "old_sha256": "029c49b52f402cf9edfea959f228af61e1ae3b2f3ca764917a43ede6d574da22"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/NATIVE-ENTRY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/NATIVE-ENTRY.md",
+      "topic": "interface",
+      "old_sha256": "23bbf668a5c2ebc438ed0e11ec16b358406cf51716b8c2fbdf04ca11f62f6d3c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/NATIVE-SEMANTICS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/game-data/NATIVE-SEMANTICS.md",
+      "topic": "game-data",
+      "old_sha256": "73ec739b7eb6694329085f1d69897f69a47fccd60914f8b8bd8d265a93eded1a"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/NATIVE-UI-LINKS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/NATIVE-UI-LINKS.md",
+      "topic": "interface",
+      "old_sha256": "256c6e952f271f79e9825f4720c4b1c9345e7ab5420dd1c34debf1387a45a24c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/NPC-LOOT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/game-data/NPC-LOOT.md",
+      "topic": "game-data",
+      "old_sha256": "81824006065a678c88773da2621794233eed0c24d7d1096d141c0e44ea4c35da"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/PACKET-RESULT-GUARD.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/PACKET-RESULT-GUARD.md",
+      "topic": "scenarios",
+      "old_sha256": "9578e5f6e48dc6d0aa27fb4092a585a93d56c1e4feab4783e7c19bc26c9972e0"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/QUEST-DEPENDENCIES.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/QUEST-DEPENDENCIES.md",
+      "topic": "scenarios",
+      "old_sha256": "9a93d38f87a1e56544256eeebdfc83c55b5738093616c5c25c38b319f82db966"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/README.md",
+      "current": "phone-exit/bots/resource-tools/vampir/RESEARCH-HISTORY.md",
+      "topic": "history",
+      "old_sha256": "0415086d2cd8496a6ed50ca18307a7ccf080d93e0a6e08cd09471b291a7ab40c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/RESOURCE-INDEX.md",
+      "current": "phone-exit/bots/resource-tools/vampir/RESOURCE-HISTORY.md",
+      "topic": "history",
+      "old_sha256": "8fbe3e7739f207478b6c709f95409da9118cc8dd1d0d82eb9030115fd6cea90c"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/REWARDS-AND-LAYOUT.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/REWARDS-AND-LAYOUT.md",
+      "topic": "scenarios",
+      "old_sha256": "cbd932765e44923d796a2fa196b32ef9b8da19df3eebc8b949704b04bb1c7ee9"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/RUNTIME-CHAIN.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/RUNTIME-CHAIN.md",
+      "topic": "scenarios",
+      "old_sha256": "0c027c29283ccd89373e8545fa7420d90581b4d09610427f67db841b1144fbca"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/SHOP-REPLAY.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/SHOP-REPLAY.md",
+      "topic": "scenarios",
+      "old_sha256": "a932dd88eb1b17121658ef4f73a898388a84ca7bde75a89dbf34fea92cd58abd"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/SYSTEM-MESSAGE-UI.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/SYSTEM-MESSAGE-UI.md",
+      "topic": "interface",
+      "old_sha256": "063fffb3942c72d3f4e020ba32506d67cdd1e1d971d69a207fc39e9eface396d"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/UI-CATALOG.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/UI-CATALOG.md",
+      "topic": "interface",
+      "old_sha256": "5e06f10e31aa162acf548014e194313dd5b07e8a7e40e37105640ba0dffd6e42"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/UI-MANAGER.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/UI-MANAGER.md",
+      "topic": "interface",
+      "old_sha256": "56157e06df589fc5b80db5730f9db6055808373fa5b49953fda83285dd272dba"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/UI-SCALE.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/UI-SCALE.md",
+      "topic": "interface",
+      "old_sha256": "8f62185cfa82e2490fcae584fb40445dd037d56073eb9b6a33618dd341b70608"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/UI-TRANSITION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/interface/UI-TRANSITION.md",
+      "topic": "interface",
+      "old_sha256": "75fdd6c05db12216a74659b068e301629b1a0d53d5aa4edeb57d7318316cf516"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/UNLOCK-REGISTRATION.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/UNLOCK-REGISTRATION.md",
+      "topic": "scenarios",
+      "old_sha256": "24e4ba8181290fe389ae9a88392858640d857b8de94625ef5fe7d0a1c1ea304e"
+    },
+    {
+      "old": "phone-exit/bots/resource-tools/vampir/UNLOCK-RESULTS.md",
+      "current": "phone-exit/bots/resource-tools/vampir/knowledge/evidence/scenarios/UNLOCK-RESULTS.md",
+      "topic": "scenarios",
+      "old_sha256": "8199a620f5f951f76b304617adc100e7db8d4ac6bd5aa2446279382d0201e882"
+    },
+    {
+      "old": "phone-exit/bots/vampir/FUNCTION-INDEX.md",
+      "current": "phone-exit/bots/vampir/FUNCTION-HISTORY.md",
+      "topic": "history",
+      "old_sha256": "104ebd62d00e4b6a3755963b75e91c647d5176236c0ede8ab0a9b82ae86bd3cc"
+    },
+    {
+      "old": "phone-exit/bots/vampir/README.md",
+      "current": "phone-exit/bots/vampir/RESEARCH-HISTORY.md",
+      "topic": "history",
+      "old_sha256": "1ede9edb93b3a44e5930bc5d9ace772227a7f5805174fabac649a3eec4d70d5f"
+    },
+    {
+      "old": "phone-exit/bots/vampir-headless/README.md",
+      "current": "phone-exit/bots/vampir-headless/RESEARCH-HISTORY.md",
+      "topic": "history",
+      "old_sha256": "5d9497a81358a9ea2e4d1a7c789818a4f3a426807a6e40d403ae3ecee77ec30d"
+    },
+    {
+      "old": "phone-exit/bots/vampir-headless/TASKS.md",
+      "current": "phone-exit/bots/vampir-headless/TASKS-HISTORY.md",
+      "topic": "history",
+      "old_sha256": "c277b06ed07868a8d29107f61ed3b6a6956c4f43d7710f0fca107dfc5853d16a"
+    }
+  ],
+  "source_commit": "31e0ca5efd1894077343152c4397a097891dfc54"
+}

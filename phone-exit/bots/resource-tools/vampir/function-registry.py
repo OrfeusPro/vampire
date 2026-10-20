@@ -19,7 +19,8 @@ def digest(path):
 
 def documents():
     return sorted(set(HERE.glob('*.md')) | set(KNOWLEDGE.rglob('*.md')) | set((HERE.parents[1] / 'vampir').glob('*.md')) |
-                  set((HERE.parents[1] / 'vampir-headless').glob('*.md')))
+                  set((HERE.parents[1] / 'vampir-headless').glob('*.md')) |
+                  set((HERE.parents[1] / 'vampir-shared').glob('*.md')))
 
 
 def build():
@@ -41,6 +42,15 @@ def build():
     roles = json.loads(roles_path.read_text('utf-8'))
     questions_path = KNOWLEDGE / 'questions.json'
     questions = json.loads(questions_path.read_text('utf-8'))
+    locations_path = KNOWLEDGE / 'document-locations.json'
+    locations = json.loads(locations_path.read_text('utf-8'))
+    navigation_topics = {}
+    for entry in locations['documents']:
+        path = (HERE.parents[3] / entry['current']).resolve()
+        if not path.is_file():
+            raise ValueError('Relocated document missing')
+        if entry['topic'] != 'history':
+            navigation_topics[str(path)] = entry['topic']
     source_sha = report['source_sha256']
     if any(value != source_sha for value in (manifest['source_sha256'], roles['source_sha256'], questions['source_sha256'])):
         raise ValueError('Registry inputs belong to different client builds')
@@ -50,7 +60,7 @@ def build():
     observed = {f['address'].lower(): f['name'] for f in report['functions']}
     if expected != observed or len(expected) != len(report['functions']):
         raise ValueError('Export inventory mismatch or duplicate addresses')
-    inputs = {str(p): digest(p) for p in (latest_path, report_path, provenance_path, manifest_path, roles_path, questions_path, Path(__file__))}
+    inputs = {str(p): digest(p) for p in (latest_path, report_path, provenance_path, manifest_path, roles_path, questions_path, locations_path, Path(__file__))}
     records = {}
     for f in report['functions']:
         path = folder / f['pseudocode_file']
@@ -102,6 +112,9 @@ def build():
                             references=[], callers=[], callees=[], questions=[])
                     documented_addresses[address]['references'].append(reference)
     edges = []
+    for record in list(records.values()) + list(documented_addresses.values()):
+        record['navigation_topics'] = sorted({navigation_topics[r['path']] for r in record['references']
+                                              if r['path'] in navigation_topics})
     for function in report['functions']:
         caller = function['address'].lower()
         for call in function['calls']:
@@ -156,6 +169,7 @@ def main():
     parser.add_argument('--build', action='store_true')
     parser.add_argument('--query')
     parser.add_argument('--question', help='Stable question ID from knowledge/questions.json')
+    parser.add_argument('--topic', help='Filter by evidence-document topic; navigation, not proof of function semantics')
     args = parser.parse_args()
     if args.build:
         result = build()
@@ -165,18 +179,25 @@ def main():
                  f"SHA клиента: `{result['source_sha256']}`.", '',
                  f"Функций: {result['function_count']}; call edges из экспорта: {result['call_edge_count']}.", '',
                  'Это выбранный исследованный набор, не весь EXE. Поля и документы — в [JSON](function-registry.json).', '',
-                 '| Адрес | Аналитическое имя | Уточнённая роль | Ссылок в документах |',
-                 '| --- | --- | --- | --- |']
+                 'Темы определяются документами-доказательствами; это навигация, не новая семантика функции.', '',
+                 '| Адрес | Аналитическое имя | Уточнённая роль | Темы | Ссылок в документах |',
+                 '| --- | --- | --- | --- | --- |']
         for row in result['functions']:
             role = row['established_role']
             index.append(f"| {row['address']} | [{row['analyst_name']}]({Path(row['pseudocode']).as_posix()}) | "
-                         f"{role['role'] if role else 'Смотреть подробные references'} | {len(row['references'])} |")
+                         f"{role['role'] if role else 'Смотреть подробные references'} | "
+                         f"{', '.join(row['navigation_topics'])} | {len(row['references'])} |")
         (OUTPUT.parent / 'INDEX.md').write_text('\n'.join(index) + '\n', encoding='utf-8')
         print(json.dumps(dict(path=str(OUTPUT), functions=result['function_count'],
                               edges=result['call_edge_count'], sha256=digest(OUTPUT))))
-    if args.query is not None:
+    if args.query is not None or args.topic is not None:
         registry = read_current()
-        rows = query(registry, args.query)
+        rows = query(registry, args.query) if args.query is not None else registry['functions'] + registry.get('documented_addresses', [])
+        if args.topic is not None:
+            available = {t for r in registry['functions'] + registry.get('documented_addresses', []) for t in r['navigation_topics']}
+            if args.topic not in available:
+                parser.error('Unknown evidence topic')
+            rows = [r for r in rows if args.topic in r['navigation_topics']]
         for row in rows[:20]:
             print(json.dumps({**row, 'references': row['references'][:10],
                               'callers': row['callers'][:10], 'callees': row['callees'][:10]}, ensure_ascii=False))
@@ -187,7 +208,7 @@ def main():
         if not rows:
             parser.error('Unknown question ID')
         print(json.dumps(rows[0], ensure_ascii=False, indent=2))
-    if not args.build and args.query is None and args.question is None:
+    if not args.build and args.query is None and args.question is None and args.topic is None:
         parser.error('Use --build, --query or --question')
 
 

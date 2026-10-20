@@ -27,16 +27,16 @@
 ## Использовать уже найденные данные
 
 Основа карты — существующий атлас с сеткой, навигацией, квестами, NPC,
-переходами и добычей: [MAP-ATLAS.md](../resource-tools/vampir/MAP-ATLAS.md).
+переходами и добычей: [MAP-ATLAS.md](../resource-tools/vampir/knowledge/evidence/maps/MAP-ATLAS.md).
 Порядок запуска: [MAP-SERVER.md](../vampir/MAP-SERVER.md).
 
 Для игровых окон, кнопок и масштаба сначала читать:
 
-- [UI-CATALOG.md](../resource-tools/vampir/UI-CATALOG.md): окна, контролы,
+- [UI-CATALOG.md](../resource-tools/vampir/knowledge/evidence/interface/UI-CATALOG.md): окна, контролы,
   порядок детей, размеры, anchors, alignment и контейнеры;
-- [UI-SCALE.md](../resource-tools/vampir/UI-SCALE.md): найденные пресеты
+- [UI-SCALE.md](../resource-tools/vampir/knowledge/evidence/interface/UI-SCALE.md): найденные пресеты
   масштаба и границы восстановления DPI;
-- [NATIVE-UI-LINKS.md](../resource-tools/vampir/NATIVE-UI-LINKS.md): связи
+- [NATIVE-UI-LINKS.md](../resource-tools/vampir/knowledge/evidence/interface/NATIVE-UI-LINKS.md): связи
   кода с ресурсами окон и попапов.
 
 Каталог находится в `F:/PhoneExit Resources/Vampir/ui-catalog/`, данные

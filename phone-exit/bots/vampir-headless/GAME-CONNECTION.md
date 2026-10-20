@@ -62,7 +62,7 @@ Handler должен быстро возвращаться и не накапл�
 ## Источники и проверка
 
 Порядок смены ключа подтверждён кодом клиента:
-[HEADLESS-KEY-CHANGE.md](../resource-tools/vampir/HEADLESS-KEY-CHANGE.md).
+[HEADLESS-KEY-CHANGE.md](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-KEY-CHANGE.md).
 Общий source SHA256:
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Native игнорирует результат отправки ack; локальная очередь при отказе

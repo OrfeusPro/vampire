@@ -1,6 +1,6 @@
 """Verified frame helper algorithms, not a complete transport or frame decoder.
 
-Evidence: resource-tools/vampir/HEADLESS-FRAME-PRIMITIVES.md.
+Evidence: resource-tools/vampir/knowledge/evidence/network/HEADLESS-FRAME-PRIMITIVES.md.
 CRC state initialization and XOR fallback match the investigated client build.
 Session key acquisition, receive validation and frame boundaries remain unknown.
 """

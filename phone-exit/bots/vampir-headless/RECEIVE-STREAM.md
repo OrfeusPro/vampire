@@ -62,10 +62,10 @@ SHA256 исследованного кода клиента:
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Исходные native-проверки и их диапазоны / SHA:
 
-- [Первый транспортный этап](../resource-tools/vampir/HEADLESS-TRANSPORT-STAGE.md).
-- [Декомпрессор](../resource-tools/vampir/HEADLESS-BLOCK-DECODE.md).
-- [Второй цикл приёма](../resource-tools/vampir/HEADLESS-LISTENER-LOOP.md).
-- [Ключ и receive-B](../resource-tools/vampir/HEADLESS-RECEIVE-B.md).
+- [Первый транспортный этап](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-TRANSPORT-STAGE.md).
+- [Декомпрессор](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-BLOCK-DECODE.md).
+- [Второй цикл приёма](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LISTENER-LOOP.md).
+- [Ключ и receive-B](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RECEIVE-B.md).
 
 Новый stream соединяет эти компоненты; полный native lifecycle и его
 менеджер уведомлений он не воспроизводит. Терминальные ошибки и бюджеты —

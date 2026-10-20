@@ -66,11 +66,11 @@ Python. Поля авторизации не выводятся в repr и со�
 Source SHA256 собранного клиента:
 `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 
-- [ID2 reader, gate и переход в Login](../resource-tools/vampir/HEADLESS-VERSION-RESULT-HANDLER.md).
-- [Version writer / кадр](../resource-tools/vampir/HEADLESS-VERSION-SEND-PATH.md).
-- [Login writer / кадр](../resource-tools/vampir/HEADLESS-LOGIN-SEND-PATH.md).
-- [LoginResult reader](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-READER.md).
-- [Условия native LoginResult handler](../resource-tools/vampir/HEADLESS-LOGIN-RESULT-HANDLER.md).
+- [ID2 reader, gate и переход в Login](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-RESULT-HANDLER.md).
+- [Version writer / кадр](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-SEND-PATH.md).
+- [Login writer / кадр](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-SEND-PATH.md).
+- [LoginResult reader](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-RESULT-READER.md).
+- [Условия native LoginResult handler](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-RESULT-HANDLER.md).
 
 `phone-exit/bots/fixtures/vampir-login-flow.json` содержит 14 Version и
 29 Login кадров из существующих native replay-отчётов, а также минимальное
