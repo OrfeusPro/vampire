@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Число Login из patch-контекста, 20 октября
+
+Десять native-сценариев BeginGame до global store, настоящий системный _wtoi,
+отдельный server ID. Актуальная строка revision ещё требует проверки
+загрузчика patch state; runtime и сеть не менялись.
+[Источники, SHA и границы](HEADLESS-LOGIN-REVISION-INPUT.md).
+
 ## Новый ответ Login 16 / InvalidState, 20 октября
 
 После сообщённой замены телефонов на прежнем аккаунте / JP 251 получен

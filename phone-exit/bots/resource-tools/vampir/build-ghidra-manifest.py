@@ -11,6 +11,13 @@ native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
 ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Vampir'))
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
+ ('PatchContext_Construct',0x144a900a0),('PatchContext_RevisionCandidate',0x144a9f1e0),
+ ('PatchContext_LoadCallback',0x144aa10c0),
+ ('Title_PatchContextSetup',0x146426330),('Title_BeginPatch',0x146425b50),
+ ('PatchContext_Create',0x14563e2f0),('PatchContext_SetSource',0x14564adf0),
+ ('PatchContext_SetAppVersion',0x14564d1d0),('PatchContext_StartBackend',0x144a9dd20),
+ ('PatchContext_SetPatchURL',0x144a9d480),('PatchContext_SetDataURL',0x144a9cee0),
+ ('PatchContext_InitializeBackend',0x144a97cc0),('PatchContext_LoadState',0x144a95950),
  ('LobbyContext_SetupA',0x144aa8670),('LobbyContext_SetupB',0x144aa8730),
  ('LobbyPost_ExternalGate',0x1445cb650),('LobbyPost_ServiceState',0x145a4b8d0),
  ('SDK_PlayerStatusStore',0x1445280c0),('SDK_PlayerStatusApply',0x1444f0c20),
