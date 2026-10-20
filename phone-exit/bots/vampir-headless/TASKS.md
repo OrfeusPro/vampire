@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-windows-identity: три наблюдённых ключа получены
+
+SDK DeviceKey, NID DeviceKeyForNetmarbleId и NMDeviceKey прочитаны из точных
+HKCU-путей, сохранены с provenance в локальном основном профиле. Confirmation
+unknown; серверная привязка и активный SDK cache не доказаны. Добавлены reader
+без генерации и prepare_registered_login с остановкой при required.
+20 тестов прошли. Далее — NID / SDK credential, свежий SDK response,
+оставшиеся поля пакетов и реальный вход. [Подробности](WINDOWS-IDENTITY.md).
+
 ## H04-runtime-context: NMDeviceKey связан с обоими пакетами
 
 Доказаны getter и поля `Version+0x48` / `Login+0x78`; общий helper переносит

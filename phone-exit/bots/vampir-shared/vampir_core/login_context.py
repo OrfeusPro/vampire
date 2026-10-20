@@ -8,6 +8,7 @@ from dataclasses import replace
 from .version_packet import VersionPayload
 from .login_packet import LoginPayload, _utf8
 from .sdk_sign_in_response import SdkSignInData
+from .device_registry import DeviceBinding
 
 
 def _bind(strings, index, value):
@@ -45,3 +46,22 @@ def bind_sdk_login_fields(login, *, sdk_data, netmarble_id):
     strings = _bind(login.strings, 2, netmarble_id)
     strings = _bind(strings, 8, sdk_data.access_token)
     return replace(login, strings=strings)
+
+
+def prepare_registered_login(version, login, *, binding, sdk_data, netmarble_id):
+    """Prepare proven fields for an explicitly selected observed device profile.
+
+    required confirmation blocks attempts; unknown allows the initial attempt
+    that may produce a challenge. No network, challenge recognition or proof
+    that supplied SDK data belong to this account. Other context is explicit.
+    """
+    if not isinstance(binding, DeviceBinding) or binding.kind != 'real':
+        raise ValueError('Login requires an observed device profile')
+    if binding.confirmation == 'required':
+        raise PermissionError('Device confirmation is required before another login attempt')
+    if binding.confirmation not in ('unknown', 'confirmed'):
+        raise ValueError('Unsupported device confirmation state')
+    if not binding.identity_recorded or not binding.nid_identity_recorded:
+        raise ValueError('Login device profile is incomplete')
+    version, login = bind_nm_device_key(version, login, nm_device_key=binding.nm_device_key)
+    return version, bind_sdk_login_fields(login, sdk_data=sdk_data, netmarble_id=netmarble_id)

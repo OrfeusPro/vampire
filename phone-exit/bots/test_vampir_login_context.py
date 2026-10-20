@@ -3,10 +3,12 @@ import json
 from pathlib import Path
 import sys
 import unittest
+from dataclasses import replace
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / 'vampir-shared'))
-from vampir_core.login_context import bind_nm_device_key, bind_sdk_login_fields
+from vampir_core.login_context import bind_nm_device_key, bind_sdk_login_fields, prepare_registered_login
+from vampir_core.device_registry import DeviceBinding
 from vampir_core.login_packet import LoginPayload
 from vampir_core.version_packet import VersionPayload
 from vampir_core.sdk_sign_in_response import parse_sdk_sign_in_response
@@ -41,6 +43,20 @@ class LoginContextTests(unittest.TestCase):
         version, login = self.templates()
         for value in ('', None, 'bad\0key'):
             with self.assertRaises(ValueError): bind_nm_device_key(version, login, nm_device_key=value)
+
+    def test_registered_profile_confirmation_and_identity_gates(self):
+        version, login = self.templates()
+        data = parse_sdk_sign_in_response(status=200, body=b'{"errorCode":0,"resultData":{"accessToken":"token-fixture","playerInfo":{"player":{"playerId":"player-fixture"}}}}')
+        binding = DeviceBinding('test@example.invalid', 'profile-fixture', 'real', True,
+            'sdk-fixture', 'nm-fixture', 'observed-fixture', 'unknown', '', 'nid-fixture', 'observed-nid-fixture')
+        for state in ('unknown', 'confirmed'):
+            a, b = prepare_registered_login(version, login, binding=replace(binding, confirmation=state), sdk_data=data, netmarble_id='nid-account-fixture')
+            self.assertEqual((a.strings[3], b.strings[6], b.strings[8]), ('nm-fixture', 'nm-fixture', 'token-fixture'))
+        with self.assertRaises(PermissionError):
+            prepare_registered_login(version, login, binding=replace(binding, confirmation='required'), sdk_data=data, netmarble_id='nid-account-fixture')
+        for change in (dict(kind='planned'), dict(device_key=''), dict(nid_device_key=''), dict(nid_identity_source='')):
+            with self.assertRaises(ValueError):
+                prepare_registered_login(version, login, binding=replace(binding, **change), sdk_data=data, netmarble_id='nid-account-fixture')
 
 
 class NativeVersionDeviceInputTests(unittest.TestCase):
