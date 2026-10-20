@@ -19,8 +19,10 @@ Metadata collector и writer разобраны в bounded сценариях: �
 У launcher credential подтверждён отдельный channelCode 200 и базовый GetObject;
 найдены запросы launcher/token и launcher/sign-in. Ключ заголовка launcherToken
 установлен; первый ответ имеет строковый resultData, второй — объект SDK sign-in.
-Внутренний канал берётся отдельно из credential+0x68. Маршрутизация и получение
-токена ещё открыты. [Передача токена и ответы](../evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md).
+Внутренний канал берётся отдельно из credential+0x68. Native-маршрутизация
+подтвердила SignInByLauncher для канала 200 и отдельный GetLauncherToken
+с существующим credential, включая NID 33. Реальный токен ещё не получен.
+[Маршрутизация и границы](../evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md).
 
 Источник первоначального заполнения common data, их значения перед Login,
 обязательность metadata на сервере и различие SDK-only / launcher context.
@@ -47,6 +49,7 @@ Credentials и локальные профили не переносить в д
 - [Game-instance ветвь success callback: Google PGS](../evidence/auth/HEADLESS-GAME-PGS-BRANCH.md)
 - [Game success: рассылка подписчикам и title interface slot+0x30](../evidence/auth/HEADLESS-GAME-SUCCESS-BROADCAST.md)
 - [Launcher-вход: отдельный credential и два HTTP-вызова](../evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md)
+- [ChannelManager: выбор SignIn и отдельное получение launcher-токена](../evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md)
 - [Launcher-токен: заголовок, ответы и отдельный номер канала](../evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md)
 - [UserInfo оказался FCommonLogData: создание и потребители](../evidence/auth/HEADLESS-NID-COMMON-LOG-DATA.md)
 - [После OnResult: Save, channel manager и credential SDK](../evidence/auth/HEADLESS-NID-CREDENTIAL.md)

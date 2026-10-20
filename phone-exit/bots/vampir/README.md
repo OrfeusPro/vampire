@@ -10,12 +10,13 @@
 успешный ответ выбранного лобби. Игровой Version принят; Game Login на ID 256
 возвращает 16 / InvalidState. Список персонажей из реальной сессии не получен.
 Официальный клиент через JP дошёл до Class Selection на Franz 2; персонаж
-не создан, пользователь закрыл игру. Это разные способы авторизации.
+не создан, пользователь закрыл игру. Совпадение контекста авторизации не проверено.
 
 У launcher-ветви подтверждены отдельный credential и два HTTP-вызова;
 условие выбора проверено локально. Установлены заголовок launcherToken и
-различие ответов; выбор пути и получение токена ещё открыты.
-[Разбор передачи токена](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md).
+различие ответов. Выбор backend по каналу и GetLauncherToken с существующим
+NID credential проверены локально; реальный launcher-токен ещё не получен.
+[Маршрутизация SDK](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md).
 
 [Сводка по темам](../resource-tools/vampir/knowledge/TOPICS.md) отделяет рабочее,
 проверенное локально, статические связи и незавершённое. Актуальные вопросы:

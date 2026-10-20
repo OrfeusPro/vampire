@@ -72,6 +72,24 @@
       "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
       "status": "bounded_native",
       "limits": "Исполнен только null gate и перенос byte +0x68 в module+0x88; остальные поля и dispatch — статические связи."
+    },
+    "0x1444fc5f0": {
+      "role": "FChannelManagerImpl::SignIn",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md",
+      "status": "diagnostic_and_bounded_native",
+      "limits": "Native channel gates и lookup исполнены до backend handoff; service/SDK state и callbacks — fixtures. Особая ветвь prior channel 100 проверена отдельно."
+    },
+    "0x1444e5560": {
+      "role": "FChannelManagerImpl::GetLauncherToken",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md",
+      "status": "diagnostic_and_bounded_native",
+      "limits": "Native lookup и handoff проверены на 9 fixtures. Не получает реальный токен; backend HTTP и callback не исполнены."
+    },
+    "0x1444dec50": {
+      "role": "FAuthImpl::ExecGetTokenResult",
+      "evidence": "knowledge/evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md",
+      "status": "diagnostic_and_static",
+      "limits": "Копирует/очищает callback auth+0x188 и ставит задачу selector 1. Новый dispatcher и bound consumer не исполнены."
     }
   }
 }

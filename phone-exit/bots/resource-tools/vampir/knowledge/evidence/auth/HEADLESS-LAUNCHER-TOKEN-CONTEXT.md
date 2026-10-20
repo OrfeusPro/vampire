@@ -1,5 +1,7 @@
 # Launcher-токен: заголовок, ответы и отдельный номер канала
 
+Продолжение: [выбор backend и GetLauncherToken с NID credential](HEADLESS-LAUNCHER-CHANNEL-ROUTING.md).
+
 20 октября 2026. Продолжение [launcher-контекста](HEADLESS-LAUNCHER-AUTH-CONTEXT.md).
 Имя заголовка теперь установлено: `launcherToken`. Также подтверждено, что
 `channelCode = 200` и внутренний номер канала SDK берутся из разных полей.

@@ -24,8 +24,9 @@
 
 Проверено различие launcher credential / NID credential и launcher gate.
 Ключ launcherToken и отдельные схемы ответов установлены; внутренний канал
-берётся из другого поля credential. Следом — выбор пути и consumer токена:
-[разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md).
+берётся из другого поля credential. Проверен GetLauncherToken с NID credential 33.
+Следом — явные планы обоих launcher-запросов, parser и отдельный JP-эксперимент:
+[разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md).
 
 ## Как не повторять исследования
 
