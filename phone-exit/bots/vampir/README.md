@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Уточнена структура SDK metadata: FCommonLogData, 20 октября
+
+Compiled имена связали прежний UserInfo writer с FCommonLogData::ToMap /
+ToJsonObject, один caller — с FPushImpl::OnChangedUserData. Это потребители,
+а не доказанные источники всех значений. Три native-сценария прошли owner
+constructor и actual getters до 37 пустых строк; найден direct caller создания.
+Далее — подключение owner к SDK host и обновление common data после SignIn.
+Runtime / сеть не менялись, причина InvalidState ещё не доказана.
+[Источники, уточнения и границы](../resource-tools/vampir/HEADLESS-NID-COMMON-LOG-DATA.md).
+
 ## Связаны поля UserInfo с ключами NID, 20 октября
 
 Двенадцать native-сценариев полного writer подтвердили 33 прямые связи полей,

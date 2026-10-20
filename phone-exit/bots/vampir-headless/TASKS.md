@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-common-log-data: роль структуры и пустое создание подтверждены
+
+UserInfo — аналитическое имя структуры FCommonLogData; writer и JSON export
+связаны с compiled diagnostics. Проверенные callers потребляют готовые данные.
+Три native-сценария полного owner constructor и actual getters подтвердили
+37 пустых descriptors. Следующие участки: caller 0x14450f420 и post-player-ID
+функция 0x14453cdf0 из SDK SignIn. Источники значений, metadata optional branches
+и причина InvalidState ещё открыты. Runtime / сеть не менялись.
+[Источники и границы](../resource-tools/vampir/HEADLESS-NID-COMMON-LOG-DATA.md).
+
 ## H04-nid-user-info-fields: writer проверен, источники значений открыты
 
 Двенадцать native-сценариев полного writer: 33 прямые field / key связи,

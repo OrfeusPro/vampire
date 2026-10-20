@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## FCommonLogData и создание SDK metadata, 20 октября
+
+Compiled diagnostics уточнили имена writer / JSON export / push consumer.
+Три native-сценария owner constructor и actual getters подтвердили пустые
+37 descriptors. Источники заполнения и причина InvalidState остаются открыты.
+[Источники, SHA и границы](HEADLESS-NID-COMMON-LOG-DATA.md).
+
 ## Поля UserInfo и writer NID map, 20 октября
 
 Двенадцать native-сценариев writer, 33 прямые связи, optional gates и getter
