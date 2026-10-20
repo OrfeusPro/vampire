@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-game-endpoint: record → master value → transport связан
+
+Server key берётся из ID 104 record+0x0c; host+0x20 / port+0x30 проходят
+copy slice master model и BeginGame до ConnectToServer. 16 native scenarios
+на одной машине подтверждены; полный master Update остаётся вне replay.
+Runtime получил явный выбор по server ID с проверкой endpoint, без выбора
+по порядку массива. Десять целевых тестов прошли. Далее — свежий список,
+выбор ID и реальный игровой Version / Login → персонажи / позиция.
+[Подробности](../resource-tools/vampir/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
+
 ## H04-live-server-list: ID 104 разобран в реальной сессии
 
 Через HK получены ID 2 / 4 / 104 с кодами 0. Полный decoder ID 104 разобрал

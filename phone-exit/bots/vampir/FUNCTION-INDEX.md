@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## ID 104 record → игровой endpoint, 20 октября
+
+Update key source 0x145d4b585 читает record+0x0c; copy slice
+0x145d4b625..0x145d4b6cf сохраняет строки / порты в master value.
+Затем native BeginGame / ConnectToServer получают host+0x20 / port+0x30.
+16 связанных native scenarios, bounded runtime выбор по явному server ID.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
+
 ## ID 104: полный decoder и реальный список серверов, 20 октября
 
 Reader 0x14574ae20, server/group 0x14574ab50 / 0x14574ad20,

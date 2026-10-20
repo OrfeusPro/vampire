@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Запись лобби связана с игровым endpoint, 20 октября
+
+Ключ сервера — второй uint32 (+0x0c), host — строка +0x20, игровой порт —
+word +0x30. Copy slice master model → BeginGame → ConnectToServer проверены
+на одних objects в 16 native scenarios. Runtime выбирает только явно заданный
+server ID и проверяет endpoint; десять целевых тестов прошли.
+Далее — игровой Version на выбранном адресе, затем Login и персонажи.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
+
 ## Реальный список серверов получен через HK, 20 октября
 
 После SDK / lobby входа получен ID 104 с кодом 0. Полностью разобрано тело

@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: source binding игрового endpoint
+
+Проверен copy slice ServerList_Update на тех же master records, которые
+затем проходят native BeginGame lookup/setters и ConnectToServer. 16 cases
+с разными ID / host / port; runtime использует record+0x0c как ID,
+строку+0x20 / word+0x30 как endpoint. Добавлен явный bounded selector,
+без automatic first-server. Прошли десять целевых тестов, сети не было.
+Далее — свежий выбор сервера и настоящий игровой Version.
+[Источники и границы](../resource-tools/vampir/HEADLESS-LOBBY-RECORD-ENDPOINT.md).
+
 ## 20 октября: настоящий список игровых серверов ID 104
 
 Экспорт Ghidra: 343 функции / 153 предупреждения. Native whole ID 104 reader
