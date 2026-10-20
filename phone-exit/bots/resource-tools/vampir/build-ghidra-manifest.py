@@ -150,7 +150,10 @@ SEEDS=[
  ('SelectionStatus_BaseInitialize',0x145608fb0),
  ('SelectionStatus_BaseClear',0x145601570),
  ('SelectionStatus_GatedRequest',0x145d7b850),
- ('SelectionStatus_RequestConstruct',0x1456bb2a0)]
+ ('SelectionStatus_RequestConstruct',0x1456bb2a0),
+ ('SelectionService_RecvWorldMoveFinishResult',0x145dbef80),
+ ('WorldMoveFinishResult_Handler',0x1467a5d30),
+ ('WorldMoveFinishResult_Construct',0x1458428a0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
