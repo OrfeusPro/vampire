@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-live-lobby-version: первый настоящий ответ лобби
+
+LobbyVersionResult получен через HK: ID 2, code 0, body 23 байта; send 94 /
+recv 28. CDN parser и connect связаны на одних globals в 20 native cases.
+В новом probe исправлена ошибочная настройка ReceiveStream: lobby offset 0,
+game offset 3. Прошли 36 целевых тестов; socket / HK-клиент закрыты.
+Это только версия протокола. Далее — SDK LobbyLogin и decoder списка
+серверов ID 104, затем игровой вход → список / выбор персонажа → позиция.
+[Подробности](LIVE-LOBBY-VERSION.md).
+
 ## H04-lobby-connect-flow: порядок Version и flush подтверждены отдельно
 
 Восемь native wrapper cases подтверждают Version перед исходным запросом

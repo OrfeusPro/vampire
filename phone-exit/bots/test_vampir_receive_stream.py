@@ -39,6 +39,37 @@ def stream(**overrides):
 
 
 class ReceiveStreamTests(unittest.TestCase):
+    def test_lobby_offset_zero_every_cut_raw_and_compressed(self):
+        body = struct.pack('<IBQQH', 0, 0, 7, 8, 9)
+        packet = inner(2, body)
+        for wire in (packet, transport(packet, compressed=True)):
+            for cut in range(len(wire) + 1):
+                receiver = ReceiveStream(ReceiveLimits(4096, 4096, 4096, 8192, 8192), uncompressed_offset=0)
+                receiver.feed(wire[:cut])
+                value = receiver.next_packet(key_bits=0, max_transport_frames=4)
+                if cut < len(wire):
+                    self.assertIsNone(value)
+                    receiver.feed(wire[cut:])
+                    value = receiver.next_packet(key_bits=0, max_transport_frames=4)
+                self.assertEqual(value, IncomingPacket(2, body))
+                self.assertEqual((receiver.raw_bytes, receiver.decoded_bytes), (0, 0))
+
+    def test_lobby_coalesced_frames_preserve_each_header_and_output_budget(self):
+        from vampir_core.transport_header import take_transport_frame
+        a, b = inner(2, bytes(23)), inner(4, bytes(26))
+        receiver = ReceiveStream(ReceiveLimits(4096, 4096, 4096, 8192, 8192), uncompressed_offset=0)
+        receiver.feed(a + b)
+        self.assertEqual(receiver.next_packet(key_bits=0, max_transport_frames=1), IncomingPacket(2, bytes(23)))
+        self.assertEqual(receiver.next_packet(key_bits=0, max_transport_frames=1), IncomingPacket(4, bytes(26)))
+        self.assertEqual(take_transport_frame(a, max_frame_size=4096, max_output_size=len(a), uncompressed_offset=0), (a, len(a)))
+        with self.assertRaises(ValueError):
+            take_transport_frame(a, max_frame_size=4096, max_output_size=len(a) - 1, uncompressed_offset=0)
+        for invalid in (-1, 1, True, None):
+            with self.assertRaises(ValueError):
+                ReceiveStream(ReceiveLimits(4096, 4096, 4096, 8192, 8192), uncompressed_offset=invalid)
+            with self.assertRaises(ValueError):
+                take_transport_frame(a, max_frame_size=4096, max_output_size=4096, uncompressed_offset=invalid)
+
     def test_every_socket_cut_at_both_headers_and_bodies(self):
         payload = b'private character data' * 2
         for compressed in (False, True):

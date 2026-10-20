@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: реальный LobbyVersionResult через HK
+
+Связаны CDN globals и lobby connect на одной native машине: 20 сценариев,
+host сохраняется, uint32 port сужается до word. Добавлен отдельный ограниченный
+LobbyVersion probe. Первая попытка дала общий exception, вторая показала
+send 94 / recv 28 и ошибку decoder. Исправлена ошибка выбора режима: lobby
+сохраняет header (offset 0), game использует offset 3. Третья попытка получила
+ID 2, code 0, flag false, body 23 байта. Сырые ответы не сохранялись.
+Login и ServerListRead не отправлялись. Все сокеты закрыты, HK-клиент остановлен
+с exit 0. Прошли 36 целевых тестов. Далее — LobbyLogin / ID 104 до игрового
+endpoint и персонажей. [Источники и границы](LIVE-LOBBY-VERSION.md).
+
 ## 20 октября: порядок отправки лобби и connected flush
 
 Ghidra расширен до 324 функций / 150 предупреждений. Проверка инструкций

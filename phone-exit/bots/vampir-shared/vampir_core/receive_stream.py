@@ -1,4 +1,4 @@
-"""Bounded receive-B stream: raw transport -> inner frames -> packet bodies.
+"""Bounded native receive stream: raw transport -> inner frames -> packet bodies.
 
 Evidence: HEADLESS-TRANSPORT-STAGE / BLOCK-DECODE / LISTENER-LOOP /
 RECEIVE-B. Limits and terminal error policy are local client decisions.
@@ -43,10 +43,15 @@ class ReceiveStream:
     call while complete buffered transport frames remain. Do not read more from
     the socket when feed capacity is exhausted. A local/protocol failure closes
     the stream; it is never resynchronized by skipping arbitrary bytes.
+    uncompressed_offset is explicit: native lobby A=0, game B=3. Compressed
+    blocks always decode their bytes after the three-byte transport header.
     """
-    def __init__(self, limits: ReceiveLimits):
+    def __init__(self, limits: ReceiveLimits, *, uncompressed_offset: int = 3):
         if not isinstance(limits, ReceiveLimits):
             raise TypeError('Expected receive limits')
+        if type(uncompressed_offset) is not int or uncompressed_offset not in (0, 3):
+            raise ValueError('Expected native uncompressed offset 0 or 3')
+        self._uncompressed_offset = uncompressed_offset
         self._limits = limits
         self._raw = bytearray()
         self._decoded = bytearray()
@@ -141,7 +146,8 @@ class ReceiveStream:
                 return None
             try:
                 body, consumed = take_transport_frame(self._raw,
-                    max_frame_size=self._limits.max_transport_size, max_output_size=self._limits.max_block_output)
+                    max_frame_size=self._limits.max_transport_size, max_output_size=self._limits.max_block_output,
+                    uncompressed_offset=self._uncompressed_offset)
             except ValueError:
                 self._fail('invalid_transport_block')
             if len(self._decoded) + len(body) > self._limits.max_decoded_buffer:

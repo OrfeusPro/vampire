@@ -41,21 +41,23 @@ def take_uncompressed_transport_frame(buffer: bytes, *, max_frame_size: int) -> 
 
 
 def take_transport_frame(buffer: bytes, *, max_frame_size: int,
-                         max_output_size: int) -> tuple[bytes, int] | None:
-    """Extract one skip=3 transport body, decoding compressed blocks if needed.
+                         max_output_size: int, uncompressed_offset: int = 3) -> tuple[bytes, int] | None:
+    """Extract one transport body with explicit native A=0 / B=3 raw offset.
 
     Explicit input/output limits bound memory; extra frames remain unconsumed.
     Empty compressed output is rejected as in the investigated native stage.
     """
+    if type(uncompressed_offset) is not int or uncompressed_offset not in (0, 3):
+        raise ValueError('Expected native uncompressed offset 0 or 3')
     if (isinstance(max_output_size, bool) or not isinstance(max_output_size, int)
             or not 1 <= max_output_size <= 0x100000):
         raise ValueError('Expected an output limit between 1 and 1048576')
     header = inspect_transport_header(buffer, max_frame_size=max_frame_size)
     if header is None or len(buffer) < header.total_size:
         return None
-    if not header.compressed and header.total_size - 3 > max_output_size:
+    if not header.compressed and header.total_size - uncompressed_offset > max_output_size:
         raise ValueError('Transport body exceeds output limit')
-    body = bytes(buffer[3:header.total_size])
+    body = bytes(buffer[(3 if header.compressed else uncompressed_offset):header.total_size])
     if header.compressed:
         body = decode_transport_block(body, max_output_size=max_output_size)
         if not body:

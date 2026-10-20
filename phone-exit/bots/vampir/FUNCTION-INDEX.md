@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## CDN → lobby endpoint и настоящий VersionResult, 20 октября
+
+SetServerList на 0x145662389 / 0x1456623c5 пишет globals 0x14b520cd0 /
+0x14b520cb0; connect 0x144aa90c0 использует их для endpoint. 20 native cases
+проведены на одной машине. Лобби использует uncompressed offset 0; после
+исправления runtime probe реально получил ID 2 / code 0 / body 23 через HK.
+[Источники, SHA и ограничения](../vampir-headless/LIVE-LOBBY-VERSION.md).
+
 ## Порядок Version и pending flush лобби, 20 октября
 
 Wrapper 0x144aa89b0: call 0x144aa8a06 отправляет подготовленный Version,
