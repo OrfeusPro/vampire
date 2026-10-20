@@ -198,7 +198,14 @@ SEEDS=[
  ('WorldMoveReserve_Request',0x145dc29c0),
  ('WorldMoveStart_Request',0x145dc2e60),
  ('WorldMoveStart_LoadPredicate',0x145dc0830),
- ('WorldMoveStart_CompareLevelPath',0x1414596e0)]
+ ('WorldMoveStart_CompareLevelPath',0x1414596e0),
+ ('WorldMoveReserve_CandidateOtherManager',0x145c8c380),
+ ('CharacterSelect_PostManagerValue',0x145596150),
+ ('CharacterSelect_PostManagerRefresh',0x14558d3f0),
+ ('CharacterSelect_PostManagerConstruct',0x1455808c0),
+ ('CharacterSelect_PostManagerSourceA',0x1455813c0),
+ ('CharacterSelect_PostManagerSourceB',0x145587020),
+ ('CharacterSelect_PostManagerVirtual58',0x1455910d0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
@@ -206,7 +213,8 @@ SEEDS=[
 # Do not manufacture .pdata for these leaves.
 REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28,0x145608fb0:71,0x145601570:23,0x1456bb2a0:25,
     0x145842880:18,  # WorldMoveFinish: straight vptr/flag stores and RET.
-    0x1414596e0:71}  # UTF-16 comparison: reviewed loop, ASCII table, three RETs.
+    0x1414596e0:71,  # UTF-16 comparison: reviewed loop, ASCII table, three RETs.
+    0x145596150:17}  # Compare/store manager+0x2728, two paths to one RET.
 
 
 def build():
