@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-nid-browser: отдельное окно и приём callback готовы к проверке входа
+
+WinForms / WebView2 host передаёт результат Python parser через pipes,
+отменяет внешние URI / popups и не меняет системные protocol handlers.
+SDK DLL закреплены вне Git. Smoke проверил synthetic callback, две отмены
+и popup; восемь unit-тестов прошли. Далее — согласованные реальные настройки,
+вход / confirmation в штатном окне и SDK sign-in с полученным credential.
+Android host и реальный аккаунт не проверены. [Подробности](NID-BROWSER.md).
+
 ## H04-nid-web-url: URL первоначального входа готов в ASCII-профиле
 
 Весь encoder исполнен на 99 профилях; runtime использует уже проверенный
