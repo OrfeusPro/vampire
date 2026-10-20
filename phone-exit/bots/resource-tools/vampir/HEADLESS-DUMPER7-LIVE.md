@@ -43,6 +43,19 @@ SDK и mappings не получены. Процесс игры после про
 защиты и не проверка совместимости Dumper-7 с объектами Vampir.
 Обход отказа и повторная загрузка не выполнялись.
 
+## Найденный защитный компонент
+
+После закрытия игры проверены файлы и метаданные, без чтения содержимого журнала.
+В `ProjectRED/Binaries/Win64/NMSSW/xcorona_x64.xem` указаны ProductName
+`XIGNCODE3 SYSTEM`, CompanyName `Wellbia.com Co., Ltd.`, версия `2024.6.18.236`.
+Проверка Authenticode вернула Valid, подписант Wellbia.com Co., Ltd.
+SHA256: `bafd34bd40b38b215c3b0728d7c578cf9fb3c4629077c578bb17828c2ad0e534`.
+Рядом есть `xigncode.log`. Драйверы xhunter1 и xhunter2 при проверке имели
+состояние Stopped; игровой процесс уже отсутствовал, лаунчер оставался открыт.
+Наличие XIGNCODE3 подтверждено файлами, но его причинная связь с отказом
+EnumProcessModules и тем более с сетевым InvalidState не установлена.
+Защита и её настройки не менялись.
+
 Отчёты вне Git:
 
 - `F:/PhoneExit Resources/Vampir/dumper7-live/20261020-access-check/report.json`,
