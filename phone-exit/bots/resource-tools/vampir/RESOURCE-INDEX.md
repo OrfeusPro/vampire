@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Поля UserInfo и writer NID map, 20 октября
+
+Двенадцать native-сценариев writer, 33 прямые связи, optional gates и getter
+updates. Verified callers указывают следующие функции 0x1445ab9f0 / 0x144550e40;
+runtime и сеть не менялись.
+[Источники, SHA и таблица](HEADLESS-NID-USER-INFO-FIELDS.md).
+
 ## Основная строка NID metadata, 20 октября
 
 Шесть native-сценариев collector / selector и bounded encoder; повтор I_World,

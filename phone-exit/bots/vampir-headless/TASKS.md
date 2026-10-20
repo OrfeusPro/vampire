@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-nid-user-info-fields: writer проверен, источники значений открыты
+
+Двенадцать native-сценариев полного writer: 33 прямые field / key связи,
+39 map entries при непустом fixture, обновляемые getters и optional gates.
+Поиск прямого UserInfo getter дал три roots; новые caller передают объект
+в 0x1445ab9f0 / 0x144550e40. Эти функции — следующий шаг до реального
+заполнения metadata и нового Login. Runtime / сеть не менялись.
+[Источники, таблица и границы](../resource-tools/vampir/HEADLESS-NID-USER-INFO-FIELDS.md).
+
 ## H04-nid-metadata: основной формат проверен, реальные значения открыты
 
 Шесть native-сценариев полного collector / selector с UserInfo map fixtures.

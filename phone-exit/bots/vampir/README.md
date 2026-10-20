@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Связаны поля UserInfo с ключами NID, 20 октября
+
+Двенадцать native-сценариев полного writer подтвердили 33 прямые связи полей,
+обновление NMDeviceKey / PlatformADID и условия пропуска GameCode / NID.
+Поиск getters нашёл 56 прямых calls с одним явным decode gap; два новых
+caller разобраны в Ghidra. Далее — функции 0x1445ab9f0 / 0x144550e40,
+которые получают UserInfo. Реальные значения SDK и причина InvalidState
+ещё не установлены; runtime и сеть не менялись.
+[Источники, таблица полей и границы](../resource-tools/vampir/HEADLESS-NID-USER-INFO-FIELDS.md).
+
 ## Проверен основной формат NID metadata, 20 октября
 
 Шесть native-сценариев исполнили collector и selector с явной UserInfo map.
