@@ -24,6 +24,8 @@ EXE SHA256: `c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`.
 Уточнение 21 октября: в [успешной официальной записи](HEADLESS-LIVE-TCP-CAPTURE.md)
 поле +0x124 равно 1, а metadata +0xd8 непустая. Описанный здесь reset-контекст
 не воспроизводит состояние этого входа; значение 7 нельзя считать универсальным.
+Дальнейший разбор установил [код языка и UpdateLanguageCode](HEADLESS-LOGIN-LANGUAGE.md).
+Сборщик теперь допускает явный `language_code`; без аргумента сохраняет reset 7.
 
 [replay-login-initial-context.py](../../../replay-login-initial-context.py) исполняет:
 

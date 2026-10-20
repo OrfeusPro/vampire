@@ -61,6 +61,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [Запись ID 104 → игровой endpoint](../evidence/network/HEADLESS-LOBBY-RECORD-ENDPOINT.md)
 - [Windows: продолжение после успешного входа в лобби](../evidence/network/HEADLESS-LOBBY-WINDOWS-CONTINUATION.md)
 - [Начальный контекст игрового Login для Windows](../evidence/network/HEADLESS-LOGIN-INITIAL-CONTEXT.md)
+- [Язык в Login и ветвь metadata с DeviceKey](../evidence/network/HEADLESS-LOGIN-LANGUAGE.md)
 - [PktLogin: constructor, SDK getters и заполнение полей](../evidence/network/HEADLESS-LOGIN-PACKET-FIELDS.md)
 - [PktLogin: проверенный writer и переносимое тело](../evidence/network/HEADLESS-LOGIN-PACKET-WRITER.md)
 - [Login: поля настроек, режима и SDK-объекта](../evidence/network/HEADLESS-LOGIN-POLICY-INPUTS.md)

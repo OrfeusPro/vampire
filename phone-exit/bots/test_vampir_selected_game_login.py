@@ -48,7 +48,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route, \
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
-            result = self.tool.run('fixture@example.invalid', auth_flow='launcher', **self.kwargs())
+            result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1, **self.kwargs())
         packet = exchange.call_args.args[2]
         self.assertIsNone(prepare.call_args.kwargs['local_address'])
         connection.getsockname.assert_not_called()
@@ -56,6 +56,8 @@ class SelectedGameLoginTests(unittest.TestCase):
         self.assertEqual(packet.strings[8], 'sdk-token-fixture')
         self.assertEqual(packet.strings[:2], ('lobby-first-fixture', 'lobby-second-fixture'))
         self.assertEqual(packet.integers[:2], (123, 42))
+        self.assertEqual(packet.raw_bytes, (3,3,1,0,0))
+        self.assertEqual(result['login_language_code'],1)
         connection.close.assert_called_once()
         self.assertNotIn('sdk-token-fixture', str(result))
         self.assertNotIn('nm-fixture', str(result))
@@ -95,7 +97,8 @@ class SelectedGameLoginTests(unittest.TestCase):
 
     def test_policy_validation_happens_before_auth_and_error_text_is_hidden(self):
         with patch.object(self.tool, 'module') as load:
-            for changed in ({'extra_number': -1}, {'context': ''}, {'server_id': 0}, {'region': 'unknown'}):
+            for changed in ({'extra_number': -1}, {'context': ''}, {'server_id': 0}, {'region': 'unknown'},
+                    {'language_code':True},{'language_code':256}):
                 with self.assertRaises(ValueError): self.tool.run('fixture@example.invalid', **dict(self.kwargs(), **changed))
             load.assert_not_called()
         with patch.object(self.tool, 'module', side_effect=RuntimeError('secret-auth-context')):

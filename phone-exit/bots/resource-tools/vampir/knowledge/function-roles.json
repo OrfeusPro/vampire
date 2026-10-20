@@ -1,6 +1,18 @@
 {
   "source_sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
   "roles": {
+    "0x145570240": {
+      "role": "FNnLocalizationManager::UpdateLanguageCode",
+      "evidence": "knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md",
+      "status": "diagnostic_and_static",
+      "limits": "Compiled diagnostic и запись AL в manager+0x18 подтверждены; полный метод и строковые конвертеры native-сценарием не исполнены. Причинность для Login 16 не установлена."
+    },
+    "0x145564550": {
+      "role": "Getter singleton менеджера локализации; его byte+0x18 передаётся в Login+0x124",
+      "evidence": "knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md",
+      "status": "diagnostic_and_static",
+      "limits": "Связь через ServerList_Update и UpdateLanguageCode; актуальный ключ сохранённой настройки ещё не извлечён. Reset 7 не является универсальным языком входа."
+    },
     "0x14453cdf0": {
       "role": "UNMServiceSettings::Save",
       "evidence": "knowledge/evidence/auth/HEADLESS-SDK-STORAGE.md",

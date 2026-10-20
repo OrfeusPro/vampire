@@ -40,6 +40,11 @@
 позиция ещё не извлечена. Сравнение Login выявило непустую metadata +0xd8
 (791 байт, включая I_DeviceKey) и policy byte +0x124 = 1 вместо 7 у бота.
 Следом — источники актуальных metadata и policy перед исправлением runtime.
+Байт policy связан с языком менеджера локализации; runner допускает явный
+`--language-code`. Encoder с DeviceKey воспроизвёл официальные 791 байт, но свежие
+поля ещё нужно собрать. [Продолжение и live результаты](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md).
+Две сравнительные попытки с языком 1 получили LobbyLoginResult 10036 до игры.
+Нужно проверить условие этого отказа; смешивать его с ошибкой Winsock нельзя.
 [Запись и границы разбора](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md).
 [Результаты](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 

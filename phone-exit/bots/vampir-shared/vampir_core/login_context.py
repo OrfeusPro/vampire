@@ -113,7 +113,7 @@ def prepare_registered_login(version, login, *, binding, sdk_data, netmarble_id)
 
 
 def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_id,
-        lobby_result, server_id, extra_number, context):
+        lobby_result, server_id, extra_number, context, language_code=None):
     """Explicit initial/reset Windows SDK branch; no NID UserInfo/manager68.
 
     Sources: LOGIN-INITIAL-CONTEXT, LOGIN-POLICY-INPUTS and LOGIN-PACKET-FIELDS.
@@ -131,9 +131,14 @@ def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_
         raise ValueError('Expected prepared source-supported Windows Version')
     if type(server_id) is not int or not 1 <= server_id <= 0xffffffff:
         raise ValueError('Expected explicit selected server ID')
+    # Reset method supplies 7; a configured client can override it from explicit
+    # source-bound localization context. Login+124 is the manager's language byte.
+    if language_code is not None and (type(language_code) is not int or not 0 <= language_code <= 255):
+        raise ValueError('Expected explicit unsigned language byte')
+    language = 7 if language_code is None else language_code
     strings = [''] * 15
     strings[3], strings[14] = version.strings[0], version.strings[9]
-    login = LoginPayload(tuple(strings), (extra_number, server_id, 207, 1), (3, 3, 7, 0, 0), 0)
+    login = LoginPayload(tuple(strings), (extra_number, server_id, 207, 1), (3, 3, language, 0, 0), 0)
     _, login = prepare_registered_login(version, login, binding=binding,
         sdk_data=sdk_data, netmarble_id=netmarble_id)
     return bind_lobby_login_fields(login, lobby_result=lobby_result)

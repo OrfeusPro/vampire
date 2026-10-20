@@ -51,6 +51,8 @@ I_NMMarket, I_NMNID, I_PCSeq, I_NMCPU, I_NMRAM, I_NMVGA
 Уточнение 21 октября: [официальная запись Login](../network/HEADLESS-LIVE-TCP-CAPTURE.md)
 подтвердила I_DeviceKey в реальной metadata из 791 байта; I_LogDes отсутствует.
 Значения и источник актуального DeviceKey ещё не подключены к сборщику runtime.
+Позднее добавлена [отдельная ветвь encoder с явным DeviceKey](../network/HEADLESS-LOGIN-LANGUAGE.md),
+которая воспроизвела всю официальную metadata. Сетевой runner пока её не использует.
 
 ## Источник UserInfo: новые экспорты
 

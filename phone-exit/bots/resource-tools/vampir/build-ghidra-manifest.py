@@ -12,6 +12,9 @@ ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Va
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
  ('Settings_SetNetmarbleId',0x14454ba20),
+ ('LoginPolicy_Byte18ConsumerCandidate',0x1455709b0),
+ ('LoginPolicy_TextApplyCandidate',0x145570240),
+ ('LoginPolicy_TextPrepareCandidate',0x14555cb50),
  ('SDK_LauncherTokenCaller',0x1444e5560),('SDK_LauncherSignInCaller',0x1444fc5f0),
  ('SDK_LauncherTokenDispatch',0x1444dec50),
  ('SDK_LauncherTokenKeyInitialize',0x1411b0460),

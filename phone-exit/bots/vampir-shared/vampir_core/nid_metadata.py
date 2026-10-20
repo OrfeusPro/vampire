@@ -1,6 +1,6 @@
 """Source-bound base NID collector order, requiring explicit proven field values.
 
-Optional DeviceKey/marketing branches are unsupported. No device discovery or IO.
+DeviceKey can be supplied explicitly; marketing remains unsupported. No IO.
 """
 
 NID_METADATA_KEYS = (
@@ -10,6 +10,14 @@ NID_METADATA_KEYS = (
     'I_TimeZone', 'I_LanguageCD', 'I_NMDeviceKey', 'I_NMIDFV', 'I_World',
     'I_NMMarket', 'I_NMNID', 'I_PCSeq', 'I_NMCPU', 'I_NMRAM', 'I_NMVGA',
 )
+
+
+def _metadata_text(value):
+    if type(value) is not str or len(value) > 4096 or any(ord(c) < 32 or c in '"\\' for c in value):
+        raise ValueError('Unsupported NID metadata string')
+    try: value.encode('utf-8', 'strict')
+    except UnicodeError: raise ValueError('Invalid NID metadata Unicode') from None
+    return value
 
 
 def encode_base_nid_metadata(values, *, user_info_available, optional_device_key, marketing_attribution):
@@ -33,11 +41,26 @@ def encode_base_nid_metadata(values, *, user_info_available, optional_device_key
     for key in NID_METADATA_KEYS:
         if key not in values: continue
         value = values[key]
-        if type(value) is not str or len(value) > 4096 or any(ord(c) < 32 or c in '"\\' for c in value):
-            raise ValueError('Unsupported NID metadata string')
-        try: value.encode('utf-8', 'strict')
-        except UnicodeError: raise ValueError('Invalid NID metadata Unicode') from None
+        _metadata_text(value)
         parts.append('"' + key + '":"' + value + '"')
     result = '{' + ','.join(parts) + '}'
+    if len(result.encode('utf-8')) > 65535: raise ValueError('NID metadata exceeds byte budget')
+    return result
+
+
+def encode_nid_metadata_with_device_key(values, *, device_key, user_info_available):
+    """Observed collector suffix with explicit current SDK DeviceKey.
+
+    The caller supplies freshness and identity provenance. This is not a cache
+    loader and never reuses a captured key. Marketing attribution is excluded.
+    Evidence: HEADLESS-LIVE-TCP-CAPTURE / LobbyNID_CollectedInput.
+    """
+    key = _metadata_text(device_key)
+    if not key or user_info_available is not True:
+        raise ValueError('DeviceKey metadata requires available UserInfo and explicit key')
+    base = encode_base_nid_metadata(values, user_info_available=True,
+        optional_device_key=False, marketing_attribution=False)
+    if base == '{}': raise ValueError('DeviceKey suffix requires populated base metadata')
+    result = base[:-1] + ',"I_DeviceKey":"' + key + '"}'
     if len(result.encode('utf-8')) > 65535: raise ValueError('NID metadata exceeds byte budget')
     return result

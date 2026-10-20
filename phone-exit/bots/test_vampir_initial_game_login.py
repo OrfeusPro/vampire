@@ -61,5 +61,14 @@ class InitialGameLoginTests(unittest.TestCase):
         strings[1] = 'Android_fixture'
         with self.assertRaises(ValueError): prepare_initial_windows_game_login(replace(version, strings=tuple(strings)), **kwargs)
 
+    def test_explicit_configured_language_changes_only_language_byte(self):
+        version, kwargs = self.inputs()
+        baseline = prepare_initial_windows_game_login(version, **kwargs)
+        configured = prepare_initial_windows_game_login(version, **kwargs, language_code=1)
+        self.assertEqual(configured, replace(baseline, raw_bytes=(3,3,1,0,0)))
+        for invalid in (-1,256,True,'1'):
+            with self.assertRaises(ValueError):
+                prepare_initial_windows_game_login(version, **kwargs, language_code=invalid)
+
 
 if __name__ == '__main__': unittest.main()

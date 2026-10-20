@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0,str(Path(__file__).resolve().parent.parent/'vampir-shared'))
 from vampir_core.frame_primitives import xor_transform,payload_crc32
 from vampir_core.login_packet import decode_login_payload
-from vampir_core.nid_metadata import NID_METADATA_KEYS
+from vampir_core.nid_metadata import NID_METADATA_KEYS, encode_nid_metadata_with_device_key
 
 
 def inspect(path, *, flow, expected_sha256):
@@ -40,11 +40,18 @@ def inspect(path, *, flow, expected_sha256):
     for key,item in pairs:
         metadata.append(dict(key=key if key in allowed else '<unknown>',
             utf8_bytes=len(item.encode('utf-8')) if type(item) is str else None,empty=not item))
+    metadata_roundtrip = None
+    if any(key == 'I_DeviceKey' for key,item in pairs):
+        try:
+            fields = dict(pairs)
+            metadata_roundtrip = encode_nid_metadata_with_device_key(fields,
+                device_key=fields['I_DeviceKey'], user_info_available=True) == value.strings[11]
+        except (ValueError,TypeError): metadata_roundtrip = False
     return dict(capture_sha256=digest,flow=flow,checked_c2s_frames=checked,
         login_body_bytes=len(value.encode(max_payload_size=65536)),
         strings=[dict(offset='0x'+offset,utf8_bytes=len(s.encode('utf-8')),empty=not s)
             for offset,s in zip(offsets,value.strings)],integers=value.integers,raw_bytes=value.raw_bytes,
-        raw128_zero=value.raw_128==0,metadata=metadata,
+        raw128_zero=value.raw_128==0,metadata=metadata,metadata_device_key_roundtrip=metadata_roundtrip,
         initial_builder_shape_comparison=dict(metadata_empty_matches=not value.strings[11],
             raw_bytes_match=value.raw_bytes==(3,3,7,0,0),
             trailing_integers_match=value.integers[2:]==(207,1),raw128_zero_matches=value.raw_128==0),
