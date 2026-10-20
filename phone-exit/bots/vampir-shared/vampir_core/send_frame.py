@@ -7,6 +7,8 @@ from .ping import PingPayload, SOURCE_SHA256
 from .frame_primitives import payload_crc32, xor_transform
 from .key_change import KeyChangePayload, KEY_CHANGED_ID
 from .character_select import CharacterSelectPayload
+from .version_packet import VersionPayload
+from .login_packet import LoginPayload
 
 
 def _encode(packet_id: int, body: bytes, sequence: int, key_bits: int) -> bytes:
@@ -50,6 +52,16 @@ def encode_world_move_finish_frame_b(sequence: int, key_bits: int) -> bytes:
 def encode_character_list_frame_b(sequence: int, key_bits: int) -> bytes:
     """Verified ID101 empty request; lifecycle permission belongs to the owner."""
     return _encode(101, b'', sequence, key_bits)
+
+
+def encode_version_frame_b(payload: VersionPayload, sequence: int, key_bits: int, *, max_payload_size: int) -> bytes:
+    if not isinstance(payload, VersionPayload): raise TypeError('Expected VersionPayload')
+    return _encode(1, payload.encode(max_payload_size=max_payload_size), sequence, key_bits)
+
+
+def encode_login_frame_b(payload: LoginPayload, sequence: int, key_bits: int, *, max_payload_size: int) -> bytes:
+    if not isinstance(payload, LoginPayload): raise TypeError('Expected LoginPayload')
+    return _encode(3, payload.encode(max_payload_size=max_payload_size), sequence, key_bits)
 
 
 def encode_character_select_frame_b(payload: CharacterSelectPayload, sequence: int, key_bits: int) -> bytes:

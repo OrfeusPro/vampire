@@ -9,6 +9,7 @@ import math
 from .key_change import KeyChangePayload, KEY_CHANGE_NOTIFY_ID
 from .outbound import OutboundFrames
 from .ping import PingPayload
+from .login_flow import LoginFlow
 from .receive_stream import ReceiveLimits, ReceiveStream
 from .selection_flow import CharacterSelectionFlow, SelectionLimits, SelectionState
 from .socket_send import drain_outbound
@@ -42,7 +43,8 @@ class GameConnection:
 
     The socket becomes nonblocking. Call pump regularly, even without a new
     read notification: decoded bytes can remain after a work budget expires.
-    on_packet(packet) synchronously handles all IDs except 11/102/110. It must
+    on_packet(packet) synchronously handles IDs outside 11/102/110, and outside
+    2/4 when start_login() is used. It must
     not block or retain unlimited bodies. Exceptions close this connection and
     propagate with a generic error; no raw payload is attached to that error.
     No reconnect or replay is automatic. A new socket requires a new instance.
@@ -63,6 +65,7 @@ class GameConnection:
         self._error = None
         self._last_time = None
         self._in_pump = False
+        self._login = None
         try:
             sock.setblocking(False)
         except Exception:
@@ -84,11 +87,15 @@ class GameConnection:
     @property
     def queued_bytes(self): return self._outbound.queued_bytes
 
+    @property
+    def login(self): return self._login
+
     def close(self):
         if self._active:
             self._active = False
             self._receiver.close()
             self._selection.close()
+            if self._login is not None: self._login.close()
             try:
                 self._socket.close()
             finally:
@@ -101,7 +108,17 @@ class GameConnection:
 
     def enter_character_list(self, *, now):
         if not self.active: raise RuntimeError('Connection is inactive')
+        if self._login is not None and self._login.state != 'login_response':
+            raise RuntimeError('Login response is not available')
         self._selection.enter_list(now=now)
+
+    def start_login(self, version, login, *, now, timeout, max_payload_size):
+        if not self.active: raise RuntimeError('Connection is inactive')
+        if self._login is not None or self._selection.state != SelectionState.WAITING_ENTRY:
+            raise RuntimeError('Connection bootstrap already started')
+        flow = LoginFlow(self._outbound, timeout=timeout, max_payload_size=max_payload_size)
+        flow.start(version, login, now=now)
+        self._login = flow
 
     def select_character(self, index, *, now):
         if not self.active: raise RuntimeError('Connection is inactive')
@@ -124,6 +141,12 @@ class GameConnection:
         packets = received = sent = reads = 0
         self._in_pump = True
         try:
+            if self._login is not None and self._login.state in ('failed', 'closed'):
+                self._fail('login_inactive')
+                return PumpProgress(0, 0, 0, False)
+            if self._login is not None and self._login.expire(now=now):
+                self._fail('login_timeout')
+                return PumpProgress(0, 0, 0, False)
             if self._selection.state in (SelectionState.FAILED, SelectionState.CLOSED):
                 self._fail('selection_inactive')
                 return PumpProgress(0, 0, 0, False)
@@ -139,6 +162,9 @@ class GameConnection:
                         value = KeyChangePayload.decode(packet.body)
                         self._outbound.acknowledge_key_change(value)
                         self._key = value.key_bits
+                    elif packet.packet_id in (2, 4) and self._login is not None:
+                        self._login.receive(packet.packet_id, packet.body, now=now)
+                        if self._login.state == 'failed': self._fail('login_response_failed')
                     elif packet.packet_id in (102, 110):
                         self._selection.receive(packet.packet_id, packet.body, now=now)
                         if self._selection.state == SelectionState.FAILED:

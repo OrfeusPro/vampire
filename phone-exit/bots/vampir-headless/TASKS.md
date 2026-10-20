@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-runtime-login: Version → Login связаны с сокетом
+
+Добавлены полный ID2 decoder и bootstrap из явных payload в общем runtime.
+ID2 code 0 ставит ID3; ID4 code 0 сохраняет ответ без автоматического списка.
+31 тест прошёл, включая 43 native-кадра и смену ключа через socketpair.
+Далее — фактические Version / SDK / device inputs, событие входа в выбор
+и реальная сессия с подтверждением устройства. [Границы](LOGIN-FLOW.md).
+
 ## H04-runtime-connection: сокет и обработка ключей связаны
 
 Владелец уже подключённого сокета объединяет receive / outbound / selection,

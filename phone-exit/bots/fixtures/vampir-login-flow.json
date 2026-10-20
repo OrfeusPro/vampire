@@ -1,0 +1,1492 @@
+{
+  "synthetic_only": true,
+  "provenance": {
+    "version-send-path-replay.json": "3105bced4c52519706217c1de58d190efeb567ebbc09a6299b34306311726a0a",
+    "login-send-path-replay.json": "6f3c9d612821c394380be84b023c22ca552d10c6966ea21b018ad209a9a3c88e",
+    "login-result-reader-replay.json": "83f0ae92b0b4fc09a424c77c67306106c1c319cf65af2b8868a7d968ea1cf602"
+  },
+  "frames": [
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "global-fixture",
+          "combined-fixture",
+          "first-fixture",
+          "provider-fixture",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "0.0-fixture"
+        ],
+        "integers": [
+          0,
+          207,
+          2
+        ]
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "71000056901532c878b39aa98447bca61ad2f68ae249a8bd0dc1ffa78420d0d978d0f5cae649beac1c9efccefc54a5bb1dbe9ac1ed52a3bd55d5f3dff055a2ac68b3ead5eb56b9ad1dc1b7c1ed58a4bc0ad69aa78420d0c978b355a78420d0c973b3aa89b40db6a000c7efd5e122d0c978"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          2
+        ]
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "2b0000615787dd4130dfef80706050403020108070605040302010807060508f3020108070605042302010"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "\u0422\u0435\u0441\u0442",
+          "combined-fixture",
+          "\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430",
+          "\u0423\u043a\u0440\u0430\u0438\u043d\u0430",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "0.0-fixture"
+        ],
+        "integers": [
+          0,
+          207,
+          2
+        ]
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "6c000076cc68b5413020108870b0f29085f19151f2605040303010e31f0d32295e4574ad160928344552759070b0cf91b0f0ae50c2b0e591b0f0aa50c06e509093f0aa51f0b0e09088f0ad50c06050403020108070af50403020108b70507e701d4679f80415222532201080"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "global-fixture",
+          "combined-fixture",
+          "first-fixture",
+          "provider-fixture",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "0.0-fixture"
+        ],
+        "integers": [
+          0,
+          207,
+          2
+        ]
+      },
+      "sequence": 65535,
+      "key": 0,
+      "frame_hex": "7100003672d85bc8784c65a98447bca61ad2f68ae249a8bd0dc1ffa78420d0d978d0f5cae649beac1c9efccefc54a5bb1dbe9ac1ed52a3bd55d5f3dff055a2ac68b3ead5eb56b9ad1dc1b7c1ed58a4bc0ad69aa78420d0c978b355a78420d0c973b3aa89b40db6a000c7efd5e122d0c978"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "global-fixture",
+          "combined-fixture",
+          "first-fixture",
+          "provider-fixture",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "0.0-fixture"
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "710000198ce7c6413020108e70073c2f52417cad16092834455275807060505030437fed12093e25540d76e908142532552d10e6191223341d4679f804152225202060f21f16392455523de61918243542451080706050403020df80706050403b2020ae404d3629485465f2159fafbfcf"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "2b000009bf35a94130dfef80706050403020108070605040302010807060508f30201080706050bfcfdfef"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "a",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "2c0000dfd70bb8c878b39aa68441d0c978b39aa78420d0c978b39aa78420d0c9b7b39aa78420d0c9874c6558"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "aaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "3a00001581ee994130dfef8f70013121514171e111013121514171e17060504030201080706050403020108070609f40302010807060afbfcfdf"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "aaaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "3b000040c0eb78413020109070013121514171e111013121514171e1116050403020108070605040302010807060508f30201080706050bfcfdfef"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 65535,
+      "key": 0,
+      "frame_hex": "aa00001591f11ec8784c65d88441b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc68420d0c978b39aa78420d0c978b39aa784201fc978b39aa784202f36874c"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "ab00002fa74d16413020100070013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e1116050403020108070605040302010807060508f30201080706050bfcfdfef"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "\u0416\u754c",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "300000c26317544130dfef8570b0c6a7a5ac108070605040302010807060504030201080bf605040302010808f9fafbf"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "\ud83d\ude42",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "2f00006a692df7c878b39aa384d04f50fab39aa78420d0c978b39aa78420d0c978b39a688420d0c978b39a587bdf2f"
+    },
+    {
+      "kind": "version",
+      "fields": {
+        "strings": [
+          "\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          0,
+          207,
+          4294967295
+        ]
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "cb000068d9931b4130dfef2070a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d9a3f98399e3b943d96050403020108070605040302010807060508f30201080706050bfcfdfef"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "b80000c52b1ceeca78b39aad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f978b08ba7f744bbe40cdcf1c2ea0db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          0,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "b80000278e50b54330dfef8a70172221405075f25d06604a305762e1001035321d45208b700e39241d4679f8041522253b2077ec1f02312c1d5475f8041b504030201080706c5027555464e5024d33760341208b70172221405075f25d5160703020018003043b6d444f7be51e4d3629485465f2154a504030201080707150235f4c7ce513143f321d4679f8041522253020df80706050403f2066e50213392f5e0d76e90814253255221080706750403020108070605141"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          1,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "b800004ba1d7ee433020108a70172221405075f25d06604a305762e1001035321d45208b700e39241d4679f8041522253b2077ec1f02312c1d5475f8041b504030201080706c5027555464e5024d33760341208b70172221405075f25d5160703021018003043b6d444f7be51e4d3629485465f2154a504030201080707150235f4c7ce513143f321d4679f8041522253020df80706050403f2066e50213392f5e0d76e90814253255221080706750403020108070605141"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          1,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 0,
+      "frame_hex": "b80000c470a34fca784c65ad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f979b08ba7f744bbe40cdcf1c2ea0db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          2,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "b80000d04fd6c1433020108a70172221405075f25d06604a305762e1001035321d45208b700e39241d4679f8041522253b2077ec1f02312c1d5475f8041b504030201080706c5027555464e5024d33760341208b70172221405075f25d5160703223018003043b6d444f7be51e4d3629485465f2154a504030201080707150235f4c7ce513143f321d4679f8041522253020df80706050403f2066e50213392f5e0d76e90814253255221080706750403020108070605141"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          3,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "b80000d11469604330dfef8a70172221405075f25d06604a305762e1001035321d45208b700e39241d4679f8041522253b2077ec1f02312c1d5475f8041b504030201080706c5027555464e5024d33760341208b70172221405075f25d5160703323018003043b6d444f7be51e4d3629485465f2154a504030201080707150235f4c7ce513143f321d4679f8041522253020df80706050403f2066e50213392f5e0d76e90814253255221080706750403020108070605141"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          5,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "b80000f945bd3dca78b39aad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f97db08ba7f744bbe40cdcf1c2ea0db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "b80000facc26984330dfef8a70172221405075f25d06604a305762e1001035321d45208b700e39241d4679f8041522253b2077ec1f02312c1d5475f8041b504030201080706c5027555464e5024d33760341208b70172221405075f25d5160703023018003043b6d444f7be51e4d3629485465f2154a504030201080707150235f4c7ce513143f321d4679f8041522253020df80706050403f2066e50213392f5e0d76e90814253255221080706750403020108070605141"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "b80000e2df5c6e433020108a70172221405075f25d06604a305762e1001035321d45208b700e39241d4679f8041522253b2077ec1f02312c1d5475f8041b504030201080706c5027555464e5024d33760341208b70172221405075f25d5160703023018003043b6d444f7be51e4d3629485465f2154a504030201080707150235f4c7ce513143f321d4679f8041522253020df80706050403f2066e50213392f5e0d76e90814253255221080706750403020108070605141"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          0,
+          0
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 0,
+      "frame_hex": "8b0000676e98c2ca784c65ad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaa7842bd0ae14dcf8c6e80da4ac00c7e1a78420d0c978b396a7e345a4bd1dc1b7c4b213b1f973b3edd5e550a0ac0a9eab97b420d3c978999aa78420d0c978b39aa784efd0c978b39aa88456b5bb0bdaf5c9a946b9b10cc6e8c28620d0c97fb39aa78420d0c978b39a"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          0
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "8b00001bca2deb433020108a70172221405075f25d06604a305762e1001035321d452080706b50275c4f72e11c4d242548546b807060504030201c801705243455523de3465331703b2067f211102025420d21b040605340300a1080706050403020108070af50403020108f7016353243497fee5d063938445562e5726050403720108070605040302110"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "9c0000993434d74330dfef8a70172221405075f25d06604a305762e1001035321d452080706b50275c4f72e11c4d242548546b807060504030201c801705243455523de3465331703b2067f211102025420d21b040605340300a108070605040303110e31f0c3c2553547ff25d063938445562e570609f40302010807f602625425379ef1e4d3629485465f215625040302710807060504030201181"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "a700000e803978ca78b39aad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f978b09aa7ae20d0c978b39aa79520b3a614dfffc4f04fa2e41edae2d3f152b5c9787c9aa78420d0c678c5ffd5f749bfa755d5f3dff055a2ac7ab39aa78320d0c978b39aa78421d1"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "ad0000288c596e4330dfef8a70172221405075f25d06604a305762e1001035321d452080706b50275c4f72e11c4d242548546b807060504030201c801705243455523de3465331703b2067f211102025420d21b040605351305374eb5d143f2b554e3de61918243542453a807060504030200180130f3c2c554364ef024d3629485465f21560508f30201080706f5036555263e91f0e7d26595864f50205524030201780706050403020108171"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "9c0000d0680fac433020108a70172221405075f25d06604a305762e1001035321d452080706b50275c4f72e11c4d242548546b807060504030201c801705243455523de3465331703b2067f211102025420d21b040605340300a108070605040303110e31f0c3c2553547ff25d063938445562e570609f40302010807f602625425379ef1e4d3629485465f215625040302710807060504030201181"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "old-cache-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 65535,
+      "key": 0,
+      "frame_hex": "b800000353eedeca784c65ad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f978b08ba7eb4cb4e41bd2f9cfe10db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "field-0x10",
+          "field-0x20",
+          "field-0x30",
+          "field-0x40",
+          "field-0x58",
+          "field-0x68",
+          "field-0x78",
+          "field-0x88",
+          "field-0xa0",
+          "field-0xb8",
+          "field-0xc8",
+          "field-0xd8",
+          "field-0xe8",
+          "field-0x100",
+          "field-0x110"
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "de00001b73593d433020108a700639255c443db00851604a304679e51c047d704812208a700639255c443db00853604a304679e51c047d70481420847362514a304679e51c047d704815288a700639255c443db00856684a304679e51c047d704817288a700639255c443db0085868bfb02a10e619053c241d1068e1409fafbfcf2a10e619053c241d1068e2486a502659457ce45d502823082a10e619053c241d1068e4486a502659457ce45d50282508ef1080706b502659457ce45d50287100101b801609352c540d20f8415160403020108760520436a89acc7e729f"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "460000663f9a214330dfef8070605040302010847362514030201080706050bfb020107f8f9faf40302010807060508f30201080706050403020108760520436a89acc7e729f"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "aaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "5500001612d573ca78b39aa7842fd0a819d2fbc6e541b1a819d2fbc6e541d0c978b39ea48621d0c978b39aa784202f4978b365587bdfd0c978b39aa784201fc978b39aa78420d0c978b39db7b674a651c26f64a57b"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "aaaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "560000358963e54330dfef8070605050304171e111013121514171e111013121512010847362514030201080706050bfb020107f8f9faf40302010807060508f30201080706050403020108760520436a89acc7e729f"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "c500005e4d9e51433020108070605040305f10e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e111013121514171e1110131215141148372615040302010807060afc03020ef7f8f9f50403020108070609f40302010807060504030201790423426d88afcee828f"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "",
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 65535,
+      "key": 0,
+      "frame_hex": "c600009c6c3aa7ca784c65a78420d0c978b39aa38722d14978d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819d2fbc6e541b1a819b39aa78420d036f8b39a587bdf2fc978b39aa78420d00678b39aa78420d0c978b39aa0941284bfe009465986df"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "\u0416\u754c",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 0,
+      "key": 1161981756646125696,
+      "frame_hex": "4b0000a26c9cbb433020108070605040302010847362514030251050e687c5cc302010808fe05040cfdfef7f7060504030201080bf6050403020108070605040373022d406f8ea9cce22ef"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "\ud83d\ude42",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 65535,
+      "key": 1161981756646125696,
+      "frame_hex": "4a0000d15a9ddf4330dfef80706050403020108473625140302010847090cfd9b220107ff06050bfcfdfef80706050403020104f706050403020108070605047201244f6e8da8cbe32df"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9\u00e9",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "integers": [
+          16909060,
+          4294967295,
+          207,
+          0
+        ],
+        "raw_bytes": [
+          255,
+          128,
+          7,
+          2,
+          255
+        ],
+        "raw_128": 18364758544493064720
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "e60000fcdc81b6ca78b39aa78420d0c978b39aa38722d1c978b39aa78480d00ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de3790ad17033642de37936f8b39a587bdf2fc978b39aa78420d00678b39aa78420d0c978b39aa0941284bfe009465986df"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "b80000c52b1ceeca78b39aad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f978b08ba7f744bbe40cdcf1c2ea0db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "b80000c52b1ceeca78b39aad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f978b08ba7f744bbe40cdcf1c2ea0db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "b80000c52b1ceeca78b39aad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f978b08ba7f744bbe40cdcf1c2ea0db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    },
+    {
+      "kind": "login",
+      "fields": {
+        "strings": [
+          "wrapper-f0",
+          "wrapper-e0",
+          "nid-fixture",
+          "global-text",
+          "",
+          "",
+          "getter-c63a0",
+          "wrapper-100",
+          "sdk-token-fixture",
+          "",
+          "",
+          "collector-fixture",
+          "",
+          "",
+          "version-fixture"
+        ],
+        "integers": [
+          123,
+          42,
+          207,
+          2
+        ],
+        "raw_bytes": [
+          0,
+          3,
+          7,
+          1,
+          1
+        ],
+        "raw_128": 0
+      },
+      "sequence": 0,
+      "key": 0,
+      "frame_hex": "b80000c52b1ceeca78b39aad8457a2a808c3ffd5a946e0c378c4e8c6f450b5bb55d6aaac844eb9ad55d5f3dff055a2ac73b3fdcbeb42b1a555c7ffdff05bd0c978b39aa7842cd0ae1dc7eec2f60db3ff4bd2aaac8457a2a808c3ffd5a911e0f978b08ba7f744bbe40cdcf1c2ea0db6a000c7efd5e10ad0c978b39aa78431d0aa17dff6c2e754bfbb55d5f3dff055a2ac78b355a78420d0c977b3ecc2f653b9a6169efccefc54a5bb1db19aa78427d0c978b39aa78420d1c8"
+    }
+  ],
+  "login_result_hex": "00000000000000000000ffff1032547698badcfe00801132547698badcfe00001232547698badcfe000000011332547698badcfe00000000021432547698badcfe1532547698badcfe1632547698badcfe1732547698badcfeffcf000000ffffffff01"
+}

@@ -9,6 +9,7 @@ from .key_change import KeyChangePayload
 from .send_frame import (encode_ping_frame_b, encode_key_changed_frame_b,
                          encode_character_list_frame_b, encode_character_select_frame_b)
 from .character_select import CharacterSelectPayload
+from .send_frame import encode_version_frame_b, encode_login_frame_b
 
 
 class OutboundFrames:
@@ -57,6 +58,14 @@ class OutboundFrames:
 
     def queue_character_list(self) -> bytes:
         return self._append(encode_character_list_frame_b(self._sequence, self._key_bits))
+
+    def queue_version(self, payload, *, max_payload_size):
+        return self._append(encode_version_frame_b(payload, self._sequence, self._key_bits,
+                                                  max_payload_size=max_payload_size))
+
+    def queue_login(self, payload, *, max_payload_size):
+        return self._append(encode_login_frame_b(payload, self._sequence, self._key_bits,
+                                                max_payload_size=max_payload_size))
 
     def queue_character_select(self, payload: CharacterSelectPayload) -> bytes:
         return self._append(encode_character_select_frame_b(payload, self._sequence, self._key_bits))
