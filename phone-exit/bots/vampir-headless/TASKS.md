@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-runtime-context: NMDeviceKey связан с обоими пакетами
+
+Доказаны getter и поля `Version+0x48` / `Login+0x78`; общий helper переносит
+ключ в обе строки, отклоняя конфликт контекстов. Отдельный helper связывает
+SDK accessToken и Netmarble ID с Login, не используя player ID вместо NID.
+Реальная запись NMDeviceKey в Windows существует, но её связь с аккаунтом
+не установлена. Основная SDK-пара / NID identity в реестре бота ещё пусты.
+Далее — согласованный device / SDK context и оставшиеся входные поля.
+[Подробности](../resource-tools/vampir/HEADLESS-VERSION-DEVICE-INPUT.md).
+
 ## H04-runtime-login: Version → Login связаны с сокетом
 
 Добавлены полный ID2 decoder и bootstrap из явных payload в общем runtime.

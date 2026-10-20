@@ -1,5 +1,13 @@
 # Vampir — самостоятельный сетевой бот
 
+## Привязка доказанных полей контекста, 20 октября
+
+NMDeviceKey связан с `Version+0x48` и `Login+0x78`. `login_context` переносит
+его в оба payload, а SDK token / отдельный Netmarble ID — в Login, отклоняя
+конфликтующие значения. 17 выбранных тестов прошли. Реальная SDK-пара / NID
+identity основной почты ещё не установлены.
+[Источники и границы](../resource-tools/vampir/HEADLESS-VERSION-DEVICE-INPUT.md).
+
 ## Version → Login в runtime, 20 октября
 
 `GameConnection.start_login()` связывает явные Version / Login payload

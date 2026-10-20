@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: общий NMDeviceKey в Version и Login
+
+Ранее неизвестный getter связан с исследованным NMDeviceKey. Проверена
+настоящая обёртка и повторное использование cache на четырёх профилях.
+Runtime связывает ключ с обоими payload, SDK token и отдельный NID — с Login.
+В Windows найдена точная запись NMDeviceKey; значение не логировалось,
+к основной почте не привязывалось. SDK-пара / NID identity ещё не получены.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-VERSION-DEVICE-INPUT.md).
+
 ## 20 октября: Version → Login через сокет
 
 Добавлен полный decoder ID2 и LoginFlow поверх готовых payload / framing.

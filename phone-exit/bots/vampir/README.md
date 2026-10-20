@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Источник строки устройства в Version / Login найден, 20 октября
+
+Один NMDeviceKey поступает в `Version+0x48` и `Login+0x78`. Настоящие wrapper
+и getter проверены вместе на четырёх профилях с повторным чтением cache.
+В общем runtime добавлены привязка этого ключа и перенос SDK token / отдельного
+Netmarble ID без смешения с player ID. Существующая запись NMDeviceKey в Windows
+найдена чтением; к почте она ещё не привязана. Реальный вход остаётся открытым.
+[Источники, SHA, проверки и границы](../resource-tools/vampir/HEADLESS-VERSION-DEVICE-INPUT.md).
+
 ## Runtime: Version → Login подключены к сокету, 20 октября
 
 Явные payload проходят ID1 → ID2 → ID3 → ID4 через `GameConnection`.

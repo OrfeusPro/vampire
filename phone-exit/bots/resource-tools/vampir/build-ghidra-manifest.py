@@ -234,7 +234,15 @@ SEEDS=[
  ('SelectedPlayer_RecordLoad',0x14588b600),
  ('SelectedPlayer_DataBaseConstruct',0x145d5ae60),
  ('SelectedPlayer_ClassGetter',0x145d65a60),
- ('SelectedPlayer_MetadataGetter',0x145206320)]
+ ('SelectedPlayer_MetadataGetter',0x145206320),
+ ('Version_InputGetter38',0x1414476a0),
+ ('Version_InputGetter48',0x1445c63a0),
+ ('Version_CombinedSuffix',0x1415c3960),
+ ('Version_ContextLookup',0x1416d7af0),
+ ('Version_Input48Source',0x1444e5ff0),
+ ('Version_Input38First',0x1415c1460),
+ ('Version_Input38Second',0x1415c1440),
+ ('Version_ContextValue',0x1416d7a10)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
