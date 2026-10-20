@@ -23,7 +23,12 @@ class SelectedGameLoginTests(unittest.TestCase):
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
             kwargs['_consume_auth'](**{name: inputs[name] for name in ('binding', 'sdk_data', 'netmarble_id')})
-            return SimpleNamespace(response=inputs['lobby_result'], server_list_response=SimpleNamespace(servers=(), groups=()), summary={'login_result_code': 0})
+            record = SimpleNamespace(u32=(7, 42, 0, 0), enums=(0, 1, 0), flags=(False,) * 5,
+                array50=('private-list-identity-fixture',), strings=('private-record-text',))
+            group = SimpleNamespace(raw_08=7, raw_20=4)
+            return SimpleNamespace(response=inputs['lobby_result'],
+                server_list_response=SimpleNamespace(servers=(record,), groups=(group,)),
+                summary={'login_result_code': 0})
         modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14')),
             SimpleNamespace(run=lobby), SimpleNamespace(choose_target=lambda *args, **kwargs:
                 SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001)),
@@ -42,6 +47,10 @@ class SelectedGameLoginTests(unittest.TestCase):
         connection.close.assert_called_once()
         self.assertNotIn('sdk-token-fixture', str(result))
         self.assertNotIn('nm-fixture', str(result))
+        self.assertNotIn('private-list-identity-fixture', str(result))
+        self.assertNotIn('private-record-text', str(result))
+        self.assertEqual(result['region_server_states'], [dict(server_id=42, enums=(0, 1, 0),
+            flags=(False,) * 5, array50_count=1, excluded_by_native_state=False)])
         self.assertEqual(result['game']['login_result_code'], 0)
         self.assertEqual(repr(self.tool.AuthForGame(**{k: inputs[k] for k in ('binding', 'sdk_data', 'netmarble_id')})), 'AuthForGame()')
 

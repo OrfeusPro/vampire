@@ -12,7 +12,7 @@ sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.game_login_probe import exchange_game_login
 from vampir_core.login_context import prepare_initial_windows_game_login
 from vampir_core.socks_route import SocksRoute
-from vampir_core.game_server_target import SERVER_REGION_CODES
+from vampir_core.game_server_target import SERVER_REGION_CODES, is_game_server_state_excluded
 
 
 @dataclass(frozen=True)
@@ -75,6 +75,13 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
         return dict(state, status='lobby_context_not_received')
     credentials = auth.pop('context')
     phase('game_target_selection')
+    # Public record flags only: never include host, text or array50 identities.
+    groups = lobby.server_list_response.groups
+    state['region_server_states'] = [dict(server_id=r.u32[1], enums=r.enums, flags=r.flags,
+        array50_count=len(r.array50), excluded_by_native_state=is_game_server_state_excluded(r))
+        for r in lobby.server_list_response.servers
+        if len(matches := [g for g in groups if g.raw_08 == r.u32[0]]) == 1
+        and matches[0].raw_20 == SERVER_REGION_CODES[region]]
     target = module('game_login_target', 'probe-selected-game-version.py').choose_target(
         lobby.server_list_response, server_id=server_id, selection=selection, region=region)
     state.update(selected_server_id=target.server_id, selected_group_id=target.group_id, selected_region=region)

@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — задачи
 
+## H04-server-entry-state: известное условие сброса проверено
+
+Byte server+0x35 со значениями 2/3 сбрасывает оба сохранённых server ID;
+256 native-сценариев прошли, selector исключает такие записи в заданном
+регионе. Свежие JP 251–270 имеют значение 0, JP 251 снова вернул Login 58.
+HK допускает JP по таблице, но полный country context ещё не проверен.
+Array50 сравнивается с GetJoinedCountryCode. Далее — заполнение SDK country,
+полный predicate и фактический допуск HK в JP до успешного Login / списка
+персонажей. Сокеты и JP-транспорт закрыты.
+[Подробности](../resource-tools/vampir/HEADLESS-SERVER-ENTRY-STATE.md).
+
 ## H04-server-region: явный фильтр перед игровым входом
 
 Enum KR=1 / ASIA=2 / TW=3 / JP=4 и group+0x20 gate подтверждены native;

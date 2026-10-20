@@ -8,6 +8,15 @@ from .lobby_server_list import LobbyServerListResult
 SERVER_REGION_CODES = {'KR': 1, 'ASIA': 2, 'TW': 3, 'JP': 4}
 
 
+def is_game_server_state_excluded(record):
+    """Native saved-server gate rejects +35 values 2/3; other flags unresolved.
+
+    False does not certify an open server or permission to create characters.
+    See HEADLESS-SERVER-ENTRY-STATE.md and the native reset replay.
+    """
+    return record.enums[1] in (2, 3)
+
+
 @dataclass(frozen=True, slots=True)
 class GameServerTarget:
     server_id: int
@@ -54,7 +63,8 @@ def select_game_server_in_region(server_list, *, region, server_id=None):
     """Explicit region gate by group +20, matching native master Update.
 
     With no ID, choose the lowest valid unique ID inside that region as a
-    local diagnostic policy. No availability interpretation or fallback region.
+    local diagnostic policy. Exclude native saved-server states 2/3; no fallback
+    region or claim that remaining records permit entry/character creation.
     See HEADLESS-SERVER-REGION-SELECTION.md for enum and gate native evidence.
     """
     if type(region) is not str or region not in SERVER_REGION_CODES:
@@ -70,5 +80,10 @@ def select_game_server_in_region(server_list, *, region, server_id=None):
             continue
         groups = [g for g in server_list.groups if g.raw_08 == target.group_id]
         if len(groups) == 1 and groups[0].raw_20 == SERVER_REGION_CODES[region]:
+            record = next(r for r in server_list.servers if r.u32[1] == identifier)
+            if is_game_server_state_excluded(record):
+                if server_id is not None:
+                    raise ValueError('Selected server state is excluded by native saved-server policy')
+                continue
             return target
     raise ValueError('No unique valid endpoint in the explicitly selected region')
