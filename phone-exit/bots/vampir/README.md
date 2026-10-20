@@ -1,5 +1,13 @@
 # Vampir — главный файл разработки
 
+## NID: URL входа собирается в runtime, 20 октября
+
+Контекст связывается с подтверждённым authWebViewUrl. Весь native encoder
+проверен на 99 ASCII-профилях; runtime переиспользует общий encoder формы.
+Учитываются пустые поля, специальные символы, scope endpoint и byte budget.
+Unicode пока явно отклоняется. Открытие окна, callback и реальный вход
+ещё не выполнены. [Источники и границы](../resource-tools/vampir/HEADLESS-NID-WEB-URL.md).
+
 ## NID: базовый контекст окна входа проверен, 20 октября
 
 Native сборка десяти пар проверена на восьми сценариях; getter webViewType —

@@ -1,5 +1,12 @@
 # Vampir — самостоятельный сетевой бот
 
+## URL штатного окна NID, 20 октября
+
+`bind_nid_web_url` готовит полный URL в проверенном ASCII-профиле из контекста
+и явной SDK-константы. Сверены 99 native-профилей encoder и публичный источник
+endpoint. Браузер, callback и реальный вход остаются следующими шагами.
+[Источники и границы](../resource-tools/vampir/HEADLESS-NID-WEB-URL.md).
+
 ## NID-контекст штатного окна, 20 октября
 
 Добавлен `prepare_nid_sign_in_context`: десять базовых параметров, webViewType

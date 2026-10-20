@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-nid-web-url: URL первоначального входа готов в ASCII-профиле
+
+Весь encoder исполнен на 99 профилях; runtime использует уже проверенный
+общий escape. Контекст связывается с authWebViewUrl из SDK constants.
+Не заявляется native map iteration / Unicode parity. Далее — активные
+значения настроек, окно авторизации и перехват callback внутри бота,
+без вызова системного handler установленной игры; затем SDK sign-in.
+[Источники и границы](../resource-tools/vampir/HEADLESS-NID-WEB-URL.md).
+
 ## H04-nid-web-context: десять базовых параметров установлены
 
 Native сборка восьми профилей и webViewType для всех 256 значений проверены.

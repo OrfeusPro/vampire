@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: URL входа NID и весь ASCII encoder
+
+Ghidra расширен до 277 функций / 111 warnings. 99 native-профилей всего
+encoder совпали с общим escape; whitelist / hex исполняются настоящие.
+Runtime связывает context с точным SDK endpoint, ограничивает размер и
+поддержанный профиль. Публичный источник endpoint повторно проверен offline.
+Браузер / реальная авторизация не запускались.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-NID-WEB-URL.md).
+
 ## 20 октября: контекст штатного окна NID
 
 Ghidra расширен до 276 функций / 110 warnings. Проверены native инструкции
