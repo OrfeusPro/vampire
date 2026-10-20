@@ -1,0 +1,2 @@
+# Optional local SOCKS transport. Pure Python; no analysis tools in runtime.
+PySocks==1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5

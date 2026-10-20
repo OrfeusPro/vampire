@@ -12,9 +12,10 @@ public static class NidBrowserHost {
     public static string SignInStep;
 
     public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
-            string signInScript, string emailJson, string passwordJson) {
+            string signInScript, string emailJson, string passwordJson, int socksPort) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
         SignInStep = "manual";
+        if (socksPort != 0 && (socksPort < 1024 || socksPort > 65535)) throw new ArgumentException("Invalid SOCKS port");
         if (timeoutSeconds < 1 || timeoutSeconds > 900) throw new ArgumentException("Invalid timeout");
         if (String.IsNullOrEmpty(gameCode) || gameCode.Length > 64) throw new ArgumentException("Invalid game scope");
         foreach (char c in gameCode) if (!(c >= 'a' && c <= 'z') && !(c >= '0' && c <= '9') && c != '-') throw new ArgumentException("Invalid game scope");
@@ -31,6 +32,8 @@ public static class NidBrowserHost {
             form.Width = 1050; form.Height = 800; form.StartPosition = FormStartPosition.CenterScreen;
             view.Dock = DockStyle.Fill;
             view.CreationProperties = new CoreWebView2CreationProperties { UserDataFolder = dataDirectory, IsInPrivateModeEnabled = true };
+            if (socksPort != 0) view.CreationProperties.AdditionalBrowserArguments =
+                "--proxy-server=socks5://127.0.0.1:" + socksPort.ToString(System.Globalization.CultureInfo.InvariantCulture) + " --disable-quic";
             form.Controls.Add(view);
             if (!String.IsNullOrEmpty(accountHint)) {
                 Label hint = new Label { Dock = DockStyle.Top, Height = 42, AutoEllipsis = true,

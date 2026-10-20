@@ -1,7 +1,10 @@
 import importlib.util
 import json
+import hashlib
 from pathlib import Path
 import unittest
+import tempfile
+from types import SimpleNamespace
 from unittest.mock import patch
 from dataclasses import replace
 from urllib.parse import parse_qs, urlsplit
@@ -75,6 +78,53 @@ class NidSdkRunnerTests(unittest.TestCase):
                 _capture=lambda *a, **k: self.provider, _execute=execute)
         self.assertEqual(result, 'registered-fixture')
         self.assertEqual(calls, ['https://sdk.example.invalid/v1/sign-up'])
+
+    def test_browser_and_sdk_share_route_and_observed_country(self):
+        calls = []
+        profile = dict(self.profile, country_code='HK')
+        def capture(plan, **kwargs):
+            self.assertEqual(kwargs['socks_port'], 17948)
+            self.assertEqual(parse_qs(urlsplit(plan.url).query)['countryCode'], ['HK'])
+            self.assertIn('socks-17948', str(kwargs['data_directory']))
+            calls.append('browser')
+            return self.provider  # Fixture account joined KR, unlike current route HK.
+        def execute(plan, **kwargs):
+            self.assertEqual(kwargs['route'], self.runner.SocksRoute(17948))
+            self.assertEqual(json.loads(plan.body)['countryCode'], 'HK')
+            calls.append('sdk')
+            return 'accepted-fixture'
+        with patch.object(self.runner, 'load_inputs', return_value=(self.binding, profile, self.constants)) as load:
+            result = self.runner.run('test@example.invalid', socks_port=17948, _capture=capture, _execute=execute)
+        self.assertEqual(result, 'accepted-fixture')
+        self.assertEqual(calls, ['browser', 'sdk'])
+        load.assert_called_once_with('test@example.invalid', route=self.runner.SocksRoute(17948))
+
+    def test_real_hk_snapshot_route_binding_and_country(self):
+        root = Path('F:/PhoneExit Resources/Vampir')
+        folder = root / 'public-gmc2-snapshots/070408d4d6fff16f5b7fe4c95aaaa8f9fdbef4ac5f4d958f1475655b4d5c747a'
+        manifest = (folder / 'manifest.json').read_bytes()
+        self.assertEqual(hashlib.sha256(manifest).hexdigest(), folder.name)
+        with tempfile.TemporaryDirectory() as temp:
+            temp_root = Path(temp)
+            (temp_root / 'code-clues').mkdir()
+            profile = (root / 'code-clues/nid-windows-initial-profile.json').read_bytes()
+            (temp_root / 'code-clues/nid-windows-initial-profile.json').write_bytes(profile)
+            (temp_root / 'manifest.json').write_bytes(manifest)
+            (temp_root / 'body.bin').write_bytes((folder / 'body.bin').read_bytes())
+            (temp_root / 'code-clues/public-gmc2-recovery.json').write_text(json.dumps(
+                dict(manifest=str(temp_root / 'manifest.json'), sha256=folder.name)), encoding='utf-8')
+            identity = SimpleNamespace(device_key=self.binding.device_key, nid_device_key=self.binding.nid_device_key,
+                                       nm_device_key=self.binding.nm_device_key)
+            with patch.object(self.runner, 'ROOT', temp_root), \
+                    patch.object(self.runner, 'DeviceRegistry') as registry, \
+                    patch.object(self.runner, 'observe_windows_device_identity', return_value=identity):
+                registry.return_value.get.return_value = self.binding
+                binding, profile, constants = self.runner.load_inputs('fixture@example.invalid', route=self.runner.SocksRoute(17948))
+                self.assertEqual(profile['country_code'], 'HK')
+                self.assertTrue(constants)
+                for wrong in (None, self.runner.SocksRoute(17949)):
+                    with self.assertRaisesRegex(ValueError, 'snapshot route differs'):
+                        self.runner.load_inputs('fixture@example.invalid', route=wrong)
 
 
 if __name__ == '__main__': unittest.main()

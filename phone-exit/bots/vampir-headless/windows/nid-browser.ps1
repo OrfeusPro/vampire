@@ -19,7 +19,7 @@ try {
     $passwordJson = ConvertTo-Json -InputObject ([string]$request.sign_in_password) -Compress
     [NidBrowserHost]::Run([string]$request.url, [string]$request.game_code,
         [string]$request.data_directory, [int]$request.timeout, [bool]$request.smoke, [string]$request.account_hint,
-        $signInScript, $emailJson, $passwordJson)
+        $signInScript, $emailJson, $passwordJson, [int]$request.socks_port)
     @{status=[NidBrowserHost]::Status; callback=[NidBrowserHost]::Callback;
       blocked_external=[NidBrowserHost]::BlockedExternal; blocked_popups=[NidBrowserHost]::BlockedPopups;
       blocked_scheme=[NidBrowserHost]::LastBlockedScheme; sign_in_step=[NidBrowserHost]::SignInStep} |

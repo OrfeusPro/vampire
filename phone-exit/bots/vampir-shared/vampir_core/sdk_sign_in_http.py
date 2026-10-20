@@ -13,6 +13,7 @@ from urllib.parse import urlsplit
 from .sdk_sign_in import SdkSignInRequestPlan
 from .sdk_sign_in_response import parse_sdk_sign_in_response
 from .sdk_sign_up_response import parse_sdk_sign_up_response
+from .socks_route import SocksRoute
 
 
 class SdkSignInHttpError(RuntimeError):
@@ -55,21 +56,21 @@ def _read_error_code(response, *, limit, budget, clock):
 
 
 def execute_sdk_sign_in(plan, *, expected_url, timeout=10, read_budget=30, max_response_bytes=65536,
-                        _open=None, _clock=time.monotonic):
+                        route=None, _open=None, _clock=time.monotonic):
     return _execute_sdk_auth(plan, expected_url=expected_url, suffix='/v1/sign-in', timeout=timeout,
         read_budget=read_budget, max_response_bytes=max_response_bytes, _open=_open, _clock=_clock,
-        parse_response=parse_sdk_sign_in_response)
+        parse_response=parse_sdk_sign_in_response, route=route)
 
 
 def execute_sdk_sign_up(plan, *, expected_url, timeout=10, read_budget=30, max_response_bytes=65536,
-                        _open=None, _clock=time.monotonic):
+                        route=None, _open=None, _clock=time.monotonic):
     """One explicit first-player POST; no fallback/retry or implicit creation."""
     return _execute_sdk_auth(plan, expected_url=expected_url, suffix='/v1/sign-up', timeout=timeout,
         read_budget=read_budget, max_response_bytes=max_response_bytes, _open=_open, _clock=_clock,
-        parse_response=parse_sdk_sign_up_response)
+        parse_response=parse_sdk_sign_up_response, route=route)
 
 
-def _execute_sdk_auth(plan, *, expected_url, suffix, timeout, read_budget, max_response_bytes, _open, _clock, parse_response):
+def _execute_sdk_auth(plan, *, expected_url, suffix, timeout, read_budget, max_response_bytes, _open, _clock, parse_response, route):
     """Execute a plan against the SAME explicitly trusted SDK endpoint.
 
     Parent owns provider origin/account/freshness and confirmation gates.
@@ -79,6 +80,7 @@ def _execute_sdk_auth(plan, *, expected_url, suffix, timeout, read_budget, max_r
     """
     if not isinstance(plan, SdkSignInRequestPlan) or plan.method != 'POST' or plan.url != expected_url:
         raise ValueError('SDK sign-in requires the bound expected endpoint')
+    if route is not None and not isinstance(route, SocksRoute): raise ValueError('Invalid explicit SDK route')
     if (type(expected_url) is not str or not expected_url.startswith('https://')
             or '?' in expected_url or '#' in expected_url or not expected_url.endswith(suffix)):
         raise ValueError('Unsupported SDK sign-in endpoint')
@@ -108,7 +110,7 @@ def _execute_sdk_auth(plan, *, expected_url, suffix, timeout, read_budget, max_r
     except (ValueError, TypeError):
         raise ValueError('Invalid SDK sign-in request headers') from None
     if _open is None:
-        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}),
+        opener = route.opener(_NoRedirect()) if route else urllib.request.build_opener(urllib.request.ProxyHandler({}),
             urllib.request.HTTPSHandler(context=ssl.create_default_context()), _NoRedirect())
         _open = opener.open
     try:

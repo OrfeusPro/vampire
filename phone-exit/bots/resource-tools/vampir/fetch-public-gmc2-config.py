@@ -6,11 +6,15 @@ import importlib.util
 import json
 from pathlib import Path
 import ssl
+import sys
 import time
 import urllib.error
 import urllib.request
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parents[1] / 'vampir-shared'))
+sys.path.insert(0, str(HERE.parents[2] / '.tools/vampir-python-runtime'))
+from vampir_core.socks_route import SocksRoute
 ROOT = Path('F:/PhoneExit Resources/Vampir')
 PROFILE_SHA = 'ed169b12eb7f0f0ccd0a83c93aa16f4e683212eb088bce82df27a0d712456abb'
 MAX_BODY = 2 * 1024 * 1024
@@ -36,7 +40,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def fetch(request):
+def fetch(request, *, route=None):
     expected = 'https://apis.netmarble.com/gc2/template-groups/netmarbles-v5/5.2.11?game=v5&country=G9&build=A&engine=unreal&market=nmp'
     if request['url'] != expected or request['method'] != 'GET' or dict(request['headers']).get('nmDeviceKey') != '':
         raise ValueError('Unsupported public GMC2 request')
@@ -44,7 +48,8 @@ def fetch(request):
     if any(name.lower() in ('accesstoken', 'playerid', 'authorization', 'cookie') for name in headers):
         raise ValueError('Public GMC2 probe cannot carry account credentials')
     headers.update({'User-Agent': 'PhoneExit-Vampir-Research/1', 'Accept-Encoding': 'identity'})
-    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect(),
+    if route is not None and not isinstance(route, SocksRoute): raise ValueError('Invalid explicit GMC2 route')
+    opener = route.opener(NoRedirect()) if route else urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect(),
         urllib.request.HTTPSHandler(context=ssl.create_default_context()))
     deadline = time.monotonic() + 30
     try:
@@ -77,11 +82,13 @@ def fetch(request):
         selected = [(name, value) for name, value in response.headers.items() if name.lower() in
                     ('content-type', 'content-length', 'content-encoding', 'etag', 'deckey', 'date', 'last-modified')]
         status = response.code
-    return bytes(body), dict(status=status, headers=selected, tls_certificate_verification=True,
+    metadata = dict(status=status, headers=selected, tls_certificate_verification=True,
         redirects_followed=False, environment_proxy_used=False, account_credentials_sent=False,
         device_identity_sent=False, max_body_bytes=MAX_BODY, timeout_seconds=10, read_budget_seconds=30,
         request_header_overrides={'User-Agent': 'PhoneExit-Vampir-Research/1', 'Accept-Encoding': 'identity'},
         transport='Python urllib HTTPS, not native SDK transport replay')
+    if route: metadata['socks5_loopback_port'] = route.port
+    return bytes(body), metadata
 
 
 def save(report, body):
@@ -105,9 +112,10 @@ def save(report, body):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fetch', action='store_true', required=True)
-    parser.parse_args()
+    parser.add_argument('--socks-port', type=int)
+    args = parser.parse_args()
     source = profile()
-    body, transport = fetch(source['request'])
+    body, transport = fetch(source['request'], route=SocksRoute(args.socks_port) if args.socks_port is not None else None)
     report = dict(schema_version=1, fetched_utc=datetime.now(timezone.utc).isoformat(),
         tool_sha256=digest(Path(__file__).read_bytes()), profile_sha256=PROFILE_SHA,
         profile=source['profile'], request=source['request'], transport=transport,

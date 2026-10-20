@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-socks-route: NID / GMC2 / SDK используют один HK-выход
+
+Добавлены явный --socks-port, remote DNS / TLS и проверка маршрута снимка.
+Свежий GMC2 подтвердил HK; NID callback получен. SDK SignUp через HK дважды
+вернул 1602. Диагностика: NID joinedCountryCode UA, SDK body HK, сообщение
+`not allowed country for game`. Смена страны аккаунта не выполнялась.
+Пользователь выбрал готовый аккаунт для сравнения; ожидаются его почта и вход
+через штатное окно. Новый ящик не создаётся. SDK-игрок и персонаж пока не получены.
+31 тест и smoke прошли. [Подробности](SOCKS-ROUTE.md).
+
 ## H04-sdk-first-player: новый SDK-игрок отклонён по стране
 
 SignIn 1203 сопровождается `not exist player channel`. Найдены SignUp и callback,
