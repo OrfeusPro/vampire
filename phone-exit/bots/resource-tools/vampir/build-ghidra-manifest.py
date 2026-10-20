@@ -242,7 +242,14 @@ SEEDS=[
  ('Version_Input48Source',0x1444e5ff0),
  ('Version_Input38First',0x1415c1460),
  ('Version_Input38Second',0x1415c1440),
- ('Version_ContextValue',0x1416d7a10)]
+ ('Version_ContextValue',0x1416d7a10),
+ ('NID_WebViewPrepare',0x1450de4f0),
+ ('NID_WebViewQuerySerialize',0x144586a30),
+ ('NID_WebViewType',0x1450e7bc0),
+ ('NID_WebCountry',0x144522160),
+ ('NID_WebLanguage',0x143d163c0),
+ ('NID_WebOS',0x1444e66b0),
+ ('NID_WebOSVersion',0x1444e64f0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

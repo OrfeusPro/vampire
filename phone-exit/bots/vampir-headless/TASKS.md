@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-nid-web-context: десять базовых параметров установлены
+
+Native сборка восьми профилей и webViewType для всех 256 значений проверены.
+Общий helper готовит параметры signin с NID key и gate confirmation required.
+Далее — encoding helper `0x141c13850`, query serializer `0x144586a30`,
+полный authWebViewUrl и доставка результата окна в бот без запуска игры.
+Не считать provider credential SDK-токеном или готовой игровой сессией.
+[Источники и границы](../resource-tools/vampir/HEADLESS-NID-WEB-CONTEXT.md).
+
 ## H04-windows-identity: три наблюдённых ключа получены
 
 SDK DeviceKey, NID DeviceKeyForNetmarbleId и NMDeviceKey прочитаны из точных
