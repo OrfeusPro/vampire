@@ -180,7 +180,16 @@ SEEDS=[
  ('GameMode_RegisterInGame',0x1468de1b0),
  ('GameMode_RegisterArena',0x1468de400),
  ('GameMode_RegisterConquest',0x1468de8f0),
- ('GameMode_RegisterCharacterSelect',0x1468e0810)]
+ ('GameMode_RegisterCharacterSelect',0x1468e0810),
+ ('OwnerProvider_RegisterEngine',0x143bf3b90),
+ ('OwnerProvider_RegisterGame',0x1468e10e0),
+ ('OwnerProvider_ConstructEngine',0x143bf9f20),
+ ('OwnerProvider_ConstructBase',0x1454d2b00),
+ ('OwnerProvider_ConstructGame',0x1468e30f0),
+ ('OwnerProvider_CreateMode',0x143c05a10),
+ ('OwnerProvider_GetWorldSettings',0x144319a30),
+ ('OwnerProvider_ModeClass',0x143bf3d80),
+ ('OwnerProvider_CopyClass',0x14178c590)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
