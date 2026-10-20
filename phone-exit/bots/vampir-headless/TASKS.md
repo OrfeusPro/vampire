@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lobby-windows: проверен переход к игровому подключению
+
+Восемь native-сценариев прошли полный успешный lobby handler с настоящим
+Windows selector / gate. Проверены перенос двух строк и вызов подключения;
+служебный backend остаётся fixture. Runtime не менялся, новая почта
+не создавалась. Далее — фактический lobby kind и полный SDK / session
+context до устранения InvalidState, списка / выбора персонажа и позиции.
+[Источники и границы](../resource-tools/vampir/HEADLESS-LOBBY-WINDOWS-CONTINUATION.md).
+
 ## H04-login-error-16: после замены выходов получен InvalidState
 
 Свежие SDK / lobby / ID 104 приняты, прежний HK-аккаунт на JP 251 получил
