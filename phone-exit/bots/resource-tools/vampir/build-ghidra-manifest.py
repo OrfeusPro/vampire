@@ -189,7 +189,14 @@ SEEDS=[
  ('OwnerProvider_CreateMode',0x143c05a10),
  ('OwnerProvider_GetWorldSettings',0x144319a30),
  ('OwnerProvider_ModeClass',0x143bf3d80),
- ('OwnerProvider_CopyClass',0x14178c590)]
+ ('OwnerProvider_CopyClass',0x14178c590),
+ ('WorldMoveReserveResult_Handler',0x1467a6020),
+ ('WorldMoveStartResult_Handler',0x1467a61a0),
+ ('WorldMoveStartResult_Read',0x145845140),
+ ('WorldMoveStartResult_Receive',0x145dbf720),
+ ('WorldMoveReserveResult_Receive',0x145dbf640),
+ ('WorldMoveReserve_Request',0x145dc29c0),
+ ('WorldMoveStart_Request',0x145dc2e60)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

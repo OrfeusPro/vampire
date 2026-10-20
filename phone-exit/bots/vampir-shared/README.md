@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## Ответ начала перемещения ID204
+
+`world_move_start_result.decode_world_move_start_result(body, max_payload_size=...)`
+читает полное тело из 30 байт. Вектор хранит float32 bits; enum ограничивается
+значением 22, bool нормализуется. Результат неизменяемый, данные скрыты из `repr`.
+Декодер требует точного размера и не применяет политику принятия ответа.
+[Схема, native-проверки и границы](../resource-tools/vampir/HEADLESS-WORLD-MOVE-START.md).
+
 ## Ответ завершения перемещения ID206
 
 `world_move_finish_result.decode_world_move_finish_result` принимает тело ответа
