@@ -35,3 +35,12 @@ def encode_key_changed_frame_b(payload: KeyChangePayload, sequence: int, key_bit
     if not isinstance(payload, KeyChangePayload):
         raise TypeError('Expected KeyChangePayload')
     return _encode(KEY_CHANGED_ID, payload.encode(), sequence, key_bits)
+
+
+def encode_world_move_finish_frame_b(sequence: int, key_bits: int) -> bytes:
+    """Encode ID205 with its verified empty body; no readiness check or IO.
+
+    Evidence: HEADLESS-WORLD-MOVE-FINISH-SEND.md. The caller owns the live
+    sequence/key and must establish the world-move completion conditions.
+    """
+    return _encode(205, b'', sequence, key_bits)

@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## Запрос завершения перемещения ID205
+
+`send_frame.encode_world_move_finish_frame_b(sequence, key_bits)` кодирует
+подтверждённое пустое тело ID205. Побайтно проверен по четырём native-кадрам,
+включая резервный XOR-ключ и переход номера последовательности через 65535.
+Номер, ключ и условия отправки задаёт вызывающий код; I/O отсутствует.
+[Источники и ограничения](../resource-tools/vampir/HEADLESS-WORLD-MOVE-FINISH-SEND.md).
+
 ## Ответ выбора персонажа ID110
 
 `character_select_result.decode_character_select_result` принимает тело ответа
