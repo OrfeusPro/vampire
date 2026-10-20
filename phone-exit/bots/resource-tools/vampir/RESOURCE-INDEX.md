@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## ClientVersion установленного manifestlist, 20 октября
+
+Пять native-сценариев связали JSON key ClientVersion с patch object+0x1b0.
+Snapshot содержит Revision258392; parser и явный ввод runner добавлены.
+Реальный Login с этим числом снова вернул InvalidState 16.
+[Источники, SHA и границы](HEADLESS-PATCH-CLIENT-VERSION.md).
+
 ## Число Login из patch-контекста, 20 октября
 
 Десять native-сценариев BeginGame до global store, настоящий системный _wtoi,

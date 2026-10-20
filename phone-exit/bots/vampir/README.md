@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## ClientVersion связан с Login; ревизия 258392 проверена, 20 октября
+
+Ключ ClientVersion из установленного windows.manifestlist связан с полем
+patch object+0x1b0; пять native-сценариев подтвердили перенос строки.
+Установленный список содержит Revision258392, независимо от ревизий отдельных
+pakchunk. Добавлены строгий parser и явный ввод manifestlist в игровой runner.
+Реальная попытка с числом 258392 снова получила Login 16; лобби принято,
+сокеты и JP-транспорт закрыты. Далее — оставшийся SDK / lobby context.
+[Источники, snapshot и реальная проверка](../resource-tools/vampir/HEADLESS-PATCH-CLIENT-VERSION.md).
+
 ## Найдено преобразование patch revision в число Login, 20 октября
 
 Десять native-сценариев прошли BeginGame до записи global для Login +0x50:

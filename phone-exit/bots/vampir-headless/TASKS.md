@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-patch-client-version: источник числа найден, Login всё ещё отклонён
+
+ClientVersion → patch structure+0x18 → patch object+0x1b0 → число Login.
+Установленный manifestlist содержит Revision258392; добавлены snapshot,
+строгий parser и --patch-manifestlist вместо ручного числа. Пять native-сценариев
+прошли; реальный Login с 258392 снова вернул InvalidState 16 на JP 251.
+Сокеты / JP-транспорт закрыты. Далее — lobby kind и SDK / NID context
+до успешного входа, пустого списка и создания первого персонажа.
+[Источники и границы](../resource-tools/vampir/HEADLESS-PATCH-CLIENT-VERSION.md).
+
 ## H04-login-revision: преобразование числа подтверждено, источник строки открыт
 
 BeginGame получает строку patch object+0x1b0, отбрасывает восемь символов

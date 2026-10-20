@@ -1,5 +1,16 @@
 # Реальные проверки игрового Login
 
+## Ревизия ClientVersion 258392: снова InvalidState
+
+20 октября 2026 выполнена одна попытка с extra_number = 258392 из установленного
+windows.manifestlist. Прежний аккаунт / Windows device profile, JP server ID 251;
+новая SDK-сессия, страна HK. Лобби приняло `[2, 104, 4]`, все коды 0,
+send 545 / recv 11 466, socket сохранялся во время игрового обмена.
+Игра вернула Version 0 / Login 16, body 131, send 641 / recv 94 байта,
+других ID нет. Персонажи не запрашивались; сокеты и JP-транспорт закрыты,
+exit 0, stderr пуст. Изменение ревизии пока не устранило отказ.
+[Связи ClientVersion, SHA и снимки](../resource-tools/vampir/HEADLESS-PATCH-CLIENT-VERSION.md).
+
 ## Login в лобби для JP 251 и сохранение соединения
 
 20 октября 2026 выполнены две проверки исправленной цепочки: Version → список

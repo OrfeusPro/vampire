@@ -13,6 +13,7 @@ from vampir_core.game_login_probe import exchange_game_login
 from vampir_core.login_context import prepare_initial_windows_game_login
 from vampir_core.socks_route import SocksRoute, socks_game_address_context
 from vampir_core.game_server_target import SERVER_REGION_CODES, is_game_server_state_excluded, game_server_allows_joined_country
+from vampir_core.patch_revision import parse_patch_client_revision
 
 
 @dataclass(frozen=True)
@@ -163,7 +164,10 @@ if __name__ == '__main__':
     parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--socks-port', type=int, required=True)
     parser.add_argument('--server-policy-byte', type=int, required=True)
-    parser.add_argument('--extra-number', type=int, required=True)
+    revision_choice = parser.add_mutually_exclusive_group(required=True)
+    revision_choice.add_argument('--extra-number', type=int)
+    revision_choice.add_argument('--patch-manifestlist', type=Path,
+        help='Read explicit ClientVersion from an installed or verified snapshot manifestlist')
     parser.add_argument('--context', choices=['windows-sdk-initial-reset'], required=True)
     parser.add_argument('--region', choices=list(SERVER_REGION_CODES), required=True)
     choice = parser.add_mutually_exclusive_group(required=True)
@@ -173,11 +177,15 @@ if __name__ == '__main__':
     parser.add_argument('--server-list-only', action='store_true', help='Check region/state/country policy without a game connection')
     args = parser.parse_args()
     try:
+        extra_number = args.extra_number
+        if args.patch_manifestlist is not None:
+            with args.patch_manifestlist.open('rb') as stream:
+                extra_number = parse_patch_client_revision(stream.read(2097153))
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
         result = run(args.email, selected_profile=args.profile, manifest_path=args.manifest,
             socks_port=args.socks_port, server_policy_byte=args.server_policy_byte,
-            extra_number=args.extra_number, context=args.context, region=args.region, server_id=args.server_id,
+            extra_number=extra_number, context=args.context, region=args.region, server_id=args.server_id,
             selection=args.selection, password=password, server_list_only=args.server_list_only,
             _progress=lambda stage: print(json.dumps(dict(event='phase', stage=stage)), file=sys.stderr, flush=True))
         password = None
