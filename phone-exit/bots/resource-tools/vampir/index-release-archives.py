@@ -109,11 +109,17 @@ def compare_observed_paths(old, new):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('manifest', type=Path)
+    parser.add_argument('--archive-sha256', help='Index only this exact archive digest from the release manifest')
     args = parser.parse_args()
     audit = load('vampir_audit_for_index', HERE / 'audit-client-release.py')
     manifest = json.loads(args.manifest.read_text('utf-8'))
     if audit.sha256(args.manifest) != args.manifest.parent.name:
         raise ValueError('Release manifest digest mismatch')
+    if args.archive_sha256 and not any(
+            (item.get('current') or {}).get('sha256') == args.archive_sha256
+            and (item.get('current') or {}).get('pak_version') == 11
+            for item in manifest['files']):
+        raise ValueError('Requested PAK digest absent from release manifest')
     reader_path = HERE.parent / 'rfnext/scan-pak.py'
     reader = load('vampir_record_reader', reader_path)
     dependencies = dict(tool_sha256=audit.sha256(Path(__file__)),
@@ -122,6 +128,8 @@ def main():
     outputs = []
     for item in manifest['files']:
         source = item['current']
+        if args.archive_sha256 and (source or {}).get('sha256') != args.archive_sha256:
+            continue
         if not source or source.get('pak_version') != 11 or item['status'] == 'sample_matches_unverified':
             continue
         path = Path(item['path'])
@@ -162,6 +170,7 @@ def main():
         outputs.append(summary)
         print(json.dumps(summary), flush=True)
     summary = dict(schema=1, release_manifest_sha256=args.manifest.parent.name,
+                   selected_archive_sha256=args.archive_sha256,
                    dependencies=dependencies, archives=outputs, compatibility='not_established')
     target = audit.save_snapshot(args.manifest.parent / 'index-summaries', summary)
     print('SUMMARY', target, flush=True)
