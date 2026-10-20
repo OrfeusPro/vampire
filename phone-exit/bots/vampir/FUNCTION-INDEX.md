@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Начальный контекст игрового Login, 20 октября
+
+Network_PeersConstruct: 0x1467a7ae7 / 0x1467a7aee обнуляют wrapper+0x100.
+Policy constructor ставит vtable 0x1498a9618; slot +8 → 0x14556a750,
+который пишет byte +0x18 = 7. Три native-сценария доводят значения до
+Login+0x88 / +0x124. Runtime получил явный builder начальной Windows SDK-ветви.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOGIN-INITIAL-CONTEXT.md).
+
 ## Login: getters настроек и режима, 20 октября
 
 0x145564550 → global 0x14b573398, object+0x18 → Login+0x124.

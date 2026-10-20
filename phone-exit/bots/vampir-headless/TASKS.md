@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-login-initial-context: начальная Windows SDK-ветвь подготовлена
+
+Actual wrapper constructor → пустая строка +0x100 → Login+0x88;
+policy constructor / vtable slot +8 → byte 7 → Login+0x124.
+Три native-сценария и явный runtime builder; дополнительный uint32 +0x50
+принимается отдельно от server ID. Прошли 15 проверок. SDK / lobby данные
+ещё нужно передать в памяти до Version → Login на одном игровом сокете,
+затем — список / выбор персонажа. Новых сетевых попыток нет.
+[Подробности](../resource-tools/vampir/HEADLESS-LOGIN-INITIAL-CONTEXT.md).
+
 ## H04-login-policy: getters и конструкторы проверены
 
 Login bytes +0x124 / +0x130 / +0x131 проверены в 43 native-сценариях.

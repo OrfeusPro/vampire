@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: сборщик начального игрового Login
+
+Найдена связь policy constructor → vtable+8 → метод с byte +0x18 = 7.
+Из существующего Network_PeersConstruct подтверждено обнуление wrapper+0x100.
+Три native-сценария передали эти значения в Login с отдельными lobby fields.
+Добавлен builder явной Windows SDK-ветви, без NID UserInfo / manager68;
+extra_number остаётся обязательным отдельным входом. Ghidra: 352 функции /
+159 предупреждений. 15 целевых проверок прошли, сети не было.
+Далее — сохранение свежего SDK / lobby context в памяти и игровой Login.
+[Источники и границы](../resource-tools/vampir/HEADLESS-LOGIN-INITIAL-CONTEXT.md).
+
 ## 20 октября: поля настроек игрового Login
 
 Ghidra: 349 функций / 157 предупреждений. Реальные getter leaves и два

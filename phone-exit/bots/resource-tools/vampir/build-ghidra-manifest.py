@@ -14,6 +14,8 @@ SEEDS=[
  ('Login_PolicySingleton',0x145564550),('Login_ModeSingleton',0x145cb2f60),
  ('Login_ModeFlag',0x145cb95e0),('Login_Manager68Flag',0x144ff8cd0),
  ('Login_PolicyConstruct',0x145556120),('Login_ModeConstruct',0x145ca7240),
+ ('Login_PolicyInitializeCandidate',0x14556a750),
+ ('Login_PolicyByteUseA',0x14555a5b0),('Login_PolicyByteUseB',0x14555d0c0),
  ('Login_Prepare',0x1467a9700),('PktLogin_Constructor',0x1456d4c80),
  ('PktLogin_Write',0x1456e57c0),('PktLogin_Read',0x1456d9370),
  ('PktLoginResult_Read',0x1456d9600),('LoginResult_Handler',0x146765540),

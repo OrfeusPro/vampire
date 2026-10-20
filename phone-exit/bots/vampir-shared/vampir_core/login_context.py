@@ -110,3 +110,29 @@ def prepare_registered_login(version, login, *, binding, sdk_data, netmarble_id)
         raise ValueError('Login device profile is incomplete')
     version, login = bind_nm_device_key(version, login, nm_device_key=binding.nm_device_key)
     return version, bind_sdk_login_fields(login, sdk_data=sdk_data, netmarble_id=netmarble_id)
+
+
+def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_id,
+        lobby_result, server_id, extra_number, context):
+    """Explicit initial/reset Windows SDK branch; no NID UserInfo/manager68.
+
+    Sources: LOGIN-INITIAL-CONTEXT, LOGIN-POLICY-INPUTS and LOGIN-PACKET-FIELDS.
+    extra_number is the separate +50 DWORD: its UI/default is not inferred.
+    Caller establishes same-account freshness and selected endpoint provenance.
+    Does not authenticate, send, mutate a device or claim live game state.
+    """
+    if context != 'windows-sdk-initial-reset':
+        raise ValueError('Explicit initial/reset Windows SDK context required')
+    if (not isinstance(version, VersionPayload) or not version.strings[0] or
+            not version.strings[1].startswith('Windows_') or
+            version.strings[9] != 'AC7F34E3AFA91ED417BE86CD45BF18C8' or
+            version.integers != (0, 207, 1)):
+        raise ValueError('Expected prepared source-supported Windows Version')
+    if type(server_id) is not int or not 1 <= server_id <= 0xffffffff:
+        raise ValueError('Expected explicit selected server ID')
+    strings = [''] * 15
+    strings[3], strings[14] = version.strings[0], version.strings[9]
+    login = LoginPayload(tuple(strings), (extra_number, server_id, 207, 1), (3, 3, 7, 0, 0), 0)
+    _, login = prepare_registered_login(version, login, binding=binding,
+        sdk_data=sdk_data, netmarble_id=netmarble_id)
+    return bind_lobby_login_fields(login, lobby_result=lobby_result)
