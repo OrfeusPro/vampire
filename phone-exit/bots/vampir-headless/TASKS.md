@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — задачи
 
+## H04-game-inputs: восстановлены CPU inputs и статические globals
+
+Initializer CPU и два getter исполнены на четырёх native fixtures. Уточнены
+compiled tag / DWORD, AppVersion zero-fill и selector Windows → 3. Полный
+runtime template ещё не строится: platform context, Windows suffix и другие
+Login inputs требуют источников. Далее — их проверка, подключение к лобби
+через HK и игровой Version / Login. [Подробности](../resource-tools/vampir/HEADLESS-GAME-LOGIN-INPUTS.md).
+
 ## H04-hk-account: регистрация и SDK-вход пройдены
 
 По последнему поручению пользователя создан отдельный ящик bot-hk-test@vampir.top.

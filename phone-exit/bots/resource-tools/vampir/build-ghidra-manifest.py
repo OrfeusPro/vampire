@@ -254,7 +254,15 @@ SEEDS=[
  ('SDK_PlatformLabel',0x14452bb70),
  ('SDK_SignUp',0x1444ff5e0),
  ('SDK_ExecSignUp',0x1444e06a0),
- ('SDK_SignUpResponse',0x1444ce940)]
+ ('SDK_SignUpResponse',0x1444ce940),
+ ('Version_Input38Initialize',0x140ff54a0),
+ ('Version_ContextSelector',0x1445c77a0),
+ ('Version_ContextStore',0x1445bdfe0),
+ ('Network_AppVersionInitialize',0x1411dc990),
+ ('Network_VersionDiagnostics',0x1467aae20),
+ ('Version_ContextStoreEnum',0x1445d23b0),
+ ('Version_PlatformName',0x143c13690),
+ ('Version_Input38Normalize',0x1414344c0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

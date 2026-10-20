@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: CPU inputs и оставшиеся источники игрового входа
+
+Переиспользован экспорт Ghidra и RIP / unwind indexer. Найден настоящий
+initializer двух строк Version: CPUID vendor и brand. Native initializer
+с обоими getter проверен на Intel / AMD / unsupported / disabled fixtures.
+Уточнены compiled pointer tag, raw DWORD 1 и источник AppVersion; значения
+не объявляются неизменными active globals. Экспорт расширен до 289 функций,
+120 предупреждений; три новых проверки прошли. Runtime не менялся,
+игровой вход не выполнялся. [Источники](../resource-tools/vampir/HEADLESS-GAME-LOGIN-INPUTS.md).
+
 ## 20 октября: новый HK-аккаунт и успешные SDK SignUp / SignIn
 
 Создан ящик bot-hk-test@vampir.top, квота 100 МБ. Добавлен явный режим

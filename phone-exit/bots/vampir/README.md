@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Поля игрового входа: CPU и compiled globals, 20 октября
+
+Найден initializer CPU vendor / brand; весь native участок и два getter
+проверены четырьмя сценариями. Привязаны compiled ASCII строка и raw DWORD
+Version / Login, уточнён Windows selector. Три новые проверки прошли;
+Ghidra содержит 289 функций / 120 предупреждений. Далее — platform context,
+Windows suffix и остальные Login inputs. Игровой запрос ещё не отправлялся.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-GAME-LOGIN-INPUTS.md).
+
 ## HK-аккаунт зарегистрирован, SDK SignUp и SignIn успешны, 20 октября
 
 Создан отдельный тестовый ящик. Штатная регистрация во встроенном окне через HK
