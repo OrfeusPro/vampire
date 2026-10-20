@@ -196,14 +196,17 @@ SEEDS=[
  ('WorldMoveStartResult_Receive',0x145dbf720),
  ('WorldMoveReserveResult_Receive',0x145dbf640),
  ('WorldMoveReserve_Request',0x145dc29c0),
- ('WorldMoveStart_Request',0x145dc2e60)]
+ ('WorldMoveStart_Request',0x145dc2e60),
+ ('WorldMoveStart_LoadPredicate',0x145dc0830),
+ ('WorldMoveStart_CompareLevelPath',0x1414596e0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
 # stores ending at RET (71/23 bytes); request constructor is 25 bytes of stores.
 # Do not manufacture .pdata for these leaves.
 REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28,0x145608fb0:71,0x145601570:23,0x1456bb2a0:25,
-    0x145842880:18}  # WorldMoveFinish: straight vptr/flag stores and RET.
+    0x145842880:18,  # WorldMoveFinish: straight vptr/flag stores and RET.
+    0x1414596e0:71}  # UTF-16 comparison: reviewed loop, ASCII table, three RETs.
 
 
 def build():
