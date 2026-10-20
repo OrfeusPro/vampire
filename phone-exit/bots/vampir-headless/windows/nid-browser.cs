@@ -12,7 +12,7 @@ public static class NidBrowserHost {
     public static string SignInStep;
 
     public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
-            string signInScript, string emailJson, string passwordJson, int socksPort) {
+            string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
         SignInStep = "manual";
         if (socksPort != 0 && (socksPort < 1024 || socksPort > 65535)) throw new ArgumentException("Invalid SOCKS port");
@@ -44,6 +44,10 @@ public static class NidBrowserHost {
             bool done = false;
             bool signInBusy = false, emailOpened = false, filled = false;
             bool autoSignIn = !smoke && passwordJson != "\"\"" && !String.IsNullOrEmpty(passwordJson);
+            bool registering = !smoke && !String.IsNullOrEmpty(registrationScript);
+            string registrationState = "{}", previousRegistrationResult = "";
+            string verificationCode = "";
+            System.Threading.Tasks.Task<string> codeRead = null;
             if (autoSignIn) SignInStep = "waiting";
             Action<string> finish = status => { if (!done) { done = true; Status = status; form.Close(); } };
             Action<string> custom = uri => {
@@ -96,8 +100,40 @@ public static class NidBrowserHost {
                 if (done || !autoSignIn || signInBusy || view.CoreWebView2 == null) return;
                 Uri source;
                 if (!Uri.TryCreate(view.CoreWebView2.Source, UriKind.Absolute, out source) || source.Scheme != "https" ||
-                    source.Host != "members.netmarble.com" || !source.IsDefaultPort || source.UserInfo != "" ||
-                    (source.AbsolutePath != "/auth/signin" && source.AbsolutePath != "/auth/signin/email")) return;
+                    source.Host != "members.netmarble.com" || !source.IsDefaultPort || source.UserInfo != "") return;
+                if (registering) {
+                    signInBusy = true;
+                    try {
+                        if (codeRead != null && codeRead.IsCompleted) {
+                            string code = codeRead.Result;
+                            if (code == null || code.Length != 5 || !System.Text.RegularExpressions.Regex.IsMatch(code, "^[0-9]{5}$")) {
+                                finish("invalid_verification_input"); return;
+                            }
+                            verificationCode = code;
+                            codeRead = null;
+                        }
+                        string registrationResult = await view.CoreWebView2.ExecuteScriptAsync(registrationScript +
+                            "({email:" + emailJson + ",password:" + passwordJson + ",code:'" + verificationCode +
+                            "',state:" + registrationState + "})");
+                        if (done) return;
+                        if (registrationResult != "null" && registrationResult != previousRegistrationResult) {
+                            previousRegistrationResult = registrationResult;
+                            Console.Out.WriteLine("{\"registration\":" + registrationResult + "}");
+                            Console.Out.Flush();
+                        }
+                        // The script returns only bounded state flags and UI labels, never values.
+                        registrationState = registrationResult == "null" ? "{}" : registrationResult;
+                        if (registrationResult.Contains("\"need_code\":true") && codeRead == null && verificationCode == "")
+                            codeRead = System.Threading.Tasks.Task.Factory.StartNew<string>(() => Console.In.ReadLine());
+                        if (registrationResult.Contains("\"complete\":true")) {
+                            registering = false; view.CoreWebView2.Navigate(startUrl);
+                        }
+                        if (registrationResult.Contains("\"stopped\":")) finish("registration_stopped");
+                    } catch { finish("registration_script_failed"); }
+                    finally { signInBusy = false; }
+                    return;
+                }
+                if (source.AbsolutePath != "/auth/signin" && source.AbsolutePath != "/auth/signin/email") return;
                 signInBusy = true;
                 try {
                     string script = signInScript + "({\"email\":" + emailJson + ",\"password\":" + passwordJson +

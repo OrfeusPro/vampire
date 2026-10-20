@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import threading
 from urllib.parse import parse_qs, urlsplit
 
 HERE = Path(__file__).resolve().parent
@@ -28,7 +29,8 @@ def _library():
     return folder
 
 
-def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sign_in_password='', socks_port=None):
+def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sign_in_password='', socks_port=None,
+         register_account=False, code_provider=None, progress=None):
     if sys.platform != 'win32': raise RuntimeError('NID browser adapter requires Windows')
     if socks_port is not None: SocksRoute(socks_port)
     if type(timeout) is not int or not 1 <= timeout <= 900: raise ValueError('Invalid browser timeout')
@@ -38,15 +40,52 @@ def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sig
     if (type(sign_in_password) is not str or len(sign_in_password) > 256 or
             (sign_in_password and (not account_hint or len(account_hint) > 320))):
         raise ValueError('Invalid explicit sign-in credentials')
+    if type(register_account) is not bool or (register_account and
+            (smoke or socks_port is None or not sign_in_password or not callable(code_provider))):
+        raise ValueError('Registration requires an explicit route, password and mail-code provider')
     request = json.dumps(dict(url=url, game_code=game_code, timeout=timeout,
         data_directory=str(Path(data_directory).resolve()), library=str(_library()), smoke=smoke,
-        account_hint=account_hint, sign_in_password=sign_in_password, socks_port=socks_port or 0))
+        account_hint=account_hint, sign_in_password=sign_in_password, socks_port=socks_port or 0,
+        register_account=register_account))
     command = ['powershell.exe', '-NoProfile', '-STA', '-ExecutionPolicy', 'Bypass',
                '-File', str(HERE / 'windows/nid-browser.ps1')]
     process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                creationflags=subprocess.CREATE_NO_WINDOW)
+    watchdog = None
     try:
-        output, _ = process.communicate(request.encode('utf-8'), timeout=timeout + 20)
+        if register_account:
+            def terminate():
+                subprocess.run(['taskkill.exe', '/PID', str(process.pid), '/T', '/F'],
+                    capture_output=True, creationflags=subprocess.CREATE_NO_WINDOW)
+            watchdog = threading.Timer(timeout + 20, terminate)
+            watchdog.start()
+            process.stdin.write((request + '\n').encode('utf-8'))
+            process.stdin.flush()
+            sent_code = False
+            budget = 0
+            while True:
+                line = process.stdout.readline(16385)
+                budget += len(line)
+                if not line or budget > 65536 or len(line) > 16384:
+                    raise RuntimeError('Registration helper response limit or EOF')
+                event = json.loads(line.decode('utf-8-sig'))
+                if 'registration' not in event:
+                    output = line
+                    process.wait(timeout=10)
+                    break
+                state = event['registration']
+                if not isinstance(state, dict): raise ValueError('Invalid registration state')
+                if progress: progress(state)
+                if state.get('need_code') and not sent_code:
+                    code = code_provider()
+                    if type(code) is not str or len(code) != 5 or not code.isascii() or not code.isdigit():
+                        raise ValueError('Invalid email verification code')
+                    process.stdin.write((code + '\n').encode('ascii'))
+                    process.stdin.flush()
+                    sent_code = True
+                    code = None
+        else:
+            output, _ = process.communicate((request + '\n').encode('utf-8'), timeout=timeout + 20)
     except BaseException:
         # Kill only the helper process tree created above if normal timed UI
         # shutdown fails or its owning caller is interrupted.
@@ -55,7 +94,11 @@ def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sig
         process.communicate()
         raise RuntimeError('NID browser helper did not finish normally') from None
     finally:
+        if watchdog: watchdog.cancel()
         request = None
+        if process.poll() is not None:
+            for stream in (process.stdin, process.stdout, process.stderr):
+                if stream and not stream.closed: stream.close()
     if process.returncode or len(output) > 65536:
         raise RuntimeError('NID browser helper failed')
     try:
@@ -66,7 +109,8 @@ def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sig
     return result
 
 
-def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=300, expected_email='', sign_in_password='', socks_port=None):
+def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=300, expected_email='', sign_in_password='', socks_port=None,
+                           register_account=False, code_provider=None, progress=None):
     """Open official sign-in UI; the user completes login/verification there.
 
     The parent validates the captured route and email result, then returns a
@@ -74,6 +118,7 @@ def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=
     This is route/origin handling, not proof of server token validity.
     """
     if not isinstance(plan, NidWebUrl): raise TypeError('Expected a prepared NID URL')
+    if type(register_account) is not bool: raise ValueError('Explicit registration mode required')
     try:
         parts = urlsplit(plan.url)
         params = parse_qs(parts.query, keep_blank_values=True, strict_parsing=True)
@@ -83,9 +128,10 @@ def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=
             raise ValueError
     except ValueError:
         raise ValueError('NID browser requires the expected SDK sign-in context') from None
+    registration = dict(register_account=True, code_provider=code_provider, progress=progress) if register_account else {}
     result = _run(url=plan.url, game_code=expected_game_code, timeout=timeout,
                   data_directory=data_directory, smoke=False, account_hint=expected_email,
-                  sign_in_password=sign_in_password, socks_port=socks_port)
+                  sign_in_password=sign_in_password, socks_port=socks_port, **registration)
     if result['status'] != 'callback':
         raise RuntimeError('NID browser did not return a sign-in result')
     callback = result.get('callback')

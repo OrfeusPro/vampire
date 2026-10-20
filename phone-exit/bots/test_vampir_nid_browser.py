@@ -47,5 +47,14 @@ class NidBrowserTests(unittest.TestCase):
         self.assertEqual(run.call_args.kwargs['sign_in_password'], 'fixture-password')
         self.assertEqual(run.call_args.kwargs['account_hint'], 'fixture@example.invalid')
 
+    def test_registration_requires_route_and_mail_provider_before_process_start(self):
+        with patch.object(self.tool.subprocess, 'Popen') as start:
+            for options in ({}, {'socks_port': 17948}, {'code_provider': lambda: '12345'}):
+                with self.assertRaises(ValueError):
+                    self.tool._run(url=self.plan().url, game_code='thered', timeout=30,
+                        data_directory='unused', smoke=False, account_hint='fixture@vampir.top',
+                        sign_in_password='fixture-password', register_account=True, **options)
+            start.assert_not_called()
+
 
 if __name__ == '__main__': unittest.main()
