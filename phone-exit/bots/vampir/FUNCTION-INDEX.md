@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## LobbyLogin writer и NID UserInfo, 20 октября
+
+Writer 0x145756e80: 24 native bodies, отдельный runtime payload.
+SDK player accessor 0x145606660 → GetPlayerId 0x144524d80.
+NID text accessor 0x145604960 → UserInfo loader 0x145604090;
+serializer 0x144551060 связывает +0x170 с I_JoinedCountryCode.
+Collector 0x145604bf0 / selector 0x1455fb550: 27 compiled key calls.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-WRITER.md).
+
 ## CDN → lobby endpoint и настоящий VersionResult, 20 октября
 
 SetServerList на 0x145662389 / 0x1456623c5 пишет globals 0x14b520cd0 /

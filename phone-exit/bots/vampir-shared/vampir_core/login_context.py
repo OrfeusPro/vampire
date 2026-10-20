@@ -10,6 +10,7 @@ from .login_packet import LoginPayload, _utf8
 from .sdk_sign_in_response import SdkSignInData
 from .device_registry import DeviceBinding
 from .lobby_login_result import LobbyLoginResultBody
+from .lobby_packets import LobbyLoginPayload
 
 
 def _bind(strings, index, value):
@@ -73,6 +74,22 @@ def bind_lobby_login_fields(login, *, lobby_result):
         raise ValueError('Lobby login did not succeed')
     strings = _bind(login.strings, 0, lobby_result.strings[0])
     strings = _bind(strings, 1, lobby_result.strings[1])
+    return replace(login, strings=strings)
+
+
+def bind_lobby_sdk_fields(login, *, sdk_data, netmarble_id, nm_device_key, joined_country_code):
+    """Bind lobby +18/+28/+38/+48/+58; keep +70 metadata and all numbers explicit.
+
+    Sources: Lobby_LoginPrepare, SDK GetPlayerId/token accessors and NID
+    UserInfo+170 -> I_JoinedCountryCode. Caller establishes freshness/account
+    provenance; SDK parsing alone is not authentication or a country observation.
+    """
+    if not isinstance(login, LobbyLoginPayload) or not isinstance(sdk_data, SdkSignInData):
+        raise TypeError('Expected separate lobby Login and parsed SDK data')
+    strings = login.strings
+    for index, value in enumerate((sdk_data.player_id, sdk_data.access_token, nm_device_key,
+            joined_country_code, netmarble_id)):
+        strings = _bind(strings, index, value)
     return replace(login, strings=strings)
 
 

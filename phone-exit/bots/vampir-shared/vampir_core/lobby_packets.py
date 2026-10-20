@@ -46,6 +46,29 @@ class LobbyVersionPayload:
 
 
 @dataclass(frozen=True, slots=True)
+class LobbyLoginPayload:
+    """ID3: u32 +10/+14, strings +18/+28/+38/+48/+58, u32 +68/+6c,
+    string +70, raw byte +80. No inferred profile defaults or SDK IO.
+    """
+    strings: tuple[str, ...] = field(repr=False)
+    integers: tuple[int, ...] = field(repr=False)
+    raw_80: int = field(repr=False)
+
+    def __post_init__(self):
+        _strings(self.strings, 6)
+        _numbers(self.integers, 4, 0xffffffff)
+        _numbers((self.raw_80,), 1, 255)
+
+    def encode(self, *, max_payload_size):
+        _budget(max_payload_size, 29)
+        texts = _strings(self.strings, 6)
+        if 29 + sum(map(len, texts)) > max_payload_size: raise BufferError('Lobby Login exceeds byte budget')
+        parts = _encode_texts(texts)
+        return (struct.pack('<II', *self.integers[:2]) + b''.join(parts[:5]) +
+            struct.pack('<II', *self.integers[2:]) + parts[5] + bytes([self.raw_80]))
+
+
+@dataclass(frozen=True, slots=True)
 class LobbyServerListPayload:
     """ID 103: strings +10/+20, uint32 +30, raw bytes +34/+35.
 

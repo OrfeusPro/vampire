@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: writer LobbyLogin и SDK / NID inputs
+
+Ghidra расширен до 331 функции / 151 предупреждения. Native writer LobbyLogin
+исполнен на 24 bodies; добавлены отдельный bounded payload и binder пяти
+строк. GetPlayerId подтверждён settings diagnostic; NID accessor связан
+с UserInfo +0x170 / I_JoinedCountryCode. В составной metadata строке найдены
+27 обращений к 26 ключам, включая параметры игры / SDK / устройства.
+Полная сериализация и numeric context пока не перенесены. Прошла 21 целевая
+проверка; сетевых попыток и передачи реальных Login tokens не было.
+[Источники и ограничения](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-WRITER.md).
+
 ## 20 октября: реальный LobbyVersionResult через HK
 
 Связаны CDN globals и lobby connect на одной native машине: 20 сценариев,

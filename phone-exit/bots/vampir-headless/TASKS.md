@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lobby-login-inputs: body и пять строк SDK / NID связаны
+
+LobbyLogin body: шесть строк, четыре uint32, raw byte; 24 полных native writer
+cases совпали с runtime encoder. Binder заполняет player ID / SDK token /
+NMDeviceKey / joinedCountryCode / NID без перезаписи конфликта. Страна
+связана с UserInfo +0x170. Collector использует 27 обращений к 26 ключам;
+полный metadata / numeric context остаётся открытым. Далее — завершить
+эти входы, связать LobbyLogin с Version и получить ответ / список серверов.
+Реальный LobbyLogin в этом этапе не отправлялся.
+[Подробности](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-WRITER.md).
+
 ## H04-live-lobby-version: первый настоящий ответ лобби
 
 LobbyVersionResult получен через HK: ID 2, code 0, body 23 байта; send 94 /

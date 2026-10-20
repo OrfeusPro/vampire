@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## LobbyLogin: writer и пять строк контекста связаны, 20 октября
+
+Полный native writer ID 3 проверен на 24 bodies; runtime получил отдельный
+LobbyLoginPayload и binder пяти строк SDK / устройства / страны / NID.
+Страна связана с UserInfo +0x170 / I_JoinedCountryCode. Для составной строки
+найдены 27 обращений к ключам, включая параметры SDK и CPU / RAM / VGA.
+Числовой и metadata context ещё требует завершения перед реальным Login.
+Новых сетевых попыток нет; 21 целевая проверка прошла.
+[Источники, схема и границы](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-WRITER.md).
+
 ## Лобби ответило на Version через HK, 20 октября
 
 Получен настоящий LobbyVersionResult: ID 2, код 0, body 23 байта.
