@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lobby-connect-flow: порядок Version и flush подтверждены отдельно
+
+Восемь native wrapper cases подтверждают Version перед исходным запросом
+при state 2. Четыре connected callback cases проверяют перенос pending bytes,
+clear и сохранение sequence. Двенадцать native кадров Version / ServerListRead
+совпали с новыми runtime frame encoders. Это ещё не общий connect lifecycle:
+state / preparation / lower send / queue представлены fixtures или captures.
+Connect читает globals 0x14b520cd0 / 0x14b520cb0; применение CDN к ним
+ещё не доказано. Далее — config handoff и подготовка / connect / очередь
+вместе, затем decoder ID 104 и реальный игровой endpoint.
+[Подробности](../resource-tools/vampir/HEADLESS-LOBBY-CONNECT-FLOW.md).
+
 ## H04-lobby-handshake: отдельные Version и запрос списка серверов
 
 ID 1 / 2 у LobbyVersion отличаются схемами от игровых Version. Найдены

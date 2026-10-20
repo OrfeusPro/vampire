@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: порядок отправки лобби и connected flush
+
+Ghidra расширен до 324 функций / 150 предупреждений. Проверка инструкций
+обнаружила пропущенную псевдокодом отправку LobbyVersion перед исходным
+запросом. Полный wrapper исполнен в восьми scenarios с captures lower sender;
+connected callback — в четырёх scenarios с buffer / queue fixtures.
+Callback сохраняет sequence. Настоящий send-A assembly с lobby writers дал
+12 кадров; отдельные runtime encoders совпали побайтно. Пять новых и девять
+смежных тестов прошли; три проверки экспорта также прошли. Внешних сетевых
+попыток нет. Следующая граница — config globals, preparation / connect /
+pending queue вместе и decoder ответа списка серверов.
+[Источники и ограничения](../resource-tools/vampir/HEADLESS-LOBBY-CONNECT-FLOW.md).
+
 ## 20 октября: отдельный LobbyVersion и codecs запроса списка серверов
 
 Ghidra расширен до 318 функций / 145 предупреждений. Связаны четыре lobby

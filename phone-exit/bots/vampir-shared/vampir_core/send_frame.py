@@ -26,6 +26,20 @@ def encode_ping_frame(payload: PingPayload, sequence: int) -> bytes:
     return _encode(16, payload.encode(), sequence, 0)
 
 
+def encode_lobby_version_frame(payload, sequence: int, *, max_payload_size: int) -> bytes:
+    """Separate lobby ID1/send-A, fixed fallback XOR; no game key/flow."""
+    from .lobby_packets import LobbyVersionPayload
+    if not isinstance(payload, LobbyVersionPayload): raise TypeError('Expected LobbyVersionPayload')
+    return _encode(1, payload.encode(max_payload_size=max_payload_size), sequence, 0)
+
+
+def encode_lobby_server_list_frame(payload, sequence: int, *, max_payload_size: int) -> bytes:
+    """Lobby ID103/send-A; readiness and source of fields belong to the owner."""
+    from .lobby_packets import LobbyServerListPayload
+    if not isinstance(payload, LobbyServerListPayload): raise TypeError('Expected LobbyServerListPayload')
+    return _encode(103, payload.encode(max_payload_size=max_payload_size), sequence, 0)
+
+
 def encode_ping_frame_b(payload: PingPayload, sequence: int, key_bits: int) -> bytes:
     """Build keyed send-B Ping; caller owns the per-connection sequence/key."""
     if not isinstance(payload, PingPayload):

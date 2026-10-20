@@ -291,7 +291,13 @@ SEEDS=[
  ('Lobby_PeerSendCandidate',0x1467aa9f0),
  ('Network_PeersConstruct',0x1467a79e0),
  ('LobbyVersionResult_Handler',0x14677f590),
- ('LobbyVersion_TextInput',0x1415be7e0)]
+ ('LobbyVersion_TextInput',0x1415be7e0),
+ ('Lobby_BaseConstruct',0x144aa8600),
+ ('Lobby_BaseInitialize',0x144aa8890),
+ ('Lobby_ConnectPending',0x144aa90c0),
+ ('Lobby_PeerConnected',0x144aa96b0),
+ ('Lobby_PeerConstruct',0x144aa8ac0),
+ ('Lobby_PeerSendA',0x144aa9da0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

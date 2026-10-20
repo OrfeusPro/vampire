@@ -1,5 +1,16 @@
 # Vampir — главный файл разработки
 
+## Лобби: Version идёт перед запросом, 20 октября
+
+Native wrapper подтвердил порядок LobbyVersion → исходный запрос; Ghidra
+ошибочно удаляла эту ветвь из псевдокода. Двенадцать полных кадров send-A
+совпали с отдельными runtime encoders. Connected callback переносит pending
+bytes в транспортную очередь и очищает буфер, сохраняя sequence.
+Проверены восемь wrapper и четыре callback cases. Новых сетевых попыток нет.
+Далее — применение адреса config, preparation / connect / queue вместе,
+затем decoder ID 104 до реального игрового входа.
+[Источники, проверки и границы](../resource-tools/vampir/HEADLESS-LOBBY-CONNECT-FLOW.md).
+
 ## Найден отдельный handshake лобби, 20 октября
 
 Подтверждены LobbyVersion / Result (ID 1 / 2) и ServerListRead / Result

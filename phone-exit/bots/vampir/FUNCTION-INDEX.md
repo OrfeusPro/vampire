@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Порядок Version и pending flush лобби, 20 октября
+
+Wrapper 0x144aa89b0: call 0x144aa8a06 отправляет подготовленный Version,
+tail jump 0x144aa8a9b — исходный запрос. Нижний send-A 0x144aa9da0.
+Connected recipient 0x144aa96b0 переносит pending peer+0x230 в queue,
+sequence peer+0x228 сохраняется. Connect 0x144aa90c0 читает глобальные host / port.
+Восемь wrapper, четыре callback cases и 12 полных native frame vectors.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOBBY-CONNECT-FLOW.md).
+
 ## Handshake лобби и список серверов, 20 октября
 
 PktLobbyVersion writer 0x145757490, Result reader 0x14574b170;
