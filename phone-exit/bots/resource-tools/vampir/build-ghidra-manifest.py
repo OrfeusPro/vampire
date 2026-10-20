@@ -266,7 +266,9 @@ SEEDS=[
  ('Version_EnumConstruct',0x1417cc270),
  ('Version_EnumSingleton',0x1417d2a40),
  ('Version_TrimFirst',0x1414342b0),
- ('Version_TrimSecond',0x141434530)]
+ ('Version_TrimSecond',0x141434530),
+ ('Enum_InputObjectConstruct',0x1416bf350),
+ ('Enum_SetMembers',0x1417202f0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

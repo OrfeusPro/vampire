@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Version: CPU text и platform form проверены, 20 октября
+
+Полная native CPU-цепочка с trim и formatter прошла девять сценариев.
+Source enum form 2 проведён через настоящий factory virtual call / setter
+до строки Windows. Runtime привязывает два поля Version из явных входов,
+не заменяя конфликтующий контекст. Все 16 целевых проверок прошли.
+Далее — наблюдение CPU и остальные входы Version / Login до игрового запроса.
+[Источники, SHA, API и границы](../resource-tools/vampir/HEADLESS-VERSION-CPU-STRING.md).
+
 ## Windows input в runtime и повтор SDK-входа, 20 октября
 
 Полный native Windows suffix getter проверен на семи сценариях. Runtime

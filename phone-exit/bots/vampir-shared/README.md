@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## Windows / CPU inputs для Version
+
+`version_cpu.VersionCpuInput` форматирует явные vendor / brand в проверенном
+ASCII-профиле. `version_inputs.bind_windows_version_inputs` заполняет только
+Version+0x28 / +0x38 из WindowsVersion и CPU inputs, отклоняя конфликтующие
+значения. Остальные поля, IO и наблюдение CPU остаются владельцу клиента.
+[Native evidence и границы](../resource-tools/vampir/HEADLESS-VERSION-CPU-STRING.md).
+
 ## Windows version input
 
 `windows_version.WindowsVersion` форматирует пять source-bound полей как

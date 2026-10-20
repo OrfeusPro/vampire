@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: CPU formatter, enum form и привязка двух полей Version
+
+Исполнена полная CPU-цепочка initializer / getters / trim / formatter:
+девять сценариев, ASCII whitespace, внутренние разделители и пустая brand.
+Установлен actual enum setter по vtable constructor. Source form 2 проходит
+настоящие factory argument loads / virtual dispatch, два stores и lookup,
+давая Windows. Четыре сценария проверяют form / flags отдельно.
+Runtime helper заполняет два поля явного Version template без изменения
+прочих inputs и с отказом на конфликт. Все 16 целевых проверок прошли.
+Ghidra: 295 функций / 121 предупреждение. Реального игрового запроса нет.
+[Источники](../resource-tools/vampir/HEADLESS-VERSION-CPU-STRING.md).
+
 ## 20 октября: Windows suffix в runtime и повтор SDK SignIn через HK
 
 Native Windows getter исполнен на семи сценариях с повторным чтением кеша.

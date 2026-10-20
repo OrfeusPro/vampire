@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-version-input-binding: два поля Version связаны с проверенными источниками
+
+CPU text подтверждён полной native цепочкой на девяти сценариях. Source
+ENnOsType form 2 проведён через factory argument loads, virtual setter
+и lookup до Windows. Runtime helper заполняет только +0x28 / +0x38,
+отклоняя конфликт с шаблоном. Остались наблюдение CPU и другие реальные
+Version / Login inputs. Игровой запрос пока не отправляется.
+[Подробности](../resource-tools/vampir/HEADLESS-VERSION-CPU-STRING.md).
+
 ## H04-windows-context: наблюдённая версия Windows подключена к NID
 
 Native suffix getter: семь сценариев; формат major / minor / build /

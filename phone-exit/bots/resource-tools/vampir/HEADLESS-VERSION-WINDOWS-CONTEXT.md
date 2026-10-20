@@ -1,5 +1,8 @@
 # Windows suffix и platform context для игрового входа
 
+Продолжение: [source enum form, полная CPU-строка и runtime binding](HEADLESS-VERSION-CPU-STRING.md).
+Там закрыта описанная ниже зависимость scoped flag в указанном source-bound объёме.
+
 20 октября 2026. Продолжение [проверки полей Version / Login](HEADLESS-GAME-LOGIN-INPUTS.md).
 Windows suffix теперь читается runtime бота и передаётся в NID как osVersion.
 Повторный реальный SDK SignIn через HK с этим полем принят сервером.
