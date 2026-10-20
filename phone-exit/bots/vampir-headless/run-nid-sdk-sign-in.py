@@ -47,7 +47,7 @@ def load_inputs(email):
     return binding, source['profile'], dict(config.constants)
 
 
-def run(email, *, timeout=300, _capture=None, _execute=execute_sdk_sign_in):
+def run(email, *, timeout=300, password='', _capture=None, _execute=execute_sdk_sign_in):
     binding, profile, constants = load_inputs(email)
     context = prepare_nid_sign_in_context(binding=binding, **profile)
     url = bind_nid_web_url(context, constants=constants, max_url_size=32768)
@@ -57,7 +57,8 @@ def run(email, *, timeout=300, _capture=None, _execute=execute_sdk_sign_in):
         spec.loader.exec_module(browser)
         _capture = browser.capture_nid_credential
     provider = _capture(url, expected_game_code=profile['game_code'], timeout=timeout,
-                        data_directory=HERE / '.local/nid-sign-in-webview', expected_email=email)
+                        data_directory=HERE / '.local/nid-sign-in-webview', expected_email=email,
+                        sign_in_password=password)
     # SDK DeviceKey differs from the NID DeviceKey used by the preceding page.
     request = plan_nid_sdk_sign_in(constants=constants, credential=build_nid_sdk_credential(provider),
         game_code=profile['game_code'], build_code=profile['build_code'], nm_device_key=binding.nm_device_key,
@@ -69,13 +70,18 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
     parser.add_argument('--timeout', type=int, default=300)
+    parser.add_argument('--password-stdin', action='store_true', help='Read the password from stdin, never from process arguments')
     args = parser.parse_args()
     try:
-        data = run(args.email, timeout=args.timeout)
+        password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
+        if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
+        data = run(args.email, timeout=args.timeout, password=password)
+        password = None
         print(json.dumps(dict(sdk_response_accepted=True, player_id_present=bool(data.player_id),
                               sdk_token_present=bool(data.access_token), game_session_ready=False)))
     except SdkSignInHttpError as error:
-        print(json.dumps(dict(sdk_response_accepted=False, error=error.kind, http_status=error.status)))
+        print(json.dumps(dict(sdk_response_accepted=False, error=error.kind, http_status=error.status,
+                              sdk_error_code=error.sdk_code)))
         sys.exit(2)
     except (ValueError, RuntimeError, PermissionError, KeyError):
         print(json.dumps(dict(sdk_response_accepted=False, error='sign_in_not_completed')))

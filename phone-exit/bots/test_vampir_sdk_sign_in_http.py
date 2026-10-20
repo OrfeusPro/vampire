@@ -84,5 +84,20 @@ class SdkSignInHttpTests(unittest.TestCase):
                           (replace(self.plan(), headers=(('Content-Type', 'bad\r\nheader'),)), URL)):
             with self.assertRaises(ValueError): execute_sdk_sign_in(plan, expected_url=url, _open=forbidden)
 
+    def test_http_error_keeps_only_numeric_code(self):
+        for body, expected in ((b'{"errorCode":4001,"errorMessage":"secret-fixture"}', 4001),
+                               (b'{"errorCode":"4001"}', 4001),
+                               (b'{"errorCode":"04001"}', None),
+                               (b'{"errorCode":true}', None),
+                               (b'{"errorCode":1,"errorCode":2}', None),
+                               (b'x' * 65537, None)):
+            response = urllib.error.HTTPError(URL, 400, 'private-url-fixture', Message(), io.BytesIO(body))
+            def fail(*args, **kwargs): raise response
+            with self.assertRaises(SdkSignInHttpError) as error:
+                execute_sdk_sign_in(self.plan(), expected_url=URL, _open=fail)
+            self.assertEqual(error.exception.sdk_code, expected)
+            self.assertNotIn('fixture', str(error.exception))
+            self.assertTrue(response.closed)
+
 
 if __name__ == '__main__': unittest.main()

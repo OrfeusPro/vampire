@@ -9,9 +9,12 @@ public static class NidBrowserHost {
     public static int BlockedExternal;
     public static int BlockedPopups;
     public static string LastBlockedScheme;
+    public static string SignInStep;
 
-    public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint) {
+    public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
+            string signInScript, string emailJson, string passwordJson) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
+        SignInStep = "manual";
         if (timeoutSeconds < 1 || timeoutSeconds > 900) throw new ArgumentException("Invalid timeout");
         if (String.IsNullOrEmpty(gameCode) || gameCode.Length > 64) throw new ArgumentException("Invalid game scope");
         foreach (char c in gameCode) if (!(c >= 'a' && c <= 'z') && !(c >= '0' && c <= '9') && c != '-') throw new ArgumentException("Invalid game scope");
@@ -36,6 +39,9 @@ public static class NidBrowserHost {
             }
             if (smoke) { form.ShowInTaskbar = false; form.Opacity = 0; }
             bool done = false;
+            bool signInBusy = false, emailOpened = false, filled = false;
+            bool autoSignIn = !smoke && passwordJson != "\"\"" && !String.IsNullOrEmpty(passwordJson);
+            if (autoSignIn) SignInStep = "waiting";
             Action<string> finish = status => { if (!done) { done = true; Status = status; form.Close(); } };
             Action<string> custom = uri => {
                 BlockedExternal++;
@@ -82,7 +88,29 @@ public static class NidBrowserHost {
             };
             var started = DateTime.UtcNow;
             timer.Interval = 200;
-            timer.Tick += (s, e) => { if ((DateTime.UtcNow - started).TotalSeconds >= timeoutSeconds) finish("timeout"); };
+            timer.Tick += async (s, e) => {
+                if ((DateTime.UtcNow - started).TotalSeconds >= timeoutSeconds) { finish("timeout"); return; }
+                if (done || !autoSignIn || signInBusy || view.CoreWebView2 == null) return;
+                Uri source;
+                if (!Uri.TryCreate(view.CoreWebView2.Source, UriKind.Absolute, out source) || source.Scheme != "https" ||
+                    source.Host != "members.netmarble.com" || !source.IsDefaultPort || source.UserInfo != "" ||
+                    (source.AbsolutePath != "/auth/signin" && source.AbsolutePath != "/auth/signin/email")) return;
+                signInBusy = true;
+                try {
+                    string script = signInScript + "({\"email\":" + emailJson + ",\"password\":" + passwordJson +
+                        ",\"emailOpened\":" + (emailOpened ? "true" : "false") + ",\"filled\":" + (filled ? "true" : "false") + "})";
+                    string result = await view.CoreWebView2.ExecuteScriptAsync(script);
+                    script = null;
+                    if (done) return;
+                    if (result == "\"opened_email\"") { emailOpened = true; SignInStep = "opened_email"; }
+                    else if (result == "\"filled\"") { filled = true; SignInStep = "filled"; }
+                    else if (result == "\"submitted\"" || result == "\"form_changed\"") {
+                        SignInStep = result == "\"submitted\"" ? "submitted" : "form_changed";
+                        autoSignIn = false; passwordJson = null; emailJson = null;
+                    }
+                } catch { autoSignIn = false; passwordJson = null; emailJson = null; SignInStep = "script_failed"; }
+                finally { signInBusy = false; }
+            };
             form.Shown += async (s, e) => { timer.Start(); try { await view.EnsureCoreWebView2Async(); } catch { finish("browser_initialization_failed"); } };
             Application.Run(form);
             timer.Stop();

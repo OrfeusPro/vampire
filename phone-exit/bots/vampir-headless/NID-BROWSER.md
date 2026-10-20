@@ -3,23 +3,25 @@
 20 октября 2026. Добавлен WinForms / WebView2 host, который может открыть
 подготовленный URL штатного входа и вернуть результат Python-клиенту.
 Проверен синтетический сценарий в настоящем WebView2. Позднее запущено
-настоящее окно входа; наличие окна подтверждено, содержимое не проверено.
-Успешного входа нет. Текущее состояние — в [описании runner](NID-SDK-RUNNER.md).
+настоящее окно входа. После добавления однократного заполнения формы получен
+настоящий NID callback. Последующий SDK POST отклонён; подробности —
+в [описании runner](NID-SDK-RUNNER.md).
 
 ## Вызов и границы
 
 Адаптер: `nid-browser.py`, host: `windows/nid-browser.ps1` / `nid-browser.cs`.
 `capture_nid_credential(plan, expected_game_code=..., data_directory=...,
-timeout=300, expected_email='')` принимает `NidWebUrl` из
+timeout=300, expected_email='', sign_in_password='')` принимает `NidWebUrl` из
 [проверенного builder](../resource-tools/vampir/HEADLESS-NID-WEB-URL.md).
 Поддерживается первоначальный signin с webViewType=sdk и ожидаемым gameCode.
 Подмена host, game scope и режима отклоняется до запуска окна.
 Необязательный expected_email показывается как подсказка пользователю;
 это не проверка принадлежности результата указанной почте.
 
-Пользователь выполняет вход и штатные проверки непосредственно на странице.
-Helper не вводит пароль, не получает reCAPTCHA обходным способом и не подменяет
-результат серверных проверок. После callback общий parser проверяет точный
+При явно переданном sign_in_password helper заполняет штатную форму и один раз
+нажимает Sign in with email. Без него пользователь вводит данные вручную.
+Helper не получает reCAPTCHA обходным способом и не подменяет результат
+серверных проверок. После callback общий parser проверяет точный
 `nm{gameCode}://nmidprovider/result`, поля и channel mailUserKey. Возвращается
 `NidEmailCredential`, в repr которого токены скрыты. Это provider credential,
 не свежий SDK token и не готовая игровая сессия.
@@ -29,6 +31,23 @@ Helper не вводит пароль, не получает reCAPTCHA обхо�
 credential сервером ещё должны проверяться последующим SDK sign-in.
 
 ## Как окно удерживает deeplink внутри бота
+
+Заполнение реализовано в `windows/nid-sign-in.js`. Допуск проверяется host
+и самим script: только members.netmarble.com по HTTPS с обычным портом,
+`/auth/signin` и `/auth/signin/email`. Script ищет единственную кнопку
+Sign in with email, поле с placeholder Email и единственное password-поле.
+Иные страницы, регистрация и неоднозначные контролы не заполняются.
+После input events следующая итерация проверяет значения, затем отправляет
+форму. Повторной отправки после submit нет. Изменение заполненных значений
+останавливает автоматизацию. Пароль не сохраняется в браузерном менеджере.
+
+Связь со страницей опирается на наблюдённую английскую форму Netmarble и
+сохранённый web contract в HEADLESS-NID-EMAIL.md: doSignInByEmail получает
+email / password и штатный reCAPTCHA token. Script вызывает UI, не копирует
+этот token и не исполняет внутренние helpers страницы. Это отдельный слой
+собственного клиента, а не native parity или готовая регистрация аккаунтов.
+DOM fixture проверяет заполнение / submit и запрет другого origin, signup
+и неоднозначных кнопок. Реальные попытки подтверждают доставку NID callback.
 
 Обработчики устанавливаются до первой навигации:
 

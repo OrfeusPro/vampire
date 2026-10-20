@@ -39,5 +39,13 @@ class NidBrowserTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, '^NID browser result was not an accepted email sign-in$'):
                     self.tool.capture_nid_credential(self.plan(), expected_game_code='thered', data_directory='unused')
 
+    def test_password_is_forwarded_only_in_helper_request(self):
+        result = dict(status='callback', callback='nmthered://nmidprovider/result?resultCode=0&accessToken=synthetic-token&refreshToken=&channelKey=mailUserKey&netmarbleId=synthetic-id&joinedCountryCode=KR')
+        with patch.object(self.tool, '_run', return_value=result) as run:
+            self.tool.capture_nid_credential(self.plan(), expected_game_code='thered', data_directory='unused',
+                                            expected_email='fixture@example.invalid', sign_in_password='fixture-password')
+        self.assertEqual(run.call_args.kwargs['sign_in_password'], 'fixture-password')
+        self.assertEqual(run.call_args.kwargs['account_hint'], 'fixture@example.invalid')
+
 
 if __name__ == '__main__': unittest.main()

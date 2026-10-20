@@ -27,14 +27,18 @@ def _library():
     return folder
 
 
-def _run(*, url, game_code, timeout, data_directory, smoke, account_hint=''):
+def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sign_in_password=''):
     if sys.platform != 'win32': raise RuntimeError('NID browser adapter requires Windows')
     if type(timeout) is not int or not 1 <= timeout <= 900: raise ValueError('Invalid browser timeout')
     if (type(game_code) is not str or not 1 <= len(game_code) <= 64 or
             any(c not in 'abcdefghijklmnopqrstuvwxyz0123456789-' for c in game_code)):
         raise ValueError('Invalid NID game scope')
+    if (type(sign_in_password) is not str or len(sign_in_password) > 256 or
+            (sign_in_password and (not account_hint or len(account_hint) > 320))):
+        raise ValueError('Invalid explicit sign-in credentials')
     request = json.dumps(dict(url=url, game_code=game_code, timeout=timeout,
-        data_directory=str(Path(data_directory).resolve()), library=str(_library()), smoke=smoke, account_hint=account_hint))
+        data_directory=str(Path(data_directory).resolve()), library=str(_library()), smoke=smoke,
+        account_hint=account_hint, sign_in_password=sign_in_password))
     command = ['powershell.exe', '-NoProfile', '-STA', '-ExecutionPolicy', 'Bypass',
                '-File', str(HERE / 'windows/nid-browser.ps1')]
     process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -60,7 +64,7 @@ def _run(*, url, game_code, timeout, data_directory, smoke, account_hint=''):
     return result
 
 
-def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=300, expected_email=''):
+def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=300, expected_email='', sign_in_password=''):
     """Open official sign-in UI; the user completes login/verification there.
 
     The parent validates the captured route and email result, then returns a
@@ -78,7 +82,8 @@ def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=
     except ValueError:
         raise ValueError('NID browser requires the expected SDK sign-in context') from None
     result = _run(url=plan.url, game_code=expected_game_code, timeout=timeout,
-                  data_directory=data_directory, smoke=False, account_hint=expected_email)
+                  data_directory=data_directory, smoke=False, account_hint=expected_email,
+                  sign_in_password=sign_in_password)
     if result['status'] != 'callback':
         raise RuntimeError('NID browser did not return a sign-in result')
     callback = result.get('callback')

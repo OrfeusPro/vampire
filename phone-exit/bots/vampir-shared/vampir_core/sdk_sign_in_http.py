@@ -3,6 +3,7 @@
 Request fields come from sdk_sign_in's source-bound plan. HTTP limits and error
 policy are local; successful JSON decoding is not proof of a game session.
 """
+import json
 import ssl
 import time
 import urllib.error
@@ -14,14 +15,42 @@ from .sdk_sign_in_response import parse_sdk_sign_in_response
 
 
 class SdkSignInHttpError(RuntimeError):
-    def __init__(self, kind, status=None):
+    def __init__(self, kind, status=None, sdk_code=None):
         self.kind, self.status = kind, status
+        self.sdk_code = sdk_code
         super().__init__('SDK sign-in failed: ' + kind)
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, request, fp, code, msg, headers, newurl):
         return None
+
+
+def _read_error_code(response, *, limit, budget, clock):
+    """Keep only a bounded numeric SDK code; never retain server text or IDs."""
+    if response.headers.get('Content-Encoding', 'identity').lower() not in ('', 'identity'): return None
+    started, body = clock(), bytearray()
+    try:
+        while clock() - started <= budget:
+            chunk = response.read1(min(8192, limit + 1 - len(body)))
+            if not chunk: break
+            body.extend(chunk)
+            if len(body) > limit: return None
+        else: return None
+        def pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result: raise ValueError('Duplicate key')
+                result[key] = value
+            return result
+        value = json.loads(body.decode('utf-8'), object_pairs_hook=pairs)
+        code = value.get('errorCode') if isinstance(value, dict) else None
+        if type(code) is str and len(code) <= 11 and code.isascii():
+            number = int(code)
+            if str(number) != code: return None
+            code = number
+        return code if type(code) is int and -(2 ** 31) <= code < 2 ** 31 else None
+    except (ValueError, UnicodeError, OSError, RecursionError): return None
 
 
 def execute_sdk_sign_in(plan, *, expected_url, timeout=10, read_budget=30, max_response_bytes=65536,
@@ -95,7 +124,10 @@ def execute_sdk_sign_in(plan, *, expected_url, timeout=10, read_budget=30, max_r
                 raise SdkSignInHttpError('sdk_response_rejected', status) from None
     except urllib.error.HTTPError as exc:
         status = exc.code
+        code = None
+        if 400 <= status <= 599:
+            code = _read_error_code(exc, limit=max_response_bytes, budget=read_budget, clock=_clock)
         exc.close()
-        raise SdkSignInHttpError('http_status', status) from None
+        raise SdkSignInHttpError('http_status', status, code) from None
     except (OSError, urllib.error.URLError):
         raise SdkSignInHttpError('transport_error') from None
