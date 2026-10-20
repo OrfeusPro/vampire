@@ -250,7 +250,8 @@ SEEDS=[
  ('NID_WebLanguage',0x143d163c0),
  ('NID_WebOS',0x1444e66b0),
  ('NID_WebOSVersion',0x1444e64f0),
- ('NID_QueryValueEncode',0x141c13850)]
+ ('NID_QueryValueEncode',0x141c13850),
+ ('SDK_PlatformLabel',0x14452bb70)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

@@ -15,7 +15,7 @@ Add-Type -Path (Join-Path $PSScriptRoot 'nid-browser.cs') -ReferencedAssemblies 
 )
 try {
     [NidBrowserHost]::Run([string]$request.url, [string]$request.game_code,
-        [string]$request.data_directory, [int]$request.timeout, [bool]$request.smoke)
+        [string]$request.data_directory, [int]$request.timeout, [bool]$request.smoke, [string]$request.account_hint)
     @{status=[NidBrowserHost]::Status; callback=[NidBrowserHost]::Callback;
       blocked_external=[NidBrowserHost]::BlockedExternal; blocked_popups=[NidBrowserHost]::BlockedPopups;
       blocked_scheme=[NidBrowserHost]::LastBlockedScheme} |

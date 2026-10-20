@@ -10,7 +10,7 @@ public static class NidBrowserHost {
     public static int BlockedPopups;
     public static string LastBlockedScheme;
 
-    public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke) {
+    public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
         if (timeoutSeconds < 1 || timeoutSeconds > 900) throw new ArgumentException("Invalid timeout");
         if (String.IsNullOrEmpty(gameCode) || gameCode.Length > 64) throw new ArgumentException("Invalid game scope");
@@ -29,6 +29,11 @@ public static class NidBrowserHost {
             view.Dock = DockStyle.Fill;
             view.CreationProperties = new CoreWebView2CreationProperties { UserDataFolder = dataDirectory, IsInPrivateModeEnabled = true };
             form.Controls.Add(view);
+            if (!String.IsNullOrEmpty(accountHint)) {
+                Label hint = new Label { Dock = DockStyle.Top, Height = 42, AutoEllipsis = true,
+                    Padding = new Padding(10), Text = "Войдите в тестовый аккаунт: " + accountHint };
+                form.Controls.Add(hint);
+            }
             if (smoke) { form.ShowInTaskbar = false; form.Opacity = 0; }
             bool done = false;
             Action<string> finish = status => { if (!done) { done = true; Status = status; form.Close(); } };
