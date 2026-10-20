@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lobby-login: отдельный ответ и два поля для игрового Login
+
+Подтверждены Lobby Login → send-A и отдельный ServerListReadResult handler →
+master model Update. Полный LobbyLoginResult body проверен native reader:
+семь полных ответов и 72 коротких префикса. Runtime decoder учитывает отдельный
+lobby context; binder переносит две строки в Login+0x10 / +0x20, отклоняет
+ошибку / пустые значения / конфликт. Все 19 целевых тестов прошли.
+Далее — lobby connect / первое сообщение, bindings и decoder списка серверов.
+Реального ответа лобби и игрового endpoint пока нет.
+[Подробности](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN.md).
+
 ## H04-version-probe: callback найден; игровой endpoint ещё не установлен
 
 Локальный IPv4 без порта и начальные key / sequence 0 подтверждены по коду

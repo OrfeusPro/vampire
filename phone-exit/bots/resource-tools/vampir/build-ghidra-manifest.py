@@ -270,7 +270,19 @@ SEEDS=[
  ('Enum_InputObjectConstruct',0x1416bf350),
  ('Enum_SetMembers',0x1417202f0),
  ('Transport_ConnectedInputs',0x144aac520),
- ('Socket_ConnectedEndpoint',0x1445e7680)]
+ ('Socket_ConnectedEndpoint',0x1445e7680),
+ ('LobbyLoginResult_Handler',0x14677ec50),
+ ('PktLobbyLogin_Write',0x145756e80),
+ ('PktLobbyLoginResult_Read',0x14574aa80),
+ ('Lobby_RegisterHandler',0x1467a7150),
+ ('Lobby_LoginPrepare',0x1467a9360),
+ ('Lobby_RegisterAll',0x14678e750),
+ ('ServerList_Update',0x145d4afe0),
+ ('Lobby_SendPacket',0x144aa89b0),
+ ('LobbyServerListResult_Handler',0x14677f350),
+ ('ServerList_RequestA',0x145d44eb0),
+ ('ServerList_RequestB',0x145d44fa0),
+ ('ServerList_RequestC',0x145d45030)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

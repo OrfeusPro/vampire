@@ -9,6 +9,7 @@ from .version_packet import VersionPayload
 from .login_packet import LoginPayload, _utf8
 from .sdk_sign_in_response import SdkSignInData
 from .device_registry import DeviceBinding
+from .lobby_login_result import LobbyLoginResultBody
 
 
 def _bind(strings, index, value):
@@ -57,6 +58,21 @@ def bind_sdk_login_fields(login, *, sdk_data, netmarble_id):
         raise TypeError('Expected Login template and parsed SDK data')
     strings = _bind(login.strings, 2, netmarble_id)
     strings = _bind(strings, 8, sdk_data.access_token)
+    return replace(login, strings=strings)
+
+
+def bind_lobby_login_fields(login, *, lobby_result):
+    """Lobby success +20/+30 -> wrapper +f0/+e0 -> game Login +10/+20.
+
+    The caller owns connection/account provenance; a parsed result cannot prove
+    it. No server selection or game Login transition is performed here.
+    """
+    if not isinstance(login, LoginPayload) or not isinstance(lobby_result, LobbyLoginResultBody):
+        raise TypeError('Expected game Login template and separate lobby result')
+    if lobby_result.result_code != 0:
+        raise ValueError('Lobby login did not succeed')
+    strings = _bind(login.strings, 0, lobby_result.strings[0])
+    strings = _bind(strings, 1, lobby_result.strings[1])
     return replace(login, strings=strings)
 
 

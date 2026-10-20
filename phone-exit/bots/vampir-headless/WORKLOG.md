@@ -1,5 +1,17 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: схема LobbyLoginResult и связь с игровым Login
+
+Экспорт Ghidra расширен до 309 функций / 142 предупреждений. Discovery
+сверил 58 direct calls в 34 корнях: Lobby Login отправляется через send-A,
+а ответ списка серверов вызывает master model Update. LobbyLoginResult
+не содержит списка; его две строки переходят через wrapper в игровой Login.
+Reader исполнен на семи bodies и 72 коротких префиксах. Добавлены отдельный
+bounded decoder и binder без подмены другого контекста. Все 19 целевых тестов
+прошли. Сетевых попыток и запуска игры не было; lobby connect и decoder
+списка серверов остаются следующими шагами.
+[Источники и ограничения](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN.md).
+
 ## 20 октября: Version probe и уточнение границы лобби
 
 Ghidra экспорт расширен до 297 функций / 123 предупреждений. Connected path

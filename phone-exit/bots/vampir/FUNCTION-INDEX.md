@@ -1,5 +1,14 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Лобби: Login и загрузка списка серверов, 20 октября
+
+Lobby Login 0x1467a9360 → sender 0x144aa89b0 (send-A).
+LobbyLoginResult handler 0x14677ec50 переносит две строки в поля игрового Login.
+Reader 0x14574aa80: три LE32, пять строк, LE32; семь полных native cases,
+72 коротких префикса. ServerListReadResult handler 0x14677f350 →
+master model Update 0x145d4afe0. Connect / список на wire ещё не закрыты.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN.md).
+
 ## Вызов владельца через поле объекта, 20 октября
 
 `0x14430da70`: получатель из `object+0x158` → virtual `+0x7b0`.
