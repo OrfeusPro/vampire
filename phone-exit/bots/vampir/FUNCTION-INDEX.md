@@ -8,9 +8,15 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --quer
 python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --query SendSignIn
 ```
 
-Generated список: `F:/PhoneExit Resources/Vampir/knowledge/INDEX.md`;
+После обновления 21 октября для прежнего EXE использовать `--source-snapshot`
+с сохранённой копией того же SHA. [Команда и ограничения](../resource-tools/vampir/knowledge/README.md).
+Его отдельный индекс находится в
+`F:/PhoneExit Resources/Vampir/knowledge/historical/c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8/INDEX.md`.
+Поиск по новой установленной сборке ещё не подготовлен.
+
+Прежний generated список: `F:/PhoneExit Resources/Vampir/knowledge/INDEX.md`;
 машинная база рядом — `function-registry.json`. Последний проверенный экспорт
-содержит 408 выбранных функций, а не все функции EXE. В базе есть calls,
+содержит 424 выбранные функции, а не все функции EXE. В базе есть calls,
 curated роли, границы и адресные ссылки на существующие разборы.
 Упоминания адресов вне экспорта индексируются отдельно, без выдуманного типа.
 

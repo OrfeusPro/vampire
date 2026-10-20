@@ -58,6 +58,20 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --topi
 python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --question common-data-population
 ```
 
+После обновления EXE обычные `--build` / `--query` отказываются использовать
+реестр прежней сборки. Для исторического исследования явно передать проверенную
+копию EXE того же SHA через `--source-snapshot`. Например:
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/function-registry.py --source-snapshot 'F:/PhoneExit Resources/Vampir/client-code-snapshots/c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8/ProjectRED-Win64-Shipping.exe' --build --query PktLogin_Write
+```
+
+Это отдельный реестр в `knowledge/historical/<SHA>/` библиотеки ресурсов.
+Полный SHA копии должен совпадать с экспортом, ролями и вопросами; проверки
+evidence сохраняются. Результат относится только к этому EXE, не подтверждает
+совместимость новой установки и не заменяет текущий реестр. После изменения
+evidence исторический реестр также нужно перестроить с тем же параметром.
+
 `--topic` группирует функции по документам-доказательствам; одна функция может
 относиться к нескольким темам. Это навигация, а не автоматическое доказательство
 её семантики. Полный список разборов каждой темы строит

@@ -15,10 +15,14 @@ def tool():
 
 
 class FunctionRegistryTests(unittest.TestCase):
-    def test_inventory_reproduces_and_save_is_not_rediscovered_as_unknown(self):
+    def test_historical_inventory_retains_roles_calls_and_navigation(self):
         module = tool()
-        saved = module.read_current()
-        self.assertEqual(module.build(), saved)
+        # Real exported old evidence must remain searchable after an installed update.
+        sha = json.loads((module.ROOT / 'ghidra/latest-export.json').read_text('utf-8'))['source_sha256']
+        snapshot = module.ROOT / 'client-code-snapshots' / sha / 'ProjectRED-Win64-Shipping.exe'
+        saved = module.build(snapshot)
+        self.assertEqual(saved['source_scope'], 'historical')
+        self.assertEqual(saved['source'], str(snapshot))
         self.assertEqual(len({r['address'] for r in saved['functions']}), saved['function_count'])
         direct = module.query(saved, '14453cdf0')
         self.assertEqual(direct, module.query(saved, '0x14453cdf0'))
@@ -37,6 +41,19 @@ class FunctionRegistryTests(unittest.TestCase):
         self.assertEqual(module.query(saved, external['address']), [external])
         self.assertEqual(external['address_kind'], 'documented_address_type_unverified')
         self.assertIsNone(external['established_role'])
+
+    def test_snapshot_requires_exact_source_hash_and_default_guard_remains(self):
+        module = tool()
+        with tempfile.TemporaryDirectory() as directory:
+            old, installed = Path(directory) / 'old.exe', Path(directory) / 'installed.exe'
+            old.write_bytes(b'old verified fixture')
+            installed.write_bytes(b'new incompatible fixture')
+            expected = module.digest(old)
+            with self.assertRaisesRegex(ValueError, 'Installed client changed'):
+                module.checked_source(installed, expected)
+            self.assertEqual(module.checked_source(installed, expected, old), old)
+            with self.assertRaisesRegex(ValueError, 'Source digest mismatch'):
+                module.checked_source(old, expected, installed)
 
     def test_stale_evidence_is_rejected_instead_of_reusing_old_claims(self):
         module = tool()

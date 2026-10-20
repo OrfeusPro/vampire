@@ -23,7 +23,15 @@ def documents():
                   set((HERE.parents[1] / 'vampir-shared').glob('*.md')))
 
 
-def build():
+def checked_source(installed, expected_sha, snapshot=None):
+    source = Path(snapshot) if snapshot is not None else Path(installed)
+    if digest(source) != expected_sha:
+        raise ValueError('Source digest mismatch' if snapshot is not None else
+                         'Installed client changed; old registry is historical')
+    return source
+
+
+def build(source_snapshot=None):
     ghidra = ROOT / 'ghidra'
     latest_path = ghidra / 'latest-export.json'
     latest = json.loads(latest_path.read_text('utf-8'))
@@ -56,8 +64,7 @@ def build():
     source_sha = report['source_sha256']
     if any(value != source_sha for value in (manifest['source_sha256'], roles['source_sha256'], questions['source_sha256'])):
         raise ValueError('Registry inputs belong to different client builds')
-    if digest(Path(manifest['source'])) != source_sha:
-        raise ValueError('Installed client changed; old registry is historical')
+    source = checked_source(manifest['source'], source_sha, source_snapshot)
     expected = {f['address'].lower(): f['name'] for f in manifest['functions']}
     observed = {f['address'].lower(): f['name'] for f in report['functions']}
     if expected != observed or len(expected) != len(report['functions']):
@@ -130,7 +137,8 @@ def build():
                 records[caller]['callees'].append(edge)
                 if callee in records:
                     records[callee]['callers'].append(edge)
-    return dict(source=manifest['source'], source_sha256=source_sha, export=str(folder),
+    return dict(source=str(source), source_sha256=source_sha,
+                source_scope='historical' if source_snapshot is not None else 'installed', export=str(folder),
                 inputs=inputs, function_count=len(records), call_edge_count=len(edges),
                 questions=questions['questions'],
                 documented_addresses=sorted(documented_addresses.values(), key=lambda r: int(r['address'], 16)),
@@ -167,18 +175,30 @@ def query(registry, term):
 
 
 def main():
+    global OUTPUT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build', action='store_true')
     parser.add_argument('--query')
     parser.add_argument('--question', help='Stable question ID from knowledge/questions.json')
     parser.add_argument('--topic', help='Filter by evidence-document topic; navigation, not proof of function semantics')
+    parser.add_argument('--source-snapshot', type=Path,
+                        help='Explicit historical EXE with the exact export SHA; uses a separate historical registry')
     args = parser.parse_args()
+    if args.source_snapshot is not None:
+        latest = json.loads((ROOT / 'ghidra/latest-export.json').read_text('utf-8'))
+        sha = latest['source_sha256']
+        checked_source('', sha, args.source_snapshot)
+        OUTPUT = ROOT / 'knowledge/historical' / sha / 'function-registry.json'
+        print(json.dumps(dict(source_scope='historical', source_sha256=sha,
+                              source_snapshot=str(args.source_snapshot)), ensure_ascii=False))
     if args.build:
-        result = build()
+        result = build(args.source_snapshot)
         OUTPUT.parent.mkdir(parents=True, exist_ok=True)
         OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         index = ['# Vampir — реестр исследованных функций', '',
                  f"SHA клиента: `{result['source_sha256']}`.", '',
+                 'Историческая сборка; совместимость с установленной игрой не подтверждена.'
+                 if args.source_snapshot is not None else 'Проверен SHA установленного клиента.', '',
                  f"Функций: {result['function_count']}; call edges из экспорта: {result['call_edge_count']}.", '',
                  'Это выбранный исследованный набор, не весь EXE. Поля и документы — в [JSON](function-registry.json).', '',
                  'Темы определяются документами-доказательствами; это навигация, не новая семантика функции.', '',
