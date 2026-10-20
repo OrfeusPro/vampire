@@ -16,6 +16,7 @@
       ],
       "evidence": [
         "evidence/network/HEADLESS-FRANZ2-LOGIN.md",
+        "evidence/updates/HEADLESS-PATCH-CLIENT-VERSION.md",
         "evidence/network/HEADLESS-OFFICIAL-CLIENT-JP.md",
         "evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md",
         "evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",

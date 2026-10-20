@@ -117,7 +117,8 @@ def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_
     """Explicit initial/reset Windows SDK branch; no NID UserInfo/manager68.
 
     Sources: LOGIN-INITIAL-CONTEXT, LOGIN-POLICY-INPUTS and LOGIN-PACKET-FIELDS.
-    extra_number is the separate +50 DWORD: its UI/default is not inferred.
+    extra_number is the separate +50 DWORD derived from patch ClientVersion;
+    the caller supplies the revision from an explicitly selected manifestlist.
     Caller establishes same-account freshness and selected endpoint provenance.
     Does not authenticate, send, mutate a device or claim live game state.
     """
