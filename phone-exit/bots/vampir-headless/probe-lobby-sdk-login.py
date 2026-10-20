@@ -22,7 +22,8 @@ def module(name, filename):
 
 
 def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
-        _progress=None):
+        _progress=None, _consume_auth=None):
+    if _consume_auth is not None and not callable(_consume_auth): raise TypeError('Expected in-memory auth consumer')
     if context != 'sdk-without-nid-info': raise ValueError('Explicit source-supported SDK context required')
     if type(read_server_list) is not bool: raise ValueError('Explicit server-list operation required')
     if read_server_list and (type(server_policy_byte) is not int or not 0 <= server_policy_byte <= 255):
@@ -55,6 +56,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     # Source path uses NMDeviceKey when initial global player text is empty.
     request = (LobbyServerListPayload((binding.nm_device_key, provider.netmarble_id), 2, (server_policy_byte, 0))
         if read_server_list else None)
+    netmarble_id = provider.netmarble_id
     provider = None
     if _progress: _progress('lobby_connect')
     connection = route.connect(*endpoint, timeout=10)
@@ -62,6 +64,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         if _progress: _progress('lobby_exchange')
         result = exchange_lobby_login(connection, version, login, timeout=15, server_list=request)
         result.summary.update(context=context, sdk_response_accepted=True)
+        if _consume_auth and result.response is not None and result.response.result_code == 0:
+            _consume_auth(binding=binding, sdk_data=data, netmarble_id=netmarble_id)
         return result
     finally: connection.close()
 

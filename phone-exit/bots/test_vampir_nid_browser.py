@@ -56,5 +56,16 @@ class NidBrowserTests(unittest.TestCase):
                         sign_in_password='fixture-password', register_account=True, **options)
             start.assert_not_called()
 
+    def test_non_callback_reports_only_fixed_status_and_step(self):
+        for status, step, expected in (('timeout', 'submitted', ('timeout', 'submitted')),
+                ('private-remote-text', 'secret-token', ('unknown', 'unknown'))):
+            result = dict(status=status, sign_in_step=step, callback='secret-callback')
+            with patch.object(self.tool, '_run', return_value=result):
+                with self.assertRaises(self.tool.NidBrowserStatusError) as captured:
+                    self.tool.capture_nid_credential(self.plan(), expected_game_code='thered', data_directory='unused')
+            self.assertEqual((captured.exception.browser_status, captured.exception.sign_in_step), expected)
+            self.assertEqual(result, {})
+            self.assertNotIn('secret', str(captured.exception))
+
 
 if __name__ == '__main__': unittest.main()

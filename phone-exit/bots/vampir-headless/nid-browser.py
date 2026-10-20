@@ -19,6 +19,15 @@ from vampir_core.nid_web_url import NidWebUrl
 from vampir_core.socks_route import SocksRoute
 
 
+class NidBrowserStatusError(RuntimeError):
+    def __init__(self, status, step):
+        super().__init__('NID browser did not return a sign-in result')
+        self.browser_status = status if status in ('timeout', 'cancelled', 'browser_initialization_failed',
+            'browser_process_failed', 'untrusted_callback_origin') else 'unknown'
+        self.sign_in_step = step if step in ('manual', 'waiting', 'opened_email', 'filled',
+            'submitted', 'form_changed', 'script_failed') else 'unknown'
+
+
 def _library():
     lock = json.loads((HERE.parent / 'resource-tools/vampir/webview2.lock.json').read_text('utf-8'))
     folder = Path('F:/PhoneExit Resources/Vampir/tools/webview2') / lock['version']
@@ -133,7 +142,9 @@ def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=
                   data_directory=data_directory, smoke=False, account_hint=expected_email,
                   sign_in_password=sign_in_password, socks_port=socks_port, **registration)
     if result['status'] != 'callback':
-        raise RuntimeError('NID browser did not return a sign-in result')
+        error = NidBrowserStatusError(result['status'], result.get('sign_in_step'))
+        result.clear()
+        raise error
     callback = result.get('callback')
     try:
         return parse_nid_email_callback(callback, expected_game_code=expected_game_code)

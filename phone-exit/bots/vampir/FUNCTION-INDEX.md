@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## Игровой Login: реальный отказ 58, 20 октября
+
+Свежие SDK / lobby поля связаны с runtime builder; один GameConnection
+выполнил Version → Login. На server ID 101 получены VersionResult 0 и
+LoginResult 58, body 131 байт. Значение кода не установлено; успешные ветви
+LoginResult handler и переход к персонажам не объявлены выполненными.
+[Контекст, источники и проверка](../vampir-headless/LIVE-GAME-LOGIN.md).
+
 ## Начальный контекст игрового Login, 20 октября
 
 Network_PeersConstruct: 0x1467a7ae7 / 0x1467a7aee обнуляют wrapper+0x100.

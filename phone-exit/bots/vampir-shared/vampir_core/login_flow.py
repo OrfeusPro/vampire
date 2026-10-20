@@ -22,6 +22,7 @@ class LoginFlow:
         self.error = self.result_code = self.response = self.deadline = None
         self._login = None
         self._last_time = None
+        self.version_result_code = self.login_result_code = self.last_body_size = None
 
     def __repr__(self): return f'LoginFlow(state={self.state}, data=<redacted>)'
 
@@ -62,6 +63,9 @@ class LoginFlow:
         try:
             result = (decode_version_result(body) if packet_id == 2 else
                       decode_login_result(body, max_payload_size=self._limit))
+            self.last_body_size = len(body)
+            if packet_id == 2: self.version_result_code = result.result_code
+            else: self.login_result_code = result.result_code
             if result.result_code != 0:
                 self._fail('unsupported_result_code', result.result_code)
                 return True
