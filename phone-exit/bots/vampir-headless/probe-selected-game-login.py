@@ -65,13 +65,38 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     auth = {}
+    selection_proof = {}
     def consume(**values): auth['context'] = AuthForGame(**values)
+    def select_server(response, country):
+        phase('game_target_selection')
+        target = module('game_login_target', 'probe-selected-game-version.py').choose_target(
+            response, server_id=server_id, selection=selection, region=region, joined_country_code=country)
+        selection_proof['target'] = target
+        return target.server_id
+    completed = {}
+    def use_session(lobby):
+        completed['result'] = _after_lobby(lobby, auth=auth, selection_proof=selection_proof,
+            source=source, socks_port=socks_port, extra_number=extra_number, context=context,
+            region=region, server_id=server_id, selection=selection, server_list_only=False, state=state, phase=phase)
     phase('lobby_preparation')
     lobby = module('game_login_lobby', 'probe-lobby-sdk-login.py').run(email,
         selected_profile=selected_profile, manifest_path=manifest_path, socks_port=socks_port,
         context='sdk-without-nid-info', password=password, read_server_list=True,
-        server_policy_byte=server_policy_byte, _progress=phase, _consume_auth=consume)
+        server_policy_byte=server_policy_byte, _progress=phase, _consume_auth=consume,
+        _select_server=None if server_list_only else select_server,
+        _use_session=None if server_list_only else use_session)
     password = None
+    if 'result' in completed: return completed.pop('result')
+    if not server_list_only:
+        state['lobby'] = lobby.summary
+        return dict(state, status='selected_lobby_context_not_received')
+    return _after_lobby(lobby, auth=auth, selection_proof=selection_proof,
+        source=source, socks_port=socks_port, extra_number=extra_number, context=context,
+        region=region, server_id=server_id, selection=selection, server_list_only=True, state=state, phase=phase)
+
+
+def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_number,
+                 context, region, server_id, selection, server_list_only, state, phase):
     state['lobby'] = lobby.summary
     if lobby.server_list_response is None or 'context' not in auth:
         return dict(state, status='lobby_context_not_received')
@@ -93,6 +118,11 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
         and matches[0].raw_20 == SERVER_REGION_CODES[region]]
     target = module('game_login_target', 'probe-selected-game-version.py').choose_target(
         lobby.server_list_response, server_id=server_id, selection=selection, region=region, joined_country_code=country)
+    if not server_list_only and ('target' not in selection_proof or
+            selection_proof['target'] != target or lobby.summary.get('login_server_id') != target.server_id or
+            lobby.summary.get('login_after_server_selection') is not True or
+            lobby.summary.get('lobby_open_during_game') is not True or lobby.summary.get('login_result_code') != 0):
+        raise ValueError('Game Login requires successful lobby Login for the same selected target')
     state.update(selected_server_id=target.server_id, selected_group_id=target.group_id, selected_region=region)
     if server_list_only:
         credentials = None

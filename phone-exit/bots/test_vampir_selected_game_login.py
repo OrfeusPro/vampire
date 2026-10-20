@@ -26,13 +26,19 @@ class SelectedGameLoginTests(unittest.TestCase):
             record = SimpleNamespace(u32=(7, 42, 0, 0), enums=(0, 1, 0), flags=(False,) * 5,
                 array50=('private-list-identity-fixture',), strings=('private-record-text',))
             group = SimpleNamespace(raw_08=7, raw_20=4)
-            return SimpleNamespace(response=inputs['lobby_result'],
-                server_list_response=SimpleNamespace(servers=(record,), groups=(group,)),
-                summary={'login_result_code': 0})
+            data = SimpleNamespace(servers=(record,), groups=(group,))
+            selected_id = kwargs['_select_server'](data, inputs['sdk_data'].joined_country_code)
+            result = SimpleNamespace(response=inputs['lobby_result'],
+                server_list_response=data,
+                summary={'login_result_code': 0, 'login_after_server_selection': True, 'login_server_id': selected_id,
+                         'lobby_open_during_game': True})
+            kwargs['_use_session'](result)
+            return result
         prepare = Mock(return_value=version)
+        target_module = SimpleNamespace(choose_target=lambda *args, **kwargs:
+                SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001))
         modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14')),
-            SimpleNamespace(run=lobby), SimpleNamespace(choose_target=lambda *args, **kwargs:
-                SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001)),
+            SimpleNamespace(run=lobby), target_module, target_module,
             SimpleNamespace(observe_inputs=lambda: ('cpu', 'windows')),
             SimpleNamespace(prepare_version=prepare)]
         connection = Mock()
@@ -65,7 +71,25 @@ class SelectedGameLoginTests(unittest.TestCase):
         with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route:
             result = self.tool.run('fixture@example.invalid', **self.kwargs())
         route.assert_not_called()
-        self.assertEqual(result['status'], 'lobby_context_not_received')
+        self.assertEqual(result['status'], 'selected_lobby_context_not_received')
+
+    def test_wrong_or_closed_lobby_context_never_opens_game_connection(self):
+        _, inputs = input_tests.InitialGameLoginTests().inputs()
+        target = SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001)
+        record = SimpleNamespace(u32=(7, 42, 0, 0), enums=(0, 1, 0), flags=(False,) * 5, array50=())
+        data = SimpleNamespace(servers=(record,), groups=(SimpleNamespace(raw_08=7, raw_20=4),))
+        base = dict(login_result_code=0, login_after_server_selection=True, login_server_id=42, lobby_open_during_game=True)
+        for changed in ({'login_server_id': 0}, {'login_server_id': 43}, {'login_after_server_selection': False},
+                        {'lobby_open_during_game': False}, {'login_result_code': 16}):
+            with self.subTest(changed=changed), patch.object(self.tool, 'module', return_value=SimpleNamespace(
+                    choose_target=lambda *args, **kwargs: target)), patch.object(self.tool, 'SocksRoute') as route:
+                with self.assertRaises(ValueError):
+                    self.tool._after_lobby(SimpleNamespace(summary=dict(base, **changed), server_list_response=data),
+                        auth={'context': self.tool.AuthForGame(**{k: inputs[k] for k in ('binding', 'sdk_data', 'netmarble_id')})},
+                        selection_proof={'target': target}, source=SimpleNamespace(app_version='fixture'), socks_port=17948,
+                        extra_number=0, context='windows-sdk-initial-reset', region='JP', server_id=42,
+                        selection=None, server_list_only=False, state={}, phase=lambda value: None)
+                route.assert_not_called()
 
     def test_policy_validation_happens_before_auth_and_error_text_is_hidden(self):
         with patch.object(self.tool, 'module') as load:

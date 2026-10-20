@@ -1,5 +1,6 @@
 """One SDK-only lobby login, using the proven native no-NID-UserInfo branch."""
 import argparse
+from dataclasses import replace
 import importlib.util
 import json
 from pathlib import Path
@@ -22,8 +23,12 @@ def module(name, filename):
 
 
 def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
-        _progress=None, _consume_auth=None):
+        _progress=None, _consume_auth=None, _select_server=None, _use_session=None):
     if _consume_auth is not None and not callable(_consume_auth): raise TypeError('Expected in-memory auth consumer')
+    if _select_server is not None and (not callable(_select_server) or not read_server_list):
+        raise TypeError('Server selection requires a callback and server list')
+    if _use_session is not None and (not callable(_use_session) or _select_server is None):
+        raise TypeError('Session consumer requires server selection')
     if context != 'sdk-without-nid-info': raise ValueError('Explicit source-supported SDK context required')
     if type(read_server_list) is not bool: raise ValueError('Explicit server-list operation required')
     if read_server_list and (type(server_policy_byte) is not int or not 0 <= server_policy_byte <= 255):
@@ -49,8 +54,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     version = version_tool.prepare_version(app_version=source.app_version,
         windows_version=observe_windows_version(), computer_name=version_tool.observe_computer_name(),
         nm_device_key=binding.nm_device_key)
-    # Exact native SDK-auth-present / NID-UserInfo-absent branch. Initial kind 0
-    # is our explicit local policy; server 0 matches the game peer constructor.
+    # SDK-auth-present / NID-UserInfo-absent branch; kind 0 remains explicit policy.
+    # Selection replaces the template's server 0 before any lobby Login is sent.
     login = LobbyLoginPayload((data.player_id, data.access_token, binding.nm_device_key, '', provider.netmarble_id, ''),
         (2, 0, 0, 0), 7)
     # Source path uses NMDeviceKey when initial global player text is empty.
@@ -62,9 +67,22 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     connection = route.connect(*endpoint, timeout=10)
     try:
         if _progress: _progress('lobby_exchange')
-        result = exchange_lobby_login(connection, version, login, timeout=15, server_list=request)
+        def selected_login(response):
+            server_id = _select_server(response, data.joined_country_code)
+            if type(server_id) is not int or not 1 <= server_id <= 0xffffffff:
+                raise ValueError('Expected selected nonzero server ID')
+            if _progress: _progress('selected_lobby_login')
+            return replace(login, integers=(login.integers[0], login.integers[1], server_id, login.integers[3]))
+        def use_session(completed):
+            completed.summary.update(context=context, sdk_response_accepted=True, lobby_open_during_game=True)
+            if _consume_auth:
+                _consume_auth(binding=binding, sdk_data=data, netmarble_id=netmarble_id)
+            _use_session(completed)
+        result = exchange_lobby_login(connection, version, login, timeout=15, server_list=request,
+            select_login=selected_login if _select_server is not None else None,
+            on_selected_login=use_session if _use_session is not None else None)
         result.summary.update(context=context, sdk_response_accepted=True)
-        if _consume_auth and result.response is not None and result.response.result_code == 0:
+        if _use_session is None and _consume_auth and result.response is not None and result.response.result_code == 0:
             _consume_auth(binding=binding, sdk_data=data, netmarble_id=netmarble_id)
         return result
     finally: connection.close()

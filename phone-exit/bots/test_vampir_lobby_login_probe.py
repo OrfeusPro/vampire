@@ -1,4 +1,5 @@
 import importlib.util
+from dataclasses import replace
 import json
 from pathlib import Path
 import socket
@@ -15,6 +16,67 @@ from test_vampir_version_probe import receive_frame, incoming
 
 
 class LobbyLoginProbeTests(unittest.TestCase):
+    def test_selection_sends_list_before_login_and_binds_selected_server_on_same_socket(self):
+        version = LobbyVersionPayload(('',) * 5, (0, 3), 1)
+        initial = LobbyLoginPayload(('fixture',) * 6, (2, 0, 0, 0), 7)
+        request = LobbyServerListPayload(('nm-fixture', 'nid-fixture'), 2, (0, 0))
+        report = json.loads(Path('F:/PhoneExit Resources/Vampir/code-clues/lobby-server-list-reader-replay.json').read_text('utf-8'))
+        body = bytes(4) + bytes.fromhex(report['cases'][-1]['payload_hex'])[4:]
+        for list_code, selected_id, login_code, consumer_error in (
+                (0, 251, 0, False), (0, 251, 16, False), (16, 251, 0, False),
+                (0, 0, 0, False), (0, 251, 0, True)):
+            with self.subTest(list_code=list_code, selected_id=selected_id, login_code=login_code):
+                client, server = socket.socketpair()
+                server.settimeout(2)
+                events, errors, choices, open_sessions = [], [], [], []
+                def select_login(response):
+                    choices.append(len(response.servers))
+                    return replace(initial, integers=(2, 0, selected_id, 0))
+                def consume_session(completed):
+                    open_sessions.append((client.fileno() >= 0, completed.summary['login_server_id'],
+                                          completed.summary['login_result_code']))
+                    if consumer_error: raise ValueError('private-callback-fixture')
+                def serve():
+                    try:
+                        events.append(receive_frame(server))
+                        server.sendall(incoming(2, bytes(23))[3:])
+                        events.append(receive_frame(server))
+                        wire = incoming(104, struct.pack('<I', list_code) + body[4:])[3:]
+                        for chunk in (wire[:2], wire[2:7], wire[7:]): server.sendall(chunk)
+                        if list_code == 0 and selected_id:
+                            events.append(receive_frame(server))
+                            server.sendall(incoming(4, struct.pack('<I', login_code) + bytes(22))[3:])
+                        events.append(server.recv(16))
+                    except Exception as error: errors.append(type(error).__name__)
+                    finally: server.close()
+                worker = threading.Thread(target=serve)
+                worker.start()
+                result = exchange_lobby_login(client, version, initial, timeout=1,
+                    server_list=request, select_login=select_login,
+                    on_selected_login=consume_session)
+                worker.join(3)
+                self.assertFalse(worker.is_alive())
+                self.assertEqual(errors, [])
+                expected = [((1, 0), version.encode(max_payload_size=4096)),
+                            ((103, 1), request.encode(max_payload_size=4096))]
+                if list_code == 0 and selected_id:
+                    expected.append(((3, 2), replace(initial, integers=(2, 0, selected_id, 0)).encode(max_payload_size=4096)))
+                    self.assertEqual(result.summary['login_result_code'], login_code)
+                    self.assertEqual(result.summary['login_server_id'], selected_id)
+                else:
+                    self.assertFalse(result.summary['login_sent'])
+                    self.assertIsNone(result.response)
+                self.assertEqual(events, expected + [b''])
+                self.assertEqual(choices, [] if list_code else [2])
+                self.assertEqual(open_sessions, [(True, 251, 0)] if list_code == 0 and selected_id and login_code == 0 else [])
+                self.assertIsNotNone(result.server_list_response)
+                self.assertTrue(result.summary['login_after_server_selection'])
+                if consumer_error:
+                    self.assertEqual(result.summary['status'], 'protocol_error')
+                    self.assertEqual(result.summary['error_type'], 'ValueError')
+                    self.assertNotIn('private-callback-fixture', str(result))
+                self.assertEqual(client.fileno(), -1)
+
     def test_socket_login_then_list_id103_id104_on_same_connection(self):
         version = LobbyVersionPayload(('',) * 5, (0, 3), 1)
         login = LobbyLoginPayload(('fixture',) * 6, (2, 0, 0, 0), 7)

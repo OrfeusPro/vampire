@@ -18,11 +18,15 @@ class LobbyLoginProbeResult:
     server_list_response: object = field(default=None, repr=False)
 
 
-def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None):
+def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, select_login=None, on_selected_login=None):
     if not isinstance(version, LobbyVersionPayload) or not isinstance(login, LobbyLoginPayload):
         raise TypeError('Expected separate explicit lobby Version/Login')
     if server_list is not None and not isinstance(server_list, LobbyServerListPayload):
         raise TypeError('Expected explicit lobby server-list payload')
+    if select_login is not None and (not callable(select_login) or server_list is None):
+        raise TypeError('Selection requires a callback and explicit server-list payload')
+    if on_selected_login is not None and (not callable(on_selected_login) or select_login is None):
+        raise TypeError('Selected-session consumer requires server selection')
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Invalid lobby probe timeout')
     receiver = ReceiveStream(ReceiveLimits(65536, 65536, 65536, 131072, 131072), uncompressed_offset=0)
@@ -35,9 +39,12 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None):
     last_body_size = None
     login_response = None
     list_sent = False
+    selected_list = None
+    selected_server_id = None
 
     def result(status, response=None, error=None, list_response=None):
         if response is None: response = login_response
+        if list_response is None: list_response = selected_list
         summary = dict(status=status, stage=stage, bytes_sent=sent, bytes_received=received,
             packet_ids=ids.copy(), version_result_code=version_code, login_sent=login_sent,
             login_result_received=response is not None,
@@ -48,6 +55,8 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None):
             server_groups=len(list_response.groups) if list_response is not None else None,
             servers=len(list_response.servers) if list_response is not None else None,
             game_session_ready=False)
+        if select_login is not None:
+            summary.update(login_after_server_selection=True, login_server_id=selected_server_id)
         if error: summary['error_type'] = type(error).__name__
         return LobbyLoginProbeResult(summary, response, list_response)
 
@@ -77,20 +86,40 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None):
                     version_code = response.result_code
                     if version_code != 0: return result('version_rejected')
                     if response.flag_14: return result('additional_numeric_context_required')
-                    pending = encode_lobby_login_frame(login, 1, max_payload_size=32768)
-                    stage = 'login'
+                    if select_login is not None:
+                        pending = encode_lobby_server_list_frame(server_list, 1, max_payload_size=32768)
+                        stage = 'server_list'
+                    else:
+                        pending = encode_lobby_login_frame(login, 1, max_payload_size=32768)
+                        stage = 'login'
                     break
                 if packet.packet_id == 4:
                     if stage != 'login' or not login_sent or pending: return result('unexpected_login_result')
                     response = decode_lobby_login_result(packet.body, max_payload_size=65536)
                     login_response = response
-                    if response.result_code != 0 or server_list is None: return result('lobby_login_result', response)
+                    if response.result_code != 0 or server_list is None or select_login is not None:
+                        completed = result('lobby_login_result', response)
+                        if response.result_code == 0 and on_selected_login is not None:
+                            on_selected_login(completed)
+                        return completed
                     pending = encode_lobby_server_list_frame(server_list, 2, max_payload_size=32768)
                     stage = 'server_list'
                     break
                 if packet.packet_id == 104:
                     if stage != 'server_list' or not list_sent or pending: return result('unexpected_server_list_result')
                     response = decode_lobby_server_list(packet.body, max_payload_size=65536, max_collection_items=8192)
+                    if select_login is not None:
+                        selected_list = response
+                        if response.result_code != 0: return result('server_list_rejected')
+                        selected = select_login(response)
+                        if not isinstance(selected, LobbyLoginPayload): raise TypeError('Selection must return lobby Login')
+                        selected_server_id = selected.integers[2]
+                        if type(selected_server_id) is not int or not 1 <= selected_server_id <= 0xffffffff:
+                            raise ValueError('Selected lobby Login requires a nonzero server ID')
+                        pending = encode_lobby_login_frame(selected, 2, max_payload_size=32768)
+                        stage = 'login'
+                        deadline = time.monotonic() + timeout
+                        break
                     return result('lobby_server_list_result', list_response=response)
             if receiver.input_capacity == 0: return result('receive_budget_exceeded')
             try:
