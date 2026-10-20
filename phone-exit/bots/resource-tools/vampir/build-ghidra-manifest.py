@@ -11,6 +11,8 @@ native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
 ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Vampir'))
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
+ ('NID_UserInfoGet',0x144521e80),('NID_UserInfoSettings',0x144524800),
+ ('NID_UserInfoCopy',0x1455fb2a0),('NID_UserInfoFallback',0x1455faa10),
  ('PatchState_Parse',0x144a98d10),('PatchState_Complete',0x144aa18d0),
  ('PatchState_Load',0x144a98c50),('PatchState_Path',0x144a96910),
  ('PatchState_Clear',0x144a923c0),
@@ -350,6 +352,7 @@ SEEDS=[
 # stores ending at RET (71/23 bytes); request constructor is 25 bytes of stores.
 # Do not manufacture .pdata for these leaves.
 REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28,0x145608fb0:71,0x145601570:23,0x1456bb2a0:25,
+    0x144521e80:12, 0x144524800:10,  # Reviewed SDK UserInfo pointer-chain getters, RET.
     0x145564550:8, 0x145cb2f60:8,  # RIP singleton pointer loads and RET.
     0x145cb95e0:8,  # Compare object+8 with 3, SETE AL, RET.
     0x144ff8cd0:5,  # Raw byte object+0x39 load, RET.

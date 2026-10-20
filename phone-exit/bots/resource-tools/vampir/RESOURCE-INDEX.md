@@ -1,5 +1,12 @@
 # Vampir: где искать данные
 
+## Основная строка NID metadata, 20 октября
+
+Шесть native-сценариев collector / selector и bounded encoder; повтор I_World,
+пустой и недоступный UserInfo различены. Реальные значения и optional branches
+ещё не проверены; runtime Login не менялся.
+[Источники, SHA и границы](HEADLESS-NID-METADATA.md).
+
 ## ClientVersion установленного manifestlist, 20 октября
 
 Пять native-сценариев связали JSON key ClientVersion с patch object+0x1b0.

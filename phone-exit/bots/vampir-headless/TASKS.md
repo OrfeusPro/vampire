@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-nid-metadata: основной формат проверен, реальные значения открыты
+
+Шесть native-сценариев полного collector / selector с UserInfo map fixtures.
+Bounded encoder сохраняет compiled порядок и повтор I_World; optional DeviceKey /
+marketing branches отклоняются. В реальный Login не подключён, сеть не использована.
+Следующий шаг — writer field offsets и SDK setters 37 FString UserInfo,
+затем сбор фактических metadata. Lobby kind и причина InvalidState ещё открыты.
+[Источники и границы](../resource-tools/vampir/HEADLESS-NID-METADATA.md).
+
 ## H04-patch-client-version: источник числа найден, Login всё ещё отклонён
 
 ClientVersion → patch structure+0x18 → patch object+0x1b0 → число Login.

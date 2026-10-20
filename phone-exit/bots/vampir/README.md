@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## Проверен основной формат NID metadata, 20 октября
+
+Шесть native-сценариев исполнили collector и selector с явной UserInfo map.
+Подтверждены порядок 27 обращений, повтор I_World и различие `{}` / пустой
+строки при доступном / недоступном UserInfo. Добавлен отдельный bounded encoder;
+реальный Login его пока не использует. Источники значений 37 полей и две optional
+ветви ещё требуют проверки. Сетевых попыток не было; далее — SDK UserInfo
+setters / initialization и оставшийся контекст до успешного Login.
+[Источники, сценарии и границы](../resource-tools/vampir/HEADLESS-NID-METADATA.md).
+
 ## ClientVersion связан с Login; ревизия 258392 проверена, 20 октября
 
 Ключ ClientVersion из установленного windows.manifestlist связан с полем
