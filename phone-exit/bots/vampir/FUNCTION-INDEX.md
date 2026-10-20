@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## LobbyLogin preparation и constructor, 20 октября
+
+0x1467a9360 → constructor 0x145744fa0 → sender boundary 0x144aa89b0:
+16 native scenarios с getter 0x144aaaa10. Constructor на 0x145744fa7
+пишет raw byte +0x80 = 7. Дополнительная numeric branch выключена флагом
+Version, поле +0x6c остаётся 0; selected-server ID передаётся без замены.
+[Источники, SHA и границы](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-PREPARATION.md).
+
 ## LobbyLogin writer и NID UserInfo, 20 октября
 
 Writer 0x145756e80: 24 native bodies, отдельный runtime payload.

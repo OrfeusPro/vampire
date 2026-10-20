@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: native LobbyLogin preparation до sender
+
+Исполнены preparation prefix, настоящий constructor и getter server ID на
+16 fixtures. Установлено значение последнего byte: 7 из constructor,
+не 0 и не нормализованный bool. При Version flag false поле +0x6c остаётся 0.
+Проверены selector / kind / server ID и отдельные SDK / NID guards.
+Добавлен Windows builder с явными kind / server ID / metadata; их live-значения
+не угаданы. Все 18 целевых проверок прошли. Новых сетевых попыток нет;
+полная metadata / lifecycle context остаются перед настоящим LobbyLogin.
+[Источники и границы](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-PREPARATION.md).
+
 ## 20 октября: writer LobbyLogin и SDK / NID inputs
 
 Ghidra расширен до 331 функции / 151 предупреждения. Native writer LobbyLogin

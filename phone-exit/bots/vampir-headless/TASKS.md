@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-lobby-login-preparation: числовая ветвь и raw byte проверены
+
+Preparation / constructor / selected-server getter исполнены до sender:
+16 сценариев, Version flag false. Byte +0x80 равен 7; +0x6c остаётся 0,
+platform / kind / server ID передаются по проверенным правилам.
+Windows builder требует явные kind / server ID / metadata, не выбирает
+неизвестные начальные значения. 18 целевых проверок прошли. Далее — источник
+kind / server state в runtime и полная metadata, затем настоящий LobbyLogin.
+[Подробности](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-PREPARATION.md).
+
 ## H04-lobby-login-inputs: body и пять строк SDK / NID связаны
 
 LobbyLogin body: шесть строк, четыре uint32, raw byte; 24 полных native writer

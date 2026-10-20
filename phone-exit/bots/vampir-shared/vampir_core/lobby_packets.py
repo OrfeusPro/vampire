@@ -111,3 +111,20 @@ def decode_lobby_version_result(body):
         raise ValueError('Expected one complete lobby VersionResult body')
     code, flag, first, second, raw = struct.unpack('<IBQQH', body)
     return LobbyVersionResultBody(code, bool(flag), (first, second), raw)
+
+
+def make_windows_lobby_login(*, version_result, kind, selected_server_id, metadata):
+    """Native Windows numeric branch with Version flag +14 off.
+
+    kind, selected server and metadata are explicit source-context inputs, not
+    inferred initial values. Five identity strings remain for the SDK binder.
+    Constructor preserves raw +80=7, not a normalized boolean.
+    """
+    if not isinstance(version_result, LobbyVersionResultBody):
+        raise TypeError('Expected separate lobby VersionResult')
+    if version_result.result_code != 0: raise ValueError('Lobby Version did not succeed')
+    if version_result.flag_14:
+        raise NotImplementedError('Version flag requires additional numeric context')
+    _numbers((kind, selected_server_id), 2, 0xffffffff)
+    _utf8(metadata)
+    return LobbyLoginPayload(('',) * 5 + (metadata,), (2, 2 if kind == 2 else 0, selected_server_id, 0), 7)

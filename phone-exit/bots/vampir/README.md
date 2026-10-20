@@ -1,5 +1,15 @@
 # Vampir — главный файл разработки
 
+## LobbyLogin: preparation и raw byte 7 подтверждены, 20 октября
+
+Native preparation до sender прошла 16 сценариев с настоящим constructor
+и getter выбранного сервера. Последний byte равен 7; при выключенном Version
+flag дополнительное число остаётся 0. Windows builder сохраняет эти правила,
+требуя явные kind / server ID / metadata. Прошли 18 целевых проверок.
+Реальный LobbyLogin ещё не отправлялся; далее — оставшийся lifecycle context
+и metadata, затем список игровых серверов и персонажи.
+[Источники, проверки и границы](../resource-tools/vampir/HEADLESS-LOBBY-LOGIN-PREPARATION.md).
+
 ## LobbyLogin: writer и пять строк контекста связаны, 20 октября
 
 Полный native writer ID 3 проверен на 24 bodies; runtime получил отдельный
