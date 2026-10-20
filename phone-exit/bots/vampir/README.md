@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Проверена привязка common data к SDK-сервису, 20 октября
+
+Три native-сценария прошли настоящий callsite SDK-сервис+0x310, полную factory,
+owner constructor и getters. На этапе создания все 37 строк пусты. Функция
+после player ID уточнена как Settings::Save, а не источник metadata.
+Далее — вызовы 0x144524d70 / 0x144548ca0 после getter в SignInResponse.
+Runtime и сеть не менялись; причина InvalidState ещё не установлена.
+[Источники, проверки и границы](../resource-tools/vampir/HEADLESS-NID-OWNER-FACTORY.md).
+
 ## Проверен Franz 2: ID 256 тоже вернул InvalidState, 20 октября
 
 Таблицы связывают Franz2 с ID 256 и Franz с группой 253; свежий список лобби

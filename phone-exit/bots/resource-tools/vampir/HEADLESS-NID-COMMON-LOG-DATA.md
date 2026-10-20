@@ -65,9 +65,11 @@ owner и InitializeSRWLock — bounded fixtures. Проверено обычно
 `0x14450f420`. Indirect / tail calls не покрыты. Следующий путь поиска —
 подключение owner к SDK host и обновление его common data из настроек / player.
 
-Отдельный кандидат из уже разобранного SDK SignIn response — `0x14453cdf0`:
-он вызывается после setter player ID. Это зацепка для проверки, не доказанная
-запись PID в FCommonLogData. Полный набор источников значений ещё открыт.
+Уточнение: `0x14453cdf0` после setter player ID уже связан с
+UNMServiceSettings::Save; считать его источником common data по этому вызову
+нельзя. Factory и подключение к SDK-сервису теперь проверены отдельно.
+Следующий участок — `0x144524d70 → 0x144548ca0` после getter в SignInResponse.
+[Новая проверка, источники и границы](HEADLESS-NID-OWNER-FACTORY.md).
 
 ## Происхождение и команды
 

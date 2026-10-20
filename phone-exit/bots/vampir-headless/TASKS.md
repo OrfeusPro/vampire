@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-common-data-factory: связь с SDK-сервисом проверена
+
+Настоящий callsite передаёт factory поле SDK-сервис+0x310. Три native-сценария
+прошли полную factory / owner constructor и getters: 37 строк ещё пусты.
+Прежний кандидат после player ID оказался Settings::Save. Далее — два
+вызова 0x144524d70 / 0x144548ca0 из SignInResponse; заполнение metadata
+и причина Login 16 остаются открытыми. Runtime и сеть не менялись.
+[Источники, отчёты и проверки](../resource-tools/vampir/HEADLESS-NID-OWNER-FACTORY.md).
+
 ## H04-franz2: сервер сопоставлен, игровой Login всё ещё отклонён
 
 Franz2 соответствует ID 256 в таблицах; свежая запись связывает его с группой
