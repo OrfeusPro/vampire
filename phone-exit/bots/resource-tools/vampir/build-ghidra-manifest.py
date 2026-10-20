@@ -144,7 +144,9 @@ SEEDS=[
  ('CharacterSelect_Map98Array50Item',0x145798b60),
  ('CharacterSelect_Map98Array50Read',0x145796d60),
  ('SelectResult_PlayerAcquire',0x145c8ba50),
- ('SelectResult_WindowTitleConsumer',0x145dea660)]
+ ('SelectResult_WindowTitleConsumer',0x145dea660),
+ ('SelectionStatus_Set',0x1456140f0),
+ ('SelectionStatus_TextSink',0x145636eb0)]
 
 # This source-bound callback has no PE unwind entry: two straight blocks and
 # one internal conditional branch, ending at RET after an allocator tail jump.
