@@ -3,7 +3,7 @@ export const WINDOW = 262144;
 export const FRAME = 16384;
 
 // Credit acknowledges TCP writes, rather than just arrival in the SCTP queue.
-export function bridge(socket, channel, { onReady = () => {}, onError = () => {}, initiallyReady = false,receiveWindow=WINDOW,sendWindow=WINDOW } = {}) {
+export function bridge(socket, channel, { onReady = () => {}, onError = () => {}, initiallyReady = false,receiveWindow=WINDOW,sendWindow=WINDOW,observer=null } = {}) {
   if(![WINDOW,1048576,2097152,4194304].includes(receiveWindow)||![WINDOW,1048576,2097152,4194304].includes(sendWindow))throw Error('Invalid flow window');
   let credit = sendWindow, outstanding = 0, ready = initiallyReady, closed = false;
   let txEof = false, rxEof = false, incoming = 0, drainTimer;
@@ -12,9 +12,10 @@ export function bridge(socket, channel, { onReady = () => {}, onError = () => {}
   socket.pause();
   channel.bufferedAmountLowThreshold = FRAME;
   const send = value => channel.send(JSON.stringify(value));
+  const observe=(direction,data)=>{try{observer?.record(direction,data);}catch{/* Observation must not interrupt forwarding. */}};
   function destroy() {
     if (closed) return;
-    closed = true; clearTimeout(timer); clearInterval(drainTimer); socket.destroy(); channel.close();
+    closed = true; clearTimeout(timer); clearInterval(drainTimer);try{observer?.close();}catch{} socket.destroy(); channel.close();
   }
   function flush() {
     if (!ready || closed || channel.readyState !== 'open') return;
@@ -37,6 +38,7 @@ export function bridge(socket, channel, { onReady = () => {}, onError = () => {}
       if (Buffer.isBuffer(data)) {
         if (!ready || rxEof || data.length === 0 || data.length > FRAME || incoming + data.length > receiveWindow) throw Error('frame');
         incoming += data.length;
+        observe('s2c',data);
         socket.write(data, error => {
           incoming -= data.length;
           if (error) return destroy();
@@ -57,6 +59,7 @@ export function bridge(socket, channel, { onReady = () => {}, onError = () => {}
     } catch { onError(1); destroy(); }
   });
   socket.on('data', data => {
+    observe('c2s',data);
     for (let p = 0; p < data.length; p += FRAME) {
       const chunk = data.subarray(p, p + FRAME); queue.push(chunk); queued += chunk.length;
     }

@@ -52,6 +52,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [Источники оставшихся полей Version / Login](../evidence/network/HEADLESS-GAME-LOGIN-INPUTS.md)
 - [Vampir — уведомление и подтверждение смены ключа](../evidence/network/HEADLESS-KEY-CHANGE.md)
 - [Vampir — исполнение второго цикла приёма](../evidence/network/HEADLESS-LISTENER-LOOP.md)
+- [Средство записи официального TCP для сравнения с ботом](../evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md)
 - [Лобби: Version перед запросом и отправка накопленного буфера](../evidence/network/HEADLESS-LOBBY-CONNECT-FLOW.md)
 - [Лобби: отдельный Version и запрос списка серверов](../evidence/network/HEADLESS-LOBBY-HANDSHAKE.md)
 - [LobbyLogin: preparation до отправителя и последний байт 7](../evidence/network/HEADLESS-LOBBY-LOGIN-PREPARATION.md)

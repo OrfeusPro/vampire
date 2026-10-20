@@ -126,6 +126,7 @@ function StartClient([switch]$Reconnect) {
         $info.StandardErrorEncoding = [System.Text.Encoding]::UTF8
         $info.EnvironmentVariables['PHONE_EXIT_DESKTOP'] = '1'
         $info.EnvironmentVariables['PHONE_EXIT_PORT'] = '1080'
+        $info.EnvironmentVariables['PHONE_EXIT_DIAGNOSTICS_DIR'] = Join-Path $script:profileDirectory 'diagnostics'
         if(!$Reconnect -or !$script:stunServers){
             $script:stunServers=@();$script:bootstrapAddresses=@()
             foreach($hostSpec in @(@('stun.l.google.com',19302),@('stun.cloudflare.com',3478),@('demochko.com',443))){
@@ -141,6 +142,8 @@ function StartClient([switch]$Reconnect) {
         $info.EnvironmentVariables['PHONE_EXIT_BIND_V4']=$physicalAddress.IPAddress
         $info.EnvironmentVariables['PHONE_EXIT_SIGNAL'] = if(($SelfTest -and !$UsbTestSerial) -or ($selected -and $selected.signal -eq 'https://demochko.com/phone-exit/signal.php')) {'https://demochko.com/phone-exit/signal.php'} else {'https://demochko.com/hosting-webrtc-probe/signal.php'}
         $script:client = New-Object System.Diagnostics.Process
+        $script:diagnosticState=$null;$script:diagnosticPending=$false
+        if($diagnosticButton){$diagnosticButton.Text='Диагностика TCP'}
         $script:client.StartInfo = $info
         $null = $script:client.Start()
         $script:startedAt = [DateTime]::UtcNow
@@ -171,6 +174,8 @@ function HandleOutput([string]$line, [bool]$isError) {
     if ($line.StartsWith('{')) {
         try {
             $pair = $line | ConvertFrom-Json
+            if($pair.event -eq 'diagnostics'){$script:diagnosticPending=$false;$script:diagnosticState=$pair;if($diagnosticButton){$diagnosticButton.Text=if($pair.state -eq 'active'){'● Запись TCP'}else{'Диагностика TCP'}};return}
+            if($pair.event -eq 'diagnostics-command-error'){$script:diagnosticPending=$false;$script:diagnosticMessage='Команда записи отклонена. Проверьте фильтр и подключение.';return}
             if($pair.event -eq 'ping' -and $null -ne $pair.rtt -and [double]$pair.rtt -ge 0 -and [double]$pair.rtt -le 60000){$script:lastPingAt=[DateTime]::UtcNow;$pingLabel.Text='Пинг до телефона: '+[int]$pair.rtt+' мс';return}
             if($pair.event -eq 'metrics'){$script:metrics=$pair;return}
             if($pair.event -eq 'transport'){$script:transportAddresses=@($pair.addresses);$script:udpAvailable=$pair.udp;return}
@@ -276,6 +281,7 @@ $timer.Add_Tick({
             else { $status.Text = 'Соединение остановлено' }
             $script:client.Dispose(); $script:client = $null
             $script:outRead=$null;$script:errRead=$null;$script:transportReady=$false
+            $script:diagnosticState=$null;$script:diagnosticPending=$false;if($diagnosticButton){$diagnosticButton.Text='Диагностика TCP'}
             $code.Clear(); $copy.Enabled = $false; $stopButton.Enabled = $false; $start.Enabled = $true
             $mode.Enabled=$script:vpnState -ne 'active';$chooseApps.Enabled=$mode.Enabled
             QueueReconnect
@@ -323,6 +329,7 @@ try { StartDirectory } catch { $hint.Text = 'Не удалось открыть 
 . (Join-Path $PSScriptRoot 'desktop-theme.ps1')
 . (Join-Path $PSScriptRoot 'desktop-bots.ps1')
 . (Join-Path $PSScriptRoot 'desktop-redesign.ps1')
+. (Join-Path $PSScriptRoot 'desktop-diagnostics.ps1')
 $timer.Start()
 try { $null = $form.ShowDialog() } finally {
     # Timers must not invoke PowerShell delegates after its runspace has unwound.

@@ -6,6 +6,13 @@ import {downloadProbeResult} from './download-probe.js';
 import {observeTransport} from './transport-probe.js';
 import {addTestLatency} from './latency-probe.js';
 import {MultiPeer} from './multi-peer.js';
+import {DiagnosticCapture} from './diagnostic-capture.js';
+import {join} from 'node:path';
+import {homedir} from 'node:os';
+
+const diagnostics=new DiagnosticCapture({root:process.env.PHONE_EXIT_DIAGNOSTICS_DIR||join(process.env.LOCALAPPDATA||homedir(),'PhoneExit','diagnostics'),
+  onStatus:value=>{if(process.env.PHONE_EXIT_DESKTOP==='1')console.log(JSON.stringify({event:'diagnostics',...value}));}});
+let diagnosticCommands=Promise.resolve();
 
 const endpoint = new URL(process.env.PHONE_EXIT_SIGNAL || 'https://demochko.com/hosting-webrtc-probe/signal.php');
 if (endpoint.protocol !== 'https:') throw Error('Сигнализация требует HTTPS');
@@ -48,6 +55,7 @@ async function stop() {
   // This module is the CLI entry point; bound shutdown even if a library timer
   // or an in-flight ICE/HTTP operation outlives the closed proxy.
   const forceExit=setTimeout(() => process.exit(process.exitCode || 0),3000);
+  await diagnostics.stop('transport_stopped');
   try { await peer.close(); } finally { clearTimeout(forceExit); process.exit(process.exitCode || 0); }
 }
 function fail(error) { console.error(error.message || 'Соединение потеряно'); process.exitCode = 1; stop(); }
@@ -106,7 +114,7 @@ control.onMessage.subscribe(async data => {
     },2000);
     await pool.start();
     if(stopped)return;
-    server = createSocksServer(pool,{port,maxStreams:hello.limits?.tcp===128?192:hello.limits?.tcp===64?80:32,udpEnabled:hello.features?.includes('udp-v1')===true,frameSize:Number(process.env.PHONE_EXIT_FRAME_SIZE||16384),receiveWindow,sendBuffer,phoneReceiveBuffer,flowProbe:flowSupported&&process.env.PHONE_EXIT_DIAG_PARALLEL==='1'});
+    server = createSocksServer(pool,{port,diagnostics,maxStreams:hello.limits?.tcp===128?192:hello.limits?.tcp===64?80:32,udpEnabled:hello.features?.includes('udp-v1')===true,frameSize:Number(process.env.PHONE_EXIT_FRAME_SIZE||16384),receiveWindow,sendBuffer,phoneReceiveBuffer,flowProbe:flowSupported&&process.env.PHONE_EXIT_DIAG_PARALLEL==='1'});
     const addresses=pool.iceTransports.flatMap(t=>[
       ...t.connection.remoteCandidates.map(c=>c.host),...t.connection.candidatePairs.map(p=>p.remoteCandidate.host),t.connection.nominated?.remoteAddr?.[0],
     ]).filter(Boolean);
@@ -123,7 +131,7 @@ if (process.env.PHONE_EXIT_DESKTOP === '1') {
   let commands = '';
   process.stdin.on('data', chunk => {
     commands += chunk;
-    if (commands.length > 1024) { stop(); return; }
+    if (commands.length > 8192) { stop(); return; }
     let end;
     while ((end = commands.indexOf('\n')) >= 0) {
       const command = commands.slice(0,end).trim(); commands = commands.slice(end+1);
@@ -132,6 +140,17 @@ if (process.env.PHONE_EXIT_DESKTOP === '1') {
       if(command==='probe-upload'&&connected&&uploadSupported&&!uploadId){uploadId=randomBytes(8).toString('hex');control.send(JSON.stringify({type:'upload-probe',id:uploadId}));}
       if(command==='probe-flow'&&connected&&flowSupported&&!flowId){flowId=randomBytes(8).toString('hex');control.send(JSON.stringify({type:'flow-probe',id:flowId}));}
       if(command==='probe-stats'&&transportProbe)console.log(JSON.stringify({event:'transport-probe',...transportProbe()}));
+      if(command.startsWith('{'))diagnosticCommands=diagnosticCommands.then(async()=>{
+        try {
+          const request=JSON.parse(command);
+          if(request.op==='capture-start'){
+            if(stopped||!connected||!server)throw Error('Transport unavailable');
+            await diagnostics.start(request.filters);
+            if(stopped)await diagnostics.stop('transport_stopped');
+          }else if(request.op==='capture-stop')await diagnostics.stop();
+          else if(request.op==='capture-status')console.log(JSON.stringify({event:'diagnostics',...diagnostics.status()}));
+        }catch{console.log(JSON.stringify({event:'diagnostics-command-error'}));}
+      });
     }
   });
   process.stdin.on('end',stop);
