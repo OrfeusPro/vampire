@@ -307,7 +307,16 @@ SEEDS=[
  ('LobbyNID_SelectField',0x1455fb550),
  ('GameWrapper_BaseConstruct',0x144aaa530),
  ('GamePeer_Construct',0x144aab540),
- ('LobbyContext_Configure',0x145d404f0)]
+ ('LobbyContext_Configure',0x145d404f0),
+ ('LobbyServerList_Array18Read',0x14574c790),
+ ('LobbyServerList_Array28Read',0x14574c630),
+ ('LobbyServerList_Map48Read',0x14574cec0),
+ ('LobbyServer_Read',0x14574ab50),
+ ('LobbyServerGroup_Read',0x14574ad20),
+ ('LobbyServerList_Map98Read',0x1456c35c0),
+ ('LobbyServer_Array50Read',0x14570b2c0),
+ ('LobbyServerList_Map98Insert',0x1456b9440),
+ ('LobbyServer_StringArrayItemRead',0x145712790)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

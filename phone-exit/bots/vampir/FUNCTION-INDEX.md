@@ -1,5 +1,13 @@
 # Vampir — общий указатель найденных функций и связей
 
+## ID 104: полный decoder и реальный список серверов, 20 октября
+
+Reader 0x14574ae20, server/group 0x14574ab50 / 0x14574ad20,
+arrays 0x14574c790 / 0x14574c630, maps 0x14574cec0 / 0x1456c35c0.
+Nested string array 0x14570b2c0 / item 0x145712790. Десять native bodies,
+bounded runtime decoder; реальный ID 104 code 0: 55 групп / 98 записей.
+[Источники, SHA и границы](../vampir-headless/LIVE-LOBBY-SERVER-LIST.md).
+
 ## Настоящий LobbyLoginResult 0 и начальный server ID, 20 октября
 
 GamePeer constructor 0x144aab540 пишет dword peer+0x270 = 0;

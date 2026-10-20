@@ -9,12 +9,69 @@ import unittest
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / 'vampir-shared'))
-from vampir_core.lobby_packets import LobbyVersionPayload, LobbyLoginPayload
+from vampir_core.lobby_packets import LobbyVersionPayload, LobbyLoginPayload, LobbyServerListPayload
 from vampir_core.lobby_login_probe import exchange_lobby_login
 from test_vampir_version_probe import receive_frame, incoming
 
 
 class LobbyLoginProbeTests(unittest.TestCase):
+    def test_socket_login_then_list_id103_id104_on_same_connection(self):
+        version = LobbyVersionPayload(('',) * 5, (0, 3), 1)
+        login = LobbyLoginPayload(('fixture',) * 6, (2, 0, 0, 0), 7)
+        request = LobbyServerListPayload(('nm-fixture', 'nid-fixture'), 2, (0, 0))
+        report = json.loads(Path('F:/PhoneExit Resources/Vampir/code-clues/lobby-server-list-reader-replay.json').read_text('utf-8'))
+        body = bytes(4) + bytes.fromhex(report['cases'][-1]['payload_hex'])[4:]
+        client, server = socket.socketpair()
+        server.settimeout(2)
+        events, errors = [], []
+        def serve():
+            try:
+                events.append(receive_frame(server)[0])
+                server.sendall(incoming(2, bytes(23))[3:])
+                events.append(receive_frame(server)[0])
+                server.sendall(incoming(4, bytes(26))[3:])
+                events.append(receive_frame(server))
+                wire = incoming(104, body)[3:]
+                for chunk in (wire[:1], wire[1:7], wire[7:]): server.sendall(chunk)
+                events.append(server.recv(16))
+            except Exception as error: errors.append(type(error).__name__)
+            finally: server.close()
+        worker = threading.Thread(target=serve)
+        worker.start()
+        result = exchange_lobby_login(client, version, login, timeout=1, server_list=request)
+        worker.join(3)
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(errors, [])
+        self.assertEqual(events, [(1, 0), (3, 1), ((103, 2), request.encode(max_payload_size=4096)), b''])
+        self.assertEqual(result.summary['status'], 'lobby_server_list_result')
+        self.assertEqual(result.summary['server_list_result_code'], 0)
+        self.assertEqual((result.summary['server_groups'], result.summary['servers']), (2, 2))
+        self.assertEqual(len(result.server_list_response.servers), 2)
+        self.assertNotIn('game.invalid', repr(result))
+
+    def test_rejected_login_does_not_send_optional_server_list(self):
+        client, server = socket.socketpair()
+        server.settimeout(2)
+        errors = []
+        def serve():
+            try:
+                receive_frame(server)
+                server.sendall(incoming(2, bytes(23))[3:])
+                receive_frame(server)
+                server.sendall(incoming(4, struct.pack('<I', 1602) + bytes(22))[3:])
+                if server.recv(16) != b'': errors.append('unexpected_followup')
+            except Exception as error: errors.append(type(error).__name__)
+            finally: server.close()
+        worker = threading.Thread(target=serve)
+        worker.start()
+        result = exchange_lobby_login(client, LobbyVersionPayload(('',) * 5, (0, 3), 1),
+            LobbyLoginPayload(('',) * 6, (2, 0, 0, 0), 7), timeout=1,
+            server_list=LobbyServerListPayload(('', ''), 2, (0, 0)))
+        worker.join(3)
+        self.assertEqual(errors, [])
+        self.assertFalse(result.summary['server_list_sent'])
+        self.assertIsNone(result.server_list_response)
+
     def test_socket_version_then_login_and_bounded_response_no_followup(self):
         version = LobbyVersionPayload(('version-fixture',) + ('',) * 4, (0, 3), 1)
         login = LobbyLoginPayload(('player-fixture', 'sdk-secret-fixture', 'nm-fixture', '', 'nid-fixture', ''), (2, 0, 0, 0), 7)

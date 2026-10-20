@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — задачи
 
+## H04-live-server-list: ID 104 разобран в реальной сессии
+
+Через HK получены ID 2 / 4 / 104 с кодами 0. Полный decoder ID 104 разобрал
+55 групп / 98 server records, body 11 338 байт. Native whole reader проверен
+на десяти bodies с непустыми collections; runtime учитывает общий item budget.
+Запрос списка необязателен, отправляется после успешного Login. Сокет / HK
+закрыты; 29 целевых проверок прошли. Далее — record → endpoint / выбор
+сервера → игровой Version/Login → список/выбор персонажа → позиция.
+[Подробности](LIVE-LOBBY-SERVER-LIST.md).
+
 ## H04-live-lobby-login: настоящий LoginResult с кодом 0
 
 Явная source-supported ветвь SDK auth без NID UserInfo принята лобби через HK.
