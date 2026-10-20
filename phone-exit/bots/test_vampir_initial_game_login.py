@@ -70,5 +70,14 @@ class InitialGameLoginTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 prepare_initial_windows_game_login(version, **kwargs, language_code=invalid)
 
+    def test_explicit_metadata_is_preserved_without_identity_replacement(self):
+        version, kwargs = self.inputs()
+        baseline=prepare_initial_windows_game_login(version,**kwargs)
+        metadata='{"I_PID":"current-fixture"}'
+        actual=prepare_initial_windows_game_login(version,**kwargs,nid_metadata=metadata)
+        strings=list(baseline.strings);strings[11]=metadata
+        self.assertEqual(actual,replace(baseline,strings=tuple(strings)))
+        self.assertNotIn('current-fixture',repr(actual))
+
 
 if __name__ == '__main__': unittest.main()

@@ -39,5 +39,11 @@ Windows; причину отказа это сравнение пока не у�
 `--auth-flow launcher` явно включает NID credential → launcher/token →
 launcher/sign-in. Автоматического fallback нет. [Реальная проверка](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 
+`--language-code 1` явно выбирает английский язык в Game Login.
+`--lobby-context sdk-with-joined-country` передаёт совпавшую свежую страну SDK / NID;
+`sdk-with-partial-metadata` дополнительно собирает шесть подтверждённых полей
+metadata из текущих источников. Это неполный набор, не копия старой авторизации.
+[Происхождение полей и сравнительные проверки](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md).
+
 [RESEARCH-HISTORY.md](RESEARCH-HISTORY.md) содержит прежний полный README,
 включая старые команды и результаты. Старые статусы не заменяют текущую сводку.

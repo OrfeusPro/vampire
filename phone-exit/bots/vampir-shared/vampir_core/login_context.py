@@ -113,13 +113,15 @@ def prepare_registered_login(version, login, *, binding, sdk_data, netmarble_id)
 
 
 def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_id,
-        lobby_result, server_id, extra_number, context, language_code=None):
-    """Explicit initial/reset Windows SDK branch; no NID UserInfo/manager68.
+        lobby_result, server_id, extra_number, context, language_code=None, nid_metadata=''):
+    """Windows SDK template with optional explicit language/metadata context.
 
     Sources: LOGIN-INITIAL-CONTEXT, LOGIN-POLICY-INPUTS and LOGIN-PACKET-FIELDS.
     extra_number is the separate +50 DWORD derived from patch ClientVersion;
     the caller supplies the revision from an explicitly selected manifestlist.
     Caller establishes same-account freshness and selected endpoint provenance.
+    Absent metadata preserves the initial no-UserInfo branch; supplied text must
+    come from the caller's current SDK/NID context. Manager68 remains absent.
     Does not authenticate, send, mutate a device or claim live game state.
     """
     if context != 'windows-sdk-initial-reset':
@@ -136,8 +138,10 @@ def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_
     if language_code is not None and (type(language_code) is not int or not 0 <= language_code <= 255):
         raise ValueError('Expected explicit unsigned language byte')
     language = 7 if language_code is None else language_code
+    _utf8(nid_metadata)
     strings = [''] * 15
     strings[3], strings[14] = version.strings[0], version.strings[9]
+    strings[11] = nid_metadata
     login = LoginPayload(tuple(strings), (extra_number, server_id, 207, 1), (3, 3, language, 0, 0), 0)
     _, login = prepare_registered_login(version, login, binding=binding,
         sdk_data=sdk_data, netmarble_id=netmarble_id)

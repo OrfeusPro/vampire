@@ -14,9 +14,13 @@ LITERALS=(0x1498a9830,0x1498a9890,0x1498a9bd0,0x1498a9c30,0x1494e0618,0x1494e062
 def build():
     root=native.ROOT
     manifest=json.loads((root/'ghidra/entry-manifest.json').read_text('utf-8'))
-    latest=json.loads((root/'ghidra/latest-export.json').read_text('utf-8'))
-    export=Path(latest['output'])
-    report=json.loads((export/'functions.json').read_text('utf-8'))
+    # This evidence belongs to the reviewed immutable export. Adding unrelated
+    # function seeds must not silently retarget an already validated report.
+    export=root/'ghidra/export-c7552efd2125/run-157d58347cfd'
+    report_bytes=(export/'functions.json').read_bytes()
+    if hashlib.sha256(report_bytes).hexdigest()!='78bd674dc4849d4746527678d6e2f96b17ab9889be5cc566d09ba187689ff8e8':
+        raise ValueError('Reviewed language export changed')
+    report=json.loads(report_bytes)
     raw=Path(manifest['source']).read_bytes()
     if hashlib.sha256(raw).hexdigest()!=manifest['source_sha256']:raise ValueError('Client changed')
     image=native.Image(raw)

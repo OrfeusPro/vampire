@@ -45,6 +45,10 @@
 поля ещё нужно собрать. [Продолжение и live результаты](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md).
 Две сравнительные попытки с языком 1 получили LobbyLoginResult 10036 до игры.
 Нужно проверить условие этого отказа; смешивать его с ошибкой Winsock нельзя.
+Свежая страна и частичная metadata из шести подтверждённых полей уже подключены
+и проверены по отдельности: выбранное лобби в обеих попытках вернуло 10036.
+Следующий участок — helper отказа `0x145f8a550` из LobbyLoginResult handler;
+полные неизвестные поля metadata пока не заполнять догадками.
 [Запись и границы разбора](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md).
 [Результаты](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md).
 

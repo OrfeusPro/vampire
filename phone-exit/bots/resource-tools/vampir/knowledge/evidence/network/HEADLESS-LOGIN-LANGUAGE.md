@@ -58,7 +58,9 @@ SHA256 `5bd542f934c8a51b9b3a2cf061cdd503eb7d2bbc696fb42bad3b0c02f4baadab`.
 
 Отчёт статических связей:
 `F:/PhoneExit Resources/Vampir/code-clues/login-language-evidence.json`,
-SHA256 `2401fcb1fe2f417965a2dbbc6c5f4f34d6457ff1d730462374dfc518a990baf2`.
+SHA256 `b8143bfca65e1887c331dc9a14193944140fea7b7031102ad4c994fd2746ab26`.
+Отчёт закреплён за проверенным immutable export ниже; новые функции в latest
+не переключают старую проверку на другой экспорт. SHA report экспорта сверяется.
 Экспорт Ghidra: `export-c7552efd2125/run-157d58347cfd`, 422 функции,
 191 предупреждение. Manifest SHA256:
 `a503bc402b59578bca81c732354d3ce31778663b491d7cb8eefb48c52b1d4658`;
@@ -128,3 +130,70 @@ SHA256 `22d0b10c3161f86feef89d386ea88c5ca875a1a45b53503a8196e7af97c2f6e9`.
 Он проверяет CRC и обратное кодирование, выводит только числа и длины.
 Следующая работа — соединить актуальные NID country / metadata с подготовкой
 лобби, не перенося токены из записи и не считая отличие доказанной причиной.
+
+## Свежая страна и частичная metadata в runtime
+
+Runner получил два явных варианта `--lobby-context` сверх прежнего
+`sdk-without-nid-info`. Автоматического переключения по отказу нет:
+
+- `sdk-with-joined-country`: LobbyLogin+0x48 получает страну только если свежий
+  SDK `joinedCountryCode` и NID callback `joinedCountryCode` совпадают и имеют
+  канонический вид двух заглавных ASCII-букв. Metadata остаётся пустой.
+- `sdk-with-partial-metadata`: та же проверка страны и collector с пятью
+  подтверждёнными полями плюс отдельный DeviceKey suffix.
+
+| Ключ metadata | Источник в текущей попытке |
+| --- | --- |
+| I_GameCode | Проверенный SDK source profile, используемый этой авторизацией |
+| I_GameVersion | AppVersion проверенного профиля игры |
+| I_PID | playerId свежего SDK ответа; связь с Login+0x10 сверена по записи |
+| I_JoinedCountryCode | Совпавшие свежие SDK / NID значения |
+| I_NMDeviceKey | Фиксированная привязка, сверяемая с текущим Windows-хранилищем |
+| I_DeviceKey | Отдельный SDK DeviceKey той же привязки; совпадение с записью проверено |
+
+Все значения обязательны и непусты для этой частичной ветви. Токены в metadata
+не включаются. Не заполняются I_TID, I_ConnectIP, I_CountryCD, I_NMNID, аппаратные
+поля и остальные unknowns. Это **не полная metadata официального клиента** и
+не доказанная полная инициализация FCommonLogData. Проверяются формат и реальные
+известные источники, а не догадки о серверной обязательности полей.
+
+Строка передаётся in-memory вместе с SDK / NID context после успешного лобби.
+`prepare_initial_windows_game_login(..., nid_metadata=...)` сохраняет её в
+Game Login+0xd8 без повторного сбора из другой сессии. Данные скрыты в repr;
+summary содержит только наличие страны и длину metadata. На диск они не пишутся.
+
+Четыре проверки `test_vampir_lobby_joined_country.py` контролируют поле в реальном
+LobbyLoginPayload, прежнюю пустую ветвь, частичный набор, in-memory consumer и
+отказ до connect при отсутствии / расхождении страны. Проверки selected runner
+подтверждают передачу той же строки в игровой Login без утечки в summary.
+
+Сетевой тест только страны через samsung SM-A057F / JP дал тот же LobbyLoginResult
+10036. Отправлено 547 байт вместо прежних 545, получено 11 506; список 55 / 98
+принят. До Game Login не дошло, поэтому одной страны оказалось недостаточно
+для этой попытки. Собственный транспорт после проверки остановлен.
+
+Отчёт `F:/PhoneExit Resources/Vampir/code-clues/live-country-login-jp-20261020T221906466742Z-summary.json`,
+SHA256 `13861f79b16cbb445d3370fe0527c3c3bd87bbe769b483148ebcc0a122288e6b9`.
+Время 21 октября 01:19:06 Киев. CDN manifest SHA256
+`f4743cbe3b09886821852e563407f8e7f7ce53c108143bc4a458c0a821e5e135`;
+GMC2 manifest SHA256 `30f3175ee94ac82d06e0ed34ce61a84cfe9d3b092703a077c4bbc669eb638fe5`.
+
+Вторая сравнительная ветвь — страна плюс частичная metadata — также проверена
+через тот же JP. SDK / Version / список приняты; Lobby Login снова вернул
+10036. Summary подтверждает `joined_country_present=true`, `metadata_bytes=219`.
+Отправлено 766 байт, получено 11 506. Game Login не отправлялся, поэтому
+передача metadata в игровой пакет пока подтверждена локальным тестом, а не live.
+Эта проверка не исключает обязательность неизвестных полей полного collector.
+
+Summary `F:/PhoneExit Resources/Vampir/code-clues/live-partial-metadata-login-jp-20261020T222229888246Z-summary.json`,
+SHA256 `8d7bebf3e6457e1e861c5bd87ad0ac1b603314a0eed4ed4042ed564b1138077e`.
+Время 21 октября 01:22:29 Киев. CDN manifest SHA256
+`2942cb7fa97b2959a856aae5ecb70deca1a4633ff2f27cb68c3eb4161330f52a`;
+GMC2 manifest SHA256 `4873c99651890ef0df8499c008d297691f287601c747fdbec2f548e5bb4e5476`.
+Собственный транспорт остановлен; ключи / аккаунт не заменялись.
+
+Повторное чтение существующего `LobbyLoginResult_Handler`, `0x14677ec50`,
+показывает: код 10036 не входит в особые ветви 0x2fae / 0x2faf / 0x15fa5 /
+0x15fae / 0x2740 и попадает в общий вызов `0x145f8a550` и status text.
+Это отдельный helper от прежде исполненного игрового mapper. Его связь с
+таблицей / локализацией — следующий конкретный вопрос для отказа лобби.

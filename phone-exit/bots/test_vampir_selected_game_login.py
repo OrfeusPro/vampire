@@ -23,7 +23,9 @@ class SelectedGameLoginTests(unittest.TestCase):
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
             self.assertEqual(kwargs['auth_flow'], 'launcher')
-            kwargs['_consume_auth'](**{name: inputs[name] for name in ('binding', 'sdk_data', 'netmarble_id')})
+            self.assertEqual(kwargs['context'], 'sdk-with-partial-metadata')
+            kwargs['_consume_auth'](**{name: inputs[name] for name in ('binding', 'sdk_data', 'netmarble_id')},
+                nid_metadata='{"I_PID":"current-player-fixture"}')
             record = SimpleNamespace(u32=(7, 42, 0, 0), enums=(0, 1, 0), flags=(False,) * 5,
                 array50=('private-list-identity-fixture',), strings=('private-record-text',))
             group = SimpleNamespace(raw_08=7, raw_20=4)
@@ -48,7 +50,8 @@ class SelectedGameLoginTests(unittest.TestCase):
         with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route, \
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
-            result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1, **self.kwargs())
+            result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
+                lobby_context='sdk-with-partial-metadata', **self.kwargs())
         packet = exchange.call_args.args[2]
         self.assertIsNone(prepare.call_args.kwargs['local_address'])
         connection.getsockname.assert_not_called()
@@ -57,9 +60,11 @@ class SelectedGameLoginTests(unittest.TestCase):
         self.assertEqual(packet.strings[:2], ('lobby-first-fixture', 'lobby-second-fixture'))
         self.assertEqual(packet.integers[:2], (123, 42))
         self.assertEqual(packet.raw_bytes, (3,3,1,0,0))
+        self.assertEqual(packet.strings[11],'{"I_PID":"current-player-fixture"}')
         self.assertEqual(result['login_language_code'],1)
         connection.close.assert_called_once()
         self.assertNotIn('sdk-token-fixture', str(result))
+        self.assertNotIn('current-player-fixture',str(result))
         self.assertNotIn('nm-fixture', str(result))
         self.assertNotIn('private-list-identity-fixture', str(result))
         self.assertNotIn('private-record-text', str(result))
