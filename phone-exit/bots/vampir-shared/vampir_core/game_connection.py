@@ -1,0 +1,171 @@
+"""Single-owner connected socket pump; auth/bootstrap remain external.
+
+Combines the verified B transport, key-change order and selection codecs.
+Does not infer heartbeat timing, Login/Version fields or world readiness.
+"""
+from dataclasses import dataclass
+import math
+
+from .key_change import KeyChangePayload, KEY_CHANGE_NOTIFY_ID
+from .outbound import OutboundFrames
+from .ping import PingPayload
+from .receive_stream import ReceiveLimits, ReceiveStream
+from .selection_flow import CharacterSelectionFlow, SelectionLimits, SelectionState
+from .socket_send import drain_outbound
+
+
+@dataclass(frozen=True, slots=True)
+class PumpBudget:
+    max_packets: int
+    max_transport_frames_per_packet: int
+    max_recv_calls: int
+    recv_chunk_size: int
+    max_send_calls: int
+
+    def __post_init__(self):
+        if any(type(v) is not int or v < 1 for v in (
+                self.max_packets, self.max_transport_frames_per_packet, self.max_recv_calls,
+                self.recv_chunk_size, self.max_send_calls)):
+            raise ValueError('Connection work budgets must be positive integers')
+
+
+@dataclass(frozen=True, slots=True)
+class PumpProgress:
+    packets: int
+    bytes_received: int
+    bytes_sent: int
+    active: bool
+
+
+class GameConnection:
+    """Own an already connected socket from construction through close.
+
+    The socket becomes nonblocking. Call pump regularly, even without a new
+    read notification: decoded bytes can remain after a work budget expires.
+    on_packet(packet) synchronously handles all IDs except 11/102/110. It must
+    not block or retain unlimited bodies. Exceptions close this connection and
+    propagate with a generic error; no raw payload is attached to that error.
+    No reconnect or replay is automatic. A new socket requires a new instance.
+    """
+    def __init__(self, sock, *, key_bits, sequence, receive_limits: ReceiveLimits,
+                 selection_limits: SelectionLimits, max_queued_bytes, max_queued_frames,
+                 on_packet):
+        if not callable(on_packet):
+            raise TypeError('Expected a packet handler')
+        self._outbound = OutboundFrames(key_bits=key_bits, sequence=sequence,
+            max_queued_bytes=max_queued_bytes, max_queued_frames=max_queued_frames)
+        self._receiver = ReceiveStream(receive_limits)
+        self._selection = CharacterSelectionFlow(self._outbound, selection_limits)
+        self._key = key_bits
+        self._on_packet = on_packet
+        self._socket = sock
+        self._active = True
+        self._error = None
+        self._last_time = None
+        self._in_pump = False
+        try:
+            sock.setblocking(False)
+        except Exception:
+            self.close()
+            raise
+
+    def __repr__(self):
+        return f'GameConnection(active={self.active}, key=<redacted>)'
+
+    @property
+    def active(self): return self._active
+
+    @property
+    def error(self): return self._error
+
+    @property
+    def selection(self): return self._selection
+
+    @property
+    def queued_bytes(self): return self._outbound.queued_bytes
+
+    def close(self):
+        if self._active:
+            self._active = False
+            self._receiver.close()
+            self._selection.close()
+            try:
+                self._socket.close()
+            finally:
+                self._key = 0
+                self._on_packet = None
+
+    def _fail(self, reason):
+        self._error = reason
+        self.close()
+
+    def enter_character_list(self, *, now):
+        if not self.active: raise RuntimeError('Connection is inactive')
+        self._selection.enter_list(now=now)
+
+    def select_character(self, index, *, now):
+        if not self.active: raise RuntimeError('Connection is inactive')
+        self._selection.select(index, now=now)
+
+    def queue_ping(self, payload: PingPayload):
+        """Explicit payload from the owner; no guessed heartbeat schedule."""
+        if not self.active: raise RuntimeError('Connection is inactive')
+        self._outbound.queue_ping(payload)
+
+    def pump(self, *, now, budget: PumpBudget):
+        if not self.active: raise RuntimeError('Connection is inactive')
+        if self._in_pump: raise RuntimeError('Connection pump is not reentrant')
+        if not isinstance(budget, PumpBudget): raise TypeError('Expected pump budget')
+        if type(now) not in (int, float) or not math.isfinite(now) or now < 0:
+            raise ValueError('Expected finite nonnegative monotonic time')
+        if self._last_time is not None and now < self._last_time:
+            raise ValueError('Connection clock moved backwards')
+        self._last_time = now
+        packets = received = sent = reads = 0
+        self._in_pump = True
+        try:
+            if self._selection.state in (SelectionState.FAILED, SelectionState.CLOSED):
+                self._fail('selection_inactive')
+                return PumpProgress(0, 0, 0, False)
+            if self._selection.expire(now=now):
+                self._fail('selection_timeout')
+                return PumpProgress(0, 0, 0, False)
+            while packets < budget.max_packets and self.active:
+                packet = self._receiver.next_packet(key_bits=self._key,
+                    max_transport_frames=budget.max_transport_frames_per_packet)
+                if packet is not None:
+                    packets += 1
+                    if packet.packet_id == KEY_CHANGE_NOTIFY_ID:
+                        value = KeyChangePayload.decode(packet.body)
+                        self._outbound.acknowledge_key_change(value)
+                        self._key = value.key_bits
+                    elif packet.packet_id in (102, 110):
+                        self._selection.receive(packet.packet_id, packet.body, now=now)
+                        if self._selection.state == SelectionState.FAILED:
+                            self._fail('selection_response_failed')
+                    else:
+                        self._on_packet(packet)
+                    continue
+                if self._receiver.finished:
+                    self.close()
+                    break
+                if reads == budget.max_recv_calls or not self._receiver.input_capacity:
+                    break
+                try:
+                    chunk = self._socket.recv(min(budget.recv_chunk_size, self._receiver.input_capacity))
+                except (BlockingIOError, InterruptedError):
+                    break
+                reads += 1
+                if chunk:
+                    received += len(chunk)
+                    self._receiver.feed(chunk)
+                else:
+                    self._receiver.end_input()
+            if self.active:
+                sent = drain_outbound(self._socket, self._outbound, max_send_calls=budget.max_send_calls).bytes_sent
+            return PumpProgress(packets, received, sent, self.active)
+        except Exception:
+            self._fail('connection_processing_failed')
+            raise RuntimeError('Game connection processing failed') from None
+        finally:
+            self._in_pump = False
