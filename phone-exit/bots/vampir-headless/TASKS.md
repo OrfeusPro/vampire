@@ -15,6 +15,10 @@
 
 ## Ближайшее действие
 
+Пользователь подтвердил maintenance и загрузку обновления игры 21 октября.
+Сначала дождаться завершённой установки и сверить SHA / ClientVersion / архивы.
+Прежний EXE сохранён; [точка сравнения и порядок аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
+
 Рабочий вопрос — `login-invalid-state` в
 [questions.json](../resource-tools/vampir/knowledge/questions.json).
 Сравнить доказанные поля Login и SDK / launcher context. Новую сетевую попытку
