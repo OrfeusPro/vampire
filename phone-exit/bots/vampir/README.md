@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Вызовы после SignIn связаны с platform log, 20 октября
+
+Getter 0x144524d70 возвращает компонент owner+0x78; следующий wrapper ведёт
+к FPlatformLogImpl::SendSignIn, что подтверждено diagnostic literal.
+Три native-сценария проверили getter / thunk и ранний выход без SDK-сервиса.
+Ветвь с доступным сервисом, источники common data и причина InvalidState
+остаются открытыми. Runtime и сеть не менялись.
+[Источники, проверки и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-LOG.md).
+
 ## Проверена привязка common data к SDK-сервису, 20 октября
 
 Три native-сценария прошли настоящий callsite SDK-сервис+0x310, полную factory,

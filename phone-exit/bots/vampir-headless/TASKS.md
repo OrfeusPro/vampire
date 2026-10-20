@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-sign-in-log: уточнена роль двух вызовов после SignIn
+
+Getter owner+0x78 и wrapper связаны с FPlatformLogImpl::SendSignIn.
+Три native-сценария прошли цепочку и ранний выход при недоступном SDK-сервисе.
+Это не заполнение common data, доказанное одним именем: вложенные вызовы
+ветви с доступным сервисом ещё требуют проверки. Далее — эта ветвь и
+источники common data; причина Login 16 остаётся открытой.
+[Источники и границы](../resource-tools/vampir/HEADLESS-SDK-SIGN-IN-LOG.md).
+
 ## H04-common-data-factory: связь с SDK-сервисом проверена
 
 Настоящий callsite передаёт factory поле SDK-сервис+0x310. Три native-сценария

@@ -11,6 +11,7 @@ native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
 ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Vampir'))
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
+ ('SDK_PostSignInOwnerGet',0x144524d70),('SDK_PostSignInOwnerActionImpl',0x144548cb0),
  ('SDK_UserInfoFactoryCaller',0x144510fd0),
  ('SDK_SettingsSave',0x14453cdf0),('NID_UserInfoOwnerCreate',0x14450f420),
  ('NID_UserInfoOwnerConstruct',0x14450f5d0),('NID_UserInfoOwnerReset',0x14450f8e0),
@@ -360,6 +361,7 @@ SEEDS=[
 REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28,0x145608fb0:71,0x145601570:23,0x1456bb2a0:25,
     0x14450e830:475,  # 74 zero QWORD stores across 37 FString descriptors, RET.
     0x144521e80:12, 0x144524800:10,  # Reviewed SDK UserInfo pointer-chain getters, RET.
+    0x144524d70:8,  # Reviewed leaf: dereference wrapper, add 0x78, RET.
     0x145564550:8, 0x145cb2f60:8,  # RIP singleton pointer loads and RET.
     0x145cb95e0:8,  # Compare object+8 with 3, SETE AL, RET.
     0x144ff8cd0:5,  # Raw byte object+0x39 load, RET.
