@@ -11,6 +11,7 @@ native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
 ROOT=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES','F:/PhoneExit Resources/Vampir'))
 SUPPORTED_SOURCE_SHA256='c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 SEEDS=[
+ ('SDK_LogEventSend',0x144546880),('SDK_LogEventSendAux',0x144547040),
  ('SDK_PostSignInOwnerGet',0x144524d70),('SDK_PostSignInOwnerActionImpl',0x144548cb0),
  ('SDK_UserInfoFactoryCaller',0x144510fd0),
  ('SDK_SettingsSave',0x14453cdf0),('NID_UserInfoOwnerCreate',0x14450f420),
