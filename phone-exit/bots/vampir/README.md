@@ -1,5 +1,14 @@
 # Vampir — главный файл разработки
 
+## Windows input в runtime и повтор SDK-входа, 20 октября
+
+Полный native Windows suffix getter проверен на семи сценариях. Runtime
+читает GetVersionExW и передаёт наблюдённую строку в NID; реальный SDK SignIn
+через HK снова успешен. Найден source descriptor ENnOsType, selector / lookup
+проверены на 12 сценариях. Далее — scoped flag, полная CPU-строка и другие
+Login inputs. Игровой Version / Login ещё не отправлялся.
+[Источники, формат, проверки и границы](../resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
+
 ## Поля игрового входа: CPU и compiled globals, 20 октября
 
 Найден initializer CPU vendor / brand; весь native участок и два getter

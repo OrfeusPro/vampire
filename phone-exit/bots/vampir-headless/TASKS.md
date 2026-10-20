@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — задачи
 
+## H04-windows-context: наблюдённая версия Windows подключена к NID
+
+Native suffix getter: семь сценариев; формат major / minor / build /
+productType / suiteMask / 64bit. Runtime читает GetVersionExW без fallback;
+реальный SDK SignIn через HK с новым osVersion успешен. Найден ENnOsType,
+selector и lookup проверены на 12 сценариях. Остались actual scoped flag,
+полная обработка CPU-строки и другие Login inputs до игрового запроса.
+[Детали](../resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
+
 ## H04-game-inputs: восстановлены CPU inputs и статические globals
 
 Initializer CPU и два getter исполнены на четырёх native fixtures. Уточнены

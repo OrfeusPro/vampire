@@ -1,5 +1,18 @@
 # Самостоятельный Vampir — журнал работы
 
+## 20 октября: Windows suffix в runtime и повтор SDK SignIn через HK
+
+Native Windows getter исполнен на семи сценариях с повторным чтением кеша.
+Сверка структуры уточнила пятое число: suiteMask по +0x118, не servicePackMajor.
+Добавлен reader GetVersionExW; его результат для процесса бота подключён к
+NID osVersion. Реальный SignIn через свежий HK-маршрут принят, player ID /
+SDK token получены без сохранения. Временный клиент остановлен, exit 0.
+Source descriptor platform context установлен как ENnOsType; 12 native
+selector / lookup scenarios проверяют обе ветви scoped flag. Сам flag ещё
+не перенесён как известный в Version. Ghidra: 293 функции / 121 предупреждение.
+Все 15 целевых проверок прошли.
+[Источники и границы](../resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
+
 ## 20 октября: CPU inputs и оставшиеся источники игрового входа
 
 Переиспользован экспорт Ghidra и RIP / unwind indexer. Найден настоящий

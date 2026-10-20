@@ -262,7 +262,11 @@ SEEDS=[
  ('Network_VersionDiagnostics',0x1467aae20),
  ('Version_ContextStoreEnum',0x1445d23b0),
  ('Version_PlatformName',0x143c13690),
- ('Version_Input38Normalize',0x1414344c0)]
+ ('Version_Input38Normalize',0x1414344c0),
+ ('Version_EnumConstruct',0x1417cc270),
+ ('Version_EnumSingleton',0x1417d2a40),
+ ('Version_TrimFirst',0x1414342b0),
+ ('Version_TrimSecond',0x141434530)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight

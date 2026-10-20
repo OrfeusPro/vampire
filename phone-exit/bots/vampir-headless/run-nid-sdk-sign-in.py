@@ -19,6 +19,7 @@ from vampir_core.nid_sdk_credential import build_nid_sdk_credential
 from vampir_core.sdk_sign_in import plan_nid_sdk_sign_in, plan_nid_sdk_sign_up
 from vampir_core.sdk_sign_in_http import execute_sdk_sign_in, execute_sdk_sign_up, SdkSignInHttpError
 from vampir_core.socks_route import SocksRoute
+from vampir_core.windows_version import observe_windows_version
 
 PROFILE_SHA = '1d98be691d899b6c9d6280c86d6f42ceeab8ce01cac9685d5e0b8495793cc7ad'
 
@@ -50,6 +51,8 @@ def load_inputs(email, *, route=None):
     if hashlib.sha256(body).hexdigest() != manifest['body_sha256']: raise ValueError('SDK snapshot body changed')
     config = decode_gmc2_configuration(body, manifest['transport']['headers'])
     profile = dict(source['profile'])
+    version = observe_windows_version()
+    profile['os_version'] = version.suffix() if version is not None else ''
     if route:
         country = json.loads(body)['resultData']['geoIp']['isoCountry']
         if type(country) is not str or len(country) != 2 or any(not 'A' <= c <= 'Z' for c in country):

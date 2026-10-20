@@ -1,5 +1,13 @@
 # Vampir — общие компоненты и результаты
 
+## Windows version input
+
+`windows_version.WindowsVersion` форматирует пять source-bound полей как
+major.minor.build.productType.suiteMask.64bit. `observe_windows_version()`
+вызывает GetVersionExW для собственного Windows-процесса; не читает игру,
+не заменяет отказ другим API. Reader не вызывается на Android.
+[Native evidence, структура и реальные проверки](../resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
+
 ## Ответ начала перемещения ID204
 
 `world_move_start_result.decode_world_move_start_result(body, max_payload_size=...)`

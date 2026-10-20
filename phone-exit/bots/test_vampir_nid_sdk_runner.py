@@ -117,11 +117,18 @@ class NidSdkRunnerTests(unittest.TestCase):
                                        nm_device_key=self.binding.nm_device_key)
             with patch.object(self.runner, 'ROOT', temp_root), \
                     patch.object(self.runner, 'DeviceRegistry') as registry, \
-                    patch.object(self.runner, 'observe_windows_device_identity', return_value=identity):
+                    patch.object(self.runner, 'observe_windows_device_identity', return_value=identity), \
+                    patch.object(self.runner, 'observe_windows_version') as observe_version:
+                from vampir_core.windows_version import WindowsVersion
+                observe_version.return_value = WindowsVersion(10, 0, 26200, 1, 256)
                 registry.return_value.get.return_value = self.binding
                 binding, profile, constants = self.runner.load_inputs('fixture@example.invalid', route=self.runner.SocksRoute(17948))
                 self.assertEqual(profile['country_code'], 'HK')
+                self.assertEqual(profile['os_version'], '10.0.26200.1.256.64bit')
                 self.assertTrue(constants)
+                observe_version.return_value = None
+                _, failed_profile, _ = self.runner.load_inputs('fixture@example.invalid', route=self.runner.SocksRoute(17948))
+                self.assertEqual(failed_profile['os_version'], '')
                 for wrong in (None, self.runner.SocksRoute(17949)):
                     with self.assertRaisesRegex(ValueError, 'snapshot route differs'):
                         self.runner.load_inputs('fixture@example.invalid', route=wrong)

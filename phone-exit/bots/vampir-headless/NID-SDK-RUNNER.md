@@ -1,5 +1,9 @@
 # NID → SDK: первая попытка входа без игры
 
+Windows osVersion теперь заполняется наблюдением GetVersionExW собственного
+процесса бота. Отказ API сохраняет пустое поле. Повторный SDK SignIn через HK
+с заполненным значением успешен. [Источник и границы](../resource-tools/vampir/HEADLESS-VERSION-WINDOWS-CONTEXT.md).
+
 Актуальный результат 20 октября: отдельный аккаунт зарегистрирован через HK;
 его SDK SignUp и SignIn приняты, получены player ID и SDK token.
 Игрового входа пока нет. [Сценарий и источники](NID-REGISTRATION.md).
