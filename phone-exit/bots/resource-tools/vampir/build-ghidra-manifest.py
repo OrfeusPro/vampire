@@ -146,12 +146,17 @@ SEEDS=[
  ('SelectResult_PlayerAcquire',0x145c8ba50),
  ('SelectResult_WindowTitleConsumer',0x145dea660),
  ('SelectionStatus_Set',0x1456140f0),
- ('SelectionStatus_TextSink',0x145636eb0)]
+ ('SelectionStatus_TextSink',0x145636eb0),
+ ('SelectionStatus_BaseInitialize',0x145608fb0),
+ ('SelectionStatus_BaseClear',0x145601570),
+ ('SelectionStatus_GatedRequest',0x145d7b850),
+ ('SelectionStatus_RequestConstruct',0x1456bb2a0)]
 
-# This source-bound callback has no PE unwind entry: two straight blocks and
-# one internal conditional branch, ending at RET after an allocator tail jump.
-# Its reviewed 28-byte range includes both paths; do not manufacture .pdata.
-REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28}
+# Source-bound leaves without PE unwind entries. The 28-byte callbacks include
+# both paths around an allocator tail jump. Status initialize/clear are straight
+# stores ending at RET (71/23 bytes); request constructor is 25 bytes of stores.
+# Do not manufacture .pdata for these leaves.
+REVIEWED_LEAF_RANGES={0x1456fa260:28,0x1456b6000:28,0x145608fb0:71,0x145601570:23,0x1456bb2a0:25}
 
 
 def build():
