@@ -171,7 +171,12 @@ SEEDS=[
  ('SelectionOwner_WorldConstructB',0x1468e2a20),
  ('SelectionOwner_WorldConstructC',0x1468e2a60),
  ('WorldFinish_DeferredPrepare',0x14561b390),
- ('WorldFinish_State4Source',0x145dbe6a0)]
+ ('WorldFinish_State4Source',0x145dbe6a0),
+ ('SelectionOwner_BaseConstruct',0x1454fc6f0),
+ ('OwnerDispatch_CandidateA',0x143c1ce70),
+ ('OwnerDispatch_CandidateB',0x143c1cfd0),
+ ('OwnerDispatch_CandidateC',0x14430da70),
+ ('OwnerDispatch_CandidateD',0x14432beb0)]
 
 # Source-bound leaves without PE unwind entries. The 28-byte callbacks include
 # both paths around an allocator tail jump. Status initialize/clear are straight
