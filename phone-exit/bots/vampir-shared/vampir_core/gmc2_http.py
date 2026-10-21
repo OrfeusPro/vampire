@@ -66,4 +66,3 @@ def fetch(request, *, route=None):
         transport='Python urllib HTTPS, not native SDK transport replay')
     if route: metadata['socks5_loopback_port'] = route.port
     return bytes(body), metadata
-
