@@ -98,6 +98,8 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                     {"CharacterList_ResultRegistrationFactory", "0x14678ec40", "0x1467b62f0"},
                     {"CharacterList_ResultRegister", "0x1467a7250", "0x1467ccd50"},
                     {"CharacterList_ResultHandler", "0x14675dce0", "0x146797990"},
+                    {"CharacterList_ResultGate", "0x1467a8e10", "0x1467cee40"},
+                    {"CharacterList_ResultPredicate", "0x145c85d90", "0x145c9c0d0"},
                     {"CharacterList_ResultIdGetter", "0x1456e1fa0", "0x1456e5ee0"},
                     {"CharacterList_ResultNameGetter", "0x1456e2fc0", "0x1456e70b0"},
                     {"RecordNested38_ConstructCandidate", "0x1457eca60", "0x1457a47d0"},

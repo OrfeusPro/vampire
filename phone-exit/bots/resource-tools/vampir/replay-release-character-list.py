@@ -133,6 +133,7 @@ def make_harness(extra_addresses=(), extra_leaves=(), max_appearance=0):
                     result_code=number(packet + 0x10, 4), raw14=number(packet + 0x14, 4),
                     tail=tuple(number(packet + off, size) for off, size in ((0x28, 8), (0x30, 4), (0x38, 8), (0x40, 8))))
     h.read_list = read
+    h.list_packet = packet
     h.list_nested_bindings = nested_bindings
     h.list_ghidra_sha = evidence_sha
     return h

@@ -14,7 +14,7 @@ def load(name, path):
     return module
 
 
-def main():
+def make_harness(extra_addresses=(), extra_leaves=()):
     lists = load('extension_release_lists', HERE / 'replay-release-character-list.py')
     native = load('extension_release_native', HERE / 'build-native-entry-code.py')
     audit = load('extension_release_audit', HERE / 'audit-client-release.py')
@@ -24,8 +24,8 @@ def main():
     if audit.sha256(evidence) != evidence_sha:
         raise ValueError('Reviewed extension Ghidra evidence changed')
     h = lists.make_harness(extra_addresses=(0x14573cc90, 0x145787660, 0x1456c8140,
-        0x1456bea70, 0x1456bcea0, 0x145785490, 0x14578a680),
-        extra_leaves=(0x145783f30,), max_appearance=8)
+        0x1456bea70, 0x1456bcea0, 0x145785490, 0x14578a680, *extra_addresses),
+        extra_leaves=(0x145783f30, *extra_leaves), max_appearance=8)
     uc, x = h.uc, h.x
     fixture_addresses = (0x1456b7990, 0x14168aa80, 0x1456c8550, 0x1456d3530,
                          0x1456d5df0, 0x141429760, 0x1456d2c90, 0x145786e60)
@@ -97,6 +97,15 @@ def main():
         return tuple(sorted(tuple(int.from_bytes(uc.mem_read(pointer + i * 0x38 + off, width), 'little')
             for off, width in ((0, 1), (0x10, 1), (0x14, 4), (0x18, 4), (0x1c, 4), (0x28, 8))) for i in range(count)))
     h.optional_snapshot = map_snapshot
+    h.map_insertions = insertions
+    h.extension_ghidra_sha = evidence_sha
+    h.decode_character_list = lists.decode_character_list
+    return h
+
+
+def main():
+    h = make_harness()
+    audit, comparison, insertions = h.audit, h.comparison, h.map_insertions
     wire = load('extension_old_wire', HERE / 'replay-character-list-extensions.py')
     cases, bodies = [], []
     for items in ((), ((0, 0, 0),), ((0xffffffff, 255, 65535), (0x12345678, 128, 0x8001)), ((1, 2, 3),) * 8):
@@ -114,7 +123,7 @@ def main():
         + wire.record_bytes(((7, 8, 9),), wire.optional_bytes(((9, 8, 7, 6, 5, 4),))) + struct.pack('<QIQQ', 1, 2, 3, 4))
     for body in bodies:
         actual = h.read_list(body)
-        expected = lists.decode_character_list(body, max_payload_size=4096, max_characters=4, max_extension_items=128)
+        expected = h.decode_character_list(body, max_payload_size=4096, max_characters=4, max_extension_items=128)
         if actual['accepted'] != 1 or actual['consumed'] != len(body) or actual['count'] != len(expected.records):
             raise ValueError('Whole-list extension acceptance differs')
         for result, record in zip(actual['records'], expected.records):
@@ -134,7 +143,7 @@ def main():
                 raise ValueError('Short extension body accepted or overread')
             truncated.append(dict(available=size, consumed=actual['consumed'], accepted=0))
     report = dict(schema=1, source=str(h.source), source_sha256=h.sha, tool_sha256=audit.sha256(Path(__file__)),
-        ghidra_evidence_sha256=evidence_sha, dependencies={p: audit.sha256(HERE / p) for p in
+        ghidra_evidence_sha256=h.extension_ghidra_sha, dependencies={p: audit.sha256(HERE / p) for p in
         ('replay-release-character-list.py', 'replay-release-fstring-input.py', 'replay-release-archive-input.py', 'replay-character-list-extensions.py')},
         fragments=h.fragments, leaves=h.leaves, cases=cases, truncated=truncated, native_execution=True,
         compatibility='not_established', limits=['Whole list/record/appearance/map callbacks and native insert/pair/value readers execute.',
