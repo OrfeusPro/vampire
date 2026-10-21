@@ -19,12 +19,10 @@
 обнаружил новый EXE и основной PAK; свежий индекс PAK и сравнение сохранённых
 файлов готовы. Patch manifest пока прежний. Ghidra дал кандидатов для 239 из
 424 исследованных функций; девять пар входа / персонажей выгружены отдельно.
-Callback списка сопоставлен статически; helper вложенного чтения прошёл
-18 ограниченных native-сценариев. Record constructor → vtable → reader проверены
-ещё 12 native-сценариями. Input archive / scalar IO прошли 63 native-сценария;
-UTF-8 / FString прошли шесть полных строк и 577 коротких префиксов. Следом —
-callback массива, packet bindings и полный list reader нового EXE. Старые адреса
-не переносить без проверки.
+Базовый whole-list reader нового EXE проверен: 12 полных bodies совпали с
+переносимым decoder, 238 коротких префиксов отклонены; память контейнеров — fixture.
+Следом — непустые appearance extensions / optional map и packet bindings,
+затем handler и реальный вход. Старые адреса не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в

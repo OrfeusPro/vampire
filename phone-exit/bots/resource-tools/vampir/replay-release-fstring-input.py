@@ -8,7 +8,7 @@ import struct
 HERE = Path(__file__).resolve().parent
 
 
-def main():
+def make_harness(extra_addresses=(), extra_leaves=()):
     spec = importlib.util.spec_from_file_location('new_archive_harness', HERE / 'replay-release-archive-input.py')
     archive = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(archive)
@@ -20,7 +20,8 @@ def main():
         raise ValueError('Reviewed UTF8 Ghidra evidence changed')
     fixtures = {}
     h = archive.make_harness(extra_addresses=(0x144aae320, 0x144aad6e0, 0x14144c520,
-        0x141446780, 0x14143be10, 0x14143ba80), extra_leaves=(0x141432060,), fixtures=fixtures)
+        0x141446780, 0x14143be10, 0x14143ba80, *extra_addresses),
+        extra_leaves=(0x141432060, *extra_leaves), fixtures=fixtures)
     uc, x = h.uc, h.x
     # Add fixture pages after assigning handlers, before emulation.
     fixture_addresses = (0x141427890, 0x141436da0, 0x1421e7580, 0x141483160, 0x1487eac40)
@@ -84,6 +85,17 @@ def main():
             finish()  # Explicit free / stack-cookie fixtures, preserving RAX.
     for address in fixture_addresses:
         fixtures[address] = storage
+    h.allocate = allocate
+    h.finish = finish
+    h.string_heap = heap
+    h.string_ghidra_sha = ghidra_sha
+    h.string_fixture_addresses = fixture_addresses
+    return h
+
+
+def main():
+    h = make_harness()
+    uc, x, heap = h.uc, h.x, h.string_heap
     cases, short = [], []
     texts = ('', 'ASCII', 'Ж界🙂', 'é' * 16, 'a' * 129, '界' * 130)
     for text in texts:
@@ -118,11 +130,11 @@ def main():
                 short.append(dict(complete_body_bytes=len(body), available=size, consumed=consumed, accepted=accepted))
     report = dict(schema=1, source=str(h.source), source_sha256=h.sha,
                   tool_sha256=h.audit.sha256(Path(__file__)),
-                  ghidra_evidence_sha256=ghidra_sha,
+                  ghidra_evidence_sha256=h.string_ghidra_sha,
                   harness_sha256=h.audit.sha256(HERE / 'replay-release-archive-input.py'),
                   capstone_version=h.env.capstone.__version__, unicorn_version=h.env.unicorn.__version__,
                   fragments=h.fragments, leaves=h.leaves, cases=cases, truncated=short,
-                  fixture_addresses=[hex(a) for a in fixture_addresses], native_execution=True,
+                  fixture_addresses=[hex(a) for a in h.string_fixture_addresses], native_execution=True,
                   compatibility='not_established',
                   limits=['Actual FString/stdstring/UTF-8 decoder and archive byte IO execute.',
                           'FString assignment, stdstring growth, UTF16 allocation, free, cookie and verified memcpy are bounded fixtures.',

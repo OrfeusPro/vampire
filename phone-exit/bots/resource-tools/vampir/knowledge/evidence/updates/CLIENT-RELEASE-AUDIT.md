@@ -353,6 +353,61 @@ Harness [replay-release-archive-input.py](../../../replay-release-archive-input.
 Следом — actual list / record readers и callback массива с прежними bounded
 container fixtures; переносимость runtime пока не подтверждена.
 
+### Целый body списка: базовый профиль новой сборки
+
+В [replay-release-character-list.py](../../../replay-release-character-list.py)
+соединены actual readers packet body / record / вложенных полей, constructors
+record, archive IO / UTF-8 и callbacks главного массива. Последний Ghidra export:
+`details/run-2cc64357ed05/details.json` внутри `run-fd4956a37b3c`, SHA256
+`facdd4d4f5073c63f95ac13f79e5b55dbf0039cf5278658ab377d820e4e57279`.
+Предыдущий `run-100be368d878` сохранён с SHA256
+`51aedcd17350afd5eb13b5f2bb931a7738ef46223e1cec873cc2004aaae25c3f`.
+
+Проверены file-backed nested vtable slots +0x20:
+
+| Vtable новой сборки | Reader |
+| --- | --- |
+| 0x1499212d8 | 0x1457fefb0, raw64 через archive+0x28 |
+| 0x149922470 | 0x145795e90, четыре uint16 |
+| 0x149921fb0 | 0x145788d00, внешний вид |
+| 0x149923ba0 | 0x1456c42d0, optional-блок |
+
+Первый запуск остановился на немаппированной таблице вложенного leaf-объекта.
+После сверки slot → reader её данные добавлены в эмулятор. Метод чтения не
+подменялся. Callback внешности 0x1456bb730 и archive helper 0x144aad7c0
+предварительно выгружены через Ghidra и исполняются в общей цепочке.
+
+12 полных bodies: три пустых списка с разными кодами результата; затем
+1 / 2 / 4 записи с пустыми строками, Unicode и 128 ASCII-символами. Проверены
+нулевые / предельные числа, enum clamps и bool. Заголовок, tail и поля каждой
+записи совпали с существующим переносимым decode_character_list. В native
+результате явно проверены нулевой count extensions внешности и отсутствие
+optional map. Это структурное чтение, не разрешение выбрать персонажа при
+ненулевом result_code.
+
+238 коротких префиксов пустого / одноэлементного Unicode списка получили отказ;
+выход за доступный input не наблюдался. Native reader допускает хвост, потребляя
+только body: поведение проверено отдельно. Переносимый decoder сохраняет
+проверку точного потребления; нормализовать хвост как допустимый пакет нельзя.
+
+Packet storage, allocation массива (до 4 записей), shallow copy, cleanup и
+string storage остаются явными bounded fixtures. Packet constructor и ID здесь
+не доказываются. Непустые appearance extensions и optional map не выполнены.
+Общий лимит input — 4096 байт, исполнения — 2 000 000 инструкций на body;
+неизвестный code target вызывает отказ. Fixture hooks не читают wire-поля.
+
+Отчёт внутри каталога сравнения:
+`character-list-replay/05922d10b2753da6538c66ef3f73a2594f81446dd4d8517de6fcb50095bc6436/manifest.json`.
+Последний каталог — SHA256. Сохранены source / tools / Ghidra / portable decoder
+SHA, native ranges / leaves, bindings, результаты и ограничения.
+Предварительный отчёт `c605340dd7d53c099b7e8bbb5a484baee61c41d1bacf7ac706389b21ee7526ce`
+не содержал явной проверки пустых native extensions; не использовать его как
+более широкое покрытие. Следом — непустые extensions / optional map и packet
+bindings; затем обработчик списка и реальная сессия при готовности сервера.
+После выделения string harness повторно прошли его шесть полных строк и
+577 префиксов. Отчёт regression:
+`fstring-input-replay/3d1f021f36a2f1e5af3a0ddd5e8799d1f6525bb5690d94d45e10e31098f6c29a/manifest.json`.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление
