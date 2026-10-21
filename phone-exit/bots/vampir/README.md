@@ -69,8 +69,10 @@ IDs 30413 → Version → Ping; бот начинает с Version. Следом
 примерно на 9 часов впереди времени capture. Затем источник часов проверен:
 GetSystemTime UTC → календарные ticks → Unix epoch + signed offset в минутах.
 24 native clock-сценария и три теста прошли; в обоих lobby ID 2 эталона offset
-равен 540. До интеграции остаётся текущая registration → clock setter;
-кадр 30413 также не найден. Runtime и live вход не менялись.
+равен 540. Затем текущая registration связана с ID 2 / PktLobbyVersionResult:
+actual reader → handler → clock setter прошли 18 сценариев и 24 длины входа,
+три регрессионных теста. Следом передать свежий clock context в runtime для
+раннего Ping. Кадр 30413 не найден; runtime и live вход пока не менялись.
 [Clock source, native проверки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.

@@ -20,6 +20,8 @@ def main():
     parser.add_argument('--follow-client-id-globals', action='store_true', help='Find consumers of constructor destinations, without inferring their role')
     parser.add_argument('--global-address', action='append', default=[], help='Follow a global explicitly referenced in the supplied Ghidra instructions')
     parser.add_argument('--direct-target', action='append', default=[], help='Inspect an explicit CALL/JMP target from the supplied Ghidra instructions')
+    parser.add_argument('--vtable-target', action='append', default=[], help='Find aligned data slots pointing to a function exported in the supplied Ghidra evidence')
+    parser.add_argument('--vtable-slot', type=lambda s:int(s,0), default=16, help='Candidate table-relative slot; an explicit hypothesis, not an inferred ABI role')
     args = parser.parse_args()
     audit = load('sdk_refs_audit', HERE / 'audit-client-release.py')
     native = load('sdk_refs_native', HERE / 'build-native-entry-code.py')
@@ -53,6 +55,28 @@ def main():
                 raise ValueError('Ghidra instruction bytes differ from current source')
             instructions.append(row)
     known_references = {int(ref, 16) for row in instructions for ref in row.get('references', [])}
+    vtables = []
+    if not 0 <= args.vtable_slot <= 256 or args.vtable_slot % 8:
+        raise ValueError('Vtable candidate slot must be aligned in 0..256')
+    known_functions = {int(f['address'],16) for f in functions}
+    for text in args.vtable_target:
+        target = int(text,16)
+        if target not in known_functions:
+            raise ValueError('Vtable target absent from supplied Ghidra functions')
+        pattern = target.to_bytes(8,'little')
+        for section in image.pe.sections:
+            if section['name'] != '.rdata':continue
+            start,end=section['raw'],section['raw']+section['raw_size']
+            position=raw.find(pattern,start,end)
+            while position>=0:
+                table_offset=position-args.vtable_slot
+                if position%8==0 and table_offset>=start and table_offset+args.vtable_slot+8<=end:
+                    table=image.pe.address(table_offset)
+                    targets[table]=dict(label='VtableCandidate')
+                    vtables.append(dict(table=hex(table),slot=args.vtable_slot,target=hex(target),
+                        file_offset=table_offset,bytes=raw[table_offset:position+8].hex()))
+                    if len(vtables)>64:raise ValueError('Vtable candidate bound exceeded')
+                position=raw.find(pattern,position+1,end)
     for value in args.global_address:
         address = int(value, 16)
         if address not in known_references:
@@ -111,6 +135,7 @@ def main():
         ghidra_evidence=str(args.evidence), ghidra_evidence_sha256=evidence_sha,
         tool_sha256=audit.sha256(Path(__file__)), scanner_sha256=audit.sha256(HERE / 'build-native-entry-code.py'),
         references=references, client_id_initializer_candidates=initializers, fragments=fragments,
+        vtable_candidates=vtables,
         ghidra_direct_target_instructions=direct_rows, roles_transferred=False,
         limits=['LEA RIP candidates validated on whole unwind-root instruction boundaries.',
                 'Ghidra database had no recorded literal references; this does not prove absence of native uses.',

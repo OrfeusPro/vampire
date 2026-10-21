@@ -26,6 +26,7 @@ def main():
     mode.add_argument('--lifecycle', action='store_true', help='Inspect remaining source-bound wrapper lifecycle slots')
     mode.add_argument('--ping', action='store_true', help='Trace PktPing literal, candidate table, constructor uses and callers')
     mode.add_argument('--clock', action='store_true', help='Inspect references to the source-bound Ping clock pointer')
+    mode.add_argument('--lobby-clock', action='store_true', help='Inspect the current registered packet/handler pair leading to the clock setter')
     args = parser.parse_args()
     comparison = ROOT / 'ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c'
     receipt_path = comparison / 'provenance.json'
@@ -57,6 +58,12 @@ def main():
         if digest(datetime) != '8a66f7e97ce2f6061b93b74140201ffde77150069c1f8f4356919dad1bb95e46':
             raise ValueError('Datetime source evidence changed')
         inputs[str(datetime)] = digest(datetime)
+    if args.lobby_clock:
+        for path,sha in [('details/run-9bd31940a8e9/details.json','a8b4ae3cbf59723cbdbadf866622429d02785212ae994cdccabf316bf0fd9ae2'),
+                         ('details/run-d1178d85d75e/details.json','f5c2306a7e7603a99f471a98e744de6f4b8cf4d0a7bcafd7cc5662faedd61b1d')]:
+            evidence=comparison/path
+            if digest(evidence)!=sha:raise ValueError('Lobby packet/registration source evidence changed')
+            inputs[str(evidence)]=sha
     out = comparison / 'bootstrap' / ('run-' + uuid.uuid4().hex[:12])
     out.mkdir(parents=True)
     env = os.environ.copy()
@@ -79,6 +86,8 @@ def main():
         command.append('ping')
     elif args.clock:
         command.append('clock')
+    elif args.lobby_clock:
+        command.append('lobby-clock')
     invocation = dict(source_sha256=SHA, inputs=inputs, tools=lock, command=command)
     (out / 'invocation.json').write_text(json.dumps(invocation, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(output=str(out))), flush=True)

@@ -49,7 +49,7 @@ public class InspectVampirBootstrap extends GhidraScript {
         if ((args.length != 2 && args.length != 3) || !args[0].equalsIgnoreCase(currentProgram.getExecutableSHA256()))
             throw new IllegalArgumentException("Expected matching source SHA and new output directory");
         if (!args[0].equalsIgnoreCase("98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e") ||
-                (args.length == 3 && !List.of("connected", "scalar", "send", "lifecycle", "ping", "clock").contains(args[2])))
+                (args.length == 3 && !List.of("connected", "scalar", "send", "lifecycle", "ping", "clock", "lobby-clock").contains(args[2])))
             throw new IllegalArgumentException("Unsupported source or inspection mode");
         Path out = Path.of(args[1]);
         Files.createDirectory(out);
@@ -60,7 +60,30 @@ public class InspectVampirBootstrap extends GhidraScript {
         report.addProperty("roles_transferred", false);
         JsonArray hits = new JsonArray();
         Map<Address, Function> owners = new TreeMap<>();
-        if (args.length == 3 && args[2].equals("clock")) {
+        if (args.length == 3 && args[2].equals("lobby-clock")) {
+            JsonArray bindings = new JsonArray();
+            // Packet/handler are paired in the current registration root, not
+            // selected by their analytic names or matching numeric offsets.
+            for (String binding : List.of("149942ce0:20", "149942ce0:28", "149942ce0:38", "149dc7ab0:10")) {
+                String[] parts = binding.split(":");
+                Address table = currentProgram.getAddressFactory().getAddress(parts[0]);
+                int slot = Integer.parseInt(parts[1],16);
+                byte[] bytes = new byte[64];currentProgram.getMemory().getBytes(table,bytes);
+                Address target = currentProgram.getAddressFactory().getDefaultAddressSpace().getAddress(currentProgram.getMemory().getLong(table.add(slot)));
+                JsonObject item = new JsonObject();item.addProperty("table","0x"+table);item.addProperty("slot",slot);
+                item.addProperty("bytes",HexFormat.of().formatHex(bytes));item.addProperty("target","0x"+target);bindings.add(item);
+                Function function = currentProgram.getFunctionManager().getFunctionAt(target);
+                if (function==null && disassemble(target)) function=createFunction(target,null);
+                if (function!=null) owners.put(target,function);
+            }
+            report.add("lobby_clock_tables",bindings);
+            for (String text : List.of("1467b5e00","1467ccbc0","14574ab20","1457a47d0","1457fedc0")) {
+                Address address=currentProgram.getAddressFactory().getAddress(text);
+                Function function=currentProgram.getFunctionManager().getFunctionAt(address);
+                if(function==null && disassemble(address)) function=createFunction(address,null);
+                if(function!=null) owners.put(address,function);
+            }
+        } else if (args.length == 3 && args[2].equals("clock")) {
             Address global = currentProgram.getAddressFactory().getAddress("14b567a40");
             report.addProperty("tracked_global", "0x" + global);
             JsonArray references = new JsonArray();
@@ -271,7 +294,7 @@ public class InspectVampirBootstrap extends GhidraScript {
         report.add("wire_fragment_candidates", wireHits);
         }
         // One caller level only: a bound, not a full call graph.
-        if (!(args.length == 3 && List.of("send", "lifecycle", "ping", "clock").contains(args[2])))
+        if (!(args.length == 3 && List.of("send", "lifecycle", "ping", "clock", "lobby-clock").contains(args[2])))
             for (Function owner : new ArrayList<>(owners.values()))
                 for (Function caller : owner.getCallingFunctions(monitor)) owners.put(caller.getEntryPoint(), caller);
         if (owners.size() > 64) throw new IllegalStateException("Owner export bound exceeded");

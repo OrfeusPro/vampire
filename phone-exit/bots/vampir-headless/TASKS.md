@@ -39,8 +39,10 @@ Producer Ping новой версии исполнен в 36 native сценар
 порог >5000, readiness / recovery подтверждены. В эталоне первый Ping показывает
 смещение около 9 часов от capture clock. Clock source затем проверен native:
 UTC GetSystemTime / Unix epoch + signed minute offset, 24 сценария / 3 теста.
-Эталонные lobby ID 2 содержат 540 минут. Перед интеграцией закрыть текущую
-packet registration → clock setter; источник / роль ID 30413 также остаётся.
+Эталонные lobby ID 2 содержат 540 минут. Текущая регистрация ID 2 затем
+подтверждена вместе с whole reader → handler → clock setter: 18 сценариев,
+24 длины входа, три теста. Следом передать свежий lobby clock context в runtime
+и проверить ранний Ping; источник / роль ID 30413 также остаётся.
 [Источник часов и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 Наблюдение само по себе не разрешает подставить magic ID или старый Ping.
 [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#полный-запуск-4c713eb5-и-сверка-идентификаторов).
