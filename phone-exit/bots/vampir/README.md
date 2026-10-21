@@ -37,7 +37,8 @@ ID 203 сверён с native writer; префикс ID 202 проверен в 
 Найден путь через состояние 4 и streaming actor, а в ID 206 — создание / обновление
 NnCharacterPC по серверному вектору. Native callback / позиционный wrapper проверены
 в 8 / 36 сценариях. Целый reader ID 206 проверен на 18 телах с пустыми массивами,
-81 коротком префиксе и 256 headings; непустые массивы ещё не сверены;
+81 коротком префиксе и 256 headings. Непустые массивы дополнительно прошли
+24 тела и 286 коротких префиксов, включая размеры из эталона;
 runtime по-прежнему останавливается после ID 204.
 [Условия ID 205 и границы проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#id-205-текущая-проверка-состояния-и-запрос-22-октября).
 [Завершение загрузки и путь позиции](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-RELEASE-WORLD-FINISH-POSITION.md).

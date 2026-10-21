@@ -1754,6 +1754,94 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Совместимость непустых массивов ID 206, headless политика завершения и live позиция."
+    },
+    {
+      "addresses": [
+        "0x1456b8c90",
+        "0x1457a45a0",
+        "0x145821190",
+        "0x145822fd0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b893029383effc6b71529534c7bffd8232a7128e82eb99a890b1a1e4c03d9e1b",
+          "id": "release-world-position-path",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54\\manifest.json",
+          "sha256": "25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54",
+          "state": "passed"
+        },
+        {
+          "cache_key": "84f38f72dfd9e79096b7cad9d846e1a8a1b5279f9d59c27c2956d377ffe1a527",
+          "id": "release-world-finish-reader-empty",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5cc9118f3aabce87c29d52092a6b68cdc388f9f6837bb394c638f14e3922fe6c\\manifest.json",
+          "sha256": "5cc9118f3aabce87c29d52092a6b68cdc388f9f6837bb394c638f14e3922fe6c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5039a034033c462a51d940143861a821e551eb8b683fb7810d5fb3aa1e87018b",
+          "id": "release-world-finish-collections",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e25e36a48aa7efd8177b5e57944fbd4f2e38d0ee703a0f30e24faf7563ce2813\\manifest.json",
+          "sha256": "e25e36a48aa7efd8177b5e57944fbd4f2e38d0ee703a0f30e24faf7563ce2813",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "u32 callback и optional float32 vector reader, а также два коротких constructor исполнены в целом current ID 206 reader. Четыре непустых массива сверены с portable decoder на 24 телах, 286 коротких префиксов отклонены. Проверены optional flags, signed zero и размеры 205 / 1 из эталона на синтетических данных.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-51479638a879\\details.json",
+          "sha256": "eddff675aa0f11c8f581f901a76f5f00bf83b109f092b303c79aa2a6775c567a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-finish-collections-replay\\c6202db3216ae532b1f8ab13e1c5cea23835b43b6a17ae9b3cd3ae74a6afe92d\\manifest.json",
+          "sha256": "c6202db3216ae532b1f8ab13e1c5cea23835b43b6a17ae9b3cd3ae74a6afe92d"
+        }
+      ],
+      "id": "e44cced04c81911e8e52c8ea269e9763005000e3272ffc6fd2e1f2bef0934820",
+      "limits": [
+        "Fresh bounded storage, temporary cleanup и CRT math imports являются явными fixtures.",
+        "Короткие constructors проверены по bytes до ret/jmp, collect оставил их вне unwind exports.",
+        "Не проверены allocator growth/reuse, handler, streaming completion, живой вход или все варианты appearance extensions внутри ID 206."
+      ],
+      "method": "bounded_native",
+      "next_check": "Локально проверить явный ID 204 → ID 205 → ID 206 в текущем GameConnection, затем один live вход при закрытой игре.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Явная headless политика завершения и текущий runtime decoder binding; полный хвост ID 202 и живая позиция ещё открыты."
     }
   ],
   "schema": 1,

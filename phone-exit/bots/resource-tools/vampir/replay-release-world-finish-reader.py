@@ -19,12 +19,12 @@ def load(name,path):
     return module
 
 
-def make_harness():
+def make_harness(*,extra_addresses=(),extra_leaves=()):
     base=load('finish_release_list',HERE/'replay-release-character-list.py')
     addresses=(0x14584db80,0x1458503f0,0x1458233c0,0x144aae290,0x144aad640,
-        0x1456b6290,0x14150b140,0x14150d410)
+        0x1456b6290,0x14150b140,0x14150d410,*extra_addresses)
     h=base.make_harness(extra_addresses=addresses,
-        extra_leaves=(0x1458212d0,0x1457846f0,0x145759170),max_appearance=4)
+        extra_leaves=(0x1458212d0,0x1457846f0,0x145759170,*extra_leaves),max_appearance=4)
     evidence={
         'details/run-a74c5869b659/details.json':'4615a07bcfe85b5213cd0ecbaeffb4f7245cd48376fe5851c6a900add93f5bda',
         'details/run-7b00263d9ea5/details.json':'a26a06673aa07711ee50369ba26d041ba842100e4d73d8650e764507c9e74a15',
@@ -109,7 +109,7 @@ def make_harness():
             raise ValueError('ID206 memory fault at '+hex(uc.reg_read(x.UC_X86_REG_RIP))) from error
         consumed=int.from_bytes(uc.mem_read(h.obj+0x30,8),'little')-h.buffer
         return accepted,consumed
-    h.read_finish=read;h.finish_packet=packet;h.finish_evidence=evidence
+    h.read_finish=read;h.finish_packet=packet;h.finish_evidence=evidence;h.map_finish_page=map_page
     h.finish_math_path=math_path;h.finish_math=math_report;h.crt_path=crt_path;h.math_imports=math_imports
     return h
 
