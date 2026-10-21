@@ -139,6 +139,23 @@
         "evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md",
         "evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md"
       ]
+    },
+    {
+      "id": "character-selection-position",
+      "status": "open",
+      "question": "Как после принятого списка выбрать персонажа в том же соединении, проверить ID 110 и получить подтверждённую позицию?",
+      "known": "21 октября recovered-release прошёл живой JP Login 0 и CharacterList 0 / одну запись, preferred index 0. Новый ID 109 constructor / writer / list state проверен в 25 native сценариях, body совпал с portable codec. Внешний current ID 110 reader 0x1456f1390 выгружен, полный portable decoder пока привязан к прежнему SHA c7552efd…; на новом ответе ещё не проверен. Явный character-index подключён к тому же GameConnection, с отказом на неверный индекс / malformed / timeout и без retry; 34 локальные проверки прошли. Full decoder по-прежнему source-bound к старому SHA; новый внешний reader показывает ту же форму контейнера, но nested compatibility не доказана. Адреса новой сборки сохраняются в facts текущего SHA; поле addresses исторического реестра оставлено пустым, чтобы не смешивать версии.",
+      "unknown": "Принятие ID 109 сервером, совместимость полного ID 110 body и семантический consumer позиции на новом SHA; дальнейшая мировая инициализация.",
+      "next_action": "Добавить явный индекс выбора после свежего списка в том же GameConnection. Использовать строгий bounded decoder, явно ограничив совместимость; не считать raw vector позицией до consumer evidence. После одной live проверки двигаться по результату.",
+      "decision_rule": "Не повторять готовые list / select request readers. Сначала использовать current exports и фактический ответ; новые native экспорты получать только для конкретной несовместимости или неизвестного consumer позиции.",
+      "do_not_repeat": "Повторять успешный Login без нового действия; расширять metadata без отказа; автоматически выбирать другого персонажа или повторять выбор после неясного результата.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/CLIENT-RELEASE-AUDIT.md",
+        "evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md",
+        "evidence/characters/HEADLESS-CHARACTER-SELECT-DECODER.md",
+        "evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md"
+      ]
     }
   ]
 }

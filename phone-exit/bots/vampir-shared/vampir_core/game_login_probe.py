@@ -10,10 +10,14 @@ from .game_login_error import describe_game_login_error
 from .session_clock import LobbyPingClock
 
 
-def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None):
+def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
+                        character_index=None):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
+    if character_index is not None and (type(character_index) is not int or not 0 <= character_index <= 65535
+                                        or not read_character_list):
+        raise ValueError('Character index requires an explicit list operation and uint16 index')
     if ping_clock is not None and not isinstance(ping_clock, LobbyPingClock):
         raise TypeError('Expected verified lobby Ping clock')
     unknown = []
@@ -29,6 +33,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     flow = None
     list_requested = False
     initial_ping_queued = False
+    select_requested = False
+    list_summary = None
+    selection_error = None
     def result(status):
         detail = describe_game_login_error(flow.login_result_code) if flow and flow.login_result_code is not None else None
         value = dict(status=status, version_result_code=flow.version_result_code if flow else None,
@@ -47,7 +54,18 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 character_list_result_code=owner.selection.result_code,
                 character_count=len(characters.records) if characters is not None else None,
                 preferred_character_index=owner.selection.preferred_index if characters is not None else None,
-                selection_error=owner.selection.error, character_select_sent=False)
+                selection_error=selection_error or owner.selection.error, character_select_sent=select_requested)
+            if list_summary is not None:
+                value.update(list_summary)
+            if character_index is not None:
+                response = owner.selection.response
+                refused = select_requested and owner.selection.error == 'unsupported_result_code'
+                value.update(character_select_result_received=response is not None or refused,
+                    character_select_result_code=(response.result_code if response is not None
+                        else owner.selection.result_code if refused else None),
+                    character_select_body_size=(owner.selection.last_body_size
+                        if owner.selection.last_packet_id == 110 else None),
+                    selection_body_fully_decoded=response is not None or refused)
         return value
     try:
         started = time.monotonic()
@@ -75,11 +93,25 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     list_requested = True
                     deadline = time.monotonic() + timeout
                 elif owner.selection.state == SelectionState.LIST_AVAILABLE:
-                    return result('character_list_result')
+                    if character_index is None: return result('character_list_result')
+                    list_summary = dict(character_list_received=True,character_list_result_code=0,
+                        character_count=len(owner.selection.characters.records),
+                        preferred_character_index=owner.selection.preferred_index)
+                    if character_index >= len(owner.selection.characters.records):
+                        selection_error = 'index_out_of_range'
+                        return result('character_selection_not_sent')
+                    owner.select_character(character_index, now=time.monotonic())
+                    select_requested = True
+                    deadline = time.monotonic() + timeout
+                elif owner.selection.state == SelectionState.SELECT_RESPONSE:
+                    return result('character_select_result')
             if owner.active:
                 request_deadline = owner.selection.deadline if list_requested else flow.deadline
                 remaining = max(0, min(deadline, request_deadline or deadline) - time.monotonic())
                 select.select([sock], [sock] if owner.queued_bytes else [], [], min(0.05, remaining))
+        if owner.active and list_requested:
+            # The outer deadline may elapse before another pump observes it.
+            owner.selection.expire(now=time.monotonic())
         return result('connection_closed' if not owner.active else 'timeout')
     finally:
         owner.close()

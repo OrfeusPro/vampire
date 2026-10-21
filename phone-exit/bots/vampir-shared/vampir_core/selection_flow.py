@@ -63,6 +63,7 @@ class CharacterSelectionFlow:
         self._last_time = None
         self._error = None
         self._result_code = None
+        self._last_packet_id = self._last_body_size = None
 
     def __repr__(self):
         return f'CharacterSelectionFlow(state={self.state.value}, data=<redacted>)'
@@ -81,6 +82,12 @@ class CharacterSelectionFlow:
 
     @property
     def result_code(self): return self._result_code
+
+    @property
+    def last_packet_id(self): return self._last_packet_id
+
+    @property
+    def last_body_size(self): return self._last_body_size
 
     @property
     def preferred_index(self):
@@ -167,6 +174,8 @@ class CharacterSelectionFlow:
             return False
         expected = SelectionState.LIST_PENDING if packet_id == 102 else SelectionState.SELECT_PENDING
         self._expect(expected)
+        self._last_packet_id = packet_id
+        self._last_body_size = len(body) if type(body) is bytes else None
         try:
             if packet_id == 102:
                 result = decode_character_list(body, max_payload_size=self._limits.max_payload_size,

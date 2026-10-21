@@ -318,6 +318,39 @@
       "question": "common-data-population",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Принятие новой metadata сервером, остальные поля common data, full callback и причина InvalidState."
+    },
+    {
+      "addresses": [
+        "0x1456e9550",
+        "0x1456f1390"
+      ],
+      "checks": [
+        {
+          "cache_key": "eadb034c9bf8a343c8ec5f7e5d2bcce78a38911281495d9a55e786964d0193cc",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b141cc403381a07eb629ecfda891aa8cda6310bc87b49bff249a05372d71e448\\manifest.json",
+          "sha256": "b141cc403381a07eb629ecfda891aa8cda6310bc87b49bff249a05372d71e448",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Явный индекс выбора подключён к принятому свежему списку в том же GameConnection. Запрос использует существующий body codec для выбранного record и текущего rawF0, без повторного запроса / fallback. Новый внешний ID 110 reader читает u32 result code и прежний набор вложенных блоков; ответ проверяется полным строгим portable decoder с явными границами совместимости.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-d44249673b72\\details.json",
+          "sha256": "a36a67359571ec08597700915fedb4eed931140d8541b58803932b854aef6151"
+        }
+      ],
+      "id": "cec0b3ed6b40854f701f2ef79a1fdf1716048abae51b90ef9deda9348c774e4f",
+      "limits": [
+        "34 локальные проверки orchestration / flow не являются native port полного ID 110.",
+        "Portable decoder по-прежнему имеет source SHA c7552efd…; все nested варианты новой сборки не подтверждены. Неизвестный формат закрывает соединение; raw vector не объявляется позицией.",
+        "Создание персонажа, повтор выбора и world-session readiness не включены."
+      ],
+      "method": "static",
+      "next_check": "Одна живая JP-проверка explicit character index 0. После ответа подтвердить конкретный body, при несовместимости исследовать изменившийся участок; без слепого повтора выбора.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Серверное принятие ID 109, полная совместимость ID 110 и семантический consumer позиции на новом SHA."
     }
   ],
   "schema": 1,

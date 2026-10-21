@@ -13,6 +13,11 @@
 GMC2 и metadata (312 байт) получила Game Login code 0 и CharacterList code 0:
 одна запись, preferred index 0. Выбор ещё не отправлялся, позиции нет.
 Временный маршрут закрыт. Следом — выбор в том же соединении и вход в мир.
+Явный `--character-index` подключён к тому же соединению после списка;
+34 локальные проверки прошли. Декодер ID 110 сохраняет прежнюю привязку SHA,
+поэтому новые форматы отклоняются строго; позиция из raw vector не заявляется.
+[Выбор и границы проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md).
+
 [Живая проверка и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md#живая-jp-проверка-login-и-список-приняты).
 
 Ниже сохранён путь предыдущих проверок, включая прежние отказы Login 16;
