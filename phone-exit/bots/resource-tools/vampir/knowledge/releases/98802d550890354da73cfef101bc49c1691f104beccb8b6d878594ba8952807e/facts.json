@@ -87,6 +87,49 @@
       "question": "common-data-population",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Запись settings+0x3f0 / +0x3e0 за geoLocation helper и поведение JSON helpers остаются неизвестными; причина Login 16 не выделена."
+    },
+    {
+      "addresses": [
+        "0x144552430"
+      ],
+      "checks": [
+        {
+          "cache_key": "9f59a916925e61a487a3537512d3653160a88896f2f105d928be062064ad98c8",
+          "id": "release-common-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066\\manifest.json",
+          "sha256": "0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a3bd73d19cc3e33408dcc2ad6e25902ef9608a47a5597bad4ed867be81e9ea49",
+          "id": "release-country-setter",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08\\manifest.json",
+          "sha256": "8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "UNMServiceSettings::SetCountryCode записывает входную FString в settings+0x3f0. Значение A1 игнорируется только при непустой прежней строке (count > 1); в остальных случаях, включая пустую или совпадающую обычную строку, выполняется присваивание. Целый метод с notify=0, как в GMC2 caller, проверен в 14 синтетических native-сценариях; соседние поля, включая город, не меняются.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-784447667bfa\\details.json",
+          "sha256": "5acdfa85c303bda2002ab56a5e84fb3938c862afa8a46a7dfba217576983804b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\country-setter-replay\\36e09ee434fe70d0b306f543eb7c6262db4c7a205de53cca8dcb568899f0a0f2\\manifest.json",
+          "sha256": "36e09ee434fe70d0b306f543eb7c6262db4c7a205de53cca8dcb568899f0a0f2"
+        }
+      ],
+      "id": "2a6a352913ed36600373a4afac3a6b32e1bd76c4f9a159414e244e9d55a11b7e",
+      "limits": [
+        "Сравнение FString, присваивание и освобождение входной строки заменены явными fixtures; native backend выделения и освобождения памяти не проверен.",
+        "Диагностическое логирование отключено; ветвь notify=1 не исполнялась.",
+        "Generic JSON helpers, HTTP, полный GMC2 callback, whole writer/collector и реальная сессия не проверены этим replay."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить контракты текущих JSON helpers и затем передавать свежие clientIp/geoLocation в runtime с проверкой источника, маршрута и времени получения и с установленным правилом A1; старые значения захвата не использовать.",
+      "question": "common-data-population",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Остаются контракты извлечения строк JSON, подключение свежего GMC2 context к runtime, остальные поля metadata и причина Game Login 16."
     }
   ],
   "schema": 1,

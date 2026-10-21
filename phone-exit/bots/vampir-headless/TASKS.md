@@ -124,8 +124,10 @@ Helper отказа `0x145f8a550` связан с отдельным mapper `0x1
 UpdateGmc2 / UpdateSDKSetting проверены в 31 native сценарии с fixtures service
 и FString. Следом — producer settings+0x3f0 / +0x3e0 из GMC2 и условные
 channel / NID ветви UpdatePlayer. Runtime ещё не дополнен этими полями.
-Теперь статически найден путь clientIp → settings+0x38. Страна / город требуют
-проверки geoLocation helper 0x144552430; не повторять constructor как parser.
+Теперь найден путь clientIp → settings+0x38 и geoLocation → SetCountryCode →
+settings+0x3f0. Setter с notify=0 проверен в 14 native случаях: A1 сохраняет
+непустое прежнее поле, но записывается при пустом. Следом — contracts JSON helpers
+и свежий GMC2 context для runtime; город без нужного consumer отдельно не разбирать.
 [Новый разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md).
 [Адреса, проверки и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md#обновление-сессионных-полей-из-sdk-и-gmc2).
 

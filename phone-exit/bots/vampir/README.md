@@ -104,9 +104,11 @@ Service и FString backend — fixtures. Запись страны в settings �
 [Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 Затем статически прослежен GMC2 callback → response consumer → geo helper:
 key clientIp передаётся string helper, результат переносится в settings+0x38,
-откуда UpdateGmc2 получает I_ConnectIP / I_NMMobileIP. Страна / город остаются
-за отдельным geoLocation helper 0x144552430; он ещё не выгружен. Generic JSON
-helpers и полный callback native не исполнены, runtime пока не расширен.
+откуда UpdateGmc2 получает I_ConnectIP / I_NMMobileIP. GeoLocation helper
+0x144552430 оказался SetCountryCode: пишет settings+0x3f0 → I_CountryCD,
+а A1 сохраняет прежнюю страну только при непустом старом поле. Целый setter
+с notify=0 прошёл 14 native случаев и три теста; FString backend — fixtures.
+Generic JSON helpers и полный callback native не исполнены, runtime пока не расширен.
 [Цепочка, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
