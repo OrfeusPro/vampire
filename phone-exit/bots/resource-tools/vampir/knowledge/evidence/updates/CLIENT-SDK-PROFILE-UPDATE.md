@@ -75,11 +75,79 @@ native ranges, поля и ограничения. Воспроизведени�
 python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-sdk-defaults.py
 ```
 
+## PC binding и новое игровое переопределение
+
+Выборочный export NID_WebOS 0x1444eddc0:
+`details/run-ae24ed5ec4b5/details.json`, SHA256
+`967e581e07549de43d4aaa65786d284854375da1346843e4fc97de2ce159844e`.
+Он сохраняет default platform byte 3 и передаёт фактический byte в getter
+0x144533280. TLS / console override может заменить этот byte; весь caller
+не исполнялся. Getter выгружен отдельно:
+`details/run-83004e31f0dc/details.json`, SHA256
+`bac36d80d0ddb3aa28cad7f51a4396a9b7079f932a1c18add3c08f859dcacbaf`.
+Ветка byte 3 копирует FString из global 0x14b565888.
+
+Среди кандидатов PC найден ровно один initializer, пишущий в этот global:
+0x1411b5d00. Его Ghidra export:
+`details/run-fff9e932d858/details.json`, SHA256
+`917b8da0a7a108cb8a7beb2442c0f54ea86d0d3ef02e386ee642723c581826cf`.
+[replay-release-sdk-platform.py](../../../replay-release-sdk-platform.py)
+исполняет initializer → global FString → getter на четырёх заполнениях памяти.
+12 сценариев: byte 3 возвращает PC, неподдерживаемые 2 / 255 дают пустую строку;
+проверены return и guards 16-byte destination. Другие platform labels этим не
+проверялись. FString construction / allocation, CRT copy и exit registration —
+ограниченные fixtures / captures. Runtime TLS / console состояние не установлено.
+Отчёт `sdk-platform-replay/034ee9fb7b3f4e4a36792105b6cd8a5e72ff53830edbf57fee9b67e0265286d0/manifest.json`.
+
+### Поиск потребителя client ID и обнаруженное отличие
+
+Поиск прежней diagnostic строки InitSetting в новом EXE не дал результата.
+Следующий Ghidra literal report:
+`details/run-dcdf0ea2331f/details.json`, SHA256
+`74683f635b13c94ec2fa662a2c2aed5d0186121ef8659f749a7be970ad98b9c9`.
+Отсутствие этой строки не использовалось как доказательство удаления поведения.
+
+`find-release-sdk-references.py --follow-client-id-globals` автоматически
+выделяет короткие initializer candidates, затем ищет обращения к их destination
+globals тем же проверяемым scanner. Получены 35 initializer candidates и один
+дополнительный root-потребитель вне них: 0x145658ca0, с global 0x14b5e8f88.
+Отчёт `sdk-reference-candidates/581565af98c277c9adfe354e6a5b9c03088efd73aa297d60956b4648c1e97213/manifest.json`.
+Всего в нём 191 проверенная RIP-ссылка / 154 roots; роль определяется отдельно.
+Промежуточный проход `d886d700…` не нашёл initializers из-за неверного ожидаемого
+числа инструкций; условие исправлено по целым source-bound roots, старый отчёт
+не переписан и не использован для установления связей.
+
+Новый root и initializer client ID 0x14125b800 выгружены в Ghidra:
+`details/run-8ffb7dbcdcff/details.json`, SHA256
+`4d32fe8932f3121d9155540b737b09137434cc3a67ed023e267bf6beb51539c9`.
+По инструкциям / псевдокоду видны записи в тот же settings layout:
+
+- Market +0x28 сначала копируется из global 0x14b5e8fc8. Его initializer
+  candidate 0x14125b860 связан с literal nmp, но исполнение этой цепочки пока
+  не выполнено. Затем появилась дополнительная условная ветвь: при наличии
+  SDK object +0x38 и результате 1 от 0x14560c680 market копируется из другого
+  global 0x14b5e8fb8. Источник и смысл альтернативного значения ещё неизвестны.
+- GameCode +0x38 копируется из 0x14b5e8f78; initializer candidate 0x14125b830
+  связан с thered. Client ID +0x98 копируется из 0x14b5e8f88, для которого
+  Ghidra initializer подтверждает прежний публичный literal client ID.
+- Environment берётся через 0x141439550, сравнивается helper 0x14145f310;
+  результат сравнения записывает settings +0x49 как 2 при равенстве, иначе 1.
+  Полный новый comparator и эта ветвь ещё не исполнены. Также видна новая
+  запись 0 в settings +0xc8; семантика поля здесь не установлена.
+
+Это статически проверенное **отличие от прежнего игрового override**, а не
+готовый новый профиль. Игнорировать дополнительный выбор market нельзя;
+простая замена старого SHA в SDK / NID loader не выполнялась.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-sdk-platform.py
+```
+
 ## Следующая проверка
 
-Нужно связать новые game-specific initializers client ID / market / GameCode
-с фактическим InitSetting и production zone write, затем определить нужный
-PC initializer по потребителю, а не выбрать один из повторных литералов.
+PC initializer уже связан с потребителем и проверен native-сценариями.
+Далее разобрать условный market selector / альтернативный global и выполнить
+новый игровой override вместе с initializers / comparator / zone write.
 После этого проверить новый GMC2 request path и сформировать отдельный
 source-bound профиль. Установленные SDK / NID guards пока прежние; свежий SDK
 config, авторизация и Game Login на новом samsung SM-A205F ещё не выполнялись.

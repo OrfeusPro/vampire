@@ -21,7 +21,8 @@ public class InspectVampirSdkProfile extends GhidraScript {
             {"Market", "nmp", "utf16"}, {"GameCode", "thered", "utf16"},
             {"ClientId", "18e6xn1vuR1lGrvR", "utf16"}, {"Platform", "PC", "utf16"},
             {"GmcBase", "https://apis.netmarble.com/gc2", "ascii"},
-            {"SdkVersion", "5.2.11", "utf16"}
+            {"SdkVersion", "5.2.11", "utf16"},
+            {"GameInitSetting", "FNnNetmarbleSDKService::_InitSetting()", "utf16"}
         };
         JsonArray literals = new JsonArray(), functions = new JsonArray();
         Map<Address, Function> owners = new TreeMap<>();

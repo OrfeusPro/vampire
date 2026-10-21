@@ -17,6 +17,7 @@ def load(name, path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('evidence', type=Path)
+    parser.add_argument('--follow-client-id-globals', action='store_true', help='Find consumers of constructor destinations, without inferring their role')
     args = parser.parse_args()
     audit = load('sdk_refs_audit', HERE / 'audit-client-release.py')
     native = load('sdk_refs_native', HERE / 'build-native-entry-code.py')
@@ -50,10 +51,37 @@ def main():
         root = image.roots[image.containing(address)]
         references.append(dict(label=targets[target]['label'], literal=hex(target), instruction=hex(address),
             function=hex(image.pe.base + root[0]), bytes=row['bytes'], operands=row['operands']))
+    initializers = []
+    if args.follow_client_id_globals:
+        for reference in list(references):
+            if reference['label'] != 'ClientId':
+                continue
+            start = int(reference['function'], 16)
+            body = [r for f in fragments if f['root_begin_rva'] + image.pe.base == start for r in f['instructions']]
+            if len(body) != 7 or body[1]['address'] != int(reference['instruction'], 16):
+                continue
+            destination = body[2]
+            if destination['mnemonic'] != 'lea' or not destination['operands'].startswith('rcx,') or len(destination['rip_references']) != 1:
+                continue
+            initializers.append(dict(function=hex(start), global_address=hex(destination['rip_references'][0]),
+                                     source_literal=reference['literal']))
+        globals_set = {int(r['global_address'], 16) for r in initializers}
+        uses = native.rip_candidates(image, globals_set)
+        use_roots = {image.roots[image.containing(a)] for a, target in uses if image.containing(a)}
+        extra = native.decode_ranges(image, use_roots - roots)
+        fragments.extend(extra)
+        rows.update({r['address']: r for f in extra for r in f['instructions']})
+        for address, target in uses:
+            row = rows.get(address)
+            if row is None or row['mnemonic'] != 'lea' or row['rip_references'] != [target]:
+                continue
+            root = image.roots[image.containing(address)]
+            references.append(dict(label='ClientIdGlobalUse', global_address=hex(target), instruction=hex(address),
+                function=hex(image.pe.base + root[0]), bytes=row['bytes'], operands=row['operands']))
     report = dict(schema=1, source=str(source), source_sha256=sha,
         ghidra_evidence=str(args.evidence), ghidra_evidence_sha256=evidence_sha,
         tool_sha256=audit.sha256(Path(__file__)), scanner_sha256=audit.sha256(HERE / 'build-native-entry-code.py'),
-        references=references, fragments=fragments, roles_transferred=False,
+        references=references, client_id_initializer_candidates=initializers, fragments=fragments, roles_transferred=False,
         limits=['LEA RIP candidates validated on whole unwind-root instruction boundaries.',
                 'Ghidra database had no recorded literal references; this does not prove absence of native uses.',
                 'No inferred function roles or runtime compatibility; next step is selected Ghidra inspection.'])
