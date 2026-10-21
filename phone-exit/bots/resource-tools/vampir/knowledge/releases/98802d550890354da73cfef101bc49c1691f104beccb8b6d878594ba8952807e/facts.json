@@ -351,6 +351,39 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Серверное принятие ID 109, полная совместимость ID 110 и семантический consumer позиции на новом SHA."
+    },
+    {
+      "addresses": [
+        "0x1456e9550",
+        "0x1456f1390"
+      ],
+      "checks": [
+        {
+          "cache_key": "32cf61d7252c6d5d33710d6af67ca0a82c2f0b635ecf82544b5ee45b7eca4bab",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd\\manifest.json",
+          "sha256": "f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "В orchestration выбора отделён sample первых 32 сопутствующих ID от лимита обработки. Обработка bounded: total4096, distinct128, общий срок и byte budgets. 19 socketpair-тестов подтвердили достижение ID 110 после 83 уведомлений и остановку на 4097-м, без повтора выбора. Новая native семантика функций этим не заявляется.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-d44249673b72\\details.json",
+          "sha256": "a36a67359571ec08597700915fedb4eed931140d8541b58803932b854aef6151"
+        }
+      ],
+      "id": "6c1a1065ee76b1918afde978da0de88685834b9e39e626257d58bd92c0c069e8",
+      "limits": [
+        "Это исправление локального observer; серверное принятие ID 109 и полный native ID 110 на новом SHA не доказаны.",
+        "Сохранение только ID / counts, без содержимого уведомлений.",
+        "Прежняя живая попытка прервана локальным лимитом до ID 110; неполные byte counts не доказывают отсутствие ответа на сервере."
+      ],
+      "method": "static",
+      "next_check": "Один живой повтор по явной просьбе пользователя с исправленным observer и explicit index0.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Результат выбора после устранения лимита; совместимость ID 110 и семантика позиции."
     }
   ],
   "schema": 1,

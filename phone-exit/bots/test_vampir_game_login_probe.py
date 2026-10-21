@@ -12,7 +12,7 @@ from vampir_core.session_clock import LobbyPingClock
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=()):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -36,6 +36,8 @@ class GameLoginProbeTests(unittest.TestCase):
                             header,body = receive_frame(server)
                             captures.append(header)
                             selection_bodies.append(body)
+                            if other_packets:
+                                server.sendall(b''.join(incoming(pid,b'') for pid in other_packets))
                             if select_body is not None: server.sendall(incoming(110,select_body))
                 while server.recv(32): pass
             except BaseException as error: errors.append(type(error).__name__)
@@ -212,6 +214,30 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertEqual(captures,[(1,0),(3,1),(101,2),(109,3)])
         self.assertFalse(result['character_select_result_received'])
         self.assertEqual(result['selection_error'],'request_timeout')
+
+
+    def test_selection_reply_after_large_notification_burst_is_not_lost(self):
+        result,captures=self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True,character_body=list_body(),character_index=0,
+            wait_for_select=True,other_packets=(602,602,1781)+tuple([120]*80),
+            select_body=bytes.fromhex(SELECTION_FIXTURE['select_result_hex']))
+        self.assertEqual(captures,[(1,0),(3,1),(101,2),(109,3)])
+        self.assertEqual(result['status'],'character_select_result')
+        self.assertEqual(result['character_select_result_code'],0)
+        self.assertEqual(result['other_packet_count'],83)
+        self.assertEqual(result['other_packet_counts'],{'120':80,'602':2,'1781':1})
+        self.assertEqual(len(result['other_packet_ids']),32)
+        self.assertTrue(result['other_packet_sample_truncated'])
+
+    def test_unbounded_notifications_stop_at_an_explicit_processing_budget(self):
+        result,captures=self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True,character_body=list_body(),character_index=0,
+            wait_for_select=True,other_packets=tuple([120]*4097))
+        self.assertEqual(captures,[(1,0),(3,1),(101,2),(109,3)])
+        self.assertEqual(result['status'],'other_packet_budget_exceeded')
+        self.assertEqual(result['other_packet_count'],4097)
+        self.assertEqual(result['other_packet_counts'],{'120':4096})
+        self.assertFalse(result['character_select_result_received'])
 
 
 if __name__ == '__main__': unittest.main()

@@ -20,10 +20,18 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         raise ValueError('Character index requires an explicit list operation and uint16 index')
     if ping_clock is not None and not isinstance(ping_clock, LobbyPingClock):
         raise TypeError('Expected verified lobby Ping clock')
-    unknown = []
+    unknown = []  # Bounded first-packet sample, not a processing limit.
+    packet_counts = {}
+    other_packet_count = 0
+    packet_budget_exceeded = False
     def observe(packet):
-        unknown.append(packet.packet_id)
-        if len(unknown) > 32: raise RuntimeError('Unknown packet budget exceeded')
+        nonlocal other_packet_count, packet_budget_exceeded
+        other_packet_count += 1
+        if len(unknown) < 32: unknown.append(packet.packet_id)
+        if other_packet_count > 4096 or (packet.packet_id not in packet_counts and len(packet_counts) >= 128):
+            packet_budget_exceeded = True
+            raise RuntimeError('Other packet budget exceeded')
+        packet_counts[packet.packet_id] = packet_counts.get(packet.packet_id, 0) + 1
     owner = GameConnection(sock, key_bits=0, sequence=0,
         receive_limits=ReceiveLimits(1048576, 1048576, 1048576, 2097152, 2097152),
         selection_limits=SelectionLimits(1048576, 64, 4096, timeout),
@@ -45,6 +53,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             login_error_message=detail[1] if detail else None,
             last_body_size=flow.last_body_size if flow else None,
             bytes_sent=sent, bytes_received=received, other_packet_ids=unknown.copy(),
+            other_packet_count=other_packet_count,
+            other_packet_counts={str(key):value for key,value in sorted(packet_counts.items())},
+            other_packet_sample_truncated=other_packet_count > len(unknown),
             byte_counts_complete=counts_complete,
             error=owner.error, login_error=flow.error if flow else None,
             character_list_sent=list_requested, initial_ping_queued=initial_ping_queued, game_session_ready=False)
@@ -81,7 +92,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 progress = owner.pump(now=time.monotonic(), budget=budget)
             except RuntimeError:
                 counts_complete = False
-                return result('connection_processing_failed')
+                return result('other_packet_budget_exceeded' if packet_budget_exceeded else 'connection_processing_failed')
             sent += progress.bytes_sent
             received += progress.bytes_received
             if received > 4194304: return result('receive_budget_exceeded')
