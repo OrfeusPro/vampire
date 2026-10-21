@@ -169,6 +169,54 @@ helper 0x144aa68b0 ведут на 0x144aae4e0; этот же helper испол�
 затем, после технических работ, реальный вход. Серверное состояние, поддержка
 новой сборки runtime и полный охват таблиц / карты / интерфейса не подтверждены.
 
+### Callback списка и helper вложенного чтения
+
+Ghidra export с `inspect-release-function-candidates.py --dependencies`:
+`details/run-5ca35f2db51a/details.json` внутри `run-fd4956a37b3c`, SHA256
+`f76d87c0c5a4f2704246e0b50c2dcf196af888bb10955d4730304840a70e0fd9`.
+Псевдокод clear / resize и callback-методов выгружен с обеих сторон.
+У части старых функций нет сохранённых инструкций в Listing; пустой массив
+instructions не означает пустое тело. Thunk не имел Function в обеих базах.
+
+Метка `StringRead_ThunkCandidate` в этом неизменяемом отчёте неточна:
+0x144aa68b0 / 0x144aae4e0 — dispatch чтения вложенного объекта, не decoder строки.
+Для следующих запусков метка исправлена на `NestedRead_ThunkCandidate`.
+
+Первые три слова по 0x1498d90a0 / 0x14992adf0:
+
+| Смещение | Старый указатель | Новый указатель | Наблюдение Ghidra |
+| --- | --- | --- | --- |
+| +0x00 | 0x141b04f00 | 0x141b0ac30 | Освобождение wrapper |
+| +0x08 | 0x1456e3ea0 | 0x1456e7cf0 | Очистка, count = 0, resize при иной capacity |
+| +0x10 | 0x1456da1a0 | 0x1456de090 | Временная запись, dispatch чтения, добавление при успехе |
+
+Clear проходит элементы с шагом 0x170: 0x1456d32e0 → 0x14577ef70 в старом EXE,
+0x1456d6f70 → 0x145786670 в новом. Resize: 0x1420e2ac0 / 0x1420e88c0.
+Новый callback чтения вызывает constructor 0x145784b10, helper 0x144aae4e0 и
+copy 0x1456d85c0. При успехе увеличивается count и запись копируется по
+`base + index * 0x170`; cleanup временного объекта есть и при отказе.
+Это статический разбор, не исполнение новых контейнерных helpers.
+Соседнее слово +0x18 различается: 0x141b04f00 / 0x1456ee7d0. Граница таблицы
+не установлена; объявлять его подтверждённым четвёртым методом нельзя.
+
+[replay-release-nested-read-thunk.py](../../../replay-release-nested-read-thunk.py)
+сверил SHA обоих сохранённых EXE и Ghidra evidence. После отсутствия Function
+использованы имеющийся PE-reader, Capstone и Unicorn. В обоих EXE совпали байты
+helper `488b024c8bc2488bd1498bc848ff6020`: vptr берётся из входного RDX,
+RCX становится object, RDX — archive, затем tail jump в virtual +0x20.
+На каждой сборке исполнены девять сценариев: три размещения и три результата
+fixture virtual reader (0, 1, 0xdeadbeef). Все 18 проверили порядок аргументов,
+выход по return и сохранность результата.
+
+Отчёт внутри `run-fd4956a37b3c`:
+`nested-read-thunk-replay/2b1fe069924f8820f5cf13ac19eac598f05c9769465abcb24c60d1b6a94b41e0/manifest.json`.
+Последний каталог — SHA256. Сохранены source/tool SHA, версии библиотек,
+инструкции, байты, file offsets и первые три слова callback-таблиц. Слова
+проверены чтением файла, callback в этом replay не исполняется.
+Строковый decoder, весь список, packet ID / vtable и live-вход не проверены.
+Следом — record vtable → reader, actual archive readers и полные bounded list
+scenarios для нового SHA. Runtime пока не объявлен совместимым.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление

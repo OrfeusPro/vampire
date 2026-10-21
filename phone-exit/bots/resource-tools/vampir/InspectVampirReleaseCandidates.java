@@ -10,9 +10,12 @@ import java.util.*;
 public class InspectVampirReleaseCandidates extends GhidraScript {
     private JsonObject export(Program program, String address, Path out, String label) throws Exception {
         Function function = program.getFunctionManager().getFunctionAt(program.getAddressFactory().getAddress(address));
-        if (function == null) throw new IllegalStateException("Missing function " + address);
         JsonObject result = new JsonObject();
         result.addProperty("address", address);
+        if (function == null) {
+            result.addProperty("function_missing", true);
+            return result;
+        }
         result.addProperty("body_bytes", function.getBody().getNumAddresses());
         JsonArray instructions = new JsonArray();
         InstructionIterator iterator = program.getListing().getInstructions(function.getBody(), true);
@@ -45,7 +48,7 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
 
     @Override public void run() throws Exception {
         String[] args = getScriptArgs();
-        if (args.length != 2) throw new IllegalArgumentException("candidates.json output");
+        if (args.length != 2 && args.length != 3) throw new IllegalArgumentException("candidates.json output [dependencies]");
         JsonObject candidates = JsonParser.parseString(Files.readString(Path.of(args[0]))).getAsJsonObject();
         if (!candidates.get("new_source_sha256").getAsString().equalsIgnoreCase(currentProgram.getExecutableSHA256()))
             throw new IllegalStateException("New digest mismatch");
@@ -68,6 +71,42 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                     pairs.put(name, row);
                 }
             }
+            JsonArray tables = new JsonArray();
+            if (args.length == 3) {
+                if (!args[2].equals("dependencies")) throw new IllegalArgumentException("Unknown mode");
+                pairs.clear();
+                String[][] dependencies = {
+                    {"NestedRead_ThunkCandidate", "0x144aa68b0", "0x144aae4e0"},
+                    {"CharacterList_ClearCandidate", "0x1456d32e0", "0x1456d6f70"},
+                    {"CharacterList_ResizeCandidate", "0x1420e2ac0", "0x1420e88c0"}
+                };
+                for (String[] dependency : dependencies) {
+                    JsonObject row = new JsonObject(); row.addProperty("old_address", dependency[1]);
+                    row.addProperty("new_address", dependency[2]); pairs.put(dependency[0], row);
+                }
+                String[] addresses = {"0x1498d90a0", "0x14992adf0"};
+                Program[] programs = {source, currentProgram};
+                for (int side = 0; side < 2; side++) {
+                    JsonObject table = new JsonObject(); table.addProperty("side", side == 0 ? "old" : "new");
+                    table.addProperty("address", addresses[side]);
+                    JsonArray words = new JsonArray();
+                    var address = programs[side].getAddressFactory().getAddress(addresses[side]);
+                    for (int i = 0; i < 4; i++) {
+                        long value = programs[side].getMemory().getLong(address.add(i * 8));
+                        words.add("0x" + Long.toHexString(value));
+                        // Table extent is unknown. Export targets as observations, not confirmed slots.
+                        if (side == 1) {
+                            String name = "ListCallbackObservedWord" + i;
+                            JsonObject pair = new JsonObject();
+                            long oldValue = source.getMemory().getLong(source.getAddressFactory().getAddress(addresses[0]).add(i * 8));
+                            pair.addProperty("old_address", "0x" + Long.toHexString(oldValue));
+                            pair.addProperty("new_address", "0x" + Long.toHexString(value));
+                            pairs.put(name, pair);
+                        }
+                    }
+                    table.add("observed_words", words); tables.add(table);
+                }
+            }
             Path out = Path.of(args[1]); Files.createDirectories(out);
             JsonArray rows = new JsonArray();
             for (var item : pairs.entrySet()) {
@@ -81,6 +120,7 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
             report.addProperty("old_source_sha256", source.getExecutableSHA256());
             report.addProperty("new_source_sha256", currentProgram.getExecutableSHA256());
             report.addProperty("roles_transferred", false);
+            report.add("observed_tables", tables);
             report.add("pairs", rows);
             Files.writeString(out.resolve("details.json"), new GsonBuilder().setPrettyPrinting().create().toJson(report) + "\n");
         } finally { source.release(this); }

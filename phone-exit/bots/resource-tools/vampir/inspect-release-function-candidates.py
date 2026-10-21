@@ -16,6 +16,7 @@ def digest(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('comparison', type=Path)
+    parser.add_argument('--dependencies', action='store_true', help='Inspect unresolved list-reader dependencies and observed callback words')
     args = parser.parse_args()
     here = Path(__file__).resolve().parent
     root = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir'))
@@ -44,6 +45,8 @@ def main():
                receipt['command'][1], 'NewRelease', '-process', Path(receipt['new_source']).name,
                '-noanalysis', '-max-cpu', '2', '-scriptPath', str(here), '-postScript', script.name,
                str(candidates), str(out)]
+    if args.dependencies:
+        command.append('dependencies')
     invocation = dict(inputs=inputs, tools=lock, command=command)
     (out / 'invocation.json').write_text(json.dumps(invocation, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(output=str(out))), flush=True)
