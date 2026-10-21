@@ -891,6 +891,58 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
+    },
+    {
+      "addresses": [
+        "0x144aae290"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Уточнение факта 1250a6063152b0c16de7719664450f4c5c5aa0945aa013ad7a0260e03e1e17b8 в части поля packet+0x210: обозначение FString210 ошибочно. Общий helper 0x144aae290 читает три float32 через archive slot 0x40 и расширяет их до трёх double. Вывод прежнего факта о writer ID 203 этим не изменяется.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-273103367ebd\\details.json",
+          "sha256": "24b73bd8d6edf1ff427614d88d78a61852fd6b56fdc4404665048aebc27769b6"
+        }
+      ],
+      "id": "d42893ee8451b19d940b314ca745ac0d4c2173dc50cf984d0aafcd5e80366f0e",
+      "limits": [
+        "Только текущий SHA; сохранённые exports и synthetic fixtures, без авторизации и сети.",
+        "Префикс ID 202 не подтверждает полный хвост; packet constructor / registration / handler ID 204 не исполнены."
+      ],
+      "method": "static",
+      "next_check": "Сверить преобразование в целой native проверке ID 204, затем проверить consumer вектора.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
     }
   ],
   "schema": 1,
