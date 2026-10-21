@@ -12,7 +12,8 @@ from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256
 
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
-                        character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False):
+                        character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False,
+                        observe_world_seconds=0):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
@@ -26,6 +27,10 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         raise ValueError('World start requires explicit character selection and current source')
     if type(read_world_finish) is not bool or (read_world_finish and not read_world_start):
         raise ValueError('World finish requires explicit world start')
+    if (type(observe_world_seconds) not in (int,float) or not math.isfinite(observe_world_seconds)
+            or not 0<=observe_world_seconds<=300 or
+            (observe_world_seconds and (not read_world_finish or ping_clock is None))):
+        raise ValueError('World observation requires explicit finish, clock and duration <=300')
     unknown = []  # Bounded first-packet sample, not a processing limit.
     packet_counts = {}
     other_packet_count = 0
@@ -53,6 +58,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     select_requested = False
     list_summary = None
     selection_error = None
+    observation_until=None
     def result(status):
         detail = describe_game_login_error(flow.login_result_code) if flow and flow.login_result_code is not None else None
         value = dict(status=status, version_result_code=flow.version_result_code if flow else None,
@@ -104,12 +110,21 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     server_target_position_received=world.target_position is not None,
                     position_semantics='server_target_before_engine_correction',
                     headless_completion_policy='acknowledge_successful_start_without_3d')
+        if observe_world_seconds:
+            heartbeat=owner.heartbeat
+            value.update(periodic_ping_queued=heartbeat.queued_count-1 if heartbeat else 0,
+                ping_results_received=heartbeat.response_count if heartbeat else 0,
+                requested_observation_seconds=observe_world_seconds,
+                world_observation_completed=status=='world_observation_complete')
         return value
     try:
         started = time.monotonic()
         owner.start_login(version, login, now=started, timeout=timeout, max_payload_size=1048576)
         if ping_clock is not None:
-            owner.queue_ping(ping_clock.initial_ping(utc_millis=time.time_ns() // 1000000))
+            initial=ping_clock.initial_ping(utc_millis=time.time_ns() // 1000000)
+            owner.queue_ping(initial)
+            if observe_world_seconds:
+                owner.enable_periodic_ping(ping_clock,initial,source_sha256=source_sha256)
             initial_ping_queued = True
         flow = owner.login
         deadline = started + 2 * timeout
@@ -146,7 +161,11 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     world=owner.world_entry
                     world.tick(time.monotonic())
                     if world.state=='start_response':return result('world_start_result')
-                    if world.state=='finish_response':return result('world_finish_result')
+                    if world.state=='finish_response':
+                        if not observe_world_seconds:return result('world_finish_result')
+                        if observation_until is None:
+                            observation_until=time.monotonic()+observe_world_seconds
+                            deadline=observation_until
                     if world.error:return result('world_start_failed')
                     if world.deadline is not None: deadline=world.deadline
             if owner.active:
@@ -158,6 +177,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             owner.selection.expire(now=time.monotonic())
             if read_world_start:
                 owner.world_entry.tick(time.monotonic())
-        return result('connection_closed' if not owner.active else 'timeout')
+        return result('connection_closed' if not owner.active else
+            'world_observation_complete' if observation_until is not None and time.monotonic()>=observation_until else 'timeout')
     finally:
         owner.close()

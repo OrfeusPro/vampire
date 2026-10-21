@@ -5,6 +5,7 @@ Does not infer heartbeat timing, Login/Version fields or world readiness.
 """
 from dataclasses import dataclass
 import math
+import time
 
 from .key_change import KeyChangePayload, KEY_CHANGE_NOTIFY_ID
 from .outbound import OutboundFrames
@@ -67,6 +68,7 @@ class GameConnection:
         self._in_pump = False
         self._login = None
         self._world_entry = None
+        self._heartbeat = None
         try:
             sock.setblocking(False)
         except Exception:
@@ -94,12 +96,16 @@ class GameConnection:
     @property
     def world_entry(self): return self._world_entry
 
+    @property
+    def heartbeat(self): return self._heartbeat
+
     def close(self):
         if self._active:
             self._active = False
             self._receiver.close()
             self._selection.close()
             if self._world_entry is not None: self._world_entry.close()
+            if self._heartbeat is not None: self._heartbeat.close()
             if self._login is not None: self._login.close()
             try:
                 self._socket.close()
@@ -143,6 +149,13 @@ class GameConnection:
         if not self.active: raise RuntimeError('Connection is inactive')
         self._outbound.queue_ping(payload)
 
+    def enable_periodic_ping(self,clock,initial_ping,*,source_sha256):
+        """Initial Ping must already be queued; scheduler starts after ID206."""
+        if not self.active or self._heartbeat is not None:
+            raise RuntimeError('Heartbeat cannot be enabled')
+        from .heartbeat import PeriodicPing
+        self._heartbeat=PeriodicPing(clock,initial_ping,source_sha256=source_sha256)
+
     def pump(self, *, now, budget: PumpBudget):
         if not self.active: raise RuntimeError('Connection is inactive')
         if self._in_pump: raise RuntimeError('Connection pump is not reentrant')
@@ -181,6 +194,8 @@ class GameConnection:
                         value = KeyChangePayload.decode(packet.body)
                         self._outbound.acknowledge_key_change(value)
                         self._key = value.key_bits
+                    elif packet.packet_id==17 and self._heartbeat is not None:
+                        self._heartbeat.receive_result(packet.body)
                     elif packet.packet_id in (2, 4) and self._login is not None:
                         self._login.receive(packet.packet_id, packet.body, now=now)
                         if self._login.state == 'failed': self._fail('login_response_failed')
@@ -211,6 +226,14 @@ class GameConnection:
                 else:
                     self._receiver.end_input()
             if self.active:
+                if self._heartbeat is not None:
+                    from .heartbeat import PingRecoveryRequired
+                    try:
+                        self._heartbeat.queue_due(self._outbound,utc_millis=time.time_ns()//1000000,
+                            ready=self._world_entry is not None and self._world_entry.state=='finish_response')
+                    except PingRecoveryRequired:
+                        self._fail('ping_recovery_required')
+                        return PumpProgress(packets,received,0,False)
                 sent = drain_outbound(self._socket, self._outbound, max_send_calls=budget.max_send_calls).bytes_sent
             return PumpProgress(packets, received, sent, self.active)
         except Exception:

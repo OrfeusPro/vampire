@@ -85,6 +85,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [Страна регистрации SDK и список стран сервера](../evidence/network/HEADLESS-SERVER-COUNTRY-POLICY.md)
 - [Проверка состояния сервера перед входом](../evidence/network/HEADLESS-SERVER-ENTRY-STATE.md)
 - [Выбор игрового сервера с учётом региона](../evidence/network/HEADLESS-SERVER-REGION-SELECTION.md)
+- [Vampir: периодический Ping и короткая живая сессия](../evidence/network/HEADLESS-SESSION-KEEPALIVE.md)
 - [Socket endpoint connect: sockaddr, syscall result и wrapper acceptance](../evidence/network/HEADLESS-SOCKET-CONNECT-RESULT.md)
 - [Проверка ошибки сокета внутри задания готовности](../evidence/network/HEADLESS-SOCKET-ERROR-OPTION.md)
 - [Socket mode job: select, state flags и completion codes](../evidence/network/HEADLESS-SOCKET-READINESS-JOB.md)

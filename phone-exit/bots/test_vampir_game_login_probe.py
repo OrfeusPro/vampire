@@ -15,12 +15,13 @@ from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
         ping_bodies = []
         selection_bodies = []
+        clock_advanced=[False]
         def serve():
             try:
                 captures.append(receive_frame(server)[0])
@@ -28,6 +29,7 @@ class GameLoginProbeTests(unittest.TestCase):
                     header, body = receive_frame(server)
                     captures.append(header)
                     ping_bodies.append(body)
+                    if observe_world_seconds:server.sendall(incoming(17,struct.pack('<IQ',0,0)))
                 server.sendall(incoming(2, version_body))
                 if wait_for_login:
                     captures.append(receive_frame(server)[0])
@@ -60,16 +62,22 @@ class GameLoginProbeTests(unittest.TestCase):
                                             captures.append(header)
                                             if body!=b'':raise AssertionError('Nonempty finish request')
                                             if world_finish_body is not None:
+                                                clock_advanced[0]=advance_clock
                                                 server.sendall(incoming(206,world_finish_body))
+                                                if observe_world_seconds and advance_clock:
+                                                    header,body=receive_frame(server)
+                                                    captures.append(header)
+                                                    if header[0]!=16:raise AssertionError('Expected periodic Ping')
+                                                    server.sendall(incoming(17,struct.pack('<IQ',0,0)))
                 while server.recv(32): pass
             except BaseException as error: errors.append(type(error).__name__)
             finally: server.close()
         worker = threading.Thread(target=serve)
         worker.start()
-        with patch('vampir_core.game_login_probe.time.time_ns', return_value=1792600142863000000):
+        with patch('vampir_core.game_login_probe.time.time_ns', side_effect=lambda:1792600142863000000+(6001000000 if clock_advanced[0] else 0)):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
                 read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index,
-                read_world_start=read_world_start, read_world_finish=read_world_finish, source_sha256=SOURCE_SHA256 if read_world_start else None)
+                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, source_sha256=SOURCE_SHA256 if read_world_start else None)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -108,6 +116,19 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertTrue(result['server_target_position_received'])
         self.assertFalse(result['game_session_ready'])
         self.assertFalse(result['world_reserve_full_body_validated'])
+
+    def test_bounded_world_observation_sends_periodic_ping_and_receives_reply(self):
+        result,captures=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',0,9,2,3,4,0,0,77),
+            read_world_finish=True,world_finish_body=finish_body(),
+            ping_clock=LobbyPingClock(540),observe_world_seconds=.05,advance_clock=True)
+        self.assertEqual(captures,[(1,0),(16,1),(3,2),(101,3),(109,4),(203,5),(205,6),(16,7)])
+        self.assertEqual(result['status'],'world_observation_complete')
+        self.assertEqual(result['periodic_ping_queued'],1)
+        self.assertEqual(result['ping_results_received'],2)
+        self.assertTrue(result['world_observation_completed'])
+        self.assertTrue(result['server_target_position_received'])
+        self.assertFalse(result['game_session_ready'])
 
     def test_world_finish_refusal_and_timeout(self):
         for body in (finish_body(16),None):

@@ -31,7 +31,10 @@ class SelectedGameLoginTests(unittest.TestCase):
     def test_explicit_world_finish_propagates_permission(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256,world_start=True,world_finish=True)
 
-    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False):
+    def test_world_observation_permission_propagates(self):
+        self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256,world_start=True,world_finish=True,observation=20)
+
+    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False,observation=0):
         from vampir_core.lobby_packets import LobbyVersionResultBody
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
@@ -68,7 +71,7 @@ class SelectedGameLoginTests(unittest.TestCase):
             if world_start: options['selected_profile'] = 'recovered-release'
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
                 lobby_context='sdk-with-partial-metadata', read_character_list=True, character_index=0,
-                read_world_start=world_start, read_world_finish=world_finish, **options)
+                read_world_start=world_start, read_world_finish=world_finish, observe_world_seconds=observation, **options)
         packet = exchange.call_args.args[2]
         clock = exchange.call_args.kwargs['ping_clock']
         if source_sha:
@@ -86,6 +89,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         self.assertEqual(exchange.call_args.kwargs['character_index'],0)
         self.assertEqual(exchange.call_args.kwargs['read_world_start'],world_start)
         self.assertEqual(exchange.call_args.kwargs['read_world_finish'],world_finish)
+        self.assertEqual(exchange.call_args.kwargs['observe_world_seconds'],observation)
         self.assertEqual(exchange.call_args.kwargs['source_sha256'],source_sha)
         self.assertEqual(packet.strings[11],'{"I_PID":"current-player-fixture"}')
         self.assertEqual(result['login_language_code'],1)

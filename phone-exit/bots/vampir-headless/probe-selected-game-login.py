@@ -34,7 +34,7 @@ def module(name, filename):
 
 def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
         extra_number, context, region, server_id=None, selection=None, password='', server_list_only=False, auth_flow='nid', language_code=None,
-        lobby_context='sdk-without-nid-info', read_character_list=False, character_index=None, read_world_start=False, read_world_finish=False, _progress=None):
+        lobby_context='sdk-without-nid-info', read_character_list=False, character_index=None, read_world_start=False, read_world_finish=False, observe_world_seconds=0, _progress=None):
     if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
     if lobby_context not in ('sdk-without-nid-info','sdk-with-joined-country','sdk-with-partial-metadata'):
         raise ValueError('Explicit supported lobby context required')
@@ -43,6 +43,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
         raise ValueError('Explicit game character-list operation required')
     if character_index is not None and (type(character_index) is not int or not 0 <= character_index <= 65535 or not read_character_list):
         raise ValueError('Character selection requires a list operation and uint16 index')
+    if type(observe_world_seconds) not in (int,float) or not 0<=observe_world_seconds<=300 or (observe_world_seconds and not read_world_finish):
+        raise ValueError('Explicit world finish and bounded observation duration required')
     if type(read_world_finish) is not bool or (read_world_finish and not read_world_start):
         raise ValueError('World finish requires explicit world start')
     if type(read_world_start) is not bool or (read_world_start and (character_index is None or selected_profile!='recovered-release')):
@@ -65,7 +67,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
             socks_port=socks_port, server_policy_byte=server_policy_byte, extra_number=extra_number,
             context=context, region=region, server_id=server_id, selection=selection, password=password,
             server_list_only=server_list_only, auth_flow=auth_flow, language_code=language_code, lobby_context=lobby_context,
-            read_character_list=read_character_list, character_index=character_index, read_world_start=read_world_start, read_world_finish=read_world_finish, state=state, phase=phase)
+            read_character_list=read_character_list, character_index=character_index, read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, state=state, phase=phase)
     except (OSError, ValueError, RuntimeError, KeyError) as error:
         result = dict(state, status='selected_game_login_not_completed', error_type=type(error).__name__)
         for name, attribute in (('http_status', 'status'), ('sdk_error_code', 'sdk_code')):
@@ -80,7 +82,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
 
 def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
          extra_number, context, region, server_id, selection, password, server_list_only, auth_flow, language_code, lobby_context,
-         read_character_list, character_index, read_world_start, read_world_finish, state, phase):
+         read_character_list, character_index, read_world_start, read_world_finish, observe_world_seconds, state, phase):
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     auth = {}
@@ -97,7 +99,7 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
         completed['result'] = _after_lobby(lobby, auth=auth, selection_proof=selection_proof,
             source=source, socks_port=socks_port, extra_number=extra_number, context=context,
             region=region, server_id=server_id, selection=selection, server_list_only=False, language_code=language_code,
-            read_character_list=read_character_list, character_index=character_index, read_world_start=read_world_start, read_world_finish=read_world_finish, state=state, phase=phase)
+            read_character_list=read_character_list, character_index=character_index, read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, state=state, phase=phase)
     phase('lobby_preparation')
     lobby = module('game_login_lobby', 'probe-lobby-sdk-login.py').run(email,
         selected_profile=selected_profile, manifest_path=manifest_path, socks_port=socks_port,
@@ -113,11 +115,11 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
     return _after_lobby(lobby, auth=auth, selection_proof=selection_proof,
         source=source, socks_port=socks_port, extra_number=extra_number, context=context,
         region=region, server_id=server_id, selection=selection, server_list_only=True, language_code=language_code,
-        read_character_list=read_character_list, character_index=character_index, read_world_start=read_world_start, read_world_finish=read_world_finish, state=state, phase=phase)
+        read_character_list=read_character_list, character_index=character_index, read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, state=state, phase=phase)
 
 
 def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_number,
-                 context, region, server_id, selection, server_list_only, state, phase, language_code=None, read_character_list=False, character_index=None, read_world_start=False, read_world_finish=False):
+                 context, region, server_id, selection, server_list_only, state, phase, language_code=None, read_character_list=False, character_index=None, read_world_start=False, read_world_finish=False, observe_world_seconds=0):
     state['lobby'] = lobby.summary
     if lobby.server_list_response is None or 'context' not in auth:
         return dict(state, status='lobby_context_not_received')
@@ -175,7 +177,7 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
         phase('game_login_exchange')
         state['login_language_code'] = login.raw_bytes[2]
         game = exchange_game_login(connection, version, login, timeout=10,
-            read_character_list=read_character_list, character_index=character_index, ping_clock=ping_clock, read_world_start=read_world_start, read_world_finish=read_world_finish,
+            read_character_list=read_character_list, character_index=character_index, ping_clock=ping_clock, read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds,
             source_sha256=getattr(source,'source_exe_sha256',''))
         login = None
         return dict(state, status='game_login_probe', selection=selection or 'explicit-id',
@@ -204,6 +206,7 @@ if __name__ == '__main__':
     parser.add_argument('--password-stdin', action='store_true')
     parser.add_argument('--server-list-only', action='store_true', help='Check region/state/country policy without a game connection')
     parser.add_argument('--read-character-list', action='store_true', help='Explicit list-entry probe after successful Login; selection requires --character-index')
+    parser.add_argument('--observe-world-seconds',type=float,default=0,help='Keep the explicit world session open with periodic Ping, up to 300 seconds')
     parser.add_argument('--read-world-finish',action='store_true',help='Explicit headless ID205 -> ID206 after successful start; requires --read-world-start')
     parser.add_argument('--read-world-start',action='store_true',help='Explicit ID202 envelope -> ID203 -> ID204 probe; no world completion')
     parser.add_argument('--character-index', type=int, help='Explicit zero-based index in the fresh character list; requires --read-character-list')
@@ -222,7 +225,7 @@ if __name__ == '__main__':
             socks_port=args.socks_port, server_policy_byte=args.server_policy_byte,
             extra_number=extra_number, context=args.context, region=args.region, server_id=args.server_id,
             selection=args.selection, password=password, server_list_only=args.server_list_only, auth_flow=args.auth_flow, language_code=args.language_code, lobby_context=args.lobby_context,
-            read_character_list=args.read_character_list, character_index=args.character_index, read_world_start=args.read_world_start, read_world_finish=args.read_world_finish,
+            read_character_list=args.read_character_list, character_index=args.character_index, read_world_start=args.read_world_start, read_world_finish=args.read_world_finish, observe_world_seconds=args.observe_world_seconds,
             _progress=lambda stage: print(json.dumps(dict(event='phase', stage=stage)), file=sys.stderr, flush=True))
         password = None
         print(json.dumps(result))

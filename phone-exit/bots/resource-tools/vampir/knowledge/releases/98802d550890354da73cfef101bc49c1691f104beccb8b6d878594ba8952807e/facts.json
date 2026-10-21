@@ -2022,6 +2022,168 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Периодический Ping в runtime, длительная сессия, разрыв / восстановление и отображение позиции на карте."
+    },
+    {
+      "addresses": [
+        "0x1467d0d10"
+      ],
+      "checks": [
+        {
+          "cache_key": "7484860aeeaa46561b0e81a53e31a5e2eb9e575f432542636d29f7e6f67690f0",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9900d5b163574fe2fa344bd4c07a75f5e96555f4ddbb45cbe5127736bd4b7816\\manifest.json",
+          "sha256": "9900d5b163574fe2fa344bd4c07a75f5e96555f4ddbb45cbe5127736bd4b7816",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b92d27f72265d19b90d27284d6fe242979315b6f2b44d9eee5e460a5524ba462",
+          "id": "release-ping-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e20a91ea69049d3ca220ff2cc78e0d2bbc8ac689610e8739cb455e24779b6bbf\\manifest.json",
+          "sha256": "e20a91ea69049d3ca220ff2cc78e0d2bbc8ac689610e8739cb455e24779b6bbf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fe2b68781b5db76c19a07a11e063b0f5446289fa5a3a0c12caec38bb82cef372",
+          "id": "release-ping-producer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9df6b15fe729d84d9ee71f8d0613ada4f65cf112b4bd209ce7f0690160991f14\\manifest.json",
+          "sha256": "9df6b15fe729d84d9ee71f8d0613ada4f65cf112b4bd209ce7f0690160991f14",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3f7f6907e3b1fda6838d68886811627eb804bfefdcba66e0fd4f7c5dbcd6148b",
+          "id": "periodic-ping-policy",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e0736950c4423359eab35efcff76aa1b6b1f90943eee1ba5c25df426b02ff09f\\manifest.json",
+          "sha256": "e0736950c4423359eab35efcff76aa1b6b1f90943eee1ba5c25df426b02ff09f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий проверенный producer использован для PeriodicPing: N / N-last, D>5000, recovery boundary six unanswered. Состояние меняется только после успешной постановки кадра. 20 секунд live после ID 206 прошли с четырьмя периодическими Ping и пятью ID 17 без ошибок.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-SESSION-KEEPALIVE.md",
+          "sha256": "ad32258ca7cf18b8bdb341ede180ad2b30eba7af65cd14a90e2729616dc4c565"
+        }
+      ],
+      "id": "4cf750a224949d71ce614ab1d33aa382ab667daf939a2842c5229d2d6d927c15",
+      "limits": [
+        "Native context / config getters, clock cache и recovery capture являются fixtures; tracking index проверен при исходном нуле.",
+        "Короткий constructor не имеет unwind root; целая factory остаётся неполной, используется конкретная последовательность регистрации.",
+        "Живое наблюдение ограничено 20 секундами; движение, карта, clock resync, engine recovery и reconnect не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подключить мир / серверную позицию к существующей карте, отдельно проверить разрыв и восстановление без replay игровых действий.",
+      "question": "session-keepalive",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Длительная сессия, clock watchdog / resync, безопасное восстановление и мировые события / карта."
+    },
+    {
+      "addresses": [
+        "0x1456d8b60",
+        "0x1456dc6e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "7484860aeeaa46561b0e81a53e31a5e2eb9e575f432542636d29f7e6f67690f0",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9900d5b163574fe2fa344bd4c07a75f5e96555f4ddbb45cbe5127736bd4b7816\\manifest.json",
+          "sha256": "9900d5b163574fe2fa344bd4c07a75f5e96555f4ddbb45cbe5127736bd4b7816",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b92d27f72265d19b90d27284d6fe242979315b6f2b44d9eee5e460a5524ba462",
+          "id": "release-ping-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e20a91ea69049d3ca220ff2cc78e0d2bbc8ac689610e8739cb455e24779b6bbf\\manifest.json",
+          "sha256": "e20a91ea69049d3ca220ff2cc78e0d2bbc8ac689610e8739cb455e24779b6bbf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fe2b68781b5db76c19a07a11e063b0f5446289fa5a3a0c12caec38bb82cef372",
+          "id": "release-ping-producer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9df6b15fe729d84d9ee71f8d0613ada4f65cf112b4bd209ce7f0690160991f14\\manifest.json",
+          "sha256": "9df6b15fe729d84d9ee71f8d0613ada4f65cf112b4bd209ce7f0690160991f14",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3f7f6907e3b1fda6838d68886811627eb804bfefdcba66e0fd4f7c5dbcd6148b",
+          "id": "periodic-ping-policy",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e0736950c4423359eab35efcff76aa1b6b1f90943eee1ba5c25df426b02ff09f\\manifest.json",
+          "sha256": "e0736950c4423359eab35efcff76aa1b6b1f90943eee1ba5c25df426b02ff09f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current ID 17 constructor и reader исполнены целиком; table 1499289b0, getter возвращает 17. Тело uint32 / uint64 совпало в 36 случаях, 12 коротких префиксов отклонены. Constructor подтверждён leaf bytes, а не unwind export.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-SESSION-KEEPALIVE.md",
+          "sha256": "ad32258ca7cf18b8bdb341ede180ad2b30eba7af65cd14a90e2729616dc4c565"
+        }
+      ],
+      "id": "fdb9a649e6208aea7bc4dd4f9625f29418e360dd88db3dc0148c0c86e4950749",
+      "limits": [
+        "Native context / config getters, clock cache и recovery capture являются fixtures; tracking index проверен при исходном нуле.",
+        "Короткий constructor не имеет unwind root; целая factory остаётся неполной, используется конкретная последовательность регистрации.",
+        "Живое наблюдение ограничено 20 секундами; движение, карта, clock resync, engine recovery и reconnect не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подключить мир / серверную позицию к существующей карте, отдельно проверить разрыв и восстановление без replay игровых действий.",
+      "question": "session-keepalive",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Длительная сессия, clock watchdog / resync, безопасное восстановление и мировые события / карта."
+    },
+    {
+      "addresses": [
+        "0x14679da80",
+        "0x1467b62f0",
+        "0x1467d09b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "7484860aeeaa46561b0e81a53e31a5e2eb9e575f432542636d29f7e6f67690f0",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9900d5b163574fe2fa344bd4c07a75f5e96555f4ddbb45cbe5127736bd4b7816\\manifest.json",
+          "sha256": "9900d5b163574fe2fa344bd4c07a75f5e96555f4ddbb45cbe5127736bd4b7816",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b92d27f72265d19b90d27284d6fe242979315b6f2b44d9eee5e460a5524ba462",
+          "id": "release-ping-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e20a91ea69049d3ca220ff2cc78e0d2bbc8ac689610e8739cb455e24779b6bbf\\manifest.json",
+          "sha256": "e20a91ea69049d3ca220ff2cc78e0d2bbc8ac689610e8739cb455e24779b6bbf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fe2b68781b5db76c19a07a11e063b0f5446289fa5a3a0c12caec38bb82cef372",
+          "id": "release-ping-producer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9df6b15fe729d84d9ee71f8d0613ada4f65cf112b4bd209ce7f0690160991f14\\manifest.json",
+          "sha256": "9df6b15fe729d84d9ee71f8d0613ada4f65cf112b4bd209ce7f0690160991f14",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3f7f6907e3b1fda6838d68886811627eb804bfefdcba66e0fd4f7c5dbcd6148b",
+          "id": "periodic-ping-policy",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e0736950c4423359eab35efcff76aa1b6b1f90943eee1ba5c25df426b02ff09f\\manifest.json",
+          "sha256": "e0736950c4423359eab35efcff76aa1b6b1f90943eee1ba5c25df426b02ff09f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущая конкретная регистрация связывает ID 17 с handler 14679da80. Целые handler / receiver исполнены: сброс counter не зависит от wire fields, elapsed равен N-sent с source multiplier -0.0001, config bit 10 вызывает recovery. Проверено 36 сценариев; всю factory не исполняли.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-SESSION-KEEPALIVE.md",
+          "sha256": "ad32258ca7cf18b8bdb341ede180ad2b30eba7af65cd14a90e2729616dc4c565"
+        }
+      ],
+      "id": "ae672851175286a8df6681130677e73f73a61a1fe31505bf2d8e04eb94c57120",
+      "limits": [
+        "Native context / config getters, clock cache и recovery capture являются fixtures; tracking index проверен при исходном нуле.",
+        "Короткий constructor не имеет unwind root; целая factory остаётся неполной, используется конкретная последовательность регистрации.",
+        "Живое наблюдение ограничено 20 секундами; движение, карта, clock resync, engine recovery и reconnect не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подключить мир / серверную позицию к существующей карте, отдельно проверить разрыв и восстановление без replay игровых действий.",
+      "question": "session-keepalive",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Длительная сессия, clock watchdog / resync, безопасное восстановление и мировые события / карта."
     }
   ],
   "schema": 1,
