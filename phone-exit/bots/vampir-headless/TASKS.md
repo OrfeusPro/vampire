@@ -21,8 +21,9 @@
 424 исследованных функций; девять пар входа / персонажей выгружены отдельно.
 Базовый whole-list reader нового EXE проверен: 12 полных bodies совпали с
 переносимым decoder, 238 коротких префиксов отклонены; память контейнеров — fixture.
-Следом — непустые appearance extensions / optional map и packet bindings,
-затем handler и реальный вход. Старые адреса не переносить без проверки.
+Непустые appearance extensions / optional map прошли ещё 31 body / 489 префиксов,
+включая duplicate overwrite и разные соседние записи. Следом — packet bindings,
+handler и реальный вход. Старые адреса не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в

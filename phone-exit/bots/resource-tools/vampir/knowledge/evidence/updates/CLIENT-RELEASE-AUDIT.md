@@ -408,6 +408,61 @@ bindings; затем обработчик списка и реальная се�
 577 префиксов. Отчёт regression:
 `fstring-input-replay/3d1f021f36a2f1e5af3a0ddd5e8799d1f6525bb5690d94d45e10e31098f6c29a/manifest.json`.
 
+### Непустые appearance extensions и optional map
+
+[replay-release-character-extensions.py](../../../replay-release-character-extensions.py)
+продолжает whole-list harness на новом SHA. Ghidra export новых зависимостей:
+`details/run-c835a4433cde/details.json` внутри `run-fd4956a37b3c`, SHA256
+`f80a7771f06e6b888c00df5b093de6521ffa2fe96bd0bfba3867fbf36e5ae34b`.
+Первый export callback / pair constructor сохранён отдельно:
+`details/run-92602aee7309/details.json`, SHA256
+`fb8ee4b49b9fc0f89b7b4fd477ddf5c0db050365e5d10bd9b4d6e6c3b7d60f66`.
+
+| Участок | Новый адрес |
+| --- | --- |
+| Appearance callback | 0x14573cc90 |
+| Appearance item constructor / reader | 0x145783f30 / 0x145787660 |
+| Optional callback | 0x1456c8140 |
+| Native optional insert | 0x1456bea70 |
+| Pair constructor | 0x1456bcea0 |
+| Value constructor / reader | 0x145785490 / 0x14578a680 |
+
+Callback внешности по таблице 0x149941770 создаёт и читает 0x10-байтный item.
+Native item reader проверяет `<IBH>` с clamp enum до 45. Optional callback
+по таблице 0x149926e38 читает key byte, ищет его по bucket chain и использует
+существующий node при совпадении. Только отсутствующий ключ идёт в native insert.
+Pair constructor устанавливает value table 0x149923a38; value reader читает
+enum / три uint32 / raw64, enum ограничивается 9. Эти пути исполняются,
+а не заменяются portable decoder в hooks.
+
+31 полный whole-list body совпал с portable decoder по полям записей:
+appearance arrays с 0 / 1 / 2 / 8 элементами; absent / empty / nonempty optional
+map; 1 / 2 / 4 персонажа. Есть максимальные значения, enum clamps, восемь
+коллидирующих ключей и повтор ключа после заполнения map. Проверка insertions
+подтвердила отсутствие дополнительного node при повторе; последнее значение
+заменяет прежнее через actual callback. Отдельный body с разными appearance и
+map у двух соседних записей проверил отсутствие общего тестового хранилища.
+Все 489 коротких префиксов двух bodies с extensions получили отказ без чтения
+за доступный input.
+
+Storage / reset массива и map, bitvector capacity, unseen-key insert predicate,
+bucket rehash, shallow copy, cleanup и string storage остаются bounded fixtures.
+Реальный поиск повторного ключа / overwrite выполняются native-кодом, но это не
+доказательство штатного allocator и времени жизни контейнеров. Fixture узлов map
+не переиспользуется между скопированными записями; разные соседние данные явно
+проверены. Лимиты — 4 персонажа, 8 уникальных узлов map и 8 appearance items
+на запись; portable decoder получает aggregate budget 128. Пакетный constructor,
+ID binding, handler и live-вход этим этапом не проверены.
+
+Отчёт внутри каталога сравнения:
+`character-extension-replay/3628a3d66034a7169de8493419a108c2b9a22982585e35051e585d2375ffe67c/manifest.json`.
+Последний каталог — SHA256. Сохранены source / Ghidra / tool SHA, native ranges,
+leaves, результаты и ограничения. После выделения whole-list harness повторно
+прошли базовые 12 bodies / 238 префиксов; regression report:
+`character-list-replay/5d02b503ad727f35da5d85d4116bed6d21020f576baf6a3543a5fc884b786d61/manifest.json`.
+Дальше — packet ID / vtable binding и обработчик списка, затем выбор персонажа
+и реальная сессия после проверки актуальной ревизии и готовности сервера.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление

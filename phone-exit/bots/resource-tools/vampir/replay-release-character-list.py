@@ -17,7 +17,7 @@ def load(name, path):
     return module
 
 
-def main():
+def make_harness(extra_addresses=(), extra_leaves=(), max_appearance=0):
     strings = load('list_release_strings', HERE / 'replay-release-fstring-input.py')
     native = load('list_release_native', HERE / 'build-native-entry-code.py')
     audit = load('list_release_audit', HERE / 'audit-client-release.py')
@@ -28,8 +28,8 @@ def main():
         raise ValueError('Reviewed whole-list Ghidra evidence changed')
     h = strings.make_harness(extra_addresses=(0x1456dcf00, 0x145784b10, 0x1457897d0,
         0x1456e7cf0, 0x1456de090, 0x144aad880, 0x1457a47d0, 0x1457fefb0,
-        0x145795e90, 0x145788d00, 0x1456c42d0, 0x144aad7c0, 0x1456bb730),
-        extra_leaves=(0x144aae4e0, 0x1457917a0, 0x1457fedc0))
+        0x145795e90, 0x145788d00, 0x1456c42d0, 0x144aad7c0, 0x1456bb730, *extra_addresses),
+        extra_leaves=(0x144aae4e0, 0x1457917a0, 0x1457fedc0, *extra_leaves))
     uc, x = h.uc, h.x
     nested_bindings = {0x1499212d8: 0x1457fefb0, 0x149922470: 0x145795e90,
                        0x149921fb0: 0x145788d00, 0x149923ba0: 0x1456c42d0}
@@ -68,19 +68,24 @@ def main():
             h.finish(a)
             return
         elif address == 0x14141cdd0:
-            if b != 0:
+            if b > max_appearance:
                 raise ValueError('Nonempty appearance extensions outside scenario')
-            machine.mem_write(a, bytes(16))
-        elif address == 0x1456b6c90 and b != 0:
+            pointer = h.allocate(b * 0x10) if b else 0
+            machine.mem_write(a, struct.pack('<Q', pointer))
+            machine.mem_write(a + 12, struct.pack('<I', b))
+        elif address == 0x1456b6c90 and b > max_appearance:
             raise ValueError('Nonempty appearance cleanup outside scenario')
         h.finish()  # Explicit cleanup fixture preserves RAX.
     for address in fixture_addresses:
         h.fixtures[address] = fixture
     packet = h.scratch + 0x6000
+    h.list_before_read = lambda: None
+    h.optional_snapshot = None
     def read(body):
         if len(body) > 4096:
             raise ValueError('List input byte bound')
         h.string_heap[0] = h.scratch + 0x20000
+        h.list_before_read()
         uc.mem_write(packet, bytes(0x100))  # Packet storage fixture, not packet-ID/constructor proof.
         uc.mem_write(h.buffer, bytes(4096))
         uc.mem_write(h.buffer, body)
@@ -105,18 +110,38 @@ def main():
         records = []
         for index in range(count):
             record = pointer + index * 0x170
-            if number(record + 0xe8, 4) != 0 or number(record + 0x118, 1) != 0:
+            if number(record + 0xe8, 4) > max_appearance:
                 raise ValueError('Nonempty native extensions outside verified profile')
+            items_pointer, items_count, items_capacity = struct.unpack('<QII', bytes(uc.mem_read(record + 0xe0, 16)))
+            if not 0 <= items_count <= items_capacity <= max_appearance:
+                raise ValueError('Appearance output fixture bound')
+            items = tuple((number(items_pointer + i * 0x10 + 8, 4), number(items_pointer + i * 0x10 + 12, 1),
+                           number(items_pointer + i * 0x10 + 14, 2)) for i in range(items_count))
+            optional = None
+            if number(record + 0x118, 1):
+                if h.optional_snapshot is None:
+                    raise ValueError('Optional map outside verified profile')
+                optional = h.optional_snapshot(record + 0x120)
             records.append(dict(strings=tuple(text(record + n) for n in (0x18, 0x50, 0xc8)),
                 u32=tuple(number(record + n, 4) for n in (0x10, 0x30)),
                 u16=tuple(number(record + n, 2) for n in (0x70, 0x72, 0x74, 0x76)),
                 u64=tuple(number(record + n, 8) for n in (8, 0x28, 0x40, 0x48, 0x80, 0x88, 0x98, 0xa0, 0xa8, 0xf0, 0xf8, 0x100)),
                 enum60=number(record + 0x60, 1), appearance=tuple(uc.mem_read(record + 0xb8, 10)),
                 appearance_flags=tuple(uc.mem_read(record + 0xd8, 2)), flag108=bool(number(record + 0x108, 1)),
-                appearance_items=(), optional_items=None))
+                appearance_items=items, optional_items=optional))
         return dict(accepted=accepted, consumed=consumed, count=count, records=records,
                     result_code=number(packet + 0x10, 4), raw14=number(packet + 0x14, 4),
                     tail=tuple(number(packet + off, size) for off, size in ((0x28, 8), (0x30, 4), (0x38, 8), (0x40, 8))))
+    h.read_list = read
+    h.list_nested_bindings = nested_bindings
+    h.list_ghidra_sha = evidence_sha
+    return h
+
+
+def main():
+    h = make_harness()
+    read = h.read_list
+    audit = h.audit
     old = load('old_list_wire_fixtures', HERE / 'replay-character-list-reader.py')
     bodies = [struct.pack('<IIHQIQQ', code, 207, 0, 1, 2, 3, 4) for code in (0, 1, 0xffffffff)]
     for text_value, value, enum, appearance, flag in (('', 0, 0, 0, 0), ('Ж界🙂', 0x12345678, 255, 255, 255), ('a' * 128, 2**64 - 1, 5, 1, 1)):
@@ -145,16 +170,16 @@ def main():
     if trailing['accepted'] != 1 or trailing['consumed'] != len(bodies[6]):
         raise ValueError('Native trailing-byte behavior changed')
     report = dict(schema=1, source=str(h.source), source_sha256=h.sha, tool_sha256=audit.sha256(Path(__file__)),
-        ghidra_evidence_sha256=evidence_sha, dependencies={p: audit.sha256(HERE / p) for p in
+        ghidra_evidence_sha256=h.list_ghidra_sha, dependencies={p: audit.sha256(HERE / p) for p in
         ('replay-release-archive-input.py', 'replay-release-fstring-input.py', 'replay-character-list-reader.py')},
         portable_decoder_sha256=audit.sha256(HERE.parents[1] / 'vampir-shared/vampir_core/character_list.py'),
-        nested_reader_bindings={hex(k): hex(v) for k, v in nested_bindings.items()},
+        nested_reader_bindings={hex(k): hex(v) for k, v in h.list_nested_bindings.items()},
         fragments=h.fragments, leaves=h.leaves, cases=cases, truncated=short,
         trailing_native_consumed=trailing['consumed'], native_execution=True, compatibility='not_established',
         limits=['Actual whole packet body reader, record constructors/readers, archive/UTF8 and array callbacks execute.',
                 'Packet storage, array allocation, shallow copy, cleanup and string storage are explicit fixtures.',
                 'Appearance extensions empty and optional map absent; no packet ID/handler/live session proof.'])
-    target = audit.save_snapshot(comparison / 'character-list-replay', report)
+    target = audit.save_snapshot(h.comparison / 'character-list-replay', report)
     print(json.dumps(dict(report=str(target), sha256=audit.sha256(target), cases=len(cases), truncated=len(short)), indent=2))
 
 
