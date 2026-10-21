@@ -23,8 +23,9 @@ JP. Проверка не допускает смешивания его со с
 в 9 native-сценариях; PC initializer → getter прошёл ещё 12 сценариев.
 Игровой override / initializers / market selector прошли 106 native-сценариев:
 market epicgames выбирается через `NMENV=epicgames`, иначе проверенные варианты
-дают nmp; production zone сверена с environment real. Следом — GMC2 request path
-перед обновлением SDK / NID профиля;
+дают nmp; production zone сверена с environment real. GMC2 Start / выбор base /
+FString copy прошли ещё 512 сценариев. Следом — build labels, сборка URL и
+заголовки GMC2 перед обновлением SDK / NID профиля;
 [подробности и границы](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md).
 Пользователь заменил телефоны: в каталоге доступны samsung SM-A205F и Redmi
 2201116SI с выходом JP, Redmi M2103K19Y — HK; все три не заняты, APK 0.9.6.

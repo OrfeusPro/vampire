@@ -191,10 +191,62 @@ replay остановился на неотображённом общем tail;
 python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-sdk-overrides.py
 ```
 
+## Новый GMC2 Start и путь запроса
+
+Поиск Ghidra дополнен точной диагностикой GMC2 Start и ASCII-литералами
+`/template-groups/`, `?game=v5&country=G9&build=` и `&engine=unreal&market=`.
+Отчёт `details/run-b117745a1cb0/details.json`, SHA256
+`0efe806b4040cf09c3098d6929a434492fb637c3578b628e74a556c782490e8b`.
+В этой частично проанализированной базе recorded xrefs по-прежнему пусты;
+готовый scanner проверил кандидатов по инструкциям целых roots:
+`sdk-reference-candidates/a98470e7ea6325acbc87b4bb34697134ddd6ea6e31c50794994c8e25f432233d/manifest.json`.
+Среди 159 ссылок / 155 roots выделены Start 0x144509080 и Refresh 0x1444faff0.
+Остальным roots роль не присваивается.
+
+Их Ghidra export `details/run-ae63693173ac/details.json`, SHA256
+`e1d4f62cd84ff146340f5f60ed0802dcaad2c68cefac968d7857cb9fa088f599`.
+Start читает CDO +0x49, выбирает base из manager +0x150 / +0x160 / +0x170 /
++0x180 для zone 0 / 1 / 2 / 3; прочие byte значения выбирают +0x160.
+Копирование в active base manager +0x1e8 идёт через настоящий общий FString
+copy 0x141441e40. Start также копирует settings +0xc8 в global 0x14b1890f4;
+этот global участвует в условиях диагностики, полная семантика флага не установлена.
+
+Прямой tail target 0x141441e40 получен из Ghidra reference, а не смещением
+старого адреса. Его экспорт `details/run-bed7531e5011/details.json`, SHA256
+`96a925705bf7e4b90c467df7901dcaf6c4cb4c436b95cef433540397f6817119`;
+manifest кандидата `sdk-reference-candidates/b7aeee86e3c5683e4bf28c3c6e80126ddfe3d3d772999d8fe80214db9fb48a69/manifest.json`.
+
+[replay-release-gmc2-start.py](../../../replay-release-gmc2-start.py) исполняет
+целый Start и FString copy: 256 zone × два raw flag (0 / 1), всего 512 сценариев.
+Проверены итоговая строка, return, FString counts / capacity, перенос raw flag
+и guards. CDO, непустые base strings, allocation и проверенный CRT copy — fixtures;
+диагностика явно выключена. Адреса base согласуются с ранее исполненным новым
+GMC2 constructor, но здесь constructor и override не исполняются непрерывно.
+Первый запуск остановился перед неотображённым tail; после его экспорта добавлен
+реальный copy body. Страница после allocator fixture также отображена, чтобы
+Unicorn мог декодировать блок перед перехватом. Неизвестное исполнение запрещено.
+Отчёт `gmc2-start-replay/9409d46095e5113f9929a9e6008f42791e397dbb08ffb0b7ff8b7cac59d8f841/manifest.json`.
+
+Из нового Refresh прослежены прямые calls: версия 0x14452baa0,
+build getter 0x144532f30, append 0x141761ae0 и RequestGMC2 0x1444fca30.
+Три последних выгружены: `details/run-ff5be244c76f/details.json`, SHA256
+`f4caea5a759d9639db82abcfa1298e474a8dcdce29f630879ffaea7245d276d2`.
+Manifest прямых targets:
+`sdk-reference-candidates/884e89db8e465be46b2e3114ba8bebc83c7a6e9e39d99ffb9d8bd9bffd8f45b5/manifest.json`.
+Build getter выбирает globals 0x14b5658e8 при byte 1, 0x14b5658f8 при 2,
+иначе 0x14b5658d8. Их initializers и фактические build labels ещё нужно связать.
+Наличие ветвей само по себе не подтверждает старые A / B / C.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-gmc2-start.py
+```
+
 ## Следующая проверка
 
 PC и игровой override уже проверены ограниченными native-сценариями.
-Далее проверить новый GMC2 request path и сформировать отдельный
+GMC2 Start и его FString copy проверены в 512 сценариях. Далее связать build
+label initializers, проверить сборку URL и заголовки нового RequestGMC2 по свежим
+экспортам выше; затем сформировать отдельный
 source-bound профиль. Установленные SDK / NID guards пока прежние; свежий SDK
 config, авторизация и Game Login на новом samsung SM-A205F ещё не выполнялись.
 Успешный вход, BlockedIp и готовность runtime этим этапом не установлены.
