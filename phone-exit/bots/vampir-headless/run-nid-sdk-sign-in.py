@@ -5,6 +5,7 @@ import importlib.util
 import json
 from pathlib import Path
 import sys
+import time
 
 HERE = Path(__file__).resolve().parent
 ROOT = Path('F:/PhoneExit Resources/Vampir')
@@ -13,6 +14,8 @@ sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.device_registry import DeviceRegistry
 from vampir_core.windows_device_identity import observe_windows_device_identity
 from vampir_core.gmc2_response import decode_gmc2_configuration
+from vampir_core.gmc2_http import fetch as fetch_gmc2
+from vampir_core.gmc2_context import SdkInputs, decode_gmc2_geo
 from vampir_core.nid_web_context import prepare_nid_sign_in_context
 from vampir_core.nid_web_url import bind_nid_web_url
 from vampir_core.nid_sdk_credential import build_nid_sdk_credential
@@ -49,38 +52,60 @@ def load_inputs(email, *, route=None, selected_profile='recovered-base'):
     if (identity.device_key, identity.nid_device_key, identity.nm_device_key) != (
             binding.device_key, binding.nid_device_key, binding.nm_device_key):
         raise ValueError('Observed device identity differs from the fixed profile')
-    pointer = json.loads((ROOT / 'code-clues/public-gmc2-recovery.json').read_text('utf-8'))
-    path = Path(pointer['manifest'])
-    data = path.read_bytes()
-    if hashlib.sha256(data).hexdigest() != pointer['sha256']: raise ValueError('SDK snapshot manifest changed')
-    manifest = json.loads(data)
-    if selected_profile == 'recovered-release' and (manifest.get('selected_profile') != selected_profile
-            or manifest.get('profile_sha256') != source['profile_sha256']):
-        raise ValueError('SDK snapshot source profile differs; fetch fresh configuration')
-    if manifest['transport'].get('status') != 200: raise ValueError('SDK snapshot HTTP status rejected')
-    if manifest['transport'].get('socks5_loopback_port') != (route.port if route else None):
-        raise ValueError('SDK snapshot route differs from the selected route; fetch fresh configuration')
-    body = (path.parent / 'body.bin').read_bytes()
-    if hashlib.sha256(body).hexdigest() != manifest['body_sha256']: raise ValueError('SDK snapshot body changed')
-    config = decode_gmc2_configuration(body, manifest['transport']['headers'])
+    geo = None
+    if selected_profile == 'recovered-release':
+        public = loader.load_release_profile('public_gmc2', root=ROOT)
+        if (public['source_sha256'], public['profile_sha256']) != (source['source_sha256'], source['profile_sha256']):
+            raise ValueError('SDK public request and NID source profiles differ')
+        fetched_at = time.monotonic()
+        body, transport = fetch_gmc2(public['request'], route=route)
+        if transport.get('status') != 200 or transport.get('tls_certificate_verification') is not True:
+            raise ValueError('SDK configuration HTTP/TLS rejected')
+        if transport.get('socks5_loopback_port') != (route.port if route else None):
+            raise ValueError('SDK configuration route differs')
+        geo = decode_gmc2_geo(body, source_sha256=source['source_sha256'])
+    else:
+        # Historical profile retains its explicit offline snapshot workflow.
+        pointer = json.loads((ROOT / 'code-clues/public-gmc2-recovery.json').read_text('utf-8'))
+        path = Path(pointer['manifest'])
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != pointer['sha256']: raise ValueError('SDK snapshot manifest changed')
+        manifest = json.loads(data)
+        transport = manifest['transport']
+        if transport.get('status') != 200: raise ValueError('SDK snapshot HTTP status rejected')
+        if transport.get('socks5_loopback_port') != (route.port if route else None):
+            raise ValueError('SDK snapshot route differs from the selected route; fetch fresh configuration')
+        body = (path.parent / 'body.bin').read_bytes()
+        if hashlib.sha256(body).hexdigest() != manifest['body_sha256']: raise ValueError('SDK snapshot body changed')
+    config = decode_gmc2_configuration(body, transport['headers'])
     profile = dict(source['profile'])
     version = observe_windows_version()
     profile['os_version'] = version.suffix() if version is not None else ''
     if route:
-        country = json.loads(body)['resultData']['geoIp']['isoCountry']
+        country = geo.iso_country if geo is not None else json.loads(body)['resultData']['geoIp']['isoCountry']
         if type(country) is not str or len(country) != 2 or any(not 'A' <= c <= 'Z' for c in country):
             raise ValueError('Missing observed country for selected route')
         profile['country_code'] = country
+    if geo is not None:
+        prepared = SdkInputs(email, binding, profile, dict(config.constants), selected_profile,
+            route.port if route else None, source['source_sha256'], geo, fetched_at)
+        prepared.check_usage(email=email, selected_profile=selected_profile, route=route)
+        return prepared
     return binding, profile, dict(config.constants)
 
 
 def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
-        _capture=None, _execute=None, _execute_token=None, _progress=None):
+        _capture=None, _execute=None, _execute_token=None, _progress=None, _prepared_inputs=None):
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')
     if auth_flow not in ('nid', 'launcher') or (auth_flow == 'launcher' and create_sdk_player):
         raise ValueError('Unsupported explicit SDK auth flow')
     route = SocksRoute(socks_port) if socks_port is not None else None
-    binding, profile, constants = load_inputs(email, route=route, selected_profile=selected_profile)
+    prepared = _prepared_inputs if _prepared_inputs is not None else load_inputs(email, route=route, selected_profile=selected_profile)
+    if _prepared_inputs is not None and not isinstance(prepared, SdkInputs):
+        raise TypeError('Expected a fresh in-memory SDK context')
+    if isinstance(prepared, SdkInputs):
+        prepared.check_usage(email=email, selected_profile=selected_profile, route=route)
+    binding, profile, constants = prepared
     context = prepare_nid_sign_in_context(binding=binding, **profile)
     url = bind_nid_web_url(context, constants=constants, max_url_size=32768)
     if _capture is None:
@@ -91,6 +116,8 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=
     provider = _capture(url, expected_game_code=profile['game_code'], timeout=timeout,
                         data_directory=HERE / ('.local/nid-sign-in-webview' + ('-socks-' + str(route.port) if route else '')),
                         expected_email=email, sign_in_password=password, socks_port=socks_port)
+    if isinstance(prepared, SdkInputs):
+        prepared.check_usage(email=email, selected_profile=selected_profile, route=route)
     # SDK DeviceKey differs from the NID DeviceKey used by the preceding page.
     inputs = dict(constants=constants, game_code=profile['game_code'], build_code=profile['build_code'], nm_device_key=binding.nm_device_key,
         device_key=binding.device_key, country_code=profile['country_code'] if route else provider.joined_country_code,

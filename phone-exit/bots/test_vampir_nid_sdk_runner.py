@@ -8,6 +8,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 from dataclasses import replace
 from urllib.parse import parse_qs, urlsplit
+from vampir_test_sources import historical_exe_reads
 
 
 class NidSdkRunnerTests(unittest.TestCase):
@@ -62,7 +63,8 @@ class NidSdkRunnerTests(unittest.TestCase):
         tool = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(tool)
         stored = json.loads((tool.ROOT / 'code-clues/nid-windows-initial-profile.json').read_text('utf-8'))
-        self.assertEqual(tool.build(), stored)
+        with historical_exe_reads(stored['source'],stored['source_sha256']):
+            self.assertEqual(tool.build(), stored)
         self.assertFalse(stored['active_runtime_settings_verified'])
         self.assertEqual((stored['profile']['os_type'], stored['profile']['game_code']), ('PC', 'thered'))
 
@@ -115,7 +117,9 @@ class NidSdkRunnerTests(unittest.TestCase):
                 dict(manifest=str(temp_root / 'manifest.json'), sha256=folder.name)), encoding='utf-8')
             identity = SimpleNamespace(device_key=self.binding.device_key, nid_device_key=self.binding.nid_device_key,
                                        nm_device_key=self.binding.nm_device_key)
-            with patch.object(self.runner, 'ROOT', temp_root), \
+            source_profile=json.loads(profile)
+            with historical_exe_reads(source_profile['source'],source_profile['source_sha256']), \
+                    patch.object(self.runner, 'ROOT', temp_root), \
                     patch.object(self.runner, 'DeviceRegistry') as registry, \
                     patch.object(self.runner, 'observe_windows_device_identity', return_value=identity), \
                     patch.object(self.runner, 'observe_windows_version') as observe_version:

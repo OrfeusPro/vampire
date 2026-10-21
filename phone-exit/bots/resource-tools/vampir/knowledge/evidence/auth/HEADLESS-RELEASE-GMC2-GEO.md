@@ -122,6 +122,48 @@ object / string схемы `resultData.geoIp`, а не копия всего nat
 Полный callback / cache lifecycle и обязательность metadata для Login остаются
 неизвестными. В этой проверке runtime и сеть не запускались.
 
+## Свежий GMC2 context в runtime
+
+Для `recovered-release` `run-nid-sdk-sign-in.py` теперь получает публичный GMC2
+непосредственно перед входом через выбранный SOCKS / HTTPS. Request и NID profile
+должны принадлежать одному закреплённому SHA источника и профиля. Константы SDK,
+clientIp, geoLocation и isoCountry извлекаются из одного ответа в памяти;
+сохранённый `public-gmc2-recovery.json` в этой ветви не читается.
+
+Транспорт вынесен в лёгкий `vampir_core/gmc2_http.py` и используется также CLI
+исследования. Сохраняются TLS validation, запрет redirects / credentials,
+лимиты тела и времени, remote DNS через выбранный SOCKS. Исследовательские
+инструменты и Ghidra runtime не импортируются.
+
+`gmc2_context.py` принимает наблюдаемую схему объектов и непустых строк;
+неподдержанные типы, дубли ключей, опасные для metadata строки и не публичный
+IPv4 отклоняются локально. Это более строгая политика, чем native conversions.
+SHA тела считается по полученным байтам. Поля и account context исключены из repr;
+runtime не сохраняет body / geo / credentials на диск.
+
+`probe-lobby-sdk-login.py` передаёт тот же `SdkInputs` в SDK, без повторной загрузки
+и смешивания контекстов. До открытия окна, после окна и перед metadata проверяются
+аккаунт, профиль, исходный SHA, SOCKS-порт и возраст по monotonic clock.
+Локальный предел — 300 секунд с начала fetch, а не восстановленный SDK timeout.
+Фоновая смена телефона за тем же портом отдельно не обнаруживается: маршрут должен
+оставаться неизменным в течение попытки; после его замены нужен новый контекст.
+
+Для текущего source SHA частичная metadata дополнена I_ConnectIP из clientIp
+и I_CountryCD из geoLocation. IsoCountry используется отдельно в прежнем SDK
+countryCode; joined country не заменяет geoLocation. Собственное состояние страны
+бота в начале запуска пустое: A1 в этом случае записывается. Helper сохраняет
+непустое прежнее значение для последующих обновлений A1; cache игры не читается.
+
+Локально прошли 34 теста: 11 новых geo / runtime, 5 lobby, 6 NID runner,
+5 release profile и 7 public GMC2. HTTP / browser / auth в новых runtime tests —
+fixtures; реальная сессия и причина InvalidState ими не установлены.
+Исторические тесты прежнего профиля используют сохранённый EXE с проверкой
+полного SHA вместо обновлённого установленного файла. Production guards сохранены.
+Три новых offline checks зарегистрированы в research-checks.json.
+
+Задание: `F:/PhoneExit Resources/Vampir/knowledge/requests/14410cfec54b4369d1c5a976444e5348f7d39353252e208fc7fdcf8e4e5f9d01/manifest.json`.
+Следом — одна живая проверка текущей metadata через стабильный JP-маршрут.
+
 ## Материалы
 
 Каталог библиотеки:

@@ -71,7 +71,7 @@ class ReleaseSdkProfileTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.runner.load_inputs('fixture@example.invalid', selected_profile='automatic')
 
-    def test_old_sdk_snapshot_rejected_before_decode_or_authentication(self):
+    def test_release_fetches_fresh_configuration_without_reading_old_snapshot(self):
         binding = SimpleNamespace(kind='real', identity_recorded=True, nid_identity_recorded=True, confirmation='unknown',
                                   device_key='sdk-fixture', nid_device_key='nid-fixture', nm_device_key='nm-fixture')
         identity = SimpleNamespace(device_key=binding.device_key, nid_device_key=binding.nid_device_key, nm_device_key=binding.nm_device_key)
@@ -89,10 +89,12 @@ class ReleaseSdkProfileTests(unittest.TestCase):
                 dict(manifest=str(manifest), sha256=hashlib.sha256(manifest.read_bytes()).hexdigest())), encoding='utf-8')
             with patch.object(self.runner, 'ROOT', root), patch.object(self.runner, 'DeviceRegistry') as registry, \
                     patch.object(self.runner, 'observe_windows_device_identity', return_value=identity), \
-                    patch.object(self.runner, 'decode_gmc2_configuration', side_effect=AssertionError('must reject before decode')):
+                    patch.object(self.runner, 'decode_gmc2_configuration', side_effect=AssertionError('must reject before decode')), \
+                    patch.object(self.runner, 'fetch_gmc2', side_effect=ValueError('fresh-fetch-fixture')) as fetch:
                 registry.return_value.get.return_value = binding
-                with self.assertRaisesRegex(ValueError, 'snapshot source profile differs'):
+                with self.assertRaisesRegex(ValueError, 'fresh-fetch-fixture'):
                     self.runner.load_inputs('fixture@example.invalid', selected_profile='recovered-release')
+                fetch.assert_called_once()
 
     def test_run_passes_selected_profile_before_browser_is_started(self):
         with patch.object(self.runner, 'load_inputs', side_effect=ValueError('preflight-fixture')) as inputs:

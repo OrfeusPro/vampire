@@ -15,6 +15,7 @@ from vampir_core.socks_route import SocksRoute
 from vampir_core.windows_version import observe_windows_version
 from vampir_core.nid_metadata import encode_nid_metadata_with_device_key
 from vampir_core.metadata_tid import resolve_metadata_tid, SOURCE_SHA256 as METADATA_TID_SOURCE_SHA256
+from vampir_core.gmc2_context import SdkInputs
 
 
 def module(name, filename):
@@ -43,7 +44,10 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path,
         route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256)
     sdk = module('lobby_sdk_signin', 'run-nid-sdk-sign-in.py')
-    binding, sdk_profile, _ = sdk.load_inputs(email, route=route, selected_profile=selected_profile)
+    prepared = sdk.load_inputs(email, route=route, selected_profile=selected_profile)
+    binding, sdk_profile, _ = prepared
+    if selected_profile == 'recovered-release' and not isinstance(prepared, SdkInputs):
+        raise ValueError('Current SDK profile requires a fresh GMC2 context')
     browser = module('lobby_sdk_browser', 'nid-browser.py')
     captured = {}
     def capture(*args, **kwargs):
@@ -52,8 +56,9 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         captured['provider'] = value
         if _progress: _progress('sdk_sign_in')
         return value
+    extra = {'_prepared_inputs': prepared} if isinstance(prepared, SdkInputs) else {}
     data = sdk.run(email, timeout=180, password=password, socks_port=socks_port, _capture=capture,
-        auth_flow=auth_flow, selected_profile=selected_profile, _progress=_progress)
+        auth_flow=auth_flow, selected_profile=selected_profile, _progress=_progress, **extra)
     password = None
     provider = captured.pop('provider')
     country = ''
@@ -69,6 +74,11 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         values = dict(I_GameCode=sdk_profile['game_code'],I_GameVersion=source.app_version,
             I_PID=data.player_id,I_JoinedCountryCode=country,I_NMDeviceKey=binding.nm_device_key)
         if getattr(source, 'source_exe_sha256', '') == METADATA_TID_SOURCE_SHA256:
+            if not isinstance(prepared, SdkInputs) or prepared.source_sha256 != source.source_exe_sha256:
+                raise ValueError('Current metadata requires matching fresh GMC2 source')
+            prepared.check_usage(email=email, selected_profile=selected_profile, route=route)
+            # Bot-owned geo state starts empty for each run; no game cache read.
+            values.update(prepared.geo.metadata(previous_country=''))
             values['I_TID'] = resolve_metadata_tid(HERE / '.local/metadata.sqlite3',
                 nm_device_key=binding.nm_device_key, source_sha256=source.source_exe_sha256)
         if any(type(value) is not str or not value for value in values.values()):

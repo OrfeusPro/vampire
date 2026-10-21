@@ -247,6 +247,77 @@
       "question": "common-data-population",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Полная семантика map lookup и virtual conversions при ошибках; подключение свежего context к runtime и причина Login 16."
+    },
+    {
+      "addresses": [
+        "0x1444f9980",
+        "0x144552430",
+        "0x14455bc40"
+      ],
+      "checks": [
+        {
+          "cache_key": "9f59a916925e61a487a3537512d3653160a88896f2f105d928be062064ad98c8",
+          "id": "release-common-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066\\manifest.json",
+          "sha256": "0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a3bd73d19cc3e33408dcc2ad6e25902ef9608a47a5597bad4ed867be81e9ea49",
+          "id": "release-country-setter",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08\\manifest.json",
+          "sha256": "8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d798498ec8da98d52b995b0e998fa9a893e1c267f05cac8f5498fc4e4c2c0fa5",
+          "id": "release-gmc2-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c655212e863ffc213a04e406f78482a3564ad835135b1c4f20ebd6ce01dfc15f\\manifest.json",
+          "sha256": "c655212e863ffc213a04e406f78482a3564ad835135b1c4f20ebd6ce01dfc15f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dfd32cdf4d5e2c751dd581dc59832e75fa5e618d01fc15db2c47e46219ca242f",
+          "id": "release-gmc2-runtime",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3d1ad601be74ca13c48c0ecde4c8c79f70d8debb1991329bf122abdbd2576d17\\manifest.json",
+          "sha256": "3d1ad601be74ca13c48c0ecde4c8c79f70d8debb1991329bf122abdbd2576d17",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4008efa2e6ac712e4dee7e3300f805c570fc0e82d067e0908f2bb31c7a36dd5d",
+          "id": "release-gmc2-lobby",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\575771b5c4d2fce4eb5de95c97bec4178863286401bf3196d87992fdabf4e3b0\\manifest.json",
+          "sha256": "575771b5c4d2fce4eb5de95c97bec4178863286401bf3196d87992fdabf4e3b0",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Доказанные clientIp → settings+0x38 → I_ConnectIP и geoLocation → SetCountryCode → settings+0x3f0 → I_CountryCD подключены к runtime recovered-release. Для SDK и metadata используется один свежий публичный HTTPS-ответ выбранного маршрута в памяти; проверяются SHA профиля / источника, аккаунт, порт и monotonic age <=300 с. Политика объектов и строк строже native conversions. Правило A1 сохранено; собственная страна бота в начале запуска пустая.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-f80af1744c74\\details.json",
+          "sha256": "88435ba99ed45b90851ff6fd3bac2cb9ebdcd9b51d2aee5dead5e5d386172ee1"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-784447667bfa\\details.json",
+          "sha256": "5acdfa85c303bda2002ab56a5e84fb3938c862afa8a46a7dfba217576983804b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-af8c285547dd\\details.json",
+          "sha256": "741a018c06373c2c6524aeb0ccae30e17e0a37915a51ad0e910a0afc08998bc7"
+        }
+      ],
+      "id": "21eeaefa5433ea85df614859056382031189cebab12b11bc72cc9d98dd5ffbc4",
+      "limits": [
+        "Новые runtime проверки используют HTTP / browser / auth fixtures, не доказывают вход в игру или причину Login 16.",
+        "300 секунд, публичный IPv4 и строгая схема являются локальной политикой, не полным native callback.",
+        "Смена телефона за тем же SOCKS-портом во время попытки отдельно не обнаруживается; маршрут должен оставаться стабильным.",
+        "Состояние страны не берётся из SaveGame или cache официального клиента и между запусками не сохраняется."
+      ],
+      "method": "static",
+      "next_check": "Одна живая проверка через стабильный JP-маршрут с новой metadata; затем двигаться по полученному ответу, без слепых повторов.",
+      "question": "common-data-population",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Принятие новой metadata сервером, остальные поля common data, full callback и причина InvalidState."
     }
   ],
   "schema": 1,

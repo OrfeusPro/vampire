@@ -117,6 +117,12 @@ Generic JSON helpers и полный callback native не исполнены, ru
 Следом подключить свежие clientIp / geoLocation с проверками источника, маршрута,
 возраста и правила A1. Полный JSON parser и callback этим не проверены.
 [Контракты и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md#json-helpers-границы-извлечения-полей).
+Теперь runtime новой сборки получает GMC2 перед входом через выбранный маршрут
+и использует один ответ для SDK и metadata. Добавлены I_ConnectIP из clientIp
+и I_CountryCD из geoLocation, с правилом A1 и пределом возраста 300 секунд.
+34 локальные проверки прошли. Следом — живая проверка; Login 16 ещё не устранён.
+[Свежий контекст и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md#свежий-gmc2-context-в-runtime).
+
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических

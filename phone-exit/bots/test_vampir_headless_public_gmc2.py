@@ -11,6 +11,7 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import Mock, patch
+from vampir_test_sources import historical_exe_reads
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / 'vampir-shared'))
@@ -34,6 +35,8 @@ class PublicGmc2Tests(unittest.TestCase):
         cls.profile_tool = load('gmc2_public_profile_test', 'build-headless-gmc2-public-profile.py')
         cls.fetch_tool = load('gmc2_public_fetch_test', 'fetch-public-gmc2-config.py')
         cls.decode_tool = load('gmc2_public_decode_test', 'decode-public-gmc2-config.py')
+        stored=json.loads((cls.fetch_tool.ROOT/'code-clues/headless-gmc2-public-profile.json').read_text('utf-8'))
+        cls.enterClassContext(historical_exe_reads(stored['source'],stored['sha256']))
         cls.profile = cls.fetch_tool.profile()
         cls.folder = cls.fetch_tool.ROOT / 'public-gmc2-snapshots' / cls.decode_tool.SNAPSHOT
         cls.manifest = json.loads((cls.folder / 'manifest.json').read_text('utf-8'))

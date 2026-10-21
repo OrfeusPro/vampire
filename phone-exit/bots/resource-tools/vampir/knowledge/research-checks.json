@@ -60,6 +60,85 @@
         "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
       ]
+    },
+    {
+      "id": "release-gmc2-context",
+      "questions": [
+        "common-data-population"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "test_pattern": "test_vampir_gmc2_context.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [],
+      "dependencies": [
+        "phone-exit/bots/vampir-shared/vampir_core/cdn_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_decode.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_metadata.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socks_route.py"
+      ]
+    },
+    {
+      "id": "release-gmc2-runtime",
+      "questions": [
+        "common-data-population"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "test_pattern": "test_vampir_gmc2_runtime.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [],
+      "dependencies": [
+        "phone-exit/bots/vampir-headless/run-nid-sdk-sign-in.py",
+        "phone-exit/bots/vampir-headless/sdk-source-profile.py",
+        "phone-exit/bots/vampir-shared/vampir_core/cdn_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_registry.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_decode.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_metadata.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_sdk_credential.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_url.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_auth.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_secret.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_version.py"
+      ]
+    },
+    {
+      "id": "release-gmc2-lobby",
+      "questions": [
+        "common-data-population"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "test_pattern": "test_vampir_lobby_joined_country.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [],
+      "dependencies": [
+        "phone-exit/bots/vampir-headless/probe-lobby-sdk-login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/cdn_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_decode.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_login_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_packets.py",
+        "phone-exit/bots/vampir-shared/vampir_core/metadata_tid.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_metadata.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socks_route.py"
+      ]
     }
   ]
 }
