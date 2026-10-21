@@ -384,6 +384,72 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Результат выбора после устранения лимита; совместимость ID 110 и семантика позиции."
+    },
+    {
+      "addresses": [
+        "0x145d758a0",
+        "0x145db4070"
+      ],
+      "checks": [
+        {
+          "cache_key": "32cf61d7252c6d5d33710d6af67ca0a82c2f0b635ecf82544b5ee45b7eca4bab",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd\\manifest.json",
+          "sha256": "f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current apply копирует main+8→player+8, main+30→player+10, vector main+188→player+20 (24 байта). Current reserve имеет gates и handoff202/236; автоматически вызывать после110 нельзя: в эталоне исходящий201 отсутствует.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-ebe2b2bfcd2d\\details.json",
+          "sha256": "049a10725e0480e710360e5e75388a3fcc792b137aa16d14e56360e97132f2c1"
+        }
+      ],
+      "id": "fa00203e0c7a1795673ef26f6206aaa86248b5f1749000b4f245588b26aa0212",
+      "limits": [
+        "Выводы по псевдокоду и инструкциям текущего EXE; целые методы native не исполнялись.",
+        "Comparison names не доказывают роль. Регистрация ID202, reader и constructor/writer ID203 ещё не проверены.",
+        "Raw vector не объявляется мировой позицией; capture показывает одну успешную ветвь."
+      ],
+      "method": "static",
+      "next_check": "Проверить current reader/registration202 и constructor/writer/getter203; затем продолжить приём после110 и отправить203 из свежих данных, без replay capture значений.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Семантический consumer позиции, current полная привязка ID202→203 и мировая инициализация."
+    },
+    {
+      "addresses": [
+        "0x145dae4c0",
+        "0x145db4510"
+      ],
+      "checks": [
+        {
+          "cache_key": "32cf61d7252c6d5d33710d6af67ca0a82c2f0b635ecf82544b5ee45b7eca4bab",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd\\manifest.json",
+          "sha256": "f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current receive переносит packet+14/+2c/+28 и вызывает slot68 с packet+2d. Current request получает selected player из manager+38/+40 и записывает player+8 в новый packet через constructor14584dcb0; mask84800 выбирает handoff204 для байтов11/14/19, иначе transport slot38. Source player+8 связан current apply с main+8 ID110.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-16b9fbd86578\\details.json",
+          "sha256": "4a46d71025d1c9e450e15d6b10504a617e95f740d2f09efa483359a0e1777523"
+        }
+      ],
+      "id": "9925b95f08cd8da0e535d09715ac73cfa04050340f307740ede2eb63d818c49c",
+      "limits": [
+        "Выводы по псевдокоду и инструкциям текущего EXE; целые методы native не исполнялись.",
+        "Comparison names не доказывают роль. Регистрация ID202, reader и constructor/writer ID203 ещё не проверены.",
+        "Raw vector не объявляется мировой позицией; capture показывает одну успешную ветвь."
+      ],
+      "method": "static",
+      "next_check": "Проверить current reader/registration202 и constructor/writer/getter203; затем продолжить приём после110 и отправить203 из свежих данных, без replay capture значений.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Семантический consumer позиции, current полная привязка ID202→203 и мировая инициализация."
     }
   ],
   "schema": 1,
