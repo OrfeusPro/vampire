@@ -186,3 +186,80 @@ SHA256 `ef5acc06ba92443f69b7cd0d993af2c16bbac4bb5e3e1ceffae1510edad40968`.
 ```powershell
 node phone-exit/pc/src/capture-inspect.js "C:/Users/Валентин/.phone-exit/diagnostics/8e13f35e8b54acbc9d136ccf2ed574e5/traffic.jsonl"
 ```
+
+## Успешный HK-захват 2d150317 после обновления
+
+Пользователь предоставил
+`C:/Users/Валентин/.phone-exit/diagnostics/2d1503177164c369d97ba71f1dab281c/`
+и уточнил: использовал HK; запись включил после автоматического выбора сервера,
+затем нажал вход к персонажам. HK — уточнение пользователя; конкретный телефон
+и внешний IP этим файлом не установлены. Это не тот же маршрут, что JP-попытка
+бота с кодом 1, поэтому разницу ответов нельзя приписывать одному полю Login.
+
+`capture-inspect.js` проверил JSONL / flows / offsets / lengths: 73087 байт файла,
+47871 байт трафика, 3 flows, 89 событий до end, 49,281 секунды.
+SHA256 `6d9717ac836923b9eaaf12cc86b29b4716da2b54a3900313cf94e06c21f06fe1`.
+Ручное штатное завершение, лимиты не достигнуты.
+
+| Flow | Клиент → сервер | Сервер → клиент | Результат |
+| --- | --- | --- | --- |
+| 1 | 0 | 0 | Открыт без записанных данных, close отсутствует; причина неизвестна |
+| 2 | 1254 | 123 | Лобби: Version / Login, IDs 1 / 3 → 2 / 4 |
+| 3 | 2112 | 44382 | Игровой Login, список, выбор и дальнейшая инициализация |
+
+Готовый offline checker применил существующие XOR / CRC / ReceiveStream,
+LoginResult и CharacterList decoders. Для лобби offset 0, игры offset 3.
+Flow 2 разобран в 4 пакета, flow 3 — в 190 пакетов обеих сторон;
+ошибок разбора и оставшихся raw / decoded / send bytes нет.
+Все 32 исходящих игровых кадра дополнительно прошли CRC в Login shape inspector.
+Это проверка восстановленного потока, а не измерение TCP retransmits / RTT
+или доказательство стабильности любого другого соединения.
+
+В игровом flow 3:
+
+- Version ID 1 имеет body 191 байт; ответ ID 2 — 17 байт.
+- Login ID 3: body 1232 байта. LoginResult ID 4: body 147 байт,
+  строгий decoder принял целиком, result code **0**.
+- ID 101, пустой запрос → ID 102, 354 байта, result code **0**, один персонаж.
+- ID 109, 20 байт → ID 110, 4724 байта; затем IDs 202 / 203 / 205 / 206.
+  Значит, запись содержит и запрос выбора, и ответ, а не только список.
+  Семантический разбор всего ID 110 / позиции и отображение мира этим не доказаны.
+
+Обезличенный checker report вне Git:
+`F:/PhoneExit Resources/Vampir/code-clues/official-capture-2d150317-redacted-summary.json`,
+SHA256 `4dc5a3837dc5204b605cfe0b6bda2a5d7a4b021a016d7013f7d8bde2ac032830`.
+Login shape report:
+`F:/PhoneExit Resources/Vampir/code-clues/official-login-shape-2d150317.json`,
+SHA256 `89b5061fb205f594919b8917c2823ae3c1c097074021560ca1ef0a9c0a962134`.
+Сохраняются размеры, allowlisted имена metadata и числовые поля, без значений
+credentials / идентификаторов / токенов. Никакой сетевой replay захвата не запускался.
+
+### Сопоставление с последней попыткой бота
+
+| Поле | Официальный клиент, HK | Бот, JP |
+| --- | --- | --- |
+| ClientVersion | 261105 | 261105 |
+| server ID | 256 | 256 |
+| Два последних uint32 | 207 / 1 | 207 / 1 |
+| Пять raw bytes | 3 / 3 / 1 / 0 / 0 | 3 / 3 / 1 / 0 / 0 |
+| raw uint64 +0x128 | 0 | 0 |
+| Metadata UTF-8 | 792 байта | 219 байт, явный subset |
+| Game Login result | 0 | 1, метка не установлена |
+
+В metadata официального клиента 26 пар, включая повтор I_World и I_DeviceKey;
+есть TID, ConnectIP, сведения об ОС / устройстве / CPU / RAM / VGA и другие поля,
+не заполненные в частичном контексте бота. Existing collector encoder с
+I_DeviceKey воспроизвёл строку побайтно; это доказывает формат, но не доказывает
+источники / обязательность всех значений. Старые значения из захвата нельзя
+переносить в новую сессию как свежие credentials / TID / IP / hardware context.
+Сами значения аккаунта и device keys с профилем бота в этом проходе не сравнивались.
+
+Успешный реальный ответ новой версии принимается текущими переносимыми readers
+LoginResult / CharacterList. Полная совместимость nonzero code 1 и native mapper
+остаётся отдельным вопросом. Причина различия HK / JP / SDK context пока не
+выделена; новая попытка бота без подтверждённого изменения не запускалась.
+
+```powershell
+node phone-exit/pc/src/capture-inspect.js "C:/Users/Валентин/.phone-exit/diagnostics/2d1503177164c369d97ba71f1dab281c/traffic.jsonl"
+python -X utf8 "F:/PhoneExit Resources/Vampir/code-clues/check-official-capture-20261021.py" "C:/Users/Валентин/.phone-exit/diagnostics/2d1503177164c369d97ba71f1dab281c/traffic.jsonl" --lobby-flow 2 --game-flow 3 --output "F:/PhoneExit Resources/Vampir/code-clues/official-capture-2d150317-recheck.json"
+```
