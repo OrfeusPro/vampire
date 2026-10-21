@@ -126,3 +126,59 @@ time readers и получить только недостающие heading rea
 проверить её локально и выполнить один новый переход до ID 206. Позицию публиковать
 как серверную целевую с указанием мира и границ преобразования, а готовность
 длительной сессии подтверждать отдельно. Полный хвост ID 202 остаётся открытым.
+
+
+## Целый current reader: профиль с пустыми массивами
+
+Продолжение 22 октября. Constructor `0x14584db80` и reader `0x1458503f0`
+теперь исполнены целиком в ограниченном окружении. Getter вернул 206;
+проверены table `0x14996d500` и её slots reader / getter. Nested heading,
+appearance, time и scalar readers исполняются; поля сопоставлены с существующим
+portable codec, без объявления всех коллекций совместимыми.
+
+Проверены 18 тел: строки пустая / ASCII / Unicode, коды 0 / 16 / `0xffffffff`,
+enum 0 / 255. Поля, bool, enum clamps, vector и Unicode совпали. Все короткие префиксы
+минимального тела (81 вариант) отклонены без чтения за доступные байты. Дополнительно
+исполнены все 256 значений heading; native canonicalization не подменяет raw byte
+в portable `WireHeading`.
+
+Установлены прямые callbacks массивов: descriptor `0x1499418a8` → `0x14573e510`,
+`0x14994ac48` → `0x14578b5e0`, `0x14994ac90` → `0x14578aee0`;
+u32 array helper `0x1456b6290` использует descriptor `0x149922210`.
+Их readers и constructors изучены, но непустые массивы пока не исполняются
+в новом whole-reader replay. Очистка / resize допускают только свежие пустые
+контейнеры и отклоняют ненулевые размеры. Это явные fixtures, а не готовый allocator
+для полного ответа. Строковый storage использует прежний ограниченный harness.
+
+Для направления понадобились assembly helpers без unwind roots. `collect`
+оставил их в очереди с объяснением. Применён прежний подход Ghidra flow discovery
+с отдельными `ExportVampirReleaseMath.java` / `run-ghidra-release-math.py`.
+Команда проверяет request, полный SHA, установленный EXE, comparison и закреплённые
+Ghidra / JDK, сериализует запуск и ждёт JVM. Старый math exporter, его выгрузки
+и latest pointer не менялись. Результат — 11 диапазонов трёх функций:
+`0x14144a8e0`, `0x1414458e0`, `0x1487eb5e0`.
+
+В replay исполняются именно эти native ranges. Импорты fmod / atan2 сверяются
+с IAT и вызывают локальную ucrtbase DLL, путь / SHA которой включены в отчёт.
+Python-тригонометрия не используется. Проверены конечные значения направления
+из wire byte; все особые аргументы математических функций этим не покрыты.
+
+| Материал в comparison | SHA256 |
+| --- | --- |
+| details/run-7b00263d9ea5/details.json | a26a06673aa07711ee50369ba26d041ba842100e4d73d8650e764507c9e74a15 |
+| details/run-6770206293df/details.json | 57e40960e63a98b055597bb81e0852d56ce006fface292766546c6abfb1562e6 |
+| math/run-538e7d34a845/provenance.json | 0d82836493f153423f9d8ac800f5b1b262412445528ccf792d2dd30843a37339 |
+| world-finish-reader-replay/4d29d6cf27b2de981d9fa337d9cb78cebd97ce560373c3380bc06ec1702bfb2e/manifest.json | 4d29d6cf27b2de981d9fa337d9cb78cebd97ce560373c3380bc06ec1702bfb2e |
+
+Три теста `test_vampir_release_world_finish_reader.py` прошли; offline check
+`release-world-finish-reader-empty` добавлен в реестр. Runtime и source binding
+portable decoder не менялись. Живой вход не повторялся.
+
+Следующий точный набор: callback u32 `0x1456b8c90`, optional vector reader
+`0x145822fd0` из table `0x1499222e8`, constructors `0x145821190` / `0x1457a45a0`.
+Optional wrapper table `0x149921b30` использует уже готовый `0x1456b8330`.
+Подготовленное задание `3c546950…` содержало неподтверждённые соседние адреса
+`0x1456b82f0` / `0x1456bde40`: оно не передавалось в collect и не является
+основанием для анализа. Следующая prepare должна использовать только точный набор
+выше. После него проверить непустые массивы, включая 205 записей +0xb8 и одну
+запись +0xe8 как в эталоне; лишь затем подключать явный переход бота до ID 206.

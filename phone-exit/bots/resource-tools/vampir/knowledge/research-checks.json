@@ -355,6 +355,48 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/resource-tools/vampir/replay-release-world-position-path.py"
       ]
+    },
+    {
+      "questions": [
+        "character-selection-position"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "timeout_seconds": 120,
+      "id": "release-world-finish-reader-empty",
+      "test_pattern": "test_vampir_release_world_finish_reader.py",
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-a74c5869b659/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-7b00263d9ea5/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-6770206293df/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-2cc64357ed05/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-c49c5bae9fe5/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-ecc4c9718f83/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/math/run-538e7d34a845/provenance.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/replay-release-archive-input.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-nested-read-thunk.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/replay-release-world-finish-reader.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-character-list.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-fstring-input.py",
+        "phone-exit/bots/resource-tools/vampir/ExportVampirReleaseMath.java",
+        "phone-exit/bots/resource-tools/vampir/run-ghidra-release-math.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+      ]
     }
   ]
 }
