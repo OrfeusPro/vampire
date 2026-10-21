@@ -102,6 +102,12 @@ native случаями; current Save сохраняет это поле. Runtim
 Service и FString backend — fixtures. Запись страны в settings из ответа GMC2
 и условные player / NID ветви ещё открыты; runtime metadata пока не расширена.
 [Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
+Затем статически прослежен GMC2 callback → response consumer → geo helper:
+key clientIp передаётся string helper, результат переносится в settings+0x38,
+откуда UpdateGmc2 получает I_ConnectIP / I_NMMobileIP. Страна / город остаются
+за отдельным geoLocation helper 0x144552430; он ещё не выгружен. Generic JSON
+helpers и полный callback native не исполнены, runtime пока не расширен.
+[Цепочка, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических

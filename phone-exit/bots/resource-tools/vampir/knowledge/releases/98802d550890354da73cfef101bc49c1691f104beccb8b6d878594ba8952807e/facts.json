@@ -36,6 +36,57 @@
       "question": "common-data-population",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Источник записи GMC2 settings и условные player / NID ветви ещё не подтверждены; причина Login 16 неизвестна."
+    },
+    {
+      "addresses": [
+        "0x1444d0370",
+        "0x1444dfc70",
+        "0x1444f9980"
+      ],
+      "checks": [
+        {
+          "cache_key": "9f59a916925e61a487a3537512d3653160a88896f2f105d928be062064ad98c8",
+          "id": "release-common-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066\\manifest.json",
+          "sha256": "0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Статически прослежен RefreshSDKConstants callback → response consumer → geo helper. Ключ clientIp из manager+0xd0 передаётся string helper, результат переносится в settings+0x38, используемый UpdateGmc2 для I_ConnectIP / I_NMMobileIP. Ключ geoLocation передаётся в отдельный helper 0x144552430.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-00ab3f9ed347\\details.json",
+          "sha256": "3c6b8b8c45e7e29440bda6484b97dd449d928af1c4cd07292e81f80e2c12f88d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-5b8a4894a8ad\\details.json",
+          "sha256": "9724b752266af0557878066964b5454b6933b55ad03f68b2c08408cf74c7a21b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-f80af1744c74\\details.json",
+          "sha256": "88435ba99ed45b90851ff6fd3bac2cb9ebdcd9b51d2aee5dead5e5d386172ee1"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-1d8612e8e473\\details.json",
+          "sha256": "361f02451d80318880d8f59586c7e54124b52af725aed0e088d60b675a96c74d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-ae63693173ac\\details.json",
+          "sha256": "e1d4f62cd84ff146340f5f60ed0802dcaad2c68cefac968d7857cb9fa088f599"
+        }
+      ],
+      "id": "93a90d41140b42aad1646f91fcad0e0f226626171eda864de52bbad35e5270ae",
+      "limits": [
+        "Сверены Ghidra instructions / pseudocode и source/output hashes.",
+        "Generic JSON helpers, whole callback, HTTP acceptance и native запись страны / города не исполнены.",
+        "Структура одного сохранённого публичного ответа наблюдалась только по именам / типам; geo-значения и IP не выводились.",
+        "Runtime metadata и живая сессия не изменены."
+      ],
+      "method": "static",
+      "next_check": "Проверить 0x144552430 и relevant destinations; затем native-сценарии нужных ветвей до переноса свежих geo-полей в runtime.",
+      "question": "common-data-population",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Запись settings+0x3f0 / +0x3e0 за geoLocation helper и поведение JSON helpers остаются неизвестными; причина Login 16 не выделена."
     }
   ],
   "schema": 1,
