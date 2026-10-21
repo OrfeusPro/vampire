@@ -578,6 +578,319 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Полный current reader202 и привязка его nested blocks; затем runtime202→203→204 и семантика позиции."
+    },
+    {
+      "addresses": [
+        "0x145823280"
+      ],
+      "checks": [
+        {
+          "cache_key": "02e272508226ae31ad28a7c99ea27c8efc51075fc79efafe7ead76e9af315b0a",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb\\manifest.json",
+          "sha256": "d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий префикс ID 202 занимает 19 байт; outer reader исполнен до nested30, nested18 reader полностью. 80 случаев подтвердили поля, clamps, bool и короткие префиксы.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-reserve-prefix-replay\\344b95fb757b1fd203d9135a0e4f93d14e2b354d8bef5ba5b91d78e6c2b5b603\\manifest.json",
+          "sha256": "344b95fb757b1fd203d9135a0e4f93d14e2b354d8bef5ba5b91d78e6c2b5b603"
+        }
+      ],
+      "id": "8bf374b6d64f0c2f8c26052a52e59c07ed6cdc7ea700f6e8a0a2ee76a48cfa96",
+      "limits": [
+        "Только текущий SHA; сохранённые exports и synthetic fixtures, без авторизации и сети.",
+        "Префикс ID 202 не подтверждает полный хвост; packet constructor / registration / handler ID 204 не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить переход свежие ID 110 → 202 → 203 → 204 в одном соединении.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
+    },
+    {
+      "addresses": [
+        "0x145784120"
+      ],
+      "checks": [
+        {
+          "cache_key": "02e272508226ae31ad28a7c99ea27c8efc51075fc79efafe7ead76e9af315b0a",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb\\manifest.json",
+          "sha256": "d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Constructor nested30 создаёт пять вложенных блоков и массивы; это не доказательство полного wire decoder ID 202.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-bb41effcf11f\\details.json",
+          "sha256": "f80cecfa659bc008fffd80fcb84c2179c4a9bdc038eb2281c340c9c9e3b40f1d"
+        }
+      ],
+      "id": "c0b454952742a832e7bdcc43f39569342005330de59b4c38486194e1888caf44",
+      "limits": [
+        "Только текущий SHA; сохранённые exports и synthetic fixtures, без авторизации и сети.",
+        "Префикс ID 202 не подтверждает полный хвост; packet constructor / registration / handler ID 204 не исполнены."
+      ],
+      "method": "static",
+      "next_check": "Проверить один явный переход до ID 204, затем завершать конкретные необходимые коллекции.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
+    },
+    {
+      "addresses": [
+        "0x145736040"
+      ],
+      "checks": [
+        {
+          "cache_key": "02e272508226ae31ad28a7c99ea27c8efc51075fc79efafe7ead76e9af315b0a",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb\\manifest.json",
+          "sha256": "d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Helper вложенного массива очищает контейнер и передаёт descriptor 0x149941818 в archive virtual +0x18; callback 0x14573e430 ещё требует разбора.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-b6070957f870\\details.json",
+          "sha256": "31ac51558fc878ed1f928bc48c313bd19f08253e6478f877eb8f23bcb8ba842c"
+        }
+      ],
+      "id": "4d69310f07d5e912fcf59bc12aecf64dd49439d5b5b4ebafbc91bf9667bedb77",
+      "limits": [
+        "Только текущий SHA; сохранённые exports и synthetic fixtures, без авторизации и сети.",
+        "Префикс ID 202 не подтверждает полный хвост; packet constructor / registration / handler ID 204 не исполнены."
+      ],
+      "method": "static",
+      "next_check": "Получать только конкретные необходимые callbacks при завершении полного хвоста ID 202.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
+    },
+    {
+      "addresses": [
+        "0x1458507c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "02e272508226ae31ad28a7c99ea27c8efc51075fc79efafe7ead76e9af315b0a",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb\\manifest.json",
+          "sha256": "d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый current reader ID 204 совпал с portable decoder на 72 телах и 30 коротких префиксах: поля, signed zero, enum clamp и bool.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-start-result-replay\\a2597bf4988507727a61729a9ef9485078f045ae9d035db8e6c0cb4d52874ddc\\manifest.json",
+          "sha256": "a2597bf4988507727a61729a9ef9485078f045ae9d035db8e6c0cb4d52874ddc"
+        }
+      ],
+      "id": "7df3143b531a3ea07a527d2f259a0ec9270a18ba33a5bd8ee31d3575883007ef",
+      "limits": [
+        "Только текущий SHA; сохранённые exports и synthetic fixtures, без авторизации и сети.",
+        "Префикс ID 202 не подтверждает полный хвост; packet constructor / registration / handler ID 204 не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить свежий ID 204 в новой сессии и актуальный consumer вектора.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
+    },
+    {
+      "addresses": [
+        "0x144aae290"
+      ],
+      "checks": [
+        {
+          "cache_key": "02e272508226ae31ad28a7c99ea27c8efc51075fc79efafe7ead76e9af315b0a",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb\\manifest.json",
+          "sha256": "d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Общий helper читает три float32 через archive slot 0x40 и расширяет их до трёх double; обозначение FString было ошибочным.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-273103367ebd\\details.json",
+          "sha256": "24b73bd8d6edf1ff427614d88d78a61852fd6b56fdc4404665048aebc27769b6"
+        }
+      ],
+      "id": "f804d5a2ab8fefc21d6628e39d33565f2a8668440f537df25cfddaf59781f3f6",
+      "limits": [
+        "Только текущий SHA; сохранённые exports и synthetic fixtures, без авторизации и сети.",
+        "Префикс ID 202 не подтверждает полный хвост; packet constructor / registration / handler ID 204 не исполнены."
+      ],
+      "method": "static",
+      "next_check": "Сверить преобразование в целой native проверке ID 204, затем проверить consumer вектора.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
+    },
+    {
+      "addresses": [
+        "0x144aad640",
+        "0x145759190"
+      ],
+      "checks": [
+        {
+          "cache_key": "02e272508226ae31ad28a7c99ea27c8efc51075fc79efafe7ead76e9af315b0a",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb\\manifest.json",
+          "sha256": "d2e49f8585425717ac0ef0a7e832bb4f337ad8e01977518a412295da34c783eb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Таблица 0x14996d6c8 связывает reader 0x1458507c0 с getter 0x145759190; выполненный getter вернул 204. Native float reader входит в целую проверку результата.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-start-result-replay\\a2597bf4988507727a61729a9ef9485078f045ae9d035db8e6c0cb4d52874ddc\\manifest.json",
+          "sha256": "a2597bf4988507727a61729a9ef9485078f045ae9d035db8e6c0cb4d52874ddc"
+        }
+      ],
+      "id": "1a4621993e9a57733d614cf8a4e9628be678102fe86614b6007433632d9b36ed",
+      "limits": [
+        "Только текущий SHA; сохранённые exports и synthetic fixtures, без авторизации и сети.",
+        "Префикс ID 202 не подтверждает полный хвост; packet constructor / registration / handler ID 204 не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить реальный ответ ID 204; регистрацию и handler исследовать отдельно.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
     }
   ],
   "schema": 1,

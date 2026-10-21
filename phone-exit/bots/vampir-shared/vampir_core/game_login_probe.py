@@ -8,10 +8,11 @@ from .receive_stream import ReceiveLimits
 from .selection_flow import SelectionLimits, SelectionState
 from .game_login_error import describe_game_login_error
 from .session_clock import LobbyPingClock
+from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256
 
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
-                        character_index=None):
+                        character_index=None, read_world_start=False, source_sha256=None):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
@@ -20,6 +21,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         raise ValueError('Character index requires an explicit list operation and uint16 index')
     if ping_clock is not None and not isinstance(ping_clock, LobbyPingClock):
         raise TypeError('Expected verified lobby Ping clock')
+    if type(read_world_start) is not bool or (read_world_start and
+            (character_index is None or source_sha256 != WORLD_SOURCE_SHA256)):
+        raise ValueError('World start requires explicit character selection and current source')
     unknown = []  # Bounded first-packet sample, not a processing limit.
     packet_counts = {}
     other_packet_count = 0
@@ -36,6 +40,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         receive_limits=ReceiveLimits(1048576, 1048576, 1048576, 2097152, 2097152),
         selection_limits=SelectionLimits(1048576, 64, 4096, timeout),
         max_queued_bytes=65536, max_queued_frames=8, on_packet=observe)
+    if read_world_start:
+        owner.enable_world_start(source_sha256=source_sha256,timeout=timeout,max_payload_size=1048576)
     sent = received = 0
     counts_complete = True
     flow = None
@@ -71,12 +77,23 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             if character_index is not None:
                 response = owner.selection.response
                 refused = select_requested and owner.selection.error == 'unsupported_result_code'
-                value.update(character_select_result_received=response is not None or refused,
+                accepted = (select_requested and owner.selection.last_packet_id == 110
+                    and owner.selection.result_code == 0 and owner.selection.error is None)
+                value.update(character_select_result_received=accepted or refused,
                     character_select_result_code=(response.result_code if response is not None
-                        else owner.selection.result_code if refused else None),
+                        else owner.selection.result_code if accepted or refused else None),
                     character_select_body_size=(owner.selection.last_body_size
                         if owner.selection.last_packet_id == 110 else None),
-                    selection_body_fully_decoded=response is not None or refused)
+                    selection_body_fully_decoded=accepted or refused)
+        if read_world_start:
+            world=owner.world_entry
+            value.update(world_entry_state=world.state,world_entry_error=world.error,
+                world_reserve_received=world.reserve_result_code is not None,
+                world_reserve_result_code=world.reserve_result_code,
+                world_reserve_full_body_validated=False,
+                world_start_queued=world.request_sent,
+                world_start_received=world.start_result_code is not None,
+                world_start_result_code=world.start_result_code)
         return value
     try:
         started = time.monotonic()
@@ -115,7 +132,12 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     select_requested = True
                     deadline = time.monotonic() + timeout
                 elif owner.selection.state == SelectionState.SELECT_RESPONSE:
-                    return result('character_select_result')
+                    if not read_world_start: return result('character_select_result')
+                    world=owner.world_entry
+                    world.tick(time.monotonic())
+                    if world.state=='start_response':return result('world_start_result')
+                    if world.error:return result('world_start_failed')
+                    if world.deadline is not None: deadline=world.deadline
             if owner.active:
                 request_deadline = owner.selection.deadline if list_requested else flow.deadline
                 remaining = max(0, min(deadline, request_deadline or deadline) - time.monotonic())
@@ -123,6 +145,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         if owner.active and list_requested:
             # The outer deadline may elapse before another pump observes it.
             owner.selection.expire(now=time.monotonic())
+            if read_world_start:
+                owner.world_entry.tick(time.monotonic())
         return result('connection_closed' if not owner.active else 'timeout')
     finally:
         owner.close()

@@ -70,6 +70,12 @@ def encode_world_move_finish_frame_b(sequence: int, key_bits: int) -> bytes:
     return _encode(205, b'', sequence, key_bits)
 
 
+def encode_world_move_start_frame_b(payload, sequence: int, key_bits: int) -> bytes:
+    from .world_move_start import WorldMoveStartPayload
+    if not isinstance(payload,WorldMoveStartPayload): raise TypeError('Expected WorldMoveStartPayload')
+    return _encode(203,payload.encode(max_payload_size=8),sequence,key_bits)
+
+
 def encode_character_list_frame_b(sequence: int, key_bits: int) -> bytes:
     """Verified ID101 empty request; lifecycle permission belongs to the owner."""
     return _encode(101, b'', sequence, key_bits)

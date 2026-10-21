@@ -196,16 +196,19 @@ bytes с 20 native результатами, проверили source / result 
 ### Reader ID202: установленная внешняя структура
 
 `0x1458506a0` читает result u32 → packet+0x10, byte с clamp32 → +0x14,
-два вложенных объекта +0x18 / +0x30, FString +0x210, bool +0x228,
+два вложенных объекта +0x18 / +0x30, vector3 +0x210, bool +0x228,
 byte с clamp6 → +0x229, byte с clamp2 → +0x22a и u32 +0x22c.
-Это не фиксированные 92 байта: тело зависит от nested blocks и строки.
-Full native reader202 пока не исполнен, runtime decoder202 ещё не добавлен.
+Это не фиксированные 92 байта: тело зависит от вложенных коллекций.
+Полный native reader ID 202 пока не исполнен. Ниже описана отдельная проверка
+его префикса; она не подтверждает оставшиеся коллекции.
 
 Constructor202 `0x14584dc50` устанавливает table `0x14996d600`, создаёт nested18
 через `0x145821270`, nested30 через `0x145784120`, обнуляет result и tail.
 Для этих двух прямых callees уже сохранено следующее задание:
 `F:/PhoneExit Resources/Vampir/knowledge/requests/77e666c927b6c29a47b00e77155a819c236386cf221ee238bca3e1219de4f1d1/manifest.json`.
-Их материалы пока отсутствуют; следующий collect должен запросить только их.
+Задание обработано: constructor nested30 выгружен, короткий constructor nested18
+оставлен в очереди Ghidra как leaf. Найдены readers вложенных блоков; результат
+ограниченного разбора описан ниже.
 
 Каталог comparison: `F:/PhoneExit Resources/Vampir/ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/`.
 
@@ -220,3 +223,54 @@ Native writer check добавлен в research-checks.json. Результат
 finish. Короткие getters остались без Ghidra function object, но их source-pinned
 leaf bytes и выполнение сохранены native report. Новый живой вход не выполнялся:
 сначала завершить decoder202 и обработку следующего шага в той же сессии.
+
+
+## Продолжение до ID 204: локальные и native проверки, 22 октября
+
+Первые 19 байт ID 202: result u32, enum byte с ограничением 32, вложенный
+uint64, uint32, bool и enum byte с ограничением 22. Native reader
+`0x1458506a0` исполнен до входа в nested30; nested18 reader `0x145823280`
+исполнен полностью. Проверены 80 случаев, включая все короткие префиксы.
+Входной буфер и vtables вложенных объектов заданы fixtures. На границе nested30
+выполнение останавливается: успешный разбор полного ID 202 не заявляется.
+
+Оставшиеся коллекции имеют callbacks и вложенные массивы. Их выгрузки сохранены,
+но полный decoder ещё не завершён. Переносимый `world_reserve_context.py`
+сохраняет оставшиеся байты непрозрачными и не использует их как состояние мира.
+Общий helper `0x144aae290` читает три float32 и расширяет их до double:
+прежнее обозначение FString в описании внешнего reader исправлено по инструкциям.
+
+Для ID 204 найдена фактическая table `0x14996d6c8`: reader +0x20 →
+`0x1458507c0`, getter +0x28 → `0x145759190`; getter исполнен и вернул 204.
+Адрес соседней таблицы не использовался как доказательство. Целый reader,
+vector helper и scalar readers проверены на 72 телах и 30 коротких префиксах.
+Переносимый decoder совпал, включая signed zero, bool и enum clamp.
+Packet storage — fixture; constructor, registration и handler не исполнялись.
+
+Новый явный `--read-world-start` продолжает то же соединение после ID 110:
+при code 0 в ограниченном контексте ID 202 ставит ID 203 в очередь из свежего
+selected player, ждёт ID 204 и останавливается. Это экспериментальная политика
+перехода, а не воспроизведение всех UI / cache / world side effects клиента.
+Неполный хвост ID 202 всегда обозначается `world_reserve_full_body_validated=false`.
+ID 205 не отправляется; готовность мира и позиция не заявляются.
+
+Локальный socketpair подтвердил совмещённое получение ID 110 / 202, общий sequence,
+тело ID 203 из текущего ответа выбора, отказы и таймауты. При закрытии сохраняются
+публичные коды уже принятых ответов, приватные тела очищаются. Проверки не выполняют
+авторизацию или игровые действия. Новая живая попытка на этом этапе не выполнена.
+
+| Материал в comparison | SHA256 |
+| --- | --- |
+| details/run-bb41effcf11f/details.json | f80cecfa659bc008fffd80fcb84c2179c4a9bdc038eb2281c340c9c9e3b40f1d |
+| details/run-8ca8ce322478/details.json | d6e0b648574b934150cdf23a82a74043101a667f36d71e8fb85a2ac7a6d758ed |
+| details/run-b6070957f870/details.json | 31ac51558fc878ed1f928bc48c313bd19f08253e6478f877eb8f23bcb8ba842c |
+| details/run-8e61a9c886bd/details.json | 71c410e80ea08fad68b32548373d8d40965bb1d27f4180edae37e18535f9420a |
+| details/run-273103367ebd/details.json | 24b73bd8d6edf1ff427614d88d78a61852fd6b56fdc4404665048aebc27769b6 |
+| details/run-814364d053aa/details.json | 6216fc5f3e83db08510d29129eaf0ba4fe4e42465d1a2f0f1d19cbb2feb58188 |
+| world-reserve-prefix-replay/344b95fb757b1fd203d9135a0e4f93d14e2b354d8bef5ba5b91d78e6c2b5b603/manifest.json | 344b95fb757b1fd203d9135a0e4f93d14e2b354d8bef5ba5b91d78e6c2b5b603 |
+| world-start-result-replay/a2597bf4988507727a61729a9ef9485078f045ae9d035db8e6c0cb4d52874ddc/manifest.json | a2597bf4988507727a61729a9ef9485078f045ae9d035db8e6c0cb4d52874ddc |
+
+Следующая проверка — одна новая сессия с явным продолжением до ID 204.
+Если ID 202 не придёт, сопоставить пропущенные промежуточные запросы эталона,
+не повторяя авторизацию без нового вывода. После ID 204 исследовать актуальный
+consumer вектора и условия завершения мира; полный хвост ID 202 остаётся в очереди.

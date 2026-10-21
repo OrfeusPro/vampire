@@ -70,6 +70,10 @@ class OutboundFrames:
     def queue_character_select(self, payload: CharacterSelectPayload) -> bytes:
         return self._append(encode_character_select_frame_b(payload, self._sequence, self._key_bits))
 
+    def queue_world_move_start(self, payload):
+        from .send_frame import encode_world_move_start_frame_b
+        return self._append(encode_world_move_start_frame_b(payload,self._sequence,self._key_bits))
+
     def close(self) -> None:
         """Invalidate the connection queue, including every unsent partial tail."""
         self._closed = True

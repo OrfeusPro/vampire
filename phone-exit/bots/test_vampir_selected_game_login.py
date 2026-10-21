@@ -25,7 +25,10 @@ class SelectedGameLoginTests(unittest.TestCase):
     def test_current_source_uses_fresh_lobby_clock(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256)
 
-    def check_auth_and_clock(self, source_sha):
+    def test_explicit_world_start_propagates_current_source_and_permission(self):
+        self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256, world_start=True)
+
+    def check_auth_and_clock(self, source_sha, world_start=False):
         from vampir_core.lobby_packets import LobbyVersionResultBody
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
@@ -58,8 +61,11 @@ class SelectedGameLoginTests(unittest.TestCase):
         with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route, \
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
+            options = self.kwargs()
+            if world_start: options['selected_profile'] = 'recovered-release'
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
-                lobby_context='sdk-with-partial-metadata', read_character_list=True, character_index=0, **self.kwargs())
+                lobby_context='sdk-with-partial-metadata', read_character_list=True, character_index=0,
+                read_world_start=world_start, **options)
         packet = exchange.call_args.args[2]
         clock = exchange.call_args.kwargs['ping_clock']
         if source_sha:
@@ -75,6 +81,8 @@ class SelectedGameLoginTests(unittest.TestCase):
         self.assertEqual(packet.raw_bytes, (3,3,1,0,0))
         self.assertTrue(exchange.call_args.kwargs['read_character_list'])
         self.assertEqual(exchange.call_args.kwargs['character_index'],0)
+        self.assertEqual(exchange.call_args.kwargs['read_world_start'],world_start)
+        self.assertEqual(exchange.call_args.kwargs['source_sha256'],source_sha)
         self.assertEqual(packet.strings[11],'{"I_PID":"current-player-fixture"}')
         self.assertEqual(result['login_language_code'],1)
         connection.close.assert_called_once()

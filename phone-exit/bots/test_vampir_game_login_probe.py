@@ -9,10 +9,13 @@ from test_vampir_version_probe import incoming, receive_frame
 from vampir_core.game_login_probe import exchange_game_login
 from test_vampir_selection_flow import list_body, FIXTURE as SELECTION_FIXTURE
 from vampir_core.session_clock import LobbyPingClock
+from vampir_core.world_move_start import SOURCE_SHA256
+from vampir_core.character_select_result import decode_character_select_result
+from test_vampir_world_entry_flow import reserve_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=()):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -38,7 +41,20 @@ class GameLoginProbeTests(unittest.TestCase):
                             selection_bodies.append(body)
                             if other_packets:
                                 server.sendall(b''.join(incoming(pid,b'') for pid in other_packets))
-                            if select_body is not None: server.sendall(incoming(110,select_body))
+                            if select_body is not None:
+                                packet = incoming(110,select_body)
+                                if world_reserve_body is not None:
+                                    packet += incoming(202,world_reserve_body)
+                                server.sendall(packet)
+                                if world_reserve_body is not None and struct.unpack_from('<I',world_reserve_body)[0]==0:
+                                    header, body = receive_frame(server)
+                                    captures.append(header)
+                                    selected = decode_character_select_result(select_body,
+                                        max_payload_size=1048576,max_collection_items=4096)
+                                    if body != struct.pack('<Q',selected.player.at(8)):
+                                        raise AssertionError('Unexpected world start body')
+                                    if world_start_body is not None:
+                                        server.sendall(incoming(204,world_start_body))
                 while server.recv(32): pass
             except BaseException as error: errors.append(type(error).__name__)
             finally: server.close()
@@ -46,7 +62,8 @@ class GameLoginProbeTests(unittest.TestCase):
         worker.start()
         with patch('vampir_core.game_login_probe.time.time_ns', return_value=1792600142863000000):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
-                read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index)
+                read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index,
+                read_world_start=read_world_start, source_sha256=SOURCE_SHA256 if read_world_start else None)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -56,6 +73,43 @@ class GameLoginProbeTests(unittest.TestCase):
         if select_fields is not None:
             self.assertEqual(selection_bodies,[struct.pack('<QIQ',*select_fields)])
         return result, captures
+
+    def world_attempt(self, **kwargs):
+        return self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True,character_body=list_body(),character_index=0,
+            wait_for_select=True,select_body=bytes.fromhex(SELECTION_FIXTURE['select_result_hex']),
+            read_world_start=True,**kwargs)
+
+    def test_world_start_after_coalesced_selection_and_reserve_uses_same_sequence(self):
+        result,captures=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',0,1,2,3,4,0,0,77))
+        self.assertEqual(captures,[(1,0),(3,1),(101,2),(109,3),(203,4)])
+        self.assertEqual(result['status'],'world_start_result')
+        self.assertEqual(result['world_start_result_code'],0)
+        self.assertTrue(result['world_reserve_received'])
+        self.assertTrue(result['world_start_received'])
+        self.assertFalse(result['world_reserve_full_body_validated'])
+        self.assertFalse(result['game_session_ready'])
+        self.assertNotIn('opaque-private-suffix',str(result))
+
+    def test_world_refusals_survive_connection_cleanup(self):
+        result,captures=self.world_attempt(world_reserve_body=reserve_body(16))
+        self.assertEqual(captures,[(1,0),(3,1),(101,2),(109,3)])
+        self.assertEqual(result['world_reserve_result_code'],16)
+        self.assertEqual(result['world_entry_error'],'reserve_result_rejected')
+        self.assertTrue(result['character_select_result_received'])
+        self.assertTrue(result['selection_body_fully_decoded'])
+        self.assertFalse(result['world_start_queued'])
+        result,_=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',16,0,0,0,0,0,0,0))
+        self.assertEqual(result['world_start_result_code'],16)
+        self.assertEqual(result['world_entry_error'],'start_result_rejected')
+
+    def test_missing_world_reserve_or_start_times_out_and_closes(self):
+        for kwargs in ({},{'world_reserve_body':reserve_body()}):
+            result,_=self.world_attempt(**kwargs)
+            self.assertEqual(result['world_entry_error'],'world_entry_timeout')
+            self.assertFalse(result['game_session_ready'])
 
     def test_early_ping_precedes_login_and_preserves_list_sequence(self):
         result, captures = self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),

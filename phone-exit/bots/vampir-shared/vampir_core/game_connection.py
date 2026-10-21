@@ -66,6 +66,7 @@ class GameConnection:
         self._last_time = None
         self._in_pump = False
         self._login = None
+        self._world_entry = None
         try:
             sock.setblocking(False)
         except Exception:
@@ -90,11 +91,15 @@ class GameConnection:
     @property
     def login(self): return self._login
 
+    @property
+    def world_entry(self): return self._world_entry
+
     def close(self):
         if self._active:
             self._active = False
             self._receiver.close()
             self._selection.close()
+            if self._world_entry is not None: self._world_entry.close()
             if self._login is not None: self._login.close()
             try:
                 self._socket.close()
@@ -123,6 +128,13 @@ class GameConnection:
     def select_character(self, index, *, now):
         if not self.active: raise RuntimeError('Connection is inactive')
         self._selection.select(index, now=now)
+
+    def enable_world_start(self, *, source_sha256, timeout, max_payload_size):
+        if not self.active or self._world_entry is not None:
+            raise RuntimeError('World entry cannot be enabled')
+        from .world_entry_flow import WorldEntryFlow
+        self._world_entry=WorldEntryFlow(self._selection,self._outbound,
+            source_sha256=source_sha256,timeout=timeout,max_payload_size=max_payload_size)
 
     def queue_ping(self, payload: PingPayload):
         """Explicit payload from the owner; no guessed heartbeat schedule."""
@@ -153,6 +165,11 @@ class GameConnection:
             if self._selection.expire(now=now):
                 self._fail('selection_timeout')
                 return PumpProgress(0, 0, 0, False)
+            if self._world_entry is not None:
+                self._world_entry.tick(now)
+                if self._world_entry.error:
+                    self._fail('world_entry_failed')
+                    return PumpProgress(0, 0, 0, False)
             while packets < budget.max_packets and self.active:
                 packet = self._receiver.next_packet(key_bits=self._key,
                     max_transport_frames=budget.max_transport_frames_per_packet)
@@ -169,6 +186,9 @@ class GameConnection:
                         self._selection.receive(packet.packet_id, packet.body, now=now)
                         if self._selection.state == SelectionState.FAILED:
                             self._fail('selection_response_failed')
+                    elif packet.packet_id in (202,204) and self._world_entry is not None:
+                        self._world_entry.receive(packet.packet_id,packet.body,now=now)
+                        if self._world_entry.error: self._fail('world_entry_response_failed')
                     else:
                         self._on_packet(packet)
                     continue
