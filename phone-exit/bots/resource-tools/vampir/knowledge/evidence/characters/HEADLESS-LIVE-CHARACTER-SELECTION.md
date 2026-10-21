@@ -164,3 +164,59 @@ registration / reader ID 202 и constructor / writer / getter ID 203. Адрес
 не брать из старого capture как значения для нового сеанса.
 
 SHA256 второго экспорта: `4a46d71025d1c9e450e15d6b10504a617e95f740d2f09efa483359a0e1777523`.
+
+## ID 203: native writer и переносимый body codec
+
+Продолжение по текущему EXE, без игры / сети. Constructor `0x14584dcb0` не имеет
+отдельной unwind-записи: collect оставил его в очереди. Проверен bounded leaf
+до RET, 24 байта:
+`488d05c1f9110448c7411000000000488901488bc1c6410a01c3`.
+Он ставит vtable `0x14996d678`, обнуляет packet+0x10 и ставит byte+0x0a=1.
+
+Таблица203: writer +0x10 → `0x1456bbdc0`, ID getter +0x28 → `0x145759180`,
+name getter +0x38 → `0x145858690` с literal PktWorldMoveStart.
+Таблица202 `0x14996d600` связана с literal PktWorldMoveReserveResult через
+`0x145858660`; reader +0x20 → `0x1458506a0`, ID getter +0x28 → `0x145759140`.
+Короткие ID getters исполнены, вернули 202 и 203.
+
+[replay-release-world-start.py](../../../replay-release-world-start.py) исполнил
+целые constructor / getters / writer текущей сборки. Writer вызывает выходной
+archive virtual +0xb8 с uint64 packet+0x10, возвращает bool результата.
+20 случаев проверили 0 / 1 / смешанное значение / старший бит / max uint64 и
+ёмкости 0 / 7 / 8 / 9 байт. Пакет не изменяется writer, отказ не пишет данные.
+Выходной archive — bounded fixture; весь native archive backend не исполнялся.
+
+[world_move_start.py](../../../../../vampir-shared/vampir_core/world_move_start.py)
+содержит неизменяемый payload и строгий body encoder `<Q`. Builder берёт raw
+field +8 из принятого ID110 и требует текущий полный source SHA. Этот source
+прослежен через current main+8 → player+8 → packet+0x10. Builder не доказывает
+внешний gate ID202 и ничего не отправляет. Три новых теста сравнили portable
+bytes с 20 native результатами, проверили source / result / uint64 / budgets.
+
+### Reader ID202: установленная внешняя структура
+
+`0x1458506a0` читает result u32 → packet+0x10, byte с clamp32 → +0x14,
+два вложенных объекта +0x18 / +0x30, FString +0x210, bool +0x228,
+byte с clamp6 → +0x229, byte с clamp2 → +0x22a и u32 +0x22c.
+Это не фиксированные 92 байта: тело зависит от nested blocks и строки.
+Full native reader202 пока не исполнен, runtime decoder202 ещё не добавлен.
+
+Constructor202 `0x14584dc50` устанавливает table `0x14996d600`, создаёт nested18
+через `0x145821270`, nested30 через `0x145784120`, обнуляет result и tail.
+Для этих двух прямых callees уже сохранено следующее задание:
+`F:/PhoneExit Resources/Vampir/knowledge/requests/77e666c927b6c29a47b00e77155a819c236386cf221ee238bca3e1219de4f1d1/manifest.json`.
+Их материалы пока отсутствуют; следующий collect должен запросить только их.
+
+Каталог comparison: `F:/PhoneExit Resources/Vampir/ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/`.
+
+| Материал | SHA256 |
+| --- | --- |
+| world-packet-bindings/94349d9ca4b72b341fa341c7c8cffa681843f743f28ce91d20ab2ca5728d9e1b/manifest.json | 94349d9ca4b72b341fa341c7c8cffa681843f743f28ce91d20ab2ca5728d9e1b |
+| details/run-3daa86310054/details.json | bb0875c2ad7ed84d7d33a72a7d34e5c6c1902cde22969feea95d8db60dad4582 |
+| details/run-4acfe2f63ddf/details.json | 9c6e5a51a358cf5a9da2319019759ba64a6744c939f368683a76ed278ec0aea2 |
+| world-start-writer-replay/f170ab69f9afef01346992173038a50c205f1cbf1a8ebac4c820907add971b3b/manifest.json | f170ab69f9afef01346992173038a50c205f1cbf1a8ebac4c820907add971b3b |
+
+Native writer check добавлен в research-checks.json. Результаты сохранены через
+finish. Короткие getters остались без Ghidra function object, но их source-pinned
+leaf bytes и выполнение сохранены native report. Новый живой вход не выполнялся:
+сначала завершить decoder202 и обработку следующего шага в той же сессии.

@@ -450,6 +450,134 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Семантический consumer позиции, current полная привязка ID202→203 и мировая инициализация."
+    },
+    {
+      "addresses": [
+        "0x14584dcb0"
+      ],
+      "checks": [
+        {
+          "cache_key": "32cf61d7252c6d5d33710d6af67ca0a82c2f0b635ecf82544b5ee45b7eca4bab",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd\\manifest.json",
+          "sha256": "f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Bounded текущий constructor ID203 исполнен до RET: устанавливает table14996d678, zero packet+10, byte+0a=1; ID getter возвращает203. Конструктор без unwind и не выгружен collect, поэтому использованы source-pinned leaf bytes.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-start-writer-replay\\f170ab69f9afef01346992173038a50c205f1cbf1a8ebac4c820907add971b3b\\manifest.json",
+          "sha256": "f170ab69f9afef01346992173038a50c205f1cbf1a8ebac4c820907add971b3b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-3daa86310054\\details.json",
+          "sha256": "bb0875c2ad7ed84d7d33a72a7d34e5c6c1902cde22969feea95d8db60dad4582"
+        }
+      ],
+      "id": "b8ba89c18455279c4f85226b46cf31ac43cddaa879f96d8f340559ee9feb0325",
+      "limits": [
+        "Native выходной archive +0xb8 — явная bounded uint64 fixture; весь backend не исполнен.",
+        "Чтение полного ID202, его dispatcher / handler и переход в мир не доказаны этим replay.",
+        "Синтетические поля; никаких игровых действий или авторизации."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти вложенные reader202 через его constructor, проверить полный decoder и только затем разрешить runtime отправку203 после принятого202.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный current reader202 и привязка его nested blocks; затем runtime202→203→204 и семантика позиции."
+    },
+    {
+      "addresses": [
+        "0x1456bbdc0",
+        "0x145759140",
+        "0x145759180",
+        "0x1458506a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "32cf61d7252c6d5d33710d6af67ca0a82c2f0b635ecf82544b5ee45b7eca4bab",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd\\manifest.json",
+          "sha256": "f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые current ID getters202/203 и writer203 исполнены из EXE; writer записывает packet+10 как один uint64. 20 сценариев проверили значения0/1/смешанный/старшийбит/max и capacities0/7/8/9; portable codec побайтно совпал. Reader202 отдельно разобран статически: result u32, enum<=32, nested18/30, FString210, bool228, enum229<=6, enum22a<=2, u32 22c; whole reader native не исполнен.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-start-writer-replay\\f170ab69f9afef01346992173038a50c205f1cbf1a8ebac4c820907add971b3b\\manifest.json",
+          "sha256": "f170ab69f9afef01346992173038a50c205f1cbf1a8ebac4c820907add971b3b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-3daa86310054\\details.json",
+          "sha256": "bb0875c2ad7ed84d7d33a72a7d34e5c6c1902cde22969feea95d8db60dad4582"
+        }
+      ],
+      "id": "1250a6063152b0c16de7719664450f4c5c5aa0945aa013ad7a0260e03e1e17b8",
+      "limits": [
+        "Native выходной archive +0xb8 — явная bounded uint64 fixture; весь backend не исполнен.",
+        "Чтение полного ID202, его dispatcher / handler и переход в мир не доказаны этим replay.",
+        "Синтетические поля; никаких игровых действий или авторизации."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти вложенные reader202 через его constructor, проверить полный decoder и только затем разрешить runtime отправку203 после принятого202.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный current reader202 и привязка его nested blocks; затем runtime202→203→204 и семантика позиции."
+    },
+    {
+      "addresses": [
+        "0x14584dc50"
+      ],
+      "checks": [
+        {
+          "cache_key": "32cf61d7252c6d5d33710d6af67ca0a82c2f0b635ecf82544b5ee45b7eca4bab",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd\\manifest.json",
+          "sha256": "f9e82484015343aa2f4b8c2eff98b9aef2fd820de32ef1b94a8a685c35761fcd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current constructor202 ставит vtable14996d600, zero result10 и enum14, создаёт nested18 через145821270 и nested30 через145784120; zero tail228/229/22a/22c. Nested constructors остаются следующим явным набором.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-4acfe2f63ddf\\details.json",
+          "sha256": "9c6e5a51a358cf5a9da2319019759ba64a6744c939f368683a76ed278ec0aea2"
+        }
+      ],
+      "id": "16616d93a69f5aa344fb870cf2ac37eadf5224c3bc53dddf86689f523f71d4d3",
+      "limits": [
+        "Native выходной archive +0xb8 — явная bounded uint64 fixture; весь backend не исполнен.",
+        "Чтение полного ID202, его dispatcher / handler и переход в мир не доказаны этим replay.",
+        "Синтетические поля; никаких игровых действий или авторизации."
+      ],
+      "method": "static",
+      "next_check": "Найти вложенные reader202 через его constructor, проверить полный decoder и только затем разрешить runtime отправку203 после принятого202.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полный current reader202 и привязка его nested blocks; затем runtime202→203→204 и семантика позиции."
     }
   ],
   "schema": 1,

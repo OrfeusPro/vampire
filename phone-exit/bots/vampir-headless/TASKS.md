@@ -31,6 +31,12 @@ ID 204 и отправляет пустой ID 205. Current apply / receive / st
 прослежены статически. Следом проверить привязки reader 202 и writer 203,
 затем продолжить ту же сессию из свежих ответов. Позиция остаётся неизвестной.
 [Цепочка из эталона и текущего кода](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#продолжение-по-полному-эталону-4c713eb5).
+ID 203 теперь имеет переносимый body codec, сверенный с целыми native constructor /
+getters / writer текущего SHA: 20 случаев, три теста. Reader ID 202 и constructor
+выгружены; осталось разобрать два вложенных блока, затем подключить продолжение
+приёма. Отправка ID 203 и новая живая попытка пока не включены.
+[Проверки и следующий точный набор](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#id-203-native-writer-и-переносимый-body-codec).
+
 
 [Отчёты и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#повторная-живая-проверка-выбор-принят).
 
