@@ -88,7 +88,9 @@ actual reader → handler → clock setter прошли 18 сценариев и
 [Сверка полей и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#дополнительная-сверка-перехода-лобби--игра).
 Найдена текущая ветвь заполнения common data: FLogImpl::Start → 0x144555470,
 которая записывает строки в сам объект. Выделены source helpers и передача
-MakeSessionID в отдельный setter; форматы и конкретный сессионный key ещё
+MakeSessionID в отдельный setter. Восемь native случаев и два теста подтвердили:
+setter меняет I_NMSessionID, который collector Login не выбирает. I_TID имеет
+отдельный источник settings+0x608 → common data; его формат / storage ещё
 проверяются. Metadata runtime не расширялась без этой проверки.
 [Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 

@@ -48,8 +48,9 @@ UTC GetSystemTime / Unix epoch + signed minute offset, 24 сценария / 3 �
 проверять оставшиеся отличия bootstrap / metadata по источникам; источник / роль
 ID 30413, периодический Ping и полный lifecycle также остаются.
 Для metadata найден actual writer новой сборки: FLogImpl::Start → 0x144555470.
-Следом проверить setter строки MakeSessionID, source helpers и callbacks,
-затем выполнить bounded native проверку перед расширением runtime metadata.
+Setter строки MakeSessionID проверен: это I_NMSessionID, а не I_TID; восемь
+native случаев / два теста прошли. Следом точный формат и storage I_TID из
+settings+0x608, source helpers и callbacks перед расширением runtime metadata.
 [Текущие записи и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 [Источник часов и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 Наблюдение само по себе не разрешает подставить magic ID или старый Ping.

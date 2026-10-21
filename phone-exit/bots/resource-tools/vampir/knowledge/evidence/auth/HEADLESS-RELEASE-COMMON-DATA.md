@@ -4,7 +4,8 @@
 `98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e`.
 Продолжение [вопроса о заполнении полей](HEADLESS-NID-USER-INFO-FIELDS.md),
 с учётом [проверки перехода лобби → игра](../network/HEADLESS-LIVE-TCP-CAPTURE.md#дополнительная-сверка-перехода-лобби--игра).
-Это статическая проверка Ghidra / инструкций, не native replay и не живой вход.
+Первый этап — статическая проверка Ghidra / инструкций. Затем выполнен bounded
+native replay отдельного setter, описанный ниже. Живого входа здесь нет.
 
 ## Что проверено заново после обновления
 
@@ -57,9 +58,40 @@ GameVersion / SDKVersion, CPU / RAM / GPU / resolution. **Семантика hel
 MakeSessionID создаёт значение через `0x1415600a0`, форматирует через
 `0x14154eb20` с raw argument 0, обрабатывает `0x141439810`, сохраняет строку
 в owner+0x98. Функция заполнения копирует её из SDK service+0x310 / owner+0x98
-и передаёт в setter `0x14455cb10(P, string)`. Destination setter и связь с
-конкретным metadata key пока не проверены. Не объявлять её I_TID / UUID и не
-генерировать замену до проверки setter и формата.
+и передаёт в setter `0x14455cb10(P, string)`. Проверка setter ниже установила,
+что это отдельный I_NMSessionID; подстановка этой строки в I_TID неверна.
+
+## I_NMSessionID и I_TID имеют разные источники
+
+Setter `0x14455cb10` сравнивает FString с полем **P+0x1d8**, то есть
+**D+0x1b0**, и вызывает assignment только при отличии. Current ToMap связывает
+D+0x1b0 с literal `I_NMSessionID` по `0x1495401d8`. В selector sequence
+collector этого ключа нет. MakeSessionID не является найденным источником I_TID.
+
+[replay-release-session-setter.py](../../../replay-release-session-setter.py)
+исполняет весь actual setter при выключенной diagnostic logging. Восемь случаев:
+пустые / равные / отличающиеся / разной длины / Unicode строки. Проверены low-byte
+возврат 0 / 1, вызов assignment только при отличии, destination descriptor,
+неизменность входного descriptor и всех соседних байтов 0x278-байтового объекта.
+Сравнение UTF-16 и descriptor assignment — явные fixtures; реальное выделение,
+освобождение и FString backend не исполняются. Тесты повторяют actual native
+выполнение. Используются только синтетические строки.
+
+У **I_TID** другой путь в actual writer `0x144555470`:
+
+1. Проверяется FString count settings+0x610 — descriptor начинается в +0x608.
+2. Если count < 2, вызываются `0x1415600a0` и formatter `0x14154eb20` с mode 0,
+   результат переносится в settings+0x608, затем вызывается `0x144544500`.
+3. Строка settings+0x608 копируется в **P+0xf8**, то есть **D+0xd0**.
+4. Current ToMap связывает D+0xd0 с `I_TID`, literal `0x14954010c`.
+
+Генератор `0x1415600a0` обнуляет 16 байт и вызывает `0x1415c4fc0`;
+Ghidra определяет платформенный вызов как CoCreateGuid. Default branch formatter
+меняет порядок байтов четырёх uint32 и вызывает hex helper `0x1415b30d0`
+с длиной 16. Точный новый hex output / casing и backend хранения settings
+ещё не исполнены. Нельзя считать эту ветвь готовым разрешением случайно
+генерировать I_TID при каждом Login или заменять её NMSessionID.
+Обязательность поля для принятия Game Login по-прежнему не установлена.
 
 ## Материалы и воспроизведение
 
@@ -74,6 +106,9 @@ MakeSessionID создаёт значение через `0x1415600a0`, форм
 | details/run-5f0d1ef45af5/details.json, Initialize / Start / MakeSessionID | f887dfd5e24b4be3a03a5bacabca975153f1b65d617e3811a6d82a61dd6778b2 |
 | sdk-reference-candidates/429e8650a7159e02ba40d4f60adcab4422ce6d935a52d6f7d80ed304932ccf6f/manifest.json | 429e8650a7159e02ba40d4f60adcab4422ce6d935a52d6f7d80ed304932ccf6f |
 | details/run-c2c88fe32275/details.json, actual common-data writer | 1eb0b48a69fdc9b5a287a328d203d6ccf491bd12034a3eb5cf67629ae159df03 |
+| details/run-3d333551d1d8/details.json, session setter | 01f72bd93f2d2cb81a1d382c8661e9a913e7b8299d9a615db9e46b6eca2a8cd0 |
+| details/run-1fe12e787a88/details.json, generator / formatter / FString transfer | 3bcf0b7a1265fee453fbc7be4f641046f47e379fbf9615bdfc174dc562ccb25d |
+| session-setter-replay/908880228b62b955d36a4c3f2e82115e599538d1efd93ad09dc77f13464d9bef/manifest.json | 908880228b62b955d36a4c3f2e82115e599538d1efd93ad09dc77f13464d9bef |
 
 Промежуточные table / substring exports сохранены рядом; финальный literal
 export выше содержит полные строки с return type, поэтому RIP candidates
@@ -84,9 +119,12 @@ SDK reference finder принимает SHA как comparison (`new_source_sha25
 
 ```powershell
 python -X utf8 phone-exit/bots/resource-tools/vampir/inspect-release-bootstrap.py --common-data
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-session-setter.py
+python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_release_session_setter.py -v
 ```
 
-Следом — setter `0x14455cb10`, форматы source helpers и callbacks заполнения
-сессионных полей. Затем bounded native сценарий и только после этого runtime.
+Следом — точный формат I_TID и хранение settings+0x608, source helpers и callbacks
+остальных полей. Проверенную ветвь NMSessionID не повторять как неизвестный TID.
+Перед интеграцией I_TID нужны bounded native формат и подтверждённый storage.
 Metadata бота остаётся subset 219 байт. Новых входов, чтения памяти игры,
 изменений устройства или аккаунта в этом проходе не было.
