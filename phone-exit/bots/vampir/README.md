@@ -32,6 +32,11 @@ ID 203 сверён с native writer; префикс ID 202 проверен в 
 Живая JP-проверка прошла до ID 204 code 0; соединение и маршрут закрыты.
 [Результат новой сессии](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#живое-продолжение-id-204-принят-22-октября).
 [Проверки и границы продолжения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#продолжение-до-id-204-локальные-и-native-проверки-22-октября).
+Запрос ID 205 и проверка его состояния в текущей сборке исполнены в 48 сценариях: состояния
+2 / 3 / 4 и флаг +0xc1 определяют разрешение отправки. Тело запроса пустое.
+Применение вектора к персонажу и источник этих состояний остаются неизвестны;
+runtime по-прежнему останавливается после ID 204.
+[Условия ID 205 и границы проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#id-205-текущая-проверка-состояния-и-запрос-22-октября).
 
 
 

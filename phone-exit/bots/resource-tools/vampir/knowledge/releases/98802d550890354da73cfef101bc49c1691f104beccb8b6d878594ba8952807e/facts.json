@@ -943,6 +943,247 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Полный хвост ID 202, актуальные условия завершения мира и семантический consumer позиции остаются неизвестны."
+    },
+    {
+      "addresses": [
+        "0x145db3fe0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий service slot 0x70 ведёт на request ID 205. Целые request и gate исполнены в 48 сценариях: при нулевом флаге +0xc1 разрешены состояния 2 / 3 / 4, затем запрос setter состояния 5, поля таймера и пустой ID 205 на границе отправки. При ненулевом флаге вызывается load fixture без отправки.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-finish-request-replay\\58fbea6fe0a85fea2d277cb18a38ce896c3c25286c21f0a50df296d3bb07029f\\manifest.json",
+          "sha256": "58fbea6fe0a85fea2d277cb18a38ce896c3c25286c21f0a50df296d3bb07029f"
+        }
+      ],
+      "id": "52647c54f1c0336fff61e941311824e5957cff5cb8165bd8a691dabb2ea57bfa",
+      "limits": [
+        "Только текущий SHA; источник получен из EXE и сохранённых Ghidra материалов.",
+        "Native request / gate используют явные fixtures setter, settings, formatter, label, load, destructor и send; engine side effects и сеть не исполняются.",
+        "Receiver ID 204, его handler и callback разобраны статически, не исполнены в новой native цепочке."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить callback 0x145d99710 и ветвь ID 206 от constructor 0x14584db80; связать service+0x60 с применением к персонажу до нового runtime шага.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник разрешённых состояний 2 / 3 / 4, callback завершения, актуальный ID 206 и семантический consumer позиции."
+    },
+    {
+      "addresses": [
+        "0x1467cbe20"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий успешный путь handler ID 204 после фильтра получает сервис через 0x14560c570 и завершает работу JMP 0x145dae5a0; это не выполнение фильтра / handler / UI.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-a676cd5fc6e5\\details.json",
+          "sha256": "03c109d07104b11e76b2328d3b7e811c5266fe5fc91a58afe79d02b8bd743f61"
+        }
+      ],
+      "id": "93ffa5ec0c1750c6f071667de002b7dea8e03f4824a83b98693cb87ad09822f4",
+      "limits": [
+        "Только текущий SHA; источник получен из EXE и сохранённых Ghidra материалов.",
+        "Native request / gate используют явные fixtures setter, settings, formatter, label, load, destructor и send; engine side effects и сеть не исполняются.",
+        "Receiver ID 204, его handler и callback разобраны статически, не исполнены в новой native цепочке."
+      ],
+      "method": "static",
+      "next_check": "Проверить callback 0x145d99710 и ветвь ID 206 от constructor 0x14584db80; связать service+0x60 с применением к персонажу до нового runtime шага.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник разрешённых состояний 2 / 3 / 4, callback завершения, актуальный ID 206 и семантический consumer позиции."
+    },
+    {
+      "addresses": [
+        "0x145dae5a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Receiver ID 204 переносит packet+0x14 в service+0x44, вектор packet+0x18 в service+0x60 и enum packet+0x30 в service+0x59. Далее возможны коррекция третьей координаты, загрузка, reuse и callback. Применение к actor этим статическим разбором не подтверждено.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-a5e5392d5579\\details.json",
+          "sha256": "840e51f9b8359dc8af02735d45b5638103dd97def8416b044c192f474a499f6c"
+        }
+      ],
+      "id": "3201f446ca7036a60d4c73222320c01bda5fb595a96062cd8fe59df17b453e51",
+      "limits": [
+        "Только текущий SHA; источник получен из EXE и сохранённых Ghidra материалов.",
+        "Native request / gate используют явные fixtures setter, settings, formatter, label, load, destructor и send; engine side effects и сеть не исполняются.",
+        "Receiver ID 204, его handler и callback разобраны статически, не исполнены в новой native цепочке."
+      ],
+      "method": "static",
+      "next_check": "Проверить callback 0x145d99710 и ветвь ID 206 от constructor 0x14584db80; связать service+0x60 с применением к персонажу до нового runtime шага.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник разрешённых состояний 2 / 3 / 4, callback завершения, актуальный ID 206 и семантический consumer позиции."
+    },
+    {
+      "addresses": [
+        "0x140bb4a10",
+        "0x145759160"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native constructor установил table 0x14996d4b0, writer slot 0x10 имеет mov al,1;ret и не пишет тело; getter slot 0x28 исполнен и вернул ID 205. Короткие leaf границы и байты проверены по текущему полному SHA.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-finish-request-replay\\58fbea6fe0a85fea2d277cb18a38ce896c3c25286c21f0a50df296d3bb07029f\\manifest.json",
+          "sha256": "58fbea6fe0a85fea2d277cb18a38ce896c3c25286c21f0a50df296d3bb07029f"
+        }
+      ],
+      "id": "c6e7de2d300b3e1502c95a7a4fa2c6ed77fb362d253e06a00d616ad77112c0c4",
+      "limits": [
+        "Только текущий SHA; источник получен из EXE и сохранённых Ghidra материалов.",
+        "Native request / gate используют явные fixtures setter, settings, formatter, label, load, destructor и send; engine side effects и сеть не исполняются.",
+        "Receiver ID 204, его handler и callback разобраны статически, не исполнены в новой native цепочке."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить callback 0x145d99710 и ветвь ID 206 от constructor 0x14584db80; связать service+0x60 с применением к персонажу до нового runtime шага.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник разрешённых состояний 2 / 3 / 4, callback завершения, актуальный ID 206 и семантический consumer позиции."
     }
   ],
   "schema": 1,
