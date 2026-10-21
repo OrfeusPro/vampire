@@ -58,6 +58,11 @@ URL и заголовки проверены native-сценариями. Инс
 IDs 30413 → Version → Ping; бот начинает с Version. Следом доказать источник
 и роль предварительного кадра / Ping на новом EXE, затем решить, что менять.
 [Полная последовательность и сверка ключей](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#полный-запуск-4c713eb5-и-сверка-идентификаторов).
+По новому EXE выгружены constructor / Version callback и source-bound targets
+уведомления подключения. Прямой поиск scalar 30413 и wire-константы результата
+не дал; роль предварительного кадра ещё не установлена. Следом — actual send
+и заполнение Ping, без повторения тех же literal searches.
+[Проверенные адреса, выгрузки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-BOOTSTRAP.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических
