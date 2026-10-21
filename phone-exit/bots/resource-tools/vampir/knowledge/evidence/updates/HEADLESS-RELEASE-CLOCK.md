@@ -202,4 +202,46 @@ signed offsets, отказ непроверенного источника, по
 прекращение Login после отказа Version и передача свежего context в runner.
 Историческая проверка lobby context index повторяется на immutable EXE того же
 SHA, поскольку установленная игра обновлена; SHA guard сохранён.
-Новый live вход на этом этапе ещё не выполнен.
+## Живая проверка с ранним Ping, 21 октября
+
+Одна попытка через свободный samsung SM-A205F / JP после проверки отсутствия
+игры. Свежие CDN / GMC2 получены через тот же SOCKS 17948; launcher flow,
+язык 1, ClientVersion 261105, server 256 / group 253, metadata subset 219 байт.
+SDK принят, lobby IDs 2 / 104 / 4 имеют code 0; лобби открыто во время игры.
+Game Version принят, ранний Ping поставлен в очередь, получен ID 17.
+Game Login снова дал **16 / InvalidState**, body 131 байт; отправлено 887,
+получено 114 байт. List / Select не отправлены, socket закрыт runtime после
+отказа Login. `connection_closed` здесь не доказывает, что сервер первым закрыл
+TCP: owner сам закрывает соединение на отказе. Временный JP-маршрут остановлен.
+Раннего Ping оказалось недостаточно для успешного Login в этой попытке.
+
+Санитизированный report вне Git:
+`F:/PhoneExit Resources/Vampir/live-login-observations/c4d96db0e405e139049062eca77ff6513168b0cd5d32561e6e1aff6e4f1c72f0/manifest.json`,
+SHA256 `c4d96db0e405e139049062eca77ff6513168b0cd5d32561e6e1aff6e4f1c72f0`.
+Свежие конфигурации: CDN `a797e37c3c0827b6e6cdb349134924562497a026e62b357fe042cf81cb317391`,
+GMC2 `d9fde16c518941489a983496b1784a60817b7728ab2c80c4d12415c36c09bf81`.
+Хранятся summary / tool hashes; raw auth / account IDs / device keys не записаны.
+
+### Прямой запрос списка после отказа Login
+
+По следующему явному запросу пользователя сделана отдельная диагностика на
+том же JP-телефоне со свежей авторизацией. Исследовательский
+[diagnose-list-after-login.py](../../../../../vampir-headless/diagnose-list-after-login.py)
+использует существующие OutboundFrames / ReceiveStream / codecs, но намеренно
+не применяет production-политику остановки на Login 16. После принятого Version
+и ответа Login он ровно один раз отправляет CharacterList ID 101 даже при отказе.
+Выбор персонажа и автоматические повторы отсутствуют; никакой ответ не делает
+отклонённую авторизацию рабочей сессией. Обычный runtime по-прежнему останавливается.
+
+Получены IDs **2 / 17 / 4**, Version code 0, Login code 16. ID 101 полностью
+передан socket.send на том же соединении: итог 898 / 114 байт против 887 / 114
+без запроса списка. За **10 секунд** ID 102 не получен, итог timeout. Принятие
+самого запроса сервером не доказано. Серверный EOF до таймаута не наблюдался.
+Все сокеты и временный маршрут закрыты после проверки.
+
+Report:
+`F:/PhoneExit Resources/Vampir/live-login-observations/d83101e3685f225cb58f958abb762ad0d271c871d3443f4d100f0fc07028e270/manifest.json`,
+SHA256 `d83101e3685f225cb58f958abb762ad0d271c871d3443f4d100f0fc07028e270`.
+Тест [test_vampir_diagnostic_list.py](../../../../../test_vampir_diagnostic_list.py)
+проверяет через socketpair порядок Version / Login / List после Login 16,
+ответ списка с отказом / одной записью, серверное закрытие и отсутствие Select.

@@ -42,9 +42,11 @@ UTC GetSystemTime / Unix epoch + signed minute offset, 24 сценария / 3 �
 Эталонные lobby ID 2 содержат 540 минут. Текущая регистрация ID 2 затем
 подтверждена вместе с whole reader → handler → clock setter: 18 сценариев,
 24 длины входа, три теста. Свежий lobby context подключён к раннему Ping для
-нового SHA: Version → Ping → Login, локальные проверки прошли. Следом проверить
-живой вход с конкретным изменением; источник / роль ID 30413, периодический
-Ping и полный lifecycle также остаются.
+нового SHA: Version → Ping → Login, локальные проверки прошли. Живая JP-попытка
+с Ping снова дала Login 16; получен ID 17. Отдельный прямой запрос ID 101 после
+отказа, разрешённый пользователем, за 10 секунд не получил ID 102. Следом
+проверять оставшиеся отличия bootstrap / metadata по источникам; источник / роль
+ID 30413, периодический Ping и полный lifecycle также остаются.
 [Источник часов и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 Наблюдение само по себе не разрешает подставить magic ID или старый Ping.
 [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#полный-запуск-4c713eb5-и-сверка-идентификаторов).
