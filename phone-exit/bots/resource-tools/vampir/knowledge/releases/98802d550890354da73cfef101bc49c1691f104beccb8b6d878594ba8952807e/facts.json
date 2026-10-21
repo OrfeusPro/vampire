@@ -130,6 +130,123 @@
       "question": "common-data-population",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Остаются контракты извлечения строк JSON, подключение свежего GMC2 context к runtime, остальные поля metadata и причина Game Login 16."
+    },
+    {
+      "addresses": [
+        "0x14447dd80",
+        "0x14447dfd0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9f59a916925e61a487a3537512d3653160a88896f2f105d928be062064ad98c8",
+          "id": "release-common-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066\\manifest.json",
+          "sha256": "0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a3bd73d19cc3e33408dcc2ad6e25902ef9608a47a5597bad4ed867be81e9ea49",
+          "id": "release-country-setter",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08\\manifest.json",
+          "sha256": "8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Обёртки сохраняют выходной адрес RDX, передают неизменённый ключ R8 в общий lookup 0x14447e460 и затем вызывают разные конверсии: 0x144472bf0 для вложенного контекста и 0x14447e050 для строки. Возвращается выходной адрес; после конверсии освобождается временный shared reference.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-c08799161927\\details.json",
+          "sha256": "ad7301e234004403fe8702d6a043f720bf21ade2accb3c330c915ed0514453ab"
+        }
+      ],
+      "id": "5fb7fb9bcb533145f0d9b14785125a13b0e5d80f2745e395fe7ff248474726a9",
+      "limits": [
+        "Вывод получен из Ghidra псевдокода и машинных инструкций текущего SHA; целые функции native не исполнялись.",
+        "Virtual methods, JSON map lookup, refcount backend и полный HTTP callback не проверены этим статическим анализом."
+      ],
+      "method": "static",
+      "next_check": "Добавить строгую локальную обработку наблюдаемой object/string схемы GMC2 с проверкой источника, маршрута, времени получения и правила A1; отклонять неподдержанные типы без попытки эмулировать полный native parser.",
+      "question": "common-data-population",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная семантика map lookup и virtual conversions при ошибках; подключение свежего context к runtime и причина Login 16."
+    },
+    {
+      "addresses": [
+        "0x144472bf0",
+        "0x14447e050",
+        "0x14447e460"
+      ],
+      "checks": [
+        {
+          "cache_key": "9f59a916925e61a487a3537512d3653160a88896f2f105d928be062064ad98c8",
+          "id": "release-common-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066\\manifest.json",
+          "sha256": "0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a3bd73d19cc3e33408dcc2ad6e25902ef9608a47a5597bad4ed867be81e9ea49",
+          "id": "release-country-setter",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08\\manifest.json",
+          "sha256": "8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Lookup требует ненулевой value с type=6 и успешный virtual +0x80, формирует key view с count=max(FString count-1,0) и вызывает 0x1415f3770. Конструктор вложенного контекста принимает type=6, иначе оставляет пустой контекст. Преобразователь строки при null или типах вне 2/3/4 возвращает zero descriptor; type=2 вызывает 0x1415ea440, type=3 использует virtual +0x58 либо numeric fallback, type=4 выбирает один из двух literals по bool accessor. Это опровергает предположение, что native converter принимает только строки.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-f6a94d9c32d3\\details.json",
+          "sha256": "abb37322342deb3ebaddddecb487146eeaa6217bbe6caac5cc0f4aeea396bf17"
+        }
+      ],
+      "id": "c0a1c6e5183ec8f53422db6d4153ab8542c785edb5ba4be11b4a3deac66c91ab",
+      "limits": [
+        "Вывод получен из Ghidra псевдокода и машинных инструкций текущего SHA; целые функции native не исполнялись.",
+        "Virtual methods, JSON map lookup, refcount backend и полный HTTP callback не проверены этим статическим анализом."
+      ],
+      "method": "static",
+      "next_check": "Добавить строгую локальную обработку наблюдаемой object/string схемы GMC2 с проверкой источника, маршрута, времени получения и правила A1; отклонять неподдержанные типы без попытки эмулировать полный native parser.",
+      "question": "common-data-population",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная семантика map lookup и virtual conversions при ошибках; подключение свежего context к runtime и причина Login 16."
+    },
+    {
+      "addresses": [
+        "0x1415ea440"
+      ],
+      "checks": [
+        {
+          "cache_key": "9f59a916925e61a487a3537512d3653160a88896f2f105d928be062064ad98c8",
+          "id": "release-common-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066\\manifest.json",
+          "sha256": "0c1c1d93c4f71be767e2a9af138d12de67640a5a139aa79177676ee57a894066",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a3bd73d19cc3e33408dcc2ad6e25902ef9608a47a5597bad4ed867be81e9ea49",
+          "id": "release-country-setter",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08\\manifest.json",
+          "sha256": "8baae2472b63ef3a05327c0f1dfffe7e06f964266ebbf0bce062de851ff0fa08",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Строковая ветвь сначала обнуляет выходной FString descriptor, затем передаёт его virtual method +0x58 и возвращает тот же адрес. При false создаёт и освобождает отдельную временную строку; replacement выходной строки в этой ветви не виден. Конкретная реализация virtual method не проверена.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-fa6ef4fc9442\\details.json",
+          "sha256": "62b1d4eebe1f0b4a3c61dd7584bb496b5be97e4d5a3614875ad27395ed8f5d81"
+        }
+      ],
+      "id": "427eeef6edfb75f66114c7a207f022953419272350f98cad1e7613792385caed",
+      "limits": [
+        "Вывод получен из Ghidra псевдокода и машинных инструкций текущего SHA; целые функции native не исполнялись.",
+        "Virtual methods, JSON map lookup, refcount backend и полный HTTP callback не проверены этим статическим анализом."
+      ],
+      "method": "static",
+      "next_check": "Добавить строгую локальную обработку наблюдаемой object/string схемы GMC2 с проверкой источника, маршрута, времени получения и правила A1; отклонять неподдержанные типы без попытки эмулировать полный native parser.",
+      "question": "common-data-population",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная семантика map lookup и virtual conversions при ошибках; подключение свежего context к runtime и причина Login 16."
     }
   ],
   "schema": 1,

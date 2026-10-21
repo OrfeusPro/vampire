@@ -126,10 +126,17 @@ UpdateGmc2 / UpdateSDKSetting проверены в 31 native сценарии �
 channel / NID ветви UpdatePlayer. Runtime ещё не дополнен этими полями.
 Теперь найден путь clientIp → settings+0x38 и geoLocation → SetCountryCode →
 settings+0x3f0. Setter с notify=0 проверен в 14 native случаях: A1 сохраняет
-непустое прежнее поле, но записывается при пустом. Следом — contracts JSON helpers
-и свежий GMC2 context для runtime; город без нужного consumer отдельно не разбирать.
+непустое прежнее поле, но записывается при пустом. Следом — свежий GMC2 context
+для runtime; город без нужного consumer отдельно не разбирать.
 [Новый разбор](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md).
 [Адреса, проверки и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md#обновление-сессионных-полей-из-sdk-и-gmc2).
+
+По коду новой сборки прослежены поиск JSON-поля, получение вложенного объекта
+и преобразование значения в FString. Есть ветви для чисел и логических значений;
+приём только объектов и строк в боте будет отдельной локальной политикой.
+Следом подключить свежие clientIp / geoLocation с проверками источника, маршрута,
+возраста и правила A1. Полный JSON parser и callback этим не проверены.
+[Контракты и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md#json-helpers-границы-извлечения-полей).
 
 Перед новым разбором искать VA/имя в реестре и читать вопрос / decision_rule.
 [Правила базы знаний](../resource-tools/vampir/knowledge/README.md).

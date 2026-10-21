@@ -99,8 +99,8 @@ native случаями; current Save сохраняет это поле. Runtim
 Следом выгружены шесть current update callees. Целые UpdateGmc2 / UpdateSDKSetting
 прошли 31 native сценарий и три теста: источники IP / страны / города / SDK полей,
 отсутствие сервиса, lazy initialization, пустые / равные / изменившиеся строки.
-Service и FString backend — fixtures. Запись страны в settings из ответа GMC2
-и условные player / NID ветви ещё открыты; runtime metadata пока не расширена.
+Service и FString backend — fixtures. Условные player / NID ветви ещё
+открыты; runtime metadata пока не расширена. Источник страны установлен в продолжении ниже.
 [Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 Затем статически прослежен GMC2 callback → response consumer → geo helper:
 key clientIp передаётся string helper, результат переносится в settings+0x38,
@@ -110,6 +110,13 @@ key clientIp передаётся string helper, результат перено
 с notify=0 прошёл 14 native случаев и три теста; FString backend — fixtures.
 Generic JSON helpers и полный callback native не исполнены, runtime пока не расширен.
 [Цепочка, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md).
+
+По коду новой сборки прослежены поиск JSON-поля, получение вложенного объекта
+и преобразование значения в FString. Есть ветви для чисел и логических значений;
+приём только объектов и строк в боте будет отдельной локальной политикой.
+Следом подключить свежие clientIp / geoLocation с проверками источника, маршрута,
+возраста и правила A1. Полный JSON parser и callback этим не проверены.
+[Контракты и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md#json-helpers-границы-извлечения-полей).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических

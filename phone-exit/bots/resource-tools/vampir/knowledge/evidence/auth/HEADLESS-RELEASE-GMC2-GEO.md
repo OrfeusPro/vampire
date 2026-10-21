@@ -91,6 +91,37 @@ geoLocation → settings+0x3f0 → P+0x128 → D+0x100 → I_CountryCD.
 к runtime с явной проверкой источника / маршрута / свежести. Текущий runner
 по-прежнему передаёт subset с I_TID; новых живых попыток здесь не было.
 
+## JSON helpers: границы извлечения полей
+
+Дополнительные явные экспорты текущего SHA прослежены по псевдокоду и
+инструкциям. Это статический результат; native parser / map lookup не исполнялись.
+
+- `0x14447dd80` сохраняет выходной адрес RDX, передаёт неизменённый ключ R8
+  в общий lookup `0x14447e460`, затем вызывает `0x144472bf0` для вложенного
+  контекста. `0x14447dfd0` использует тот же lookup и конверсию `0x14447e050`.
+  Обе обёртки возвращают выходной адрес и освобождают временный shared reference.
+- Lookup требует ненулевой value с type 6 и успешный virtual method +0x80.
+  Затем формирует key view с длиной max(FString count − 1, 0) и вызывает
+  `0x1415f3770`. Сам map lookup и поведение отсутствующего ключа не проверены.
+- Конструктор контекста `0x144472bf0` сначала обнуляет выходное состояние;
+  значение принимает только при ненулевом pointer и type 6.
+- `0x14447e050` при null или типе вне 2 / 3 / 4 возвращает нулевой FString
+  descriptor. Для type 2 вызывает `0x1415ea440`; type 3 использует virtual +0x58
+  либо numeric fallback, type 4 выбирает literal по результату bool accessor.
+  Следовательно, native converter нельзя описывать как строго string-only.
+- Строковая ветвь `0x1415ea440` обнуляет выходной descriptor, передаёт его virtual
+  method +0x58 и возвращает тот же адрес. При false создаётся и освобождается
+  отдельная временная строка; замены выходного descriptor в этой ветви не видно.
+  Конкретная реализация virtual method и backend FString ещё не проверены.
+
+Для runtime следующая граница — строгая локальная политика приёма наблюдаемой
+object / string схемы `resultData.geoIp`, а не копия всего native parser.
+Неподдержанные типы отклонять до авторизации; не угадывать numeric formatting.
+Проверять SHA профиля / body, маршрут и возраст ответа. `geoLocation` передавать
+по доказанному правилу A1, `clientIp` — только из свежего ответа выбранного выхода.
+Полный callback / cache lifecycle и обязательность metadata для Login остаются
+неизвестными. В этой проверке runtime и сеть не запускались.
+
 ## Материалы
 
 Каталог библиотеки:
@@ -101,6 +132,9 @@ geoLocation → settings+0x3f0 → P+0x128 → D+0x100 → I_CountryCD.
 | details/run-00ab3f9ed347/details.json, callback wrapper | 3c6b8b8c45e7e29440bda6484b97dd449d928af1c4cd07292e81f80e2c12f88d |
 | details/run-5b8a4894a8ad/details.json, response consumer | 9724b752266af0557878066964b5454b6933b55ad03f68b2c08408cf74c7a21b |
 | details/run-f80af1744c74/details.json, geo helper | 88435ba99ed45b90851ff6fd3bac2cb9ebdcd9b51d2aee5dead5e5d386172ee1 |
+| details/run-c08799161927/details.json, JSON wrappers | ad7301e234004403fe8702d6a043f720bf21ade2accb3c330c915ed0514453ab |
+| details/run-f6a94d9c32d3/details.json, lookup / conversions | abb37322342deb3ebaddddecb487146eeaa6217bbe6caac5cc0f4aeea396bf17 |
+| details/run-fa6ef4fc9442/details.json, string branch | 62b1d4eebe1f0b4a3c61dd7584bb496b5be97e4d5a3614875ad27395ed8f5d81 |
 | details/run-784447667bfa/details.json, SetCountryCode | 5acdfa85c303bda2002ab56a5e84fb3938c862afa8a46a7dfba217576983804b |
 | country-setter-replay/36e09ee434fe70d0b306f543eb7c6262db4c7a205de53cca8dcb568899f0a0f2/manifest.json | 36e09ee434fe70d0b306f543eb7c6262db4c7a205de53cca8dcb568899f0a0f2 |
 
@@ -116,3 +150,9 @@ geoLocation → settings+0x3f0 → P+0x128 → D+0x100 → I_CountryCD.
 python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-country-setter.py
 python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_release_country_setter.py -v
 ```
+
+Задания JSON helpers (каталог `F:/PhoneExit Resources/Vampir/knowledge/requests/`):
+
+- `00ccfc9db53c33e13d6c3264aa626b6d24c3686e073171586a19fe7d625133d5/manifest.json`;
+- `c19065def3a7c49f27a3261bfabc73bad3d5693083e8632e4745186ae9bb012d/manifest.json`;
+- `3a6170ef118e69dcdf0e80c8c85962df802f74411b4a9f6588c3866fa3bbd54b/manifest.json`.
