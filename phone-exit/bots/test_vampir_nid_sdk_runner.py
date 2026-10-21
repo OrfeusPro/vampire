@@ -97,7 +97,7 @@ class NidSdkRunnerTests(unittest.TestCase):
             result = self.runner.run('test@example.invalid', socks_port=17948, _capture=capture, _execute=execute)
         self.assertEqual(result, 'accepted-fixture')
         self.assertEqual(calls, ['browser', 'sdk'])
-        load.assert_called_once_with('test@example.invalid', route=self.runner.SocksRoute(17948))
+        load.assert_called_once_with('test@example.invalid', route=self.runner.SocksRoute(17948), selected_profile='recovered-base')
 
     def test_real_hk_snapshot_route_binding_and_country(self):
         root = Path('F:/PhoneExit Resources/Vampir')

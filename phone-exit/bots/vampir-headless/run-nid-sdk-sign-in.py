@@ -26,10 +26,18 @@ from vampir_core.windows_version import observe_windows_version
 PROFILE_SHA = '1d98be691d899b6c9d6280c86d6f42ceeab8ce01cac9685d5e0b8495793cc7ad'
 
 
-def load_inputs(email, *, route=None):
-    path = ROOT / 'code-clues/nid-windows-initial-profile.json'
-    if hashlib.sha256(path.read_bytes()).hexdigest() != PROFILE_SHA: raise ValueError('NID source profile changed')
-    source = json.loads(path.read_text('utf-8'))
+def load_inputs(email, *, route=None, selected_profile='recovered-base'):
+    if selected_profile == 'recovered-release':
+        spec = importlib.util.spec_from_file_location('nid_release_source', HERE / 'sdk-source-profile.py')
+        loader = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(loader)
+        source = loader.load_release_profile('nid', root=ROOT)
+    elif selected_profile == 'recovered-base':
+        path = ROOT / 'code-clues/nid-windows-initial-profile.json'
+        if hashlib.sha256(path.read_bytes()).hexdigest() != PROFILE_SHA: raise ValueError('NID source profile changed')
+        source = json.loads(path.read_text('utf-8'))
+    else:
+        raise ValueError('Select a verified SDK source profile')
     if hashlib.sha256(Path(source['source']).read_bytes()).hexdigest() != source['source_sha256']:
         raise ValueError('Installed client changed')
     registry = DeviceRegistry(HERE / '.local/accounts.sqlite3')
@@ -46,6 +54,9 @@ def load_inputs(email, *, route=None):
     data = path.read_bytes()
     if hashlib.sha256(data).hexdigest() != pointer['sha256']: raise ValueError('SDK snapshot manifest changed')
     manifest = json.loads(data)
+    if selected_profile == 'recovered-release' and (manifest.get('selected_profile') != selected_profile
+            or manifest.get('profile_sha256') != source['profile_sha256']):
+        raise ValueError('SDK snapshot source profile differs; fetch fresh configuration')
     if manifest['transport'].get('status') != 200: raise ValueError('SDK snapshot HTTP status rejected')
     if manifest['transport'].get('socks5_loopback_port') != (route.port if route else None):
         raise ValueError('SDK snapshot route differs from the selected route; fetch fresh configuration')
@@ -63,13 +74,13 @@ def load_inputs(email, *, route=None):
     return binding, profile, dict(config.constants)
 
 
-def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=None, auth_flow='nid',
+def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
         _capture=None, _execute=None, _execute_token=None, _progress=None):
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')
     if auth_flow not in ('nid', 'launcher') or (auth_flow == 'launcher' and create_sdk_player):
         raise ValueError('Unsupported explicit SDK auth flow')
     route = SocksRoute(socks_port) if socks_port is not None else None
-    binding, profile, constants = load_inputs(email, route=route)
+    binding, profile, constants = load_inputs(email, route=route, selected_profile=selected_profile)
     context = prepare_nid_sign_in_context(binding=binding, **profile)
     url = bind_nid_web_url(context, constants=constants, max_url_size=32768)
     if _capture is None:
@@ -108,12 +119,13 @@ if __name__ == '__main__':
     parser.add_argument('--create-sdk-player', action='store_true', help='Explicit SDK SignUp instead of SignIn; never automatic on errors')
     parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for both browser and SDK HTTPS')
     parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid', help='Explicit SDK flow, no automatic fallback')
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], default='recovered-base')
     args = parser.parse_args()
     try:
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
         data = run(args.email, timeout=args.timeout, password=password, create_sdk_player=args.create_sdk_player,
-                   socks_port=args.socks_port, auth_flow=args.auth_flow)
+                   socks_port=args.socks_port, auth_flow=args.auth_flow, selected_profile=args.profile)
         password = None
         print(json.dumps(dict(sdk_response_accepted=True, operation='sign-up' if args.create_sdk_player else 'sign-in', auth_flow=args.auth_flow,
                               player_id_present=bool(data.player_id),

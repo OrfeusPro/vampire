@@ -7,7 +7,7 @@
       "question": "Почему игровой Login бота возвращает 16, когда официальный клиент доходит до создания персонажа?",
       "known": "SDK / выбранное лобби / Game Version принимают вход. Launcher flow давал 58 на прежних JP / HK и 16 после замены JP. 21 октября пользователь подтвердил тот же аккаунт и Franz 2, создал Okly и вошёл в мир официальным клиентом через samsung SM-A057F / JP. После закрытия игры бот на том же выбранном телефоне снова получил 16. Server 256 / group 253, ClientVersion 258392; три сохранённых ключа устройства совпали с текущими Windows-значениями.",
       "unknown": "Какое условие Game Login не выполнено. Создание персонажа не устранило отказ; отличий трёх ключей в хранилище нет. Совпадение остальных полей, активного кеша и внешнего IP не измерено. Публичный поиск 21 октября не нашёл расшифровки игрового кода 16; официальный FAQ говорит о сохранении последней игровой авторизации, но не связывает это с кодом.",
-      "next_action": "После докачки EXE сохранил SHA 98802d550890…, patch manifest — Revision261105, основной Game INI — AppVersion 1.13.14. Явный профиль recovered-release добавлен с проверкой EXE / PAK / INI; свежий CDN 1.13.14 получен через samsung SM-A057F / JP. Смешивание профиля и CDN разных версий отклоняется. Подготовительный runner остановился до авторизации на старой SDK / NID source binding. В новом EXE уже проверены settings prefix / GMC2 constructor / SDK version 5.2.11 в 9 native-сценариях. PC initializer 0x1411b5d00 → getter 0x144533280 проверен в 12 native-сценариях. Автоматический поиск globals вывел новый игровой override 0x145658ca0; Ghidra выявил дополнительный условный market из 0x14b5e8fb8 через selector 0x14560c680. Selector / альтернативный market установлены: NMENV=epicgames выбирает epicgames, остальные проверенные варианты — nmp. Override / четыре initializers / getter / selector / два comparator и zone прошли 106 native-сценариев с явными fixtures окружения и FParse. GMC2 Start 0x144509080 и FString copy 0x141441e40 проверены в 512 сценариях: выбор base по всем zone bytes и перенос raw +0xc8 в global 0x14b1890f4. Свежие Refresh 0x1444faff0 / RequestGMC2 0x1444fca30 / build getter 0x144532f30 выгружены в Ghidra. Следом связать build label initializers, проверить URL и заголовки GMC2, получить свежий SDK config и выполнить одну ограниченную попытку до фактического ответа сервера. Пользователь заменил телефоны; каталог подтвердил доступные JP samsung SM-A205F / Redmi 2201116SI и HK Redmi M2103K19Y, APK 0.9.6. Следующий выбранный JP — samsung SM-A205F; блокировку старого выхода на него не переносить. Guard checks не отключать. BlockedIp после обновления пока не получен. Непрерывный ID 102 → setter / indexed caller → ID 109 constructor / writer проверен в 25 сценариях; дальнейший транспорт ещё открыт. Адреса массива addresses относятся к старому source_sha256. Полная metadata и реальный вход остаются нерешёнными.",
+      "next_action": "21 октября после обновления 1.13.14 / ClientVersion 261105 подготовлены отдельные CDN и SDK / NID профили recovered-release, проверены current EXE SHA и native settings / GMC2 цепочки. Через новый samsung SM-A205F / JP SDK launcher, список серверов, выбранное лобби и Game Version приняты, но текущая модель LoginResult получила код 1. Прежний код 16 не воспроизведён в этой попытке. Продолжение — вопрос release-game-login-code-1; новый отказ не подменяет объяснение исторического InvalidState. Повторять 16 без конкретного нового отличия не нужно. Реальный список и позиция не получены.",
       "decision_rule": "Повторять вход только если найдено конкретное отличие поля или порядка обмена с доказанным источником. Одинаковый отказ сам по себе не основание для новой попытки.",
       "do_not_repeat": "Повторять те же credentials/context/server без изменения условий; считать JP-выход доказательством совпадения устройства или адреса.",
       "addresses": [
@@ -28,6 +28,21 @@
         "evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md",
         "evidence/updates/CLIENT-RELEASE-AUDIT.md",
         "evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md"
+      ]
+    },
+    {
+      "id": "release-game-login-code-1",
+      "status": "open",
+      "question": "Что означает код 1 игрового Login после обновления 1.13.14 и соответствует ли ему текущий decoder?",
+      "known": "EXE SHA 98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e. SDK / NID source profile recovered-release построен по шести pinned native reports. Через новый samsung SM-A205F / JP приняты launcher SDK, lobby IDs 2 / 104 / 4 и Game Version 0. Аккаунт joined country HK. На server 256 / group 253 / region JP с ClientVersion 261105, языком 1 и partial metadata 219 байт текущая модель получила LoginResult code 1, body 131 байт. Отправлено 860 байт, получено 94; других packet IDs нет. CharacterList не отправлен, соединения закрыты. Санитизированное наблюдение a85aa7a538bd24f1d3ce086b84d53ce0800923b16c186619260b267f841a6bee хранится вне Git; raw body / full transcript не сохранены.",
+      "unknown": "Метка кода 1 и поведение соответствующей ветви нового клиента; совместимость полей нового LoginResult с переносимым reader и конкретное непройденное условие Login. Старые коды 16 / 58 не объясняют этот результат.",
+      "next_action": "Сначала сверить текущий LoginResult reader и result-code mapper по реестру / новым Ghidra экспортам. Для кода 1 подтвердить literal / ветвь на текущем SHA, затем проверить значимое отличие поля либо порядка обмена до следующей сетевой попытки.",
+      "decision_rule": "Новый вход только после конкретного source-bound отличия или изменения внешних условий; число повторов и неизвестная метка сами по себе не основание.",
+      "do_not_repeat": "Не повторять текущие SDK / GMC2 native ветви без изменившихся входов. Не считать code 1 InvalidState / BlockedIp по старым сопоставлениям. Не обходить source guards.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md",
+        "evidence/network/HEADLESS-FRANZ2-LOGIN.md"
       ]
     },
     {

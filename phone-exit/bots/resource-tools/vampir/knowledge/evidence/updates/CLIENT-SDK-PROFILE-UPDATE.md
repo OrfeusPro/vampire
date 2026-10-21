@@ -241,12 +241,141 @@ Build getter выбирает globals 0x14b5658e8 при byte 1, 0x14b5658f8 п�
 python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-gmc2-start.py
 ```
 
-## Следующая проверка
+## Build labels, URL и заголовки новой версии
 
-PC и игровой override уже проверены ограниченными native-сценариями.
-GMC2 Start и его FString copy проверены в 512 сценариях. Далее связать build
-label initializers, проверить сборку URL и заголовки нового RequestGMC2 по свежим
-экспортам выше; затем сформировать отдельный
-source-bound профиль. Установленные SDK / NID guards пока прежние; свежий SDK
-config, авторизация и Game Login на новом samsung SM-A205F ещё не выполнялись.
-Успешный вход, BlockedIp и готовность runtime этим этапом не установлены.
+Globals build labels прослежены из getter по Ghidra references:
+0x14b5658d8 / 0x14b5658e8 / 0x14b5658f8 → initializers
+0x1411b3350 / 0x1411b3380 / 0x1411b33b0. Manifest кандидатов
+`sdk-reference-candidates/89a033de8d7a88f6b48ab42dfa5670a22883edc996e78e3baeee8cbcceb75b92/manifest.json`.
+Ghidra export `details/run-e2265b35851b/details.json`, SHA256
+`9f6f21bebd5ce191051fe997d1feaf7128492eaa3886b27dedac141b9aa94541`.
+Связь строк A / B / C с этими globals проверена исполнением initializers,
+затем actual getter: byte 1 → B, 2 → C, остальные проверенные 0 / 255 → A.
+Полный диапазон byte этим новым replay не заявляется.
+
+Прямой copy target 0x141453970 из Refresh также экспортирован:
+`details/run-379a720f244e/details.json`, SHA256
+`d3489b6de5916d4107ef35d7204a2fb746f715b480f0847140b66572f4aa2f02`.
+Это переход к проверенному CRT memcpy thunk. Manifest ссылки
+`sdk-reference-candidates/ef3e64aecbb350d0456e00b8dfd1931ad452afa3a6897c573c2f3ec5a1566f3b/manifest.json`.
+
+[replay-release-gmc2-url.py](../../../replay-release-gmc2-url.py) выполняет
+новый slice 0x1444fb178..0x1444fb48d, три initializers, build / SDK version
+getters, native ASCII append 0x141761ae0 и copy wrapper. 27 сценариев совпали
+с переносимым helper: разные build bytes, nmp / epicgames, пустые base / group /
+market, лишний slash и raw query characters. Включён canonical production URL.
+Все строки помещаются в native inline builder; growth не подменён и не проверен.
+Отчёт `gmc2-url-replay/ee859f52afb6bc496420d5c0164da52e230bbf7b9d452288452c4d8c9aaef429/manifest.json`.
+Ранние отчёты `0d8d67cf…` / `391da90f…` содержат 26 сценариев до добавления
+canonical production case / общего harness; для профиля используется последний.
+
+[replay-release-gmc2-headers.py](../../../replay-release-gmc2-headers.py)
+выполняет новый GMC2 constructor и RequestGMC2 slice
+0x1444fcc70..0x1444fcec1 вместе с initializers / build getter.
+17 сценариев: четыре build bytes × два eTag × два accessToken плюс явный
+публичный production request без device identity / аккаунтных credentials.
+Captured URL, GET и ordered headers совпали с переносимым planner.
+Пустой eTag пропускается; playerId / accessToken добавляются только при непустом
+accessToken. Значения player / device во всех случаях искусственные либо пустые.
+Отчёт `gmc2-headers-replay/ecb52e39f9bd1a3850761761a81e08f1aa88245dd18f17206259b973b537a255/manifest.json`.
+
+HTTP virtual methods — captures. Manager/settings/CDO, FString storage / growth,
+free, exit registration и player / device getters — явные fixtures.
+Реальная строка / значения, полученные от конструкторов и getters, не заменяются
+ожидаемой готовой строкой URL / заголовков. Полный Refresh, создание запроса,
+TLS / console gates, HTTP transport и авторизация native-клиента не исполняются.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-gmc2-url.py
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-gmc2-headers.py
+```
+
+## Отдельный профиль recovered-release
+
+[build-release-sdk-profile.py](../../../build-release-sdk-profile.py) проверяет
+шесть immutable native reports, их source / tool / dependency SHA и текущий EXE.
+Он связывает выбранные результаты initial production settings → PC label →
+production base → canonical URL → public header capture и создаёт отдельный
+bundle. Старые файлы SDK / NID и их SHA не переписаны.
+
+Профиль `F:/PhoneExit Resources/Vampir/sdk-source-profiles/dd77f0c13f54949999b96de3c753dde608a8521087d83c80de5bbbc5a726c582/manifest.json`.
+SHA256 совпадает с именем каталога. В нём SDK 5.2.11, GameCode thered,
+market nmp при отсутствующем NMENV, build code 0, PC и публичный client ID.
+NID webview type 0 / English — явные локальные параметры; country / osVersion
+заполняются runner по текущему источнику. Это initial source profile,
+не прочитанный кеш / command line / TLS state работающей игры.
+
+Лёгкий [sdk-source-profile.py](../../../../../vampir-headless/sdk-source-profile.py)
+не импортирует инструменты исследования. Он проверяет SHA bundle и установленного
+EXE. Fetch и NID runner принимают явный `recovered-release`; выбранный профиль
+передаётся из lobby runner. NID отклоняет GMC2 snapshot старого профиля даже
+при том же SOCKS-порте. Нет автоматического отката к прежнему профилю.
+
+Пять новых проверок: реальный pinned профиль / public request, повреждённый
+manifest, изменившийся EXE, отсутствие / неизвестный выбор, старый SDK snapshot
+до decode / auth и передача выбора в runner. Ещё четыре lobby-context теста,
+семь launcher-flow тестов и обновлённая проверка передачи route / profile прошли.
+Исследовательские native replay не равны проверке реальной сессии.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/build-release-sdk-profile.py
+python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_release_sdk_profile.py -v
+python -X utf8 phone-exit/bots/resource-tools/vampir/fetch-public-gmc2-config.py --fetch --profile recovered-release --socks-port 17948
+```
+
+## Свежая конфигурация на новом JP
+
+Каталог вновь подтвердил доступный samsung SM-A205F / JP / APK 0.9.6.
+Собственный временный SOCKS на 127.0.0.1:17948 подключён к этому телефону;
+системные маршруты не менялись. Получены:
+
+- GMC2 HTTP 200, 13772 байта, DECKEY присутствует:
+  `public-gmc2-snapshots/ce43eb49be35879a5f583cd743ac38033e156de007d33189f8b234f218d715f0/manifest.json`.
+- CDN 1.13.14 / real, 7632 байта:
+  `public-cdn-snapshots/f09aa380346cd4bb389a0d9355e8f8a9133ed0f98c36cc827439eb120fd23417/manifest.json`.
+
+Эти два каталога находятся непосредственно в `F:/PhoneExit Resources/Vampir/`.
+NID preflight нового профиля прошёл: все три сохранённых device keys совпали
+с Windows-хранилищем, текущая страна JP, декодированы 94 SDK constants.
+Сами ключи / constants / credentials в документ и Git не включаются.
+Первое окно без пароля осталось на manual sign-in; закрыто штатно, SDK POST
+не выполнялся. Последующая проверка использует ранее заданный пароль через
+скрытый getpass / stdin, без аргументов процесса или сохранения пароля.
+
+## Результат реального входа на новом JP
+
+Ограниченная попытка на bot-hk-test / Franz 2 завершилась:
+
+- SDK launcher token / launcher sign-in приняты; joined country аккаунта HK.
+  Это отличается от текущего выхода JP и не подменяется сетевой страной.
+- Лобби: IDs 2 / 104 / 4, все result codes 0; 55 групп / 98 серверов.
+  Отправлено 766 байт, получено 11466. Выбран server 256 / group 253 / region JP;
+  лобби оставалось открытым во время игрового запроса.
+- Контекст `windows-sdk-initial-reset`, partial metadata 219 байт, язык 1,
+  ClientVersion 261105. Локальный адрес через SOCKS не установлен
+  (`socks_bound_unavailable`); адрес не выдумывался.
+- Game Version принят: code 0. LoginResult декодирован текущей моделью как
+  code 1, body 131 байт. Отправлено 860 байт, получено 94; счётчики полные,
+  других packet IDs нет. Клиент закрыл соединение по неизвестному ненулевому
+  результату; character list не отправлялся.
+
+Код 1 не называется BlockedIp / InvalidState: метка и соответствие нового
+LoginResult reader текущей переносимой модели ещё требуют проверки.
+Прежний отказ IP на новом телефоне не воспроизведён как 58, но это не доказательство
+отсутствия других ограничений сервера. SDK / лобби совместимость проверена
+этим обменом; полного игрового входа нет.
+
+Санитизированное наблюдение из завершённого CLI output сохранено отдельно:
+`F:/PhoneExit Resources/Vampir/live-login-observations/a85aa7a538bd24f1d3ce086b84d53ce0800923b16c186619260b267f841a6bee/manifest.json`.
+Это summary наблюдаемого вывода, не сохранённые сырые пакеты / body и не полный
+machine-captured transcript. В нём нет credentials / device keys / account IDs /
+токенов. Полный CLI result не сохранялся. Временный route helper завершился
+штатно с code 0; listener 17948 закрыт. Повторного SDK / Game Login после code 1
+не выполнялось.
+
+## Следующая проверка
+Проверить текущий LoginResult reader и native result-code mapper для кода 1
+на SHA 98802d550890… . Затем определить конкретное отличие поля / порядка
+обмена, которое оправдает следующую ограниченную попытку. Реальный список,
+выбор персонажа и позиция остаются открытыми; не повторять вход без нового
+подтверждённого изменения условий.

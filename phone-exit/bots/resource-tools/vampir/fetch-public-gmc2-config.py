@@ -24,7 +24,14 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def profile():
+def profile(selected_profile='recovered-base'):
+    if selected_profile == 'recovered-release':
+        spec = importlib.util.spec_from_file_location('gmc2_release_source', HERE.parents[1] / 'vampir-headless/sdk-source-profile.py')
+        loader = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(loader)
+        return loader.load_release_profile('public_gmc2', root=ROOT)
+    if selected_profile != 'recovered-base':
+        raise ValueError('Select a verified SDK source profile')
     path = ROOT / 'code-clues/headless-gmc2-public-profile.json'
     payload = path.read_bytes()
     if digest(payload) != PROFILE_SHA:
@@ -113,11 +120,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fetch', action='store_true', required=True)
     parser.add_argument('--socks-port', type=int)
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], default='recovered-base')
     args = parser.parse_args()
-    source = profile()
+    source = profile(args.profile)
     body, transport = fetch(source['request'], route=SocksRoute(args.socks_port) if args.socks_port is not None else None)
     report = dict(schema_version=1, fetched_utc=datetime.now(timezone.utc).isoformat(),
-        tool_sha256=digest(Path(__file__).read_bytes()), profile_sha256=PROFILE_SHA,
+        tool_sha256=digest(Path(__file__).read_bytes()), profile_sha256=source.get('profile_sha256', PROFILE_SHA),
+        selected_profile=args.profile,
         profile=source['profile'], request=source['request'], transport=transport,
         body_sha256=digest(body), body_bytes=len(body), active_settings_verified=False,
         authentication_attempted=False, network_ready=False)

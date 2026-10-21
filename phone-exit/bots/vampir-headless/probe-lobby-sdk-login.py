@@ -42,7 +42,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path,
         route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256)
     sdk = module('lobby_sdk_signin', 'run-nid-sdk-sign-in.py')
-    binding, sdk_profile, _ = sdk.load_inputs(email, route=route)
+    binding, sdk_profile, _ = sdk.load_inputs(email, route=route, selected_profile=selected_profile)
     browser = module('lobby_sdk_browser', 'nid-browser.py')
     captured = {}
     def capture(*args, **kwargs):
@@ -52,7 +52,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         if _progress: _progress('sdk_sign_in')
         return value
     data = sdk.run(email, timeout=180, password=password, socks_port=socks_port, _capture=capture,
-        auth_flow=auth_flow, _progress=_progress)
+        auth_flow=auth_flow, selected_profile=selected_profile, _progress=_progress)
     password = None
     provider = captured.pop('provider')
     country = ''
