@@ -48,7 +48,7 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
 
     @Override public void run() throws Exception {
         String[] args = getScriptArgs();
-        if (args.length != 2 && args.length != 3) throw new IllegalArgumentException("candidates.json output [dependencies]");
+        if (args.length < 2) throw new IllegalArgumentException("candidates.json output [dependencies [names]]");
         JsonObject candidates = JsonParser.parseString(Files.readString(Path.of(args[0]))).getAsJsonObject();
         if (!candidates.get("new_source_sha256").getAsString().equalsIgnoreCase(currentProgram.getExecutableSHA256()))
             throw new IllegalStateException("New digest mismatch");
@@ -72,7 +72,7 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                 }
             }
             JsonArray tables = new JsonArray();
-            if (args.length == 3) {
+            if (args.length >= 3) {
                 if (!args[2].equals("dependencies")) throw new IllegalArgumentException("Unknown mode");
                 pairs.clear();
                 String[][] dependencies = {
@@ -94,6 +94,12 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                     {"CharacterList_OptionalRead", "0x1456bf640", "0x1456c42d0"},
                     {"Record_TimeBaseRead", "0x1457f0a90", "0x1457fefb0"},
                     {"CharacterList_ResultRead", "0x1456d8d80", "0x1456dcf00"},
+                    {"CharacterList_ResultConstruct", "0x1456d47a0", "0x1456d84f0"},
+                    {"CharacterList_ResultRegistrationFactory", "0x14678ec40", "0x1467b62f0"},
+                    {"CharacterList_ResultRegister", "0x1467a7250", "0x1467ccd50"},
+                    {"CharacterList_ResultHandler", "0x14675dce0", "0x146797990"},
+                    {"CharacterList_ResultIdGetter", "0x1456e1fa0", "0x1456e5ee0"},
+                    {"CharacterList_ResultNameGetter", "0x1456e2fc0", "0x1456e70b0"},
                     {"RecordNested38_ConstructCandidate", "0x1457eca60", "0x1457a47d0"},
                     {"RecordNested38_BaseCandidate", "0x1457eca60", "0x1457fedc0"},
                     {"Archive_ReadFString", "0x144aa66f0", "0x144aae320"},
@@ -141,6 +147,12 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                     }
                     table.add("observed_words", words); tables.add(table);
                 }
+            }
+            if (args.length >= 4) {
+                Set<String> selected = new HashSet<>();
+                for (int i = 3; i < args.length; i++) selected.addAll(Arrays.asList(args[i].split(",")));
+                if (!pairs.keySet().containsAll(selected)) throw new IllegalArgumentException("Unknown selected pair");
+                pairs.keySet().retainAll(selected);
             }
             Path out = Path.of(args[1]); Files.createDirectories(out);
             JsonArray rows = new JsonArray();

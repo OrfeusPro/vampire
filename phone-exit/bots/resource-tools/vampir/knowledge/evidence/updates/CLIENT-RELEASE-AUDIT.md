@@ -463,6 +463,64 @@ leaves, результаты и ограничения. После выделе�
 Дальше — packet ID / vtable binding и обработчик списка, затем выбор персонажа
 и реальная сессия после проверки актуальной ревизии и готовности сервера.
 
+### ID 102: constructor, vtable и регистрация handler
+
+По уникальному указателю на уже проверенный reader 0x1456dcf00 найдена таблица
+0x14992a968. По LEA этой таблицы установлен кандидат leaf constructor
+0x1456d84f0; единственный прямой call-кандидат находится по 0x1467b6973
+в factory root 0x1467b62f0. Совпадение байтов поиска само по себе не принято
+как роль: constructor / getters и участок фабрики затем проверены исполнением.
+
+Ghidra export фабрики: `details/run-36c407109687/details.json` внутри
+`run-fd4956a37b3c`, SHA256
+`1d414ee4ce052123a9cfa6a833bcacd5b3576a2c6b2224c1e7ab90e2aa778e17`.
+Декомпиляции целых old/new factories остановились по timeout, что сохранено
+в отчёте. У новой фабрики есть 19 000 инструкций Listing, использованных для
+сверки конкретного участка; полнота фабрики этим числом не доказывается.
+Constructor не имел Function в Ghidra и проверен как bounded leaf.
+
+Выборочный export register / handler / getters:
+`details/run-ab4ca396be23/details.json`, SHA256
+`64a07328ba5dc14b901dc01005a8515a0a102a893eb750d4e3fa309a92040767`.
+Runner получил `--only` для выбора нужных dependency pairs без повторного
+экспорта всей фабрики. Первый запуск `run-8f2cc3538ac2` отчёта не получил:
+Ghidra разделил comma-список на отдельные аргументы; Java parser исправлен.
+
+| Привязка новой сборки | Адрес / значение |
+| --- | --- |
+| Constructor | 0x1456d84f0 |
+| Vtable | 0x14992a968 |
+| Writer +0x10 / reader +0x20 | 0x1456e9390 / 0x1456dcf00 |
+| ID getter +0x28 | 0x1456e5ee0, возвращает 102 |
+| Name getter +0x38 | 0x1456e70b0 |
+| Compiled name | PktCharacterListReadResult |
+| Handler vtable / method +0x10 | 0x149dc8800 / 0x146797990 |
+| Register call / function | 0x1467b6986 / 0x1467ccd50 |
+
+[replay-release-character-packet-binding.py](../../../replay-release-character-packet-binding.py)
+исполнил factory slice 0x1467b6940..0x1467b698b с allocator/backend fixtures.
+Три размещения подтвердили передачу RCX=factory context, RDX=packet,
+R8=handler. Vptr обоих объектов установлен actual-кодом; constructor не
+повредил canaries 0x48-байтного packet и 8-байтного handler.
+ID getter исполнен и дал 102. Name getter передаёт compiled ASCII-литерал
+по 0x14992a9b8 в 0x141426a30 и возвращает destination. Helper построения
+строки заменён capture fixture; его layout не выдуман и не считается проверенным.
+Первоначальное предположение о UTF-16-литерале отклонено по фактическим байтам.
+
+Отдельно исполнен prefix регистрации 0x1467ccd50..0x1467ccd9c: actual call
+virtual +0x28 и запись AX как uint16 в ключ. Во всех трёх размещениях ключ 102
+совпал с ID пакета. Backend-вставка 0x1467b5a90, весь dispatcher и handler
+не исполнялись. Новый handler выгружен: в нём видны result gate 0x1467cee40,
+predicate 0x145c9c0d0 и применение списка; их новый bounded replay ещё впереди.
+
+Отчёт внутри каталога сравнения:
+`packet-binding-replay/9da68c98aab2b6cefa9ef9821b03b7d63aff272c619db1c6cc851e0dfaedb6a2/manifest.json`.
+Последний каталог — SHA256. Сохранены SHA EXE / Ghidra / инструментов, версии
+Capstone / Unicorn, code bytes / slices, bindings, результаты и ограничения.
+Прежний отчёт `873105a2e577081385a0326c6527d3a63cd0c71195d5b01a36809270800aaa89`
+предшествовал добавлению версий библиотек и dependency SHA.
+Подтверждён ID 102 и его reader, не совместимость всех packet bindings клиента.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление

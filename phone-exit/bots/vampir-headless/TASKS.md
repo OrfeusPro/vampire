@@ -22,8 +22,9 @@
 Базовый whole-list reader нового EXE проверен: 12 полных bodies совпали с
 переносимым decoder, 238 коротких префиксов отклонены; память контейнеров — fixture.
 Непустые appearance extensions / optional map прошли ещё 31 body / 489 префиксов,
-включая duplicate overwrite и разные соседние записи. Следом — packet bindings,
-handler и реальный вход. Старые адреса не переносить без проверки.
+включая duplicate overwrite и разные соседние записи. Constructor / vtable /
+ID 102 / reader и ключ регистрации подтверждены отдельным native replay.
+Следом — новый handler, выбор персонажа и реальный вход. Старые адреса не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в
