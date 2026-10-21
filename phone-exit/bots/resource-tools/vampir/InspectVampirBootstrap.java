@@ -23,6 +23,9 @@ public class InspectVampirBootstrap extends GhidraScript {
             item.addProperty("address", "0x" + ins.getAddress());
             item.addProperty("text", ins.toString());
             item.addProperty("bytes", HexFormat.of().formatHex(ins.getBytes()));
+            JsonArray flows = new JsonArray();
+            for (Address target : ins.getFlows()) flows.add("0x" + target);
+            item.add("flows", flows);
             instructions.add(item);
         }
         row.add("instructions", instructions);
@@ -46,23 +49,77 @@ public class InspectVampirBootstrap extends GhidraScript {
         if ((args.length != 2 && args.length != 3) || !args[0].equalsIgnoreCase(currentProgram.getExecutableSHA256()))
             throw new IllegalArgumentException("Expected matching source SHA and new output directory");
         if (!args[0].equalsIgnoreCase("98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e") ||
-                (args.length == 3 && !List.of("connected", "scalar").contains(args[2])))
+                (args.length == 3 && !List.of("connected", "scalar", "send", "lifecycle", "ping").contains(args[2])))
             throw new IllegalArgumentException("Unsupported source or inspection mode");
         Path out = Path.of(args[1]);
         Files.createDirectory(out);
         JsonObject report = new JsonObject();
         report.addProperty("source_sha256", currentProgram.getExecutableSHA256());
+        report.addProperty("new_source_sha256", currentProgram.getExecutableSHA256());
         report.addProperty("scalar", 30413);
         report.addProperty("roles_transferred", false);
         JsonArray hits = new JsonArray();
         Map<Address, Function> owners = new TreeMap<>();
-        if (args.length == 3 && args[2].equals("connected")) {
+        if (args.length == 3 && args[2].equals("ping")) {
+            JsonArray references = new JsonArray();
+            JsonArray literals = new JsonArray();
+            byte[] name = "PktPing\0".getBytes(java.nio.charset.StandardCharsets.US_ASCII);
+            Address cursor = currentProgram.getMinAddress();
+            while (cursor != null) {
+                Address found = currentProgram.getMemory().findBytes(cursor, name, null, true, monitor);
+                if (found == null) break;
+                JsonObject literal = new JsonObject();
+                literal.addProperty("label", "PktPing");literal.addProperty("address", "0x" + found);
+                literal.addProperty("bytes", HexFormat.of().formatHex(name));literals.add(literal);
+                var refs = currentProgram.getReferenceManager().getReferencesTo(found);
+                while (refs.hasNext()) {
+                    var ref = refs.next();
+                    Function getter = currentProgram.getFunctionManager().getFunctionContaining(ref.getFromAddress());
+                    JsonObject item = new JsonObject();
+                    item.addProperty("literal", "0x" + found); item.addProperty("reference", "0x" + ref.getFromAddress());
+                    if (getter != null) {
+                        item.addProperty("getter_candidate", "0x" + getter.getEntryPoint());
+                        owners.put(getter.getEntryPoint(), getter);
+                        var tableRefs = currentProgram.getReferenceManager().getReferencesTo(getter.getEntryPoint());
+                        JsonArray tables = new JsonArray();
+                        while (tableRefs.hasNext()) {
+                            Address slot = tableRefs.next().getFromAddress();
+                            if (currentProgram.getListing().getInstructionContaining(slot) != null) continue;
+                            Address table = slot.subtract(0x38);
+                            JsonObject t = new JsonObject();t.addProperty("candidate_table", "0x" + table);
+                            byte[] raw = new byte[64]; currentProgram.getMemory().getBytes(table, raw);
+                            t.addProperty("bytes", HexFormat.of().formatHex(raw));
+                            var ctorRefs = currentProgram.getReferenceManager().getReferencesTo(table);
+                            JsonArray uses = new JsonArray();
+                            while (ctorRefs.hasNext()) {
+                                Address use = ctorRefs.next().getFromAddress();
+                                Function ctor = currentProgram.getFunctionManager().getFunctionContaining(use);
+                                if (ctor == null) continue;
+                                JsonObject u = new JsonObject();u.addProperty("reference", "0x" + use);u.addProperty("owner", "0x" + ctor.getEntryPoint());uses.add(u);
+                                owners.put(ctor.getEntryPoint(), ctor);
+                                for (Function caller : ctor.getCallingFunctions(monitor)) owners.put(caller.getEntryPoint(), caller);
+                            }
+                            t.add("table_uses", uses);tables.add(t);
+                        }
+                        item.add("candidate_tables", tables);
+                    }
+                    references.add(item);
+                }
+                cursor = found.add(name.length);
+            }
+            report.add("ping_name_references", references);
+            report.add("literals", literals);
+        } else if (args.length == 3 && List.of("connected", "send", "lifecycle").contains(args[2])) {
             JsonArray tables = new JsonArray();
             // LEA/store bindings in the separately exported new GamePeer ctor.
-            for (String text : List.of("1496736c8", "1496736f8")) {
+            // Game wrapper table is stored by Network_PeersConstruct 1467cda10.
+            boolean send = List.of("send", "lifecycle").contains(args[2]);
+            List<String> bindings = args[2].equals("lifecycle") ? List.of("149dcb358:08", "149dcb358:18", "149dcb358:20") : send ? List.of("149dcb358:30", "149dcb358:38", "149dcb358:40", "149dcb358:48") : List.of("1496736c8:10", "1496736f8:18");
+            for (String binding : bindings) {
+                String text = binding.split(":")[0];
+                int slot = Integer.parseInt(binding.split(":")[1], 16);
                 Address table = currentProgram.getAddressFactory().getAddress(text);
-                byte[] raw = new byte[40]; currentProgram.getMemory().getBytes(table, raw);
-                int slot = text.equals("1496736f8") ? 24 : 16;
+                byte[] raw = new byte[send ? 80 : 40]; currentProgram.getMemory().getBytes(table, raw);
                 Address target = currentProgram.getAddressFactory().getDefaultAddressSpace().getAddress(currentProgram.getMemory().getLong(table.add(slot)));
                 JsonObject item = new JsonObject();
                 item.addProperty("table", "0x" + table); item.addProperty("bytes", HexFormat.of().formatHex(raw));
@@ -76,7 +133,12 @@ public class InspectVampirBootstrap extends GhidraScript {
                 }
                 if (function != null) owners.put(target, function);
             }
-            report.add("connected_tables", tables);
+            report.add(send ? "send_tables" : "connected_tables", tables);
+            if (send) {
+                for (Function function : new ArrayList<>(owners.values()))
+                    if (List.of("1467d0a70", "1467d0af0", "1467cec60").contains(function.getEntryPoint().toString()))
+                        for (Function callee : function.getCalledFunctions(monitor)) owners.put(callee.getEntryPoint(), callee);
+            }
         } else {
         Address cursor = currentProgram.getMinAddress();
         byte[] pattern = {(byte)0xcd, (byte)0x76};
@@ -153,8 +215,9 @@ public class InspectVampirBootstrap extends GhidraScript {
         report.add("wire_fragment_candidates", wireHits);
         }
         // One caller level only: a bound, not a full call graph.
-        for (Function owner : new ArrayList<>(owners.values()))
-            for (Function caller : owner.getCallingFunctions(monitor)) owners.put(caller.getEntryPoint(), caller);
+        if (!(args.length == 3 && List.of("send", "lifecycle", "ping").contains(args[2])))
+            for (Function owner : new ArrayList<>(owners.values()))
+                for (Function caller : owner.getCallingFunctions(monitor)) owners.put(caller.getEntryPoint(), caller);
         if (owners.size() > 64) throw new IllegalStateException("Owner export bound exceeded");
         JsonArray functions = new JsonArray();
         for (Function function : owners.values()) functions.add(export(function, out));

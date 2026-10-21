@@ -60,9 +60,14 @@ IDs 30413 → Version → Ping; бот начинает с Version. Следом
 [Полная последовательность и сверка ключей](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#полный-запуск-4c713eb5-и-сверка-идентификаторов).
 По новому EXE выгружены constructor / Version callback и source-bound targets
 уведомления подключения. Прямой поиск scalar 30413 и wire-константы результата
-не дал; роль предварительного кадра ещё не установлена. Следом — actual send
-и заполнение Ping, без повторения тех же literal searches.
+не дал; роль предварительного кадра ещё не установлена. Эти же literal searches
+без изменившихся входов повторять не требуется.
 [Проверенные адреса, выгрузки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-BOOTSTRAP.md).
+Продолжение: actual send новой версии выгружен; найден producer Ping.
+36 native сценариев подтвердили поля «часы / разница», порог >5000, readiness
+и recovery branch. Эталонные пять Ping согласуются с producer; часы первого
+примерно на 9 часов впереди времени capture. Epoch / источник clock-cache
+и кадр 30413 ещё не установлены; runtime и live вход не менялись.
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических

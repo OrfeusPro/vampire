@@ -22,6 +22,9 @@ def main():
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--connected', action='store_true', help='Inspect ctor-bound connected table slots instead of searching bytes')
     mode.add_argument('--scalar-only', action='store_true', help='Search low 16 bits of scalars without wire fragment searches')
+    mode.add_argument('--send', action='store_true', help='Inspect source-bound game wrapper slots and one level of callees')
+    mode.add_argument('--lifecycle', action='store_true', help='Inspect remaining source-bound wrapper lifecycle slots')
+    mode.add_argument('--ping', action='store_true', help='Trace PktPing literal, candidate table, constructor uses and callers')
     args = parser.parse_args()
     comparison = ROOT / 'ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c'
     receipt_path = comparison / 'provenance.json'
@@ -35,6 +38,11 @@ def main():
             raise ValueError('Pinned tool mismatch')
     script = HERE / 'InspectVampirBootstrap.java'
     inputs = {str(p): digest(p) for p in (Path(__file__), script, receipt_path)}
+    if args.send or args.lifecycle:
+        constructor = comparison / 'details/run-318565bc90d7/details.json'
+        if digest(constructor) != 'a0d199a7b60fba31c926aedb5862670d061adafb31bf00b3d9bbd78812aa9a22':
+            raise ValueError('Source-bound wrapper constructor export changed')
+        inputs[str(constructor)] = digest(constructor)
     out = comparison / 'bootstrap' / ('run-' + uuid.uuid4().hex[:12])
     out.mkdir(parents=True)
     env = os.environ.copy()
@@ -49,6 +57,12 @@ def main():
         command.append('connected')
     elif args.scalar_only:
         command.append('scalar')
+    elif args.send:
+        command.append('send')
+    elif args.lifecycle:
+        command.append('lifecycle')
+    elif args.ping:
+        command.append('ping')
     invocation = dict(source_sha256=SHA, inputs=inputs, tools=lock, command=command)
     (out / 'invocation.json').write_text(json.dumps(invocation, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(output=str(out))), flush=True)
