@@ -24,9 +24,9 @@ source-bound профиль и проверить SDK / NID привязки; с
 1.13.14 получен через текущий JP. Подготовительный runner остановился до
 авторизации на прежней SDK / NID привязке; Game Login после докачки не отправлен.
 Новые SDK settings prefix / GMC2 constructor / version getter прошли 9 native
-сценариев; PC initializer / getter — ещё 12. В новом игровом override найден
-дополнительный условный выбор market. Следом — его selector / альтернативный
-global и native-проверка override / production zone;
+сценариев; PC initializer / getter — ещё 12. Игровой override / initializers /
+market selector и production zone проверены в 106 сценариях. Альтернативный
+market epicgames задаётся через `NMENV=epicgames`. Следом — GMC2 request path;
 [источники и границы](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md).
 После сообщения пользователя о трёх новых телефонах каталог показал доступные
 JP samsung SM-A205F / Redmi 2201116SI и HK Redmi M2103K19Y, APK 0.9.6.

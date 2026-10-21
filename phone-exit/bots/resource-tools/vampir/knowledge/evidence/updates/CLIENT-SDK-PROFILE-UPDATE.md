@@ -143,12 +143,58 @@ globals тем же проверяемым scanner. Получены 35 initiali
 python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-sdk-platform.py
 ```
 
+## Автоматическая проверка market и zone, 21 октября
+
+Следующий проход закрыл неизвестное выше: global 0x14b5e8fb8 заполняет
+initializer 0x14125b8c0 строкой epicgames. Selector 0x14560c680 получает значение
+через 0x14452abd0 по ключу командной строки `NMENV=`. Сравнение без учёта
+ASCII-регистра возвращает 0 для nmp, 1 для epicgames, 2 для gpgpc; пустое или
+неизвестное значение даёт 0. Игровой override переключает market только при 1
+и наличии SDK object / handle. Это условие командной строки; страну аккаунта
+или выхода данная ветвь не проверяет.
+
+Ghidra exports в том же comparison:
+
+- `details/run-f43686dcac55/details.json`, SHA256
+  `30fd3276d957fc9dff241c215ba1a4810df7cab6d3b3dec85272819c679f0c65`:
+  selector, comparator 0x14145f310 и initializer epicgames.
+- `details/run-27454953ad4c/details.json`, SHA256
+  `13b6067cbbd5b220ecf0c32183d87fe434120e8b841ef922f0aebf52906320cf`:
+  getter и comparator 0x14145f2c0.
+
+Автоматический finder теперь принимает только globals / прямые CALL или JMP
+из предоставленных Ghidra instructions. Отчёты `sdk-reference-candidates/`
+`048bc050d9ba6dd0be8f3bedbe5dcf25a11fd4e55285e56434f30824179ef326` и
+`f18b912a99b2ba84711ccaed7a239f4666f7e05d4c1edcf536314571a82000d9`
+содержат соответствующие manifest.json. Опечатка 0x14125b890 была отклонена
+selected export `run-ffc0530fa194`: адрес отсутствовал среди кандидатов.
+Теперь Python runner проверяет это до запуска Ghidra.
+
+[replay-release-sdk-overrides.py](../../../replay-release-sdk-overrides.py)
+исполняет prefix settings, четыре initializers, целый игровой override,
+market getter / selector, оба comparator и общий tail 0x1445530b0.
+Пройдены 106 сценариев: 13 значений environment × 8 NMENV и два отказа gate.
+Market nmp / epicgames, GameCode thered, публичный client ID, build code 0,
+zone 2 для real без учёта ASCII-регистра (иначе 1) и raw +0xc8 = 0 совпали;
+guards объекта сохранены. Семантика raw +0xc8 за пределами записи не установлена.
+Отчёт `sdk-overrides-replay/a38710b3406e7740be44169bf5b861c13c95e299e25ce535a3ad256339313953/manifest.json`.
+
+Class/CDO, singleton objects, environment string, FString storage / growth,
+CRT copy, free и exit registration — явные fixtures. Выход FParse также fixture:
+настоящий parser и командная строка запущенной игры не исполнялись. Первый
+replay остановился на неотображённом общем tail; после проверки двух инструкций
+по Ghidra и исходным байтам tail включён в разрешённые диапазоны. Ограничение
+на неизвестное исполнение сохранено. Это офлайн-проверка, не доказательство
+полного startup, HTTP, авторизации или совместимости сервера.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-sdk-overrides.py
+```
+
 ## Следующая проверка
 
-PC initializer уже связан с потребителем и проверен native-сценариями.
-Далее разобрать условный market selector / альтернативный global и выполнить
-новый игровой override вместе с initializers / comparator / zone write.
-После этого проверить новый GMC2 request path и сформировать отдельный
+PC и игровой override уже проверены ограниченными native-сценариями.
+Далее проверить новый GMC2 request path и сформировать отдельный
 source-bound профиль. Установленные SDK / NID guards пока прежние; свежий SDK
 config, авторизация и Game Login на новом samsung SM-A205F ещё не выполнялись.
 Успешный вход, BlockedIp и готовность runtime этим этапом не установлены.

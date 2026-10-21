@@ -46,6 +46,12 @@ def main():
     if args.sdk_reference_candidates:
         if digest(args.sdk_reference_candidates) != args.sdk_reference_candidates.parent.name:
             raise ValueError('SDK reference manifest digest mismatch')
+        supplied = json.loads(args.sdk_reference_candidates.read_text('utf-8'))
+        if supplied['source_sha256'] != receipt['new_source_sha256']:
+            raise ValueError('SDK reference source mismatch')
+        permitted = {row['function'] for row in supplied['references']}
+        if not set(args.sdk_functions.split(',')) <= permitted:
+            raise ValueError('Requested SDK function absent from verified references')
         inputs[str(args.sdk_reference_candidates)] = digest(args.sdk_reference_candidates)
     out = args.comparison / 'details' / ('run-' + uuid.uuid4().hex[:12])
     out.mkdir(parents=True)

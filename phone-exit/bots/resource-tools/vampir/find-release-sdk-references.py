@@ -18,6 +18,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('evidence', type=Path)
     parser.add_argument('--follow-client-id-globals', action='store_true', help='Find consumers of constructor destinations, without inferring their role')
+    parser.add_argument('--global-address', action='append', default=[], help='Follow a global explicitly referenced in the supplied Ghidra instructions')
+    parser.add_argument('--direct-target', action='append', default=[], help='Inspect an explicit CALL/JMP target from the supplied Ghidra instructions')
     args = parser.parse_args()
     audit = load('sdk_refs_audit', HERE / 'audit-client-release.py')
     native = load('sdk_refs_native', HERE / 'build-native-entry-code.py')
@@ -32,13 +34,20 @@ def main():
     raw = source.read_bytes()
     image = native.Image(raw)
     targets = {}
-    for item in evidence['literals']:
+    for item in evidence.get('literals', []):
         address = int(item['address'], 16)
         data = bytes.fromhex(item['bytes'])
         off = image.offset(address - image.pe.base)
         if raw[off:off + len(data)] != data:
             raise ValueError('Ghidra literal bytes changed')
         targets[address] = item
+    instructions = [row for function in evidence.get('functions', []) for row in function.get('instructions', [])]
+    known_references = {int(ref, 16) for row in instructions for ref in row.get('references', [])}
+    for value in args.global_address:
+        address = int(value, 16)
+        if address not in known_references:
+            raise ValueError('Global absent from supplied Ghidra references')
+        targets[address] = dict(label='GlobalAddress')
     candidates = native.rip_candidates(image, targets)
     roots = {image.roots[image.containing(a)] for a, target in candidates if image.containing(a)}
     fragments = native.decode_ranges(image, roots)
@@ -51,6 +60,16 @@ def main():
         root = image.roots[image.containing(address)]
         references.append(dict(label=targets[target]['label'], literal=hex(target), instruction=hex(address),
             function=hex(image.pe.base + root[0]), bytes=row['bytes'], operands=row['operands']))
+    direct_rows = []
+    for value in args.direct_target:
+        address = int(value, 16)
+        callers = [row for row in instructions if row['text'].startswith(('CALL ', 'JMP '))
+                   and address in [int(ref, 16) for ref in row.get('references', [])]]
+        if not callers:
+            raise ValueError('Target absent from supplied Ghidra CALL/JMP references')
+        references.append(dict(label='GhidraDirectTarget', function=hex(address),
+            callsites=[row['address'] for row in callers]))
+        direct_rows.extend(callers)
     initializers = []
     if args.follow_client_id_globals:
         for reference in list(references):
@@ -81,7 +100,8 @@ def main():
     report = dict(schema=1, source=str(source), source_sha256=sha,
         ghidra_evidence=str(args.evidence), ghidra_evidence_sha256=evidence_sha,
         tool_sha256=audit.sha256(Path(__file__)), scanner_sha256=audit.sha256(HERE / 'build-native-entry-code.py'),
-        references=references, client_id_initializer_candidates=initializers, fragments=fragments, roles_transferred=False,
+        references=references, client_id_initializer_candidates=initializers, fragments=fragments,
+        ghidra_direct_target_instructions=direct_rows, roles_transferred=False,
         limits=['LEA RIP candidates validated on whole unwind-root instruction boundaries.',
                 'Ghidra database had no recorded literal references; this does not prove absence of native uses.',
                 'No inferred function roles or runtime compatibility; next step is selected Ghidra inspection.'])

@@ -21,8 +21,10 @@ JP. Проверка не допускает смешивания его со с
 Подготовительный runner остановился до авторизации на прежней привязке SDK / NID.
 В новом EXE проверены constructor defaults SDK / GMC2 и версия SDK 5.2.11
 в 9 native-сценариях; PC initializer → getter прошёл ещё 12 сценариев.
-У нового игрового override обнаружен дополнительный условный выбор market,
-который ещё нужно проверить перед обновлением SDK / NID профиля;
+Игровой override / initializers / market selector прошли 106 native-сценариев:
+market epicgames выбирается через `NMENV=epicgames`, иначе проверенные варианты
+дают nmp; production zone сверена с environment real. Следом — GMC2 request path
+перед обновлением SDK / NID профиля;
 [подробности и границы](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md).
 Пользователь заменил телефоны: в каталоге доступны samsung SM-A205F и Redmi
 2201116SI с выходом JP, Redmi M2103K19Y — HK; все три не заняты, APK 0.9.6.
