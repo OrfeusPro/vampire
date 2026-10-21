@@ -77,6 +77,11 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                 pairs.clear();
                 String[][] dependencies = {
                     {"NestedRead_ThunkCandidate", "0x144aa68b0", "0x144aae4e0"},
+                    {"CharacterList_RecordConstruct", "0x14577d3d0", "0x145784b10"},
+                    {"RecordNested38_ConstructCandidate", "0x1457eca60", "0x1457a47d0"},
+                    {"RecordNested38_BaseCandidate", "0x1457eca60", "0x1457fedc0"},
+                    {"Archive_ReadFString", "0x144aa66f0", "0x144aae320"},
+                    {"Archive_ReadArray", "0x144aa5c50", "0x144aad880"},
                     {"CharacterList_ClearCandidate", "0x1456d32e0", "0x1456d6f70"},
                     {"CharacterList_ResizeCandidate", "0x1420e2ac0", "0x1420e88c0"}
                 };

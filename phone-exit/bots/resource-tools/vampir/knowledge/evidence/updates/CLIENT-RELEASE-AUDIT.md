@@ -217,6 +217,46 @@ fixture virtual reader (0, 1, 0xdeadbeef). Все 18 проверили поря
 Следом — record vtable → reader, actual archive readers и полные bounded list
 scenarios для нового SHA. Runtime пока не объявлен совместимым.
 
+### Конструктор записи → vtable → reader
+
+Дополнительный Ghidra export конструктора, Archive_ReadFString / ReadArray и
+вложенной зависимости: `details/run-cb6f5eff23f7/details.json` внутри
+`run-fd4956a37b3c`, SHA256
+`778cc016dd5b5744ef539045add4502342b263f7c7dac37ebf2947c7e1226d78`.
+Промежуточный export `run-356f180aa51c` сохранён отдельно; его SHA256
+`e805f131a930ccaea129407d3fb4a67320b70649af6f383a12ab20d09bf7bceb`.
+
+У новой записи constructor 0x145784b10 устанавливает vptr 0x14992a420.
+Её slot +0x20 содержит 0x1457897d0 — кандидата CharacterList_RecordRead.
+Старая цепочка: 0x14577d3d0 → 0x1498d7ff8 → 0x145781c80.
+Новый Archive_ReadArray 0x144aad880 сначала читает uint16 через archive+0x68,
+затем вызывает callback+8 для подготовки массива и callback+0x10 для элементов,
+прерываясь при отказе. Это статическая проверка Ghidra, не исполнение array IO.
+
+Первая попытка исполнения конструктора остановилась на защите leaf-кода:
+вместо старого leaf 0x1457eca60 новая запись вызывает 0x1457a47d0, который
+дополнительно вызывает 0x1457fedc0. Новый wrapper выгружен через Ghidra;
+базовый leaf не имел Function и затем разобран Capstone: установка vptr,
+обнуление qword +8 и возврат объекта. Неизвестный вызов не заменялся заглушкой.
+После проверки добавлены actual wrapper и leaf; соседний leaf 0x1457917a0
+также исполняется. Старые nested leaves — 0x1457eca60 и 0x145789700.
+
+[replay-release-record-binding.py](../../../replay-release-record-binding.py)
+исполнил оба record constructors и перечисленные вложенные методы в Unicorn.
+На каждой сборке проверены заполнения объекта 0 / 0x5a / 0xff и два размещения:
+12 сценариев. Проверены return pointer, ожидаемый vptr и file-backed slot +0x20;
+canaries перед / после 0x170-байтного объекта сохранены. Код ограничен
+проверенными constructor ranges и leaves, бюджет — 2000 инструкций на вызов.
+Непроверенный выход за эти ranges вызывает отказ; fixtures методов нет.
+
+Отчёт внутри каталога сравнения:
+`record-binding-replay/36c7b4365f3ff677f00cfc69c093be450801bc37d39fc33edbacc9d85e9f78ff/manifest.json`.
+Последний каталог — SHA256; сохранены SHA источников / инструментов / Ghidra
+evidence, native ranges, leaf bytes, результаты и снимки объектов.
+Сам reader по slot +0x20 ещё не исполнен. Следом — actual archive IO / UTF-8
+и полный body списка с проверкой чтения и отказов на новом SHA. Готовность
+декодера всей сессии или runtime этим этапом не подтверждена.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление

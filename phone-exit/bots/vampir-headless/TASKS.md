@@ -20,8 +20,9 @@
 файлов готовы. Patch manifest пока прежний. Ghidra дал кандидатов для 239 из
 424 исследованных функций; девять пар входа / персонажей выгружены отдельно.
 Callback списка сопоставлен статически; helper вложенного чтения прошёл
-18 ограниченных native-сценариев. Следом — record vtable → reader, archive readers,
-packet bindings и полные list scenarios нового EXE. Старые адреса не переносить без проверки.
+18 ограниченных native-сценариев. Record constructor → vtable → reader проверены
+ещё 12 native-сценариями. Следом — archive IO / UTF-8, packet bindings и полные
+list scenarios нового EXE. Старые адреса не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в
