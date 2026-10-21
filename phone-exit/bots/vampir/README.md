@@ -19,6 +19,9 @@ AppVersion 1.13.14; свежие каталоги и Game INI основного
 профиль `recovered-release` уже добавлен; свежий CDN 1.13.14 получен через текущий
 JP. Проверка не допускает смешивания его со старым config snapshot.
 Подготовительный runner остановился до авторизации на прежней привязке SDK / NID.
+В новом EXE проверены constructor defaults SDK / GMC2 и версия SDK 5.2.11
+в 9 native-сценариях. Для профиля ещё нужны game-specific overrides и PC binding;
+[подробности и границы](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md).
 Пользователь заменил телефоны: в каталоге доступны samsung SM-A205F и Redmi
 2201116SI с выходом JP, Redmi M2103K19Y — HK; все три не заняты, APK 0.9.6.
 Следующую JP-проверку готовить на samsung SM-A205F после сверки SDK / NID.

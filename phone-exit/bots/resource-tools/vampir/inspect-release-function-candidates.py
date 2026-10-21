@@ -18,7 +18,14 @@ def main():
     parser.add_argument('comparison', type=Path)
     parser.add_argument('--dependencies', action='store_true', help='Inspect unresolved list-reader dependencies and observed callback words')
     parser.add_argument('--only', help='Comma-separated candidate names, or dependency pair names with --dependencies')
+    parser.add_argument('--sdk-profile', action='store_true', help='Inspect current SDK literal references and their Ghidra owners')
+    parser.add_argument('--sdk-reference-candidates', type=Path, help='Verified native SDK reference manifest for missing Ghidra xrefs')
+    parser.add_argument('--sdk-functions', help='Comma-separated function addresses present in --sdk-reference-candidates')
     args = parser.parse_args()
+    if args.sdk_profile and (args.dependencies or args.only):
+        parser.error('--sdk-profile is a separate inspection mode')
+    if bool(args.sdk_reference_candidates) != bool(args.sdk_functions) or (args.sdk_functions and not args.sdk_profile):
+        parser.error('--sdk-reference-candidates and --sdk-functions require each other and --sdk-profile')
     here = Path(__file__).resolve().parent
     root = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir'))
     provenance = args.comparison / 'provenance.json'
@@ -34,8 +41,12 @@ def main():
     for name in ('ghidra', 'jdk'):
         if json.loads((tools / lock[name]['directory'] / '.phoneexit-verified.json').read_text('utf-8')) != lock[name]:
             raise ValueError('Pinned tool mismatch')
-    script = here / 'InspectVampirReleaseCandidates.java'
+    script = here / ('InspectVampirSdkProfile.java' if args.sdk_profile else 'InspectVampirReleaseCandidates.java')
     inputs = {str(p): digest(p) for p in (Path(__file__), script, candidates, provenance)}
+    if args.sdk_reference_candidates:
+        if digest(args.sdk_reference_candidates) != args.sdk_reference_candidates.parent.name:
+            raise ValueError('SDK reference manifest digest mismatch')
+        inputs[str(args.sdk_reference_candidates)] = digest(args.sdk_reference_candidates)
     out = args.comparison / 'details' / ('run-' + uuid.uuid4().hex[:12])
     out.mkdir(parents=True)
     env = os.environ.copy()
@@ -52,6 +63,8 @@ def main():
         command.append('candidates')
     if args.only:
         command.append(args.only)
+    if args.sdk_reference_candidates:
+        command.extend([str(args.sdk_reference_candidates), args.sdk_functions])
     invocation = dict(inputs=inputs, tools=lock, command=command)
     (out / 'invocation.json').write_text(json.dumps(invocation, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(output=str(out))), flush=True)
