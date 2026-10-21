@@ -308,6 +308,51 @@ Capstone / Unicorn, native ranges, leaves и результаты. UTF-8 / FStri
 callback массива и весь список на новом EXE ещё не исполнены. Следующий шаг —
 перенести эти зависимости, сохранив исходные ограничения прежних scenarios.
 
+### UTF-8 / FString новой сборки
+
+Ghidra export цепочки строк: `details/run-c49c5bae9fe5/details.json` внутри
+`run-fd4956a37b3c`, SHA256
+`dd47cf6861dc3872ee93f05d9bcd08849f0a144bcb8c15a7f92c49370790038a`.
+Промежуточный export `run-700d46644bc9` сохранён с SHA256
+`e7340ba1a7295bb79f713b7e35aa5167965d654da84ce413976aa6fd70c1e20e`.
+
+| Участок | Новый адрес |
+| --- | --- |
+| Archive_ReadFString | 0x144aae320 |
+| Archive_ReadStdString | 0x144aad6e0 |
+| UTF-8 length | 0x14144c520 |
+| Decode wrapper | 0x141446780 |
+| Decode core | 0x14143be10 |
+| Decode scalar | 0x14143ba80 |
+
+[replay-release-fstring-input.py](../../../replay-release-fstring-input.py)
+исполнил эти методы и actual archive byte IO на новом EXE. Проверены шесть
+полных строк: пустая, ASCII, `Ж界🙂`, 16 букв é, 129 ASCII-символов и 130
+иероглифов. Декодированный текст совпал; последние случаи охватывают рост
+stdstring и UTF-16 scratch свыше 128 units. Все 577 коротких префиксов
+возвратили отказ, потребили только доступные байты и не присвоили итоговый текст.
+Malformed UTF-8 и embedded NUL не проверялись.
+
+Присваивание FString, рост stdstring, UTF-16 allocation, free и stack cookie
+остаются bounded fixtures. Преобразование UTF-8 не заменено Python decode:
+Python UTF-16 используется только для проверки уже записанного native результата.
+После первого отказа эмулятора проверен прямой thunk 0x141432060 → 0x141483160;
+он исполняется до явной free fixture. Неизвестные execution targets отклоняются.
+
+Отчёт: `fstring-input-replay/c76f9bd73126854788ecdafc589d9b525ff5a559eab478da26078b20e52a3ad3/manifest.json`
+внутри каталога сравнения; последний каталог — SHA256. Сохранены SHA EXE,
+Ghidra evidence и harness, native ranges / leaves, версии инструментов,
+результаты и ограничения. Работа со строками не доказывает готовность всего
+списка, handler или live-сессии.
+
+Harness [replay-release-archive-input.py](../../../replay-release-archive-input.py)
+выделен в `make_harness` для дальнейшего целого reader, с дополнительными
+проверяемыми ranges и явными fixture handlers. Повторная проверка его 63 scalar
+сценариев прошла после изменения. Новый отчёт scalar regression:
+`archive-input-replay/806852fc8cde0897494fc647b8537a2af667cefb492120dc5d4f542928a5fb94/manifest.json`.
+Следом — actual list / record readers и callback массива с прежними bounded
+container fixtures; переносимость runtime пока не подтверждена.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление

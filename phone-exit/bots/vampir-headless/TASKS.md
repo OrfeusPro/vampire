@@ -22,8 +22,9 @@
 Callback списка сопоставлен статически; helper вложенного чтения прошёл
 18 ограниченных native-сценариев. Record constructor → vtable → reader проверены
 ещё 12 native-сценариями. Input archive / scalar IO прошли 63 native-сценария;
-следом — UTF-8 / FString, callback массива, packet bindings и полный list reader
-нового EXE. Старые адреса не переносить без проверки.
+UTF-8 / FString прошли шесть полных строк и 577 коротких префиксов. Следом —
+callback массива, packet bindings и полный list reader нового EXE. Старые адреса
+не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в
