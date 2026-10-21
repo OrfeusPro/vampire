@@ -1,0 +1,350 @@
+"""Preparation, bounded collection and explicit result recording; no game IO."""
+from contextlib import contextmanager
+import hashlib
+import importlib.metadata
+import json
+import os
+import platform
+import re
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+
+def canonical(value):
+    return (json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + '\n').encode('utf-8')
+
+
+def atomic(path, raw):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, name = tempfile.mkstemp(dir=path.parent, prefix='research-')
+    try:
+        with os.fdopen(descriptor, 'wb') as stream: stream.write(raw)
+        Path(name).replace(path)
+    finally:
+        if Path(name).exists(): Path(name).unlink()
+
+
+def snapshot(root, category, value):
+    raw = canonical(value)
+    sha = hashlib.sha256(raw).hexdigest()
+    path = root / 'knowledge' / category / sha / 'manifest.json'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open('xb') as stream: stream.write(raw)
+    except FileExistsError:
+        if path.read_bytes() != raw: raise ValueError('Immutable research manifest collision')
+    return path
+
+
+@contextmanager
+def locked(root, name):
+    path = root / 'knowledge/locks' / (name + '.lock')
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try: descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        raise ValueError('Research operation locked: ' + str(path) + '; inspect recorded PID before removing a stale lock') from None
+    try:
+        os.write(descriptor, str(os.getpid()).encode('ascii'))
+        yield
+    finally:
+        os.close(descriptor)
+        path.unlink()
+
+
+def checked_manifest(index, path):
+    path = path.resolve()
+    if index.digest(path) != path.parent.name: raise ValueError('Research manifest digest mismatch')
+    return index.read_json(path)
+
+
+def registry(index, knowledge):
+    path = knowledge / 'research-checks.json'
+    return index.read_json(path) if path.is_file() else dict(schema=1, checks=[])
+
+
+def run_checks(index, args, sha, question):
+    results = []
+    workspace = index.HERE.parents[3]
+    for check in registry(index, args.knowledge)['checks']:
+        if question not in check['questions']: continue
+        if sha not in check['source_sha256']:
+            results.append(dict(id=check['id'], state='requires_port', reason='No reviewed check for this source SHA'))
+            continue
+        # Registry holds reviewed offline unittest targets, never shell commands.
+        pattern = check['test_pattern']
+        if not pattern.startswith('test_vampir_') or not pattern.endswith('.py') or any(c in pattern for c in '/\\*?'):
+            raise ValueError('Check needs one explicit offline unittest file')
+        test_path = workspace / 'phone-exit/bots' / pattern
+        dependencies = [test_path]
+        for name in check['dependencies']:
+            dependencies.append(index.child(workspace, name))
+        dependencies = sorted(set(dependencies))
+        inputs = {str(p): index.digest(p) for p in dependencies}
+        external = {}
+        for name in check.get('artifact_dependencies', []):
+            path = index.child(args.root, name)
+            if not path.is_relative_to((args.root / 'ghidra').resolve()):
+                raise ValueError('Check artifact dependency must be public Ghidra evidence')
+            external[str(path)] = index.digest(path)
+        definition = dict(check=check, source_sha256=sha, inputs=inputs, artifacts=external,
+            python_version=platform.python_version(), executable=sys.executable,
+            runner_sha256=index.digest(Path(__file__)))
+        definition['runtime_metadata'] = {}
+        for name in check.get('runtime_distributions', []):
+            matches = list(importlib.metadata.distributions(path=[str(index.HERE.parents[2] / '.tools/vampir-analysis')]))
+            selected = [d for d in matches if d.metadata['Name'].lower() == name.lower()]
+            if len(selected) != 1: raise ValueError('Missing or ambiguous offline check runtime: ' + name)
+            definition['runtime_metadata'][name] = dict(version=selected[0].version,
+                record_sha256=hashlib.sha256((selected[0].read_text('RECORD') or '').encode()).hexdigest())
+        key = hashlib.sha256(canonical(definition)).hexdigest()
+        cache = args.root / 'knowledge/check-cache' / (key + '.json')
+        if cache.is_file():
+            pointer = index.read_json(cache)
+            report_path = Path(pointer['report'])
+            report = checked_manifest(index, report_path)
+            if report.get('definition') != definition: raise ValueError('Check cache input mismatch')
+        else:
+            if check.get('offline_reviewed') is not True: raise ValueError('Check is not reviewed for offline execution')
+            command = [sys.executable, '-X', 'utf8', '-m', 'unittest', 'discover', '-s',
+                'phone-exit/bots', '-p', pattern, '-v']
+            with tempfile.TemporaryFile() as log:
+                try:
+                    completed = subprocess.run(command, cwd=workspace, stdout=log,
+                        stderr=subprocess.STDOUT, timeout=check.get('timeout_seconds', 120))
+                    state = 'passed' if completed.returncode == 0 else 'failed'
+                except subprocess.TimeoutExpired:
+                    state = 'timeout'
+                if ({str(p): index.digest(p) for p in dependencies} != inputs
+                        or any(index.digest(name) != sha for name,sha in external.items())):
+                    raise ValueError('Check inputs changed during execution')
+                log.seek(0)
+                output = log.read(1024 * 1024 + 1)
+            report = dict(schema=1, definition=definition, state=state,
+                output=output[:1024*1024].decode('utf-8', errors='replace'), truncated=len(output)>1024*1024)
+            report_path = snapshot(args.root, 'check-results', report)
+            atomic(cache, canonical(dict(report=str(report_path))))
+        results.append(dict(id=check['id'], state=report['state'], report=str(report_path),
+            sha256=index.digest(report_path), cache_key=key))
+    return results
+
+
+def function_state(index, db, sha, at):
+    rows = index.query(db, 'function', at, sha, 200)
+    usable = [r for r in rows if r['completed'] and r['pseudocode'] and db.execute(
+        'SELECT body_json FROM variants WHERE id=?', (r['variant'],)).fetchone()]
+    usable = [r for r in usable if json.loads(db.execute(
+        'SELECT body_json FROM variants WHERE id=?', (r['variant'],)).fetchone()[0]).get('instructions')]
+    return dict(address=at, state='ready' if usable else 'incomplete' if rows else 'missing', variants=rows)
+
+
+def prepare(index, args, database):
+    with locked(args.root, 'research'):
+        index.build(args.root, database, knowledge=args.knowledge)
+        db = index.open_index(database)
+        try:
+            sha = index.select_release(db, args.release)
+            if sha is None: raise ValueError('Research needs exactly one source SHA, not all')
+            questions = index.read_json(args.knowledge / 'questions.json')['questions']
+            matches = [q for q in questions if q['id'] == args.question]
+            if len(matches) != 1: raise ValueError('Unknown or ambiguous question ID')
+            question = matches[0]
+            addresses = sorted({index.address(a) for a in args.function}, key=lambda a:int(a,16))
+            if not 1 <= len(addresses) <= 32: raise ValueError('Research address budget is 1..32')
+            functions = [function_state(index, db, sha, at) for at in addresses]
+            related = set()
+            for term in (args.question, *addresses):
+                related.update(row['variant'] for row in index.query(db,'search',term,sha,200))
+            context = [dict(r) for r in db.execute('SELECT * FROM context WHERE source_sha IN (?,?)', (sha,''))
+                if (r['id'] in related or args.question in r['payload'] or any(at.lower() in r['payload'].lower() for at in addresses)
+                    or r['path'] in {str((args.knowledge / p).resolve()) for p in question['evidence']})]
+            for row in context: row['payload'] = json.loads(row['payload'])
+            source = db.execute('SELECT source FROM releases WHERE sha=?', (sha,)).fetchone()[0]
+            pinned = {source: sha}
+            for f in functions:
+                for variant in f['variants']:
+                    for key in ('artifact', 'pseudocode'):
+                        if variant[key]: pinned[variant[key]] = index.digest(variant[key])
+            request = dict(schema=1, source_sha256=sha, source=source,
+                require_installed_match=args.release == 'installed', question=args.question,
+                question_snapshot=question, question_applicability='historical_context_not_release_proof',
+                question_sha256=index.digest(args.knowledge / 'questions.json'),
+                reason=args.reason or question['next_action'], functions=functions, context=context,
+                inputs=pinned, context_inputs={r['path']:index.digest(r['path']) for r in context},
+                checks=run_checks(index, args, sha, args.question),
+                limits=['Explicit addresses only; no role transfer or game/network actions.'])
+        finally: db.close()
+        path = snapshot(args.root, 'requests', request)
+        return dict(request=str(path), sha256=index.digest(path), source_sha256=sha,
+            functions=[dict(address=f['address'], state=f['state']) for f in functions], checks=request['checks'])
+
+
+def load_request(index, args):
+    request = checked_manifest(index, args.request)
+    if request.get('schema') != 1 or not index.SHA.fullmatch(request['source_sha256']):
+        raise ValueError('Unsupported research request')
+    if request['require_installed_match'] and index.digest(index.INSTALL) != request['source_sha256']:
+        raise ValueError('Installed client changed; prepare a new request')
+    for name, expected in request['inputs'].items():
+        if index.digest(name) != expected: raise ValueError('Research input changed: ' + name)
+    return request
+
+
+def collector(index, args, request, addresses):
+    candidates = []
+    for path in (args.root / 'ghidra/release-comparisons').glob('*/run-*/provenance.json'):
+        receipt = index.read_json(path)
+        if receipt.get('new_source_sha256') == request['source_sha256']:
+            if index.digest(path.parent / 'candidates.json') != receipt['files']['candidates.json']:
+                raise ValueError('Comparison candidate hash mismatch')
+            candidates.append(path.parent)
+    if len(candidates) != 1:
+        return dict(state='queued', reason='Missing or ambiguous Ghidra comparison project', addresses=addresses)
+    # Validate requested starts on real unwind boundaries. No guessed data address
+    # is passed to createFunction. Leaf/tail candidates need a separate reviewed export.
+    native = index.extension('build-native-entry-code')
+    image = native.Image(Path(request['source']).read_bytes())
+    permitted, queued = [], []
+    for at in addresses:
+        location = image.containing(int(at,16))
+        if location is not None and image.roots[location][0] + image.pe.base == int(at,16): permitted.append(at)
+        else: queued.append(dict(address=at, reason='Not an unambiguous unwind root; needs reviewed boundary evidence'))
+    if not permitted: return dict(state='queued', queue=queued)
+    audit = index.extension('audit-client-release')
+    references = dict(schema=1, source_sha256=request['source_sha256'],
+        references=[dict(function=at, reason='Explicit request and source unwind root; no role claim') for at in permitted])
+    target = audit.save_snapshot(candidates[0] / 'sdk-reference-candidates', references)
+    command = [sys.executable, '-X', 'utf8', str(index.HERE / 'inspect-release-function-candidates.py'),
+        str(candidates[0]), '--sdk-profile', '--sdk-reference-candidates', str(target),
+        '--sdk-functions', ','.join(permitted)]
+    with locked(args.root, 'ghidra'):
+        # The pinned runner owns the child JVM and waits for it. Do not kill only
+        # the parent on timeout and leave an orphan holding the project lock.
+        completed = subprocess.run(command, stdout=sys.stderr)
+    if completed.returncode: raise ValueError('Ghidra collection failed; inspect preserved export logs')
+    return dict(state='collected', addresses=permitted, queue=queued)
+
+
+def collect(index, args, database):
+    with locked(args.root, 'research'):
+        request = load_request(index, args)
+        index.build(args.root, database, knowledge=args.knowledge)
+        db = index.open_index(database)
+        try:
+            states = [function_state(index, db, request['source_sha256'], f['address']) for f in request['functions']]
+        finally: db.close()
+        missing = [f['address'] for f in states if f['state'] != 'ready']
+        key = index.digest(args.request)
+        attempted = args.root / 'knowledge/collection-attempts' / (key + '.json')
+        if not missing: outcome = dict(state='reused', addresses=[])
+        elif attempted.exists():
+            outcome = dict(state='queued', reason='This request was already attempted; inspect outcome or prepare changed inputs',
+                previous=index.read_json(attempted), addresses=missing)
+        else:
+            atomic(attempted, canonical(dict(state='started', addresses=missing)))
+            try:
+                outcome = collector(index, args, request, missing)
+                index.build(args.root, database, knowledge=args.knowledge)
+                db = index.open_index(database)
+                try:
+                    remaining = [function_state(index,db,request['source_sha256'],at) for at in missing]
+                finally: db.close()
+                if outcome['state'] == 'collected':
+                    incomplete = [dict(address=f['address'],reason='Export remains '+f['state'])
+                        for f in remaining if f['state'] != 'ready']
+                    if incomplete:
+                        outcome['state'] = 'partial'
+                        outcome.setdefault('queue',[]).extend(incomplete)
+                atomic(attempted, canonical(outcome))
+            except BaseException:
+                atomic(attempted, canonical(dict(state='failed', addresses=missing)))
+                raise
+        receipt = snapshot(args.root, 'collections', dict(request_sha256=key, outcome=outcome))
+        return dict(report=str(receipt), **outcome)
+
+
+def finish(index, args, database):
+    with locked(args.root, 'research'):
+        request = load_request(index, args)
+        result = index.read_json(args.result)
+        required = ('question', 'source_sha256', 'addresses', 'conclusion', 'method', 'limits', 'unknown', 'next_check', 'evidence')
+        missing = [field for field in required if not result.get(field)]
+        if missing: raise ValueError('Incomplete research result; missing: ' + ', '.join(missing))
+        if result['question'] != request['question'] or result['source_sha256'] != request['source_sha256']:
+            raise ValueError('Result does not belong to this request/source')
+        result['addresses'] = sorted({index.address(a) for a in result['addresses']})
+        if result['method'] not in ('static', 'bounded_native'):
+            raise ValueError('Supported result methods: static, bounded_native')
+        if not set(result['addresses']) <= {f['address'] for f in request['functions']}:
+            raise ValueError('Result introduces an address outside explicit research request')
+        allowed = (args.knowledge.resolve(), (args.root / 'ghidra').resolve())
+        for evidence in result['evidence']:
+            path = Path(evidence['path']).resolve()
+            if not any(path.is_relative_to(folder) for folder in allowed):
+                raise ValueError('Evidence must be a knowledge document or public Ghidra research artifact')
+            evidence['path'] = str(path)
+        checks = run_checks(index, args, request['source_sha256'], request['question'])
+        if any(c['state'] != 'passed' for c in checks): raise ValueError('Required checks are not passed: ' + json.dumps(checks))
+        if result['method'] == 'bounded_native' and not checks: raise ValueError('Native claim needs a registered offline check')
+        fact = {field:result[field] for field in required}
+        fact['checks'] = checks
+        fact['id'] = hashlib.sha256(canonical(fact)).hexdigest()
+        index.extension('knowledge-context').validate_fact(index, fact, request['source_sha256'], {request['question']})
+        target = args.knowledge / 'releases' / request['source_sha256'] / 'facts.json'
+        previous = target.read_bytes() if target.exists() else None
+        facts = json.loads(previous) if previous else dict(schema=1, source_sha256=request['source_sha256'], facts=[])
+        if not any(f['id'] == fact['id'] for f in facts['facts']): facts['facts'].append(fact)
+        atomic(target, canonical(facts))
+        try:
+            consistency(index, args.knowledge)
+            index.build(args.root, database, knowledge=args.knowledge)
+        except BaseException:
+            if previous is None: target.unlink()
+            else: atomic(target, previous)
+            raise
+        receipt = snapshot(args.root, 'completions', dict(request_sha256=index.digest(args.request),
+            result_sha256=index.digest(args.result), fact_id=fact['id'], facts=str(target), checks=checks))
+        return dict(state='recorded', fact_id=fact['id'], facts=str(target), report=str(receipt), checks=checks)
+
+
+def consistency(index, knowledge):
+    questions = index.read_json(knowledge / 'questions.json')['questions']
+    ids = [q['id'] for q in questions]
+    if len(ids) != len(set(ids)): raise ValueError('Duplicate question IDs')
+    for question in questions:
+        for name in question.get('evidence', []):
+            if not index.child(knowledge, name).is_file(): raise ValueError('Question evidence missing: ' + name)
+    for path in (knowledge / 'releases').glob('*/facts.json'):
+        data = index.read_json(path)
+        for fact in data['facts']:
+            index.extension('knowledge-context').validate_fact(index, fact, path.parent.name, set(ids))
+    if knowledge == index.KNOWLEDGE:
+        result = index.extension('check-knowledge').check()
+        if result['broken']: raise ValueError('Broken knowledge links: ' + json.dumps(result['broken']))
+
+
+def check(index, args, database):
+    consistency(index, args.knowledge)
+    # Only changed Markdown receives style checks; historic technical prose is
+    # never silently reformatted. No code or identifiers are rewritten.
+    workspace = index.HERE.parents[3]
+    names = subprocess.run(['git', 'diff', '--cached', '--name-only', '--diff-filter=ACMR', '-z'],
+        cwd=workspace, capture_output=True, check=True).stdout.decode('utf-8').split('\0')
+    failures = []
+    for name in names:
+        if not name.endswith('.md'): continue
+        staged = subprocess.run(['git', 'show', ':' + name], cwd=workspace,
+            capture_output=True, check=True).stdout.decode('utf-8-sig')
+        fenced = False
+        for number, line in enumerate(staged.splitlines(), 1):
+            if line.lstrip().startswith(('```', '~~~')): fenced = not fenced
+            if fenced: continue
+            if re.match(r'^\\#{1,6}\s', line):
+                failures.append(dict(path=name, line=number, reason='Escaped Markdown heading'))
+            if line.rstrip().endswith('\\') and re.search(r'\\[()]', line):
+                failures.append(dict(path=name, line=number, reason='Possibly escaped Markdown pasted as literal text'))
+    if failures: raise ValueError('Review Markdown manually: ' + json.dumps(failures,ensure_ascii=False))
+    index.build(args.root, database, knowledge=args.knowledge)
+    return dict(state='passed', knowledge_consistent=True, staged_markdown_checked=len([p for p in names if p.endswith('.md')]),
+        limits='Structural checks do not establish semantic truth or replace review of Russian text and numeric meaning.')

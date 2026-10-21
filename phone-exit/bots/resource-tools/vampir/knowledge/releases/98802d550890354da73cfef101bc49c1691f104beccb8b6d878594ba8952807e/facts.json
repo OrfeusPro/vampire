@@ -1,0 +1,43 @@
+{
+  "facts": [
+    {
+      "addresses": [
+        "0x14455bc40",
+        "0x14455c950"
+      ],
+      "checks": [
+        {
+          "cache_key": "a208c72797b020d5fcc1944d34c90fd39d5de0c504a3478fe54b43e89d833069",
+          "id": "release-common-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\41873a8841a3178a0983aa986cfb1437fabcb5a3227f8906730d449b5bf04702\\manifest.json",
+          "sha256": "41873a8841a3178a0983aa986cfb1437fabcb5a3227f8906730d449b5bf04702",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые UpdateGmc2 и UpdateSDKSetting переносят проверенные поля settings в common data, возвращают флаг изменения и сохраняют соседние поля; проверен 31 синтетический native сценарий.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-af8c285547dd\\details.json",
+          "sha256": "741a018c06373c2c6524aeb0ccae30e17e0a37915a51ad0e910a0afc08998bc7"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\common-context-replay\\4aaf376d50e17036b0392e084b71cd132ede62f232b22a1a94d575fc44895eaa\\manifest.json",
+          "sha256": "4aaf376d50e17036b0392e084b71cd132ede62f232b22a1a94d575fc44895eaa"
+        }
+      ],
+      "id": "8a21a6d97d007e7ad62e3fa00da20832f418b27f0fbebfa029f5e95c5cdaab50",
+      "limits": [
+        "Service lookup и lazy initialization — fixtures.",
+        "FString allocation, comparison, assignment, free, bounded CRT copy и market helper — fixtures.",
+        "Diagnostic logging выключен; HTTP parser, полный writer, collector и живая сессия не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проследить current producer settings+0x3f0 / +0x3e0 / +0x38 и ветви UpdatePlayer до добавления metadata в runtime.",
+      "question": "common-data-population",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник записи GMC2 settings и условные player / NID ветви ещё не подтверждены; причина Login 16 неизвестна."
+    }
+  ],
+  "schema": 1,
+  "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+}

@@ -12,7 +12,7 @@ import struct
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = Path('F:/PhoneExit Resources/Vampir')
+ROOT = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir'))
 KEY_CALLBACK = 0x1468e62d0
 EXE_SHA256 = 'c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
 ARCHIVE_SHA256 = '7c1efc7b799dd27d2580b4eed279755e60a92a6ce8ace1e9863038137122d179'

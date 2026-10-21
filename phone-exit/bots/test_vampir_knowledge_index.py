@@ -15,6 +15,13 @@ class KnowledgeIndexTests(unittest.TestCase):
         cls.tool = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(cls.tool)
 
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        previous = self.tool.KNOWLEDGE
+        self.tool.KNOWLEDGE = Path(directory.name)
+        self.addCleanup(setattr, self.tool, 'KNOWLEDGE', previous)
+
     def source(self, root, number):
         raw = bytearray(0x400)
         raw[:2] = b'MZ'
@@ -134,6 +141,17 @@ class KnowledgeIndexTests(unittest.TestCase):
             receipt.write_text(json.dumps(value), encoding='utf-8')
             result = self.tool.build(root, root/'knowledge/search.sqlite3')
             self.assertEqual(result['counts']['unresolved'], 1)
+            self.assertEqual(result['counts']['functions'], 0)
+            report = self.export(root, 'body-budget', sha, code)
+            content = json.loads(report.read_text())
+            receipt = report.parent / 'provenance.json'
+            value = json.loads(receipt.read_text())
+            content['functions'] = [dict(address='0x140001000', skipped='body_budget')]
+            report.write_text(json.dumps(content), encoding='utf-8')
+            value['files']['details.json'] = self.tool.digest(report)
+            receipt.write_text(json.dumps(value), encoding='utf-8')
+            result = self.tool.build(root, root/'knowledge/search.sqlite3')
+            self.assertEqual(result['counts']['unresolved'], 2)
             self.assertEqual(result['counts']['functions'], 0)
 
     def test_decompiler_timeout_preserves_instructions_without_inventing_pseudocode(self):

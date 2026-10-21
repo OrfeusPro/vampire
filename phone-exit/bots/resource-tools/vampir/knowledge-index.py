@@ -1,4 +1,4 @@
-"""Source-scoped search over existing Ghidra exports. No game or Ghidra execution."""
+"""Source-scoped knowledge and explicit offline research workflow."""
 import argparse
 import hashlib
 import importlib.util
@@ -14,6 +14,7 @@ from types import SimpleNamespace
 HERE = Path(__file__).resolve().parent
 ROOT = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir'))
 INSTALL = Path('C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe')
+KNOWLEDGE = HERE / 'knowledge'
 SHA = re.compile(r'[0-9a-f]{64}')
 DIRECT_CALL = re.compile(r'^CALL\s+(0x[0-9a-f]+)$', re.I)
 DATA_LEA = re.compile(r'^LEA\s+\w+,\[(0x[0-9a-f]+)\]$', re.I)
@@ -26,7 +27,18 @@ def digest(path):
 
 def tool_inputs():
     return {name: digest(HERE/name) for name in ('knowledge-index.py', 'extract-native-enums.py',
-        'build-headless-sdk-config.py', 'build-native-entry-code.py')}
+        'build-headless-sdk-config.py', 'build-native-entry-code.py', 'knowledge-context.py')}
+
+
+def extension(name):
+    spec = importlib.util.spec_from_file_location(name.replace('-', '_'), HERE / (name + '.py'))
+    value = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(value)
+    return value
+
+
+def api():
+    return SimpleNamespace(**globals())
 
 
 def read_json(path):
@@ -106,7 +118,7 @@ def discover(root):
 
 def schema(db):
     db.executescript('''
-        PRAGMA user_version=1;
+        PRAGMA user_version=2;
         CREATE TABLE releases(sha TEXT PRIMARY KEY, source TEXT NOT NULL);
         CREATE TABLE artifacts(path TEXT PRIMARY KEY, sha TEXT NOT NULL, receipt TEXT,
             receipt_sha TEXT, state TEXT NOT NULL, detail TEXT NOT NULL);
@@ -179,9 +191,10 @@ def import_report(db, sources, report):
         at = address(row['address'])
         seen.add((sha, at))
         db.execute('INSERT OR IGNORE INTO releases VALUES(?,?)', (sha, str(source_path)))
-        if row.get('function_missing') is True:
+        if row.get('function_missing') is True or row.get('skipped') == 'body_budget':
             db.execute('INSERT INTO unresolved VALUES(?,?,?,?,?,?)',
-                (str(report), ordinal, sha, at, name, 'No function object in this Ghidra export'))
+                (str(report), ordinal, sha, at, name,
+                 'Ghidra export body budget exceeded' if row.get('skipped') == 'body_budget' else 'No function object in this Ghidra export'))
             continue
         completed = row.get('decompilation_completed', row.get('completed'))
         if type(completed) is not bool: raise ValueError('Missing decompiler status')
@@ -243,8 +256,11 @@ def import_report(db, sources, report):
         str(receipt_path), digest(receipt_path), 'verified_source_and_outputs', json.dumps(detail)))
 
 
-def build(root, output, on_progress=None):
+def build(root, output, on_progress=None, knowledge=None):
     root, output = Path(root), Path(output)
+    knowledge = Path(knowledge) if knowledge is not None else KNOWLEDGE
+    context = extension('knowledge-context')
+    context_inputs = context.inventory(api(), root, knowledge)
     inputs = tool_inputs()
     output.parent.mkdir(parents=True, exist_ok=True)
     if output.is_file():
@@ -254,10 +270,37 @@ def build(root, output, on_progress=None):
             same_reports = {str(p) for p in discover(root)} == {r['path'] for r in previous.execute('SELECT path FROM artifacts')}
             newly_finished = any(not r['receipt'] and receipt_for(Path(r['path'])).is_file()
                 for r in previous.execute('SELECT path,receipt FROM artifacts'))
+            old_context = ({r['path']: r['sha'] for r in previous.execute('SELECT * FROM context_inputs')}
+                if previous.execute('PRAGMA user_version').fetchone()[0] == 2 else None)
             if builder and json.loads(builder['value']) == inputs and same_reports and not newly_finished:
-                verify_index(previous)
-                return dict(database=str(output), counts=index_counts(previous), reused=True,
-                    roles_transferred=False, game_or_ghidra_started=False)
+                verify_index(previous, include_context=False)
+                if old_context == context_inputs:
+                    return dict(database=str(output), counts=index_counts(previous), reused=True,
+                        roles_transferred=False, game_or_ghidra_started=False)
+                # Documentation updates do not re-import tens of thousands of
+                # native observations. Work on a private backup, never the live DB.
+                handle, name = tempfile.mkstemp(prefix='knowledge-context-', suffix='.sqlite3', dir=output.parent)
+                os.close(handle)
+                temporary = Path(name)
+                revised = sqlite3.connect(temporary)
+                try:
+                    previous.backup(revised)
+                    revised.execute('DELETE FROM search WHERE variant IN (SELECT id FROM context)')
+                    revised.executescript('DROP TABLE context; DROP TABLE context_inputs;')
+                    context.import_context(api(), revised, root, knowledge, context_inputs)
+                    if context.inventory(api(), root, knowledge) != context_inputs:
+                        raise ValueError('Knowledge inputs changed during refresh')
+                    revised.commit()
+                    if revised.execute('PRAGMA integrity_check').fetchone()[0] != 'ok': raise ValueError('Index integrity failed')
+                    counts = index_counts(revised)
+                    revised.close()
+                    previous.close()
+                    temporary.replace(output)
+                    return dict(database=str(output), counts=counts, reused=False, code_reused=True,
+                        roles_transferred=False, game_or_ghidra_started=False)
+                finally:
+                    revised.close()
+                    if temporary.exists(): temporary.unlink()
         finally: previous.close()
     handle, temporary = tempfile.mkstemp(prefix='knowledge-index-', suffix='.sqlite3', dir=output.parent)
     os.close(handle)
@@ -272,6 +315,9 @@ def build(root, output, on_progress=None):
             except (ValueError, OSError, KeyError, TypeError) as error:
                 raise ValueError(f'Export rejected: {report}: {error}') from error
             if on_progress and (number % 25 == 0 or number == len(reports)): on_progress(number, len(reports))
+        context.import_context(api(), db, root, knowledge, context_inputs)
+        if context.inventory(api(), root, knowledge) != context_inputs:
+            raise ValueError('Knowledge inputs changed during indexing')
         if tool_inputs() != inputs: raise ValueError('Index builder/dependencies changed during import')
         db.execute('INSERT INTO metadata VALUES(?,?)', ('tool_inputs', json.dumps(inputs, sort_keys=True)))
         db.execute('INSERT INTO metadata VALUES(?,?)', ('root', str(root.resolve())))
@@ -291,7 +337,7 @@ def index_counts(db):
         for name in ('releases', 'artifacts', 'functions', 'variants', 'observations', 'calls', 'literals', 'literal_refs', 'unresolved')}
 
 
-def verify_index(db):
+def verify_index(db, include_context=True):
     for row in db.execute('SELECT path,sha,receipt,receipt_sha FROM artifacts'):
         if digest(row['path']) != row['sha'] or (row['receipt'] and digest(row['receipt']) != row['receipt_sha']):
             raise ValueError('Indexed artifact changed; rebuild required')
@@ -299,13 +345,16 @@ def verify_index(db):
         if digest(row['pseudocode']) != row['pseudocode_sha']: raise ValueError('Indexed pseudocode changed')
     for row in db.execute('SELECT * FROM releases'):
         if digest(row['source']) != row['sha']: raise ValueError('Indexed source changed')
+    if include_context and db.execute('PRAGMA user_version').fetchone()[0] == 2:
+        for row in db.execute('SELECT * FROM context_inputs'):
+            if digest(row['path']) != row['sha']: raise ValueError('Indexed knowledge changed')
     if db.execute('PRAGMA integrity_check').fetchone()[0] != 'ok': raise ValueError('Index integrity check failed')
 
 
 def open_index(path):
     db = sqlite3.connect(Path(path).resolve().as_uri() + '?mode=ro', uri=True)
     db.row_factory = sqlite3.Row
-    if db.execute('PRAGMA user_version').fetchone()[0] != 1:
+    if db.execute('PRAGMA user_version').fetchone()[0] not in (1, 2):
         db.close()
         raise ValueError('Unsupported index schema')
     return db
@@ -336,8 +385,9 @@ def query(db, operation, value, release, limit):
     phrase = '"' + value.replace('"', '""') + '"'
     results = [dict(r) for r in db.execute('''SELECT source_sha,address,variant,path,kind,
         snippet(search,3,'[',']',' … ',36) AS excerpt FROM search
-        WHERE search MATCH ? AND (? IS NULL OR source_sha=?) ORDER BY rank LIMIT ?''', (phrase, release, release, limit))]
+        WHERE search MATCH ? AND (? IS NULL OR source_sha=? OR source_sha='') ORDER BY rank LIMIT ?''', (phrase, release, release, limit))]
     for result in results:
+        if not result['source_sha']: result['applicability'] = 'unscoped_navigation_not_release_proof'
         if result['kind'] == 'literal':
             result['references'] = [dict(r) for r in db.execute('''SELECT r.caller AS function,r.instruction,
                 min(o.artifact) AS artifact,min(o.pseudocode) AS pseudocode FROM literal_refs r
@@ -350,10 +400,25 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=ROOT)
     parser.add_argument('--database', type=Path)
+    parser.add_argument('--knowledge', type=Path, default=KNOWLEDGE)
     sub = parser.add_subparsers(dest='operation', required=True)
     sub.add_parser('build')
     sub.add_parser('verify')
     sub.add_parser('status')
+    sub.add_parser('check')
+    p = sub.add_parser('prepare')
+    p.add_argument('--question', required=True)
+    p.add_argument('--function', action='append', required=True)
+    p.add_argument('--release', default='installed')
+    p.add_argument('--reason')
+    for name in ('collect', 'finish'):
+        p = sub.add_parser(name)
+        p.add_argument('--request', required=True, type=Path)
+        if name == 'finish': p.add_argument('--result', required=True, type=Path)
+    p = sub.add_parser('update')
+    p.add_argument('--baseline', required=True, type=Path)
+    p.add_argument('--install', type=Path, default=INSTALL.parents[3])
+    p.add_argument('--audit-only', action='store_true')
     for operation in ('search', 'function', 'callers'):
         p = sub.add_parser(operation)
         p.add_argument('value')
@@ -361,8 +426,16 @@ def main():
         p.add_argument('--limit', type=int, default=20)
     args = parser.parse_args()
     database = args.database or args.root / 'knowledge/search.sqlite3'
+    if args.operation == 'update':
+        print(json.dumps(extension('research-update').update(api(), args, database), ensure_ascii=False))
+        return
+    if args.operation in ('prepare', 'collect', 'finish', 'check'):
+        workflow = extension('research-workflow')
+        result = getattr(workflow, args.operation)(api(), args, database)
+        print(json.dumps(result, ensure_ascii=False))
+        return
     if args.operation == 'build':
-        print(json.dumps(build(args.root, database,
+        print(json.dumps(build(args.root, database, knowledge=args.knowledge,
             on_progress=lambda count,total: print(json.dumps(dict(event='index_progress', reports=count, total=total)), file=sys.stderr, flush=True)), ensure_ascii=False))
         return
     db = open_index(database)
@@ -377,7 +450,7 @@ def main():
             if not 1 <= args.limit <= 200: raise ValueError('Result limit must be 1..200')
             release = select_release(db, args.release)
             result = dict(release=release or 'all', results=query(db, args.operation, args.value, release, args.limit),
-                limits='Exported static observations only. Names are not proven roles. Replays, claims and resource adapters are not indexed yet.')
+                limits='Static exports, explicit claims, bounded replay metadata and unscoped document navigation. Names are not proven roles. Resource adapters are not indexed.')
             if args.operation == 'function':
                 result['unresolved_export_candidates'] = [dict(r) for r in db.execute(
                     'SELECT DISTINCT source_sha,address,hint,artifact,reason FROM unresolved WHERE address=? AND (? IS NULL OR source_sha=?) LIMIT ?',
