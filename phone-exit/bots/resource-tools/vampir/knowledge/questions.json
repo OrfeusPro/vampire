@@ -34,7 +34,7 @@
       "id": "release-game-login-code-1",
       "status": "open",
       "question": "Что означает код 1 игрового Login после обновления 1.13.14 и соответствует ли ему текущий decoder?",
-      "known": "EXE SHA 98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e. SDK / NID source profile recovered-release построен по шести pinned native reports. Через новый samsung SM-A205F / JP приняты launcher SDK, lobby IDs 2 / 104 / 4 и Game Version 0. Аккаунт joined country HK. На server 256 / group 253 / region JP с ClientVersion 261105, языком 1 и partial metadata 219 байт текущая модель получила LoginResult code 1, body 131 байт. Отправлено 860 байт, получено 94; других packet IDs нет. CharacterList не отправлен, соединения закрыты. Санитизированное наблюдение a85aa7a538bd24f1d3ce086b84d53ce0800923b16c186619260b267f841a6bee хранится вне Git; raw body / full transcript не сохранены.",
+      "known": "EXE SHA 98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e. SDK / NID source profile recovered-release построен по шести pinned native reports. Через новый samsung SM-A205F / JP приняты launcher SDK, lobby IDs 2 / 104 / 4 и Game Version 0. Аккаунт joined country HK. На server 256 / group 253 / region JP с ClientVersion 261105, языком 1 и partial metadata 219 байт текущая модель получила LoginResult code 1, body 131 байт. Отправлено 860 байт, получено 94; других packet IDs нет. CharacterList не отправлен, соединения закрыты. Санитизированное наблюдение a85aa7a538bd24f1d3ce086b84d53ce0800923b16c186619260b267f841a6bee хранится вне Git; raw body / full transcript не сохранены. Следующая запись официального клиента 8e13f35e8b54acbc9d136ccf2ed574e5 не содержит flows / bytes: пользователь получил Server Internal Error в лаунчере, фильтр был только на игровые endpoints :12000. Это не официальный LoginResult для сравнения и не доказательство слабой связи.",
       "unknown": "Метка кода 1 и поведение соответствующей ветви нового клиента; совместимость полей нового LoginResult с переносимым reader и конкретное непройденное условие Login. Старые коды 16 / 58 не объясняют этот результат.",
       "next_action": "Сначала сверить текущий LoginResult reader и result-code mapper по реестру / новым Ghidra экспортам. Для кода 1 подтвердить literal / ветвь на текущем SHA, затем проверить значимое отличие поля либо порядка обмена до следующей сетевой попытки.",
       "decision_rule": "Новый вход только после конкретного source-bound отличия или изменения внешних условий; число повторов и неизвестная метка сами по себе не основание.",
@@ -42,7 +42,8 @@
       "addresses": [],
       "evidence": [
         "evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md",
-        "evidence/network/HEADLESS-FRANZ2-LOGIN.md"
+        "evidence/network/HEADLESS-FRANZ2-LOGIN.md",
+        "evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md"
       ]
     },
     {
