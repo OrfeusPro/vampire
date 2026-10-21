@@ -2184,6 +2184,74 @@
       "question": "session-keepalive",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Длительная сессия, clock watchdog / resync, безопасное восстановление и мировые события / карта."
+    },
+    {
+      "addresses": [
+        "0x145dade30"
+      ],
+      "checks": [
+        {
+          "cache_key": "daa7a7abc03dbc4533ba3ba25576fdeae1bba880cd0a2d9cc9172d35b85549e4",
+          "id": "release-map-projection",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97b8dafc7e8fab3d7647d4a5f1e0df16840d8222b32f9ae1d926f520c84b37e2\\manifest.json",
+          "sha256": "97b8dafc7e8fab3d7647d4a5f1e0df16840d8222b32f9ae1d926f520c84b37e2",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Для серверной цели ID 206 подготовлена read-only модель MapProjection. Текущие map functions проверены статически по 15 инструкциям и трём literals; новый полный SHA pakchunk1 потребовал отдельного извлечения таблиц. Map 10/11 и MapId / LevelPath 36 миров сохранены. Прежние поля World/Map совпали, добавлены по 8 ID и World.IsNavMoveLimit. Четыре теста модели и реального аудита прошли.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\maps\\HEADLESS-MAP-POSITION.md",
+          "sha256": "90b4af739f1b99a2f951f98d93a8077a04899919aecc1bf8ba3a984fc097b546"
+        }
+      ],
+      "id": "8e5791757cd91a8b0d43b4338175ab4e12eb26cd71638e7001f4c21e5a933ee1",
+      "limits": [
+        "Не whole native execution виджета и не применение engine correction.",
+        "Current tables получены из нового source-bound record index, старые entries не использовались для чтения нового архива.",
+        "Не подтверждены texture freshness, semantics IsNavMoveLimit, проходимость, live marker или движение.",
+        "Получение ID 206 доказано прежним live экспериментом; новый вход здесь не выполнялся."
+      ],
+      "method": "static",
+      "next_check": "Подключить явную модель сессии к существующему атласу, затем новый live эксперимент для маркера нужного мира.",
+      "question": "map-live-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Read-only UI маркер и передача свежей живой позиции, текстуры, проходимость и движение."
+    },
+    {
+      "addresses": [
+        "0x145ac2770",
+        "0x1464ee890",
+        "0x1464fe280"
+      ],
+      "checks": [
+        {
+          "cache_key": "daa7a7abc03dbc4533ba3ba25576fdeae1bba880cd0a2d9cc9172d35b85549e4",
+          "id": "release-map-projection",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97b8dafc7e8fab3d7647d4a5f1e0df16840d8222b32f9ae1d926f520c84b37e2\\manifest.json",
+          "sha256": "97b8dafc7e8fab3d7647d4a5f1e0df16840d8222b32f9ae1d926f520c84b37e2",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Для серверной цели ID 206 подготовлена read-only модель MapProjection. Текущие map functions проверены статически по 15 инструкциям и трём literals; новый полный SHA pakchunk1 потребовал отдельного извлечения таблиц. Map 10/11 и MapId / LevelPath 36 миров сохранены. Прежние поля World/Map совпали, добавлены по 8 ID и World.IsNavMoveLimit. Четыре теста модели и реального аудита прошли.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\maps\\HEADLESS-MAP-POSITION.md",
+          "sha256": "90b4af739f1b99a2f951f98d93a8077a04899919aecc1bf8ba3a984fc097b546"
+        }
+      ],
+      "id": "50366e71bda48a9678c45bdf8f12c3c5876918c668e0e00754bbb530239d400d",
+      "limits": [
+        "Не whole native execution виджета и не применение engine correction.",
+        "Current tables получены из нового source-bound record index, старые entries не использовались для чтения нового архива.",
+        "Не подтверждены texture freshness, semantics IsNavMoveLimit, проходимость, live marker или движение.",
+        "Получение ID 206 доказано прежним live экспериментом; новый вход здесь не выполнялся."
+      ],
+      "method": "static",
+      "next_check": "Подключить явную модель сессии к существующему атласу, затем новый live эксперимент для маркера нужного мира.",
+      "question": "map-live-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Read-only UI маркер и передача свежей живой позиции, текстуры, проходимость и движение."
     }
   ],
   "schema": 1,

@@ -599,6 +599,34 @@
         "phone-exit/bots/vampir-shared/vampir_core/ping.py",
         "phone-exit/bots/test_vampir_periodic_ping.py"
       ]
+    },
+    {
+      "id": "release-map-projection",
+      "questions": [
+        "map-live-position"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone"
+      ],
+      "test_pattern": "test_vampir_release_map_projection.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-52ee72db9b11/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-release-map-projection.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
+      ]
     }
   ]
 }

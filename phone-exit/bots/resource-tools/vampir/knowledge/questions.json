@@ -175,6 +175,23 @@
         "evidence/characters/HEADLESS-LIVE-WORLD-FINISH.md",
         "evidence/network/HEADLESS-SESSION-KEEPALIVE.md"
       ]
+    },
+    {
+      "id": "map-live-position",
+      "status": "open",
+      "question": "Как показать серверные мир / позицию бота на существующей карте с актуальными источниками и явным состоянием сессии?",
+      "known": "Live ID 206 и 20 секунд heartbeat подтверждены. Три current map functions выгружены и статически проверены по 15 instructions / трём literals. Установленный pakchunk1 SHA 365ceb7f отличается от прежнего table snapshot: новый индекс дал 3107 записей, извлечение 3094 CSV без ошибок. Current World / Map содержат по 8 новых ID, World добавил IsNavMoveLimit; прежние поля старых строк совпали. Map 10/11 и MapId / LevelPath 36 миров совпали. Лёгкая MapProjection добавлена, четыре теста прошли.",
+      "unknown": "Живой мир персонажа / координаты ещё не переданы в UI; актуальность текстур, engine correction, IsNavMoveLimit, обновления движения и проходимость.",
+      "next_action": "Подключить read-only маркер существующего атласа через явную модель сессии и передать свежую позицию при новом live эксперименте. Аудит и модель проекции использовать повторно; неизвестный мир показывать как неподдержанный, без угадывания карты.",
+      "decision_rule": "Не накладывать точку на неподтверждённую карту. Разделять серверную цель, engine correction, static NPC и live entities.",
+      "do_not_repeat": "Повторное извлечение неизменных таблиц; whole EXE Ghidra обход; слепая отправка движения.",
+      "addresses": [],
+      "evidence": [
+        "evidence/maps/MAP-ATLAS.md",
+        "evidence/characters/HEADLESS-LIVE-WORLD-FINISH.md",
+        "evidence/network/HEADLESS-SESSION-KEEPALIVE.md",
+        "evidence/maps/HEADLESS-MAP-POSITION.md"
+      ]
     }
   ]
 }
