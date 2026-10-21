@@ -20,6 +20,13 @@ class SelectedGameLoginTests(unittest.TestCase):
             server_policy_byte=0, extra_number=123, context='windows-sdk-initial-reset', region='JP', server_id=42)
 
     def test_auth_stays_in_memory_and_same_lobby_result_supplies_login(self):
+        self.check_auth_and_clock('')
+
+    def test_current_source_uses_fresh_lobby_clock(self):
+        self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256)
+
+    def check_auth_and_clock(self, source_sha):
+        from vampir_core.lobby_packets import LobbyVersionResultBody
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
             self.assertEqual(kwargs['auth_flow'], 'launcher')
@@ -32,6 +39,7 @@ class SelectedGameLoginTests(unittest.TestCase):
             data = SimpleNamespace(servers=(record,), groups=(group,))
             selected_id = kwargs['_select_server'](data, inputs['sdk_data'].joined_country_code)
             result = SimpleNamespace(response=inputs['lobby_result'],
+                version_response=LobbyVersionResultBody(0, False, (123, 456), 540),
                 server_list_response=data,
                 summary={'login_result_code': 0, 'login_after_server_selection': True, 'login_server_id': selected_id,
                          'lobby_open_during_game': True})
@@ -40,7 +48,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         prepare = Mock(return_value=version)
         target_module = SimpleNamespace(choose_target=lambda *args, **kwargs:
                 SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001))
-        modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14', compiled_tag=version.strings[9])),
+        modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14', compiled_tag=version.strings[9], source_exe_sha256=source_sha)),
             SimpleNamespace(run=lobby), target_module, target_module,
             SimpleNamespace(observe_inputs=lambda: ('cpu', 'windows')),
             SimpleNamespace(prepare_version=prepare)]
@@ -53,6 +61,11 @@ class SelectedGameLoginTests(unittest.TestCase):
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
                 lobby_context='sdk-with-partial-metadata', read_character_list=True, **self.kwargs())
         packet = exchange.call_args.args[2]
+        clock = exchange.call_args.kwargs['ping_clock']
+        if source_sha:
+            self.assertEqual(clock.offset_minutes, 540)
+        else:
+            self.assertIsNone(clock)
         self.assertIsNone(prepare.call_args.kwargs['local_address'])
         connection.getsockname.assert_not_called()
         self.assertEqual(result['game_address_source'], 'socks_bound_unavailable')

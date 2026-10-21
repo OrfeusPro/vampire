@@ -7,12 +7,15 @@ from .game_connection import GameConnection, PumpBudget
 from .receive_stream import ReceiveLimits
 from .selection_flow import SelectionLimits, SelectionState
 from .game_login_error import describe_game_login_error
+from .session_clock import LobbyPingClock
 
 
-def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False):
+def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
+    if ping_clock is not None and not isinstance(ping_clock, LobbyPingClock):
+        raise TypeError('Expected verified lobby Ping clock')
     unknown = []
     def observe(packet):
         unknown.append(packet.packet_id)
@@ -25,6 +28,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     counts_complete = True
     flow = None
     list_requested = False
+    initial_ping_queued = False
     def result(status):
         detail = describe_game_login_error(flow.login_result_code) if flow and flow.login_result_code is not None else None
         value = dict(status=status, version_result_code=flow.version_result_code if flow else None,
@@ -36,7 +40,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             bytes_sent=sent, bytes_received=received, other_packet_ids=unknown.copy(),
             byte_counts_complete=counts_complete,
             error=owner.error, login_error=flow.error if flow else None,
-            character_list_sent=list_requested, game_session_ready=False)
+            character_list_sent=list_requested, initial_ping_queued=initial_ping_queued, game_session_ready=False)
         if read_character_list:
             characters = owner.selection.characters
             value.update(character_list_received=characters is not None,
@@ -48,6 +52,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     try:
         started = time.monotonic()
         owner.start_login(version, login, now=started, timeout=timeout, max_payload_size=1048576)
+        if ping_clock is not None:
+            owner.queue_ping(ping_clock.initial_ping(utc_millis=time.time_ns() // 1000000))
+            initial_ping_queued = True
         flow = owner.login
         deadline = started + 2 * timeout
         budget = PumpBudget(32, 8, 8, 16384, 8)

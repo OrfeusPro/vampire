@@ -7,6 +7,7 @@ import struct
 import sys
 import threading
 import unittest
+from unittest.mock import patch
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE / 'vampir-shared'))
@@ -33,13 +34,14 @@ class LobbyLoginProbeTests(unittest.TestCase):
                     choices.append(len(response.servers))
                     return replace(initial, integers=(2, 0, selected_id, 0))
                 def consume_session(completed):
+                    self.assertEqual(completed.version_response.raw_38, 540)
                     open_sessions.append((client.fileno() >= 0, completed.summary['login_server_id'],
                                           completed.summary['login_result_code']))
                     if consumer_error: raise ValueError('private-callback-fixture')
                 def serve():
                     try:
                         events.append(receive_frame(server))
-                        server.sendall(incoming(2, bytes(23))[3:])
+                        server.sendall(incoming(2, struct.pack('<IBQQH', 0, 0, 123, 456, 540))[3:])
                         events.append(receive_frame(server))
                         wire = incoming(104, struct.pack('<I', list_code) + body[4:])[3:]
                         for chunk in (wire[:2], wire[2:7], wire[7:]): server.sendall(chunk)
@@ -73,6 +75,8 @@ class LobbyLoginProbeTests(unittest.TestCase):
                 self.assertEqual(choices, [] if list_code else [2])
                 self.assertEqual(open_sessions, [(True, 251, 0)] if list_code == 0 and selected_id and login_code == 0 else [])
                 self.assertIsNotNone(result.server_list_response)
+                self.assertEqual(result.version_response.raw_38, 540)
+                self.assertNotIn('time_bits', repr(result))
                 self.assertTrue(result.summary['login_after_server_selection'])
                 if consumer_error:
                     self.assertEqual(result.summary['status'], 'protocol_error')
@@ -192,7 +196,12 @@ class LobbyLoginProbeTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location('test_lobby_context_index', HERE / 'resource-tools/vampir/build-lobby-login-context-index.py')
         tool = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(tool)
-        self.assertEqual(tool.build(), report)
+        # Historical evidence retains its original source label; execute against
+        # the immutable snapshot of the same SHA after the installed EXE changed.
+        snapshot = Path('F:/PhoneExit Resources/Vampir/client-code-snapshots') / report['source_sha256'] / 'ProjectRED-Win64-Shipping.exe'
+        with patch.object(tool, 'Path', side_effect=lambda value:
+                snapshot if str(value) == report['source'] else Path(value)):
+            self.assertEqual(tool.build(), report)
         self.assertEqual(len(report['calls']), 49)
         self.assertEqual(report['failed_roots'], [])
 

@@ -2,21 +2,28 @@ import socket
 import struct
 import threading
 import unittest
+from unittest.mock import patch
 
 from test_vampir_login_flow import VERSION, LOGIN, RESULT, FIXTURE
 from test_vampir_version_probe import incoming, receive_frame
 from vampir_core.game_login_probe import exchange_game_login
 from test_vampir_selection_flow import list_body
+from vampir_core.session_clock import LobbyPingClock
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
+        ping_bodies = []
         def serve():
             try:
                 captures.append(receive_frame(server)[0])
+                if ping_clock is not None:
+                    header, body = receive_frame(server)
+                    captures.append(header)
+                    ping_bodies.append(body)
                 server.sendall(incoming(2, version_body))
                 if wait_for_login:
                     captures.append(receive_frame(server)[0])
@@ -29,12 +36,29 @@ class GameLoginProbeTests(unittest.TestCase):
             finally: server.close()
         worker = threading.Thread(target=serve)
         worker.start()
-        result = exchange_game_login(client, VERSION, LOGIN, timeout=1, read_character_list=read_character_list)
+        with patch('vampir_core.game_login_probe.time.time_ns', return_value=1792600142863000000):
+            result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
+                read_character_list=read_character_list, ping_clock=ping_clock)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
         self.assertEqual(client.fileno(), -1)
+        if ping_clock is not None:
+            self.assertEqual(ping_bodies, [struct.pack('<QQ', 1792632542863, 1792632542863)])
         return result, captures
+
+    def test_early_ping_precedes_login_and_preserves_list_sequence(self):
+        result, captures = self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            ping_clock=LobbyPingClock(540), read_character_list=True,
+            character_body=list_body(keys=(11,), preferred=11))
+        self.assertEqual(captures, [(1, 0), (16, 1), (3, 2), (101, 3)])
+        self.assertEqual(result['character_count'], 1)
+
+    def test_early_ping_does_not_override_version_refusal(self):
+        result, captures = self.attempt(version_body=struct.pack('<I', 16) + RESULT[4:],
+            wait_for_login=False, ping_clock=LobbyPingClock(540))
+        self.assertEqual(captures, [(1, 0), (16, 1)])
+        self.assertFalse(result['login_result_received'])
 
     def test_version_then_login_same_socket_and_sequence_without_character_request(self):
         body = bytes.fromhex(FIXTURE['login_result_hex'])

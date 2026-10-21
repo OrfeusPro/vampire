@@ -17,6 +17,7 @@ class LobbyLoginProbeResult:
     summary: dict
     response: object = field(default=None, repr=False)
     server_list_response: object = field(default=None, repr=False)
+    version_response: object = field(default=None, repr=False)
 
 
 def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, select_login=None, on_selected_login=None):
@@ -34,6 +35,7 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, 
     sent = received = 0
     ids = []
     version_code = None
+    version_response = None
     login_sent = False
     stage = 'version'
     pending = b''
@@ -62,7 +64,7 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, 
         if select_login is not None:
             summary.update(login_after_server_selection=True, login_server_id=selected_server_id)
         if error: summary['error_type'] = type(error).__name__
-        return LobbyLoginProbeResult(summary, response, list_response)
+        return LobbyLoginProbeResult(summary, response, list_response, version_response)
 
     try:
         pending = encode_lobby_version_frame(version, 0, max_payload_size=32768)
@@ -87,6 +89,7 @@ def exchange_lobby_login(sock, version, login, *, timeout=15, server_list=None, 
                 if packet.packet_id == 2:
                     if stage != 'version' or pending: return result('unexpected_version_result')
                     response = decode_lobby_version_result(packet.body)
+                    version_response = response
                     version_code = response.result_code
                     if version_code != 0: return result('version_rejected')
                     if response.flag_14: return result('additional_numeric_context_required')

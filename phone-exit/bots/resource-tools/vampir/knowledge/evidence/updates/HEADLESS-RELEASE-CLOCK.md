@@ -172,6 +172,34 @@ SHA256 checker: `90341e64c1e96fcb9376b37d211d2696020b492f6c66d3b1804c351792ed78e
 `find-release-sdk-references.py` и затем `inspect-release-function-candidates.py`;
 invocations / pinned inputs / source / script / output hashes сохранены рядом.
 
-Следом — свежий lobby clock context в runtime и ранний Ping. Источник кадра
-30413 остаётся неизвестным; порядок эталона целиком ещё не воспроизведён.
-Runtime бота и живой вход на этом проходе не менялись.
+## Подключение первого Ping к runtime
+
+`LobbyLoginProbeResult.version_response` сохраняет parsed ID 2 в памяти,
+отдельно от LoginResult. Поле исключено из repr и публичной summary.
+`game-source-profile.py` передаёт проверенный SHA EXE вместе с профилем.
+Для нового SHA runner создаёт `LobbyPingClock` из этого свежего ответа:
+только code 0 / поддержанная ветвь flag=false, raw38 приводится к signed short.
+Для старого профиля этот новый путь не включается.
+
+[session_clock.py](../../../../../vampir-shared/vampir_core/session_clock.py)
+строит N = trunc(double((UTC_ms + M × 60000) × 10000) × 0.0001).
+Первый Ping содержит N / N при last=0; проверяется native gate N>5000.
+Server sample не используется вместо UTC. Постоянная поправка 540 и значения
+из эталонной сессии в production не подставляются. Системное время не меняется.
+
+`exchange_game_login` получает необязательный clock context и ставит один Ping
+в очередь сразу после Version, до первого pump. Login по-прежнему отправляется
+только после принятого Game Version. Текущий порядок: Version seq 0 → Ping seq 1
+→ Login seq 2; при запросе списка ID 101 имеет seq 3. В summary есть только
+признак `initial_ping_queued`, без времён / полей авторизации.
+Это пока один ранний Ping: периодический producer, recovery и полный clock
+lifecycle ещё не подключены. Источник кадра 30413 неизвестен; порядок эталона
+целиком не воспроизведён. Необходимость Ping для успешного Login не доказана.
+
+Локально прошли тесты session clock, socketpair входа / списка, сохранения
+ответа лобби и selected runner. Проверены новое значение первого Ping эталона,
+signed offsets, отказ непроверенного источника, порядок / CRC / sequence,
+прекращение Login после отказа Version и передача свежего context в runner.
+Историческая проверка lobby context index повторяется на immutable EXE того же
+SHA, поскольку установленная игра обновлена; SHA guard сохранён.
+Новый live вход на этом этапе ещё не выполнен.

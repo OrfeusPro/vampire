@@ -35,6 +35,7 @@ class BaseGameProfile:
     source_snapshot_sha256: str
     active_game_cache_verified: bool = False
     compiled_tag: str = ''
+    source_exe_sha256: str = ''
 
 
 def verify_file(path, expected):
@@ -81,7 +82,8 @@ def load_profile(*, selected_profile, root=ROOT):
     if values['CdnConfig'] != 'True': raise ValueError('Explicit base profile has no CDN config')
     url = prepare_cdn_config_url_ascii(normal=values['CdnConfigUrl'], qa=values['CdnConfigUrlQA'],
         prefix=values['ConfigPrefix'], app_version=values['AppVersion'], platform_code=2)
-    return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, snapshot, compiled_tag=compiled_tag)
+    return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, snapshot,
+        compiled_tag=compiled_tag, source_exe_sha256=source_sha)
 
 
 def bind_profile(version, login, *, selected_profile, root=ROOT):

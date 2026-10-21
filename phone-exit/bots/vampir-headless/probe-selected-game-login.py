@@ -14,6 +14,7 @@ from vampir_core.login_context import prepare_initial_windows_game_login
 from vampir_core.socks_route import SocksRoute, socks_game_address_context
 from vampir_core.game_server_target import SERVER_REGION_CODES, is_game_server_state_excluded, game_server_allows_joined_country
 from vampir_core.patch_revision import parse_patch_client_revision
+from vampir_core.session_clock import LobbyPingClock, SOURCE_SHA256 as PING_CLOCK_SOURCE_SHA256
 
 
 @dataclass(frozen=True)
@@ -146,6 +147,10 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
         groups = [g for g in lobby.server_list_response.groups if g.raw_08 == reference[0].u32[0]]
         if len(groups) == 1: state['reference_server_101_region_code'] = groups[0].raw_20
     phase('game_system_inputs')
+    ping_clock = None
+    if getattr(source, 'source_exe_sha256', '') == PING_CLOCK_SOURCE_SHA256:
+        ping_clock = LobbyPingClock.from_version_result(lobby.version_response,
+            source_sha256=source.source_exe_sha256)
     cpu, windows = module('game_login_system', 'windows-system-inputs.py').observe_inputs()
     prepare_version = module('game_login_version', 'probe-game-version.py').prepare_version
     phase('game_connect')
@@ -163,7 +168,8 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
         credentials = None
         phase('game_login_exchange')
         state['login_language_code'] = login.raw_bytes[2]
-        game = exchange_game_login(connection, version, login, timeout=10, read_character_list=read_character_list)
+        game = exchange_game_login(connection, version, login, timeout=10,
+            read_character_list=read_character_list, ping_clock=ping_clock)
         login = None
         return dict(state, status='game_login_probe', selection=selection or 'explicit-id',
             target_source='fresh_lobby_id104', context=context, extra_number=extra_number, game=game)
