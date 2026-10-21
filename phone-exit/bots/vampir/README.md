@@ -66,8 +66,12 @@ IDs 30413 → Version → Ping; бот начинает с Version. Следом
 Продолжение: actual send новой версии выгружен; найден producer Ping.
 36 native сценариев подтвердили поля «часы / разница», порог >5000, readiness
 и recovery branch. Эталонные пять Ping согласуются с producer; часы первого
-примерно на 9 часов впереди времени capture. Epoch / источник clock-cache
-и кадр 30413 ещё не установлены; runtime и live вход не менялись.
+примерно на 9 часов впереди времени capture. Затем источник часов проверен:
+GetSystemTime UTC → календарные ticks → Unix epoch + signed offset в минутах.
+24 native clock-сценария и три теста прошли; в обоих lobby ID 2 эталона offset
+равен 540. До интеграции остаётся текущая registration → clock setter;
+кадр 30413 также не найден. Runtime и live вход не менялись.
+[Clock source, native проверки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических

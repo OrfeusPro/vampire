@@ -37,8 +37,11 @@ HK-клиентом: полный metadata там 792 байта, у бота su
 Version seq 1, Ping seq 2, Login seq 3; бот начинает с Version seq 0.
 Producer Ping новой версии исполнен в 36 native сценариях: source fields,
 порог >5000, readiness / recovery подтверждены. В эталоне первый Ping показывает
-смещение около 9 часов от capture clock; epoch / получение clock-cache пока
-не доказаны. Следом — clock-cache и источник / роль ID 30413.
+смещение около 9 часов от capture clock. Clock source затем проверен native:
+UTC GetSystemTime / Unix epoch + signed minute offset, 24 сценария / 3 теста.
+Эталонные lobby ID 2 содержат 540 минут. Перед интеграцией закрыть текущую
+packet registration → clock setter; источник / роль ID 30413 также остаётся.
+[Источник часов и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 Наблюдение само по себе не разрешает подставить magic ID или старый Ping.
 [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#полный-запуск-4c713eb5-и-сверка-идентификаторов).
 Единая цепочка обновления всех данных и сценариев ещё не завершена.

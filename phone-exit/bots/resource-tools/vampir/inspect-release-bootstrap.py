@@ -25,6 +25,7 @@ def main():
     mode.add_argument('--send', action='store_true', help='Inspect source-bound game wrapper slots and one level of callees')
     mode.add_argument('--lifecycle', action='store_true', help='Inspect remaining source-bound wrapper lifecycle slots')
     mode.add_argument('--ping', action='store_true', help='Trace PktPing literal, candidate table, constructor uses and callers')
+    mode.add_argument('--clock', action='store_true', help='Inspect references to the source-bound Ping clock pointer')
     args = parser.parse_args()
     comparison = ROOT / 'ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c'
     receipt_path = comparison / 'provenance.json'
@@ -43,6 +44,19 @@ def main():
         if digest(constructor) != 'a0d199a7b60fba31c926aedb5862670d061adafb31bf00b3d9bbd78812aa9a22':
             raise ValueError('Source-bound wrapper constructor export changed')
         inputs[str(constructor)] = digest(constructor)
+    if args.clock:
+        constructor = comparison / 'bootstrap/run-4398dc0d34cf/export/bootstrap.json'
+        if digest(constructor) != 'd6d1c226ecad9f5ef0ac389c4ddef9d3ffdffe7dbd3fef602d72583ca42bbb63':
+            raise ValueError('Clock constructor evidence changed')
+        inputs[str(constructor)] = digest(constructor)
+        initialize = comparison / 'bootstrap/run-aa9d3f766ff1/export/bootstrap.json'
+        if digest(initialize) != '0d7ed611834d0ab44e77f701c0094bb2e7c8393a829b7b62c80e71f9f819e96c':
+            raise ValueError('Clock initialize/addend evidence changed')
+        inputs[str(initialize)] = digest(initialize)
+        datetime = comparison / 'details/run-7c4690fdf614/details.json'
+        if digest(datetime) != '8a66f7e97ce2f6061b93b74140201ffde77150069c1f8f4356919dad1bb95e46':
+            raise ValueError('Datetime source evidence changed')
+        inputs[str(datetime)] = digest(datetime)
     out = comparison / 'bootstrap' / ('run-' + uuid.uuid4().hex[:12])
     out.mkdir(parents=True)
     env = os.environ.copy()
@@ -63,6 +77,8 @@ def main():
         command.append('lifecycle')
     elif args.ping:
         command.append('ping')
+    elif args.clock:
+        command.append('clock')
     invocation = dict(source_sha256=SHA, inputs=inputs, tools=lock, command=command)
     (out / 'invocation.json').write_text(json.dumps(invocation, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(output=str(out))), flush=True)

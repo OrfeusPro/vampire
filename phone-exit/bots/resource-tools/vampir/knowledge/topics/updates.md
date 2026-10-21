@@ -53,4 +53,5 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Публичная CDN-конфигурация получена и разобрана](../evidence/updates/HEADLESS-PUBLIC-CDN.md)
 - [Реальный публичный GMC2 response и SDK constants](../evidence/updates/HEADLESS-PUBLIC-GMC2.md)
 - [Ранний обмен новой версии: проверка источника предварительного кадра](../evidence/updates/HEADLESS-RELEASE-BOOTSTRAP.md)
+- [Источник часов Ping: UTC, Unix epoch и поправка в минутах](../evidence/updates/HEADLESS-RELEASE-CLOCK.md)
 - [Новый compiled tag Version / Login и код 1](../evidence/updates/HEADLESS-RELEASE-WIRE-TAG.md)
