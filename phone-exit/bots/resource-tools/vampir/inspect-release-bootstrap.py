@@ -27,6 +27,7 @@ def main():
     mode.add_argument('--ping', action='store_true', help='Trace PktPing literal, candidate table, constructor uses and callers')
     mode.add_argument('--clock', action='store_true', help='Inspect references to the source-bound Ping clock pointer')
     mode.add_argument('--lobby-clock', action='store_true', help='Inspect the current registered packet/handler pair leading to the clock setter')
+    mode.add_argument('--common-data', action='store_true', help='Inspect current common-data owner table candidates without assigning roles')
     args = parser.parse_args()
     comparison = ROOT / 'ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c'
     receipt_path = comparison / 'provenance.json'
@@ -65,6 +66,11 @@ def main():
             if digest(evidence)!=sha:raise ValueError('Lobby packet/registration source evidence changed')
             inputs[str(evidence)]=sha
     out = comparison / 'bootstrap' / ('run-' + uuid.uuid4().hex[:12])
+    if args.common_data:
+        evidence = comparison / 'details/run-a9346fc63f34/details.json'
+        if digest(evidence) != 'bd853e57aca595e219a6b2a7700e382e359380f710534bb603c1fa3215d50980':
+            raise ValueError('Common-data owner source evidence changed')
+        inputs[str(evidence)] = digest(evidence)
     out.mkdir(parents=True)
     env = os.environ.copy()
     env['JAVA_HOME'] = str(tools / lock['jdk']['directory'])
@@ -88,6 +94,8 @@ def main():
         command.append('clock')
     elif args.lobby_clock:
         command.append('lobby-clock')
+    elif args.common_data:
+        command.append('common-data')
     invocation = dict(source_sha256=SHA, inputs=inputs, tools=lock, command=command)
     (out / 'invocation.json').write_text(json.dumps(invocation, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(output=str(out))), flush=True)

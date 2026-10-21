@@ -28,7 +28,7 @@ def main():
     evidence_sha = audit.sha256(args.evidence)
     evidence = json.loads(args.evidence.read_text('utf-8'))
     sha = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
-    if evidence['new_source_sha256'] != sha:
+    if evidence.get('new_source_sha256', evidence.get('source_sha256')) != sha:
         raise ValueError('Unreviewed SDK source')
     source = native.ROOT / 'client-code-snapshots' / sha / 'ProjectRED-Win64-Shipping.exe'
     if audit.sha256(source) != sha:

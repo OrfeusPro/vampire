@@ -70,6 +70,7 @@ Credentials и локальные профили не переносить в д
 - [NID OnResult: проверки и аргументы принятия токенов](../evidence/auth/HEADLESS-NID-VALIDATION.md)
 - [NID: полный базовый набор параметров штатного окна входа](../evidence/auth/HEADLESS-NID-WEB-CONTEXT.md)
 - [NID: сборка URL штатного окна входа](../evidence/auth/HEADLESS-NID-WEB-URL.md)
+- [Заполнение common data в новой сборке](../evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md)
 - [Auth-контекст и дополнительный каталог SDK](../evidence/auth/HEADLESS-SDK-AUTH-PATH.md)
 - [SDK bootstrap: версия SDK и BuildCode](../evidence/auth/HEADLESS-SDK-BOOTSTRAP-VALUES.md)
 - [Vampir — источник конфигурации SDK GMC2](../evidence/auth/HEADLESS-SDK-CONFIG.md)

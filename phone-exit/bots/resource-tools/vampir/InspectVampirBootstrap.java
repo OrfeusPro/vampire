@@ -49,7 +49,7 @@ public class InspectVampirBootstrap extends GhidraScript {
         if ((args.length != 2 && args.length != 3) || !args[0].equalsIgnoreCase(currentProgram.getExecutableSHA256()))
             throw new IllegalArgumentException("Expected matching source SHA and new output directory");
         if (!args[0].equalsIgnoreCase("98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e") ||
-                (args.length == 3 && !List.of("connected", "scalar", "send", "lifecycle", "ping", "clock", "lobby-clock").contains(args[2])))
+                (args.length == 3 && !List.of("connected", "scalar", "send", "lifecycle", "ping", "clock", "lobby-clock", "common-data").contains(args[2])))
             throw new IllegalArgumentException("Unsupported source or inspection mode");
         Path out = Path.of(args[1]);
         Files.createDirectory(out);
@@ -60,7 +60,48 @@ public class InspectVampirBootstrap extends GhidraScript {
         report.addProperty("roles_transferred", false);
         JsonArray hits = new JsonArray();
         Map<Address, Function> owners = new TreeMap<>();
-        if (args.length == 3 && args[2].equals("lobby-clock")) {
+        if (args.length == 3 && args[2].equals("common-data")) {
+            JsonArray bindings = new JsonArray();
+            // Tables are stored by the inspected current owner constructor.
+            // Slots are candidates only; no initialization role is assumed.
+            for (String text : List.of("149543170", "14953ff00")) {
+                Address table = currentProgram.getAddressFactory().getAddress(text);
+                for (int slot = 0; slot < 0x40; slot += 8) {
+                    Address target = currentProgram.getAddressFactory().getDefaultAddressSpace().getAddress(currentProgram.getMemory().getLong(table.add(slot)));
+                    JsonObject item = new JsonObject();item.addProperty("table","0x"+table);item.addProperty("slot",slot);
+                    item.addProperty("target","0x"+target);bindings.add(item);
+                    var block = currentProgram.getMemory().getBlock(target);
+                    if (block == null || !block.isExecute()) continue;
+                    Function function = currentProgram.getFunctionManager().getFunctionAt(target);
+                    if (function == null && disassemble(target)) function=createFunction(target,null);
+                    if (function != null) owners.put(target,function);
+                }
+            }
+            report.add("common_data_table_candidates",bindings);
+            JsonArray literals = new JsonArray();
+            for (String name : List.of("FLogImpl", "FCommonLogData")) {
+                byte[] pattern=("Netmarble::Service::"+name+"::").getBytes(java.nio.charset.StandardCharsets.US_ASCII);
+                Address cursor=currentProgram.getMinAddress();
+                for (int count=0;count<128;count++) {
+                    Address found=currentProgram.getMemory().findBytes(cursor,pattern,null,true,monitor);
+                    if(found==null) break;
+                    Address start=found;
+                    for(int i=0;i<256;i++) {
+                        int previous=Byte.toUnsignedInt(currentProgram.getMemory().getByte(start.subtract(1)));
+                        if(previous<32 || previous>126) break;
+                        start=start.subtract(1);
+                    }
+                    java.io.ByteArrayOutputStream data=new java.io.ByteArrayOutputStream();
+                    for(int i=0;i<512;i++) {byte value=currentProgram.getMemory().getByte(start.add(i));data.write(value);if(value==0)break;}
+                    byte[] bytes=data.toByteArray();
+                    if(bytes[bytes.length-1]!=0) throw new IllegalStateException("Common-data literal bound");
+                    JsonObject literal=new JsonObject();literal.addProperty("label",name);
+                    literal.addProperty("address","0x"+start);literal.addProperty("bytes",HexFormat.of().formatHex(bytes));
+                    literals.add(literal);cursor=start.add(bytes.length);
+                }
+            }
+            report.add("literals",literals);
+        } else if (args.length == 3 && args[2].equals("lobby-clock")) {
             JsonArray bindings = new JsonArray();
             // Packet/handler are paired in the current registration root, not
             // selected by their analytic names or matching numeric offsets.
@@ -294,7 +335,7 @@ public class InspectVampirBootstrap extends GhidraScript {
         report.add("wire_fragment_candidates", wireHits);
         }
         // One caller level only: a bound, not a full call graph.
-        if (!(args.length == 3 && List.of("send", "lifecycle", "ping", "clock", "lobby-clock").contains(args[2])))
+        if (!(args.length == 3 && List.of("send", "lifecycle", "ping", "clock", "lobby-clock", "common-data").contains(args[2])))
             for (Function owner : new ArrayList<>(owners.values()))
                 for (Function caller : owner.getCallingFunctions(monitor)) owners.put(caller.getEntryPoint(), caller);
         if (owners.size() > 64) throw new IllegalStateException("Owner export bound exceeded");

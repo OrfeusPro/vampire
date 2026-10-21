@@ -86,6 +86,11 @@ actual reader → handler → clock setter прошли 18 сценариев и
 у бота — на одном. Причина 16 этим не установлена; следующие источники для
 проверки — metadata и lobby lifecycle.
 [Сверка полей и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#дополнительная-сверка-перехода-лобби--игра).
+Найдена текущая ветвь заполнения common data: FLogImpl::Start → 0x144555470,
+которая записывает строки в сам объект. Выделены source helpers и передача
+MakeSessionID в отдельный setter; форматы и конкретный сессионный key ещё
+проверяются. Metadata runtime не расширялась без этой проверки.
+[Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических

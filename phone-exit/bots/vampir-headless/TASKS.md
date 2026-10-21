@@ -47,6 +47,10 @@ UTC GetSystemTime / Unix epoch + signed minute offset, 24 сценария / 3 �
 отказа, разрешённый пользователем, за 10 секунд не получил ID 102. Следом
 проверять оставшиеся отличия bootstrap / metadata по источникам; источник / роль
 ID 30413, периодический Ping и полный lifecycle также остаются.
+Для metadata найден actual writer новой сборки: FLogImpl::Start → 0x144555470.
+Следом проверить setter строки MakeSessionID, source helpers и callbacks,
+затем выполнить bounded native проверку перед расширением runtime metadata.
+[Текущие записи и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 [Источник часов и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 Наблюдение само по себе не разрешает подставить magic ID или старый Ping.
 [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#полный-запуск-4c713eb5-и-сверка-идентификаторов).

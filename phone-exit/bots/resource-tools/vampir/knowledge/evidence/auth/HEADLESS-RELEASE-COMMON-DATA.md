@@ -1,0 +1,92 @@
+# Заполнение common data в новой сборке
+
+21 октября 2026. Источник EXE SHA256
+`98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e`.
+Продолжение [вопроса о заполнении полей](HEADLESS-NID-USER-INFO-FIELDS.md),
+с учётом [проверки перехода лобби → игра](../network/HEADLESS-LIVE-TCP-CAPTURE.md#дополнительная-сверка-перехода-лобби--игра).
+Это статическая проверка Ghidra / инструкций, не native replay и не живой вход.
+
+## Что проверено заново после обновления
+
+Выгружены текущие candidates collector `0x14560c880`, writer `0x144558870`
+и owner constructor `0x144516ce0`. Constructor сохраняет таблицы
+`0x149543170` в owner и `0x14953ff00` во вложенный объект размером 0x278;
+37 строк начинаются во вложенном объекте+0x28. Просмотр первых 0x40 байт обеих
+таблиц нашёл только destructor в slot 0; далее уже текстовые данные.
+Не расширять этот путь как неизвестную виртуальную initialization-цепочку.
+
+Текущие compiled diagnostics и проверенные RIP references привели к:
+
+| Адрес | Имя из diagnostic literal |
+| --- | --- |
+| 0x1445307a0 | FLogImpl::Initialize |
+| 0x1445567d0 | FLogImpl::Start |
+| 0x144536f80 | FLogImpl::MakeSessionID |
+
+Start вызывает MakeSessionID, затем передаёт `*(owner+0x28)` в
+`0x144555470`. Последняя функция получает SDK service через weak reference,
+регистрирует callbacks и **записывает FString descriptors в сам вложенный объект**.
+Это найденный writer первоначальных значений, а не ранее исследованный ToMap,
+Save, copy или SendSignIn. Ветка без service выходит до заполнения.
+
+## Найденные записи
+
+Пусть P — вложенный объект, D = P+0x28 — common-data строки.
+В текущем псевдокоде и инструкциях видны переносы результатов helpers:
+
+| Destination | Offset в D | Helper / источник перед записью |
+| --- | --- | --- |
+| P+0x28 | D+0x00 | 0x1444eda80 |
+| P+0x38 | D+0x10 | 0x1444edc00 |
+| P+0x48 | D+0x20 | 0x1444ebd40 |
+| P+0x58 | D+0x30 | 0x1444ebd20 |
+| P+0x68 | D+0x40 | 0x1444ed290 |
+| P+0xa8 | D+0x80 | 0x1444eb690 |
+| P+0xb8 | D+0x90 | literal 0x149545af8 через FString constructor |
+| P+0x218 | D+0x1f0 | 0x1444eb880 |
+| P+0x228 | D+0x200 | 0x1444ed230 |
+| P+0x238 | D+0x210 | 0x1444f0e30 |
+| P+0x248 | D+0x220 | 0x1444ed2b0 |
+
+Новый writer ToMap сохраняет соответствующие field/key связи; ранее они
+разобраны для ОС / версии ОС / модели / производителя / модели производителя,
+GameVersion / SDKVersion, CPU / RAM / GPU / resolution. **Семантика helpers,
+формат их строк и live значения ещё не подтверждены native-сценариями новой
+сборки.** Не заменять их произвольными Python / WMI значениями по имени поля.
+
+MakeSessionID создаёт значение через `0x1415600a0`, форматирует через
+`0x14154eb20` с raw argument 0, обрабатывает `0x141439810`, сохраняет строку
+в owner+0x98. Функция заполнения копирует её из SDK service+0x310 / owner+0x98
+и передаёт в setter `0x14455cb10(P, string)`. Destination setter и связь с
+конкретным metadata key пока не проверены. Не объявлять её I_TID / UUID и не
+генерировать замену до проверки setter и формата.
+
+## Материалы и воспроизведение
+
+Общий каталог вне Git:
+`F:/PhoneExit Resources/Vampir/ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/`.
+
+| Файл | SHA256 |
+| --- | --- |
+| details/run-a9346fc63f34/details.json, current collector / writer / owner | bd853e57aca595e219a6b2a7700e382e359380f710534bb603c1fa3215d50980 |
+| bootstrap/run-f058526ab03a/export/bootstrap.json, tables / full diagnostic literals | fd8aba696a92ba2386783c3ea7db6e49658161140906fe6b08ff289daf9154cc |
+| bootstrap/sdk-reference-candidates/a626c39388b2b3cf89274475f6430304a00b38963de52855bf0f817c69baae1b/manifest.json | a626c39388b2b3cf89274475f6430304a00b38963de52855bf0f817c69baae1b |
+| details/run-5f0d1ef45af5/details.json, Initialize / Start / MakeSessionID | f887dfd5e24b4be3a03a5bacabca975153f1b65d617e3811a6d82a61dd6778b2 |
+| sdk-reference-candidates/429e8650a7159e02ba40d4f60adcab4422ce6d935a52d6f7d80ed304932ccf6f/manifest.json | 429e8650a7159e02ba40d4f60adcab4422ce6d935a52d6f7d80ed304932ccf6f |
+| details/run-c2c88fe32275/details.json, actual common-data writer | 1eb0b48a69fdc9b5a287a328d203d6ccf491bd12034a3eb5cf67629ae159df03 |
+
+Промежуточные table / substring exports сохранены рядом; финальный literal
+export выше содержит полные строки с return type, поэтому RIP candidates
+следуют к началу diagnostic, а не к середине строки с именем класса.
+SDK reference finder принимает SHA как comparison (`new_source_sha256`),
+так и standalone export (`source_sha256`); несовпадение по-прежнему отклоняется.
+Выгрузки сохранены вместе с invocation / source / tool / output hashes.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/inspect-release-bootstrap.py --common-data
+```
+
+Следом — setter `0x14455cb10`, форматы source helpers и callbacks заполнения
+сессионных полей. Затем bounded native сценарий и только после этого runtime.
+Metadata бота остаётся subset 219 байт. Новых входов, чтения памяти игры,
+изменений устройства или аккаунта в этом проходе не было.
