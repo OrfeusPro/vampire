@@ -6,10 +6,11 @@ import unittest
 from test_vampir_login_flow import VERSION, LOGIN, RESULT, FIXTURE
 from test_vampir_version_probe import incoming, receive_frame
 from vampir_core.game_login_probe import exchange_game_login
+from test_vampir_selection_flow import list_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -20,12 +21,15 @@ class GameLoginProbeTests(unittest.TestCase):
                 if wait_for_login:
                     captures.append(receive_frame(server)[0])
                     server.sendall(incoming(4, login_body))
+                    if character_body is not None:
+                        captures.append(receive_frame(server)[0])
+                        server.sendall(incoming(102, character_body))
                 while server.recv(32): pass
             except BaseException as error: errors.append(type(error).__name__)
             finally: server.close()
         worker = threading.Thread(target=serve)
         worker.start()
-        result = exchange_game_login(client, VERSION, LOGIN, timeout=1)
+        result = exchange_game_login(client, VERSION, LOGIN, timeout=1, read_character_list=read_character_list)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -95,6 +99,34 @@ class GameLoginProbeTests(unittest.TestCase):
         finally:
             client.close()
             server.close()
+
+    def test_explicit_list_entry_keeps_same_socket_sequence_and_redacts_characters(self):
+        result, captures = self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True, character_body=list_body(keys=(11,), preferred=11))
+        self.assertEqual(captures, [(1, 0), (3, 1), (101, 2)])
+        self.assertEqual(result['status'], 'character_list_result')
+        self.assertTrue(result['character_list_sent'])
+        self.assertTrue(result['character_list_received'])
+        self.assertEqual(result['character_list_result_code'], 0)
+        self.assertEqual(result['character_count'], 1)
+        self.assertEqual(result['preferred_character_index'], 0)
+        self.assertFalse(result['character_select_sent'])
+        self.assertFalse(result['game_session_ready'])
+
+    def test_list_entry_option_never_sends_on_invalid_packet_version(self):
+        body = struct.pack('<I', 1) + bytes.fromhex(FIXTURE['login_result_hex'])[4:]
+        result, captures = self.attempt(login_body=body, read_character_list=True)
+        self.assertEqual(captures, [(1, 0), (3, 1)])
+        self.assertEqual(result['login_result_key'], 'InvalidPacketVersion')
+        self.assertFalse(result['character_list_sent'])
+        self.assertFalse(result['character_list_received'])
+
+    def test_list_refusal_closes_and_never_selects_or_retries(self):
+        result, captures = self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True, character_body=list_body(code=16))
+        self.assertEqual(captures, [(1, 0), (3, 1), (101, 2)])
+        self.assertEqual(result['character_list_result_code'], 16)
+        self.assertFalse(result['character_select_sent'])
 
 
 if __name__ == '__main__': unittest.main()

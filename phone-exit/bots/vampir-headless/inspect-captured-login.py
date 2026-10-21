@@ -11,7 +11,9 @@ from vampir_core.login_packet import decode_login_payload
 from vampir_core.nid_metadata import NID_METADATA_KEYS, encode_nid_metadata_with_device_key
 
 
-def inspect(path, *, flow, expected_sha256):
+def inspect(path, *, flow, expected_sha256, _consume_frame=None):
+    # Optional trusted in-memory analysis; raw bodies never enter this report.
+    if _consume_frame is not None and not callable(_consume_frame):raise TypeError('Expected frame consumer')
     with Path(path).open('rb') as stream: raw=stream.read(12582913)
     if len(raw)>12582912 or not raw.endswith(b'\n'): raise ValueError('Capture bounds')
     digest=hashlib.sha256(raw).hexdigest()
@@ -27,6 +29,7 @@ def inspect(path, *, flow, expected_sha256):
         plain=xor_transform(data[3:size]);data=data[size:]
         if int.from_bytes(plain[:4],'little')!=payload_crc32(plain[4:]):raise ValueError('CRC or unsupported changed key')
         checked+=1
+        if _consume_frame is not None:_consume_frame(int.from_bytes(plain[4:6],'little'),plain[8:])
         if int.from_bytes(plain[4:6],'little')!=3:continue
         body=plain[8:];value=decode_login_payload(body,max_payload_size=65536)
         if value.encode(max_payload_size=65536)!=body:raise ValueError('Login roundtrip differs')

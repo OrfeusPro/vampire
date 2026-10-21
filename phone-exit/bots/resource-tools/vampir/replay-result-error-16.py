@@ -12,10 +12,11 @@ mapper = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mapper)
 
 
-def build():
+def build(*, source_snapshot=None):
     root = mapper.native.ROOT
     manifest = json.loads((root / 'ghidra/entry-manifest.json').read_text('utf-8'))
-    raw = Path(manifest['source']).read_bytes()
+    source = Path(manifest['source']) if source_snapshot is None else Path(source_snapshot)
+    raw = source.read_bytes()
     if hashlib.sha256(raw).hexdigest() != manifest['source_sha256']: raise ValueError('Client changed')
     image = mapper.native.Image(raw)
     cases = [mapper.Replay(raw, image).execute(code) for code in (0, 16, 58)]
@@ -29,7 +30,7 @@ def build():
     rows = list(csv.DictReader(io.StringIO(data.decode('utf-8-sig'))))
     matches = [(i + 1, row) for i, row in enumerate(rows) if row['Key'] == 'InvalidState']
     if len(matches) != 1: raise ValueError('Result 16 localization is not unique')
-    return dict(source=manifest['source'], source_sha256=manifest['source_sha256'],
+    return dict(source=str(source), source_sha256=manifest['source_sha256'],
         tool_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         mapper_tool_sha256=hashlib.sha256((HERE / 'replay-result-error-text.py').read_bytes()).hexdigest(),
         cases=cases, localization=dict(path=str(path), sha256=record['sha256'],

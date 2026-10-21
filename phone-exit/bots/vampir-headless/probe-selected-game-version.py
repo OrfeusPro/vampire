@@ -84,7 +84,7 @@ def _run(email, *, selected_profile, manifest_path, socks_port, password, server
         address_context = socks_game_address_context(connection)
         state['game_address_source'] = address_context.source
         version = prepare(app_version=source.app_version, nm_device_key=binding.nm_device_key,
-            local_address=address_context.address, cpu=cpu, windows_version=windows)
+            local_address=address_context.address, cpu=cpu, windows_version=windows, compiled_tag=source.compiled_tag)
         phase('game_version_exchange')
         summary = exchange_version(connection, version, timeout=10)
         return dict(status='game_version_probe', selection=selection or 'explicit-id',
@@ -96,7 +96,7 @@ def _run(email, *, selected_profile, manifest_path, socks_port, password, server
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--profile', choices=['recovered-base'], required=True)
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--socks-port', type=int, required=True)
     parser.add_argument('--server-policy-byte', type=int, required=True)

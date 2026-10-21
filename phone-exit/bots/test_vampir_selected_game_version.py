@@ -39,7 +39,7 @@ class SelectedGameVersionTests(unittest.TestCase):
         def fail(**kwargs):
             kwargs['_progress']('nid_browser')
             raise RuntimeError('secret-token-and-auth-url')
-        source = SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='fixture'))
+        source = SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='fixture', compiled_tag='A' * 32))
         lobby = SimpleNamespace(run=lambda email, **kwargs: fail(**kwargs))
         with patch.object(self.tool, 'module', side_effect=[source, lobby]), patch.object(self.tool, 'SocksRoute') as route:
             result = self.tool.run('fixture@example.invalid', selected_profile='recovered-base',
@@ -49,7 +49,7 @@ class SelectedGameVersionTests(unittest.TestCase):
         route.assert_not_called()
 
     def test_fresh_list_target_and_socket_close_on_game_protocol_error(self):
-        source = SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='fixture'))
+        source = SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='fixture', compiled_tag='A' * 32))
         lobby = SimpleNamespace(run=lambda email, **kwargs: SimpleNamespace(
             summary={'server_list_result_code': 0}, server_list_response=listing(record(42))))
         system = SimpleNamespace(observe_inputs=lambda: ('cpu-fixture', 'windows-fixture'))

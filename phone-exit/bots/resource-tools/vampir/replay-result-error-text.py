@@ -89,9 +89,10 @@ class Replay:
             ranges=self.ranges, trace=list(self.trace.values()))
 
 
-def build():
+def build(*, source_snapshot=None):
     manifest = json.loads((native.ROOT / 'ghidra/entry-manifest.json').read_text('utf-8'))
-    raw = Path(manifest['source']).read_bytes()
+    source = Path(manifest['source']) if source_snapshot is None else Path(source_snapshot)
+    raw = source.read_bytes()
     if hashlib.sha256(raw).hexdigest() != manifest['source_sha256']: raise ValueError('Client changed')
     image = native.Image(raw)
     cases = [Replay(raw, image).execute(code) for code in (0, 1, 42, 54, 57, 58, 59)]
@@ -105,7 +106,7 @@ def build():
     rows = list(csv.DictReader(io.StringIO(data.decode('utf-8-sig'))))
     found = [(i + 1, r) for i, r in enumerate(rows) if r['Key'] == key]
     if len(found) != 1: raise ValueError('Error localization key is not unique')
-    return dict(source=manifest['source'], source_sha256=manifest['source_sha256'],
+    return dict(source=str(source), source_sha256=manifest['source_sha256'],
         tool_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         cases=cases, localization=dict(path=str(path), sha256=table['sha256'],
             index_sha256=hashlib.sha256(index_path.read_bytes()).hexdigest(), provenance=table,

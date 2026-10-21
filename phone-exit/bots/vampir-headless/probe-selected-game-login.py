@@ -33,11 +33,13 @@ def module(name, filename):
 
 def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
         extra_number, context, region, server_id=None, selection=None, password='', server_list_only=False, auth_flow='nid', language_code=None,
-        lobby_context='sdk-without-nid-info', _progress=None):
+        lobby_context='sdk-without-nid-info', read_character_list=False, _progress=None):
     if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
     if lobby_context not in ('sdk-without-nid-info','sdk-with-joined-country','sdk-with-partial-metadata'):
         raise ValueError('Explicit supported lobby context required')
     if type(server_list_only) is not bool: raise ValueError('Explicit server-list-only policy required')
+    if type(read_character_list) is not bool or (read_character_list and server_list_only):
+        raise ValueError('Explicit game character-list operation required')
     if type(region) is not str or region not in SERVER_REGION_CODES: raise ValueError('Explicit server region required')
     if context != 'windows-sdk-initial-reset': raise ValueError('Explicit game Login context required')
     if type(extra_number) is not int or not 0 <= extra_number <= 0xffffffff: raise ValueError('Explicit uint32 extra number required')
@@ -55,7 +57,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
         return _run(email, selected_profile=selected_profile, manifest_path=manifest_path,
             socks_port=socks_port, server_policy_byte=server_policy_byte, extra_number=extra_number,
             context=context, region=region, server_id=server_id, selection=selection, password=password,
-            server_list_only=server_list_only, auth_flow=auth_flow, language_code=language_code, lobby_context=lobby_context, state=state, phase=phase)
+            server_list_only=server_list_only, auth_flow=auth_flow, language_code=language_code, lobby_context=lobby_context,
+            read_character_list=read_character_list, state=state, phase=phase)
     except (OSError, ValueError, RuntimeError, KeyError) as error:
         result = dict(state, status='selected_game_login_not_completed', error_type=type(error).__name__)
         for name, attribute in (('http_status', 'status'), ('sdk_error_code', 'sdk_code')):
@@ -69,7 +72,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
 
 
 def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
-         extra_number, context, region, server_id, selection, password, server_list_only, auth_flow, language_code, lobby_context, state, phase):
+         extra_number, context, region, server_id, selection, password, server_list_only, auth_flow, language_code, lobby_context,
+         read_character_list, state, phase):
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     auth = {}
@@ -85,7 +89,8 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
     def use_session(lobby):
         completed['result'] = _after_lobby(lobby, auth=auth, selection_proof=selection_proof,
             source=source, socks_port=socks_port, extra_number=extra_number, context=context,
-            region=region, server_id=server_id, selection=selection, server_list_only=False, language_code=language_code, state=state, phase=phase)
+            region=region, server_id=server_id, selection=selection, server_list_only=False, language_code=language_code,
+            read_character_list=read_character_list, state=state, phase=phase)
     phase('lobby_preparation')
     lobby = module('game_login_lobby', 'probe-lobby-sdk-login.py').run(email,
         selected_profile=selected_profile, manifest_path=manifest_path, socks_port=socks_port,
@@ -100,11 +105,12 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
         return dict(state, status='selected_lobby_context_not_received')
     return _after_lobby(lobby, auth=auth, selection_proof=selection_proof,
         source=source, socks_port=socks_port, extra_number=extra_number, context=context,
-        region=region, server_id=server_id, selection=selection, server_list_only=True, language_code=language_code, state=state, phase=phase)
+        region=region, server_id=server_id, selection=selection, server_list_only=True, language_code=language_code,
+        read_character_list=read_character_list, state=state, phase=phase)
 
 
 def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_number,
-                 context, region, server_id, selection, server_list_only, state, phase, language_code=None):
+                 context, region, server_id, selection, server_list_only, state, phase, language_code=None, read_character_list=False):
     state['lobby'] = lobby.summary
     if lobby.server_list_response is None or 'context' not in auth:
         return dict(state, status='lobby_context_not_received')
@@ -148,16 +154,16 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
         address_context = socks_game_address_context(connection)
         state['game_address_source'] = address_context.source
         version = prepare_version(app_version=source.app_version, nm_device_key=credentials.binding.nm_device_key,
-            local_address=address_context.address, cpu=cpu, windows_version=windows)
+            local_address=address_context.address, cpu=cpu, windows_version=windows, compiled_tag=source.compiled_tag)
         phase('game_login_preparation')
         login = prepare_initial_windows_game_login(version, binding=credentials.binding,
             sdk_data=credentials.sdk_data, netmarble_id=credentials.netmarble_id,
             lobby_result=lobby.response, server_id=target.server_id, extra_number=extra_number, context=context,
-            language_code=language_code,nid_metadata=credentials.nid_metadata)
+            language_code=language_code,nid_metadata=credentials.nid_metadata, compiled_tag=source.compiled_tag)
         credentials = None
         phase('game_login_exchange')
         state['login_language_code'] = login.raw_bytes[2]
-        game = exchange_game_login(connection, version, login, timeout=10)
+        game = exchange_game_login(connection, version, login, timeout=10, read_character_list=read_character_list)
         login = None
         return dict(state, status='game_login_probe', selection=selection or 'explicit-id',
             target_source='fresh_lobby_id104', context=context, extra_number=extra_number, game=game)
@@ -184,6 +190,7 @@ if __name__ == '__main__':
     choice.add_argument('--selection', choices=['lowest-valid-id'])
     parser.add_argument('--password-stdin', action='store_true')
     parser.add_argument('--server-list-only', action='store_true', help='Check region/state/country policy without a game connection')
+    parser.add_argument('--read-character-list', action='store_true', help='Explicit list-entry probe after successful Login; no character selection')
     parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid')
     parser.add_argument('--language-code',type=int,help='Explicit source-bound Login language byte; absent preserves reset value 7')
     parser.add_argument('--lobby-context',choices=['sdk-without-nid-info','sdk-with-joined-country','sdk-with-partial-metadata'],default='sdk-without-nid-info')
@@ -199,6 +206,7 @@ if __name__ == '__main__':
             socks_port=args.socks_port, server_policy_byte=args.server_policy_byte,
             extra_number=extra_number, context=args.context, region=args.region, server_id=args.server_id,
             selection=args.selection, password=password, server_list_only=args.server_list_only, auth_flow=args.auth_flow, language_code=args.language_code, lobby_context=args.lobby_context,
+            read_character_list=args.read_character_list,
             _progress=lambda stage: print(json.dumps(dict(event='phase', stage=stage)), file=sys.stderr, flush=True))
         password = None
         print(json.dumps(result))

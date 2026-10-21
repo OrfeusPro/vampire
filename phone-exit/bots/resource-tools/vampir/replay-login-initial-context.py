@@ -72,10 +72,11 @@ class Replay(base.Replay):
         return result
 
 
-def build():
+def build(*, source_snapshot=None):
     path = native.ROOT / 'code-clues/login-policy-inputs-replay.json'
     prior = json.loads(path.read_text('utf-8'))
-    raw = Path(prior['source']).read_bytes()
+    source = Path(prior['source']) if source_snapshot is None else Path(source_snapshot)
+    raw = source.read_bytes()
     if hashlib.sha256(raw).hexdigest() != prior['source_sha256']: raise ValueError('Client changed')
     image = native.Image(raw)
     fields_path = native.ROOT / 'code-clues/login-packet-fields-replay.json'
@@ -99,7 +100,7 @@ def build():
             raise ValueError('Initial Login context differs from native construction/reset')
         if (p['strings']['0x10'], p['strings']['0x20']) != ('lobby-first-fixture', 'lobby-second-fixture'):
             raise ValueError('Lobby fields lost')
-    return dict(source=prior['source'], source_sha256=prior['source_sha256'],
+    return dict(source=str(source), source_sha256=prior['source_sha256'],
         tool_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         upstream_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
         fields_sha256=hashlib.sha256(fields_path.read_bytes()).hexdigest(), fragments=fragments,

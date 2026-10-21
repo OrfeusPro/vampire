@@ -40,7 +40,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         prepare = Mock(return_value=version)
         target_module = SimpleNamespace(choose_target=lambda *args, **kwargs:
                 SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001))
-        modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14')),
+        modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14', compiled_tag=version.strings[9])),
             SimpleNamespace(run=lobby), target_module, target_module,
             SimpleNamespace(observe_inputs=lambda: ('cpu', 'windows')),
             SimpleNamespace(prepare_version=prepare)]
@@ -51,7 +51,7 @@ class SelectedGameLoginTests(unittest.TestCase):
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
-                lobby_context='sdk-with-partial-metadata', **self.kwargs())
+                lobby_context='sdk-with-partial-metadata', read_character_list=True, **self.kwargs())
         packet = exchange.call_args.args[2]
         self.assertIsNone(prepare.call_args.kwargs['local_address'])
         connection.getsockname.assert_not_called()
@@ -60,6 +60,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         self.assertEqual(packet.strings[:2], ('lobby-first-fixture', 'lobby-second-fixture'))
         self.assertEqual(packet.integers[:2], (123, 42))
         self.assertEqual(packet.raw_bytes, (3,3,1,0,0))
+        self.assertTrue(exchange.call_args.kwargs['read_character_list'])
         self.assertEqual(packet.strings[11],'{"I_PID":"current-player-fixture"}')
         self.assertEqual(result['login_language_code'],1)
         connection.close.assert_called_once()

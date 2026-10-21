@@ -4,6 +4,9 @@
 def describe_game_login_error(code):
     if type(code) is not int or not 0 <= code <= 0xffffffff:
         raise ValueError('Expected raw uint32 game result code')
+    # Current mapper 0x145814800, complete native call; HEADLESS-RELEASE-WIRE-TAG.md.
+    if code == 1:
+        return ('InvalidPacketVersion', 'Несовместимая версия игровых пакетов.')
     # ResultError_Text 0x1458091b0, native case 58 -> literal 0x1498ff2b0.
     # HEADLESS-RESULT-ERROR-58.md; this does not identify why an IP is blocked.
     if code == 58:

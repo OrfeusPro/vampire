@@ -113,7 +113,8 @@ def prepare_registered_login(version, login, *, binding, sdk_data, netmarble_id)
 
 
 def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_id,
-        lobby_result, server_id, extra_number, context, language_code=None, nid_metadata=''):
+        lobby_result, server_id, extra_number, context, language_code=None, nid_metadata='',
+        compiled_tag='AC7F34E3AFA91ED417BE86CD45BF18C8'):
     """Windows SDK template with optional explicit language/metadata context.
 
     Sources: LOGIN-INITIAL-CONTEXT, LOGIN-POLICY-INPUTS and LOGIN-PACKET-FIELDS.
@@ -128,7 +129,8 @@ def prepare_initial_windows_game_login(version, *, binding, sdk_data, netmarble_
         raise ValueError('Explicit initial/reset Windows SDK context required')
     if (not isinstance(version, VersionPayload) or not version.strings[0] or
             not version.strings[1].startswith('Windows_') or
-            version.strings[9] != 'AC7F34E3AFA91ED417BE86CD45BF18C8' or
+            type(compiled_tag) is not str or len(compiled_tag) != 32 or
+            any(c not in '0123456789ABCDEF' for c in compiled_tag) or version.strings[9] != compiled_tag or
             version.integers != (0, 207, 1)):
         raise ValueError('Expected prepared source-supported Windows Version')
     if type(server_id) is not int or not 1 <= server_id <= 0xffffffff:

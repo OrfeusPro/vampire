@@ -19,6 +19,12 @@ PROFILES = {
     'recovered-release': ('c67314cea3e6d3f28f98073a6f6346b1fa0233143feb6e18e7e0914a152f4c7d',
         '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'),
 }
+# Source-bound pointer/literal offsets; HEADLESS-RELEASE-WIRE-TAG.md.
+WIRE_TAGS = {
+    SOURCE_SHA: (185899560, '30ec904901000000', 160487472, 'AC7F34E3AFA91ED417BE86CD45BF18C8'),
+    '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e':
+        (186362008, '401f964901000000', 160827200, '32283C4C6485307BCF524765A84409C3'),
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,12 +34,24 @@ class BaseGameProfile:
     cdn_url: str
     source_snapshot_sha256: str
     active_game_cache_verified: bool = False
+    compiled_tag: str = ''
 
 
 def verify_file(path, expected):
     with Path(path).open('rb') as stream:
         digest = hashlib.file_digest(stream, 'sha256').hexdigest()
     if digest != expected: raise ValueError('Game profile source changed; refresh extracted evidence')
+
+
+def verify_compiled_tag(path, source_sha):
+    if source_sha not in WIRE_TAGS: raise ValueError('No verified compiled tag for this source')
+    pointer_offset, pointer_bytes, literal_offset, tag = WIRE_TAGS[source_sha]
+    with Path(path).open('rb') as stream:
+        stream.seek(pointer_offset)
+        if stream.read(8) != bytes.fromhex(pointer_bytes): raise ValueError('Compiled tag source pointer changed')
+        stream.seek(literal_offset)
+        if stream.read(33) != (tag + '\0').encode('ascii'): raise ValueError('Compiled tag source literal changed')
+    return tag
 
 
 def load_profile(*, selected_profile, root=ROOT):
@@ -45,6 +63,7 @@ def load_profile(*, selected_profile, root=ROOT):
     manifest = json.loads(path.read_text('utf-8'))
     if manifest['exe_sha256'] != source_sha: raise ValueError('Unsupported game client source')
     verify_file(manifest['source_exe'], source_sha)
+    compiled_tag = verify_compiled_tag(manifest['source_exe'], source_sha)
     verify_file(manifest['source_archive']['path'], manifest['archive_sha256'])
     config = next(config for config in manifest['configs'] if config['snapshot_file'] == 'DefaultGame.ini')
     ini = path.parent / 'DefaultGame.ini'
@@ -62,7 +81,7 @@ def load_profile(*, selected_profile, root=ROOT):
     if values['CdnConfig'] != 'True': raise ValueError('Explicit base profile has no CDN config')
     url = prepare_cdn_config_url_ascii(normal=values['CdnConfigUrl'], qa=values['CdnConfigUrlQA'],
         prefix=values['ConfigPrefix'], app_version=values['AppVersion'], platform_code=2)
-    return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, snapshot)
+    return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, snapshot, compiled_tag=compiled_tag)
 
 
 def bind_profile(version, login, *, selected_profile, root=ROOT):

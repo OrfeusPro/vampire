@@ -41,7 +41,17 @@ def main():
         if raw[off:off + len(data)] != data:
             raise ValueError('Ghidra literal bytes changed')
         targets[address] = item
-    instructions = [row for function in evidence.get('functions', []) for row in function.get('instructions', [])]
+    # Comparison exports contain both releases: follow only the reviewed new side.
+    functions = list(evidence.get('functions', [])) + [pair['new'] for pair in evidence.get('pairs', [])]
+    instructions = []
+    for function in functions:
+        for original in function.get('instructions', []):
+            row = dict(original, references=original.get('references', original.get('flows', [])))
+            data = bytes.fromhex(row['bytes'])
+            off = image.offset(int(row['address'], 16) - image.pe.base)
+            if raw[off:off + len(data)] != data:
+                raise ValueError('Ghidra instruction bytes differ from current source')
+            instructions.append(row)
     known_references = {int(ref, 16) for row in instructions for ref in row.get('references', [])}
     for value in args.global_address:
         address = int(value, 16)

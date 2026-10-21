@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import hashlib
 from pathlib import Path
 import sys
 import unittest
@@ -16,7 +17,10 @@ class ResultErrorTextTests(unittest.TestCase):
         tool = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(tool)
         report = json.loads((tool.mapper.native.ROOT / 'code-clues/result-error-16-replay.json').read_text('utf-8'))
-        self.assertEqual(tool.build(), report)
+        snapshot = tool.mapper.native.ROOT / 'client-code-snapshots' / report['source_sha256'] / 'ProjectRED-Win64-Shipping.exe'
+        expected = dict(report, source=str(snapshot), tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+            mapper_tool_sha256=hashlib.sha256((path.parent / 'replay-result-error-text.py').read_bytes()).hexdigest())
+        self.assertEqual(tool.build(source_snapshot=snapshot), expected)
         cases = {c['code']: c for c in report['cases']}
         self.assertEqual(cases[16]['key'], 'InvalidState')
         self.assertEqual(cases[58]['key'], 'BlockedIp')
@@ -29,7 +33,9 @@ class ResultErrorTextTests(unittest.TestCase):
         tool = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(tool)
         report = json.loads((tool.native.ROOT / 'code-clues/result-error-text-replay.json').read_text('utf-8'))
-        self.assertEqual(tool.build(), report)
+        snapshot = tool.native.ROOT / 'client-code-snapshots' / report['source_sha256'] / 'ProjectRED-Win64-Shipping.exe'
+        expected = dict(report, source=str(snapshot), tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+        self.assertEqual(tool.build(source_snapshot=snapshot), expected)
         cases = {case['code']: case for case in report['cases']}
         self.assertEqual(cases[58]['key'], 'BlockedIp')
         self.assertEqual(cases[57]['key'], 'NotExistCharacter')
@@ -41,6 +47,7 @@ class ResultErrorTextTests(unittest.TestCase):
     def test_runtime_labels_only_verified_code_and_never_decides_remedy(self):
         self.assertEqual(describe_game_login_error(58), ('BlockedIp', 'Доступ с этого IP ограничен сервером.'))
         self.assertEqual(describe_game_login_error(16), ('InvalidState', 'Недопустимое состояние при входе.'))
-        for code in (0, 1, 57, 59, 12345, 0xffffffff): self.assertIsNone(describe_game_login_error(code))
+        self.assertEqual(describe_game_login_error(1), ('InvalidPacketVersion', 'Несовместимая версия игровых пакетов.'))
+        for code in (0, 57, 59, 12345, 0xffffffff): self.assertIsNone(describe_game_login_error(code))
         for invalid in (True, -1, 0x100000000, '58'):
             with self.assertRaises(ValueError): describe_game_login_error(invalid)

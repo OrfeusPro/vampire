@@ -95,7 +95,9 @@ public class InspectVampirSdkProfile extends GhidraScript {
             println("Inspecting SDK literal owner " + owner.getEntryPoint());
             JsonObject row = new JsonObject(); row.addProperty("address", "0x" + owner.getEntryPoint());
             row.addProperty("body_bytes", owner.getBody().getNumAddresses());
-            if (owner.getBody().getNumAddresses() > 20000) {
+            // The result-code mapper reached from a selected popup is about 42 KiB.
+            // Keep a finite budget for these explicitly referenced functions.
+            if (owner.getBody().getNumAddresses() > (args.length >= 4 ? 65536 : 20000)) {
                 row.addProperty("skipped", "body_budget"); functions.add(row); continue;
             }
             JsonArray instructions = new JsonArray();

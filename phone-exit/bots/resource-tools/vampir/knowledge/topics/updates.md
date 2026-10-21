@@ -52,3 +52,4 @@ Windows / Android parity и перенос старых mappings требуют 
 - [ClientVersion из manifestlist до числа игрового Login](../evidence/updates/HEADLESS-PATCH-CLIENT-VERSION.md)
 - [Публичная CDN-конфигурация получена и разобрана](../evidence/updates/HEADLESS-PUBLIC-CDN.md)
 - [Реальный публичный GMC2 response и SDK constants](../evidence/updates/HEADLESS-PUBLIC-GMC2.md)
+- [Новый compiled tag Version / Login и код 1](../evidence/updates/HEADLESS-RELEASE-WIRE-TAG.md)

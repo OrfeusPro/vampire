@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import hashlib
 from pathlib import Path
 import sys
 import unittest
@@ -31,7 +32,10 @@ class InitialGameLoginTests(unittest.TestCase):
         tool = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(tool)
         report = json.loads((tool.native.ROOT / 'code-clues/login-initial-context-replay.json').read_text('utf-8'))
-        self.assertEqual(tool.build(), report)
+        snapshot = tool.native.ROOT / 'client-code-snapshots' / report['source_sha256'] / 'ProjectRED-Win64-Shipping.exe'
+        # Historical addresses must execute against the pinned historical bytes after an installed update.
+        expected = dict(report, source=str(snapshot), tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+        self.assertEqual(tool.build(source_snapshot=snapshot), expected)
         self.assertEqual(report['reset_slot']['target'], '0x14556a750')
         self.assertEqual(report['reset_slot']['offset'], 8)
         version, kwargs = self.inputs()

@@ -26,15 +26,17 @@ def module(name, filename):
     return value
 
 
-def prepare_version(*, app_version, nm_device_key, local_address, cpu, windows_version):
+def prepare_version(*, app_version, nm_device_key, local_address, cpu, windows_version, compiled_tag=COMPILED_TAG):
     # None is explicit unavailable endpoint context, matching the native
     # getsockname failure -> empty callback -> Version +58 path.
     address = '' if local_address is None else str(ipaddress.IPv4Address(local_address))
     if type(nm_device_key) is not str or not nm_device_key: raise ValueError('Observed NM device key required')
     if type(app_version) is not str or not app_version: raise ValueError('Explicit AppVersion required')
+    if type(compiled_tag) is not str or len(compiled_tag) != 32 or any(c not in '0123456789ABCDEF' for c in compiled_tag):
+        raise ValueError('Expected explicit compiled tag from the selected source profile')
     # Covered normal Windows connected path: ctor zeros, callback assignments,
     # compiled tag pointer / raw DWORD1, raw DWORD207; see source evidence.
-    payload = VersionPayload((app_version, '', '', nm_device_key, address, '', '', '', '', COMPILED_TAG), (0, 207, 1))
+    payload = VersionPayload((app_version, '', '', nm_device_key, address, '', '', '', '', compiled_tag), (0, 207, 1))
     return bind_windows_version_inputs(payload, cpu=cpu, windows_version=windows_version)
 
 
@@ -59,7 +61,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, diagnostic_cdn_lo
     connection = route.connect(*endpoint, timeout=10)
     try:
         payload = prepare_version(app_version=profile.app_version, nm_device_key=binding.nm_device_key,
-            local_address=socks_game_address_context(connection).address, cpu=cpu, windows_version=version)
+            local_address=socks_game_address_context(connection).address, cpu=cpu, windows_version=version, compiled_tag=profile.compiled_tag)
         result = exchange_version(connection, payload, timeout=10)
         result.update(target_role='cdn_lobby', game_endpoint_verified=False)
         return result
@@ -70,7 +72,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, diagnostic_cdn_lo
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--profile', choices=['recovered-base'], required=True)
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--socks-port', type=int, required=True)
     parser.add_argument('--diagnostic-cdn-lobby', action='store_true', required=True,
