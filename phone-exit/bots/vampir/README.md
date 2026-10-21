@@ -34,9 +34,12 @@ ID 203 сверён с native writer; префикс ID 202 проверен в 
 [Проверки и границы продолжения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#продолжение-до-id-204-локальные-и-native-проверки-22-октября).
 Запрос ID 205 и проверка его состояния в текущей сборке исполнены в 48 сценариях: состояния
 2 / 3 / 4 и флаг +0xc1 определяют разрешение отправки. Тело запроса пустое.
-Применение вектора к персонажу и источник этих состояний остаются неизвестны;
+Найден путь через состояние 4 и streaming actor, а в ID 206 — создание / обновление
+NnCharacterPC по серверному вектору. Native callback / позиционный wrapper проверены
+в 8 / 36 сценариях. Полный decoder ID 206 на новом SHA ещё не сверен;
 runtime по-прежнему останавливается после ID 204.
 [Условия ID 205 и границы проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md#id-205-текущая-проверка-состояния-и-запрос-22-октября).
+[Завершение загрузки и путь позиции](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-RELEASE-WORLD-FINISH-POSITION.md).
 
 
 

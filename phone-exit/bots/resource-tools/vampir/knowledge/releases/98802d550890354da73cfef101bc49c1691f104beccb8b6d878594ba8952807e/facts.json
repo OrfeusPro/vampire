@@ -1184,6 +1184,347 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Источник разрешённых состояний 2 / 3 / 4, callback завершения, актуальный ID 206 и семантический consumer позиции."
+    },
+    {
+      "addresses": [
+        "0x145d99710"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b893029383effc6b71529534c7bffd8232a7128e82eb99a890b1a1e4c03d9e1b",
+          "id": "release-world-position-path",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54\\manifest.json",
+          "sha256": "25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый current callback исполнен в 8 сценариях: без объекта мира вызывает service finish slot, с миром передаёт service+0x60 в bridge, который запрашивает состояние 4. В ветви без найденного streaming actor finish не вызывается.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-position-path-replay\\5f9817d51d4d2c3bcf28409257d340d6e17b3c8089e7dada0ea5bb5648534284\\manifest.json",
+          "sha256": "5f9817d51d4d2c3bcf28409257d340d6e17b3c8089e7dada0ea5bb5648534284"
+        }
+      ],
+      "id": "9223b99a4e9528bb32c0932e484a4abffd236ef4bd5af3fff4ae9949885022ac",
+      "limits": [
+        "Только текущий SHA, offline exports / synthetic fixtures; без авторизации и сетевых действий.",
+        "Callback и bridge проверены только с отсутствующим streaming actor; world/class lookup, state setter и finish slot — fixtures.",
+        "Actor position wrapper проверен до component virtual capture; current ID 206 receiver / handler / actor spawn / correction не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить whole ID 206 с heading reader 0x1458233c0 и callbacks четырёх массивов, затем подключить явный headless переход до ID 206.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная nested совместимость ID 206, headless политика завершения, коррекция координат и готовность длительной сессии."
+    },
+    {
+      "addresses": [
+        "0x14561f540",
+        "0x1458503f0",
+        "0x1467cbae0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b893029383effc6b71529534c7bffd8232a7128e82eb99a890b1a1e4c03d9e1b",
+          "id": "release-world-position-path",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54\\manifest.json",
+          "sha256": "25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Bridge 0x14561f540 запрашивает состояние 4 и ищет streaming actor; current внешний reader ID 206 имеет наблюдаемую группировку прежнего portable decoder, но nested совместимость не доказана. Current handler ID 206 вызывает receiver 0x145dade30 после фильтра. Это статические связи, не исполненная полная цепочка ID 206.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-a74c5869b659\\details.json",
+          "sha256": "4615a07bcfe85b5213cd0ecbaeffb4f7245cd48376fe5851c6a900add93f5bda"
+        }
+      ],
+      "id": "0c2aa7e9a845c358d9ebb13f6f0426eb28f63fc4f985b495ea80d8dfc75e210f",
+      "limits": [
+        "Только текущий SHA, offline exports / synthetic fixtures; без авторизации и сетевых действий.",
+        "Callback и bridge проверены только с отсутствующим streaming actor; world/class lookup, state setter и finish slot — fixtures.",
+        "Actor position wrapper проверен до component virtual capture; current ID 206 receiver / handler / actor spawn / correction не исполнены."
+      ],
+      "method": "static",
+      "next_check": "Проверить whole ID 206 с heading reader 0x1458233c0 и callbacks четырёх массивов, затем подключить явный headless переход до ID 206.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная nested совместимость ID 206, headless политика завершения, коррекция координат и готовность длительной сессии."
+    },
+    {
+      "addresses": [
+        "0x14555ada0",
+        "0x14556aa30",
+        "0x145dade30"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b893029383effc6b71529534c7bffd8232a7128e82eb99a890b1a1e4c03d9e1b",
+          "id": "release-world-position-path",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54\\manifest.json",
+          "sha256": "25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Класс bridge — NnWaitingForWorldPartitionStreamingActor, не персонаж. Receiver ID 206 использует packet+0x30 как целевой вектор для создания / обновления actor, найденного по player+8; до применения есть нормализация и преобразование. Окончательное положение без проверки этих ветвей не установлено.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-48179cd50ecb\\details.json",
+          "sha256": "9b729c73f195ebb0401cf0bb98f53ccd57b41e78ec281c6e6b61d21a27260b5e"
+        }
+      ],
+      "id": "822746933ff8ae230e718540f2ae278bbcede1e9a3023ec265f92d387fcd73ce",
+      "limits": [
+        "Только текущий SHA, offline exports / synthetic fixtures; без авторизации и сетевых действий.",
+        "Callback и bridge проверены только с отсутствующим streaming actor; world/class lookup, state setter и finish slot — fixtures.",
+        "Actor position wrapper проверен до component virtual capture; current ID 206 receiver / handler / actor spawn / correction не исполнены."
+      ],
+      "method": "static",
+      "next_check": "Проверить whole ID 206 с heading reader 0x1458233c0 и callbacks четырёх массивов, затем подключить явный headless переход до ID 206.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная nested совместимость ID 206, headless политика завершения, коррекция координат и готовность длительной сессии."
+    },
+    {
+      "addresses": [
+        "0x1438228b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b893029383effc6b71529534c7bffd8232a7128e82eb99a890b1a1e4c03d9e1b",
+          "id": "release-world-position-path",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54\\manifest.json",
+          "sha256": "25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый actor position wrapper 0x1438228b0 исполнен в 36 сценариях с синтетическим actor/component: на virtual component+0x548 передаёт target минус current, rotation block, sweep и teleport; возврат компонента сохраняется. Реальное движение заменено capture fixture.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-position-path-replay\\5f9817d51d4d2c3bcf28409257d340d6e17b3c8089e7dada0ea5bb5648534284\\manifest.json",
+          "sha256": "5f9817d51d4d2c3bcf28409257d340d6e17b3c8089e7dada0ea5bb5648534284"
+        }
+      ],
+      "id": "260ca5f3c8817c726f0981c8990c9d4708618fb196e6eae2558e5df4ff8649b6",
+      "limits": [
+        "Только текущий SHA, offline exports / synthetic fixtures; без авторизации и сетевых действий.",
+        "Callback и bridge проверены только с отсутствующим streaming actor; world/class lookup, state setter и finish slot — fixtures.",
+        "Actor position wrapper проверен до component virtual capture; current ID 206 receiver / handler / actor spawn / correction не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить whole ID 206 с heading reader 0x1458233c0 и callbacks четырёх массивов, затем подключить явный headless переход до ID 206.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная nested совместимость ID 206, headless политика завершения, коррекция координат и готовность длительной сессии."
+    },
+    {
+      "addresses": [
+        "0x1454d2540",
+        "0x1457846f0",
+        "0x1458212d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9bcd533a8b698d68faec61f6eb741ee7fec4be5c10da1c56041451e321970a7f",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95\\manifest.json",
+          "sha256": "49cc35ce2823047035c15dda5d94fff9a7f161dd1c2e0397a384227f72e76f95",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b893029383effc6b71529534c7bffd8232a7128e82eb99a890b1a1e4c03d9e1b",
+          "id": "release-world-position-path",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54\\manifest.json",
+          "sha256": "25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Class guard actor lookup статически связан с literal NnCharacterPC. Два nested constructor ID 206 исполнены: heading table 0x1499237a0 → reader 0x1458233c0, appearance table 0x149921fb0 → reader 0x145788d00. Getter ID 206 отдельно вернул 206; целый constructor / reader ответа не исполнялись.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\world-position-path-replay\\5f9817d51d4d2c3bcf28409257d340d6e17b3c8089e7dada0ea5bb5648534284\\manifest.json",
+          "sha256": "5f9817d51d4d2c3bcf28409257d340d6e17b3c8089e7dada0ea5bb5648534284"
+        }
+      ],
+      "id": "4e9eff3fa18a8000c269c029c22a001127d8d33ed57c1a656c08c03cfe3fb452",
+      "limits": [
+        "Только текущий SHA, offline exports / synthetic fixtures; без авторизации и сетевых действий.",
+        "Callback и bridge проверены только с отсутствующим streaming actor; world/class lookup, state setter и finish slot — fixtures.",
+        "Actor position wrapper проверен до component virtual capture; current ID 206 receiver / handler / actor spawn / correction не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить whole ID 206 с heading reader 0x1458233c0 и callbacks четырёх массивов, затем подключить явный headless переход до ID 206.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная nested совместимость ID 206, headless политика завершения, коррекция координат и готовность длительной сессии."
     }
   ],
   "schema": 1,
