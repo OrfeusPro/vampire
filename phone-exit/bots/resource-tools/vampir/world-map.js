@@ -15,6 +15,54 @@ let areaTaskIndex = new Map(), spotTaskIndex = new Map();
 let liftPreview = null, selectedLift = null;
 let navOverlay=null, navOverlayPending=null;
 let selectedNavSpecial=null;
+let sessionSnapshot=null,sessionTimer=null,sessionAbort=null,sessionEpoch=0;
+
+function sessionMessage(text){$('sessionStatus').textContent=text;}
+async function pollSession(epoch){
+  if(epoch!==sessionEpoch||!$('sessionLayer').checked||document.hidden)return;
+  sessionAbort=new AbortController();const abort=sessionAbort;
+  const timeout=setTimeout(()=>abort.abort(),2000);
+  try{
+    const response=await fetch('http://127.0.0.1:17947/state',{cache:'no-store',signal:abort.signal});
+    if(!response.ok)throw Error('HTTP '+response.status);
+    const text=await response.text();if(text.length>4096)throw Error('Слишком большой ответ');
+    const snapshot=MapSessionModel.validate(JSON.parse(text));
+    if(epoch!==sessionEpoch)return;
+    sessionSnapshot=snapshot;
+    const p=snapshot.position;
+    const labels={waiting:'Ожидание позиции',disconnected:'Сессия отключена',unsupported_world:'Для этого мира нет проверенной карты'};
+    sessionMessage(p?'Серверная цель входа · мир '+p.world_id+' · высота '+Math.round(p.z)
+      +(Date.now()-snapshot.updated_at_ms>5000?' · снимок позиции устарел':'')
+      +(!p.inside?' · за границами атласа':''):labels[snapshot.state]);
+    $('sessionFocus').disabled=!p||!p.inside||!worldById.has(String(p.world_id));
+  }catch(error){
+    if(epoch!==sessionEpoch)return;
+    sessionSnapshot=null;$('sessionFocus').disabled=true;sessionMessage('Нет соединения с ботом');
+  }finally{
+    clearTimeout(timeout);if(sessionAbort===abort)sessionAbort=null;
+    if(epoch===sessionEpoch){schedule();sessionTimer=setTimeout(()=>pollSession(epoch),1000);}
+  }
+}
+function resetSessionPolling(){
+  ++sessionEpoch;clearTimeout(sessionTimer);sessionAbort?.abort();sessionSnapshot=null;
+  $('sessionFocus').disabled=true;schedule();
+  if($('sessionLayer').checked&&!document.hidden)pollSession(sessionEpoch);
+  else sessionMessage($('sessionLayer').checked?'Вывод приостановлен в скрытой вкладке':'Вывод сессии выключен');
+}
+$('sessionLayer').onchange=resetSessionPolling;
+document.addEventListener('visibilitychange',resetSessionPolling);
+$('sessionFocus').onclick=()=>{
+  const p=sessionSnapshot?.position;if(!p||!p.inside||!worldById.has(String(p.world_id)))return;
+  $('worlds').value=String(p.world_id);update();view={x:p.x,y:p.y,s:.008};schedule();
+};
+function drawSession(){
+  if(!$('sessionLayer').checked)return;
+  const p=MapSessionModel.marker(sessionSnapshot,$('worlds').value,Date.now());if(!p)return;
+  const [x,y]=pointScreen(p);ctx.save();ctx.strokeStyle=p.stale?'#b3bdc9':'#ffffff';
+  ctx.fillStyle='#42e9bb';ctx.lineWidth=3;
+  ctx.beginPath();ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#ffffff';ctx.font='bold 13px system-ui';ctx.fillText('Персонаж · цель входа',x+15,y-12);ctx.restore();
+}
 
 function fail(error) { $('error').textContent = 'Не удалось загрузить данные: ' + error.message; }
 async function json(url, hash) {
@@ -335,7 +383,7 @@ function draw() {
     ctx.fillStyle='#151718ed';ctx.fillRect(box.x,box.y,box.width,box.height);
     ctx.fillStyle='#ffe7b5';ctx.fillText(byKey.get(box.key).text,box.x+6,box.y+15);
   }
-  drawRelation(); drawLiftPreview(); drawSpecialNavigation();
+  drawRelation(); drawLiftPreview(); drawSpecialNavigation(); drawSession();
   $('viewScale').textContent = 'Масштаб ' + Math.round(view.s / (dimensions.height / 615000) * 100) + '% · ' + groups.length + ' отметок в окне'+($('labels').checked?' · названий '+placed.length+' из '+candidates.length:'');
 }
 function focus(p) {

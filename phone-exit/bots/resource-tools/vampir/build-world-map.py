@@ -298,7 +298,7 @@ def main(root=ROOT):
     (out / 'nocturne-manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), 'utf-8')
     # Preserve the previous per-world viewer, with all the existing links intact.
     (out / 'world.html').write_text((HERE / 'map-atlas.html').read_text('utf-8'), 'utf-8')
-    for source, target in [('world-map.html', 'index.html'), ('world-map.js', 'world-map.js'), ('world-map-model.js', 'world-map-model.js'),('nav-overlay-model.js','nav-overlay-model.js')]:
+    for source, target in [('world-map.html', 'index.html'), ('world-map.js', 'world-map.js'), ('world-map-model.js', 'world-map-model.js'),('nav-overlay-model.js','nav-overlay-model.js'),('map-session-model.js','map-session-model.js')]:
         path = HERE / source
         if path.is_file():
             (out / target).write_text(path.read_text('utf-8'), 'utf-8')

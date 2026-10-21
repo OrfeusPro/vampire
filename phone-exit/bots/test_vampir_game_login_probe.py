@@ -15,7 +15,7 @@ from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -77,7 +77,7 @@ class GameLoginProbeTests(unittest.TestCase):
         with patch('vampir_core.game_login_probe.time.time_ns', side_effect=lambda:1792600142863000000+(6001000000 if clock_advanced[0] else 0)):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
                 read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index,
-                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, source_sha256=SOURCE_SHA256 if read_world_start else None)
+                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, source_sha256=SOURCE_SHA256 if read_world_start else None)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -129,6 +129,17 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertTrue(result['world_observation_completed'])
         self.assertTrue(result['server_target_position_received'])
         self.assertFalse(result['game_session_ready'])
+
+    def test_map_observer_receives_position_then_cleanup_without_public_coordinates(self):
+        events=[]
+        result,_=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',0,10011,2,3,4,0,0,77),
+            read_world_finish=True,world_finish_body=finish_body(),world_observer=events.append)
+        self.assertEqual(len(events),2)
+        self.assertEqual(events[0].world_id,10011)
+        self.assertEqual(events[0].vector.finite_values(),(1.5,-2.25,-0.0))
+        self.assertIsNone(events[1])
+        self.assertNotIn('target_position',result)
 
     def test_world_finish_refusal_and_timeout(self):
         for body in (finish_body(16),None):

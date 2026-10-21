@@ -13,10 +13,12 @@ from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
                         character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False,
-                        observe_world_seconds=0):
+                        observe_world_seconds=0,world_observer=None):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
+    if world_observer is not None and (not callable(world_observer) or not read_world_finish):
+        raise ValueError('World observer requires explicit completion')
     if character_index is not None and (type(character_index) is not int or not 0 <= character_index <= 65535
                                         or not read_character_list):
         raise ValueError('Character index requires an explicit list operation and uint16 index')
@@ -162,6 +164,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     world.tick(time.monotonic())
                     if world.state=='start_response':return result('world_start_result')
                     if world.state=='finish_response':
+                        if observation_until is None and world_observer is not None:
+                            world_observer(world.target_position)
                         if not observe_world_seconds:return result('world_finish_result')
                         if observation_until is None:
                             observation_until=time.monotonic()+observe_world_seconds
@@ -181,3 +185,4 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             'world_observation_complete' if observation_until is not None and time.monotonic()>=observation_until else 'timeout')
     finally:
         owner.close()
+        if world_observer is not None:world_observer(None)

@@ -29,4 +29,5 @@ offline фильтры и параметры как наблюдённые на�
 Это источники и история проверок; наличие документа не означает завершённую live-функцию.
 
 - [Текущая проекция серверной позиции на атлас](../evidence/maps/HEADLESS-MAP-POSITION.md)
+- [Слой сессии бота в существующем атласе](../evidence/maps/HEADLESS-MAP-SESSION.md)
 - [Атлас Vampir](../evidence/maps/MAP-ATLAS.md)

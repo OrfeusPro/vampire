@@ -2252,6 +2252,46 @@
       "question": "map-live-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Read-only UI маркер и передача свежей живой позиции, текстуры, проходимость и движение."
+    },
+    {
+      "addresses": [
+        "0x145dade30"
+      ],
+      "checks": [
+        {
+          "cache_key": "daa7a7abc03dbc4533ba3ba25576fdeae1bba880cd0a2d9cc9172d35b85549e4",
+          "id": "release-map-projection",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97b8dafc7e8fab3d7647d4a5f1e0df16840d8222b32f9ae1d926f520c84b37e2\\manifest.json",
+          "sha256": "97b8dafc7e8fab3d7647d4a5f1e0df16840d8222b32f9ae1d926f520c84b37e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "71e0e4eae5ea92637b64298cd0d3d54242c976fa2d81eeb69be47cc247891729",
+          "id": "map-session-feed",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c5742a6f9ca88d1aaf7e6d3bf518a4ef76c8bc3e1d844e34a84bbd00c07ea6a8\\manifest.json",
+          "sha256": "c5742a6f9ca88d1aaf7e6d3bf518a4ef76c8bc3e1d844e34a84bbd00c07ea6a8",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Готовая current серверная цель ID 206 подключена через наблюдатель и MapProjection к read-only loopback feed и существующему атласу. В live JP UI показан маркер мира 10010 / Blood Pool, кнопка центрирует нужный мир, вывод отключается без изменения сетевой сессии. Проверка 120 секунд прошла: 24 периодических Ping / 25 ID 17 без ошибок; после close маркер очищен и endpoint / маршрут закрыты.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\maps\\HEADLESS-MAP-SESSION.md",
+          "sha256": "ad52f5ec648b7ed40b465f6604c615bff1d3aabb7bfa6d22c30df7b89e18ea94"
+        }
+      ],
+      "id": "de6c3d750dcf653b14deaa34521a6950e3f7681e46f4215a3306728ec3d12bca",
+      "limits": [
+        "Это снимок цели входа до engine correction, не непрерывное положение или движение.",
+        "Feed работает в памяти и не содержит авторизации; loopback не изолирует от других локальных процессов.",
+        "UI использует существующий атлас; совпадение проекции не доказывает texture freshness / проходимость.",
+        "Нет команд движения, квестов, живых сущностей или автоматического reconnect."
+      ],
+      "method": "static",
+      "next_check": "Разобрать current серверные события положения и активных сущностей, обновлять модель сессии с проверяемыми границами.",
+      "question": "map-live-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Последующие серверные события движения / сущностей, квестовое состояние, навигация и reconnect."
     }
   ],
   "schema": 1,
