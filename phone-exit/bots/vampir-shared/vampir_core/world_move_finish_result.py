@@ -2,8 +2,11 @@
 from dataclasses import dataclass,field
 import struct
 
-from .character_select_result import SelectionRecord,WireVector3,WireHeading,SOURCE_SHA256
+from .character_select_result import SelectionRecord,WireVector3,WireHeading
 from .login_result import _text
+
+# Current whole-reader and nested collection evidence: HEADLESS-RELEASE-WORLD-FINISH-POSITION.md.
+SOURCE_SHA256='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 
 
 @dataclass(frozen=True,slots=True)

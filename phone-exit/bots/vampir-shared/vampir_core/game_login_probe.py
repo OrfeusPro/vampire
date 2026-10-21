@@ -12,7 +12,7 @@ from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256
 
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
-                        character_index=None, read_world_start=False, source_sha256=None):
+                        character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
@@ -24,6 +24,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     if type(read_world_start) is not bool or (read_world_start and
             (character_index is None or source_sha256 != WORLD_SOURCE_SHA256)):
         raise ValueError('World start requires explicit character selection and current source')
+    if type(read_world_finish) is not bool or (read_world_finish and not read_world_start):
+        raise ValueError('World finish requires explicit world start')
     unknown = []  # Bounded first-packet sample, not a processing limit.
     packet_counts = {}
     other_packet_count = 0
@@ -41,7 +43,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         selection_limits=SelectionLimits(1048576, 64, 4096, timeout),
         max_queued_bytes=65536, max_queued_frames=8, on_packet=observe)
     if read_world_start:
-        owner.enable_world_start(source_sha256=source_sha256,timeout=timeout,max_payload_size=1048576)
+        owner.enable_world_start(source_sha256=source_sha256,timeout=timeout,max_payload_size=1048576,
+            complete_world=read_world_finish,max_collection_items=4096)
     sent = received = 0
     counts_complete = True
     flow = None
@@ -94,6 +97,13 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 world_start_queued=world.request_sent,
                 world_start_received=world.start_result_code is not None,
                 world_start_result_code=world.start_result_code)
+            if read_world_finish:
+                value.update(world_finish_queued=world.finish_sent,
+                    world_finish_received=world.finish_result_code is not None,
+                    world_finish_result_code=world.finish_result_code,
+                    server_target_position_received=world.target_position is not None,
+                    position_semantics='server_target_before_engine_correction',
+                    headless_completion_policy='acknowledge_successful_start_without_3d')
         return value
     try:
         started = time.monotonic()
@@ -136,6 +146,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     world=owner.world_entry
                     world.tick(time.monotonic())
                     if world.state=='start_response':return result('world_start_result')
+                    if world.state=='finish_response':return result('world_finish_result')
                     if world.error:return result('world_start_failed')
                     if world.deadline is not None: deadline=world.deadline
             if owner.active:

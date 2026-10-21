@@ -129,12 +129,14 @@ class GameConnection:
         if not self.active: raise RuntimeError('Connection is inactive')
         self._selection.select(index, now=now)
 
-    def enable_world_start(self, *, source_sha256, timeout, max_payload_size):
+    def enable_world_start(self, *, source_sha256, timeout, max_payload_size,
+                           complete_world=False,max_collection_items=4096):
         if not self.active or self._world_entry is not None:
             raise RuntimeError('World entry cannot be enabled')
         from .world_entry_flow import WorldEntryFlow
         self._world_entry=WorldEntryFlow(self._selection,self._outbound,
-            source_sha256=source_sha256,timeout=timeout,max_payload_size=max_payload_size)
+            source_sha256=source_sha256,timeout=timeout,max_payload_size=max_payload_size,
+            complete_world=complete_world,max_collection_items=max_collection_items)
 
     def queue_ping(self, payload: PingPayload):
         """Explicit payload from the owner; no guessed heartbeat schedule."""
@@ -186,7 +188,8 @@ class GameConnection:
                         self._selection.receive(packet.packet_id, packet.body, now=now)
                         if self._selection.state == SelectionState.FAILED:
                             self._fail('selection_response_failed')
-                    elif packet.packet_id in (202,204) and self._world_entry is not None:
+                    elif self._world_entry is not None and (packet.packet_id in (202,204) or
+                            (packet.packet_id==206 and self._world_entry.complete_world)):
                         self._world_entry.receive(packet.packet_id,packet.body,now=now)
                         if self._world_entry.error: self._fail('world_entry_response_failed')
                     else:

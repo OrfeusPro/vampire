@@ -20,6 +20,12 @@ def reserve_body(code=0):
     return struct.pack('<IBQIBB', code, 255, 123, 456, 2, 255) + b'opaque-private-suffix'
 
 
+def finish_body(code=0,vector=(1.5,-2.25,-0.0)):
+    appearance=bytes(16)
+    return (struct.pack('<IQIIBBfffBBB',code,123,1,2,0,0,*vector,45,0,0)
+        +appearance+bytes(4)+struct.pack('<QHHH',0,0,0,0)+struct.pack('<QBB',0,0,0))
+
+
 class WorldEntryFlowTests(unittest.TestCase):
     def setUp(self):
         fixture = json.loads((HERE / 'fixtures/vampir-selection-flow.json').read_text('utf-8'))

@@ -1842,6 +1842,96 @@
       "question": "character-selection-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Явная headless политика завершения и текущий runtime decoder binding; полный хвост ID 202 и живая позиция ещё открыты."
+    },
+    {
+      "addresses": [
+        "0x1458503f0",
+        "0x145db3fe0"
+      ],
+      "checks": [
+        {
+          "cache_key": "2ae6966680a375a1b6ffd6792731a5568867257ab0a1181aab433ce95ca8cea2",
+          "id": "release-character-selection-probe",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\76d0d0b712186b8b7a404b7c338a5486998af4a51361b990beef65dd926c6964\\manifest.json",
+          "sha256": "76d0d0b712186b8b7a404b7c338a5486998af4a51361b990beef65dd926c6964",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53519c5e7e148b0db09ad009b38a111529cd5a750e677ecdf069c09dfddb361f",
+          "id": "release-world-start-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75\\manifest.json",
+          "sha256": "fa1cd9573dd4f3a409d16b0cb6d836b254383fdee6c5238c7fa8eee2f697df75",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2d1e7919c49a3af98a3d47f765201ae1c5f1cb470ceaf52f1c849ce2746afdc8",
+          "id": "release-world-reserve-prefix",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6\\manifest.json",
+          "sha256": "64f814c71c8ca5d0a3a1fa14909b8f7ed22c0c334c467f7779d00aeac9eaafc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11e5ba0feb6f3c344bb092302347d402eae4072f7e6a3f088c62a628953a5597",
+          "id": "release-world-start-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba\\manifest.json",
+          "sha256": "27ccdf10691b178a56dccc70c8cb73e52cc5d9e5b8d53b299b62564b05c4f3ba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6f153ad30a211060848216d7c02876b82fe3ebae175a63ff10cf3f7541c8178f",
+          "id": "release-world-finish-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39\\manifest.json",
+          "sha256": "d1e75faf98e43c77b2e1100b7c182a1f7d650c7aa15a26e2c4b76251c4c3ec39",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b893029383effc6b71529534c7bffd8232a7128e82eb99a890b1a1e4c03d9e1b",
+          "id": "release-world-position-path",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54\\manifest.json",
+          "sha256": "25619ee583a7b1a7f103639173ad58891b23439087a318f1b733429b28340b54",
+          "state": "passed"
+        },
+        {
+          "cache_key": "acf93ec2d23f1cfdced8e851430dcdd1cfcd4fc1917eee15551d950b0a3ae974",
+          "id": "release-world-finish-reader-empty",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\43c4416e5174dfc642691848147d7ea1ec2d9796e070fa922e83f0fccefff190\\manifest.json",
+          "sha256": "43c4416e5174dfc642691848147d7ea1ec2d9796e070fa922e83f0fccefff190",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5ba73563f5a97d89423e90764702041089fa8a5de46be6ae696c5740e162a82a",
+          "id": "release-world-finish-collections",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3cff25932cb72f06405dd61ccde0488ff333f69ad7289cb92e6e2aade978152f\\manifest.json",
+          "sha256": "3cff25932cb72f06405dd61ccde0488ff333f69ad7289cb92e6e2aade978152f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3f16caa76ce47bfb706834ba7adbad0a27aacc427c5cb36418f2e664bab87c92",
+          "id": "release-world-completion-policy",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bbb55d888be2e6334566284c08c206ed8bacd832afe7f9482cb52dff5ca3a12c\\manifest.json",
+          "sha256": "bbb55d888be2e6334566284c08c206ed8bacd832afe7f9482cb52dff5ca3a12c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Готовые current native доказательства запроса ID 205 и reader ID 206 использованы для явного headless завершения. WorldEntryFlow после code-zero ID 204 однократно ставит ID 205 в текущую очередь, полностью проверяет ID 206 и сохраняет серверную целевую позицию с world ID из ID 204. Политика отключена по умолчанию; runtime и socketpair проверки прошли.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-RELEASE-WORLD-FINISH-POSITION.md",
+          "sha256": "f808424d8846e4a6635fd66dcfb1ca3049300181b727e77607d17f8ae6a636e0"
+        }
+      ],
+      "id": "263c80e259c7a731a3a9734a199cdef1dbb8775c70b4489b395af561c347f99d",
+      "limits": [
+        "Headless acknowledgement является явной собственной политикой, не исполнением engine streaming event.",
+        "Серверная целевая позиция до коррекции, не подтверждение actor placement, карты или долгой готовности сессии.",
+        "Живые попытки на двух JP и HK получили Login 58 / BlockedIp, список и ID 205 не отправлялись.",
+        "Пять старых native тестов остановлены старым source SHA guard; проверки текущего SHA прошли."
+      ],
+      "method": "static",
+      "next_check": "После замены телефонов один read-world-finish при закрытой игре; до этого привязка карты на явных fixtures.",
+      "question": "character-selection-position",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Живой ID 206, полный хвост ID 202, engine correction / map projection и длительная сессия."
     }
   ],
   "schema": 1,

@@ -11,11 +11,11 @@ from test_vampir_selection_flow import list_body, FIXTURE as SELECTION_FIXTURE
 from vampir_core.session_clock import LobbyPingClock
 from vampir_core.world_move_start import SOURCE_SHA256
 from vampir_core.character_select_result import decode_character_select_result
-from test_vampir_world_entry_flow import reserve_body
+from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -55,6 +55,12 @@ class GameLoginProbeTests(unittest.TestCase):
                                         raise AssertionError('Unexpected world start body')
                                     if world_start_body is not None:
                                         server.sendall(incoming(204,world_start_body))
+                                        if read_world_finish and struct.unpack_from('<I',world_start_body)[0]==0:
+                                            header, body=receive_frame(server)
+                                            captures.append(header)
+                                            if body!=b'':raise AssertionError('Nonempty finish request')
+                                            if world_finish_body is not None:
+                                                server.sendall(incoming(206,world_finish_body))
                 while server.recv(32): pass
             except BaseException as error: errors.append(type(error).__name__)
             finally: server.close()
@@ -63,7 +69,7 @@ class GameLoginProbeTests(unittest.TestCase):
         with patch('vampir_core.game_login_probe.time.time_ns', return_value=1792600142863000000):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
                 read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index,
-                read_world_start=read_world_start, source_sha256=SOURCE_SHA256 if read_world_start else None)
+                read_world_start=read_world_start, read_world_finish=read_world_finish, source_sha256=SOURCE_SHA256 if read_world_start else None)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -91,6 +97,27 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertFalse(result['world_reserve_full_body_validated'])
         self.assertFalse(result['game_session_ready'])
         self.assertNotIn('opaque-private-suffix',str(result))
+
+    def test_world_finish_uses_same_connection_and_does_not_claim_readiness(self):
+        result,captures=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',0,9,2,3,4,0,0,77),
+            read_world_finish=True,world_finish_body=finish_body())
+        self.assertEqual(captures,[(1,0),(3,1),(101,2),(109,3),(203,4),(205,5)])
+        self.assertEqual(result['status'],'world_finish_result')
+        self.assertEqual(result['world_finish_result_code'],0)
+        self.assertTrue(result['server_target_position_received'])
+        self.assertFalse(result['game_session_ready'])
+        self.assertFalse(result['world_reserve_full_body_validated'])
+
+    def test_world_finish_refusal_and_timeout(self):
+        for body in (finish_body(16),None):
+            result,captures=self.world_attempt(world_reserve_body=reserve_body(),
+                world_start_body=struct.pack('<IIIIIBBQ',0,9,2,3,4,0,0,77),
+                read_world_finish=True,world_finish_body=body)
+            self.assertEqual(captures[-1],(205,5))
+            self.assertFalse(result['server_target_position_received'])
+            self.assertEqual(result['world_entry_error'],
+                'finish_result_rejected' if body else 'world_entry_timeout')
 
     def test_world_refusals_survive_connection_cleanup(self):
         result,captures=self.world_attempt(world_reserve_body=reserve_body(16))
