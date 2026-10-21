@@ -6,7 +6,10 @@
 
 ## Текущее состояние
 
-Бот ранее прошёл живые Login / список / выбор и ID 204 code 0 через JP.
+После замены телефонов 22 октября бот прошёл живые Login / список / выбор,
+ID 204 → ID 205 → ID 206 code 0 через JP / TECNO TECNO KJ5n. Конечная серверная
+целевая позиция получена; ошибки отсутствуют. Соединение и маршрут закрыты.
+[Отчёт и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-WORLD-FINISH.md#живой-id-206-после-замены-телефонов).
 Добавлен явный `--read-world-finish` вместе с `--read-world-start`,
 `--read-character-list` и `--character-index`: после успешного ID 204 он
 однократно отправляет ID 205 и ожидает полный ID 206. Это отдельная headless
