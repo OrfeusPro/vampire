@@ -14,14 +14,14 @@ import {mkdtemp,rm} from 'node:fs/promises';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 
-for(const Transport of [RTCPeerConnection,NativePeer])test(`SOCKS5 over real WebRTC (${Transport===NativePeer?'native':'werift'}): binary, parallel streams, half-close, rejection`, {timeout:60000}, async t => {
+for(const mode of ['endpoints','all-tcp'])for(const Transport of [RTCPeerConnection,NativePeer])test(`SOCKS5 over real WebRTC (${Transport===NativePeer?'native':'werift'}, ${mode}): binary, parallel streams, half-close, rejection`, {timeout:60000}, async t => {
   const echo = net.createServer({allowHalfOpen:true}, s => {
     s.on('error',()=>{}); s.on('data',data => s.write(data)); s.on('end',() => s.end(Buffer.from('END')));
   });
   echo.listen(0,'127.0.0.1'); await once(echo,'listening');
   const captureRoot=await mkdtemp(join(tmpdir(),'phone-exit-webrtc-capture-'));
   const diagnostics=new DiagnosticCapture({root:captureRoot,onStatus:()=>{throw Error('UI unavailable');}});
-  const captureId=await diagnostics.start([{host:'127.0.0.1',port:echo.address().port}]);
+  const captureId=await diagnostics.start(mode==='endpoints'?[{host:'127.0.0.1',port:echo.address().port}]:undefined,{mode});
   const a = new Transport({iceServers:[]}), b = new RTCPeerConnection({iceServers:[]});
   const flowWindow=Transport===NativePeer?2097152:1048576;
   const sendBuffer=Transport===NativePeer?524288:1048576;

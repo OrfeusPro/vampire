@@ -25,6 +25,7 @@ $exercise.Add_Tick({
     try{
         $inputBox=@($dialog.Controls|Where-Object AccessibleName -eq 'Фильтр адресов игры')[0]
         $beginButton=@($dialog.Controls|Where-Object AccessibleName -eq 'Начать запись TCP')[0]
+        $allBox=@($dialog.Controls|Where-Object AccessibleName -eq 'Записывать весь TCP через телефон')[0]
         $endButton=@($dialog.Controls|Where-Object Text -eq 'Остановить')[0]
         if($script:diagnosticUiStep -eq 0){
             $inputBox.Text='https://invalid.example';$beginButton.PerformClick()
@@ -34,12 +35,24 @@ $exercise.Add_Tick({
             if($command.op -ne 'capture-start' -or @($command.filters).Count -ne 1 -or $command.filters[0].host -ne 'game.example' -or $command.filters[0].port -ne 12001){throw 'Wrong capture start command'}
             $script:diagnosticState=[pscustomobject]@{state='active';id=('a'*32);bytes=123;flows=1;reason=''}
             $script:diagnosticUiStep=1
-        }elseif($endButton.Enabled){
+        }elseif($script:diagnosticUiStep -eq 1 -and $endButton.Enabled){
             if($beginButton.Enabled -or $inputBox.Enabled){throw 'Active capture filter is editable'}
             $endButton.PerformClick()
             $last=@($writer.ToString().Trim() -split "`r?`n")[-1]|ConvertFrom-Json
             if($last.op -ne 'capture-stop'){throw 'Stop did not reach transport'}
-            $script:diagnosticUiStep=2;$exercise.Stop();$dialog.Close()
+            $script:diagnosticPending=$false;$script:diagnosticState=[pscustomobject]@{state='stopped';id=('a'*32);bytes=123;flows=1;reason='manual'}
+            $script:diagnosticUiStep=2
+        }elseif($script:diagnosticUiStep -eq 2 -and $beginButton.Enabled){
+            $null=$writer.GetStringBuilder().Clear();$inputBox.Text='invalid filter ignored in all TCP mode';$allBox.Checked=$true
+            if($inputBox.Enabled){throw 'All TCP mode still enables endpoint filter'}
+            $beginButton.PerformClick();$command=$writer.ToString().Trim()|ConvertFrom-Json
+            if($command.op -ne 'capture-start' -or $command.mode -ne 'all-tcp' -or $command.PSObject.Properties['filters']){throw 'Wrong all TCP start command'}
+            $script:diagnosticPending=$false;$script:diagnosticState=[pscustomobject]@{state='active';id=('b'*32);bytes=456;flows=20;reason='';remainingMs=123000}
+            $script:diagnosticUiStep=3
+        }elseif($script:diagnosticUiStep -eq 3 -and $endButton.Enabled){
+            if($allBox.Enabled -or $beginButton.Enabled){throw 'Active capture scope is editable'}
+            $exercise.Stop();SaveDesktopDialogPreview $dialog 'diagnostics-all'
+            $endButton.PerformClick();$script:diagnosticUiStep=4;$dialog.Close()
         }
     }catch{$script:diagnosticUiError=$_.Exception.Message;$exercise.Stop();$dialog.Close()}
 })
@@ -54,8 +67,8 @@ try{
     if(!$rejected){throw 'Oversized filter accepted'}
     $exercise.Start();ShowTcpDiagnostics
     if($script:diagnosticUiError){throw $script:diagnosticUiError}
-    if($script:diagnosticUiStep -ne 2){throw 'Capture controls did not finish test'}
+    if($script:diagnosticUiStep -ne 4){throw 'Capture controls did not finish test'}
     $script:client=$null;$script:transportReady=$false;$script:diagnosticState=$null
     ShowTcpDiagnostics -Preview
-    Write-Output 'PASS: exact filter start/stop commands, active state, disabled capture without transport, dialog bounds and resize'
+    Write-Output 'PASS: exact filter and explicit all TCP start/stop commands, active state, disabled capture without transport, dialog bounds and resize'
 }finally{$exercise.Dispose();$writer.Dispose();$form.Dispose()}

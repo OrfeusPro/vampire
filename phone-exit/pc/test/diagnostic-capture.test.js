@@ -70,3 +70,50 @@ test('write failure disables observation without exposing the raw disk error',as
   assert.doesNotThrow(()=>flow.record('c2s',Buffer.from('still-forwardable')));
   assert.ok(!JSON.stringify(events).includes('private-filesystem'));
 });
+
+
+test('all TCP requires explicit mode, includes unknown hosts and ports, and reads beyond legacy caps',async t=>{
+  const {root,capture,events}=await fixture(t);
+  await assert.rejects(capture.start());
+  await assert.rejects(capture.start([], {mode:'invalid'}));
+  await assert.rejects(capture.start(filters, {mode:'all-tcp'}));
+  assert.deepEqual(await readdir(root),[]);
+  const id=await capture.start(undefined,{mode:'all-tcp'});
+  assert.equal(capture.status().mode,'all-tcp');
+  assert.ok(capture.status().remainingMs<=180000&&capture.status().remainingMs>179000);
+  for(let i=1;i<=20;i++){
+    const flow=capture.open(`unknown-${i}.example`,i%2?443:12000);
+    assert.ok(flow);flow.record('c2s',Buffer.from([i]));flow.close();
+  }
+  const flow=capture.open('192.0.2.1',80),chunk=Buffer.alloc(65536,7);
+  for(let i=0;i<129;i++){
+    flow.record('s2c',chunk);
+    // Keep this test about total volume rather than the independent disk queue limit.
+    if(capture.current.stream.writableNeedDrain)await new Promise(r=>capture.current.stream.once('drain',r));
+  }
+  flow.close();await capture.stop();
+  const path=join(root,id,'traffic.jsonl'),result=await readCapture(path);
+  assert.equal(result.summary.mode,'all-tcp');assert.equal(result.flows.size,21);
+  assert.equal(result.summary.bytes,129*chunk.length+20);
+  assert.equal(result.summary.finalized,true);
+  assert.ok(!JSON.stringify(events).includes('unknown-'));
+  const header=JSON.parse((await readFile(path,'utf8')).split('\n')[0]);
+  assert.deepEqual(header.filters,[]);assert.equal(header.limits.maxBytes,33554432);
+  assert.equal(header.limits.maxFlows,128);assert.equal(header.limits.durationMs,180000);
+  // A larger file cannot masquerade as a legacy capture.
+  const raw=await readFile(path,'utf8');await writeFile(path,raw.replace('"mode":"all-tcp"','"mode":"endpoints"'));
+  await assert.rejects(readCapture(path));
+  await capture.start(filters);assert.equal(capture.open('unknown-1.example',443),null);
+});
+
+test('all TCP auto-stops on deadline and cannot resume recording through an old observer',async t=>{
+  const {root,capture}=await fixture(t,{durationMs:20});
+  const id=await capture.start(undefined,{mode:'all-tcp'}),flow=capture.open('auth.example',443);
+  flow.record('c2s',Buffer.from([1]));
+  await new Promise(r=>setTimeout(r,50));await capture.stop();
+  flow.record('c2s',Buffer.from([2]));assert.equal(capture.open('auth.example',443),null);
+  const result=await readCapture(join(root,id,'traffic.jsonl'));
+  assert.equal(result.summary.reason,'time_limit');assert.equal(result.summary.bytes,1);
+  await capture.start(undefined,{mode:'all-tcp'});flow.record('c2s',Buffer.from([3]));
+  await capture.stop();assert.equal(capture.status().bytes,0);
+});

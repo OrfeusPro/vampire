@@ -145,7 +145,7 @@ if (process.env.PHONE_EXIT_DESKTOP === '1') {
           const request=JSON.parse(command);
           if(request.op==='capture-start'){
             if(stopped||!connected||!server)throw Error('Transport unavailable');
-            await diagnostics.start(request.filters);
+            await diagnostics.start(request.filters,{mode:request.mode});
             if(stopped)await diagnostics.stop('transport_stopped');
           }else if(request.op==='capture-stop')await diagnostics.stop();
           else if(request.op==='capture-status')console.log(JSON.stringify({event:'diagnostics',...diagnostics.status()}));
