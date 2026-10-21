@@ -24,7 +24,10 @@
 Непустые appearance extensions / optional map прошли ещё 31 body / 489 префиксов,
 включая duplicate overwrite и разные соседние записи. Constructor / vtable /
 ID 102 / reader и ключ регистрации подтверждены отдельным native replay.
-Следом — новый handler, выбор персонажа и реальный вход. Старые адреса не переносить без проверки.
+Новый handler / gate / predicate проверены вместе с reader в 50 сценариях:
+применение и замена списка, сохранение при отказе, начальный индекс. Engine / UI
+и память состояния — fixtures. Следом — запрос выбора в новой сборке и реальный
+вход. Старые адреса не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в

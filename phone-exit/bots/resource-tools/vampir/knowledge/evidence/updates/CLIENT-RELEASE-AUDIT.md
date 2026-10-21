@@ -539,6 +539,58 @@ decoder, 489 коротких префиксов получили отказ. Н
 Границы fixtures прежние. Следом — исполнение handler с gate / predicate,
 проверка применения списка и выбора начального индекса.
 
+### Новый handler списка: совместное исполнение
+
+[replay-release-character-handler.py](../../../replay-release-character-handler.py)
+исполняет body / record / extension readers, затем handler 0x146797990,
+result gate 0x1467cee40 и predicate 0x145c9c0d0 в одном Unicorn-эмуляторе.
+Входы привязаны к новому SHA EXE `98802d550890…`; SHA двух Ghidra exports
+проверяются перед запуском. Packet vptr устанавливается fixture из независимо
+проверенной таблицы 0x14992a968; ID getter 0x1456e5ee0 исполняется настоящим кодом.
+Проверены фактические аргументы gate: код ответа и packet ID 102.
+
+50 сценариев подтвердили поведение в проверенных ветвях:
+
+- Код 0 проходит gate. Коды 1, 14, 22, 37, 54, 9400, 9818, 9819, 90021 и
+  0xffffffff отклоняются; handler вызывает controller virtual +0x38 и сохраняет
+  прежний список. Это не классификация всех возможных кодов gate.
+- После gate список применяется только при predicate == 1. Проверены policy
+  0 / 2 / 4, отключённый поиск policy и отсутствующий policy object.
+- Передаются прежний count в cleanup, новый count в allocation / copy;
+  состояние +0x70 / +0x78 получает записи. После fixture copy совпадают все
+  байты записей, включая непустые вложенные extensions / optional map.
+- Native stores переносят packet +0x30 в state +0x80 и младшие 32 бита
+  packet +0x28 в state +0x84. Packet +0x40 передаётся helper 0x145ca6570.
+  Отрицательное signed-значение packet +0x28 вызывает warning capture.
+- Предпочтение packet +0x38 сравнивается с record +8; берётся первое совпадение.
+  Sentinel по данным нового EXE 0x149672698 равен 0. Для sentinel, отсутствующего
+  ключа и пустого списка UI получает индекс 0. Проверены повторные и нулевые ключи,
+  первое / среднее / последнее совпадение и отсутствующий UI.
+- Проверенный путь вызывает owner virtual +0xa00 при наличии owner, завершение
+  UI, selection event с младшим байтом аргумента 6 и transport setter с 0.
+  Замена непустого списка, очистка пустым ответом и сохранение прежних записей
+  при отказе проверены отдельно; gate state 1 проверен при успехе и ошибке.
+
+Engine objects / type metadata / policy virtual, singleton getters, диагностика,
+state allocation / shallow copy / cleanup, UI / owner / events / transport setter
+остаются явными fixtures или captures. Вторичная engine-проверка получает null
+fixture; реальный engine lifecycle не исполняется. Неизвестные execution targets
+отклоняются. Это проверка применения списка и начального индекса, не отправка
+запроса выбора персонажа и не доказательство позиции или сетевой совместимости.
+
+Воспроизведение:
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-character-handler.py
+```
+
+Отчёт внутри каталога сравнения:
+`character-handler-replay/0b93ec2b7986a449cc789873e7af6965ed9efc4c7f4970f9c0631187c3472503/manifest.json`.
+Последний каталог — SHA256 отчёта. Сохранены SHA источника, Ghidra / scripts /
+dependencies, проверяемые диапазоны, trace инструкций gate, fixtures и результаты.
+Следом — источники полей и отправка запроса выбора в новой сборке, затем её
+ClientVersion и реальная сессия. Старые адреса выбора пока остаются историей.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление
