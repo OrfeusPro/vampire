@@ -99,7 +99,7 @@ test('all TCP requires explicit mode, includes unknown hosts and ports, and read
   assert.ok(!JSON.stringify(events).includes('unknown-'));
   const header=JSON.parse((await readFile(path,'utf8')).split('\n')[0]);
   assert.deepEqual(header.filters,[]);assert.equal(header.limits.maxBytes,33554432);
-  assert.equal(header.limits.maxFlows,128);assert.equal(header.limits.durationMs,180000);
+  assert.equal(header.limits.maxFlows,1024);assert.equal(header.limits.durationMs,180000);
   // A larger file cannot masquerade as a legacy capture.
   const raw=await readFile(path,'utf8');await writeFile(path,raw.replace('"mode":"all-tcp"','"mode":"endpoints"'));
   await assert.rejects(readCapture(path));
@@ -116,4 +116,17 @@ test('all TCP auto-stops on deadline and cannot resume recording through an old 
   assert.equal(result.summary.reason,'time_limit');assert.equal(result.summary.bytes,1);
   await capture.start(undefined,{mode:'all-tcp'});flow.record('c2s',Buffer.from([3]));
   await capture.stop();assert.equal(capture.status().bytes,0);
+});
+
+
+test('launcher burst beyond 128 flows stays captured; hard limit stops the 1025th flow',async t=>{
+  const {root,capture}=await fixture(t);
+  const id=await capture.start(undefined,{mode:'all-tcp'});
+  for(let i=0;i<1024;i++){
+    const flow=capture.open('launcher.example',443);assert.ok(flow);flow.close();
+  }
+  assert.equal(capture.status().state,'active');
+  assert.equal(capture.open('launcher.example',443),null);await capture.stop();
+  const result=await readCapture(join(root,id,'traffic.jsonl'));
+  assert.equal(result.summary.reason,'flow_limit');assert.equal(result.flows.size,1024);
 });

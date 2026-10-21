@@ -8,7 +8,7 @@ import {randomBytes} from 'node:crypto';
 
 export const CAPTURE_LIMITS={
   endpoints:{maxBytes:8388608,maxFileBytes:12582912,maxPendingBytes:2097152,maxRecords:32768,maxFlows:16,durationMs:180000},
-  'all-tcp':{maxBytes:33554432,maxFileBytes:50331648,maxPendingBytes:2097152,maxRecords:131072,maxFlows:128,durationMs:180000}
+  'all-tcp':{maxBytes:33554432,maxFileBytes:50331648,maxPendingBytes:2097152,maxRecords:131072,maxFlows:1024,durationMs:180000}
 };
 const DEFAULTS=CAPTURE_LIMITS.endpoints;
 function hostName(host) {
