@@ -257,6 +257,57 @@ evidence, native ranges, leaf bytes, результаты и снимки объ
 и полный body списка с проверкой чтения и отказов на новом SHA. Готовность
 декодера всей сессии или runtime этим этапом не подтверждена.
 
+### Новый input archive: constructor и числовое чтение
+
+Ghidra export: `details/run-ecc4c9718f83/details.json` внутри `run-fd4956a37b3c`,
+SHA256 `c2e050e62bd50d5bfe0fc5a97bd0047fc3b9d8be223cea79dde03f1747fb4f11`.
+Промежуточный `run-a4e4306dd03f` имеет SHA256
+`f307b73e920385656c4e5a5d0aedb43f6f2bdc1b45dbdd22c32b6a17ff0a3a92`.
+В нём предполагаемый адрес constructor 0x144aad4f0 не имел Function; проверка
+PE unwind установила, что это середина функции 0x144aad4e0. Эта гипотеза
+отклонена, начало функции повторно проверено Ghidra. Имя пары
+Archive_InputConstructCandidate в export не доказывает эквивалентность старому
+constructor с буфером: новый 0x144aad4e0 — default constructor без буфера.
+
+Поиск последовательности двух уже найденных reader pointers дал две таблицы:
+0x1496726a8 и 0x149672840. Их reader slots совпадают, destructor отличается.
+Ghidra показал установку 0x1496726a8 в default constructor 0x144aad4e0;
+далее это подтверждено его исполнением. Начальный вызов 0x144aae160 — leaf
+инициализации базового archive, проверенный после отсутствия Function в Ghidra.
+Пустой список Ghidra references в этом частичном проекте не означает отсутствия
+ссылок на таблицы.
+
+[replay-release-archive-input.py](../../../replay-release-archive-input.py)
+выполнил actual default constructor, raw reader 0x144aad910 и scalar readers:
+
+| Формат | Reader | Слот таблицы |
+| --- | --- | --- |
+| uint8 | 0x144aad590 | +0x78 / +0x80 |
+| uint16 | 0x144aad5a0 | +0x68 / +0x70 |
+| uint32 | 0x144aad5f0 | +0x58 / +0x60 |
+| uint64 | 0x144aad7f0 | +0x48 / +0x50 |
+| bool | 0x144aad840 | +0x88 |
+| raw bytes | 0x144aad910 | +0x90 |
+
+63 сценария: значения 0 / 1 / максимум ширины и каждый доступный префикс от
+0 до полной ширины. Проверены code возврата, фактически потреблённые байты и
+decoded value при успехе; bool нормализует ненулевой байт в 1. Частичный raw
+read потребляет доступный префикс, но возвращает отказ, если он короче запроса.
+Swap выключен actual default constructor; big-endian ветви не исполнялись.
+
+После настоящего default constructor буфер и длина задаются явной fixture.
+CRT memcpy по 0x1487f7a19 проверен как импорт vcruntime140.dll / memcpy и
+заменён bounded copy (до 64 байт, только scratch). Bookkeeping 0x144aae4f0
+исполняется, неизвестные code targets отклоняются. Инициализация входного
+буфера штатным receive-конструктором этим replay не проверяется.
+
+Отчёт внутри каталога сравнения:
+`archive-input-replay/cae9f161880263dd8278116751cefbb6fc90844b410017ac7452cd285f13385d/manifest.json`.
+Последний каталог — SHA256. Сохранены SHA EXE / Ghidra / инструментов, версии
+Capstone / Unicorn, native ranges, leaves и результаты. UTF-8 / FString,
+callback массива и весь список на новом EXE ещё не исполнены. Следующий шаг —
+перенести эти зависимости, сохранив исходные ограничения прежних scenarios.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление

@@ -82,6 +82,14 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                     {"RecordNested38_BaseCandidate", "0x1457eca60", "0x1457fedc0"},
                     {"Archive_ReadFString", "0x144aa66f0", "0x144aae320"},
                     {"Archive_ReadArray", "0x144aa5c50", "0x144aad880"},
+                    {"Archive_InputConstructCandidate", "0x144aa6260", "0x144aad4e0"},
+                    {"Archive_BaseInputConstructCandidate", "0x144aa5850", "0x144aae160"},
+                    {"Archive_ReadU16Candidate", "0x144aa5970", "0x144aad5a0"},
+                    {"Archive_ReadU32Candidate", "0x144aa59c0", "0x144aad5f0"},
+                    {"Archive_ReadU64Candidate", "0x144aa5bc0", "0x144aad7f0"},
+                    {"Archive_ReadBoolCandidate", "0x144aa5c10", "0x144aad840"},
+                    {"Archive_ReadByteCandidate", "0x144aa5960", "0x144aad590"},
+                    {"Archive_ReadRawCandidate", "0x144aa5ce0", "0x144aad910"},
                     {"CharacterList_ClearCandidate", "0x1456d32e0", "0x1456d6f70"},
                     {"CharacterList_ResizeCandidate", "0x1420e2ac0", "0x1420e88c0"}
                 };
@@ -126,6 +134,18 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
             report.addProperty("new_source_sha256", currentProgram.getExecutableSHA256());
             report.addProperty("roles_transferred", false);
             report.add("observed_tables", tables);
+            JsonArray archiveReferences = new JsonArray();
+            for (String tableAddress : new String[]{"0x1496726a8", "0x149672840"}) {
+                var refs = currentProgram.getReferenceManager().getReferencesTo(currentProgram.getAddressFactory().getAddress(tableAddress));
+                while (refs.hasNext()) {
+                    var ref = refs.next(); JsonObject row = new JsonObject();
+                    row.addProperty("table", tableAddress); row.addProperty("from", "0x" + ref.getFromAddress());
+                    var owner = currentProgram.getFunctionManager().getFunctionContaining(ref.getFromAddress());
+                    if (owner != null) row.addProperty("containing_function", "0x" + owner.getEntryPoint());
+                    archiveReferences.add(row);
+                }
+            }
+            report.add("observed_archive_references", archiveReferences);
             report.add("pairs", rows);
             Files.writeString(out.resolve("details.json"), new GsonBuilder().setPrettyPrinting().create().toJson(report) + "\n");
         } finally { source.release(this); }

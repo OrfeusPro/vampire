@@ -21,8 +21,9 @@
 424 исследованных функций; девять пар входа / персонажей выгружены отдельно.
 Callback списка сопоставлен статически; helper вложенного чтения прошёл
 18 ограниченных native-сценариев. Record constructor → vtable → reader проверены
-ещё 12 native-сценариями. Следом — archive IO / UTF-8, packet bindings и полные
-list scenarios нового EXE. Старые адреса не переносить без проверки.
+ещё 12 native-сценариями. Input archive / scalar IO прошли 63 native-сценария;
+следом — UTF-8 / FString, callback массива, packet bindings и полный list reader
+нового EXE. Старые адреса не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в
