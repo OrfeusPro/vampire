@@ -96,6 +96,11 @@ native случаями; current Save сохраняет это поле. Runtim
 состояние, без изменения SaveGame игры. 14 проверок прошли. Живая JP-попытка
 подтвердила metadata 262 байта, SDK / лобби / Game Version приняты, но Login
 снова 16. Маршрут закрыт. Остальные metadata и lobby lifecycle ещё проверяются.
+Следом выгружены шесть current update callees. Целые UpdateGmc2 / UpdateSDKSetting
+прошли 31 native сценарий и три теста: источники IP / страны / города / SDK полей,
+отсутствие сервиса, lazy initialization, пустые / равные / изменившиеся строки.
+Service и FString backend — fixtures. Запись страны в settings из ответа GMC2
+и условные player / NID ветви ещё открыты; runtime metadata пока не расширена.
 [Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
@@ -185,7 +190,7 @@ NID credential проверены локально. Явный runtime launcher 
 анализа. Учтён обычный выпуск обновлений по средам рано утром; новый baseline
 принимается после загрузки и сверки SHA.
 [Первый этап индекса](../resource-tools/vampir/knowledge/INDEX-USAGE.md) реализован:
-234 отчёта, 606 функций двух версий, поиск текста и прямых вызовов без запуска
+Более 230 отчётов и 600 функций двух версий, поиск текста и прямых вызовов без запуска
 Ghidra. Вопросы, доказанные роли и ресурсы пока остаются в отдельных справочниках.
 Перед новым экспортом обязательно проверить этот индекс по текущему SHA:
 `function` / `search --release installed`, при необходимости `callers`.

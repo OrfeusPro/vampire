@@ -166,6 +166,50 @@ GMC2 `2a17713dde46b673cac5439175be2a3308f8da8ff61a8bde84cbc66d2fa847d3`.
 Report включает hashes runner / metadata_tid / clock / probe code и публичную
 summary; credentials, device keys и raw packet bodies отсутствуют.
 
+## Обновление сессионных полей из SDK и GMC2
+
+После проверки общего индекса экспортированы шесть ранее отсутствовавших callees
+actual writer. Их diagnostic literals и записи в объект дают следующие связи.
+Как и выше, P — вложенный объект, D = P+0x28.
+
+| Current function | Diagnostic method | Источник → destination |
+| --- | --- | --- |
+| 0x14455bc40 | UpdateGmc2 | settings+0x38 → P+0x108 и P+0x118; settings+0x3f0 → P+0x128; settings+0x3e0 → P+0x138 |
+| 0x14455c110 | UpdatePlayer | player и getters → P+0x148…0x1c8, P+0x258 / P+0x268; условные channel / NID ветви ещё не исполнены |
+| 0x14455c020 | UpdateLanguage | helper 0x143d1d470 → P+0x1a8 |
+| 0x14455cc40 | UpdateTimeZone | helper 0x1444ef630 при доступном service → P+0x1e8 |
+| 0x14455c950 | UpdateSDKSetting | SDK settings+0x38 → P+0xc8; helper 0x144532f30(settings byte+0x48) → P+0xd8; settings+0x28 → P+0xe8 |
+| 0x14455bad0 | UpdateDisplayMetrics | helper 0x1444ed2b0 при доступном service → P+0x248 |
+
+В текущем ToMap `0x144558870` заново сверены destinations и key literals:
+D+0xe0 / `I_ConnectIP`, D+0xf0 / `I_NMMobileIP`, D+0x100 / `I_CountryCD`,
+D+0x110 / `I_City`, D+0xa0 / `I_GameCode`, D+0xb0 / `I_NMBuildCode`,
+D+0xc0 / `I_NMMarket`. Это статическая привязка текущего ToMap; его целое
+native выполнение в этом проходе не заявляется. Два IP поля имеют один source
+descriptor; отдельного определения мобильного IP в UpdateGmc2 нет.
+
+[replay-release-common-context.py](../../../replay-release-common-context.py)
+исполняет **целые UpdateGmc2 и UpdateSDKSetting**. 31 сценарий проверяет:
+
+- готовый service, отсутствие service после lazy initialization и его появление;
+- равные / разные / разной длины / Unicode строки;
+- эквивалентность пустых FString с count 0 и count 1;
+- независимые изменения полей, включая общий источник двух IP destinations;
+- low-byte changed flag, сохранность соседних полей и исходного settings object.
+
+Service lookup / lazy initialization, FString backend и bounded CRT copy заданы
+fixtures; diagnostic logging выключен. Market helper также fixture: доказаны
+его входной byte и destination, **не значения market mapping**. Current helper
+`0x144532f30` уже найден в прежнем экспорте `details/run-ff5be244c76f`;
+повторно выгружать его без новых входов не требуется. Три regression tests
+повторно исполнили native сценарии и прошли.
+
+Метаданные runtime в этом проходе не расширены. Источник записи settings+0x3f0
+из ответа GMC2 ещё не связан с текущей функцией; `I_CountryCD` нельзя автоматически
+приравнивать к joined country аккаунта. Аналогично, IP нельзя брать из старого
+capture. Следующая проверка — current producer этих settings и условные
+channel / NID ветви UpdatePlayer. Новый живой вход пока не выполнялся.
+
 ## Материалы и воспроизведение
 
 Общий каталог вне Git:
@@ -185,6 +229,9 @@ summary; credentials, device keys и raw packet bodies отсутствуют.
 | details/run-9b65c26bd51d/details.json, current Save | e674e1f649421c606184463b367e9c7c63f09e551b847afdac161f3da2986d85 |
 | details/run-765554611ab2/details.json, hex writer | 31bc1d2e366b30de909b740493e30d974154b161019b376a782d1515a909e9ae |
 | guid-format-replay/14cf5b41499c1c7f5402fb39f83430d3002fcab2211efdcf199665fa2f0afbfa/manifest.json | 14cf5b41499c1c7f5402fb39f83430d3002fcab2211efdcf199665fa2f0afbfa |
+| sdk-reference-candidates/a62001cdb34ba87c0038866ae78704484b413855a5d8bf212bce82826e72bd72/manifest.json, writer direct targets | a62001cdb34ba87c0038866ae78704484b413855a5d8bf212bce82826e72bd72 |
+| details/run-af8c285547dd/details.json, шесть update callees | 741a018c06373c2c6524aeb0ccae30e17e0a37915a51ad0e910a0afc08998bc7 |
+| common-context-replay/4aaf376d50e17036b0392e084b71cd132ede62f232b22a1a94d575fc44895eaa/manifest.json | 4aaf376d50e17036b0392e084b71cd132ede62f232b22a1a94d575fc44895eaa |
 
 Промежуточные table / substring exports сохранены рядом; финальный literal
 export выше содержит полные строки с return type, поэтому RIP candidates
@@ -199,6 +246,8 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-session-sett
 python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_release_session_setter.py -v
 python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-guid-format.py
 python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_metadata_tid.py -v
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-common-context.py
+python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_release_common_context.py -v
 ```
 
 Следом — source helpers / callbacks остальных metadata полей и отличие lobby

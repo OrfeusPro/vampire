@@ -120,6 +120,12 @@ Helper отказа `0x145f8a550` связан с отдельным mapper `0x1
 
 ## Как не повторять исследования
 
+Продолжение metadata на новом SHA: шесть update callees сохранены, целые
+UpdateGmc2 / UpdateSDKSetting проверены в 31 native сценарии с fixtures service
+и FString. Следом — producer settings+0x3f0 / +0x3e0 / +0x38 из GMC2 и условные
+channel / NID ветви UpdatePlayer. Runtime ещё не дополнен этими полями.
+[Адреса, проверки и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md#обновление-сессионных-полей-из-sdk-и-gmc2).
+
 Перед новым разбором искать VA/имя в реестре и читать вопрос / decision_rule.
 [Правила базы знаний](../resource-tools/vampir/knowledge/README.md).
 [Сводка всех тем](../resource-tools/vampir/knowledge/TOPICS.md).
