@@ -93,8 +93,9 @@ setter меняет I_NMSessionID, который collector Login не выби�
 отдельный источник settings+0x608 → common data. Формат проверен четырьмя
 native случаями; current Save сохраняет это поле. Runtime новой сборки теперь
 добавляет собственный постоянный TID бота через CoCreateGuid и отдельное SQLite
-состояние, без изменения SaveGame игры. 14 проверок прошли; новый живой вход
-с этим полем ещё не выполнен. Остальная metadata остаётся неполной.
+состояние, без изменения SaveGame игры. 14 проверок прошли. Живая JP-попытка
+подтвердила metadata 262 байта, SDK / лобби / Game Version приняты, но Login
+снова 16. Маршрут закрыт. Остальные metadata и lobby lifecycle ещё проверяются.
 [Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.

@@ -63,7 +63,8 @@ metadata из текущих источников. Это неполный на�
 Для проверенной сборки 1.13.14 добавлен постоянный I_TID самого бота:
 Windows CoCreateGuid, проверенный native формат, локальное SQLite-состояние.
 Он переиспользуется при следующих входах; TID установленной игры не читается,
-её SaveGame не меняется. Живой вход с этим расширением ещё не выполнен.
+её SaveGame не меняется. Живая JP-проверка: metadata 262 байта, SDK / лобби /
+Game Version приняты, Game Login снова 16. Временный маршрут закрыт.
 [Происхождение полей и сравнительные проверки](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md).
 
 [RESEARCH-HISTORY.md](RESEARCH-HISTORY.md) содержит прежний полный README,

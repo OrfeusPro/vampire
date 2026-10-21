@@ -52,7 +52,9 @@ Setter строки MakeSessionID проверен: это I_NMSessionID, а н�
 native случаев / два теста прошли. Формат I_TID проверен native; current Save
 сохраняет settings+0x608. Новый runtime добавляет собственный постоянный TID
 в частичную metadata, с SQLite reuse / concurrency / source guards; 14 тестов
-прошли. Следом живая проверка с этим конкретным изменением.
+прошли. Живая JP-попытка с I_TID дала metadata 262 байта и снова Login 16 при
+принятых SDK / лобби / Game Version. Следом остальные source helpers / callbacks
+metadata и lobby lifecycle; тот же контекст без нового изменения не повторять.
 [Текущие записи и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 [Источник часов и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
 Наблюдение само по себе не разрешает подставить magic ID или старый Ping.

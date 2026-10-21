@@ -139,7 +139,32 @@ metadata не восстановлена: source helpers остальных по
 Тесты: четыре проверки хранения / source guard / concurrency / native-format
 comparison, пять lobby-context проверок и пять selected-game проверок прошли.
 Fixtures не пишут реальную metadata DB; её первое создание происходит только
-при запуске соответствующей авторизации. Живой вход с I_TID ещё не выполнен.
+при запуске соответствующей авторизации. Затем выполнена одна живая попытка ниже.
+
+## Живая попытка с I_TID
+
+21 октября, samsung SM-A205F / JP, игра предварительно закрыта, телефон свободен.
+Получены свежие CDN / GMC2 через тот же SOCKS 17948. Launcher flow, ClientVersion
+261105, язык 1, server 256 / group 253; SDK joined country HK. SDK принят,
+лобби Version / ServerList / Login имеют code 0. Summary подтвердила metadata
+**262 байта** вместо 219. Собственное постоянное состояние TID создано в
+игнорируемой `.local/metadata.sqlite3`, значение не выведено и не сохранено
+в отчёте авторизации.
+
+Game Version code 0, получен ID 17, ранний Ping отправлен. Game Login вновь
+вернул **16 / InvalidState**, body 131 байт; отправлено 930, получено 114 байт.
+List / Select не отправлялись. Owner сам закрыл соединение на отказе, затем
+временный маршрут остановлен с code 0. Раннего Ping и собственного постоянного
+I_TID недостаточно для входа в этой попытке; это не доказывает ненужность
+остальной metadata или причину отказа.
+
+Report вне Git:
+`F:/PhoneExit Resources/Vampir/live-login-observations/2836f7c27733a06f9dc52ecf616b5f8a53e93e275462697892939acad6e2b59f/manifest.json`,
+SHA256 `2836f7c27733a06f9dc52ecf616b5f8a53e93e275462697892939acad6e2b59f`.
+CDN snapshot `e5164c345e2930a41b38794a6496a9d0614f533fb2887209de00e007076f63a3`,
+GMC2 `2a17713dde46b673cac5439175be2a3308f8da8ff61a8bde84cbc66d2fa847d3`.
+Report включает hashes runner / metadata_tid / clock / probe code и публичную
+summary; credentials, device keys и raw packet bodies отсутствуют.
 
 ## Материалы и воспроизведение
 
@@ -176,7 +201,7 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-guid-format.
 python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_metadata_tid.py -v
 ```
 
-Следом — одна живая проверка с постоянным I_TID после проверки транспорта;
-затем source helpers / callbacks остальных полей по результату. Проверенную
-ветвь NMSessionID не повторять как неизвестный TID. Новых входов, чтения памяти
-игры, изменений устройства или аккаунта в этом проходе не было.
+Следом — source helpers / callbacks остальных metadata полей и отличие lobby
+lifecycle. Не повторять попытку на том же context без нового подтверждённого
+изменения. Проверенную ветвь NMSessionID не повторять как неизвестный TID.
+Память игры и её SaveGame не читались и не менялись.
