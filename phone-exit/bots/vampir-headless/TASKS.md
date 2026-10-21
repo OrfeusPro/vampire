@@ -17,9 +17,11 @@
 
 21 октября установка обновлена, сервер ещё на технических работах. Офлайн-аудит
 обнаружил новый EXE и основной PAK; свежий индекс PAK и сравнение сохранённых
-файлов готовы. Patch manifest пока прежний. Следом — сопоставление функций
-входа и персонажей между двумя сохранёнными EXE через Ghidra; старые адреса
-не переносить без проверки. [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
+файлов готовы. Patch manifest пока прежний. Ghidra дал кандидатов для 239 из
+424 исследованных функций; девять пар входа / персонажей выгружены отдельно.
+Следом проверить новые helpers строки, callback списка и packet bindings,
+затем bounded scenarios нового EXE. Старые адреса не переносить без проверки.
+[Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в
 [questions.json](../resource-tools/vampir/knowledge/questions.json).

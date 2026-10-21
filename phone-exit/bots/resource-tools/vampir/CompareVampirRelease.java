@@ -13,25 +13,33 @@ import java.nio.file.*;
 public class CompareVampirRelease extends HeadlessScript {
     @Override public void run() throws Exception {
         String[] args = getScriptArgs();
-        if (args.length != 5) throw new IllegalArgumentException("old-project-dir old-project old-sha new-sha output");
+        if (args.length != 6) throw new IllegalArgumentException("old-project-dir old-project old-sha new-sha output incomplete-analysis");
         if (!args[3].equalsIgnoreCase(currentProgram.getExecutableSHA256()))
             throw new IllegalStateException("New program digest mismatch");
         DomainFolder root = state.getProject().getProjectData().getRootFolder();
         GhidraProject historical = GhidraProject.openProject(args[0], args[1], false);
         VTSession session = null;
+        Program copiedSource = null;
         try {
             Program source = historical.openProgram("/", currentProgram.getName(), true);
             if (!args[2].equalsIgnoreCase(source.getExecutableSHA256()))
                 throw new IllegalStateException("Historical program digest mismatch");
+            if (!currentProgram.canSave()) throw new IllegalStateException("Process the saved destination program before correlation");
+            DomainFile copiedFile = root.getFile("HistoricalSource");
+            if (copiedFile == null) copiedFile = root.createFile("HistoricalSource", source, monitor);
+            copiedSource = (Program) copiedFile.getReadOnlyDomainObject(this, -1, monitor);
+            if (!args[2].equalsIgnoreCase(copiedSource.getExecutableSHA256()))
+                throw new IllegalStateException("Copied historical program digest mismatch");
+            source = copiedSource;
             JsonObject result = new JsonObject();
             result.addProperty("old_source_sha256", source.getExecutableSHA256());
             result.addProperty("new_source_sha256", currentProgram.getExecutableSHA256());
-            result.addProperty("analysis_timed_out", analysisTimeoutOccurred());
+            result.addProperty("analysis_timed_out", Boolean.parseBoolean(args[5]) || analysisTimeoutOccurred());
             result.addProperty("old_function_count", source.getFunctionManager().getFunctionCount());
             result.addProperty("new_function_count", currentProgram.getFunctionManager().getFunctionCount());
             result.addProperty("matches_accepted", false);
             result.addProperty("roles_transferred", false);
-            result.addProperty("scope", "Ghidra exact correlators; old selected functions versus new analyzed functions; candidates only");
+            result.addProperty("scope", "Ghidra exact correlators over loaded program address sets; historical export reviewed separately; candidates only");
             // End the script transaction before VT acquires program/session locks.
             end(true);
             session = new VTSessionDB("ReleaseCandidates", source, currentProgram, this);
@@ -73,6 +81,7 @@ public class CompareVampirRelease extends HeadlessScript {
             println("Release candidate report complete");
         } finally {
             if (session != null) session.release(this);
+            if (copiedSource != null) copiedSource.release(this);
             historical.close();
         }
     }
