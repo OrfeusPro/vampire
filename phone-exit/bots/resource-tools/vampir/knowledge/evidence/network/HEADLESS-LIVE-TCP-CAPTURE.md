@@ -374,6 +374,48 @@ python -X utf8 "F:/PhoneExit Resources/Vampir/code-clues/check-official-capture-
 Сравнивать порядок / framing / sequence / схемы и доказанные источники полей.
 Токены, TID, IP и другие значения сессии не переносить в новую авторизацию.
 
+### Дополнительная сверка перехода лобби → игра
+
+По просьбе пользователя захват повторно проверен для нового вопроса: совпадают
+ли временные поля авторизации между lobby flow 88 и game flow 89, а не только
+постоянные ключи устройства. [inspect-captured-handoff.py](../../../../../vampir-headless/inspect-captured-handoff.py)
+читает значения только в памяти, проверяет SHA / исходящие CRC / roundtrip и
+сохраняет лишь равенства и публичную форму. Полный JSONL предварительно проверен
+существующим capture-inspect; этот дополнительный инструмент его не заменяет.
+
+Подтверждены все ожидаемые привязки текущего builder:
+
+- LobbyResult strings 0 / 1 → Game Login strings 0 / 1, без перестановки.
+- Lobby Login SDK token string 1 → Game Login string 8.
+- NID string 4 → game string 2, NMDeviceKey string 2 → game string 6.
+- Выбранный server ID совпадает; lobby numbers `(2, 0, 256, 0)`, raw80 = 7.
+- Полная metadata совпадает побайтно между lobby string 5 и game string 11:
+  **792 байта в обоих пакетах**. У бота передаётся subset 219 байт.
+
+Остальные непустые строки LobbyResult не совпали с другими строками Game Login.
+Для перечисленных полей неправильная перестановка не обнаружена; это не
+доказывает полноты builder, источников остальных полей или причины InvalidState.
+Из захвата нельзя получить источник недостающих metadata, просто повторив
+значения старой авторизации. Следующая проверка — их текущие SDK / NID источники.
+
+В прежней timeline есть ещё отличие orchestration: официальный клиент использует
+отдельные lobby flow 81 для ServerList и flow 88 для Login; flow 81 закрывается
+до открытия flow 88. Version и соответствующий запрос отправлены до получения
+VersionResult. Бот ждёт VersionResult, получает список и делает выбранный Login
+на том же соединении. Лобби принимает этот вариант с code 0, поэтому причинная
+связь с Game Login 16 не установлена. Перед изменением нужно проверить lifecycle
+клиента по коду, а не добавлять задержки / новые сокеты по одному наблюдению.
+
+Report вне Git: `F:/PhoneExit Resources/Vampir/code-clues/official-handoff-4c713eb5-public.json`,
+SHA256 `b06fcec7b0fc0058b81997d64e885452df65ff960b912cd1859e09ca0fc5e31f`.
+[Тест](../../../../../test_vampir_captured_handoff.py) проверяет привязки на
+синтетической записи, отказ при неправильном SHA и отсутствие секретных строк
+в результате. Сеть не использовалась; runtime не менялся.
+
+```powershell
+python -X utf8 phone-exit/bots/vampir-headless/inspect-captured-handoff.py "C:/Users/Валентин/.phone-exit/diagnostics/4c713eb525f1931c0cd285feae3faccc/traffic.jsonl" --sha256 d979ae6dbe0b7825d542fdcbf9990b5e0458038d73a6147de30bc383fdf9e5ca --lobby-flow 88 --game-flow 89 --output "F:/PhoneExit Resources/Vampir/code-clues/official-handoff-4c713eb5-public-recheck.json"
+```
+
 
 21 октября пользователь предоставил запись
 `C:/Users/Валентин/.phone-exit/diagnostics/4c713eb525f1931c0cd285feae3faccc/`,

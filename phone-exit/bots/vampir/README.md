@@ -79,6 +79,13 @@ actual reader → handler → clock setter прошли 18 сценариев и
 отправила ID 101 после отказа на том же соединении; за 10 секунд ID 102 не пришёл.
 Обе проверки завершены, временные маршруты закрыты. Причина 16 остаётся открытой.
 [Clock source, native проверки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-CLOCK.md).
+Дополнительная сверка эталона подтвердила session-field handoff лобби → игра:
+две строки ответа, SDK token / NID / device / server согласованы с builder.
+Полная metadata одинакова в обоих официальных Login — 792 байта. Есть отличие
+соединений: официальный ServerList и lobby Login идут в разных TCP-потоках,
+у бота — на одном. Причина 16 этим не установлена; следующие источники для
+проверки — metadata и lobby lifecycle.
+[Сверка полей и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-TCP-CAPTURE.md#дополнительная-сверка-перехода-лобби--игра).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.
 21 октября пользователь подтвердил завершение обновления; сервер ещё на технических
