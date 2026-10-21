@@ -14,6 +14,7 @@ from vampir_core.lobby_login_probe import exchange_lobby_login
 from vampir_core.socks_route import SocksRoute
 from vampir_core.windows_version import observe_windows_version
 from vampir_core.nid_metadata import encode_nid_metadata_with_device_key
+from vampir_core.metadata_tid import resolve_metadata_tid, SOURCE_SHA256 as METADATA_TID_SOURCE_SHA256
 
 
 def module(name, filename):
@@ -63,10 +64,13 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
             raise ValueError('Fresh SDK and NID joined countries must agree')
     metadata = ''
     if context == 'sdk-with-partial-metadata':
-        # Only independently sourced fields; no TID/IP/hardware values invented
-        # and no old session metadata loaded. This is explicitly incomplete.
+        # Only sourced fields; no captured session/IP/hardware values replayed.
+        # TID is persistent bot-owned state under the verified generation policy.
         values = dict(I_GameCode=sdk_profile['game_code'],I_GameVersion=source.app_version,
             I_PID=data.player_id,I_JoinedCountryCode=country,I_NMDeviceKey=binding.nm_device_key)
+        if getattr(source, 'source_exe_sha256', '') == METADATA_TID_SOURCE_SHA256:
+            values['I_TID'] = resolve_metadata_tid(HERE / '.local/metadata.sqlite3',
+                nm_device_key=binding.nm_device_key, source_sha256=source.source_exe_sha256)
         if any(type(value) is not str or not value for value in values.values()):
             raise ValueError('Current metadata sources are incomplete')
         metadata = encode_nid_metadata_with_device_key(values,

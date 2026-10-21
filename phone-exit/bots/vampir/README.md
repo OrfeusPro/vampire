@@ -90,8 +90,11 @@ actual reader → handler → clock setter прошли 18 сценариев и
 которая записывает строки в сам объект. Выделены source helpers и передача
 MakeSessionID в отдельный setter. Восемь native случаев и два теста подтвердили:
 setter меняет I_NMSessionID, который collector Login не выбирает. I_TID имеет
-отдельный источник settings+0x608 → common data; его формат / storage ещё
-проверяются. Metadata runtime не расширялась без этой проверки.
+отдельный источник settings+0x608 → common data. Формат проверен четырьмя
+native случаями; current Save сохраняет это поле. Runtime новой сборки теперь
+добавляет собственный постоянный TID бота через CoCreateGuid и отдельное SQLite
+состояние, без изменения SaveGame игры. 14 проверок прошли; новый живой вход
+с этим полем ещё не выполнен. Остальная metadata остаётся неполной.
 [Источники, адреса и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md).
 
 Ниже — состояние предыдущего этапа до дополнительной докачки.

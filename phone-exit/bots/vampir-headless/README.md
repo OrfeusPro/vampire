@@ -58,8 +58,12 @@ launcher/sign-in. Автоматического fallback нет. [Реальн�
 
 `--language-code 1` явно выбирает английский язык в Game Login.
 `--lobby-context sdk-with-joined-country` передаёт совпавшую свежую страну SDK / NID;
-`sdk-with-partial-metadata` дополнительно собирает шесть подтверждённых полей
+`sdk-with-partial-metadata` дополнительно собирает подтверждённые поля
 metadata из текущих источников. Это неполный набор, не копия старой авторизации.
+Для проверенной сборки 1.13.14 добавлен постоянный I_TID самого бота:
+Windows CoCreateGuid, проверенный native формат, локальное SQLite-состояние.
+Он переиспользуется при следующих входах; TID установленной игры не читается,
+её SaveGame не меняется. Живой вход с этим расширением ещё не выполнен.
 [Происхождение полей и сравнительные проверки](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-LANGUAGE.md).
 
 [RESEARCH-HISTORY.md](RESEARCH-HISTORY.md) содержит прежний полный README,
