@@ -26,8 +26,10 @@
 ID 102 / reader и ключ регистрации подтверждены отдельным native replay.
 Новый handler / gate / predicate проверены вместе с reader в 50 сценариях:
 применение и замена списка, сохранение при отказе, начальный индекс. Engine / UI
-и память состояния — fixtures. Следом — запрос выбора в новой сборке и реальный
-вход. Старые адреса не переносить без проверки.
+и память состояния — fixtures. Непрерывный ID 102 → setter / indexed caller →
+ID 109 constructor / writer прошёл 25 сценариев; 20 байт тела совпали с codec.
+Handoff и выходной archive — fixtures. Следом — handoff / транспорт новой сборки
+и реальный вход. Старые адреса не переносить без проверки.
 [Снимки, SHA и границы аудита](../resource-tools/vampir/knowledge/evidence/updates/CLIENT-RELEASE-AUDIT.md).
 
 Рабочий вопрос — `login-invalid-state` в

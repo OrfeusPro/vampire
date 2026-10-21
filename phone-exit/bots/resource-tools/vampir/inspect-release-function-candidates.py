@@ -17,10 +17,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('comparison', type=Path)
     parser.add_argument('--dependencies', action='store_true', help='Inspect unresolved list-reader dependencies and observed callback words')
-    parser.add_argument('--only', help='Comma-separated dependency pair names; avoid exporting already reviewed pairs')
+    parser.add_argument('--only', help='Comma-separated candidate names, or dependency pair names with --dependencies')
     args = parser.parse_args()
-    if args.only and not args.dependencies:
-        parser.error('--only requires --dependencies')
     here = Path(__file__).resolve().parent
     root = Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir'))
     provenance = args.comparison / 'provenance.json'
@@ -50,6 +48,8 @@ def main():
                str(candidates), str(out)]
     if args.dependencies:
         command.append('dependencies')
+    elif args.only:
+        command.append('candidates')
     if args.only:
         command.append(args.only)
     invocation = dict(inputs=inputs, tools=lock, command=command)

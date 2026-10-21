@@ -48,7 +48,7 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
 
     @Override public void run() throws Exception {
         String[] args = getScriptArgs();
-        if (args.length < 2) throw new IllegalArgumentException("candidates.json output [dependencies [names]]");
+        if (args.length < 2) throw new IllegalArgumentException("candidates.json output [dependencies|candidates [names]]");
         JsonObject candidates = JsonParser.parseString(Files.readString(Path.of(args[0]))).getAsJsonObject();
         if (!candidates.get("new_source_sha256").getAsString().equalsIgnoreCase(currentProgram.getExecutableSHA256()))
             throw new IllegalStateException("New digest mismatch");
@@ -60,6 +60,11 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
             Set<String> wanted = Set.of("PktLogin_Write", "PktLogin_Read", "Archive_WriteFString",
                 "PktCharacterListResult_Read", "CharacterList_RecordRead", "CharacterList_RequestA",
                 "CharacterList_RequestB", "PktCharacterSelect_Write", "PktCharacterSelectResult_Read");
+            if (args.length >= 3 && args[2].equals("candidates")) {
+                if (args.length < 4) throw new IllegalArgumentException("Candidate names required");
+                wanted = new HashSet<>();
+                for (int i = 3; i < args.length; i++) wanted.addAll(Arrays.asList(args[i].split(",")));
+            }
             Map<String, JsonObject> pairs = new TreeMap<>();
             for (JsonElement pass : candidates.getAsJsonArray("passes")) {
                 for (JsonElement item : pass.getAsJsonObject().getAsJsonArray("matches")) {
@@ -72,8 +77,9 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                 }
             }
             JsonArray tables = new JsonArray();
-            if (args.length >= 3) {
-                if (!args[2].equals("dependencies")) throw new IllegalArgumentException("Unknown mode");
+            if (args.length >= 3 && !args[2].equals("dependencies") && !args[2].equals("candidates"))
+                throw new IllegalArgumentException("Unknown mode");
+            if (args.length >= 3 && args[2].equals("dependencies")) {
                 pairs.clear();
                 String[][] dependencies = {
                     {"NestedRead_ThunkCandidate", "0x144aa68b0", "0x144aae4e0"},
@@ -102,6 +108,9 @@ public class InspectVampirReleaseCandidates extends GhidraScript {
                     {"CharacterList_ResultPredicate", "0x145c85d90", "0x145c9c0d0"},
                     {"CharacterList_ResultIdGetter", "0x1456e1fa0", "0x1456e5ee0"},
                     {"CharacterList_ResultNameGetter", "0x1456e2fc0", "0x1456e70b0"},
+                    {"CharacterSelect_Construct", "0x1456d4850", "0x1456d85a0"},
+                    {"CharacterSelect_RecordLookup", "0x145c847c0", "0x145c9abd0"},
+                    {"CharacterState_Get", "0x145c859f0", "0x145c9bc00"},
                     {"RecordNested38_ConstructCandidate", "0x1457eca60", "0x1457a47d0"},
                     {"RecordNested38_BaseCandidate", "0x1457eca60", "0x1457fedc0"},
                     {"Archive_ReadFString", "0x144aa66f0", "0x144aae320"},

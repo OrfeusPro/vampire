@@ -591,6 +591,73 @@ dependencies, проверяемые диапазоны, trace инструкц�
 Следом — источники полей и отправка запроса выбора в новой сборке, затем её
 ClientVersion и реальная сессия. Старые адреса выбора пока остаются историей.
 
+### Новая сборка: непрерывный путь от списка до тела выбора
+
+[replay-release-character-select.py](../../../replay-release-character-select.py)
+продолжает состояние того же эмулятора после ID 102, без переноса snapshot
+между отдельными replays. Выполняются новый setter 0x145ca6570, indexed caller
+0x145d5a570, leaf lookup 0x145c9abd0, service 0x145db0e30, constructor
+0x1456d85a0 и writer 0x1456e9550. Native getter 0x145c9bc00 и lookup читают
+один global 0x14b5f41e8. Этот slot находится в zero-initialized virtual tail PE;
+синтетический указатель на state задаётся fixture, а не читается из процесса.
+
+Новые выборочные Ghidra exports внутри каталога сравнения:
+
+- `details/run-9eb39947f076/details.json`, SHA256
+  `28ff65921df52644773fbf071da56affe1a349b94cc1b4de85007c16c68a38ab`:
+  setter, indexed caller и service;
+- `details/run-90cef8d92d6e/details.json`, SHA256
+  `5e072c4e5c8243cded716807c22f4b0f28364da56b548beb90aa8cac71aeb8d3`:
+  попытка выгрузки constructor / lookup / getter. Function objects в неполном
+  анализе отсутствуют. Это не доказательство удаления: после сверки callers
+  исполнены bounded leaves 30 / 34 / 8 байт. Для lookup сохранены и проверяются
+  точные инструкции обеих signed bounds branches.
+
+25 сценариев проверили непрерывный путь и отказы:
+
+- ID 102 packet +0x40 через настоящий setter записывается в state +0xf0;
+  setter также исполнен при последующем изменении, повторе и сбросе значения.
+  Persistence helpers остаются captures; условие вызова проверяется.
+- Indexed caller берёт UI +0x3f8, проверяет type metadata и передаёт выбранный
+  record +8 в service virtual +0x50. Неверный signed index, пустой список,
+  отсутствующий UI, type mismatch и global disable не доходят до handoff.
+- Service строит packet через constructor, записывает выбранный raw64 в +0x10,
+  uint32 из indexed caller в +0x18 и текущее state +0xf0 в +0x20. У indexed caller
+  uint32 берётся из 0x1496726a0 и равен 0. Проверены нулевой / максимальный key,
+  повторные keys, начальный preferred index и явная смена индекса.
+- Constructor устанавливает packet vtable 0x14992abf8; slot +0x10 указывает на
+  writer, slot +0x28 — ID getter 0x1456e5f30. Getter реально возвращает 109.
+  Service вызывает handoff 0x144aafc50 с kind 110, нулевым opaque argument
+  и timeout 0. Kind ожидаемого ответа не подменяется отправляемым ID 109.
+- На границе handoff явная fixture передаёт packet в настоящий writer.
+  Порядок записи — uint64 / uint32 / uint64, всего 20 байт. Тела побайтно
+  совпали с `CharacterSelectPayload.from_character_list` при переданном текущем
+  rawF0. Выходной archive — bounded scalar fixture. Ёмкости 0 / 7 / 8 / 11 /
+  12 / 19 проверяют отказ и прекращение записи после первой неудачной операции.
+
+Engine / UI / type objects, controller slot +0x50, память контейнеров,
+persistence и scalar output archive остаются fixtures. Настоящие pending-request
+bookkeeping, wrapper, CRC / XOR / framing, очередь и сокет на этой новой сборке
+здесь не исполнены. ID 110, позиция и успешный серверный выбор не подтверждены.
+Следом — новый handoff и транспортная цепочка; отдельно нужна актуальная версия
+для реального входа. Старые source-bound профили runtime автоматически не заменены.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/replay-release-character-select.py
+```
+
+Отчёт: `character-select-replay/f2a7d5ce95c45ae8bae765fae3b4adbd8f3d06a15d1edba6998d3d7cb7c171e2/manifest.json`
+внутри каталога сравнения. Последний каталог — SHA256. Общий handler harness
+получил дополнительные проверяемые ranges / leaves; его прежние 50 сценариев
+после изменения прошли. Новый regression report:
+`character-handler-replay/e8377a58eddc53ba1130bc1b00a8b065fcba596f6d74ff8798fb8ae304a5484f/manifest.json`.
+
+Runner `inspect-release-function-candidates.py --only <имена>` теперь выбирает
+произвольные имена из уже сохранённых кандидатов Ghidra без правки Java-списка
+приоритетов. Режим `--dependencies --only` сохранён для явно установленных
+адресных пар. Неизвестные имена и конфликтующие соответствия отклоняются;
+экспорт кандидата по-прежнему не переносит его роль как подтверждённую.
+
 ## Автоматизация следующих обновлений
 
 Требование пользователя от 21 октября: разработать автоматическое обновление

@@ -18,9 +18,10 @@ def load(name, path):
 
 
 class Emulator:
-    def __init__(self):
+    def __init__(self, extra_addresses=(), extra_leaves=()):
         extensions = load('handler_release_extensions', HERE / 'replay-release-character-extensions.py')
-        self.h = h = extensions.make_harness(extra_addresses=(HANDLER, PREDICATE), extra_leaves=(0x1456e5ee0,))
+        self.h = h = extensions.make_harness(extra_addresses=(HANDLER, PREDICATE, *extra_addresses),
+                                             extra_leaves=(0x1456e5ee0, *extra_leaves))
         self.phase = False
         self.events, self.trace, self.gate_ranges = [], {}, []
         for relative, sha in (
