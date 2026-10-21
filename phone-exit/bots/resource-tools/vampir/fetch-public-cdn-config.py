@@ -3,6 +3,7 @@ import argparse
 from dataclasses import asdict
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import ssl
@@ -21,6 +22,7 @@ from vampir_core.socks_route import SocksRoute
 ROOT = Path('F:/PhoneExit Resources/Vampir')
 PROFILE_ID = '393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db'
 PUBLIC_URL = 'https://red.gcdn.netmarble.com/red/config/window/real/1_12_14/config.json'
+RELEASE_URL = 'https://red.gcdn.netmarble.com/red/config/window/real/1_13_14/config.json'
 MAX_BODY = 2 * 1024 * 1024
 
 
@@ -28,7 +30,23 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def profile():
+def profile(selected_profile='recovered-base'):
+    if selected_profile == 'recovered-release':
+        path = HERE.parents[1] / 'vampir-headless/game-source-profile.py'
+        spec = importlib.util.spec_from_file_location('cdn_release_source_profile', path)
+        source = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(source)
+        value = source.load_profile(selected_profile=selected_profile, root=ROOT)
+        if value.cdn_url != RELEASE_URL:
+            raise ValueError('Unexpected verified release CDN URL')
+        manifest_path = ROOT / 'resource-config-snapshots' / value.source_snapshot_sha256 / 'manifest.json'
+        report = json.loads(manifest_path.read_text('utf-8'))
+        config = next(c for c in report['configs'] if c['snapshot_file'] == 'DefaultGame.ini')
+        return dict(config_snapshot_sha256=value.source_snapshot_sha256, archive_sha256=report['archive_sha256'],
+            ini_sha256=config['payload_sha256'], source_values=config['values'], raw_url=value.cdn_url[8:],
+            url=value.cdn_url, https_added_by_local_policy=True, active_profile_verified=False)
+    if selected_profile != 'recovered-base':
+        raise ValueError('Explicit verified CDN profile required')
     path = ROOT / 'resource-config-snapshots' / PROFILE_ID / 'manifest.json'
     if digest(path.read_bytes()) != PROFILE_ID:
         raise ValueError('Base profile manifest changed')
@@ -53,7 +71,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def fetch(url, *, route=None):
-    if url != PUBLIC_URL:
+    if url not in (PUBLIC_URL, RELEASE_URL):
         raise ValueError('Only the recovered public CDN URL is supported')
     if route is not None and not isinstance(route, SocksRoute): raise TypeError('Expected an explicit SOCKS route')
     context = ssl.create_default_context()
@@ -123,6 +141,7 @@ def save(report, body):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fetch', action='store_true', help='Perform one public HTTPS GET; no redirects or account credentials')
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], default='recovered-base')
     parser.add_argument('--snapshot', type=Path, help='Decode an existing snapshot offline')
     parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for the public fetch')
     args = parser.parse_args()
@@ -139,7 +158,7 @@ def main():
             raise ValueError('Public CDN snapshot changed')
         print(json.dumps(dict(offline_verified=True, body_bytes=len(body), environment=report['analysis']['environment'])))
         return
-    provenance = profile()
+    provenance = profile(args.profile)
     route = SocksRoute(args.socks_port) if args.socks_port is not None else None
     body, transport = fetch(provenance['url'], route=route)
     report = dict(schema_version=1, fetched_utc=datetime.now(timezone.utc).isoformat(),

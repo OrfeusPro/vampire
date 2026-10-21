@@ -169,7 +169,7 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--profile', choices=['recovered-base'], required=True)
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--socks-port', type=int, required=True)
     parser.add_argument('--server-policy-byte', type=int, required=True)

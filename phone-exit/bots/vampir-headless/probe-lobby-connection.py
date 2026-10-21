@@ -18,19 +18,28 @@ from vampir_core.cdn_servers import select_cdn_server
 from vampir_core.socks_route import SocksRoute
 
 
-def selected_endpoint(manifest_path, *, route):
+def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=None):
     if not isinstance(route, SocksRoute): raise TypeError('Explicit SOCKS route required')
     path = Path(manifest_path).resolve(strict=True)
     if path.stat().st_size > 131072: raise ValueError('CDN manifest exceeds local budget')
     data = path.read_bytes()
     if hashlib.sha256(data).hexdigest() != path.parent.name: raise ValueError('CDN manifest hash differs')
     manifest = json.loads(data)
+    if (expected_config_snapshot_sha256 is not None and
+            manifest['profile']['config_snapshot_sha256'] != expected_config_snapshot_sha256):
+        raise ValueError('CDN snapshot belongs to a different selected game profile')
     if (manifest['transport']['status'] != 200 or
             manifest['transport'].get('socks5_loopback_port') != route.port):
         raise ValueError('CDN status or selected route differs')
-    if manifest['profile']['config_snapshot_sha256'] != '393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db':
-        raise ValueError('Probe requires the explicit recovered base profile')
-    if manifest['profile']['url'] != 'https://red.gcdn.netmarble.com/red/config/window/real/1_12_14/config.json':
+    urls = {
+        '393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db':
+            'https://red.gcdn.netmarble.com/red/config/window/real/1_12_14/config.json',
+        'c67314cea3e6d3f28f98073a6f6346b1fa0233143feb6e18e7e0914a152f4c7d':
+            'https://red.gcdn.netmarble.com/red/config/window/real/1_13_14/config.json',
+    }
+    if manifest['profile']['config_snapshot_sha256'] not in urls:
+        raise ValueError('Probe requires an explicit verified recovered profile')
+    if manifest['profile']['url'] != urls[manifest['profile']['config_snapshot_sha256']]:
         raise ValueError('Probe source URL differs from the recovered base profile')
     body_path = path.parent / 'body.bin'
     if body_path.stat().st_size > 2097152: raise ValueError('CDN body exceeds local budget')

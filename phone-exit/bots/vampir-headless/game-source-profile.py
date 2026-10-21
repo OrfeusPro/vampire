@@ -14,6 +14,11 @@ from vampir_core.login_context import bind_game_app_version
 ROOT = Path('F:/PhoneExit Resources/Vampir')
 SNAPSHOT = '393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db'
 SOURCE_SHA = 'c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8'
+PROFILES = {
+    'recovered-base': (SNAPSHOT, SOURCE_SHA),
+    'recovered-release': ('c67314cea3e6d3f28f98073a6f6346b1fa0233143feb6e18e7e0914a152f4c7d',
+        '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'),
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,13 +37,14 @@ def verify_file(path, expected):
 
 
 def load_profile(*, selected_profile, root=ROOT):
-    if selected_profile != 'recovered-base': raise ValueError('Select the recovered-base profile explicitly')
-    path = Path(root) / 'resource-config-snapshots' / SNAPSHOT / 'manifest.json'
+    if selected_profile not in PROFILES: raise ValueError('Select a verified recovered profile explicitly')
+    snapshot, source_sha = PROFILES[selected_profile]
+    path = Path(root) / 'resource-config-snapshots' / snapshot / 'manifest.json'
     if path.stat().st_size > 2097152: raise ValueError('Game profile manifest exceeds local budget')
-    verify_file(path, SNAPSHOT)
+    verify_file(path, snapshot)
     manifest = json.loads(path.read_text('utf-8'))
-    if manifest['exe_sha256'] != SOURCE_SHA: raise ValueError('Unsupported game client source')
-    verify_file(manifest['source_exe'], SOURCE_SHA)
+    if manifest['exe_sha256'] != source_sha: raise ValueError('Unsupported game client source')
+    verify_file(manifest['source_exe'], source_sha)
     verify_file(manifest['source_archive']['path'], manifest['archive_sha256'])
     config = next(config for config in manifest['configs'] if config['snapshot_file'] == 'DefaultGame.ini')
     ini = path.parent / 'DefaultGame.ini'
@@ -56,7 +62,7 @@ def load_profile(*, selected_profile, root=ROOT):
     if values['CdnConfig'] != 'True': raise ValueError('Explicit base profile has no CDN config')
     url = prepare_cdn_config_url_ascii(normal=values['CdnConfigUrl'], qa=values['CdnConfigUrlQA'],
         prefix=values['ConfigPrefix'], app_version=values['AppVersion'], platform_code=2)
-    return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, SNAPSHOT)
+    return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, snapshot)
 
 
 def bind_profile(version, login, *, selected_profile, root=ROOT):
@@ -67,7 +73,7 @@ def bind_profile(version, login, *, selected_profile, root=ROOT):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--profile', choices=['recovered-base'], required=True)
+    parser.add_argument('--profile', choices=list(PROFILES), required=True)
     parser.add_argument('--check', action='store_true', required=True)
     args = parser.parse_args()
     try:

@@ -40,12 +40,15 @@ class PublicCdnTests(unittest.TestCase):
         with self.assertRaises(TypeError): module.fetch(module.PUBLIC_URL, route='17948')
 
     def test_saved_real_document_decodes_offline_with_source_profile(self):
-        pointer = json.loads((module.ROOT / 'code-clues/public-cdn-recovery.json').read_text('utf-8'))
-        manifest = Path(pointer['manifest'])
-        self.assertEqual(module.digest(manifest.read_bytes()), pointer['sha256'])
+        # Fixed historical input: a new public fetch must not change this fixture.
+        identity = '4939dc4752684068106f52bc4954d3f8ebd43ff470fa43d1ae14e8f0d0a6736a'
+        manifest = module.ROOT / 'public-cdn-snapshots' / identity / 'manifest.json'
+        self.assertEqual(module.digest(manifest.read_bytes()), identity)
         report = json.loads(manifest.read_text('utf-8'))
         body = (manifest.parent / 'body.bin').read_bytes()
-        self.assertEqual(module.digest(TOOL.read_bytes()), report['tool_sha256'])
+        # Historical immutable receipt belongs to the extractor before release support.
+        self.assertIn(report['tool_sha256'], (module.digest(TOOL.read_bytes()),
+            '8d9ce1d61917b424cea6ed6604b0706cf7a0f7a019d52d983d72647d2be6cf52'))
         self.assertEqual(module.digest(body), report['body_sha256'])
         self.assertEqual(len(body), 6000)
         self.assertEqual(module.profile(), report['profile'])
@@ -61,6 +64,19 @@ class PublicCdnTests(unittest.TestCase):
             self.assertFalse(result[flag])
         self.assertFalse(report['active_runtime_settings_verified'])
         self.assertFalse(report['network_ready'])
+
+    def test_new_release_url_is_bound_to_verified_source_and_same_route(self):
+        profile = module.profile('recovered-release')
+        self.assertEqual(profile['url'], module.RELEASE_URL)
+        self.assertEqual(profile['config_snapshot_sha256'], 'c67314cea3e6d3f28f98073a6f6346b1fa0233143feb6e18e7e0914a152f4c7d')
+        opener = Mock()
+        opener.open.return_value = Response(url=module.RELEASE_URL)
+        with patch.object(module.SocksRoute, 'opener', return_value=opener), \
+                patch.object(module.urllib.request, 'build_opener', side_effect=AssertionError('Direct fallback')):
+            body, metadata = module.fetch(profile['url'], route=module.SocksRoute(17948))
+        self.assertEqual(body, b'abc')
+        self.assertEqual(metadata['socks5_loopback_port'], 17948)
+        with self.assertRaises(ValueError): module.profile('automatic')
 
     def test_transport_policy_and_valid_bounded_response(self):
         response = Response(headers=[('Content-Length', '3')])

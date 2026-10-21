@@ -39,7 +39,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     if not read_server_list and server_policy_byte is not None: raise ValueError('Server-list policy without request')
     source = module('lobby_sdk_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     route = SocksRoute(socks_port)
-    endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path, route=route)
+    endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path,
+        route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256)
     sdk = module('lobby_sdk_signin', 'run-nid-sdk-sign-in.py')
     binding, sdk_profile, _ = sdk.load_inputs(email, route=route)
     browser = module('lobby_sdk_browser', 'nid-browser.py')
@@ -115,7 +116,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--profile', choices=['recovered-base'], required=True)
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
     parser.add_argument('--context', choices=['sdk-without-nid-info','sdk-with-joined-country','sdk-with-partial-metadata'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--socks-port', type=int, required=True)

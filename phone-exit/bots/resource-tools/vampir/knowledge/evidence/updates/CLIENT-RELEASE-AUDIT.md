@@ -72,6 +72,50 @@ CDN / SDK данные по текущему JP, затем одна огран�
 ответа сервера. Полная metadata, handler ответа и причины отказа остаются
 отдельными проверками.
 
+### Явный профиль нового выпуска и свежий CDN через JP
+
+`game-source-profile.py` получил отдельный выбор `recovered-release`, привязанный
+к config snapshot `c67314cea3e6…` и новому полному SHA EXE. Проверяются manifest,
+EXE, PAK и INI; AppVersion 1.13.14 и CDN URL строятся из проверенных строк.
+`recovered-base` сохранён отдельно и не объявляется текущим после обновления.
+Активный GConfig cache и порядок применения слоёв по-прежнему не доказаны.
+
+В `probe-selected-game-login.py` и `probe-lobby-sdk-login.py` выбор нового
+профиля явный. CDN fetch принимает только два известных URL 1.12.14 / 1.13.14.
+Lobby runner передаёт ожидаемый SHA config snapshot в проверку CDN: смешивание
+нового профиля со старым CDN-снимком отклоняется до SDK и сетевого подключения.
+
+Через samsung SM-A057F / JP был включён отдельный ограниченный SOCKS 17948;
+получен публичный конфиг версии 1.13.14, HTTP 200, 7632 байта, environment real.
+Снимок:
+`F:/PhoneExit Resources/Vampir/public-cdn-snapshots/35c745b6a8401b8b9e4c4160d487a8911c0ae284cd23d2e67ac4e7f051b5612a/manifest.json`.
+SHA256 совпадает с именем каталога. Последующая офлайн-проверка подтвердила
+body hash и результат decoder; выбранный public IPv4 lobby endpoint с портом
+12000 принят с привязкой к новому config snapshot и тому же SOCKS-маршруту.
+Сам TCP-connect к lobby этим чтением адреса не выполняется.
+Собственный транспорт после проверки штатно остановлен с exit code 0;
+локальный SOCKS 17948 закрыт. Существующий пользовательский VPN не менялся.
+
+```powershell
+python -X utf8 phone-exit/bots/vampir-headless/game-source-profile.py --profile recovered-release --check
+python -X utf8 phone-exit/bots/resource-tools/vampir/fetch-public-cdn-config.py --fetch --profile recovered-release --socks-port 17948
+```
+
+Подготовительный запуск selected runner с новым профилем, свежим CDN,
+Revision261105, language 1 и launcher flow остановился штатно на
+`stage=lobby_preparation`, `status=selected_game_login_not_completed`,
+`error_type=ValueError`. SDK / NID source profile остаётся привязан к старому EXE.
+Авторизация и Game Login не отправлены, BlockedIp не наблюдался. Guard не отключён.
+Следом — новая подтверждённая привязка SDK / NID, затем свежий SDK config и
+ограниченный вход до фактического ответа сервера.
+
+21 локальная проверка прошла: 6 CDN, 7 source / endpoint, 4 joined-country /
+metadata и 4 selected-login. Проверяются смена EXE / PAK / INI, неправильный
+профиль, несовпадение версии CDN, route и отсутствие direct fallback, границы
+ответа, сохранность credentials in memory и условия до game connect.
+Исторический CDN fixture теперь закреплён immutable SHA, чтобы новый fetch
+не менял вход теста через обновление latest pointer; старый receipt не переписан.
+
 ## Завершённое обновление: офлайн-сравнение 21 октября
 
 Пользователь сообщил, что обновление завершилось, но сервер ещё не запущен.

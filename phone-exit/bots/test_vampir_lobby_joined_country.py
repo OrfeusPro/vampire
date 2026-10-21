@@ -18,7 +18,7 @@ class LobbyJoinedCountryTests(unittest.TestCase):
         sdk_data=SimpleNamespace(player_id='player-fixture',access_token='token-fixture',joined_country_code=sdk_country)
         def sdk_run(email,**kwargs):
             kwargs['_capture']('https://example.invalid');return sdk_data
-        modules=[SimpleNamespace(load_profile=lambda **k:SimpleNamespace(app_version='fixture')),
+        modules=[SimpleNamespace(load_profile=lambda **k:SimpleNamespace(app_version='fixture',source_snapshot_sha256='fixture-snapshot')),
             SimpleNamespace(selected_endpoint=lambda *a,**k:('lobby.example',12000)),
             SimpleNamespace(load_inputs=lambda *a,**k:(binding,{'game_code':'thered'},{}),run=sdk_run),
             SimpleNamespace(capture_nid_credential=lambda *a,**k:provider),
