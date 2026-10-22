@@ -27,7 +27,9 @@ def module(name, filename):
 
 
 def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
-        auth_flow='nid', _progress=None, _consume_auth=None, _select_server=None, _use_session=None):
+        auth_flow='nid', lobby_region=None, auth_timeout=180, _progress=None, _consume_auth=None, _select_server=None, _use_session=None):
+    if type(auth_timeout) is not int or not 1 <= auth_timeout <= 900:
+        raise ValueError('Bounded authentication timeout required')
     if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
     if _consume_auth is not None and not callable(_consume_auth): raise TypeError('Expected in-memory auth consumer')
     if _select_server is not None and (not callable(_select_server) or not read_server_list):
@@ -43,7 +45,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     source = module('lobby_sdk_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     route = SocksRoute(socks_port) if socks_port is not None else None
     endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path,
-        route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256)
+        route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256, lobby_region=lobby_region)
     sdk = module('lobby_sdk_signin', 'run-nid-sdk-sign-in.py')
     prepared = sdk.load_inputs(email, route=route, selected_profile=selected_profile)
     binding, sdk_profile, _ = prepared
@@ -58,7 +60,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         if _progress: _progress('sdk_sign_in')
         return value
     extra = {'_prepared_inputs': prepared} if isinstance(prepared, SdkInputs) else {}
-    data = sdk.run(email, timeout=180, password=password, socks_port=socks_port, _capture=capture,
+    data = sdk.run(email, timeout=auth_timeout, password=password, socks_port=socks_port, _capture=capture,
         auth_flow=auth_flow, selected_profile=selected_profile, _progress=_progress, **extra)
     password = None
     provider = captured.pop('provider')
@@ -141,13 +143,16 @@ if __name__ == '__main__':
     parser.add_argument('--read-server-list', action='store_true')
     parser.add_argument('--server-policy-byte', type=int)
     parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid')
+    parser.add_argument('--lobby-region', choices=['SG', 'NA', 'EU'], help='Explicit current CDN regional lobby')
+    parser.add_argument('--auth-timeout', type=int, default=180, help='Bounded time for the official sign-in window, at most 900 seconds')
     args = parser.parse_args()
     try:
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
         result = run(args.email, selected_profile=args.profile, manifest_path=args.manifest,
             socks_port=args.socks_port, context=args.context, password=password,
-            read_server_list=args.read_server_list, server_policy_byte=args.server_policy_byte, auth_flow=args.auth_flow)
+            read_server_list=args.read_server_list, server_policy_byte=args.server_policy_byte, auth_flow=args.auth_flow,
+            lobby_region=args.lobby_region, auth_timeout=args.auth_timeout)
         password = None
         print(json.dumps(result.summary))
     except (OSError, ValueError, RuntimeError, KeyError) as error:

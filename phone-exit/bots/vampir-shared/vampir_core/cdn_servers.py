@@ -34,7 +34,7 @@ def _string(value, limit):
     return value
 
 
-def select_cdn_server(document: dict) -> CdnServerSelection:
+def select_cdn_server(document: dict, *, lobby_region=None) -> CdnServerSelection:
     """Select first ASCII-case-insensitive type match using select_server/type.
 
     Missing item type is skipped; wrong types are local errors. An empty list
@@ -46,6 +46,12 @@ def select_cdn_server(document: dict) -> CdnServerSelection:
     not repeat the client's permissive _wtoi port conversion or validate DNS,
     schemes, port ranges, trust, full ReadJson or connection readiness.
     """
+    # Current EXE 98802d550890: SetServerList 14565f760 loads d0/e0/f0/100;
+    # selector 14563a8f0 maps 5 -> SG, 6 -> NA, 7 -> EU. This explicit local
+    # option does not infer a region from the user's network or SDK country.
+    region_keys = {'SG': 'lobbyAddressSG', 'NA': 'lobbyAddressNA', 'EU': 'lobbyAddressEU'}
+    if lobby_region is not None and (type(lobby_region) is not str or lobby_region not in region_keys):
+        raise ValueError('Explicit supported lobby region required')
     if not isinstance(document, dict) or not isinstance(document.get('select_server'), dict):
         raise ValueError('Missing CDN server selection')
     requested = _string(document['select_server'].get('type'), 128)
@@ -66,5 +72,11 @@ def select_cdn_server(document: dict) -> CdnServerSelection:
             raise ValueError('Invalid CDN server detail object')
         values = [_string(detail[key], 4096) if key in detail else None
                   for key in ('lobbyAddress', 'lobbyPort', 'patchURL', 'dataURL')]
+        if lobby_region is not None:
+            key = region_keys[lobby_region]
+            regional = _string(detail[key], 4096) if key in detail else None
+            # Native count > 1 means a nonempty FString, including its NUL.
+            if regional:
+                values[0] = regional
         return CdnServerSelection(index, requested, kind, *values)
     raise ValueError('No matching CDN server entry')

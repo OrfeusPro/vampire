@@ -48,6 +48,7 @@ class ResultErrorTextTests(unittest.TestCase):
         self.assertEqual(describe_game_login_error(58), ('BlockedIp', 'Доступ с этого IP ограничен сервером.'))
         self.assertEqual(describe_game_login_error(16), ('InvalidState', 'Недопустимое состояние при входе.'))
         self.assertEqual(describe_game_login_error(1), ('InvalidPacketVersion', 'Несовместимая версия игровых пакетов.'))
-        for code in (0, 57, 59, 12345, 0xffffffff): self.assertIsNone(describe_game_login_error(code))
+        self.assertEqual(describe_game_login_error(59), ('BlockedInfo', 'Доступ к игровому сервису ограничен сервером.'))
+        for code in (0, 57, 12345, 0xffffffff): self.assertIsNone(describe_game_login_error(code))
         for invalid in (True, -1, 0x100000000, '58'):
             with self.assertRaises(ValueError): describe_game_login_error(invalid)

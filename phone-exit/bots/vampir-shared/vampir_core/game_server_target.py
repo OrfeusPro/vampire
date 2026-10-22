@@ -5,7 +5,7 @@ import re
 
 from .lobby_server_list import LobbyServerListResult
 
-SERVER_REGION_CODES = {'KR': 1, 'ASIA': 2, 'TW': 3, 'JP': 4}
+SERVER_REGION_CODES = {'KR': 1, 'ASIA': 2, 'TW': 3, 'JP': 4, 'SG': 5, 'NA': 6, 'EU': 7}
 
 
 def is_game_server_state_excluded(record):
@@ -56,7 +56,12 @@ def select_game_server_target(server_list, *, server_id):
     records = [record for record in server_list.servers if record.u32[1] == server_id]
     if len(records) != 1: raise ValueError('Selected server is absent or ambiguous')
     record = records[0]
-    host, port = record.strings[1], record.u16[0]
+    host, port = validate_public_game_endpoint(record.strings[1], record.u16[0])
+    return GameServerTarget(server_id, record.u32[0], host, port, record.u16[1])
+
+
+def validate_public_game_endpoint(host, port):
+    """Validate endpoint syntax; the transport must also check resolved IPs."""
     if type(host) is not str or not 1 <= len(host) <= 253 or type(port) is not int or not 1 <= port <= 32767:
         raise ValueError('Game endpoint is outside supported local bounds')
     try: address = ipaddress.ip_address(host)
@@ -70,7 +75,7 @@ def select_game_server_target(server_list, *, server_id):
             raise ValueError('Unsupported game DNS destination')
     else:
         if address.version != 4 or not address.is_global: raise ValueError('Expected public game IPv4 destination')
-    return GameServerTarget(server_id, record.u32[0], host, port, record.u16[1])
+    return host, port
 
 
 def select_game_server_in_region(server_list, *, region, server_id=None, joined_country_code=None):

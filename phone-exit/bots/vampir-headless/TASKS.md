@@ -4,9 +4,13 @@
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.
 
 Уточнение: Global / Prelude 2, аккаунт бота прежний, нужен новый персонаж.
-Прямой NID / SDK / лобби вход проверен. Прочитанный каталог ещё прежний,
-Prelude в нём нет; сначала определить конфигурацию Global и свежий ID сервера.
+Прямой NID / SDK / лобби вход проверен. Добавлен выбор регионального лобби;
+пользователь подтвердил EU. Свежий каталог дал Prelude 2 / ID 384 / group 358.
+Game Version 0, Game Login 59 / BlockedInfo; до списка и создания не дошли.
+Следом — причина этого отказа и сравнение с официальным принятым EU-входом.
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
+[Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
+[Живая проверка EU](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
 
 | Порядок | Результат, который нужен | Что есть / что остаётся |
 | --- | --- | --- |

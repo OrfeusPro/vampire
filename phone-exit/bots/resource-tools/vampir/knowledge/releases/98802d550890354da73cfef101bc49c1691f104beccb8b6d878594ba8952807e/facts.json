@@ -4442,6 +4442,113 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Источник vector / raw28 / raw38, producer QuestUpdate, исходное состояние квеста и обработчик результата."
+    },
+    {
+      "addresses": [
+        "0x14563a8f0",
+        "0x14565f760",
+        "0x146460920"
+      ],
+      "checks": [
+        {
+          "cache_key": "e845f5c1bcb39021fc66934ec50e989739ee19ee15f2604661f081b0991d4602",
+          "id": "release-regional-lobby",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\73a4c3e7bc6ebd2425cddd98303a4f51fb9183f3a3691ed3d25eacb688e1c6e3\\manifest.json",
+          "sha256": "73a4c3e7bc6ebd2425cddd98303a4f51fb9183f3a3691ed3d25eacb688e1c6e3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий SetServerList загружает обычный / NA / EU / SG адреса в config+d0/e0/f0/100. Целый selector 14563a8f0 подтверждён в 540 случаях: 5 -> SG, 6 -> NA, 7 -> EU, иначе обычный адрес; пустой региональный адрес использует обычный. Добавлен явный выбор регионального лобби без угадывания по IP или стране SDK.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-GLOBAL-LOBBY-REGIONS.md",
+          "sha256": "f295e367b9946d158fc5b99c563a6a5edf283b2c391b715d9c887369cffd9996"
+        }
+      ],
+      "id": "12b623c1bd87040ce030e421603da2f4293bf07fb331e60cd0e8624e780b3518",
+      "limits": [
+        "Целый selector исполнен с fixtures config, guard и прежней global FString; assignment ограничен копированием descriptor без allocator.",
+        "SetServerList и endpoint consumer проверены статически; полный UI-путь и реальная инициализация guard не исполнялись.",
+        "Новые server ID, вход на Prelude 2 и создание персонажа этим не доказаны."
+      ],
+      "method": "bounded_native",
+      "next_check": "Завершить NID вход, получить свежий EU ID 104, проверить запись Prelude 2; затем прочитать список персонажей.",
+      "question": "global-lobby-selection",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Свежий список EU / Prelude 2, игровой вход и создание нового персонажа."
+    },
+    {
+      "addresses": [
+        "0x14563a8f0",
+        "0x14565f760",
+        "0x146460920"
+      ],
+      "checks": [
+        {
+          "cache_key": "2e913665e0d21c242a3326b94f13f2102d8cffc434b7b4de070e25b12ea85bc1",
+          "id": "release-regional-lobby",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6a06a19d1ac0f19c7da5203c9c4ec33158f561d5f00eabce9b7a107fc1c8ba8d\\manifest.json",
+          "sha256": "6a06a19d1ac0f19c7da5203c9c4ec33158f561d5f00eabce9b7a107fc1c8ba8d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий SetServerList загружает обычный / NA / EU / SG адреса в config+d0/e0/f0/100. Целый selector 14563a8f0 подтверждён в 540 случаях: 5 -> SG, 6 -> NA, 7 -> EU, иначе обычный адрес; пустой региональный адрес использует обычный. Добавлен явный выбор регионального лобби без угадывания по IP или стране SDK.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-GLOBAL-LOBBY-REGIONS.md",
+          "sha256": "f295e367b9946d158fc5b99c563a6a5edf283b2c391b715d9c887369cffd9996"
+        }
+      ],
+      "id": "0f1abfeec43b84d8d8f3bd93f00e1e33666b3986c77903db0c5ce85f7dd916fe",
+      "limits": [
+        "Целый selector исполнен с fixtures config, guard и прежней global FString; assignment ограничен копированием descriptor без allocator.",
+        "SetServerList и endpoint consumer проверены статически; полный UI-путь и реальная инициализация guard не исполнялись.",
+        "Новые server ID, вход на Prelude 2 и создание персонажа этим не доказаны."
+      ],
+      "method": "bounded_native",
+      "next_check": "Завершить NID вход, получить свежий EU ID 104, проверить запись Prelude 2; затем прочитать список персонажей.",
+      "question": "global-lobby-selection",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Свежий список EU / Prelude 2, игровой вход и создание нового персонажа."
+    },
+    {
+      "addresses": [
+        "0x1457da4e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "2e913665e0d21c242a3326b94f13f2102d8cffc434b7b4de070e25b12ea85bc1",
+          "id": "release-regional-lobby",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6a06a19d1ac0f19c7da5203c9c4ec33158f561d5f00eabce9b7a107fc1c8ba8d\\manifest.json",
+          "sha256": "6a06a19d1ac0f19c7da5203c9c4ec33158f561d5f00eabce9b7a107fc1c8ba8d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b63aa65b9fe3b6c0d05d7efca1a0ac87b92cca19a8340dc427113c28f8ebd882",
+          "id": "release-result-names",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b69eeb831c68523985acb631a90ffeafe489037579f8c7d7771d230060398144\\manifest.json",
+          "sha256": "b69eeb831c68523985acb631a90ffeafe489037579f8c7d7771d230060398144",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем SHA точная пара словаря 59 / BlockedInfo подтверждена строковым объектом, int и двумя соседними указателями. В новой прямой EU-сессии на Prelude 2 / server 384 приняты Lobby Login 0 и Game Version 0, Game Login вернул 59; запрос списка не отправлялся. Это общее ограничение доступа, отдельное от 58 / BlockedIp.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-LIVE-GLOBAL-EU.md",
+          "sha256": "113176e16f0fcada5a708be7bb0f47ef65b54369d1d48604c2d303c06a5993fc"
+        }
+      ],
+      "id": "beb06d7ed0a9a362255b41cb55fcb2c92c07bc2a356d71796167def3e16c2a69",
+      "limits": [
+        "Словарь проверен статически по whole-unwind инструкциям; constructor / map lookup / конкретный handler не исполнялись.",
+        "Live-сводка не содержит auth-тел; причина ограничения и привязка к аккаунту / устройству / сети не установлены.",
+        "Не получены список персонажей, создание или вход в мир на EU."
+      ],
+      "method": "static",
+      "next_check": "Сравнить обработку 59 и официальный успешный EU Login, сохраняя источник и область проверки; до Login 0 не отправлять создание.",
+      "question": "global-lobby-selection",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Причина отказа 59 и отличие от принятого официального EU-входа."
     }
   ],
   "schema": 1,

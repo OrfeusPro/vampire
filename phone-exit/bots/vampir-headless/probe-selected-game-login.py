@@ -117,6 +117,7 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
     phase('lobby_preparation')
     lobby = module('game_login_lobby', 'probe-lobby-sdk-login.py').run(email,
         selected_profile=selected_profile, manifest_path=manifest_path, socks_port=socks_port,
+        lobby_region=region if region in ('SG', 'NA', 'EU') else None,
         context=lobby_context, password=password, read_server_list=True, auth_flow=auth_flow,
         server_policy_byte=server_policy_byte, _progress=phase, _consume_auth=consume,
         _select_server=None if server_list_only else select_server,

@@ -48,7 +48,8 @@ class ServerRegionTargetTests(unittest.TestCase):
         spec.loader.exec_module(tool)
         report = json.loads((tool.native.ROOT / 'code-clues/server-region-selection-replay.json').read_text('utf-8'))
         self.assertEqual(tool.build(), report)
-        self.assertEqual(SERVER_REGION_CODES, {k: v for k, v in report['enum_initializer']['members'].items() if v})
+        historical = {k: v for k, v in report['enum_initializer']['members'].items() if v}
+        self.assertEqual({key: SERVER_REGION_CODES[key] for key in historical}, historical)
         self.assertEqual(len(report['filter_cases']), 32)
         country = {r['JoinedCountry']: r for r in report['tables'][0]['rows']}
         self.assertEqual(country['HK']['ServerRegionType'], 'TW,ASIA,JP')

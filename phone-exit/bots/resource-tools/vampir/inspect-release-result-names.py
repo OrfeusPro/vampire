@@ -1,4 +1,4 @@
-"""Verify three local result-name / value pairs in one explicit native function.
+"""Verify selected local result-name / value pairs in one explicit native function.
 
 Static instruction evidence only; no game IO or native execution.
 """
@@ -10,7 +10,7 @@ import json
 HERE = Path(__file__).resolve().parent
 SHA = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 OWNER = 0x1457da4e0
-VALUES = {0: 'Success', 58: 'BlockedIp', 100: 'CharacterNotSelected'}
+VALUES = {0: 'Success', 58: 'BlockedIp', 59: 'BlockedInfo', 100: 'CharacterNotSelected'}
 
 
 def load(name, path):
@@ -47,8 +47,9 @@ def run():
                 continue
             # String construction precedes storing its name pointer; the next
             # interleaved entry supplies the LEA of this entry's integer slot.
-            window = instructions[i - 6:i + 6]
-            if len(window) != 12:
+            prefix = 5 if value == 59 else 6
+            window = instructions[i - prefix:i + 6]
+            if len(window) != prefix + 6:
                 raise ValueError('Incomplete result-name window')
             def require(index, mnemonic, operands):
                 if window[index]['mnemonic'] != mnemonic or window[index]['operands'] != operands:
@@ -65,14 +66,14 @@ def run():
             if local is None:
                 raise ValueError('Result-name string slot changed')
             require(2, 'lea', 'rcx, ' + local[1])
-            require(4, 'call', '0x141426a30')
-            require(5, 'lea', 'rax, ' + local[1])
-            name_slot = re.fullmatch(r'qword ptr \[rbp \+ (0x[0-9a-f]+)\], rax', window[7]['operands'])
+            require(prefix - 2, 'call', '0x141426a30')
+            require(prefix - 1, 'lea', 'rax, ' + local[1])
+            name_slot = re.fullmatch(r'qword ptr \[rbp \+ (0x[0-9a-f]+)\], rax', window[prefix + 1]['operands'])
             if name_slot is None:
                 raise ValueError('Result-name pair slot changed')
-            require(7, 'mov', window[7]['operands'])
-            require(9, 'lea', 'rax, [rbp + ' + match[1] + ']')
-            require(11, 'mov', f'qword ptr [rbp + {hex(int(name_slot[1], 0) + 8)}], rax')
+            require(prefix + 1, 'mov', window[prefix + 1]['operands'])
+            require(prefix + 3, 'lea', 'rax, [rbp + ' + match[1] + ']')
+            require(prefix + 5, 'mov', f'qword ptr [rbp + {hex(int(name_slot[1], 0) + 8)}], rax')
             pairs.append(dict(value=value, name=VALUES[value], literal_address=hex(name_address),
                 literal_hex=(literal + b'\0').hex(), instructions=window))
     if sorted(p['value'] for p in pairs) != sorted(VALUES):
@@ -80,7 +81,7 @@ def run():
     report = dict(source_sha256=SHA, tool_sha256=audit.sha256(Path(__file__)),
         owner=hex(OWNER), fragments=[{k:v for k,v in f.items() if k != 'instructions'} for f in fragments],
         pairs=pairs, limits=[
-            'Whole unwind fragments decoded, three local string/integer pointer pairs checked statically.',
+            'Whole unwind fragments decoded, four local string/integer pointer pairs checked statically.',
             'Ghidra skipped this 90467-byte body by budget; no completed whole pseudocode export.',
             'Map insertion, string constructor and lookup are not executed by this tool.',
             'No packet-specific handler, request field meaning or server-side cause is established.'])

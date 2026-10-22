@@ -368,6 +368,16 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertFalse(result['character_list_sent'])
         self.assertFalse(result['game_session_ready'])
 
+    def test_blocked_info_stops_before_list_and_does_not_claim_ip_cause(self):
+        body = struct.pack('<I', 59) + bytes.fromhex(FIXTURE['login_result_hex'])[4:]
+        result, captures = self.attempt(login_body=body, read_character_list=True)
+        self.assertEqual(captures, [(1, 0), (3, 1)])
+        self.assertEqual(result['login_result_code'], 59)
+        self.assertEqual(result['login_result_key'], 'BlockedInfo')
+        self.assertEqual(result['login_error_message'], 'Доступ к игровому сервису ограничен сервером.')
+        self.assertFalse(result['character_list_sent'])
+        self.assertFalse(result['game_session_ready'])
+
     def test_version_refusal_never_sends_login(self):
         result, captures = self.attempt(version_body=struct.pack('<I', 23456) + RESULT[4:], wait_for_login=False)
         self.assertEqual(captures, [(1, 0)])

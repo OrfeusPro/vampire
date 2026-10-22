@@ -4,7 +4,6 @@ No packet is sent, and no account credentials or raw received data are saved.
 """
 import argparse
 import hashlib
-import ipaddress
 import json
 from pathlib import Path
 import socket
@@ -17,9 +16,10 @@ from vampir_core.cdn_config import decode_cdn_config_document
 from vampir_core.cdn_servers import select_cdn_server
 from vampir_core.socks_route import SocksRoute
 from vampir_core.direct_route import connect_direct
+from vampir_core.game_server_target import validate_public_game_endpoint
 
 
-def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=None):
+def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=None, lobby_region=None):
     if route is not None and not isinstance(route, SocksRoute): raise TypeError('Invalid explicit route')
     path = Path(manifest_path).resolve(strict=True)
     if path.stat().st_size > 131072: raise ValueError('CDN manifest exceeds local budget')
@@ -46,14 +46,13 @@ def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=N
     if body_path.stat().st_size > 2097152: raise ValueError('CDN body exceeds local budget')
     body = body_path.read_bytes()
     if hashlib.sha256(body).hexdigest() != manifest['body_sha256']: raise ValueError('CDN body hash differs')
-    selected = select_cdn_server(decode_cdn_config_document(body))
-    # This first connection probe supports only the observed public IPv4 form.
-    address = ipaddress.IPv4Address(selected.lobby_address)
-    if not address.is_global: raise ValueError('Lobby address is not public IPv4')
+    if lobby_region is not None and manifest['profile']['config_snapshot_sha256'] != 'c67314cea3e6d3f28f98073a6f6346b1fa0233143feb6e18e7e0914a152f4c7d':
+        raise ValueError('Regional lobby selection requires the verified current profile')
+    selected = select_cdn_server(decode_cdn_config_document(body), lobby_region=lobby_region)
     port = selected.lobby_port
     if type(port) is not str or not port.isascii() or not port.isdecimal() or not 1 <= int(port) <= 65535:
         raise ValueError('Lobby port is invalid')
-    return str(address), int(port)
+    return validate_public_game_endpoint(selected.lobby_address, int(port))
 
 
 def probe(manifest_path, *, socks_port):

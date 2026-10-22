@@ -4,10 +4,14 @@
 лёгкую 2D-карту, игровые меню, сценарии фарма и переносимый Android runtime.
 Исследовательские инструменты и большие данные остаются отдельно от runtime.
 Пользователь перешёл на Global / Prelude 2; там нужен новый персонаж.
-Прямой вход SDK / лобби без Phone Exit проверен, но текущий профиль вернул
-прежний каталог без Prelude. Следом — источник конфигурации Global;
-ID Franz 2 не использовать для нового сервера.
+Прямой вход SDK / лобби без Phone Exit проверен. Установлен отдельный выбор
+лобби EU / NA / SG в текущем EXE; selector прошёл 540 native-сценариев.
+Свежий EU-каталог получен: Prelude 2 — server ID 384 / group ID 358.
+Game Version принят, Game Login вернул 59 / BlockedInfo до списка персонажей.
+Создание нового персонажа ещё не выполнялось; причина ограничения не установлена.
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
+[Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
+[Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
 
 Карта должна принимать действия по выбранной точке / сущности, а оболочка —
 показывать события сессии, игровые окна, их тексты и доступные кнопки.

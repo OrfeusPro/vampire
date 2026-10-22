@@ -11,6 +11,10 @@ def describe_game_login_error(code):
     # HEADLESS-RESULT-ERROR-58.md; this does not identify why an IP is blocked.
     if code == 58:
         return ('BlockedIp', 'Доступ с этого IP ограничен сервером.')
+    # Current 1457da4e0 dictionary pair; HEADLESS-LIVE-GLOBAL-EU.md.
+    # A generic access restriction does not identify its server-side cause.
+    if code == 59:
+        return ('BlockedInfo', 'Доступ к игровому сервису ограничен сервером.')
     # Complete native mapper 16 -> InvalidState; no particular invalid state inferred.
     # HEADLESS-RESULT-ERROR-16.md / result-error-16-replay.json.
     if code == 16:
