@@ -80,6 +80,17 @@ public static class NidBrowserHost {
                 core.Settings.IsWebMessageEnabled = false;
                 core.Settings.IsPasswordAutosaveEnabled = false;
                 core.Settings.IsGeneralAutofillEnabled = false;
+                const string smokeUrl = "https://members.netmarble.com/__phone_exit_smoke__";
+                if (smoke) {
+                    // Intercept every resource in this synthetic test: no network login.
+                    core.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
+                    core.WebResourceRequested += (s, e) => {
+                        byte[] body = System.Text.Encoding.UTF8.GetBytes("{\"errorCode\":321,\"message\":\"synthetic-private-text\"}");
+                        e.Response = core.Environment.CreateWebResourceResponse(new System.IO.MemoryStream(body),
+                            e.Request.Uri == smokeUrl ? 400 : 404, "Synthetic",
+                            "Content-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: " + body.Length);
+                    };
+                }
                 core.NavigationStarting += (s, e) => {
                     Uri uri;
                     if (!Uri.TryCreate(e.Uri, UriKind.Absolute, out uri)) { e.Cancel = true; return; }
@@ -99,7 +110,8 @@ public static class NidBrowserHost {
                 core.ProcessFailed += (s, e) => finish("browser_process_failed");
                 core.WebResourceResponseReceived += async (s, e) => {
                     // No request body, headers, URL or response text is emitted.
-                    if (done || smoke || registering || !NidHttpDiagnostics.IsEndpoint(e.Request.Uri, e.Request.Method)) return;
+                    if (done || registering || (smoke && e.Request.Uri != smokeUrl) ||
+                        !NidHttpDiagnostics.IsEndpoint(e.Request.Uri, e.Request.Method)) return;
                     int status = e.Response.StatusCode;
                     if (status >= 400 && status <= 599) NidHttpStatus = status;
                     pendingDiagnostics++;
@@ -133,7 +145,7 @@ public static class NidBrowserHost {
                     finally { pendingDiagnostics--; }
                 };
                 if (smoke) {
-                    core.NavigateToString("<html><script>setTimeout(function(){window.open('probe-blocked://ignored'); location.href='probe-blocked://ignored'; setTimeout(function(){location.href='nm" + gameCode + "://nmidprovider/result?resultCode=0&accessToken=synthetic-token&refreshToken=&channelKey=mailUserKey&netmarbleId=synthetic-id&joinedCountryCode=KR';},200);},200);</script></html>");
+                    core.NavigateToString("<html><script>setTimeout(function(){window.open('probe-blocked://ignored'); location.href='probe-blocked://ignored'; fetch('" + smokeUrl + "',{method:'POST'}).then(function(){setTimeout(function(){location.href='nm" + gameCode + "://nmidprovider/result?resultCode=0&accessToken=synthetic-token&refreshToken=&channelKey=mailUserKey&netmarbleId=synthetic-id&joinedCountryCode=KR';},1000);});},200);</script></html>");
                 } else core.Navigate(startUrl);
             };
             var started = DateTime.UtcNow;

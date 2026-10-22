@@ -48,12 +48,23 @@ public static class NidHttpDiagnostics {
         return null;
     }
 
-    public static async Task<Result> ReadAsync(Stream stream, int? length) {
+    public static Task<Result> ReadAsync(Stream stream, int? length) {
+        // Keep blocking COM stream reads off the UI thread.
+        return Task.Run(() => Read(stream, length));
+    }
+
+    private static Result Read(Stream stream, int? length) {
         if (length.HasValue && (length.Value < 0 || length.Value > 16384)) return new Result { State = "length_limit" };
         byte[] buffer = new byte[16385];
+        byte[] chunk = new byte[4096];
         try {
             int total = 0, read;
-            while (total < buffer.Length && (read = await stream.ReadAsync(buffer, total, buffer.Length - total)) > 0) total += read;
+            // WebView2 COMStreamWrapper.Read rejects a nonzero buffer offset.
+            // Always read at zero, then append into the bounded result buffer.
+            while (total < buffer.Length && (read = stream.Read(chunk, 0, Math.Min(chunk.Length, buffer.Length - total))) > 0) {
+                Buffer.BlockCopy(chunk, 0, buffer, total, read);
+                total += read;
+            }
             if (total > 16384) return new Result { State = "body_limit" };
             if (length.HasValue && total != length.Value) return new Result { State = "length_mismatch" };
             string body = new System.Text.UTF8Encoding(false, true).GetString(buffer, 0, total);
@@ -62,6 +73,6 @@ public static class NidHttpDiagnostics {
             return new Result { Code = code, State = code.HasValue ? "numeric_code" : "no_numeric_code" };
         } catch (System.Text.DecoderFallbackException) { return new Result { State = "invalid_utf8" }; }
         catch { return new Result { State = "read_failed" }; }
-        finally { Array.Clear(buffer, 0, buffer.Length); }
+        finally { Array.Clear(buffer, 0, buffer.Length); Array.Clear(chunk, 0, chunk.Length); }
     }
 }

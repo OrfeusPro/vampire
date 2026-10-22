@@ -170,8 +170,10 @@ def smoke():
         raise RuntimeError('Browser smoke callback differs')
     if result.get('blocked_external', 0) < 2 or result.get('blocked_popups', 0) < 1:
         raise RuntimeError('Browser smoke did not exercise URI/popup cancellation')
+    if (result.get('nid_http_status'), result.get('nid_error_code'), result.get('nid_response_state')) != (400, 321, 'numeric_code'):
+        raise RuntimeError('Synthetic response diagnostic failed: ' + str(result.get('nid_response_state')))
     return dict(synthetic_only=True, callback_captured=True, blocked_external=result['blocked_external'],
-                blocked_popups=result['blocked_popups'], game_started=False)
+                blocked_popups=result['blocked_popups'], response_code_checked=True, game_started=False)
 
 
 if __name__ == '__main__':

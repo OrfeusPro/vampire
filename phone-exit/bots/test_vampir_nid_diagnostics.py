@@ -42,6 +42,15 @@ process.stdout.write(JSON.stringify([
 param([string]$Source)
 $ErrorActionPreference='Stop'
 Add-Type -Path $Source -ReferencedAssemblies 'System.Web.Extensions'
+Add-Type -TypeDefinition @'
+public sealed class ZeroOffsetStream : System.IO.MemoryStream {
+ public ZeroOffsetStream(byte[] body) : base(body) { }
+ public override int Read(byte[] buffer, int offset, int count) {
+  if (offset != 0) throw new System.NotImplementedException();
+  return base.Read(buffer, offset, System.Math.Min(count, 3));
+ }
+}
+'@
 $cases=@(
  '{"errorCode":123,"accessToken":"private-fixture"}',
  '{"code":456,"message":"private-password"}',
@@ -59,8 +68,9 @@ $endpoints=@(
  [NidHttpDiagnostics]::IsEndpoint('https://members.netmarble.com.evil.invalid/api/auth','POST'),
  [NidHttpDiagnostics]::IsEndpoint('https://user@members.netmarble.com/api/auth','POST')
 )
-function Inspect([string]$Body, $Length) {
- $stream=[System.IO.MemoryStream]::new([System.Text.Encoding]::UTF8.GetBytes($Body))
+function Inspect([string]$Body, $Length, [bool]$ZeroOffset=$false) {
+ $bytes=[System.Text.Encoding]::UTF8.GetBytes($Body)
+ $stream=if ($ZeroOffset) { [ZeroOffsetStream]::new($bytes) } else { [System.IO.MemoryStream]::new($bytes) }
  try {
   $result=[NidHttpDiagnostics]::ReadAsync($stream,$Length).GetAwaiter().GetResult()
   @{code=$result.Code;state=$result.State;read=$stream.Position}
@@ -71,7 +81,8 @@ $bounded=@(
  (Inspect '{"code":123}' 1),
  (Inspect ('x'*20000) $null),
  (Inspect '{"code":123}' 20000),
- (Inspect '{"accessToken":"private-fixture"}' $null)
+ (Inspect '{"accessToken":"private-fixture"}' $null),
+ (Inspect '{"code":654}' $null $true)
 )
 $invalid=[System.IO.MemoryStream]::new([byte[]]@(255))
 $closed=[System.IO.MemoryStream]::new(); $closed.Dispose()
@@ -94,10 +105,11 @@ try {
         self.assertEqual(data['endpoints'], [True, False, False, False, False, False])
         self.assertIsNone(data['large'])
         self.assertEqual([row['state'] for row in data['bounded']],
-            ['numeric_code', 'length_mismatch', 'body_limit', 'length_limit', 'no_numeric_code'])
+            ['numeric_code', 'length_mismatch', 'body_limit', 'length_limit', 'no_numeric_code', 'numeric_code'])
         self.assertEqual(data['bounded'][0]['code'], 456)
         self.assertEqual(data['bounded'][2]['read'], 16385)
         self.assertEqual(data['bounded'][3]['read'], 0)
+        self.assertEqual(data['bounded'][5]['code'], 654)
         self.assertEqual(data['failures'], ['invalid_utf8', 'read_failed'])
         self.assertNotIn('private', result.stdout)
 
