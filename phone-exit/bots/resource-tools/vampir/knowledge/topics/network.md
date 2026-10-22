@@ -42,6 +42,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 
 - [BeginGameImpl: ID сервера, поиск записи и цель транспорта](../evidence/network/HEADLESS-BEGIN-GAME-SERVER-TARGET.md)
 - [Vampir — распаковка транспортных блоков и второй слой приёма](../evidence/network/HEADLESS-BLOCK-DECODE.md)
+- [Входящие события движения текущей сборки](../evidence/network/HEADLESS-CHARACTER-MOVE-EVENTS.md)
 - [Нижний connect: параметры peer и передача resolver-задания](../evidence/network/HEADLESS-CONNECT-RESOLVER-HANDOFF.md)
 - [Локальный адрес соединения в Version и граница SOCKS](../evidence/network/HEADLESS-CONNECTED-LOCAL-ADDRESS.md)
 - [Первый пакет connected callback — PktVersion](../evidence/network/HEADLESS-CONNECTED-VERSION-PACKET.md)

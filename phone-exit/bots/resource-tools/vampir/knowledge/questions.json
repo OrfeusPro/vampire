@@ -193,6 +193,22 @@
         "evidence/maps/HEADLESS-MAP-POSITION.md",
         "evidence/maps/HEADLESS-MAP-SESSION.md"
       ]
+    },
+    {
+      "id": "world-position-events",
+      "status": "open",
+      "question": "Какие текущие серверные пакеты обновляют положение своего персонажа и других сущностей после ID 206?",
+      "known": "Текущие ID 305 / 306 / 307 привязаны по именам и getter bytes. Целые конструкторы / readers ID 306 / 307 проверены в 28 native случаях и на 20 коротких префиксах. ID 307 содержит uint64 entity key и float32 XY, без Z / мира; receiver ищет объект по ключу и использует его Z с преобразованием и ветвями применения. Лёгкие decoders добавлены, три offline-теста прошли; к сессии ещё не подключены.",
+      "unknown": "Связь entity key с собственным персонажем, преобразование XY/Z, условия receiver, непрерывные события и фактическая позиция; формат исходящей команды ID 305 и смысл ID 306.",
+      "next_action": "Проверить ветви 14679eab0 и преобразование 1456a6770, затем identity guard и обновление модели сессии; использовать готовые readers без повторного извлечения.",
+      "decision_rule": "Не переносить старые адреса или считать объект своим без identity guard. Готовые exports использовать повторно, новые только по конкретным VA.",
+      "do_not_repeat": "Вход без новой обработки; движение по неподтверждённому формату; подмена live NPC статическими размещениями.",
+      "addresses": [],
+      "evidence": [
+        "evidence/maps/HEADLESS-MAP-SESSION.md",
+        "evidence/network/HEADLESS-PACKET-BINDINGS.md",
+        "evidence/network/HEADLESS-CHARACTER-MOVE-EVENTS.md"
+      ]
     }
   ]
 }

@@ -2292,6 +2292,44 @@
       "question": "map-live-position",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Последующие серверные события движения / сущностей, квестовое состояние, навигация и reconnect."
+    },
+    {
+      "addresses": [
+        "0x144aad640",
+        "0x144aae220",
+        "0x1456c5190",
+        "0x1456c5b60",
+        "0x1456d4b80",
+        "0x146797d00",
+        "0x14679eab0"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a6891e61112cdbd7ecbb2b2ef778e4d8f8d318132d492e8a44c4bf4efef974",
+          "id": "release-character-move",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cd4627f75c167d370b113f2522f3000534b1238c19149e4407440a2645614a71\\manifest.json",
+          "sha256": "cd4627f75c167d370b113f2522f3000534b1238c19149e4407440a2645614a71",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие ID 306 / 307 привязаны через конструкторы и getters; целые readers и вложенное чтение XY совпали с лёгкими декодерами на 28 телах, 20 коротких префиксов отклонены. ID 307 содержит uint64 ключ и float32 XY без Z / мира. Статический receiver ищет объект по ключу, берёт его Z и выбирает путь применения через преобразование. Исходящий ID 305 найден, полный формат команды ещё не разобран.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-CHARACTER-MOVE-EVENTS.md",
+          "sha256": "e59f6bf7576c2dcc9daf14e22fbe2dd74a1948e91c4b2675312624f2815f7322"
+        }
+      ],
+      "id": "639af6a6476018ea73109a803bf15a1aece0af0b79b06e37c6a82508fe08ddc9",
+      "limits": [
+        "Native исполняет конструкторы, getters и readers; тела синтетические, memcpy архива ограничен фикстурой.",
+        "Handler / receiver разобраны статически; ветви состояния, transform и высота не исполнены.",
+        "Связь с собственным персонажем и живые события не проверены. ID 306 остаётся необъяснённым uint32; игровые команды не отправлялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Разобрать преобразование 1456a6770 и проверить ветви receiver, затем связать ключ с выбранным персонажем и моделью сессии.",
+      "question": "world-position-events",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Условия receiver, преобразование 1456a6770, identity guard собственного персонажа и непрерывная позиция; исходящий ID 305 и смысл ID 306."
     }
   ],
   "schema": 1,

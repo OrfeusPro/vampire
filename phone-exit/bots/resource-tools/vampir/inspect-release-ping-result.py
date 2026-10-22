@@ -1,15 +1,18 @@
-"""Locate current PingResult through literal and checked instruction boundaries."""
+"""Locate explicitly named current packets through checked instruction boundaries."""
 import hashlib
 import importlib.util
 from pathlib import Path
 import json
 import struct
+import argparse
 
 HERE=Path(__file__).resolve().parent
 SHA='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 
 
-def run():
+def run(packet='PktPingResult'):
+    if packet not in ('PktPingResult','PktCharacterPosition','PktCharacterMove','PktCharacterMoveResult','PktCharacterMoveNotify'):
+        raise ValueError('Explicit supported packet name required')
     spec=importlib.util.spec_from_file_location('ping_result_native',HERE/'build-native-entry-code.py')
     native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
     spec=importlib.util.spec_from_file_location('ping_result_audit',HERE/'audit-client-release.py')
@@ -22,10 +25,11 @@ def run():
     for section in image.pe.sections:
         if section['name']!='.rdata':continue
         start,end=section['raw'],section['raw']+section['raw_size']
-        at=raw.find(b'PktPingResult\0',start,end)
+        literal_bytes=packet.encode()+b'\0'
+        at=raw.find(literal_bytes,start,end)
         while at>=0:
-            literals.append(image.pe.address(at));at=raw.find(b'PktPingResult\0',at+1,end)
-    if len(literals)!=1:raise ValueError('Ambiguous PingResult literal')
+            literals.append(image.pe.address(at));at=raw.find(literal_bytes,at+1,end)
+    if len(literals)!=1:raise ValueError('Ambiguous literal: '+packet)
     def references(target):
         candidates=native.rip_candidates(image,{target:{}})
         roots={image.roots[f] for at,_ in candidates if (f:=image.containing(at)) is not None}
@@ -62,20 +66,26 @@ def run():
     table=image.pe.address(locations[0]-0x38)
     slots=struct.unpack_from('<8Q',raw,locations[0]-0x38)
     id_bytes=raw[image.offset(slots[5]-image.pe.base):][:6]
-    if id_bytes!=b'\xb8\x11\x00\x00\x00\xc3':raise ValueError('Candidate getter is not ID17')
+    if len(id_bytes)!=6 or id_bytes[0]!=0xb8 or id_bytes[-1]!=0xc3:
+        raise ValueError('Candidate getter '+hex(slots[5])+' is not MOV EAX,imm;RET: '+id_bytes.hex())
+    packet_id=struct.unpack_from('<I',id_bytes,1)[0]
+    if packet_id>65535 or (packet=='PktPingResult' and packet_id!=17):raise ValueError('Unexpected packet ID')
     ctors,ctor_fragments=references(table)
     report=dict(source_sha256=SHA,tool_sha256=audit.sha256(Path(__file__)),
-        literal=hex(literals[0]),literal_bytes=b'PktPingResult\0'.hex(),name_references=names,
+        packet=packet,packet_id=packet_id,literal=hex(literals[0]),literal_bytes=literal_bytes.hex(),name_references=names,
         candidate_table=hex(table),table_bytes=raw[locations[0]-0x38:locations[0]+8].hex(),
         slots=[hex(a) for a in slots],id_getter_bytes=id_bytes.hex(),constructor_candidates=ctors,
         fragments=name_fragments+ctor_fragments,
         limits=['Name-slot displacement 0x38 remains a hypothesis until constructor vptr store is reviewed.',
             'Exact source SHA and whole-unwind instruction boundaries are checked; no Ghidra analysis or game IO.',
             'Reader and handler semantics are not established by names or table candidates.'])
-    target=audit.save_snapshot(native.ROOT/'code-clues/release-ping-result-discovery',report)
+    category='release-ping-result-discovery' if packet=='PktPingResult' else 'release-world-packet-discovery'
+    target=audit.save_snapshot(native.ROOT/'code-clues'/category,report)
     return target,report
 
 
 if __name__=='__main__':
-    path,r=run();print(json.dumps(dict(report=str(path),table=r['candidate_table'],
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--packet',default='PktPingResult')
+    path,r=run(parser.parse_args().packet);print(json.dumps(dict(report=str(path),packet_id=r['packet_id'],table=r['candidate_table'],
         slots=r['slots'],constructors=[v['owner'] for v in r['constructor_candidates']])))
