@@ -7,13 +7,15 @@ import struct
 HERE = Path(__file__).resolve().parent
 
 
-def run():
+def run(*, drain=False):
     spec = importlib.util.spec_from_file_location('tutorial_apply_archive', HERE / 'replay-release-archive-input.py')
     archive = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(archive)
     fixtures = {a: None for a in (0x1464a1f20, 0x1464c5770, 0x1464cfb80, 0x14560c570, 0x14690a090)}
+    if drain:
+        fixtures.update({0x14584e610: None, 0x14141cc40: None})
     h = archive.make_harness(extra_addresses=(0x141682d60, 0x14163c5f0, 0x14163c480,
-        0x1464c06d0, 0x1464d1770, 0x1464c4ea0, 0x14584d0a0),
+        0x1464c06d0, 0x1464d1770, 0x1464c4ea0, 0x14584d0a0, *((0x1464cd550,) if drain else ())),
         extra_leaves=(0x1457fee50, 0x1458571a0), fixtures=fixtures)
     evidence = {
         'details/run-0d509e824f91/details.json': '116e67e3daec8c5756fcb162c278265576e3f818f6d47adb585b11798ea314e4',
@@ -102,8 +104,10 @@ def run():
         return nodes + 48
 
     events, blocked, selector, incoming_state = [], False, 0, 0
+    drain_active, drain_expected, drain_index = False, [], [0]
 
     def fixture(machine):
+        nonlocal selector, incoming_state, keep
         address = machine.reg_read(x.UC_X86_REG_RIP)
         a, c, d, e = [machine.reg_read(reg) for reg in
             (x.UC_X86_REG_RCX, x.UC_X86_REG_RDX, x.UC_X86_REG_R8, x.UC_X86_REG_R9)]
@@ -114,6 +118,8 @@ def run():
             result = inserted
             events.append('insert_fixture')
         elif address == 0x1464c5770:
+            if drain_active:
+                _, selector, incoming_state, keep = drain_expected[drain_index[0]]
             if (a, c, d, e) != (context, 1001, selector, incoming_state):
                 raise ValueError('Tutorial gate arguments differ')
             events.append('gate_fixture')
@@ -130,6 +136,16 @@ def run():
             uc.mem_write(clone, bytes(0x38))
             result = clone
             events.append('clone_fixture')
+        elif address == 0x14584e610:
+            if not drain_active or (a, c) != (drain_expected[drain_index[0]][0], 1):
+                raise ValueError('Deferred destructor arguments differ')
+            drain_index[0] += 1
+            events.append('release_fixture')
+        elif address == 0x14141cc40:
+            if not drain_active or (a, c) != (context + 0x198, 0) or u32(context + 0x1a0):
+                raise ValueError('Queue shrink called before native count reset')
+            uc.mem_write(context + 0x198, bytes(16))
+            events.append('shrink_fixture')
         else:
             raise ValueError('Unexpected apply fixture')
         sp = machine.reg_read(x.UC_X86_REG_RSP)
@@ -214,18 +230,85 @@ def run():
                         if u32(context + 0x1a0):
                             raise ValueError('Ready result entered deferred queue')
                     phases.append(dict(phase=phase, bypass=bypass, keep=keep, blocked=blocked, deferred=deferred))
+    drains = []
+    if drain:
+        if h.image.pe.base + h.image.roots[h.image.containing(0x1464cd590)][0] != 0x1464cd550:
+            raise ValueError('Queue root is not the reviewed chained-unwind entry')
+        if int.from_bytes(uc.mem_read(0x14996ba48, 8), 'little') != 0x14584e610:
+            raise ValueError('Result destructor binding differs')
+        drain_active = True
+        incoming_state = 1
+        for initial_phase in (0, 5, 6, 7):
+            for order in ((), (None,), (0,), (0, None, 1)):
+                for keep in (0, 1):
+                    for blocked in (False, True):
+                        server, local = setup(True, True, False)
+                        pending_setup()
+                        uc.mem_write(context + 0x198, struct.pack('<QII', queue, len(order), 4))
+                        uc.mem_write(state_object + 0x30, bytes([initial_phase]))
+                        drain_expected = []
+                        drain_index[0] = 0
+                        for i, item in enumerate(order):
+                            pointer = 0 if item is None else clone + item * 0x80
+                            uc.mem_write(queue + i * 8, struct.pack('<Q', pointer))
+                            if pointer:
+                                h.call(0x14584d0a0, pointer)
+                                current_selector = item * 2
+                                uc.mem_write(pointer + 0x20, struct.pack('<IIIB', 1001, current_selector,
+                                    0x12345678 + item, 1))
+                                uc.mem_write(pointer + 0x30, bytes((1, keep)))
+                                drain_expected.append((pointer, current_selector, 1, keep))
+                        before_records = bytes(uc.mem_read(server, 24)) + bytes(uc.mem_read(local, 24))
+                        events.clear()
+                        h.call(0x1464cd550, context, budget=12000)
+                        if initial_phase < 6:
+                            if events or u32(context + 0x1a0) != len(order):
+                                raise ValueError('Not-ready drain touched queued packets')
+                            if before_records != bytes(uc.mem_read(server, 24)) + bytes(uc.mem_read(local, 24)):
+                                raise ValueError('Not-ready drain changed applied state')
+                            if pending_keys(False) != [0, 1001, 0xffffffff]:
+                                raise ValueError('Not-ready drain removed pending key')
+                            uc.mem_write(state_object + 0x30, b'\x06')
+                            h.call(0x1464cd550, context, budget=12000)
+                        expected_events = []
+                        for _ in drain_expected:
+                            expected_events += ['gate_fixture'] + ([] if blocked else ['launch_fixture']) + ['release_fixture']
+                        expected_events.append('shrink_fixture')
+                        if events != expected_events or drain_index[0] != len(drain_expected):
+                            raise ValueError('Deferred processing or release order differs')
+                        if bytes(uc.mem_read(context + 0x198, 16)) != bytes(16):
+                            raise ValueError('Queue was not cleared')
+                        if drain_expected:
+                            last = drain_expected[-1][1]
+                            if u32(server + 12) != last or u32(local + 12) != (last if blocked or keep else last + 1):
+                                raise ValueError('Queue did not preserve result order')
+                            if pending_keys(False) != [0, 0xffffffff] or u32(pending + 0x34) != 1:
+                                raise ValueError('Repeated queued key was freed more than once')
+                        elif before_records != bytes(uc.mem_read(server, 24)) + bytes(uc.mem_read(local, 24)):
+                            raise ValueError('Empty queue changed records')
+                        events.clear()
+                        h.call(0x1464cd550, context, budget=12000)
+                        if events:
+                            raise ValueError('Drained packet was processed or released again')
+                        drains.append(dict(initial_phase=initial_phase, order=order,
+                            keep=keep, blocked=blocked, released=len(drain_expected), resumed=initial_phase < 6))
     report = dict(source_sha256=h.sha, tool_sha256=h.audit.sha256(Path(__file__)),
         evidence=evidence, fragments=h.fragments, leaves=h.leaves, removals=removals, applied=applied,
-        phases=phases, native_execution=True, network_used=False,
+        phases=phases, drains=drains, native_execution=True, network_used=False,
         limits=['Whole pending lookup/unlink/sparse free, receiver, ID 9904 clone and record application execute.',
                 'Existing maps use bounded prepared storage; fresh authoritative insertion, clone allocation and client phase are fixtures.',
                 'The actual task gate and task execution remain fixtures; no active UI or live tutorial completion claim.',
-                'Deferred queue uses preallocated capacity; growth and automatic queue drain do not execute.'])
+                ('Whole chained-unwind queue drain executes for ID 9904; packet destructor and queue shrink/free are fixtures.' if drain else
+                 'Deferred queue uses preallocated capacity; growth and automatic queue drain do not execute.'),
+                'Queue drain does not establish its caller lifecycle, runtime readiness mapping or other packet branches.'])
     path = h.audit.save_snapshot(h.native.ROOT / 'code-clues/release-tutorial-apply-replay', report)
     return path, report
 
 
 if __name__ == '__main__':
-    path, report = run()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--drain', action='store_true')
+    path, report = run(drain=parser.parse_args().drain)
     print(json.dumps(dict(report=str(path), removals=len(report['removals']),
-                          applied=len(report['applied']), phases=len(report['phases']))))
+                          applied=len(report['applied']), phases=len(report['phases']), drains=len(report['drains']))))

@@ -142,11 +142,15 @@ Writer `0x145858ef0` уже проверен: 9 байтов, 64 native вект
 сценариев с fixtures. Удаление ключа / копирование раннего ответа / применение
 записи дополнительно прошли 12 / 32 / 384 native-сценария с явными границами.
 Различать серверный selector и локальный +1; реальный gate и запуск задач
-пока fixtures. Следом потребитель отложенной очереди, loader TutorialStep,
+пока fixtures. Потребитель queued ID 9904 проверен в 64 сценариях: настоящий
+вход `0x1464cd550`, внутренний фрагмент `0x1464cd590` отдельно не вызывать.
+Следом начальное применение ID 9905 (`0x1464c4ba0`), bootstrap
+`0x1464cfeb0` / построение статусов `0x1464d0510`, loader TutorialStep,
 первая задача и callback панели. Сброс ожидания не означает завершение действия.
 Активный step 2 ещё не подтверждён.
 [Ответ и границы применения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
 [Очередь, удаление ключа и запись состояния](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md).
+[Готовность и разбор очереди](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-QUEUE-DRAIN.md).
 [Тело запроса и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
 [Путь действия и следующий пробел](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md).
 [Переход, строки и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md).

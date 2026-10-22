@@ -90,12 +90,16 @@ ID 9904 / TutorialUpdateResult разобран: decoder прошёл 216 native
 Удаление ожидающего ключа, копирование раннего ответа и применение записи
 теперь проверены native: 12 / 32 / 384 сценария. Серверная запись и локальный
 селектор различаются; реальный gate задачи и запуск остаются fixtures.
-Потребитель очереди, условия действия и callback ещё проверяются.
+Потребитель очереди ID 9904 прошёл ещё 64 native-сценария с явными fixtures
+освобождения: готовность, порядок, возобновление и отсутствие повторной обработки.
+Найдена цепочка начального ID 9905 → проверка / построение локальных задач;
+её исполнение, условия действия и callback ещё проверяются.
 Классификация квестов, автовыполнение и источники прежнего UI
 уточнены в TASKS.
 [Writer и следующий ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
 [Ответ и различие ожиданий](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
 [Применение и отложенный ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md).
+[Consumer очереди и начальное уведомление](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-QUEUE-DRAIN.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 
