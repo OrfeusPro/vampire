@@ -22,7 +22,8 @@
 <p class="hint">По умолчанию Carnage. Класс выбирается вручную и сохраняется. При подтверждении «ник занят» меняется только ник, до 5 вариантов; неизвестный ответ не вызывает повтор.</p>
 <p class="hint">Если на выбранном сервере уже есть персонаж, новый не создаётся. Эти настройки применяются только к подтверждённому пустому списку. Сетевое создание пока недоступно. Кнопка случайного ника меняет форму до сохранения.</p>
 <p id="characters-age" class="muted"></p>
-<div class="tools"><button type="button" id="characters">Прочитать персонажей</button><button class="primary" type="submit">Сохранить настройки</button></div></form>
+<p class="hint">Для выбранного сервера сразу нажмите «Войти и прочитать персонажей»: каталог серверов и персонажи загружаются за один вход. Предварительно нажимать «Загрузить серверы» не нужно. Эта проверка не входит в мир.</p>
+<div class="tools"><button type="button" id="characters">Войти и прочитать персонажей</button><button class="primary" type="submit">Сохранить настройки</button></div></form>
 <div class="session"><div><span class="eyebrow">СЕССИЯ</span><h3 id="message">Готов к настройке</h3><p id="stage" class="muted"></p></div><div class="tools"><button id="start" class="primary">Запустить</button><button id="stop" class="danger">Остановить</button></div></div>
 <div id="code-entry" hidden><label>Код регистрации из письма<input id="registration-code" type="password" inputmode="numeric" maxlength="5" autocomplete="one-time-code"></label><button id="send-code" type="button">Передать код регистрации</button><p class="muted">Только код регистрации выбранного аккаунта. Код не сохраняется.</p></div>
 <p class="muted">Первый запуск ограничен 5 минутами после входа в мир. Без автоматического повторного входа и игровых действий по квестам.</p><div id="notice" role="status"></div>

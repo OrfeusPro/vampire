@@ -84,7 +84,8 @@ class SelectedGameLoginTests(unittest.TestCase):
         connection.getsockname.return_value = ('127.0.0.1', 1234)
         connection.get_proxy_sockname.return_value = ('0.0.0.0', 0)
         connection.getsockname.return_value = ('192.168.1.25', 49152)
-        with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route, \
+        catalog = Mock()
+        with patch.object(self.tool, 'module', side_effect=modules) as loader, patch.object(self.tool, 'SocksRoute') as route, \
                 patch.object(self.tool, 'connect_direct', return_value=connection) as direct_connect, \
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
@@ -93,7 +94,12 @@ class SelectedGameLoginTests(unittest.TestCase):
             if world_start: options['selected_profile'] = 'recovered-release'
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
                 lobby_context='sdk-with-partial-metadata', read_character_list=True, character_index=0,
-                read_world_start=world_start, read_world_finish=world_finish, observe_world_seconds=observation, **options)
+                read_world_start=world_start, read_world_finish=world_finish, observe_world_seconds=observation,
+                _server_list_observer=catalog, **options)
+        catalog.assert_called_once()
+        self.assertEqual(catalog.call_args.args[0].servers[0].u32[1], 42)
+        self.assertEqual(sum(call.args[1] == 'probe-lobby-sdk-login.py' for call in loader.call_args_list), 1)
+        exchange.assert_called_once()
         packet = exchange.call_args.args[2]
         clock = exchange.call_args.kwargs['ping_clock']
         if source_sha:

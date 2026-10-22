@@ -90,6 +90,11 @@ def run(args):
     def world(position):
         if position is not None:
             emit('active', message='Персонаж в мире; соединение активно.')
+    def catalog(listing):
+        if listing.result_code != 0:
+            raise ValueError('Server catalog was not accepted')
+        store.save_catalog(settings['region'], build_account_catalog(listing, region=settings['region'],
+            observed_utc=datetime.now(timezone.utc).isoformat()))
     result = tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
         server_policy_byte=0, extra_number=revision, context='windows-sdk-initial-reset', region=settings['region'],
         server_id=settings['server_id'], password=password, auth_flow=settings.get('auth_flow', 'launcher'), language_code=1,
@@ -97,7 +102,7 @@ def run(args):
         character_index=settings['character_index'] if start_world else None,
         read_world_start=start_world, read_world_finish=start_world,
         observe_world_seconds=300 if start_world else 0, world_observer=world if start_world else None,
-        _progress=progress)
+        _progress=progress, _server_list_observer=catalog)
     password = None
     if result.get('browser_status') in ('timeout', 'login_failed'):
         browser = load('account_browser_failure', HERE / 'nid-browser.py')

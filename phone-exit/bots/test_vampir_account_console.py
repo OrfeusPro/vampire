@@ -106,6 +106,46 @@ class AccountConsoleTests(unittest.TestCase):
             self.assertNotIn('create_sdk_player', lobby.run.call_args.kwargs)
             store.save_catalog.assert_called_once_with('EU', {})
 
+    def test_character_operation_saves_catalog_from_same_login_and_never_selects_character(self):
+        spec = importlib.util.spec_from_file_location('account_chain_test', HERE / 'vampir-headless/account-worker.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        for code in (0, 59):
+            store, registry, cdn, login = MagicMock(), MagicMock(), MagicMock(), MagicMock()
+            store.credential.return_value = ('fixture@unit.invalid', 'fixture-password',
+                dict(enabled=True, region='EU', server_id=384, auth_flow='launcher', character_index=0, character_key='123'))
+            cdn.profile.return_value = dict(url='https://fixture.invalid')
+            cdn.fetch.return_value = (b'fixture-body', {})
+            cdn.save.return_value = (Path('fixture-manifest.json'), None)
+            def login_run(*args, **kwargs):
+                kwargs['_server_list_observer'](SimpleNamespace(result_code=code))
+                self.assertIsNone(kwargs['character_index'])
+                self.assertTrue(kwargs['read_character_list'])
+                self.assertFalse(kwargs['read_world_start'])
+                self.assertFalse(kwargs['read_world_finish'])
+                return dict(status='game_login_probe', game=dict(login_result_code=0,
+                    character_list_received=True, character_list_result_code=0,
+                    characters=[dict(index=0, key='123', name='Existing')]))
+            login.run.side_effect = login_run
+            def load(name, path):
+                if path.name == 'fetch-public-cdn-config.py': return cdn
+                if path.name == 'probe-selected-game-login.py': return login
+                self.fail('Second authentication or unexpected module: ' + path.name)
+            with patch.object(tool, 'AccountStore', return_value=store), \
+                 patch.object(tool, 'DeviceRegistry', return_value=registry), patch.object(tool, 'load', side_effect=load), \
+                 patch.object(tool, 'build_account_catalog', return_value={'fixture': True}), patch.object(tool, 'emit'), \
+                 patch.object(tool.Path, 'read_bytes', return_value=b'fixture'), patch.object(tool, 'parse_patch_client_revision', return_value=123):
+                args = SimpleNamespace(store=Path('fixture.sqlite3'), account='fixture-id', operation='characters')
+                if code == 0:
+                    tool.run(args)
+                    store.save_catalog.assert_called_once_with('EU', {'fixture': True})
+                    store.save_characters.assert_called_once()
+                else:
+                    with self.assertRaises(ValueError): tool.run(args)
+                    store.save_catalog.assert_not_called()
+                    store.save_characters.assert_not_called()
+            login.run.assert_called_once()
+            store.creation_nickname.assert_not_called()
+
     def test_sdk_failure_keeps_only_numeric_status_and_code(self):
         spec = importlib.util.spec_from_file_location('worker_error_test', HERE / 'vampir-headless/account-worker.py')
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
