@@ -157,6 +157,10 @@ SignUp прошли, включая четыре native сценария ста�
 снимка. Текущие две функции SignUp разобраны отдельно статически;
 это ещё не native-проверка новой сборки.
 [Текущий разбор и оставшиеся проверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-SDK-SIGN-UP.md).
+Семь текущих initializers ключей прошли 28 native случаев: имена полей SignUp
+и ключи errorCode / resultData подтверждены для нового SHA. Полный caller и
+constructor ключей player callback этой проверкой не покрываются.
+[Ключи, fixtures и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-SIGN-UP-KEYS.md).
 Проверка синтаксиса JavaScript прошла.
 После добавления параметров создания прошли 53 теста выбранного набора,
 включая 18 тестов панели: сохранение ника после перезапуска, неизменность класса

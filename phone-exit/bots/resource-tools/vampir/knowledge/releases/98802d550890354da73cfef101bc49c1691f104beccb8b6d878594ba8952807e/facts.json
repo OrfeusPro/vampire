@@ -4651,6 +4651,43 @@
       "question": "sdk-first-player",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Текущие initializers ключей и constructor owner callback, native исполнение актуального тела."
+    },
+    {
+      "addresses": [
+        "0x1411b0350",
+        "0x1411b0380",
+        "0x1411b03e0",
+        "0x1411b0440",
+        "0x1411b05c0",
+        "0x1411b05f0",
+        "0x1411b06b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "83a83a983079fead2ffb98d3c464fc32a2573eea2dc03c22244f11dc72ce621f",
+          "id": "release-sign-up-keys",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c0ced7295e895b3506b9fdf82fb3e6b9bd80389edb98a988e99bbf6d7ffbe4c\\manifest.json",
+          "sha256": "0c0ced7295e895b3506b9fdf82fb3e6b9bd80389edb98a988e99bbf6d7ffbe4c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Семь целых compiled initializers в 28 native случаях устанавливают nmDeviceKey, deviceKey, countryCode, os, credential, errorCode и resultData в текущем EXE. Совместно со статическим caller подтверждены имена полей SignUp; исполнение самого caller и owner callback ещё не выполнено.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-SIGN-UP-KEYS.md",
+          "sha256": "589d08da689616957daed674638f889addbe5c9d85e6f6ee8715223520432e5b"
+        }
+      ],
+      "id": "da9f47a1be983d93bebe2d4a55432c1d0a420189887d1f56936062e330c8c803",
+      "limits": [
+        "FString construction и atexit являются bounded fixtures; destructor не исполняется.",
+        "Сборка JSON, getters, HTTP, callback и реальная регистрация не исполнялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить owner constructor и actual SignUp caller перед новой живой регистрацией SDK.",
+      "question": "sdk-first-player",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Текущий constructor owner callback и целое bounded исполнение caller SignUp."
     }
   ],
   "schema": 1,

@@ -5,15 +5,16 @@
       "id": "sdk-first-player",
       "status": "open",
       "question": "Как создать игровой профиль SDK после подтверждённого NID, отдельно от персонажа?",
-      "known": "На SHA 98802d получены полные экспорты SignUp 144506cf0 и callback 1444d6050. Статически подтверждены authUrl / v1/sign-up, четыре начальные пары и optional credential, HTTP 200..206 и вложенный разбор ответа. Имена глобальных ключей ещё не перенесены. Исторический replay воспроизводится только на явном SHA-снимке.",
+      "known": "На SHA 98802d получены полные экспорты SignUp 144506cf0 и callback 1444d6050. Статически подтверждены authUrl / v1/sign-up, четыре начальные пары и optional credential, HTTP 200..206 и вложенный разбор ответа. Имена глобальных ключей ещё не перенесены. Исторический replay воспроизводится только на явном SHA-снимке. Семь текущих initializers целиком исполнены в 28 случаях: nmDeviceKey, deviceKey, countryCode, os, credential, errorCode, resultData подтверждены. FString / atexit остаются bounded fixtures; body caller и owner constructor не исполнены.",
       "unknown": "Актуальный контракт SignUp и ответ текущего сервиса для новой EU-почты.",
-      "next_action": "Проверить текущие initializers пяти ключей и constructor owner callback; затем bounded replay актуального тела и отдельный SDK SignUp.",
+      "next_action": "Проверить текущий constructor owner callback и целый bounded caller SignUp; затем отдельный SDK SignUp.",
       "decision_rule": "Не повторять регистрацию занятой почты; не считать SignUp входом или созданием персонажа. Новый SHA проверять отдельно.",
       "do_not_repeat": "Автоматический SignUp после любого отказа SignIn; повторять создание при неизвестном результате.",
       "addresses": [],
       "evidence": [
         "evidence/auth/HEADLESS-SDK-SIGN-UP.md",
-        "evidence/auth/HEADLESS-RELEASE-SDK-SIGN-UP.md"
+        "evidence/auth/HEADLESS-RELEASE-SDK-SIGN-UP.md",
+        "evidence/auth/HEADLESS-RELEASE-SIGN-UP-KEYS.md"
       ]
     },
     {
