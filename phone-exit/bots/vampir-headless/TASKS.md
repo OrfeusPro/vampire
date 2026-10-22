@@ -3,14 +3,25 @@
 Статус на 22 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.
 
-Уточнение: Global / Prelude 2, аккаунт бота прежний, нужен новый персонаж.
+Уточнение: Global / EU / Prelude 2. На основном тестовом аккаунте уже есть
+персонаж: панель получила Login 0 и одну запись, назначение по ключу сохранено.
+Первая проверка входа в мир остановилась на NID. Следующий запуск получил
+серверную позицию; статус «В мире» проверен на одном EU-аккаунте.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-EU-ACCOUNT-CONSOLE.md).
+Прежний HK-профиль исключён из EU-проверок. Для новой EU-почты ещё нужны
+регистрация и создание персонажа.
+[Панель и проверенные границы](ACCOUNT-CONSOLE.md).
 Прямой NID / SDK / лобби вход проверен. Добавлен выбор регионального лобби;
 пользователь подтвердил EU. Свежий каталог дал Prelude 2 / ID 384 / group 358.
-Game Version 0, Game Login 59 / BlockedInfo; до списка и создания не дошли.
-Следом — причина этого отказа и сравнение с официальным принятым EU-входом.
+На прежнем HK-профиле были Game Version 0 и Login 59 / BlockedInfo до списка.
+Следом — проверить регистрацию нового аккаунта и создание персонажа;
+причину старого ограничения не считать доказанной причиной поведения других аккаунтов.
 Параллельно разобрана подготовка создания первого персонажа: игровые ID 103 /
 104, CreateData writer / reader и producer найдены. Пустой ID 102 и отказ Login
 разделены current native replay; отправка создания пока не подключена.
+Constructor / getter источника класса прошли 144 native случая; допустимая строка
+класса, appearance JSON и целый writer создания ещё не проверены.
+[Источник класса и fixtures](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-SOURCE.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

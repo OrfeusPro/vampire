@@ -47,6 +47,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [Локальный адрес соединения в Version и граница SOCKS](../evidence/network/HEADLESS-CONNECTED-LOCAL-ADDRESS.md)
 - [Первый пакет connected callback — PktVersion](../evidence/network/HEADLESS-CONNECTED-VERSION-PACKET.md)
 - [Vampir — Dispatch до входа в OnHandler](../evidence/network/HEADLESS-DISPATCH.md)
+- [EU-вход через панель аккаунтов](../evidence/network/HEADLESS-EU-ACCOUNT-CONSOLE.md)
 - [Vampir — CRC32 и XOR внешнего слоя, H03b.1](../evidence/network/HEADLESS-FRAME-PRIMITIVES.md)
 - [Franz 2: связь имени с ID и отдельная попытка входа](../evidence/network/HEADLESS-FRANZ2-LOGIN.md)
 - [ConnectToServer: адрес, игровой порт и дополнительная пара](../evidence/network/HEADLESS-GAME-CONNECT-TARGET.md)

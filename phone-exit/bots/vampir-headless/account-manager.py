@@ -153,6 +153,7 @@ def server(store, *, port=17949):
             if self.path != '/api/state' or not self.trusted(True):
                 return self.response(403, dict(error='Forbidden'))
             return self.response(200, dict(accounts=store.accounts(), jobs=jobs.snapshot(), catalogs=store.catalogs(),
+                character_lists=store.character_lists(),
                 device_profiles=[dict(id='current-pc', name='Текущий ПК · общие данные устройства', available=True)]))
 
         def do_POST(self):

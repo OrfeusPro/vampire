@@ -1,5 +1,6 @@
 """Local bot assignments and encrypted credentials; no game operations."""
 import ctypes
+from datetime import datetime
 from contextlib import contextmanager
 from ctypes import wintypes
 import json
@@ -58,6 +59,7 @@ class AccountStore:
         with self._db() as db:
             db.execute('CREATE TABLE IF NOT EXISTS accounts(id TEXT PRIMARY KEY,email TEXT UNIQUE NOT NULL,password BLOB NOT NULL,assignment TEXT NOT NULL)')
             db.execute('CREATE TABLE IF NOT EXISTS catalogs(region TEXT PRIMARY KEY,data TEXT NOT NULL)')
+            db.execute('CREATE TABLE IF NOT EXISTS character_lists(account_id TEXT,region TEXT,server_id INTEGER,data TEXT NOT NULL,PRIMARY KEY(account_id,region,server_id))')
             columns = {row[1] for row in db.execute('PRAGMA table_info(accounts)')}
             if 'mail_password' not in columns:
                 db.execute('ALTER TABLE accounts ADD COLUMN mail_password BLOB')
@@ -159,3 +161,33 @@ class AccountStore:
     def catalogs(self):
         with self._db() as db:
             return {region: json.loads(data) for region, data in db.execute('SELECT region,data FROM catalogs')}
+
+    def save_characters(self, identifier, *, region, server_id, characters, observed_utc):
+        self.assignment(dict(region=region, server_id=server_id))
+        if server_id is None or type(characters) is not list or len(characters) > 4096:
+            raise ValueError('Invalid character list')
+        if type(observed_utc) is not str or len(observed_utc) > 50 or datetime.fromisoformat(observed_utc).utcoffset() is None:
+            raise ValueError('Invalid character observation time')
+        keys = set()
+        for index, row in enumerate(characters):
+            if type(row) is not dict or set(row) != {'index', 'key', 'name'} or type(row['index']) is not int or row['index'] != index:
+                raise ValueError('Invalid character record')
+            self.assignment(dict(region=region, server_id=server_id, character_index=index, character_key=row['key']))
+            if row['key'] is None or row['key'] in keys:
+                raise ValueError('Ambiguous character key')
+            keys.add(row['key'])
+            if type(row['name']) is not str or len(row['name']) > 512 or any(ord(c) < 32 for c in row['name']):
+                raise ValueError('Invalid character label')
+        data = json.dumps(dict(characters=characters, observed_utc=observed_utc), ensure_ascii=False)
+        if len(data.encode('utf-8')) > 262144:
+            raise ValueError('Character list exceeds budget')
+        with self._db() as db:
+            if db.execute('SELECT 1 FROM accounts WHERE id=?', (identifier,)).fetchone() is None:
+                raise KeyError('Unknown account')
+            db.execute('INSERT INTO character_lists VALUES(?,?,?,?) ON CONFLICT(account_id,region,server_id) DO UPDATE SET data=excluded.data',
+                (identifier, region, server_id, data))
+
+    def character_lists(self):
+        with self._db() as db:
+            return {f'{identifier}|{region}|{server}': json.loads(data)
+                for identifier, region, server, data in db.execute('SELECT account_id,region,server_id,data FROM character_lists')}

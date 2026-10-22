@@ -26,6 +26,52 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_character_lists_survive_restart_and_are_isolated_by_account_and_server(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'console.sqlite3'
+            store = AccountStore(path, FixtureVault())
+            first, second = [store.save(address, password='fixture', assignment={})
+                for address in ('one@unit.invalid', 'two@unit.invalid')]
+            for identifier, server, name in ((first, 384, 'One'), (second, 384, 'Two'), (first, 382, 'Another server')):
+                store.save_characters(identifier, region='EU', server_id=server,
+                    characters=[dict(index=0, key='628556622121157889', name=name)], observed_utc='2026-10-22T19:00:00+00:00')
+            lists = AccountStore(path, FixtureVault()).character_lists()
+            self.assertEqual(len(lists), 3)
+            self.assertEqual(lists[first+'|EU|384']['characters'][0]['name'], 'One')
+            self.assertEqual(lists[second+'|EU|384']['characters'][0]['name'], 'Two')
+            self.assertEqual(lists[first+'|EU|382']['characters'][0]['key'], '628556622121157889')
+
+    def test_only_accepted_list_replaces_cached_characters_and_empty_is_a_real_update(self):
+        spec = importlib.util.spec_from_file_location('account_worker_cache_test', HERE / 'vampir-headless/account-worker.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('one@unit.invalid', password='fixture', assignment={})
+            settings = dict(region='EU', server_id=384)
+            accepted = dict(login_result_code=0, character_list_received=True, character_list_result_code=0,
+                characters=[dict(index=0, key='11', name='One')])
+            tool.remember_characters(store, identifier, settings, accepted)
+            original = store.character_lists()
+            for failed in ({}, dict(accepted, login_result_code=59), dict(accepted, character_list_received=False),
+                           dict(accepted, character_list_result_code=9)):
+                tool.remember_characters(store, identifier, settings, failed)
+                self.assertEqual(store.character_lists(), original)
+            tool.remember_characters(store, identifier, settings, dict(accepted, characters=[]))
+            self.assertEqual(store.character_lists()[identifier+'|EU|384']['characters'], [])
+
+    def test_invalid_character_update_preserves_previous_data(self):
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('one@unit.invalid', password='fixture', assignment={})
+            record = dict(index=0, key='11', name='One')
+            options = dict(region='EU', server_id=384, observed_utc='2026-10-22T19:00:00+00:00')
+            store.save_characters(identifier, characters=[record], **options)
+            original = store.character_lists()
+            for rows in ([record, dict(record, index=1)], [dict(record, key=11)], [dict(record, index=True)],
+                         [dict(record, name='bad\nlabel')]):
+                with self.assertRaises(ValueError): store.save_characters(identifier, characters=rows, **options)
+                self.assertEqual(store.character_lists(), original)
+
     def test_two_owned_workers_are_isolated_and_third_start_is_rejected(self):
         spec = importlib.util.spec_from_file_location('console_process_test', HERE / 'vampir-headless/account-manager.py')
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)

@@ -90,11 +90,14 @@ def run(args):
     password = None
     game = result.get('game', {})
     code = game.get('login_result_code')
+    remember_characters(store, args.account, settings, game)
     if code not in (None, 0):
         message = f"Login {code}: {game.get('login_result_key') or 'отказ сервера'}"
         state = 'error'
     elif result.get('status') != 'game_login_probe' or game.get('error'):
         message, state = 'Вход не завершён: ' + str(result.get('stage', 'unknown')), 'error'
+        if result.get('browser_status') == 'timeout':
+            message = 'Истекло время входа Netmarble. Игровое соединение не открыто; проверьте окно авторизации.'
     elif game.get('character_entry_state') == 'empty_list':
         message, state = 'Персонажей нет. Ник сохранён; сетевое создание ещё не подключено.', 'needs_character'
     elif game.get('selection_error'):
@@ -103,6 +106,13 @@ def run(args):
         message, state = ('Проверка завершена; соединение закрыто.', 'stopped')
     emit('result', status=state, message=message, characters=game.get('characters', []),
         login_code=code, character_count=game.get('character_count'))
+
+
+def remember_characters(store, identifier, settings, game):
+    if (game.get('login_result_code') == 0 and game.get('character_list_received') is True
+            and game.get('character_list_result_code') == 0 and 'characters' in game):
+        store.save_characters(identifier, region=settings['region'], server_id=settings['server_id'],
+            characters=game['characters'], observed_utc=datetime.now(timezone.utc).isoformat())
 
 
 def register_account(store, args, email, password):
