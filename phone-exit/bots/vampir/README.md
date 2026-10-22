@@ -67,7 +67,9 @@ ID 206 и 120 секунд без ошибок; цель входа показа
 Tutorial 1001 / step 1001002 → `QuestPanel_PanelTouch`. Шесть выбранных строк
 текущих CSV совпали с прежними; активное состояние ещё проверить.
 ID 9905 / TutorialUpdateNotify уже приходил
-в сессии; его вложенный формат — следующий шаг.
+в сессии. Вложенный формат разобран: decoder прошёл 72 native тела и 29 коротких
+префиксов; смысл трёх полей и lifecycle применения ещё проверяются.
+[Reader состояния обучения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 

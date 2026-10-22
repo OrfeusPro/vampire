@@ -2453,6 +2453,41 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Поля элемента массива обучения, активный шаг, текущий handler и producer / ответ PanelSelect."
+    },
+    {
+      "addresses": [
+        "0x1457ff150",
+        "0x1457ff270",
+        "0x1464c0680",
+        "0x1467cab90"
+      ],
+      "checks": [
+        {
+          "cache_key": "959df6ceb76f2066d8b45300aa07ab6306d6ae9354e590141dddd342898053de",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c\\manifest.json",
+          "sha256": "b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый текущий ID 9905 reader, constructors, getter, nested/item readers и callback массива сверены с лёгким decoder в 72 native случаях; 29 коротких префиксов отклонены. Формат: bool, uint16 count, затем три uint32 и state byte с clamp 3 в каждой записи. Статический handler ведёт в receiver с отложенным применением при раннем состоянии клиента; первый uint32 используется как ключ, переход state 1→2 имеет отдельную ветвь.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-UPDATE-READER.md",
+          "sha256": "361bc46955d1c61a08d5ef87a21aaf137ef7fa88d842557d9b9b63714c219338"
+        }
+      ],
+      "id": "e4a64c787e843695a60c6490201e6229e01a43c20526e3015e772e353737c1ff",
+      "limits": [
+        "Native исполняет чтение тела; свежая аллокация массива и cleanup являются ограниченными фикстурами. Рост / повторное использование контейнера не проверялись.",
+        "Handler / receiver прочитаны статически; shared branches и lifecycle применения не исполнены.",
+        "Смысл флага, трёх полей и enum состояния ещё не установлен. Decoder не подключён к сессии; активный шаг и нажатие панели не подтверждены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Установить роли полей через consumer / текущие таблицы, проверить lifecycle, затем подключить decoder и получить состояние из живого ID 9905.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Роли полей и состояний, отложенное применение и живой активный шаг обучения; producer панели и подтверждение результата."
     }
   ],
   "schema": 1,

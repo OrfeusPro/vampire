@@ -116,8 +116,13 @@ Quest 110110 / Moving forward → task 110110040 → Tutorial 1001 → step 1001
 Сверить эту цепочку с текущими таблицами и состоянием персонажа; не считать
 кандидат уже подтверждённым активным шагом. Повторно извлекать весь каталог не нужно.
 Выбранные шесть строк текущих CSV уже совпали с прежними полями. Найден
-PktTutorialUpdateNotify / ID 9905, который действительно приходил в HONOR-сессии;
-для чтения активного состояния дальше разобрать callback `0x1457ff270`.
+PktTutorialUpdateNotify / ID 9905, который действительно приходил в HONOR-сессии.
+Callback и reader элемента теперь разобраны: ID 9905 — bool, uint16 count,
+записи из трёх uint32 и state byte с clamp 3. Decoder прошёл 72 native тела
+и 29 коротких префиксов. Handler найден; раннее применение откладывается.
+Следом установить смысл полей / состояний и проверить lifecycle перед
+подключением к живой сессии.
+[Reader и границы применения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md).
 PktQuestPanelSelect / ID 1836 найден, но его producer / поле запроса ещё неизвестны.
 [Сверка строк, ID и следующий адрес](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 

@@ -216,9 +216,9 @@
       "id": "quest-waiting-action",
       "status": "open",
       "question": "Как определить ожидающий шаг квеста / обучения и выполнить действие квестовой панели без процесса игры?",
-      "known": "Найден кандидат Quest 110110 / task 110110040 / Tutorial 1001 / step 1001002, QuestPanel_PanelTouch и ServerProcessRequest=1. Шесть выбранных строк current CSV совпали с прежними полями. Текущие ID 1802 / QuestListReadResult, 9905 / TutorialUpdateNotify и 1836 / QuestPanelSelect привязаны по именам / getters. ID 9905 реально присутствовал в успешной HONOR-сессии; его вложенный reader 1457ff1e0 читает флаг и массив с callback 1457ff270. Активное состояние ещё не декодируется.",
-      "unknown": "Поля элемента tutorial array и семантика флага; активный квест / tutorial step персонажа; handler состояния, producer панели, поле запроса и подтверждение результата; текущие UI package bytes.",
-      "next_action": "Получить только explicit callback 1457ff270, затем проверить whole ID 9905 reader / handler и модель обучения. После этого живой вход должен получить активное состояние. Producer ID 1836 разбирать по связям панели; игровые запросы пока не отправлять.",
+      "known": "Найден кандидат Quest 110110 / task 110110040 / Tutorial 1001 / step 1001002, QuestPanel_PanelTouch и ServerProcessRequest=1. Шесть выбранных строк current CSV совпали с прежними полями. ID 1802 / QuestListReadResult, 9905 / TutorialUpdateNotify и 1836 / QuestPanelSelect привязаны по именам / getters. Whole ID 9905 decoder проверен в 72 native случаях / 29 коротких префиксах: bool, uint16 count, три uint32 и state byte с clamp 3. Handler ведёт в 1464c0680 с отложенным применением. ID 9905 реально приходил в HONOR-сессии; активный шаг ещё не установлен.",
+      "unknown": "Роли полей tutorial array и семантика флага / состояний; lifecycle применения, активный квест / tutorial step персонажа; producer панели, поле запроса и подтверждение результата; текущие UI package bytes.",
+      "next_action": "Whole ID 9905 decoder проверен в 72 native случаях / 29 коротких префиксах. Handler 1467cab90 ведёт в 1464c0680; раннее применение откладывается, первый uint32 служит ключом, state 1→2 имеет отдельную ветвь. Установить роли полей и состояний через consumer / таблицы, проверить lifecycle, затем подключить decoder и получить живое активное состояние. Producer ID 1836 пока не отправлять.",
       "decision_rule": "Статический квест или текст не доказывает активное состояние. Не объяснять отсутствие движения обучением без session proof; не подменять действие панели произвольной командой движения.",
       "do_not_repeat": "Извлечение всего каталога без изменения источника; вопрос пользователю о тексте до проверки готовых связей; вход без новой обработки.",
       "addresses": [],
@@ -226,7 +226,8 @@
         "evidence/scenarios/REWARDS-AND-LAYOUT.md",
         "evidence/interface/UI-CATALOG.md",
         "evidence/network/HEADLESS-LIVE-HONOR-SESSION.md",
-        "evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md"
+        "evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md",
+        "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md"
       ]
     }
   ]
