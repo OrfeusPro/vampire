@@ -31,6 +31,7 @@ Live состояние заданий, серверные переходы и �
 - [Vampir: имена числовых ContentsLockCondition](../evidence/scenarios/CONDITION-TYPES.md)
 - [ContentsLock: поля загрузчика и вызовы проверки](../evidence/scenarios/CONTENTS-LOCK-FIELDS.md)
 - [ContentsLock: условия открытия квестов и связи с наградами](../evidence/scenarios/CONTENTS-LOCKS.md)
+- [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Vampir: разрешение обработки результата пакета](../evidence/scenarios/PACKET-RESULT-GUARD.md)
 - [Vampir: зависимости квестов, обучения и интерфейса](../evidence/scenarios/QUEST-DEPENDENCIES.md)
 - [Условия наград и геометрия из данных клиента](../evidence/scenarios/REWARDS-AND-LAYOUT.md)

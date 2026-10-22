@@ -2425,6 +2425,34 @@
       "question": "world-position-events",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Живые собственные события ID 307, исходящий ID 305 / условия первого действия и последующие игровые события."
+    },
+    {
+      "addresses": [
+        "0x1456b83a0",
+        "0x1456ff620",
+        "0x1457ff1e0",
+        "0x14582cac0",
+        "0x14584d070"
+      ],
+      "checks": [],
+      "conclusion": "Шесть выбранных строк текущих CSV совпали с прежней цепочкой Quest 110110 / Tutorial 1001 / Step 1001002 для нажатия панели. Текущие getters связывают QuestListReadResult с ID 1802, TutorialUpdateNotify с ID 9905 и QuestPanelSelect с ID 1836. ID 9905 приходил в успешной HONOR-сессии; вложенный reader читает флаг и массив с callback 0x1457ff270, поля которого ещё неизвестны.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-PANEL-ENTRY.md",
+          "sha256": "4650c29dd32f6c868fc0974a4fbb86cf8d1b3951047500541a5a03f4a59a89d7"
+        }
+      ],
+      "id": "1d521c61233a331648bd11d555877b0b9d1a2f4e2230c2449a8de3ca7eec2c54",
+      "limits": [
+        "Сверены шесть выбранных строк-кандидатов; идентичность целых таблиц и активное состояние персонажа не подтверждены.",
+        "Текущие UI package bytes, видимость окна, producer действия, смысл поля запроса и подтверждение результата не проверены.",
+        "Decoder обучения, native replay и игровые действия не заявляются; аудит и экспорты выполнены offline."
+      ],
+      "method": "static",
+      "next_check": "Разобрать explicit callback 0x1457ff270, затем целый reader и handler перед новой живой проверкой состояния.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Поля элемента массива обучения, активный шаг, текущий handler и producer / ответ PanelSelect."
     }
   ],
   "schema": 1,
