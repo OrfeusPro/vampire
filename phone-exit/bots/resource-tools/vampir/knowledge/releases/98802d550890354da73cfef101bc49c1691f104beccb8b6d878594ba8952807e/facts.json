@@ -4219,6 +4219,229 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Поля ID 1810, назначение 1852 и источник исходного состояния / локальной остановки автопрохождения."
+    },
+    {
+      "addresses": [
+        "0x14582cf30",
+        "0x145838300"
+      ],
+      "checks": [
+        {
+          "cache_key": "5af47ddbb200ae87b02da43a506199216eb1f219d38805e44119cad9b7c07a65",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2\\manifest.json",
+          "sha256": "b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "25d56a780e4a367423f358aacdacf5efadd4ffce463f673f7434dec0fe03714a",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506\\manifest.json",
+          "sha256": "d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bda3cf661dcf10032f260f022f387d364210472b4de8739ac4da6256e8dfd95e",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2\\manifest.json",
+          "sha256": "fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5fd9448b0a5a1b17a14edca6bc9c809adeb581233d69e1a871f65191beff81e5",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273\\manifest.json",
+          "sha256": "280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a86c427cb8ed19e25ac894f2bffef4d826dd5829e706b19ad358c91f8d9a0b8",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a\\manifest.json",
+          "sha256": "948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50cbfdd50bc4aa64cf8ca7e77ddf8459738b95e869be6016410b97ba5f996d47",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14\\manifest.json",
+          "sha256": "9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ecfb24adc12f53d080b07bdf634f3cfd9f1ea1848c8e858781942c20110cc0f",
+          "id": "release-tutorial-drain",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681\\manifest.json",
+          "sha256": "58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1fcd6c4a2bd3e25f2aaf42130420c8996ce81494de0532526904bd1be52a25b0",
+          "id": "release-tutorial-startup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c\\manifest.json",
+          "sha256": "d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e516b8c0a6aa484ada7f0ffab6cc36e4cfe379d0e8a3b8adfff8d32364f5e035",
+          "id": "release-quest-record",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7\\manifest.json",
+          "sha256": "68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "20861cde41aaf2ad18e5f68ed42f9cebb5d929b0e8f745c6fe931aff7a929e90",
+          "id": "release-quest-list",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3\\manifest.json",
+          "sha256": "86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ebc75d286b83acd265f3fc7162f4e7c6a9b11ef3c9f398951b04fb221337eb8",
+          "id": "release-quest-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409\\manifest.json",
+          "sha256": "c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6621cabe210d745f0a0ea1392744ba527bb07c6c1a240e49f120261459780e55",
+          "id": "release-quest-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c0bbd36313bd4a6911ffa4f267c3f28ff3b1a11c296b802b6837ecbe0f2c2d3\\manifest.json",
+          "sha256": "0c0bbd36313bd4a6911ffa4f267c3f28ff3b1a11c296b802b6837ecbe0f2c2d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые writer / mirror reader ID 1810 совпали с codec на 48 телах; шесть отказов writer и 29 коротких префиксов. Wire: три float32, два uint64, byte, всего 29 байт; byte не bool. Codec без отправки.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-UPDATE-WIRE.md",
+          "sha256": "64e6c54e38dd21ab3a65c02482307c22ee32fbb62cb29dbda60566254a0d5451"
+        }
+      ],
+      "id": "892ddf3fd090a9087f9af98c507626917c7752f1337e61894f191e8e11137833",
+      "limits": [
+        "Raw output append и archive memcpy — ограниченные fixtures; allocator / transport не исполнялись.",
+        "Constructor не инициализирует vector; локальный codec разрешает только finite float32.",
+        "Совпадение raw30 с ключами Quest в capture — кандидатная связь, не producer / setter proof.",
+        "Codec не подключён к отправке; серверное принятие и handler ID 1811 не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти текущий Quest / прогресс и producer ID 1810; не копировать тела capture в новую сессию.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник vector / raw28 / raw38, producer QuestUpdate, исходное состояние квеста и обработчик результата."
+    },
+    {
+      "addresses": [
+        "0x144aae290",
+        "0x144aae5d0",
+        "0x145829dd0"
+      ],
+      "checks": [
+        {
+          "cache_key": "5af47ddbb200ae87b02da43a506199216eb1f219d38805e44119cad9b7c07a65",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2\\manifest.json",
+          "sha256": "b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "25d56a780e4a367423f358aacdacf5efadd4ffce463f673f7434dec0fe03714a",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506\\manifest.json",
+          "sha256": "d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bda3cf661dcf10032f260f022f387d364210472b4de8739ac4da6256e8dfd95e",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2\\manifest.json",
+          "sha256": "fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5fd9448b0a5a1b17a14edca6bc9c809adeb581233d69e1a871f65191beff81e5",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273\\manifest.json",
+          "sha256": "280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a86c427cb8ed19e25ac894f2bffef4d826dd5829e706b19ad358c91f8d9a0b8",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a\\manifest.json",
+          "sha256": "948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50cbfdd50bc4aa64cf8ca7e77ddf8459738b95e869be6016410b97ba5f996d47",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14\\manifest.json",
+          "sha256": "9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ecfb24adc12f53d080b07bdf634f3cfd9f1ea1848c8e858781942c20110cc0f",
+          "id": "release-tutorial-drain",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681\\manifest.json",
+          "sha256": "58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1fcd6c4a2bd3e25f2aaf42130420c8996ce81494de0532526904bd1be52a25b0",
+          "id": "release-tutorial-startup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c\\manifest.json",
+          "sha256": "d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e516b8c0a6aa484ada7f0ffab6cc36e4cfe379d0e8a3b8adfff8d32364f5e035",
+          "id": "release-quest-record",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7\\manifest.json",
+          "sha256": "68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "20861cde41aaf2ad18e5f68ed42f9cebb5d929b0e8f745c6fe931aff7a929e90",
+          "id": "release-quest-list",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3\\manifest.json",
+          "sha256": "86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ebc75d286b83acd265f3fc7162f4e7c6a9b11ef3c9f398951b04fb221337eb8",
+          "id": "release-quest-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409\\manifest.json",
+          "sha256": "c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6621cabe210d745f0a0ea1392744ba527bb07c6c1a240e49f120261459780e55",
+          "id": "release-quest-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c0bbd36313bd4a6911ffa4f267c3f28ff3b1a11c296b802b6837ecbe0f2c2d3\\manifest.json",
+          "sha256": "0c0bbd36313bd4a6911ffa4f267c3f28ff3b1a11c296b802b6837ecbe0f2c2d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые vector helpers ID 1810 преобразуют три double в float32 и обратно. Настоящий constructor задаёт vptr, обнуляет raw28 / raw30 / raw38, но оставляет vector нетронутым; проверено в 48 whole-codec сценариях.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-UPDATE-WIRE.md",
+          "sha256": "64e6c54e38dd21ab3a65c02482307c22ee32fbb62cb29dbda60566254a0d5451"
+        }
+      ],
+      "id": "36392f54d2effb033f3ccb20601f479a7aa3938bedc3b06f6a9cd833bdf42b66",
+      "limits": [
+        "Raw output append и archive memcpy — ограниченные fixtures; allocator / transport не исполнялись.",
+        "Constructor не инициализирует vector; локальный codec разрешает только finite float32.",
+        "Совпадение raw30 с ключами Quest в capture — кандидатная связь, не producer / setter proof.",
+        "Codec не подключён к отправке; серверное принятие и handler ID 1811 не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти текущий Quest / прогресс и producer ID 1810; не копировать тела capture в новую сессию.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник vector / raw28 / raw38, producer QuestUpdate, исходное состояние квеста и обработчик результата."
     }
   ],
   "schema": 1,

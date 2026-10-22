@@ -49,6 +49,11 @@ Blood Pool. Вывод включается / выключается, «К пе�
 [Проверенная timeline и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REFERENCE-TIMELINE.md).
 Следующий путь — состояние квеста и поля ID 1810; диагностический 1801
 не воспроизводит этот официальный сценарий.
+Wire ID 1810 проверен: vector 3 × float32, два uint64 и byte, всего 29 байт.
+Целые native writer / reader прошли 48 тел, шесть отказов записи и 29 коротких
+префиксов. Codec не подключён к отправке; значения полей должен дать producer.
+В десяти сохранённых запросах raw30 совпадает с ключами Quest, но семантическая
+привязка ещё не доказана. [Формат, fixtures и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE.md).
 
 Отдельная запись PktQuest / Progress проверена. Живой диагностический запрос
 ID 1801 с 0 / 0 через HONOR JP вернул code 100, успешного списка нет.

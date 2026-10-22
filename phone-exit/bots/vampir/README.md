@@ -46,6 +46,10 @@ ID 1801 / 1802 / 1836 не встречаются; найдены QuestUpdate / 
 Teleport. Точное соответствие кликам ещё не установлено. Следом — поля ID 1810.
 [Эталон квестового сценария](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-QUEST-REFERENCE-CAPTURE.md).
 [Пакеты официального сценария](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REFERENCE-TIMELINE.md).
+Формат QuestUpdate / 1810 проверен целым native replay: 29 байт, вектор,
+два qword и байт. Добавлен отдельный codec без отправки; источник значений
+и обработка результата ещё не установлены.
+[Структура запроса и проверка](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE.md).
 
 Новый вход через Xiaomi / JP прошёл до мира с кодом 0, но один повторный
 запрос списка квестов снова вернул code 100. Исправленный decoder разобрал
