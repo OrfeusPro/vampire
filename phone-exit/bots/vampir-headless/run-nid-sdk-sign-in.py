@@ -113,8 +113,10 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=
         browser = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(browser)
         _capture = browser.capture_nid_credential
+    # Concurrent accounts must not share WebView cookies or browser-profile locks.
+    account_directory = hashlib.sha256(email.strip().lower().encode('utf-8')).hexdigest()[:24]
     provider = _capture(url, expected_game_code=profile['game_code'], timeout=timeout,
-                        data_directory=HERE / ('.local/nid-sign-in-webview' + ('-socks-' + str(route.port) if route else '')),
+                        data_directory=HERE / '.local/nid-accounts' / account_directory / ('socks-' + str(route.port) if route else 'direct'),
                         expected_email=email, sign_in_password=password, socks_port=socks_port)
     if isinstance(prepared, SdkInputs):
         prepared.check_usage(email=email, selected_profile=selected_profile, route=route)

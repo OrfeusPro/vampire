@@ -50,8 +50,8 @@ def _run(*, url, game_code, timeout, data_directory, smoke, account_hint='', sig
             (sign_in_password and (not account_hint or len(account_hint) > 320))):
         raise ValueError('Invalid explicit sign-in credentials')
     if type(register_account) is not bool or (register_account and
-            (smoke or socks_port is None or not sign_in_password or not callable(code_provider))):
-        raise ValueError('Registration requires an explicit route, password and mail-code provider')
+            (smoke or not sign_in_password or not callable(code_provider))):
+        raise ValueError('Registration requires a password and mail-code provider')
     request = json.dumps(dict(url=url, game_code=game_code, timeout=timeout,
         data_directory=str(Path(data_directory).resolve()), library=str(_library()), smoke=smoke,
         account_hint=account_hint, sign_in_password=sign_in_password, socks_port=socks_port or 0,

@@ -15,7 +15,7 @@ from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=(), tutorial_observer=None, before_finish_packets=(), ack_initial_tutorial=False, expected_tutorial_ack=False, tutorial_ack_response=None, read_quest_list=False, quest_response=None, quest_observer=None, quest_wire_observer=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=(), tutorial_observer=None, before_finish_packets=(), ack_initial_tutorial=False, expected_tutorial_ack=False, tutorial_ack_response=None, read_quest_list=False, quest_response=None, quest_observer=None, quest_wire_observer=None, expose_character_labels=False, expected_character_key=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -90,7 +90,7 @@ class GameLoginProbeTests(unittest.TestCase):
         worker.start()
         with patch('vampir_core.game_login_probe.time.time_ns', side_effect=lambda:1792600142863000000+(6001000000 if clock_advanced[0] else 0)):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
-                read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index,
+                read_character_list=read_character_list, expose_character_labels=expose_character_labels, expected_character_key=expected_character_key, ping_clock=ping_clock, character_index=character_index,
                 read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, tutorial_observer=tutorial_observer, ack_initial_tutorial=ack_initial_tutorial, read_quest_list=read_quest_list, quest_observer=quest_observer, quest_wire_observer=quest_wire_observer, source_sha256=SOURCE_SHA256 if read_world_start else None)
         worker.join(3)
         self.assertFalse(worker.is_alive())
@@ -449,6 +449,23 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertTrue(result['selection_body_fully_decoded'])
         self.assertEqual(result['character_select_body_size'],len(body))
         self.assertFalse(result['game_session_ready'])
+
+    def test_saved_character_key_resolves_fresh_order_and_labels_are_opt_in(self):
+        result, captures = self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True, character_body=list_body(keys=(22, 11)), character_index=0,
+            expected_character_key=11, expose_character_labels=True, wait_for_select=True,
+            select_body=bytes.fromhex(SELECTION_FIXTURE['select_result_hex']), select_fields=(11, 0, 42))
+        self.assertEqual(captures[-1], (109, 3))
+        self.assertEqual([row['key'] for row in result['characters']], ['22', '11'])
+
+    def test_missing_or_ambiguous_saved_character_never_selects_another_slot(self):
+        for keys in ((22,), (11, 11)):
+            result, captures = self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+                read_character_list=True, character_body=list_body(keys=keys), character_index=0,
+                expected_character_key=11)
+            self.assertEqual(result['selection_error'], 'assigned_character_missing_or_ambiguous')
+            self.assertEqual(captures, [(1, 0), (3, 1), (101, 2)])
+            self.assertNotIn('characters', result)
 
     def test_empty_or_short_list_never_sends_selection(self):
         for keys,index in (((),0),((11,),1)):

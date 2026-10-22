@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="console-token" content="__CONSOLE_TOKEN__"><title>Vampir · аккаунты ботов</title><link rel="stylesheet" href="/console.css"><script src="/console.js" defer></script></head>
+<body><header><div><span class="eyebrow">VAMPIR · HEADLESS</span><h1>Аккаунты ботов</h1></div><a href="http://127.0.0.1:17946/maps/atlas/index.html" target="_blank" rel="noopener">Открыть карту ↗</a></header>
+<main><aside><div class="aside-head"><h2>Мои аккаунты</h2><button id="new">＋ Добавить</button></div><div id="accounts"></div><button id="start-all" class="primary full">Запустить два аккаунта</button><p class="muted">Каждый бот работает отдельно. Статус «В мире» появляется после получения серверной позиции.</p></aside>
+<section><div class="section-head"><div><span class="eyebrow">НАСТРОЙКИ БОТА</span><h2 id="heading">Выберите аккаунт</h2></div><span id="badge" class="badge">Остановлен</span></div>
+<form id="settings"><div class="grid"><label>Название<input id="label" maxlength="100" placeholder="Например, основной бот"></label><label>Почта Netmarble<input id="email" type="email" required autocomplete="off"></label><label>Пароль Netmarble<input id="password" type="password" maxlength="256" autocomplete="new-password" placeholder="Оставьте пустым, чтобы сохранить текущий"></label><label>Профиль устройства<select id="device"><option value="current-pc">Текущий ПК · общие данные устройства</option></select></label></div>
+<p class="hint">На первом этапе оба аккаунта используют наблюдённые данные этого ПК. Пароли зашифрованы Windows и не возвращаются в браузер.</p>
+<label><input id="enabled" type="checkbox" checked> Использовать аккаунт для запуска бота</label>
+<div class="divider"></div><h3>Регистрация Netmarble</h3>
+<label>Пароль почтового ящика<input id="mail-password" type="password" maxlength="256" autocomplete="new-password" placeholder="Для получения кода регистрации по IMAP"></label>
+<p class="hint">Для почты @vampir.top код читается из новых писем через mail.vampir.top:993. Почтовый пароль хранится отдельно от игрового, зашифрован Windows. Создание почтового ящика сюда не входит.</p>
+<p id="registration-state" class="muted"></p>
+<label><input id="terms" type="checkbox"> Принимаю обязательные условия использования и политику конфиденциальности Netmarble для этой регистрации</label>
+<div class="tools"><button id="register" type="button">Зарегистрировать аккаунт</button></div>
+<div class="divider"></div><div class="grid"><label>Регион<select id="region"><option>EU</option><option>NA</option><option>SG</option><option>JP</option><option>TW</option><option>ASIA</option><option>KR</option></select></label><label>Игровой сервер<select id="server"></select></label></div>
+<div class="tools"><button type="button" id="servers">Загрузить серверы</button><span id="catalog-age" class="muted"></span></div>
+<div class="divider"></div><div class="grid"><label>Персонаж<select id="character"><option value="">Не назначен</option></select></label><label>Ник для нового персонажа<input id="nickname" maxlength="40" placeholder="Если персонажей пока нет"></label></div>
+<p class="hint">Ник сохраняется как задание. Автоматическое создание пока не подключено; отказ входа не считается пустым списком.</p>
+<div class="tools"><button type="button" id="characters">Прочитать персонажей</button><button class="primary" type="submit">Сохранить настройки</button></div></form>
+<div class="session"><div><span class="eyebrow">СЕССИЯ</span><h3 id="message">Готов к настройке</h3><p id="stage" class="muted"></p></div><div class="tools"><button id="start" class="primary">Запустить</button><button id="stop" class="danger">Остановить</button></div></div>
+<p class="muted">Первый запуск ограничен 5 минутами после входа в мир. Без автоматического повторного входа и игровых действий по квестам.</p><div id="notice" role="status"></div>
+</section></main></body></html>

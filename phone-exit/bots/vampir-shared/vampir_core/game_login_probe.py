@@ -17,7 +17,12 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False,
                         observe_world_seconds=0,world_observer=None,tutorial_observer=None,
                         ack_initial_tutorial=False, read_quest_list=False, quest_observer=None,
-                        quest_wire_observer=None):
+                        quest_wire_observer=None, expose_character_labels=False, expected_character_key=None):
+    if expected_character_key is not None and (type(expected_character_key) is not int or
+            not 0 <= expected_character_key <= 0xffffffffffffffff or character_index is None):
+        raise ValueError('Expected character key requires explicit selection')
+    if type(expose_character_labels) is not bool or (expose_character_labels and not read_character_list):
+        raise ValueError('Character labels require an explicit list operation')
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
@@ -133,6 +138,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 selection_error=selection_error or owner.selection.error, character_select_sent=select_requested)
             if list_summary is not None:
                 value.update(list_summary)
+            if expose_character_labels and characters is not None:
+                value['characters'] = [dict(index=index, name=record.strings[0], key=str(record.u64[0]))
+                    for index, record in enumerate(characters.records)]
             if character_index is not None:
                 response = owner.selection.response
                 refused = select_requested and owner.selection.error == 'unsupported_result_code'
@@ -226,6 +234,13 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     deadline = time.monotonic() + timeout
                 elif owner.selection.state == SelectionState.LIST_AVAILABLE:
                     if character_index is None: return result('character_list_result')
+                    if expected_character_key is not None:
+                        matches = [index for index, record in enumerate(owner.selection.characters.records)
+                            if record.u64[0] == expected_character_key]
+                        if len(matches) != 1:
+                            selection_error = 'assigned_character_missing_or_ambiguous'
+                            return result('character_selection_not_sent')
+                        character_index = matches[0]
                     list_summary = dict(character_list_received=True,character_list_result_code=0,
                         character_count=len(owner.selection.characters.records),
                         preferred_character_index=owner.selection.preferred_index)

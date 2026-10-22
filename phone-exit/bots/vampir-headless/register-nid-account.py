@@ -1,4 +1,4 @@
-"""Explicit bot-account registration through one selected SOCKS route.
+"""Explicit bot-account registration through a selected direct or SOCKS route.
 
 Passwords enter only on stdin. No SDK player creation, game process or tokens on disk.
 """
@@ -21,11 +21,17 @@ def module(name, filename):
     return result
 
 
-def prepare_observed_profile(runner, address):
-    source_path = runner.ROOT / 'code-clues/nid-windows-initial-profile.json'
-    if hashlib.sha256(source_path.read_bytes()).hexdigest() != runner.PROFILE_SHA:
-        raise ValueError('NID source profile changed')
-    source = json.loads(source_path.read_text('utf-8'))
+def prepare_observed_profile(runner, address, *, selected_profile='recovered-base'):
+    if selected_profile == 'recovered-release':
+        loader = module('registration_source', 'sdk-source-profile.py')
+        source = loader.load_release_profile('nid', root=runner.ROOT)
+    elif selected_profile == 'recovered-base':
+        source_path = runner.ROOT / 'code-clues/nid-windows-initial-profile.json'
+        if hashlib.sha256(source_path.read_bytes()).hexdigest() != runner.PROFILE_SHA:
+            raise ValueError('NID source profile changed')
+        source = json.loads(source_path.read_text('utf-8'))
+    else:
+        raise ValueError('Unknown source profile')
     if hashlib.sha256(Path(source['source']).read_bytes()).hexdigest() != source['source_sha256']:
         raise ValueError('Installed client changed')
     identity = runner.observe_windows_device_identity(store_name='Netmarble', game_code='thered')
@@ -48,27 +54,38 @@ def prepare_observed_profile(runner, address):
             source=provenance + identity.sdk_registry_path + ' DeviceKeyForNetmarbleId')
 
 
-def run(address, *, password, mail_password, socks_port, timeout=300, accept_required_terms=False):
+def run(address, *, password, mail_password, socks_port=None, timeout=300, accept_required_terms=False,
+        selected_profile='recovered-base', _progress=None):
     if accept_required_terms is not True: raise ValueError('Explicit acceptance of required terms is missing')
     runner = module('registration_runner', 'run-nid-sdk-sign-in.py')
     browser = module('registration_browser', 'nid-browser.py')
     mail = module('registration_mail', 'nid-mail-code.py')
-    route = runner.SocksRoute(socks_port)
+    route = runner.SocksRoute(socks_port) if socks_port is not None else None
     # Opening the named mailbox first establishes a UID baseline before Send.
     mailbox = mail.RegistrationMailbox(address, mail_password)
     try:
-        prepare_observed_profile(runner, address)
-        binding, profile, constants = runner.load_inputs(address, route=route)
+        prepare_observed_profile(runner, address, selected_profile=selected_profile)
+        binding, profile, constants = runner.load_inputs(address, route=route, selected_profile=selected_profile)
         context = runner.prepare_nid_sign_in_context(binding=binding, **profile)
         url = runner.bind_nid_web_url(context, constants=constants, max_url_size=32768)
+        completed = False
         def progress(state):
+            nonlocal completed
+            completed = completed or state.get('complete') is True
+            if _progress:
+                _progress(state)
+                return
             print(json.dumps(dict(registration_stage=state.get('path'),
                 mail_sent=bool(state.get('email_sent')), waiting_for_code=bool(state.get('need_code')),
                 registration_complete=bool(state.get('complete')), stopped=state.get('stopped'))), flush=True)
-        return browser.capture_nid_credential(url, expected_game_code=profile['game_code'],
-            data_directory=HERE / ('.local/nid-registration-socks-' + str(socks_port)),
+        account_directory = hashlib.sha256(address.strip().lower().encode('utf-8')).hexdigest()[:24]
+        provider = browser.capture_nid_credential(url, expected_game_code=profile['game_code'],
+            data_directory=HERE / '.local/nid-accounts' / account_directory / ('registration-socks-' + str(socks_port) if route else 'registration-direct'),
             timeout=timeout, expected_email=address, sign_in_password=password, socks_port=socks_port,
             register_account=True, code_provider=mailbox.get_code, progress=progress)
+        if not completed:
+            raise RuntimeError('Registration completion was not observed')
+        return provider
     finally:
         mailbox.close()
 
@@ -76,7 +93,8 @@ def run(address, *, password, mail_password, socks_port, timeout=300, accept_req
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--socks-port', type=int, required=True)
+    parser.add_argument('--socks-port', type=int)
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], default='recovered-base')
     parser.add_argument('--timeout', type=int, default=300)
     parser.add_argument('--accept-required-terms', action='store_true', required=True,
         help='Explicitly accept required Terms of Service and Privacy Policy; no marketing consent')
@@ -89,7 +107,8 @@ if __name__ == '__main__':
         if not password or not mail_password or max(len(password), len(mail_password)) > 256:
             raise ValueError('Invalid password input')
         provider = run(args.email, password=password, mail_password=mail_password,
-            socks_port=args.socks_port, timeout=args.timeout, accept_required_terms=args.accept_required_terms)
+            socks_port=args.socks_port, timeout=args.timeout, accept_required_terms=args.accept_required_terms,
+            selected_profile=args.profile)
         password = mail_password = None
         print(json.dumps(dict(nid_callback_accepted=True, joined_country=provider.joined_country_code,
             sdk_player_created=False, game_session_ready=False)))
