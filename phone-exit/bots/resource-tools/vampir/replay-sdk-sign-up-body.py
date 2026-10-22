@@ -10,7 +10,7 @@ ROOT = Path('F:/PhoneExit Resources/Vampir')
 SEGMENTS = ((0x1444ff84b, 0x1444ff963), (0x1444ffa86, 0x1444ffb19))
 
 
-def build():
+def build(*, source_snapshot=None):
     spec = importlib.util.spec_from_file_location('signup_body_base', HERE / 'replay-sdk-sign-in-body.py')
     base = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(base)
@@ -22,7 +22,8 @@ def build():
         if hashlib.sha256(path.read_bytes()).hexdigest() != digest: raise ValueError('SDK source evidence changed')
         sources[name] = json.loads(path.read_text('utf-8'))
     prior, signup = sources.values()
-    raw = Path(prior['source']).read_bytes()
+    source = Path(source_snapshot) if source_snapshot is not None else Path(prior['source'])
+    raw = source.read_bytes()
     if hashlib.sha256(raw).hexdigest() != prior['sha256'] or signup['sha256'] != prior['sha256']:
         raise ValueError('Installed client changed')
     image = base.config.native.Image(raw)
@@ -53,7 +54,7 @@ def build():
             cases.append(dict(fixture=fixture, body=replay.body, events=replay.events))
     literals = [base.config.read_literal(raw, image, a) for a in (0x1494d7e90, 0x1494d7e98)]
     if [x['text'] for x in literals] != ['authUrl', 'v1/sign-up']: raise ValueError('SignUp endpoint literals changed')
-    return dict(schema_version=1, source=prior['source'], sha256=prior['sha256'],
+    return dict(schema_version=1, source=str(source), sha256=prior['sha256'],
         tool_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         base_tool_sha256=hashlib.sha256((HERE / 'replay-sdk-sign-in-body.py').read_bytes()).hexdigest(),
         segments=[dict(start=hex(a), end_exclusive=hex(b)) for a, b in SEGMENTS],
@@ -65,7 +66,18 @@ def build():
 
 
 if __name__ == '__main__':
-    result = build()
-    path = ROOT / 'code-clues/sdk-sign-up-body-replay.json'
-    path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source-snapshot', type=Path)
+    args = parser.parse_args()
+    result = build(source_snapshot=args.source_snapshot)
+    payload = (json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8')
+    if args.source_snapshot is not None:
+        path = ROOT / 'code-clues/sdk-sign-up-body-replays' / hashlib.sha256(payload).hexdigest() / 'manifest.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if path.exists() and path.read_bytes() != payload:
+            raise ValueError('Immutable replay result changed')
+    else:
+        path = ROOT / 'code-clues/sdk-sign-up-body-replay.json'
+    path.write_bytes(payload)
     print(json.dumps(dict(path=str(path), sha256=hashlib.sha256(path.read_bytes()).hexdigest(), cases=len(result['cases']))))

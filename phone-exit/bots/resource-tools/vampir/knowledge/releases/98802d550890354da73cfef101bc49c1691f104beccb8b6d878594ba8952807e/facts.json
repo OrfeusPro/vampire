@@ -4627,6 +4627,30 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Допустимая запись класса, реальные значения начальной внешности, producer и полная wire-проверка создания."
+    },
+    {
+      "addresses": [
+        "0x1444d6050",
+        "0x144506cf0"
+      ],
+      "checks": [],
+      "conclusion": "Текущий SignUp статически собирает четыре начальные пары и optional credential, использует authUrl и суффикс v1/sign-up. Callback содержит ветку HTTP 200..206 и вложенный разбор ответа. Имена ключей требуют текущих initializers и constructor; исторический replay их не подтверждает.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-SDK-SIGN-UP.md",
+          "sha256": "560378c11523d97f056ace547fbc2c6e760591c18e20e4e576945fd801f3217b"
+        }
+      ],
+      "id": "b7c31c9cb94855f7fca66ccd2447849e729f5a7fe0ec5e589775ca11e7721e02",
+      "limits": [
+        "Только два полных Ghidra экспорта и literal bytes; JSON, HTTP и callback не исполнялись.",
+        "Имена глобальных ключей и полей owner не перенесены со старого SHA."
+      ],
+      "method": "static",
+      "next_check": "Проверить initializers и constructor перед bounded replay и отдельной живой регистрацией SDK.",
+      "question": "sdk-first-player",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Текущие initializers ключей и constructor owner callback, native исполнение актуального тела."
     }
   ],
   "schema": 1,

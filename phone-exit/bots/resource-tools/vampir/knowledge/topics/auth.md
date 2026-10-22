@@ -72,6 +72,7 @@ Credentials и локальные профили не переносить в д
 - [NID: сборка URL штатного окна входа](../evidence/auth/HEADLESS-NID-WEB-URL.md)
 - [Заполнение common data в новой сборке](../evidence/auth/HEADLESS-RELEASE-COMMON-DATA.md)
 - [GMC2 response: путь clientIp к common data](../evidence/auth/HEADLESS-RELEASE-GMC2-GEO.md)
+- [SignUp SDK в текущей сборке](../evidence/auth/HEADLESS-RELEASE-SDK-SIGN-UP.md)
 - [Auth-контекст и дополнительный каталог SDK](../evidence/auth/HEADLESS-SDK-AUTH-PATH.md)
 - [SDK bootstrap: версия SDK и BuildCode](../evidence/auth/HEADLESS-SDK-BOOTSTRAP-VALUES.md)
 - [Vampir — источник конфигурации SDK GMC2](../evidence/auth/HEADLESS-SDK-CONFIG.md)

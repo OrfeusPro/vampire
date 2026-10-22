@@ -63,9 +63,16 @@ class SdkSignUpTests(unittest.TestCase):
         spec = importlib.util.spec_from_file_location('signup_replay_test', path)
         tool = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(tool)
-        result = tool.build()
         stored = Path('F:/PhoneExit Resources/Vampir/code-clues/sdk-sign-up-body-replay.json')
-        self.assertEqual(json.loads(stored.read_text('utf-8')), result)
+        original = stored.read_bytes()
+        baseline = json.loads(original)
+        snapshot = tool.ROOT / 'client-code-snapshots' / baseline['sha256'] / 'ProjectRED-Win64-Shipping.exe'
+        result = tool.build(source_snapshot=snapshot)
+        # Historical execution is explicit and SHA-checked, never evidence for the installed release.
+        for field in ('sha256', 'segments', 'fragments', 'literals', 'cases', 'network_ready', 'limitations'):
+            self.assertEqual(baseline[field], result[field], field)
+        self.assertEqual(result['source'], str(snapshot))
+        self.assertEqual(stored.read_bytes(), original)
         self.assertEqual([x['text'] for x in result['literals']], ['authUrl', 'v1/sign-up'])
         self.assertEqual(len(result['cases']), 4)
         for case in result['cases']:
@@ -79,6 +86,18 @@ class SdkSignUpTests(unittest.TestCase):
             self.assertNotIn('playerId', json.loads(plan.body))
             self.assertNotIn('accessToken', dict(plan.headers))
             self.assertNotIn(f['credential']['channelAccessToken'], repr(plan))
+
+    def test_wrong_snapshot_is_rejected_without_changing_historical_report(self):
+        import tempfile
+        spec = importlib.util.spec_from_file_location('signup_snapshot_gate', HERE / 'resource-tools/vampir/replay-sdk-sign-up-body.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        stored = tool.ROOT / 'code-clues/sdk-sign-up-body-replay.json'
+        before = stored.read_bytes()
+        with tempfile.TemporaryDirectory() as folder:
+            bad = Path(folder) / 'bad.exe'; bad.write_bytes(b'wrong-source-fixture')
+            with self.assertRaisesRegex(ValueError, 'Installed client changed'):
+                tool.build(source_snapshot=bad)
+        self.assertEqual(stored.read_bytes(), before)
 
 
 if __name__ == '__main__': unittest.main()
