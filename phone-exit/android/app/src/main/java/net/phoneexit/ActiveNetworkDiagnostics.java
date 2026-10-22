@@ -19,17 +19,18 @@ final class ActiveNetworkDiagnostics {
         if(!busy.compareAndSet(false,true))throw new Exception("network_probe_busy");
         try{
             if(android.os.Build.VERSION.SDK_INT<29)throw new Exception("network_probe_requires_android_10");
-            JSONObject result=new JSONObject().put("version",1).put("topology",NetworkDiagnostics.snapshot(context));
+            JSONObject result=new JSONObject().put("version",2).put("topology",NetworkDiagnostics.snapshot(context));
+            WebRtcAddressComparison webRtc=ControlPeer.recentAddresses();
             Network preferred=null;try{preferred=PeerDirectory.exitNetwork(context);}catch(Exception ignored){}
             ConnectivityManager cm=context.getSystemService(ConnectivityManager.class);
             Network processNetwork=cm.getBoundNetworkForProcess();if(processNetwork==null)processNetwork=cm.getActiveNetwork();
             JSONArray modes=new JSONArray();
-            modes.put(probe(null,processNetwork,"process_default"));
-            if(preferred!=null)modes.put(probe(preferred,preferred,"exit_socket_bound"));
+            modes.put(probe(null,processNetwork,"process_default",webRtc));
+            if(preferred!=null)modes.put(probe(preferred,preferred,"exit_socket_bound",webRtc));
             result.put("modes",modes).put("note","mapping_comparison_not_full_nat_classification");return result;
         }finally{busy.set(false);}
     }
-    private static JSONObject probe(Network network,Network dnsNetwork,String mode)throws Exception{
+    private static JSONObject probe(Network network,Network dnsNetwork,String mode,WebRtcAddressComparison webRtc)throws Exception{
         JSONObject result=new JSONObject().put("mode",mode);JSONArray steps=new JSONArray();
         // Fixed public STUN hosts only. DNS uses the same Network as the socket.
         InetSocketAddress[] targets=new InetSocketAddress[2];
@@ -49,6 +50,7 @@ final class ActiveNetworkDiagnostics {
             result.put("sameMappingAcrossTargets",mapped[0]!=null&&mapped[1]!=null?mapped[0].equals(mapped[1]):JSONObject.NULL)
                 .put("sameMappingOnRepeat",mapped[0]!=null&&mapped[2]!=null?mapped[0].equals(mapped[2]):JSONObject.NULL);
         }catch(SecurityException e){result.put("error","denied");}catch(Exception e){result.put("error","socket_or_binding_error");}
+        result.put("webRtcAddressComparison",webRtc==null?new JSONObject().put("result","no_recent_attempt"):webRtc.compare(mapped,dnsNetwork,System.nanoTime()));
         return result.put("steps",steps).put("elapsedMs",(System.nanoTime()-started)/1_000_000);
     }
     @android.annotation.TargetApi(29)
@@ -74,8 +76,25 @@ final class ActiveNetworkDiagnostics {
             }
             text.append("Внешнее соответствие одинаково для A и B: ").append(comparison(mode,"sameMappingAcrossTargets"))
                 .append("\nСохранилось при повторе A: ").append(comparison(mode,"sameMappingOnRepeat")).append("\n");
+            JSONObject address=mode.optJSONObject("webRtcAddressComparison");
+            text.append("Публичный IPv4 STUN и объявленного WebRTC: ").append(addressComparison(address)).append("\n");
+            if(address!=null&&address.has("ageMs"))text.append("Возраст данных WebRTC: ").append(address.optLong("ageMs")/1000).append(" с\n");
         }
-        return text.append("\nЭто не полная классификация NAT и не доказательство доступности WebRTC. Отсутствие ответа не доказывает блокировку всего UDP. IP, порты и ключи в отчёте не сохраняются. Привязка процесса и настройки не изменены.").toString();
+        return text.append("\nДля сравнения WebRTC повторите подключение с ПК, затем запустите эту проверку в течение 2 минут. Сравниваются IPv4, порты разных сокетов не сравниваются. Совпадение не доказывает доступность входящей связи. Это не полная классификация NAT. Отсутствие ответа не доказывает блокировку всего UDP. IP, порты и ключи в отчёте не сохраняются. Привязка процесса и настройки не изменены.").toString();
+    }
+    private static String addressComparison(JSONObject value){
+        if(value==null)return "нет данных";
+        switch(value.optString("result")){
+            case "match":return "совпадает с кандидатом";
+            case "different":return "не совпадает";
+            case "mixed":return "совпадает не во всех ответах";
+            case "stale":return "снимок WebRTC старше 2 минут";
+            case "different_network":return "выбраны разные сети, сравнение не выполнено";
+            case "network_unknown":return "сеть неизвестна";
+            case "no_public_candidate":return "в объявленном ответе нет публичного IPv4 srflx";
+            case "no_stun_response":return "нет ответа STUN";
+            default:return "нет свежей попытки подключения с ПК";
+        }
     }
     private static String comparison(JSONObject value,String key){return value.isNull(key)?"не измерено":value.optBoolean(key)?"да":"нет";}
 }

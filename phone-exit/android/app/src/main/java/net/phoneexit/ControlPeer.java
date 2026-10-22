@@ -2,6 +2,7 @@ package net.phoneexit;
 
 import java.nio.*;
 import java.nio.charset.StandardCharsets;
+import java.lang.ref.WeakReference;
 import java.util.*;
 import java.util.concurrent.*;
 import org.json.*;
@@ -9,6 +10,14 @@ import org.webrtc.*;
 
 /** Authenticated offer arrives through AES-GCM; subsequent messages use DTLS. */
 final class ControlPeer implements AutoCloseable {
+    private static volatile WeakReference<ControlPeer> recent=new WeakReference<>(null);
+    private volatile WebRtcAddressComparison publishedAddresses;
+    static WebRtcAddressComparison recentAddresses(){
+        ControlPeer p=recent.get();if(p==null)return null;
+        WebRtcAddressComparison value=p.publishedAddresses;
+        if(value!=null&&(System.nanoTime()-value.capturedNs)/1_000_000>WebRtcAddressComparison.MAX_AGE_MS)p.publishedAddresses=null;
+        return value;
+    }
     private final ControlAgent agent;
     private final ScheduledExecutorService events=Executors.newSingleThreadScheduledExecutor();
     private final ThreadPoolExecutor actions=new ThreadPoolExecutor(1,1,0,TimeUnit.SECONDS,new ArrayBlockingQueue<>(4));
@@ -56,10 +65,12 @@ final class ControlPeer implements AutoCloseable {
             if(!sdp.endsWith("\n"))sdp+="\r\n";sdp+=extra;
             if(sdp.length()>11000)throw new Exception("sdp_limit");
             if(!sdp.contains("a=candidate:"))return;
-            answer.complete(new JSONObject().put("sdp",sdp).put("type","answer").put("iceSession",ice.session));
+            WebRtcAddressComparison advertised=new WebRtcAddressComparison(sdp,agent.wifi,System.nanoTime());
+            if(answer.complete(new JSONObject().put("sdp",sdp).put("type","answer").put("iceSession",ice.session)))publishedAddresses=advertised;
         }catch(Exception e){answer.completeExceptionally(e);close();}
     }
     JSONObject connect(String offer)throws Exception{
+        recent=new WeakReference<>(this);
         event(()->{
             try{
                 if(!agent.active()||!WifiBinding.acquire(agent.context,agent.wifi,this))throw new Exception("wifi_binding_denied");
