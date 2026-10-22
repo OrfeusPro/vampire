@@ -218,7 +218,7 @@
       "question": "Как определить ожидающий шаг квеста / обучения и выполнить действие квестовой панели без процесса игры?",
       "known": "Найден кандидат Quest 110110 / task 110110040 / Tutorial 1001 / step 1001002, QuestPanel_PanelTouch и ServerProcessRequest=1. Шесть выбранных строк current CSV совпали с прежними полями. ID 1802 / QuestListReadResult, 9905 / TutorialUpdateNotify и 1836 / QuestPanelSelect привязаны по именам / getters. Whole ID 9905 decoder проверен в 72 native случаях / 29 коротких префиксах: bool, uint16 count, три uint32 и state byte с clamp 3. Handler ведёт в 1464c0680 с отложенным применением. ID 9905 реально приходил в HONOR-сессии; активный шаг ещё не установлен.",
       "unknown": "Роли полей tutorial array и семантика флага / состояний; lifecycle применения, активный квест / tutorial step персонажа; producer панели, поле запроса и подтверждение результата; текущие UI package bytes.",
-      "next_action": "Явный tutorial observer подключён; 30 socketpair-тестов прошли. HONOR JP прошёл вход и 20 секунд без ошибок; живой ID 9905 дал 16 записей, ключ 1001 / raw0c 0 / raw10 0 / state 1, остальные 15 state 0. Определить роли полей и enum через consumer / текущие таблицы, затем связать ожидающий шаг с текстом / кнопкой. Producer ID 1836 пока не отправлять; без новой обработки вход не повторять.",
+      "next_action": "Живой ключ 1001 / raw0c 0 / state 1 сохранён. Whole 1464cd6f0 проверен в 64 native случаях с fixtures: raw0c +1 или сохранение, state 0→1. Поиск 145c2e8b0 выбирает строку группы по raw0c. Реальный 1464c5770 имеет побочные эффекты и неоднозначный псевдокод; проверить инструкции и row layout. Затем constructors задач 1464dc4c0 / 1464dc3d0 и callbacks до нажатия панели. Producer ID 1836 не отправлять вслепую; вход без новой обработки не повторять.",
       "decision_rule": "Статический квест или текст не доказывает активное состояние. Не объяснять отсутствие движения обучением без session proof; не подменять действие панели произвольной командой движения.",
       "do_not_repeat": "Извлечение всего каталога без изменения источника; вопрос пользователю о тексте до проверки готовых связей; вход без новой обработки.",
       "addresses": [],
@@ -228,7 +228,8 @@
         "evidence/network/HEADLESS-LIVE-HONOR-SESSION.md",
         "evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md",
         "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md",
-        "evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md"
+        "evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md",
+        "evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md"
       ]
     }
   ]

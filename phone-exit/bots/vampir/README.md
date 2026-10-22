@@ -74,6 +74,10 @@ ID 9905 / TutorialUpdateNotify уже приходил
 ключ 1001 / state 1, остальные state 0. Конкретный шаг и смысл остальных
 полей ещё проверяются; кнопка продолжения не нажималась.
 [Живое состояние и следующий шаг](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md).
+Локальный переход к следующей строке проверен в 64 native-сценариях с явными
+fixtures допуска / запуска. raw0c=0 не доказывает ожидание step 2;
+проверка условий и callbacks задач продолжается.
+[Выбор строки и переход](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 
