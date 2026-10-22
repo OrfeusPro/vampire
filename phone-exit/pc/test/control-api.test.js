@@ -5,6 +5,10 @@ import {applyBlocked,createControlServer,sealControl,openControl,validateCommand
 import {Directory} from '../src/directory.js';
 import {RTCPeerConnection} from '../src/native-peer.js';
 const hex=n=>randomBytes(n).toString('hex');
+test('network probe accepts only fixed built-in destinations',()=>{
+ validateCommand('networkProbe',{});
+ assert.throws(()=>validateCommand('networkProbe',{host:'127.0.0.1'}));
+});
 test('control frames isolate devices and reject tampering',()=>{
   const token=hex(32),body={id:hex(16),request:hex(16),command:'tap',at:Date.now()};const box=sealControl(token,body);
   assert.deepEqual(openControl(token,box),body);assert.throws(()=>openControl(hex(32),box));
@@ -29,7 +33,8 @@ test('bot management uses encrypted HTTPS without opening a direct channel; manu
  const response=await fetch(path,{method:'POST',headers,body:JSON.stringify({command:'bot',args:{op:'assign',botId:'rfonlinenext'}})});
  assert.equal(response.status,202);const job=await response.json();assert.notEqual(job.transport,'webrtc');
  assert.deepEqual(commands,['bot']);
- const manual=await fetch(path,{method:'POST',headers,body:'{"command":"home"}'});assert.equal(manual.status,502);assert.deepEqual(commands,['bot','connectControl']);
+ const probe=await fetch(path,{method:'POST',headers,body:'{"command":"networkProbe","args":{}}'});assert.equal(probe.status,202);assert.deepEqual(commands,['bot','networkProbe']);
+ const manual=await fetch(path,{method:'POST',headers,body:'{"command":"home"}'});assert.equal(manual.status,502);assert.deepEqual(commands,['bot','networkProbe','connectControl']);
 });
 
 test('HTTP API bootstraps authenticated native WebRTC once and survives catalog outage',async t=>{

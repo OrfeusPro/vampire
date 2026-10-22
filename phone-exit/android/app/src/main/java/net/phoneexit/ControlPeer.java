@@ -23,12 +23,17 @@ final class ControlPeer implements AutoCloseable {
     private volatile String iceState="NEW",gatheringState="NEW",signalingState="STABLE",closeReason="";
     private volatile int callbackCandidates,sdpCandidates,mediaSections,rejectedSections,iceCredentials;
     private final long started=System.nanoTime();
+    private volatile JSONObject iceChecks=new JSONObject();
+    private volatile long statsAtMs;
+    private volatile String lastIceState="NEW";
+    private boolean statsPending;
     JSONObject diagnostics(){
         JSONObject value=new JSONObject();try{
             value.put("iceState",iceState).put("gatheringState",gatheringState).put("signalingState",signalingState)
                 .put("callbackCandidates",callbackCandidates).put("sdpCandidates",sdpCandidates)
                 .put("mediaSections",mediaSections).put("rejectedSections",rejectedSections).put("iceCredentials",iceCredentials)
-                .put("closed",closed).put("closeReason",closeReason).put("elapsedMs",TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-started));
+                .put("closed",closed).put("closeReason",closeReason).put("elapsedMs",TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-started))
+                .put("lastIceState",lastIceState).put("iceChecks",iceChecks).put("statsAtMs",statsAtMs);
         }catch(JSONException ignored){}return value;
     }
     private void describe(String sdp){
@@ -66,7 +71,7 @@ final class ControlPeer implements AutoCloseable {
                 cfg.continualGatheringPolicy=PeerConnection.ContinualGatheringPolicy.GATHER_CONTINUALLY;
                 peer=factory.createPeerConnection(cfg,new PeerConnection.Observer(){
                     public void onSignalingChange(PeerConnection.SignalingState s){signalingState=s.name();}
-                    public void onIceConnectionChange(PeerConnection.IceConnectionState s){iceState=s.name();if(s==PeerConnection.IceConnectionState.FAILED)close("direct_ice_failed");else if(s==PeerConnection.IceConnectionState.CLOSED)close("direct_ice_closed");}
+                    public void onIceConnectionChange(PeerConnection.IceConnectionState s){iceState=s.name();if(s!=PeerConnection.IceConnectionState.CLOSED)lastIceState=s.name();if(s==PeerConnection.IceConnectionState.FAILED)close("direct_ice_failed");else if(s==PeerConnection.IceConnectionState.CLOSED)close("direct_ice_closed");}
                     public void onIceConnectionReceivingChange(boolean b){}
                     public void onIceGatheringChange(PeerConnection.IceGatheringState s){gatheringState=s.name();if(s==PeerConnection.IceGatheringState.COMPLETE)event(()->{SessionDescription d=peer.getLocalDescription();if(d!=null)describe(d.description);});}
                     public void onIceCandidate(IceCandidate c){callbackCandidates=Math.min(32,callbackCandidates+1);event(()->{
@@ -84,6 +89,7 @@ final class ControlPeer implements AutoCloseable {
                     public void onDataChannel(DataChannel dc){event(()->attach(dc));}
                 });
                 if(peer==null)throw new Exception("peer_unavailable");
+                events.scheduleWithFixedDelay(this::sampleIceChecks,1,2,TimeUnit.SECONDS);
                 peer.setRemoteDescription(new Sdp(){public void onSetSuccess(){event(()->peer.createAnswer(new Sdp(){
                     public void onCreateSuccess(SessionDescription d){event(()->peer.setLocalDescription(new Sdp(),d));}
                 },new MediaConstraints()));}},new SessionDescription(SessionDescription.Type.OFFER,offer));
@@ -94,6 +100,13 @@ final class ControlPeer implements AutoCloseable {
         try{return answer.get(16,TimeUnit.SECONDS);}catch(ExecutionException e){close();String reason=e.getCause().getMessage();throw new Exception(reason!=null&&reason.matches("[a-z_]{1,80}")?reason:"direct_connect_failed");}catch(Exception e){close();throw new Exception("direct_connect_failed");}
     }
     private Runnable thisPeerPublish(){return this::publishAnswer;}
+    private void sampleIceChecks(){
+        if(closed||peer==null||statsPending||open()||System.nanoTime()-started>TimeUnit.SECONDS.toNanos(60))return;statsPending=true;
+        try{peer.getStats(report->{
+            try{JSONObject summary=IceDiagnostics.summarize(report);iceChecks=summary;statsAtMs=TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-started);}
+            catch(Exception ignored){}finally{event(()->statsPending=false);}
+        });}catch(Exception ignored){statsPending=false;}
+    }
     private class Sdp implements SdpObserver{
         public void onCreateSuccess(SessionDescription d){}public void onSetSuccess(){}
         public void onCreateFailure(String s){answer.completeExceptionally(new Exception("sdp_failed"));close();}

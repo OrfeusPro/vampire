@@ -14,7 +14,8 @@ export function sealControl(token,value){const iv=randomBytes(12),c=createCipher
 export function openControl(token,box){if(!box||typeof box.data!=='string'||box.data.length>2800000||typeof box.iv!=='string'||box.iv.length!==16)throw Error('invalid frame');const iv=Buffer.from(box.iv,'base64'),data=Buffer.from(box.data,'base64');if(iv.length!==12||data.length<16)throw Error('invalid frame');const c=createDecipheriv('aes-256-gcm',key(token),iv);c.setAAD(label);c.setAuthTag(data.subarray(-16));return JSON.parse(Buffer.concat([c.update(data.subarray(0,-16)),c.final()]).toString('utf8'));}
 export function validateCommand(command,args={}){
   if(!args||typeof args!=='object'||Array.isArray(args))throw Error('invalid arguments');
-  if(!['bot','status','screenshot','tap','swipe','back','home','launch','checkUpdate','installUpdate','deviceInfo','apps','foreground','keyevent','inputText','longPress','gesture','connectControl','controlIce'].includes(command))throw Error('unsupported command');
+  if(!['bot','status','screenshot','tap','swipe','back','home','launch','checkUpdate','installUpdate','deviceInfo','apps','foreground','keyevent','inputText','longPress','gesture','connectControl','controlIce','networkProbe'].includes(command))throw Error('unsupported command');
+  if(command==='networkProbe'&&Object.keys(args).length)throw Error('invalid probe arguments');
   if(command==='bot'){
     if(!['status','catalog','assign','install','rollback','settingsBegin','settingsChunk','settingsCommit','start','pause','resume','stop','diagnosticsList','diagnosticsGet'].includes(args.op))throw Error('unsupported bot operation');
     if(args.op==='diagnosticsGet'&&!/^\d{13}-[a-f0-9]{32}$/.test(args.id))throw Error('invalid diagnostic id');
@@ -97,7 +98,7 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
     const linked=peers.get(id)?.peer;
     const management=['status','catalog','assign','install','rollback','stop','pause','start','resume','settingsBegin','settingsChunk','settingsCommit'];
     if((!state||Date.now()-state.received>=45000)&&(!linked||linked.closed||linked.channel?.readyState!=='open'))throw Object.assign(Error('device offline'),{status:409});
-    if(state.control?.api<3||!state.control?.directControl||['checkUpdate','installUpdate'].includes(command))return enqueueHttp(id,command,args);
+    if(state.control?.api<3||!state.control?.directControl||['checkUpdate','installUpdate','networkProbe'].includes(command))return enqueueHttp(id,command,args);
     if(command==='bot'&&management.includes(args.op)&&(!linked||linked.closed||linked.channel?.readyState!=='open'))return enqueueHttp(id,command,args);
     if(!state.control.enabled)throw Object.assign(Error('control disabled'),{status:409});
     let entry=peers.get(id);

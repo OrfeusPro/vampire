@@ -45,7 +45,7 @@ final class ControlAgent implements AutoCloseable {
     void start(){if(config.account!=null)loop.scheduleWithFixedDelay(this::tick,0,1,TimeUnit.SECONDS);}
     static JSONObject capabilities(Context c)throws Exception{
         boolean su=false;for(String path:new String[]{"/system/bin/su","/system/xbin/su","/sbin/su","/su/bin/su","/system_ext/bin/su"})if(new File(path).exists())su=true;
-        return new JSONObject().put("api",4).put("botApi",1).put("botDiagnostics",1).put("bot",BotStore.status(c)).put("directControl",true).put("enabled",ControlAccessibility.allowed(c)).put("accessibility",ControlAccessibility.current!=null).put("screenshot",Build.VERSION.SDK_INT>=30)
+        return new JSONObject().put("api",4).put("networkProbe",Build.VERSION.SDK_INT>=29).put("botApi",1).put("botDiagnostics",1).put("bot",BotStore.status(c)).put("directControl",true).put("enabled",ControlAccessibility.allowed(c)).put("accessibility",ControlAccessibility.current!=null).put("screenshot",Build.VERSION.SDK_INT>=30)
             .put("shell",false).put("forceStop",false).put("reboot",false).put("textInput",ControlAccessibility.current!=null).put("gesture",ControlAccessibility.current!=null)
             .put("androidSdk",Build.VERSION.SDK_INT).put("processUid",android.os.Process.myUid()).put("processRoot",android.os.Process.myUid()==0).put("rootGranted",JSONObject.NULL).put("suPresent",su).put("rootProbe","passive_only");
     }
@@ -128,6 +128,7 @@ final class ControlAgent implements AutoCloseable {
             return p.iceSnapshot(args.getString("iceSession"));
         }
         if(command.equals("deviceInfo")){JSONObject info=DeviceControl.info(context);ControlPeer p=direct;if(p!=null)info.put("controlDiagnostics",p.diagnostics());return info;}
+        if(command.equals("networkProbe"))return ActiveNetworkDiagnostics.run(context);
         if(command.equals("apps"))return DeviceControl.apps(context,args==null?new JSONObject():args);
         ControlAccessibility service=ControlAccessibility.current;if(service==null)throw new Exception("accessibility_permission_required");
         if(java.util.Arrays.asList("tap","swipe","longPress","gesture","back","home","launch","keyevent","inputText").contains(command))BotManager.manualPause(context);

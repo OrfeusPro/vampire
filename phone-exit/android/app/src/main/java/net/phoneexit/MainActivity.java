@@ -145,6 +145,21 @@ public final class MainActivity extends Activity {
                 });
             },"PhoneExitNetworkInfo").start();
         });
+        Button activeDiagnostics=action("Проверить UDP / STUN",false);add(details,activeDiagnostics,10);
+        activeDiagnostics.setOnClickListener(v->{
+            activeDiagnostics.setEnabled(false);android.content.Context app=getApplicationContext();
+            new Thread(()->{
+                String report;
+                try{report=ActiveNetworkDiagnostics.describe(ActiveNetworkDiagnostics.run(app));}
+                catch(Exception e){report="network_probe_busy".equals(e.getMessage())?"Проверка уже выполняется.":"network_probe_requires_android_10".equals(e.getMessage())?"Для активной проверки нужен Android 10 или новее.":"Проверку не удалось выполнить.";}
+                final String text=report;
+                handler.post(()->{
+                    if(isFinishing()||isDestroyed())return;activeDiagnostics.setEnabled(true);
+                    ScrollView probeScroll=new ScrollView(this);TextView content=label(text,14,TEXT);content.setTextIsSelectable(true);content.setPadding(dp(20),dp(12),dp(20),dp(12));probeScroll.addView(content);
+                    new android.app.AlertDialog.Builder(this).setTitle("UDP / STUN").setView(probeScroll).setPositiveButton("Закрыть",null).show();
+                });
+            },"PhoneExitActiveNetworkInfo").start();
+        });
         Button exitNetwork=action("Сеть для предоставления доступа",false);add(details,exitNetwork,10);
         exitNetwork.setOnClickListener(v->chooseExitNetwork());
         add(remote,label("API управления своим телефоном",18,TEXT),0);
