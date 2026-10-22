@@ -36,9 +36,12 @@
 вложенный CreateData и producer; полный формат внешности ещё не проверен.
 [Пустой список и подготовка создания](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 Целый reader запроса создания ID 103 проверен на 36 телах и 1398 коротких
-префиксах, включая строки и непустой массив внешности. Writer и допустимые
-игровые значения ещё не подтверждены; отправка создания не подключена.
+префиксах, включая строки и непустой массив внешности.
 [Формат чтения и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-READER.md).
+Целый writer ID 103 проверен на 42 телах и 24 отказах выходного fixture;
+переносимый encoder совпал с native байтами. Допустимые игровые значения,
+producer и результат создания ещё не подтверждены; отправка не подключена.
+[Запись тела и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-WRITER.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

@@ -49,12 +49,14 @@ Carnage; случайный ник сохраняется и меняется т
 104, CreateData writer / reader и producer найдены. Пустой ID 102 и отказ Login
 разделены current native replay; отправка создания пока не подключена.
 Constructor / getter источника класса прошли 144 native случая; допустимая строка
-класса, appearance JSON и целый writer создания ещё не проверены.
+класса и appearance JSON ещё не проверены.
 [Источник класса и fixtures](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-SOURCE.md).
 Целый reader ID 103 с constructor, CreateData и appearance прошёл 36 тел и
 1398 коротких префиксов. Проверены Unicode, непустой массив и границы памяти.
-Далее — whole writer, допустимые игровые значения и ответ создания ID 104.
+Writer затем прошёл 42 тела и 24 отказа raw output fixture; переносимый encoder
+совпал с native байтами. Далее — допустимые игровые значения и ответ ID 104.
 [Формат чтения и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-READER.md).
+[Запись и переносимый encoder](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-WRITER.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

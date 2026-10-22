@@ -4737,6 +4737,62 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Whole writer, допустимый Carnage class ID, схема JSON и значения внешности, результат создания и политика имени."
+    },
+    {
+      "addresses": [
+        "0x144aae660",
+        "0x1456bb7d0",
+        "0x14578ddd0",
+        "0x14578e120"
+      ],
+      "checks": [
+        {
+          "cache_key": "5cc24e597dc0feee00e21b8a3bd203c7d3d7c4759ee8c1daf4f1d590ada9f1db",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93\\manifest.json",
+          "sha256": "dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93",
+          "state": "passed"
+        },
+        {
+          "cache_key": "113eb7d10e7db841555255a044ab27602de77a28fc4f829cc8509a12e6185590",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7\\manifest.json",
+          "sha256": "36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "24c06747f1c3120a5ef20c0f5884d04c26ca2fbb7caf6ce59d2dbcabd1513b4d",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\417f4db9d641123d60a3ea3ef070e8a5875d2c4a7ed9ef4ca18d5387cd7d282d\\manifest.json",
+          "sha256": "417f4db9d641123d60a3ea3ef070e8a5875d2c4a7ed9ef4ca18d5387cd7d282d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fde81f6a172cf1b5d74481320b0dd6a06adfb20fcc43c5f9334375d1f67427c",
+          "id": "release-character-create-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fc149b49c870e7c3ef4dda5cb65bfa811d3e727e4f828e40b0207afbb9e80d80\\manifest.json",
+          "sha256": "fc149b49c870e7c3ef4dda5cb65bfa811d3e727e4f828e40b0207afbb9e80d80",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые текущие writer ID 103, CreateData и appearance с native UTF16/UTF8 и scalar aliases совпали с переносимым encoder в 42 телах. Writer сохраняет raw enum/bool bytes. В 24 искусственных raw output отказах четыре string позиции не распространяют отказ и продолжают запись; остальные останавливаются. Переносимый encoder возвращает целое тело после валидации, сеть не подключена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-REQUEST-WRITER.md",
+          "sha256": "957b7d9fc548757ba7f88f1bad21acfdfbfc42a830d742d877e3f4c90e6d4a84"
+        }
+      ],
+      "id": "8fa7d2c882c76a679b28c5d087fdd3f6a4d78896a0bd7d1b5fd7569f22ea447e",
+      "limits": [
+        "Raw output append, storage allocation/copy/free/cookie являются bounded fixtures; поведение реального архива при OOM или сокета не установлено.",
+        "Синтетические значения класса, внешности и JSON не доказывают допустимые игровые параметры; producer и ответ ID 104 не исполнялись.",
+        "Строки корректно завершены, embedded NUL / malformed Unicode portable encoder отклоняет; нет сети или реального создания."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать UI class +0x360 с Carnage / записью класса, проверить JSON producer и reader / handler ID 104 перед отправкой создания.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Допустимый Carnage class ID из UI, producer / JSON и допустимые appearance choices, ID 104, name_taken и реальное создание."
     }
   ],
   "schema": 1,
