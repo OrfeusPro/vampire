@@ -26,6 +26,62 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_sdk_creation_requires_verified_nid_and_fresh_missing_player_result(self):
+        spec = importlib.util.spec_from_file_location('sdk_job_test', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('fixture@unit.invalid', password='fixture', assignment={})
+            jobs = tool.Jobs(store)
+            with patch.object(tool.subprocess, 'Popen') as popen, patch.object(tool.threading, 'Thread'):
+                for state, code in (('unconfirmed', 1203), ('nid_verified', None), ('nid_verified', 100), ('sdk_created', 1203)):
+                    store.registration_status(identifier, state)
+                    jobs.jobs[identifier] = dict(running=False, sdk_error=dict(code=code))
+                    with self.subTest(state=state, code=code), self.assertRaises(ValueError):
+                        jobs.start(identifier, 'sdk_register')
+                popen.assert_not_called()
+                store.registration_status(identifier, 'nid_verified')
+                jobs.start(identifier, 'sdk_register')
+                self.assertEqual(popen.call_count, 1)
+                self.assertEqual(popen.call_args.args[0][-2:], ['--operation', 'sdk_register'])
+                self.assertNotIn('fixture@unit.invalid', popen.call_args.args[0])
+
+    def test_sdk_creation_is_separate_from_lobby_and_preserves_state_on_failure(self):
+        spec = importlib.util.spec_from_file_location('sdk_worker_test', HERE / 'vampir-headless/account-worker.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        store, registry, runner = MagicMock(), MagicMock(), MagicMock()
+        store.credential.return_value = ('fixture@unit.invalid', 'fixture-secret', {'enabled': True, 'server_id': None})
+        store.accounts.return_value = [{'id': 'fixture-id', 'registration_status': 'nid_verified'}]
+        args = SimpleNamespace(store=Path('fixture.sqlite3'), account='fixture-id', operation='sdk_register')
+        with patch.object(tool, 'AccountStore', return_value=store), \
+             patch.object(tool, 'DeviceRegistry', return_value=registry), \
+             patch.object(tool, 'load', return_value=runner) as load, patch.object(tool, 'emit') as emit:
+            runner.run.side_effect = RuntimeError('private-error')
+            with self.assertRaises(RuntimeError): tool.run(args)
+            store.registration_status.assert_not_called()
+            runner.run.side_effect = None
+            tool.run(args)
+            self.assertTrue(all(call.args[1].name == 'run-nid-sdk-sign-in.py' for call in load.call_args_list))
+            self.assertEqual(runner.run.call_args.kwargs, dict(password='fixture-secret', selected_profile='recovered-release',
+                socks_port=None, create_sdk_player=True, auth_flow='nid', timeout=300))
+            store.registration_status.assert_called_once_with('fixture-id', 'sdk_created')
+            self.assertEqual(emit.call_args.kwargs['status'], 'stopped')
+
+    def test_sdk_failure_keeps_only_numeric_status_and_code(self):
+        spec = importlib.util.spec_from_file_location('worker_error_test', HERE / 'vampir-headless/account-worker.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        value = tool.failure(tool.SdkSignInHttpError('secret-server-text', 403, 123))
+        self.assertEqual(value['sdk_error'], {'http_status': 403, 'code': 123})
+        self.assertNotIn('secret', json.dumps(value))
+        value = tool.failure(tool.SdkSignInHttpError('secret', 'private-status', 'private-code'))
+        self.assertEqual(value['sdk_error'], {'http_status': None, 'code': None})
+        self.assertNotIn('private', json.dumps(value))
+        timeout = RuntimeError('private-browser-details')
+        timeout.browser_status = 'timeout'
+        value = tool.failure(timeout)
+        self.assertIn('Истекло время входа Netmarble', value['message'])
+        self.assertNotIn('private', json.dumps(value))
+
     def test_manual_registration_code_is_scoped_single_use_and_not_in_snapshot(self):
         import io
         spec = importlib.util.spec_from_file_location('console_code_test', HERE / 'vampir-headless/account-manager.py')

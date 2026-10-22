@@ -15,6 +15,7 @@ from vampir_core.device_registry import DeviceRegistry
 from vampir_core.windows_device_identity import observe_windows_device_identity
 from vampir_core.account_catalog import build_account_catalog
 from vampir_core.patch_revision import parse_patch_client_revision
+from vampir_core.sdk_sign_in_http import SdkSignInHttpError
 
 
 def load(name, path):
@@ -34,7 +35,7 @@ def run(args):
     email, password, settings = store.credential(args.account)
     if not settings.get('enabled', True):
         raise ValueError('This account is disabled')
-    if settings['server_id'] is None and args.operation not in ('servers', 'register'):
+    if settings['server_id'] is None and args.operation not in ('servers', 'register', 'sdk_register'):
         raise ValueError('Select a server first')
     registry = DeviceRegistry(HERE / '.local/accounts.sqlite3')
     try:
@@ -49,6 +50,24 @@ def run(args):
     if args.operation == 'register':
         register_account(store, args, email, password)
         return
+    if args.operation == 'sdk_register':
+        if next(a for a in store.accounts() if a['id'] == args.account)['registration_status'] != 'nid_verified':
+            raise ValueError('NID account must be verified before SDK creation')
+        runner = load('account_sdk_registration', HERE / 'run-nid-sdk-sign-in.py')
+        emit('phase', stage='sdk_registration')
+        runner.run(email, password=password, selected_profile='recovered-release', socks_port=None,
+            create_sdk_player=True, auth_flow='nid', timeout=300)
+        password = None
+        store.registration_status(args.account, 'sdk_created')
+        emit('result', status='stopped', message='Игровой профиль SDK создан. Можно отдельно загрузить серверы и войти.')
+        return
+    def progress(stage):
+        # The lobby wrapper emits this only after a validated NID email callback.
+        if stage == 'sdk_sign_in':
+            account = next(a for a in store.accounts() if a['id'] == args.account)
+            if account['registration_status'] != 'sdk_created':
+                store.registration_status(args.account, 'nid_verified')
+        emit('phase', stage=stage)
     emit('phase', stage='configuration')
     cdn = load('account_cdn', HERE.parent / 'resource-tools/vampir/fetch-public-cdn-config.py')
     profile = cdn.profile('recovered-release')
@@ -61,7 +80,7 @@ def run(args):
         response = tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
             context='sdk-with-partial-metadata', password=password, read_server_list=True, server_policy_byte=0,
             auth_flow='launcher', lobby_region=settings['region'] if settings['region'] in ('EU', 'NA', 'SG') else None,
-            auth_timeout=300, _progress=lambda stage: emit('phase', stage=stage))
+            auth_timeout=300, _progress=progress)
         password = None
         listing = response.server_list_response
         if listing is None or listing.result_code != 0:
@@ -87,7 +106,7 @@ def run(args):
         character_index=settings['character_index'] if start_world else None,
         read_world_start=start_world, read_world_finish=start_world,
         observe_world_seconds=300 if start_world else 0, world_observer=world if start_world else None,
-        _progress=lambda stage: emit('phase', stage=stage))
+        _progress=progress)
     password = None
     game = result.get('game', {})
     code = game.get('login_result_code')
@@ -156,18 +175,30 @@ def register_account(store, args, email, password):
     emit('result', status='stopped', message='Регистрация Netmarble подтверждена. Можно загрузить серверы и войти.')
 
 
+def failure(error):
+    if getattr(error, 'browser_status', None) == 'timeout':
+        return dict(status='error', message='Истекло время входа Netmarble. Игровое соединение не открыто; проверьте окно авторизации.')
+    if isinstance(error, SdkSignInHttpError):
+        code = error.sdk_code if type(error.sdk_code) is int and -(2**31) <= error.sdk_code < 2**31 else None
+        status = error.status if type(error.status) is int and 100 <= error.status <= 599 else None
+        return dict(status='error', message='Netmarble принят; запрос игрового SDK отклонён.' +
+            (f' HTTP {status}.' if status is not None else '') + (f' Код SDK: {code}.' if code is not None else ''),
+            sdk_error=dict(http_status=status, code=code))
+    return dict(status='error', message=(
+        'Почтовый сервер не прошёл проверку TLS. Исправьте сертификат или выберите ввод кода из письма вручную.'
+        if isinstance(error, ssl.SSLCertVerificationError) else 'Операция не завершена: ' + type(error).__name__))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--store', required=True, type=Path)
     parser.add_argument('--account', required=True)
-    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register'], required=True)
+    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register', 'sdk_register'], required=True)
     parser.add_argument('--accept-required-terms', action='store_true')
     parser.add_argument('--manual-mail-code', action='store_true')
     try:
         run(parser.parse_args())
     except Exception as error:
         # Messages from networking / auth helpers may contain sensitive values.
-        message = ('Почтовый сервер не прошёл проверку TLS. Исправьте сертификат или выберите ввод кода из письма вручную.'
-            if isinstance(error, ssl.SSLCertVerificationError) else 'Операция не завершена: ' + type(error).__name__)
-        emit('result', status='error', message=message)
+        emit('result', **failure(error))
         raise SystemExit(2)

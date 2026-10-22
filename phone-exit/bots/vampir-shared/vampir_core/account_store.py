@@ -137,7 +137,7 @@ class AccountStore:
         return self.vault.decrypt(row[0])
 
     def registration_status(self, identifier, state):
-        if state not in ('in_progress', 'unconfirmed', 'registered', 'email_in_use'):
+        if state not in ('in_progress', 'unconfirmed', 'registered', 'email_in_use', 'nid_verified', 'sdk_created'):
             raise ValueError('Invalid registration state')
         with self._db() as db:
             if db.execute('UPDATE accounts SET registration_status=? WHERE id=?', (state, identifier)).rowcount != 1:
