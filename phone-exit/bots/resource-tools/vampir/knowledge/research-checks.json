@@ -677,7 +677,9 @@
         "phone-exit/bots/vampir-shared/vampir_core/map_session.py",
         "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
         "phone-exit/bots/test_vampir_map_session.py",
-        "phone-exit/bots/vampir-headless/run-map-session.py"
+        "phone-exit/bots/vampir-headless/run-map-session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_target.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py"
       ]
     },
     {
@@ -712,6 +714,113 @@
         "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py"
+      ]
+    },
+    {
+      "id": "world-target-stream",
+      "questions": [
+        "world-position-events"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "test_pattern": "test_vampir_game_login_probe.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [],
+      "dependencies": [
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_connection.py",
+        "phone-exit/bots/vampir-shared/vampir_core/selection_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_list.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/outbound.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_stream.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_frame.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_packet.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socket_send.py",
+        "phone-exit/bots/vampir-shared/vampir_core/key_change.py",
+        "phone-exit/bots/vampir-shared/vampir_core/send_frame.py",
+        "phone-exit/bots/vampir-shared/vampir_core/frame_primitives.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_error.py",
+        "phone-exit/bots/vampir-shared/vampir_core/session_clock.py",
+        "phone-exit/bots/test_vampir_login_flow.py",
+        "phone-exit/bots/test_vampir_version_probe.py",
+        "phone-exit/bots/test_vampir_selection_flow.py",
+        "phone-exit/bots/fixtures/vampir-selection-flow.json",
+        "phone-exit/bots/fixtures/vampir-login-flow.json",
+        "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
+        "phone-exit/bots/test_vampir_world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/heartbeat.py",
+        "phone-exit/bots/vampir-shared/vampir_core/ping.py",
+        "phone-exit/bots/vampir-shared/vampir_core/map_session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/test_vampir_map_session.py",
+        "phone-exit/bots/vampir-headless/run-map-session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_target.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
+        "phone-exit/bots/test_vampir_game_login_probe.py"
+      ]
+    },
+    {
+      "id": "character-target-identity",
+      "questions": [
+        "world-position-events"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "test_pattern": "test_vampir_character_target.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [],
+      "dependencies": [
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_connection.py",
+        "phone-exit/bots/vampir-shared/vampir_core/selection_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_list.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/outbound.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_stream.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_frame.py",
+        "phone-exit/bots/vampir-shared/vampir_core/receive_packet.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socket_send.py",
+        "phone-exit/bots/vampir-shared/vampir_core/key_change.py",
+        "phone-exit/bots/vampir-shared/vampir_core/send_frame.py",
+        "phone-exit/bots/vampir-shared/vampir_core/frame_primitives.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_error.py",
+        "phone-exit/bots/vampir-shared/vampir_core/session_clock.py",
+        "phone-exit/bots/test_vampir_login_flow.py",
+        "phone-exit/bots/test_vampir_version_probe.py",
+        "phone-exit/bots/test_vampir_selection_flow.py",
+        "phone-exit/bots/fixtures/vampir-selection-flow.json",
+        "phone-exit/bots/fixtures/vampir-login-flow.json",
+        "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
+        "phone-exit/bots/test_vampir_world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/heartbeat.py",
+        "phone-exit/bots/vampir-shared/vampir_core/ping.py",
+        "phone-exit/bots/vampir-shared/vampir_core/map_session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/test_vampir_map_session.py",
+        "phone-exit/bots/vampir-headless/run-map-session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_target.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_move_event.py",
+        "phone-exit/bots/test_vampir_game_login_probe.py",
+        "phone-exit/bots/test_vampir_character_target.py"
       ]
     }
   ]

@@ -15,7 +15,7 @@ from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=()):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -63,7 +63,8 @@ class GameLoginProbeTests(unittest.TestCase):
                                             if body!=b'':raise AssertionError('Nonempty finish request')
                                             if world_finish_body is not None:
                                                 clock_advanced[0]=advance_clock
-                                                server.sendall(incoming(206,world_finish_body))
+                                                server.sendall(incoming(206,world_finish_body)+b''.join(
+                                                    incoming(pid,payload) for pid,payload in after_finish_packets))
                                                 if observe_world_seconds and advance_clock:
                                                     header,body=receive_frame(server)
                                                     captures.append(header)
@@ -140,6 +141,25 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertEqual(events[0].vector.finite_values(),(1.5,-2.25,-0.0))
         self.assertIsNone(events[1])
         self.assertNotIn('target_position',result)
+
+    def test_coalesced_move_updates_only_selected_character_before_first_observer(self):
+        events=[]
+        selected=bytearray.fromhex(SELECTION_FIXTURE['select_result_hex'])
+        struct.pack_into('<Q',selected,4,42)
+        result,captures=self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True,character_body=list_body(),character_index=0,
+            wait_for_select=True,select_body=bytes(selected),read_world_start=True,
+            world_reserve_body=reserve_body(),world_start_body=struct.pack('<IIIIIBBQ',0,10010,2,3,4,0,0,77),
+            read_world_finish=True,world_finish_body=finish_body(),world_observer=events.append,
+            after_finish_packets=((307,struct.pack('<Qff',43,987,654)),(307,struct.pack('<Qff',42,12,34))))
+        self.assertEqual(result['status'],'world_finish_result')
+        self.assertEqual(result['own_xy_target_updates'],1)
+        self.assertEqual(len(events),2)
+        self.assertEqual(events[0].vector.finite_values(),(12,34,-0.0))
+        self.assertEqual(events[0].source,'character_move_notify_xy_retained_z')
+        self.assertIsNone(events[1])
+        self.assertEqual([pid for pid,_ in captures],[1,3,101,109,203,205])
+        self.assertNotIn('987',str(result))
 
     def test_world_finish_refusal_and_timeout(self):
         for body in (finish_body(16),None):

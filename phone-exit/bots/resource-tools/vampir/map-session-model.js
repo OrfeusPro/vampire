@@ -7,7 +7,7 @@
     const p=value.position;
     if(!p||!Number.isInteger(p.world_id)||!['10','11'].includes(p.map_id)
       ||!['x','y','z','pixel_x','pixel_y'].every(k=>typeof p[k]==='number'&&Number.isFinite(p[k]))
-      ||typeof p.inside!=='boolean'||p.semantics!=='server_target_before_engine_correction'
+      ||typeof p.inside!=='boolean'||!['server_target_before_engine_correction','server_target_xy_retained_z'].includes(p.semantics)
       ||!Number.isFinite(value.updated_at_ms))throw Error('Неверная позиция сессии');
     return {state:value.state,position:p,updated_at_ms:value.updated_at_ms};
   }

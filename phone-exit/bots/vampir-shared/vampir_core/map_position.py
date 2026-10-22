@@ -37,6 +37,9 @@ class MapProjection:
 
     def project(self,position):
         if not isinstance(position,ServerTargetPosition):raise TypeError('Server target required')
+        semantics={'world_move_finish_result':'server_target_before_engine_correction',
+            'character_move_notify_xy_retained_z':'server_target_xy_retained_z'}.get(position.source)
+        if semantics is None:raise ValueError('Unsupported position semantics')
         if type(position.world_id) is not int:raise ValueError('World ID must be integer')
         map_id=self.worlds.get(str(position.world_id))
         if map_id is None:raise ValueError('No verified projection for this world')
@@ -45,4 +48,4 @@ class MapProjection:
         py=(y-self.center[1])*self.size[1]/self.ground+self.size[1]/2
         if not all(math.isfinite(v) for v in (px,py)):raise ValueError('Projected point overflow')
         return MapPosition(position.world_id,map_id,x,y,z,px,py,
-            0<=px<=self.size[0] and 0<=py<=self.size[1])
+            0<=px<=self.size[0] and 0<=py<=self.size[1],semantics)

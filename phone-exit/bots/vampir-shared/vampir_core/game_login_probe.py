@@ -9,6 +9,7 @@ from .selection_flow import SelectionLimits, SelectionState
 from .game_login_error import describe_game_login_error
 from .session_clock import LobbyPingClock
 from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256
+from .character_target import CharacterTargetTracker
 
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
@@ -37,6 +38,16 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     packet_counts = {}
     other_packet_count = 0
     packet_budget_exceeded = False
+    target_tracker = None
+    notified_revision = 0
+    def ensure_target_tracker():
+        nonlocal target_tracker
+        if target_tracker is None and world_observer is not None and owner.world_entry is not None:
+            world=owner.world_entry
+            if world.state=='finish_response':
+                target_tracker=CharacterTargetTracker(owner.selection.response,world.target_position,
+                    source_sha256=source_sha256)
+        return target_tracker
     def observe(packet):
         nonlocal other_packet_count, packet_budget_exceeded
         other_packet_count += 1
@@ -45,6 +56,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             packet_budget_exceeded = True
             raise RuntimeError('Other packet budget exceeded')
         packet_counts[packet.packet_id] = packet_counts.get(packet.packet_id, 0) + 1
+        if packet.packet_id==307 and world_observer is not None:
+            tracker=ensure_target_tracker()
+            if tracker is not None:tracker.receive(packet.body)
     owner = GameConnection(sock, key_bits=0, sequence=0,
         receive_limits=ReceiveLimits(1048576, 1048576, 1048576, 2097152, 2097152),
         selection_limits=SelectionLimits(1048576, 64, 4096, timeout),
@@ -118,6 +132,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 ping_results_received=heartbeat.response_count if heartbeat else 0,
                 requested_observation_seconds=observe_world_seconds,
                 world_observation_completed=status=='world_observation_complete')
+        if world_observer is not None:
+            value['own_xy_target_updates']=target_tracker.update_count if target_tracker else 0
         return value
     try:
         started = time.monotonic()
@@ -164,8 +180,10 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     world.tick(time.monotonic())
                     if world.state=='start_response':return result('world_start_result')
                     if world.state=='finish_response':
-                        if observation_until is None and world_observer is not None:
-                            world_observer(world.target_position)
+                        tracker=ensure_target_tracker()
+                        if tracker is not None and tracker.revision!=notified_revision:
+                            world_observer(tracker.position)
+                            notified_revision=tracker.revision
                         if not observe_world_seconds:return result('world_finish_result')
                         if observation_until is None:
                             observation_until=time.monotonic()+observe_world_seconds
@@ -185,4 +203,5 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             'world_observation_complete' if observation_until is not None and time.monotonic()>=observation_until else 'timeout')
     finally:
         owner.close()
+        if target_tracker is not None:target_tracker.close()
         if world_observer is not None:world_observer(None)

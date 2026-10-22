@@ -80,6 +80,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [После замены телефонов: игровой LoginResult 16 / InvalidState](../evidence/network/HEADLESS-RESULT-ERROR-16.md)
 - [Игровой LoginResult 58: BlockedIp](../evidence/network/HEADLESS-RESULT-ERROR-58.md)
 - [Login в лобби после выбора игрового сервера](../evidence/network/HEADLESS-SELECTED-LOBBY-LOGIN.md)
+- [Серверная XY-цель собственного персонажа](../evidence/network/HEADLESS-SELF-TARGET-STREAM.md)
 - [Vampir — send-B и владение байтами очереди](../evidence/network/HEADLESS-SEND-B.md)
 - [Vampir — очередь → Winsock send и частичная отправка](../evidence/network/HEADLESS-SEND-DRAIN.md)
 - [Vampir — полный исходящий Ping frame, H03b.2a](../evidence/network/HEADLESS-SEND-FRAME.md)

@@ -49,7 +49,7 @@ async function pollSession(epoch){
     sessionSnapshot=snapshot;
     const p=snapshot.position;
     const labels={waiting:'Ожидание позиции',disconnected:'Сессия отключена',unsupported_world:'Для этого мира нет проверенной карты'};
-    sessionMessage(p?'Серверная цель входа · мир '+p.world_id+' · высота '+Math.round(p.z)
+    sessionMessage(p?(p.semantics==='server_target_xy_retained_z'?'Серверная XY-цель · последняя известная высота ':'Серверная цель входа · высота ')+Math.round(p.z)+' · мир '+p.world_id
       +(Date.now()-snapshot.updated_at_ms>5000?' · снимок позиции устарел':'')
       +(!p.inside?' · за границами атласа':''):labels[snapshot.state]);
     $('sessionFocus').disabled=!p||!p.inside||!worldById.has(String(p.world_id));
@@ -94,7 +94,7 @@ function drawSession(){
   const [x,y]=pointScreen(sessionVisual||p);ctx.save();ctx.strokeStyle=p.stale?'#b3bdc9':'#ffffff';
   ctx.fillStyle='#42e9bb';ctx.lineWidth=3;
   ctx.beginPath();ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();ctx.stroke();
-  ctx.fillStyle='#ffffff';ctx.font='bold 13px system-ui';ctx.fillText('Персонаж · цель входа',x+15,y-12);ctx.restore();
+  ctx.fillStyle='#ffffff';ctx.font='bold 13px system-ui';ctx.fillText(p.semantics==='server_target_xy_retained_z'?'Персонаж · серверная XY-цель':'Персонаж · цель входа',x+15,y-12);ctx.restore();
 }
 
 function fail(error) { $('error').textContent = 'Не удалось загрузить данные: ' + error.message; }

@@ -33,6 +33,14 @@ class MapPositionTests(unittest.TestCase):
         p=self.projection.project(self.point(615000,0))
         self.assertFalse(p.inside);self.assertEqual(p.pixel_x,15360)
 
+    def test_xy_target_keeps_explicit_height_semantics(self):
+        initial=self.point(1,2,3)
+        p=self.projection.project(ServerTargetPosition(initial.world_id,initial.vector,
+            source='character_move_notify_xy_retained_z'))
+        self.assertEqual(p.semantics,'server_target_xy_retained_z')
+        with self.assertRaises(ValueError):
+            self.projection.project(ServerTargetPosition(initial.world_id,initial.vector,source='unverified'))
+
     def test_unknown_world_nonfinite_and_source_mismatch_fail(self):
         for point in (self.point(0,0,world=999),self.point(float('nan'),0)):
             with self.assertRaises(ValueError):self.projection.project(point)

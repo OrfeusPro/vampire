@@ -2330,6 +2330,55 @@
       "question": "world-position-events",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Условия receiver, преобразование 1456a6770, identity guard собственного персонажа и непрерывная позиция; исходящий ID 305 и смысл ID 306."
+    },
+    {
+      "addresses": [
+        "0x145514ef0",
+        "0x1456a6770",
+        "0x145dade30",
+        "0x14679eab0"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a6891e61112cdbd7ecbb2b2ef778e4d8f8d318132d492e8a44c4bf4efef974",
+          "id": "release-character-move",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cd4627f75c167d370b113f2522f3000534b1238c19149e4407440a2645614a71\\manifest.json",
+          "sha256": "cd4627f75c167d370b113f2522f3000534b1238c19149e4407440a2645614a71",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c88539258b3d2fb712cdb6b1d7438810a7779c587951741e0a10601b65e2b694",
+          "id": "world-target-stream",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b4f8827cc90eadf1fe241c84e4d0ed8696da91a18ecb4c68401b7455c0404fcc\\manifest.json",
+          "sha256": "b4f8827cc90eadf1fe241c84e4d0ed8696da91a18ecb4c68401b7455c0404fcc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5c4522f462a58bb496c69367087a707d36e37b9830d9088f05e0cb980f493774",
+          "id": "character-target-identity",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\55771fa97b907e8dc573ac085778b51bf5add8c958d2926c1fbf83690be4918a\\manifest.json",
+          "sha256": "55771fa97b907e8dc573ac085778b51bf5add8c958d2926c1fbf83690be4918a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие receivers ID 206 / 307 используют общий actor lookup с ключами player+8 / packet+0x10. Новый tracker принимает XY только для собственного ненулевого ключа после ID 206 и передаёт серверную цель в map feed, сохраняя Z из ID 206. Порядок обработки проверен socketpair, включая совместное получение ID 206 и собственных / чужих уведомлений. Полная коррекция движка не воспроизводится: 1456a6770 вызывает две зависимости и выбирает варианты координат по высоте и флагам.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-SELF-TARGET-STREAM.md",
+          "sha256": "8c7435513561db0313620178a564ac9689679145458907e8d1660c3cc14800b5"
+        }
+      ],
+      "id": "f642366e67ac96afa0bc6f9294d665f60cca550fe7c23f2e6247c2b80e5a2c94",
+      "limits": [
+        "Связи ключей и преобразование прочитаны статически. Зависимости движка не исполнены; XY-цель с сохранённым Z не является фактической позицией.",
+        "Локально прошли 3 identity-теста, 27 socketpair-тестов exchange, 4 projection, 2 feed и 8 тестов запуска. Сетевых игровых действий эти проверки не выполняют.",
+        "Попытки TECNO / vivo JP и Redmi HK завершились Login 58 / BlockedIp до списка персонажей. Живые обновления и работа нового consumer на реальном ID 307 не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "После сообщения пользователя о готовности новых телефонов проверить новый consumer через свежий выход. Параллельно разбирать writer / producer ID 305; не отправлять движение в неподтверждённом формате.",
+      "question": "world-position-events",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Живые собственные XY-цели, условия применения и фактическая высота, исходящий writer / producer ID 305 и квестовые / диалоговые события."
     }
   ],
   "schema": 1,
