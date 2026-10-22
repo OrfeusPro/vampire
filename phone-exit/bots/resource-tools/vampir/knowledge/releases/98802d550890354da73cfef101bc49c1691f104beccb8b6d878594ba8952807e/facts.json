@@ -3804,6 +3804,213 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Смысл code 100, штатные raw10 / raw18 запроса и записи четырёх массивов ItemChangeList."
+    },
+    {
+      "addresses": [
+        "0x14649b6d0",
+        "0x14649b840"
+      ],
+      "checks": [
+        {
+          "cache_key": "5af47ddbb200ae87b02da43a506199216eb1f219d38805e44119cad9b7c07a65",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2\\manifest.json",
+          "sha256": "b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "25d56a780e4a367423f358aacdacf5efadd4ffce463f673f7434dec0fe03714a",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506\\manifest.json",
+          "sha256": "d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bda3cf661dcf10032f260f022f387d364210472b4de8739ac4da6256e8dfd95e",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2\\manifest.json",
+          "sha256": "fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5fd9448b0a5a1b17a14edca6bc9c809adeb581233d69e1a871f65191beff81e5",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273\\manifest.json",
+          "sha256": "280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a86c427cb8ed19e25ac894f2bffef4d826dd5829e706b19ad358c91f8d9a0b8",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a\\manifest.json",
+          "sha256": "948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50cbfdd50bc4aa64cf8ca7e77ddf8459738b95e869be6016410b97ba5f996d47",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14\\manifest.json",
+          "sha256": "9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ecfb24adc12f53d080b07bdf634f3cfd9f1ea1848c8e858781942c20110cc0f",
+          "id": "release-tutorial-drain",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681\\manifest.json",
+          "sha256": "58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1fcd6c4a2bd3e25f2aaf42130420c8996ce81494de0532526904bd1be52a25b0",
+          "id": "release-tutorial-startup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c\\manifest.json",
+          "sha256": "d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e516b8c0a6aa484ada7f0ffab6cc36e4cfe379d0e8a3b8adfff8d32364f5e035",
+          "id": "release-quest-record",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7\\manifest.json",
+          "sha256": "68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "20861cde41aaf2ad18e5f68ed42f9cebb5d929b0e8f745c6fe931aff7a929e90",
+          "id": "release-quest-list",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3\\manifest.json",
+          "sha256": "86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ebc75d286b83acd265f3fc7162f4e7c6a9b11ef3c9f398951b04fb221337eb8",
+          "id": "release-quest-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409\\manifest.json",
+          "sha256": "c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "14649b6d0 меняет вложенные локальные maps по двум byte-ключам, присваивая или прибавляя int и удаляя значения меньше 1. Эта функция не содержит прямой отправки пакета; virtual +0xa0 с числом 1801 в 14649b840 не установлен как сетевой вызов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-REFUSAL-RECHECK.md",
+          "sha256": "7eb6bf4d35c6340b040a572a90c5cd41f19c66f25eb1e7eba67559e507f52f15"
+        }
+      ],
+      "id": "1013ad8b97ab46aadcb4bc6ed2987790db57919d7d1f4bc0cd1fd48988764464",
+      "limits": [
+        "Статический разбор инструкций и псевдокода; вызванные helpers не исполнялись native replay.",
+        "Число 1801 / 1802 само по себе не доказывает сетевую роль.",
+        "Живая повторная проверка дала code 100 после входа с code 0, но не устанавливает смысл кода."
+      ],
+      "method": "static",
+      "next_check": "Найти источник параметров или dispatch через доказанную сетевую связь; не повторять 0 / 0 без нового основания.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Смысл code 100, штатные поля ID 1801 и доказанный handler ID 1802."
+    },
+    {
+      "addresses": [
+        "0x145f5db10",
+        "0x14648f620",
+        "0x1465dff70"
+      ],
+      "checks": [
+        {
+          "cache_key": "5af47ddbb200ae87b02da43a506199216eb1f219d38805e44119cad9b7c07a65",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2\\manifest.json",
+          "sha256": "b78f36925f9b32330f19a413b573feca2ea9240967b622db57b0a5cf9059eec2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "25d56a780e4a367423f358aacdacf5efadd4ffce463f673f7434dec0fe03714a",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506\\manifest.json",
+          "sha256": "d0cde8a853f0d46d37f60731b0c4f25e683524aaeac5f363a764df5f011bc506",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bda3cf661dcf10032f260f022f387d364210472b4de8739ac4da6256e8dfd95e",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2\\manifest.json",
+          "sha256": "fca90a688dd447388f3908e06c4297d4176496fe35f5d1a60b9e79df0b4529e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5fd9448b0a5a1b17a14edca6bc9c809adeb581233d69e1a871f65191beff81e5",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273\\manifest.json",
+          "sha256": "280474f30153d24aefaf53845e372fa35f6c336f4cb2bb0da3929b7704762273",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a86c427cb8ed19e25ac894f2bffef4d826dd5829e706b19ad358c91f8d9a0b8",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a\\manifest.json",
+          "sha256": "948ca68ed9abdef9ceb99298eb6f16ef9c96bce42490f0a4be136a5a2abf745a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50cbfdd50bc4aa64cf8ca7e77ddf8459738b95e869be6016410b97ba5f996d47",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14\\manifest.json",
+          "sha256": "9d79dda45cc7e23058e0137901ae25a6cf7a749acc143cbc3caf1eb211ff3d14",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ecfb24adc12f53d080b07bdf634f3cfd9f1ea1848c8e858781942c20110cc0f",
+          "id": "release-tutorial-drain",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681\\manifest.json",
+          "sha256": "58affca4d1e962c89a787b7d2a8357221c13936b29105901b4b4aa9db2466681",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1fcd6c4a2bd3e25f2aaf42130420c8996ce81494de0532526904bd1be52a25b0",
+          "id": "release-tutorial-startup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c\\manifest.json",
+          "sha256": "d530966f45cf1697ece8c2b510e246b50e5c348bcd98bffe0b8347cfe381cc5c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e516b8c0a6aa484ada7f0ffab6cc36e4cfe379d0e8a3b8adfff8d32364f5e035",
+          "id": "release-quest-record",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7\\manifest.json",
+          "sha256": "68ede1869661b1fde33a64c069c2dae0d49905ea6efa01779d3759cac132a6d7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "20861cde41aaf2ad18e5f68ed42f9cebb5d929b0e8f745c6fe931aff7a929e90",
+          "id": "release-quest-list",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3\\manifest.json",
+          "sha256": "86d1bc2ad7a946a2ac635c244e3c82550c00a20f1127eefad5f62f4dc999e3b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ebc75d286b83acd265f3fc7162f4e7c6a9b11ef3c9f398951b04fb221337eb8",
+          "id": "release-quest-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409\\manifest.json",
+          "sha256": "c88d77670822aac0fd2bb16acdc0b14e1b5a05f06c3c2d48949eaa49596ad409",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Три явных кандидата с непосредственным 1802 работают с локальными счётчиками: выбор ключа по типу / строке, подсчёт записей, сумма 1802 / 1803 / 1804. Эти экспорты не устанавливают handler ответа ID 1802 и не дают штатные параметры ID 1801.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-REFUSAL-RECHECK.md",
+          "sha256": "7eb6bf4d35c6340b040a572a90c5cd41f19c66f25eb1e7eba67559e507f52f15"
+        }
+      ],
+      "id": "e2fadaf42472a9cd4a634fbc05d65e89893310be9f9af5e8e46908dbf2ded7ba",
+      "limits": [
+        "Статический разбор инструкций и псевдокода; вызванные helpers не исполнялись native replay.",
+        "Число 1801 / 1802 само по себе не доказывает сетевую роль.",
+        "Живая повторная проверка дала code 100 после входа с code 0, но не устанавливает смысл кода."
+      ],
+      "method": "static",
+      "next_check": "Найти источник параметров или dispatch через доказанную сетевую связь; не повторять 0 / 0 без нового основания.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Смысл code 100, штатные поля ID 1801 и доказанный handler ID 1802."
     }
   ],
   "schema": 1,
