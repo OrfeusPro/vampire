@@ -204,6 +204,8 @@ def server(store, *, port=17949):
                     return self.response(200, dict(id=identifier))
                 if self.path == '/api/nickname':
                     return self.response(200, dict(nickname=random_nickname(a.get('create_nickname', '') for a in store.accounts())))
+                if self.path == '/api/reveal':
+                    return self.response(200, dict(password=store.reveal_password(body['id'], body['kind'])))
                 if self.path == '/api/job':
                     if body['operation'] == 'stop':
                         jobs.stop(body['id'])

@@ -4,6 +4,9 @@ from datetime import datetime
 from contextlib import contextmanager
 from ctypes import wintypes
 import json
+import re
+import secrets
+import string
 from pathlib import Path
 import sqlite3
 import sys
@@ -11,6 +14,13 @@ import uuid
 
 from .device_registry import _email
 from .character_creation_plan import CLASS_CHOICES, DEFAULT_CLASS, MAX_NAME_ATTEMPTS, random_nickname
+
+ACCOUNT_NICKNAMES = (
+    'NightRaven', 'AshHunter', 'DuskWarden', 'MoonFang', 'BloodCrow', 'StormWolf',
+    'GrimFalcon', 'DarkViper', 'FrostHawk', 'IronShade', 'EmberFang', 'RavenClaw',
+    'SilverCrow', 'ScarletOwl', 'NightLynx', 'AshWarden', 'DuskFalcon', 'MoonRaven',
+    'ShadowFox', 'StormCrow', 'FrostWolf', 'IronRaven', 'EmberHawk', 'CrimsonFang',
+)
 
 
 class WindowsVault:
@@ -67,6 +77,9 @@ class AccountStore:
                 db.execute('ALTER TABLE accounts ADD COLUMN mail_password BLOB')
             if 'registration_status' not in columns:
                 db.execute("ALTER TABLE accounts ADD COLUMN registration_status TEXT NOT NULL DEFAULT 'unknown'")
+            if 'mail_status' not in columns:
+                db.execute("ALTER TABLE accounts ADD COLUMN mail_status TEXT NOT NULL DEFAULT 'unknown'")
+            db.execute('CREATE TABLE IF NOT EXISTS prepared_batches(name TEXT PRIMARY KEY,data TEXT NOT NULL)')
 
     @contextmanager
     def _db(self):
@@ -135,9 +148,115 @@ class AccountStore:
 
     def accounts(self):
         with self._db() as db:
-            rows = db.execute('SELECT id,email,assignment,mail_password IS NOT NULL,registration_status FROM accounts ORDER BY rowid').fetchall()
-        return [dict(id=i, email=e, password_saved=True, mail_password_saved=bool(m), registration_status=r,
-            **self.assignment(json.loads(a))) for i, e, a, m, r in rows]
+            rows = db.execute('SELECT id,email,assignment,mail_password IS NOT NULL,registration_status,mail_status FROM accounts ORDER BY rowid').fetchall()
+        return [dict(id=i, email=e, password_saved=True, mail_password_saved=bool(m), registration_status=r, mail_status=ms,
+            **self.assignment(json.loads(a))) for i, e, a, m, r, ms in rows]
+
+    def reveal_password(self, identifier, kind):
+        # Explicit local UI action only; never include this in accounts()/state.
+        if kind not in ('mail', 'netmarble'):
+            raise ValueError('Unknown password kind')
+        column = 'mail_password' if kind == 'mail' else 'password'
+        with self._db() as db:
+            row = db.execute('SELECT ' + column + ' FROM accounts WHERE id=?', (identifier,)).fetchone()
+        if row is None or row[0] is None:
+            raise ValueError('Password is not saved')
+        return self.vault.decrypt(row[0])
+
+    def prepare_batch(self, name, *, domain='vampir.top', region='EU', per_server=2, minimum_new=24):
+        """Atomic local plan; does not claim mailboxes or Netmarble accounts exist."""
+        if (type(name) is not str or not re.fullmatch(r'[a-z0-9-]{1,80}', name) or domain != 'vampir.top'
+                or type(per_server) is not int or not 1 <= per_server <= 10
+                or type(minimum_new) is not int or not 1 <= minimum_new <= 128):
+            raise ValueError('Invalid batch plan')
+        config = dict(domain=domain, region=region, per_server=per_server, minimum_new=minimum_new)
+        with self._db() as db:
+            db.execute('BEGIN IMMEDIATE')
+            old = db.execute('SELECT data FROM prepared_batches WHERE name=?', (name,)).fetchone()
+            if old:
+                data = json.loads(old[0])
+                if data['config'] != config:
+                    raise ValueError('Batch already exists with different settings')
+                return data
+            row = db.execute('SELECT data FROM catalogs WHERE region=?', (region,)).fetchone()
+            if row is None:
+                raise ValueError('A saved server catalog is required')
+            servers = json.loads(row[0])['servers']
+            servers = [server for server in servers if server.get('excluded') is False]
+            if not servers or len({s['id'] for s in servers}) != len(servers):
+                raise ValueError('No unambiguous available servers')
+            count = max(minimum_new, len(servers) * per_server)
+            if count > 128:
+                raise ValueError('Batch exceeds account budget')
+            targets = [server for server in servers for _ in range(per_server)]
+            used_emails = {e for e, in db.execute('SELECT email FROM accounts')}
+            used_passwords, identifiers = set(), []
+            def password(size, special=False):
+                alphabet = string.ascii_letters + string.digits
+                while True:
+                    value = ''.join(secrets.choice(alphabet) for _ in range(size))
+                    if special:
+                        value += secrets.choice('!#$%')
+                    if (value not in used_passwords and any(c.islower() for c in value)
+                            and any(c.isupper() for c in value) and any(c.isdigit() for c in value)):
+                        used_passwords.add(value)
+                        return value
+            for index in range(count):
+                target = targets[index % len(targets)]
+                base = ACCOUNT_NICKNAMES[index % len(ACCOUNT_NICKNAMES)]
+                ordinal = index // len(ACCOUNT_NICKNAMES) + 1
+                while True:
+                    nickname = base + (str(ordinal) if ordinal > 1 else '')
+                    email = nickname.lower() + '@' + domain
+                    if email not in used_emails:
+                        used_emails.add(email); break
+                    ordinal += 1
+                settings = self.assignment(dict(label=nickname, enabled=False, create_nickname=nickname,
+                    region=region, server_id=target['id'], auth_flow='launcher'))
+                identifier = str(uuid.uuid4())
+                db.execute('INSERT INTO accounts(id,email,password,mail_password,assignment,mail_status) VALUES(?,?,?,?,?,?)',
+                    (identifier, email, self.vault.encrypt(password(16)), self.vault.encrypt(password(20, special=True)),
+                     json.dumps(settings), 'planned'))
+                identifiers.append(identifier)
+            data = dict(name=name, config=config, account_ids=identifiers,
+                server_ids=[s['id'] for s in servers], catalog_observed_utc=json.loads(row[0]).get('observed_utc'))
+            db.execute('INSERT INTO prepared_batches VALUES(?,?)', (name, json.dumps(data)))
+        return data
+
+    def rename_prepared_batch(self, name):
+        """Rename only local, unregistered drafts; external mailboxes are not changed."""
+        with self._db() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row = db.execute('SELECT data FROM prepared_batches WHERE name=?', (name,)).fetchone()
+            if row is None:
+                raise ValueError('Unknown batch')
+            batch = json.loads(row[0]); config = batch['config']
+            renamed = []
+            for index, identifier in enumerate(batch['account_ids']):
+                account = db.execute('SELECT email,assignment,mail_status,registration_status FROM accounts WHERE id=?', (identifier,)).fetchone()
+                if account is None or account[2:] != ('planned', 'unknown'):
+                    raise ValueError('Only unregistered mailbox drafts can be renamed')
+                settings = self.assignment(json.loads(account[1]))
+                ordinal = index // len(ACCOUNT_NICKNAMES) + 1
+                nickname = ACCOUNT_NICKNAMES[index % len(ACCOUNT_NICKNAMES)] + (str(ordinal) if ordinal > 1 else '')
+                email = nickname.lower() + '@' + config['domain']
+                collision = db.execute('SELECT id FROM accounts WHERE email=? AND id<>?', (email, identifier)).fetchone()
+                if collision:
+                    raise ValueError('Meaningful mailbox login already belongs to another account')
+                settings['label'] = nickname
+                settings['create_nickname'] = nickname
+                db.execute('UPDATE accounts SET email=?,assignment=? WHERE id=?', (email, json.dumps(settings), identifier))
+                renamed.append(email)
+            batch['naming'] = 'meaningful-game-nicknames'
+            db.execute('UPDATE prepared_batches SET data=? WHERE name=?', (json.dumps(batch), name))
+        return renamed
+
+    def mail_status(self, identifier, state):
+        if state not in ('planned', 'created', 'verified', 'unconfirmed', 'error'):
+            raise ValueError('Invalid mailbox status')
+        with self._db() as db:
+            if db.execute('UPDATE accounts SET mail_status=? WHERE id=?', (state, identifier)).rowcount != 1:
+                raise KeyError('Unknown account')
 
     def creation_nickname(self, identifier, *, region, server_id, result='empty_list', rejected_name=None):
         """Name proposal only. Future decoder must confirm name_taken; no unknown retry."""

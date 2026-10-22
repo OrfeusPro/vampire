@@ -161,7 +161,7 @@ def register_account(store, args, email, password):
             store.registration_status(args.account, 'email_in_use')
         emit('phase', stage='registration_code' if state.get('need_code') else 'registration_form')
         paths = ('/auth/signin', '/auth/signin/email', '/auth/signup/terms', '/auth/signup/email/input',
-            '/auth/signup/email/verify', '/auth/signup/password/input', '/auth/signup/complete')
+            '/auth/signup/email/verify', '/auth/signup/password/input', '/auth/signup/email/complete', '/auth/signup/complete')
         emit('registration', path=state.get('path') if state.get('path') in paths else 'other',
             mail_sent=state.get('email_sent') is True, code_submitted=state.get('code_submitted') is True,
             password_submitted=state.get('password_submitted') is True, complete=state.get('complete') is True)

@@ -71,9 +71,12 @@ def run(address, *, password, mail_password, socks_port=None, timeout=300, accep
         context = runner.prepare_nid_sign_in_context(binding=binding, **profile)
         url = runner.bind_nid_web_url(context, constants=constants, max_url_size=32768)
         completed = False
+        confirmed_steps = set()
         def progress(state):
             nonlocal completed
             completed = completed or state.get('complete') is True
+            confirmed_steps.update(key for key in ('terms_submitted', 'email_sent', 'code_submitted', 'password_submitted')
+                if state.get(key) is True)
             if _progress:
                 _progress(state)
                 return
@@ -85,7 +88,10 @@ def run(address, *, password, mail_password, socks_port=None, timeout=300, accep
             data_directory=HERE / '.local/nid-accounts' / account_directory / ('registration-socks-' + str(socks_port) if route else 'registration-direct'),
             timeout=timeout, expected_email=address, sign_in_password=password, socks_port=socks_port,
             register_account=True, code_provider=mailbox.get_code if mailbox is not None else _code_provider, progress=progress)
-        if not completed:
+        # The official SDK webview signs in immediately after email signup and
+        # can return the validated callback without visiting /email/complete.
+        # A callback alone is insufficient: require every explicit signup step.
+        if not completed and confirmed_steps != {'terms_submitted', 'email_sent', 'code_submitted', 'password_submitted'}:
             raise RuntimeError('Registration completion was not observed')
         return provider
     finally:
