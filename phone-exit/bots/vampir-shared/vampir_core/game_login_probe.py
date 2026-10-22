@@ -15,7 +15,8 @@ from .tutorial_update import decode_tutorial_update
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
                         character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False,
-                        observe_world_seconds=0,world_observer=None,tutorial_observer=None):
+                        observe_world_seconds=0,world_observer=None,tutorial_observer=None,
+                        ack_initial_tutorial=False):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
@@ -37,6 +38,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             or not 0<=observe_world_seconds<=300 or
             (observe_world_seconds and (not read_world_finish or ping_clock is None))):
         raise ValueError('World observation requires explicit finish, clock and duration <=300')
+    if type(ack_initial_tutorial) is not bool or (ack_initial_tutorial and not observe_world_seconds):
+        raise ValueError('Initial tutorial ack requires explicit bounded world observation')
     unknown = []  # Bounded first-packet sample, not a processing limit.
     packet_counts = {}
     other_packet_count = 0
@@ -76,6 +79,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     if read_world_start:
         owner.enable_world_start(source_sha256=source_sha256,timeout=timeout,max_payload_size=1048576,
             complete_world=read_world_finish,max_collection_items=4096)
+    if ack_initial_tutorial:
+        owner.enable_initial_tutorial_ack(source_sha256=source_sha256, timeout=timeout)
     sent = received = 0
     counts_complete = True
     flow = None
@@ -145,6 +150,14 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         if world_observer is not None:
             value['own_xy_target_updates']=target_tracker.update_count if target_tracker else 0
         if tutorial_observer is not None:value['tutorial_notifications_decoded']=tutorial_notifications
+        if ack_initial_tutorial:
+            ack = owner.tutorial_ack
+            # A diagnostic exit with a pending command has an unknown outcome.
+            if ack.state in ('queued', 'sent'): owner.close()
+            value.update(initial_tutorial_ack_state=ack.state,
+                initial_tutorial_ack_result_code=ack.result_code,
+                initial_tutorial_ack_unmatched_results=ack.unmatched_results,
+                initial_tutorial_ack_semantics='server_step_ack_not_quest_panel_click')
         return value
     try:
         started = time.monotonic()
@@ -201,6 +214,15 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         if observation_until is None:
                             observation_until=time.monotonic()+observe_world_seconds
                             deadline=observation_until
+                        if ack_initial_tutorial:
+                            ack = owner.tutorial_ack
+                            if ack.state == 'eligible':
+                                try:
+                                    owner.queue_initial_tutorial_ack(now=time.monotonic())
+                                except BufferError:
+                                    return result('initial_tutorial_ack_not_queued')
+                            if ack.state in ('accepted', 'rejected'):
+                                return result('initial_tutorial_ack_result')
                     if world.error:return result('world_start_failed')
                     if world.deadline is not None: deadline=world.deadline
             if owner.active:

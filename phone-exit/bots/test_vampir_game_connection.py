@@ -1,5 +1,6 @@
 """Connected socket owner integration without a game or external network."""
 import socket
+import select
 import struct
 import unittest
 
@@ -114,7 +115,11 @@ class GameConnectionTests(unittest.TestCase):
         owner, server, client = self.connect()
         server.sendall(b'\x10')
         server.shutdown(socket.SHUT_WR)
-        with self.assertRaises(RuntimeError): owner.pump(now=0, budget=BUDGET)
+        # Windows socketpair shutdown can become readable in a later pump.
+        with self.assertRaises(RuntimeError):
+            for _ in range(20):
+                select.select([client], [], [], .1)
+                owner.pump(now=0, budget=BUDGET)
         self.assertEqual(client.fileno(), -1)
         def fail(packet): raise ValueError('sensitive callback details')
         owner, server, client = self.connect(handler=fail)

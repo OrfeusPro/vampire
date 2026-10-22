@@ -78,6 +78,11 @@ class OutboundFrames:
         from .send_frame import encode_world_move_finish_frame_b
         return self._append(encode_world_move_finish_frame_b(self._sequence,self._key_bits))
 
+    def queue_initial_tutorial_ack(self, *, source_sha256):
+        from .send_frame import encode_initial_tutorial_ack_frame_b
+        return self._append(encode_initial_tutorial_ack_frame_b(
+            self._sequence, self._key_bits, source_sha256=source_sha256))
+
     def close(self) -> None:
         """Invalidate the connection queue, including every unsent partial tail."""
         self._closed = True
@@ -113,13 +118,15 @@ class OutboundFrames:
             return None
         return memoryview(self._frames[0])[self._head_offset:]
 
-    def consume_sent(self, count: int) -> None:
-        """Commit only bytes accepted by the socket, never discard an unsent tail."""
+    def consume_sent(self, count: int) -> bytes | None:
+        """Commit accepted bytes; return the original frame only on completion."""
         available = len(self._frames[0]) - self._head_offset if self._frames else 0
         if isinstance(count, bool) or not isinstance(count, int) or not 0 <= count <= available:
             raise ValueError('Sent count outside pending head frame')
         self._head_offset += count
         self._queued_bytes -= count
         if self._frames and count == available:
-            self._frames.popleft()
+            frame = self._frames.popleft()
             self._head_offset = 0
+            return frame
+        return None

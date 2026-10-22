@@ -18,6 +18,38 @@ Blood Pool. Вывод включается / выключается, «К пе�
 
 ## Текущее состояние
 
+Добавлена явная диагностическая команда `--ack-initial-tutorial` в
+`probe-selected-game-login.py`. Она требует `--read-world-start`,
+`--read-world-finish`, выбора персонажа и `--observe-world-seconds`.
+По умолчанию команда выключена. После успешного ID 206 и свежего ID 9905
+этого соединения разрешена одна отправка ID 9903: tutorial 1001, step 2,
+raw18 = 0. Локальный фильтр требует единственную запись 1001 со state 1,
+raw0c 0 или 1, raw10 0 и flag false; возраст снимка — не больше 10 секунд.
+Это диагностическая политика для наблюдавшегося начального состояния,
+не воспроизведение неизвестного cached-поля Tutorial +0x50.
+
+Очередь, полная передача кадра сокету и ответ сервера различаются. ID 9904
+принимается как результат только после полной отправки и при совпадении
+1001 / 2: code 0 — `accepted`, другой код — `rejected`. Ранний или чужой
+ответ не подтверждает действие. Таймаут, обрыв и завершение наблюдения
+при ожидаемом ответе дают `unknown`; повторной отправки нет, в том числе
+для code 4223. Передача байтов сокету сама по себе не доказывает их обработку.
+
+Локально проверена цепочка входа → ID 206 → ID 9905 → ID 9903 → ID 9904
+через socketpair, а также частичная отправка, отказ, отсутствие ответа,
+лимит очереди и очистка при обрыве. Живой сервер для этой команды ещё
+не проверен. Подтверждение шага не является кликом QuestPanel_PanelTouch,
+не выбирает квест и не доказывает запуск автоматического движения.
+[Основание полей запроса](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md),
+[ответа](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md)
+и [начального перехода](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STARTUP.md).
+Проверки без авторизации и игровых действий:
+
+```powershell
+$env:PYTHONPATH='phone-exit/bots/vampir-shared;phone-exit/bots'
+python -X utf8 -m unittest test_vampir_initial_tutorial_ack test_vampir_game_connection test_vampir_game_login_probe test_vampir_selected_game_login test_vampir_headless_send_drain.SocketPumpTests test_vampir_headless_send_b.OutboundStateTests
+```
+
 После замены телефонов 22 октября бот прошёл живые Login / список / выбор,
 ID 204 → ID 205 → ID 206 code 0 через JP / TECNO TECNO KJ5n. Конечная серверная
 целевая позиция получена; ошибки отсутствуют. Соединение и маршрут закрыты.

@@ -69,6 +69,7 @@ class GameConnection:
         self._login = None
         self._world_entry = None
         self._heartbeat = None
+        self._tutorial_ack = None
         try:
             sock.setblocking(False)
         except Exception:
@@ -99,6 +100,9 @@ class GameConnection:
     @property
     def heartbeat(self): return self._heartbeat
 
+    @property
+    def tutorial_ack(self): return self._tutorial_ack
+
     def close(self):
         if self._active:
             self._active = False
@@ -107,6 +111,7 @@ class GameConnection:
             if self._world_entry is not None: self._world_entry.close()
             if self._heartbeat is not None: self._heartbeat.close()
             if self._login is not None: self._login.close()
+            if self._tutorial_ack is not None: self._tutorial_ack.close()
             try:
                 self._socket.close()
             finally:
@@ -149,6 +154,22 @@ class GameConnection:
         if not self.active: raise RuntimeError('Connection is inactive')
         self._outbound.queue_ping(payload)
 
+    def enable_initial_tutorial_ack(self, *, source_sha256, timeout=10, snapshot_max_age=10):
+        """Track this connection's snapshots; enabling sends no game command."""
+        if not self.active or self._tutorial_ack is not None:
+            raise RuntimeError('Initial tutorial acknowledgement cannot be enabled')
+        from .initial_tutorial_ack import InitialTutorialAck
+        self._tutorial_ack = InitialTutorialAck(self._outbound, source_sha256=source_sha256,
+            timeout=timeout, snapshot_max_age=snapshot_max_age)
+
+    def queue_initial_tutorial_ack(self, *, now):
+        """Explicit diagnostic step 2 ack, requiring successful world completion."""
+        if (not self.active or self._tutorial_ack is None or self._world_entry is None
+                or self._world_entry.state != 'finish_response'
+                or self._world_entry.finish_result_code != 0):
+            raise RuntimeError('Initial tutorial acknowledgement is unavailable')
+        self._tutorial_ack.queue(now=now)
+
     def enable_periodic_ping(self,clock,initial_ping,*,source_sha256):
         """Initial Ping must already be queued; scheduler starts after ID206."""
         if not self.active or self._heartbeat is not None:
@@ -185,6 +206,9 @@ class GameConnection:
                 if self._world_entry.error:
                     self._fail('world_entry_failed')
                     return PumpProgress(0, 0, 0, False)
+            if self._tutorial_ack is not None and self._tutorial_ack.expire(now=now):
+                self._fail('initial_tutorial_ack_unknown')
+                return PumpProgress(0, 0, 0, False)
             while packets < budget.max_packets and self.active:
                 packet = self._receiver.next_packet(key_bits=self._key,
                     max_transport_frames=budget.max_transport_frames_per_packet)
@@ -208,6 +232,8 @@ class GameConnection:
                         self._world_entry.receive(packet.packet_id,packet.body,now=now)
                         if self._world_entry.error: self._fail('world_entry_response_failed')
                     else:
+                        if self._tutorial_ack is not None and packet.packet_id in (9904, 9905):
+                            self._tutorial_ack.receive(packet.packet_id, packet.body, now=now)
                         self._on_packet(packet)
                     continue
                 if self._receiver.finished:
@@ -234,7 +260,8 @@ class GameConnection:
                     except PingRecoveryRequired:
                         self._fail('ping_recovery_required')
                         return PumpProgress(packets,received,0,False)
-                sent = drain_outbound(self._socket, self._outbound, max_send_calls=budget.max_send_calls).bytes_sent
+                sent = drain_outbound(self._socket, self._outbound, max_send_calls=budget.max_send_calls,
+                    on_frame_sent=(self._tutorial_ack.frame_sent if self._tutorial_ack is not None else None)).bytes_sent
             return PumpProgress(packets, received, sent, self.active)
         except Exception:
             self._fail('connection_processing_failed')
