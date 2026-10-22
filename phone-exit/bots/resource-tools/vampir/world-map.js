@@ -16,6 +16,24 @@ let liftPreview = null, selectedLift = null;
 let navOverlay=null, navOverlayPending=null;
 let selectedNavSpecial=null;
 let sessionSnapshot=null,sessionTimer=null,sessionAbort=null,sessionEpoch=0;
+let sessionVisual=null,sessionVisualTime=0;
+
+function animateSession(){
+  const p=$('sessionLayer').checked?MapSessionModel.marker(sessionSnapshot,'all',Date.now()):null;
+  const now=performance.now();
+  if(!p){sessionVisual=null;sessionVisualTime=now;return;}
+  if(!sessionVisual||sessionVisual.world_id!==p.world_id){sessionVisual={...p};}
+  else{
+    const blend=1-Math.exp(-Math.min(now-sessionVisualTime,64)/100);
+    const dx=p.x-sessionVisual.x,dy=p.y-sessionVisual.y;
+    if(Math.hypot(dx,dy)*view.s<.1)sessionVisual={...p};
+    else{
+      sessionVisual={...p,x:sessionVisual.x+dx*blend,y:sessionVisual.y+dy*blend};
+      schedule();
+    }
+  }
+  sessionVisualTime=now;
+}
 
 function sessionMessage(text){$('sessionStatus').textContent=text;}
 async function pollSession(epoch){
@@ -51,6 +69,21 @@ function resetSessionPolling(){
 }
 $('sessionLayer').onchange=resetSessionPolling;
 document.addEventListener('visibilitychange',resetSessionPolling);
+$('sessionFollow').onchange=()=>{
+  if($('sessionFollow').checked&&!$('sessionLayer').checked){
+    $('sessionLayer').checked=true;resetSessionPolling();
+  }
+  schedule();
+};
+function followSession(){
+  if(!$('sessionFollow').checked||!$('sessionLayer').checked)return;
+  const p=sessionVisual;
+  if(!p||!worldById.has(String(p.world_id)))return;
+  if($('worlds').value!==String(p.world_id)){
+    $('worlds').value=String(p.world_id);update();
+  }
+  view.x=p.x;view.y=p.y;
+}
 $('sessionFocus').onclick=()=>{
   const p=sessionSnapshot?.position;if(!p||!p.inside||!worldById.has(String(p.world_id)))return;
   $('worlds').value=String(p.world_id);update();view={x:p.x,y:p.y,s:.008};schedule();
@@ -58,7 +91,7 @@ $('sessionFocus').onclick=()=>{
 function drawSession(){
   if(!$('sessionLayer').checked)return;
   const p=MapSessionModel.marker(sessionSnapshot,$('worlds').value,Date.now());if(!p)return;
-  const [x,y]=pointScreen(p);ctx.save();ctx.strokeStyle=p.stale?'#b3bdc9':'#ffffff';
+  const [x,y]=pointScreen(sessionVisual||p);ctx.save();ctx.strokeStyle=p.stale?'#b3bdc9':'#ffffff';
   ctx.fillStyle='#42e9bb';ctx.lineWidth=3;
   ctx.beginPath();ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();ctx.stroke();
   ctx.fillStyle='#ffffff';ctx.font='bold 13px system-ui';ctx.fillText('Персонаж · цель входа',x+15,y-12);ctx.restore();
@@ -338,6 +371,8 @@ function focusLift(lift) {
 }
 function draw() {
   if (!scene) return;
+  animateSession();
+  followSession();
   dimensions = canvas.getBoundingClientRect();
   const ratio = Math.min(devicePixelRatio || 1, 2);
   const width = Math.round(dimensions.width * ratio), height = Math.round(dimensions.height * ratio);
