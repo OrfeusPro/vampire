@@ -25,6 +25,9 @@ class SelectedGameLoginTests(unittest.TestCase):
     def test_current_source_uses_fresh_lobby_clock(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256)
 
+    def test_direct_route_reaches_game_with_socket_address_and_no_socks(self):
+        self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256, direct=True)
+
     def test_explicit_world_start_propagates_current_source_and_permission(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256, world_start=True)
 
@@ -34,10 +37,11 @@ class SelectedGameLoginTests(unittest.TestCase):
     def test_world_observation_permission_propagates(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256,world_start=True,world_finish=True,observation=20)
 
-    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False,observation=0):
+    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False,observation=0,direct=False):
         from vampir_core.lobby_packets import LobbyVersionResultBody
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
+            self.assertEqual(kwargs['socks_port'], None if direct else 17948)
             self.assertEqual(kwargs['auth_flow'], 'launcher')
             self.assertEqual(kwargs['context'], 'sdk-with-partial-metadata')
             kwargs['_consume_auth'](**{name: inputs[name] for name in ('binding', 'sdk_data', 'netmarble_id')},
@@ -64,10 +68,13 @@ class SelectedGameLoginTests(unittest.TestCase):
         connection = Mock()
         connection.getsockname.return_value = ('127.0.0.1', 1234)
         connection.get_proxy_sockname.return_value = ('0.0.0.0', 0)
+        connection.getsockname.return_value = ('192.168.1.25', 49152)
         with patch.object(self.tool, 'module', side_effect=modules), patch.object(self.tool, 'SocksRoute') as route, \
+                patch.object(self.tool, 'connect_direct', return_value=connection) as direct_connect, \
                 patch.object(self.tool, 'exchange_game_login', return_value={'login_result_code': 0}) as exchange:
             route.return_value.connect.return_value = connection
             options = self.kwargs()
+            if direct: options['socks_port'] = None
             if world_start: options['selected_profile'] = 'recovered-release'
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
                 lobby_context='sdk-with-partial-metadata', read_character_list=True, character_index=0,
@@ -78,9 +85,17 @@ class SelectedGameLoginTests(unittest.TestCase):
             self.assertEqual(clock.offset_minutes, 540)
         else:
             self.assertIsNone(clock)
-        self.assertIsNone(prepare.call_args.kwargs['local_address'])
-        connection.getsockname.assert_not_called()
-        self.assertEqual(result['game_address_source'], 'socks_bound_unavailable')
+        if direct:
+            self.assertEqual(prepare.call_args.kwargs['local_address'], '192.168.1.25')
+            self.assertEqual(result['game_address_source'], 'direct_socket_ipv4')
+            connection.get_proxy_sockname.assert_not_called()
+            direct_connect.assert_called_once_with('game.example.com', 12001, timeout=10)
+            route.assert_not_called()
+        else:
+            self.assertIsNone(prepare.call_args.kwargs['local_address'])
+            connection.getsockname.assert_not_called()
+            self.assertEqual(result['game_address_source'], 'socks_bound_unavailable')
+            direct_connect.assert_not_called()
         self.assertEqual(packet.strings[8], 'sdk-token-fixture')
         self.assertEqual(packet.strings[:2], ('lobby-first-fixture', 'lobby-second-fixture'))
         self.assertEqual(packet.integers[:2], (123, 42))

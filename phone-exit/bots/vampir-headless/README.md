@@ -4,6 +4,12 @@
 Общий вход в проект: [README Vampir](../vampir/README.md).
 Актуальный порядок работ: [TASKS.md](TASKS.md).
 
+В цепочке `probe-selected-game-login.py` можно явно выбрать `--direct`
+вместо `--socks-port`; в Python API передать `socks_port=None`.
+Этот выбор действует для NID, SDK, лобби и игры, без изменения маршрутов ОС.
+Прямой вход в прежнее лобби проверен; каталог Global / Prelude 2 ещё требуется
+определить. [Результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
+
 Периодический Ping подключён явно. Новая JP-проверка после ID 206 прошла
 20 секунд: четыре периодических Ping, пять ID 17, ошибок нет. Сокет и маршрут
 закрыты. Длительная сессия, движение, карта и reconnect ещё не проверены.

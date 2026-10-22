@@ -51,6 +51,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [Franz 2: связь имени с ID и отдельная попытка входа](../evidence/network/HEADLESS-FRANZ2-LOGIN.md)
 - [ConnectToServer: адрес, игровой порт и дополнительная пара](../evidence/network/HEADLESS-GAME-CONNECT-TARGET.md)
 - [Источники оставшихся полей Version / Login](../evidence/network/HEADLESS-GAME-LOGIN-INPUTS.md)
+- [Прямой маршрут и переход к Global](../evidence/network/HEADLESS-GLOBAL-DIRECT.md)
 - [Vampir — уведомление и подтверждение смены ключа](../evidence/network/HEADLESS-KEY-CHANGE.md)
 - [Vampir — исполнение второго цикла приёма](../evidence/network/HEADLESS-LISTENER-LOOP.md)
 - [Живая сессия через новый HONOR JP](../evidence/network/HEADLESS-LIVE-HONOR-SESSION.md)

@@ -12,6 +12,7 @@ sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.game_login_probe import exchange_game_login
 from vampir_core.login_context import prepare_initial_windows_game_login
 from vampir_core.socks_route import SocksRoute, socks_game_address_context
+from vampir_core.direct_route import connect_direct, direct_game_address_context
 from vampir_core.game_server_target import SERVER_REGION_CODES, is_game_server_state_excluded, game_server_allows_joined_country
 from vampir_core.patch_revision import parse_patch_client_revision
 from vampir_core.session_clock import LobbyPingClock, SOURCE_SHA256 as PING_CLOCK_SOURCE_SHA256
@@ -70,7 +71,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
     if selection is not None and selection != 'lowest-valid-id': raise ValueError('Unsupported selection policy')
     if server_id is not None and (type(server_id) is not int or not 1 <= server_id <= 0xffffffff):
         raise ValueError('Invalid selected server ID')
-    state = dict(stage='source_validation', game_session_ready=False, sdk_auth_flow=auth_flow)
+    state = dict(stage='source_validation', game_session_ready=False, sdk_auth_flow=auth_flow,
+        selected_transport='direct' if socks_port is None else 'socks5')
     def phase(value):
         state['stage'] = value
         if _progress: _progress(value)
@@ -174,9 +176,11 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
     cpu, windows = module('game_login_system', 'windows-system-inputs.py').observe_inputs()
     prepare_version = module('game_login_version', 'probe-game-version.py').prepare_version
     phase('game_connect')
-    connection = SocksRoute(socks_port).connect(target.host, target.port, timeout=10)
+    connection = (connect_direct(target.host, target.port, timeout=10) if socks_port is None else
+        SocksRoute(socks_port).connect(target.host, target.port, timeout=10))
     try:
-        address_context = socks_game_address_context(connection)
+        address_context = (direct_game_address_context(connection) if socks_port is None else
+            socks_game_address_context(connection))
         state['game_address_source'] = address_context.source
         version = prepare_version(app_version=source.app_version, nm_device_key=credentials.binding.nm_device_key,
             local_address=address_context.address, cpu=cpu, windows_version=windows, compiled_tag=source.compiled_tag)
@@ -204,7 +208,9 @@ if __name__ == '__main__':
     parser.add_argument('--email', required=True)
     parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
-    parser.add_argument('--socks-port', type=int, required=True)
+    route_choice = parser.add_mutually_exclusive_group(required=True)
+    route_choice.add_argument('--socks-port', type=int)
+    route_choice.add_argument('--direct', action='store_true', help='Use the ordinary route for the complete login chain')
     parser.add_argument('--server-policy-byte', type=int, required=True)
     revision_choice = parser.add_mutually_exclusive_group(required=True)
     revision_choice.add_argument('--extra-number', type=int)

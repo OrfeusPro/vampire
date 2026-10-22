@@ -16,10 +16,11 @@ sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.cdn_config import decode_cdn_config_document
 from vampir_core.cdn_servers import select_cdn_server
 from vampir_core.socks_route import SocksRoute
+from vampir_core.direct_route import connect_direct
 
 
 def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=None):
-    if not isinstance(route, SocksRoute): raise TypeError('Explicit SOCKS route required')
+    if route is not None and not isinstance(route, SocksRoute): raise TypeError('Invalid explicit route')
     path = Path(manifest_path).resolve(strict=True)
     if path.stat().st_size > 131072: raise ValueError('CDN manifest exceeds local budget')
     data = path.read_bytes()
@@ -29,7 +30,7 @@ def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=N
             manifest['profile']['config_snapshot_sha256'] != expected_config_snapshot_sha256):
         raise ValueError('CDN snapshot belongs to a different selected game profile')
     if (manifest['transport']['status'] != 200 or
-            manifest['transport'].get('socks5_loopback_port') != route.port):
+            manifest['transport'].get('socks5_loopback_port') != (route.port if route else None)):
         raise ValueError('CDN status or selected route differs')
     urls = {
         '393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db':
@@ -56,9 +57,9 @@ def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=N
 
 
 def probe(manifest_path, *, socks_port):
-    route = SocksRoute(socks_port)
+    route = SocksRoute(socks_port) if socks_port is not None else None
     endpoint = selected_endpoint(manifest_path, route=route)
-    connection = route.connect(*endpoint, timeout=10)
+    connection = (route.connect if route else connect_direct)(*endpoint, timeout=10)
     try:
         connection.settimeout(3)
         try:
@@ -78,7 +79,9 @@ def probe(manifest_path, *, socks_port):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--manifest', type=Path, required=True)
-    parser.add_argument('--socks-port', type=int, required=True)
+    route_choice = parser.add_mutually_exclusive_group(required=True)
+    route_choice.add_argument('--socks-port', type=int)
+    route_choice.add_argument('--direct', action='store_true', help='Use the ordinary IPv4 route without SOCKS')
     args = parser.parse_args()
     try:
         print(json.dumps(probe(args.manifest, socks_port=args.socks_port)))

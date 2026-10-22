@@ -32,8 +32,9 @@ public static class NidBrowserHost {
             form.Width = 1050; form.Height = 800; form.StartPosition = FormStartPosition.CenterScreen;
             view.Dock = DockStyle.Fill;
             view.CreationProperties = new CoreWebView2CreationProperties { UserDataFolder = dataDirectory, IsInPrivateModeEnabled = true };
-            if (socksPort != 0) view.CreationProperties.AdditionalBrowserArguments =
-                "--proxy-server=socks5://127.0.0.1:" + socksPort.ToString(System.Globalization.CultureInfo.InvariantCulture) + " --disable-quic";
+            view.CreationProperties.AdditionalBrowserArguments = socksPort == 0
+                ? "--no-proxy-server --disable-quic"
+                : "--proxy-server=socks5://127.0.0.1:" + socksPort.ToString(System.Globalization.CultureInfo.InvariantCulture) + " --disable-quic";
             form.Controls.Add(view);
             if (!String.IsNullOrEmpty(accountHint)) {
                 Label hint = new Label { Dock = DockStyle.Top, Height = 42, AutoEllipsis = true,

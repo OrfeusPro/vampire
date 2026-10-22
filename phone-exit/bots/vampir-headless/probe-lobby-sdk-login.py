@@ -12,6 +12,7 @@ sys.path.insert(0, str(HERE.parents[1] / '.tools/vampir-python-runtime'))
 from vampir_core.lobby_packets import LobbyLoginPayload, LobbyServerListPayload
 from vampir_core.lobby_login_probe import exchange_lobby_login
 from vampir_core.socks_route import SocksRoute
+from vampir_core.direct_route import connect_direct
 from vampir_core.windows_version import observe_windows_version
 from vampir_core.nid_metadata import encode_nid_metadata_with_device_key
 from vampir_core.metadata_tid import resolve_metadata_tid, SOURCE_SHA256 as METADATA_TID_SOURCE_SHA256
@@ -40,7 +41,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         raise ValueError('Explicit raw server-list policy byte required')
     if not read_server_list and server_policy_byte is not None: raise ValueError('Server-list policy without request')
     source = module('lobby_sdk_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
-    route = SocksRoute(socks_port)
+    route = SocksRoute(socks_port) if socks_port is not None else None
     endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path,
         route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256)
     sdk = module('lobby_sdk_signin', 'run-nid-sdk-sign-in.py')
@@ -99,7 +100,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     netmarble_id = provider.netmarble_id
     provider = None
     if _progress: _progress('lobby_connect')
-    connection = route.connect(*endpoint, timeout=10)
+    connection = (route.connect if route else connect_direct)(*endpoint, timeout=10)
     try:
         if _progress: _progress('lobby_exchange')
         def selected_login(response):
@@ -133,7 +134,9 @@ if __name__ == '__main__':
     parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
     parser.add_argument('--context', choices=['sdk-without-nid-info','sdk-with-joined-country','sdk-with-partial-metadata'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
-    parser.add_argument('--socks-port', type=int, required=True)
+    route_choice = parser.add_mutually_exclusive_group(required=True)
+    route_choice.add_argument('--socks-port', type=int)
+    route_choice.add_argument('--direct', action='store_true', help='Use the ordinary route for browser, SDK and lobby')
     parser.add_argument('--password-stdin', action='store_true')
     parser.add_argument('--read-server-list', action='store_true')
     parser.add_argument('--server-policy-byte', type=int)
