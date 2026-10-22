@@ -4,6 +4,7 @@ Accepts only contiguous 16-byte (image pointer, signed value) rows whose
 name pointers all resolve to strings of the same enum in mapped PE sections.
 """
 import hashlib
+import argparse
 import json
 import mmap
 import os
@@ -102,6 +103,8 @@ def extract(data):
 
 
 def main():
+    # Parse before reading or replacing artifacts; --help must be read-only.
+    argparse.ArgumentParser(description=__doc__).parse_args()
     source = INSTALL / 'ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe'
     with source.open('rb') as stream, mmap.mmap(stream.fileno(), 0, access=mmap.ACCESS_READ) as data:
         result, rejected = extract(data)

@@ -42,7 +42,10 @@ Blood Pool. Вывод включается / выключается, «К пе�
 PktQuestProgress: 216 native тел / 39 коротких префиксов, decoder в shared.
 Теперь проверен и полный ID 1802: 243 тела / 295 коротких префиксов,
 с PktQuestTypeData и вложенными квестами, ограничениями коллекций и суммарного
-числа записей. Следом — запрос списка и handler, затем живая проверка.
+числа записей. Формат запроса ID 1801 также проверен: 9 байт, byte + uint64,
+32 native случая / два отказа / девять коротких префиксов. Остались источник
+параметров, producer / handler и подключение к живой сессии.
+[Запрос списка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REQUEST.md).
 Новый вход без новой обработки не требуется.
 [Полный ответ списка и ограничения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LIST.md).
 [Проверенный формат и неизвестные связи](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RECORD.md).
