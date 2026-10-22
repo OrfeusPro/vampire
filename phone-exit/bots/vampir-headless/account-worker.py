@@ -5,7 +5,6 @@ from functools import partial
 import importlib.util
 import json
 from pathlib import Path
-import re
 import sys
 
 HERE = Path(__file__).resolve().parent
@@ -13,7 +12,7 @@ sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 from vampir_core.account_store import AccountStore
 from vampir_core.device_registry import DeviceRegistry
 from vampir_core.windows_device_identity import observe_windows_device_identity
-from vampir_core.game_server_target import SERVER_REGION_CODES
+from vampir_core.account_catalog import build_account_catalog
 from vampir_core.patch_revision import parse_patch_client_revision
 
 
@@ -66,17 +65,8 @@ def run(args):
         listing = response.server_list_response
         if listing is None or listing.result_code != 0:
             emit('result', status='error', message='Лобби не вернуло список серверов.'); return
-        groups = {g.raw_08: g for g in listing.groups if g.raw_20 == SERVER_REGION_CODES[settings['region']]}
-        servers = []
-        for record in listing.servers:
-            group = groups.get(record.u32[0])
-            if group is None:
-                continue
-            suffix = re.search(r'(\d+)$', record.strings[0])
-            name = group.text_10 + (' ' + suffix[1] if suffix else '')
-            servers.append(dict(id=record.u32[1], group_id=record.u32[0], name=name,
-                excluded=record.enums[1] in (2, 3)))
-        catalog = dict(observed_utc=datetime.now(timezone.utc).isoformat(), servers=servers, source='fresh_lobby')
+        catalog = build_account_catalog(listing, region=settings['region'],
+            observed_utc=datetime.now(timezone.utc).isoformat())
         store.save_catalog(settings['region'], catalog)
         emit('result', status='stopped', message='Список серверов загружен.', catalog=catalog); return
     tool = load('account_login', HERE / 'probe-selected-game-login.py')
