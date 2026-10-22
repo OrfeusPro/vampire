@@ -40,8 +40,11 @@ Blood Pool. Вывод включается / выключается, «К пе�
 
 Для чтения текущих квестов проверена отдельная запись PktQuest с вложенным
 PktQuestProgress: 216 native тел / 39 коротких префиксов, decoder в shared.
-Следом — оставшийся вложенный массив PktQuestData, bounded whole ID 1802,
-запрос списка и handler. Новый вход без новой обработки не требуется.
+Теперь проверен и полный ID 1802: 243 тела / 295 коротких префиксов,
+с PktQuestTypeData и вложенными квестами, ограничениями коллекций и суммарного
+числа записей. Следом — запрос списка и handler, затем живая проверка.
+Новый вход без новой обработки не требуется.
+[Полный ответ списка и ограничения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LIST.md).
 [Проверенный формат и неизвестные связи](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RECORD.md).
 
 Для первого серверного шага обучения добавлен явный `--ack-initial-tutorial`:
