@@ -59,6 +59,17 @@ VPN остановлен, исходные enabled/vpnRequested=false сохра
 настройка логирования восстановлена, fixture остановлен, открыт главный экран
 Phone Exit. APK продукта и частный релиз не менялись.
 
+Повтор через мобильную точку доступа: внешний IPv4 vivo изменился и отличается
+от ПК (сравнение по хешу). Baseline: три HTTPS/UA, UDP DNS/STUN проходят.
+vivo → UgPhone снова: directory accepted → offer sent → answer received →
+ICE CHECKING → ICE FAILED. Контроль на том же vivo и той же новой сети к
+samsung SM-A145F / JP / APK 0.9.6: настоящий VpnService READY, отдельный UID
+fixture подтвердил три HTTPS/JP, UDP DNS и STUN. После Stop VPN выключен,
+обычный HTTPS/UA, DNS/STUN восстановлены, enabled=false/vpnRequested=false,
+fixture остановлен и открыт Phone Exit. Это локализует отказ к проверяемому
+UgPhone/совместимости с ним на двух исходящих сетях, но не доказывает конкретную
+политику провайдера или точную причину ICE. Изменения продукта не выполнялись.
+
 ## Android 0.9.8: диагностика выбора сети, 22 октября 2026
 
 `Настройки → Диагностика сети` получает свежий снимок в отдельном потоке и
