@@ -67,6 +67,15 @@ class NidBrowserTests(unittest.TestCase):
             self.assertEqual(result, {})
             self.assertNotIn('secret', str(captured.exception))
 
+    def test_diagnostic_failure_states_are_fixed_and_preserved(self):
+        for state in ('invalid_utf8', 'content_unavailable', 'response_observation_failed', 'read_failed'):
+            result = dict(status='login_failed', nid_http_status=400, nid_response_state=state)
+            with self.subTest(state=state), patch.object(self.tool, '_run', return_value=result):
+                with self.assertRaises(self.tool.NidBrowserStatusError) as captured:
+                    self.tool.capture_nid_credential(self.plan(), expected_game_code='thered', data_directory='unused')
+                self.assertEqual(captured.exception.nid_response_state, state)
+                self.assertEqual(result, {})
+
     def test_nid_failure_diagnostic_numbers_are_bounded_and_callback_is_cleared(self):
         for status, code, expected in ((400, 123, (400, 123)),
                 ('private-status', 'private-code', (None, None)), (True, 2**40, (None, None))):

@@ -201,7 +201,10 @@ def failure(error):
             }.get(getattr(error, 'sign_in_step', None))
         response = {'non_json': 'ответ не в JSON', 'length_limit': 'объявленный размер вне лимита',
             'body_limit': 'тело больше лимита', 'length_mismatch': 'длина ответа не совпала',
-            'no_numeric_code': 'числовой код не найден', 'read_failed': 'ответ не удалось разобрать'
+            'no_numeric_code': 'числовой код не найден', 'read_failed': 'не удалось прочитать поток ответа',
+            'invalid_utf8': 'ответ содержит некорректный UTF-8',
+            'content_unavailable': 'WebView не предоставил тело ответа',
+            'response_observation_failed': 'ошибка получения ответа из WebView'
             }.get(getattr(error, 'nid_response_state', None))
         return dict(status='error', message=message + ' Игровое соединение не открыто.' +
             (f' Этап: {step}.' if step is not None else '') +

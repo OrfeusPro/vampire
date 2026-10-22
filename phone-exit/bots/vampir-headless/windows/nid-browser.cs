@@ -119,13 +119,17 @@ public static class NidBrowserHost {
                             length = parsed;
                         }
                         using (var stream = await e.Response.GetContentAsync()) {
-                            if (stream == null || done) return;
+                            if (done) return;
+                            if (stream == null) {
+                                if (status >= 400) NidResponseState = "content_unavailable";
+                                return;
+                            }
                             var observed = await NidHttpDiagnostics.ReadAsync(stream, length);
                             if (done) return;
                             if (status >= 400 || (observed.Code.HasValue && observed.Code.Value != 0)) NidResponseState = observed.State;
                             if (observed.Code.HasValue && observed.Code.Value != 0) { NidHttpStatus = status; NidErrorCode = observed.Code; }
                         }
-                    } catch { if (!done && status >= 400) NidResponseState = "read_failed"; }
+                    } catch { if (!done && status >= 400) NidResponseState = "response_observation_failed"; }
                     finally { pendingDiagnostics--; }
                 };
                 if (smoke) {

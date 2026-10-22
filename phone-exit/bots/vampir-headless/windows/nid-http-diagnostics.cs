@@ -60,7 +60,8 @@ public static class NidHttpDiagnostics {
             int? code = ParseCode(body);
             body = null;
             return new Result { Code = code, State = code.HasValue ? "numeric_code" : "no_numeric_code" };
-        } catch { return new Result { State = "read_failed" }; }
+        } catch (System.Text.DecoderFallbackException) { return new Result { State = "invalid_utf8" }; }
+        catch { return new Result { State = "read_failed" }; }
         finally { Array.Clear(buffer, 0, buffer.Length); }
     }
 }

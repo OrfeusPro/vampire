@@ -29,7 +29,8 @@ class NidBrowserStatusError(RuntimeError):
         self.nid_http_status = http_status if type(http_status) is int and 100 <= http_status <= 599 else None
         self.nid_error_code = code if type(code) is int and -(2**31) <= code < 2**31 else None
         self.nid_response_state = response_state if response_state in ('not_observed', 'non_json', 'length_limit',
-            'body_limit', 'length_mismatch', 'numeric_code', 'no_numeric_code', 'read_failed') else 'not_observed'
+            'body_limit', 'length_mismatch', 'numeric_code', 'no_numeric_code', 'read_failed',
+            'invalid_utf8', 'content_unavailable', 'response_observation_failed') else 'not_observed'
 
 
 def _library():

@@ -73,7 +73,15 @@ $bounded=@(
  (Inspect '{"code":123}' 20000),
  (Inspect '{"accessToken":"private-fixture"}' $null)
 )
-@{codes=$codes;endpoints=$endpoints;bounded=$bounded;large=[NidHttpDiagnostics]::ParseCode(('x'*16385))} | ConvertTo-Json -Compress -Depth 5
+$invalid=[System.IO.MemoryStream]::new([byte[]]@(255))
+$closed=[System.IO.MemoryStream]::new(); $closed.Dispose()
+try {
+ $failures=@(
+  [NidHttpDiagnostics]::ReadAsync($invalid,$null).GetAwaiter().GetResult().State,
+  [NidHttpDiagnostics]::ReadAsync($closed,$null).GetAwaiter().GetResult().State
+ )
+} finally { $invalid.Dispose() }
+@{codes=$codes;endpoints=$endpoints;bounded=$bounded;failures=$failures;large=[NidHttpDiagnostics]::ParseCode(('x'*16385))} | ConvertTo-Json -Compress -Depth 5
 '''
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'fixture.ps1'; path.write_text(script, encoding='utf-8-sig')
@@ -90,6 +98,7 @@ $bounded=@(
         self.assertEqual(data['bounded'][0]['code'], 456)
         self.assertEqual(data['bounded'][2]['read'], 16385)
         self.assertEqual(data['bounded'][3]['read'], 0)
+        self.assertEqual(data['failures'], ['invalid_utf8', 'read_failed'])
         self.assertNotIn('private', result.stdout)
 
 
