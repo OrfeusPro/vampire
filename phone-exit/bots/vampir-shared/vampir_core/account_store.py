@@ -10,6 +10,7 @@ import sys
 import uuid
 
 from .device_registry import _email
+from .character_creation_plan import CLASS_CHOICES, DEFAULT_CLASS, MAX_NAME_ATTEMPTS, random_nickname
 
 
 class WindowsVault:
@@ -60,6 +61,7 @@ class AccountStore:
             db.execute('CREATE TABLE IF NOT EXISTS accounts(id TEXT PRIMARY KEY,email TEXT UNIQUE NOT NULL,password BLOB NOT NULL,assignment TEXT NOT NULL)')
             db.execute('CREATE TABLE IF NOT EXISTS catalogs(region TEXT PRIMARY KEY,data TEXT NOT NULL)')
             db.execute('CREATE TABLE IF NOT EXISTS character_lists(account_id TEXT,region TEXT,server_id INTEGER,data TEXT NOT NULL,PRIMARY KEY(account_id,region,server_id))')
+            db.execute('CREATE TABLE IF NOT EXISTS creation_names(account_id TEXT,region TEXT,server_id INTEGER,data TEXT NOT NULL,PRIMARY KEY(account_id,region,server_id))')
             columns = {row[1] for row in db.execute('PRAGMA table_info(accounts)')}
             if 'mail_password' not in columns:
                 db.execute('ALTER TABLE accounts ADD COLUMN mail_password BLOB')
@@ -77,7 +79,7 @@ class AccountStore:
 
     @staticmethod
     def assignment(value):
-        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname'}:
+        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname'}:
             raise ValueError('Unknown account setting')
         enabled = value.get('enabled', True)
         if type(enabled) is not bool:
@@ -87,6 +89,10 @@ class AccountStore:
                for v, limit in ((label, 100), (nickname, 40))):
             raise ValueError('Invalid account text')
         profile = value.get('device_profile', 'current-pc')
+        create_class = value.get('create_class', DEFAULT_CLASS)
+        random_name = value.get('create_random_nickname', True)
+        if type(create_class) is not str or create_class not in {key for key, _ in CLASS_CHOICES} or type(random_name) is not bool:
+            raise ValueError('Invalid character creation choices')
         if profile != 'current-pc':
             raise ValueError('Only the observed current PC profile is supported')
         region = value.get('region', 'EU')
@@ -106,7 +112,8 @@ class AccountStore:
         if character is not None and server is None:
             raise ValueError('A character requires a server')
         return dict(label=label, enabled=enabled, device_profile=profile, region=region, server_id=server,
-            character_index=character, character_key=key, create_nickname=nickname)
+            character_index=character, character_key=key, create_nickname=nickname,
+            create_class=create_class, create_random_nickname=random_name)
 
     def save(self, email, *, password=None, mail_password=None, assignment):
         email, assignment = _email(email), self.assignment(assignment)
@@ -127,7 +134,51 @@ class AccountStore:
         with self._db() as db:
             rows = db.execute('SELECT id,email,assignment,mail_password IS NOT NULL,registration_status FROM accounts ORDER BY rowid').fetchall()
         return [dict(id=i, email=e, password_saved=True, mail_password_saved=bool(m), registration_status=r,
-            **json.loads(a)) for i, e, a, m, r in rows]
+            **self.assignment(json.loads(a))) for i, e, a, m, r in rows]
+
+    def creation_nickname(self, identifier, *, region, server_id, result='empty_list', rejected_name=None):
+        """Name proposal only. Future decoder must confirm name_taken; no unknown retry."""
+        if result not in ('empty_list', 'name_taken') or (result == 'name_taken' and not rejected_name):
+            raise ValueError('A confirmed creation outcome is required')
+        with self._db() as db:
+            db.execute('BEGIN IMMEDIATE')
+            row = db.execute('SELECT assignment FROM accounts WHERE id=?', (identifier,)).fetchone()
+            if row is None:
+                raise KeyError('Unknown account')
+            assignment = self.assignment(json.loads(row[0]))
+            if (assignment['region'], assignment['server_id']) != (region, server_id) or server_id is None:
+                raise ValueError('Creation target changed')
+            listing = db.execute('SELECT data FROM character_lists WHERE account_id=? AND region=? AND server_id=?',
+                (identifier, region, server_id)).fetchone()
+            if listing is None or json.loads(listing[0])['characters']:
+                raise ValueError('An accepted empty character list is required')
+            if assignment['character_key'] is not None or assignment['character_index'] is not None:
+                raise ValueError('A character is already assigned')
+            row = db.execute('SELECT data FROM creation_names WHERE account_id=? AND region=? AND server_id=?',
+                (identifier, region, server_id)).fetchone()
+            history = json.loads(row[0]) if row else []
+            name = assignment['create_nickname']
+            if result == 'name_taken':
+                if not history or rejected_name != history[-1] or name != rejected_name:
+                    raise ValueError('The rejected nickname is not the current proposal')
+                if not assignment['create_random_nickname']:
+                    raise ValueError('Automatic nickname replacement is disabled')
+                if len(history) >= MAX_NAME_ATTEMPTS:
+                    raise ValueError('Nickname attempts exhausted')
+                name = random_nickname(history)
+            elif not name and assignment['create_random_nickname']:
+                name = history[-1] if history else random_nickname()
+            if not name:
+                return None
+            if not history or name != history[-1]:
+                if name in history or len(history) >= MAX_NAME_ATTEMPTS:
+                    raise ValueError('Nickname attempts exhausted or repeated')
+                history.append(name)
+            assignment['create_nickname'] = name
+            db.execute('UPDATE accounts SET assignment=? WHERE id=?', (json.dumps(assignment), identifier))
+            db.execute('INSERT INTO creation_names VALUES(?,?,?,?) ON CONFLICT(account_id,region,server_id) DO UPDATE SET data=excluded.data',
+                (identifier, region, server_id, json.dumps(history)))
+            return name
 
     def mail_credential(self, identifier):
         with self._db() as db:

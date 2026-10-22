@@ -26,6 +26,50 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_creation_nickname_reuses_persisted_proposal_and_changes_only_after_confirmed_collision(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'console.sqlite3'
+            store = AccountStore(path, FixtureVault())
+            identifier = store.save('one@unit.invalid', password='fixture', assignment={'region': 'EU', 'server_id': 384})
+            self.assertEqual(store.accounts()[0]['create_class'], 'Gunner')
+            with self.assertRaises(ValueError): store.creation_nickname(identifier, region='EU', server_id=384)
+            store.save_characters(identifier, region='EU', server_id=384, characters=[], observed_utc='2026-10-22T20:00:00+00:00')
+            first = store.creation_nickname(identifier, region='EU', server_id=384)
+            self.assertRegex(first, r'^[A-Z][a-z]{9}$')
+            store = AccountStore(path, FixtureVault())
+            self.assertEqual(first, store.creation_nickname(identifier, region='EU', server_id=384))
+            for outcome in ('timeout', 'unknown', 'connection_closed'):
+                with self.assertRaises(ValueError):
+                    store.creation_nickname(identifier, region='EU', server_id=384, result=outcome, rejected_name=first)
+                self.assertEqual(store.accounts()[0]['create_nickname'], first)
+            with self.assertRaises(ValueError):
+                store.creation_nickname(identifier, region='EU', server_id=384, result='name_taken', rejected_name='other')
+            second = store.creation_nickname(identifier, region='EU', server_id=384, result='name_taken', rejected_name=first)
+            self.assertNotEqual(first, second)
+            self.assertEqual(store.accounts()[0]['create_class'], 'Gunner')
+            for _ in range(3):
+                second = store.creation_nickname(identifier, region='EU', server_id=384, result='name_taken', rejected_name=second)
+            with self.assertRaises(ValueError):
+                store.creation_nickname(identifier, region='EU', server_id=384, result='name_taken', rejected_name=second)
+            self.assertEqual(store.accounts()[0]['create_nickname'], second)
+
+    def test_creation_name_requires_empty_list_for_same_account_and_target(self):
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('one@unit.invalid', password='fixture', assignment={'region': 'EU', 'server_id': 384,
+                'create_class': 'Fighter', 'create_nickname': 'ManualName', 'create_random_nickname': False})
+            second = store.save('two@unit.invalid', password='fixture', assignment={'region': 'EU', 'server_id': 384})
+            store.save_characters(identifier, region='EU', server_id=384, characters=[], observed_utc='2026-10-22T20:00:00+00:00')
+            for account, region, server in ((second, 'EU', 384), (identifier, 'JP', 384), (identifier, 'EU', 385)):
+                with self.assertRaises(ValueError): store.creation_nickname(account, region=region, server_id=server)
+            self.assertEqual('ManualName', store.creation_nickname(identifier, region='EU', server_id=384))
+            with self.assertRaises(ValueError):
+                store.creation_nickname(identifier, region='EU', server_id=384, result='name_taken', rejected_name='ManualName')
+            self.assertEqual(store.accounts()[0]['create_class'], 'Fighter')
+            store.save_characters(identifier, region='EU', server_id=384,
+                characters=[dict(index=0, key='123', name='Existing')], observed_utc='2026-10-22T20:01:00+00:00')
+            with self.assertRaises(ValueError): store.creation_nickname(identifier, region='EU', server_id=384)
+
     def test_sdk_creation_requires_verified_nid_and_fresh_missing_player_result(self):
         spec = importlib.util.spec_from_file_location('sdk_job_test', HERE / 'vampir-headless/account-manager.py')
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
@@ -203,7 +247,8 @@ class AccountConsoleTests(unittest.TestCase):
     def test_assignments_validate_types_and_do_not_generate_identity(self):
         for value in ({'server_id': True}, {'character_index': -1}, {'device_profile': 'random-fingerprint'},
                       {'region': 'unknown'}, {'create_nickname': 'bad\nname'}, {'enabled': 1},
-                      {'character_key': '999999999999999999999'}, {'character_key': '1'}, {'character_index': 0}):
+                      {'character_key': '999999999999999999999'}, {'character_key': '1'}, {'character_index': 0},
+                      {'create_class': 'random'}, {'create_class': 3}, {'create_class': []}, {'create_random_nickname': 1}):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 AccountStore.assignment(value)
         self.assertEqual(AccountStore.assignment({})['device_profile'], 'current-pc')

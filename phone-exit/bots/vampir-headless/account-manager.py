@@ -11,6 +11,7 @@ import threading
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 from vampir_core.account_store import AccountStore
+from vampir_core.character_creation_plan import CLASS_CHOICES, random_nickname
 
 
 class Jobs:
@@ -180,6 +181,7 @@ def server(store, *, port=17949):
                 return self.response(403, dict(error='Forbidden'))
             return self.response(200, dict(accounts=store.accounts(), jobs=jobs.snapshot(), catalogs=store.catalogs(),
                 character_lists=store.character_lists(),
+                creation_classes=[dict(key=key, label=label) for key, label in CLASS_CHOICES],
                 device_profiles=[dict(id='current-pc', name='Текущий ПК · общие данные устройства', available=True)]))
 
         def do_POST(self):
@@ -199,6 +201,8 @@ def server(store, *, port=17949):
                     identifier = store.save(body['email'], password=body.get('password') or None,
                         mail_password=body.get('mail_password') or None, assignment=body['assignment'])
                     return self.response(200, dict(id=identifier))
+                if self.path == '/api/nickname':
+                    return self.response(200, dict(nickname=random_nickname(a.get('create_nickname', '') for a in store.accounts())))
                 if self.path == '/api/job':
                     if body['operation'] == 'stop':
                         jobs.stop(body['id'])

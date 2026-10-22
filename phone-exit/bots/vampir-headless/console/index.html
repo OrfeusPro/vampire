@@ -18,7 +18,9 @@
 <div class="divider"></div><div class="grid"><label>Регион<select id="region"><option>EU</option><option>NA</option><option>SG</option><option>JP</option><option>TW</option><option>ASIA</option><option>KR</option></select></label><label>Игровой сервер<select id="server"></select></label></div>
 <div class="tools"><button type="button" id="servers">Загрузить серверы</button><span id="catalog-age" class="muted"></span></div>
 <div class="divider"></div><div class="grid"><label>Персонаж<select id="character"><option value="">Не назначен</option></select></label><label>Ник для нового персонажа<input id="nickname" maxlength="40" placeholder="Если персонажей пока нет"></label></div>
-<p class="hint">Ник сохраняется как задание. Автоматическое создание пока не подключено; отказ входа не считается пустым списком.</p>
+<div class="grid"><label>Класс нового персонажа<select id="create-class"></select></label><div><label><input id="random-nickname" type="checkbox" checked> Случайный ник, если персонажей нет</label><button id="generate-nickname" type="button">Другой случайный ник</button></div></div>
+<p class="hint">По умолчанию Carnage. Класс выбирается вручную и сохраняется. При подтверждении «ник занят» меняется только ник, до 5 вариантов; неизвестный ответ не вызывает повтор.</p>
+<p class="hint">Если на выбранном сервере уже есть персонаж, новый не создаётся. Эти настройки применяются только к подтверждённому пустому списку. Сетевое создание пока недоступно. Кнопка случайного ника меняет форму до сохранения.</p>
 <p id="characters-age" class="muted"></p>
 <div class="tools"><button type="button" id="characters">Прочитать персонажей</button><button class="primary" type="submit">Сохранить настройки</button></div></form>
 <div class="session"><div><span class="eyebrow">СЕССИЯ</span><h3 id="message">Готов к настройке</h3><p id="stage" class="muted"></p></div><div class="tools"><button id="start" class="primary">Запустить</button><button id="stop" class="danger">Остановить</button></div></div>

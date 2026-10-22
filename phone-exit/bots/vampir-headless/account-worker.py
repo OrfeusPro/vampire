@@ -119,9 +119,13 @@ def run(args):
         if result.get('browser_status') == 'timeout':
             message = 'Истекло время входа Netmarble. Игровое соединение не открыто; проверьте окно авторизации.'
     elif game.get('character_entry_state') == 'empty_list':
-        message, state = 'Персонажей нет. Ник сохранён; сетевое создание ещё не подключено.', 'needs_character'
+        name = store.creation_nickname(args.account, region=settings['region'], server_id=settings['server_id'])
+        message, state = ('Персонажей нет. ' + ('Ник подготовлен; ' if name else 'Укажите ник; ') +
+            'сетевое создание ещё не подключено.'), 'needs_character'
     elif game.get('selection_error'):
         message, state = 'Проверьте выбранного персонажа: ' + game['selection_error'], 'needs_character'
+    elif game.get('characters') and settings['character_index'] is None:
+        message, state = 'Персонажи уже есть. Выберите существующего; новый создаваться не будет.', 'needs_character'
     else:
         message, state = ('Проверка завершена; соединение закрыто.', 'stopped')
     emit('result', status=state, message=message, characters=game.get('characters', []),
