@@ -14,7 +14,8 @@
 <label><input id="manual-mail-code" type="checkbox"> Ввести код из письма вручную вместо IMAP</label>
 <label><input id="terms" type="checkbox"> Принимаю обязательные условия использования и политику конфиденциальности Netmarble для этой регистрации</label>
 <div class="tools"><button id="register" type="button">Зарегистрировать аккаунт</button></div>
-<div class="divider"></div><label>Способ авторизации<select id="auth-flow"><option value="launcher">Через лаунчер</option><option value="nid">Netmarble ID</option></select></label>
+<div class="divider"></div><label>Вход игрового SDK после Netmarble<select id="auth-flow"><option value="launcher">Через лаунчер</option><option value="nid">Прямой SDK SignIn</option></select></label>
+<p class="hint">Оба способа сначала открывают одну и ту же форму входа Netmarble. Затем «Через лаунчер» выполняет launcher/token → launcher/sign-in, а «Прямой SDK SignIn» — v1/sign-in. При ошибке способ сам не меняется; регистрация не запускается.</p>
 <label><input id="manual-sign-in" type="checkbox"> Ввести логин и пароль в окне Netmarble вручную</label>
 <p class="hint">Для одной следующей операции входа. Автозаполнение отключено; после авторизации продолжается выбранное действие. К регистрации этот режим не применяется.</p>
 <div class="divider"></div><div class="grid"><label>Регион<select id="region"><option>EU</option><option>NA</option><option>SG</option><option>JP</option><option>TW</option><option>ASIA</option><option>KR</option></select></label><label>Игровой сервер<select id="server"></select></label></div>
