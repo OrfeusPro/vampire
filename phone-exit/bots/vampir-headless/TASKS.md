@@ -141,16 +141,22 @@ Writer `0x145858ef0` уже проверен: 9 байтов, 64 native вект
 векторов / 19 коротких префиксов. Handler / сброс общего ожидания прошли 45
 сценариев с fixtures. Удаление ключа / копирование раннего ответа / применение
 записи дополнительно прошли 12 / 32 / 384 native-сценария с явными границами.
-Различать серверный selector и локальный +1; реальный gate и запуск задач
-пока fixtures. Потребитель queued ID 9904 проверен в 64 сценариях: настоящий
+Различать серверный selector и локальный +1; в проверках ID 9904 gate и запуск
+задач — fixtures. Потребитель queued ID 9904 проверен в 64 сценариях: настоящий
 вход `0x1464cd550`, внутренний фрагмент `0x1464cd590` отдельно не вызывать.
-Следом начальное применение ID 9905 (`0x1464c4ba0`), bootstrap
-`0x1464cfeb0` / построение статусов `0x1464d0510`, loader TutorialStep,
-первая задача и callback панели. Сброс ожидания не означает завершение действия.
+Начальное применение ID 9905 / bootstrap / первый переход дополнительно
+прошли 192 native-сценария: ранний gate настоящий, table / storage / запуск —
+fixtures. Именованные setters `0x145c46830` / `0x145c46d20` подтвердили поля,
+но происхождение row+0x50 и timer row+0x60 ещё неизвестно.
+Следом связать явную ограниченную команду ID 9903 с текущей записью и ответом
+ID 9904 в той же сессии. Отдельно продолжить условия автоматического запуска
+и callback панели; подтверждение обучения не выдавать за действие ID 1836.
+Сброс ожидания не означает завершение действия.
 Активный step 2 ещё не подтверждён.
 [Ответ и границы применения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
 [Очередь, удаление ключа и запись состояния](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md).
 [Готовность и разбор очереди](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-QUEUE-DRAIN.md).
+[Первый переход и поля таблиц](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STARTUP.md).
 [Тело запроса и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
 [Путь действия и следующий пробел](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md).
 [Переход, строки и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md).

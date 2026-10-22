@@ -3112,6 +3112,97 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Применение начального ID 9905 и построение локальных задач целиком; связь native readiness / условий драйвера с headless lifecycle; loader TutorialStep, реальные условия первой задачи / callbacks; активный квест / tutorial step; смысл raw10, состояний и флагов; producer панели и текущие UI package bytes."
+    },
+    {
+      "addresses": [
+        "0x14142e7d0",
+        "0x145c46830",
+        "0x145c46d20",
+        "0x1464a1460",
+        "0x1464c4ba0",
+        "0x1464c5770",
+        "0x1464c67e0",
+        "0x1464cd6f0",
+        "0x1464cfeb0",
+        "0x1464d0510"
+      ],
+      "checks": [
+        {
+          "cache_key": "959df6ceb76f2066d8b45300aa07ab6306d6ae9354e590141dddd342898053de",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c\\manifest.json",
+          "sha256": "b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6edd2371d98792b2521e2bc834df627bf3339f71be93cabebff8224923255e72",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e0d7eeea7dc37ebe8f3542a84941b8ad882b5294bdfea4d5003f6c2ce100c282\\manifest.json",
+          "sha256": "e0d7eeea7dc37ebe8f3542a84941b8ad882b5294bdfea4d5003f6c2ce100c282",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6cdb1f81ede80731e61933a65579f515474a04d82a29d362fee8bf2a2011bfa0",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306\\manifest.json",
+          "sha256": "7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306",
+          "state": "passed"
+        },
+        {
+          "cache_key": "28735c6a754f8211297cb0d0c9c54a1cf5335eb6829fe6ccb337a619cf2f1bea",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d\\manifest.json",
+          "sha256": "e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1a556947f318d6711514bbadadcaedccfd3cb428952c52e897cf0ed9d995fb37",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa\\manifest.json",
+          "sha256": "409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e3ed75b11154a7fef8610e7c41368f8c3c8ddf2ad530713628e9a4b2cf46db83",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eaddbd26c24d719e44e1cc88ac158acb40196a109b2bf5840b0b8ac1ca02fba2\\manifest.json",
+          "sha256": "eaddbd26c24d719e44e1cc88ac158acb40196a109b2bf5840b0b8ac1ca02fba2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d95407ee7fb63eedc5167b1bdfba91a4c654f7c7c06e58ea5c76be4c70aa4b48",
+          "id": "release-tutorial-drain",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b5df88f15260af525c59f58e98520af541d6e05206fd62b98b08521f9f3e558b\\manifest.json",
+          "sha256": "b5df88f15260af525c59f58e98520af541d6e05206fd62b98b08521f9f3e558b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8dc2720f9dd7400680f7a145cc3d4fa38fae3d8eaedddb06275f42e616445166",
+          "id": "release-tutorial-startup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b559a4f0e1a8ebe609b409ca3fd0ed5a4e9a2a6b75279ba8277fda094097c8e9\\manifest.json",
+          "sha256": "b559a4f0e1a8ebe609b409ca3fd0ed5a4e9a2a6b75279ba8277fda094097c8e9",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Свежий ID 9905 → native map copy/hash link → сверка без удалений → bootstrap / builder → локальный переход с настоящей ранней ветвью gate проверен в 192 сценариях. При заданных row+0x50 0/1 и descriptor+8=2 запись 1001 со state 1 переводит selector 0/1 в 1/2. Именованные cell setters статически связали TutorialId / Step / ServerProcessRequest с row+0x0c / +0x18 / +0x1c; Tutorial.Type находится в byte +0x0c, а не dword +0x50.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-STARTUP.md",
+          "sha256": "588d787fb78ae5e793c61ab8f0186507c97d99c73fc31cdb57727175cf583f36"
+        }
+      ],
+      "id": "bab9a41469e083e3aebff8ae60a660b394ac7db807ad779b45fd40fa232c5911",
+      "limits": [
+        "Table lookup / group descriptor, выдача ячеек map / статусов, cleanup, security-cookie helper и запуск — fixtures.",
+        "Профиль свежий и уникальный: дубликаты, rehash, реальные удаления при prune, существующие локальные задачи и завершение gate не исполнены.",
+        "Cell setters и callbacks не исполнены; это не полный initial CSV loader. Происхождение row+0x50 и timer row+0x60 ещё неизвестно.",
+        "Не доказаны активный UI / step 2 или соответствие native readiness событию ID 206; авторизация и игровые действия не выполнялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать отдельную явную команду ID 9903 с текущим source SHA, записью ID 9905 и корреляцией ID 9904 в той же сессии; ограничить её известным сценарием и не повторять неизвестный результат. Не называть это действием панели ID 1836 или автоматическим прохождением. Для автоматики продолжить virtual callbacks setters 145c46830 / 145c46d20: row+0x50 не Tutorial.Type, происхождение timer row+0x60 ещё неизвестно. Активный step 2 и соответствие ready state 6 событию ID 206 не доказаны.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Происхождение условия row+0x50 и timer row+0x60, callbacks полей и ветви завершения gate; связь native readiness с headless lifecycle; активный tutorial step, смысл raw10 / флагов; producer панели ID 1836 и текущие UI package bytes. Свежий startup проверен с fixtures, не как живое выполнение."
     }
   ],
   "schema": 1,

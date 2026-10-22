@@ -89,17 +89,22 @@ ID 9904 / TutorialUpdateResult разобран: decoder прошёл 216 native
 19 коротких префиксов; handler и сброс ожидания — 45 сценариев с явными fixtures.
 Удаление ожидающего ключа, копирование раннего ответа и применение записи
 теперь проверены native: 12 / 32 / 384 сценария. Серверная запись и локальный
-селектор различаются; реальный gate задачи и запуск остаются fixtures.
+селектор различаются; в этих проверках ответа gate задачи и запуск — fixtures.
 Потребитель очереди ID 9904 прошёл ещё 64 native-сценария с явными fixtures
 освобождения: готовность, порядок, возобновление и отсутствие повторной обработки.
-Найдена цепочка начального ID 9905 → проверка / построение локальных задач;
-её исполнение, условия действия и callback ещё проверяются.
+Начальная цепочка ID 9905 → построение локальной задачи → первый переход
+прошла 192 native-сценария с явными table / storage / launch fixtures;
+ранний gate исполнен настоящим кодом. Именованные setters подтвердили поля
+TutorialStep, но row+0x50 нельзя подменять Tutorial.Type из CSV.
+Условия автоматического действия и callbacks ещё проверяются; отдельную явную
+команду ID 9903 предстоит связать с наблюдением и ответом той же сессии.
 Классификация квестов, автовыполнение и источники прежнего UI
 уточнены в TASKS.
 [Writer и следующий ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
 [Ответ и различие ожиданий](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
 [Применение и отложенный ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md).
 [Consumer очереди и начальное уведомление](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-QUEUE-DRAIN.md).
+[Начальный переход и именованные поля](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STARTUP.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 

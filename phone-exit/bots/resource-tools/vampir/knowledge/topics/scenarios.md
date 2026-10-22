@@ -38,6 +38,7 @@ Live состояние заданий, серверные переходы и �
 - [Разбор отложенной очереди обучения](../evidence/scenarios/HEADLESS-TUTORIAL-QUEUE-DRAIN.md)
 - [Тело запроса обучения ID 9903](../evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md)
 - [Ответ обучения ID 9904 и ожидание результата](../evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md)
+- [Начальный снимок обучения и первый локальный переход](../evidence/scenarios/HEADLESS-TUTORIAL-STARTUP.md)
 - [Выбор строки и локальный переход обучения](../evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md)
 - [Reader состояния обучения ID 9905](../evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md)
 - [Vampir: разрешение обработки результата пакета](../evidence/scenarios/PACKET-RESULT-GUARD.md)
