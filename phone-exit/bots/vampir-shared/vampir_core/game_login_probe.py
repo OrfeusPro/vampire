@@ -10,16 +10,19 @@ from .game_login_error import describe_game_login_error
 from .session_clock import LobbyPingClock
 from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256
 from .character_target import CharacterTargetTracker
+from .tutorial_update import decode_tutorial_update
 
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
                         character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False,
-                        observe_world_seconds=0,world_observer=None):
+                        observe_world_seconds=0,world_observer=None,tutorial_observer=None):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
     if world_observer is not None and (not callable(world_observer) or not read_world_finish):
         raise ValueError('World observer requires explicit completion')
+    if tutorial_observer is not None and (not callable(tutorial_observer) or not read_world_finish):
+        raise ValueError('Tutorial observer requires explicit completion')
     if character_index is not None and (type(character_index) is not int or not 0 <= character_index <= 65535
                                         or not read_character_list):
         raise ValueError('Character index requires an explicit list operation and uint16 index')
@@ -40,6 +43,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     packet_budget_exceeded = False
     target_tracker = None
     notified_revision = 0
+    tutorial_pending=[]
+    tutorial_notifications=0
     def ensure_target_tracker():
         nonlocal target_tracker
         if target_tracker is None and world_observer is not None and owner.world_entry is not None:
@@ -49,7 +54,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     source_sha256=source_sha256)
         return target_tracker
     def observe(packet):
-        nonlocal other_packet_count, packet_budget_exceeded
+        nonlocal other_packet_count, packet_budget_exceeded, tutorial_notifications
         other_packet_count += 1
         if len(unknown) < 32: unknown.append(packet.packet_id)
         if other_packet_count > 4096 or (packet.packet_id not in packet_counts and len(packet_counts) >= 128):
@@ -59,6 +64,11 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         if packet.packet_id==307 and world_observer is not None:
             tracker=ensure_target_tracker()
             if tracker is not None:tracker.receive(packet.body)
+        if packet.packet_id==9905 and tutorial_observer is not None:
+            if len(tutorial_pending)>=64:raise RuntimeError('Tutorial notification budget exceeded')
+            tutorial_pending.append(decode_tutorial_update(packet.body,source_sha256=source_sha256,
+                max_records=4096,max_payload_size=65536))
+            tutorial_notifications+=1
     owner = GameConnection(sock, key_bits=0, sequence=0,
         receive_limits=ReceiveLimits(1048576, 1048576, 1048576, 2097152, 2097152),
         selection_limits=SelectionLimits(1048576, 64, 4096, timeout),
@@ -134,6 +144,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 world_observation_completed=status=='world_observation_complete')
         if world_observer is not None:
             value['own_xy_target_updates']=target_tracker.update_count if target_tracker else 0
+        if tutorial_observer is not None:value['tutorial_notifications_decoded']=tutorial_notifications
         return value
     try:
         started = time.monotonic()
@@ -180,6 +191,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     world.tick(time.monotonic())
                     if world.state=='start_response':return result('world_start_result')
                     if world.state=='finish_response':
+                        while tutorial_pending:
+                            tutorial_observer(tutorial_pending.pop(0))
                         tracker=ensure_target_tracker()
                         if tracker is not None and tracker.revision!=notified_revision:
                             world_observer(tracker.position)
@@ -204,4 +217,6 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     finally:
         owner.close()
         if target_tracker is not None:target_tracker.close()
+        tutorial_pending.clear()
+        if tutorial_observer is not None:tutorial_observer(None)
         if world_observer is not None:world_observer(None)

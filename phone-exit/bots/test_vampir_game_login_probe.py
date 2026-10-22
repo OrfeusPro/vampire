@@ -15,7 +15,7 @@ from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=()):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=(), tutorial_observer=None, before_finish_packets=()):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -63,7 +63,7 @@ class GameLoginProbeTests(unittest.TestCase):
                                             if body!=b'':raise AssertionError('Nonempty finish request')
                                             if world_finish_body is not None:
                                                 clock_advanced[0]=advance_clock
-                                                server.sendall(incoming(206,world_finish_body)+b''.join(
+                                                server.sendall(b''.join(incoming(pid,payload) for pid,payload in before_finish_packets)+incoming(206,world_finish_body)+b''.join(
                                                     incoming(pid,payload) for pid,payload in after_finish_packets))
                                                 if observe_world_seconds and advance_clock:
                                                     header,body=receive_frame(server)
@@ -78,7 +78,7 @@ class GameLoginProbeTests(unittest.TestCase):
         with patch('vampir_core.game_login_probe.time.time_ns', side_effect=lambda:1792600142863000000+(6001000000 if clock_advanced[0] else 0)):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
                 read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index,
-                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, source_sha256=SOURCE_SHA256 if read_world_start else None)
+                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, tutorial_observer=tutorial_observer, source_sha256=SOURCE_SHA256 if read_world_start else None)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -170,6 +170,37 @@ class GameLoginProbeTests(unittest.TestCase):
             self.assertFalse(result['server_target_position_received'])
             self.assertEqual(result['world_entry_error'],
                 'finish_result_rejected' if body else 'world_entry_timeout')
+
+    def test_tutorial_notifications_are_deferred_until_finish_and_keep_order(self):
+        events=[]
+        first=struct.pack('<BHIIIB',1,1,1001,2,0,1)
+        second=struct.pack('<BHIIIB',0,1,1002,3,4,2)
+        result,captures=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',0,10010,2,3,4,0,0,77),
+            read_world_finish=True,world_finish_body=finish_body(),tutorial_observer=events.append,
+            before_finish_packets=((9905,first),),after_finish_packets=((9905,second),))
+        self.assertEqual([e.records[0].raw08 for e in events[:-1]],[1001,1002])
+        self.assertIsNone(events[-1]);self.assertEqual(result['tutorial_notifications_decoded'],2)
+        self.assertEqual([pid for pid,_ in captures],[1,3,101,109,203,205])
+
+    def test_bad_tutorial_body_closes_without_observer_data(self):
+        events=[]
+        result,_=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',0,10010,2,3,4,0,0,77),
+            read_world_finish=True,world_finish_body=finish_body(),tutorial_observer=events.append,
+            before_finish_packets=((9905,b'bad'),))
+        self.assertEqual(result['status'],'connection_processing_failed')
+        self.assertEqual(events,[None])
+
+    def test_tutorial_queue_is_bounded_before_world_finish(self):
+        events=[]
+        result,_=self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ',0,10010,2,3,4,0,0,77),
+            read_world_finish=True,world_finish_body=finish_body(),tutorial_observer=events.append,
+            before_finish_packets=tuple((9905,bytes(3)) for _ in range(65)))
+        self.assertEqual(result['status'],'connection_processing_failed')
+        self.assertEqual(result['tutorial_notifications_decoded'],64)
+        self.assertEqual(events,[None])
 
     def test_world_refusals_survive_connection_cleanup(self):
         result,captures=self.world_attempt(world_reserve_body=reserve_body(16))

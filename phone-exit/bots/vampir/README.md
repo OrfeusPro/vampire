@@ -70,6 +70,10 @@ ID 9905 / TutorialUpdateNotify уже приходил
 в сессии. Вложенный формат разобран: decoder прошёл 72 native тела и 29 коротких
 префиксов; смысл трёх полей и lifecycle применения ещё проверяются.
 [Reader состояния обучения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md).
+Новый явный observer прочитал живой ID 9905 через HONOR JP: 16 записей,
+ключ 1001 / state 1, остальные state 0. Конкретный шаг и смысл остальных
+полей ещё проверяются; кнопка продолжения не нажималась.
+[Живое состояние и следующий шаг](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 

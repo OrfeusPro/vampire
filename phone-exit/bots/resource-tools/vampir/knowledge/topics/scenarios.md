@@ -31,6 +31,7 @@ Live состояние заданий, серверные переходы и �
 - [Vampir: имена числовых ContentsLockCondition](../evidence/scenarios/CONDITION-TYPES.md)
 - [ContentsLock: поля загрузчика и вызовы проверки](../evidence/scenarios/CONTENTS-LOCK-FIELDS.md)
 - [ContentsLock: условия открытия квестов и связи с наградами](../evidence/scenarios/CONTENTS-LOCKS.md)
+- [Живое чтение состояния обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md)
 - [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Reader состояния обучения ID 9905](../evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md)
 - [Vampir: разрешение обработки результата пакета](../evidence/scenarios/PACKET-RESULT-GUARD.md)

@@ -14,7 +14,7 @@ from vampir_core.map_session import MapSession,MapSessionServer
 from vampir_core.world_move_start import SOURCE_SHA256
 
 
-def run(args,password):
+def run(args,password,*,tutorial_observer=None):
     raw=args.projection.read_bytes()
     if len(raw)>1048576 or hashlib.sha256(raw).hexdigest()!=args.projection.parent.name:
         raise ValueError('Immutable projection audit required')
@@ -39,6 +39,7 @@ def run(args,password):
             password=password,auth_flow='launcher',language_code=1,lobby_context='sdk-with-partial-metadata',
             read_character_list=True,character_index=args.character_index,read_world_start=True,
             read_world_finish=True,observe_world_seconds=args.seconds,world_observer=observe,
+            tutorial_observer=tutorial_observer,
             _progress=lambda stage:print(json.dumps(dict(event='phase',stage=stage)),flush=True))
 
 
