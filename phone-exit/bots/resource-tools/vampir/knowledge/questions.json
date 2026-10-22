@@ -200,7 +200,7 @@
       "question": "Какие текущие серверные пакеты обновляют положение своего персонажа и других сущностей после ID 206?",
       "known": "Текущие ID 305 / 306 / 307 привязаны по именам и getter bytes. Целые конструкторы / readers ID 306 / 307 проверены в 28 native случаях и на 20 коротких префиксах. ID 307 содержит uint64 entity key и float32 XY, без Z / мира. Общий actor lookup связывает player+8 после ID 206 с ключом уведомления. Лёгкий tracker фильтрует собственный ненулевой ключ и передаёт XY-цель в feed с сохранённым Z из ID 206. Преобразование движка разобрано статически; локальные identity / socketpair / projection / feed проверки прошли.",
       "unknown": "Живые собственные обновления, фактическая позиция и высота, поведение зависимостей преобразования XY/Z и условий receiver; формат исходящей команды ID 305 и смысл ID 306.",
-      "next_action": "Identity guard и обновление XY-цели подключены; Z сохранён из ID 206 с отдельной семантикой. Локальные проверки прошли. Живые попытки через TECNO / vivo JP и Redmi HK получили 58 / BlockedIp; пользователь готовит новые телефоны. После готовности проверить новую ветвь через свежий выход; параллельно продолжать ID 305 и квестовые события.",
+      "next_action": "После замены телефонов HONOR JP прошёл вход, выбор и ID 206, затем 120 секунд / 24 Ping / 25 ID 17 без ошибок. Маркер цели входа показан; ID 307 не поступил, обновлений собственной XY-цели нет. Соединение / feed / маршрут закрыты. Продолжать writer / producer ID 305 и условия первого действия, затем живую ветвь ID 307; без нового шага вход не повторять.",
       "decision_rule": "Не переносить старые адреса или считать объект своим без identity guard. Готовые exports использовать повторно, новые только по конкретным VA.",
       "do_not_repeat": "Вход без новой обработки; движение по неподтверждённому формату; подмена live NPC статическими размещениями.",
       "addresses": [],
@@ -208,7 +208,24 @@
         "evidence/maps/HEADLESS-MAP-SESSION.md",
         "evidence/network/HEADLESS-PACKET-BINDINGS.md",
         "evidence/network/HEADLESS-CHARACTER-MOVE-EVENTS.md",
-        "evidence/network/HEADLESS-SELF-TARGET-STREAM.md"
+        "evidence/network/HEADLESS-SELF-TARGET-STREAM.md",
+        "evidence/network/HEADLESS-LIVE-HONOR-SESSION.md"
+      ]
+    },
+    {
+      "id": "quest-waiting-action",
+      "status": "open",
+      "question": "Как определить ожидающий шаг квеста / обучения и выполнить действие квестовой панели без процесса игры?",
+      "known": "Пользователь сообщает, что персонаж ждёт нажатия квестовой панели. В готовом прежнем quest-graph есть Quest 110110 / task 110110040 / Tutorial 1001 / step 1001002 с текстом о нажатии панели справа: QuestPanel_PanelTouch, WBP_GameUI / DeferredQuestUI / TableViewQuestList, ControlIndex 0. Current EXE содержит имена PktQuestListReadResult, PktQuestPanelSelect и tutorial packets, но их привязки ещё не разобраны.",
+      "unknown": "Актуальность выбранных строк текущей версии; активный квест / tutorial step персонажа; reader текущего состояния, обработчик панели, запрос и подтверждение результата.",
+      "next_action": "Использовать готовый quest graph и UI catalog, сверить выбранные строки с current CSV. Найти текущие IDs / readers QuestList и Tutorial, затем PanelSelect producer; до подтверждения формата игровые действия не отправлять.",
+      "decision_rule": "Статический квест или текст не доказывает активное состояние. Не объяснять отсутствие движения обучением без session proof; не подменять действие панели произвольной командой движения.",
+      "do_not_repeat": "Извлечение всего каталога без изменения источника; вопрос пользователю о тексте до проверки готовых связей; вход без новой обработки.",
+      "addresses": [],
+      "evidence": [
+        "evidence/scenarios/REWARDS-AND-LAYOUT.md",
+        "evidence/interface/UI-CATALOG.md",
+        "evidence/network/HEADLESS-LIVE-HONOR-SESSION.md"
       ]
     }
   ]

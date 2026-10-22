@@ -2379,6 +2379,52 @@
       "question": "world-position-events",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Живые собственные XY-цели, условия применения и фактическая высота, исходящий writer / producer ID 305 и квестовые / диалоговые события."
+    },
+    {
+      "addresses": [
+        "0x14679eab0"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a6891e61112cdbd7ecbb2b2ef778e4d8f8d318132d492e8a44c4bf4efef974",
+          "id": "release-character-move",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cd4627f75c167d370b113f2522f3000534b1238c19149e4407440a2645614a71\\manifest.json",
+          "sha256": "cd4627f75c167d370b113f2522f3000534b1238c19149e4407440a2645614a71",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c88539258b3d2fb712cdb6b1d7438810a7779c587951741e0a10601b65e2b694",
+          "id": "world-target-stream",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b4f8827cc90eadf1fe241c84e4d0ed8696da91a18ecb4c68401b7455c0404fcc\\manifest.json",
+          "sha256": "b4f8827cc90eadf1fe241c84e4d0ed8696da91a18ecb4c68401b7455c0404fcc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5c4522f462a58bb496c69367087a707d36e37b9830d9088f05e0cb980f493774",
+          "id": "character-target-identity",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\55771fa97b907e8dc573ac085778b51bf5add8c958d2926c1fbf83690be4918a\\manifest.json",
+          "sha256": "55771fa97b907e8dc573ac085778b51bf5add8c958d2926c1fbf83690be4918a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Через новый HONOR CLK-LX3 / JP текущий бот прошёл Login 0, список / выбор и ID 206 code 0. Цель входа показана в атласе с привязкой к персонажу. За 120 секунд выполнены 24 периодических Ping, получены 25 ID 17 и 125 сопутствующих пакетов, ошибок нет. ID 307 не поступил, own_xy_target_updates=0. Соединение, feed и маршрут закрыты, маркер очищен.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-LIVE-HONOR-SESSION.md",
+          "sha256": "de83a22639104a5d9e5e9560464c3976a42440c65a3360ae211bd79dabbeb43e"
+        }
+      ],
+      "id": "a7f7e5b109d94db0234a326862279b7e24226e09359b93bc61f1829748675288",
+      "limits": [
+        "Это живая проверка начальной позиции и поддержания соединения; ветвь receiver ID 307 не исполнялась на живом событии.",
+        "Команды движения не отправлялись. Движение, квесты, коррекции движка, фактическая высота и reconnect остаются непроверенными.",
+        "Offline-проверки из кэша подтверждают локальные сценарии, а не заменяют живую проверку. game_session_ready=false сохраняется."
+      ],
+      "method": "static",
+      "next_check": "Разобрать writer / producer ID 305 и условия доступности первого действия, затем проверить собственные обновления; без нового шага вход не повторять.",
+      "question": "world-position-events",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Живые собственные события ID 307, исходящий ID 305 / условия первого действия и последующие игровые события."
     }
   ],
   "schema": 1,
