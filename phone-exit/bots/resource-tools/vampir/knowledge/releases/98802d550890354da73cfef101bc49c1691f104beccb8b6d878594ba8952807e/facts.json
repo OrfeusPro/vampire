@@ -4588,6 +4588,45 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Полная wire-проверка CreateData / appearance, источник class-параметра и реальный UI-переход пустого списка; причина Login59 остаётся отдельной."
+    },
+    {
+      "addresses": [
+        "0x146442670",
+        "0x14644a0c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "5cc24e597dc0feee00e21b8a3bd203c7d3d7c4759ee8c1daf4f1d590ada9f1db",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93\\manifest.json",
+          "sha256": "dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93",
+          "state": "passed"
+        },
+        {
+          "cache_key": "113eb7d10e7db841555255a044ab27602de77a28fc4f829cc8509a12e6185590",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7\\manifest.json",
+          "sha256": "36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые constructor и getter создания проверены в 144 native случаях: при разрешённом lookup и подходящем UI getter копирует raw uint32 из UI +0x360, иначе возвращает sentinel 0; constructor копирует byte UI +0x364 в owner +0x30 только при подходящем UI и оставляет прежний byte в остальных случаях. Это не доказывает допустимый ID класса или внешность по умолчанию.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-CLASS-SOURCE.md",
+          "sha256": "6901e21435e29eabc75f613784c143296240f8624e8f18f6d5e948cb73ef1af2"
+        }
+      ],
+      "id": "62d912ebec13f5d0760a25741bf6fe97d90331c78f164af3a80425fcec192e90",
+      "limits": [
+        "Lookup, type singleton, метаданные, guard и class/appearance значения являются fixtures.",
+        "Producer, JSON внешности, wire packet и сетевое создание не исполнялись; object writer tail сверяется только статически."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать UI +0x360 с таблицей классов, затем выполнить whole producer и appearance/wire replay; отправка только после принятого Login и пустого списка.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Допустимая запись класса, реальные значения начальной внешности, producer и полная wire-проверка создания."
     }
   ],
   "schema": 1,
