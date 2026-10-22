@@ -14,10 +14,10 @@ from vampir_core.world_move_start import SOURCE_SHA256
 
 def fixture(*, populated=False):
     if not populated:
-        return struct.pack('<IBHHBBHQ', 0, 0, 0, 0, 0, 0, 0, 7)
+        return struct.pack('<IBHHBBHHHH', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     quest = struct.pack('<QBBQQBIII', 11, 255, 255, 22, 33, 255, 44, 55, 66)
-    return (struct.pack('<IBH', 9, 255, 1) + quest + struct.pack('<HBQQ', 1, 255, 77, 88)
-        + b'\xff\0' + struct.pack('<HBH', 1, 255, 2) + quest * 2 + struct.pack('<Q', 99))
+    return (struct.pack('<IBH', 9, 255, 2) + quest * 2 + struct.pack('<HBQQ', 1, 255, 77, 88)
+        + b'\xff\0' + bytes(8))
 
 
 def decode(body, **limits):
@@ -29,16 +29,14 @@ class QuestListTests(unittest.TestCase):
     def test_empty_and_nested_fields(self):
         result = decode(fixture())
         self.assertEqual((result.code, result.raw14, result.quests, result.assets,
-            result.data.groups, result.data.raw18), (0, 0, (), (), (), 7))
+            result.item_changes.counts), (0, 0, (), (), (0, 0, 0, 0)))
         result = decode(fixture(populated=True))
         self.assertEqual((result.code, result.raw14, result.raw38, result.raw39), (9, 12, True, False))
-        self.assertEqual((len(result.quests), len(result.assets), len(result.data.groups)), (1, 1, 1))
+        self.assertEqual((len(result.quests), len(result.assets)), (2, 1))
         self.assertEqual(result.quests[0].raw10, 6)
         self.assertEqual(result.quests[0].progress.raw08, 255)
         self.assertEqual((result.assets[0].raw08, result.assets[0].raw10), (97, 77))
-        self.assertEqual((result.data.groups[0].raw08, len(result.data.groups[0].quests)), (12, 2))
-        self.assertEqual(result.data.groups[0].quests, result.quests * 2)
-        self.assertEqual(result.data.raw18, 99)
+        self.assertEqual(result.item_changes.counts, (0, 0, 0, 0))
         self.assertNotIn('99', repr(result))
 
     def test_every_short_prefix_and_trailing_bytes(self):
@@ -50,9 +48,9 @@ class QuestListTests(unittest.TestCase):
 
     def test_nested_total_and_individual_budgets(self):
         body = fixture(populated=True)
-        # One top quest, one asset, one group and two nested quests = five.
-        with self.assertRaises(BufferError): decode(body, max_total_items=4)
-        self.assertEqual(len(decode(body, max_total_items=5).data.groups), 1)
+        # Two quests and one asset = three; item collections are empty.
+        with self.assertRaises(BufferError): decode(body, max_total_items=2)
+        self.assertEqual(len(decode(body, max_total_items=3).quests), 2)
         with self.assertRaises(BufferError): decode(body, max_collection_items=1)
         with self.assertRaises(BufferError): decode(body, max_payload_size=len(body) - 1)
         self.assertEqual(decode(fixture(), max_collection_items=0, max_total_items=0).code, 0)
@@ -66,6 +64,14 @@ class QuestListTests(unittest.TestCase):
             decode_quest_list_result(body, source_sha256='old', max_collection_items=8,
                 max_total_items=64, max_payload_size=8192)
 
+    def test_actual_rejection_and_unimplemented_item_changes(self):
+        actual = bytes.fromhex('64000000000000000000000000000000000000')
+        self.assertEqual(decode(actual).code, 100)
+        for offset in (11, 13, 15, 17):
+            body = bytearray(fixture());body[offset] = 1
+            with self.assertRaisesRegex(ValueError, 'Nonempty quest item changes'):
+                decode(bytes(body))
+
     def test_whole_native_list_and_nested_callbacks(self):
         result = subprocess.run([sys.executable, '-X', 'utf8', str(
             HERE / 'resource-tools/vampir/replay-release-quest-list.py')],
@@ -73,8 +79,10 @@ class QuestListTests(unittest.TestCase):
         report = json.loads(Path(json.loads(result.stdout)['report']).read_text('utf-8'))
         self.assertTrue(report['native_execution'])
         self.assertFalse(report['network_used'])
-        self.assertEqual(len(report['cases']), 243)
-        self.assertEqual([case['size'] for case in report['short']], list(range(295)))
+        self.assertEqual(len(report['cases']), 27)
+        self.assertEqual([case['size'] for case in report['short']], list(range(131)))
+        self.assertTrue(report['actual_constructor'])
+        self.assertEqual(report['rejection_code'], 100)
 
 
 if __name__ == '__main__': unittest.main()

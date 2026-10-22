@@ -1,4 +1,4 @@
-"""Bounded current ID 1802 wire data, without handler or request semantics."""
+"""Current ID 1802 with empty item-change suffix; other suffixes fail explicitly."""
 from dataclasses import dataclass, field
 import struct
 
@@ -14,15 +14,8 @@ class AssetChange:
 
 
 @dataclass(frozen=True, slots=True)
-class QuestTypeData:
-    raw08: int
-    quests: tuple[QuestRecord, ...] = field(repr=False)
-
-
-@dataclass(frozen=True, slots=True)
-class QuestData:
-    groups: tuple[QuestTypeData, ...] = field(repr=False)
-    raw18: int = field(repr=False)
+class EmptyItemChangeList:
+    counts: tuple[int, int, int, int] = (0, 0, 0, 0)
 
 
 @dataclass(frozen=True, slots=True)
@@ -33,7 +26,7 @@ class QuestListResult:
     assets: tuple[AssetChange, ...] = field(repr=False)
     raw38: bool
     raw39: bool
-    data: QuestData = field(repr=False)
+    item_changes: EmptyItemChangeList = field(repr=False)
 
 
 def decode_quest_list_result(body, *, source_sha256, max_collection_items,
@@ -78,12 +71,12 @@ def decode_quest_list_result(body, *, source_sha256, max_collection_items,
         kind, a, b = struct.unpack('<BQQ', take(17))
         assets.append(AssetChange(min(kind, 97), a, b))
     raw38, raw39 = (bool(value) for value in take(2))
-    groups = []
-    for _ in range(count()):
-        kind = min(take(1)[0], 12)
-        groups.append(QuestTypeData(kind, quests()))
-    raw18 = struct.unpack('<Q', take(8))[0]
+    # Actual packet constructor sets PktItemChangeList here, not PktQuestData.
+    # Do not invent or skip variable-length item records before proving them.
+    for _ in range(4):
+        if count():
+            raise ValueError('Nonempty quest item changes are not supported')
     if at != len(body):
         raise ValueError('Trailing quest list bytes')
     return QuestListResult(code, raw14, records, tuple(assets), raw38, raw39,
-                           QuestData(tuple(groups), raw18))
+                           EmptyItemChangeList())

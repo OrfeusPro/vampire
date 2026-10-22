@@ -15,7 +15,7 @@ from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=(), tutorial_observer=None, before_finish_packets=(), ack_initial_tutorial=False, expected_tutorial_ack=False, tutorial_ack_response=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=(), tutorial_observer=None, before_finish_packets=(), ack_initial_tutorial=False, expected_tutorial_ack=False, tutorial_ack_response=None, read_quest_list=False, quest_response=None, quest_observer=None, quest_wire_observer=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -77,6 +77,12 @@ class GameLoginProbeTests(unittest.TestCase):
                         raise AssertionError('Unexpected initial tutorial acknowledgement')
                     if tutorial_ack_response is not None:
                         server.sendall(incoming(9904, tutorial_ack_response))
+                if read_quest_list:
+                    header, body = receive_frame(server)
+                    captures.append(header)
+                    if header[0] != 1801 or body != bytes(9):
+                        raise AssertionError('Unexpected quest list diagnostic')
+                    if quest_response is not None: server.sendall(incoming(1802, quest_response))
                 while server.recv(32): pass
             except BaseException as error: errors.append(type(error).__name__)
             finally: server.close()
@@ -85,7 +91,7 @@ class GameLoginProbeTests(unittest.TestCase):
         with patch('vampir_core.game_login_probe.time.time_ns', side_effect=lambda:1792600142863000000+(6001000000 if clock_advanced[0] else 0)):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
                 read_character_list=read_character_list, ping_clock=ping_clock, character_index=character_index,
-                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, tutorial_observer=tutorial_observer, ack_initial_tutorial=ack_initial_tutorial, source_sha256=SOURCE_SHA256 if read_world_start else None)
+                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, tutorial_observer=tutorial_observer, ack_initial_tutorial=ack_initial_tutorial, read_quest_list=read_quest_list, quest_observer=quest_observer, quest_wire_observer=quest_wire_observer, source_sha256=SOURCE_SHA256 if read_world_start else None)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -124,6 +130,49 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertTrue(result['server_target_position_received'])
         self.assertFalse(result['game_session_ready'])
         self.assertFalse(result['world_reserve_full_body_validated'])
+
+    def test_explicit_quest_list_read_on_world_connection(self):
+        from test_vampir_quest_list import fixture
+        for code in (0, 9):
+            events = []
+            body = bytearray(fixture());body[0] = code
+            result, captures = self.world_attempt(world_reserve_body=reserve_body(),
+                world_start_body=struct.pack('<IIIIIBBQ', 0, 9, 2, 3, 4, 0, 0, 77),
+                read_world_finish=True, world_finish_body=finish_body(),
+                ping_clock=LobbyPingClock(540), observe_world_seconds=.3,
+                read_quest_list=True, quest_response=bytes(body), quest_observer=events.append)
+            self.assertEqual(captures[-1], (1801, 7))
+            self.assertEqual(result['status'], 'quest_list_result')
+            self.assertEqual(result['quest_list_state'], 'received' if code == 0 else 'rejected')
+            self.assertEqual(result['quest_list_result_code'], code)
+            self.assertEqual(result['quest_count'], 0)
+            self.assertEqual(len(events), 2)
+            self.assertEqual(events[0].item_changes.counts, (0, 0, 0, 0))
+            self.assertIsNone(events[1])
+            self.assertFalse(result['game_session_ready'])
+
+    def test_quest_list_no_reply_is_unknown(self):
+        result, captures = self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ', 0, 9, 2, 3, 4, 0, 0, 77),
+            read_world_finish=True, world_finish_body=finish_body(),
+            ping_clock=LobbyPingClock(540), observe_world_seconds=.05, read_quest_list=True)
+        self.assertEqual(captures[-1], (1801, 7))
+        self.assertEqual(result['quest_list_state'], 'unknown')
+        self.assertNotIn('quest_count', result)
+
+    def test_rejected_quest_body_can_be_observed_before_decoder_failure(self):
+        wire = []
+        result, _ = self.world_attempt(world_reserve_body=reserve_body(),
+            world_start_body=struct.pack('<IIIIIBBQ', 0, 9, 2, 3, 4, 0, 0, 77),
+            read_world_finish=True, world_finish_body=finish_body(),
+            ping_clock=LobbyPingClock(540), observe_world_seconds=.3,
+            read_quest_list=True, quest_response=b'\0\0\0\0', quest_wire_observer=wire.append)
+        self.assertEqual(wire, [bytes(4)])
+        self.assertEqual(result['status'], 'connection_processing_failed')
+        self.assertEqual(result['quest_list_state'], 'unknown')
+        self.assertEqual(result['quest_list_decode_error'], 'Truncated quest list body')
+        self.assertEqual(result['quest_list_decode_body_size'], 4)
+        self.assertEqual(result['other_packet_counts']['1802'], 1)
 
     def test_explicit_initial_tutorial_ack_after_world_finish(self):
         snapshot = b'\0\1\0' + struct.pack('<IIIB', 1001, 0, 0, 1)

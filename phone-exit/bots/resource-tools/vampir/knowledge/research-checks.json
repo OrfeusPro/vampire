@@ -1176,7 +1176,7 @@
         "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-df3c5d97b2b8/details.json",
         "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-f47f7eb31681/details.json",
         "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-6c286a6860d8/details.json",
-        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-b25ee312ccc9/details.json"
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-387f0cc495c4/details.json"
       ],
       "dependencies": [
         "phone-exit/bots/resource-tools/vampir/replay-release-quest-list.py",

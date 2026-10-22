@@ -38,17 +38,14 @@ Blood Pool. Вывод включается / выключается, «К пе�
 
 ## Карта, справочники и квестовый сценарий
 
-Для чтения текущих квестов проверена отдельная запись PktQuest с вложенным
-PktQuestProgress: 216 native тел / 39 коротких префиксов, decoder в shared.
-Теперь проверен и полный ID 1802: 243 тела / 295 коротких префиксов,
-с PktQuestTypeData и вложенными квестами, ограничениями коллекций и суммарного
-числа записей. Формат запроса ID 1801 также проверен: 9 байт, byte + uint64,
-32 native случая / два отказа / девять коротких префиксов. Остались источник
-параметров, producer / handler и подключение к живой сессии.
-[Запрос списка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REQUEST.md).
-Новый вход без новой обработки не требуется.
-[Полный ответ списка и ограничения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LIST.md).
-[Проверенный формат и неизвестные связи](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RECORD.md).
+Отдельная запись PktQuest / Progress проверена. Живой диагностический запрос
+ID 1801 с 0 / 0 через HONOR JP вернул code 100, успешного списка нет.
+Выявлена ошибка прежней модели suffix: настоящий ID 1802 содержит
+PktItemChangeList, а не PktQuestData. Исправленный decoder и actual constructor
+проверены на 27 телах / 131 префиксе при пустых item changes; непустые пока
+явно отклоняются. Старый claim полного списка с группами отозван.
+[Коррекция и сохранённый ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LIST-CORRECTION.md).
+Следом — code 100 и источник штатных параметров; 0 / 0 не повторять.
 
 Для первого серверного шага обучения добавлен явный `--ack-initial-tutorial`:
 одна команда 1001 / 2 после успешного входа в мир и свежего состояния того же

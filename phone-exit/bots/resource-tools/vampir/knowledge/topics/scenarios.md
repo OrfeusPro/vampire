@@ -35,6 +35,8 @@ Live состояние заданий, серверные переходы и �
 - [Сервер принял начальное подтверждение обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-ACK-ACCEPTED.md)
 - [Состояние обучения после повторного входа](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-PERSISTENCE.md)
 - [Живое чтение состояния обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md)
+- [Фабрика пакета списка квестов](../evidence/scenarios/HEADLESS-QUEST-FACTORY.md)
+- [Исправление вложенного объекта ответа квестов](../evidence/scenarios/HEADLESS-QUEST-LIST-CORRECTION.md)
 - [Полное чтение ответа списка квестов](../evidence/scenarios/HEADLESS-QUEST-LIST.md)
 - [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Поля ответа выбора квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-RESULT.md)

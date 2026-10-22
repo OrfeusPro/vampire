@@ -16,7 +16,8 @@ from .tutorial_update import decode_tutorial_update
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
                         character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False,
                         observe_world_seconds=0,world_observer=None,tutorial_observer=None,
-                        ack_initial_tutorial=False):
+                        ack_initial_tutorial=False, read_quest_list=False, quest_observer=None,
+                        quest_wire_observer=None):
     if type(timeout) not in (int, float) or not math.isfinite(timeout) or not 0 < timeout <= 30:
         raise ValueError('Expected game login timeout in (0,30]')
     if type(read_character_list) is not bool: raise ValueError('Explicit character-list operation required')
@@ -40,6 +41,13 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         raise ValueError('World observation requires explicit finish, clock and duration <=300')
     if type(ack_initial_tutorial) is not bool or (ack_initial_tutorial and not observe_world_seconds):
         raise ValueError('Initial tutorial ack requires explicit bounded world observation')
+    if type(read_quest_list) is not bool or (read_quest_list and
+            (not observe_world_seconds or ack_initial_tutorial)):
+        raise ValueError('Quest list diagnostic requires bounded observation without tutorial ack')
+    if quest_observer is not None and (not callable(quest_observer) or not read_quest_list):
+        raise ValueError('Quest observer requires explicit list diagnostic')
+    if quest_wire_observer is not None and (not callable(quest_wire_observer) or not read_quest_list):
+        raise ValueError('Quest wire observer requires explicit list diagnostic')
     unknown = []  # Bounded first-packet sample, not a processing limit.
     packet_counts = {}
     other_packet_count = 0
@@ -64,6 +72,10 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             packet_budget_exceeded = True
             raise RuntimeError('Other packet budget exceeded')
         packet_counts[packet.packet_id] = packet_counts.get(packet.packet_id, 0) + 1
+        if packet.packet_id == 1802 and quest_wire_observer is not None:
+            if packet_counts[1802] > 2 or len(packet.body) > 262144:
+                raise BufferError('Quest wire observation budget exceeded')
+            quest_wire_observer(packet.body)
         if packet.packet_id==307 and world_observer is not None:
             tracker=ensure_target_tracker()
             if tracker is not None:tracker.receive(packet.body)
@@ -81,6 +93,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             complete_world=read_world_finish,max_collection_items=4096)
     if ack_initial_tutorial:
         owner.enable_initial_tutorial_ack(source_sha256=source_sha256, timeout=timeout)
+    if read_quest_list:
+        owner.enable_quest_list_read(source_sha256=source_sha256, timeout=timeout)
     sent = received = 0
     counts_complete = True
     flow = None
@@ -164,6 +178,18 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 value['initial_tutorial_ack_response'] = dict(raw08=record.raw08,
                     raw0c=record.raw0c, raw10=record.raw10, state=record.state,
                     raw30=response.raw30, raw31=response.raw31)
+        if read_quest_list:
+            quests = owner.quest_list
+            if quests.state in ('queued', 'sent'): owner.close()
+            response = quests.response
+            value.update(quest_list_state=quests.state, quest_list_result_code=quests.result_code,
+                quest_list_decode_error=quests.decode_error, quest_list_decode_body_size=quests.decode_body_size,
+                quest_list_unmatched_results=quests.unmatched_results,
+                quest_list_policy='explicit_native_reset_fields_0_0',
+                quest_list_correlation='one_outstanding_same_connection_matching_raw14_after_send')
+            if response is not None:
+                value.update(quest_count=len(response.quests), quest_asset_count=len(response.assets),
+                    quest_item_change_counts=response.item_changes.counts)
         return value
     try:
         started = time.monotonic()
@@ -229,6 +255,14 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                                     return result('initial_tutorial_ack_not_queued')
                             if ack.state in ('accepted', 'rejected'):
                                 return result('initial_tutorial_ack_result')
+                        if read_quest_list:
+                            quests = owner.quest_list
+                            if quests.state == 'waiting_entry':
+                                try: owner.queue_quest_list_read(now=time.monotonic())
+                                except BufferError: return result('quest_list_not_queued')
+                            if quests.state in ('received', 'rejected'):
+                                if quest_observer is not None: quest_observer(quests.response)
+                                return result('quest_list_result')
                     if world.error:return result('world_start_failed')
                     if world.deadline is not None: deadline=world.deadline
             if owner.active:
@@ -247,4 +281,5 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         if target_tracker is not None:target_tracker.close()
         tutorial_pending.clear()
         if tutorial_observer is not None:tutorial_observer(None)
+        if quest_observer is not None:quest_observer(None)
         if world_observer is not None:world_observer(None)

@@ -77,6 +77,12 @@ def encode_initial_tutorial_ack_frame_b(sequence: int, key_bits: int, *, source_
         source_sha256=source_sha256), sequence, key_bits)
 
 
+def encode_quest_list_read_frame_b(sequence: int, key_bits: int, *, source_sha256) -> bytes:
+    """Explicit reset-field diagnostic, not inferred quest pagination."""
+    from .quest_request import encode_quest_list_read
+    return _encode(1801, encode_quest_list_read(0, 0, source_sha256=source_sha256), sequence, key_bits)
+
+
 def encode_world_move_start_frame_b(payload, sequence: int, key_bits: int) -> bytes:
     from .world_move_start import WorldMoveStartPayload
     if not isinstance(payload,WorldMoveStartPayload): raise TypeError('Expected WorldMoveStartPayload')

@@ -70,6 +70,7 @@ class GameConnection:
         self._world_entry = None
         self._heartbeat = None
         self._tutorial_ack = None
+        self._quest_list = None
         try:
             sock.setblocking(False)
         except Exception:
@@ -103,6 +104,9 @@ class GameConnection:
     @property
     def tutorial_ack(self): return self._tutorial_ack
 
+    @property
+    def quest_list(self): return self._quest_list
+
     def close(self):
         if self._active:
             self._active = False
@@ -112,6 +116,7 @@ class GameConnection:
             if self._heartbeat is not None: self._heartbeat.close()
             if self._login is not None: self._login.close()
             if self._tutorial_ack is not None: self._tutorial_ack.close()
+            if self._quest_list is not None: self._quest_list.close()
             try:
                 self._socket.close()
             finally:
@@ -177,6 +182,23 @@ class GameConnection:
         from .heartbeat import PeriodicPing
         self._heartbeat=PeriodicPing(clock,initial_ping,source_sha256=source_sha256)
 
+    def enable_quest_list_read(self, *, source_sha256, timeout=10):
+        if not self.active or self._quest_list is not None:
+            raise RuntimeError('Quest list read cannot be enabled')
+        from .quest_list_flow import QuestListRead
+        self._quest_list = QuestListRead(self._outbound, source_sha256=source_sha256, timeout=timeout)
+
+    def queue_quest_list_read(self, *, now):
+        if (not self.active or self._quest_list is None or self._world_entry is None
+                or self._world_entry.state != 'finish_response'
+                or self._world_entry.finish_result_code != 0):
+            raise RuntimeError('Quest list read requires successful world completion')
+        self._quest_list.queue(now=now)
+
+    def _frame_sent(self, frame):
+        if self._tutorial_ack is not None: self._tutorial_ack.frame_sent(frame)
+        if self._quest_list is not None: self._quest_list.frame_sent(frame)
+
     def pump(self, *, now, budget: PumpBudget):
         if not self.active: raise RuntimeError('Connection is inactive')
         if self._in_pump: raise RuntimeError('Connection pump is not reentrant')
@@ -209,6 +231,9 @@ class GameConnection:
             if self._tutorial_ack is not None and self._tutorial_ack.expire(now=now):
                 self._fail('initial_tutorial_ack_unknown')
                 return PumpProgress(0, 0, 0, False)
+            if self._quest_list is not None and self._quest_list.expire(now=now):
+                self._fail('quest_list_unknown')
+                return PumpProgress(0, 0, 0, False)
             while packets < budget.max_packets and self.active:
                 packet = self._receiver.next_packet(key_bits=self._key,
                     max_transport_frames=budget.max_transport_frames_per_packet)
@@ -234,7 +259,13 @@ class GameConnection:
                     else:
                         if self._tutorial_ack is not None and packet.packet_id in (9904, 9905):
                             self._tutorial_ack.receive(packet.packet_id, packet.body, now=now)
-                        self._on_packet(packet)
+                        if self._quest_list is not None and packet.packet_id == 1802:
+                            # Explicit diagnostic handler can retain bounded ID1802
+                            # evidence even when its subsequent decoder rejects it.
+                            self._on_packet(packet)
+                            self._quest_list.receive(packet.body, now=now)
+                        else:
+                            self._on_packet(packet)
                     continue
                 if self._receiver.finished:
                     self.close()
@@ -261,7 +292,7 @@ class GameConnection:
                         self._fail('ping_recovery_required')
                         return PumpProgress(packets,received,0,False)
                 sent = drain_outbound(self._socket, self._outbound, max_send_calls=budget.max_send_calls,
-                    on_frame_sent=(self._tutorial_ack.frame_sent if self._tutorial_ack is not None else None)).bytes_sent
+                    on_frame_sent=self._frame_sent).bytes_sent
             return PumpProgress(packets, received, sent, self.active)
         except Exception:
             self._fail('connection_processing_failed')
