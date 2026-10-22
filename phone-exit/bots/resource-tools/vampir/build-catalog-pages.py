@@ -9,7 +9,7 @@ def main(root=Path('F:/PhoneExit Resources/Vampir')):
     routes = {
         'catalog-nav.js': 'catalog-nav.js', 'catalog-nav.css': 'catalog-nav.css',
         'catalog.css': 'catalog.css', 'catalog-data.js': 'catalog-data.js',
-        'catalog-class-model.js': 'catalog-class-model.js',
+        'catalog-class-model.js': 'catalog-class-model.js', 'atlas-locale.js': 'atlas-locale.js',
         'collections.html': 'collections/index.html', 'collections.js': 'collections/collections.js',
         'collections.css': 'collections/collections.css', 'collections-model.js': 'collections/collections-model.js',
         'attributes.html': 'attributes/index.html', 'attributes.js': 'attributes/attributes.js',

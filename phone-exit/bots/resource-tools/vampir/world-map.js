@@ -106,7 +106,7 @@ async function json(url, hash) {
     const actual = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(v => v.toString(16).padStart(2, '0')).join('');
     if (actual !== hash) throw Error('Изменился SHA256: ' + url);
   }
-  return JSON.parse(new TextDecoder().decode(bytes));
+  return window.AtlasLocale ? await AtlasLocale.localize(JSON.parse(new TextDecoder().decode(bytes))) : JSON.parse(new TextDecoder().decode(bytes));
 }
 function el(tag, text, className) { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; if (className) node.className = className; return node; }
 function link(text, href) { const node = el('a', text); node.href = href; return node; }
