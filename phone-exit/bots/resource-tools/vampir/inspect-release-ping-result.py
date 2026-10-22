@@ -13,7 +13,7 @@ SHA='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 def run(packet='PktPingResult'):
     if packet not in ('PktPingResult','PktCharacterPosition','PktCharacterMove','PktCharacterMoveResult','PktCharacterMoveNotify',
             'PktQuestListReadResult','PktQuestPanelSelect','PktQuestPanelSelectResult',
-            'PktTutorialUpdate','PktTutorialUpdateNotify'):
+            'PktTutorialUpdate','PktTutorialUpdateResult','PktTutorialUpdateNotify'):
         raise ValueError('Explicit supported packet name required')
     spec=importlib.util.spec_from_file_location('ping_result_native',HERE/'build-native-entry-code.py')
     native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)

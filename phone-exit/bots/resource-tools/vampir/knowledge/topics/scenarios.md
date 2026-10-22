@@ -34,6 +34,7 @@ Live состояние заданий, серверные переходы и �
 - [Живое чтение состояния обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md)
 - [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Подсказка обучения и запрос завершения шага](../evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md)
+- [Тело запроса обучения ID 9903](../evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md)
 - [Выбор строки и локальный переход обучения](../evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md)
 - [Reader состояния обучения ID 9905](../evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md)
 - [Vampir: разрешение обработки результата пакета](../evidence/scenarios/PACKET-RESULT-GUARD.md)
