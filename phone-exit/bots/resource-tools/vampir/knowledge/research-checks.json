@@ -981,6 +981,42 @@
         "phone-exit/bots/resource-tools/vampir/replay-release-tutorial-request.py",
         "phone-exit/bots/vampir-shared/vampir_core/tutorial_request.py"
       ]
+    },
+    {
+      "id": "release-tutorial-result",
+      "questions": [
+        "quest-waiting-action"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "test_pattern": "test_vampir_tutorial_result.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-91409cb5259a/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-8a2129c0aba9/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-74973e2905f8/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-ecc4c9718f83/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-4ec0da51a9f0/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/replay-release-archive-input.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-nested-read-thunk.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/replay-release-tutorial-result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
+      ]
     }
   ]
 }

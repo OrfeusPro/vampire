@@ -85,10 +85,13 @@ PktTutorialUpdate / ID 9903 с ключом и селектором строки
 [Подсказка, запрос и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md).
 Формат ID 9903 теперь проверен исполнением: два uint32 и исходный байт,
 64 native вектора и три отказа записи. Добавлен отдельный encoder без отправки.
-Найден ID 9904 / TutorialUpdateResult; reader / handler и условия действия ещё
-не проверены. Классификация квестов, автовыполнение и источники прежнего UI
+ID 9904 / TutorialUpdateResult разобран: decoder прошёл 216 native векторов /
+19 коротких префиксов; handler и сброс ожидания — 45 сценариев с явными fixtures.
+Отложенное применение, условия действия и callback ещё проверяются.
+Классификация квестов, автовыполнение и источники прежнего UI
 уточнены в TASKS.
 [Writer и следующий ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
+[Ответ и различие ожиданий](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 

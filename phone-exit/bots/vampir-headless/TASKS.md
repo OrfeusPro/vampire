@@ -137,8 +137,12 @@ UI-каталога после сверки версии, родителей и 
 показа подсказки и producer PktTutorialUpdate / ID 9903. Перед выполнением
 проверить loader TutorialStep, ответ / снятие ожидающего ключа и callback панели.
 Writer `0x145858ef0` уже проверен: 9 байтов, 64 native вектора и три отказа;
-кодек не подключён к отправке. Найден ответ ID 9904, его обработку ещё разобрать.
+кодек не подключён к отправке. Ответ ID 9904 разобран: 19 байтов, 216 native
+векторов / 19 коротких префиксов. Handler / сброс общего ожидания прошли 45
+сценариев с fixtures; отложенное применение и удаление ожидающего ключа
+из receiver ещё проверить. Сброс ожидания не означает завершение действия.
 Активный step 2 ещё не подтверждён.
+[Ответ и границы применения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
 [Тело запроса и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
 [Путь действия и следующий пробел](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md).
 [Переход, строки и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md).
