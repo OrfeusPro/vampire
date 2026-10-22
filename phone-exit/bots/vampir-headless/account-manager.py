@@ -25,7 +25,7 @@ class Jobs:
     def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False):
         if type(manual_mail_code) is not bool or (manual_mail_code and operation != 'register'):
             raise ValueError('Invalid mail-code mode')
-        if operation not in ('servers', 'characters', 'start', 'register', 'sdk_register'):
+        if operation not in ('servers', 'characters', 'start', 'register'):
             raise ValueError('Unknown operation')
         account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
         if account is None:
@@ -36,9 +36,6 @@ class Jobs:
                 or account['registration_status'] in ('registered', 'in_progress', 'email_in_use', 'nid_verified', 'sdk_created')):
             raise ValueError('Registration requires a mailbox password and explicit terms acceptance')
         with self.lock:
-            if operation == 'sdk_register' and (account['registration_status'] != 'nid_verified' or
-                    (self.jobs.get(identifier, {}).get('sdk_error') or {}).get('code') != 1203):
-                raise ValueError('SDK creation requires the observed missing-player response')
             if self.jobs.get(identifier, {}).get('running'):
                 raise ValueError('This account already has a job')
             if sum(bool(job.get('running')) for job in self.jobs.values()) >= 2:

@@ -48,6 +48,7 @@ $cases=@(
  '{"error":{"code":789,"email":"private-fixture"}}',
  '{"code":"private-token"}', '{"errorCode":true}', '{"code":1.5}',
  '{"code":2147483648}', 'not JSON', '{"accessToken":"private-fixture"}'
+ '{"errorCode":"123"}', '{"resultCode":321}', '{"errorCode":"00123"}'
 )
 $codes=@($cases | ForEach-Object { [NidHttpDiagnostics]::ParseCode($_) })
 $endpoints=@(
@@ -58,7 +59,21 @@ $endpoints=@(
  [NidHttpDiagnostics]::IsEndpoint('https://members.netmarble.com.evil.invalid/api/auth','POST'),
  [NidHttpDiagnostics]::IsEndpoint('https://user@members.netmarble.com/api/auth','POST')
 )
-@{codes=$codes;endpoints=$endpoints;large=[NidHttpDiagnostics]::ParseCode(('x'*16385))} | ConvertTo-Json -Compress
+function Inspect([string]$Body, $Length) {
+ $stream=[System.IO.MemoryStream]::new([System.Text.Encoding]::UTF8.GetBytes($Body))
+ try {
+  $result=[NidHttpDiagnostics]::ReadAsync($stream,$Length).GetAwaiter().GetResult()
+  @{code=$result.Code;state=$result.State;read=$stream.Position}
+ } finally { $stream.Dispose() }
+}
+$bounded=@(
+ (Inspect '{"code":"456"}' $null),
+ (Inspect '{"code":123}' 1),
+ (Inspect ('x'*20000) $null),
+ (Inspect '{"code":123}' 20000),
+ (Inspect '{"accessToken":"private-fixture"}' $null)
+)
+@{codes=$codes;endpoints=$endpoints;bounded=$bounded;large=[NidHttpDiagnostics]::ParseCode(('x'*16385))} | ConvertTo-Json -Compress -Depth 5
 '''
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'fixture.ps1'; path.write_text(script, encoding='utf-8-sig')
@@ -67,9 +82,14 @@ $endpoints=@(
                 capture_output=True, text=True, check=True, timeout=30)
         data = json.loads(result.stdout)
         # PowerShell pipelines omit null results; no rejected values reach output.
-        self.assertEqual([v for v in data['codes'] if v is not None], [123, 456, 789])
+        self.assertEqual([v for v in data['codes'] if v is not None], [123, 456, 789, 123, 321])
         self.assertEqual(data['endpoints'], [True, False, False, False, False, False])
         self.assertIsNone(data['large'])
+        self.assertEqual([row['state'] for row in data['bounded']],
+            ['numeric_code', 'length_mismatch', 'body_limit', 'length_limit', 'no_numeric_code'])
+        self.assertEqual(data['bounded'][0]['code'], 456)
+        self.assertEqual(data['bounded'][2]['read'], 16385)
+        self.assertEqual(data['bounded'][3]['read'], 0)
         self.assertNotIn('private', result.stdout)
 
 

@@ -79,7 +79,7 @@ class AccountStore:
 
     @staticmethod
     def assignment(value):
-        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname'}:
+        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname', 'auth_flow'}:
             raise ValueError('Unknown account setting')
         enabled = value.get('enabled', True)
         if type(enabled) is not bool:
@@ -89,6 +89,9 @@ class AccountStore:
                for v, limit in ((label, 100), (nickname, 40))):
             raise ValueError('Invalid account text')
         profile = value.get('device_profile', 'current-pc')
+        auth_flow = value.get('auth_flow', 'launcher')
+        if auth_flow not in ('launcher', 'nid'):
+            raise ValueError('Invalid sign-in flow')
         create_class = value.get('create_class', DEFAULT_CLASS)
         random_name = value.get('create_random_nickname', True)
         if type(create_class) is not str or create_class not in {key for key, _ in CLASS_CHOICES} or type(random_name) is not bool:
@@ -113,7 +116,7 @@ class AccountStore:
             raise ValueError('A character requires a server')
         return dict(label=label, enabled=enabled, device_profile=profile, region=region, server_id=server,
             character_index=character, character_key=key, create_nickname=nickname,
-            create_class=create_class, create_random_nickname=random_name)
+            create_class=create_class, create_random_nickname=random_name, auth_flow=auth_flow)
 
     def save(self, email, *, password=None, mail_password=None, assignment):
         email, assignment = _email(email), self.assignment(assignment)

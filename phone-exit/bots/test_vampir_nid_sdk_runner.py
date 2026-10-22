@@ -48,6 +48,26 @@ class NidSdkRunnerTests(unittest.TestCase):
             result = self.runner.run('test@example.invalid', _capture=capture, _execute=execute)
         self.assertEqual((result, calls), ('accepted-fixture', ['browser', 'sdk']))
 
+    def test_launcher_login_and_explicit_signup_share_the_same_nid_request(self):
+        from vampir_core.sdk_launcher_auth import LauncherToken
+        captures, endpoints = [], []
+        def capture(plan, **kwargs):
+            captures.append((plan.url, kwargs))
+            return self.provider
+        def execute(plan, **kwargs):
+            endpoints.append(urlsplit(plan.url).path)
+            return 'accepted-fixture'
+        def token(plan, **kwargs):
+            endpoints.append(urlsplit(plan.url).path)
+            return LauncherToken('launcher-token-fixture')
+        with patch.object(self.runner, 'load_inputs', return_value=(self.binding, self.profile, self.constants)):
+            self.runner.run('test@example.invalid', password='password-fixture', auth_flow='launcher',
+                _capture=capture, _execute=execute, _execute_token=token)
+            self.runner.run('test@example.invalid', password='password-fixture', auth_flow='nid', create_sdk_player=True,
+                _capture=capture, _execute=execute, _execute_token=token)
+        self.assertEqual(captures[0], captures[1])
+        self.assertEqual(endpoints, ['/launcher/token', '/launcher/sign-in', '/v1/sign-up'])
+
     def test_browser_failure_and_required_confirmation_prevent_sdk_post(self):
         for required in (False, True):
             binding = replace(self.binding, confirmation='required') if required else self.binding

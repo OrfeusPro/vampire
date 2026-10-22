@@ -71,13 +71,14 @@ class NidBrowserTests(unittest.TestCase):
         for status, code, expected in ((400, 123, (400, 123)),
                 ('private-status', 'private-code', (None, None)), (True, 2**40, (None, None))):
             result = dict(status='login_failed', sign_in_step='submitted', callback='secret-callback',
-                nid_http_status=status, nid_error_code=code)
+                nid_http_status=status, nid_error_code=code, nid_response_state='private-response')
             with patch.object(self.tool, '_run', return_value=result):
                 with self.assertRaises(self.tool.NidBrowserStatusError) as captured:
                     self.tool.capture_nid_credential(self.plan(), expected_game_code='thered', data_directory='unused')
             self.assertEqual(captured.exception.browser_status, 'login_failed')
             self.assertEqual((captured.exception.nid_http_status, captured.exception.nid_error_code), expected)
             self.assertEqual(result, {})
+            self.assertEqual(captured.exception.nid_response_state, 'not_observed')
             self.assertNotIn('secret', str(captured.exception))
 
 

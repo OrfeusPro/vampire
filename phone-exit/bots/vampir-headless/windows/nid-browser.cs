@@ -12,12 +12,14 @@ public static class NidBrowserHost {
     public static string SignInStep;
     public static int NidHttpStatus;
     public static int? NidErrorCode;
+    public static string NidResponseState;
 
     public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
             string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript, string statusScript) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
         SignInStep = "manual";
         NidHttpStatus = 0; NidErrorCode = null;
+        NidResponseState = "not_observed";
         if (socksPort != 0 && (socksPort < 1024 || socksPort > 65535)) throw new ArgumentException("Invalid SOCKS port");
         if (timeoutSeconds < 1 || timeoutSeconds > 900) throw new ArgumentException("Invalid timeout");
         if (String.IsNullOrEmpty(gameCode) || gameCode.Length > 64) throw new ArgumentException("Invalid game scope");
@@ -51,6 +53,8 @@ public static class NidBrowserHost {
             bool registering = !smoke && !String.IsNullOrEmpty(registrationScript);
             string registrationState = "{}", previousRegistrationResult = "";
             string verificationCode = "";
+            int pendingDiagnostics = 0;
+            DateTime? failureSeenAt = null;
             System.Threading.Tasks.Task<string> codeRead = null;
             if (autoSignIn) SignInStep = "waiting";
             Action<string> finish = status => { if (!done) { done = true; Status = status; form.Close(); } };
@@ -98,22 +102,31 @@ public static class NidBrowserHost {
                     if (done || smoke || registering || !NidHttpDiagnostics.IsEndpoint(e.Request.Uri, e.Request.Method)) return;
                     int status = e.Response.StatusCode;
                     if (status >= 400 && status <= 599) NidHttpStatus = status;
+                    pendingDiagnostics++;
                     try {
-                        int length;
-                        if (!Int32.TryParse(e.Response.Headers.GetHeader("Content-Length"), out length) || length < 1 || length > 16384 ||
-                            !e.Response.Headers.GetHeader("Content-Type").StartsWith("application/json", StringComparison.OrdinalIgnoreCase)) return;
+                        if (!e.Response.Headers.Contains("Content-Type") ||
+                            !e.Response.Headers.GetHeader("Content-Type").StartsWith("application/json", StringComparison.OrdinalIgnoreCase)) {
+                            if (status >= 400) NidResponseState = "non_json";
+                            return;
+                        }
+                        int? length = null;
+                        if (e.Response.Headers.Contains("Content-Length")) {
+                            int parsed;
+                            if (!Int32.TryParse(e.Response.Headers.GetHeader("Content-Length"), out parsed) || parsed < 0 || parsed > 16384) {
+                                if (status >= 400) NidResponseState = "length_limit";
+                                return;
+                            }
+                            length = parsed;
+                        }
                         using (var stream = await e.Response.GetContentAsync()) {
                             if (stream == null || done) return;
-                            byte[] buffer = new byte[length + 1];
-                            int total = 0, read;
-                            while (total < buffer.Length && (read = await stream.ReadAsync(buffer, total, buffer.Length - total)) > 0) total += read;
-                            if (done || total != length) return;
-                            string body = new System.Text.UTF8Encoding(false, true).GetString(buffer, 0, total);
-                            int? code = NidHttpDiagnostics.ParseCode(body);
-                            body = null; Array.Clear(buffer, 0, buffer.Length);
-                            if (code.HasValue && code.Value != 0) { NidHttpStatus = status; NidErrorCode = code; }
+                            var observed = await NidHttpDiagnostics.ReadAsync(stream, length);
+                            if (done) return;
+                            if (status >= 400 || (observed.Code.HasValue && observed.Code.Value != 0)) NidResponseState = observed.State;
+                            if (observed.Code.HasValue && observed.Code.Value != 0) { NidHttpStatus = status; NidErrorCode = observed.Code; }
                         }
-                    } catch { /* Missing headers / malformed or large responses remain unobserved. */ }
+                    } catch { if (!done && status >= 400) NidResponseState = "read_failed"; }
+                    finally { pendingDiagnostics--; }
                 };
                 if (smoke) {
                     core.NavigateToString("<html><script>setTimeout(function(){window.open('probe-blocked://ignored'); location.href='probe-blocked://ignored'; setTimeout(function(){location.href='nm" + gameCode + "://nmidprovider/result?resultCode=0&accessToken=synthetic-token&refreshToken=&channelKey=mailUserKey&netmarbleId=synthetic-id&joinedCountryCode=KR';},200);},200);</script></html>");
@@ -131,7 +144,12 @@ public static class NidBrowserHost {
                     signInBusy = true;
                     try {
                         string pageStatus = await view.CoreWebView2.ExecuteScriptAsync(statusScript + "()");
-                        if (pageStatus == "\"login_failed\"") { finish("login_failed"); return; }
+                        if (pageStatus == "\"login_failed\"") {
+                            if (!failureSeenAt.HasValue) failureSeenAt = DateTime.UtcNow;
+                            // Let a pending bounded response inspection finish; never wait indefinitely.
+                            if (pendingDiagnostics > 0 && (DateTime.UtcNow - failureSeenAt.Value).TotalMilliseconds < 1500) return;
+                            finish("login_failed"); return;
+                        }
                     } catch { /* Optional observation does not change authentication. */ }
                     finally { signInBusy = false; }
                 }

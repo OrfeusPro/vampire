@@ -28,7 +28,8 @@ try {
     @{status=[NidBrowserHost]::Status; callback=[NidBrowserHost]::Callback;
       blocked_external=[NidBrowserHost]::BlockedExternal; blocked_popups=[NidBrowserHost]::BlockedPopups;
       blocked_scheme=[NidBrowserHost]::LastBlockedScheme; sign_in_step=[NidBrowserHost]::SignInStep;
-      nid_http_status=[NidBrowserHost]::NidHttpStatus; nid_error_code=[NidBrowserHost]::NidErrorCode} |
+      nid_http_status=[NidBrowserHost]::NidHttpStatus; nid_error_code=[NidBrowserHost]::NidErrorCode;
+      nid_response_state=[NidBrowserHost]::NidResponseState} |
         ConvertTo-Json -Compress | ForEach-Object { [Console]::Out.Write($_) }
 } finally {
     $request = $null

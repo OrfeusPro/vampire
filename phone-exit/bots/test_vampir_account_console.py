@@ -70,46 +70,41 @@ class AccountConsoleTests(unittest.TestCase):
                 characters=[dict(index=0, key='123', name='Existing')], observed_utc='2026-10-22T20:01:00+00:00')
             with self.assertRaises(ValueError): store.creation_nickname(identifier, region='EU', server_id=384)
 
-    def test_sdk_creation_requires_verified_nid_and_fresh_missing_player_result(self):
-        spec = importlib.util.spec_from_file_location('sdk_job_test', HERE / 'vampir-headless/account-manager.py')
+    def test_sdk_creation_is_not_available_in_account_console(self):
+        spec = importlib.util.spec_from_file_location('sdk_removed_test', HERE / 'vampir-headless/account-manager.py')
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
         with tempfile.TemporaryDirectory() as folder:
             store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
             identifier = store.save('fixture@unit.invalid', password='fixture', assignment={})
+            store.registration_status(identifier, 'nid_verified')
             jobs = tool.Jobs(store)
-            with patch.object(tool.subprocess, 'Popen') as popen, patch.object(tool.threading, 'Thread'):
-                for state, code in (('unconfirmed', 1203), ('nid_verified', None), ('nid_verified', 100), ('sdk_created', 1203)):
-                    store.registration_status(identifier, state)
-                    jobs.jobs[identifier] = dict(running=False, sdk_error=dict(code=code))
-                    with self.subTest(state=state, code=code), self.assertRaises(ValueError):
-                        jobs.start(identifier, 'sdk_register')
+            jobs.jobs[identifier] = dict(running=False, sdk_error=dict(code=1203))
+            with patch.object(tool.subprocess, 'Popen') as popen:
+                with self.assertRaises(ValueError): jobs.start(identifier, 'sdk_register')
                 popen.assert_not_called()
-                store.registration_status(identifier, 'nid_verified')
-                jobs.start(identifier, 'sdk_register')
-                self.assertEqual(popen.call_count, 1)
-                self.assertEqual(popen.call_args.args[0][-2:], ['--operation', 'sdk_register'])
-                self.assertNotIn('fixture@unit.invalid', popen.call_args.args[0])
 
-    def test_sdk_creation_is_separate_from_lobby_and_preserves_state_on_failure(self):
-        spec = importlib.util.spec_from_file_location('sdk_worker_test', HERE / 'vampir-headless/account-worker.py')
+    def test_server_loading_uses_selected_signin_flow_without_signup(self):
+        spec = importlib.util.spec_from_file_location('account_signin_test', HERE / 'vampir-headless/account-worker.py')
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
-        store, registry, runner = MagicMock(), MagicMock(), MagicMock()
-        store.credential.return_value = ('fixture@unit.invalid', 'fixture-secret', {'enabled': True, 'server_id': None})
-        store.accounts.return_value = [{'id': 'fixture-id', 'registration_status': 'nid_verified'}]
-        args = SimpleNamespace(store=Path('fixture.sqlite3'), account='fixture-id', operation='sdk_register')
-        with patch.object(tool, 'AccountStore', return_value=store), \
-             patch.object(tool, 'DeviceRegistry', return_value=registry), \
-             patch.object(tool, 'load', return_value=runner) as load, patch.object(tool, 'emit') as emit:
-            runner.run.side_effect = RuntimeError('private-error')
-            with self.assertRaises(RuntimeError): tool.run(args)
-            store.registration_status.assert_not_called()
-            runner.run.side_effect = None
-            tool.run(args)
-            self.assertTrue(all(call.args[1].name == 'run-nid-sdk-sign-in.py' for call in load.call_args_list))
-            self.assertEqual(runner.run.call_args.kwargs, dict(password='fixture-secret', selected_profile='recovered-release',
-                socks_port=None, create_sdk_player=True, auth_flow='nid', timeout=300))
-            store.registration_status.assert_called_once_with('fixture-id', 'sdk_created')
-            self.assertEqual(emit.call_args.kwargs['status'], 'stopped')
+        for flow in ('launcher', 'nid'):
+            store, registry, cdn, lobby = MagicMock(), MagicMock(), MagicMock(), MagicMock()
+            store.credential.return_value = ('fixture@unit.invalid', 'fixture-password',
+                dict(enabled=True, region='EU', server_id=384, auth_flow=flow))
+            cdn.profile.return_value = dict(url='https://fixture.invalid')
+            cdn.fetch.return_value = (b'fixture-body', {})
+            cdn.save.return_value = (Path('fixture-manifest.json'), None)
+            lobby.run.return_value.server_list_response.result_code = 0
+            def load(name, path):
+                if path.name == 'fetch-public-cdn-config.py': return cdn
+                if path.name == 'probe-lobby-sdk-login.py': return lobby
+                self.fail('Unexpected module in sign-in: ' + path.name)
+            with patch.object(tool, 'AccountStore', return_value=store), \
+                 patch.object(tool, 'DeviceRegistry', return_value=registry), patch.object(tool, 'load', side_effect=load), \
+                 patch.object(tool, 'build_account_catalog', return_value={}), patch.object(tool, 'emit'):
+                tool.run(SimpleNamespace(store=Path('fixture.sqlite3'), account='fixture-id', operation='servers'))
+            self.assertEqual(lobby.run.call_args.kwargs['auth_flow'], flow)
+            self.assertNotIn('create_sdk_player', lobby.run.call_args.kwargs)
+            store.save_catalog.assert_called_once_with('EU', {})
 
     def test_sdk_failure_keeps_only_numeric_status_and_code(self):
         spec = importlib.util.spec_from_file_location('worker_error_test', HERE / 'vampir-headless/account-worker.py')
@@ -123,11 +118,13 @@ class AccountConsoleTests(unittest.TestCase):
         rejected = RuntimeError('private-browser-details')
         rejected.browser_status, rejected.nid_http_status, rejected.nid_error_code = 'login_failed', 400, 123
         rejected.sign_in_step = 'submitted'
+        rejected.nid_response_state = 'no_numeric_code'
         value = tool.failure(rejected)
         self.assertIn('Login Failed', value['message'])
         self.assertIn('HTTP 400', value['message'])
         self.assertIn('Код NID: 123', value['message'])
         self.assertIn('форма отправлена', value['message'])
+        self.assertIn('числовой код не найден', value['message'])
         self.assertNotIn('private', json.dumps(value))
         timeout = RuntimeError('private-browser-details')
         timeout.browser_status = 'timeout'
@@ -257,7 +254,8 @@ class AccountConsoleTests(unittest.TestCase):
         for value in ({'server_id': True}, {'character_index': -1}, {'device_profile': 'random-fingerprint'},
                       {'region': 'unknown'}, {'create_nickname': 'bad\nname'}, {'enabled': 1},
                       {'character_key': '999999999999999999999'}, {'character_key': '1'}, {'character_index': 0},
-                      {'create_class': 'random'}, {'create_class': 3}, {'create_class': []}, {'create_random_nickname': 1}):
+                      {'create_class': 'random'}, {'create_class': 3}, {'create_class': []}, {'create_random_nickname': 1},
+                      {'auth_flow': 'signup'}, {'auth_flow': 'fallback'}):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 AccountStore.assignment(value)
         self.assertEqual(AccountStore.assignment({})['device_profile'], 'current-pc')

@@ -20,7 +20,7 @@ from vampir_core.socks_route import SocksRoute
 
 
 class NidBrowserStatusError(RuntimeError):
-    def __init__(self, status, step, http_status=None, code=None):
+    def __init__(self, status, step, http_status=None, code=None, response_state=None):
         super().__init__('NID browser did not return a sign-in result')
         self.browser_status = status if status in ('timeout', 'cancelled', 'browser_initialization_failed',
             'browser_process_failed', 'untrusted_callback_origin', 'login_failed') else 'unknown'
@@ -28,6 +28,8 @@ class NidBrowserStatusError(RuntimeError):
             'submitted', 'form_changed', 'script_failed') else 'unknown'
         self.nid_http_status = http_status if type(http_status) is int and 100 <= http_status <= 599 else None
         self.nid_error_code = code if type(code) is int and -(2**31) <= code < 2**31 else None
+        self.nid_response_state = response_state if response_state in ('not_observed', 'non_json', 'length_limit',
+            'body_limit', 'length_mismatch', 'numeric_code', 'no_numeric_code', 'read_failed') else 'not_observed'
 
 
 def _library():
@@ -145,7 +147,7 @@ def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=
                   sign_in_password=sign_in_password, socks_port=socks_port, **registration)
     if result['status'] != 'callback':
         error = NidBrowserStatusError(result['status'], result.get('sign_in_step'),
-            result.get('nid_http_status'), result.get('nid_error_code'))
+            result.get('nid_http_status'), result.get('nid_error_code'), result.get('nid_response_state'))
         result.clear()
         raise error
     callback = result.get('callback')

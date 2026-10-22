@@ -35,7 +35,9 @@ def run(args):
     email, password, settings = store.credential(args.account)
     if not settings.get('enabled', True):
         raise ValueError('This account is disabled')
-    if settings['server_id'] is None and args.operation not in ('servers', 'register', 'sdk_register'):
+    if args.operation not in ('servers', 'characters', 'start', 'register'):
+        raise ValueError('Unknown account operation')
+    if settings['server_id'] is None and args.operation not in ('servers', 'register'):
         raise ValueError('Select a server first')
     registry = DeviceRegistry(HERE / '.local/accounts.sqlite3')
     try:
@@ -49,17 +51,6 @@ def run(args):
             source='Observed current Windows PC, account manager')
     if args.operation == 'register':
         register_account(store, args, email, password)
-        return
-    if args.operation == 'sdk_register':
-        if next(a for a in store.accounts() if a['id'] == args.account)['registration_status'] != 'nid_verified':
-            raise ValueError('NID account must be verified before SDK creation')
-        runner = load('account_sdk_registration', HERE / 'run-nid-sdk-sign-in.py')
-        emit('phase', stage='sdk_registration')
-        runner.run(email, password=password, selected_profile='recovered-release', socks_port=None,
-            create_sdk_player=True, auth_flow='nid', timeout=300)
-        password = None
-        store.registration_status(args.account, 'sdk_created')
-        emit('result', status='stopped', message='Игровой профиль SDK создан. Можно отдельно загрузить серверы и войти.')
         return
     def progress(stage):
         # The lobby wrapper emits this only after a validated NID email callback.
@@ -79,7 +70,7 @@ def run(args):
         tool = load('account_lobby', HERE / 'probe-lobby-sdk-login.py')
         response = tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
             context='sdk-with-partial-metadata', password=password, read_server_list=True, server_policy_byte=0,
-            auth_flow='launcher', lobby_region=settings['region'] if settings['region'] in ('EU', 'NA', 'SG') else None,
+            auth_flow=settings.get('auth_flow', 'launcher'), lobby_region=settings['region'] if settings['region'] in ('EU', 'NA', 'SG') else None,
             auth_timeout=300, _progress=progress)
         password = None
         listing = response.server_list_response
@@ -101,7 +92,7 @@ def run(args):
             emit('active', message='Персонаж в мире; соединение активно.')
     result = tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
         server_policy_byte=0, extra_number=revision, context='windows-sdk-initial-reset', region=settings['region'],
-        server_id=settings['server_id'], password=password, auth_flow='launcher', language_code=1,
+        server_id=settings['server_id'], password=password, auth_flow=settings.get('auth_flow', 'launcher'), language_code=1,
         lobby_context='sdk-with-partial-metadata', read_character_list=True,
         character_index=settings['character_index'] if start_world else None,
         read_world_start=start_world, read_world_finish=start_world,
@@ -111,7 +102,7 @@ def run(args):
     if result.get('browser_status') in ('timeout', 'login_failed'):
         browser = load('account_browser_failure', HERE / 'nid-browser.py')
         error = browser.NidBrowserStatusError(result['browser_status'], result.get('sign_in_step'),
-            result.get('nid_http_status'), result.get('nid_error_code'))
+            result.get('nid_http_status'), result.get('nid_error_code'), result.get('nid_response_state'))
         emit('result', **failure(error))
         return
     if result.get('error_type') == 'SdkSignInHttpError':
@@ -199,8 +190,13 @@ def failure(error):
         step = {'waiting': 'ожидание формы', 'opened_email': 'выбор входа по почте', 'filled': 'поля заполнены',
             'submitted': 'форма отправлена', 'form_changed': 'форма изменилась', 'script_failed': 'обработка формы остановлена'
             }.get(getattr(error, 'sign_in_step', None))
+        response = {'non_json': 'ответ не в JSON', 'length_limit': 'объявленный размер вне лимита',
+            'body_limit': 'тело больше лимита', 'length_mismatch': 'длина ответа не совпала',
+            'no_numeric_code': 'числовой код не найден', 'read_failed': 'ответ не удалось разобрать'
+            }.get(getattr(error, 'nid_response_state', None))
         return dict(status='error', message=message + ' Игровое соединение не открыто.' +
             (f' Этап: {step}.' if step is not None else '') +
+            (f' Диагностика NID: {response}.' if response is not None else '') +
             (f' HTTP {status}.' if status is not None else '') + (f' Код NID: {code}.' if code is not None else ''))
     if isinstance(error, SdkSignInHttpError):
         code = error.sdk_code if type(error.sdk_code) is int and -(2**31) <= error.sdk_code < 2**31 else None
@@ -217,7 +213,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--store', required=True, type=Path)
     parser.add_argument('--account', required=True)
-    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register', 'sdk_register'], required=True)
+    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register'], required=True)
     parser.add_argument('--accept-required-terms', action='store_true')
     parser.add_argument('--manual-mail-code', action='store_true')
     try:

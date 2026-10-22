@@ -25,11 +25,13 @@ class SelectedGameLoginTests(unittest.TestCase):
             error = RuntimeError('private-server-response')
             error.browser_status, error.sign_in_step = 'login_failed', 'submitted'
             error.nid_http_status, error.nid_error_code = status, code
+            error.nid_response_state = 'no_numeric_code'
             with patch.object(self.tool, '_run', side_effect=error):
                 result = self.tool.run('fixture@unit.invalid', **self.kwargs())
             self.assertEqual(result['browser_status'], 'login_failed')
             self.assertEqual(result['sign_in_step'], 'submitted')
-            self.assertEqual({k: v for k, v in result.items() if k.startswith('nid_')}, expected)
+            self.assertEqual({k: v for k, v in result.items() if k.startswith('nid_')},
+                dict(expected, nid_response_state='no_numeric_code'))
             self.assertNotIn('private', str(result))
 
     def test_auth_stays_in_memory_and_same_lobby_result_supplies_login(self):

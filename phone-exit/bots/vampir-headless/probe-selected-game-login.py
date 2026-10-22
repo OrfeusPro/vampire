@@ -94,6 +94,9 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
         for name, lower, upper in (('nid_http_status', 100, 599), ('nid_error_code', -(2**31), 2**31 - 1)):
             value = getattr(error, name, None)
             if type(value) is int and lower <= value <= upper: result[name] = value
+        response_state = getattr(error, 'nid_response_state', None)
+        if response_state in ('not_observed', 'non_json', 'length_limit', 'body_limit', 'length_mismatch',
+                'numeric_code', 'no_numeric_code', 'read_failed'): result['nid_response_state'] = response_state
         return result
 
 
