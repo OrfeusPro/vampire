@@ -40,6 +40,8 @@ path='/auth/signup/password/input';const p1=new Input('password'),p2=new Input('
 step();step();step();if(next.clicks!==1||p1.value!==input.password||p2.value!==input.password)throw Error('password retry');
 body='Account Registration Complete';if(!step().complete)throw Error('completion');
 if(JSON.stringify(input.state).includes(input.password)||JSON.stringify(input.state).includes(input.code))throw Error('secret state');
+path='/auth/signup/email/input';body='This email is already in use. Please use a different email to create your account.';
+input.state={email_sent:true};if(step().stopped!=='email_already_in_use'||send.clicks!==1)throw Error('existing account');
 location.origin='https://unrelated.invalid';if(run(input)!==null)throw Error('origin');
 location.origin='https://members.netmarble.com:444';if(run(input)!==null)throw Error('port');
 location.origin='https://members.netmarble.com';path='/auth/signup/email/input';body='Verification emails can only be sent once every 3 minutes.';

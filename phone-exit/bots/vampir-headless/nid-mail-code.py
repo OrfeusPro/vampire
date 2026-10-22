@@ -28,15 +28,15 @@ def registration_code(raw, address):
 
 
 class RegistrationMailbox:
-    """Only the user's selected mail.vampir.top:993 mailbox is supported."""
+    """Explicit mail.vampir.top:143 with verified STARTTLS before credentials."""
     def __init__(self, address, password):
         if (type(address) is not str or address.count('@') != 1 or
                 not address.endswith('@vampir.top') or any(c.isspace() for c in address)):
             raise ValueError('Explicit bot mailbox required')
         self.address = address.lower()
-        self.client = imaplib.IMAP4_SSL('mail.vampir.top', 993,
-            ssl_context=ssl.create_default_context(), timeout=15)
+        self.client = imaplib.IMAP4('mail.vampir.top', 143, timeout=15)
         try:
+            self.client.starttls(ssl_context=ssl.create_default_context())
             self.client.login(address, password)
             status, _ = self.client.select('INBOX', readonly=True)
             if status != 'OK': raise RuntimeError('Cannot open registration mailbox')

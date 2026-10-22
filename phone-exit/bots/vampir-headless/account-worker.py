@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from functools import partial
 import importlib.util
 import json
+import ssl
 from pathlib import Path
 import sys
 
@@ -120,15 +121,33 @@ def register_account(store, args, email, password):
         raise ValueError('Explicit terms acceptance required')
     if next(a for a in store.accounts() if a['id'] == args.account)['registration_status'] == 'registered':
         raise ValueError('Registration already confirmed')
-    mail_password = store.mail_credential(args.account)
+    mail_password = None if args.manual_mail_code else store.mail_credential(args.account)
     tool = load('account_registration', HERE / 'register-nid-account.py')
     store.registration_status(args.account, 'in_progress')
     def progress(state):
+        if state.get('stopped') == 'email_already_in_use':
+            store.registration_status(args.account, 'email_in_use')
         emit('phase', stage='registration_code' if state.get('need_code') else 'registration_form')
+        paths = ('/auth/signin', '/auth/signin/email', '/auth/signup/terms', '/auth/signup/email/input',
+            '/auth/signup/email/verify', '/auth/signup/password/input', '/auth/signup/complete')
+        emit('registration', path=state.get('path') if state.get('path') in paths else 'other',
+            mail_sent=state.get('email_sent') is True, code_submitted=state.get('code_submitted') is True,
+            password_submitted=state.get('password_submitted') is True, complete=state.get('complete') is True)
+    def read_code():
+        emit('phase', stage='registration_code')
+        value = sys.stdin.readline(8).strip()
+        if len(value) != 5 or not value.isascii() or not value.isdigit():
+            raise ValueError('Invalid verification input')
+        return value
     try:
         tool.run(email, password=password, mail_password=mail_password, socks_port=None,
-            selected_profile='recovered-release', timeout=300, accept_required_terms=True, _progress=progress)
+            selected_profile='recovered-release', timeout=300, accept_required_terms=True, _progress=progress,
+            _code_provider=read_code if args.manual_mail_code else None)
     except BaseException:
+        account = next(a for a in store.accounts() if a['id'] == args.account)
+        if account['registration_status'] == 'email_in_use':
+            emit('result', status='stopped', message='Netmarble: почта уже используется. Повторная регистрация остановлена; вход ещё не проверен.')
+            return
         store.registration_status(args.account, 'unconfirmed')
         raise
     finally:
@@ -143,9 +162,12 @@ if __name__ == '__main__':
     parser.add_argument('--account', required=True)
     parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register'], required=True)
     parser.add_argument('--accept-required-terms', action='store_true')
+    parser.add_argument('--manual-mail-code', action='store_true')
     try:
         run(parser.parse_args())
     except Exception as error:
         # Messages from networking / auth helpers may contain sensitive values.
-        emit('result', status='error', message='Операция не завершена: ' + type(error).__name__)
+        message = ('Почтовый сервер не прошёл проверку TLS. Исправьте сертификат или выберите ввод кода из письма вручную.'
+            if isinstance(error, ssl.SSLCertVerificationError) else 'Операция не завершена: ' + type(error).__name__)
+        emit('result', status='error', message=message)
         raise SystemExit(2)

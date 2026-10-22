@@ -26,6 +26,42 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_manual_registration_code_is_scoped_single_use_and_not_in_snapshot(self):
+        import io
+        spec = importlib.util.spec_from_file_location('console_code_test', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        process = MagicMock(); process.stdin = io.BytesIO(); process.poll.return_value = None
+        jobs = tool.Jobs(None)
+        jobs.jobs['fixture'] = dict(process=process, running=True, manual_mail_code=True,
+            code_sent=False, stage='registration_code')
+        for identifier, code in (('other', '12345'), ('fixture', '1234'), ('fixture', '１２３４５')):
+            with self.assertRaises(ValueError): jobs.submit_code(identifier, code)
+        jobs.submit_code('fixture', '12345')
+        self.assertEqual(process.stdin.getvalue(), b'12345\n')
+        self.assertNotIn('12345', json.dumps(jobs.snapshot()))
+        with self.assertRaises(ValueError): jobs.submit_code('fixture', '54321')
+        jobs.jobs['fixture'].update(code_sent=False, stage='registration_form')
+        with self.assertRaises(ValueError): jobs.submit_code('fixture', '12345')
+
+    def test_manual_registration_provider_does_not_open_imap(self):
+        spec = importlib.util.spec_from_file_location('manual_registration_test', HERE / 'vampir-headless/register-nid-account.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        runner, browser, mail = MagicMock(), MagicMock(), MagicMock()
+        runner.load_inputs.return_value = (object(), {'game_code': 'thered'}, {})
+        modules = {'run-nid-sdk-sign-in.py': runner, 'nid-browser.py': browser, 'nid-mail-code.py': mail}
+        provider = lambda: '12345'
+        def capture(*args, **kwargs):
+            self.assertIs(kwargs['code_provider'], provider)
+            kwargs['progress']({'complete': True})
+            return 'fixture-provider'
+        browser.capture_nid_credential.side_effect = capture
+        with patch.object(tool, 'module', side_effect=lambda name, filename: modules[filename]), \
+             patch.object(tool, 'prepare_observed_profile'):
+            self.assertEqual(tool.run('fixture@vampir.top', password='fixture', mail_password=None,
+                selected_profile='recovered-release', accept_required_terms=True,
+                _code_provider=provider, _progress=lambda state: None), 'fixture-provider')
+        mail.RegistrationMailbox.assert_not_called()
+
     def test_character_lists_survive_restart_and_are_isolated_by_account_and_server(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'console.sqlite3'

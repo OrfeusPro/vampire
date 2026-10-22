@@ -55,14 +55,16 @@ def prepare_observed_profile(runner, address, *, selected_profile='recovered-bas
 
 
 def run(address, *, password, mail_password, socks_port=None, timeout=300, accept_required_terms=False,
-        selected_profile='recovered-base', _progress=None):
+        selected_profile='recovered-base', _progress=None, _code_provider=None):
     if accept_required_terms is not True: raise ValueError('Explicit acceptance of required terms is missing')
     runner = module('registration_runner', 'run-nid-sdk-sign-in.py')
     browser = module('registration_browser', 'nid-browser.py')
     mail = module('registration_mail', 'nid-mail-code.py')
     route = runner.SocksRoute(socks_port) if socks_port is not None else None
     # Opening the named mailbox first establishes a UID baseline before Send.
-    mailbox = mail.RegistrationMailbox(address, mail_password)
+    if _code_provider is not None and not callable(_code_provider):
+        raise TypeError('Expected explicit code provider')
+    mailbox = mail.RegistrationMailbox(address, mail_password) if _code_provider is None else None
     try:
         prepare_observed_profile(runner, address, selected_profile=selected_profile)
         binding, profile, constants = runner.load_inputs(address, route=route, selected_profile=selected_profile)
@@ -82,12 +84,13 @@ def run(address, *, password, mail_password, socks_port=None, timeout=300, accep
         provider = browser.capture_nid_credential(url, expected_game_code=profile['game_code'],
             data_directory=HERE / '.local/nid-accounts' / account_directory / ('registration-socks-' + str(socks_port) if route else 'registration-direct'),
             timeout=timeout, expected_email=address, sign_in_password=password, socks_port=socks_port,
-            register_account=True, code_provider=mailbox.get_code, progress=progress)
+            register_account=True, code_provider=mailbox.get_code if mailbox is not None else _code_provider, progress=progress)
         if not completed:
             raise RuntimeError('Registration completion was not observed')
         return provider
     finally:
-        mailbox.close()
+        if mailbox is not None:
+            mailbox.close()
 
 
 if __name__ == '__main__':

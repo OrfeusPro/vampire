@@ -9,8 +9,9 @@
 <label><input id="enabled" type="checkbox" checked> Использовать аккаунт для запуска бота</label>
 <div class="divider"></div><h3>Регистрация Netmarble</h3>
 <label>Пароль почтового ящика<input id="mail-password" type="password" maxlength="256" autocomplete="new-password" placeholder="Для получения кода регистрации по IMAP"></label>
-<p class="hint">Для почты @vampir.top код читается из новых писем через mail.vampir.top:993. Почтовый пароль хранится отдельно от игрового, зашифрован Windows. Создание почтового ящика сюда не входит.</p>
+<p class="hint">Для почты @vampir.top код читается из новых писем через mail.vampir.top:143 с STARTTLS. Почтовый пароль хранится отдельно от игрового, зашифрован Windows. Создание почтового ящика сюда не входит.</p>
 <p id="registration-state" class="muted"></p>
+<label><input id="manual-mail-code" type="checkbox"> Ввести код из письма вручную вместо IMAP</label>
 <label><input id="terms" type="checkbox"> Принимаю обязательные условия использования и политику конфиденциальности Netmarble для этой регистрации</label>
 <div class="tools"><button id="register" type="button">Зарегистрировать аккаунт</button></div>
 <div class="divider"></div><div class="grid"><label>Регион<select id="region"><option>EU</option><option>NA</option><option>SG</option><option>JP</option><option>TW</option><option>ASIA</option><option>KR</option></select></label><label>Игровой сервер<select id="server"></select></label></div>
@@ -20,5 +21,6 @@
 <p id="characters-age" class="muted"></p>
 <div class="tools"><button type="button" id="characters">Прочитать персонажей</button><button class="primary" type="submit">Сохранить настройки</button></div></form>
 <div class="session"><div><span class="eyebrow">СЕССИЯ</span><h3 id="message">Готов к настройке</h3><p id="stage" class="muted"></p></div><div class="tools"><button id="start" class="primary">Запустить</button><button id="stop" class="danger">Остановить</button></div></div>
+<div id="code-entry" hidden><label>Код регистрации из письма<input id="registration-code" type="password" inputmode="numeric" maxlength="5" autocomplete="one-time-code"></label><button id="send-code" type="button">Передать код регистрации</button><p class="muted">Только код регистрации выбранного аккаунта. Код не сохраняется.</p></div>
 <p class="muted">Первый запуск ограничен 5 минутами после входа в мир. Без автоматического повторного входа и игровых действий по квестам.</p><div id="notice" role="status"></div>
 </section></main></body></html>

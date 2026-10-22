@@ -7,6 +7,9 @@
         .filter(visible);
     const state = input.state || {};
     if (location.pathname === '/auth/signup/email/input' && state.email_sent &&
+        document.body.innerText.includes('This email is already in use.'))
+        return {...state, stopped: 'email_already_in_use'};
+    if (location.pathname === '/auth/signup/email/input' && state.email_sent &&
         document.body.innerText.includes('Verification emails can only be sent once every'))
         return {...state, stopped: 'mail_rate_limited'};
     const setValue = (element, value) => {

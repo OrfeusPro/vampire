@@ -42,13 +42,25 @@ class RegistrationMailTests(unittest.TestCase):
             self.assertEqual((operation, args), ('fetch', (b'10', '(BODY.PEEK[]<0.131072>)')))
             return ('OK', [(b'wire metadata', self.message('12345'))])
         client.uid.side_effect = uid
-        with patch.object(self.module.imaplib, 'IMAP4_SSL', return_value=client) as factory:
+        with patch.object(self.module.imaplib, 'IMAP4', return_value=client) as factory:
             mailbox = self.module.RegistrationMailbox('fixture@vampir.top', 'fixture-password')
             self.assertEqual(mailbox.get_code(), '12345')
             mailbox.close()
         client.select.assert_called_once_with('INBOX', readonly=True)
         client.logout.assert_called_once()
-        self.assertTrue(factory.call_args.kwargs['ssl_context'].check_hostname)
+        factory.assert_called_once_with('mail.vampir.top', 143, timeout=15)
+        self.assertTrue(client.starttls.call_args.kwargs['ssl_context'].check_hostname)
+        self.assertEqual([call[0] for call in client.method_calls][:2], ['starttls', 'login'])
+
+    def test_tls_failure_never_sends_mailbox_password(self):
+        import ssl
+        client = Mock()
+        client.starttls.side_effect = ssl.SSLCertVerificationError('fixture TLS failure')
+        with patch.object(self.module.imaplib, 'IMAP4', return_value=client):
+            with self.assertRaises(ssl.SSLCertVerificationError):
+                self.module.RegistrationMailbox('fixture@vampir.top', 'fixture-password')
+        client.login.assert_not_called()
+        client.logout.assert_called_once()
 
 
 if __name__ == '__main__': unittest.main()

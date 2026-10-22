@@ -21,7 +21,9 @@ class Jobs:
         with self.lock:
             return {key: {k: v for k, v in job.items() if k != 'process'} for key, job in self.jobs.items()}
 
-    def start(self, identifier, operation, *, accept_required_terms=False):
+    def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False):
+        if type(manual_mail_code) is not bool or (manual_mail_code and operation != 'register'):
+            raise ValueError('Invalid mail-code mode')
         if operation not in ('servers', 'characters', 'start', 'register'):
             raise ValueError('Unknown operation')
         account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
@@ -29,8 +31,8 @@ class Jobs:
             raise ValueError('Unknown account')
         if not account.get('enabled', True):
             raise ValueError('This account is disabled')
-        if operation == 'register' and (accept_required_terms is not True or not account['mail_password_saved']
-                or account['registration_status'] in ('registered', 'in_progress')):
+        if operation == 'register' and (accept_required_terms is not True or (not manual_mail_code and not account['mail_password_saved'])
+                or account['registration_status'] in ('registered', 'in_progress', 'email_in_use')):
             raise ValueError('Registration requires a mailbox password and explicit terms acceptance')
         with self.lock:
             if self.jobs.get(identifier, {}).get('running'):
@@ -41,12 +43,15 @@ class Jobs:
                 '--store', str(self.store.path.resolve()), '--account', identifier, '--operation', operation]
             if operation == 'register':
                 command.append('--accept-required-terms')
+            if manual_mail_code:
+                command.append('--manual-mail-code')
             process = subprocess.Popen(command,
-                stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                stdin=subprocess.PIPE if manual_mail_code else subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                 creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
             job = dict(process=process, running=True, active=False, status='connecting',
                 stage='starting', message='Подготовка подключения.', characters=[],
-                region=account['region'], server_id=account['server_id'], account_id=identifier, operation=operation)
+                region=account['region'], server_id=account['server_id'], account_id=identifier, operation=operation,
+                manual_mail_code=manual_mail_code, code_sent=False)
             self.jobs[identifier] = job
             threading.Thread(target=self._watch, args=(job,), daemon=True).start()
 
@@ -63,6 +68,9 @@ class Jobs:
                 with self.lock:
                     if event.get('event') == 'phase':
                         job['stage'] = str(event.get('stage', 'unknown'))[:100]
+                    elif event.get('event') == 'registration':
+                        job['registration'] = {key: event.get(key) for key in
+                            ('path', 'mail_sent', 'code_submitted', 'password_submitted', 'complete')}
                     elif event.get('event') == 'active':
                         job.update(active=True, status='active', message=event['message'])
                     elif event.get('event') == 'result':
@@ -75,6 +83,8 @@ class Jobs:
                 job.update(status='error', message='Рабочий процесс завершился с ошибкой.')
         finally:
             process.stdout.close()
+            if process.stdin:
+                process.stdin.close()
             if job['operation'] == 'register':
                 account = next(a for a in self.store.accounts() if a['id'] == job['account_id'])
                 if account['registration_status'] == 'in_progress':
@@ -99,6 +109,18 @@ class Jobs:
         except subprocess.TimeoutExpired:
             process.kill()
             process.wait(timeout=5)
+
+    def submit_code(self, identifier, code):
+        if type(code) is not str or len(code) != 5 or not code.isascii() or not code.isdigit():
+            raise ValueError('Expected five-digit code')
+        with self.lock:
+            job = self.jobs.get(identifier)
+            if (not job or not job['running'] or not job.get('manual_mail_code') or job['code_sent']
+                    or job['stage'] != 'registration_code' or job['process'].poll() is not None):
+                raise ValueError('No verification code is expected')
+            job['process'].stdin.write((code + '\n').encode('ascii'))
+            job['process'].stdin.flush()
+            job['code_sent'] = True
 
     def stop(self, identifier):
         with self.lock:
@@ -177,7 +199,11 @@ def server(store, *, port=17949):
                     if body['operation'] == 'stop':
                         jobs.stop(body['id'])
                     else:
-                        jobs.start(body['id'], body['operation'], accept_required_terms=body.get('accept_required_terms', False))
+                        jobs.start(body['id'], body['operation'], accept_required_terms=body.get('accept_required_terms', False),
+                            manual_mail_code=body.get('manual_mail_code', False))
+                    return self.response(200, dict(ok=True))
+                if self.path == '/api/registration-code':
+                    jobs.submit_code(body['id'], body['code'])
                     return self.response(200, dict(ok=True))
                 return self.response(404, dict(error='Unknown action'))
             except (ValueError, KeyError, TypeError, RuntimeError):
