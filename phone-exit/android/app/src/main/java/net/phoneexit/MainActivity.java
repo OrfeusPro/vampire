@@ -129,6 +129,22 @@ public final class MainActivity extends Activity {
         if(personal) info.setText("Этот телефон появляется в вашем списке на ПК автоматически. Для доступа используются Wi-Fi или мобильный интернет; после потери сети приложение подключается заново.");
         add(details,label("Работает в фоне с уведомлением. Можно свернуть приложение, пока доступ включён.",14,MUTED),14);
         LinearLayout remote=column(22);remote.setBackground(surface(CARD,20));add(settingsLayout,remote,16);
+        Button networkDiagnostics=action("Диагностика сети",false);add(details,networkDiagnostics,14);
+        networkDiagnostics.setOnClickListener(v->{
+            networkDiagnostics.setEnabled(false);
+            android.content.Context app=getApplicationContext();
+            new Thread(()->{
+                String report="Phone Exit "+BuildConfig.VERSION_NAME+" · Android "+android.os.Build.VERSION.RELEASE+"\n\n"
+                    +NetworkDiagnostics.describe(NetworkDiagnostics.snapshot(app));
+                handler.post(()->{
+                    if(isFinishing()||isDestroyed())return;
+                    networkDiagnostics.setEnabled(true);
+                    ScrollView diagnosticScroll=new ScrollView(this);TextView content=label(report,14,TEXT);content.setTextIsSelectable(true);
+                    content.setPadding(dp(20),dp(12),dp(20),dp(12));diagnosticScroll.addView(content);
+                    new android.app.AlertDialog.Builder(this).setTitle("Диагностика сети").setView(diagnosticScroll).setPositiveButton("Закрыть",null).show();
+                });
+            },"PhoneExitNetworkInfo").start();
+        });
         add(remote,label("API управления своим телефоном",18,TEXT),0);
         add(remote,label("Скриншоты, нажатия и свайпы для своего ПК. Без root. Доступ к экрану включается отдельно; защищённые системные окна не управляются.",14,MUTED),10);
         Switch controlToggle=new Switch(this);controlToggle.setText("Разрешить управление с ПК");controlToggle.setTextColor(TEXT);

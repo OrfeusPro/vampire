@@ -16,23 +16,7 @@ final class DeviceControl {
             .put("screenLocked",c.getSystemService(android.app.KeyguardManager.class).isKeyguardLocked()).put("screenOn",c.getSystemService(android.os.PowerManager.class).isInteractive())
             .put("capabilities",ControlAgent.capabilities(c)).put("networkDiagnostics",networkDiagnostics(c));
     }
-    static JSONObject networkDiagnostics(Context c){
-        JSONObject result=new JSONObject();try{
-            android.net.ConnectivityManager cm=c.getSystemService(android.net.ConnectivityManager.class);
-            android.net.Network bound=cm.getBoundNetworkForProcess();android.net.NetworkCapabilities boundCaps=bound==null?null:cm.getNetworkCapabilities(bound);
-            result.put("processBoundToWifi",boundCaps!=null&&boundCaps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI));
-            JSONArray wifi=new JSONArray();for(android.net.Network n:cm.getAllNetworks()){
-                android.net.NetworkCapabilities caps=cm.getNetworkCapabilities(n);if(caps==null||!caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI))continue;
-                android.net.LinkProperties properties=cm.getLinkProperties(n);String name=properties==null?null:properties.getInterfaceName();
-                wifi.put(new JSONObject().put("interface",name==null?JSONObject.NULL:name).put("nativeInterfacePresent",name!=null&&java.net.NetworkInterface.getByName(name)!=null));
-            }result.put("wifi",wifi);
-            JSONArray interfaces=new JSONArray();java.util.Enumeration<java.net.NetworkInterface> all=java.net.NetworkInterface.getNetworkInterfaces();
-            while(all!=null&&all.hasMoreElements()&&interfaces.length()<32){java.net.NetworkInterface item=all.nextElement();int ipv4=0,ipv6=0;java.util.Enumeration<java.net.InetAddress> addresses=item.getInetAddresses();
-                while(addresses.hasMoreElements()){java.net.InetAddress address=addresses.nextElement();if(address instanceof java.net.Inet4Address)ipv4++;else if(address instanceof java.net.Inet6Address)ipv6++;}
-                interfaces.put(new JSONObject().put("name",item.getName()).put("up",item.isUp()).put("loopback",item.isLoopback()).put("virtual",item.isVirtual()).put("ipv4Count",ipv4).put("ipv6Count",ipv6));
-            }result.put("interfaces",interfaces);
-        }catch(Exception e){try{result.put("available",false);}catch(Exception ignored){}}return result;
-    }
+    static JSONObject networkDiagnostics(Context c){return NetworkDiagnostics.snapshot(c);}
     static JSONObject apps(Context c,JSONObject args)throws Exception{
         String filter=args.optString("package","");if(!filter.isEmpty()&&!filter.matches("[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z0-9_]+)+"))throw new Exception("invalid_package");
         List<PackageInfo> packages=c.getPackageManager().getInstalledPackages(0);packages.sort(Comparator.comparing(p->p.packageName));JSONArray out=new JSONArray();

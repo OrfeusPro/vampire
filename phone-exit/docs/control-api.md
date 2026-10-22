@@ -362,3 +362,17 @@ Pixel; длительная работа сутками и нагрузка на
 повторяются. Старый APK без iceSession и старый ПК продолжают начальный обмен.
 Расширение относится к каналу управления; VPN уже передаёт trickle ICE через
 signal.php. TURN не добавлен, пользовательский трафик через PHP не передаётся.
+
+## Снимок сетей deviceInfo, APK 0.9.8
+
+`networkDiagnostics.networks` — максимум 32 записи с временным номером `network`
+и признаками `systemDefault`, `processBound`, `managed`, `preferred`. Признаки
+не взаимоисключающие. Несколько Network могут иметь одинаковый `interface`.
+Дополнительно: `available`, `wifi`, `cellular`, `vpn`, `internet`, `validated`,
+`notVpn`, `eligible`, `ipv4Count`, `ipv6Count`, `dnsIpv4Count`, `dnsIpv6Count`,
+`defaultIpv4Route`, `mtu`. Итоговый `bindingMode`: none / explicit /
+compatible_default; `hasSystemDefault`, `hasProcessBinding`, `hasPreferred`.
+Старые поля `wifi`, `interfaces`, `processBoundToWifi` сохранены. Это последовательный
+снимок Android API, не атомарная фиксация: при смене сети повторить запрос.
+IP-адреса/SSID/MAC/DNS-адреса не передаются; данные не являются доказательством
+доступности UDP или обхода NAT. Сбор выполняется только по запросу информации.

@@ -11,6 +11,7 @@ final class WifiBinding {
     private static final Set<Object> owners=Collections.newSetFromMap(new IdentityHashMap<>());
     private static Network network;
     private static boolean defaultRoute;
+    static synchronized Network selectedNetwork(){return network;}
     static synchronized boolean acquire(Context context,Network wifi,Object owner){
         return acquireResult(context,wifi,owner)==Result.ACQUIRED;
     }
