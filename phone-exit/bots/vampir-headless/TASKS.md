@@ -109,8 +109,11 @@ Blood Pool. Вывод включается / выключается, «К пе�
 Локальный переход обучения проверен в 64 native-сценариях: при заданном
 разрешающем результате вызова raw0c увеличивается на 1 либо сохраняется по
 флагу; state 0 становится 1. Реальный вызов содержит побочные эффекты, его
-условия ещё не доказаны. Связь row layout с TutorialStep и callbacks задач
-проверить перед выполнением: constructors-кандидаты `0x1464dc4c0` / `0x1464dc3d0`.
+условия ещё не доказаны. Прослежены инициализация пары ключ / селектор, путь
+показа подсказки и producer PktTutorialUpdate / ID 9903. Перед выполнением
+проверить loader TutorialStep, output slots writer `0x145858ef0`, ответ /
+снятие ожидающего ключа и callback панели. Активный step 2 ещё не подтверждён.
+[Путь действия и следующий пробел](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md).
 [Переход, строки и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md).
 
 Живой ID 9905 теперь прочитан через HONOR JP: 16 записей, ключ 1001 / state 1,

@@ -78,6 +78,11 @@ ID 9905 / TutorialUpdateNotify уже приходил
 fixtures допуска / запуска. raw0c=0 не доказывает ожидание step 2;
 проверка условий и callbacks задач продолжается.
 [Выбор строки и переход](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md).
+Прослежен отдельный путь завершения обучения: producer создаёт
+PktTutorialUpdate / ID 9903 с ключом и селектором строки. Writer найден,
+формат output slots и ответ ещё проверяются. Показ подсказки связан с UI-контроллером;
+активный шаг и callback нажатия пока не подтверждены, команда не отправлялась.
+[Подсказка, запрос и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 
