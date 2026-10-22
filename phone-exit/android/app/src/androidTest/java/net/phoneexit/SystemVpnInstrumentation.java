@@ -9,7 +9,9 @@ import org.json.JSONObject;
 
 /** ADB-only test runner: retains actual VPN while a separate UID probes its routes. */
 public final class SystemVpnInstrumentation extends Instrumentation {
-    @Override public void onCreate(Bundle args){super.onCreate(args);start();}
+    private String targetName="realme RMX3830",targetCountry="JP";
+    @Override public void onCreate(Bundle args){super.onCreate(args);
+        if(args!=null){targetName=args.getString("phone",targetName);targetCountry=args.getString("country",targetCountry);}start();}
     @Override public void onStart(){
         Context c=getTargetContext();Bundle result=new Bundle();boolean restore=ExitService.enabled(c),started=false;
         File stop=new File(c.getFilesDir(),"system-vpn-test-stop");stop.delete();
@@ -17,7 +19,9 @@ public final class SystemVpnInstrumentation extends Instrumentation {
             if(ClientVpnService.active||ClientVpnService.requested(c))throw new IllegalStateException("session_busy");
             if(VpnService.prepare(c)!=null)throw new IllegalStateException("vpn_consent_required");
             DirectoryConfig config=DirectoryConfig.load(c);JSONObject selected=null;
-            for(JSONObject phone:PeerDirectory.list(PeerDirectory.clientNetwork(c),config))if("realme RMX3830".equals(phone.optString("name"))&&"JP".equals(phone.optString("country"))&&!phone.optBoolean("busy"))selected=phone;
+            int matches=0;
+            for(JSONObject phone:PeerDirectory.list(PeerDirectory.clientNetwork(c),config))if(targetName.equals(phone.optString("name"))&&targetCountry.equals(phone.optString("country"))&&!phone.optBoolean("busy")){selected=phone;matches++;}
+            if(matches>1)throw new IllegalStateException("ambiguous_exit");
             if(selected==null)throw new IllegalStateException("exit_unavailable");
             c.startForegroundService(new Intent(c,ClientVpnService.class).putExtra("target",selected.getString("id")));
             started=true;
@@ -27,7 +31,7 @@ public final class SystemVpnInstrumentation extends Instrumentation {
                 Thread.sleep(200);
             }
             if(!ClientVpnService.status.startsWith("Подключено"))throw new IllegalStateException("vpn_timeout");
-            Bundle ready=new Bundle();ready.putString("stream","READY actual Android VPN via JP realme");sendStatus(1,ready);
+            Bundle ready=new Bundle();ready.putString("stream","READY actual Android VPN via selected phone");sendStatus(1,ready);
             deadline=android.os.SystemClock.elapsedRealtime()+90000;
             while(!stop.exists()&&android.os.SystemClock.elapsedRealtime()<deadline)Thread.sleep(200);
             if(!stop.exists())throw new IllegalStateException("probe_timeout");

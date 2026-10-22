@@ -45,6 +45,20 @@ Personal APK 0.9.9/code 49 собран, lint: 0 ошибок / 16 предуп�
 direct_ice_failed; три запроса поздних ICE без ошибок, added=0. Переключение
 обратно восстановило каталог, но не устранило прежний отказ прямого канала.
 
+Контрольный Android-клиент: пользователь подключил vivo V2061 по USB, на нём уже
+0.9.9, исходно enabled=false / vpnRequested=false. Отдельный UID fixture до и
+после теста подтвердил три HTTPS/UA, UDP DNS и STUN. SystemVpnInstrumentation
+теперь принимает `-e phone 'Google Pixel 5' -e country JP` (по умолчанию прежний
+realme JP), отклоняет неоднозначное имя. Тестовый APK собран и установлен.
+Реальный VpnService: directory accepted → offer sent → answer received →
+ICE CHECKING → ICE FAILED. Запрос через Google native Android WebRTC также
+не открыл канал к UgPhone; пользовательский TCP/UDP через него не проверен.
+У ПК и vivo совпал внешний IPv4 (сравнение по хешу), поэтому этот тест не
+исключает проблему общего NAT/маршрута и не доказывает запрет всего P2P у UgPhone.
+VPN остановлен, исходные enabled/vpnRequested=false сохранены, временная
+настройка логирования восстановлена, fixture остановлен, открыт главный экран
+Phone Exit. APK продукта и частный релиз не менялись.
+
 ## Android 0.9.8: диагностика выбора сети, 22 октября 2026
 
 `Настройки → Диагностика сети` получает свежий снимок в отдельном потоке и
