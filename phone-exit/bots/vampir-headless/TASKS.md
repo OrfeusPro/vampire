@@ -47,6 +47,10 @@ HONOR и Redmi JP вернули Game Login 58 / BlockedIp до отправки
 Для отдельного Node-каталога подтверждено системное хранилище CA, пустой
 список при ошибке TLS не означает отсутствие доступных телефонов.
 [Живые сводки и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-INITIAL-TUTORIAL-ACK.md).
+Новый Pixel 5 / JP восстановлен по разрешению пользователя; сигнализация
+прошла, прямой канал завершился `direct_connection_failed`. Игровой вход
+через него ещё не проверен. Сначала нужен готовый транспорт.
+[Проверка Pixel и сохранность профиля](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-PIXEL-CHANNEL.md).
 Это подтверждение шага, а не команда выбора / автопрохождения квеста.
 [Условия запуска и ограничения](README.md#текущее-состояние).
 

@@ -18,6 +18,13 @@ Blood Pool. Вывод включается / выключается, «К пе�
 
 ## Текущее состояние
 
+Pixel 5 / JP у другого поставщика восстановлен из списка заблокированных
+привязок с разрешения пользователя; остальные поля профиля сверены и сохранены.
+Сигнализация прошла, но прямой WebRTC-канал дал `connecting → failed` /
+`direct_connection_failed`. Через него Game Login не запускался, вывод о
+BlockedIp для этого выхода не получен. Владельцы попыток завершены.
+[Результат транспорта, резервная копия и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-PIXEL-CHANNEL.md).
+
 Добавлена явная диагностическая команда `--ack-initial-tutorial` в
 `probe-selected-game-login.py`. Она требует `--read-world-start`,
 `--read-world-finish`, выбора персонажа и `--observe-world-seconds`.
