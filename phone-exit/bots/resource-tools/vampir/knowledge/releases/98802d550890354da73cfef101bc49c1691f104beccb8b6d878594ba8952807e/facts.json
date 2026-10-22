@@ -3289,6 +3289,103 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Источник qword ID 1836, handler ID 1837, семантика полей и условия применения результата."
+    },
+    {
+      "addresses": [
+        "0x145787dd0",
+        "0x1457a77c0",
+        "0x1457a7980",
+        "0x1457a7a20",
+        "0x1457a9cc0",
+        "0x14582cac0"
+      ],
+      "checks": [
+        {
+          "cache_key": "959df6ceb76f2066d8b45300aa07ab6306d6ae9354e590141dddd342898053de",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c\\manifest.json",
+          "sha256": "b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0930b3cedc196ee293dfce841eb52d30868af31d82e419cbc441507a7c083c46",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eb2e92440da6d1b72e4373a2d7d2f065d976bb0bf401161bc23adb4d5f8442ad\\manifest.json",
+          "sha256": "eb2e92440da6d1b72e4373a2d7d2f065d976bb0bf401161bc23adb4d5f8442ad",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6cdb1f81ede80731e61933a65579f515474a04d82a29d362fee8bf2a2011bfa0",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306\\manifest.json",
+          "sha256": "7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306",
+          "state": "passed"
+        },
+        {
+          "cache_key": "28735c6a754f8211297cb0d0c9c54a1cf5335eb6829fe6ccb337a619cf2f1bea",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d\\manifest.json",
+          "sha256": "e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1a556947f318d6711514bbadadcaedccfd3cb428952c52e897cf0ed9d995fb37",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa\\manifest.json",
+          "sha256": "409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e3ed75b11154a7fef8610e7c41368f8c3c8ddf2ad530713628e9a4b2cf46db83",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eaddbd26c24d719e44e1cc88ac158acb40196a109b2bf5840b0b8ac1ca02fba2\\manifest.json",
+          "sha256": "eaddbd26c24d719e44e1cc88ac158acb40196a109b2bf5840b0b8ac1ca02fba2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d95407ee7fb63eedc5167b1bdfba91a4c654f7c7c06e58ea5c76be4c70aa4b48",
+          "id": "release-tutorial-drain",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b5df88f15260af525c59f58e98520af541d6e05206fd62b98b08521f9f3e558b\\manifest.json",
+          "sha256": "b5df88f15260af525c59f58e98520af541d6e05206fd62b98b08521f9f3e558b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8dc2720f9dd7400680f7a145cc3d4fa38fae3d8eaedddb06275f42e616445166",
+          "id": "release-tutorial-startup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b559a4f0e1a8ebe609b409ca3fd0ed5a4e9a2a6b75279ba8277fda094097c8e9\\manifest.json",
+          "sha256": "b559a4f0e1a8ebe609b409ca3fd0ed5a4e9a2a6b75279ba8277fda094097c8e9",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ed81aea27d580f1fe17995a09d18fb091e64cc0a5547cab530e153fb748badf1",
+          "id": "release-quest-record",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d7f961934f015dd9007e2ea47a9de926258efea3c876bd85a50ccc635d2f5e9e\\manifest.json",
+          "sha256": "d7f961934f015dd9007e2ea47a9de926258efea3c876bd85a50ccc635d2f5e9e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые PktQuest / PktQuestProgress readers совпали с portable decoder 39 байт на 216 телах и отклонили 39 коротких префиксов. ID 1802 статически содержит две коллекции с PktQuest и PktAssetChange, два bool и PktQuestData; последний повторно используется ответом ID 1837.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-RECORD.md",
+          "sha256": "310f0e75dad5d6765099e4a5a799fa4fbacc9d1649a1e83f2ee0244d1fd79698"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-6c286a6860d8\\details.json",
+          "sha256": "a9698c44e788c5e38cb3d31b0a7d02604ffd197c5f0959e91c30d552f5a7d622"
+        }
+      ],
+      "id": "5975f10c8bc10d48d9502b46fd3db9fcda14e7f747e5949e8f88859c745e5fea",
+      "limits": [
+        "Native replay только целых записи Quest и вложенного Progress, с явной начальной формой и bounded memcpy fixture, без constructor / callback / allocator.",
+        "Структура whole списка, AssetChange и QuestData проверена статически; полный decoder списка и handler не заявляются.",
+        "Смысл raw-полей и связь qword с QuestInfoId или экземпляром пока неизвестны."
+      ],
+      "method": "bounded_native",
+      "next_check": "Разобрать элемент последнего массива и проверить whole ID 1802 с ограниченными коллекциями; подключить чтение только после проверки запроса и handler.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Элемент descriptor 14994bc18, whole bounded reader списка и отказные пути массивов, request / handler списка, источник qword выбора панели."
     }
   ],
   "schema": 1,

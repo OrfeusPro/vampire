@@ -37,6 +37,7 @@ Live состояние заданий, серверные переходы и �
 - [Живое чтение состояния обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md)
 - [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Поля ответа выбора квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-RESULT.md)
+- [Запись квеста и структура списка](../evidence/scenarios/HEADLESS-QUEST-RECORD.md)
 - [Подсказка обучения и запрос завершения шага](../evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md)
 - [Применение ответа обучения и удаление ожидающего ключа](../evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md)
 - [Разбор отложенной очереди обучения](../evidence/scenarios/HEADLESS-TUTORIAL-QUEUE-DRAIN.md)
