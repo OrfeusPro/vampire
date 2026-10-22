@@ -41,6 +41,7 @@ Live состояние заданий, серверные переходы и �
 - [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Поля ответа выбора квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-RESULT.md)
 - [Запись квеста и структура списка](../evidence/scenarios/HEADLESS-QUEST-RECORD.md)
+- [Квестовые пакеты в эталоне официального клиента](../evidence/scenarios/HEADLESS-QUEST-REFERENCE-TIMELINE.md)
 - [Повторная проверка квестового отказа](../evidence/scenarios/HEADLESS-QUEST-REFUSAL-RECHECK.md)
 - [Запрос списка квестов ID 1801](../evidence/scenarios/HEADLESS-QUEST-REQUEST.md)
 - [Имя квестового отказа 100 в словаре клиента](../evidence/scenarios/HEADLESS-QUEST-RESULT-NAMES.md)

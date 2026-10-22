@@ -13,6 +13,13 @@ SHA='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 def run(packet='PktPingResult'):
     if packet not in ('PktPingResult','PktCharacterPosition','PktCharacterMove','PktCharacterMoveResult','PktCharacterMoveNotify',
             'PktQuestListRead','PktQuestListReadResult','PktQuestPanelSelect','PktQuestPanelSelectResult',
+            'PktQuestTaskActionStart','PktQuestTaskActionStartResult',
+            'PktQuestAutoPlayState','PktQuestAutoPlayStateResult','PktQuestAutoPlayStateNotify',
+            'PktQuestAutoStart','PktQuestAutoStartResult',
+            'PktQuestUpdate','PktQuestUpdateResult','PktQuestStart','PktQuestStartResult',
+            'PktQuestActCutSceneWorldEnter','PktQuestActCutSceneWorldEnterResult',
+            'PktQuestComplete','PktQuestCompleteResult','PktQuestSelect','PktQuestSelectResult',
+            'PktQuestDialogTeleport','PktQuestDialogTeleportResult','PktQuestTeleport','PktQuestTeleportResult',
             'PktTutorialUpdate','PktTutorialUpdateResult','PktTutorialUpdateNotify'):
         raise ValueError('Explicit supported packet name required')
     spec=importlib.util.spec_from_file_location('ping_result_native',HERE/'build-native-entry-code.py')
