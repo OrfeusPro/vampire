@@ -108,6 +108,15 @@ def run(args):
         observe_world_seconds=300 if start_world else 0, world_observer=world if start_world else None,
         _progress=progress)
     password = None
+    if result.get('browser_status') in ('timeout', 'login_failed'):
+        browser = load('account_browser_failure', HERE / 'nid-browser.py')
+        error = browser.NidBrowserStatusError(result['browser_status'], result.get('sign_in_step'),
+            result.get('nid_http_status'), result.get('nid_error_code'))
+        emit('result', **failure(error))
+        return
+    if result.get('error_type') == 'SdkSignInHttpError':
+        emit('result', **failure(SdkSignInHttpError('redacted', result.get('http_status'), result.get('sdk_error_code'))))
+        return
     game = result.get('game', {})
     code = game.get('login_result_code')
     remember_characters(store, args.account, settings, game)
@@ -180,8 +189,19 @@ def register_account(store, args, email, password):
 
 
 def failure(error):
-    if getattr(error, 'browser_status', None) == 'timeout':
-        return dict(status='error', message='Истекло время входа Netmarble. Игровое соединение не открыто; проверьте окно авторизации.')
+    browser_status = getattr(error, 'browser_status', None)
+    if browser_status in ('timeout', 'login_failed'):
+        status, code = getattr(error, 'nid_http_status', None), getattr(error, 'nid_error_code', None)
+        status = status if type(status) is int and 100 <= status <= 599 else None
+        code = code if type(code) is int and -(2**31) <= code < 2**31 else None
+        message = ('Netmarble показал Login Failed. Причина отказа не установлена.' if browser_status == 'login_failed' else
+            'Истекло время входа Netmarble. Проверьте окно авторизации.')
+        step = {'waiting': 'ожидание формы', 'opened_email': 'выбор входа по почте', 'filled': 'поля заполнены',
+            'submitted': 'форма отправлена', 'form_changed': 'форма изменилась', 'script_failed': 'обработка формы остановлена'
+            }.get(getattr(error, 'sign_in_step', None))
+        return dict(status='error', message=message + ' Игровое соединение не открыто.' +
+            (f' Этап: {step}.' if step is not None else '') +
+            (f' HTTP {status}.' if status is not None else '') + (f' Код NID: {code}.' if code is not None else ''))
     if isinstance(error, SdkSignInHttpError):
         code = error.sdk_code if type(error.sdk_code) is int and -(2**31) <= error.sdk_code < 2**31 else None
         status = error.status if type(error.status) is int and 100 <= error.status <= 599 else None

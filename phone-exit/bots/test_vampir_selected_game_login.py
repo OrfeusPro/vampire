@@ -19,6 +19,19 @@ class SelectedGameLoginTests(unittest.TestCase):
         return dict(selected_profile='recovered-base', manifest_path=Path('fixture'), socks_port=17948,
             server_policy_byte=0, extra_number=123, context='windows-sdk-initial-reset', region='JP', server_id=42)
 
+    def test_browser_failure_carries_only_fixed_state_and_bounded_numeric_diagnostics(self):
+        for status, code, expected in ((400, 123, {'nid_http_status': 400, 'nid_error_code': 123}),
+                ('private-status', 'private-code', {})):
+            error = RuntimeError('private-server-response')
+            error.browser_status, error.sign_in_step = 'login_failed', 'submitted'
+            error.nid_http_status, error.nid_error_code = status, code
+            with patch.object(self.tool, '_run', side_effect=error):
+                result = self.tool.run('fixture@unit.invalid', **self.kwargs())
+            self.assertEqual(result['browser_status'], 'login_failed')
+            self.assertEqual(result['sign_in_step'], 'submitted')
+            self.assertEqual({k: v for k, v in result.items() if k.startswith('nid_')}, expected)
+            self.assertNotIn('private', str(result))
+
     def test_auth_stays_in_memory_and_same_lobby_result_supplies_login(self):
         self.check_auth_and_clock('')
 

@@ -120,6 +120,15 @@ class AccountConsoleTests(unittest.TestCase):
         value = tool.failure(tool.SdkSignInHttpError('secret', 'private-status', 'private-code'))
         self.assertEqual(value['sdk_error'], {'http_status': None, 'code': None})
         self.assertNotIn('private', json.dumps(value))
+        rejected = RuntimeError('private-browser-details')
+        rejected.browser_status, rejected.nid_http_status, rejected.nid_error_code = 'login_failed', 400, 123
+        rejected.sign_in_step = 'submitted'
+        value = tool.failure(rejected)
+        self.assertIn('Login Failed', value['message'])
+        self.assertIn('HTTP 400', value['message'])
+        self.assertIn('Код NID: 123', value['message'])
+        self.assertIn('форма отправлена', value['message'])
+        self.assertNotIn('private', json.dumps(value))
         timeout = RuntimeError('private-browser-details')
         timeout.browser_status = 'timeout'
         value = tool.failure(timeout)

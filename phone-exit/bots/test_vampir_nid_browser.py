@@ -67,5 +67,18 @@ class NidBrowserTests(unittest.TestCase):
             self.assertEqual(result, {})
             self.assertNotIn('secret', str(captured.exception))
 
+    def test_nid_failure_diagnostic_numbers_are_bounded_and_callback_is_cleared(self):
+        for status, code, expected in ((400, 123, (400, 123)),
+                ('private-status', 'private-code', (None, None)), (True, 2**40, (None, None))):
+            result = dict(status='login_failed', sign_in_step='submitted', callback='secret-callback',
+                nid_http_status=status, nid_error_code=code)
+            with patch.object(self.tool, '_run', return_value=result):
+                with self.assertRaises(self.tool.NidBrowserStatusError) as captured:
+                    self.tool.capture_nid_credential(self.plan(), expected_game_code='thered', data_directory='unused')
+            self.assertEqual(captured.exception.browser_status, 'login_failed')
+            self.assertEqual((captured.exception.nid_http_status, captured.exception.nid_error_code), expected)
+            self.assertEqual(result, {})
+            self.assertNotIn('secret', str(captured.exception))
+
 
 if __name__ == '__main__': unittest.main()

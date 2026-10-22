@@ -87,10 +87,13 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
         for name, attribute in (('http_status', 'status'), ('sdk_error_code', 'sdk_code')):
             if type(getattr(error, attribute, None)) is int: result[name] = getattr(error, attribute)
         for name, allowed in (('browser_status', ('timeout', 'cancelled', 'browser_initialization_failed',
-                'browser_process_failed', 'untrusted_callback_origin', 'unknown')),
+                'browser_process_failed', 'untrusted_callback_origin', 'login_failed', 'unknown')),
                 ('sign_in_step', ('manual', 'waiting', 'opened_email', 'filled', 'submitted', 'form_changed', 'script_failed', 'unknown'))):
             value = getattr(error, name, None)
             if value in allowed: result[name] = value
+        for name, lower, upper in (('nid_http_status', 100, 599), ('nid_error_code', -(2**31), 2**31 - 1)):
+            value = getattr(error, name, None)
+            if type(value) is int and lower <= value <= upper: result[name] = value
         return result
 
 

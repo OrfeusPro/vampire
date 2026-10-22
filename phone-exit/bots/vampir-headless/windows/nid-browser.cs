@@ -10,11 +10,14 @@ public static class NidBrowserHost {
     public static int BlockedPopups;
     public static string LastBlockedScheme;
     public static string SignInStep;
+    public static int NidHttpStatus;
+    public static int? NidErrorCode;
 
     public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
-            string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript) {
+            string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript, string statusScript) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
         SignInStep = "manual";
+        NidHttpStatus = 0; NidErrorCode = null;
         if (socksPort != 0 && (socksPort < 1024 || socksPort > 65535)) throw new ArgumentException("Invalid SOCKS port");
         if (timeoutSeconds < 1 || timeoutSeconds > 900) throw new ArgumentException("Invalid timeout");
         if (String.IsNullOrEmpty(gameCode) || gameCode.Length > 64) throw new ArgumentException("Invalid game scope");
@@ -90,6 +93,28 @@ public static class NidBrowserHost {
                 core.PermissionRequested += (s, e) => { e.State = CoreWebView2PermissionState.Deny; };
                 core.ServerCertificateErrorDetected += (s, e) => { e.Action = CoreWebView2ServerCertificateErrorAction.Cancel; };
                 core.ProcessFailed += (s, e) => finish("browser_process_failed");
+                core.WebResourceResponseReceived += async (s, e) => {
+                    // No request body, headers, URL or response text is emitted.
+                    if (done || smoke || registering || !NidHttpDiagnostics.IsEndpoint(e.Request.Uri, e.Request.Method)) return;
+                    int status = e.Response.StatusCode;
+                    if (status >= 400 && status <= 599) NidHttpStatus = status;
+                    try {
+                        int length;
+                        if (!Int32.TryParse(e.Response.Headers.GetHeader("Content-Length"), out length) || length < 1 || length > 16384 ||
+                            !e.Response.Headers.GetHeader("Content-Type").StartsWith("application/json", StringComparison.OrdinalIgnoreCase)) return;
+                        using (var stream = await e.Response.GetContentAsync()) {
+                            if (stream == null || done) return;
+                            byte[] buffer = new byte[length + 1];
+                            int total = 0, read;
+                            while (total < buffer.Length && (read = await stream.ReadAsync(buffer, total, buffer.Length - total)) > 0) total += read;
+                            if (done || total != length) return;
+                            string body = new System.Text.UTF8Encoding(false, true).GetString(buffer, 0, total);
+                            int? code = NidHttpDiagnostics.ParseCode(body);
+                            body = null; Array.Clear(buffer, 0, buffer.Length);
+                            if (code.HasValue && code.Value != 0) { NidHttpStatus = status; NidErrorCode = code; }
+                        }
+                    } catch { /* Missing headers / malformed or large responses remain unobserved. */ }
+                };
                 if (smoke) {
                     core.NavigateToString("<html><script>setTimeout(function(){window.open('probe-blocked://ignored'); location.href='probe-blocked://ignored'; setTimeout(function(){location.href='nm" + gameCode + "://nmidprovider/result?resultCode=0&accessToken=synthetic-token&refreshToken=&channelKey=mailUserKey&netmarbleId=synthetic-id&joinedCountryCode=KR';},200);},200);</script></html>");
                 } else core.Navigate(startUrl);
@@ -98,10 +123,19 @@ public static class NidBrowserHost {
             timer.Interval = 200;
             timer.Tick += async (s, e) => {
                 if ((DateTime.UtcNow - started).TotalSeconds >= timeoutSeconds) { finish("timeout"); return; }
-                if (done || !autoSignIn || signInBusy || view.CoreWebView2 == null) return;
+                if (done || smoke || signInBusy || view.CoreWebView2 == null) return;
                 Uri source;
                 if (!Uri.TryCreate(view.CoreWebView2.Source, UriKind.Absolute, out source) || source.Scheme != "https" ||
                     source.Host != "members.netmarble.com" || !source.IsDefaultPort || source.UserInfo != "") return;
+                if (!registering) {
+                    signInBusy = true;
+                    try {
+                        string pageStatus = await view.CoreWebView2.ExecuteScriptAsync(statusScript + "()");
+                        if (pageStatus == "\"login_failed\"") { finish("login_failed"); return; }
+                    } catch { /* Optional observation does not change authentication. */ }
+                    finally { signInBusy = false; }
+                }
+                if (done || !autoSignIn) return;
                 if (registering) {
                     signInBusy = true;
                     try {
