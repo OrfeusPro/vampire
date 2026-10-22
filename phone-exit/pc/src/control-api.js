@@ -14,7 +14,7 @@ export function sealControl(token,value){const iv=randomBytes(12),c=createCipher
 export function openControl(token,box){if(!box||typeof box.data!=='string'||box.data.length>2800000||typeof box.iv!=='string'||box.iv.length!==16)throw Error('invalid frame');const iv=Buffer.from(box.iv,'base64'),data=Buffer.from(box.data,'base64');if(iv.length!==12||data.length<16)throw Error('invalid frame');const c=createDecipheriv('aes-256-gcm',key(token),iv);c.setAAD(label);c.setAuthTag(data.subarray(-16));return JSON.parse(Buffer.concat([c.update(data.subarray(0,-16)),c.final()]).toString('utf8'));}
 export function validateCommand(command,args={}){
   if(!args||typeof args!=='object'||Array.isArray(args))throw Error('invalid arguments');
-  if(!['bot','status','screenshot','tap','swipe','back','home','launch','checkUpdate','installUpdate','deviceInfo','apps','foreground','keyevent','inputText','longPress','gesture','connectControl'].includes(command))throw Error('unsupported command');
+  if(!['bot','status','screenshot','tap','swipe','back','home','launch','checkUpdate','installUpdate','deviceInfo','apps','foreground','keyevent','inputText','longPress','gesture','connectControl','controlIce'].includes(command))throw Error('unsupported command');
   if(command==='bot'){
     if(!['status','catalog','assign','install','rollback','settingsBegin','settingsChunk','settingsCommit','start','pause','resume','stop','diagnosticsList','diagnosticsGet'].includes(args.op))throw Error('unsupported bot operation');
     if(args.op==='diagnosticsGet'&&!/^\d{13}-[a-f0-9]{32}$/.test(args.id))throw Error('invalid diagnostic id');
@@ -24,6 +24,7 @@ export function validateCommand(command,args={}){
     if(args.op==='settingsBegin'&&(!Number.isSafeInteger(args.size)||args.size<2||args.size>1048576||!/^[a-f0-9]{64}$/.test(args.sha256)))throw Error('invalid settings upload');
     if(args.op==='settingsChunk'&&(!Number.isSafeInteger(args.offset)||args.offset<0||typeof args.data!=='string'||args.data.length>5464))throw Error('invalid settings chunk');
   }
+  if(command==='controlIce'&&!/^[a-f0-9]{32}$/.test(args.iceSession??''))throw Error('invalid ICE session');
   if(command==='connectControl'&&(typeof args.sdp!=='string'||args.sdp.length>11000||!args.sdp.startsWith('v=0')))throw Error('invalid offer');
   if(command==='launch'&&(typeof args.package!=='string'||!/^[A-Za-z][A-Za-z0-9_]*(\.[A-Za-z0-9_]+)+$/.test(args.package)||args.package.length>200))throw Error('invalid package');
   if(command==='launch'&&args.activity!==undefined&&(typeof args.activity!=='string'||args.activity.length>250||!/^\.?[A-Za-z][A-Za-z0-9_.$]*$/.test(args.activity)))throw Error('invalid activity');
@@ -61,21 +62,21 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
   const results=new Map();let resultBytes=0;
   const cleanResults=()=>{for(const[k,v]of results)if(v.until<Date.now()){resultBytes-=v.size;results.delete(k);}};
   const resultTimer=setInterval(cleanResults,500);resultTimer.unref();
-  const api=async(body)=>{
-    const response=await request(CONTROL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:1,token:catalogKey(directory.account.feedToken),...body}),signal:AbortSignal.timeout(10000)});
+  const api=async(body,signal)=>{
+    const response=await request(CONTROL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({version:1,token:catalogKey(directory.account.feedToken),...body}),signal:signal?AbortSignal.any([signal,AbortSignal.timeout(10000)]):AbortSignal.timeout(10000)});
     const raw=await response.text();if(raw.length>3000000)throw Error('large response');
     if(!response.ok){const e=Error('remote unavailable');e.status=response.status;throw e;}return JSON.parse(raw);
   };
   const phoneFor=id=>{const p=directory.phones.find(p=>p.id===id);if(!p||directory.account.blocked.includes(id))throw Object.assign(Error('unknown device'),{status:404});return p;};
   const devices=()=>{let phones=[];const original=directory.emit;try{directory.emit=e=>{if(e.event==='phones')phones=e.phones;};directory.publish();}finally{directory.emit=original;}return phones.map(p=>{const d=peers.get(p.id)?.peer;return d&&!d.closed&&d.channel?.readyState==='open'?{...p,online:true,controlTransport:'webrtc',controlRttMs:d.rttMs??null}:d?{...p,controlTransport:d.phase??'closed',controlCandidates:d.candidates,controlSdpStructure:d.sdpStructure,controlError:d.failure&&/^[a-z_ ]{1,80}$/.test(d.failure)?d.failure:undefined}:p;});};
-  const enqueueHttp=async(id,command,args={})=>{
+  const enqueueHttp=async(id,command,args={},signal)=>{
     const phone=phoneFor(id),state=directory.states.get(id);if(!state||Date.now()-state.received>=45000)throw Object.assign(Error('device offline'),{status:409});
     if(!state.control?.api||state.control.api<2&&(['deviceInfo','apps','foreground','keyevent','inputText','longPress','gesture'].includes(command)||command==='screenshot'&&Object.keys(args).length>0))throw Object.assign(Error('update APK first'),{status:409});
-    validateCommand(command,args);const requestId=randomBytes(16).toString('hex');await api({op:'enqueue',id,request:requestId,box:sealControl(phone.token,{id,request:requestId,at:Date.now(),command,args})});return {id:requestId,status:'queued'};
+    validateCommand(command,args);const requestId=randomBytes(16).toString('hex');await api({op:'enqueue',id,request:requestId,box:sealControl(phone.token,{id,request:requestId,at:Date.now(),command,args})},signal);return {id:requestId,status:'queued'};
   };
-  const get=async(id,requestId)=>{
+  const get=async(id,requestId,signal)=>{
     const phone=phoneFor(id),cacheKey=id+':'+requestId;cleanResults();const cached=results.get(cacheKey);if(cached)return cached.value;
-    const value=await api({op:'get',id,request:requestId});phoneFor(id);
+    const value=await api({op:'get',id,request:requestId},signal);phoneFor(id);
     if(value.box){const result=openControl(phone.token,value.box);if(result.id!==id||result.request!==requestId||!Number.isSafeInteger(result.at)||Math.abs(result.at-Date.now())>180000)throw Error('invalid result');value.result=result;delete value.box;
       const size=Buffer.byteLength(JSON.stringify(value));while(results.size>=256||resultBytes+size>8388608){const first=results.keys().next().value;if(first===undefined)break;resultBytes-=results.get(first).size;results.delete(first);}
       const previous=results.get(cacheKey);if(previous)resultBytes-=previous.size;
@@ -103,7 +104,14 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
     if(!entry||entry.peer?.closed){
       if(!entry&&peers.size>=32)throw Object.assign(Error('too many connections'),{status:429});
       entry={};peers.set(id,entry);
-      const direct=entry.peer=new DirectControl({id,bootstrap:async sdp=>{
+      const direct=entry.peer=new DirectControl({id,pollIce:async(iceSession,signal)=>{
+        const job=await enqueueHttp(id,'controlIce',{iceSession},signal),until=Date.now()+12000;
+        while(!signal.aborted&&Date.now()<until){const r=await get(id,job.id,signal);
+          if(r.status==='done'){if(!r.result.ok)throw Error('ICE poll failed');return r.result.result;}
+          if(['unknown','expired'].includes(r.status))throw Error('ICE poll expired');
+          await new Promise(resolve=>{if(signal.aborted){resolve();return;}const done=()=>{clearTimeout(timer);signal.removeEventListener('abort',done);resolve();};const timer=setTimeout(done,350);signal.addEventListener('abort',done,{once:true});});
+        }throw Error('ICE poll stopped');
+      },bootstrap:async sdp=>{
         const job=await enqueueHttp(id,'connectControl',{sdp}),end=Date.now()+45000;
         while(Date.now()<end){const r=await get(id,job.id);if(r.status==='done'){
           if(!r.result.ok)throw Error(r.result.error);return r.result.result;
@@ -151,7 +159,7 @@ export function createControlServer({directory,secret,request=fetch,vmosWaitMs=2
       if(!phone||directory.account.blocked.includes(phone.id))return send(404,{error:'unknown device'});
       if(req.method==='POST'&&!match[2]){
         let raw='';for await(const chunk of req){raw+=chunk;if(raw.length>16384)return send(413,{error:'large request'});}
-        let input;try{input=JSON.parse(raw);if(input.command==='connectControl')throw Error();validateCommand(input.command,input.args);}catch{return send(400,{error:'invalid command or arguments'});}
+        let input;try{input=JSON.parse(raw);if(['connectControl','controlIce'].includes(input.command))throw Error();validateCommand(input.command,input.args);}catch{return send(400,{error:'invalid command or arguments'});}
         if(input.transport!==undefined&&input.transport!=='https')return send(400,{error:'invalid transport'});
         if(input.transport==='https'){
           // Explicit opt-in to the same authenticated mailbox used by older APKs.

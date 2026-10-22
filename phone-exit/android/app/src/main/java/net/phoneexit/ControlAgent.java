@@ -123,6 +123,10 @@ final class ControlAgent implements AutoCloseable {
         if(command.equals("bot"))return BotManager.execute(this,args==null?new JSONObject():args);
         if(command.equals("checkUpdate")||command.equals("installUpdate")){AppUpdater.check(this);if(command.equals("installUpdate"))AppUpdater.notifyReady(context);return AppUpdater.state(context);}
         if(!ControlAccessibility.allowed(context))throw new Exception("control_disabled");
+        if(command.equals("controlIce")){
+            ControlPeer p=direct;if(p==null)throw new Exception("ice_session_changed");
+            return p.iceSnapshot(args.getString("iceSession"));
+        }
         if(command.equals("deviceInfo")){JSONObject info=DeviceControl.info(context);ControlPeer p=direct;if(p!=null)info.put("controlDiagnostics",p.diagnostics());return info;}
         if(command.equals("apps"))return DeviceControl.apps(context,args==null?new JSONObject():args);
         ControlAccessibility service=ControlAccessibility.current;if(service==null)throw new Exception("accessibility_permission_required");

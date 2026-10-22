@@ -10,8 +10,8 @@ android {
         manifestPlaceholders.phoneExitTestProcess = (findProperty('phoneExitTestProcess') ?: 'net.phoneexit').toString()
         minSdk 26
         targetSdk 35
-        versionCode 46
-        versionName '0.9.6'
+        versionCode 47
+        versionName '0.9.7'
         // Per-ABI personal APK keeps the upgrade within the 0.7.x downloader's 60 MB bound.
         ndk { abiFilters((findProperty('phoneExitAbi') ?: 'arm64-v8a').toString()) }
     }

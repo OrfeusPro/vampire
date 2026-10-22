@@ -1,9 +1,10 @@
 import {RTCPeerConnection} from './native-peer.js';
 import {randomBytes} from 'node:crypto';
+import {ControlIcePoller} from './control-ice.js';
 
 // Binary result: request UUID (16), total u32 BE, offset u32 BE, <=16 KiB payload.
 export class DirectControl {
-  constructor({id,bootstrap,Peer=RTCPeerConnection}){this.id=id;this.bootstrap=bootstrap;this.Peer=Peer;this.jobs=new Map();this.closed=false;this.bytes=0;}
+  constructor({id,bootstrap,pollIce,Peer=RTCPeerConnection}){this.id=id;this.bootstrap=bootstrap;this.pollIce=pollIce;this.Peer=Peer;this.jobs=new Map();this.closed=false;this.bytes=0;}
   async connect(){
     this.phase='gathering';
     const peer=this.peer=new this.Peer({iceServers:[{urls:['stun:stun.l.google.com:19302','stun:stun.cloudflare.com:3478']}]});
@@ -28,7 +29,13 @@ export class DirectControl {
       this.sdpStructure={pc:structure(peer.localDescription.sdp),phone:structure(answer.sdp)};
       if(this.closed)throw Error('direct closed');
       this.phase='channel';
-      await peer.setRemoteDescription(answer);await ready;
+      await peer.setRemoteDescription({type:answer.type,sdp:answer.sdp});
+      if(this.pollIce&&/^[a-f0-9]{32}$/.test(answer.iceSession??'')&&!this.closed){
+        this.iceAbort=new AbortController();
+        this.icePoller=new ControlIcePoller({peer,session:answer.iceSession,poll:this.pollIce,signal:this.iceAbort.signal,initialSdp:answer.sdp});
+        this.icePoller.run().catch(()=>{});
+      }
+      await ready;this.iceAbort?.abort();
       this.phase='connected';
       this.seen=Date.now();this.lastPing=0;
       this.timer=setInterval(()=>{
@@ -73,7 +80,7 @@ export class DirectControl {
   }
   get(request){this.clean();const j=this.jobs.get(request);return j?.value??{status:j&&!this.closed?'delivered':'expired',transport:'webrtc',error:this.closed?'channel lost; action not repeated':undefined};}
   close(){
-    if(this.closed)return;this.closed=true;clearInterval(this.timer);clearInterval(this.cleanTimer);this.rejectReady?.(Error('direct closed'));
+    if(this.closed)return;this.closed=true;this.iceAbort?.abort();clearInterval(this.timer);clearInterval(this.cleanTimer);this.rejectReady?.(Error('direct closed'));
     for(const j of this.jobs.values())if(!j.value){this.bytes-=j.size||0;j.size=0;j.frame=null;j.value={status:'expired',transport:'webrtc',error:'channel lost; action not repeated'};}
     this.channel?.close();this.peer?.close();
   }

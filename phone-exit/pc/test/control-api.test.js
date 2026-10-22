@@ -36,7 +36,7 @@ test('HTTP API bootstraps authenticated native WebRTC once and survives catalog 
   const directory=new Directory(()=>{}),secret=hex(32),phone={id:hex(16),name:'Direct',token:hex(32)};
   directory.setAccount({version:1,feedToken:hex(32),privateKey:'test',blocked:[]});directory.setPhones([phone]);
   directory.states.set(phone.id,{received:Date.now(),control:{api:3,directControl:true,enabled:true}});
-  const remote=new RTCPeerConnection({iceServers:[]});let response,bootstraps=0,actions=0;
+  const remote=new RTCPeerConnection({iceServers:[]});let response,bootstraps=0,actions=0,icePolls=0;const iceSession=hex(16);let lateCandidates=[];
   remote.onDataChannel.subscribe(dc=>dc.onMessage.subscribe(raw=>{
     const v=JSON.parse(raw);if(v.type==='ping'){dc.send(JSON.stringify({type:'pong',request:v.request}));return;}
     actions++;const body=Buffer.from(JSON.stringify({id:phone.id,request:v.request,at:Date.now(),ok:true,result:{performed:true}})),b=Buffer.alloc(24+body.length);
@@ -45,22 +45,29 @@ test('HTTP API bootstraps authenticated native WebRTC once and survives catalog 
   const server=createControlServer({directory,secret,request:async(_,options)=>{
     const b=JSON.parse(options.body);
     if(b.op==='enqueue'){
-      const v=openControl(phone.token,b.box);assert.equal(v.command,'connectControl');bootstraps++;
-      await remote.setRemoteDescription({type:'offer',sdp:v.args.sdp});await remote.setLocalDescription({type:'answer'});
-      response={status:'done',box:sealControl(phone.token,{id:phone.id,request:b.request,at:Date.now(),ok:true,result:remote.localDescription})};
+      const v=openControl(phone.token,b.box);let result;
+      if(v.command==='connectControl'){
+        bootstraps++;
+        const stripped=v.args.sdp.split(/\r?\n/).filter(s=>!s.startsWith('a=candidate:')&&s!=='a=end-of-candidates').join('\r\n');
+        await remote.setRemoteDescription({type:'offer',sdp:stripped});await remote.setLocalDescription({type:'answer'});
+        lateCandidates=remote.localDescription.sdp.split(/\r?\n/).filter(s=>s.startsWith('a=candidate:')).map(s=>({candidate:s.slice(2),sdpMid:'0',sdpMLineIndex:0}));
+        result={type:'answer',iceSession,sdp:remote.localDescription.sdp.split(/\r?\n/).filter(s=>!s.startsWith('a=candidate:')&&s!=='a=end-of-candidates').join('\r\n')};
+      }else{assert.equal(v.command,'controlIce');assert.equal(v.args.iceSession,iceSession);icePolls++;result={iceSession,closed:false,candidates:lateCandidates};}
+      response={status:'done',box:sealControl(phone.token,{id:phone.id,request:b.request,at:Date.now(),ok:true,result})};
       return Response.json({ok:true});
     }
     return Response.json(b.op==='ack'?{ok:true}:response);
   }});
   await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(async()=>{await new Promise(r=>server.close(r));await remote.close();});
   const base='http://127.0.0.1:'+server.address().port,path=base+'/v1/devices/'+phone.id+'/commands',headers={Authorization:'Bearer '+secret,'Content-Type':'application/json'};
+  for(const command of ['connectControl','controlIce']){assert.equal((await fetch(path,{method:'POST',headers,body:JSON.stringify({command,args:{iceSession,sdp:'v=0'}})})).status,400);}
   for(let i=0;i<2;i++){
     const accepted=await fetch(path,{method:'POST',headers,body:'{"command":"home"}'});assert.equal(accepted.status,202);const job=await accepted.json();assert.equal(job.transport,'webrtc');
     let r;for(let n=0;n<100;n++){r=await(await fetch(path+'/'+job.id,{headers})).json();if(r.status==='done')break;await new Promise(r=>setTimeout(r,10));}
     assert.equal(r.status,'done');assert.equal(r.result.result.performed,true);
     directory.states.get(phone.id).received=Date.now()-60000;
   }
-  assert.equal(bootstraps,1);assert.equal(actions,2);
+  assert.equal(bootstraps,1);assert.equal(actions,2);assert.ok(icePolls>0);
   assert.equal((await(await fetch(base+'/v1/devices',{headers})).json()).devices[0].online,true);
   applyBlocked(directory,[phone.id]);assert.equal((await fetch(path,{method:'POST',headers,body:'{"command":"home"}'})).status,404);assert.equal(actions,2);
 });

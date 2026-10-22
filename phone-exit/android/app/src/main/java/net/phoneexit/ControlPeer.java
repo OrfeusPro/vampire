@@ -15,6 +15,8 @@ final class ControlPeer implements AutoCloseable {
     private final CompletableFuture<JSONObject> answer=new CompletableFuture<>();
     private final CompletableFuture<Void> disposed=new CompletableFuture<>();
     private final List<IceCandidate> candidates=new ArrayList<>();
+    private final ControlIce ice=new ControlIce();
+    JSONObject iceSnapshot(String session)throws Exception{return ice.snapshot(session);}
     private boolean answerScheduled;
     private PeerConnectionFactory factory;private PeerConnection peer;private DataChannel channel;
     private volatile boolean closed;private volatile long seen=System.nanoTime();
@@ -49,7 +51,7 @@ final class ControlPeer implements AutoCloseable {
             if(!sdp.endsWith("\n"))sdp+="\r\n";sdp+=extra;
             if(sdp.length()>11000)throw new Exception("sdp_limit");
             if(!sdp.contains("a=candidate:"))return;
-            answer.complete(new JSONObject().put("sdp",sdp).put("type","answer"));
+            answer.complete(new JSONObject().put("sdp",sdp).put("type","answer").put("iceSession",ice.session));
         }catch(Exception e){answer.completeExceptionally(e);close();}
     }
     JSONObject connect(String offer)throws Exception{
@@ -68,6 +70,7 @@ final class ControlPeer implements AutoCloseable {
                     public void onIceConnectionReceivingChange(boolean b){}
                     public void onIceGatheringChange(PeerConnection.IceGatheringState s){gatheringState=s.name();if(s==PeerConnection.IceGatheringState.COMPLETE)event(()->{SessionDescription d=peer.getLocalDescription();if(d!=null)describe(d.description);});}
                     public void onIceCandidate(IceCandidate c){callbackCandidates=Math.min(32,callbackCandidates+1);event(()->{
+                        try{ice.add(c.sdp,c.sdpMid,c.sdpMLineIndex);}catch(Exception ignored){}
                         if(candidates.size()<32)candidates.add(c);
                         // Leave time for STUN after the first host candidate;
                         // continuous gathering can discover Wi-Fi after an early
@@ -136,7 +139,7 @@ final class ControlPeer implements AutoCloseable {
     void awaitClosed()throws Exception{try{disposed.get(10,TimeUnit.SECONDS);}catch(Exception e){throw new Exception("direct_cleanup_failed");}}
     @Override public void close(){close("direct_closed");}
     private synchronized void close(String reason){
-        if(closed)return;closeReason=reason;closed=true;actions.shutdownNow();answer.completeExceptionally(new Exception(reason));
+        if(closed)return;closeReason=reason;closed=true;ice.close();actions.shutdownNow();answer.completeExceptionally(new Exception(reason));
         // Dispose after the worker has stopped and callbacks have returned.
         events.execute(()->{
             Exception failure=null;
