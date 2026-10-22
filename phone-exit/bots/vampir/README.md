@@ -41,9 +41,12 @@ Blood Pool. Вывод включается / выключается, «К пе�
 
 Новый вход через Xiaomi / JP прошёл до мира с кодом 0, но один повторный
 запрос списка квестов снова вернул code 100. Исправленный decoder разобрал
-ответ без ошибки; значение отказа ещё неизвестно. Samsung / JP получил
+ответ без ошибки. В словаре текущего клиента 100 соответствует
+CharacterNotSelected; причина отсутствия нужного контекста ещё не установлена.
+Samsung / JP получил
 Game Login 58 / BlockedIp до этого запроса. Выбор квеста пока не выполнен.
 [Повторная проверка и источники](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REFUSAL-RECHECK.md).
+[Имя кода и границы расшифровки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RESULT-NAMES.md).
 
 **Текущий результат: вход, выбор и ID 206 приняты; серверная целевая позиция получена.**
 В одном соединении Login 0, CharacterList 0 / один персонаж, ID 110 code 0 /

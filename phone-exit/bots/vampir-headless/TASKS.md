@@ -50,7 +50,12 @@ PktItemChangeList, а не PktQuestData. Исправленный decoder и act
 разобрал ответ без ошибки; тело совпало с прежним. Новый Samsung / JP получил
 отдельный Game Login 58 / BlockedIp до запроса квестов.
 [Сравнение стадий и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REFUSAL-RECHECK.md).
-Следом — значение code 100 и источник штатных параметров; 0 / 0 без нового основания не повторять.
+В словаре текущего клиента подтверждены пары 0 / Success, 58 / BlockedIp,
+100 / CharacterNotSelected. Почему запрос получает «персонаж не выбран»
+после принятого входа в мир, ещё не установлено; qword запроса не объявлен
+Character ID. Следом — источник штатных параметров и контекст запроса.
+[Инструкции пар и ограничения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RESULT-NAMES.md).
+0 / 0 без нового основания не повторять.
 
 Для первого серверного шага обучения добавлен явный `--ack-initial-tutorial`:
 одна команда 1001 / 2 после успешного входа в мир и свежего состояния того же

@@ -43,6 +43,7 @@ Live состояние заданий, серверные переходы и �
 - [Запись квеста и структура списка](../evidence/scenarios/HEADLESS-QUEST-RECORD.md)
 - [Повторная проверка квестового отказа](../evidence/scenarios/HEADLESS-QUEST-REFUSAL-RECHECK.md)
 - [Запрос списка квестов ID 1801](../evidence/scenarios/HEADLESS-QUEST-REQUEST.md)
+- [Имя квестового отказа 100 в словаре клиента](../evidence/scenarios/HEADLESS-QUEST-RESULT-NAMES.md)
 - [Подсказка обучения и запрос завершения шага](../evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md)
 - [Применение ответа обучения и удаление ожидающего ключа](../evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md)
 - [Разбор отложенной очереди обучения](../evidence/scenarios/HEADLESS-TUTORIAL-QUEUE-DRAIN.md)
