@@ -3203,6 +3203,92 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Происхождение условия row+0x50 и timer row+0x60, callbacks полей и ветви завершения gate; связь native readiness с headless lifecycle; активный tutorial step, смысл raw10 / флагов; producer панели ID 1836 и текущие UI package bytes. Свежий startup проверен с fixtures, не как живое выполнение."
+    },
+    {
+      "addresses": [
+        "0x1456ff620",
+        "0x14582cc00"
+      ],
+      "checks": [
+        {
+          "cache_key": "959df6ceb76f2066d8b45300aa07ab6306d6ae9354e590141dddd342898053de",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c\\manifest.json",
+          "sha256": "b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c3577210baf94e7df63f261da7f19790268c8f70968445f70aadfc3718a26d28",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\475d6aec8f4825d239af7fab121c9522435b146de27b1c9cd11162f6dbd7e3bf\\manifest.json",
+          "sha256": "475d6aec8f4825d239af7fab121c9522435b146de27b1c9cd11162f6dbd7e3bf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6cdb1f81ede80731e61933a65579f515474a04d82a29d362fee8bf2a2011bfa0",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306\\manifest.json",
+          "sha256": "7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306",
+          "state": "passed"
+        },
+        {
+          "cache_key": "28735c6a754f8211297cb0d0c9c54a1cf5335eb6829fe6ccb337a619cf2f1bea",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d\\manifest.json",
+          "sha256": "e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1a556947f318d6711514bbadadcaedccfd3cb428952c52e897cf0ed9d995fb37",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa\\manifest.json",
+          "sha256": "409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e3ed75b11154a7fef8610e7c41368f8c3c8ddf2ad530713628e9a4b2cf46db83",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eaddbd26c24d719e44e1cc88ac158acb40196a109b2bf5840b0b8ac1ca02fba2\\manifest.json",
+          "sha256": "eaddbd26c24d719e44e1cc88ac158acb40196a109b2bf5840b0b8ac1ca02fba2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d95407ee7fb63eedc5167b1bdfba91a4c654f7c7c06e58ea5c76be4c70aa4b48",
+          "id": "release-tutorial-drain",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b5df88f15260af525c59f58e98520af541d6e05206fd62b98b08521f9f3e558b\\manifest.json",
+          "sha256": "b5df88f15260af525c59f58e98520af541d6e05206fd62b98b08521f9f3e558b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8dc2720f9dd7400680f7a145cc3d4fa38fae3d8eaedddb06275f42e616445166",
+          "id": "release-tutorial-startup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b559a4f0e1a8ebe609b409ca3fd0ed5a4e9a2a6b75279ba8277fda094097c8e9\\manifest.json",
+          "sha256": "b559a4f0e1a8ebe609b409ca3fd0ed5a4e9a2a6b75279ba8277fda094097c8e9",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Writer ID 1836 передаёт qword packet+0x10 в output slot +0x48; reader ID 1837 последовательно вызывает input +0x58 в packet+0x10, input +0x50 во временный qword с последующим копированием в packet+0x18 и helper 144aae4e0 для packet+0x20; возвращает успех только после всех трёх чтений.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-PANEL-RESULT.md",
+          "sha256": "3c7a3835e7de5599f86be9a87af98bc36a75c0b74b369d5161adb768a34cf2cb"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-bd0040da9384\\details.json",
+          "sha256": "b973543e7b5e49ad10f0c211c01128f82ebccf2f155d3627fa8b2cdebe38fa75"
+        }
+      ],
+      "id": "992b729b8a0ddc39552f2a65a0292af3fd542a1aa7c4fc2ca3b299d7fcea99c0",
+      "limits": [
+        "Статический экспорт и инструкции, без native replay, handler и живого ответа ID 1837.",
+        "Типы primitive slots и смысл полей отдельно не установлены.",
+        "Отсутствие прямых E8 / LEA на constructor candidate не доказывает отсутствие producer."
+      ],
+      "method": "static",
+      "next_check": "Найти регистрацию / handler и источник qword; сверить primitives, затем bounded replay целых writer и reader.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник qword ID 1836, handler ID 1837, семантика полей и условия применения результата."
     }
   ],
   "schema": 1,

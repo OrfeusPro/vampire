@@ -38,7 +38,10 @@ raw0c 0 или 1, raw10 0 и flag false; возраст снимка — не б
 Локально проверена цепочка входа → ID 206 → ID 9905 → ID 9903 → ID 9904
 через socketpair, а также частичная отправка, отказ, отсутствие ответа,
 лимит очереди и очистка при обрыве. Живой сервер для этой команды ещё
-не проверен. Подтверждение шага не является кликом QuestPanel_PanelTouch,
+не проверен: две попытки через HONOR / Redmi JP остановились на Game Login
+58 / BlockedIp, до отправки ID 9903. Оба временных маршрута закрыты.
+[Сводки попыток и исправление диагностики каталога](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-INITIAL-TUTORIAL-ACK.md).
+Подтверждение шага не является кликом QuestPanel_PanelTouch,
 не выбирает квест и не доказывает запуск автоматического движения.
 [Основание полей запроса](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md),
 [ответа](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md)
