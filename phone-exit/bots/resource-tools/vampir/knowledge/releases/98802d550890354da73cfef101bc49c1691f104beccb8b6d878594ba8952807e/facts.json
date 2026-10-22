@@ -4793,6 +4793,72 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Допустимый Carnage class ID из UI, producer / JSON и допустимые appearance choices, ID 104, name_taken и реальное создание."
+    },
+    {
+      "addresses": [
+        "0x145896a10",
+        "0x145897180",
+        "0x145c8df30",
+        "0x14641af30",
+        "0x14642b0c0",
+        "0x14642be10",
+        "0x146431390"
+      ],
+      "checks": [
+        {
+          "cache_key": "5cc24e597dc0feee00e21b8a3bd203c7d3d7c4759ee8c1daf4f1d590ada9f1db",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93\\manifest.json",
+          "sha256": "dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93",
+          "state": "passed"
+        },
+        {
+          "cache_key": "113eb7d10e7db841555255a044ab27602de77a28fc4f829cc8509a12e6185590",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7\\manifest.json",
+          "sha256": "36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "24c06747f1c3120a5ef20c0f5884d04c26ca2fbb7caf6ce59d2dbcabd1513b4d",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\417f4db9d641123d60a3ea3ef070e8a5875d2c4a7ed9ef4ca18d5387cd7d282d\\manifest.json",
+          "sha256": "417f4db9d641123d60a3ea3ef070e8a5875d2c4a7ed9ef4ca18d5387cd7d282d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fde81f6a172cf1b5d74481320b0dd6a06adfb20fcc43c5f9334375d1f67427c",
+          "id": "release-character-create-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fc149b49c870e7c3ef4dda5cb65bfa811d3e727e4f828e40b0207afbb9e80d80\\manifest.json",
+          "sha256": "fc149b49c870e7c3ef4dda5cb65bfa811d3e727e4f828e40b0207afbb9e80d80",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d84eb78f8071a86ccba3bc5a5a51559115f8ba7bb95389c7a3d19c683ca2cd92",
+          "id": "release-create-class-lookup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e494bc6640b8b7b2d71a630c279af06d68c04eed177ec6a3931ab3cb3ea0ccb8\\manifest.json",
+          "sha256": "e494bc6640b8b7b2d71a630c279af06d68c04eed177ec6a3931ab3cb3ea0ccb8",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Источник выбранного класса установлен как RdPlayerStateCharacterCreate. Статически selector получает тип из Class_ tag, lookup возвращает строку, setter пишет row+8 в PlayerState+0x360, а отдельная ветка сбрасывает sentinel 0. Целые sparse lookup и iterator прошли 45 native случаев с занятостью и границей 31/32; ID строки отличается от байтового типа. Исторический Carnage Id 3 не перенесён автоматически.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-CLASS-LOOKUP.md",
+          "sha256": "513b2b8a91b98303f717ed313130c6db6df209317dba79b9a61a4348c8248157"
+        }
+      ],
+      "id": "6310a78cc1a717a92df3c232bfcbcbc84e7880dfaefc09ab7b867fd1a56cd575",
+      "limits": [
+        "Table storage, bits, row types/IDs synthetic; identity и значения установленной таблицы не доказаны.",
+        "Цепочка type/selector/setter разобрана статически, целый engine/UI не исполнен.",
+        "Прямой E8 поиск покрывает только явные caller roots, без indirect/tail/inline; сеть и создание отсутствуют."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать singleton 14b1bdfd0 с таблицей данных, проверить converter и актуальные Class_ теги / строку Class перед подстановкой wire ID.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Identity singleton и схема Class row, converter 1457ba970 / актуальные Class_ теги и реальная текущая строка Carnage; appearance JSON и ID 104."
     }
   ],
   "schema": 1,

@@ -290,9 +290,9 @@
       "id": "character-creation-entry",
       "status": "open",
       "question": "Как текущий клиент переходит от принятого пустого списка к созданию первого персонажа?",
-      "known": "Для текущего EXE найдены игровые Create ID 103 и Result ID 104. Native replay различает 16 успешных пустых списков и 18 отказов Login 57 / 58 / 59; отказ Login не разрешает создание. Constructor / getter источника класса прошли 144 случая: raw uint32 берётся из UI +0x360, при недоступном UI возвращается sentinel 0; начальная внешность из UI +0x364 не инициализируется при отсутствующем UI. Целые constructor / reader ID 103 с CreateData и appearance прошли 36 тел и 1398 коротких префиксов. Целые writer ID 103 / CreateData / appearance с native UTF8 и scalar aliases прошли 42 тела; переносимый encoder совпал с native байтами. В 24 искусственных отказах raw output четыре string позиции не распространили отказ; остальные остановились. В runtime добавлен отдельный encoder целого тела с проверкой SHA и локальными бюджетами; отправка создания не подключена.",
-      "unknown": "Допустимый Carnage class ID из UI +0x360, whole producer и схема JSON / допустимые значения внешности, reader / handler результата ID 104, код name_taken и реальное создание персонажа после принятого пустого списка.",
-      "next_action": "Связать UI +0x360 с допустимой записью класса Carnage, проверить whole producer / генерацию JSON внешности и reader / handler ID 104. Использовать готовые writer / reader / encoder и зарегистрированные проверки; не повторять Ghidra без нового unknown. Создание отправлять только после принятого пустого списка нужного аккаунта и сервера.",
+      "known": "Для текущего EXE найдены игровые Create ID 103 и Result ID 104. Native replay различает 16 успешных пустых списков и 18 отказов Login 57 / 58 / 59; отказ Login не разрешает создание. Constructor / getter источника класса прошли 144 случая: raw uint32 берётся из PlayerState +0x360, при недоступном PlayerState возвращается sentinel 0; начальная внешность из PlayerState +0x364 не инициализируется при отсутствующем PlayerState. Целые constructor / reader ID 103 с CreateData и appearance прошли 36 тел и 1398 коротких префиксов. Целые writer ID 103 / CreateData / appearance с native UTF8 и scalar aliases прошли 42 тела; переносимый encoder совпал с native байтами. В 24 искусственных отказах raw output четыре string позиции не распространили отказ; остальные остановились. В runtime добавлен отдельный encoder целого тела с проверкой SHA и локальными бюджетами; отправка создания не подключена. Тип источника уточнён как /Script/RdFramework.RdPlayerStateCharacterCreate. Статически прослежено: Class_ tag → byte type → lookup → row ID +8 → PlayerState +0x360. Целые lookup / sparse iterator прошли 45 native случаев; row ID намеренно отличается от типа в fixtures. Identity singleton и реальные строки текущей таблицы ещё не подтверждены.",
+      "unknown": "Identity singleton 0x14b1bdfd0 / схема строки, converter 0x1457ba970 и актуальные Class_ теги / строка Carnage; whole producer и JSON / допустимые значения внешности; reader / handler ID 104, name_taken и реальное создание.",
+      "next_action": "Связать singleton 0x14b1bdfd0 с таблицей данных, проверить converter 0x1457ba970 и реальные Class_ теги, затем актуальную строку Carnage. После — producer / JSON и ID 104. Не подставлять ID 3 только по историческому каталогу; использовать готовые native проверки и экспортировать только явные недостающие функции.",
       "decision_rule": "Пустой список подтверждается только успешным ID 102 после принятого Login. Не отправлять создание в обход Login 59 и не копировать старые auth / character тела.",
       "do_not_repeat": "Повтор входа или непроверенная отправка создания ради проверки гипотезы; повторная выгрузка готового ListResult handler без нового unknown.",
       "addresses": [],
@@ -302,7 +302,8 @@
         "evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md",
         "evidence/characters/HEADLESS-CREATE-CLASS-SOURCE.md",
         "evidence/characters/HEADLESS-CREATE-REQUEST-READER.md",
-        "evidence/characters/HEADLESS-CREATE-REQUEST-WRITER.md"
+        "evidence/characters/HEADLESS-CREATE-REQUEST-WRITER.md",
+        "evidence/characters/HEADLESS-CREATE-CLASS-LOOKUP.md"
       ]
     }
   ]

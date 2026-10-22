@@ -57,6 +57,11 @@ Writer затем прошёл 42 тела и 24 отказа raw output fixture
 совпал с native байтами. Далее — допустимые игровые значения и ответ ID 104.
 [Формат чтения и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-READER.md).
 [Запись и переносимый encoder](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-WRITER.md).
+Установлена цепочка `Class_` tag → byte type → lookup → row ID `+8` →
+`RdPlayerStateCharacterCreate +0x360`. Lookup прошёл 45 native случаев.
+Далее нужна identity singleton / схема строки и текущая строка Carnage;
+старое совпадение Class Id / Type 3 само по себе не подтверждает wire ID.
+[Выбор класса](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-LOOKUP.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

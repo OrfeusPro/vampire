@@ -3,6 +3,7 @@ import argparse
 import importlib.util
 import json
 from pathlib import Path
+import struct
 
 HERE = Path(__file__).resolve().parent
 
@@ -20,6 +21,7 @@ def main():
     parser.add_argument('--follow-client-id-globals', action='store_true', help='Find consumers of constructor destinations, without inferring their role')
     parser.add_argument('--global-address', action='append', default=[], help='Follow a global explicitly referenced in the supplied Ghidra instructions')
     parser.add_argument('--direct-target', action='append', default=[], help='Inspect an explicit CALL/JMP target from the supplied Ghidra instructions')
+    parser.add_argument('--callers-of', action='append', default=[], help='Find direct E8 callers of an explicitly exported function; at most 64 unwind roots')
     parser.add_argument('--vtable-target', action='append', default=[], help='Find aligned data slots pointing to a function exported in the supplied Ghidra evidence')
     parser.add_argument('--vtable-slot', type=lambda s:int(s,0), default=16, help='Candidate table-relative slot; an explicit hypothesis, not an inferred ABI role')
     args = parser.parse_args()
@@ -84,9 +86,35 @@ def main():
         targets[address] = dict(label='GlobalAddress')
     candidates = native.rip_candidates(image, targets)
     roots = {image.roots[image.containing(a)] for a, target in candidates if image.containing(a)}
+    call_targets = {int(value, 16) for value in args.callers_of}
+    if len(call_targets) > 4 or not call_targets.issubset(known_functions):
+        raise ValueError('Caller targets must be at most four supplied Ghidra functions')
+    call_candidates = []
+    if call_targets:
+        for section in image.pe.sections:
+            if section['name'] != '.text': continue
+            start, end = section['raw'], section['raw'] + section['raw_size']
+            position = raw.find(b'\xe8', start, end - 4)
+            while position != -1:
+                address = image.pe.address(position)
+                target = address + 5 + struct.unpack_from('<i', raw, position + 1)[0]
+                function = image.containing(address)
+                if target in call_targets and function is not None:
+                    call_candidates.append((address, target))
+                    roots.add(image.roots[function])
+                    if len(roots) > 64 or len(call_candidates) > 256:
+                        raise ValueError('Explicit caller candidate budget exceeded')
+                position = raw.find(b'\xe8', position + 1, end - 4)
     fragments = native.decode_ranges(image, roots)
     rows = {r['address']: r for f in fragments for r in f['instructions']}
     references = []
+    for address, target in call_candidates:
+        row = rows.get(address)
+        if row is None or row['mnemonic'] != 'call' or row['direct_target'] != target or len(bytes.fromhex(row['bytes'])) != 5:
+            continue
+        root = image.roots[image.containing(address)]
+        references.append(dict(label='DirectCaller', target=hex(target), instruction=hex(address),
+            function=hex(image.pe.base + root[0]), bytes=row['bytes']))
     for address, target in candidates:
         row = rows.get(address)
         if row is None or row['mnemonic'] != 'lea' or row['rip_references'] != [target]:
@@ -138,6 +166,7 @@ def main():
         vtable_candidates=vtables,
         ghidra_direct_target_instructions=direct_rows, roles_transferred=False,
         limits=['LEA RIP candidates validated on whole unwind-root instruction boundaries.',
+                'Explicit E8 caller candidates are checked on decoded unwind-root boundaries; no indirect, tail or inline call coverage.',
                 'Ghidra database had no recorded literal references; this does not prove absence of native uses.',
                 'No inferred function roles or runtime compatibility; next step is selected Ghidra inspection.'])
     target = audit.save_snapshot(args.evidence.parent.parent.parent / 'sdk-reference-candidates', report)
