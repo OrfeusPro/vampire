@@ -24,6 +24,7 @@ class InitialTutorialAck:
         self._snapshot_time = self._last_time = self._deadline = self._frame = None
         self.state = 'waiting_snapshot'
         self.result_code = None
+        self.response = None
         self.unmatched_results = 0
 
     def __repr__(self):
@@ -55,6 +56,7 @@ class InitialTutorialAck:
                 self.unmatched_results = min(self.unmatched_results + 1, 65535)
                 return
             self.result_code = result.code
+            self.response = result
             self.state = 'accepted' if result.code == 0 else 'rejected'
             self._deadline = None
 

@@ -158,6 +158,12 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 initial_tutorial_ack_result_code=ack.result_code,
                 initial_tutorial_ack_unmatched_results=ack.unmatched_results,
                 initial_tutorial_ack_semantics='server_step_ack_not_quest_panel_click')
+            if ack.response is not None:
+                response = ack.response
+                record = response.record
+                value['initial_tutorial_ack_response'] = dict(raw08=record.raw08,
+                    raw0c=record.raw0c, raw10=record.raw10, state=record.state,
+                    raw30=response.raw30, raw31=response.raw31)
         return value
     try:
         started = time.monotonic()

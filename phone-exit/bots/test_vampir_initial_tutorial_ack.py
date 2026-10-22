@@ -47,6 +47,7 @@ class InitialTutorialAckTests(unittest.TestCase):
         self.assertEqual(sent, [])
         flow.receive(9904, response(), now=2)
         self.assertEqual(flow.state, 'queued')
+        self.assertIsNone(flow.response)
         drain_outbound(sock, queue, max_send_calls=1, on_frame_sent=completed)
         self.assertEqual(flow.state, 'sent')
         self.assertEqual(len(sent), 1)
@@ -57,6 +58,7 @@ class InitialTutorialAckTests(unittest.TestCase):
         self.assertEqual((flow.state, flow.result_code, flow.unmatched_results), ('accepted', 0, 1))
         flow.close()
         self.assertEqual(flow.state, 'accepted')
+        self.assertEqual(flow.response.record.raw0c, 2)
         with self.assertRaises(RuntimeError): flow.queue(now=4)
 
     def test_refusal_and_unrelated_results_never_trigger_special_retry(self):
@@ -71,6 +73,7 @@ class InitialTutorialAckTests(unittest.TestCase):
             for body in (response(key=3001), response(selector=1)):
                 flow.receive(9904, body, now=1)
                 self.assertEqual(flow.state, 'sent')
+                self.assertIsNone(flow.response)
             flow.receive(9904, response(code=code), now=2)
             self.assertEqual(flow.state, 'accepted' if code == 0 else 'rejected')
             self.assertEqual(flow.result_code, code)

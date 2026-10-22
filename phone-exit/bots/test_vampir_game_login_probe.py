@@ -139,6 +139,8 @@ class GameLoginProbeTests(unittest.TestCase):
             self.assertEqual(result['status'], 'initial_tutorial_ack_result')
             self.assertEqual(result['initial_tutorial_ack_state'], 'accepted' if code == 0 else 'rejected')
             self.assertEqual(result['initial_tutorial_ack_result_code'], code)
+            self.assertEqual(result['initial_tutorial_ack_response'], dict(raw08=1001,
+                raw0c=2, raw10=0, state=1, raw30=False, raw31=False))
             self.assertFalse(result['game_session_ready'])
 
     def test_initial_tutorial_ack_without_reply_has_unknown_outcome(self):
@@ -151,6 +153,7 @@ class GameLoginProbeTests(unittest.TestCase):
         self.assertEqual(captures[-1], (9903, 7))
         self.assertEqual(result['initial_tutorial_ack_state'], 'unknown')
         self.assertIsNone(result['initial_tutorial_ack_result_code'])
+        self.assertNotIn('initial_tutorial_ack_response', result)
 
     def test_initial_tutorial_ack_is_opt_in_and_requires_snapshot(self):
         for opted_in, packets in ((False, ((9905, b'\0\1\0'+struct.pack('<IIIB', 1001, 0, 0, 1)),)),
