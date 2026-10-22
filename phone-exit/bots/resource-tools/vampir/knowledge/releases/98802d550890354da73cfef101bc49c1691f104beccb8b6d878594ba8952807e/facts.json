@@ -4688,6 +4688,55 @@
       "question": "sdk-first-player",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Текущий constructor owner callback и целое bounded исполнение caller SignUp."
+    },
+    {
+      "addresses": [
+        "0x1456b83a0",
+        "0x1456d8120",
+        "0x145788d00",
+        "0x145789090"
+      ],
+      "checks": [
+        {
+          "cache_key": "5cc24e597dc0feee00e21b8a3bd203c7d3d7c4759ee8c1daf4f1d590ada9f1db",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93\\manifest.json",
+          "sha256": "dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93",
+          "state": "passed"
+        },
+        {
+          "cache_key": "113eb7d10e7db841555255a044ab27602de77a28fc4f829cc8509a12e6185590",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7\\manifest.json",
+          "sha256": "36d55f3fb5ca48951ad7a4f098b15d26a245fc7115fe6d2d384a6b34650587a7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "24c06747f1c3120a5ef20c0f5884d04c26ca2fbb7caf6ce59d2dbcabd1513b4d",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\417f4db9d641123d60a3ea3ef070e8a5875d2c4a7ed9ef4ca18d5387cd7d282d\\manifest.json",
+          "sha256": "417f4db9d641123d60a3ea3ef070e8a5875d2c4a7ed9ef4ca18d5387cd7d282d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые текущие constructor и reader ID 103 с CreateData, строками и appearance прошли 36 синтетических тел и отклонили 1398 коротких префиксов. Подтверждены порядок полей, clamp appearance 2 / item 45, bool и непустой массив; таблицы и canaries проверены. Допустимый класс и настройки персонажа этим не определены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-REQUEST-READER.md",
+          "sha256": "63dea5281544865876d72b8da714e0f039cc62f51d598a606be71e13be9da9b5"
+        }
+      ],
+      "id": "e33859501ec7a56d734da58460449f987177b77c877f8a0bcbe74622a9ece45d",
+      "limits": [
+        "Input buffer, storage, allocation/copy/cleanup — ограниченные fixtures; строки и массивы остаются в их пределах.",
+        "Числа класса, имена, appearance и строка настроек синтетические; writer, producer и JSON generator не исполнялись.",
+        "Сеть, ID 104 и реальное создание персонажа не выполнялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Исполнить whole writer ID 103 и appearance с теми же полями, затем связать UI class / appearance и проверить reader ID 104.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Whole writer, допустимый Carnage class ID, схема JSON и значения внешности, результат создания и политика имени."
     }
   ],
   "schema": 1,

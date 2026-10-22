@@ -290,9 +290,9 @@
       "id": "character-creation-entry",
       "status": "open",
       "question": "Как текущий клиент переходит от принятого пустого списка к созданию первого персонажа?",
-      "known": "На EU / Prelude 2 нужен новый персонаж. Последний Game Login вернул 59 до запроса списка, пустой список сервером не подтверждён. В текущем EXE найдены PktCharacterCreate / ID 103 и PktCharacterCreateResult / ID 104. По точным packet constructors и factory 1467b62f0 статически связаны LoginResult handler 14679c4f0 и CreateResult handler 146796690. Текущий ListResult handler 146797990 уже имеет export и bounded replay пустого списка. Current native replay разделил 16 успешных пустых списков и 18 отказов Login 57/58/59; отправки создания нет. CreateData table14992a360 / writer14578e120 / reader145789090, caller146449dc0 найдены; class-параметр от virtual90, строка от UI+368, appearance от owner и helper146447e50. Полная wire / UI цепочка ещё не проверена. Constructor 0x146442670 и getter 0x14644a0c0 прошли 144 native случая: raw class из UI +0x360 при подходящем UI, иначе sentinel 0; начальная внешность из UI +0x364, при отсутствующем UI owner +0x30 не инициализируется. Допустимая строка класса не доказана.",
+      "known": "На EU / Prelude 2 нужен новый персонаж. Последний Game Login вернул 59 до запроса списка, пустой список сервером не подтверждён. В текущем EXE найдены PktCharacterCreate / ID 103 и PktCharacterCreateResult / ID 104. По точным packet constructors и factory 1467b62f0 статически связаны LoginResult handler 14679c4f0 и CreateResult handler 146796690. Текущий ListResult handler 146797990 уже имеет export и bounded replay пустого списка. Current native replay разделил 16 успешных пустых списков и 18 отказов Login 57/58/59; отправки создания нет. CreateData table14992a360 / writer14578e120 / reader145789090, caller146449dc0 найдены; class-параметр от virtual90, строка от UI+368, appearance от owner и helper146447e50. Полная wire / UI цепочка ещё не проверена. Constructor 0x146442670 и getter 0x14644a0c0 прошли 144 native случая: raw class из UI +0x360 при подходящем UI, иначе sentinel 0; начальная внешность из UI +0x364, при отсутствующем UI owner +0x30 не инициализируется. Допустимая строка класса не доказана. 23 октября целый текущий constructor / reader ID 103 с CreateData и appearance проверен на 36 телах и 1398 коротких префиксах: Unicode, clamp 2 / 45, bool и непустой массив. Writer и допустимые игровые значения по-прежнему не подтверждены.",
       "unknown": "Полная ветка отсутствия персонажей, источник полей создания / класса / имени / внешности и подтверждение результата; отношение к отказу Login 59.",
-      "next_action": "Связать UI +0x360 с допустимой строкой класса, затем проверить whole producer, appearance JSON и полный wire writer / reader. Использовать готовые constructor/getter и зарегистрированный replay; не повторять Ghidra без нового unknown.",
+      "next_action": "Проверить whole writer ID 103 / appearance на тех же полях, затем связать UI +0x360 с допустимой записью класса Carnage, проверить генерацию JSON внешности и reader результата ID 104. Готовые constructor / readers / harness использовать повторно; отправка создания только после принятого пустого списка.",
       "decision_rule": "Пустой список подтверждается только успешным ID 102 после принятого Login. Не отправлять создание в обход Login 59 и не копировать старые auth / character тела.",
       "do_not_repeat": "Повтор входа или непроверенная отправка создания ради проверки гипотезы; повторная выгрузка готового ListResult handler без нового unknown.",
       "addresses": [],
@@ -300,7 +300,8 @@
         "evidence/network/HEADLESS-LIVE-GLOBAL-EU.md",
         "evidence/characters/HEADLESS-CHARACTER-LIST-EXTENSIONS.md",
         "evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md",
-        "evidence/characters/HEADLESS-CREATE-CLASS-SOURCE.md"
+        "evidence/characters/HEADLESS-CREATE-CLASS-SOURCE.md",
+        "evidence/characters/HEADLESS-CREATE-REQUEST-READER.md"
       ]
     }
   ]

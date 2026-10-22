@@ -51,6 +51,10 @@ Carnage; случайный ник сохраняется и меняется т
 Constructor / getter источника класса прошли 144 native случая; допустимая строка
 класса, appearance JSON и целый writer создания ещё не проверены.
 [Источник класса и fixtures](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-SOURCE.md).
+Целый reader ID 103 с constructor, CreateData и appearance прошёл 36 тел и
+1398 коротких префиксов. Проверены Unicode, непустой массив и границы памяти.
+Далее — whole writer, допустимые игровые значения и ответ создания ID 104.
+[Формат чтения и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-READER.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

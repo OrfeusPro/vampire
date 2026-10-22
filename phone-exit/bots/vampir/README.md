@@ -35,6 +35,10 @@
 отличаются от 18 отказов Login 57 / 58 / 59. Найдены Create 103 / Result 104,
 вложенный CreateData и producer; полный формат внешности ещё не проверен.
 [Пустой список и подготовка создания](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
+Целый reader запроса создания ID 103 проверен на 36 телах и 1398 коротких
+префиксах, включая строки и непустой массив внешности. Writer и допустимые
+игровые значения ещё не подтверждены; отправка создания не подключена.
+[Формат чтения и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-READER.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
