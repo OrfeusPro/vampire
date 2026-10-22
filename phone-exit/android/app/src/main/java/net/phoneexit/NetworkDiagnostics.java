@@ -11,6 +11,7 @@ final class NetworkDiagnostics {
     static String describe(JSONObject snapshot){
         if(!snapshot.optBoolean("available"))return "Android не предоставил сведения о сетях. Повторите проверку.";
         StringBuilder text=new StringBuilder("Снимок сетей по запросу. Номера действуют только в этом снимке.\n");
+        text.append("Выбор сети выхода: ").append("manual_wifi".equals(snapshot.optString("exitSelection"))?"Wi-Fi вручную":"автоматически").append("\n");
         text.append("Режим привязки: ").append(snapshot.optString("bindingMode")).append("\n");
         JSONArray rows=snapshot.optJSONArray("networks");
         if(rows==null||rows.length()==0)text.append("Сети не обнаружены.\n");
@@ -37,7 +38,7 @@ final class NetworkDiagnostics {
         try{
             ConnectivityManager cm=context.getSystemService(ConnectivityManager.class);
             Network active=cm.getActiveNetwork(),bound=cm.getBoundNetworkForProcess(),managed=WifiBinding.selectedNetwork(),preferred=null;
-            try{preferred=PeerDirectory.internetNetwork(context);}catch(java.io.IOException ignored){}
+            try{preferred=PeerDirectory.exitNetwork(context);}catch(java.io.IOException ignored){}
             LinkedHashSet<Network> all=new LinkedHashSet<>(Arrays.asList(cm.getAllNetworks()));
             for(Network n:new Network[]{active,bound,managed,preferred})if(n!=null)all.add(n);
             JSONArray rows=new JSONArray(),wifi=new JSONArray();int index=0;
@@ -67,6 +68,7 @@ final class NetworkDiagnostics {
                     .put("nativeInterfacePresent",name!=null&&NetworkInterface.getByName(name)!=null));
             }
             result.put("available",true).put("networks",rows).put("wifi",wifi)
+                .put("exitSelection",context.getSharedPreferences("runtime",Context.MODE_PRIVATE).getLong("exitWifiHandle",0)==0?"automatic":"manual_wifi")
                 .put("processBoundToWifi",bound!=null&&cm.getNetworkCapabilities(bound)!=null&&cm.getNetworkCapabilities(bound).hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
                 .put("bindingMode",managed==null?"none":WifiBinding.compatible(managed)?"compatible_default":"explicit")
                 .put("hasSystemDefault",active!=null).put("hasProcessBinding",bound!=null).put("hasPreferred",preferred!=null);

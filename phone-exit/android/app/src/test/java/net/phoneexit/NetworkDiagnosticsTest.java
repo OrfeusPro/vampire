@@ -13,6 +13,8 @@ public class NetworkDiagnosticsTest {
         Context c=mock(Context.class);ConnectivityManager cm=mock(ConnectivityManager.class);
         Network stale=mock(Network.class),live=mock(Network.class);NetworkCapabilities bad=caps(false),good=caps(true);
         when(c.getSystemService(ConnectivityManager.class)).thenReturn(cm);
+        android.content.SharedPreferences preferences=mock(android.content.SharedPreferences.class);
+        when(c.getSharedPreferences("runtime",Context.MODE_PRIVATE)).thenReturn(preferences);
         when(cm.getActiveNetwork()).thenReturn(live);when(cm.getBoundNetworkForProcess()).thenReturn(live);
         when(cm.getAllNetworks()).thenReturn(new Network[]{stale,live});
         when(cm.getNetworkCapabilities(stale)).thenReturn(bad);when(cm.getNetworkCapabilities(live)).thenReturn(good);

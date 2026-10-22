@@ -14,6 +14,17 @@ import java.util.*;
 final class PeerDirectory {
     /** Explicitly enabled personal clients and exits may use Wi-Fi or cellular. */
     static Network clientNetwork(Context c) throws IOException {return internetNetwork(c);}
+    /** Explicit diagnostic choice affects the exit role only, never client VPN. */
+    static Network exitNetwork(Context c)throws IOException{
+        long chosen=c.getSharedPreferences("runtime",Context.MODE_PRIVATE).getLong("exitWifiHandle",0);
+        if(chosen==0)return internetNetwork(c);
+        ConnectivityManager cm=c.getSystemService(ConnectivityManager.class);
+        for(Network n:cm.getAllNetworks())if(n.getNetworkHandle()==chosen){
+            NetworkCapabilities caps=cm.getNetworkCapabilities(n);
+            if(clientUplink(caps)&&caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))return n;
+        }
+        throw new IOException("selected_wifi_unavailable");
+    }
     static Network internetNetwork(Context c) throws IOException {
         ConnectivityManager cm=c.getSystemService(ConnectivityManager.class);
         Network active=cm.getActiveNetwork();

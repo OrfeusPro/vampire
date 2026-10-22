@@ -145,6 +145,8 @@ public final class MainActivity extends Activity {
                 });
             },"PhoneExitNetworkInfo").start();
         });
+        Button exitNetwork=action("Сеть для предоставления доступа",false);add(details,exitNetwork,10);
+        exitNetwork.setOnClickListener(v->chooseExitNetwork());
         add(remote,label("API управления своим телефоном",18,TEXT),0);
         add(remote,label("Скриншоты, нажатия и свайпы для своего ПК. Без root. Доступ к экрану включается отдельно; защищённые системные окна не управляются.",14,MUTED),10);
         Switch controlToggle=new Switch(this);controlToggle.setText("Разрешить управление с ПК");controlToggle.setTextColor(TEXT);
@@ -214,6 +216,37 @@ public final class MainActivity extends Activity {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},1);
     }
     private int dp(int value) { return Math.round(value*getResources().getDisplayMetrics().density); }
+    private void chooseExitNetwork(){
+        android.net.ConnectivityManager cm=getSystemService(android.net.ConnectivityManager.class);
+        java.util.List<android.net.Network> choices=new java.util.ArrayList<>();choices.add(null);
+        java.util.List<String> names=new java.util.ArrayList<>();names.add("Автоматически: приоритет Wi-Fi, затем мобильная сеть");
+        long saved=getSharedPreferences("runtime",MODE_PRIVATE).getLong("exitWifiHandle",0);int selected=saved==0?0:-1,index=0;
+        for(android.net.Network n:cm.getAllNetworks()){
+            index++;android.net.NetworkCapabilities caps=cm.getNetworkCapabilities(n);
+            if(!PeerDirectory.clientUplink(caps)||!caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI))continue;
+            android.net.LinkProperties link=cm.getLinkProperties(n);
+            String name="Сеть №"+index+" · Wi-Fi · "+(link==null?"интерфейс неизвестен":link.getInterfaceName())
+                +(n.equals(cm.getActiveNetwork())?" · основная Android":"")
+                +(link!=null&&android.os.Build.VERSION.SDK_INT>=29?" · MTU "+link.getMtu():"");
+            choices.add(n);names.add(name);if(n.getNetworkHandle()==saved)selected=choices.size()-1;
+        }
+        new android.app.AlertDialog.Builder(this).setTitle("Сеть выхода · номера в этом списке")
+            .setSingleChoiceItems(names.toArray(new String[0]),selected,(dialog,which)->{
+                dialog.dismiss();android.net.Network choice=choices.get(which);
+                new android.app.AlertDialog.Builder(this).setTitle("Применить выбор сети?")
+                    .setMessage(names.get(which)+"\n\nТекущие подключения через этот телефон будут закрыты. Ручной выбор действует только для предоставления доступа. Если сеть исчезнет, выберите её заново или верните автоматический режим.")
+                    .setNegativeButton("Отмена",null).setPositiveButton("Применить",(confirm,button)->{
+                        if(choice!=null){android.net.NetworkCapabilities caps=cm.getNetworkCapabilities(choice);
+                            if(!PeerDirectory.clientUplink(caps)||!caps.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI)){
+                                new android.app.AlertDialog.Builder(this).setMessage("Эта сеть больше недоступна. Откройте выбор сетей заново.").setPositiveButton("OK",null).show();return;
+                            }
+                        }
+                        getSharedPreferences("runtime",MODE_PRIVATE).edit().putLong("exitWifiHandle",choice==null?0:choice.getNetworkHandle()).apply();
+                        if(ExitService.enabled(this)&&!ClientVpnService.active&&!ClientVpnService.requested(this))
+                            startForegroundService(new Intent(this,ExitService.class).setAction("reconnect"));
+                    }).show();
+            }).setNegativeButton("Закрыть",null).show();
+    }
     private void chooseVpnPhone(){
         if(android.os.Build.VERSION.SDK_INT<29){new android.app.AlertDialog.Builder(this).setTitle("Требуется Android 10").setMessage("Подключение через другой телефон доступно с Android 10. Предоставление интернета по-прежнему работает с Android 8.").setPositiveButton("OK",null).show();return;}
         if(loadingPhones||ClientVpnService.active)return;loadingPhones=true;vpnChoose.setEnabled(false);vpnState.setText("Получаю список личных телефонов…");

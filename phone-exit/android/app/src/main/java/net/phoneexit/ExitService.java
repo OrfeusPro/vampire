@@ -98,15 +98,17 @@ public final class ExitService extends Service {
             update("Текущая сеть изменилась · переподключаю доступ");
         }
         try{
-            Network network=PeerDirectory.internetNetwork(this);
+            Network network=PeerDirectory.exitNetwork(this);
             if(selectedWifi!=null&&!network.equals(selectedWifi)){
                 closeSession();selectedWifi=null;retryAt=0;
                 if(config==null){stopSelf();return;}
             }
             useWifi(network,manager.getNetworkCapabilities(network));
-        }catch(java.io.IOException ignored){
+        }catch(java.io.IOException unavailable){
             if(selectedWifi!=null&&!PeerDirectory.clientUplink(manager.getNetworkCapabilities(selectedWifi))){closeSession();selectedWifi=null;}
-            if(directory==null&&engine==null)update("Ожидаю Wi-Fi или мобильный интернет · подключение автоматическое");
+            if(directory==null&&engine==null)update("selected_wifi_unavailable".equals(unavailable.getMessage())
+                ?"Выбранная сеть Wi-Fi недоступна · выберите сеть заново или автоматический режим в настройках"
+                :"Ожидаю Wi-Fi или мобильный интернет · подключение автоматическое");
         }
     }
     private void useWifi(Network network,NetworkCapabilities caps) {
