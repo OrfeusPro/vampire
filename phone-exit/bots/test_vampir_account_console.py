@@ -86,7 +86,7 @@ class AccountConsoleTests(unittest.TestCase):
     def test_server_loading_uses_selected_signin_flow_without_signup(self):
         spec = importlib.util.spec_from_file_location('account_signin_test', HERE / 'vampir-headless/account-worker.py')
         tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
-        for flow in ('launcher', 'nid'):
+        for flow, manual in (('launcher', False), ('nid', False), ('launcher', True), ('nid', True)):
             store, registry, cdn, lobby = MagicMock(), MagicMock(), MagicMock(), MagicMock()
             store.credential.return_value = ('fixture@unit.invalid', 'fixture-password',
                 dict(enabled=True, region='EU', server_id=384, auth_flow=flow))
@@ -101,10 +101,27 @@ class AccountConsoleTests(unittest.TestCase):
             with patch.object(tool, 'AccountStore', return_value=store), \
                  patch.object(tool, 'DeviceRegistry', return_value=registry), patch.object(tool, 'load', side_effect=load), \
                  patch.object(tool, 'build_account_catalog', return_value={}), patch.object(tool, 'emit'):
-                tool.run(SimpleNamespace(store=Path('fixture.sqlite3'), account='fixture-id', operation='servers'))
+                tool.run(SimpleNamespace(store=Path('fixture.sqlite3'), account='fixture-id', operation='servers', manual_sign_in=manual))
             self.assertEqual(lobby.run.call_args.kwargs['auth_flow'], flow)
+            self.assertEqual(lobby.run.call_args.kwargs['password'], '' if manual else 'fixture-password')
             self.assertNotIn('create_sdk_player', lobby.run.call_args.kwargs)
             store.save_catalog.assert_called_once_with('EU', {})
+
+    def test_manual_signin_flag_is_explicit_and_rejects_registration(self):
+        spec = importlib.util.spec_from_file_location('manual_signin_job_test', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec); spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('fixture@unit.invalid', password='fixture', assignment={})
+            jobs = tool.Jobs(store)
+            with patch.object(tool.subprocess, 'Popen') as popen, patch.object(tool.threading, 'Thread'):
+                with self.assertRaises(ValueError): jobs.start(identifier, 'register', manual_sign_in=True)
+                with self.assertRaises(ValueError): jobs.start(identifier, 'characters', manual_sign_in=1)
+                popen.assert_not_called()
+                jobs.start(identifier, 'characters', manual_sign_in=True)
+                self.assertIn('--manual-sign-in', popen.call_args.args[0])
+                self.assertTrue(jobs.snapshot()[identifier]['manual_sign_in'])
+                self.assertNotIn('fixture@unit.invalid', popen.call_args.args[0])
 
     def test_character_operation_saves_catalog_from_same_login_and_never_selects_character(self):
         spec = importlib.util.spec_from_file_location('account_chain_test', HERE / 'vampir-headless/account-worker.py')

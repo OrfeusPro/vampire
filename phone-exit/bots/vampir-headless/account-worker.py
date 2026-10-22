@@ -37,6 +37,8 @@ def run(args):
         raise ValueError('This account is disabled')
     if args.operation not in ('servers', 'characters', 'start', 'register'):
         raise ValueError('Unknown account operation')
+    if getattr(args, 'manual_sign_in', False) and args.operation == 'register':
+        raise ValueError('Manual sign-in cannot start registration')
     if settings['server_id'] is None and args.operation not in ('servers', 'register'):
         raise ValueError('Select a server first')
     registry = DeviceRegistry(HERE / '.local/accounts.sqlite3')
@@ -52,6 +54,8 @@ def run(args):
     if args.operation == 'register':
         register_account(store, args, email, password)
         return
+    if getattr(args, 'manual_sign_in', False):
+        password = ''
     def progress(stage):
         # The lobby wrapper emits this only after a validated NID email callback.
         if stage == 'sdk_sign_in':
@@ -221,6 +225,7 @@ if __name__ == '__main__':
     parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register'], required=True)
     parser.add_argument('--accept-required-terms', action='store_true')
     parser.add_argument('--manual-mail-code', action='store_true')
+    parser.add_argument('--manual-sign-in', action='store_true')
     try:
         run(parser.parse_args())
     except Exception as error:

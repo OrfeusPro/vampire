@@ -22,7 +22,9 @@ class Jobs:
         with self.lock:
             return {key: {k: v for k, v in job.items() if k != 'process'} for key, job in self.jobs.items()}
 
-    def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False):
+    def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False, manual_sign_in=False):
+        if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start')):
+            raise ValueError('Manual sign-in is only available for login operations')
         if type(manual_mail_code) is not bool or (manual_mail_code and operation != 'register'):
             raise ValueError('Invalid mail-code mode')
         if operation not in ('servers', 'characters', 'start', 'register'):
@@ -46,13 +48,15 @@ class Jobs:
                 command.append('--accept-required-terms')
             if manual_mail_code:
                 command.append('--manual-mail-code')
+            if manual_sign_in:
+                command.append('--manual-sign-in')
             process = subprocess.Popen(command,
                 stdin=subprocess.PIPE if manual_mail_code else subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                 creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
             job = dict(process=process, running=True, active=False, status='connecting',
                 stage='starting', message='Подготовка подключения.', characters=[],
                 region=account['region'], server_id=account['server_id'], account_id=identifier, operation=operation,
-                manual_mail_code=manual_mail_code, code_sent=False)
+                manual_mail_code=manual_mail_code, manual_sign_in=manual_sign_in, code_sent=False)
             self.jobs[identifier] = job
             threading.Thread(target=self._watch, args=(job,), daemon=True).start()
 
@@ -205,7 +209,7 @@ def server(store, *, port=17949):
                         jobs.stop(body['id'])
                     else:
                         jobs.start(body['id'], body['operation'], accept_required_terms=body.get('accept_required_terms', False),
-                            manual_mail_code=body.get('manual_mail_code', False))
+                            manual_mail_code=body.get('manual_mail_code', False), manual_sign_in=body.get('manual_sign_in', False))
                     return self.response(200, dict(ok=True))
                 if self.path == '/api/registration-code':
                     jobs.submit_code(body['id'], body['code'])
