@@ -87,11 +87,15 @@ PktTutorialUpdate / ID 9903 с ключом и селектором строки
 64 native вектора и три отказа записи. Добавлен отдельный encoder без отправки.
 ID 9904 / TutorialUpdateResult разобран: decoder прошёл 216 native векторов /
 19 коротких префиксов; handler и сброс ожидания — 45 сценариев с явными fixtures.
-Отложенное применение, условия действия и callback ещё проверяются.
+Удаление ожидающего ключа, копирование раннего ответа и применение записи
+теперь проверены native: 12 / 32 / 384 сценария. Серверная запись и локальный
+селектор различаются; реальный gate задачи и запуск остаются fixtures.
+Потребитель очереди, условия действия и callback ещё проверяются.
 Классификация квестов, автовыполнение и источники прежнего UI
 уточнены в TASKS.
 [Writer и следующий ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
 [Ответ и различие ожиданий](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
+[Применение и отложенный ответ](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md).
 [Данные и сетевые привязки](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md).
 [Ближайший порядок](../vampir-headless/TASKS.md#ближайшее-действие).
 

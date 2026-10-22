@@ -139,10 +139,14 @@ UI-каталога после сверки версии, родителей и 
 Writer `0x145858ef0` уже проверен: 9 байтов, 64 native вектора и три отказа;
 кодек не подключён к отправке. Ответ ID 9904 разобран: 19 байтов, 216 native
 векторов / 19 коротких префиксов. Handler / сброс общего ожидания прошли 45
-сценариев с fixtures; отложенное применение и удаление ожидающего ключа
-из receiver ещё проверить. Сброс ожидания не означает завершение действия.
+сценариев с fixtures. Удаление ключа / копирование раннего ответа / применение
+записи дополнительно прошли 12 / 32 / 384 native-сценария с явными границами.
+Различать серверный selector и локальный +1; реальный gate и запуск задач
+пока fixtures. Следом потребитель отложенной очереди, loader TutorialStep,
+первая задача и callback панели. Сброс ожидания не означает завершение действия.
 Активный step 2 ещё не подтверждён.
 [Ответ и границы применения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md).
+[Очередь, удаление ключа и запись состояния](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md).
 [Тело запроса и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md).
 [Путь действия и следующий пробел](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md).
 [Переход, строки и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md).

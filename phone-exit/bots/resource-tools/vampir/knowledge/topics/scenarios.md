@@ -34,6 +34,7 @@ Live состояние заданий, серверные переходы и �
 - [Живое чтение состояния обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md)
 - [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Подсказка обучения и запрос завершения шага](../evidence/scenarios/HEADLESS-TUTORIAL-ACTION-ROUTE.md)
+- [Применение ответа обучения и удаление ожидающего ключа](../evidence/scenarios/HEADLESS-TUTORIAL-APPLY.md)
 - [Тело запроса обучения ID 9903](../evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md)
 - [Ответ обучения ID 9904 и ожидание результата](../evidence/scenarios/HEADLESS-TUTORIAL-RESULT.md)
 - [Выбор строки и локальный переход обучения](../evidence/scenarios/HEADLESS-TUTORIAL-STEP-ADVANCE.md)

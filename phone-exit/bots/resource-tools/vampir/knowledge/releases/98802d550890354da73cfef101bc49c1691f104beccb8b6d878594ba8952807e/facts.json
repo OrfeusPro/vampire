@@ -2959,6 +2959,80 @@
       "question": "quest-waiting-action",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Эффект 141682d60, отложенное применение, loader TutorialStep, условия первой задачи и callback панели."
+    },
+    {
+      "addresses": [
+        "0x14163c480",
+        "0x14163c5f0",
+        "0x141682d60",
+        "0x1464c06d0",
+        "0x1464c4ea0",
+        "0x1464c5770",
+        "0x1464d1770"
+      ],
+      "checks": [
+        {
+          "cache_key": "959df6ceb76f2066d8b45300aa07ab6306d6ae9354e590141dddd342898053de",
+          "id": "release-tutorial-update",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c\\manifest.json",
+          "sha256": "b6314f8d1ace644ad0422b50b5c4f550a42116da24f63398bd64df1a20e08a3c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6edd2371d98792b2521e2bc834df627bf3339f71be93cabebff8224923255e72",
+          "id": "tutorial-session-observer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e0d7eeea7dc37ebe8f3542a84941b8ad882b5294bdfea4d5003f6c2ce100c282\\manifest.json",
+          "sha256": "e0d7eeea7dc37ebe8f3542a84941b8ad882b5294bdfea4d5003f6c2ce100c282",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6cdb1f81ede80731e61933a65579f515474a04d82a29d362fee8bf2a2011bfa0",
+          "id": "release-tutorial-advance",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306\\manifest.json",
+          "sha256": "7ac3debd781a342cd1d9984a5f508bb39800c89bb288f39561cdb696fee08306",
+          "state": "passed"
+        },
+        {
+          "cache_key": "28735c6a754f8211297cb0d0c9c54a1cf5335eb6829fe6ccb337a619cf2f1bea",
+          "id": "release-tutorial-request",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d\\manifest.json",
+          "sha256": "e25c8a0d79e61d41c91891040e354c4a3b9496bd6a28f97aa4e677358a04cd0d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1a556947f318d6711514bbadadcaedccfd3cb428952c52e897cf0ed9d995fb37",
+          "id": "release-tutorial-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa\\manifest.json",
+          "sha256": "409be15c8e8b054b3f977c8315b4f54f598e333877c6215ea9a2ae8453f256aa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6668bd40c02b1d556985ad6b3795eb02fe2cd98d148a23f3a3b96c4d972420cf",
+          "id": "release-tutorial-apply",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d61fcad06498142c2b75a18f917116ba4d4b9a92dbcd204fd013383b0e7a27eb\\manifest.json",
+          "sha256": "d61fcad06498142c2b75a18f917116ba4d4b9a92dbcd204fd013383b0e7a27eb",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Реальное удаление ожидающего ключа, копирование раннего ID 9904 и применение записи проверены в 12 / 32 / 384 native-сценариях. Серверный map получает все поля; локальный сохраняет raw10 и может увеличить selector на 1. Ранний ответ сохраняет отдельную копию, не меняя maps и ожидающий ключ. У gate статически подтверждены возвраты AL, его реальные побочные эффекты ещё не исполнены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-APPLY.md",
+          "sha256": "ac509330aaa4903d38d6bf67eef58b116a22b82ea4814fbd9ea97043be93c06f"
+        }
+      ],
+      "id": "71e905f563f239569dd437ae18bcde510d0583faa9b0c61078b4279717122a09",
+      "limits": [
+        "Реальный gate задачи и её запуск — fixtures; это не подтверждение активного UI или выполнения обучения.",
+        "Свежая вставка server record, clone allocation и получение клиентской фазы — fixtures.",
+        "Очередь имеет подготовленную ёмкость; growth, автоматический потребитель и освобождение копий не исполнены.",
+        "Удаление hash chain / allocation bit / free list исполняется настоящим кодом, без подмены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Разобрать явные callers 1464cd590 (CALL 1464cd607 / 1464cd682) и 1464d0510 (CALL 1464d0aae) к применению 1464d1770: найти потребителя очереди context+0x198 и его готовность. Затем loader TutorialStep / реальный gate 1464c5770 первого перехода и callback панели. Сохранять отдельно серверную запись и локальный selector; активный step 2 не доказан. Вход без новой обработки не повторять.",
+      "question": "quest-waiting-action",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Потребитель отложенной очереди, loader TutorialStep, реальный gate первой задачи, callback панели и активный шаг."
     }
   ],
   "schema": 1,
