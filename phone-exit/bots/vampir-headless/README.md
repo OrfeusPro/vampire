@@ -18,12 +18,11 @@ Blood Pool. Вывод включается / выключается, «К пе�
 
 ## Текущее состояние
 
-Pixel 5 / JP у другого поставщика восстановлен из списка заблокированных
-привязок с разрешения пользователя; остальные поля профиля сверены и сохранены.
-Сигнализация прошла, но прямой WebRTC-канал дал `connecting → failed` /
-`direct_connection_failed`. Через него Game Login не запускался, вывод о
-BlockedIp для этого выхода не получен. Владельцы попыток завершены.
-[Результат транспорта, резервная копия и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-PIXEL-CHANNEL.md).
+Последняя живая проверка через новый Redmi M2006C3LG / JP прошла Login 0,
+список / выбор и вход в мир с ID 206 code 0. После свежего ID 9905 сервер
+принял одну команду обучения 1001 / 2: ID 9904 code 0, `accepted`.
+Сокет и маршрут закрыты. Выбор квеста и автоматическое движение ещё не проверены.
+[Живое подтверждение и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-TUTORIAL-ACK-ACCEPTED.md).
 
 Добавлена явная диагностическая команда `--ack-initial-tutorial` в
 `probe-selected-game-login.py`. Она требует `--read-world-start`,
@@ -44,10 +43,11 @@ raw0c 0 или 1, raw10 0 и flag false; возраст снимка — не б
 
 Локально проверена цепочка входа → ID 206 → ID 9905 → ID 9903 → ID 9904
 через socketpair, а также частичная отправка, отказ, отсутствие ответа,
-лимит очереди и очистка при обрыве. Живой сервер для этой команды ещё
-не проверен: две попытки через HONOR / Redmi JP остановились на Game Login
-58 / BlockedIp, до отправки ID 9903. Оба временных маршрута закрыты.
+лимит очереди и очистка при обрыве. Живой сервер принял эту команду через
+новый Redmi JP. Две прежние попытки через HONOR / Redmi JP остановились
+на Game Login 58 / BlockedIp до отправки ID 9903.
 [Сводки попыток и исправление диагностики каталога](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-INITIAL-TUTORIAL-ACK.md).
+[Отдельная проверка привязки и прямого канала Pixel](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-PIXEL-CHANNEL.md).
 Подтверждение шага не является кликом QuestPanel_PanelTouch,
 не выбирает квест и не доказывает запуск автоматического движения.
 [Основание полей запроса](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-REQUEST-WRITER.md),

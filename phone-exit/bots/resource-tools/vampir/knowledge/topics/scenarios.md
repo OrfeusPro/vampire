@@ -32,6 +32,7 @@ Live состояние заданий, серверные переходы и �
 - [ContentsLock: поля загрузчика и вызовы проверки](../evidence/scenarios/CONTENTS-LOCK-FIELDS.md)
 - [ContentsLock: условия открытия квестов и связи с наградами](../evidence/scenarios/CONTENTS-LOCKS.md)
 - [Живая проверка начального подтверждения обучения](../evidence/scenarios/HEADLESS-LIVE-INITIAL-TUTORIAL-ACK.md)
+- [Сервер принял начальное подтверждение обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-ACK-ACCEPTED.md)
 - [Живое чтение состояния обучения](../evidence/scenarios/HEADLESS-LIVE-TUTORIAL-STATE.md)
 - [Ожидающее действие квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-ENTRY.md)
 - [Поля ответа выбора квестовой панели](../evidence/scenarios/HEADLESS-QUEST-PANEL-RESULT.md)
