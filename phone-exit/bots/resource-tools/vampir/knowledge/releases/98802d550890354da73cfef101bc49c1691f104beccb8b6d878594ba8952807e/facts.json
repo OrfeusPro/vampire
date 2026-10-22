@@ -4549,6 +4549,45 @@
       "question": "global-lobby-selection",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Причина отказа 59 и отличие от принятого официального EU-входа."
+    },
+    {
+      "addresses": [
+        "0x1456bb7d0",
+        "0x145789090",
+        "0x14578e120",
+        "0x146449dc0",
+        "0x146796690",
+        "0x146797990",
+        "0x14679c4f0",
+        "0x1467cee40"
+      ],
+      "checks": [
+        {
+          "cache_key": "5cc24e597dc0feee00e21b8a3bd203c7d3d7c4759ee8c1daf4f1d590ada9f1db",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93\\manifest.json",
+          "sha256": "dfe2ca9922ef3ef665d3eba381b0a9bc47a2d45a85c9e2b0a2db1a810ab4fd93",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем EXE целый LoginResult handler/gate в 18 случаях code57/58/59 не применяет список, выбирает transport0 и выход либо popup; 16 принятых пустых ID102 через actual readers/handler/gate/predicate очищают прежний список и продолжают UI. Статически найдены игровые Create103/Result104, CreateData table14992a360, writer14578e120/reader145789090 и direct producer146449dc0. Runtime различает login_rejected и empty_list; отправка создания не подключена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-EMPTY-LIST-CREATION-ENTRY.md",
+          "sha256": "9423adaeda7a7dc23b49812eca2e3783edc0c98f09752c50b2b52a50b67eb35c"
+        }
+      ],
+      "id": "eaff5c07a4909da186485de8dbd991e1d736cf9f0a77a7285c7cff149f89ca3a",
+      "limits": [
+        "Login packet layout, engine globals/state/policy, строки, allocation и UI заданы fixtures/captures; popup callbacks и owner continuation не исполнены.",
+        "Полное native исполнение относится к covered отказам Login и пустому ListResult, а Create writer/reader/producer разобраны только статически.",
+        "Полная wire-структура внешности, допустимый класс и серверное создание пока не проверены; новых входов и игровых действий нет."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подтвердить leaf границы object serializer144aae8c0, appearance writer и class producer; затем целый ограниченный replay создания. До Login0 не отправлять создание.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная wire-проверка CreateData / appearance, источник class-параметра и реальный UI-переход пустого списка; причина Login59 остаётся отдельной."
     }
   ],
   "schema": 1,

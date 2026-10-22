@@ -121,6 +121,11 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             character_list_sent=list_requested, initial_ping_queued=initial_ping_queued, game_session_ready=False)
         if read_character_list:
             characters = owner.selection.characters
+            # Creation is a later explicit operation; a refused Login cannot
+            # be interpreted as an accepted empty list.
+            value['character_entry_state'] = ('login_rejected' if flow and flow.login_result_code not in (None, 0)
+                else 'awaiting_list' if characters is None
+                else 'empty_list' if not characters.records else 'characters_available')
             value.update(character_list_received=characters is not None,
                 character_list_result_code=owner.selection.result_code,
                 character_count=len(characters.records) if characters is not None else None,

@@ -12,6 +12,7 @@ SHA='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 
 def run(packet='PktPingResult'):
     if packet not in ('PktPingResult','PktCharacterPosition','PktCharacterMove','PktCharacterMoveResult','PktCharacterMoveNotify',
+            'PktLoginResult','PktCharacterCreate','PktCharacterCreateResult',
             'PktQuestListRead','PktQuestListReadResult','PktQuestPanelSelect','PktQuestPanelSelectResult',
             'PktQuestTaskActionStart','PktQuestTaskActionStartResult',
             'PktQuestAutoPlayState','PktQuestAutoPlayStateResult','PktQuestAutoPlayStateNotify',

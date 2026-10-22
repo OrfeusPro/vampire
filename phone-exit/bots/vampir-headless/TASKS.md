@@ -8,6 +8,10 @@
 пользователь подтвердил EU. Свежий каталог дал Prelude 2 / ID 384 / group 358.
 Game Version 0, Game Login 59 / BlockedInfo; до списка и создания не дошли.
 Следом — причина этого отказа и сравнение с официальным принятым EU-входом.
+Параллельно разобрана подготовка создания первого персонажа: игровые ID 103 /
+104, CreateData writer / reader и producer найдены. Пустой ID 102 и отказ Login
+разделены current native replay; отправка создания пока не подключена.
+[Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живая проверка EU](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

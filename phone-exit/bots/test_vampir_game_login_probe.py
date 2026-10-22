@@ -373,6 +373,7 @@ class GameLoginProbeTests(unittest.TestCase):
         result, captures = self.attempt(login_body=body, read_character_list=True)
         self.assertEqual(captures, [(1, 0), (3, 1)])
         self.assertEqual(result['login_result_code'], 59)
+        self.assertEqual(result['character_entry_state'], 'login_rejected')
         self.assertEqual(result['login_result_key'], 'BlockedInfo')
         self.assertEqual(result['login_error_message'], 'Доступ к игровому сервису ограничен сервером.')
         self.assertFalse(result['character_list_sent'])
@@ -457,6 +458,17 @@ class GameLoginProbeTests(unittest.TestCase):
             self.assertEqual(result['status'],'character_selection_not_sent')
             self.assertEqual(result['selection_error'],'index_out_of_range')
             self.assertFalse(result['character_select_sent'])
+            self.assertEqual(result['character_entry_state'], 'empty_list' if not keys else 'characters_available')
+
+    def test_accepted_empty_list_is_distinct_from_login_refusal(self):
+        result, captures = self.attempt(login_body=bytes.fromhex(FIXTURE['login_result_hex']),
+            read_character_list=True, character_body=list_body(keys=()))
+        self.assertEqual(captures, [(1, 0), (3, 1), (101, 2)])
+        self.assertEqual(result['character_entry_state'], 'empty_list')
+        self.assertEqual(result['character_list_result_code'], 0)
+        self.assertEqual(result['character_count'], 0)
+        self.assertIsNone(result['preferred_character_index'])
+        self.assertFalse(result['character_select_sent'])
 
     def test_selection_refusal_preserves_list_summary_and_does_not_retry(self):
         body=struct.pack('<I',16)+bytes.fromhex(SELECTION_FIXTURE['select_result_hex'])[4:]

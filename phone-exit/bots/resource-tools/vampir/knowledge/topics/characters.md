@@ -40,6 +40,7 @@ bounded native-сценарии; семантика проверенной ве�
 - [Продолжение ID110: отдельный менеджер и обход получателей](../evidence/characters/HEADLESS-CHARACTER-SELECT-POST-MANAGER.md)
 - [ID110: минимальное тело и raw spatial vector, 20 октября 2026](../evidence/characters/HEADLESS-CHARACTER-SELECT-RESULT.md)
 - [ID109: реальные callers, источники полей и кадр](../evidence/characters/HEADLESS-CHARACTER-SELECT-SEND.md)
+- [Пустой список и отдельный запрос создания персонажа](../evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md)
 - [Выбор персонажа после принятого списка](../evidence/characters/HEADLESS-LIVE-CHARACTER-SELECTION.md)
 - [Vampir: живое завершение входа в мир](../evidence/characters/HEADLESS-LIVE-WORLD-FINISH.md)
 - [Завершение входа и путь позиции на текущей сборке](../evidence/characters/HEADLESS-RELEASE-WORLD-FINISH-POSITION.md)

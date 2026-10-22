@@ -9,6 +9,10 @@
 Свежий EU-каталог получен: Prelude 2 — server ID 384 / group ID 358.
 Game Version принят, Game Login вернул 59 / BlockedInfo до списка персонажей.
 Создание нового персонажа ещё не выполнялось; причина ограничения не установлена.
+Проверена отдельная ветка пустого списка: 16 native случаев успешного ID 102
+отличаются от 18 отказов Login 57 / 58 / 59. Найдены Create 103 / Result 104,
+вложенный CreateData и producer; полный формат внешности ещё не проверен.
+[Пустой список и подготовка создания](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
