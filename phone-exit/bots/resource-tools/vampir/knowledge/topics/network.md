@@ -75,6 +75,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [Проверка официального клиента через JP](../evidence/network/HEADLESS-OFFICIAL-CLIENT-JP.md)
 - [Vampir: пакеты входа, персонажа и heartbeat — H02](../evidence/network/HEADLESS-PACKET-BINDINGS.md)
 - [Vampir — реальные байты тела Ping, H03a](../evidence/network/HEADLESS-PING-CODEC.md)
+- [Эталон записи запуска и квестового автопрохождения](../evidence/network/HEADLESS-QUEST-REFERENCE-CAPTURE.md)
 - [Vampir — receive-B, ключ и таблица уведомлений](../evidence/network/HEADLESS-RECEIVE-B.md)
 - [Vampir — длина входящего кадра и связь с dispatcher](../evidence/network/HEADLESS-RECEIVE-ENVELOPE.md)
 - [Resolver result → peer recipient → socket creation](../evidence/network/HEADLESS-RESOLVED-SOCKET-SETUP.md)
