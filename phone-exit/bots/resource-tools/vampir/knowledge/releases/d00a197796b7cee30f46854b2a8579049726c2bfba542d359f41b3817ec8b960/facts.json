@@ -1755,6 +1755,58 @@
       "question": "release-update-target-discovery",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Текущие UTF-8 conversion/archive primitives, полные preparation, send/result, затем character list/select/world/position/heartbeat."
+    },
+    {
+      "addresses": [
+        "0x1414465f0",
+        "0x14144c550",
+        "0x144aad310"
+      ],
+      "checks": [
+        {
+          "cache_key": "2eff674b19bde55631fb6b87d46e6fd9a527349500c1f0748ded41637d9debed",
+          "id": "native-utf8-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\63f5aa78b819c4f0af06847048f601229d11690ecec7ba3ebeb1d6431d58c56f\\manifest.json",
+          "sha256": "63f5aa78b819c4f0af06847048f601229d11690ecec7ba3ebeb1d6431d58c56f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем SHA целиком исполнены UTF-8 length 14144c550, conversion 1414465f0 и явно ограниченный scalar encoder leaf 14143f320..14143f45c (317 байт). Пройдены 142 строковых и 80 scalar случаев: actual UTF-8, replacement ?, нехватка ёмкости, целый префикс, указатели, canaries, RBX/RSP. String writer 144aad310 связан с length/conversion статически; его готовый export использован повторно. Проверка native-utf8-context включена в update и оба игровых контракта; coverage остаётся partial.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-UTF8-11316.md",
+          "sha256": "21f1329d9ea8ce2f6b718ef44f4ec5b405c2e4bd8eecc2c796b74a3f354b7357"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\UTF8-11316.json",
+          "sha256": "e494d81b455ffad2a88e76961303c84ff3bc46b7f447ff0295aa478875264a17"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\utf8-11316.json",
+          "sha256": "78c4bd0c5e54381ed315ba1ab56d527a578f60694b3ea16c4157aa97b6759ab3"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-1a6b28373a53\\details.json",
+          "sha256": "8f8d65772109b8eb78d043ae41837d8232c36c4b6104abfd71f44872ce488142"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dc93ae3f92b7\\details.json",
+          "sha256": "462d870177d42665c381ab61e069b9530ddc4239fcc9f55260072fe6e83a1e72"
+        }
+      ],
+      "id": "e1611b8e8a2a3bbdf62ea16191da0ccc7abe8dbb01110145df26b338c1cec8e2",
+      "limits": [
+        "String writer и archive primitives не исполнялись; сетевой формат всего Version/Login body не подтверждён.",
+        "Explicit UTF-16 counts, bounded vectors и неотрицательные capacities; не произвольные указатели или размеры.",
+        "Encoder не имеет unwind root: используются явные bytes/SHA и проверка замкнутых переходов без вызовов.",
+        "Встроенный NUL проверен только при явном count; допустимость NUL в FString/пакете не установлена.",
+        "Нет авторизации, игровых команд, процесса игры, смены профиля или baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "Исполнить сохранённый string writer с подтверждёнными UTF-8 helpers и текущими archive string/uint16/raw IO methods; не повторять готовые exports.",
+      "question": "release-utf8-codec",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Текущие string writer / archive encoding, полные preparation/result Version/Login и дальнейшая сессия."
     }
   ],
   "schema": 1,

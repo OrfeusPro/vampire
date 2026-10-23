@@ -59,3 +59,4 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Новый compiled tag Version / Login и код 1](../evidence/updates/HEADLESS-RELEASE-WIRE-TAG.md)
 - [Возобновляемая сверка 1.13.14 → 1.13.16](../evidence/updates/HEADLESS-RESUMABLE-UPDATE-11316.md)
 - [Связанные проверки в команде обновления](../evidence/updates/HEADLESS-UPDATE-CHECK-DISPATCH.md)
+- [UTF-8 helpers 1.13.16: нативное преобразование и границы буфера](../evidence/updates/HEADLESS-UTF8-11316.md)

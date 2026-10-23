@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-utf8-checks\\ffd99a7f69b3fafa36470342233b872acdf203690c4aceeeebbeeb6477a45fbd\\manifest.json",
+  "sha256": "ffd99a7f69b3fafa36470342233b872acdf203690c4aceeeebbeeb6477a45fbd",
+  "cases": 142,
+  "scalar_cases": 80,
+  "network_used": false,
+  "profile_activated": false
+}

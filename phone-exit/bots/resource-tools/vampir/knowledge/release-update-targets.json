@@ -837,6 +837,54 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-utf8-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-utf8-context.py"
+      ],
+      "rule": "От подтверждённого string writer проверить прямые length/conversion calls; encoder из converter разрешать только по явным байтам, SHA и замкнутым переходам bounded leaf. Новый SHA требует review и port, runtime не переключать.",
+      "automation": {
+        "discovery": "reviewed_direct_calls_and_bounded_leaf",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x14144c550",
+                "scope": "Native UTF-8 helper; scalar encoder leaf 0x14143f320..0x14143f45c, 317 bytes, explicit-count/capacity fixtures, no archive IO",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x1414465f0",
+                "scope": "Native UTF-8 helper; scalar encoder leaf 0x14143f320..0x14143f45c, 317 bytes, explicit-count/capacity fixtures, no archive IO",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x14143f320",
+                "scope": "Native UTF-8 helper; scalar encoder leaf 0x14143f320..0x14143f45c, 317 bytes, explicit-count/capacity fixtures, no archive IO",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-utf8-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-UTF8-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

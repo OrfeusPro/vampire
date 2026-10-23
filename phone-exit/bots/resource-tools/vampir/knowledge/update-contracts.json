@@ -181,7 +181,8 @@
       "purpose": "Version и compiled tag",
       "depends_on": [],
       "checks": [
-        "compiled-tag-native-11316"
+        "compiled-tag-native-11316",
+        "native-utf8-context"
       ],
       "recipes": [
         {
@@ -263,7 +264,8 @@
       },
       "targets": [
         "compiled-tag-current",
-        "packet-writers-current"
+        "packet-writers-current",
+        "native-utf8-current"
       ],
       "writer_check": {
         "object_size": 208,
@@ -333,7 +335,8 @@
       ],
       "checks": [
         "release-game-sign-in-result",
-        "release-lobby-errors"
+        "release-lobby-errors",
+        "native-utf8-context"
       ],
       "recipes": [
         {
@@ -405,7 +408,8 @@
       },
       "targets": [
         "compiled-tag-current",
-        "packet-writers-current"
+        "packet-writers-current",
+        "native-utf8-current"
       ],
       "writer_check": {
         "object_size": 320,

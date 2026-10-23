@@ -1,9 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
-Version / Login writers текущего SHA проверены на порядок полей и отказы:
-160 native случаев. Дальше — реальный string helper / UTF-8 / archive encoding,
-полные preparation и result readers. Готовые writers и string helper не выгружать заново.
-[Границы и сохранённые адреса](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-PACKET-WRITERS-11316.md).
+Version / Login writers проверены на порядок полей и отказы: 160 случаев.
+Текущие native UTF-8 helpers прошли ещё 222 сценария. Дальше — полный string
+writer / archive encoding, затем preparation и result readers. Готовые writers,
+string helper, length / converter повторно не выгружать.
+[Адреса, границы и следующая проверка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UTF8-11316.md).
 
 Возобновляемая сверка пары сборок проверена; готов только offline launcher.
 Дальше — полный Version / Login writer / result, затем список / выбор персонажа

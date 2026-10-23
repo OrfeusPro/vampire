@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Для 1.13.16 нативные UTF-8 length / conversion / encoder прошли 222 сценария,
+включая повреждённые суррогаты и нехватку буфера. Готовые exports сохранены;
+дальше — полный string writer и archive encoding.
+[Адреса, границы и повторная проверка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UTF8-11316.md).
+
 Для 1.13.16 исполнены целые Version / Login writers: 160 сценариев порядка
 полей и отказов операций. Проверка включена в update; string / archive methods
 пока fixtures, wire encoding и полный игровой вход ещё не подтверждены.
