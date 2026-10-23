@@ -174,3 +174,13 @@ common-context результат в [facts текущего SHA](releases/98802
 Отчёт: `knowledge/update-results/932418e6e4be5c3519210d636e1d41bbe1fc787f747dbf6041fa7e3cd2cd113d/manifest.json`.
 Первый экспериментальный отчёт `05e0ba17…` неверно обозначал CEF archives как
 удалённые из-за неполного охвата; он заменён указанным повторным аудитом.
+
+## Проверки из update
+
+Обычный update после обработки ресурсов вызывает только checks с явными
+`on_update: true` и `offline_reviewed: true` в research-checks.json, максимум 32.
+Используется общий source/dependency cache. Новый SHA даёт requires_port; ошибки
+и неперенесённые проверки сохраняются в queue и checks итогового отчёта.
+Audit-only их не запускает. Совместимость, baseline и runtime не продвигаются
+автоматически. Подключённый набор и границы:
+[dispatch проверок](evidence/updates/HEADLESS-UPDATE-CHECK-DISPATCH.md).

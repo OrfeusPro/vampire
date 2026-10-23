@@ -172,5 +172,62 @@ class ResearchUpdateTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     self.update.target_plans(self.index.api(), self.knowledge)
 
+    def register_update_checks(self, checks):
+        (self.knowledge/'research-checks.json').write_text(json.dumps(dict(schema=1, checks=checks)), 'utf-8')
+
+    def test_update_runs_only_opted_in_checks_and_queues_nonpassing_results(self):
+        self.register_update_checks([dict(id='current', on_update=True, offline_reviewed=True),
+            dict(id='unported', on_update=True, offline_reviewed=True),
+            dict(id='failed', on_update=True, offline_reviewed=True), dict(id='unrelated')])
+        calls = []
+        def run(index, args, sha, question, *, check_ids):
+            calls.append(check_ids)
+            name = check_ids[0]
+            return [dict(id=name, state=dict(current='passed', unported='requires_port', failed='failed')[name])]
+        with patch.object(self.workflow, 'run_checks', side_effect=run):
+            checked = self.update.run_update_checks(self.index.api(), self.workflow, self.args, self.sha)
+        with patch.object(self.update, 'run_update_checks', return_value=checked):
+            result = self.update.update(self.index.api(), self.args, self.root/'knowledge/search.sqlite3')
+        report = self.workflow.checked_manifest(self.index.api(), Path(result['report']))
+        self.assertEqual(calls, [['current'], ['unported'], ['failed']])
+        self.assertEqual([r['check'] for r in report['queue']], ['unported', 'failed'])
+        self.assertEqual(len(report['checks']), 3)
+        self.assertFalse(report['baseline_promoted'])
+
+    def test_update_input_error_and_unreviewed_check_stay_in_queue(self):
+        self.register_update_checks([dict(id='corrupt', on_update=True, offline_reviewed=True),
+            dict(id='unreviewed', on_update=True, offline_reviewed=False)])
+        with patch.object(self.workflow, 'run_checks', side_effect=ValueError('fixture dependency changed')) as run:
+            checked = self.update.run_update_checks(self.index.api(), self.workflow, self.args, self.sha)
+        with patch.object(self.update, 'run_update_checks', return_value=checked):
+            result = self.update.update(self.index.api(), self.args, self.root/'knowledge/search.sqlite3')
+        report = self.workflow.checked_manifest(self.index.api(), Path(result['report']))
+        run.assert_called_once()
+        self.assertEqual([c['state'] for c in report['checks']], ['requires_review', 'requires_review'])
+        self.assertEqual(len(report['queue']), 2)
+
+    def test_audit_only_skips_opted_in_checks(self):
+        self.register_update_checks([dict(id='current', on_update=True, offline_reviewed=True)])
+        self.args.audit_only = True
+        with patch.object(self.update, 'run_update_checks', side_effect=AssertionError('Audit only')):
+            result = self.update.update(self.index.api(), self.args, self.root/'knowledge/search.sqlite3')
+        report = self.workflow.checked_manifest(self.index.api(), Path(result['report']))
+        self.assertEqual(report['checks'], [])
+
+    def test_update_checks_share_dependency_cache_and_new_source_requires_port(self):
+        # Use a reviewed synthetic unittest already present in the workspace;
+        # subprocess itself is mocked, so no nested update/auth work is executed.
+        test = 'test_vampir_research_update.py'
+        self.register_update_checks([dict(id='fixture', on_update=True, offline_reviewed=True,
+            questions=['question'], source_sha256=[self.sha], test_pattern=test, dependencies=[])])
+        from types import SimpleNamespace
+        with patch.object(self.workflow.subprocess, 'run', return_value=SimpleNamespace(returncode=0)) as run:
+            first = self.update.run_update_checks(self.index.api(), self.workflow, self.args, self.sha)
+            second = self.update.run_update_checks(self.index.api(), self.workflow, self.args, self.sha)
+            other = self.update.run_update_checks(self.index.api(), self.workflow, self.args, 'f'*64)
+        run.assert_called_once()
+        self.assertEqual(first, second)
+        self.assertEqual(other[0]['state'], 'requires_port')
+
 
 if __name__ == '__main__': unittest.main()

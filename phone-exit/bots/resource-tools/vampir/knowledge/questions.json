@@ -345,16 +345,17 @@
       "id": "release-update-target-discovery",
       "status": "open",
       "question": "Какие точные ориентиры автоматически находят кандидатов после обновления EXE без переноса старых ролей?",
-      "known": "Для SHA d00a1977 по проверенным RIP LEA найдены два launcher candidate roots. IsInspect имеет несколько ссылок и undecodable fragments, остаётся в очереди. Машинный план хранит точные строки, старый SHA, проверочные команды и границы переноса. Добавлен collect без comparison project: отдельный noanalysis проект по SHA, только явные unwind roots. Полные Ghidra exports 1444ee9d0 / 144503b10 получены, проверены importer и повторно использованы без JVM. Однобайтные placeholders остаются incomplete. Прошли 6 collector/source tests, 6 index и 12 lifecycle tests. В план добавлена точная GMC2 Start signature. Новый unique root 144508210 получен через prepare/collect; 57 source-checked instructions исполнены в 512 сценариях до FString copy boundary. Zone выбирает source offsets 150/160/170/180, destination 1e8; settings getter и copy fixtures. URL и default zone ещё не подтверждены.",
-      "unknown": "Новый auth-контракт и SDK/GMC2 profile: ключи, внешние callees, headers и callbacks ещё требуют проверки. Отсутствие comparison project для этого SHA больше не препятствует явному collect.",
-      "next_action": "Найти текущий GMC2 constructor и settings/game overrides по проверенным globals и явным ссылкам, затем port SDK/GMC2 profile. Готовый Start не перевыгружать.",
+      "known": "Для SHA d00a1977 по проверенным RIP LEA найдены два launcher candidate roots. IsInspect имеет несколько ссылок и undecodable fragments, остаётся в очереди. Машинный план хранит точные строки, старый SHA, проверочные команды и границы переноса. Добавлен collect без comparison project: отдельный noanalysis проект по SHA, только явные unwind roots. Полные Ghidra exports 1444ee9d0 / 144503b10 получены, проверены importer и повторно использованы без JVM. Однобайтные placeholders остаются incomplete. Прошли 6 collector/source tests, 6 index и 12 lifecycle tests. В план добавлена точная GMC2 Start signature. Новый unique root 144508210 получен через prepare/collect; 57 source-checked instructions исполнены в 512 сценариях до FString copy boundary. Zone выбирает source offsets 150/160/170/180, destination 1e8; settings getter и copy fixtures. URL и default zone ещё не подтверждены. После ограниченного переноса SDK/NID/geo в update подключён opt-in dispatch зарегистрированных offline checks: source/dependency cache, отказ unreviewed, очередь ошибок и requires_port. Native reports перепроверены при изменении workflow dependency; SDK manifest пересобран.",
+      "unknown": "Полное покрытие ресурсных и игровых связей opt-in checks; перенос игрового профиля / character selection / world completion на текущий SHA и живая совместимость.",
+      "next_action": "Перенести current game source checks, затем расширять явно проверенный набор on_update. Сохранять requires_port до подтверждения; runtime не продвигать автоматически.",
       "decision_rule": "Уникальная строка и ссылка дают кандидат, а не подтверждённую роль или совместимость. Runtime profile меняется только после source-bound проверки контракта.",
       "do_not_repeat": "Не повторять те же экспорты; не расширять дерево вызовов автоматически и не переносить старые адреса по общему сдвигу.",
       "addresses": [],
       "evidence": [
         "UPDATE-TARGETS.md",
         "evidence/tools/HEADLESS-REQUESTED-GHIDRA.md",
-        "evidence/auth/HEADLESS-GMC2-START-11316.md"
+        "evidence/auth/HEADLESS-GMC2-START-11316.md",
+        "evidence/updates/HEADLESS-UPDATE-CHECK-DISPATCH.md"
       ]
     },
     {

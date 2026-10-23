@@ -189,7 +189,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/ping.py",
         "phone-exit/bots/vampir-shared/vampir_core/map_session.py",
         "phone-exit/bots/vampir-shared/vampir_core/map_position.py"
-      ]
+      ],
+      "on_update": true
     },
     {
       "id": "release-world-start-writer",
@@ -491,7 +492,8 @@
         "phone-exit/bots/test_vampir_world_entry_flow.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/test_vampir_world_completion_flow.py"
-      ]
+      ],
+      "on_update": true
     },
     {
       "id": "release-ping-result",
@@ -2511,7 +2513,8 @@
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
-      ]
+      ],
+      "on_update": true
     },
     {
       "id": "release-game-sign-in-result",
@@ -3098,7 +3101,8 @@
         "phone-exit/bots/resource-tools/vampir/compare-release-snapshots.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/release-update-targets.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/release-gmc2-request-targets.json",
-        "phone-exit/bots/test_vampir_knowledge_index.py"
+        "phone-exit/bots/test_vampir_knowledge_index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json"
       ]
     },
     {
@@ -3529,7 +3533,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/gmc2_decode.py",
         "phone-exit/bots/vampir-shared/vampir_core/nid_metadata.py",
         "phone-exit/bots/vampir-shared/vampir_core/socks_route.py"
-      ]
+      ],
+      "on_update": true
     },
     {
       "id": "sdk-runtime-launcher-11316",
@@ -3609,7 +3614,8 @@
       ],
       "system_runtime_files": [
         "ucrtbase.dll"
-      ]
+      ],
+      "on_update": true
     }
   ]
 }

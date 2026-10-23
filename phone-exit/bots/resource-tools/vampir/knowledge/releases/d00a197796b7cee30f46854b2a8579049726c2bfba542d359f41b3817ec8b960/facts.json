@@ -1233,6 +1233,52 @@
       "question": "sdk-profile-assembly",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Живой вход, текущие direct SDK sign-in/fetch/sign-up/terms и игровой source profile."
+    },
+    {
+      "addresses": [
+        "0x1444c4210"
+      ],
+      "checks": [
+        {
+          "cache_key": "c977fe1447aca8e5f852fda94042ce48e31506db140432a53af18872af5a6ad2",
+          "id": "release-update-target-discovery",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bc41af993d35f91d7d9f8f8f93732bac25afc9d7875af2d1fa3ae0adc62c2e97\\manifest.json",
+          "sha256": "bc41af993d35f91d7d9f8f8f93732bac25afc9d7875af2d1fa3ae0adc62c2e97",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fe9b1fe61c69c0695515b352123aacbe5ab01e7e22c17075ad91ed93ecc71fe",
+          "id": "release-requested-function-export",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\11662f0557dfc3275372e4e5df493abbcb0ccb2b9eebaf4b728391448f9367ef\\manifest.json",
+          "sha256": "11662f0557dfc3275372e4e5df493abbcb0ccb2b9eebaf4b728391448f9367ef",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d7c4958a2b5fc7fa5bf57ba3438ce607a8004ed471f9604141009088d7bdcf27",
+          "id": "release-update-plan-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\63b6d05838dd0dc4a923372d6f7fd7aa11fa6854c2d0773c382688d3e8d96d9b\\manifest.json",
+          "sha256": "63b6d05838dd0dc4a923372d6f7fd7aa11fa6854c2d0773c382688d3e8d96d9b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Команда update вызывает явно отмеченные offline checks через общий source/dependency cache и сохраняет неперенесённые проверки и ошибки в queue. Повторная сверка SDK выявила изменение workflow dependency; native report и runtime manifest пересозданы с явным новым SHA. Три текущие проверки прошли, character selection и world completion требуют переноса.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-UPDATE-CHECK-DISPATCH.md",
+          "sha256": "624db9e0e25d079d9603013598500a86d6027db9ba982b902717e7214f0b8436"
+        }
+      ],
+      "id": "706ece687dcd6cf1d919a8f00ed84a062a0dd356cd9326ef676e7ceaf44c41c3",
+      "limits": [
+        "15 update и 14 workflow tests используют синтетические fixtures; авторизация и игровые действия отсутствуют.",
+        "Реальный dispatcher проверен отдельно от полного аудита установки и resource extraction; пять opt-in checks не покрывают все игровые связи.",
+        "Новый manifest остаётся launcher-only; живая совместимость и Android не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "Перенести текущие game source checks и расширить явно проверенный on_update набор; затем живая проверка при доступности серверов.",
+      "question": "release-update-target-discovery",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Полное покрытие обновлений, текущий игровой profile / character selection / world completion, нагрузка и Android runtime."
     }
   ],
   "schema": 1,

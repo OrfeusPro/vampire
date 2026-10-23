@@ -144,11 +144,19 @@ def check_artifacts(index, root, names):
     return external
 
 
-def run_checks(index, args, sha, question):
+def run_checks(index, args, sha, question, *, check_ids=None):
     results = []
     workspace = index.HERE.parents[3]
-    for check in registry(index, args.knowledge)['checks']:
-        if question not in check['questions']: continue
+    checks = registry(index, args.knowledge)['checks']
+    if check_ids is not None and (not isinstance(check_ids, list) or not check_ids
+            or any(not isinstance(name, str) for name in check_ids)
+            or len(check_ids) != len(set(check_ids))
+            or any(sum(c['id'] == name for c in checks) != 1 for name in check_ids)):
+        raise ValueError('Explicit checks must name unique registered IDs')
+    for check in checks:
+        if check_ids is not None:
+            if check['id'] not in check_ids: continue
+        elif question not in check['questions']: continue
         if sha not in check['source_sha256']:
             results.append(dict(id=check['id'], state='requires_port', reason='No reviewed check for this source SHA'))
             continue

@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Update теперь вызывает явно отмеченные offline checks с кэшем зависимостей;
+ошибки и проверки без поддержки текущего SHA остаются в очереди. При сверке
+SDK пересоздан зависимый NID report и заново закреплён manifest профиля.
+[Как фиксируются обновления и что ещё осталось](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-CHECK-DISPATCH.md).
+
 SDK profile 1.13.16 подключён для явного launcher flow: шесть новых offline
 проверок проходят, installed SHA / account / route / freshness guards сохранены.
 Direct SDK операции и игровой протокол новой сборки ещё требуют переноса;

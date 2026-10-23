@@ -9,7 +9,7 @@ HERE=Path(__file__).resolve().parent
 INSTALLED=Path('C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe')
 REPORTS={
  'nid_base':('nid-context-11316','ba7dcda923ed58e82967bfdf38444e9f1499afea95c18ddf2436837ff4f84204'),
- 'nid_helpers':('nid-primitives-11316','fc36df990225b72dd298bac3da0795dfc1e7d66ab0a1784425f62c7720d540bb'),
+ 'nid_helpers':('nid-primitives-11316','4c9c0bd27f4cfa2c8b4baf4c3a28fe2f7bf393d549b9289ac38ba5a385958ecb'),
  'geo':('gmc2-geo-11316','990e41054b9d890ca9611a358645da4a3d28ccca06958f5dd397ada8e9ae1a72')}
 
 

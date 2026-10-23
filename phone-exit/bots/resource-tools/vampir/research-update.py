@@ -119,6 +119,25 @@ def target_plans(index, knowledge):
     return plans
 
 
+def run_update_checks(index, workflow, args, sha):
+    """Opt-in offline checks only; source ports and errors remain explicit."""
+    results = []
+    checks = workflow.registry(index, args.knowledge)['checks']
+    selected = [c for c in checks if c.get('on_update') is True]
+    if len(selected) > 32 or len({c['id'] for c in selected}) != len(selected):
+        raise ValueError('Update check budget or uniqueness differs')
+    for check in selected:
+        if check.get('offline_reviewed') is not True:
+            results.append(dict(id=check['id'], state='requires_review', reason='Update check is not reviewed for offline execution'))
+            continue
+        try:
+            results.extend(workflow.run_checks(index, args, sha, None, check_ids=[check['id']]))
+        except (ValueError, OSError) as error:
+            results.append(dict(id=check['id'], state='requires_review',
+                reason='Offline check inputs or execution rejected: ' + str(error)))
+    return results
+
+
 def update(index, args, database):
     workflow = index.extension('research-workflow')
     with workflow.locked(args.root, 'research'):
@@ -194,9 +213,16 @@ def update(index, args, database):
                 tasks.append(dict(state='requires_resources', reason='Audit-only: changed resources have not been processed'))
             if statuses & {'sample_equal_content_unverified','metadata_changed_content_unverified'}:
                 tasks.append(dict(state='requires_review', reason='Baseline lacks full hashes for some archives; sample equality does not prove unchanged content'))
+        checks = [] if args.audit_only else run_update_checks(index, workflow, args, new_sha)
+        for check in checks:
+            if check['state'] != 'passed':
+                tasks.append(dict(check=check['id'], source_sha256=new_sha, state=check['state'],
+                    reason=check.get('reason', 'Offline check did not pass; inspect its report'),
+                    next_action='Port or repair this source-bound check; do not promote runtime automatically'))
         index.build(args.root, database, knowledge=args.knowledge)
         final = dict(schema=1, source_sha256=new_sha, manifest=str(manifest), comparison=comparison,
             resources=resources, native_targets=native_targets, additional_native_targets=additional_native_targets,
+            checks=checks, check_policy='Explicit on_update offline checks; cache by source and dependencies; audit-only skips checks',
             queue=tasks, baseline_promoted=False, compatibility='not_established',
             schedule='Manual post-download command; Wednesday is informational, no scheduled task created')
         target = workflow.snapshot(args.root, 'update-results', final)
