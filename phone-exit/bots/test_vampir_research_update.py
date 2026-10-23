@@ -143,5 +143,34 @@ class ResearchUpdateTests(unittest.TestCase):
         report = self.workflow.checked_manifest(self.index.api(), Path(result['report']))
         self.assertIsNone(report['native_targets'])
 
+    def test_additional_target_plan_runs_sequentially_and_ambiguity_stays_queued(self):
+        primary = self.knowledge/'release-update-targets.json'
+        primary.write_text(json.dumps(dict(additional_target_plans=['gmc.json'])), 'utf-8')
+        (self.knowledge/'gmc.json').write_text('{}', 'utf-8')
+        raw = bytearray(self.exe.read_bytes()); raw[0x201] = 5
+        self.exe.write_bytes(raw)
+        calls = []
+        def adapter(index, args, tool, arguments):
+            plan = Path(arguments[-1]).name
+            calls.append(plan)
+            return dict(state='passed', result=dict(candidates=[dict(state='candidate' if len(calls)==1 else 'requires_review')]))
+        with patch.object(self.update, 'execute_adapter', side_effect=adapter):
+            result = self.update.update(self.index.api(), self.args, self.root/'knowledge/search.sqlite3')
+        report = self.workflow.checked_manifest(self.index.api(), Path(result['report']))
+        self.assertEqual(calls, ['release-update-targets.json', 'gmc.json'])
+        self.assertEqual(report['additional_native_targets'][0]['plan'], 'gmc.json')
+        self.assertTrue(any(task.get('plan') == 'gmc.json' for task in report['queue']))
+        self.assertFalse(report['baseline_promoted'])
+        self.assertEqual(report['compatibility'], 'not_established')
+
+    def test_additional_target_plan_cannot_escape_scope_or_expand_without_bound(self):
+        primary = self.knowledge/'release-update-targets.json'
+        for names in (['../outside.json'], ['missing.json'], ['a.json']*2,
+                      ['a.json','b.json','c.json','d.json'], [{}]):
+            with self.subTest(names=names):
+                primary.write_text(json.dumps(dict(additional_target_plans=names)), 'utf-8')
+                with self.assertRaises(ValueError):
+                    self.update.target_plans(self.index.api(), self.knowledge)
+
 
 if __name__ == '__main__': unittest.main()

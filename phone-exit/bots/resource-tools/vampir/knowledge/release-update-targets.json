@@ -379,6 +379,57 @@
         "release-sdk-terms"
       ],
       "rule": "No automatic SignUp after a generic SignIn failure; preserve fresh Fetch and explicit terms gates."
+    },
+    {
+      "id": "gmc2-request-layout",
+      "baseline_functions": [
+        "0x1444faff0",
+        "0x1444fca30"
+      ],
+      "tools": [
+        "audit-gmc2-request-11316.py"
+      ],
+      "required_checks": [
+        "release-gmc2-runtime"
+      ],
+      "rule": "Discover from release-gmc2-request-targets.json; static masked shapes do not prove external callees or native URL/header results.",
+      "automation": {
+        "discovery": "automatic_literal_candidates",
+        "validation": "automatic_for_registered_source",
+        "reuse": "Only with identical full source SHA and dependency hashes",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1444fa180",
+                "scope": "whole source coverage and masked shape; no native execution",
+                "required_checks": [
+                  "gmc2-request-layout-11316"
+                ]
+              },
+              {
+                "address": "0x1444fbbc0",
+                "scope": "whole source coverage and masked shape; no native execution",
+                "required_checks": [
+                  "gmc2-request-layout-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "audit-gmc2-request-11316.py"
+            ],
+            "evidence": [
+              "evidence/auth/HEADLESS-GMC2-REQUEST-LAYOUT-11316.md"
+            ]
+          }
+        ]
+      }
     }
+  ],
+  "additional_target_plans": [
+    "release-gmc2-request-targets.json"
   ]
 }

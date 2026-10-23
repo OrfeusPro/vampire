@@ -399,6 +399,20 @@
         "evidence/auth/HEADLESS-SDK-OVERRIDE-LINKS-11316.md",
         "evidence/auth/HEADLESS-SDK-OVERRIDE-NATIVE-11316.md"
       ]
+    },
+    {
+      "id": "gmc2-request-layout",
+      "status": "bounded_answer",
+      "question": "Где текущие GMC2 Refresh / Request, участки URL и headers, и какие их зависимости требуют переноса?",
+      "known": "На d00a1977 найдены два unique кандидата по точным signatures, получены полные exports. Сверены 456/433 инструкции и целые формы функций; URL slice 172 и headers slice 139 инструкций совпали с прежними nonrelative bytes/local branches. Внешние targets и globals маскировались, native выходы ещё не проверены.",
+      "unknown": "Новые внешние getters, append, initializers, HTTP capture outputs и итоговый runtime profile.",
+      "next_action": "По явным CALL/RIP связям выгрузить зависимости, исполнить URL/header slices с bounded fixtures, затем собрать source-bound профиль.",
+      "decision_rule": "Masked shape comparison не доказывает внешние callees, строки globals или URL/header outputs. Совместимость runtime отдельно.",
+      "do_not_repeat": "Не перевыгружать готовые два roots без смены источника или конкретной неполноты. Обновление запускает дополнительный target plan автоматически.",
+      "addresses": [],
+      "evidence": [
+        "evidence/auth/HEADLESS-GMC2-REQUEST-LAYOUT-11316.md"
+      ]
     }
   ]
 }

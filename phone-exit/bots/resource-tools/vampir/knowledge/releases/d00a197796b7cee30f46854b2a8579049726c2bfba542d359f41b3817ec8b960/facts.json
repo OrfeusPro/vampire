@@ -301,6 +301,46 @@
       "question": "sdk-game-overrides",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "GMC2 URL/headers текущего SHA, полный runtime profile и совместимость живого входа."
+    },
+    {
+      "addresses": [
+        "0x1444fa180",
+        "0x1444fbbc0"
+      ],
+      "checks": [
+        {
+          "cache_key": "8fdcf5f97ffc596d76242259d38fed3ea88e737e827ee6ffff5cbc8ee8ca50a6",
+          "id": "gmc2-request-layout-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c5385f0e540be72f920dfba9f26c5e5d518d57947082022a503f453ec9e1d9a2\\manifest.json",
+          "sha256": "c5385f0e540be72f920dfba9f26c5e5d518d57947082022a503f453ec9e1d9a2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "65f3b73853fbc2a2fdab579f64a664816bac1818fc47acf1b7dc4cfeb46db889",
+          "id": "release-update-plan-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d0c8dd24066c8f36cf41162d390c40a8af1a8b32a0d664d47583ede313f02f26\\manifest.json",
+          "sha256": "d0c8dd24066c8f36cf41162d390c40a8af1a8b32a0d664d47583ede313f02f26",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Точные signatures дали два unique source-checked кандидата Refresh/Request; полные exports содержат 456/433 инструкции. Whole masked shapes/local branch offsets совпали с baseline, URL/header slices 172/139 инструкций найдены без переноса адреса по delta. Дополнительный target plan подключён к последовательной обработке нового EXE, неоднозначности остаются в очереди. Прошли 3 audit, 11 update и 8 locator/annotation тестов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-GMC2-REQUEST-LAYOUT-11316.md",
+          "sha256": "97310a77fd43f37efd2b105625fdcbc12393591c11540d68a1c1410ef6a844c7"
+        }
+      ],
+      "id": "507ce52a0c62c7c9e34ff645f591572884dd408de867f4bef52ba9dcb5063291",
+      "limits": [
+        "Сохранённые EXE и синтетические update fixtures; без игры, сети, auth и native исполнения URL/headers.",
+        "Сравнение маскирует RIP displacements и внешние direct targets; их семантика и данные globals не подтверждены.",
+        "Дополнительные наборы ограничены тремя sibling JSON files; текущий запуск locator проверен отдельно, реальная повторная обработка 165 архивов не запускалась."
+      ],
+      "method": "static",
+      "next_check": "По явным CALL/RIP references получить текущие dependencies и исполнить оба request slices с ограниченными fixtures.",
+      "question": "gmc2-request-layout",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Новые getter/append/initializer dependencies, native URL/header results и итоговый runtime profile."
     }
   ],
   "schema": 1,

@@ -30,6 +30,9 @@ client ID и путь NMENV. Источники и границы статиче
 Ветка исполнена в 106 native сценариях: real даёт zone 2, NMENV и SDK handles
 управляют market. GMC2 URL / headers и полный профиль ещё требуют переноса.
 [Результаты выполнения и fixtures](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-OVERRIDE-NATIVE-11316.md).
+Найдены текущие Refresh / Request GMC2 и статически сверены 889 инструкций.
+Их точные signatures подключены к автоматическому поиску после изменения EXE.
+[Участки URL / headers и границы сверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-REQUEST-LAYOUT-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

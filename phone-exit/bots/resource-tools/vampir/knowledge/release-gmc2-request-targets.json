@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "baseline_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+  "anchors": [
+    {
+      "id": "gmc-refresh",
+      "text": "void __cdecl Netmarble::Service::FGMC2ManagerImpl::RefreshSDKConstants(const class TFunction<void __cdecl(class TSharedRef<class Netmarble::FResult,1> const &)>)",
+      "encoding": "ascii",
+      "baseline_root": "0x1444faff0",
+      "baseline_literal": "0x149537cc0",
+      "required_checks": [
+        "release-gmc2-runtime"
+      ]
+    },
+    {
+      "id": "gmc-request",
+      "text": "void __cdecl Netmarble::Service::FGMC2ManagerImpl::RequestGMC2(const class FString &,const class FString &,const class FString &,const class TFunction<void __cdecl(class TSharedRef<class Netmarble::FResult,1> const &,class TSharedPtr<class IHttpResponse,1>)>)",
+      "encoding": "ascii",
+      "baseline_root": "0x1444fca30",
+      "baseline_literal": "0x149537dc0",
+      "required_checks": [
+        "release-gmc2-runtime"
+      ]
+    }
+  ]
+}

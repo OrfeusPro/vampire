@@ -100,6 +100,25 @@ def execute_adapter(index, args, tool, arguments):
         diagnostic=text if state != 'passed' else None)
 
 
+def target_plans(index, knowledge):
+    primary = knowledge / 'release-update-targets.json'
+    if not primary.is_file():
+        return [primary]
+    names = index.read_json(primary).get('additional_target_plans', [])
+    if (not isinstance(names, list) or len(names) > 3 or not all(isinstance(name, str) for name in names)
+            or len(set(names)) != len(names)):
+        raise ValueError('Additional native target plan budget or uniqueness differs')
+    plans = [primary]
+    for name in names:
+        if not isinstance(name, str) or Path(name).name != name or not name.endswith('.json'):
+            raise ValueError('Additional native target plan must be a sibling JSON file')
+        path = knowledge / name
+        if path.resolve().parent != knowledge.resolve() or path in plans or not path.is_file():
+            raise ValueError('Additional native target plan is missing or outside knowledge')
+        plans.append(path)
+    return plans
+
+
 def update(index, args, database):
     workflow = index.extension('research-workflow')
     with workflow.locked(args.root, 'research'):
@@ -108,6 +127,7 @@ def update(index, args, database):
         comparison = index.extension('compare-release-snapshots').compare(normalized, report)
         tasks, resources = [], []
         native_targets = None
+        additional_native_targets = []
         for row in comparison['files']:
             if row['status'] == 'removed':
                 tasks.append(dict(archive=row['path'],state='requires_review',reason='Archive removed; review resource dependents'))
@@ -118,13 +138,17 @@ def update(index, args, database):
                     reason='EXE changed; historical addresses and claims are not transferred',
                     next_action='Find current function candidates, then prepare explicit addresses'))
             if not args.audit_only:
-                native_targets = execute_adapter(index, args, 'locate-release-update-targets.py',
-                    ['--root', args.root, '--source-sha256', new_sha,
-                     '--targets', args.knowledge / 'release-update-targets.json'])
-                if native_targets['state'] != 'passed':
-                    tasks.append(dict(state='requires_review', reason='Native target discovery failed; inspect diagnostics, do not transfer old addresses'))
-                elif any(row['state'] != 'candidate' for row in (native_targets.get('result') or {}).get('candidates', [])):
-                    tasks.append(dict(state='requires_review', reason='Native anchors have missing, ambiguous or undecodable candidates; export explicit functions'))
+                for number, plan in enumerate(target_plans(index, args.knowledge)):
+                    found = execute_adapter(index, args, 'locate-release-update-targets.py',
+                        ['--root', args.root, '--source-sha256', new_sha, '--targets', plan])
+                    if number == 0:
+                        native_targets = found
+                    else:
+                        additional_native_targets.append(dict(plan=plan.name, discovery=found))
+                    if found['state'] != 'passed':
+                        tasks.append(dict(plan=plan.name, state='requires_review', reason='Native target discovery failed; inspect diagnostics, do not transfer old addresses'))
+                    elif any(row['state'] != 'candidate' for row in (found.get('result') or {}).get('candidates', [])):
+                        tasks.append(dict(plan=plan.name, state='requires_review', reason='Native anchors have missing, ambiguous or undecodable candidates; export explicit functions'))
         if not args.audit_only:
             for row in report['files']:
                 current = row['current']
@@ -172,7 +196,8 @@ def update(index, args, database):
                 tasks.append(dict(state='requires_review', reason='Baseline lacks full hashes for some archives; sample equality does not prove unchanged content'))
         index.build(args.root, database, knowledge=args.knowledge)
         final = dict(schema=1, source_sha256=new_sha, manifest=str(manifest), comparison=comparison,
-            resources=resources, native_targets=native_targets, queue=tasks, baseline_promoted=False, compatibility='not_established',
+            resources=resources, native_targets=native_targets, additional_native_targets=additional_native_targets,
+            queue=tasks, baseline_promoted=False, compatibility='not_established',
             schedule='Manual post-download command; Wednesday is informational, no scheduled task created')
         target = workflow.snapshot(args.root, 'update-results', final)
         return dict(report=str(target), manifest=str(manifest), source_sha256=new_sha,

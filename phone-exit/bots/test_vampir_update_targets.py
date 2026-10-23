@@ -85,7 +85,8 @@ class UpdateTargetsTests(unittest.TestCase):
     def test_saved_plan_points_to_existing_tools_and_registered_checks(self):
         definition=json.loads((HERE/'knowledge/release-update-targets.json').read_text(encoding='utf-8'))
         checks={c['id'] for c in json.loads((HERE/'knowledge/research-checks.json').read_text(encoding='utf-8'))['checks']}
-        for group in definition['anchors']+definition['manual_port_targets']:
+        extra = [json.loads((HERE/'knowledge'/name).read_text('utf-8')) for name in definition.get('additional_target_plans', [])]
+        for group in definition['anchors']+definition['manual_port_targets']+[a for plan in extra for a in plan['anchors']]:
             self.assertTrue(set(group.get('required_checks',[])) <= checks)
             for name in group.get('tools',[]): self.assertTrue((HERE/name).is_file(),name)
 
