@@ -710,6 +710,58 @@
           }
         ]
       }
+    },
+    {
+      "id": "sdk-runtime-launcher-current",
+      "baseline_functions": [],
+      "tools": [
+        "build-sdk-runtime-profile-11316.py"
+      ],
+      "rule": "Reassemble only after SDK/NID/geo source checks and launcher contract audit; explicit loader promotion is limited to launcher. Direct SDK operations and game protocol require separate source ports.",
+      "automation": {
+        "discovery": "reuse_reviewed_sdk_nid_geo_and_launcher_targets",
+        "validation": "automatic_for_registered_source",
+        "reuse": "Identical source, report, dependency and CRT hashes/locale only",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1444c4210",
+                "scope": "SDK launcher integration with mocked HTTP/browser; no live auth or game protocol",
+                "required_checks": [
+                  "sdk-profile-assembly-11316",
+                  "sdk-runtime-launcher-11316"
+                ]
+              },
+              {
+                "address": "0x1450e3c80",
+                "scope": "SDK launcher integration with mocked HTTP/browser; no live auth or game protocol",
+                "required_checks": [
+                  "sdk-profile-assembly-11316",
+                  "sdk-runtime-launcher-11316"
+                ]
+              },
+              {
+                "address": "0x1450f3e40",
+                "scope": "SDK launcher integration with mocked HTTP/browser; no live auth or game protocol",
+                "required_checks": [
+                  "sdk-profile-assembly-11316",
+                  "sdk-runtime-launcher-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "build-sdk-runtime-profile-11316.py"
+            ],
+            "evidence": [
+              "evidence/auth/HEADLESS-SDK-RUNTIME-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

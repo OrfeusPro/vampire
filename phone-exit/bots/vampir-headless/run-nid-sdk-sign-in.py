@@ -114,6 +114,8 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
         raise TypeError('Expected a fresh in-memory SDK context')
     if isinstance(prepared, SdkInputs):
         prepared.check_usage(email=email, selected_profile=selected_profile, route=route)
+        prepared.check_auth_operation(auth_flow=auth_flow, create_sdk_player=create_sdk_player,
+            fetch_player=fetch_player, first_sdk_login=first_sdk_login)
     binding, profile, constants = prepared
     if first_sdk_login:
         if not isinstance(prepared, SdkInputs): raise ValueError('First SDK login requires fresh current inputs')
@@ -154,6 +156,8 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
         if _progress: _progress('sdk_launcher_token')
         request = plan_nid_launcher_token(credential=credential, **inputs)
         token = (_execute_token or execute_launcher_token)(request, expected_url=request.url, route=route)
+        if isinstance(prepared, SdkInputs):
+            prepared.check_usage(email=email, selected_profile=selected_profile, route=route)
         if _progress: _progress('sdk_launcher_sign_in')
         request = plan_launcher_sign_in(launcher_token=token, **inputs)
         token = credential = provider = None

@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 
 ROOT = Path('F:/PhoneExit Resources/Vampir')
-RELEASE_PROFILE_SHA = 'dd77f0c13f54949999b96de3c753dde608a8521087d83c80de5bbbc5a726c582'
-RELEASE_SOURCE_SHA = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
+RELEASE_PROFILE_SHA = 'd4b562f9f774833843ddf08f7b867c0ae732dff6fb46ee29b4ba2ad9fcb027be'
+RELEASE_SOURCE_SHA = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
 
 
 def load_release_profile(kind, *, root=ROOT):

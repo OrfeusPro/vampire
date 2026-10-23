@@ -1192,6 +1192,47 @@
       "question": "nid-context-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Подключение текущего SDK profile и полный offline auth input flow, затем свежая авторизация и game compatibility."
+    },
+    {
+      "addresses": [
+        "0x1444c4210",
+        "0x1450e3c80",
+        "0x1450f3e40"
+      ],
+      "checks": [
+        {
+          "cache_key": "0e049208e8e51d41cc4ad612927d0e1a40de8b029f3ee260bb9bcc8e5e876d5c",
+          "id": "sdk-profile-assembly-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\676c44de826d74003bb7ddc559daf0667c561cfdea5157db2a587549ef8f5b27\\manifest.json",
+          "sha256": "676c44de826d74003bb7ddc559daf0667c561cfdea5157db2a587549ef8f5b27",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3972f7a8a54cd4e40395cb8f9f25e2f1ace6d7ef80ebb2570c6e2a2f77b37649",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8580696368618af57993c559877e4800a8c789bbe2edf4f3b85ba421edfa094c\\manifest.json",
+          "sha256": "8580696368618af57993c559877e4800a8c789bbe2edf4f3b85ba421edfa094c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Отдельный SDK runtime profile текущей сборки подключён для явного launcher flow с проверкой installed EXE и pinned manifest. Шесть offline tests используют настоящий GMC2 decoder / NID context / launcher planners; direct SDK операции до переноса отклоняются. Контекст повторно проверяется после launcher token до второго POST.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-RUNTIME-11316.md",
+          "sha256": "a27db3ae95527b731b4af0455f3793badcbf04646e5996f67cf7872a629548e8"
+        }
+      ],
+      "id": "be1acab6f55226a86228f2cdf60fff8fef46734153a5d683369c5773bba5362a",
+      "limits": [
+        "Browser, device observation, registry, HTTP и ответы SDK — синтетические fixtures; сеть и реальные аккаунты не используются.",
+        "Native coverage унаследовано только из явно проверенных reports текущего SHA; полный SDK lifecycle и активные startup inputs не исполнены.",
+        "Профиль не подтверждает game protocol, direct SDK операции или живую сессию."
+      ],
+      "method": "static",
+      "next_check": "Перенести direct SDK и игровые source checks; после доступности серверов отдельно проверить launcher вход.",
+      "question": "sdk-profile-assembly",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Живой вход, текущие direct SDK sign-in/fetch/sign-up/terms и игровой source profile."
     }
   ],
   "schema": 1,

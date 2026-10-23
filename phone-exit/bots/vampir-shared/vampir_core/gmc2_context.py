@@ -86,6 +86,11 @@ class SdkInputs:
         # Keep the existing binding/profile/constants unpacking interface.
         return iter((self.binding, self.profile, self.constants))
 
+    def check_auth_operation(self, *, auth_flow, create_sdk_player=False, fetch_player=False, first_sdk_login=False):
+        if self.source_sha256 == CURRENT_SOURCE_SHA256 and (
+                auth_flow != 'launcher' or create_sdk_player or fetch_player or first_sdk_login):
+            raise ValueError('This SDK source currently supports launcher sign-in only; direct SDK operations require source port')
+
     def check_usage(self, *, email, selected_profile, route, now=None):
         age = (time.monotonic() if now is None else now) - self.fetched_at
         if (email != self.email or selected_profile != self.selected_profile
