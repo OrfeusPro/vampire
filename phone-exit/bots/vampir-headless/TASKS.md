@@ -142,6 +142,15 @@ Completion wrapper и selector прошли 24 native сценария: 18 immed
 Далее — перенос defaults и десериализация при загрузке именно этого asset;
 повторять проверенные constructors и механическое ветвление completion не нужно.
 [Сценарии, шаблон и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-COMPLETION.md).
+Обычный constructor найден в `1417e6cb0`, initializer в нём встроен; `1417d6b00`
+уточнён как archetype selector. Вся цепочка ordinary construction прошла 18 native
+сценариев с пустым / полным / частичным списком копируемых полей.
+В extractor добавлена отдельная проекция defaults с `model_only=true` и
+`verified_loaded_asset=false`; исходные omitted int32 остаются unresolved.
+Следом — целый producer `146449dc0`, JSON и handler ID 104 с явным модельным
+кандидатом внешности. Фактическая десериализация / late overrides остаются unknown;
+не нужно повторять обычный constructor ради совпадения с загруженным экраном.
+[Проверки и границы модели](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-OBJECT.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

@@ -58,6 +58,22 @@ class CreationPresetTests(unittest.TestCase):
             self.assertEqual(row['floats'], [0.5] * 7)
             self.assertTrue(row['integer_bytes_preserved'])
 
+    def test_projection_keeps_raw_unknowns_and_model_provenance(self):
+        for package in self.report['packages'][2:]:
+            raw = package['decoded']; projection = package['native_default_projection']
+            self.assertTrue(projection['model_only'])
+            self.assertFalse(projection['verified_loaded_asset'])
+            self.assertEqual(projection['inferred_fields'], raw['unresolved'])
+            for name in raw['unresolved']:
+                self.assertIsNone(raw['values'][name])
+                self.assertEqual(projection['values'][name], 0)
+                self.assertEqual(projection['origins'][name], 'native_zero_allocation_model')
+            for name, value in raw['values'].items():
+                if value is not None: self.assertEqual(projection['values'][name], value)
+        wrong = {**self.report['native_default_model'], 'source_sha256': '0' * 64}
+        with self.assertRaisesRegex(ValueError, 'provenance'):
+            self.tool.project_native_defaults(self.report['packages'][2]['decoded'], wrong)
+
     def test_every_short_prefix_and_trailing_byte_rejected(self):
         for package in self.report['packages']:
             body_path = self.root / 'code-clues/appearance-resource-blobs' / package['parts'][1]['blob']

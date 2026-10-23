@@ -110,6 +110,12 @@ Wrapper завершения прошёл 24 native сценария: 18 нем�
 extractor теперь проверяет class / template / super references и отклоняет подмены.
 Перенос defaults при загрузке asset ещё не исполнен, omitted int32 остаются unknown.
 [Завершение и привязка шаблона](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-COMPLETION.md).
+Найден ordinary constructor `1417e6cb0` со встроенным initializer. В 18 native
+сценариях проверены copy flag, source CDO и перенос по выбранному списку полей.
+Extractor сохраняет отдельную модельную проекцию недостающих int32 со значением 0;
+исходные unknown сохранены, loaded asset не объявлен проверенным. Проекция —
+явный кандидат для следующей offline проверки целого producer / JSON внешности.
+[Обычный объект и происхождение проекции](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-OBJECT.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

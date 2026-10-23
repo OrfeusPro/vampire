@@ -153,6 +153,31 @@ def native_template(references, export):
         export_table_bytes=row['table_bytes'])
 
 
+def native_default_model():
+    native = load('preset_default_object_model', 'replay-release-preset-object.py')
+    path, report = native.run()
+    vectors = {case['default_bytes'] for case in report['cases']}
+    if report['source_sha256'] != SHA or len(vectors) != 1:
+        raise ValueError('Preset native default model is ambiguous')
+    raw = bytes.fromhex(vectors.pop())
+    if len(raw) != 0x41: raise ValueError('Preset native default vector size differs')
+    values = {}
+    for i, name in enumerate(ASSET_FIELDS):
+        values[name] = struct.unpack_from('<i' if i < 9 else '<f' if i < 16 else '<B', raw, i * 4)[0]
+    return dict(report=str(path), source_sha256=SHA, values=values,
+        model_only=True, verified_loaded_asset=False, limits=report['limits'])
+
+
+def project_native_defaults(decoded, model):
+    if model.get('source_sha256') != SHA or model.get('model_only') is not True:
+        raise ValueError('Preset native default model provenance differs')
+    inferred = list(decoded['unresolved']); values = dict(decoded['values']); origins = dict(decoded['origins'])
+    for name in inferred:
+        values[name] = model['values'][name]; origins[name] = 'native_zero_allocation_model'
+    return dict(values=values, origins=origins, inferred_fields=inferred, model_only=True,
+        verified_loaded_asset=False, report=model['report'])
+
+
 def extract(index_path, directory_path, root):
     helpers = load('preset_named_helpers', 'extract-release-appearance-resources.py')
     if helpers.digest(index_path) != index_path.parent.name: raise ValueError('Preset record index hash changed')
@@ -172,7 +197,7 @@ def extract(index_path, directory_path, root):
             or helpers.digest(reader.ROOT / 'tools/oodle-data-shared.dll') != index['dependencies']['oodle_sha256']):
         raise ValueError('Preset pinned reader changed')
     package = load('preset_package_exports', 'inspect-ui.py'); references = load('preset_package_refs', 'decode-package-references.py')
-    descriptors = schema(root); defaults = constructor_defaults(); blobs = {}; packages = []
+    descriptors = schema(root); defaults = constructor_defaults(); model = native_default_model(); blobs = {}; packages = []
     def read_targets(targets):
         named = helpers.named_records(directory_path, index, targets)
         for target, entries in named.items():
@@ -201,6 +226,7 @@ def extract(index_path, directory_path, root):
                 if export['type'] != 'NnDataAssetForCustomizePreset': raise ValueError('Preset asset class differs')
                 item['native_template'] = native_template(refs, export)
                 item['decoded'] = asset(body)
+                item['native_default_projection'] = project_native_defaults(item['decoded'], model)
             packages.append(item)
     read_targets(TABLES)
     links = []
@@ -223,14 +249,16 @@ def extract(index_path, directory_path, root):
     audit = load('preset_resource_audit', 'audit-client-release.py')
     dependencies = {str(path): helpers.digest(path) for path in (reader_path, Path(__file__),
         HERE / 'extract-release-appearance-resources.py', HERE / 'recover-pak-game-config.py', HERE / 'inspect-ui.py',
-        HERE / 'decode-package-references.py', HERE / 'decode-canvas-slots.py', HERE / 'replay-release-archive-input.py')}
+        HERE / 'decode-package-references.py', HERE / 'decode-canvas-slots.py', HERE / 'replay-release-archive-input.py',
+        HERE / 'replay-release-preset-object.py')}
     report = dict(source=index['source'], source_sha256=SHA, record_index=str(index_path),
         record_index_sha256=helpers.digest(index_path), directory_manifest=str(directory_path),
-        directory_manifest_sha256=helpers.digest(directory_path), schema=descriptors, constructor=defaults,
+        directory_manifest_sha256=helpers.digest(directory_path), schema=descriptors, constructor=defaults, native_default_model=model,
         packages=packages, selected_class3=links, dependencies=dependencies, ghidra_exports=exports,
         limits=['Derived row fields precede inherited fields; exact observed six-field layout, complete body consumption and references checked.',
             'Unique class-3 links in these current tables; active engine cache and F/M byte conversion are not executed here.',
             'Omitted float/voice values use reviewed native constructor; omitted integer CDO defaults stay explicitly unresolved.',
+            'Separate native_default_projection infers omitted integers from the explicit zero-allocation native model; it is not loaded-asset verification and does not change decoded values.',
             'No game, authorization, JSON output, complete producer or character creation.'])
     path = audit.save_snapshot(root / 'code-clues/release-creation-presets', report)
     return path, report

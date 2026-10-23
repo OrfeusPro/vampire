@@ -1836,7 +1836,8 @@
         "phone-exit/bots/resource-tools/vampir/replay-release-archive-input.py",
         "phone-exit/bots/resource-tools/vampir/replay-release-nested-read-thunk.py",
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
-        "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/replay-release-preset-object.py"
       ],
       "artifact_dependencies": [
         "release-snapshots/2b9ee9bbb180f064ae5f399cc41f063784f4f7b98dcc6b659d0707ed4d4cee08/manifest.json",
@@ -1844,7 +1845,17 @@
         "resource-config-snapshots/3c1151930e190baf7fb7093c976222e4c2e053bef816c077e689c8a4b1de44a3/manifest.json",
         "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-0c0270dde1c5/details.json",
         "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-2e4ce3671ec8/details.json",
-        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-3cb7258f777e/details.json"
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-3cb7258f777e/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-e2336a990daa/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-086e862edcea/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-fbf8f7b13fe2/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-d156ab446138/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-29d6ad1c7c55/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-c1cdaeaa2d5d/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-a9f0f96bdeb3/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-4dc9ed45997b/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-5ec4a8b50550/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-0fc58b2f30f3/details.json"
       ]
     },
     {
@@ -2017,6 +2028,48 @@
         "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/resource-tools/vampir/replay-release-preset-completion.py"
+      ]
+    },
+    {
+      "id": "release-preset-object",
+      "questions": [
+        "character-creation-entry"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "test_pattern": "test_vampir_preset_object.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-e2336a990daa/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-086e862edcea/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-fbf8f7b13fe2/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-d156ab446138/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-29d6ad1c7c55/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-c1cdaeaa2d5d/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-2e4ce3671ec8/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-a9f0f96bdeb3/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-4dc9ed45997b/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-5ec4a8b50550/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-0fc58b2f30f3/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/replay-release-preset-initializer.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-archive-input.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-nested-read-thunk.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/replay-release-preset-object.py",
+        "phone-exit/bots/resource-tools/vampir/extract-release-creation-presets.py",
+        "phone-exit/bots/resource-tools/vampir/extract-release-appearance-resources.py"
       ]
     }
   ]
