@@ -118,6 +118,14 @@ Female 1 → F. DefaultGender 1 у Carnage соответствует F / preset
 ещё не проверены. CDO creation найден в `1416a4780`; далее его allocation
 `1417e6110`, initializer `1417ca780` и завершение `1417cbe90` для omitted int32.
 [Масштаб, исключённые кандидаты и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CUSTOMIZE-SCALE.md).
+Разобраны allocator / initializer / completion и postconstruct. Новая allocation
+обнуляется в найденной статической ветке; DataAsset регистрируется с размером 0x30.
+Целый InitProperties прошёл 36 native сценариев: property end ограничен source
+class size, поля пресета от +0x30 не копируются из родителя размером 0x30.
+Полный preset CDO и загрузка asset не исполнены; omitted int32 пока unresolved.
+Следующий шаг — проверить завершение именно этого CDO и применение defaults
+при загрузке asset, затем разрешать отсутствующие поля extractor.
+[Воспроизведение и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-DEFAULT-COPY.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

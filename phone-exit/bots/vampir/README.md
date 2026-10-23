@@ -93,6 +93,11 @@ int32 остаются неизвестными до проверки CDO. Че�
 Поздние overrides и min/max ещё не проверены. Найдена функция создания CDO;
 её allocation / default copy нужны для отсутствующих int32 пресета.
 [Identity экрана, масштаб и следующий путь CDO](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CUSTOMIZE-SCALE.md).
+Следом проверена граница default property copy: 36 native сценариев подтвердили,
+что размер родительского DataAsset 0x30 не позволяет копировать собственные поля
+пресета от +0x30. Обнуление новой allocation найдено статически; полный цикл
+CDO / загрузки asset ещё не проверен, отсутствующие int32 остаются unknown.
+[Копирование defaults и границы проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-DEFAULT-COPY.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
