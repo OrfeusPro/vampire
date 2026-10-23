@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Возобновляемая сверка пары сборок проверена; готов только offline launcher.
+Дальше — полный Version / Login writer / result, затем список / выбор персонажа
+и вход в мир. Constructors / tag slices уже проверены, их exports не повторять.
+[Очередь и границы текущих доказательств](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESUMABLE-UPDATE-11316.md).
+
 Контроллер обновления поддерживает `--plan-only`, `--resume` и `update-status`.
 Профиль готовится отдельно, активации и продвижения baseline нет.
 [Возобновление, зависимости и очередь](../resource-tools/vampir/knowledge/RESUMABLE-UPDATE.md).

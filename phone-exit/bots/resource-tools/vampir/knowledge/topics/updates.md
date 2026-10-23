@@ -56,4 +56,5 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Ранний обмен новой версии: проверка источника предварительного кадра](../evidence/updates/HEADLESS-RELEASE-BOOTSTRAP.md)
 - [Источник часов Ping: UTC, Unix epoch и поправка в минутах](../evidence/updates/HEADLESS-RELEASE-CLOCK.md)
 - [Новый compiled tag Version / Login и код 1](../evidence/updates/HEADLESS-RELEASE-WIRE-TAG.md)
+- [Возобновляемая сверка 1.13.14 → 1.13.16](../evidence/updates/HEADLESS-RESUMABLE-UPDATE-11316.md)
 - [Связанные проверки в команде обновления](../evidence/updates/HEADLESS-UPDATE-CHECK-DISPATCH.md)

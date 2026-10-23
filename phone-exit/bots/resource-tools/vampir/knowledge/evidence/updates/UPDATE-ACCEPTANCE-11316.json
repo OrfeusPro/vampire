@@ -1,0 +1,61 @@
+{
+  "baseline_promoted": false,
+  "baseline_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+  "changed_archives": 2,
+  "context_proofs": [
+    {
+      "cases": 4,
+      "contract": "game-version",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-context-checks\\d02cd9fd61a2f0a6473b2327129e9615673a06bf2eb564ec43b4ea2b071098cc\\manifest.json",
+      "sha256": "d02cd9fd61a2f0a6473b2327129e9615673a06bf2eb564ec43b4ea2b071098cc"
+    },
+    {
+      "cases": 4,
+      "contract": "game-login",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-context-checks\\e931bb2bbf8f13391212b2a5c95c196483f464671ba785d17e6fd79810da3294\\manifest.json",
+      "sha256": "e931bb2bbf8f13391212b2a5c95c196483f464671ba785d17e6fd79810da3294"
+    }
+  ],
+  "files": 165,
+  "network_actions": false,
+  "prepared_profiles": [
+    {
+      "activated": false,
+      "live_verified": false,
+      "profile": "F:\\PhoneExit Resources\\Vampir\\knowledge\\prepared-profiles\\11a2cafe7727289ebbc829b34a1dec928a2bb239c923a9b19019107b0ecf3665\\manifest.json",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+    }
+  ],
+  "profile_activation": false,
+  "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-acceptance-reports\\f0d40f501647a7f82cd332d22b9338a20c158242e76c68fcde4aea6b38b78e7f\\manifest.json",
+  "report_sha256": "f0d40f501647a7f82cd332d22b9338a20c158242e76c68fcde4aea6b38b78e7f",
+  "runs": [
+    {
+      "executed_stages": [
+        "profile-launcher"
+      ],
+      "ghidra_launches": 0,
+      "label": "first",
+      "manual_queue_rows": 38,
+      "native_context_replays": 0,
+      "reused_stages": 20,
+      "snapshot": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-replays\\f7e77182d5fb9310385b3834241b10569b8477f6d3264506057004f3fb71def6\\manifest.json",
+      "snapshot_sha256": "f7e77182d5fb9310385b3834241b10569b8477f6d3264506057004f3fb71def6",
+      "wall_seconds": 93.722814
+    },
+    {
+      "executed_stages": [],
+      "ghidra_launches": 0,
+      "label": "repeat",
+      "manual_queue_rows": 38,
+      "native_context_replays": 0,
+      "reused_stages": 21,
+      "snapshot": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-replays\\d88a55776c996905890da09f2c2395fa43f60bf5bc75891791a92309f65c8902\\manifest.json",
+      "snapshot_sha256": "d88a55776c996905890da09f2c2395fa43f60bf5bc75891791a92309f65c8902",
+      "wall_seconds": 33.215017
+    }
+  ],
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "status_read_only": true
+}
