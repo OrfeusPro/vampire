@@ -84,6 +84,10 @@ DA_PresetDarkMage3_F/M (ID 3 / 2), несмотря на имя файла. Зн
 семь float defaults 0.5 и voice 0 подтверждены native constructor. Пропущенные
 int32 остаются неизвестными до проверки CDO. Четыре теста прошли.
 [Пресеты Carnage, значения и недостающие defaults](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-PRESETS.md).
+Пол связан с ресурсом: 0 / Male → M, 1 / Female → F. При DefaultGender 1
+у Carnage выбирается F и preset ID 3. Целые path helpers прошли 1024 случая
+с явными engine-строковыми fixtures. Max 2 не считать допустимым полом.
+[Enum пола, суффиксы и уточнение прежнего разбора](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-GENDER-PATHS.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

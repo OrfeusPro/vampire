@@ -106,6 +106,12 @@ DT_CustomizePreset F/M, ссылки и значения выбранного п
 пропущенные int32 не инициализирует. Далее проверить CDO defaults для них,
 byte пола → F/M и реальные scale / min / max. Четыре теста прошли.
 [Текущие пресеты и неизвестные поля](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-PRESETS.md).
+Преобразование пола затем проверено в 1024 native случаях: Male 0 → M,
+Female 1 → F. DefaultGender 1 у Carnage соответствует F / preset ID 3.
+Строковая операция сохраняет первую букву, а не удаляет её, как было ошибочно
+описано раньше. Sentinel Max 2 также даёт M, поэтому результат helper не
+является валидацией пола. CDO int32 defaults и настройки ползунков ещё открыты.
+[Проверка пути и границы fixtures](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-GENDER-PATHS.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
