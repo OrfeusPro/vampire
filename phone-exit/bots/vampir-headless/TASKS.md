@@ -177,6 +177,15 @@ code 0 без identity требует списка, nonzero не сохраня�
 Далее — интеграция одной отправки Create после принятого пустого списка,
 decode ID 104, сохранение серверного ключа и refresh после неоднозначного разрыва.
 [Handler, fixtures и решение runtime](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-HANDLER.md).
+Opt-in creation_payload подключён к exchange / GameConnection: accepted Login
+и accepted empty list, один frame ID 103 с общими key/sequence; ID 104 только
+после full send. Unknown при timeout/EOF, без повторов; existing character не создаётся.
+Шесть локальных lifecycle/socket тестов и 40 exchange / 9 connection / 12 selection
+regression прошли. Это synthetic local exchange, не живая игровая проверка.
+Следом — explicit worker operation, persistent pending/unknown до отправки,
+сохранение server key/name и чтение списка перед новым решением после разрыва.
+UI / worker пока не отправляют Create, остальные классы factory ещё не поддерживает.
+[Сессия и следующий этап](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-SESSION-FLOW.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

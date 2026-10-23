@@ -134,6 +134,12 @@ Code 0 принимает запись независимо от совпаде�
 без автоматического retry. Следом — подключение одной отправки к принятому
 пустому списку и живой контроль; создания ботом пока не было.
 [Ответ, ожидание и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-HANDLER.md).
+Создание подключено к GameConnection / exchange как явная opt-in операция:
+accepted Login и пустой список, один keyed ID 103, полный send перед ID 104.
+Timeout / EOF дают unknown без retry; existing character исключает Create.
+Локальная socket-сессия и regression проверки прошли. Worker / UI отправку
+пока не включают; далее постоянный журнал неопределённого исхода и живой контроль.
+[Сессионный lifecycle и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-SESSION-FLOW.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

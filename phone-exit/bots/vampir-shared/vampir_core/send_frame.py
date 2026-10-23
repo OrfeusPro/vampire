@@ -94,6 +94,11 @@ def encode_character_list_frame_b(sequence: int, key_bits: int) -> bytes:
     return _encode(101, b'', sequence, key_bits)
 
 
+def encode_character_create_frame_b(payload, sequence: int, key_bits: int, *, source_sha256):
+    from .character_create import encode_character_create
+    return _encode(103, encode_character_create(payload, source_sha256=source_sha256), sequence, key_bits)
+
+
 def encode_version_frame_b(payload: VersionPayload, sequence: int, key_bits: int, *, max_payload_size: int) -> bytes:
     if not isinstance(payload, VersionPayload): raise TypeError('Expected VersionPayload')
     return _encode(1, payload.encode(max_payload_size=max_payload_size), sequence, key_bits)

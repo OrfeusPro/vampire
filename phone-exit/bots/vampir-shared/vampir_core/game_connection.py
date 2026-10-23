@@ -71,6 +71,7 @@ class GameConnection:
         self._heartbeat = None
         self._tutorial_ack = None
         self._quest_list = None
+        self._creation = None
         try:
             sock.setblocking(False)
         except Exception:
@@ -107,6 +108,9 @@ class GameConnection:
     @property
     def quest_list(self): return self._quest_list
 
+    @property
+    def creation(self): return self._creation
+
     def close(self):
         if self._active:
             self._active = False
@@ -117,6 +121,7 @@ class GameConnection:
             if self._login is not None: self._login.close()
             if self._tutorial_ack is not None: self._tutorial_ack.close()
             if self._quest_list is not None: self._quest_list.close()
+            if self._creation is not None: self._creation.close()
             try:
                 self._socket.close()
             finally:
@@ -143,7 +148,20 @@ class GameConnection:
 
     def select_character(self, index, *, now):
         if not self.active: raise RuntimeError('Connection is inactive')
+        if self._creation is not None: raise RuntimeError('Refresh character list on a new connection before selection')
         self._selection.select(index, now=now)
+
+    def queue_character_create(self, payload, *, source_sha256, now, timeout=10):
+        if (not self.active or self._creation is not None or self._login is None
+                or self._login.state != 'login_response' or self._login.login_result_code != 0):
+            raise RuntimeError('Creation requires accepted Login and a fresh attempt')
+        from .character_creation_flow import CharacterCreationFlow
+        flow = CharacterCreationFlow(self._outbound, source_sha256=source_sha256, timeout=timeout)
+        try:
+            flow.queue(payload, self._selection, now=now)
+        finally:
+            # Only an attempted queue consumes this connection's creation slot.
+            if flow.state != 'waiting_entry': self._creation = flow
 
     def enable_world_start(self, *, source_sha256, timeout, max_payload_size,
                            complete_world=False,max_collection_items=4096):
@@ -198,6 +216,7 @@ class GameConnection:
     def _frame_sent(self, frame):
         if self._tutorial_ack is not None: self._tutorial_ack.frame_sent(frame)
         if self._quest_list is not None: self._quest_list.frame_sent(frame)
+        if self._creation is not None: self._creation.frame_sent(frame)
 
     def pump(self, *, now, budget: PumpBudget):
         if not self.active: raise RuntimeError('Connection is inactive')
@@ -234,6 +253,9 @@ class GameConnection:
             if self._quest_list is not None and self._quest_list.expire(now=now):
                 self._fail('quest_list_unknown')
                 return PumpProgress(0, 0, 0, False)
+            if self._creation is not None and self._creation.expire(now=now):
+                self._fail('character_creation_unknown')
+                return PumpProgress(0, 0, 0, False)
             while packets < budget.max_packets and self.active:
                 packet = self._receiver.next_packet(key_bits=self._key,
                     max_transport_frames=budget.max_transport_frames_per_packet)
@@ -248,6 +270,8 @@ class GameConnection:
                     elif packet.packet_id in (2, 4) and self._login is not None:
                         self._login.receive(packet.packet_id, packet.body, now=now)
                         if self._login.state == 'failed': self._fail('login_response_failed')
+                    elif packet.packet_id == 104 and self._creation is not None:
+                        self._creation.receive(packet.body, now=now)
                     elif packet.packet_id in (102, 110):
                         self._selection.receive(packet.packet_id, packet.body, now=now)
                         if self._selection.state == SelectionState.FAILED:

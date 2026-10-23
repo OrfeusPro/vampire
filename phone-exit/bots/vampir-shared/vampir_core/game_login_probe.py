@@ -17,7 +17,13 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         character_index=None, read_world_start=False, source_sha256=None,read_world_finish=False,
                         observe_world_seconds=0,world_observer=None,tutorial_observer=None,
                         ack_initial_tutorial=False, read_quest_list=False, quest_observer=None,
-                        quest_wire_observer=None, expose_character_labels=False, expected_character_key=None):
+                        quest_wire_observer=None, expose_character_labels=False, expected_character_key=None,
+                        creation_payload=None):
+    if creation_payload is not None:
+        from .character_create import encode_character_create
+        if not read_character_list or character_index is not None or source_sha256 != WORLD_SOURCE_SHA256:
+            raise ValueError('Creation requires current source and explicit list operation without selection')
+        encode_character_create(creation_payload, source_sha256=source_sha256)
     if expected_character_key is not None and (type(expected_character_key) is not int or
             not 0 <= expected_character_key <= 0xffffffffffffffff or character_index is None):
         raise ValueError('Expected character key requires explicit selection')
@@ -152,6 +158,19 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     character_select_body_size=(owner.selection.last_body_size
                         if owner.selection.last_packet_id == 110 else None),
                     selection_body_fully_decoded=accepted or refused)
+        if creation_payload is not None:
+            creation = owner.creation
+            if creation is not None and creation.state in ('queued', 'sent'): owner.close()
+            outcome = creation.outcome if creation is not None else None
+            value.update(character_creation_state=creation.state if creation is not None else 'not_attempted',
+                character_creation_result_code=creation.result_code if creation is not None else None,
+                character_creation_retry_allowed=False,
+                character_creation_refresh_required=creation is not None and creation.state in ('unknown', 'needs_refresh', 'created'),
+                character_creation_unmatched_results=creation.unmatched_results if creation is not None else 0)
+            if outcome is not None and outcome.status == 'created':
+                # Explicit account-console operation may retain labels; ordinary diagnostics do not.
+                value['created_character_key'] = str(outcome.character_key)
+                if expose_character_labels: value['created_character_name'] = outcome.character_name
         if read_world_start:
             world=owner.world_entry
             value.update(world_entry_state=world.state,world_entry_error=world.error,
@@ -233,6 +252,21 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     list_requested = True
                     deadline = time.monotonic() + timeout
                 elif owner.selection.state == SelectionState.LIST_AVAILABLE:
+                    if creation_payload is not None and not owner.selection.characters.records:
+                        if owner.creation is None:
+                            try:
+                                owner.queue_character_create(creation_payload, source_sha256=source_sha256,
+                                    now=time.monotonic(), timeout=timeout)
+                            except BufferError:
+                                return result('character_creation_not_queued')
+                            deadline = time.monotonic() + timeout
+                        if owner.creation.state in ('created', 'rejected', 'needs_refresh'):
+                            return result('character_creation_result')
+                        if owner.creation.state == 'unknown': return result('character_creation_unknown')
+                        # Keep pumping this connection until ID104 or timeout; do not select or repeat Create.
+                        remaining = max(0, deadline - time.monotonic())
+                        select.select([sock], [sock] if owner.queued_bytes else [], [], min(0.05, remaining))
+                        continue
                     if character_index is None: return result('character_list_result')
                     if expected_character_key is not None:
                         matches = [index for index, record in enumerate(owner.selection.characters.records)

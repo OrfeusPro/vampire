@@ -59,6 +59,11 @@ class OutboundFrames:
     def queue_character_list(self) -> bytes:
         return self._append(encode_character_list_frame_b(self._sequence, self._key_bits))
 
+    def queue_character_create(self, payload, *, source_sha256):
+        from .send_frame import encode_character_create_frame_b
+        return self._append(encode_character_create_frame_b(payload,
+            self._sequence, self._key_bits, source_sha256=source_sha256))
+
     def queue_version(self, payload, *, max_payload_size):
         return self._append(encode_version_frame_b(payload, self._sequence, self._key_bits,
                                                   max_payload_size=max_payload_size))
