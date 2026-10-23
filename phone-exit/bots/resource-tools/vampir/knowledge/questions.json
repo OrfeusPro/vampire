@@ -429,6 +429,20 @@
       "evidence": [
         "evidence/auth/HEADLESS-SDK-PLATFORM-11316.md"
       ]
+    },
+    {
+      "id": "sdk-profile-assembly",
+      "status": "bounded_answer",
+      "question": "Как собрать воспроизводимый текущий SDK profile из проверенных reports без автоматического продвижения runtime?",
+      "known": "Для d00a1977 собран отдельный кандидат из шести native reports: 739 случаев. Проверены SHA источника/артефактов/зависимостей и согласованность defaults/override/platform/Start/URL/headers. Constructor+Start отдельно проверены совместно в 512 сценариях до copy boundary. Пять тестов прошли, runtime_enabled/network_ready остаются false.",
+      "unknown": "Current NID caller inputs, auth lifecycle и runtime integration новой сборки; совместимость живой сессии.",
+      "next_action": "Сверить current NID caller inputs и auth guards, затем подключить профиль явно и проверить вход отдельно при доступности серверов.",
+      "decision_rule": "Согласованный offline profile не доказывает активные startup inputs или принятие сервером. Новый SHA и изменённая dependency требуют новых reports.",
+      "do_not_repeat": "Готовые exports и неизменные reports повторно использовать; не заменять старый runtime source guard одним новым SHA.",
+      "addresses": [],
+      "evidence": [
+        "evidence/auth/HEADLESS-SDK-PROFILE-11316.md"
+      ]
     }
   ]
 }

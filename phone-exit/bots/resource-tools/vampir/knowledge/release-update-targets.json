@@ -232,20 +232,36 @@
               },
               {
                 "address": "0x144508210",
-                "scope": "GMC2 Start to FString copy boundary",
+                "scope": "Start to copy boundary; constructed source URL checked, destination copy excluded",
                 "required_checks": [
-                  "release-requested-function-export"
+                  "release-requested-function-export",
+                  "sdk-profile-assembly-11316"
                 ]
               }
             ],
             "tools": [
-              "replay-sdk-defaults-11316.py"
+              "replay-sdk-defaults-11316.py",
+              "replay-gmc2-base-11316.py",
+              "build-sdk-profile-11316.py"
             ],
             "evidence": [
               "evidence/auth/HEADLESS-SDK-DEFAULTS-11316.md",
-              "evidence/auth/HEADLESS-GMC2-START-11316.md"
+              "evidence/auth/HEADLESS-GMC2-START-11316.md",
+              "evidence/auth/HEADLESS-SDK-PROFILE-11316.md"
             ]
           }
+        ]
+      },
+      "profile_assembly": {
+        "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "tool": "build-sdk-profile-11316.py",
+        "required_check": "sdk-profile-assembly-11316",
+        "state": "offline_candidate_only",
+        "runtime_enabled": false,
+        "review_before_runtime": [
+          "Current NID caller inputs",
+          "Auth lifecycle source guards",
+          "Explicit integration and separate live validation"
         ]
       }
     },

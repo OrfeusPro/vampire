@@ -43,6 +43,9 @@ Platform и полный SDK profile ещё требуют проверки.
 switch: case blocks входят в проверяемые инструкции, прежний неполный материал
 сохранён. Полный SDK profile пока не собран.
 [Платформа и контроль полноты](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-PLATFORM-11316.md).
+Собран отдельный SDK profile-кандидат из шести native reports / 739 случаев.
+Он пока не включён в runtime: NID caller inputs и auth guards ещё требуют сверки.
+[Состав профиля, проверки и следующий этап](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-PROFILE-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

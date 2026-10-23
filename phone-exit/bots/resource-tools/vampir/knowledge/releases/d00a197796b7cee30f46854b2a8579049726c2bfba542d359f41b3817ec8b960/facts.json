@@ -491,6 +491,40 @@
       "question": "sdk-platform-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "NID caller inputs новой сборки и полный SDK runtime profile; совместимость живого входа."
+    },
+    {
+      "addresses": [
+        "0x1444c4210",
+        "0x144508210",
+        "0x144532410"
+      ],
+      "checks": [
+        {
+          "cache_key": "638bd27ad63bc9b2085e2425f7012c85e13da89dccbcb61fba315d1871f7e807",
+          "id": "sdk-profile-assembly-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\07e26e73778b4a94afac326ffca939de9214bf44d91d2e0844ad0f966bde8ff2\\manifest.json",
+          "sha256": "07e26e73778b4a94afac326ffca939de9214bf44d91d2e0844ad0f966bde8ff2",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Собран immutable offline SDK profile candidate из шести source-bound native reports, 739 случаев. Совместный constructor/Start replay проверил 512 zone/flag pairs и source URL до copy boundary. Сборщик сверяет source/report/artifact/dependency hashes и согласованность defaults/override/PC/base/URL/public headers. Пять тестов прошли; runtime_enabled/network_ready/active_runtime_settings_verified остаются false.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-PROFILE-11316.md",
+          "sha256": "4ca8863bef24fc0869ee733c1ed443c2f327c2f8fd722496d5936f3928b6da43"
+        }
+      ],
+      "id": "f4940345f1a9a677af1989d2c334d39f777171a382e80806483b60250292bfeb",
+      "limits": [
+        "Сохранённый EXE и synthetic memory; без процесса игры, сети и авторизации.",
+        "В constructor/Start replay FString storage, class/CDO, logging и final copy capture — fixtures; destination copy не исполняется.",
+        "Profile выбирает real/NMENV absent/PC byte 3 и локальные NID UI значения; фактические caller/startup inputs и auth lifecycle не подтверждены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сверить NID caller inputs и auth guards, затем явно подключить профиль и отдельно выполнить живую проверку при доступности серверов.",
+      "question": "sdk-profile-assembly",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current NID caller inputs, auth lifecycle source guards и runtime integration новой сборки, совместимость живого входа."
     }
   ],
   "schema": 1,
