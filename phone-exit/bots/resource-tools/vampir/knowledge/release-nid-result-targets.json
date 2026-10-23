@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "baseline_sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+  "anchors": [
+    {
+      "id": "nid-ondeeplink",
+      "text": "bool __cdecl Netmarble::Service::FNetmarbleIDContent::OnDeepLink(const class FString &)",
+      "encoding": "ascii",
+      "baseline_root": "0x1450ed4f0",
+      "baseline_literal": "0x1496e3bc0",
+      "required_checks": [
+        "nid-result-source-11316"
+      ]
+    },
+    {
+      "id": "nid-onresult",
+      "text": "void __cdecl Netmarble::Service::FNetmarbleIDContent::OnResult(const class FString &)",
+      "encoding": "ascii",
+      "baseline_root": "0x1450ee6b0",
+      "baseline_literal": "0x1496e3e70",
+      "required_checks": [
+        "nid-result-source-11316"
+      ]
+    }
+  ]
+}

@@ -557,7 +557,8 @@
         "replay-nid-extensions-11316.py",
         "replay-nid-converter-11316.py",
         "replay-nid-gates-11316.py",
-        "replay-nid-query-11316.py"
+        "replay-nid-query-11316.py",
+        "audit-nid-result-11316.py"
       ],
       "rule": "Follow explicit callers of reviewed FDeviceInfo::GetPlatform; preserve undecodable roots and inspect selected Ghidra exports before assigning NID role.",
       "automation": {
@@ -602,6 +603,20 @@
                 "required_checks": [
                   "nid-query-native-11316"
                 ]
+              },
+              {
+                "address": "0x1450f2c80",
+                "scope": "Static diagnostic signature and direct OnResult CALL; URL routing behavior not executed",
+                "required_checks": [
+                  "nid-result-source-11316"
+                ]
+              },
+              {
+                "address": "0x1450f3e40",
+                "scope": "Static diagnostic signature, auth mode mask and six result key initializer bindings; validation/setters/callbacks not executed",
+                "required_checks": [
+                  "nid-result-source-11316"
+                ]
               }
             ],
             "tools": [
@@ -609,14 +624,16 @@
               "replay-nid-extensions-11316.py",
               "replay-nid-converter-11316.py",
               "replay-nid-gates-11316.py",
-              "replay-nid-query-11316.py"
+              "replay-nid-query-11316.py",
+              "audit-nid-result-11316.py"
             ],
             "evidence": [
               "evidence/auth/HEADLESS-NID-CONTEXT-11316.md",
               "evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md",
               "evidence/auth/HEADLESS-NID-CONVERTER-11316.md",
               "evidence/auth/HEADLESS-NID-GATES-11316.md",
-              "evidence/auth/HEADLESS-NID-QUERY-11316.md"
+              "evidence/auth/HEADLESS-NID-QUERY-11316.md",
+              "evidence/auth/HEADLESS-NID-RESULT-SOURCE-11316.md"
             ]
           }
         ],
@@ -634,6 +651,7 @@
     }
   ],
   "additional_target_plans": [
-    "release-gmc2-request-targets.json"
+    "release-gmc2-request-targets.json",
+    "release-nid-result-targets.json"
   ]
 }

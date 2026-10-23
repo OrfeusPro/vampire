@@ -68,6 +68,10 @@ console slot при initialized TLS. NID parent / context builder ещё не п
 hex leaves; сборка URL и передача в owner fields — 48 случаев с fixtures.
 Открытие браузера и целая авторизация этим не подтверждены.
 [Кодирование, URL assembly и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-QUERY-11316.md).
+Найдены текущие OnDeepLink / OnResult: статически сверены 1384 инструкции,
+route, mode mask и семь key bindings. Поиск включён в планы updater;
+валидация результата ещё требует native replay текущей сборки.
+[Обработчики результата и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-RESULT-SOURCE-11316.md).
 
 Атлас переключён на русский язык: названия и описания из именованных таблиц
 текущего клиента, исходный текст при отсутствии однозначного перевода.

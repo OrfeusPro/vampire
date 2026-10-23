@@ -845,6 +845,81 @@
       "question": "nid-context-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Полная map serialization, Unicode, owner storage implementation, browser/result boundary и auth source guards новой сборки."
+    },
+    {
+      "addresses": [
+        "0x1450f2c80",
+        "0x1450f3e40"
+      ],
+      "checks": [
+        {
+          "cache_key": "8d5c4c2b01a8f110eafb9cb13e6af9e0688e2ca19ef6552aefa8cd46515e4415",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105\\manifest.json",
+          "sha256": "ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105",
+          "state": "passed"
+        },
+        {
+          "cache_key": "95edeeb2782f32a926fe145682cbd3bd473e82794399eea7fa31a5d390c17b58",
+          "id": "nid-context-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610\\manifest.json",
+          "sha256": "a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e48e5ec12ce24dc97d355a4f063b4f24115bff89990c8f564aeca282f088345a",
+          "id": "nid-extensions-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49d3783ab446377123827c0c9c90a0940de64d9ff8d827e869d900d804cdf8da\\manifest.json",
+          "sha256": "49d3783ab446377123827c0c9c90a0940de64d9ff8d827e869d900d804cdf8da",
+          "state": "passed"
+        },
+        {
+          "cache_key": "384bd0c52c2d230533da165f1ba3b3749c0dada5f3692c43c0dff5e1f7408863",
+          "id": "nid-converter-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e47a9a0a970d5fb81ffd266ad43f37e078317fe0042cf1fe3abb8a0a72d5be99\\manifest.json",
+          "sha256": "e47a9a0a970d5fb81ffd266ad43f37e078317fe0042cf1fe3abb8a0a72d5be99",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c1579c51aa294134d5ee0d423394bf189b44ed7d718eab0aa5566ac07f37a331",
+          "id": "nid-gates-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\818b42b028343f1b37b3efcaa1d3e54fc84e45adefb4a22a54aa83b9f2403bd1\\manifest.json",
+          "sha256": "818b42b028343f1b37b3efcaa1d3e54fc84e45adefb4a22a54aa83b9f2403bd1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e1400cfbe86be753c32299ac8a4ffd3c5a6290ada923c811156d10d42671544e",
+          "id": "nid-query-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4fdaa3bd681c4f4e136de14cef75e421182b6449260949808c30635818f4e83a\\manifest.json",
+          "sha256": "4fdaa3bd681c4f4e136de14cef75e421182b6449260949808c30635818f4e83a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5bcb50cd192c3a074c991b02c16ca7efae7d6d6f994abc79c4b92670bf4549d2",
+          "id": "nid-result-source-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0be647525cce53f16684c8f691eb044067ac567cf22bc4e4fb26f7ba632f4748\\manifest.json",
+          "sha256": "0be647525cce53f16684c8f691eb044067ac567cf22bc4e4fb26f7ba632f4748",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие OnDeepLink / OnResult найдены точными diagnostic signatures, получены два exports. Static audit сверил 1384 exported instructions, CALL 0x1450f30bb -> 0x1450f3e40, TEST режима с маской 0xfffffffa и семь UTF-16 key initializer bindings: result/resultCode/accessToken/refreshToken/channelKey/netmarbleId/joinedCountryCode. Поиск включён в additional target plan updater.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-NID-RESULT-SOURCE-11316.md",
+          "sha256": "646bf8744bb6d876f66b94abc8dbd7d810b9307de9d9d0a9e0f94b009ae4bce5"
+        }
+      ],
+      "id": "b30ab3fe8abf0458698ff3c936d3c4c092c8927fae3083b135c51b0dc6418ccb",
+      "limits": [
+        "Проверка инструкций и связей, native validation behavior не исполняется.",
+        "Initializer scan ограничен 16 самостоятельными roots до 64 байт, без chained expansion. Full decompiler coverage не гарантирует отсутствия instruction-list gaps.",
+        "Нет реальных аккаунтов/токенов, missing/empty behavior, integer/channel parsing, setters, persistence, browser/result callbacks и авторизации. Runtime profile не включён."
+      ],
+      "method": "static",
+      "next_check": "Перенести bounded OnResult validation replay на готовый текущий export перед auth source guards и runtime integration.",
+      "question": "nid-context-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Поведение текущего OnResult при missing/empty fields, parser/mapper gates и раздельные adoption arguments; browser/result lifecycle."
     }
   ],
   "schema": 1,
