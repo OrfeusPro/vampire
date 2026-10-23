@@ -112,6 +112,12 @@ Female 1 → F. DefaultGender 1 у Carnage соответствует F / preset
 описано раньше. Sentinel Max 2 также даёт M, поэтому результат helper не
 является валидацией пола. CDO int32 defaults и настройки ползунков ещё открыты.
 [Проверка пути и границы fixtures](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-GENDER-PATHS.md).
+Настоящий экран CharacterCustomizeUI связан через getter `146404090` и
+условный wrapper `14640a3f0` с constructor `1464166f0`. Шесть native случаев
+подтвердили default scale 1000 и пустой owner; поздние overrides и min/max
+ещё не проверены. CDO creation найден в `1416a4780`; далее его allocation
+`1417e6110`, initializer `1417ca780` и завершение `1417cbe90` для omitted int32.
+[Масштаб, исключённые кандидаты и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CUSTOMIZE-SCALE.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

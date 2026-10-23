@@ -88,6 +88,11 @@ int32 остаются неизвестными до проверки CDO. Че�
 у Carnage выбирается F и preset ID 3. Целые path helpers прошли 1024 случая
 с явными engine-строковыми fixtures. Max 2 не считать допустимым полом.
 [Enum пола, суффиксы и уточнение прежнего разбора](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-GENDER-PATHS.md).
+Для CharacterCustomizeUI подтверждён native constructor default scale 1000:
+шесть сценариев через условный constructor wrapper, с сохранением guards.
+Поздние overrides и min/max ещё не проверены. Найдена функция создания CDO;
+её allocation / default copy нужны для отсутствующих int32 пресета.
+[Identity экрана, масштаб и следующий путь CDO](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CUSTOMIZE-SCALE.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
