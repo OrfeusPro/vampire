@@ -554,7 +554,8 @@
       "tools": [
         "find-release-sdk-references.py",
         "replay-nid-context-11316.py",
-        "replay-nid-extensions-11316.py"
+        "replay-nid-extensions-11316.py",
+        "replay-nid-converter-11316.py"
       ],
       "rule": "Follow explicit callers of reviewed FDeviceInfo::GetPlatform; preserve undecodable roots and inspect selected Ghidra exports before assigning NID role.",
       "automation": {
@@ -573,18 +574,38 @@
                 "required_checks": [
                   "nid-context-native-11316",
                   "sdk-override-references-11316",
-                  "nid-extensions-native-11316"
+                  "nid-extensions-native-11316",
+                  "nid-converter-native-11316"
+                ]
+              },
+              {
+                "address": "0x1450ed350",
+                "scope": "Whole webViewType converter with logging disabled: all 256 byte values and NID caller bindings; FString storage remains fixture",
+                "required_checks": [
+                  "nid-converter-native-11316"
                 ]
               }
             ],
             "tools": [
               "replay-nid-context-11316.py",
-              "replay-nid-extensions-11316.py"
+              "replay-nid-extensions-11316.py",
+              "replay-nid-converter-11316.py"
             ],
             "evidence": [
               "evidence/auth/HEADLESS-NID-CONTEXT-11316.md",
-              "evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md"
+              "evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md",
+              "evidence/auth/HEADLESS-NID-CONVERTER-11316.md"
             ]
+          }
+        ],
+        "discovery_hints": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "address": "0x1450ed350",
+            "literal": "0x14973c850",
+            "encoding": "ascii",
+            "text": "class FString __cdecl Netmarble::Service::FNMServiceUtil::GetWebViewTypeByChannelType(enum ENMChannelType)",
+            "rule": "Exact diagnostic literal/reference is a candidate only; verify branches, literals, caller and port source-bound check before reuse"
           }
         ]
       }

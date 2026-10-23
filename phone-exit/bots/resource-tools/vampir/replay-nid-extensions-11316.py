@@ -25,9 +25,13 @@ def load(name, path):
     return module
 
 
-def replay(root=None):
+def replay(root=None, native_converter=False):
     harness = load('nid_extensions_harness', HERE/'native-request-harness-11316.py')
-    h = harness.make_harness(EXPORTS, {ROOT}, leaves=TAILS, root=root)
+    exports, functions = dict(EXPORTS), {ROOT}
+    if native_converter:
+        exports['run-3ead5c3e47cf'] = 'b196fbc036eecaacb9ed0dd256bf89ab69fc2d2bd596bf8877fc721745d84411'
+        functions.add(0x1450ed350)
+    h = harness.make_harness(exports, functions, leaves=TAILS, root=root)
     rbp, owner, vtable, obj = [h.scratch+n for n in (0x10000, 0x18000, 0x19000, 0x19100)]
     virtual = h.scratch+0x3e000
     heap, options, pairs, events = [0], {}, [], []
@@ -101,12 +105,29 @@ def replay(root=None):
         else: raise ValueError('Unreviewed NID extension fixture')
         h.finish(result)
 
-    for at in (0x141426950, 0x141426b30, 0x1450ed350, 0x1414632f0,
+    for at in (0x141426950, 0x141426b30, 0x1414632f0,
                0x1450e9720, virtual, 0x144488e50, 0x144476300, 0x141483080):
         h.add_fixture(at, fixture)
+    if not native_converter: h.add_fixture(0x1450ed350, fixture)
+    converter_cases = []
+    web_label = lambda value: {30: 'steam', 31: 'epic', 34: 'xbox'}.get(value, 'sdk')
+    if native_converter:
+        # Logging disabled explicitly; logging helpers are not fixtures or allowed targets.
+        h.uc.mem_write(0x14b5632e0, bytes(1))
+        for poison, value in itertools.product((0, 0x55, 0xaa, 0xff), range(256)):
+            destination = rbp+0x600; heap[0] = h.scratch+0x20000
+            h.uc.mem_write(destination-16, bytes([poison])*48)
+            h.uc.reg_write(h.x.UC_X86_REG_RDX, value)
+            result = h.call(0x1450ed350, receiver=destination, budget=1024)
+            if result != destination or text(destination) != web_label(value):
+                raise ValueError('NID native converter result differs')
+            if bytes(h.uc.mem_read(destination-16, 16)) != bytes([poison])*16 or bytes(h.uc.mem_read(destination+16, 16)) != bytes([poison])*16:
+                raise ValueError('NID native converter canaries changed')
+            converter_cases.append(dict(byte=value, poison=poison, value=text(destination), canaries_unchanged=True))
     cases = []
     for poison, mode, web, optional in itertools.product((0, 0x55, 0xaa, 0xff),
-            (0, 1, 2, 3, 4, 5, 6, 0xffffffff), (0, 1, 2, 255), (False, True)):
+            (0, 1, 2, 3, 4, 5, 6, 0xffffffff),
+            (0, 1, 2, 30, 31, 34, 255) if native_converter else (0, 1, 2, 255), (False, True)):
         heap[0] = h.scratch+0x20000; pairs.clear(); events.clear()
         options.update(web=web, optional=optional)
         h.uc.mem_write(rbp-0x200, bytes([poison])*0xa00)
@@ -121,11 +142,12 @@ def replay(root=None):
         h.uc.emu_start(BEGIN, END, count=10000)
         if h.uc.reg_read(h.x.UC_X86_REG_RIP) != END: raise ValueError('NID extension instruction budget')
         special = mode in (4, 5)
-        expected = [['webViewType', 'fixture-web-'+str(web if special else 0)]]
+        argument = web if special else 0
+        expected = [['webViewType', web_label(argument) if native_converter else 'fixture-web-'+str(argument)]]
         if special and optional: expected.append(['credential', 'fixture-extra'])
         if mode in AUTH_TYPES: expected.append(['authType', AUTH_TYPES[mode]])
         if pairs != expected: raise ValueError('NID extension pairs differ: '+repr((mode, pairs, expected)))
-        expected_events = [['converter', web if special else 0]]
+        expected_events = [] if native_converter else [['converter', argument]]
         if special:
             expected_events.append(['optional', web])
             if optional: expected_events.append(['virtual'])
@@ -135,12 +157,14 @@ def replay(root=None):
         cases.append(dict(mode=mode, web=web, optional=optional, poison=poison,
                           pairs=pairs.copy(), events=events.copy(), canaries_unchanged=True))
     return dict(schema=1, source=str(h.source), source_sha256=h.sha, evidence=h.evidence,
-        start=hex(BEGIN), stop=hex(END), cases=cases, native_execution=True, network_ready=False,
+        start=hex(BEGIN), stop=hex(END), cases=cases, converter_cases=converter_cases,
+        converter_native=native_converter, native_execution=True, network_ready=False,
         dependencies={n: hashlib.sha256((HERE/n).read_bytes()).hexdigest() for n in
             ('replay-nid-extensions-11316.py', 'native-request-harness-11316.py', 'build-native-entry-code.py',
              'extract-native-enums.py', 'build-object-zero-init-code.py')},
         limits=['Native extension dispatch and authType literals execute; map insertion is a capture fixture.',
-            'webV converter, optional getter/virtual object/serializer/cleanup and FString storage/free are fixtures.',
+            ('Whole webViewType converter executes with logging disabled; optional getter/virtual object/serializer/cleanup and FString storage/free are fixtures.'
+             if native_converter else 'webV converter, optional getter/virtual object/serializer/cleanup and FString storage/free are fixtures.'),
             'The optional shared pointer has no reference controller; destructor branches are not exercised.',
             'Earlier gates, final query encoding, browser and authentication are not executed.'])
 
