@@ -63,6 +63,7 @@ Credentials и локальные профили не переносить в д
 - [Выполнение GMC2 URL в 1.13.16](../evidence/auth/HEADLESS-GMC2-URL-NATIVE-11316.md)
 - [JP: официальный вход до каталога и отказ после выбора сервера](../evidence/auth/HEADLESS-JP-LAUNCHER-CAPTURE-20261024.md)
 - [JP: регистрация Netmarble 24 октября 2026](../evidence/auth/HEADLESS-JP-REGISTRATION-20261024.md)
+- [JP: SDK принял повторный вход после официального клиента](../evidence/auth/HEADLESS-JP-SDK-RETRY-20261024.md)
 - [Launcher-вход: отдельный credential и два HTTP-вызова](../evidence/auth/HEADLESS-LAUNCHER-AUTH-CONTEXT.md)
 - [ChannelManager: выбор SignIn и отдельное получение launcher-токена](../evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md)
 - [Launcher request / response в 1.13.16](../evidence/auth/HEADLESS-LAUNCHER-CONTRACT-11316.md)
