@@ -8469,6 +8469,128 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Native no-data response до dispatcher и error layout/context; успешная ветвь content/UI и сохранение принятия перед первым SDK SignUp."
+    },
+    {
+      "addresses": [
+        "0x144517fd0",
+        "0x144532190",
+        "0x14456b510",
+        "0x1445742c0",
+        "0x144580990",
+        "0x145604f00",
+        "0x145605cf0",
+        "0x145606690",
+        "0x14560aff0",
+        "0x14560b130"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "19f0e56a253e5f3219a7fb4098ba3ea5475b9d9bb7b2184e1950ac200bda4222",
+          "id": "release-sdk-fetch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0\\manifest.json",
+          "sha256": "7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5d31887a62eda105d185a1b969f41abbacbbf690318c93496d740bf43a27d10f",
+          "id": "release-terms-continuation",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5\\manifest.json",
+          "sha256": "69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dcb400e135d05acb707165b5c797313e477549d40325b9d69f3548bd676599be",
+          "id": "release-sdk-terms",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d05bb331e7ce79d169146c72d8d2c33cc94e1c33434300ca15a8c3c3074cc1e7\\manifest.json",
+          "sha256": "d05bb331e7ce79d169146c72d8d2c33cc94e1c33434300ca15a8c3c3074cc1e7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "559c2bf20a771b1fa4506a05a6ba89e417556fabd1e3f0d0b278b34fa4217a0e",
+          "id": "release-terms-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2\\manifest.json",
+          "sha256": "326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b4a4c3c29b20bb57c23280428eea4af9386fb23539f5460133b34b5f5a319ce3",
+          "id": "release-individual-terms-response",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e\\manifest.json",
+          "sha256": "ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "40 native сценариев замкнули individual nonzero response через настоящий error constructor, dispatcher, queued adapter 145608200 и game consumer/virtual delegates до Netmarble SDK SignUp handoff либо error message. Constructor вычисляет aggregate code 30057209 = domain 7200 + base 30050000 + step 9; signed context сохраняет resultCode. NO DATA/-1 даёт state 2 и при binding четыре Netmarble 33/step13 handoff captures; остальные ненулевые коды дают state 3 / message 20. Реального SDK SignUp не было.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-INDIVIDUAL-TERMS-RESPONSE.md",
+          "sha256": "6283219fc38bfb4bdcbc94e1ee3934e6cfc666aaa253c23213f487f6a05606a5"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-1b2b935daa62\\details.json",
+          "sha256": "fc36502fde60719b09bcbaef04f5fdb21ae45e078f6f50a906c76815896d957b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-3380a52fff6d\\details.json",
+          "sha256": "7b0307a30a6cc0b33c1149c956e12a0c822fa8f54a6b4299fbd07c429ad518aa"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-61bf93179385\\details.json",
+          "sha256": "21adce1460632974a791d1e957058596d17bcb6ec04e336e3488686be04bef4c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-8c0479e8b8bd\\details.json",
+          "sha256": "c0e9b7937e1d716ecbf03759a5449a60a2f7e4e7fee46fda852643067b4d1cd5"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-18d567ce0cd6\\details.json",
+          "sha256": "9b91484b0423a1b99725da19226112bbd4e8987f1cc8c79a4645698fdec0c764"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-3a0991b1f1c8\\details.json",
+          "sha256": "20a5532389041914f37cfc5236a9c9a50facdc0697d2aca5888f03f97e85e8b4"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-c558937a4554\\details.json",
+          "sha256": "b3c2261d213515546d75e43e53b4521a2130815a106a854c6a9b9efb7ea54750"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-57ea578ebe47\\details.json",
+          "sha256": "c281575496f53eda31722eb828dfe6c8125bb600a4e268c92e44a5ae4b5537b3"
+        }
+      ],
+      "id": "fb10807054e7d62d19555c7930275f85607e052808af3b664ac909e76d07e611",
+      "limits": [
+        "HTTP/JSON/FString/allocation/service/error observer/scheduler ownership/callable getter/logging/error text/final SDK handoff — fixtures.",
+        "Явный Netmarble channel 33 и IDP count 1, tracked lookup уже существует; insertion / growth не проверены.",
+        "Не исполнялись HTTP failure, malformed JSON, zero result/content/UI, allocation failure, queue destructor/release и гонки; ответы синтетические."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать Fetch response errorCode 1203 с native aggregate 30050027 / context 1203. Подключить явный первый SDK вход через Fetch и обе terms ветви, останавливаясь при доступных или неоднозначных условиях; NID-регистрацию не повторять.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Точная Fetch challenge из живого ответа и переносимая первая SDK цепочка с реальными terms ответами; отдельно доступные условия и их принятие. Native handoff не доказывает успешный сетевой SDK SignUp."
     }
   ],
   "schema": 1,

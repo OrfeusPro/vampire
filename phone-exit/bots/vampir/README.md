@@ -184,14 +184,17 @@ UI, HTTP и серверное создание остаются вне пров
 summary не подтверждает согласие и не разрешает SDK SignUp. Далее individual terms без player ID.
 [Ответ условий и граница согласия](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-BASIC-TERMS-RESPONSE.md).
 Индивидуальные условия без player ID используют termsUrl GET и termsType I;
-это отдельная ветвь от agreementUrl с player ID. Диспетчер и отложенный callback
-прошли 96 native-сценариев: исходные ошибка и состояние сохраняются. Публичный
-индивидуальный GET получил NO DATA с объектом terms вместо массива BasicTerms.
-Добавлен отдельный план GET без сетевого вызова; пять тестов условий и два
-теста передачи результата прошли. Далее проверка обработчика NO DATA до
-диспетчера, затем ветви с доступными условиями и их показом;
-первый SDK вход ещё не замкнут, новых персонажей бот не создавал.
-[Индивидуальный запрос и передача результата](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
+с player ID действует отдельная ветвь agreementUrl. Публичный индивидуальный
+GET получил NO DATA с объектом terms вместо массива BasicTerms. Проверены
+план запроса и передача результата через очередь. Затем 40 native-сценариев
+замкнули обработчик ответа, настоящий конструктор ошибки и игровой callback:
+итоговый код 30057209, signed context сохраняется. При NO DATA / state 2
+и заданном callback игра выбирает переход SDK SignUp для Netmarble 33 / step 13;
+остальные ненулевые ответы дают сообщение об ошибке. Это ещё не сетевой SignUp.
+Следом — точная Fetch challenge и первый SDK вход через реальные ответы условий;
+новых персонажей бот пока не создавал.
+[Индивидуальный запрос и очередь](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
+[Обработчик ответа и игровой переход](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-RESPONSE.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
