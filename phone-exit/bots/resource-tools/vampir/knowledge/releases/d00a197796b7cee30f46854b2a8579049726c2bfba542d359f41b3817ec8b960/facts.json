@@ -131,6 +131,49 @@
       "question": "launcher-wire-contract",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Новый SDK/GMC2 profile, активные settings и семантика внешних auth callees; живая EU-сессия."
+    },
+    {
+      "addresses": [
+        "0x144508210"
+      ],
+      "checks": [
+        {
+          "cache_key": "b5aafcd3d137da1a3d7ef878d5f6ee3a7e5e567350b7802a7ddb5e407e3de88e",
+          "id": "release-update-target-discovery",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3abca959a1cf956e20c6c8bcc3b645d68f2ff9dfd533fd85eed819439f855ea0\\manifest.json",
+          "sha256": "3abca959a1cf956e20c6c8bcc3b645d68f2ff9dfd533fd85eed819439f855ea0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f6e56da1cb6164695955a498903823d1e34f14a46d2978a79d0e1674ddc987f7",
+          "id": "release-requested-function-export",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\685c6d9432c82608184eb94391d5839869c91bdb97be8fef0b6ba9b3756edb3b\\manifest.json",
+          "sha256": "685c6d9432c82608184eb94391d5839869c91bdb97be8fef0b6ba9b3756edb3b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Новый GMC2 Start найден по exact diagnostic signature и получен полным export: 57 инструкций/236 байт. Source-bound Unicorn исполнил 512 случаев до copy boundary: zone 0/2/3 выбирает manager offsets 150/170/180, остальные 160, destination 1e8; flag settings+c8 переносится в global. Getter/copy являются явными fixtures. Ориентир добавлен в автоматический план обновления.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-GMC2-START-11316.md",
+          "sha256": "5da199abcb70137fb361f467ecd68c0663dbf6b0e6244f4d2a121962a911b9e5"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d444f3f0abe1\\details.json",
+          "sha256": "dc9da35e609aac46ae80416e86977844303165c937aece5e4a0c8ffeb3fb57c1"
+        }
+      ],
+      "id": "c3669908b0dcbb7820851d2b05d2b1a7ab936f58c5037328883f2b54c96965e8",
+      "limits": [
+        "Logging отключён; settings уже существуют. Getter 1444b1fe0 fixture возвращает class/settings, constructor ветвь не исполняется.",
+        "Реальный tail JMP к 141441d60 захватывает аргументы и останавливает выполнение. FString copy и содержимое URL не исполняются.",
+        "Default zone, инициализация баз, SDK/GMC2 profile, HTTP и игра не подтверждены. Точная ранее предполагавшаяся строка InitSetting не найдена и не включена в anchors."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти constructor и settings/game override по проверенным данным и явным ссылкам, получить только недостающие exports, затем перенести полный SDK/GMC2 profile перед живым входом.",
+      "question": "release-update-target-discovery",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Текущий GMC2 constructor, значения четырёх баз и defaults/game override новой сборки."
     }
   ],
   "schema": 1,

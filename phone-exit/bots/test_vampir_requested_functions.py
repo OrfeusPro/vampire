@@ -124,5 +124,57 @@ class RequestedFunctionTests(unittest.TestCase):
             self.assertEqual(normalized[0],normalized[1])
         # This deliberately does not assert target identities, global contents or SDK behavior.
 
+    def test_new_gmc_start_all_zone_bytes_to_copy_boundary(self):
+        import struct
+        sys_path=__import__('sys').path
+        sys_path.insert(0,str(HERE.parents[2]/'.tools/vampir-analysis'))
+        from unicorn import Uc, UC_ARCH_X86, UC_MODE_64, UC_HOOK_CODE
+        from unicorn import x86_const as x
+        native=self.index.extension('build-native-entry-code')
+        sha='d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
+        source=native.ROOT/'client-code-snapshots'/sha/'ProjectRED-Win64-Shipping.exe'
+        self.assertEqual(self.index.digest(source),sha)
+        raw=source.read_bytes();image=native.Image(raw)
+        report=native.ROOT/'ghidra/request-exports'/sha/'run-d444f3f0abe1/details.json'
+        self.assertEqual(self.index.digest(report),'dc9da35e609aac46ae80416e86977844303165c937aece5e4a0c8ffeb3fb57c1')
+        f=json.loads(report.read_text(encoding='utf-8'))['functions'][0]
+        self.assertEqual(len(f['instructions']),57)
+        machine=Uc(UC_ARCH_X86,UC_MODE_64);pages=set()
+        def page(at):
+            base=at&~4095
+            if base not in pages: machine.mem_map(base,4096);pages.add(base)
+        for row in f['instructions']:
+            at=int(row['address'],16);data=bytes.fromhex(row['bytes']);off=image.offset(at-image.pe.base)
+            self.assertEqual(raw[off:off+len(data)],data)
+            page(at);page(at+len(data)-1);machine.mem_write(at,data)
+        for at in (0x1444b1fe0,0x141441d60,0x14b5632e0,0x14b1860f4):page(at)
+        machine.mem_write(0x1444b1fe0,b'\xc3');machine.mem_write(0x141441d60,b'\xc3')
+        scratch=0x20000000;machine.mem_map(scratch,0x10000)
+        receiver,manager,cls,settings,stack=[scratch+v for v in (0x1000,0x2000,0x3000,0x4000,0x8000)]
+        machine.mem_write(receiver,struct.pack('<Q',manager));machine.mem_write(cls+0x110,struct.pack('<Q',settings))
+        captures=[]
+        def hook(uc,at,size,user):
+            if at==0x1444b1fe0:
+                uc.reg_write(x.UC_X86_REG_RAX,cls)
+                sp=uc.reg_read(x.UC_X86_REG_RSP)
+                uc.reg_write(x.UC_X86_REG_RIP,int.from_bytes(uc.mem_read(sp,8),'little'))
+                uc.reg_write(x.UC_X86_REG_RSP,sp+8)
+            elif at==0x141441d60:
+                captures.append((uc.reg_read(x.UC_X86_REG_RCX),uc.reg_read(x.UC_X86_REG_RDX)))
+                uc.emu_stop()
+        machine.hook_add(UC_HOOK_CODE,hook)
+        for zone in range(256):
+            for diagnostic_flag in (0,1):
+                machine.mem_write(0x14b5632e0,b'\0') # Logging disabled fixture.
+                machine.mem_write(settings+0x49,bytes([zone]))
+                machine.mem_write(settings+0xc8,bytes([diagnostic_flag]))
+                machine.reg_write(x.UC_X86_REG_RCX,receiver);machine.reg_write(x.UC_X86_REG_RSP,stack)
+                machine.emu_start(0x144508210,0,count=1000)
+                offset={0:0x150,2:0x170,3:0x180}.get(zone,0x160)
+                self.assertEqual(captures[-1],(manager+0x1e8,manager+offset))
+                self.assertEqual(bytes(machine.mem_read(0x14b1860f4,1)),bytes([diagnostic_flag]))
+        self.assertEqual(len(captures),512)
+        # Getter and final FString copy are fixtures; URLs and profile defaults are untested.
+
 
 if __name__=='__main__': unittest.main()

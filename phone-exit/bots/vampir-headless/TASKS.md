@@ -15,6 +15,9 @@ patch revision **262487**, EXE SHA `d00a197796b7…`. Полная сверка 
 Статический launcher request/response audit перенесён на новый SHA: 16 функций,
 10 ключей, суффиксы, thunks и локальные ветвления. Живой вход этим не подтверждён.
 [Launcher-контракт 1.13.16](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-CONTRACT-11316.md).
+Новый GMC2 Start проверен на 512 native случаях до границы копирования базы.
+Реальные URL, default zone и полный SDK profile ещё требуют переноса.
+[Выбор базы и fixtures](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-START-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

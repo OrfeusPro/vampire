@@ -132,6 +132,16 @@
       "required_checks": [
         "release-launcher-contract"
       ]
+    },
+    {
+      "id": "gmc-start",
+      "text": "void __cdecl Netmarble::Service::FGMC2ManagerImpl::Start(void)",
+      "encoding": "ascii",
+      "baseline_root": "0x144509080",
+      "baseline_literal": "0x149537b28",
+      "required_checks": [
+        "release-gmc2-runtime"
+      ]
     }
   ],
   "resource_checks": [
