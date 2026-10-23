@@ -13,6 +13,7 @@ sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 from vampir_core.account_store import AccountStore
 from vampir_core.character_creation_plan import CLASS_CHOICES, random_nickname
 from vampir_core.account_sdk_preparation import validate_sdk_preparation
+from vampir_core.account_readiness import account_readiness
 
 
 class Jobs:
@@ -196,8 +197,10 @@ def server(store, *, port=17949):
                 return self.response(200, data, {'/': 'text/html; charset=utf-8', '/console.js': 'text/javascript; charset=utf-8', '/console.css': 'text/css; charset=utf-8'}[self.path])
             if self.path != '/api/state' or not self.trusted(True):
                 return self.response(403, dict(error='Forbidden'))
-            return self.response(200, dict(accounts=store.accounts(), jobs=jobs.snapshot(), catalogs=store.catalogs(),
-                character_lists=store.character_lists(),
+            accounts, catalogs, lists = store.accounts(), store.catalogs(), store.character_lists()
+            return self.response(200, dict(accounts=accounts, jobs=jobs.snapshot(), catalogs=catalogs,
+                character_lists=lists,
+                readiness={a['id']: account_readiness(a, catalogs, lists) for a in accounts},
                 creation_attempts=store.creation_attempts(),
                 creation_classes=[dict(key=key, label=label) for key, label in CLASS_CHOICES],
                 device_profiles=[dict(id='current-pc', name='Текущий ПК · общие данные устройства', available=True)]))
