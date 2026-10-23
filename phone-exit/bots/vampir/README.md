@@ -74,6 +74,11 @@ BoneGroup F / M извлечены из текущего PAK: по семь гр
 перед записью, JSON и preview. Поиск / вставка записи map пока fixture;
 реальные preset, масштаб и диапазоны ползунков ещё не подтверждены.
 [Запись параметров и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-SLIDER.md).
+Следом настоящие map lookup / insert / update прошли 26 native сценариев
+с коллизиями и повторным использованием свободных слотов. Строковые операции
+и память остаются fixtures; рост map не проверен. Predicate preset прошёл
+64 случая сравнения типа класса. Теперь нужны реальные строки и значения пресета.
+[Контейнер внешности и фильтр пресетов](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-MAP.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

@@ -94,6 +94,12 @@ value / scale как float32 пишется в запись перед JSON / pr
 insert остаётся fixture. Далее проверить `1464368f0`, predicate `1464479f0`,
 текущий preset и реальные scale / min / max ползунков.
 [Preset → ползунок → запись float](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-SLIDER.md).
+Map lookup / insert / update затем прошли 26 native сценариев при заранее
+выделенной памяти: коллизии, обновление без дубликатов и reuse свободных слотов
+с occupation bits через границу 31 / 32. Predicate preset прошёл 64 случая;
+он сравнивает row type с типом выбранного класса. Далее текущие строки
+DT_CustomizePreset F/M, ссылки и значения выбранного пресета, scale / min / max.
+[Map и predicate: fixtures и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-MAP.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
