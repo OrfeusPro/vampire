@@ -121,12 +121,23 @@ def main():
                 position = raw.find(b'\xe8', position + 1, end - 4)
     if len(roots) > 64:
         raise ValueError('Explicit reference root budget exceeded')
-    fragments = native.decode_ranges(image, roots)
+    fragments, gaps = [], []
+    def decode_roots(selected):
+        result = []
+        for root in sorted(selected):
+            try:
+                result.extend(native.decode_ranges(image, {root}))
+            except ValueError as error:
+                gaps.append(dict(function=hex(image.pe.base + root[0]), reason=str(error)))
+        return result
+    fragments.extend(decode_roots(roots))
     rows = {r['address']: r for f in fragments for r in f['instructions']}
-    references = []
+    references, unresolved_callers = [], []
     for address, target in call_candidates:
         row = rows.get(address)
         if row is None or row['mnemonic'] != 'call' or row['direct_target'] != target or len(bytes.fromhex(row['bytes'])) != 5:
+            unresolved_callers.append(dict(function=hex(image.pe.base + image.roots[image.containing(address)][0]),
+                instruction=hex(address), target=hex(target), reason='Raw E8 candidate; whole-root instruction boundary not verified'))
             continue
         root = image.roots[image.containing(address)]
         references.append(dict(label='DirectCaller', target=hex(target), instruction=hex(address),
@@ -167,7 +178,7 @@ def main():
         use_roots = {image.roots[image.containing(a)] for a, target in uses if image.containing(a)}
         if len(roots | use_roots) > 64:
             raise ValueError('Client ID reference root budget exceeded')
-        extra = native.decode_ranges(image, use_roots - roots)
+        extra = decode_roots(use_roots - roots)
         fragments.extend(extra)
         rows.update({r['address']: r for f in extra for r in f['instructions']})
         for address, target in uses:
@@ -181,7 +192,7 @@ def main():
         ghidra_evidence=str(args.evidence), ghidra_evidence_sha256=evidence_sha,
         tool_sha256=audit.sha256(Path(__file__)), scanner_sha256=audit.sha256(HERE / 'build-native-entry-code.py'),
         references=references, client_id_initializer_candidates=initializers, fragments=fragments,
-        vtable_candidates=vtables,
+        vtable_candidates=vtables, unresolved_roots=gaps, unresolved_callers=unresolved_callers,
         ghidra_direct_target_instructions=direct_rows, roles_transferred=False,
         limits=['LEA RIP candidates validated on whole unwind-root instruction boundaries.',
                 'Explicit E8 caller candidates are checked on decoded unwind-root boundaries; no indirect, tail or inline call coverage.',
@@ -191,7 +202,7 @@ def main():
         raise ValueError('SDK reference inputs changed during analysis')
     target = audit.save_snapshot(args.evidence.parent.parent.parent / 'sdk-reference-candidates', report)
     print(json.dumps(dict(report=str(target), sha256=audit.sha256(target),
-        references=len(references), functions=len({r['function'] for r in references})), indent=2))
+        references=len(references), functions=len({r['function'] for r in references}), unresolved_roots=len(gaps)), indent=2))
 
 
 if __name__ == '__main__':

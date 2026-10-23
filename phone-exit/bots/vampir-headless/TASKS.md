@@ -49,6 +49,9 @@ switch: case blocks входят в проверяемые инструкции,
 FDeviceInfo::GetPlatform проверен в 52 native случаях: default PC и выбор
 console slot при initialized TLS. NID parent / context builder ещё не подтверждён.
 [Caller платформы и fixture limits](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-WEB-PLATFORM-11316.md).
+Текущий NID CheckPossibleToOpen найден через explicit caller export. Десять
+базовых context pairs прошли 32 native случая; extensions / gates ещё открыты.
+[Связи NID inputs и сохранение unknown](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-CONTEXT-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

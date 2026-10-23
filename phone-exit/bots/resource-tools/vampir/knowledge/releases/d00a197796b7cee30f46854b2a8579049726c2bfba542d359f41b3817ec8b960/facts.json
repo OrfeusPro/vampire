@@ -573,6 +573,49 @@
       "question": "sdk-platform-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Связь с текущим NID parent/context builder, остальные inputs и auth lifecycle новой сборки."
+    },
+    {
+      "addresses": [
+        "0x1411b3260",
+        "0x1411b3290",
+        "0x1411b32c0",
+        "0x1445320c0",
+        "0x1450e3c80"
+      ],
+      "checks": [
+        {
+          "cache_key": "8d5c4c2b01a8f110eafb9cb13e6af9e0688e2ca19ef6552aefa8cd46515e4415",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105\\manifest.json",
+          "sha256": "ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105",
+          "state": "passed"
+        },
+        {
+          "cache_key": "95edeeb2782f32a926fe145682cbd3bd473e82794399eea7fa31a5d390c17b58",
+          "id": "nid-context-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610\\manifest.json",
+          "sha256": "a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Explicit Ghidra export подтвердил FNetmarbleIDContent::CheckPossibleToOpen и CALL GetPlatform в текущем SHA. Base-pair slice до map constructor исполнен в 32 случаях с actual build getter/initializers: десять key/value pairs, nidV 3, build A/B/C/A и шесть getter bindings проверены. Scanner теперь сохраняет valid references и unresolved roots/calls отдельно вместо общего отказа; raw candidate разрешён только последующим Ghidra export.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-NID-CONTEXT-11316.md",
+          "sha256": "4bd8b191b9c920af1fd23deb7bb82ba1a651a82055b835fbaa6c441303e974f9"
+        }
+      ],
+      "id": "c219fa1d7553a90d9b0b9691f71f179df3c15c12336a749b3b49e45820a08122",
+      "limits": [
+        "Сохранённый EXE и synthetic memory, без сети/процесса игры/auth.",
+        "Шесть context getters, settings/context objects, FString storage/allocation, memcpy и exit registration — fixtures.",
+        "Earlier URL/availability gates, actual device/context getter implementation, map/encoding, webV/authType extensions и browser callbacks не исполнены."
+      ],
+      "method": "bounded_native",
+      "next_check": "По готовому NID export сверить webV/authType и availability gates, затем auth source guards перед явным runtime integration.",
+      "question": "nid-context-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current extensions/gates и весь NID/auth lifecycle; runtime integration профиля-кандидата."
     }
   ],
   "schema": 1,

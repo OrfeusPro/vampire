@@ -82,6 +82,22 @@ class SdkReferences11316Tests(unittest.TestCase):
                          {'0x14125b770', '0x1456579d0'})
         self.assertTrue(all(row['literal'] == '0x14b5e5fc8' for row in report['references']))
 
+    def test_undecodable_caller_preserves_valid_results_and_explicit_unknown(self):
+        device_export=EXPORT.parent.parent/'run-47e33521ffcf/details.json'
+        result=self.run_tool(device_export,'--callers-of','1444ecf50')
+        report=json.loads(Path(result['report']).read_text('utf-8'))
+        self.assertEqual(len(report['references']),11)
+        self.assertEqual(report['unresolved_roots'],[dict(function='0x1450e3c80',reason='Fragment not fully decoded')])
+        self.assertEqual(len(report['unresolved_callers']),1)
+        unknown=report['unresolved_callers'][0]
+        self.assertEqual(unknown['function'],'0x1450e3c80')
+        self.assertEqual(unknown['target'],'0x1444ecf50')
+        self.assertNotIn(unknown['instruction'],{r['instruction'] for r in report['references']})
+        # Later explicit Ghidra inspection resolves the candidate; scanner itself does not promote it.
+        export=json.loads((EXPORT.parent.parent/'run-988ec3bf8f0a/details.json').read_text('utf-8'))
+        row=next(r for r in export['functions'][0]['instructions'] if r['address']==unknown['instruction'])
+        self.assertEqual(row['text'],'CALL 0x1444ecf50')
+
     def test_global_not_in_supplied_instructions_is_rejected(self):
         with self.assertRaisesRegex(ValueError, 'Global absent'):
             self.run_tool(EXPORT, '--global-address', '14b5e5fa8')

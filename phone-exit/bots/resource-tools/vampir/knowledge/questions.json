@@ -421,8 +421,8 @@
       "status": "bounded_answer",
       "question": "Как текущий platform getter получает PC и как проверяется полнота switch export?",
       "known": "Для d00a1977 точный PC initializer 0x1411b5c10 пишет global 0x14b562888; getter 0x144532410 после выгрузки ограниченных блоков содержит 75 инструкций и 11 блоков. Native replay в 12 случаях подтвердил: byte 3 возвращает PC, 2 / 255 — пустую строку, на четырёх poison fills; canaries сохранены. Неполный ранний export сохранён со статусом incomplete. Collector ограничивает blocks исходными unwind ranges. По проверенным direct callers getter найден FDeviceInfo::GetPlatform 0x1444ecf50; diagnostic signature подтверждена. Caller/getter/PC initializer исполнены в 52 случаях: initialized TLS, console pointer absent/present, два synthetic thread predicates. Default byte 3 и выбор slot 0/4 подтверждены; lazy registration и NID parent не покрыты.",
-      "unknown": "NID parent/caller binding, lazy console lookup/registration, остальные NID inputs и auth lifecycle новой сборки.",
-      "next_action": "Найти verified callers FDeviceInfo::GetPlatform и текущий NID context builder; проверить build/clientId/webview/country inputs до runtime integration.",
+      "unknown": "NID parent CheckPossibleToOpen теперь подтверждён отдельно; lazy console initialization, extensions/gates и весь auth lifecycle остаются непроверенными.",
+      "next_action": "Продолжить через nid-context-current: проверить webV/authType, URL/availability gates и auth guards.",
       "decision_rule": "PC byte 3 — explicit local choice; native getter не доказывает фактический caller или весь NID lifecycle. Псевдокод switch не доказывает экспорт case instructions.",
       "do_not_repeat": "Готовые initializer/getter не перевыгружать без смены источника или конкретной неполноты; старый switch export без blocks не использовать как ready.",
       "addresses": [],
@@ -443,6 +443,20 @@
       "addresses": [],
       "evidence": [
         "evidence/auth/HEADLESS-SDK-PROFILE-11316.md"
+      ]
+    },
+    {
+      "id": "nid-context-current",
+      "status": "bounded_answer",
+      "question": "Как текущий NID CheckPossibleToOpen связывает десять базовых key/value inputs с SDK getters?",
+      "known": "Для d00a1977 GetPlatform caller search сохранил 11 verified callers и один undecodable root. Явный export 0x1450e3c80 подтвердил FNetmarbleIDContent::CheckPossibleToOpen: 961 инструкция / 191 block. Slice 0x1450e4058..0x1450e42a8 исполнен в 32 сценариях; десять pairs, build getter/initializers, nidV 3 и шесть getter bindings подтверждены. Context values/storage — fixtures, map/encoding не исполнены.",
+      "unknown": "Текущие webV/authType extensions, URL/availability gates, реализация country/device/language/version getters и весь NID/auth lifecycle.",
+      "next_action": "Сверить extensions и gates текущего NID builder, затем auth source guards и runtime integration профиля-кандидата.",
+      "decision_rule": "Передача synthetic getter outputs доказывает bindings, не реальные device values или успешную авторизацию. Недекодированные roots сохранять отдельно, не считать отсутствующими.",
+      "do_not_repeat": "Не перевыгружать ready NID root без смены source или конкретной неполноты. Полный NID lifecycle не выводить из base pairs slice.",
+      "addresses": [],
+      "evidence": [
+        "evidence/auth/HEADLESS-NID-CONTEXT-11316.md"
       ]
     }
   ]
