@@ -57,6 +57,17 @@ def main():
                 raise ValueError('Ghidra instruction bytes differ from current source')
             instructions.append(row)
     known_references = {int(ref, 16) for row in instructions for ref in row.get('references', [])}
+    # Partial Ghidra projects may omit references even for a decoded LEA RIP.
+    # Recover only from the exact source-checked instruction, never its label.
+    decoder = native.capstone.Cs(native.capstone.CS_ARCH_X86, native.capstone.CS_MODE_64)
+    decoder.detail = True
+    for row in instructions:
+        data = bytes.fromhex(row['bytes'])
+        decoded = list(decoder.disasm(data, int(row['address'], 16)))
+        if len(decoded) == 1 and decoded[0].size == len(data) and decoded[0].mnemonic == 'lea':
+            ins = decoded[0]
+            known_references.update(ins.address + ins.size + op.mem.disp for op in ins.operands
+                if op.type == native.X86_OP_MEM and op.mem.base == native.X86_REG_RIP)
     vtables = []
     if not 0 <= args.vtable_slot <= 256 or args.vtable_slot % 8:
         raise ValueError('Vtable candidate slot must be aligned in 0..256')

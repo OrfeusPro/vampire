@@ -44,8 +44,11 @@ producer и результат создания ещё не подтвержде
 [Запись тела и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-WRITER.md).
 Источник класса уточнён: PlayerState создания хранит ID найденной строки,
 полученной по типу из `Class_` tag. Lookup прошёл 45 native случаев с sparse
-storage. Текущий ID Carnage ещё требует сверки таблицы и converter.
+storage. Затем singleton связан с ClassInfo / Type loader и Gunner converter;
+свежий PAK подтвердил Id 3 / Type 3 / DefaultGender 1. Проверка текущих строк
+и native lookup охватила 54 случая; отправки создания ещё нет.
 [Цепочка выбора и оставшиеся границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-LOOKUP.md).
+[Текущие классы и источники](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-CLASSES.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

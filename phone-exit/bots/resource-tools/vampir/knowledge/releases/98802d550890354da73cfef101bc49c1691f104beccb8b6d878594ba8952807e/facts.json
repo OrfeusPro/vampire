@@ -4859,6 +4859,77 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Identity singleton и схема Class row, converter 1457ba970 / актуальные Class_ теги и реальная текущая строка Carnage; appearance JSON и ID 104."
+    },
+    {
+      "addresses": [
+        "0x1457ba970",
+        "0x145896a10",
+        "0x145897850",
+        "0x1458b76d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "590a8f32ccd035225973c9cd612a2f1f5d8c91fbd1ee9c5f4374d02c87eca6ef",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d86deb0f8617da041c50992e64488222a820768e45d7e237f549aa029e423b36\\manifest.json",
+          "sha256": "d86deb0f8617da041c50992e64488222a820768e45d7e237f549aa029e423b36",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7e8e616520c040371cf3b19da2a77f63e5a1e676b16f97b418eac88748e5ab41",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cdbcec9e6495e1bed652f95f4e47effe337ea988bd19e277161e91d098a3e51d\\manifest.json",
+          "sha256": "cdbcec9e6495e1bed652f95f4e47effe337ea988bd19e277161e91d098a3e51d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f404dfee8a9ef53fa919c38e0969aef46f61eebc2feb602c2c048d5b3c1af04c",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\101c6ccd003efdc10cc9a461500e5673f6e5fb9ba5295140b247ae3f3a668208\\manifest.json",
+          "sha256": "101c6ccd003efdc10cc9a461500e5673f6e5fb9ba5295140b247ae3f3a668208",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ded66115c06be182c235de4370ae7243ea7ac5785073880de50b47037a3883d1",
+          "id": "release-character-create-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0015bdee22d4915ed73a1a0b3d887266f2a35e7f422bda757a284e990933ee72\\manifest.json",
+          "sha256": "0015bdee22d4915ed73a1a0b3d887266f2a35e7f422bda757a284e990933ee72",
+          "state": "passed"
+        },
+        {
+          "cache_key": "efc95e0a65b374265adb2f7a5083d646063bee69bbd03f85d7d4c829179230fa",
+          "id": "release-create-class-lookup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1dd4569f2c5cb0d92cd31819e94e75cd5017f0d73c9d3812f19bab628e12da45\\manifest.json",
+          "sha256": "1dd4569f2c5cb0d92cd31819e94e75cd5017f0d73c9d3812f19bab628e12da45",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3cec5a48ca3409473de3d64dea2ac43273be68e9e24297db8a259b0320c42ec7",
+          "id": "release-creation-class-data",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1d2470cd348515dc6f64433f9d80e3355ba5f640684f62e14965c69ae58720e3\\manifest.json",
+          "sha256": "1d2470cd348515dc6f64433f9d80e3355ba5f640684f62e14965c69ae58720e3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Singleton связан статически с ClassInfo по начальным vptr / name getter, Type loader пишет row+0x28, converter связывает Gunner с 3. Свежий PAK с полным SHA содержит побайтно прежний Class CSV, теперь entry 37. Текущая строка Carnage / Gunner: Id 3, Type 3, DefaultGender 1. Native lookup с данными CSV и синтетическими строками прошёл 54 случая; сохранён source-bound профиль пяти классов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-CURRENT-CLASSES.md",
+          "sha256": "1b495ffbae87bf264981758486ca2f5099b56a0252398330804373914d912aed"
+        }
+      ],
+      "id": "c221bffb97905353ae65de6095d6077a40d485db75d18c77fb108af834e38978",
+      "limits": [
+        "Identity, column loader и converter map установлены статически; whole loader / engine converter map не исполнялись.",
+        "Native lookup исполняется на fixture memory со значениями свежего CSV, не на активном engine cache.",
+        "Проверен указанный полный SHA PAK и CSV; приоритет всех PAK слоёв, серверный допуск и реальное создание не подтверждены.",
+        "Appearance producer / JSON и ответ ID 104 остаются открытыми; сеть не выполнялась."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить actual appearance constructor / helper 0x146447e50 и whole producer 0x146449dc0, затем ID 104; class raw ID для текущего Gunner равен 3.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Whole producer внешности и допустимые остальные параметры / JSON, reader / handler ID 104 / name_taken, активный cache и реальное создание."
     }
   ],
   "schema": 1,

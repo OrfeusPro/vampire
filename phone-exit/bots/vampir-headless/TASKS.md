@@ -59,9 +59,11 @@ Writer затем прошёл 42 тела и 24 отказа raw output fixture
 [Запись и переносимый encoder](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-REQUEST-WRITER.md).
 Установлена цепочка `Class_` tag → byte type → lookup → row ID `+8` →
 `RdPlayerStateCharacterCreate +0x360`. Lookup прошёл 45 native случаев.
-Далее нужна identity singleton / схема строки и текущая строка Carnage;
-старое совпадение Class Id / Type 3 само по себе не подтверждает wire ID.
+Затем подтверждены ClassInfo singleton / Type loader / Gunner converter и
+строка свежего PAK: Carnage Id 3 / Type 3 / DefaultGender 1. Проверка данных
+и lookup прошла 54 случая. Далее — producer внешности / JSON и ID 104.
 [Выбор класса](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-LOOKUP.md).
+[Текущая строка Carnage](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-CLASSES.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
