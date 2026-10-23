@@ -1093,6 +1093,54 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-version-platform-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-version-platform-context.py"
+      ],
+      "rule": "От текущего Version prepare проверить selector, context store и enum lookup: call sites, platform literals, cache, signed count и entry stride. Реальные FName/type/value helpers и новый SHA требуют отдельной сверки; runtime не продвигать.",
+      "automation": {
+        "discovery": "reviewed_constructor_wrapper_table_and_call_sites",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1445ce2e0",
+                "scope": "Whole selector/store/lookup with explicit platform, FName, resolver and value fixtures; no whole prepare integration.",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              },
+              {
+                "address": "0x1445c4b90",
+                "scope": "Whole selector/store/lookup with explicit platform, FName, resolver and value fixtures; no whole prepare integration.",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              },
+              {
+                "address": "0x1416dd660",
+                "scope": "Whole selector/store/lookup with explicit platform, FName, resolver and value fixtures; no whole prepare integration.",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-platform-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

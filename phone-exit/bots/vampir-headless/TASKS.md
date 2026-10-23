@@ -1,5 +1,9 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Текущий приоритет пользователя: **1, 5, 8, 9**, без серверов и живых входов.
+[Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
+этапов; старые «дальше» не заменяют текущий план.
+
 Native NM provider / getter прошли 36 сценариев, интеграция с Version prepare —
 64. Семь нужных callees уже экспортированы; дальше platform/context, Windows /
 CPU helpers, затем Login prepare и result readers.

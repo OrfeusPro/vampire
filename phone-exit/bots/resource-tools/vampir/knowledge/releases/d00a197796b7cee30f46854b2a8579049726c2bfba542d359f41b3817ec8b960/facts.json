@@ -2014,6 +2014,62 @@
       "question": "release-version-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Actual platform/context/Windows/CPU/string helper semantics, Login prepare и текущие result readers; реальная cold registry startup цепочка."
+    },
+    {
+      "addresses": [
+        "0x1416dd660",
+        "0x1445c4b90",
+        "0x1445ce2e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "16eb79a5613b81a0b6d2f4bd95fa721914a9be54cd2aec44a78d2ecd75be5695",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e851929a28415a88a10213314ac68b87d6e37daea08de13a28a37909a7bed128\\manifest.json",
+          "sha256": "e851929a28415a88a10213314ac68b87d6e37daea08de13a28a37909a7bed128",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f35af36db3881f03304a3e3b061fa89df40839b881c1c6d8aca5e690314f4df4",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f4effc1591651a8a98e27196bd3a011398b82a2f6522894914a88d17969267c6\\manifest.json",
+          "sha256": "f4effc1591651a8a98e27196bd3a011398b82a2f6522894914a88d17969267c6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "efed211a6dfb11dd4d753d2afb7cee4fab1c598cb40fc819b53b92d08f2b683a",
+          "id": "native-version-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd\\manifest.json",
+          "sha256": "cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Три целых Version helpers исполнены в 116 сценариях: selector возвращает 1/2/3 по Android/IOS/Windows equality и 0 при отсутствии совпадений; store кэширует ненулевой resolver, нулевой результат вызывает повтор; lookup передаёт индекс первого 64-битного совпадения или ffffffff. Проверены порядок вызовов, входы, guards и ABI. Экспорт повторно использован без Ghidra.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-PLATFORM-11316.md",
+          "sha256": "32ab3357dcc4214980f2d4b46d5d7779c821bf609380557944944ef3684baf7b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\VERSION-PLATFORM-11316.json",
+          "sha256": "58a931ae63b58153d9420eee3a89898f89251a42d13666994ceedf2cc351452c"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-platform-11316.json",
+          "sha256": "23bfc30c4adc88a0b26d871e978ea4be8a437dd214840df5b4c263bc55dc302e"
+        }
+      ],
+      "id": "0a26d1a51a63abdc00dd6578c1db0fdccc0c8bf304a602dbffa2eab9d5e3e246",
+      "limits": [
+        "Platform text, FName constructor/equality/free, type/resolver и value-at остаются явными fixtures.",
+        "Equality fixture использует точный текст; реальная FName normalization не подтверждена.",
+        "Нет whole Version integration с этими helpers, Windows/CPU, Login prepare/result, сети или продвижения runtime."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать сохранённые Windows/CPU exports; проверить явные callees и границы, затем включить подтверждённые helpers в whole prepare. Новый SHA оставлять неподдержанным до проверки.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные platform/context callees, Windows/CPU helpers, Login prepare и result readers текущей сборки."
     }
   ],
   "schema": 1,

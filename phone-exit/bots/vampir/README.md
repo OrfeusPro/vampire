@@ -1,5 +1,13 @@
 # Vampir — главный указатель разработки
 
+Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Selector / store / lookup подготовки Version 1.13.16 прошли 116 native сценариев
+с явными fixtures; whole prepare integration, Windows / CPU и Login ещё открыты.
+[Доказательства и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md).
+
+Далее сохранены результаты последовательных этапов. Формулировка «следующий шаг»
+в старой записи относится к моменту её проверки; актуальный порядок — в плане выше.
+
 Version NM provider / getter 1.13.16 исполнены в 36 сценариях cache / storage,
 затем включены в 64 whole prepare сценария с initialized synthetic cache.
 Реальные ключи не менялись; дальше platform/context и Windows / CPU helpers.

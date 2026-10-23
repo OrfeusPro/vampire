@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "proofs": {
+    "platform_context": {
+      "report": "F:/PhoneExit Resources/Vampir/knowledge/native-version-platform-checks/f2d104d4a076e463f10e303c38606e88a9e2a8ce2a6ddc748f7da04e8dfe47d3/manifest.json",
+      "sha256": "f2d104d4a076e463f10e303c38606e88a9e2a8ce2a6ddc748f7da04e8dfe47d3",
+      "cases": 116
+    }
+  },
+  "network_used": false,
+  "profile_activated": false
+}

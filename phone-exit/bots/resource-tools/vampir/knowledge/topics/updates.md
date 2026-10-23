@@ -63,4 +63,5 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Связанные проверки в команде обновления](../evidence/updates/HEADLESS-UPDATE-CHECK-DISPATCH.md)
 - [UTF-8 helpers 1.13.16: нативное преобразование и границы буфера](../evidence/updates/HEADLESS-UTF8-11316.md)
 - [Version 1.13.16: настоящий NM provider и getter](../evidence/updates/HEADLESS-VERSION-NM-11316.md)
+- [Version: платформа и контекст 1.13.16](../evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md)
 - [Version prepare 1.13.16: целая функция с явными входами](../evidence/updates/HEADLESS-VERSION-PREPARE-11316.md)

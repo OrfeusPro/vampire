@@ -494,16 +494,17 @@
       "id": "release-version-prepare",
       "status": "bounded_answer",
       "question": "Как текущий Version prepare проецирует явные контекстные и аппаратные входы в пакет и выполняет cleanup до/после send?",
-      "known": "Целые Version prepare 1467ce6a0 и constructor 1456d7be0 исполнены в 64 сценариях: контекст есть/нет, пустые/Unicode, enum 0/max, send 0/1, poison. Проверены packet fields, owner reset +160, cleanup и ABI; внешние getters/строки/destructor/send — явные fixtures. Provider 1445ccee0 и NM getter 1444ec890 теперь native: 36 cache/storage/GUID-flow scenarios и 64 whole prepare scenarios с initialized synthetic cache; storage/GUID/string boundaries остаются fixtures.",
-      "unknown": "Actual platform/context/Windows/CPU/string helpers, cold storage/GUID semantics за пределами fixtures, отдельный Login prepare и текущие result readers.",
-      "next_action": "Использовать готовый run-09b30ec921d8 для platform/context selector/lookup и Windows/CPU helpers; затем Login prepare и result readers. NM bodies и caller projection повторно не выгружать.",
+      "known": "Целые Version prepare 1467ce6a0 и constructor 1456d7be0 исполнены в 64 сценариях: контекст есть/нет, пустые/Unicode, enum 0/max, send 0/1, poison. Проверены packet fields, owner reset +160, cleanup и ABI; внешние getters/строки/destructor/send — явные fixtures. Provider 1445ccee0 и NM getter 1444ec890 теперь native: 36 cache/storage/GUID-flow scenarios и 64 whole prepare scenarios с initialized synthetic cache; storage/GUID/string boundaries остаются fixtures. Selector 1445ce2e0, store 1445c4b90 и lookup 1416dd660 исполнены целиком в 116 сценариях с явными platform/FName/type/value fixtures. Проверены enum 0/1/2/3, cache/retry, signed count и первый индекс либо ffffffff; whole prepare integration этих трёх helpers ещё нет.",
+      "unknown": "Реальные platform/context callees, Windows/CPU helpers, интеграция helpers в Version prepare, Login prepare и result readers текущего SHA.",
+      "next_action": "Использовать сохранённые Windows/CPU exports, проверить явные callees и границы; затем интеграция подготовки. Сеть и каталог пока не запускать: доступа нет.",
       "decision_rule": "Полный caller с fixtures не подтверждает реальные getter values, framing или живой вход. Не активировать профиль на этом основании.",
       "do_not_repeat": "Готовые exports prepare/constructor не извлекать повторно.",
       "addresses": [],
       "evidence": [
         "evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md",
         "evidence/updates/HEADLESS-VERSION-PREPARE-11316.md",
-        "evidence/updates/HEADLESS-VERSION-NM-11316.md"
+        "evidence/updates/HEADLESS-VERSION-NM-11316.md",
+        "evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md"
       ]
     }
   ]

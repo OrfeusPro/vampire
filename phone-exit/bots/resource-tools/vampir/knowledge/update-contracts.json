@@ -186,7 +186,8 @@
         "native-string-writer-context",
         "native-archive-wire-context",
         "native-version-prepare-context",
-        "native-version-nm-context"
+        "native-version-nm-context",
+        "native-version-platform-context"
       ],
       "recipes": [
         {
@@ -213,6 +214,18 @@
           "method": "direct_call",
           "from": "writer",
           "offset": 23
+        },
+        {
+          "key": "platform-selector",
+          "method": "reviewed"
+        },
+        {
+          "key": "context-store",
+          "method": "reviewed"
+        },
+        {
+          "key": "context-lookup",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -221,7 +234,10 @@
           "constructor": "0x1456d7be0",
           "wrapper-constructor": "0x1467cc380",
           "writer": "0x1456e8830",
-          "string-writer": "0x144aad310"
+          "string-writer": "0x144aad310",
+          "platform-selector": "0x1445ce2e0",
+          "context-store": "0x1445c4b90",
+          "context-lookup": "0x1416dd660"
         }
       },
       "resources": [
@@ -235,7 +251,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Version prepare исполняется с настоящим NM wrapper/getter на synthetic cache; cold getter flow отдельно проверен со storage/GUID/string fixtures. Дальше actual platform/context/CPU/Windows helpers и Version result reader; профиль остаётся partial.",
+      "next_check": "Selector/store/lookup целиком проверены с явными FName/type/value fixtures отдельно от whole Version prepare. Дальше Windows/CPU helpers, реальные зависимости context и Login prepare / result readers; профиль остаётся partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -273,7 +289,8 @@
         "native-string-writer-current",
         "native-archive-wire-current",
         "native-version-prepare-current",
-        "native-version-nm-current"
+        "native-version-nm-current",
+        "native-version-platform-current"
       ],
       "writer_check": {
         "object_size": 208,
