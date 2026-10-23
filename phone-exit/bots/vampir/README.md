@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Windows / CPU / NM включены в целый Version prepare: 64 сценария на общей памяти
+проверили поля, cleanup и send 0 / 1. Context/platform и combiners ещё fixtures;
+дальше их перенос и whole Login prepare / result readers.
+[Доказательства интеграции и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PREPARE-SYSTEM-11316.md).
+
 Windows helper прошёл 48 native сценариев, CPU formatter / getters / trim — 72.
 Дальше их интеграция в whole Version prepare и перенос Login; сеть не запускалась.
 [Источники, fixtures и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md).

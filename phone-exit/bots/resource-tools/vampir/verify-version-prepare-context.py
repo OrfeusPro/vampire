@@ -22,10 +22,15 @@ def verify(context,root):
     prepare,constructor,table,wrapper_table,send=[int(context[k],16) for k in
         ('prepare','constructor','packet_table','wrapper_table','send')]
     nm=context.get('native_nm')
+    system=context.get('native_system')
     functions={prepare,constructor};exports=dict(context['exports'])
     if nm:
         functions.update(int(nm[k],16) for k in ('wrapper','getter'))
         exports.update(nm['exports'])
+    if system:
+        functions.update(int(at,16) for at in system['cpu']['functions'].values())
+        functions.add(int(system['windows']['function'],16))
+        for part in system.values():exports.update(part['exports'])
     h=load('update-native-harness').make_harness(context,exports,functions,root=root)
     native=load('build-native-entry-code');rows=load('update-bindings').rows
     calls={hex(r['address']):{'target':hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
@@ -47,6 +52,9 @@ def verify(context,root):
         h.uc.mem_write(page,h.raw[off:off+4096])
     map_data(wrapper_table)
     fixture={k:int(v,16) for k,v in context['fixtures'].items()}
+    if system and (fixture['suffix']!=int(system['windows']['function'],16) or
+                   fixture['first_text']!=int(system['cpu']['functions']['formatter'],16)):
+        raise ValueError('Version system helper links differ')
     if nm and (int(nm['wrapper'],16)!=fixture['provider'] or
             [r['direct_target'] for r in rows(native,h.image,int(nm['wrapper'],16)) if r['call']]!=[int(nm['getter'],16)]):
         raise ValueError('Version native NM provider link differs')
@@ -143,7 +151,11 @@ def verify(context,root):
 
     for name,address in fixture.items():
         if name=='provider' and nm:continue
+        if system and name in ('suffix','first_text'):continue
         h.add_fixture(address,handler(name))
+    if system:
+        seed_system,check_system=load('version-system-fixtures').install(
+            load,h,system,fixture,state,write_text,read_text,literal,reg)
     if nm:
         import unicorn
         h.uc.mem_write(int(nm['log_level'],16),b'\0')
@@ -177,11 +189,12 @@ def verify(context,root):
                 for raw_enum in (0,0xffffffff):
                     for send_return in (0,1):
                         state.update(heap=h.scratch+0x10000,allocations={},freed=set(),logs=0,
-                            present=present,selector=0x87,context_text='контекст',suffix='' if empty else 'suffix-fixture',
+                            present=present,empty=empty,selector=0x87,context_text='контекст',suffix='' if empty else 'suffix-fixture',
                             first_text='' if empty else 'CPU-Ж🙂',provider='' if empty else 'provider-界',
                             combined='' if empty else 'combined-fixture',context_calls=0,sent=False,
                             destroyed=False,send_return=send_return,nm_calls=0)
                         h.uc.mem_write(h.scratch+0x30000,b'\0'*0x8000)
+                        if system:seed_system()
                         owner_bytes=bytearray([poison]*0x180);struct.pack_into('<Q',owner_bytes,0,wrapper_table)
                         h.uc.mem_write(owner-16,b'\xa5'*16+bytes(owner_bytes)+b'\xa6'*16)
                         global_text='' if empty else 'global-fixture';input_text='' if empty else 'input-🙂'
@@ -196,6 +209,7 @@ def verify(context,root):
                         for name,value in abi.items():h.uc.reg_write(getattr(h.x,'UC_X86_REG_'+name),value)
                         h.uc.reg_write(h.x.UC_X86_REG_RDX,input_descriptor)
                         h.call(prepare,owner,budget=100000)
+                        if system:check_system()
                         expected=[global_text,state['combined'],state['first_text'],state['provider'],input_text,'','','','',compiled_tag]
                         if not state['sent'] or state['strings']!=expected or state['integers']!=[0,207,raw_enum]:
                             raise ValueError('Version prepared fields differ')
@@ -214,13 +228,15 @@ def verify(context,root):
                             raise ValueError('Version prepare ABI differs')
                         cases.append(dict(poison=poison,context_present=present,empty=empty,raw_enum=raw_enum,
                             send_return=send_return,strings=state['strings'],integers=state['integers'],
-                            native_nm_calls=state['nm_calls'],guards=True))
+                            native_nm_calls=state['nm_calls'],native_system_calls=dict(state.get('system_calls',{})),guards=True))
     return dict(schema=1,source_sha256=context['source_sha256'],method='bounded_native',cases=cases,
         evidence=h.evidence,network_used=False,profile_activated=False,
         runtime=load('update-native-harness').runtime_inputs(),
         native_nm_used=bool(nm),
+        native_system_used=bool(system),
+        system_fixture_sha256=hashlib.sha256((HERE/'version-system-fixtures.py').read_bytes()).hexdigest() if system else None,
         limits=['Whole prepare/constructor; optional native NM provider/getter uses initialized synthetic cache only.',
-                'OS/context/text/string/allocator/free/destructor/log/send are explicit fixtures; provider is fixture unless native_nm_used.',
+                'Windows/CPU helpers are native only when native_system_used; OS/CRT/cache boundaries and context/string/allocator/free/destructor/log/send remain fixtures.',
                 'Combiner output is supplied, not native concatenation semantics. No real hardware/SDK getter values proved.',
                 'No Login preparation, result readers, framing, auth, socket or runtime activation.'])
 

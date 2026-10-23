@@ -494,9 +494,9 @@
       "id": "release-version-prepare",
       "status": "bounded_answer",
       "question": "Как текущий Version prepare проецирует явные контекстные и аппаратные входы в пакет и выполняет cleanup до/после send?",
-      "known": "Целые Version prepare 1467ce6a0 и constructor 1456d7be0 исполнены в 64 сценариях: контекст есть/нет, пустые/Unicode, enum 0/max, send 0/1, poison. Проверены packet fields, owner reset +160, cleanup и ABI; внешние getters/строки/destructor/send — явные fixtures. Provider 1445ccee0 и NM getter 1444ec890 теперь native: 36 cache/storage/GUID-flow scenarios и 64 whole prepare scenarios с initialized synthetic cache; storage/GUID/string boundaries остаются fixtures. Selector 1445ce2e0, store 1445c4b90 и lookup 1416dd660 исполнены целиком в 116 сценариях с явными platform/FName/type/value fixtures. Проверены enum 0/1/2/3, cache/retry, signed count и первый индекс либо ffffffff; whole prepare integration этих трёх helpers ещё нет. Windows suffix 1415c9380 исполнен в 48 сценариях, CPU formatter/getters/trim — в 72. Третий compiled CPU input Unknown выбирает двухчастный формат. TLS/WinAPI/CRT и CPU buffers остаются явными fixtures; CPU initializer и интеграция этих helpers в whole prepare не выполнены.",
-      "unknown": "Интеграция actual Windows/CPU/platform/context helpers в Version prepare, реальные context/combiners и CPU initialization, Login prepare/result readers текущего SHA.",
-      "next_action": "Использовать готовые exports для whole Version prepare с настоящими Windows/CPU helpers и явными оставшимися fixtures; затем Login prepare/results. Сеть пока не запускать.",
+      "known": "Целые Version prepare 1467ce6a0 и constructor 1456d7be0 исполнены в 64 сценариях: контекст есть/нет, пустые/Unicode, enum 0/max, send 0/1, poison. Проверены packet fields, owner reset +160, cleanup и ABI; внешние getters/строки/destructor/send — явные fixtures. Provider 1445ccee0 и NM getter 1444ec890 теперь native: 36 cache/storage/GUID-flow scenarios и 64 whole prepare scenarios с initialized synthetic cache; storage/GUID/string boundaries остаются fixtures. Selector 1445ce2e0, store 1445c4b90 и lookup 1416dd660 исполнены целиком в 116 сценариях с явными platform/FName/type/value fixtures. Проверены enum 0/1/2/3, cache/retry, signed count и первый индекс либо ffffffff; whole prepare integration этих трёх helpers ещё нет. Windows suffix 1415c9380 исполнен в 48 сценариях, CPU formatter/getters/trim — в 72. Третий compiled CPU input Unknown выбирает двухчастный формат. TLS/WinAPI/CRT и CPU buffers остаются явными fixtures; CPU initializer и интеграция этих helpers в whole prepare не выполнены. Whole Version prepare теперь включает actual Windows/CPU/NM на общей памяти в 64 сценариях с shared allocator/cleanup guards. Native CPU text передаётся в +38, NM cache в +48, Windows success/failure — в combiner. Проверены actual entry counts и shared string bindings.",
+      "unknown": "Реальные context/platform/combiners в общей цепочке Version, CPU initialization и целая подготовка Login/result readers текущего SHA.",
+      "next_action": "Переносить оставшиеся context/platform/combiners и whole Login prepare по готовым exports. Login содержит SDK gates и действия после send; один writer не закрывает caller. Сеть пока не запускать.",
       "decision_rule": "Полный caller с fixtures не подтверждает реальные getter values, framing или живой вход. Не активировать профиль на этом основании.",
       "do_not_repeat": "Готовые exports prepare/constructor не извлекать повторно.",
       "addresses": [],
@@ -505,7 +505,8 @@
         "evidence/updates/HEADLESS-VERSION-PREPARE-11316.md",
         "evidence/updates/HEADLESS-VERSION-NM-11316.md",
         "evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md",
-        "evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md"
+        "evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md",
+        "evidence/updates/HEADLESS-VERSION-PREPARE-SYSTEM-11316.md"
       ]
     }
   ]

@@ -2141,6 +2141,84 @@
       "question": "release-version-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Интеграция actual helpers в whole Version prepare, реальные context/combiners, CPU initialization, Login prepare/result readers."
+    },
+    {
+      "addresses": [
+        "0x141439db0",
+        "0x141439fc0",
+        "0x14143a030",
+        "0x14144d1a0",
+        "0x1415c6e60",
+        "0x1415c6e80",
+        "0x1415c9380",
+        "0x1444ec890",
+        "0x1445ccee0",
+        "0x1456d7be0",
+        "0x1467ce6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "eb93a7fc6c3fe1ae38b819f31313f225ed39330cd5cd6718ff6a7c7b534fcee9",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e58049ecb8ba521140a7fed50ed891286a09b3c9415704b5d6356feb2d3b89d4\\manifest.json",
+          "sha256": "e58049ecb8ba521140a7fed50ed891286a09b3c9415704b5d6356feb2d3b89d4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f85379aa39938017c6b52c9e7c6c798f984b2fe3c3a74334e2f31fca671262c8",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\58cc032665c8dbfc6990d2ff2fd01419ef61203e3594eb22f5b63a2b1c00845c\\manifest.json",
+          "sha256": "58cc032665c8dbfc6990d2ff2fd01419ef61203e3594eb22f5b63a2b1c00845c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "efed211a6dfb11dd4d753d2afb7cee4fab1c598cb40fc819b53b92d08f2b683a",
+          "id": "native-version-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd\\manifest.json",
+          "sha256": "cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "406700ad9b37413d49897ad3c29604846c6e7f9f0c4ab3314e53a32b8ef0d89d",
+          "id": "native-version-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7021ae6dfe881f717afc926021b30777e53436cdf3e4e5819064db83ab2e6863\\manifest.json",
+          "sha256": "7021ae6dfe881f717afc926021b30777e53436cdf3e4e5819064db83ab2e6863",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d97acb040829ae85178980a0dfb3c35968436ee166b216bd699de0e05054ebb0",
+          "id": "native-version-prepare-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a61ffc2e7a7ea12b95b29cac50ca6a4b93da6d410fbdb22fa25bf899c810973a\\manifest.json",
+          "sha256": "a61ffc2e7a7ea12b95b29cac50ca6a4b93da6d410fbdb22fa25bf899c810973a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "В 64 whole Version prepare сценариях с общей памятью исполнены constructor, NM wrapper/getter, Windows suffix и CPU formatter/getters/trim. Native Windows success/failure передаёт ожидаемый suffix в combiner, CPU text передаётся в packet +38, NM cache в +48. Проверены counts actual entries, все поля, send 0/1, cleanup, неизменность inputs/cache/owner guards и ABI. Готовые exports использованы без Ghidra.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-PREPARE-SYSTEM-11316.md",
+          "sha256": "901a32522c2d54a94ef433a9ebe02e374ccf64affe8014e5d0c09b4d6f883a9b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\VERSION-PREPARE-SYSTEM-11316.json",
+          "sha256": "853a6b56645ff956674c72d823be89fe9f143f992f1ee9364337b90b01925fa5"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-prepare-system-11316.json",
+          "sha256": "e9e8b31d301461a9db0fd214e99f49df84e468a8ec7546ee66f3a540b99552f3"
+        }
+      ],
+      "id": "cc125963e7c3e6cbd9ec60e9e3217e752d1adaefd0959de514fb9a61d26f6d21",
+      "limits": [
+        "OS/CPU state и NM cache синтетические; CPU initializer, реальный WinAPI/CRT, NM cold storage в общей цепочке не исполняются.",
+        "Platform/context, combiners и string constructors/allocator/free/destructor/log/send остаются fixtures. Combiner output задан явно.",
+        "Нет Login prepare/results, framing, сети, авторизации, runtime promotion или смены baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовые exports для оставшихся Version dependencies и whole Login prepare. Не повторять извлечение подтверждённых helpers; новый SHA переносить явно.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные context/platform/combiner зависимости whole Version prepare, CPU initializer, whole Login prepare и result readers."
     }
   ],
   "schema": 1,

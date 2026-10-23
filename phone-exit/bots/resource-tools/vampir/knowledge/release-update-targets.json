@@ -1219,6 +1219,112 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-version-prepare-system-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-version-prepare-context.py",
+        "version-system-fixtures.py"
+      ],
+      "rule": "Проверить actual Version prepare/constructor вместе с Windows/CPU/NM helpers на общей памяти. Сверить exports, call sites, shared string bindings, imports и globals. OS/CRT/cache/context/combiner fixtures не повышают runtime готовность; новый SHA требует отдельного переноса.",
+      "automation": {
+        "discovery": "reviewed_constructor_wrapper_table_and_call_sites",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1467ce6a0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1456d7be0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1445ccee0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1444ec890",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c9380",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x14144d1a0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e80",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e60",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x141439fc0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x141439db0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x14143a030",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-prepare-context.py",
+              "version-system-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-PREPARE-SYSTEM-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

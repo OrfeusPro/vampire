@@ -66,4 +66,5 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Version 1.13.16: настоящий NM provider и getter](../evidence/updates/HEADLESS-VERSION-NM-11316.md)
 - [Version: платформа и контекст 1.13.16](../evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md)
 - [Version prepare 1.13.16: целая функция с явными входами](../evidence/updates/HEADLESS-VERSION-PREPARE-11316.md)
+- [Version prepare с native Windows / CPU / NM 1.13.16](../evidence/updates/HEADLESS-VERSION-PREPARE-SYSTEM-11316.md)
 - [Version: Windows и CPU helpers 1.13.16](../evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md)
