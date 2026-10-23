@@ -405,9 +405,10 @@
             "functions": [
               {
                 "address": "0x1444fa180",
-                "scope": "whole source coverage and masked shape; no native execution",
+                "scope": "whole static coverage; native URL slice 0x1444fa308..0x1444fa61d only",
                 "required_checks": [
-                  "gmc2-request-layout-11316"
+                  "gmc2-request-layout-11316",
+                  "gmc2-url-native-11316"
                 ]
               },
               {
@@ -416,13 +417,57 @@
                 "required_checks": [
                   "gmc2-request-layout-11316"
                 ]
+              },
+              {
+                "address": "0x1445320c0",
+                "scope": "whole build getter",
+                "required_checks": [
+                  "gmc2-url-native-11316"
+                ]
+              },
+              {
+                "address": "0x14452ac30",
+                "scope": "whole SDK version getter",
+                "required_checks": [
+                  "gmc2-url-native-11316"
+                ]
+              },
+              {
+                "address": "0x1417619b0",
+                "scope": "ASCII append within inline capacity; growth excluded",
+                "required_checks": [
+                  "gmc2-url-native-11316"
+                ]
+              },
+              {
+                "address": "0x1411b3260",
+                "scope": "whole build A initializer",
+                "required_checks": [
+                  "gmc2-url-native-11316"
+                ]
+              },
+              {
+                "address": "0x1411b3290",
+                "scope": "whole build B initializer",
+                "required_checks": [
+                  "gmc2-url-native-11316"
+                ]
+              },
+              {
+                "address": "0x1411b32c0",
+                "scope": "whole build C initializer",
+                "required_checks": [
+                  "gmc2-url-native-11316"
+                ]
               }
             ],
             "tools": [
-              "audit-gmc2-request-11316.py"
+              "audit-gmc2-request-11316.py",
+              "replay-gmc2-url-11316.py"
             ],
             "evidence": [
-              "evidence/auth/HEADLESS-GMC2-REQUEST-LAYOUT-11316.md"
+              "evidence/auth/HEADLESS-GMC2-REQUEST-LAYOUT-11316.md",
+              "evidence/auth/HEADLESS-GMC2-URL-NATIVE-11316.md"
             ]
           }
         ]

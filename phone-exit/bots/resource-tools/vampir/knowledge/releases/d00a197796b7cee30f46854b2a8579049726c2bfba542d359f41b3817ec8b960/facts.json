@@ -341,6 +341,58 @@
       "question": "gmc2-request-layout",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Новые getter/append/initializer dependencies, native URL/header results и итоговый runtime profile."
+    },
+    {
+      "addresses": [
+        "0x1411b3260",
+        "0x1411b3290",
+        "0x1411b32c0",
+        "0x1417619b0",
+        "0x1444fa180",
+        "0x14452ac30",
+        "0x1445320c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "8fdcf5f97ffc596d76242259d38fed3ea88e737e827ee6ffff5cbc8ee8ca50a6",
+          "id": "gmc2-request-layout-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c5385f0e540be72f920dfba9f26c5e5d518d57947082022a503f453ec9e1d9a2\\manifest.json",
+          "sha256": "c5385f0e540be72f920dfba9f26c5e5d518d57947082022a503f453ec9e1d9a2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "75b7aabb47ca05c1f78d07677d7894f50fa37e356f5c435d9f14523ab800e2ed",
+          "id": "release-update-plan-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ca2a01ff09de5984343e56cec7023295ddac93d8cd3767bd01c52524fb47c353\\manifest.json",
+          "sha256": "ca2a01ff09de5984343e56cec7023295ddac93d8cd3767bd01c52524fb47c353",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5075ff1bd6236952ef5e6910babb1f962944f4c00203efcf2e59a62c55c2c52a",
+          "id": "gmc2-url-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d683b7c504ca1aba33103fe1a06a6590e66ab37a40990438327a4efbe08ab52d\\manifest.json",
+          "sha256": "d683b7c504ca1aba33103fe1a06a6590e66ab37a40990438327a4efbe08ab52d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий URL slice, три actual build initializers, build/version getters и ASCII append исполнены в 27 native сценариях. Все URL совпали с portable helper, build A/B/C и SDK5.2.11 подтверждены, end canaries сохранены. Copy tail и memcpy import проверены; неизвестный адрес исполнения отклоняется. Пометки автоматизации сохраняют source SHA, required checks и inline bounds.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-GMC2-URL-NATIVE-11316.md",
+          "sha256": "df3a017744141e2e748dab0ffc777e1b6a6a043f1bf469b353daa72bc8d64725"
+        }
+      ],
+      "id": "c396a3010add0748b21ec1263d4c7acab83c4587a369bcb60dbfb1f3a6e7dfce",
+      "limits": [
+        "Сохранённый EXE и synthetic memory; без сети, процесса игры и авторизации.",
+        "Manager/settings/CDO, FString storage/allocation, memcpy/free и exit registration — ограниченные fixtures.",
+        "Все случаи помещаются в inline builder; growth, whole Refresh, headers и активные startup inputs не покрыты."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить getters текущего headers slice, исполнить HTTP capture outputs и platform, затем собрать полный профиль.",
+      "question": "gmc2-request-layout",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native HTTP header outputs, platform и итоговый runtime profile."
     }
   ],
   "schema": 1,

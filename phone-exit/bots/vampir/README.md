@@ -33,6 +33,9 @@ client ID и путь NMENV. Источники и границы статиче
 Найдены текущие Refresh / Request GMC2 и статически сверены 889 инструкций.
 Их точные signatures подключены к автоматическому поиску после изменения EXE.
 [Участки URL / headers и границы сверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-REQUEST-LAYOUT-11316.md).
+GMC2 URL slice с настоящими getters / initializers / append прошёл 27 native
+сценариев. Заголовки и полный профиль пока не перенесены.
+[Выполнение URL и автоматические проверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-URL-NATIVE-11316.md).
 
 Атлас переключён на русский язык: названия и описания из именованных таблиц
 текущего клиента, исходный текст при отсутствии однозначного перевода.
