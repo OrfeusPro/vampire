@@ -556,7 +556,8 @@
         "replay-nid-context-11316.py",
         "replay-nid-extensions-11316.py",
         "replay-nid-converter-11316.py",
-        "replay-nid-gates-11316.py"
+        "replay-nid-gates-11316.py",
+        "replay-nid-query-11316.py"
       ],
       "rule": "Follow explicit callers of reviewed FDeviceInfo::GetPlatform; preserve undecodable roots and inspect selected Ghidra exports before assigning NID role.",
       "automation": {
@@ -571,13 +572,14 @@
             "functions": [
               {
                 "address": "0x1450e3c80",
-                "scope": "Base NID pairs slice 0x1450e4058..0x1450e42a8; six getter fixtures; map/encoding/gates excluded; Extension dispatch 0x1450e43d3..0x1450e48aa; exact authType literals/jump table plus six pinned cleanup tails; converter/optional serializer/map are fixtures; early URL/clientId branch destinations and account additions 0x1450e48aa..0x1450e4a95, getters/CDO/map fixtures, error callbacks excluded",
+                "scope": "Base NID pairs slice 0x1450e4058..0x1450e42a8; six getter fixtures; map/encoding/gates excluded; Extension dispatch 0x1450e43d3..0x1450e48aa; exact authType literals/jump table plus six pinned cleanup tails; converter/optional serializer/map are fixtures; early URL/clientId branch destinations and account additions 0x1450e48aa..0x1450e4a95, getters/CDO/map fixtures, error callbacks excluded; URL assembly 0x1450e4a95..0x1450e4c29 with query/storage fixtures, inline buffer only",
                 "required_checks": [
                   "nid-context-native-11316",
                   "sdk-override-references-11316",
                   "nid-extensions-native-11316",
                   "nid-converter-native-11316",
-                  "nid-gates-native-11316"
+                  "nid-gates-native-11316",
+                  "nid-query-native-11316"
                 ]
               },
               {
@@ -586,19 +588,35 @@
                 "required_checks": [
                   "nid-converter-native-11316"
                 ]
+              },
+              {
+                "address": "0x14458d3d0",
+                "scope": "Static caller -> serializer -> encoder CALL links only; whole map serialization not executed",
+                "required_checks": [
+                  "nid-query-native-11316"
+                ]
+              },
+              {
+                "address": "0x141c19460",
+                "scope": "Whole printable ASCII encoder with pinned real whitelist/hex leaves; conversion/storage/stack-cookie fixtures; Unicode excluded",
+                "required_checks": [
+                  "nid-query-native-11316"
+                ]
               }
             ],
             "tools": [
               "replay-nid-context-11316.py",
               "replay-nid-extensions-11316.py",
               "replay-nid-converter-11316.py",
-              "replay-nid-gates-11316.py"
+              "replay-nid-gates-11316.py",
+              "replay-nid-query-11316.py"
             ],
             "evidence": [
               "evidence/auth/HEADLESS-NID-CONTEXT-11316.md",
               "evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md",
               "evidence/auth/HEADLESS-NID-CONVERTER-11316.md",
-              "evidence/auth/HEADLESS-NID-GATES-11316.md"
+              "evidence/auth/HEADLESS-NID-GATES-11316.md",
+              "evidence/auth/HEADLESS-NID-QUERY-11316.md"
             ]
           }
         ],

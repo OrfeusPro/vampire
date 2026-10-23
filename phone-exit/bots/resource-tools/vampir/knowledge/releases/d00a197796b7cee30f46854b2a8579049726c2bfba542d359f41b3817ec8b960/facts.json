@@ -776,6 +776,75 @@
       "question": "nid-context-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Final query encoding/browser delivery, реальные URL/account/predicate getters, error callbacks и весь NID/auth lifecycle."
+    },
+    {
+      "addresses": [
+        "0x141c19460",
+        "0x14458d3d0",
+        "0x1450e3c80"
+      ],
+      "checks": [
+        {
+          "cache_key": "8d5c4c2b01a8f110eafb9cb13e6af9e0688e2ca19ef6552aefa8cd46515e4415",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105\\manifest.json",
+          "sha256": "ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105",
+          "state": "passed"
+        },
+        {
+          "cache_key": "95edeeb2782f32a926fe145682cbd3bd473e82794399eea7fa31a5d390c17b58",
+          "id": "nid-context-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610\\manifest.json",
+          "sha256": "a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e48e5ec12ce24dc97d355a4f063b4f24115bff89990c8f564aeca282f088345a",
+          "id": "nid-extensions-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49d3783ab446377123827c0c9c90a0940de64d9ff8d827e869d900d804cdf8da\\manifest.json",
+          "sha256": "49d3783ab446377123827c0c9c90a0940de64d9ff8d827e869d900d804cdf8da",
+          "state": "passed"
+        },
+        {
+          "cache_key": "384bd0c52c2d230533da165f1ba3b3749c0dada5f3692c43c0dff5e1f7408863",
+          "id": "nid-converter-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e47a9a0a970d5fb81ffd266ad43f37e078317fe0042cf1fe3abb8a0a72d5be99\\manifest.json",
+          "sha256": "e47a9a0a970d5fb81ffd266ad43f37e078317fe0042cf1fe3abb8a0a72d5be99",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c1579c51aa294134d5ee0d423394bf189b44ed7d718eab0aa5566ac07f37a331",
+          "id": "nid-gates-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\818b42b028343f1b37b3efcaa1d3e54fc84e45adefb4a22a54aa83b9f2403bd1\\manifest.json",
+          "sha256": "818b42b028343f1b37b3efcaa1d3e54fc84e45adefb4a22a54aa83b9f2403bd1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e1400cfbe86be753c32299ac8a4ffd3c5a6290ada923c811156d10d42671544e",
+          "id": "nid-query-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4fdaa3bd681c4f4e136de14cef75e421182b6449260949808c30635818f4e83a\\manifest.json",
+          "sha256": "4fdaa3bd681c4f4e136de14cef75e421182b6449260949808c30635818f4e83a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole printable ASCII query encoder 0x141c19460 с реальными whitelist initialization/lookup и hex leaves прошёл 396 native случаев, совпав с portable encoder. CALL links NID root -> serializer -> encoder подтверждены текущими exports. URL assembly slice прошёл 48 случаев: base + ? + synthetic query передаётся storage helper для owner +0x48 и +0x58.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-NID-QUERY-11316.md",
+          "sha256": "48800c1b7f7d3c5d6d93dbca360c71c94bce92b6931196b3c2fa7b1859a9f31d"
+        }
+      ],
+      "id": "22aaf36f8bcf3f157cd5a268dbd91109d150a6d6752874f612bf490c5a0db449",
+      "limits": [
+        "UTF-16-unit to ASCII conversion, reserve/append storage и stack-cookie helper — fixtures. Unicode и непечатные символы исключены.",
+        "Map copy/query serializer, owner storage и free — fixtures; порядок Unreal map не заявляется. Inline buffer без growth.",
+        "Serializer/encoder CALL links статические; browser delivery, result callbacks, реальные credentials и успешная авторизация не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Перенести auth source guards и проверить browser/result boundary для подключения SDK profile 1.13.16; живую сессию после доступности серверов.",
+      "question": "nid-context-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Полная map serialization, Unicode, owner storage implementation, browser/result boundary и auth source guards новой сборки."
     }
   ],
   "schema": 1,

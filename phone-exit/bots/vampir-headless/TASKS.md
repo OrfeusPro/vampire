@@ -64,6 +64,10 @@ console slot при initialized TLS. NID parent / context builder ещё не п
 полей аккаунта — 512. Реальные getters и error callbacks не исполнены.
 Далее query encoding / browser delivery и auth source guards новой сборки.
 [Условия, поля аккаунта и границы проверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-GATES-11316.md).
+Текущий ASCII query encoder прошёл 396 native случаев с реальными whitelist /
+hex leaves; сборка URL и передача в owner fields — 48 случаев с fixtures.
+Открытие браузера и целая авторизация этим не подтверждены.
+[Кодирование, URL assembly и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-QUERY-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.
