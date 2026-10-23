@@ -122,6 +122,12 @@ Extractor сохраняет отдельную модельную проекц�
 дополнительные байты равны 0/0, items пуст, ожидается ID 104. JSON helper остаётся
 fixture; следом его ключи / значения и целый handler результата. Сети не было.
 [Запрос, порядок полей и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRODUCER.md).
+Ключи JSON внешности проверены в 36 native сценариях через AsNumber и formatter:
+при явных Latin rules текущие группы дают ключи 1–7; другая таблица цифр меняет
+ключи. Float32 → double, signed zero и обязательный VoiceType подтверждены.
+Добавлен переносимый builder с явным Latin profile и SHA; числовая семантика
+сверена с native setter captures. Native JSON bytes и серверный допуск не заявлены.
+[Ключи, культура и builder](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-JSON-KEYS.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

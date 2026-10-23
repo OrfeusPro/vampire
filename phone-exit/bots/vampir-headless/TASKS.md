@@ -160,6 +160,14 @@ JSON пока fixture. Следом — actual key conversion / значения
 handler ID 104 `146796690`, затем подключение создания при принятом пустом списке.
 Новая живая отправка и создание персонажа этим изменением не выполнялись.
 [Producer и воспроизводимые сценарии](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRODUCER.md).
+Цепочка numeric keys / values прошла 36 native сценариев: outer / entry,
+AsNumber, formatter, integer digits, parts join и ToString. IDs 1–7 дают Latin
+ключи при явных Latin rules; Arabic rules дают другие цифры. Live culture не читалась.
+Portable `encode_character_appearance` требует SHA и `key_profile='latin'`,
+округляет float32, сохраняет signed zero и отклоняет неизвестные / nonfinite inputs.
+JSON сравнивается семантически с setter captures; native serializer bytes не проверены.
+Далее — целый handler ID 104, затем кандидат Carnage и живое создание при пустом списке.
+[Числовые ключи и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-JSON-KEYS.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
