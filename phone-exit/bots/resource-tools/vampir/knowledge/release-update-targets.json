@@ -142,6 +142,27 @@
       "required_checks": [
         "release-gmc2-runtime"
       ]
+    },
+    {
+      "id": "gmc-production-base",
+      "text": "https://apis.netmarble.com/gc2",
+      "encoding": "ascii",
+      "baseline_root": "0x1444c5080",
+      "required_checks": [
+        "release-gmc2-runtime"
+      ],
+      "baseline_literal": "0x149537a60"
+    },
+    {
+      "id": "sdk-version",
+      "text": "5.2.11",
+      "encoding": "utf-16le",
+      "baseline_root": "0x14452baa0",
+      "required_checks": [
+        "release-gmc2-runtime"
+      ],
+      "require_preceding_nul": true,
+      "baseline_literal": "0x149545af8"
     }
   ],
   "resource_checks": [

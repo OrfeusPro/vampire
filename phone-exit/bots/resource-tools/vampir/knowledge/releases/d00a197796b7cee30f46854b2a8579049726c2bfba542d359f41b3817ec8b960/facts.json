@@ -174,6 +174,49 @@
       "question": "release-update-target-discovery",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Текущий GMC2 constructor, значения четырёх баз и defaults/game override новой сборки."
+    },
+    {
+      "addresses": [
+        "0x1444b1fe0",
+        "0x1444b3290",
+        "0x1444c4210",
+        "0x14452ac30"
+      ],
+      "checks": [
+        {
+          "cache_key": "3d5141410958c524ec9b2d4cd0b1355ec089d23a0c3f77b4cf9a13263adf052e",
+          "id": "sdk-initial-defaults-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6243dba8d7d0ab7623689396facc3fd566b409d98ccbb1a6ea708641d844b6a6\\manifest.json",
+          "sha256": "6243dba8d7d0ab7623689396facc3fd566b409d98ccbb1a6ea708641d844b6a6",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На EXE 1.13.16 проверены 9 native случаев: whole GMC2 constructor, SDK version getter и initial settings prefix. Подтверждены четыре базы, service netmarbles и template group netmarbles-v5, SDK5.2.11. Initial gameCode thered, market пусто, build0/zone1, client IDs пусто. Полные exports повторно доступны в индексе; class callback к settings constructor прослежен по реальным 20 leaf bytes.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-DEFAULTS-11316.md",
+          "sha256": "b1865b7a1f7f89e69cf67b8f096d33b21f0d2b68d6084b5a54c9e68950fd348c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-0cdca2f717ea\\details.json",
+          "sha256": "e5667cf351382f2ae5d7454010f6526cb24d0a11b49e86e87eb652c64babaf34"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d490839a48f4\\details.json",
+          "sha256": "ba186c8e32fccaecc4a5a4dae04b8df9d2c667327bec1309a6d5a9ce04fa0bb1"
+        }
+      ],
+      "id": "a6d400a182a573371820ff247852b0a111b96cbcc2e2246e1adec0129dfdc58f",
+      "limits": [
+        "Settings base constructor fixture возвращает receiver без записи; FString constructors читают точные EXE literals в bounded synthetic heap. Реальный allocator/FString не исполнялся.",
+        "Settings только до1444b3339; остаток constructor и lazy UObject registration не исполнялись. GMC2 ctor/version getter до return, logging отключён.",
+        "Это initial defaults, не активный game override. Новый market/clientId/zone, URL builder/headers, runtime profile и живой вход остаются открытыми."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти текущие gameCode/market/clientId initializers и consumer override, проверить real/NMENV, затем перенести GMC2 URL и headers перед новым auth.",
+      "question": "sdk-initial-defaults",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Новый game override и итоговый SDK/GMC2 production profile для 1.13.16."
     }
   ],
   "schema": 1,

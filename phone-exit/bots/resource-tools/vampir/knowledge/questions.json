@@ -370,6 +370,20 @@
       "evidence": [
         "evidence/auth/HEADLESS-LAUNCHER-CONTRACT-11316.md"
       ]
+    },
+    {
+      "id": "sdk-initial-defaults",
+      "status": "bounded_answer",
+      "question": "Какие начальные SDK settings и GMC2 базы задаёт конкретная версия EXE до game overrides?",
+      "known": "На d00a1977 whole GMC2 constructor и SDK version getter, settings prefix прошли 9 native случаев. Production база в manager+170, initial zone1 и пустой market, gameCode thered, SDK5.2.11. Fixtures base settings ctor и FString constructors; активный game override не покрыт.",
+      "unknown": "Текущий game override, market/clientId/zone, GMC2 URL/headers и итоговый runtime profile.",
+      "next_action": "По явным literals/initializers найти новый game override, сверить real/NMENV и profile dependencies перед живым входом.",
+      "decision_rule": "Constructor defaults не равны активным настройкам игры. Production строка не разрешает подстановку zone2 в runtime.",
+      "do_not_repeat": "Не перевыгружать готовые constructor/getter без смены источника или конкретной неполноты. Не запускать auth с непроверенным новым profile.",
+      "addresses": [],
+      "evidence": [
+        "evidence/auth/HEADLESS-SDK-DEFAULTS-11316.md"
+      ]
     }
   ]
 }
