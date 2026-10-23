@@ -89,6 +89,31 @@ class UpdateTargetsTests(unittest.TestCase):
             self.assertTrue(set(group.get('required_checks',[])) <= checks)
             for name in group.get('tools',[]): self.assertTrue((HERE/name).is_file(),name)
 
+    def test_function_automation_annotations_are_source_bound_and_require_port(self):
+        definition = json.loads((HERE/'knowledge/release-update-targets.json').read_text('utf-8'))
+        checks = {c['id']: c for c in json.loads((HERE/'knowledge/research-checks.json').read_text('utf-8'))['checks']}
+        annotated = [g['automation'] for g in definition['manual_port_targets'] if 'automation' in g]
+        self.assertTrue(annotated)
+        for automation in annotated:
+            self.assertFalse(automation['automatic_runtime_promotion'])
+            self.assertEqual(automation['validation'], 'automatic_for_registered_source')
+            self.assertEqual(automation['next_release'], 'requires_candidate_review_and_check_port')
+            for release in automation['reviewed_releases']:
+                self.assertRegex(release['source_sha256'], '^[0-9a-f]{64}$')
+                self.assertTrue(release['functions'])
+                addresses = [f['address'] for f in release['functions']]
+                self.assertEqual(len(addresses), len(set(addresses)))
+                for function in release['functions']:
+                    self.assertRegex(function['address'], '^0x[0-9a-f]+$')
+                    self.assertTrue(function['scope'])
+                    self.assertTrue(function['required_checks'])
+                    for check in function['required_checks']:
+                        self.assertIn(release['source_sha256'], checks[check]['source_sha256'])
+                for name in release['tools']:
+                    self.assertTrue((HERE/name).is_file())
+                for name in release['evidence']:
+                    self.assertTrue((HERE/'knowledge'/name).is_file())
+
     def test_short_utf16_anchor_requires_a_literal_boundary(self):
         raw=bytearray(self.image());raw[0x300:0x306]='os\0'.encode('utf-16le')
         anchor=dict(self.anchor(),text='os',encoding='utf-16le',require_preceding_nul=True)

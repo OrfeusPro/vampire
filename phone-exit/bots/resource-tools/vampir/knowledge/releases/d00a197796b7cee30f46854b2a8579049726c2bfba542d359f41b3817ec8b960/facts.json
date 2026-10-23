@@ -255,6 +255,52 @@
       "question": "sdk-game-overrides",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Native результат game override для real/NMENV, активная zone, GMC2 URL/headers и runtime profile."
+    },
+    {
+      "addresses": [
+        "0x14125b710",
+        "0x14125b740",
+        "0x14125b770",
+        "0x14125b7d0",
+        "0x1444b3290",
+        "0x144529d60",
+        "0x14560aed0",
+        "0x1456579d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d21e32622d4f680f46ddeeead97c3acac461dcc7d5e053a0437af2484e31d22e",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f16c5326938c2940e1d98c8fddc6d08c9619279b26f8a2c387262d57474f79e\\manifest.json",
+          "sha256": "3f16c5326938c2940e1d98c8fddc6d08c9619279b26f8a2c387262d57474f79e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bd88c9a231f245a696bfa5c2f9c12fe03a730bdae0a332db49d3842659405133",
+          "id": "sdk-game-overrides-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7181eeff6dcf2b1ffa2d8849615c33d30e6c2354be2720b84de384b6f265aa9c\\manifest.json",
+          "sha256": "7181eeff6dcf2b1ffa2d8849615c33d30e6c2354be2720b84de384b6f265aa9c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Выполнены settings prefix, четыре global initializers, whole game override, selector/getter, два actual comparator leaves и shared tail в 106 native сценариях. Для real в четырёх регистрах zone 2; прочие перечисленные environments дают 1. Market epicgames только при соответствующем NMENV и SDK singleton/handle; иначе nmp. GameCode/client ID/build/c8, parser gate и canaries проверены. Добавлены source-bound пометки автоматизации и обязательные проверки.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-OVERRIDE-NATIVE-11316.md",
+          "sha256": "b4b857f4f2e4a33d9bf094fab34f0a5f12700d0632c97c86ea26424dcb6b54b3"
+        }
+      ],
+      "id": "0db12e23080f0e6214805cafa2570df078066d37a425cdc6449e14e206fa63fe",
+      "limits": [
+        "Только сохранённый source-bound EXE и synthetic memory; без игры, сети и auth.",
+        "Class/CDO, SDK handles, environment, command-line parser output, FString storage/capacity, memcpy/free и exit registration — ограниченные fixtures.",
+        "Logging отключён; settings после prefix, полный startup, фактические game inputs и GMC2 URL/headers не покрыты."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти текущие GMC2 URL builder / headers по явным caller/reference links, портировать bounded проверки и собрать source-bound профиль.",
+      "question": "sdk-game-overrides",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "GMC2 URL/headers текущего SHA, полный runtime profile и совместимость живого входа."
     }
   ],
   "schema": 1,

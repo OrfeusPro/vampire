@@ -25,8 +25,11 @@ URL и начальные значения отдельно проверены �
 Начальные zone 1 / пустой market ещё требуют сверки game override.
 [Конструкторы и начальные значения 1.13.16](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-DEFAULTS-11316.md).
 Статически найдена текущая ветка game overrides: семь функций, строки market /
-client ID и путь NMENV. Исполнение ветки остаётся следующей проверкой.
+client ID и путь NMENV. Источники и границы статической проверки:
 [Связи настроек SDK 1.13.16](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-OVERRIDE-LINKS-11316.md).
+Ветка исполнена в 106 native сценариях: real даёт zone 2, NMENV и SDK handles
+управляют market. GMC2 URL / headers и полный профиль ещё требуют переноса.
+[Результаты выполнения и fixtures](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-OVERRIDE-NATIVE-11316.md).
 
 Атлас переключён на русский язык: названия и описания из именованных таблиц
 текущего клиента, исходный текст при отсутствии однозначного перевода.

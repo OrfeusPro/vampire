@@ -198,7 +198,56 @@
         "release-gmc2-context",
         "release-gmc2-runtime"
       ],
-      "rule": "Historical addresses only. Find new explicit candidates, export and port bounded checks before producing a new profile."
+      "rule": "Historical addresses only. Find new explicit candidates, export and port bounded checks before producing a new profile.",
+      "automation": {
+        "discovery": "literal_candidates_and_explicit_references",
+        "validation": "automatic_for_registered_source",
+        "reuse": "Only with identical full source SHA and check dependency hashes",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1444b3290",
+                "scope": "settings prefix to 0x1444b3339",
+                "required_checks": [
+                  "sdk-initial-defaults-11316"
+                ]
+              },
+              {
+                "address": "0x1444c4210",
+                "scope": "whole GMC2 constructor",
+                "required_checks": [
+                  "sdk-initial-defaults-11316"
+                ]
+              },
+              {
+                "address": "0x14452ac30",
+                "scope": "whole SDK version getter",
+                "required_checks": [
+                  "sdk-initial-defaults-11316"
+                ]
+              },
+              {
+                "address": "0x144508210",
+                "scope": "GMC2 Start to FString copy boundary",
+                "required_checks": [
+                  "release-requested-function-export"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-sdk-defaults-11316.py"
+            ],
+            "evidence": [
+              "evidence/auth/HEADLESS-SDK-DEFAULTS-11316.md",
+              "evidence/auth/HEADLESS-GMC2-START-11316.md"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "sdk-game-overrides",
@@ -210,7 +259,91 @@
       "tools": [
         "replay-release-sdk-overrides.py"
       ],
-      "rule": "Review NMENV, sdk_zone, market, game_code and client_id; never infer runtime values from string presence."
+      "rule": "Review NMENV, sdk_zone, market, game_code and client_id; never infer runtime values from string presence.",
+      "automation": {
+        "discovery": "assisted_explicit_references",
+        "validation": "automatic_for_registered_source",
+        "reuse": "Only with identical full source SHA and check dependency hashes",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x14125b710",
+                "scope": "client ID initializer",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              },
+              {
+                "address": "0x14125b740",
+                "scope": "gameCode initializer",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              },
+              {
+                "address": "0x14125b770",
+                "scope": "default market initializer",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              },
+              {
+                "address": "0x14125b7d0",
+                "scope": "alternate market initializer",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              },
+              {
+                "address": "0x1456579d0",
+                "scope": "whole game override",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              },
+              {
+                "address": "0x14560aed0",
+                "scope": "whole market selector",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              },
+              {
+                "address": "0x144529d60",
+                "scope": "whole market getter",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              },
+              {
+                "address": "0x1444b3290",
+                "scope": "settings prefix to 0x1444b3339",
+                "required_checks": [
+                  "sdk-override-references-11316",
+                  "sdk-game-overrides-native-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-sdk-overrides-11316.py"
+            ],
+            "evidence": [
+              "evidence/auth/HEADLESS-SDK-OVERRIDE-NATIVE-11316.md"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "launcher-fields-callbacks",
