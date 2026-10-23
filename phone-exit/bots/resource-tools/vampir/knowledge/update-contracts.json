@@ -182,7 +182,8 @@
       "depends_on": [],
       "checks": [
         "compiled-tag-native-11316",
-        "native-utf8-context"
+        "native-utf8-context",
+        "native-string-writer-context"
       ],
       "recipes": [
         {
@@ -336,7 +337,8 @@
       "checks": [
         "release-game-sign-in-result",
         "release-lobby-errors",
-        "native-utf8-context"
+        "native-utf8-context",
+        "native-string-writer-context"
       ],
       "recipes": [
         {

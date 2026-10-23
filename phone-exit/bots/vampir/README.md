@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Полный string writer 1.13.16 прошёл 228 native сценариев с реальными UTF-8
+helpers: NUL / count gate, inline / heap, возврат ошибки и cleanup.
+Следующий пробел — native archive encoding; профиль игры пока не активирован.
+[Проверка и автоматизация повторов](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-STRING-WRITER-11316.md).
+
 Повторный launcher-вход JP-аккаунта после официального клиента принят SDK:
 1203 не повторился, страна JP, регион GLOBAL. Статус панели — `sdk_created`.
 Новый каталог бот ещё не запрашивал: игровой профиль 1.13.16 не прошёл guard.

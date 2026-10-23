@@ -885,6 +885,40 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-string-writer-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-string-writer-context.py"
+      ],
+      "rule": "От packet writer проверить прямой string writer, его UTF-8 calls и archive slot +0x28; полный native writer проверять с явными fixtures allocator/free/security/archive. Архивные байты и новый SHA требуют отдельной проверки; runtime не переключать.",
+      "automation": {
+        "discovery": "reviewed_writer_direct_calls_and_archive_slot",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x144aad310",
+                "scope": "Whole string writer with native UTF-8; bounded allocator/free/security/archive fixtures, no archive wire bytes",
+                "required_checks": [
+                  "native-string-writer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-string-writer-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-STRING-WRITER-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

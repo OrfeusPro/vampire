@@ -1807,6 +1807,53 @@
       "question": "release-utf8-codec",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Текущие string writer / archive encoding, полные preparation/result Version/Login и дальнейшая сессия."
+    },
+    {
+      "addresses": [
+        "0x144aad310"
+      ],
+      "checks": [
+        {
+          "cache_key": "2eff674b19bde55631fb6b87d46e6fd9a527349500c1f0748ded41637d9debed",
+          "id": "native-utf8-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\63f5aa78b819c4f0af06847048f601229d11690ecec7ba3ebeb1d6431d58c56f\\manifest.json",
+          "sha256": "63f5aa78b819c4f0af06847048f601229d11690ecec7ba3ebeb1d6431d58c56f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "72c4cba338e222bf69bf8c2c08d402867c41d0addaba2a23a22305f37f457185",
+          "id": "native-string-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f64014bc697db6aca2232908f8594edc10220b4e308b87d29c5cc2dc7788e\\manifest.json",
+          "sha256": "f52f64014bc697db6aca2232908f8594edc10220b4e308b87d29c5cc2dc7788e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Полный string writer 144aad310 исполнен с native UTF-8 length/converter/encoder в 228 сценариях. Проверены первый NUL, нулевой count/null pointer и положительный count gate, inline/heap/aligned allocation branches, archive return byte 0/1/128/255, cleanup, canaries, nonvolatile registers и RSP. Готовые exports повторно использованы без Ghidra. Проверка native-string-writer-context подключена к update и обоим игровым контрактам, coverage остаётся partial.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-STRING-WRITER-11316.md",
+          "sha256": "2d56c0dbfc21997c3a905be8360a7285ad42086edd53794d25e2504434bf8cab"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\STRING-WRITER-11316.json",
+          "sha256": "e37f4182888beeebb95b6deef1c7ef1c572d4cb41fcccac08cedf26189cf0201"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\string-writer-11316.json",
+          "sha256": "92f98aed0f7b446326a9da23d63d503089173fb63d30b64e12d9c3736937bafb"
+        }
+      ],
+      "id": "dfbc4e4dcd0d7f7de1de82da686075aabb2b8a0e014078bceffe2f5e0a3c40d1",
+      "limits": [
+        "Allocator/free/memcpy/security/archive — ограниченные fixtures; native archive bytes не исполняются.",
+        "Валидное terminated storage до 4095 UTF-8 байт; произвольные pointers/counts и allocation failure исключены.",
+        "Нет network/auth/OS actions, preparation/result, переключения runtime или baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти текущие implementations archive slot +0x28 / uint16 / raw IO и исполнить отдельно, затем соединить с готовым writer. Повторный export writer/UTF-8 не нужен.",
+      "question": "release-utf8-codec",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Текущие archive string/uint16/raw IO methods, полный wire Version/Login, preparation/result и последующая сессия."
     }
   ],
   "schema": 1,
