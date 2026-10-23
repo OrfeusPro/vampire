@@ -1009,6 +1009,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-version-prepare-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-version-prepare-context.py"
+      ],
+      "rule": "Найти prepare через constructor/table и затем сверить каждый call site, packet constructor, wrapper send slot +0x38 и prepare slot +0x48. Whole caller projection требует bounded fixtures, но actual getter semantics отдельно; runtime не продвигать.",
+      "automation": {
+        "discovery": "reviewed_constructor_wrapper_table_and_call_sites",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1467ce6a0",
+                "scope": "Whole Version prepare/constructor projection with explicit context/text/string/send fixtures, not actual OS/SDK values",
+                "required_checks": [
+                  "native-version-prepare-context"
+                ]
+              },
+              {
+                "address": "0x1456d7be0",
+                "scope": "Whole Version prepare/constructor projection with explicit context/text/string/send fixtures, not actual OS/SDK values",
+                "required_checks": [
+                  "native-version-prepare-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-prepare-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-PREPARE-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

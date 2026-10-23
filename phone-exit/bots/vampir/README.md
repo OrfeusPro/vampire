@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Целые Version prepare / constructor 1.13.16 прошли 64 сценария проекции до
+send и cleanup после него. OS/context/string getters ещё fixtures; их перенос,
+Login prepare и result readers остаются до живой проверки игрового профиля.
+[Адреса, границы и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PREPARE-11316.md).
+
 Native archive 1.13.16 проверен: 45 случаев primitives и 64 полных тела
 Version / Login с реальными string / UTF-8 / archive methods. Байты совпали;
 дальше preparation и result readers, runtime profile ещё не активирован.

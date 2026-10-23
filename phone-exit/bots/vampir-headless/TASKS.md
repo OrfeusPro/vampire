@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Version prepare / constructor исполнены целиком в 64 сценариях проекции и
+cleanup. Дальше — actual OS/context/string getters, отдельный Login prepare
+и текущие result readers. Эти prepare exports уже есть, повторять collect не нужно.
+[Границы caller fixtures](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PREPARE-11316.md).
+
 Version / Login writers проверены на порядок полей и отказы: 160 случаев.
 Native UTF-8 helpers прошли ещё 222 сценария, полный string writer — 228.
 Native archive прошёл 45 случаев и 64 полных тела Version / Login.

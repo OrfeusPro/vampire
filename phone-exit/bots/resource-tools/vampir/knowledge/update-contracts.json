@@ -184,7 +184,8 @@
         "compiled-tag-native-11316",
         "native-utf8-context",
         "native-string-writer-context",
-        "native-archive-wire-context"
+        "native-archive-wire-context",
+        "native-version-prepare-context"
       ],
       "recipes": [
         {
@@ -233,7 +234,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Проверить целый Version writer и остальные поля текущего game profile; tag slice и ID сами по себе не доказывают весь формат.",
+      "next_check": "Целый Version prepare/constructor проверен на проекцию и cleanup с явными fixtures входов/строк/send. Перенести actual OS/context/string getters, затем Version result reader; это не готовность игрового профиля.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -269,7 +270,8 @@
         "packet-writers-current",
         "native-utf8-current",
         "native-string-writer-current",
-        "native-archive-wire-current"
+        "native-archive-wire-current",
+        "native-version-prepare-current"
       ],
       "writer_check": {
         "object_size": 208,

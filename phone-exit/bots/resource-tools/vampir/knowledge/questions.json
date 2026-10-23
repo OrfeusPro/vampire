@@ -348,7 +348,7 @@
       "question": "Какие точные ориентиры автоматически находят кандидатов после обновления EXE без переноса старых ролей?",
       "known": "Для SHA d00a1977 по проверенным RIP LEA найдены два launcher candidate roots. IsInspect имеет несколько ссылок и undecodable fragments, остаётся в очереди. Машинный план хранит точные строки, старый SHA, проверочные команды и границы переноса. Добавлен collect без comparison project: отдельный noanalysis проект по SHA, только явные unwind roots. Полные Ghidra exports 1444ee9d0 / 144503b10 получены, проверены importer и повторно использованы без JVM. Однобайтные placeholders остаются incomplete. Прошли 6 collector/source tests, 6 index и 12 lifecycle tests. В план добавлена точная GMC2 Start signature. Новый unique root 144508210 получен через prepare/collect; 57 source-checked instructions исполнены в 512 сценариях до FString copy boundary. Zone выбирает source offsets 150/160/170/180, destination 1e8; settings getter и copy fixtures. URL и default zone ещё не подтверждены. После ограниченного переноса SDK/NID/geo в update подключён opt-in dispatch зарегистрированных offline checks: source/dependency cache, отказ unreviewed, очередь ошибок и requires_port. Native reports перепроверены при изменении workflow dependency; SDK manifest пересобран. Добавлен append-only импорт новых exports с проверкой прежних SHA и атомарной заменой SQLite. На реальной библиотеке полный импорт занял 66 секунд, добавление одного export с пятью функциями 16,991 секунды, неизменный повтор 6,864 секунды; девять таблиц кода совпали с полным индексом. 13 index tests проходят. План ускорения следующего патча вынесен отдельно. Контроллер переведён на граф контрактов, сохранение этапов, --resume и отдельный prepared profile. На сохранённой паре 1.13.14 → 1.13.16 повтор использует 21 этап без новых Ghidra/context replay; launcher готов офлайн, остальные возможности остаются неполными. Для текущего SHA подтверждены constructors / ID getters и ограниченные tag slices Version/Login, по четыре poison случая; полные prepare и игровой протокол ещё не закрыты. Для 1.13.16 исполнены целые writers Version 1456e8830 и Login 1456e8370 через source-context: 56 и 104 случая, порядок полей и отказ каждой операции. String/archive methods остаются fixtures; wire encoding и полные prepare/result не подтверждены. Добавлены declarative table slot/direct call recipes, отдельный adapter и отдельные ключи кэша нескольких checks одного контракта.",
       "unknown": "Полное покрытие ресурсных и игровых связей opt-in checks; перенос игрового профиля / character selection / world completion на текущий SHA и живая совместимость.",
-      "next_action": "Продолжить release-utf8-codec: текущие native UTF-8 helpers проверены отдельно, дальше полный string writer / archive encoding. Затем полные preparation/result и character/world; готовые exports не повторять.",
+      "next_action": "Продолжить release-version-prepare: целый Version caller проверен с fixtures, нужны actual OS/context/string getters, отдельный Login prepare и result readers. Packet/string/UTF-8/archive bodies уже проверены, их exports не повторять.",
       "decision_rule": "Уникальная строка и ссылка дают кандидат, а не подтверждённую роль или совместимость. Runtime profile меняется только после source-bound проверки контракта.",
       "do_not_repeat": "Не повторять те же экспорты; не расширять дерево вызовов автоматически и не переносить старые адреса по общему сдвигу.",
       "addresses": [],
@@ -489,6 +489,21 @@
       ],
       "do_not_repeat": "Не извлекать заново готовые exports string writer/length/converter для d00a1977 и не подменять доказанный UTF-8 результат повтором фиктивного helper. Новый анализ нужен для archive IO или изменившихся SHA/входов. Native archive exports и полные тела d00a1977 также уже проверены в явном preallocated scope.",
       "addresses": []
+    },
+    {
+      "id": "release-version-prepare",
+      "status": "bounded_answer",
+      "question": "Как текущий Version prepare проецирует явные контекстные и аппаратные входы в пакет и выполняет cleanup до/после send?",
+      "known": "Целые Version prepare 1467ce6a0 и constructor 1456d7be0 исполнены в 64 сценариях: контекст есть/нет, пустые/Unicode, enum 0/max, send 0/1, poison. Проверены packet fields, owner reset +160, cleanup и ABI; внешние getters/строки/destructor/send — явные fixtures.",
+      "unknown": "Actual OS/context/string helper bodies и их источники; отдельный Login prepare, текущие result readers и живой игровой профиль.",
+      "next_action": "Перенести actual OS/context/string helper semantics, затем Login prepare и result readers; caller projection и exports повторно не выполнять без изменения входов.",
+      "decision_rule": "Полный caller с fixtures не подтверждает реальные getter values, framing или живой вход. Не активировать профиль на этом основании.",
+      "do_not_repeat": "Готовые exports prepare/constructor не извлекать повторно.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md",
+        "evidence/updates/HEADLESS-VERSION-PREPARE-11316.md"
+      ]
     }
   ]
 }

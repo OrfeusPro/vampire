@@ -1919,6 +1919,47 @@
       "question": "release-utf8-codec",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Полные preparation и result readers Version/Login, последующая сессия и живая совместимость текущего игрового профиля."
+    },
+    {
+      "addresses": [
+        "0x1456d7be0",
+        "0x1467ce6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "2ca22c6dd32b1c4863e3ef4ea4510b2acec09f99a0b26c2affc6ac1da26a7b54",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6df237138fb2a279c2751071d4b5cbb3f05a1d799c0b27844cd532f94855e170\\manifest.json",
+          "sha256": "6df237138fb2a279c2751071d4b5cbb3f05a1d799c0b27844cd532f94855e170",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые Version prepare и constructor исполнены в 64 случаях с явными input/context/text/string/send fixtures. Проверены обе context-store ветви, пустые/Unicode строки, raw enum 0/max, send 0/1, точная проекция 10 строк и 3 integers, owner +160 reset, cleanup, canaries, input immutability и ABI. Constructor/packet table, wrapper slots +38/+48 и все call sites сверены с source. Проверка native-version-prepare-context включена в update, game-version остаётся partial.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-PREPARE-11316.md",
+          "sha256": "d7ccd27f8184529903f3742052444a001b77138a2f2f07b735738ef0da42ad2b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\VERSION-PREPARE-11316.json",
+          "sha256": "f83a0e3149279ded1e78942b5909ce32041ddbe96874ed4146aa89fbbf38c85a"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-prepare-11316.json",
+          "sha256": "65919dc9c124e48ac69780982a755ad3779462d83509799ec81fbd3b7ec555fe"
+        }
+      ],
+      "id": "1a7decb74126f8fe8539952e35568408865258abd52e9292df1142ac106282d7",
+      "limits": [
+        "Actual OS/context/text getters, combiners, FString helpers, allocation/free/destructor/log/send остаются bounded fixtures.",
+        "Combiner outputs заданы явно; реальные getter values и алгоритмы конкатенации не подтверждены.",
+        "Нет Login prepare/result readers, network/framing/auth и переключения runtime/baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "Перенести actual OS/context/string helpers по явным call sites, затем Login prepare и result readers. Готовые prepare/constructor exports и caller projection повторно не извлекать.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные зависимости подготовки Version, отдельная подготовка Login, текущие result readers и живая совместимость игрового профиля."
     }
   ],
   "schema": 1,
