@@ -339,6 +339,20 @@
         "evidence/characters/HEADLESS-CREATE-WORKER-JOURNAL.md",
         "evidence/characters/HEADLESS-CREATE-LIVE-PREFLIGHT.md"
       ]
+    },
+    {
+      "id": "release-update-target-discovery",
+      "status": "open",
+      "question": "Какие точные ориентиры автоматически находят кандидатов после обновления EXE без переноса старых ролей?",
+      "known": "Для SHA d00a1977 по проверенным RIP LEA найдены два launcher candidate roots. IsInspect имеет несколько ссылок и undecodable fragments, остаётся в очереди. Машинный план хранит точные строки, старый SHA, проверочные команды и границы переноса.",
+      "unknown": "Полный Ghidra экспорт и протокол кандидатов новой сборки; создание отдельного comparison project для нового SHA.",
+      "next_action": "Использовать code-clues/update-targets report, затем prepare явных кандидатов. Создать отдельный Ghidra project без общего анализа EXE и получить только запрошенные функции.",
+      "decision_rule": "Уникальная строка и ссылка дают кандидат, а не подтверждённую роль или совместимость. Runtime profile меняется только после source-bound проверки контракта.",
+      "do_not_repeat": "Не повторять те же экспорты; не расширять дерево вызовов автоматически и не переносить старые адреса по общему сдвигу.",
+      "addresses": [],
+      "evidence": [
+        "UPDATE-TARGETS.md"
+      ]
     }
   ]
 }

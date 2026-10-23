@@ -1,0 +1,39 @@
+{
+  "facts": [
+    {
+      "addresses": [
+        "0x1444ee9d0",
+        "0x144503b10"
+      ],
+      "checks": [
+        {
+          "cache_key": "03b5a44944a853db6a1e1447b06231a549c73894de9bf0f5f5a6a7461f89b1fb",
+          "id": "release-update-target-discovery",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4c59bcfeea6b0aa420289a3e01a609daafac31ff90b03299375576cb8cebea06\\manifest.json",
+          "sha256": "4c59bcfeea6b0aa420289a3e01a609daafac31ff90b03299375576cb8cebea06",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Точные diagnostic literals и source-bound RIP LEA нового EXE дали два launcher candidates: 1444ee9d0 и 144503b10. IsInspect неоднозначен и имеет непроверенные fragments, поэтому остаётся requires_review. Машинный план связан с обычным update: поиск без авторизации, автоматического переноса ролей или профиля.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\UPDATE-TARGETS.md",
+          "sha256": "f2d87e41d485b3133e660e35fc5dce61e66a76c02539acc8126728230a757f4e"
+        }
+      ],
+      "id": "bdc23b6b9cb9e0b63f06f03fe006a11a88587d90f86af81bd672773d868a1f11",
+      "limits": [
+        "Кандидат не подтверждает роль функции, body/headers/callbacks или совместимость SDK. Полных Ghidra exports ещё нет.",
+        "Декодируются только unwind roots со ссылками на явные literal anchors; IsInspect имеет undecodable ranges и несколько ссылок.",
+        "Пять offline тестов locator и девять update tests используют fixtures. Реальный поиск нового EXE проверен отдельно; автоматическая ветка update проверена fixtures, полного update после изменения кода повторно не было."
+      ],
+      "method": "static",
+      "next_check": "Создать отдельный Ghidra project нового SHA без общего анализа, экспортировать только два явно подготовленных launcher candidates; затем перенести source-bound auth checks и остальные явные SDK/GMC2 зависимости.",
+      "question": "release-update-target-discovery",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Новый auth-контракт и SDK/GMC2 profile; Ghidra comparison project нового SHA пока отсутствует."
+    }
+  ],
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+}

@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "baseline_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+  "anchors": [
+    {
+      "id": "launcher-token",
+      "text": "void __cdecl Netmarble::Service::FAuthImpl::GetTokenByLauncher(const class TSharedPtr<class Netmarble::Service::FCredential,1>,const class TFunction<void __cdecl(class TSharedRef<class Netmarble::FResult,1> const &)>)",
+      "encoding": "ascii",
+      "baseline_literal": "0x149532cc0",
+      "baseline_root": "0x1444ef840",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "launcher-sign-in",
+      "text": "void __cdecl Netmarble::Service::FAuthImpl::SignInByLauncher(const class TSharedPtr<class Netmarble::Service::FLauncherCredential,1>,const class TFunction<void __cdecl(class TSharedRef<class Netmarble::FResult,1> const &)>)",
+      "encoding": "ascii",
+      "baseline_literal": "0x149532ed0",
+      "baseline_root": "0x144504980",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "lobby-inspect",
+      "text": "IsInspect",
+      "encoding": "ascii",
+      "baseline_literal": "0x149952d40",
+      "baseline_root": "0x145810700",
+      "required_checks": [
+        "release-lobby-errors"
+      ]
+    }
+  ],
+  "resource_checks": [
+    "DefaultGame.ini: NetworkSetting/AppVersion, ConfigPrefix, CdnConfigUrl",
+    "Patch/windows.manifestlist: parse_patch_client_revision",
+    "Full EXE/PAK SHA and inventory stability before/after"
+  ],
+  "next_targets": [
+    "SDK defaults/zone/market/platform and GMC2 URL/headers need separate candidate discovery from validated callers; no automatic call-tree expansion."
+  ],
+  "evidence": [
+    "evidence/auth/HEADLESS-RELEASE-LAUNCHER-CONTRACT.md",
+    "evidence/network/HEADLESS-RELEASE-LOBBY-ERRORS.md"
+  ],
+  "manual_port_targets": [
+    {
+      "id": "sdk-defaults-gmc2",
+      "baseline_functions": [
+        "0x1444b4100",
+        "0x1444c5080",
+        "0x14452baa0",
+        "0x144509080"
+      ],
+      "tools": [
+        "replay-release-sdk-defaults.py",
+        "replay-release-sdk-platform.py",
+        "replay-release-gmc2-start.py",
+        "replay-release-gmc2-url.py",
+        "replay-release-gmc2-headers.py",
+        "build-release-sdk-profile.py"
+      ],
+      "required_checks": [
+        "release-gmc2-context",
+        "release-gmc2-runtime"
+      ],
+      "rule": "Historical addresses only. Find new explicit candidates, export and port bounded checks before producing a new profile."
+    },
+    {
+      "id": "sdk-game-overrides",
+      "baseline_functions": [
+        "0x145658ca0",
+        "0x14560c680",
+        "0x14452abd0"
+      ],
+      "tools": [
+        "replay-release-sdk-overrides.py"
+      ],
+      "rule": "Review NMENV, sdk_zone, market, game_code and client_id; never infer runtime values from string presence."
+    },
+    {
+      "id": "launcher-fields-callbacks",
+      "baseline_functions": [
+        "0x1411b0260",
+        "0x1411b04d0",
+        "0x1411b0590",
+        "0x1444cd020",
+        "0x1444d45a0"
+      ],
+      "tools": [
+        "audit-release-launcher-contract.py"
+      ],
+      "required_checks": [
+        "release-launcher-contract"
+      ],
+      "rule": "Check initializers, body keys, launcherToken header, URL suffixes and both response gates."
+    },
+    {
+      "id": "first-sdk-and-terms",
+      "baseline_functions": [
+        "0x144506cf0",
+        "0x145603ab0",
+        "0x14456b510"
+      ],
+      "tools": [
+        "replay-release-fetch-result.py",
+        "replay-release-individual-terms-response.py"
+      ],
+      "required_checks": [
+        "release-sdk-fetch",
+        "release-sdk-first-login",
+        "release-sdk-terms"
+      ],
+      "rule": "No automatic SignUp after a generic SignIn failure; preserve fresh Fetch and explicit terms gates."
+    }
+  ]
+}

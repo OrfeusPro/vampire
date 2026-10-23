@@ -116,11 +116,32 @@ class ResearchUpdateTests(unittest.TestCase):
         raw = bytearray(self.exe.read_bytes())
         raw[0x201] = 2
         self.exe.write_bytes(raw)
-        result = self.update.update(self.index.api(),self.args,self.root/'knowledge/search.sqlite3')
+        with patch.object(self.update, 'execute_adapter', return_value=dict(state='passed', result={})) as adapter:
+            result = self.update.update(self.index.api(),self.args,self.root/'knowledge/search.sqlite3')
+        self.assertEqual(adapter.call_args.args[2], 'locate-release-update-targets.py')
         self.assertTrue(result['changed_exe'])
         self.assertNotEqual(result['source_sha256'],self.sha)
         self.assertEqual(result['queue'],1)
         self.assertTrue((self.root/'client-code-snapshots'/self.sha/self.exe.name).is_file())
+
+    def test_failed_native_discovery_stays_in_queue_without_promoting_profile(self):
+        raw = bytearray(self.exe.read_bytes()); raw[0x201] = 3
+        self.exe.write_bytes(raw)
+        with patch.object(self.update, 'execute_adapter', return_value=dict(state='failed', result=None)):
+            result = self.update.update(self.index.api(), self.args, self.root/'knowledge/search.sqlite3')
+        report = self.workflow.checked_manifest(self.index.api(), Path(result['report']))
+        self.assertEqual(report['native_targets']['state'], 'failed')
+        self.assertTrue(any('Native target discovery failed' in task['reason'] for task in report['queue']))
+        self.assertEqual(report['compatibility'], 'not_established')
+        self.assertFalse(report['baseline_promoted'])
+
+    def test_audit_only_new_exe_does_not_run_candidate_discovery(self):
+        raw = bytearray(self.exe.read_bytes()); raw[0x201] = 4
+        self.exe.write_bytes(raw); self.args.audit_only = True
+        with patch.object(self.update, 'execute_adapter', side_effect=AssertionError('Audit only')):
+            result = self.update.update(self.index.api(), self.args, self.root/'knowledge/search.sqlite3')
+        report = self.workflow.checked_manifest(self.index.api(), Path(result['report']))
+        self.assertIsNone(report['native_targets'])
 
 
 if __name__ == '__main__': unittest.main()
