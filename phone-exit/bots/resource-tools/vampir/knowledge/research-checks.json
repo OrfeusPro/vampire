@@ -45,7 +45,10 @@
     },
     {
       "id": "update-run-offline",
-      "runtime_distributions": ["capstone", "unicorn"],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
       "questions": [
         "release-update-target-discovery"
       ],
@@ -124,8 +127,12 @@
     },
     {
       "id": "binary-diff-candidate-adapter",
-      "questions": ["release-update-target-discovery"],
-      "source_sha256": ["d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"],
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_binary_diff.py",
@@ -3799,6 +3806,42 @@
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
         "phone-exit/bots/resource-tools/vampir/build-headless-sdk-config.py",
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py"
+      ]
+    },
+    {
+      "id": "packet-writer-context",
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_packet_writer_context.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/verify-version-login-context.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-packet-writer-context.py",
+        "phone-exit/bots/test_vampir_version_login_context.py"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6f00cf979ea3/details.json"
       ]
     }
   ]

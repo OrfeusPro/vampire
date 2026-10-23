@@ -195,13 +195,28 @@
         {
           "key": "wrapper-constructor",
           "method": "reviewed"
+        },
+        {
+          "key": "writer",
+          "method": "vtable",
+          "from": "constructor",
+          "rip_offset": 6,
+          "slot": 16
+        },
+        {
+          "key": "string-writer",
+          "method": "direct_call",
+          "from": "writer",
+          "offset": 23
         }
       ],
       "bindings": {
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
           "prepare": "0x1467ce6a0",
           "constructor": "0x1456d7be0",
-          "wrapper-constructor": "0x1467cc380"
+          "wrapper-constructor": "0x1467cc380",
+          "writer": "0x1456e8830",
+          "string-writer": "0x144aad310"
         }
       },
       "resources": [
@@ -217,7 +232,8 @@
       ],
       "next_check": "Проверить целый Version writer и остальные поля текущего game profile; tag slice и ID сами по себе не доказывают весь формат.",
       "context_checks": [
-        "version-login-tag"
+        "version-login-tag",
+        "packet-writer-projection"
       ],
       "tag_check": {
         "packet_id": 1,
@@ -246,8 +262,67 @@
         }
       },
       "targets": [
-        "compiled-tag-current"
-      ]
+        "compiled-tag-current",
+        "packet-writers-current"
+      ],
+      "writer_check": {
+        "object_size": 208,
+        "memcpy": "0x1487f5ab9",
+        "fields": [
+          [
+            "string",
+            16
+          ],
+          [
+            "u32",
+            32
+          ],
+          [
+            "string",
+            40
+          ],
+          [
+            "string",
+            56
+          ],
+          [
+            "string",
+            72
+          ],
+          [
+            "string",
+            88
+          ],
+          [
+            "string",
+            104
+          ],
+          [
+            "string",
+            120
+          ],
+          [
+            "string",
+            136
+          ],
+          [
+            "u32",
+            152
+          ],
+          [
+            "string",
+            160
+          ],
+          [
+            "string",
+            176
+          ],
+          [
+            "u32",
+            192
+          ]
+        ]
+      }
     },
     {
       "id": "game-login",
@@ -268,12 +343,27 @@
         {
           "key": "constructor",
           "method": "reviewed"
+        },
+        {
+          "key": "writer",
+          "method": "vtable",
+          "from": "constructor",
+          "rip_offset": 12,
+          "slot": 16
+        },
+        {
+          "key": "string-writer",
+          "method": "direct_call",
+          "from": "writer",
+          "offset": 23
         }
       ],
       "bindings": {
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
           "prepare": "0x1467ce030",
-          "constructor": "0x1456d7570"
+          "constructor": "0x1456d7570",
+          "writer": "0x1456e8370",
+          "string-writer": "0x144aad310"
         }
       },
       "resources": [],
@@ -284,7 +374,8 @@
       ],
       "next_check": "Сверить текущие SDK getters, metadata, язык, clock / sequence и полный Login writer / result reader; использовать готовые exports.",
       "context_checks": [
-        "version-login-tag"
+        "version-login-tag",
+        "packet-writer-projection"
       ],
       "tag_check": {
         "packet_id": 3,
@@ -313,8 +404,115 @@
         }
       },
       "targets": [
-        "compiled-tag-current"
-      ]
+        "compiled-tag-current",
+        "packet-writers-current"
+      ],
+      "writer_check": {
+        "object_size": 320,
+        "memcpy": "0x1487f5ab9",
+        "fields": [
+          [
+            "string",
+            16
+          ],
+          [
+            "string",
+            32
+          ],
+          [
+            "string",
+            48
+          ],
+          [
+            "string",
+            64
+          ],
+          [
+            "u32",
+            80
+          ],
+          [
+            "string",
+            88
+          ],
+          [
+            "string",
+            104
+          ],
+          [
+            "string",
+            120
+          ],
+          [
+            "string",
+            136
+          ],
+          [
+            "u8",
+            152
+          ],
+          [
+            "u8",
+            153
+          ],
+          [
+            "string",
+            160
+          ],
+          [
+            "u32",
+            176
+          ],
+          [
+            "string",
+            184
+          ],
+          [
+            "string",
+            200
+          ],
+          [
+            "string",
+            216
+          ],
+          [
+            "string",
+            232
+          ],
+          [
+            "u32",
+            248
+          ],
+          [
+            "string",
+            256
+          ],
+          [
+            "string",
+            272
+          ],
+          [
+            "u32",
+            288
+          ],
+          [
+            "u8",
+            292
+          ],
+          [
+            "u64",
+            296
+          ],
+          [
+            "bool",
+            304
+          ],
+          [
+            "bool",
+            305
+          ]
+        ]
+      }
     },
     {
       "id": "character-list",

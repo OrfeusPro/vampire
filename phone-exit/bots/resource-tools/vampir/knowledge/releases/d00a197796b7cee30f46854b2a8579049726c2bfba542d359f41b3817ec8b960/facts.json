@@ -1639,6 +1639,122 @@
       "question": "release-update-target-discovery",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Полные Version/Login prepare и writer/result reader, SDK getters/metadata/clock/sequence, character list/select/world/position/heartbeat на новом SHA; время полного следующего патча."
+    },
+    {
+      "addresses": [
+        "0x1456e8370",
+        "0x1456e8830"
+      ],
+      "checks": [
+        {
+          "cache_key": "276274fc99feb72386b9f4e3c0b55fe57216fc5535dd1d297270975dd4106df1",
+          "id": "update-contract-registry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\34385faee07cec3c950c5e031abc108ac3dd260882e6bc083ff221a8722404b3\\manifest.json",
+          "sha256": "34385faee07cec3c950c5e031abc108ac3dd260882e6bc083ff221a8722404b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0b5bf88149cefad9ad5c729fcc1872024d189ebea98a548ff3bf6a2b6fe53b88",
+          "id": "update-binding-closure",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\46d360159509806fb208d03d487fd2e1e6a807d093a957de7c4b370b31bdd6b0\\manifest.json",
+          "sha256": "46d360159509806fb208d03d487fd2e1e6a807d093a957de7c4b370b31bdd6b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9e7e052a473f76fc2292f933337b6ffd0d56dfba8e7a748affcf63a63b7e1d27",
+          "id": "update-run-offline",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\109662150100d58538da6b8f8f91dd208b928adc6e0976cfced737602a656f08\\manifest.json",
+          "sha256": "109662150100d58538da6b8f8f91dd208b928adc6e0976cfced737602a656f08",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3ab201544b33993f595908738891f7abb936796c91fac019aa341da550c3dfc2",
+          "id": "update-profile-guards",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ff75600d91aa3fa20e3a05894d7218e45759ea90e08138b45a53d81f3da31108\\manifest.json",
+          "sha256": "ff75600d91aa3fa20e3a05894d7218e45759ea90e08138b45a53d81f3da31108",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8b761134745f8448a0b4007ade4f4b9f0b7521507ee2459f3e48342d1bf3f1b1",
+          "id": "version-login-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b2457a68f2c59d5dc2669c651387a83b952d8bb54cae325da26afb91d2e26061\\manifest.json",
+          "sha256": "b2457a68f2c59d5dc2669c651387a83b952d8bb54cae325da26afb91d2e26061",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b7463b78ddc4a24f13b7d6cbb806d0e1a4f061ad5a07718eb16d107657fdd106",
+          "id": "binary-diff-candidate-adapter",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2b361c8bdcbf8f871e10bf7f6b1621cc84ce133f8a45fc1752f7382a88d5e3dc\\manifest.json",
+          "sha256": "2b361c8bdcbf8f871e10bf7f6b1621cc84ce133f8a45fc1752f7382a88d5e3dc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "71a578f6b2a5c3a15b9c65261fc1f3b50703359a1e5904942392cdb81f414ba3",
+          "id": "release-update-target-discovery",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7d6c60dc6c55c04dd076774ced5be74e21333b0f489f617513c87bf665038f4a\\manifest.json",
+          "sha256": "7d6c60dc6c55c04dd076774ced5be74e21333b0f489f617513c87bf665038f4a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ce1032c79ecaf269416f5b9a8688030b6337df557cbfce324c00a72c59088c43",
+          "id": "release-requested-function-export",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0542dbacc87aebd1939cfb124eeafd1d8cae650fcef8f5a33385586faf1f80a1\\manifest.json",
+          "sha256": "0542dbacc87aebd1939cfb124eeafd1d8cae650fcef8f5a33385586faf1f80a1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ef0f0f2b0c2ec12ead28f8cb07bcc79b3aa9a98c17a00b7d9740762a9328ad5f",
+          "id": "release-update-plan-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dabe9361b391dabd0063c2878b3049936cad2de11e3e585dd307c78dfe4f3ee0\\manifest.json",
+          "sha256": "dabe9361b391dabd0063c2878b3049936cad2de11e3e585dd307c78dfe4f3ee0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "05cc1a22bb5ab275ca9405ec7438f5d074be890dc0e407c25ac42ce25cad396f",
+          "id": "knowledge-index-incremental",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\13e8d9b4ca116969c2585f586edd75f3d960f8be62bfb9e959755f84f8c8a4b4\\manifest.json",
+          "sha256": "13e8d9b4ca116969c2585f586edd75f3d960f8be62bfb9e959755f84f8c8a4b4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3e0e22e14702ad0e5da9f94273a07605e4e2ea87669d675286f990421b076607",
+          "id": "packet-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\379b30761b735d3da73e8d9d138d774ce35f3b4ac8078c14ae37c750d0194240\\manifest.json",
+          "sha256": "379b30761b735d3da73e8d9d138d774ce35f3b4ac8078c14ae37c750d0194240",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем SHA исполнены целые writers PktVersion 1456e8830 и PktLogin 1456e8370: 13 и 25 операций, 56 и 104 случая. Проверены порядок и значения аргументов, отказ каждой операции, canaries и ABI; подтверждены constructor/table/slot +0x10 и общий string helper 144aad310. Source-context adapter включён в update, checks одного контракта имеют отдельные ключи кэша. Общий прогон сохранил partial coverage и ручную очередь.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-PACKET-WRITERS-11316.md",
+          "sha256": "a0cb230919c8fac47b9303ad148ebf2172ea790adf146fc1974fd6003ffaa0d0"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\PACKET-WRITERS-11316.json",
+          "sha256": "15329cb7fd2bd3adf63dfc9a3e5892753bada72087a813ba750fe0b92239cb20"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-6f00cf979ea3\\details.json",
+          "sha256": "a30f7c5dd6a4e594730aaa7ebe8a3d9bd68b56a6c986696d7f20b332a3131031"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dc93ae3f92b7\\details.json",
+          "sha256": "462d870177d42665c381ab61e069b9530ddc4239fcc9f55260072fe6e83a1e72"
+        }
+      ],
+      "id": "38412f63ac64e61763502de95c29a4e59e9dc05fc0bb3d3ba2a890d6014e426c",
+      "limits": [
+        "String helper и scalar archive methods являются bounded fixtures; UTF-8 и wire bytes не доказаны.",
+        "Проверены raw bool helper inputs, но не их сетевое кодирование.",
+        "Полные Version/Login preparation, result readers, SDK getters и живой вход не исполнены.",
+        "Нет авторизации, игровых команд, активации профиля или продвижения baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "По готовому export 144aad310 проверить length 14144c550, conversion 1414465f0 и archive writer; использовать явный prepare, не повторять exports writers/helper.",
+      "question": "release-update-target-discovery",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Текущие UTF-8 conversion/archive primitives, полные preparation, send/result, затем character list/select/world/position/heartbeat."
     }
   ],
   "schema": 1,

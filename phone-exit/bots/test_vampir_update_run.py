@@ -43,6 +43,21 @@ class UpdateRunTests(fixture.ResearchUpdateTests):
         self.assertEqual(result['state'],'planned')
         self.assertFalse(result['profile_activation'])
 
+    def test_context_adapters_keep_separate_cached_results(self):
+        self.contracts['contracts'][0]['context_checks']=['version-login-tag','packet-writer-projection']
+        (self.knowledge/'update-contracts.json').write_text(json.dumps(self.contracts),'utf-8')
+        tag=Mock(return_value=dict(proof='tag'))
+        writer=Mock(return_value=dict(proof='writer'))
+        self.modules['verify-version-login-context']=SimpleNamespace(verify=tag)
+        self.modules['verify-packet-writer-context']=SimpleNamespace(verify=writer)
+        first,_=self.run_fixture()
+        self.assertEqual(tag.call_count,1)
+        self.assertEqual(writer.call_count,1)
+        self.args.resume=Path(first['run'])
+        self.run_fixture()
+        self.assertEqual(tag.call_count,1)
+        self.assertEqual(writer.call_count,1)
+
     def test_resume_reuses_completed_stages_and_status_is_read_only(self):
         first,calls=self.run_fixture()
         self.args.resume=Path(first['run'])

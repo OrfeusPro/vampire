@@ -796,6 +796,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "packet-writers-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-packet-writer-context.py"
+      ],
+      "rule": "После подтверждения constructor/table: slot +0x10; затем явный export и packet-writer-projection с проверкой whole writer. Не переносить callee semantics или wire формат по одному совпадению.",
+      "automation": {
+        "discovery": "reviewed_constructor_table_slot_0x10",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456e8830",
+                "scope": "Целый writer: порядок и значения аргументов, отказ каждой операции; string/archive fixtures, без доказательства wire encoding",
+                "required_checks": [
+                  "packet-writer-context"
+                ]
+              },
+              {
+                "address": "0x1456e8370",
+                "scope": "Целый writer: порядок и значения аргументов, отказ каждой операции; string/archive fixtures, без доказательства wire encoding",
+                "required_checks": [
+                  "packet-writer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-packet-writer-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-PACKET-WRITERS-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

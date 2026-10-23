@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "proofs": {
+    "game-version": {
+      "id": "packet-writer-projection",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-context-checks\\9319794a12d5f937811d7fe99d2c52abc76fdb99d93da8e28d9a7ed3d212adc6\\manifest.json",
+      "sha256": "9319794a12d5f937811d7fe99d2c52abc76fdb99d93da8e28d9a7ed3d212adc6",
+      "state": "passed"
+    },
+    "game-login": {
+      "id": "packet-writer-projection",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-context-checks\\08137a1e840d371f3df8c1f08002564a893acee257908f88650ee645239ed970\\manifest.json",
+      "sha256": "08137a1e840d371f3df8c1f08002564a893acee257908f88650ee645239ed970",
+      "state": "passed"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-6f00cf979ea3\\details.json",
+      "sha256": "a30f7c5dd6a4e594730aaa7ebe8a3d9bd68b56a6c986696d7f20b332a3131031"
+    },
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dc93ae3f92b7\\details.json",
+      "sha256": "462d870177d42665c381ab61e069b9530ddc4239fcc9f55260072fe6e83a1e72"
+    }
+  ],
+  "tools": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\verify-packet-writer-context.py",
+      "sha256": "ad08232fc9475351885fda3fb91d0510b13668e81d724585071860a1a3a5b418"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-native-harness.py",
+      "sha256": "5a7cc3465015cba684167d67930ac667917f3f6ca9f9f96af0462692f79b3ec8"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-bindings.py",
+      "sha256": "af6d91639063c706d759fbf456089171e4253467dd9140fea5ed2ccb7e49c39a"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\build-native-entry-code.py",
+      "sha256": "ec256ae4a128bc127214ba192e9df88041eef6e07a433c04ea9a53a4ccdadc86"
+    }
+  ],
+  "runtime": {
+    "capstone": "5.0.6",
+    "unicorn": "2.1.4"
+  },
+  "limits": [
+    "Whole writers with bounded string/scalar archive fixtures; no native UTF-8, wire IO, complete preparation or result reader proof.",
+    "No authentication, game commands, profile activation or baseline promotion."
+  ]
+}

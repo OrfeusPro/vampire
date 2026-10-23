@@ -64,7 +64,7 @@ def load(index, knowledge):
                 if (not isinstance(pattern,str) or not pattern.startswith('code-clues/') or '..' in pattern or
                     not pattern.endswith('/*/manifest.json') or type(spec.get('min_cases')) is not int or spec['min_cases']<1):
                     raise ValueError('Invalid profile report selector')
-        if any(x!='version-login-tag' for x in c.get('context_checks',[])):
+        if any(x not in ('version-login-tag','packet-writer-projection') for x in c.get('context_checks',[])):
             raise ValueError('Unreviewed context check')
         for resource in c.get('resources', []):
             if not isinstance(resource.get('archive'), str) or not isinstance(resource.get('path'), str):

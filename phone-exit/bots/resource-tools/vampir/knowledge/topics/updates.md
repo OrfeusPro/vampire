@@ -49,6 +49,7 @@ Windows / Android parity и перенос старых mappings требуют 
 - [GMC2: native сборка URL из явных значений](../evidence/updates/HEADLESS-GMC2-URL.md)
 - [GMC2 DecryptXOR: 16-битные единицы и пропуск нуля](../evidence/updates/HEADLESS-GMC2-XOR.md)
 - [Описания модулей base и patch](../evidence/updates/HEADLESS-MODULE-DESCRIPTORS.md)
+- [Version / Login 1.13.16: порядок полей и отказы writers](../evidence/updates/HEADLESS-PACKET-WRITERS-11316.md)
 - [PAK: ключ callback, каталог и упакованный Game config](../evidence/updates/HEADLESS-PAK-CONFIG-RECOVERY.md)
 - [ClientVersion из manifestlist до числа игрового Login](../evidence/updates/HEADLESS-PATCH-CLIENT-VERSION.md)
 - [Публичная CDN-конфигурация получена и разобрана](../evidence/updates/HEADLESS-PUBLIC-CDN.md)

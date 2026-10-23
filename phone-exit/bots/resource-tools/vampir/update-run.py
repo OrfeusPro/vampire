@@ -37,7 +37,7 @@ def execution_inputs(index):
         'discovery':['locate-release-update-targets.py'],
         'bindings':['update-bindings.py','update-contracts.py'],
         'contracts':['update-contracts.py'],
-        'context':['verify-version-login-context.py','update-native-harness.py'],
+        'context':['verify-version-login-context.py','verify-packet-writer-context.py','update-native-harness.py'],
         'profile':['update-profile.py']}.items()}
     runtime=index.extension('update-native-harness').runtime_inputs()
     for name in ('resources','discovery','bindings','context'):groups[name]['native_runtime']=runtime
@@ -345,13 +345,16 @@ def run_locked(index, args, database, *, audited=None):
             checks = []
             for adapter in c.get('context_checks',[]):
                 def check_context():
-                    if adapter!='version-login-tag':raise ValueError('Unreviewed context adapter')
-                    proof=index.extension('verify-version-login-context').verify(context,args.root)
+                    module={'version-login-tag':'verify-version-login-context',
+                            'packet-writer-projection':'verify-packet-writer-context'}.get(adapter)
+                    if module is None:raise ValueError('Unreviewed context adapter')
+                    proof=index.extension(module).verify(context,args.root)
                     proof['context_sha256']=index.digest(cp)
                     target=workflow.snapshot(args.root,'update-context-checks',proof)
                     return dict(id=adapter,state='passed',report=str(target),sha256=index.digest(target))
                 try:
-                    checked=journal.stage('context-check-'+name,dict(context=index.digest(cp),
+                    stage_name='context-check-'+name+('' if adapter=='version-login-tag' else '-'+adapter)
+                    checked=journal.stage(stage_name,dict(context=index.digest(cp),
                         inputs=tools['context']),check_context)
                 except (ValueError,OSError,KeyError,StopIteration) as error:
                     checked=dict(id=adapter,state='requires_review',reason=str(error))
