@@ -1311,6 +1311,59 @@
       "question": "release-game-login-code-1",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Полный current Version preparation, caller/vtable роль, Login consumer и остальные поля game profile; живая совместимость."
+    },
+    {
+      "addresses": [
+        "0x1467ce6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "3907b4aa0368145d03ffd17abc2fc295a302ceff15570d12ca8d2a465da63081",
+          "id": "release-update-target-discovery",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4b70c9bbdd8998420e3f024929f39981ff6f29e34ee4157d706d76dfa3f99971\\manifest.json",
+          "sha256": "4b70c9bbdd8998420e3f024929f39981ff6f29e34ee4157d706d76dfa3f99971",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ce3173eac50ea58dc9599f43d3797cf13d554fc4f3a125024290a23761f3d2b9",
+          "id": "release-requested-function-export",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\de431e0570ff992434064bcc462c86da63fbbf5e73b9dfc6f6a46fc052e0b09e\\manifest.json",
+          "sha256": "de431e0570ff992434064bcc462c86da63fbbf5e73b9dfc6f6a46fc052e0b09e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4feeca4e9736b64fa495f41a23a1b7d4e8c65af2fd0aa03c9a907360c28909f6",
+          "id": "release-update-plan-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d28dcf9aae9c43ae551e6d4408c88f5e41a90c978ade669b75528e4e7bf08537\\manifest.json",
+          "sha256": "d28dcf9aae9c43ae551e6d4408c88f5e41a90c978ade669b75528e4e7bf08537",
+          "state": "passed"
+        },
+        {
+          "cache_key": "860031048827f59c028fe5097ec9e197a8aa4c4581784d2c17ca8d02611ffe87",
+          "id": "knowledge-index-incremental",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3205d4d65a7b1c4e070024e1674117be0c37d562b5e04557ad4b48f7e2d68eed\\manifest.json",
+          "sha256": "3205d4d65a7b1c4e070024e1674117be0c37d562b5e04557ad4b48f7e2d68eed",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Добавлен append-only импорт новых exports в копию SQLite с полной проверкой прежних SHA, проверкой новых материалов и атомарной заменой. На реальной библиотеке полный импорт занял 66 секунд, добавление одного export с пятью функциями 16,991 секунды, неизменный повтор 6,864 секунды; девять таблиц кода совпали с полным индексом. План дальнейшей автоматизации сохранён отдельно.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\tools\\HEADLESS-INCREMENTAL-INDEX.md",
+          "sha256": "904a03f345e5cde9c86695c005569d60d8ea37d9b172a32a6db91e2d3df9c4ed"
+        }
+      ],
+      "id": "1d6b506ea7e230d034a890010a1d161f4dbc883c8230f6ab3433861704e3b375",
+      "limits": [
+        "Замер одного последовательного прогона на этом ПК относится только к индексатору, не полному обновлению, Ghidra или живому входу.",
+        "13 index tests используют синтетические sources и exports; настоящий benchmark использует публичные материалы в отдельной базе вне Git.",
+        "Новый builder input, удаление report и новый completion receipt сохраняют полный rebuild path; runtime автоматически не продвигается."
+      ],
+      "method": "static",
+      "next_check": "Завершить current Version/Login source checks; затем пакетировать адреса и измерить все фазы на следующей реальной сборке.",
+      "question": "release-update-target-discovery",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Время полного следующего патча, автоматический выбор batch candidates, полное покрытие ресурсных и игровых dependencies."
     }
   ],
   "schema": 1,

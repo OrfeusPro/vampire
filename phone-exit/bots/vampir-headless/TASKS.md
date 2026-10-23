@@ -1,5 +1,15 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Добавление exports теперь не требует повторного импорта всей базы: на этой
+библиотеке 16,991 секунды против 66 секунд полного build, неизменный повтор
+6,864 секунды. Это замер индексатора, не всего переноса игры.
+[План автоматизации следующего обновления](../resource-tools/vampir/knowledge/UPDATE-AUTOMATION.md).
+
+Для продолжения Version / Login уже сохранён batch export пяти roots:
+`F:/PhoneExit Resources/Vampir/ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json`,
+SHA `c94200451d70a9eb459767aa9076b5f98a90325605c135686db082f31a290619`.
+Готовые owners / constructors повторно не выгружать; их полная семантика ещё не подтверждена.
+
 Compiled tag 1.13.16 проверен через новый pointer и четыре native сценария:
 строка совпала с 1.13.14, адреса изменились. Полный Version / Login consumer
 ещё требует сверки; игровой runtime profile пока не переключён.

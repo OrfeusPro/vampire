@@ -282,29 +282,45 @@ def build(root, output, on_progress=None, knowledge=None):
         previous = open_index(output)
         try:
             builder = previous.execute("SELECT value FROM metadata WHERE key='tool_inputs'").fetchone()
-            same_reports = {str(p) for p in discover(root)} == {r['path'] for r in previous.execute('SELECT path FROM artifacts')}
+            reports = {str(p) for p in discover(root)}
+            old_reports = {r['path'] for r in previous.execute('SELECT path FROM artifacts')}
+            same_reports = reports == old_reports
             newly_finished = any(not r['receipt'] and receipt_for(Path(r['path'])).is_file()
                 for r in previous.execute('SELECT path,receipt FROM artifacts'))
             old_context = ({r['path']: r['sha'] for r in previous.execute('SELECT * FROM context_inputs')}
                 if previous.execute('PRAGMA user_version').fetchone()[0] == 2 else None)
-            if builder and json.loads(builder['value']) == inputs and same_reports and not newly_finished:
+            if builder and json.loads(builder['value']) == inputs and old_reports <= reports and not newly_finished:
                 verify_index(previous, include_context=False)
-                if old_context == context_inputs:
+                if same_reports and old_context == context_inputs:
                     return dict(database=str(output), counts=index_counts(previous), reused=True,
                         roles_transferred=False, game_or_ghidra_started=False)
-                # Documentation updates do not re-import tens of thousands of
-                # native observations. Work on a private backup, never the live DB.
+                # Append only new exports or refresh context on a private backup.
+                # Existing source/output hashes were checked above; removed files,
+                # newly completed receipts and changed tools still need a rebuild.
                 handle, name = tempfile.mkstemp(prefix='knowledge-context-', suffix='.sqlite3', dir=output.parent)
                 os.close(handle)
                 temporary = Path(name)
                 revised = sqlite3.connect(temporary)
+                revised.row_factory = sqlite3.Row
                 try:
                     previous.backup(revised)
-                    revised.execute('DELETE FROM search WHERE variant IN (SELECT id FROM context)')
-                    revised.executescript('DROP TABLE context; DROP TABLE context_inputs;')
-                    context.import_context(api(), revised, root, knowledge, context_inputs)
+                    added = sorted(reports-old_reports)
+                    if added:
+                        sources = Sources(root)
+                        for number, name in enumerate(added, 1):
+                            try: import_report(revised, sources, Path(name))
+                            except (ValueError, OSError, KeyError, TypeError) as error:
+                                raise ValueError(f'Export rejected: {name}: {error}') from error
+                            if on_progress: on_progress(number, len(added))
+                    if old_context != context_inputs:
+                        revised.execute('DELETE FROM search WHERE variant IN (SELECT id FROM context)')
+                        revised.executescript('DROP TABLE context; DROP TABLE context_inputs;')
+                        context.import_context(api(), revised, root, knowledge, context_inputs)
                     if context.inventory(api(), root, knowledge) != context_inputs:
                         raise ValueError('Knowledge inputs changed during refresh')
+                    if {str(p) for p in discover(root)} != reports or tool_inputs() != inputs:
+                        raise ValueError('Index inputs changed during refresh')
+                    verify_index(revised, include_context=False)
                     revised.commit()
                     if revised.execute('PRAGMA integrity_check').fetchone()[0] != 'ok': raise ValueError('Index integrity failed')
                     counts = index_counts(revised)
@@ -312,6 +328,7 @@ def build(root, output, on_progress=None, knowledge=None):
                     previous.close()
                     temporary.replace(output)
                     return dict(database=str(output), counts=counts, reused=False, code_reused=True,
+                        imported_reports=len(added),
                         roles_transferred=False, game_or_ghidra_started=False)
                 finally:
                     revised.close()

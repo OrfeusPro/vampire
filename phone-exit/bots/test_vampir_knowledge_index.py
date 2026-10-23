@@ -5,6 +5,7 @@ from pathlib import Path
 import struct
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 class KnowledgeIndexTests(unittest.TestCase):
@@ -89,6 +90,99 @@ class KnowledgeIndexTests(unittest.TestCase):
                 self.assertEqual(literals[0]['references'][0]['function'], '0x140001000')
                 with self.assertRaises(ValueError): self.tool.select_release(db, '0'*64)
             finally: db.close()
+
+    def test_new_export_imports_only_added_report_and_preserves_source_separation(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            sha1, code1 = self.source(root, 1)
+            sha2, code2 = self.source(root, 2)
+            old = self.export(root, 'one', sha1, code1)
+            output = root/'knowledge/search.sqlite3'
+            self.tool.build(root, output)
+            new = self.export(root, 'two', sha2, code2)
+            with patch.object(self.tool, 'import_report', wraps=self.tool.import_report) as importer:
+                result = self.tool.build(root, output)
+            self.assertEqual([call.args[2] for call in importer.call_args_list], [new])
+            self.assertTrue(result['code_reused'])
+            self.assertEqual(result['imported_reports'], 1)
+            self.assertEqual(result['counts']['functions'], 2)
+            db = self.tool.open_index(output)
+            try:
+                self.assertEqual(self.tool.query(db, 'function', '140001000', sha1, 10)[0]['artifact'], str(old))
+                self.assertEqual(self.tool.query(db, 'function', '140001000', sha2, 10)[0]['artifact'], str(new))
+            finally: db.close()
+            full = self.tool.build(root, root/'knowledge/full.sqlite3')
+            self.assertEqual(result['counts'], full['counts'])
+
+    def test_corrupt_added_report_preserves_previous_database(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            sha, code = self.source(root, 1)
+            self.export(root, 'one', sha, code)
+            output = root/'knowledge/search.sqlite3'
+            self.tool.build(root, output)
+            before = output.read_bytes()
+            new = self.export(root, 'two', sha, code)
+            (new.parent/'fixture.c').write_text('corrupt', encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'output hash'):
+                self.tool.build(root, output)
+            self.assertEqual(output.read_bytes(), before)
+
+    def test_old_corruption_is_rejected_even_when_new_export_arrives(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            sha, code = self.source(root, 1)
+            old = self.export(root, 'one', sha, code)
+            output = root/'knowledge/search.sqlite3'
+            self.tool.build(root, output)
+            before = output.read_bytes()
+            self.export(root, 'two', sha, code)
+            (old.parent/'fixture.c').write_text('corrupt', encoding='utf-8')
+            with self.assertRaisesRegex(ValueError, 'pseudocode changed'):
+                self.tool.build(root, output)
+            self.assertEqual(output.read_bytes(), before)
+
+    def test_added_incomplete_export_cannot_hide_completed_variant(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            sha, code = self.source(root, 1)
+            self.export(root, 'complete', sha, code)
+            output = root/'knowledge/search.sqlite3'
+            self.tool.build(root, output)
+            self.export(root, 'partial', sha, code, completed=False)
+            self.assertEqual(self.tool.build(root, output)['imported_reports'], 1)
+            db = self.tool.open_index(output)
+            try:
+                self.assertEqual([r['completed'] for r in self.tool.query(db, 'function', '140001000', sha, 10)], [1, 0])
+            finally: db.close()
+
+    def test_new_receipt_requires_full_source_validation(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            sha, code = self.source(root, 1)
+            report = self.export(root, 'one', sha, code)
+            receipt = report.parent/'provenance.json'
+            saved = receipt.read_bytes()
+            receipt.unlink()
+            output = root/'knowledge/search.sqlite3'
+            self.tool.build(root, output)
+            receipt.write_bytes(saved)
+            result = self.tool.build(root, output)
+            self.assertFalse(result.get('code_reused', False))
+            self.assertEqual(result['counts']['functions'], 1)
+
+    def test_removed_export_rebuilds_without_stale_observations(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            sha, code = self.source(root, 1)
+            self.export(root, 'one', sha, code)
+            removed = self.export(root, 'two', sha, code, completed=False)
+            output = root/'knowledge/search.sqlite3'
+            self.tool.build(root, output)
+            removed.unlink()
+            result = self.tool.build(root, output)
+            self.assertFalse(result.get('code_reused', False))
+            self.assertEqual(result['counts']['observations'], 1)
 
     def test_uncovered_switch_or_missing_block_cannot_replace_complete_variant(self):
         for kind in ('switch_dispatch','missing_block'):
