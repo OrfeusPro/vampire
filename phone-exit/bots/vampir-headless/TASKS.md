@@ -231,6 +231,12 @@ auth regression tests прошли. Live nightraven получил Fetch HTTP 40
 bot-test контроль остановился на NID до Fetch, без вывода о его SDK-профиле.
 Следом vtable targets `14560b130` / `14560aff0` и terms implementation `1445ac980`.
 [Read-only Fetch и продолжение условий](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FETCH-CONTRACT.md).
+Terms callback → два native virtual bridge → closures → classifier проверены
+в 99 сценариях; статический handoff доведён до `144506cf0` SDK SignUp.
+Raw UI state не доказывает фактическое завершение согласия; SDK профиль не создавался.
+Далее `144584210`, `143d1d470`, `144522040`, callback pointer `1445744b0`:
+query / HTTP / ответ BasicTerms, затем реальный первый игровой вход.
+[Проверка terms continuation](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-TERMS-CONTINUATION.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
