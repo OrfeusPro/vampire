@@ -79,6 +79,11 @@ BoneGroup F / M извлечены из текущего PAK: по семь гр
 и память остаются fixtures; рост map не проверен. Predicate preset прошёл
 64 случая сравнения типа класса. Теперь нужны реальные строки и значения пресета.
 [Контейнер внешности и фильтр пресетов](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-MAP.md).
+Текущие таблицы пресетов прочитаны: 16 / 13 строк. Type 3 связан с
+DA_PresetDarkMage3_F/M (ID 3 / 2), несмотря на имя файла. Значения извлечены;
+семь float defaults 0.5 и voice 0 подтверждены native constructor. Пропущенные
+int32 остаются неизвестными до проверки CDO. Четыре теста прошли.
+[Пресеты Carnage, значения и недостающие defaults](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-PRESETS.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

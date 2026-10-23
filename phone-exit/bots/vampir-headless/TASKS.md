@@ -100,6 +100,12 @@ Map lookup / insert / update затем прошли 26 native сценарие�
 он сравнивает row type с типом выбранного класса. Далее текущие строки
 DT_CustomizePreset F/M, ссылки и значения выбранного пресета, scale / min / max.
 [Map и predicate: fixtures и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-MAP.md).
+Обе текущие таблицы затем разобраны целиком: 16 / 13 строк. Уникальный type 3
+ссылается на DA_PresetDarkMage3_F/M, IDs 3 / 2. Assets извлечены по ссылкам,
+схемы сверены с EXE. Native constructor задаёт float defaults 0.5 и voice 0;
+пропущенные int32 не инициализирует. Далее проверить CDO defaults для них,
+byte пола → F/M и реальные scale / min / max. Четыре теста прошли.
+[Текущие пресеты и неизвестные поля](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-PRESETS.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

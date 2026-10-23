@@ -77,7 +77,7 @@ def native_schema(root):
     return dict(source_sha256=sha, properties=result, serialized_properties=['GroupName', 'ID', 'BoneNameIDs'])
 
 
-def named_records(directory_path, index):
+def named_records(directory_path, index, targets=TARGETS):
     """Join authenticated names to fresh record offsets, never adjacent records."""
     if digest(directory_path) != directory_path.parent.name:
         raise ValueError('Appearance directory manifest hash changed')
@@ -99,7 +99,7 @@ def named_records(directory_path, index):
     core = load('appearance_named_entry', HERE / 'recover-pak-game-config.py')
     encoded = encoded_file.read_bytes()
     result = {}
-    for target in TARGETS:
+    for target in targets:
         parts = []
         for suffix in ('.uasset', '.uexp'):
             name = 'ProjectRED/Content/' + target.removeprefix('/Game/') + suffix

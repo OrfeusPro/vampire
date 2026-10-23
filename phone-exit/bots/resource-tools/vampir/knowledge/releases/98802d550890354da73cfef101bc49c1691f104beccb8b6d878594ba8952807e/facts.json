@@ -5719,6 +5719,135 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Текущие строки DT_CustomizePreset F/M, ссылки и значения выбранного preset и его UObject-схема, настройки ползунков; actual key conversion/JSON output, producer и handler ID 104."
+    },
+    {
+      "addresses": [
+        "0x14545dd00",
+        "0x1454d06a0",
+        "0x1454d6800",
+        "0x145c86320",
+        "0x145c8c9d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d5f90d9ce1210a1600791d6fed9229c7ee9863a45612aaaa69fccb1d223ae0d0",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326\\manifest.json",
+          "sha256": "7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326",
+          "state": "passed"
+        },
+        {
+          "cache_key": "99ec5cf6fc2412b2fd5690809ce7d186d4a97a2fb0e933938aa1d5f0c88b8030",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b\\manifest.json",
+          "sha256": "8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a51da97fefd155eb0d79da2f4986046c44bdb50c693758d65af97465cc8acfb",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b\\manifest.json",
+          "sha256": "3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b6ec3391a351662f8a4f5a15c68659c175787940cc7b946ec48de91af3ef33ed",
+          "id": "release-character-create-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b\\manifest.json",
+          "sha256": "b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "48ce8511dd27e774a282c8d32eb06abe039ba61358ce27daf2f73dd224bc528c",
+          "id": "release-create-class-lookup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5\\manifest.json",
+          "sha256": "89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "218eebc981b597c74e5cb2d34ebbcb6771e772280f94422ed33f84fb6bd4a8c7",
+          "id": "release-creation-class-data",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34\\manifest.json",
+          "sha256": "556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34",
+          "state": "passed"
+        },
+        {
+          "cache_key": "82cc1a0db07f945cdbd1b1d9cca63777062471ed11e56c2b4078679e8c410345",
+          "id": "release-character-create-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17\\manifest.json",
+          "sha256": "39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8e9ef3ecb9922ed9f229eca97589ef7c7d87da056e8c136ed4c604f0c6d74d91",
+          "id": "release-appearance-json-inputs",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd\\manifest.json",
+          "sha256": "51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a29a123b58040b53012ded3985b8d54304aac5981cfbb11951c082ab401aac77",
+          "id": "release-appearance-json-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d\\manifest.json",
+          "sha256": "c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d0041514046c6cc38f038ff9e40d769fb4cab7784a56c59713c42e59d0748e3a",
+          "id": "release-appearance-resources",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\aab2f8ae74ac7c0ab1003986abc94d5271d7fda428460956e9f91e33e3358f12\\manifest.json",
+          "sha256": "aab2f8ae74ac7c0ab1003986abc94d5271d7fda428460956e9f91e33e3358f12",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c8cdd4e4a399397d3b52d271c4cfdcf7c789bf6656c5d6c752ecb0ed86d6b323",
+          "id": "release-appearance-reset",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5833151550c262fbd322d58bbcde74cc56c21050a0217c4b749a7be4138641e4\\manifest.json",
+          "sha256": "5833151550c262fbd322d58bbcde74cc56c21050a0217c4b749a7be4138641e4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e843e2b56a2ad7942ba94a742a36d33f366e963b7a1d24bee6d53daa2bbf7951",
+          "id": "release-appearance-slider",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\112e8154b101752caf5ede9f3d1be90440a9b655127ed6b303252101dba90ee4\\manifest.json",
+          "sha256": "112e8154b101752caf5ede9f3d1be90440a9b655127ed6b303252101dba90ee4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4fc7e97afcb3dc34fff4eae3222c623561188429cb24b01c42406060cec4e2e3",
+          "id": "release-appearance-map",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1bec3ad665a5c235905579a601d66d73d02bd24bb7d53c0dbf9495b01a0b537b\\manifest.json",
+          "sha256": "1bec3ad665a5c235905579a601d66d73d02bd24bb7d53c0dbf9495b01a0b537b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6d52c606deed31e043a106c5da9935c2379a846b15e75da03c36c80b5319c41d",
+          "id": "release-creation-presets",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0b8a16ab9c56291950aa0e18aa62ad35c6ab32b780ee055da94bb2852060e3ab\\manifest.json",
+          "sha256": "0b8a16ab9c56291950aa0e18aa62ad35c6ab32b780ee055da94bb2852060e3ab",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие DT_CustomizePreset F/M прочитаны целиком по source-checked descriptor schema: 16/13 строк. В каждой уникальная строка RecommandClassType 3 с ID 3/2 ссылается на DA_PresetDarkMage3_F/M, а не на DA_PresetGunner1. Связанные assets извлечены по именованным ссылкам, все property bytes разобраны с происхождением значений. Native constructor прошёл три poison случая: семь float явно 0.5, voice 0, девять int32 остаются прежними. Поэтому четыре отсутствующих int32 поля F/M оставлены unresolved CDO. Четыре теста подтвердили связи, повторяемость и отклонение всех коротких префиксов и хвостов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-CURRENT-PRESETS.md",
+          "sha256": "a7a2dfc088aa0251970c5c501d503079960e9916c20a448227bb5352c2b6d87e"
+        }
+      ],
+      "id": "1a11ea6dfe3ca69d194d3aeede24f9925ca42bad71a5f7d10f5155847f03dce5",
+      "limits": [
+        "Derived-first row wire order подтверждён полным bounded разбором и refs; engine generic schema builder/UObject deserializer не исполнялись.",
+        "Base constructor и type lookup являются fixtures; actual CDO defaults для omitted int32 остаются неизвестны.",
+        "Уникальная type-3 ссылка в этих таблицах не доказывает активный runtime cache или соответствие byte пола suffix F/M.",
+        "Полный CreateData пока не формируется; нет доказанных UI scale/min/max, окончательного JSON, целого producer/handler.",
+        "Авторизация, сеть и создание персонажа не запускались."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить CDO initialization/copy defaults отсутствующих int32, затем byte пола→F/M и реальные настройки ползунков; использовать связанные DA_PresetDarkMage3_F/M.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Actual CDO defaults DecalIndex F/M, DecalColorIndex F и EyeTexIndex M; byte пола→F/M, UI scale/min/max; actual JSON output, целый producer и handler ID104."
     }
   ],
   "schema": 1,
