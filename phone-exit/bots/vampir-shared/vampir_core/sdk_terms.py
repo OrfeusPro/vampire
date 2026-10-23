@@ -19,6 +19,12 @@ class BasicTermsReadPlan:
 
 
 @dataclass(frozen=True, slots=True)
+class IndividualTermsReadPlan:
+    url: str = field(repr=False)
+    method: str = 'GET'
+
+
+@dataclass(frozen=True, slots=True)
 class BasicTermsSummary:
     state: str
     result_code: int
@@ -27,8 +33,7 @@ class BasicTermsSummary:
     sdk_creation_ready: bool = False
 
 
-def plan_basic_terms_read(*, constants, game_code, country, locale, platform, filtered):
-    """Current public production endpoint only; local restrictive query policy."""
+def _validate_terms_inputs(constants, game_code, country, locale, platform):
     if lookup_sdk_url_value(constants, 'termsUrl') != 'https://terms-api.netmarble.com':
         raise ValueError('Unsupported explicit terms endpoint')
     if type(game_code) is not str or not re.fullmatch(r'[A-Za-z0-9_-]{1,64}', game_code):
@@ -37,11 +42,31 @@ def plan_basic_terms_read(*, constants, game_code, country, locale, platform, fi
         raise ValueError('Invalid explicit terms country')
     if type(locale) is not str or not re.fullmatch(r'[A-Za-z]{2,8}(?:-[A-Za-z0-9]{2,8}){0,3}', locale):
         raise ValueError('Invalid explicit terms locale')
-    if platform != 'PC' or type(filtered) is not bool:
+    if platform != 'PC':
+        raise ValueError('Explicit supported terms platform required')
+
+
+def plan_basic_terms_read(*, constants, game_code, country, locale, platform, filtered):
+    """Current public production endpoint only; local restrictive query policy."""
+    _validate_terms_inputs(constants, game_code, country, locale, platform)
+    if type(filtered) is not bool:
         raise ValueError('Explicit supported terms platform/branch required')
     suffix = '/filtered/unique' if filtered else ''
     query = urlencode(dict(country=country, locale=locale, platform=platform))
     return BasicTermsReadPlan(f'https://terms-api.netmarble.com/game/v2/{game_code}/terms{suffix}?{query}')
+
+
+def plan_individual_terms_read(*, constants, game_code, country, locale, platform, terms_name):
+    """No-player-ID branch only; exact current game argument and termsType getter.
+
+    Existing-player agreementUrl branch and response/UI handling remain separate.
+    Source: HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md.
+    """
+    _validate_terms_inputs(constants, game_code, country, locale, platform)
+    if terms_name != 'terms_of_service_ko':
+        raise ValueError('Unsupported explicit individual terms name')
+    query = urlencode(dict(country=country, locale=locale, termsType='I', platform=platform))
+    return IndividualTermsReadPlan(f'https://terms-api.netmarble.com/game/v2/{game_code}/terms/{terms_name}?{query}')
 
 
 def parse_basic_terms_summary(*, status, body):

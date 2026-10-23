@@ -183,6 +183,15 @@ UI, HTTP и серверное создание остаются вне пров
 такой ответ. Добавлен offline plan / summary условий; четыре теста прошли,
 summary не подтверждает согласие и не разрешает SDK SignUp. Далее individual terms без player ID.
 [Ответ условий и граница согласия](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-BASIC-TERMS-RESPONSE.md).
+Индивидуальные условия без player ID используют termsUrl GET и termsType I;
+это отдельная ветвь от agreementUrl с player ID. Диспетчер и отложенный callback
+прошли 96 native-сценариев: исходные ошибка и состояние сохраняются. Публичный
+индивидуальный GET получил NO DATA с объектом terms вместо массива BasicTerms.
+Добавлен отдельный план GET без сетевого вызова; пять тестов условий и два
+теста передачи результата прошли. Далее проверка обработчика NO DATA до
+диспетчера, затем ветви с доступными условиями и их показом;
+первый SDK вход ещё не замкнут, новых персонажей бот не создавал.
+[Индивидуальный запрос и передача результата](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

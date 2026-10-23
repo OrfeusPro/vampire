@@ -243,6 +243,15 @@ Public UA / en-US / PC GET дал NO DATA / terms[]. Offline plan и bounded sum
 готовы; четыре теста и шесть workflow checks прошли. Далее `144580990` и callback
 pointer `1445744c0` из готового `1445a0100`: individual terms без player ID.
 [BasicTerms ответ и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-BASIC-TERMS-RESPONSE.md).
+Индивидуальные условия без player ID используют termsUrl GET и termsType I;
+это отдельная ветвь от agreementUrl с player ID. Диспетчер и отложенный callback
+прошли 96 native-сценариев: исходные ошибка и состояние сохраняются. Публичный
+индивидуальный GET получил NO DATA с объектом terms вместо массива BasicTerms.
+Добавлен отдельный план GET без сетевого вызова; пять тестов условий и два
+теста передачи результата прошли. Далее проверка обработчика NO DATA до
+диспетчера, затем ветви с доступными условиями и их показом;
+первый SDK вход ещё не замкнут, новых персонажей бот не создавал.
+[Индивидуальный запрос и передача результата](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

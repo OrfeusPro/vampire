@@ -8374,6 +8374,101 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Полная передача raw UI state2 и error result к basic callback; individual terms без playerID и достоверное завершение перед SDK SignUp."
+    },
+    {
+      "addresses": [
+        "0x144561f60",
+        "0x14456b510",
+        "0x1445742c0",
+        "0x144580990",
+        "0x144586be0",
+        "0x1445a0100"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "19f0e56a253e5f3219a7fb4098ba3ea5475b9d9bb7b2184e1950ac200bda4222",
+          "id": "release-sdk-fetch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0\\manifest.json",
+          "sha256": "7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5d31887a62eda105d185a1b969f41abbacbbf690318c93496d740bf43a27d10f",
+          "id": "release-terms-continuation",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5\\manifest.json",
+          "sha256": "69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dcb400e135d05acb707165b5c797313e477549d40325b9d69f3548bd676599be",
+          "id": "release-sdk-terms",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d05bb331e7ce79d169146c72d8d2c33cc94e1c33434300ca15a8c3c3074cc1e7\\manifest.json",
+          "sha256": "d05bb331e7ce79d169146c72d8d2c33cc94e1c33434300ca15a8c3c3074cc1e7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "559c2bf20a771b1fa4506a05a6ba89e417556fabd1e3f0d0b278b34fa4217a0e",
+          "id": "release-terms-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2\\manifest.json",
+          "sha256": "326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Individual terms без player ID используют termsUrl GET /game/v2/{game}/terms/{name}, termsType I из vtable getter, имя terms_of_service_ko. Статический response -1 передаёт error/context -1 со state 2. Целые dispatcher и thunk прошли 96 native случаев: сохраняют исходные state/result pair, сбрасывают показ для 2/3, учитывают callback binding и storage. Один анонимный UA/en-US/PC GET вернул HTTP 200 / NO DATA с object terms, а не BasicTerms array. Добавлен отдельный offline GET plan, без SDK SignUp.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md",
+          "sha256": "92b7bcfa382e477f12af637aadda3d6960855ef7ccf57ab6d3cdb3b6f4ea9ece"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-006adfae88f9\\details.json",
+          "sha256": "8a17f0d348ee3ceb45424666e5f43611d6d0ffb5887fabdd07ad48f01a72897a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-18d567ce0cd6\\details.json",
+          "sha256": "9b91484b0423a1b99725da19226112bbd4e8987f1cc8c79a4645698fdec0c764"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-61bf93179385\\details.json",
+          "sha256": "21adce1460632974a791d1e957058596d17bcb6ec04e336e3488686be04bef4c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-870ba3c30a43\\details.json",
+          "sha256": "6b08dda0178d473c5daa6d4a3ef497340ad10eb91f66342967ecfeef7d4a95f0"
+        }
+      ],
+      "id": "84622a288569d28a0dbda6241a2f04401cc7105873f85b2313125820e78a6908",
+      "limits": [
+        "Allocation, scheduler ownership, callable getter и consumer — fixtures; логирование отключено.",
+        "HTTP parser, успешный content/UI path и игровой consumer не исполнялись в новом replay; queue destructor/reference cleanup и гонки не проверены.",
+        "Анонимный query имеет явные исследовательские страну/язык, не реальные native inputs аккаунта; NO DATA не доказывает согласие."
+      ],
+      "method": "bounded_native",
+      "next_check": "Исполнить 14456b510 no-data branch с явными HTTP/JSON fixtures; затем проверить 1445a5f70/14457a520 и фактическое продолжение первого SDK входа без повторной NID-регистрации.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Native no-data response до dispatcher и error layout/context; успешная ветвь content/UI и сохранение принятия перед первым SDK SignUp."
     }
   ],
   "schema": 1,
