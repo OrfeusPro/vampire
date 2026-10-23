@@ -19,6 +19,9 @@ from vampir_core.sdk_sign_in_http import SdkSignInHttpError
 from vampir_core.character_creation_candidate import carnage_creation_candidate
 from vampir_core.lobby_login_error import describe_lobby_login_error
 from vampir_core.world_move_start import SOURCE_SHA256
+from vampir_core.account_sdk_preparation import validate_sdk_preparation
+from vampir_core.sdk_first_login import FirstSdkLoginStopped
+from vampir_core.sdk_sign_in_response import SdkSignInData
 
 
 def load(name, path):
@@ -38,11 +41,14 @@ def run(args):
     email, password, settings = store.credential(args.account)
     if not settings.get('enabled', True):
         raise ValueError('This account is disabled')
-    if args.operation not in ('servers', 'characters', 'start', 'register', 'create'):
+    if args.operation not in ('servers', 'characters', 'start', 'register', 'create', 'prepare-sdk'):
         raise ValueError('Unknown account operation')
     if getattr(args, 'manual_sign_in', False) and args.operation == 'register':
         raise ValueError('Manual sign-in cannot start registration')
-    if settings['server_id'] is None and args.operation not in ('servers', 'register'):
+    if args.operation == 'prepare-sdk':
+        account = next(a for a in store.accounts() if a['id'] == args.account)
+        validate_sdk_preparation(account, country=args.terms_country, locale=args.terms_locale, mode=args.basic_terms_mode)
+    if settings['server_id'] is None and args.operation not in ('servers', 'register', 'prepare-sdk'):
         raise ValueError('Select a server first')
     if args.operation == 'create' and (settings.get('create_class') != 'Gunner'
             or settings.get('character_index') is not None or settings.get('character_key') is not None):
@@ -69,6 +75,18 @@ def run(args):
             if account['registration_status'] != 'sdk_created':
                 store.registration_status(args.account, 'nid_verified')
         emit('phase', stage=stage)
+    if args.operation == 'prepare-sdk':
+        tool = load('account_first_sdk', HERE / 'run-nid-sdk-sign-in.py')
+        signed_in = tool.run(email, password=password, timeout=300, first_sdk_login=True,
+            selected_profile='recovered-release', auth_flow='nid', terms_country=args.terms_country,
+            terms_locale=args.terms_locale, basic_filtered=args.basic_terms_mode == 'filtered-unique', _progress=progress)
+        password = None
+        if type(signed_in) is not SdkSignInData or not signed_in.player_id or not signed_in.access_token:
+            raise FirstSdkLoginStopped('sdk_sign_in_result_unknown')
+        signed_in = None
+        store.registration_status(args.account, 'sdk_created')
+        emit('result', status='stopped', message='Профиль SDK подтверждён. Теперь можно войти и прочитать персонажей. Игровое соединение не открывалось.')
+        return
     emit('phase', stage='configuration')
     cdn = load('account_cdn', HERE.parent / 'resource-tools/vampir/fetch-public-cdn-config.py')
     profile = cdn.profile('recovered-release')
@@ -234,6 +252,16 @@ def register_account(store, args, email, password):
 
 
 def failure(error):
+    if isinstance(error, FirstSdkLoginStopped):
+        message = {
+            'basic_terms_require_review': 'Получены основные условия: требуется просмотр и принятие.',
+            'individual_terms_require_review': 'Получены индивидуальные условия: требуется просмотр и принятие.',
+            'sdk_creation_result_unknown': 'Результат создания профиля SDK не подтверждён.',
+            'fetch_result_unknown': 'Результат проверки профиля SDK не распознан.',
+            'sdk_sign_in_result_unknown': 'Вход в профиль SDK не подтверждён.',
+            'sdk_sign_in_player_mismatch': 'SDK вернул разные идентификаторы профиля.',
+        }.get(error.kind, 'Подготовка профиля SDK остановлена.')
+        return dict(status='error', message=message + ' Автоматического повтора нет; игровое соединение не открывалось.')
     browser_status = getattr(error, 'browser_status', None)
     if browser_status in ('timeout', 'login_failed'):
         status, code = getattr(error, 'nid_http_status', None), getattr(error, 'nid_error_code', None)
@@ -284,7 +312,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--store', required=True, type=Path)
     parser.add_argument('--account', required=True)
-    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register', 'create'], required=True)
+    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register', 'create', 'prepare-sdk'], required=True)
+    parser.add_argument('--terms-country')
+    parser.add_argument('--terms-locale')
+    parser.add_argument('--basic-terms-mode', choices=['all', 'filtered-unique'])
     parser.add_argument('--accept-required-terms', action='store_true')
     parser.add_argument('--manual-mail-code', action='store_true')
     parser.add_argument('--manual-sign-in', action='store_true')

@@ -12,6 +12,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'vampir-shared'))
 from vampir_core.account_store import AccountStore
 from vampir_core.character_creation_plan import CLASS_CHOICES, random_nickname
+from vampir_core.account_sdk_preparation import validate_sdk_preparation
 
 
 class Jobs:
@@ -22,18 +23,23 @@ class Jobs:
         with self.lock:
             return {key: {k: v for k, v in job.items() if k != 'process'} for key, job in self.jobs.items()}
 
-    def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False, manual_sign_in=False):
-        if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start', 'create')):
+    def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False, manual_sign_in=False,
+              terms_country=None, terms_locale=None, basic_terms_mode=None):
+        if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start', 'create', 'prepare-sdk')):
             raise ValueError('Manual sign-in is only available for login operations')
         if type(manual_mail_code) is not bool or (manual_mail_code and operation != 'register'):
             raise ValueError('Invalid mail-code mode')
-        if operation not in ('servers', 'characters', 'start', 'register', 'create'):
+        if operation not in ('servers', 'characters', 'start', 'register', 'create', 'prepare-sdk'):
             raise ValueError('Unknown operation')
         account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
         if account is None:
             raise ValueError('Unknown account')
         if not account.get('enabled', True):
             raise ValueError('This account is disabled')
+        if operation == 'prepare-sdk':
+            validate_sdk_preparation(account, country=terms_country, locale=terms_locale, mode=basic_terms_mode)
+        elif any(value is not None for value in (terms_country, terms_locale, basic_terms_mode)):
+            raise ValueError('Terms query is only available for SDK preparation')
         if operation == 'create' and (account['create_class'] != 'Gunner' or account['server_id'] is None
                 or account['character_index'] is not None or account['character_key'] is not None):
             raise ValueError('Сначала сохраните сервер и класс Carnage без назначенного персонажа.')
@@ -53,6 +59,9 @@ class Jobs:
                 command.append('--manual-mail-code')
             if manual_sign_in:
                 command.append('--manual-sign-in')
+            if operation == 'prepare-sdk':
+                command.extend(['--terms-country', terms_country, '--terms-locale', terms_locale,
+                                '--basic-terms-mode', basic_terms_mode])
             process = subprocess.Popen(command,
                 stdin=subprocess.PIPE if manual_mail_code else subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                 creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
@@ -219,7 +228,9 @@ def server(store, *, port=17949):
                         jobs.stop(body['id'])
                     else:
                         jobs.start(body['id'], body['operation'], accept_required_terms=body.get('accept_required_terms', False),
-                            manual_mail_code=body.get('manual_mail_code', False), manual_sign_in=body.get('manual_sign_in', False))
+                            manual_mail_code=body.get('manual_mail_code', False), manual_sign_in=body.get('manual_sign_in', False),
+                            terms_country=body.get('terms_country'), terms_locale=body.get('terms_locale'),
+                            basic_terms_mode=body.get('basic_terms_mode'))
                     return self.response(200, dict(ok=True))
                 if self.path == '/api/registration-code':
                     jobs.submit_code(body['id'], body['code'])

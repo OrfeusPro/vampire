@@ -2846,6 +2846,63 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/vampir-shared/vampir_core/lobby_login_error.py"
       ]
+    },
+    {
+      "id": "release-console-sdk-preparation",
+      "questions": [
+        "launcher-auth-contract"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone"
+      ],
+      "test_pattern": "test_vampir_account_sdk_preparation.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-3380a52fff6d/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-8c0479e8b8bd/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-313ff5f10ab1/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-429315d23bfb/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_fetch.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_up_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_auth.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_sdk_credential.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
+        "phone-exit/bots/vampir-shared/vampir_core/device_registry.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_http.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_web_url.py",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_version.py",
+        "phone-exit/bots/vampir-headless/run-nid-sdk-sign-in.py",
+        "phone-exit/bots/test_vampir_nid_sdk_runner.py",
+        "phone-exit/bots/test_vampir_sdk_sign_in_http.py",
+        "phone-exit/bots/vampir_test_sources.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_first_login.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_terms.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_terms_http.py",
+        "phone-exit/bots/test_vampir_sdk_terms.py",
+        "phone-exit/bots/test_vampir_sdk_launcher_auth.py",
+        "phone-exit/bots/vampir-shared/vampir_core/account_sdk_preparation.py",
+        "phone-exit/bots/vampir-shared/vampir_core/account_store.py",
+        "phone-exit/bots/vampir-headless/account-manager.py",
+        "phone-exit/bots/vampir-headless/account-worker.py",
+        "phone-exit/bots/vampir-headless/console/index.html",
+        "phone-exit/bots/vampir-headless/console/console.js",
+        "phone-exit/bots/test_vampir_account_console.py"
+      ]
     }
   ]
 }

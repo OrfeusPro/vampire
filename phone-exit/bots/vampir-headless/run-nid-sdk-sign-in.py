@@ -128,6 +128,7 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
         _capture = browser.capture_nid_credential
     # Concurrent accounts must not share WebView cookies or browser-profile locks.
     account_directory = hashlib.sha256(email.strip().lower().encode('utf-8')).hexdigest()[:24]
+    if _progress: _progress('nid_browser')
     provider = _capture(url, expected_game_code=profile['game_code'], timeout=timeout,
                         data_directory=HERE / '.local/nid-accounts' / account_directory / ('socks-' + str(route.port) if route else 'direct'),
                         expected_email=email, sign_in_password=password, socks_port=socks_port)

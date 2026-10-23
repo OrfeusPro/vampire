@@ -9006,6 +9006,116 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Причина selected lobby IsInspect на Aria 1 и Prelude 2 при принятом SDK у основного и нового аккаунтов: серверное состояние либо общий контекст клиента. Нужен контроль штатного клиента в сопоставимое время. Первая игровая сессия nightraven и доступные условия/UI остаются открытыми."
+    },
+    {
+      "addresses": [
+        "0x144506cf0"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5ae48a670a8f27036ca252f1b6ff53630ddd5e649a6c37b20b42eea83eeb039c",
+          "id": "release-sdk-fetch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\081ef1c6b83a20449e8a9de1db47c883475e01563167648dba760b458d9b16cc\\manifest.json",
+          "sha256": "081ef1c6b83a20449e8a9de1db47c883475e01563167648dba760b458d9b16cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5d31887a62eda105d185a1b969f41abbacbbf690318c93496d740bf43a27d10f",
+          "id": "release-terms-continuation",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5\\manifest.json",
+          "sha256": "69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f94e16fe4da3b17c5ded12b7ea41f477d26354ecfa7edd0fd7bd4ef2c6ef028a",
+          "id": "release-sdk-terms",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0fe1d0c2fa05cf6d84184b0a65bb79b942ff39e84b0f5982f766669ea5000d60\\manifest.json",
+          "sha256": "0fe1d0c2fa05cf6d84184b0a65bb79b942ff39e84b0f5982f766669ea5000d60",
+          "state": "passed"
+        },
+        {
+          "cache_key": "559c2bf20a771b1fa4506a05a6ba89e417556fabd1e3f0d0b278b34fa4217a0e",
+          "id": "release-terms-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2\\manifest.json",
+          "sha256": "326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b4a4c3c29b20bb57c23280428eea4af9386fb23539f5460133b34b5f5a319ce3",
+          "id": "release-individual-terms-response",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e\\manifest.json",
+          "sha256": "ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1fa8e1cd6caec770441e4022c389929b29e9c15f65e7f3d6e7bf0ddfbec72f20",
+          "id": "release-sdk-first-login",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\205b6f9fd6c77eabd84075c5c9f8f6622281f7057cff9af406d925c94cd7a6a3\\manifest.json",
+          "sha256": "205b6f9fd6c77eabd84075c5c9f8f6622281f7057cff9af406d925c94cd7a6a3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "cd463243dad54e5aeb0cedbb7a3039be2188b0c58303d35e809076f639631127",
+          "id": "release-nid-http-hints",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e740be1b2de39fcddf28b7d860d16abf7d388cbd24bc6c8c058201039dda56f1\\manifest.json",
+          "sha256": "e740be1b2de39fcddf28b7d860d16abf7d388cbd24bc6c8c058201039dda56f1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6bc3b2bdc1e03e6924985994d1d3c5d19402943cc6e967b85d8b6e1054fea5ac",
+          "id": "release-lobby-errors",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\419cfec6eb81025091a3ce46c7f6d7b2a4d79681f12ac64a87184dba52276a67\\manifest.json",
+          "sha256": "419cfec6eb81025091a3ce46c7f6d7b2a4d79681f12ac64a87184dba52276a67",
+          "state": "passed"
+        },
+        {
+          "cache_key": "68af2b7e785bb1b3c9c788347a0c75c92d0f2815eedd06fd7d81787bb1af6462",
+          "id": "release-console-sdk-preparation",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8c12ee72b3eb9ff2592139c25c7e0d8a8b0d3937acde66a90cffaf00e439d87c\\manifest.json",
+          "sha256": "8c12ee72b3eb9ff2592139c25c7e0d8a8b0d3937acde66a90cffaf00e439d87c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Проверенный отдельный first-sdk-login подключён к панели через prepare-sdk с явными параметрами условий. Подтверждённый SDK-профиль и назначенный персонаж запрещают подготовку; обычный вход не меняет flow. Только валидный SignIn сохраняет sdk_created. Четыре новых и 41 регрессионный offline тест прошли; HTTP контроль подтвердил отказ без запуска worker.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-CONSOLE-FIRST-SDK-LOGIN.md",
+          "sha256": "aa15de4fd111f4fff004e9c47937074636a2b1f743109502fd4fd22c2e8ac8df"
+        }
+      ],
+      "id": "2da081ea4bbbdedb7b9c7b0523782c214f66ce62e88ee9eceb43f62039c9358a",
+      "limits": [
+        "Готовый экспорт текущего Auth SignUp использован повторно; нового native исполнения нет.",
+        "Fixtures не выполняют авторизацию, SDK SignUp или игровые действия. Визуальная проверка недоступна: Browser use выключен.",
+        "Живой вход новой кнопкой ещё не выполнен. Доступные условия останавливают операцию; интерфейс их принятия не реализован.",
+        "Установленный EXE изменился на d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960; результат относится только к прежнему явному SHA, guards не отключались."
+      ],
+      "method": "static",
+      "next_check": "Сверить новый установленный EXE и перенести затронутый auth-контракт перед новым живым входом. Сравнить штатную игру на Aria 1; SDK SignUp nightraven не повторять.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Живой первый SDK-вход через новую кнопку на другом новом аккаунте; текущая причина EU lobby IsInspect; обработка доступных условий."
     }
   ],
   "schema": 1,

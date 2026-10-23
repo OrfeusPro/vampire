@@ -270,6 +270,12 @@ launcher SDK и получил selected lobby 10036 до Game Login. Назна�
 без изменений. Это исключает отсутствие нового персонажа как единственное
 объяснение; серверную причину и общий контекст клиента ещё нужно разделить.
 [Сравнение двух EU-серверов](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-EU-LOBBY-CONTROL.md).
+Первый SDK-вход подключён к панели отдельной кнопкой с явными параметрами
+условий. Подтверждённый профиль повторно не подготавливается; обычный вход
+не переключается на регистрацию. Прошли 45 offline тестов и HTTP-контроль
+отказа для подтверждённого профиля без запуска worker. Живой вход через кнопку
+ещё не проверен.
+[Подготовка SDK из панели](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-CONSOLE-FIRST-SDK-LOGIN.md).
 [Первый SDK-вход: запуск и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-SDK-LOGIN.md).
 [Индивидуальный запрос и очередь](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
 [Обработчик ответа и игровой переход](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-RESPONSE.md).
@@ -717,3 +723,8 @@ settings+0x3f0. Setter с notify=0 проверен в 14 native случаях:
 [TASKS-HISTORY.md](TASKS-HISTORY.md) сохраняет прежние номера H/U и всю историю
 этапов. Формулировка «готово в указанном объёме» там означает bounded этап,
 а не завершённый продукт. История не является очередью на повторное выполнение.
+
+При завершении подключения подготовки SDK к панели установленный EXE изменился:
+SHA256 `d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960`.
+Проверки этого этапа относятся к прежнему SHA `98802d550890…`; совместимость
+новой сборки ещё не подтверждена. Перед следующим живым входом сверить обновление.
