@@ -1,4 +1,5 @@
 import importlib.util
+import copy
 from pathlib import Path
 import struct
 import tempfile
@@ -33,6 +34,22 @@ class CreationPresetTests(unittest.TestCase):
         self.assertEqual(female['unresolved'], ['DecalIndex', 'DecalColorIndex'])
         self.assertEqual(male['unresolved'], ['DecalIndex', 'EyeTexIndex'])
         self.assertIsNone(female['values']['DecalIndex'])
+        for package in packages[2:]:
+            self.assertEqual(package['native_template']['template_path'],
+                '/Script/NnFramework.Default__NnDataAssetForCustomizePreset')
+
+    def test_wrong_native_class_template_and_superclass_rejected(self):
+        package = self.report['packages'][2]
+        refs = package['references']; export = package['export']
+        for field, value, error in (('class_index', -2, 'native class'),
+                                    ('template_index', -1, 'CDO template'),
+                                    ('template_index', 1, 'CDO template'),
+                                    ('super_index', -1, 'superclass')):
+            changed = copy.deepcopy(refs)
+            changed['references'] = {str(k): v for k, v in changed['references'].items()}
+            changed['references'][str(export['index'])][field] = value
+            with self.subTest(field=field, value=value), self.assertRaisesRegex(ValueError, error):
+                self.tool.native_template(changed, export)
 
     def test_constructor_defaults_preserve_unresolved_integer_bytes(self):
         rows = self.report['constructor']['cases']

@@ -134,6 +134,14 @@ postconstruct сценариев без config / subobjects изменили т�
 при загрузке asset. Config helper не считать целиком служебным: его config-ветка
 может менять свойства, здесь покрыт ранний возврат при отсутствии class flag 0x4.
 [Native цепочка и fixtures](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-INITIALIZER.md).
+Completion wrapper и selector прошли 24 native сценария: 18 immediate / 6 deferred.
+При deferred объект сохраняется, native wrapper помечает копию initializer,
+полученную от queue fixture; последующее выполнение очереди не проверено.
+Оба текущих asset ссылаются на native CDO через template -2; class -1 и super 0
+теперь проверяются extractor. Подмены class / template / super отклоняются.
+Далее — перенос defaults и десериализация при загрузке именно этого asset;
+повторять проверенные constructors и механическое ветвление completion не нужно.
+[Сценарии, шаблон и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-COMPLETION.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

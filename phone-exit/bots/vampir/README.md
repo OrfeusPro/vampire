@@ -104,6 +104,12 @@ Initializer / context push и вся цепочка constructors пресета 
 без config / subobjects изменили только flags. Wrapper завершения и загрузка
 asset ещё не проверены; omitted int32 пока не подставляются автоматически.
 [Инициализация, virtual bindings и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-INITIALIZER.md).
+Wrapper завершения прошёл 24 native сценария: 18 немедленных и шесть отложенных.
+Проверены восстановление context и пометка копии initializer из queue fixture.
+Оба текущих asset указывают native CDO `Default__NnDataAssetForCustomizePreset`;
+extractor теперь проверяет class / template / super references и отклоняет подмены.
+Перенос defaults при загрузке asset ещё не исполнен, omitted int32 остаются unknown.
+[Завершение и привязка шаблона](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-COMPLETION.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

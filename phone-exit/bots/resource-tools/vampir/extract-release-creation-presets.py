@@ -137,6 +137,22 @@ def constructor_defaults():
         limits=['Base constructor/type lookup are fixtures; omitted integer defaults in the actual CDO remain unresolved.'])
 
 
+def native_template(references, export):
+    refs = {str(key): value for key, value in references['references'].items()}
+    row = refs.get(str(export['index']))
+    if not row or row['kind'] != 'export' or row['super_index'] != 0:
+        raise ValueError('Preset export has unsupported superclass')
+    cls = refs.get(str(row['class_index']), {})
+    template = refs.get(str(row['template_index']), {})
+    if cls.get('kind') != 'import' or cls.get('path') != '/Script/NnFramework.NnDataAssetForCustomizePreset':
+        raise ValueError('Preset native class binding differs')
+    if template.get('kind') != 'import' or template.get('path') != '/Script/NnFramework.Default__NnDataAssetForCustomizePreset':
+        raise ValueError('Preset native CDO template binding differs')
+    return dict(class_path=cls['path'], template_path=template['path'],
+        class_index=row['class_index'], template_index=row['template_index'],
+        export_table_bytes=row['table_bytes'])
+
+
 def extract(index_path, directory_path, root):
     helpers = load('preset_named_helpers', 'extract-release-appearance-resources.py')
     if helpers.digest(index_path) != index_path.parent.name: raise ValueError('Preset record index hash changed')
@@ -183,6 +199,7 @@ def extract(index_path, directory_path, root):
                 item['rows'] = table(body, parsed['names'], {str(k): v for k, v in refs['references'].items()}, structs[0]['index'])
             else:
                 if export['type'] != 'NnDataAssetForCustomizePreset': raise ValueError('Preset asset class differs')
+                item['native_template'] = native_template(refs, export)
                 item['decoded'] = asset(body)
             packages.append(item)
     read_targets(TABLES)

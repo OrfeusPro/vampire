@@ -6440,6 +6440,167 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Выбор immediate/deferred completion и перенос CDO defaults при загрузке preset asset; реальные widget limits/overrides; JSON, producer, handler и live creation."
+    },
+    {
+      "addresses": [
+        "0x141633290",
+        "0x141638a20",
+        "0x1417cbe90"
+      ],
+      "checks": [
+        {
+          "cache_key": "d5f90d9ce1210a1600791d6fed9229c7ee9863a45612aaaa69fccb1d223ae0d0",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326\\manifest.json",
+          "sha256": "7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326",
+          "state": "passed"
+        },
+        {
+          "cache_key": "99ec5cf6fc2412b2fd5690809ce7d186d4a97a2fb0e933938aa1d5f0c88b8030",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b\\manifest.json",
+          "sha256": "8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a51da97fefd155eb0d79da2f4986046c44bdb50c693758d65af97465cc8acfb",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b\\manifest.json",
+          "sha256": "3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b6ec3391a351662f8a4f5a15c68659c175787940cc7b946ec48de91af3ef33ed",
+          "id": "release-character-create-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b\\manifest.json",
+          "sha256": "b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "48ce8511dd27e774a282c8d32eb06abe039ba61358ce27daf2f73dd224bc528c",
+          "id": "release-create-class-lookup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5\\manifest.json",
+          "sha256": "89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "218eebc981b597c74e5cb2d34ebbcb6771e772280f94422ed33f84fb6bd4a8c7",
+          "id": "release-creation-class-data",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34\\manifest.json",
+          "sha256": "556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34",
+          "state": "passed"
+        },
+        {
+          "cache_key": "82cc1a0db07f945cdbd1b1d9cca63777062471ed11e56c2b4078679e8c410345",
+          "id": "release-character-create-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17\\manifest.json",
+          "sha256": "39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8e9ef3ecb9922ed9f229eca97589ef7c7d87da056e8c136ed4c604f0c6d74d91",
+          "id": "release-appearance-json-inputs",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd\\manifest.json",
+          "sha256": "51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a29a123b58040b53012ded3985b8d54304aac5981cfbb11951c082ab401aac77",
+          "id": "release-appearance-json-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d\\manifest.json",
+          "sha256": "c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d0041514046c6cc38f038ff9e40d769fb4cab7784a56c59713c42e59d0748e3a",
+          "id": "release-appearance-resources",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\aab2f8ae74ac7c0ab1003986abc94d5271d7fda428460956e9f91e33e3358f12\\manifest.json",
+          "sha256": "aab2f8ae74ac7c0ab1003986abc94d5271d7fda428460956e9f91e33e3358f12",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c8cdd4e4a399397d3b52d271c4cfdcf7c789bf6656c5d6c752ecb0ed86d6b323",
+          "id": "release-appearance-reset",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5833151550c262fbd322d58bbcde74cc56c21050a0217c4b749a7be4138641e4\\manifest.json",
+          "sha256": "5833151550c262fbd322d58bbcde74cc56c21050a0217c4b749a7be4138641e4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e843e2b56a2ad7942ba94a742a36d33f366e963b7a1d24bee6d53daa2bbf7951",
+          "id": "release-appearance-slider",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\112e8154b101752caf5ede9f3d1be90440a9b655127ed6b303252101dba90ee4\\manifest.json",
+          "sha256": "112e8154b101752caf5ede9f3d1be90440a9b655127ed6b303252101dba90ee4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4fc7e97afcb3dc34fff4eae3222c623561188429cb24b01c42406060cec4e2e3",
+          "id": "release-appearance-map",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1bec3ad665a5c235905579a601d66d73d02bd24bb7d53c0dbf9495b01a0b537b\\manifest.json",
+          "sha256": "1bec3ad665a5c235905579a601d66d73d02bd24bb7d53c0dbf9495b01a0b537b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "cc27b8a7ed467023e7fa87c93e9f49c53d6b1d2a440f0939fc70629944265d19",
+          "id": "release-creation-presets",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\781f424f0183f44c4a8d0a285f1ef0010787e41133328ee12b7d2f323bb6dac7\\manifest.json",
+          "sha256": "781f424f0183f44c4a8d0a285f1ef0010787e41133328ee12b7d2f323bb6dac7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3139be176696b025a23081fe9592cfe7af3474bb7cb939defc44815af9096096",
+          "id": "release-gender-paths",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f96c244d17ed2d220f5856bf226aae98008b401929d32d0f7ce6cc075ddcd5ed\\manifest.json",
+          "sha256": "f96c244d17ed2d220f5856bf226aae98008b401929d32d0f7ce6cc075ddcd5ed",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b526da87f212cd1aaa37798ffa1f9038b1807846847f364becb7f8415d324d94",
+          "id": "release-customize-scale",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\830f0ac1b92f6547e76b7f8526ebd8d421b79f0af9c79420a2d1c888eed11a3a\\manifest.json",
+          "sha256": "830f0ac1b92f6547e76b7f8526ebd8d421b79f0af9c79420a2d1c888eed11a3a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "45e95be6ddbe1397a082bc1b3b4090f25857370a6282036e4d719581e70f9561",
+          "id": "release-preset-default-copy",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\95bbc357c9d9f5bd8582b184350c7bf94ffc908935cebb039dae36958679e61d\\manifest.json",
+          "sha256": "95bbc357c9d9f5bd8582b184350c7bf94ffc908935cebb039dae36958679e61d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d3ea501728208a0bf73379c42626fb2b964c55959bd3f264e522fe8c4d226953",
+          "id": "release-preset-initializer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ffa24c77192b2b549c2b08c4b39703cf7a9398a26e1cf13964474cd51da6e5c7\\manifest.json",
+          "sha256": "ffa24c77192b2b549c2b08c4b39703cf7a9398a26e1cf13964474cd51da6e5c7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "936c242468cd8b5e32dfc1668cb4aa60ab59d58410c67b0c03e1f29c921bc9ce",
+          "id": "release-preset-completion",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ba16e5dc418bfae976fec16b5b9b524e96e5f40526d6b72c2f2e61920c1e2d2a\\manifest.json",
+          "sha256": "ba16e5dc418bfae976fec16b5b9b524e96e5f40526d6b72c2f2e61920c1e2d2a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый completion wrapper, selector и readiness query прошли 24 native сценария: 18 immediate исполняют postconstruct, 6 deferred сохраняют объект и native byte+13 помечает копию из queue fixture. Context восстановлен, internal bit31 снят. Текущие F/M assets явно ссылаются на native CDO Default__NnDataAssetForCustomizePreset; extractor проверяет class/template/super.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-PRESET-COMPLETION.md",
+          "sha256": "03697cd28da27204d9717fb213723e97d2bd6e8d7ba4af4a683c3bb0be896c83"
+        }
+      ],
+      "id": "6dcbd9eda6af1e2411436f41a80f879948f5e55cdf512a7916aea1dc95cc4bc5",
+      "limits": [
+        "Bool dependency, TLS/context, queue lookup/insertion, empty-container cleanup, bookkeeping, feature query и security check — fixtures. Class/parent metadata, no config и empty subobjects заданы явно.",
+        "Реализация очереди и последующее выполнение deferred initializer не покрыты; native wrapper только помечает возвращённую копию.",
+        "Template binding проверен по текущим экспортам/imports; полный загрузчик/default transfer/asset deserialization не исполнены, omitted int32 остаются unresolved.",
+        "Нет сети, авторизации, отправки создания или изменений runtime."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить default transfer и десериализацию именно native template NnDataAssetForCustomizePreset; не повторять native wrapper branching и constructors без новых входов.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Перенос native CDO defaults при загрузке preset asset и возможные поздние изменения; реальные widget limits, JSON output, whole producer, handler и live creation."
     }
   ],
   "schema": 1,
