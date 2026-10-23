@@ -157,6 +157,24 @@ def valid_install(index, audit, install):
         install, {Path(p).parent for p in expected if Path(p).suffix.lower() != '.exe'})
 
 
+def definition_status(index, args, run):
+    """Inspect current registry hashes only; never launch checks or analysis."""
+    saved = run.get('plan', {}).get('definition_sha256')
+    if not isinstance(saved, dict) or not saved:
+        return dict(current=None, changed=[], reason='Legacy journal has no definition hashes; resume to audit current definitions')
+    knowledge = getattr(args, 'knowledge', index.HERE / 'knowledge')
+    update = index.extension('research-update')
+    try:
+        paths = [knowledge / 'update-contracts.json', knowledge / 'research-checks.json',
+                 *update.target_plans(index, knowledge)]
+        current = {str(path): index.digest(path) for path in paths}
+    except (OSError, ValueError) as error:
+        return dict(current=False, changed=[], reason='Cannot inspect update definitions: ' + str(error))
+    changed = sorted(path for path in set(current) | set(saved) if current.get(path) != saved.get(path))
+    return dict(current=not changed, changed=changed,
+                reason='Resume required to apply changed definitions' if changed else None)
+
+
 def status(index, args):
     workflow = index.extension('research-workflow')
     run = read(index, workflow, args.run, args.root)
@@ -173,6 +191,7 @@ def status(index, args):
         queue=run.get('queue', []), capabilities=run.get('capabilities', {}),
         results_current=False if run['state'] in ('running','failed','interrupted') else None,
         installed_inputs_checked=False,
+        definitions=definition_status(index, args, run),
         metrics=run.get('metrics',{}),profile_activation=False, baseline_promoted=False)
 
 
@@ -277,7 +296,7 @@ def run_locked(index, args, database, *, audited=None):
             r['current'].get('sha256') != (r.get('baseline') or {}).get('sha256')]
         changes = [dict(archive=r['path'], paths=None) for r in changed]
         dirty = model.affected(contracts, exe_changed=not comparison['exe']['full_hash_equal'], changes=changes)
-        record['plan'] = dict(affected=dirty, contracts=contracts, tools=tools)
+        record['plan'] = dict(affected=dirty, contracts=contracts, tools=tools, definition_sha256=definitions)
         if getattr(args, 'plan_only', False) or getattr(args, 'audit_only', False):
             record['state'] = 'planned'; record['queue'] = []
             save(workflow, path, record)
