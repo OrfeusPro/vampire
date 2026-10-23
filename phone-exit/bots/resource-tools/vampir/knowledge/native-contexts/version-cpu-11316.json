@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "exports": {
+    "run-09b30ec921d8": "05567661bee229c7038ea1e621e08dd3a1c4c3d7685e9551554c222dab33c4da",
+    "run-3f96bbd3d272": "9db07fe46882c292a83dc7b8e3a2f4351f4952add1767a55dc4eb26fecbf3a61",
+    "run-222e27fb93bc": "42530f3b8c561ca7e295da4d7dcb673c21d17a196d2bf6d8644ef2492fd6cb4b"
+  },
+  "vendor": "0x14b0c7cb2",
+  "brand": "0x14b0c7cbf",
+  "space_slot": "0x14899c1f8",
+  "functions": {
+    "formatter": "0x14144d1a0",
+    "first": "0x1415c6e80",
+    "second": "0x1415c6e60",
+    "trim": "0x141439fc0",
+    "trim_end": "0x141439db0",
+    "trim_start": "0x14143a030"
+  },
+  "fixtures": {
+    "ascii": "0x141426950",
+    "wide": "0x141426b30",
+    "free": "0x141483080",
+    "move": "0x1487f5abf",
+    "shrink": "0x141437c30",
+    "format": "0x141433340",
+    "space": "0x28006000"
+  },
+  "call_sites": {
+    "0x14144d1b9": "0x1415c6e80",
+    "0x14144d1c5": "0x141439fc0",
+    "0x14144d1d3": "0x141483080",
+    "0x14144d1dc": "0x1415c6e60",
+    "0x14144d1e8": "0x141439fc0",
+    "0x14144d1f6": "0x141483080",
+    "0x14144d206": "0x141426b30",
+    "0x14144d213": "0x141439fc0",
+    "0x14144d221": "0x141483080",
+    "0x14144d231": "0x141426b30",
+    "0x14144d287": "0x141483080",
+    "0x14144d2b9": "0x14142e020",
+    "0x14144d2e1": "0x141435110",
+    "0x14144d31d": "0x141433340",
+    "0x14144d32b": "0x141483080",
+    "0x14144d369": "0x141433340",
+    "0x14144d396": "0x141433340",
+    "0x14144d3a4": "0x141483080",
+    "0x14144d3b2": "0x141483080",
+    "0x14144d3c0": "0x141483080",
+    "0x1415c6e90": "0x141426950",
+    "0x1415c6e70": "0x141426950",
+    "0x141439fd0": "0x141439db0",
+    "0x141439fd8": "0x14143a030",
+    "0x141439de8": "qword ptr [rip + 0x756240a]",
+    "0x141439e3d": "0x1487f5abf",
+    "0x141439e48": "0x141437c30",
+    "0x14143a066": "qword ptr [rip + 0x756218c]",
+    "0x14143a0a5": "0x1487f5abf",
+    "0x14143a0b0": "0x141437c30"
+  }
+}

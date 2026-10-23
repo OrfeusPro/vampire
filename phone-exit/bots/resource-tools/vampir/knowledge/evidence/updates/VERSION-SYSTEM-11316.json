@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "proofs": {
+    "windows": {
+      "report": "F:/PhoneExit Resources/Vampir/knowledge/native-version-windows-checks/564536d512768d0d7da62a847f0ceb4ea9ec0445cadd35af984111361ac5e46f/manifest.json",
+      "sha256": "564536d512768d0d7da62a847f0ceb4ea9ec0445cadd35af984111361ac5e46f",
+      "cases": 48
+    },
+    "cpu": {
+      "report": "F:/PhoneExit Resources/Vampir/knowledge/native-version-cpu-checks/eb974d47d733f87e5dd1fa1385a7e5473d00522bed18b1c3fd2d7e0ef3522e6e/manifest.json",
+      "sha256": "eb974d47d733f87e5dd1fa1385a7e5473d00522bed18b1c3fd2d7e0ef3522e6e",
+      "cases": 72
+    }
+  },
+  "network_used": false,
+  "host_identity_read": false,
+  "profile_activated": false
+}

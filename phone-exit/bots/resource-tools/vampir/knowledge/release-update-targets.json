@@ -1141,6 +1141,84 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-version-system-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-version-windows-context.py",
+        "verify-version-cpu-context.py"
+      ],
+      "rule": "От текущего Version prepare проверить Windows suffix / CPU formatter, getters и trim по call sites, globals, imports, literals и границам. TLS, WinAPI, CRT и synthetic CPU buffers остаются fixtures. Новый SHA требует отдельной сверки; runtime не продвигать.",
+      "automation": {
+        "discovery": "reviewed_constructor_wrapper_table_and_call_sites",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1415c9380",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x14144d1a0",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e80",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e60",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x141439fc0",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x141439db0",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x14143a030",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-windows-context.py",
+              "verify-version-cpu-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

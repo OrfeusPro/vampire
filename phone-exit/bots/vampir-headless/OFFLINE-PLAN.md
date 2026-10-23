@@ -10,7 +10,9 @@
   с явными fixtures, NM getter и его интеграция с synthetic cache.
 - Новый законченный этап: selector / context store / lookup — 116 native случаев,
   готовый экспорт использован повторно без Ghidra.
-- Далее: Windows / CPU helpers, реальные зависимости context, интеграция helpers
+- Windows helper прошёл 48 сценариев; CPU formatter / getters / trim — 72.
+  [Доказательства и границы fixtures](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md).
+- Далее: реальные зависимости context, интеграция Windows / CPU и других helpers
   в whole prepare, Login prepare и result readers. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.
 

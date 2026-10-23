@@ -187,7 +187,8 @@
         "native-archive-wire-context",
         "native-version-prepare-context",
         "native-version-nm-context",
-        "native-version-platform-context"
+        "native-version-platform-context",
+        "native-version-system-context"
       ],
       "recipes": [
         {
@@ -226,6 +227,34 @@
         {
           "key": "context-lookup",
           "method": "reviewed"
+        },
+        {
+          "key": "windows-suffix",
+          "method": "reviewed"
+        },
+        {
+          "key": "cpu-formatter",
+          "method": "reviewed"
+        },
+        {
+          "key": "cpu-first",
+          "method": "reviewed"
+        },
+        {
+          "key": "cpu-second",
+          "method": "reviewed"
+        },
+        {
+          "key": "cpu-trim",
+          "method": "reviewed"
+        },
+        {
+          "key": "cpu-trim-end",
+          "method": "reviewed"
+        },
+        {
+          "key": "cpu-trim-start",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -237,7 +266,14 @@
           "string-writer": "0x144aad310",
           "platform-selector": "0x1445ce2e0",
           "context-store": "0x1445c4b90",
-          "context-lookup": "0x1416dd660"
+          "context-lookup": "0x1416dd660",
+          "windows-suffix": "0x1415c9380",
+          "cpu-formatter": "0x14144d1a0",
+          "cpu-first": "0x1415c6e80",
+          "cpu-second": "0x1415c6e60",
+          "cpu-trim": "0x141439fc0",
+          "cpu-trim-end": "0x141439db0",
+          "cpu-trim-start": "0x14143a030"
         }
       },
       "resources": [
@@ -251,7 +287,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Selector/store/lookup целиком проверены с явными FName/type/value fixtures отдельно от whole Version prepare. Дальше Windows/CPU helpers, реальные зависимости context и Login prepare / result readers; профиль остаётся partial.",
+      "next_check": "Windows helper: 48 сценариев; CPU formatter/getters/trim: 72 с явными TLS/WinAPI/CRT/cache fixtures. Далее интеграция actual helpers в whole Version prepare, затем Login prepare/results. CPU initializer и реальные context/combiners ещё неизвестны; профиль остаётся partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -290,7 +326,8 @@
         "native-archive-wire-current",
         "native-version-prepare-current",
         "native-version-nm-current",
-        "native-version-platform-current"
+        "native-version-platform-current",
+        "native-version-system-current"
       ],
       "writer_check": {
         "object_size": 208,

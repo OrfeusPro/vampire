@@ -2070,6 +2070,77 @@
       "question": "release-version-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные platform/context callees, Windows/CPU helpers, Login prepare и result readers текущей сборки."
+    },
+    {
+      "addresses": [
+        "0x141439db0",
+        "0x141439fc0",
+        "0x14143a030",
+        "0x14144d1a0",
+        "0x1415c6e60",
+        "0x1415c6e80",
+        "0x1415c9380"
+      ],
+      "checks": [
+        {
+          "cache_key": "16eb79a5613b81a0b6d2f4bd95fa721914a9be54cd2aec44a78d2ecd75be5695",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e851929a28415a88a10213314ac68b87d6e37daea08de13a28a37909a7bed128\\manifest.json",
+          "sha256": "e851929a28415a88a10213314ac68b87d6e37daea08de13a28a37909a7bed128",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f35af36db3881f03304a3e3b061fa89df40839b881c1c6d8aca5e690314f4df4",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f4effc1591651a8a98e27196bd3a011398b82a2f6522894914a88d17969267c6\\manifest.json",
+          "sha256": "f4effc1591651a8a98e27196bd3a011398b82a2f6522894914a88d17969267c6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "efed211a6dfb11dd4d753d2afb7cee4fab1c598cb40fc819b53b92d08f2b683a",
+          "id": "native-version-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd\\manifest.json",
+          "sha256": "cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "406700ad9b37413d49897ad3c29604846c6e7f9f0c4ab3314e53a32b8ef0d89d",
+          "id": "native-version-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7021ae6dfe881f717afc926021b30777e53436cdf3e4e5819064db83ab2e6863\\manifest.json",
+          "sha256": "7021ae6dfe881f717afc926021b30777e53436cdf3e4e5819064db83ab2e6863",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Windows suffix исполнен целиком в 48 сценариях TLS/cache/acquire/API success/failure/projection. CPU formatter, getters и trim wrapper/start/end исполнены в 72 сценариях: initial ASCII cache, whitespace, empty ownership, NUL, delimiters, max brand, canaries/cleanup/ABI. Compiled third input Unknown выбирает two-part formatter; alternate third-input ветки не заявлены. Пять недостающих явных roots получены в двух последовательных exports с повторным использованием проекта.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-SYSTEM-11316.md",
+          "sha256": "78c7221a850ad93dbf6bda88a9312431d34ea7401a6cade5013e3a09deae2693"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\VERSION-SYSTEM-11316.json",
+          "sha256": "93be4e6856ae508a1d59a2df2f9e75be4112be8933208ed640b745bfc6c9429d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-windows-11316.json",
+          "sha256": "b2c17162916647f095d66dea0f3bff54ace0945db14e233695bdfff9166f5f3f"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-cpu-11316.json",
+          "sha256": "5696c3f5e6a8bbbe6cb54ace99a4a4707c64b6192f94b99c80c52ae5559b19ca"
+        }
+      ],
+      "id": "c51293734babd8fd5079cca83a6279d9ed1ce86adb069f7c5175abdd08bed036",
+      "limits": [
+        "Windows TLS/guard, WinAPI, memset/printf/cookie и FString constructors остаются fixtures. Cookie fixture сохраняет RAX.",
+        "CPU cache инициализирован синтетически: initializer/CPUID не исполнены. Constructors/allocation/free/memmove/shrink/printf и ASCII iswspace остаются fixtures.",
+        "Не доказаны Unicode/locale CRT, whole prepare integration, context/combiners, Login preparation/results, сеть или готовность runtime."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовые exports для интеграции Windows/CPU helpers в whole Version prepare с явными fixtures, затем переносить Login prepare/results. Runtime/baseline не менять.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Интеграция actual helpers в whole Version prepare, реальные context/combiners, CPU initialization, Login prepare/result readers."
     }
   ],
   "schema": 1,
