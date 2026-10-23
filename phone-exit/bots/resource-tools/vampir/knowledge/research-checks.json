@@ -1673,6 +1673,37 @@
         "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
       ]
+    },
+    {
+      "id": "release-appearance-resources",
+      "questions": [
+        "character-creation-entry"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone"
+      ],
+      "test_pattern": "test_vampir_appearance_resources.py",
+      "timeout_seconds": 120,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/extract-release-appearance-resources.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-ui.py",
+        "phone-exit/bots/resource-tools/vampir/decode-package-references.py",
+        "phone-exit/bots/resource-tools/vampir/decode-canvas-slots.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/rfnext/scan-pak.py"
+      ],
+      "artifact_dependencies": [
+        "release-snapshots/2b9ee9bbb180f064ae5f399cc41f063784f4f7b98dcc6b659d0707ed4d4cee08/manifest.json",
+        "release-snapshots/2b9ee9bbb180f064ae5f399cc41f063784f4f7b98dcc6b659d0707ed4d4cee08/record-indexes/f64ec55098c97fa6bfd0d620e4c397a13b26119c76dde35abb0d9f6cebd5a714/3a313dbd09096213bd92cd033a06337beb4ed38f5ca3f0ee936f7cba055c0adc/manifest.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-f5abfef626ea/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-378c1d7706a7/details.json"
+      ]
     }
   ]
 }
