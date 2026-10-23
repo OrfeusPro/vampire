@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Compiled tag 1.13.16 проверен через новый pointer и четыре native сценария:
+строка совпала с 1.13.14, адреса изменились. Полный Version / Login consumer
+ещё требует сверки; игровой runtime profile пока не переключён.
+[Источник, fixtures и следующая проверка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-COMPILED-TAG-11316.md).
+
 Update теперь вызывает явно отмеченные offline checks с кэшем зависимостей;
 ошибки и проверки без поддержки текущего SHA остаются в очереди. При сверке
 SDK пересоздан зависимый NID report и заново закреплён manifest профиля.

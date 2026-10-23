@@ -762,6 +762,40 @@
           }
         ]
       }
+    },
+    {
+      "id": "compiled-tag-current",
+      "baseline_functions": [],
+      "tools": [
+        "replay-compiled-tag-11316.py"
+      ],
+      "rule": "Review a current Version preparation candidate and its pointer load; do not require the old tag literal or transfer its value automatically. Verify caller and Login consumer separately.",
+      "automation": {
+        "discovery": "assisted_reviewed_code_prefix_and_unwind_root",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1467ce6a0",
+                "scope": "Tag assignment slice 0x1467ce8da..0x1467ce931 only; FString constructor/allocation/copy fixtures; full root role/callers/Login consumer not proven",
+                "required_checks": [
+                  "compiled-tag-native-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-compiled-tag-11316.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-COMPILED-TAG-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

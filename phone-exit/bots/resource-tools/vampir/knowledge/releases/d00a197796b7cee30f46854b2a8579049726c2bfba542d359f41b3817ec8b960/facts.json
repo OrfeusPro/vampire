@@ -1279,6 +1279,38 @@
       "question": "release-update-target-discovery",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Полное покрытие обновлений, текущий игровой profile / character selection / world completion, нагрузка и Android runtime."
+    },
+    {
+      "addresses": [
+        "0x1467ce6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "6bab681bbfa959dda4f68ac7891302ec5fd75372d75dbab561b492a6e8ff1ec0",
+          "id": "compiled-tag-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\abab65bbfadb64f51c885247fd482c68d3f77ad6a8b9efce9d1e4b7df1b84e76\\manifest.json",
+          "sha256": "abab65bbfadb64f51c885247fd482c68d3f77ad6a8b9efce9d1e4b7df1b84e76",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий tag assignment slice 0x1467ce8da..0x1467ce931 проверен на четырёх poison fills. Native MOV читает global 0x14b1b9e98 и literal 0x149960020; descriptor length/capacity 33 и 66 UTF-16 bytes совпали, canaries сохранены. Строка 32283C4C6485307BCF524765A84409C3 совпадает с прежней сборкой при новых адресах. Check подключён к on_update.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-COMPILED-TAG-11316.md",
+          "sha256": "8c40ae50798a0a174f241cca188457665806543f640c2e0cbb4522263284af94"
+        }
+      ],
+      "id": "5297b9630cfef2ffa65a5b1a4e4e663eadf6cf91f18c3cb5fd633a27c6a2af33",
+      "limits": [
+        "FString ASCII constructor, allocator и memcpy — явные bounded fixtures.",
+        "Исполнен только tag assignment slice; полный root, caller/vtable роль и Login consumer не проверены.",
+        "Сеть, реальные аккаунты, captures и game profile promotion отсутствуют."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сверить вызывающие ссылки и текущий Login consumer по явным source exports, затем подготовить профиль без обхода SHA guards.",
+      "question": "release-game-login-code-1",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Полный current Version preparation, caller/vtable роль, Login consumer и остальные поля game profile; живая совместимость."
     }
   ],
   "schema": 1,
