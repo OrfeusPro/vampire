@@ -157,6 +157,11 @@ HTTP 400 / 1203 до игрового соединения. Основной а�
 source-bound audit и три теста прошли без авторизации. Причина SDK 1203 остаётся
 открытой; следующий участок — фактический consumer ошибки, а не повтор регистрации.
 [Текущие адреса, проверки и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-LAUNCHER-CONTRACT.md).
+Далее найден прямой игровой caller SDK и его callback. Целый callback прошёл
+67 native сценариев; обычный отказ ведёт к сообщению, успех и специальные ошибки
+разделены. UI, журнал и manager actions остаются captures. Причина живого 1203
+не установлена; следующий вопрос — выбор режима до отправки первого входа.
+[Цепочка результата и границы исполнения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GAME-SIGN-IN-RESULT.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

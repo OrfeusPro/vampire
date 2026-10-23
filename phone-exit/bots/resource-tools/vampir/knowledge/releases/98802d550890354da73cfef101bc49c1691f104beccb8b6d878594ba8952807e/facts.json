@@ -7982,6 +7982,75 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Фактический consumer SDK error и отличие первого игрового входа нового аккаунта; причина 1203."
+    },
+    {
+      "addresses": [
+        "0x1444da480",
+        "0x1444e7630",
+        "0x144503c80",
+        "0x144503d00",
+        "0x145605100",
+        "0x1456151f0",
+        "0x14561b6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий прямой игровой caller 14561b6a0 передаёт callback leaf 145608220 -> 145605100 через wrapper и ChannelManager. Dispatcher 1444e7630 сохраняет исходный result, не выбирая SignUp. Целый игровой callback с тремя реальными getter leaves прошёл 67 native сценариев: owner gates, шаги 14/15, success, специальные 40040011/30050012 с context 429/502, обычный error text/message и balanced owner count. Статический 1456151f0 форматирует и журналирует результат. Причина живого SDK 1203 не установлена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-GAME-SIGN-IN-RESULT.md",
+          "sha256": "dabfe4edcf960b499c59a1012804b9facd69d0dde8dd76815c37933469db1801"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-e0b2e7fef500\\details.json",
+          "sha256": "2542f275a915286ae02709624bfacca4ca7034649104138c2e76abb790a5d794"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-480aabc11edb\\details.json",
+          "sha256": "6dcb121d9b4f3afcbe19aaed870bc7a59d463613c00ce73a6d35c543498d4e3e"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-bd88fe6b96de\\details.json",
+          "sha256": "fdfccac0bee932c873ddf224a86b975e3fea3f2b20ef3a2b33be8e5ab4b35c73"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-122867bb3bc4\\details.json",
+          "sha256": "7640a2cd9a17d7ff0d76f1a28b735deab08483d24036400ad12adebd2732e159"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-6092fea5749a\\details.json",
+          "sha256": "96ca33af8b1026fe13594afacc28c960ee358c002038cc7a406792a2bfd38fa3"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-1d064761d70c\\details.json",
+          "sha256": "c439dba14da9fb7294249dbf53ced371c1307d3b35c55dd0556c4c9bfa10fec3"
+        }
+      ],
+      "id": "28f6df2f904ef4aa9525b4222f2dd085a765ffaf918f78587f4c7a98645aaba4",
+      "limits": [
+        "Native исполняется только целый 145605100 и три getter leaves. Logger, error text, FString, UI и manager/child actions — captures; внешний startup/caller/dispatcher lifecycle не исполняется.",
+        "Raw result fields синтетические; field_28=1203 не является восстановленным живым SDK error. Нет HTTP, авторизации, регистрации SDK или создания персонажа.",
+        "Статическая цепочка caller/descriptor не доказывает фактический путь реального аккаунта. Косвенные действия за capture границами не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подготовить текущие caller roots 145603ab0 и 145605440, подтверждённые E8 в 14561b6a0; проследить выбор operation/channel/step, не повторять scheduler и прежние HTTP входы.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Как выбираются первоначальные channel и шаг для нового аккаунта перед игровым SignIn; серверная причина SDK 1203."
     }
   ],
   "schema": 1,

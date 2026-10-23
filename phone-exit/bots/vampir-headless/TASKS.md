@@ -211,6 +211,13 @@ SHA и инструкции; три теста прошли без входа. �
 причина 1203 неизвестна. Далее `1444e7630` и фактический consumer SDK error;
 семь готовых экспортов использовать повторно. Не запускать массовые входы.
 [Контракт текущей сборки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-LAUNCHER-CONTRACT.md).
+Следом найдены текущие dispatcher `1444e7630`, игровой caller `14561b6a0`
+и callback `145605100`. Целый callback и три getter leaves прошли 67 сценариев;
+logging/UI/manager actions — captures. Причина SDK 1203 не декодирована,
+synthetic raw fields не считать живым ответом. Далее caller roots `145603ab0`
+и `145605440`: выбрать реальную operation/channel/step до первого входа.
+Два теста и workflow checks прошли; авторизация не запускалась.
+[Результат SDK → игровой callback](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GAME-SIGN-IN-RESULT.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
