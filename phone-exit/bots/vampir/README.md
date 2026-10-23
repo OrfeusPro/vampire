@@ -52,6 +52,10 @@ storage. Затем singleton связан с ClassInfo / Type loader и Gunner 
 Reader ответа создания ID 104 проверен на 16 телах и 729 коротких префиксах.
 Переносимый decoder возвращает code и запись, но не сохраняет ник автоматически.
 [Ответ создания и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-READER.md).
+Целый helper внешности проверен в 12 сценариях до границы JSON serializer:
+обход занятых настроек и обязательный VoiceType. Начальный VoiceType равен 0;
+реальные ключи внешности и JSON engine output ещё не подтверждены.
+[Входы генератора внешности](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-JSON-INPUTS.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

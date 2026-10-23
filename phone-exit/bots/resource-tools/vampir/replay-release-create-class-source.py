@@ -69,6 +69,8 @@ def run():
         if int.from_bytes(uc.mem_read(owner, 8), 'little') != table:
             raise ValueError('Creation owner constructor vptr changed')
         actual_appearance = uc.mem_read(owner + 0x30, 1)[0]
+        if uc.mem_read(owner + 0x28, 1)[0] != 0:
+            raise ValueError('Creation owner initial voice differs')
         # Constructor does not initialize +30 if UI/type is unavailable.
         if actual_appearance != (raw_appearance if valid else 0xa5):
             raise ValueError('Creation owner initial appearance source differs')

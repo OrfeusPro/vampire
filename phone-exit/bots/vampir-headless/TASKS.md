@@ -68,6 +68,11 @@ Constructor / reader ID 104 прошли 16 тел и 729 усечений; вс
 совпали с переносимым decoder. Handler и коды отказа остаются отдельно;
 параметры внешности / JSON и реальное создание пока не подключены.
 [Чтение результата создания](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-READER.md).
+Внешний appearance helper прошёл 12 native сценариев до captures JSON:
+занятые строки, float / режим и обязательный VoiceType. Constructor подтверждает
+начальный VoiceType 0. Далее — реальный источник параметров, конвертация ключей,
+JSON engine output, whole producer и handler ID 104.
+[Внешность и границы JSON](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-JSON-INPUTS.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
