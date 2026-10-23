@@ -39,6 +39,10 @@ GMC2 URL slice с настоящими getters / initializers / append прош�
 GMC2 headers slice прошёл 73 native случая с synthetic HTTP captures.
 Platform и полный SDK profile ещё требуют проверки.
 [Поля headers, gates и fixtures](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-HEADERS-NATIVE-11316.md).
+Текущий PC initializer / getter прошёл 12 native случаев. Исправлен export
+switch: case blocks входят в проверяемые инструкции, прежний неполный материал
+сохранён. Полный SDK profile пока не собран.
+[Платформа и контроль полноты](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-PLATFORM-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

@@ -3,7 +3,9 @@
 import ghidra.app.script.GhidraScript;
 import ghidra.app.decompiler.*;
 import ghidra.app.cmd.function.CreateFunctionCmd;
+import ghidra.app.cmd.disassemble.DisassembleCommand;
 import ghidra.program.model.address.Address;
+import ghidra.program.model.address.AddressSet;
 import ghidra.program.model.listing.*;
 import com.google.gson.*;
 import java.nio.charset.StandardCharsets;
@@ -97,12 +99,57 @@ public class InspectVampirSdkProfile extends GhidraScript {
         for (Function owner : owners.values()) {
             println("Inspecting SDK literal owner " + owner.getEntryPoint());
             JsonObject row = new JsonObject(); row.addProperty("address", "0x" + owner.getEntryPoint());
-            row.addProperty("body_bytes", owner.getBody().getNumAddresses());
             // The result-code mapper reached from a selected popup is about 42 KiB.
             // Keep a finite budget for these explicitly referenced functions.
             if (owner.getBody().getNumAddresses() > (args.length >= 4 ? 65536 : 20000)) {
                 row.addProperty("skipped", "body_budget"); functions.add(row); continue;
             }
+            DecompInterface decompiler = new DecompInterface();
+            try {
+                decompiler.toggleCCode(true); decompiler.toggleSyntaxTree(true);
+                if (!decompiler.openProgram(currentProgram)) throw new IllegalStateException(decompiler.getLastMessage());
+                var result = decompiler.decompileFunction(owner, 30, monitor);
+                row.addProperty("decompilation_completed", result.decompileCompleted());
+                row.addProperty("message", result.getErrorMessage());
+                if (result.decompileCompleted() && result.getDecompiledFunction() != null) {
+                    String filename = "SdkLiteralOwner-" + owner.getEntryPoint() + ".c";
+                    Files.writeString(out.resolve(filename), result.getDecompiledFunction().getC());
+                    row.addProperty("pseudocode_file", filename);
+                }
+                if (source.has("requested_unwind_ranges") && result.getHighFunction() != null) {
+                    AddressSet permitted = new AddressSet();
+                    String key = "0x" + owner.getEntryPoint();
+                    for (JsonElement item : source.getAsJsonObject("requested_unwind_ranges").getAsJsonArray(key)) {
+                        JsonObject range = item.getAsJsonObject();
+                        Address begin = currentProgram.getAddressFactory().getAddress(range.get("begin").getAsString());
+                        Address end = currentProgram.getAddressFactory().getAddress(range.get("end").getAsString()).subtract(1);
+                        permitted.add(begin, end);
+                    }
+                    if (permitted.getNumAddresses() > 65536) throw new IllegalStateException("Requested block range budget");
+                    var blocks = result.getHighFunction().getBasicBlocks();
+                    if (blocks.isEmpty() || blocks.size() > 512) throw new IllegalStateException("Requested block count budget");
+                    AddressSet body = new AddressSet(owner.getBody()).intersect(permitted);
+                    JsonArray starts = new JsonArray();
+                    for (var block : blocks) {
+                        Address begin = block.getStart(), end = block.getStop();
+                        if (!permitted.contains(begin, end)) throw new IllegalStateException("Decompiler block outside requested unwind ranges");
+                        DisassembleCommand command = new DisassembleCommand(begin, permitted, true);
+                        command.enableCodeAnalysis(false);
+                        command.applyTo(currentProgram, monitor);
+                        var last = currentProgram.getListing().getInstructionAt(end);
+                        if (last == null || !permitted.contains(begin, last.getMaxAddress()))
+                            throw new IllegalStateException("Decompiler block is not fully disassembled");
+                        body.add(begin, last.getMaxAddress());
+                        starts.add("0x" + begin);
+                    }
+                    owner.setBody(body);
+                    row.add("decompiler_block_starts", starts);
+                    row.addProperty("block_coverage_complete", true);
+                } else if (source.has("requested_unwind_ranges")) {
+                    row.addProperty("block_coverage_complete", false);
+                }
+            } finally { decompiler.dispose(); }
+            row.addProperty("body_bytes", owner.getBody().getNumAddresses());
             JsonArray instructions = new JsonArray();
             var iterator = currentProgram.getListing().getInstructions(owner.getBody(), true);
             while (iterator.hasNext()) {
@@ -115,19 +162,6 @@ public class InspectVampirSdkProfile extends GhidraScript {
                 instruction.add("references", refs); instructions.add(instruction);
             }
             row.add("instructions", instructions);
-            DecompInterface decompiler = new DecompInterface();
-            try {
-                decompiler.toggleCCode(true); decompiler.toggleSyntaxTree(false);
-                if (!decompiler.openProgram(currentProgram)) throw new IllegalStateException(decompiler.getLastMessage());
-                var result = decompiler.decompileFunction(owner, 30, monitor);
-                row.addProperty("decompilation_completed", result.decompileCompleted());
-                row.addProperty("message", result.getErrorMessage());
-                if (result.decompileCompleted() && result.getDecompiledFunction() != null) {
-                    String filename = "SdkLiteralOwner-" + owner.getEntryPoint() + ".c";
-                    Files.writeString(out.resolve(filename), result.getDecompiledFunction().getC());
-                    row.addProperty("pseudocode_file", filename);
-                }
-            } finally { decompiler.dispose(); }
             functions.add(row);
         }
         JsonObject report = new JsonObject();

@@ -475,6 +475,53 @@
           }
         ]
       }
+    },
+    {
+      "id": "sdk-platform-current",
+      "baseline_functions": [
+        "0x1411b5d00",
+        "0x144533280"
+      ],
+      "tools": [
+        "replay-sdk-platform-11316.py"
+      ],
+      "rule": "Exact PC string has multiple uses; review initializer destination and source-checked MOV consumer. Switch requires exported decompiler case blocks.",
+      "automation": {
+        "discovery": "assisted_literal_initializer_global_mov",
+        "validation": "automatic_for_registered_source",
+        "reuse": "Identical source SHA and dependency hashes only",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1411b5c10",
+                "scope": "whole PC initializer with storage/exit fixtures",
+                "required_checks": [
+                  "sdk-platform-native-11316",
+                  "release-requested-function-export"
+                ]
+              },
+              {
+                "address": "0x144532410",
+                "scope": "switch getter platform bytes3/2/255; other labels/caller not covered",
+                "required_checks": [
+                  "sdk-platform-native-11316",
+                  "release-requested-function-export"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-sdk-platform-11316.py"
+            ],
+            "evidence": [
+              "evidence/auth/HEADLESS-SDK-PLATFORM-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

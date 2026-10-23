@@ -451,6 +451,46 @@
       "question": "gmc2-request-layout",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Platform initializer/getter, полный runtime profile и совместимость живого входа."
+    },
+    {
+      "addresses": [
+        "0x1411b5c10",
+        "0x144532410"
+      ],
+      "checks": [
+        {
+          "cache_key": "153b5cca047e074342332dda1d4b61886c16fb51c3464cf942fc90214b879ca3",
+          "id": "release-requested-function-export",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dcd96db5cf081af33b83fbc3223dafcdc7d5ed7c1b65187a168499c1bf76d490\\manifest.json",
+          "sha256": "dcd96db5cf081af33b83fbc3223dafcdc7d5ed7c1b65187a168499c1bf76d490",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e0a4f3a2e5f0a51f568b29a23e4451c5ef2f62fa25287c5804841d82bafb1167",
+          "id": "sdk-platform-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6094d94c1a39b2fe3d9a5fd0c5c2b5ac10c77c5d72ae33799238df961b190486\\manifest.json",
+          "sha256": "6094d94c1a39b2fe3d9a5fd0c5c2b5ac10c77c5d72ae33799238df961b190486",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current PC initializer и switch getter исполнены в 12 native случаях: platform byte 3 возвращает PC, 2/255 пусто на четырёх poison fills, return/counts/termination/canaries проверены. Ранний switch export содержал 21 инструкцию; сохранён как incomplete. Исправленный bounded exporter получил 75 инструкций и 11 blocks. Collector требует block coverage, importer не принимает missing blocks за ready. Java compilation и offline проверки прошли.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-PLATFORM-11316.md",
+          "sha256": "3c5e9ab94648408117cea79b325499c7ececdfea37690fa0adcdb9476410c768"
+        }
+      ],
+      "id": "e55ca29f406f0e638206f49150eee05a28295f35339a781784260a157e794c8c",
+      "limits": [
+        "Сохранённый EXE, source-bound exports и synthetic memory; без сети/процесса игры/auth.",
+        "FString storage/allocation, memcpy и exit registration — fixtures.",
+        "Проверены только platform bytes 3/2/255; другие labels, caller binding и console/TLS overrides не покрыты."
+      ],
+      "method": "bounded_native",
+      "next_check": "Собрать новый профиль из актуальных native reports и отдельно проверить NID caller inputs перед живым входом.",
+      "question": "sdk-platform-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "NID caller inputs новой сборки и полный SDK runtime profile; совместимость живого входа."
     }
   ],
   "schema": 1,

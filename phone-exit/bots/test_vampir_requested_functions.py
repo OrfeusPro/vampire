@@ -37,9 +37,13 @@ class RequestedFunctionTests(unittest.TestCase):
         self.assertEqual(command[-1],self.at)
         self.assertNotIn('-analysisTimeoutPerFile',command)
         output=Path(command[command.index('-postScript')+3])
+        context=json.loads(Path(command[command.index('-postScript')+2]).read_text('utf-8'))
+        self.assertEqual(context['requested_unwind_ranges'][self.at],
+                         [dict(begin='0x140001000',end='0x140001010')])
         (Path(command[1])/'RequestedRelease.gpr').touch()
         (output/'details.json').write_text(json.dumps(dict(new_source_sha256=self.request['source_sha256'],
-            functions=[dict(address=self.at,body_bytes=7,instructions=[dict(bytes='488d05f90f0000')])])),encoding='utf-8')
+            functions=[dict(address=self.at,body_bytes=7,block_coverage_complete=True,
+                            instructions=[dict(address=self.at,bytes='488d05f90f0000')])])),encoding='utf-8')
         stdout.write('Save succeeded for processed file: fixture\n' if '-process' in command else 'Save succeeded for: fixture\n')
         return SimpleNamespace(returncode=0)
 
@@ -86,6 +90,19 @@ class RequestedFunctionTests(unittest.TestCase):
             return result
         with patch.object(self.tool.subprocess,'run',side_effect=partial):
             with self.assertRaisesRegex(ValueError,'coverage is incomplete'):
+                self.tool.collect(self.index.api(),self.args,self.request,[self.at])
+        self.assertFalse(list((self.root/'ghidra/request-exports').glob('*/*/provenance.json')))
+
+    def test_missing_block_coverage_is_not_sealed_as_complete_export(self):
+        def partial(command, **kwargs):
+            result=self.fake_jvm(command, **kwargs)
+            output=Path(command[command.index('-postScript')+3])/'details.json'
+            data=json.loads(output.read_text('utf-8'))
+            data['functions'][0].pop('block_coverage_complete')
+            output.write_text(json.dumps(data),'utf-8')
+            return result
+        with patch.object(self.tool.subprocess,'run',side_effect=partial):
+            with self.assertRaisesRegex(ValueError,'block coverage is incomplete'):
                 self.tool.collect(self.index.api(),self.args,self.request,[self.at])
         self.assertFalse(list((self.root/'ghidra/request-exports').glob('*/*/provenance.json')))
 

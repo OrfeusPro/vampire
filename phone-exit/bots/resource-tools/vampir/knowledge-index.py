@@ -205,6 +205,16 @@ def import_report(db, sources, report):
         pseudo_text = pseudo.read_text('utf-8-sig') if pseudo else ''
         instructions = row.get('instructions', [])
         message = row.get('message', '')
+        starts = set(row.get('decompiler_block_starts', []))
+        covered = {ins['address'] for ins in instructions}
+        if row.get('block_coverage_complete') is False or not starts <= covered:
+            completed = False
+            message += ' Decompiler basic blocks missing from instruction export.'
+        if ('switch' in pseudo_text and not starts and any(
+                re.fullmatch(r'JMP\s+[A-Z][A-Z0-9]*', ins.get('text', '')) and not ins.get('references')
+                for ins in instructions)):
+            completed = False
+            message += ' Switch has unresolved indirect dispatch and no block coverage evidence; inspect case blocks.'
         if 'body_bytes' in row and sum(len(bytes.fromhex(ins['bytes'])) for ins in instructions) > row['body_bytes']:
             completed = False
             message += ' Instruction coverage exceeds declared function body; export incomplete.'

@@ -90,6 +90,32 @@ class KnowledgeIndexTests(unittest.TestCase):
                 with self.assertRaises(ValueError): self.tool.select_release(db, '0'*64)
             finally: db.close()
 
+    def test_uncovered_switch_or_missing_block_cannot_replace_complete_variant(self):
+        for kind in ('switch_dispatch','missing_block'):
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as folder:
+                root=Path(folder);sha,code=self.source(root,1)
+                self.export(root,'complete',sha,code)
+                report=self.export(root,'partial',sha,code)
+                data=json.loads(report.read_text('utf-8'))
+                row=data['functions'][0]
+                if kind=='switch_dispatch':
+                    (report.parent/'fixture.c').write_text('void f(){switch(x){case 3: break;}}','utf-8')
+                    row['instructions'][0]['text']='JMP RDX'
+                else:
+                    row['block_coverage_complete']=True
+                    row['decompiler_block_starts']=['0x140001080']
+                report.write_text(json.dumps(data),'utf-8')
+                receipt=report.parent/'provenance.json'
+                receipt.write_text(json.dumps(dict(files={p.name:self.tool.digest(p) for p in
+                    (report,report.parent/'fixture.c')})),'utf-8')
+                output=root/'knowledge/search.sqlite3'
+                self.tool.build(root,output)
+                db=self.tool.open_index(output)
+                try:
+                    rows=self.tool.query(db,'function','140001000',sha,20)
+                    self.assertEqual([r['completed'] for r in rows],[1,0])
+                finally:db.close()
+
     def test_bad_receipt_or_forged_instructions_cannot_replace_working_index(self):
         for failure in ('output_hash', 'instruction_bytes', 'receipt_path'):
             with self.subTest(failure=failure), tempfile.TemporaryDirectory() as folder:

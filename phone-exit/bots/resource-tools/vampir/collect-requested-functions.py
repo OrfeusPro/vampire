@@ -30,11 +30,17 @@ def collect(index, args, request, addresses):
         raise ValueError('Only explicit request addresses may be exported')
     native = index.extension('build-native-entry-code')
     image = native.Image(source.read_bytes())
+    function_ranges = {}
     for address in addresses:
         at = int(address, 16)
         fragment = image.containing(at)
         if fragment is None or image.pe.base + image.roots[fragment][0] != at:
             raise ValueError('Requested address is not an unwind root')
+        ranges = [row for row, root in image.roots.items() if root == image.roots[fragment]]
+        if len(ranges) > 32 or sum(end-begin for begin,end,_ in ranges) > 65536:
+            raise ValueError('Requested unwind range budget exceeded')
+        function_ranges[address] = [dict(begin=hex(image.pe.base+begin),end=hex(image.pe.base+end))
+                                    for begin,end,_ in ranges]
     lock_path = index.HERE / 'ghidra-tools.lock.json'
     lock = index.read_json(lock_path)
     tools = args.root / 'tools/ghidra'
@@ -58,7 +64,7 @@ def collect(index, args, request, addresses):
     out = args.root / 'ghidra/request-exports' / sha / ('run-' + uuid.uuid4().hex[:12])
     out.mkdir(parents=True)
     context, references = out / 'source.json', out / 'references.json'
-    context.write_bytes(workflow.canonical(dict(new_source_sha256=sha)))
+    context.write_bytes(workflow.canonical(dict(new_source_sha256=sha, requested_unwind_ranges=function_ranges)))
     references.write_bytes(workflow.canonical(dict(source_sha256=sha,
         references=[dict(function=at, reason='Explicit request/unwind root; no role assigned') for at in addresses])))
     command = command_for(launcher=tools / lock['ghidra']['directory'] / 'support/analyzeHeadless.bat',
@@ -89,6 +95,8 @@ def collect(index, args, request, addresses):
         size = sum(len(bytes.fromhex(row['bytes'])) for row in function.get('instructions', []))
         if not size or size > function.get('body_bytes', 0):
             raise ValueError('Requested export body/instruction coverage is incomplete')
+        if function.get('block_coverage_complete') is not True:
+            raise ValueError('Requested export decompiler block coverage is incomplete')
     saved = re.search(r'Save succeeded for(?: processed file)?:', (out / 'headless.log').read_text('utf-8'))
     if not project_file.is_file() or not saved:
         raise ValueError('Requested Ghidra project save not confirmed')
