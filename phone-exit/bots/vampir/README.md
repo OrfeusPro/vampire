@@ -152,6 +152,11 @@ HTTP 400 / 1203 до игрового соединения. Основной а�
 Найдена и исправлена передача creation_factory через вложенные wrapper-функции;
 два новых теста прошли. Причина различий SDK / лобби остаётся неизвестной.
 [Живые этапы и исправление](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-LIVE-PREFLIGHT.md).
+Текущий launcher-контракт теперь сверён отдельно от прежнего EXE: два запроса,
+три ключа и два обработчика ответа. Формат совпадает с разделением в runtime;
+source-bound audit и три теста прошли без авторизации. Причина SDK 1203 остаётся
+открытой; следующий участок — фактический consumer ошибки, а не повтор регистрации.
+[Текущие адреса, проверки и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-LAUNCHER-CONTRACT.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

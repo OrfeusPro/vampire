@@ -205,6 +205,12 @@ sign-in вернул HTTP 400 / 1203 до game TCP. Bot-test контроль п
 Далее проверить account-specific auth различия по существующим источникам,
 без массовых повторов и SignUp fallback; создание остаётся непроверенным live.
 [Наблюдения и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-LIVE-PREFLIGHT.md).
+На текущем SHA статически сверены launcher/token `1444ef840`, launcher/sign-in
+`144504980`, три initializers и ответы `1444cd020` / `1444d45a0`. Аудит проверяет
+SHA и инструкции; три теста прошли без входа. Прямого SignUp в этих handler нет,
+причина 1203 неизвестна. Далее `1444e7630` и фактический consumer SDK error;
+семь готовых экспортов использовать повторно. Не запускать массовые входы.
+[Контракт текущей сборки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-LAUNCHER-CONTRACT.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

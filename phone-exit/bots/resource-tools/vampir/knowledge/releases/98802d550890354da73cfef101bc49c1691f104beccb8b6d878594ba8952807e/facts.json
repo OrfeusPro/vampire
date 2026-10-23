@@ -7932,6 +7932,56 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Причина account-specific SDK1203 и текущего отказа selected lobby; live Create и подтверждённый ID104 остаются непроверенными."
+    },
+    {
+      "addresses": [
+        "0x1411b0260",
+        "0x1411b04d0",
+        "0x1411b0590",
+        "0x1444cd020",
+        "0x1444d45a0",
+        "0x1444ef840",
+        "0x144504980"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем SHA статически сверены два launcher-запроса, три ключа и два callback root. Тела по-прежнему разделяют четыре поля устройства, credential с gameCode/buildCode для token и отдельный launcherToken header для sign-in. Ответ token строковый, ответ sign-in объектный; ненулевой errorCode передаётся в error result и dispatcher 1444e7630. Прямого вызова SignUp в двух обработчиках нет; причина SDK 1203 не установлена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-LAUNCHER-CONTRACT.md",
+          "sha256": "47168715798a92eb1da76b057720fee448ca2caab6c1683c444cf41d00c7ce39"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-4f6c93310580\\details.json",
+          "sha256": "e184e1cb16b2f4e85dabe9bafec8099744bb82335dbb5955ca8ec044bef20a9a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-82294ab74cc0\\details.json",
+          "sha256": "9c65601c33add974231d636a77bf0ce314cbf7a92f8030ee477c00338f435df8"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-5f5b69ab5cf7\\details.json",
+          "sha256": "8526f7380efb1838a063c0d6b5ec80c01e5df1b5f46def43104b6017f1ef3bf3"
+        }
+      ],
+      "id": "358238a238bc5002d1cd83fbee4f919659810d14897519d6d5a46144aa911ef4",
+      "limits": [
+        "Семь полных экспортов сверены по SHA и инструкциям; это не native replay и не доказательство серверного принятия.",
+        "HTTP, JSON helpers, settings, dispatcher и фактический consumer не исполнены. Отсутствие прямой ссылки SignUp не исключает косвенную или последующую ветвь.",
+        "Локальное read-only сравнение установило одинаковые launcher/EU/ключи ПК, но не равенство токенов, provider country или SDK состояния. Авторизация не выполнялась."
+      ],
+      "method": "static",
+      "next_check": "Подготовить только текущий dispatcher 1444e7630 и проследить фактический consumer сохранённого callback до решения приложения, не запускать массовые повторные входы или SignUp fallback.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Фактический consumer SDK error и отличие первого игрового входа нового аккаунта; причина 1203."
     }
   ],
   "schema": 1,

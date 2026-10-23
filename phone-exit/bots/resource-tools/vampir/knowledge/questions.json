@@ -131,11 +131,11 @@
       "id": "launcher-auth-contract",
       "status": "open",
       "question": "Как launcher-контекст превращается в SDK-сессию и влияет ли он на игровой Login?",
-      "known": "Native gate, launcherToken header, раздельные credential channelCode 200 / channel +0x68 и маршрутизация ChannelManager проверены. Runtime flow NID credential 33 → launcher/token → launcher/sign-in принят SDK / лобби. Game Login давал 58 на прежних JP / HK и 16 после замены JP. 21 октября официальный клиент на том же выбранном JP вошёл в мир с созданным пользователем Okly, бот после закрытия игры снова получил 16. Фактический официальный auth route и оставшиеся поля не сопоставлены.",
-      "unknown": "Причина Game Login 58 на проверенных выходах, влияние launcher flow относительно смены выхода и сессии; штатная ветвь официального запуска и контекст устройства пока не сопоставлены.",
-      "next_action": "Использовать выполненное сравнение: официальный клиент вошёл в мир, бот отклонён. Проверять конкретные оставшиеся источники игрового контекста, включая Netmarble ID в launcher-ветви. Новые токены и те же запросы без нового условия не повторять.",
-      "decision_rule": "Launcher token и SDK sign-in уже приняты реальным сервером. Не повторять ради подтверждения этого факта; следующий тест должен различать транспорт / официальный клиент / конкретное поле. BlockedIp не доказывает конкретное правило серверной блокировки.",
-      "do_not_repeat": "Не повторять gate и не заменять NID channelCode 33 на 200 без полного контракта. Не читать реальные launch arguments ради статического вопроса. Ключ launcherToken и перенос +0x68 уже проверены; не искать их заново. SignIn и GetLauncherToken уже разобраны; dispatcher scheduler не расширять ради покрытия. Не повторять реализованную цепочку на тех же выходах без нового условия; не объявлять её причиной смены 16 на 58.",
+      "known": "Прежние gate / ChannelManager / launcherToken replay относятся к SHA c7552efd; их границы сохранены в evidence. На SHA 98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e статически сверены текущие два запроса, три initializers и два callback root. launcher/token сохраняет credential с gameCode / buildCode; launcher/sign-in передаёт отдельный launcherToken header и четыре поля устройства. Ответы различаются строкой и объектом resultData. Ненулевой errorCode второго handler передаётся в error result и 1444e7630; прямого вызова SignUp в обоих handler нет. Семь экспортов проверены source-bound audit; три теста прошли, native execution не выполнялось. Живой контроль 23 октября: nightraven дважды получил SDK 1203 до игры, bot-test прошёл SDK и остановился на выбранном лобби. Оба сохранённых назначения используют launcher / EU и одинаковые три ключа ПК; полные auth inputs не сравнивались. Поле addresses сохраняет исторический набор прежнего реестра; текущие адреса отдельно закреплены в facts текущего SHA и HEADLESS-RELEASE-LAUNCHER-CONTRACT.md.",
+      "unknown": "Фактический consumer SDK error на текущем SHA, отличие первого игрового входа нового аккаунта и причина SDK 1203. Равенство token / provider country / SDK состояния не установлено. Отдельная причина отказа выбранного лобби основного аккаунта также неизвестна.",
+      "next_action": "Начать с prepare для текущего dispatcher 1444e7630 и найти фактический consumer сохранённого callback до решения приложения. Проверить конкретную ветвь первого SDK-входа нового аккаунта; новые массовые входы или SignUp fallback без установленного контракта не выполнять.",
+      "decision_rule": "Успешный SDK основного аккаунта и отказ SDK нового — разные наблюдения. Прямое отсутствие SignUp в двух handler не исключает последующую или косвенную ветвь. Новая живая попытка требует конкретного различающего условия, а не повторения прежнего запроса.",
+      "do_not_repeat": "Не переносить replay старого SHA в подтверждённые факты текущего. Текущие тела, ключи и E9 callbacks уже сохранены; использовать готовые экспорты. Не заменять channel 33 на 200, не читать реальные launch arguments ради статического вопроса, не расширять scheduler ради покрытия. Не считать 1203 доказательством отсутствия регистрации и не добавлять автоматический SignUp.",
       "addresses": [
         "0x1444eb1c0",
         "0x1444dd8a0",
@@ -153,7 +153,8 @@
         "evidence/auth/HEADLESS-NID-CREDENTIAL.md",
         "evidence/auth/HEADLESS-LAUNCHER-TOKEN-CONTEXT.md",
         "evidence/auth/HEADLESS-LAUNCHER-CHANNEL-ROUTING.md",
-        "evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md"
+        "evidence/auth/HEADLESS-LAUNCHER-LIVE-LOGIN.md",
+        "evidence/auth/HEADLESS-RELEASE-LAUNCHER-CONTRACT.md"
       ]
     },
     {

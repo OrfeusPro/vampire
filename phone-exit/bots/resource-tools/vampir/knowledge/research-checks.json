@@ -2482,6 +2482,32 @@
         "phone-exit/bots/vampir-headless/console/index.html",
         "phone-exit/bots/vampir-headless/console/console.js"
       ]
+    },
+    {
+      "id": "release-launcher-contract",
+      "questions": [
+        "launcher-auth-contract"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone"
+      ],
+      "test_pattern": "test_vampir_release_launcher_contract.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-4f6c93310580/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-82294ab74cc0/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-5f5b69ab5cf7/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/audit-release-launcher-contract.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
+      ]
     }
   ]
 }
