@@ -196,6 +196,15 @@ slot назначается по unique key match при прежнем target �
 Далее проверить активные worker панели перед перезапуском; один пустой EU-аккаунт,
 один Create, затем новый список и вход по server key. Массовое создание пока не запускать.
 [Журнал и ограничения интеграции](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-WORKER-JOURNAL.md).
+Живой preflight: nightraven / EU Aria 1 дважды прошёл NID, но SDK launcher
+sign-in вернул HTTP 400 / 1203 до game TCP. Bot-test контроль прошёл SDK,
+однако выбранное лобби не дало игрового контекста. В конце 0 активных jobs
+и 0 записей creation_attempts; ID 103 не ставился в очередь. Регистрация не повторялась.
+Исправлен callback creation_factory через run / _run / _after_lobby; два wrapper
+теста проверили обе границы, внешний worker mock раньше их не покрывал.
+Далее проверить account-specific auth различия по существующим источникам,
+без массовых повторов и SignUp fallback; создание остаётся непроверенным live.
+[Наблюдения и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-LIVE-PREFLIGHT.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

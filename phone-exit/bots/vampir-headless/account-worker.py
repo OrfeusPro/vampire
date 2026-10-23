@@ -156,6 +156,9 @@ def run(args):
         state = 'error'
     elif result.get('status') != 'game_login_probe' or game.get('error'):
         message, state = 'Вход не завершён: ' + str(result.get('stage', 'unknown')), 'error'
+        lobby_code = result.get('lobby', {}).get('login_result_code')
+        if type(lobby_code) is int and 0 <= lobby_code <= 0xffffffff:
+            message += f'. Код входа в лобби: {lobby_code}.'
         if result.get('browser_status') == 'timeout':
             message = 'Истекло время входа Netmarble. Игровое соединение не открыто; проверьте окно авторизации.'
     elif args.operation == 'create' and attempt[0] is not None:

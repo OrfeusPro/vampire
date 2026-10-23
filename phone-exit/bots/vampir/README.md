@@ -146,6 +146,12 @@ pending до очереди; crash / unknown блокируют повтор д�
 ключа в новом списке. Проверены временная БД, конкурирующие попытки и worker mocks;
 живое создание ещё не запускалось. Далее одна проверка пустого EU-аккаунта.
 [Worker, журнал и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-WORKER-JOURNAL.md).
+Живой контроль запущен: новый EU-аккаунт дважды прошёл NID, но получил SDK
+HTTP 400 / 1203 до игрового соединения. Основной аккаунт SDK прошёл, затем
+остановился на выбранном лобби. Create не отправлялся, журнал попыток пуст.
+Найдена и исправлена передача creation_factory через вложенные wrapper-функции;
+два новых теста прошли. Причина различий SDK / лобби остаётся неизвестной.
+[Живые этапы и исправление](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-LIVE-PREFLIGHT.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
