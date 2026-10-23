@@ -20,7 +20,7 @@ from vampir_core.socks_route import SocksRoute
 
 
 class NidBrowserStatusError(RuntimeError):
-    def __init__(self, status, step, http_status=None, code=None, response_state=None):
+    def __init__(self, status, step, http_status=None, code=None, response_state=None, hint=None, shape=None):
         super().__init__('NID browser did not return a sign-in result')
         self.browser_status = status if status in ('timeout', 'cancelled', 'browser_initialization_failed',
             'browser_process_failed', 'untrusted_callback_origin', 'login_failed') else 'unknown'
@@ -31,6 +31,10 @@ class NidBrowserStatusError(RuntimeError):
         self.nid_response_state = response_state if response_state in ('not_observed', 'non_json', 'length_limit',
             'body_limit', 'length_mismatch', 'numeric_code', 'no_numeric_code', 'read_failed',
             'invalid_utf8', 'content_unavailable', 'response_observation_failed') else 'not_observed'
+        self.nid_error_hint = hint if hint in ('invalid_credentials', 'account_not_found', 'rate_limited',
+            'captcha_required', 'device_confirmation', 'region_restricted', 'session_invalid') else 'unknown'
+        self.nid_response_shape = shape if shape in ('numeric_code', 'nonnumeric_code', 'nested_error',
+            'message_only', 'unrecognized_object', 'not_object', 'invalid_json') else 'unknown'
 
 
 def _library():
@@ -148,7 +152,8 @@ def capture_nid_credential(plan, *, expected_game_code, data_directory, timeout=
                   sign_in_password=sign_in_password, socks_port=socks_port, **registration)
     if result['status'] != 'callback':
         error = NidBrowserStatusError(result['status'], result.get('sign_in_step'),
-            result.get('nid_http_status'), result.get('nid_error_code'), result.get('nid_response_state'))
+            result.get('nid_http_status'), result.get('nid_error_code'), result.get('nid_response_state'),
+            result.get('nid_error_hint'), result.get('nid_response_shape'))
         result.clear()
         raise error
     callback = result.get('callback')

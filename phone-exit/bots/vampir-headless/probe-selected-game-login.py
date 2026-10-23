@@ -102,6 +102,13 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
         response_state = getattr(error, 'nid_response_state', None)
         if response_state in ('not_observed', 'non_json', 'length_limit', 'body_limit', 'length_mismatch',
                 'numeric_code', 'no_numeric_code', 'read_failed'): result['nid_response_state'] = response_state
+        for name, allowed in (
+                ('nid_error_hint', ('invalid_credentials', 'account_not_found', 'rate_limited', 'captcha_required',
+                                    'device_confirmation', 'region_restricted', 'session_invalid')),
+                ('nid_response_shape', ('numeric_code', 'nonnumeric_code', 'nested_error', 'message_only',
+                                        'unrecognized_object', 'not_object', 'invalid_json'))):
+            value = getattr(error, name, None)
+            if value in allowed: result[name] = value
         return result
 
 

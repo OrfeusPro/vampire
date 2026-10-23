@@ -9,6 +9,48 @@ WINDOWS = Path(__file__).parent / 'vampir-headless/windows'
 
 
 class NidDiagnosticsTests(unittest.TestCase):
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows diagnostic classifier')
+    def test_fixed_hints_ignore_identity_and_ambiguous_messages(self):
+        script = r'''
+param([string]$Source)
+$ErrorActionPreference='Stop'
+Add-Type -Path $Source -ReferencedAssemblies 'System.Web.Extensions'
+$bodies=@(
+ '{"error":"invalid_grant","error_description":"Invalid username or password; private-fixture"}',
+ '{"error":{"code":"CAPTCHA_REQUIRED","message":"private-fixture"}}',
+ '{"code":"TOO_MANY_REQUESTS","email":"private-fixture"}',
+ '{"message":"Verify your device: private-fixture"}',
+ '{"resultCode":"ACCOUNT_NOT_FOUND"}',
+ '{"message":"not allowed country for game"}',
+ '{"message":"Session expired"}',
+ '{"accessToken":"invalid_credentials","email":"CAPTCHA_REQUIRED","password":"private-fixture"}',
+ '{"message":"Invalid password. CAPTCHA required"}',
+ '{"message":"Login Failed: private-fixture"}',
+ '{"code":"private-fixture"}',
+ '[]', 'not JSON'
+)
+$rows=@($bodies | ForEach-Object {
+ $r=[NidHttpDiagnostics]::Describe($_)
+ @{hint=$r.Hint;shape=$r.Shape;code=$r.Code;state=$r.State}
+})
+ConvertTo-Json -InputObject $rows -Compress
+'''
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'fixture.ps1'
+            path.write_text(script, encoding='utf-8-sig')
+            result = subprocess.run(['powershell.exe', '-NoProfile', '-File', str(path),
+                '-Source', str((WINDOWS / 'nid-http-diagnostics.cs').resolve())],
+                capture_output=True, text=True, check=True, timeout=30)
+        rows = json.loads(result.stdout)
+        self.assertEqual([row['hint'] for row in rows], ['invalid_credentials', 'captcha_required',
+            'rate_limited', 'device_confirmation', 'account_not_found', 'region_restricted',
+            'session_invalid', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown', 'unknown'])
+        self.assertEqual(rows[7]['shape'], 'unrecognized_object')
+        self.assertEqual(rows[10]['shape'], 'nonnumeric_code')
+        self.assertEqual(rows[11]['shape'], 'not_object')
+        self.assertEqual(rows[12]['shape'], 'invalid_json')
+        self.assertNotIn('private', result.stdout)
+
     def test_failure_observer_returns_only_fixed_label_on_official_visible_page(self):
         source = (WINDOWS / 'nid-page-status.js').read_text('utf-8')
         fixture = r'''

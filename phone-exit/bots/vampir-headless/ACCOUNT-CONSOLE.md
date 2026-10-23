@@ -469,7 +469,10 @@ constructor ключей player callback этой проверкой не пок
 Это отдельная операция, без повторной регистрации Netmarble и без создания
 персонажа. Панель пока её не запускает. Доступные условия требуют дальнейшей
 реализации их показа и принятия. Две живые попытки остановились до SDK на NID;
-успешный первый SDK-вход пока не подтверждён. Отдельно новый HTTP-клиент
+следующая отдельная попытка прошла полную цепочку и получила совпавший player ID
+и SDK token. Для nightraven сохранён sdk_created; SDK SignUp повторять не нужно.
+Worker создания на Aria 1 получил selected lobby 10036 до списка персонажей;
+создание не отправлялось. [Результат и диагностика NID](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-LIVE-AND-NID-HINTS.md). Отдельно новый HTTP-клиент
 выполнил два анонимных GET с явными UA / en-US / all: BasicTerms и IndividualTerms
 вернули no_data / -1, consent_confirmed осталось false. Это проверка чтения
 условий без аккаунта, без SDK SignUp и игровых действий.

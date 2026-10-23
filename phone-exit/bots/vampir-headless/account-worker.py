@@ -139,7 +139,8 @@ def run(args):
     if result.get('browser_status') in ('timeout', 'login_failed'):
         browser = load('account_browser_failure', HERE / 'nid-browser.py')
         error = browser.NidBrowserStatusError(result['browser_status'], result.get('sign_in_step'),
-            result.get('nid_http_status'), result.get('nid_error_code'), result.get('nid_response_state'))
+            result.get('nid_http_status'), result.get('nid_error_code'), result.get('nid_response_state'),
+            result.get('nid_error_hint'), result.get('nid_response_shape'))
         emit('result', **failure(error))
         return
     if result.get('error_type') == 'SdkSignInHttpError':
@@ -247,9 +248,23 @@ def failure(error):
             'content_unavailable': 'WebView не предоставил тело ответа',
             'response_observation_failed': 'ошибка получения ответа из WebView'
             }.get(getattr(error, 'nid_response_state', None))
+        hint = {'invalid_credentials': 'ответ содержит признак ошибки учётных данных',
+            'account_not_found': 'ответ содержит признак отсутствия аккаунта',
+            'rate_limited': 'ответ содержит признак ограничения частоты',
+            'captcha_required': 'ответ содержит признак капчи',
+            'device_confirmation': 'ответ содержит признак подтверждения устройства',
+            'region_restricted': 'ответ содержит признак ограничения региона',
+            'session_invalid': 'ответ содержит признак недействительной сессии'
+            }.get(getattr(error, 'nid_error_hint', None))
+        shape = {'nonnumeric_code': 'код ответа нечисловой', 'nested_error': 'вложенный объект ошибки',
+            'message_only': 'сообщение без числового кода', 'unrecognized_object': 'неизвестная схема объекта',
+            'not_object': 'JSON не является объектом', 'invalid_json': 'не удалось разобрать JSON'
+            }.get(getattr(error, 'nid_response_shape', None))
         return dict(status='error', message=message + ' Игровое соединение не открыто.' +
             (f' Этап: {step}.' if step is not None else '') +
             (f' Диагностика NID: {response}.' if response is not None else '') +
+            (f' Подсказка NID: {hint}.' if hint is not None else '') +
+            (f' Формат: {shape}.' if shape is not None else '') +
             (f' HTTP {status}.' if status is not None else '') + (f' Код NID: {code}.' if code is not None else ''))
     if isinstance(error, SdkSignInHttpError):
         code = error.sdk_code if type(error.sdk_code) is int and -(2**31) <= error.sdk_code < 2**31 else None

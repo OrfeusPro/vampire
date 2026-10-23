@@ -188,6 +188,12 @@ class AccountConsoleTests(unittest.TestCase):
         value = tool.failure(timeout)
         self.assertIn('Истекло время входа Netmarble', value['message'])
         self.assertNotIn('private', json.dumps(value))
+        rejected.nid_error_hint, rejected.nid_response_shape = 'rate_limited', 'message_only'
+        value = tool.failure(rejected)
+        self.assertIn('признак ограничения частоты', value['message'])
+        self.assertIn('сообщение без числового кода', value['message'])
+        rejected.nid_error_hint, rejected.nid_response_shape = 'private-fixture', 'private-fixture'
+        self.assertNotIn('private', json.dumps(tool.failure(rejected)))
 
     def test_manual_registration_code_is_scoped_single_use_and_not_in_snapshot(self):
         import io

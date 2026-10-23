@@ -15,6 +15,20 @@ class NidBrowserTests(unittest.TestCase):
     def plan(self):
         return self.tool.NidWebUrl('https://members.netmarble.com/auth?gameCode=thered&webViewType=sdk&authType=signin')
 
+    def test_error_hints_cross_boundary_only_as_fixed_labels(self):
+        for hint, shape, expected_hint, expected_shape in (
+            ('invalid_credentials', 'message_only', 'invalid_credentials', 'message_only'),
+            ('private-token-fixture', 'private-body-fixture', 'unknown', 'unknown')):
+            result = dict(status='login_failed', sign_in_step='submitted', nid_http_status=400,
+                          nid_response_state='no_numeric_code', nid_error_hint=hint, nid_response_shape=shape)
+            with patch.object(self.tool, '_run', return_value=result):
+                with self.assertRaises(self.tool.NidBrowserStatusError) as caught:
+                    self.tool.capture_nid_credential(self.plan(), expected_game_code='thered', data_directory='unused')
+            self.assertEqual(caught.exception.nid_error_hint, expected_hint)
+            self.assertEqual(caught.exception.nid_response_shape, expected_shape)
+            self.assertNotIn('private', str(caught.exception))
+            self.assertEqual(result, {})
+
     def test_captured_callback_is_validated_and_not_retained(self):
         result = dict(status='callback', callback='nmthered://nmidprovider/result?resultCode=0&accessToken=synthetic-token&refreshToken=&channelKey=mailUserKey&netmarbleId=synthetic-id&joinedCountryCode=KR')
         with patch.object(self.tool, '_run', return_value=result):

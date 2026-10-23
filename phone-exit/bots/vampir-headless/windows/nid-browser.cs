@@ -13,6 +13,8 @@ public static class NidBrowserHost {
     public static int NidHttpStatus;
     public static int? NidErrorCode;
     public static string NidResponseState;
+    public static string NidErrorHint;
+    public static string NidResponseShape;
 
     public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
             string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript, string statusScript) {
@@ -20,6 +22,7 @@ public static class NidBrowserHost {
         SignInStep = "manual";
         NidHttpStatus = 0; NidErrorCode = null;
         NidResponseState = "not_observed";
+        NidErrorHint = "unknown"; NidResponseShape = "unknown";
         if (socksPort != 0 && (socksPort < 1024 || socksPort > 65535)) throw new ArgumentException("Invalid SOCKS port");
         if (timeoutSeconds < 1 || timeoutSeconds > 900) throw new ArgumentException("Invalid timeout");
         if (String.IsNullOrEmpty(gameCode) || gameCode.Length > 64) throw new ArgumentException("Invalid game scope");
@@ -138,7 +141,11 @@ public static class NidBrowserHost {
                             }
                             var observed = await NidHttpDiagnostics.ReadAsync(stream, length);
                             if (done) return;
-                            if (status >= 400 || (observed.Code.HasValue && observed.Code.Value != 0)) NidResponseState = observed.State;
+                            if (status >= 400 || (observed.Code.HasValue && observed.Code.Value != 0)) {
+                                NidResponseState = observed.State;
+                                NidErrorHint = observed.Hint;
+                                NidResponseShape = observed.Shape;
+                            }
                             if (observed.Code.HasValue && observed.Code.Value != 0) { NidHttpStatus = status; NidErrorCode = observed.Code; }
                         }
                     } catch { if (!done && status >= 400) NidResponseState = "response_observation_failed"; }

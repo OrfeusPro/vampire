@@ -34,6 +34,16 @@ class SelectedGameLoginTests(unittest.TestCase):
                 dict(expected, nid_response_state='no_numeric_code'))
             self.assertNotIn('private', str(result))
 
+    def test_nid_hints_are_fixed_and_unknown_text_is_discarded(self):
+        for hint, shape, expected in (('rate_limited', 'message_only', True), ('private-fixture', 'private-fixture', False)):
+            error = RuntimeError('private-fixture')
+            error.nid_error_hint, error.nid_response_shape = hint, shape
+            with patch.object(self.tool, '_run', side_effect=error):
+                result = self.tool.run('fixture@unit.invalid', **self.kwargs())
+            self.assertEqual('nid_error_hint' in result, expected)
+            self.assertEqual('nid_response_shape' in result, expected)
+            self.assertNotIn('private', str(result))
+
     def test_auth_stays_in_memory_and_same_lobby_result_supplies_login(self):
         self.check_auth_and_clock('')
 

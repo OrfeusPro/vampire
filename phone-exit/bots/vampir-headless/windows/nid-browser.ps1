@@ -29,7 +29,8 @@ try {
       blocked_external=[NidBrowserHost]::BlockedExternal; blocked_popups=[NidBrowserHost]::BlockedPopups;
       blocked_scheme=[NidBrowserHost]::LastBlockedScheme; sign_in_step=[NidBrowserHost]::SignInStep;
       nid_http_status=[NidBrowserHost]::NidHttpStatus; nid_error_code=[NidBrowserHost]::NidErrorCode;
-      nid_response_state=[NidBrowserHost]::NidResponseState} |
+      nid_response_state=[NidBrowserHost]::NidResponseState;
+      nid_error_hint=[NidBrowserHost]::NidErrorHint; nid_response_shape=[NidBrowserHost]::NidResponseShape} |
         ConvertTo-Json -Compress | ForEach-Object { [Console]::Out.Write($_) }
 } finally {
     $request = $null

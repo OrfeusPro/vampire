@@ -2793,6 +2793,30 @@
         "phone-exit/bots/test_vampir_sdk_terms.py",
         "phone-exit/bots/test_vampir_sdk_launcher_auth.py"
       ]
+    },
+    {
+      "id": "release-nid-http-hints",
+      "questions": [
+        "launcher-auth-contract"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "test_pattern": "test_vampir_nid_diagnostics.py",
+      "timeout_seconds": 120,
+      "dependencies": [
+        "phone-exit/bots/vampir-headless/windows/nid-http-diagnostics.cs",
+        "phone-exit/bots/vampir-headless/windows/nid-browser.cs",
+        "phone-exit/bots/vampir-headless/windows/nid-browser.ps1",
+        "phone-exit/bots/vampir-headless/windows/nid-page-status.js",
+        "phone-exit/bots/vampir-headless/nid-browser.py",
+        "phone-exit/bots/vampir-headless/account-worker.py",
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/test_vampir_nid_browser.py",
+        "phone-exit/bots/test_vampir_account_console.py",
+        "phone-exit/bots/test_vampir_selected_game_login.py"
+      ]
     }
   ]
 }
