@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "bindiff": {
+    "version": "8",
+    "archive": "bindiff8.msi",
+    "url": "https://github.com/google/bindiff/releases/download/v8/bindiff8.msi",
+    "sha256": "688831e490bef8a20c9917048b693bad591f346b3b96489fc79ad8d20d7cb15f"
+  },
+  "binexport": {
+    "commit": "1fc1d734db5924c9bc9067ae244cb9b94c94efcb",
+    "archive": "binexport-source.zip",
+    "directory": "source",
+    "url": "https://codeload.github.com/google/binexport/zip/1fc1d734db5924c9bc9067ae244cb9b94c94efcb",
+    "sha256": "5358ad955b065b1484450f0d1c6d6cea8afbbc45c9bb0c647076b080df33207f"
+  },
+  "gradle": {
+    "version": "8.14.3",
+    "archive": "gradle-8.14.3-bin.zip",
+    "directory": ".",
+    "url": "https://services.gradle.org/distributions/gradle-8.14.3-bin.zip",
+    "sha256": "bd71102213493060956ec229d946beee57158dbd89d0e62b91bca0fa2c5f3531"
+  }
+}

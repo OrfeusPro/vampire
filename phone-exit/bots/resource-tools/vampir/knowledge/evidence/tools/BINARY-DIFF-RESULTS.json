@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "installation": {
+    "manifest": "F:\\PhoneExit Resources\\Vampir\\tools\\binary-diff\\install.json",
+    "sha256": "c32d63a02ab9d8816f73e31c83e7a12c0f000939a80e55cbca1799fb64f86c15"
+  },
+  "adapter_sha256": "159334d74e5411dd6846e502d5b1d3a783161e2a27dcf5554a4d3925ffcc8787",
+  "export": {
+    "manifest": "F:\\PhoneExit Resources\\Vampir\\binary-diff\\exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\manifest.json",
+    "manifest_sha256": "1b7effd3a2566573c496378e42a65d7ece434e2421f2a7fc2d7787f102f1a681",
+    "export_sha256": "ae0a09c00a1ffb291badf5718427cbbab4e3f1940bcc4323ef624b6665677f2e",
+    "bytes": 13492788,
+    "seconds": 221.71276349999243,
+    "coverage": "existing project only; read-only; no new autoanalysis"
+  },
+  "self_comparison": {
+    "manifest": "F:\\PhoneExit Resources\\Vampir\\binary-diff\\comparisons\\2c633ccc660d483ad16e4e52ed11c50b54688d2e4f9166d0142d5d9e5f02ae50\\manifest.json",
+    "manifest_sha256": "521af90157aed385af72fd83ee4cb9f024c3b349b4fe51d4b2c5a260f882c2f1",
+    "database_sha256": "4c3c13a1d0d8d8399db347876a690bfee687a3adb6dfc948b7f1b7d3709aaa43",
+    "candidate_count": 3995,
+    "seconds": 8.79085109999869,
+    "reused_on_repeat": true,
+    "repeat_validation_seconds": 1.13424670000677,
+    "checked_address": [
+      {
+        "old_address": "0x1467ce6a0",
+        "new_address": "0x1467ce6a0",
+        "similarity": 1.0,
+        "confidence": 0.9926084586557181,
+        "state": "candidate",
+        "semantic_verification": false
+      }
+    ]
+  },
+  "prepare_request": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\0705d4f814e44c3323d0e82b27a350207b711a1666afe6f3ebb865eed53a161a\\manifest.json",
+  "manual_queue": [
+    {
+      "id": "historical-full-binexport-98802d",
+      "baseline_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "stopped": {
+        "cpu_seconds": 936.53125,
+        "state": "stopped_for_resource_budget",
+        "elapsed_seconds": 653.063064,
+        "working_set_bytes": 8940351488,
+        "process_id": 31200,
+        "reason": "Large historical project export has not completed; heap approached 8 GiB. No comparison or semantic proof produced.",
+        "heap_limit_gib": 8
+      },
+      "log": "F:\\PhoneExit Resources\\Vampir\\binary-diff\\exports\\98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e\\cb8056d62def0ec22bb8e7e9f445c0f24aed002666a519248131b38e921d72b3\\export.log",
+      "next_check": "Measure and bound the large historical export before attempting whole-release diff; no completed cross-version match claimed",
+      "log_sha256": "6df75301243f04928f6cf7cbfc55bac047b56b216088f6fa9b569fd32cd49bd3"
+    }
+  ],
+  "semantic_verification": false,
+  "network_actions": false,
+  "profile_activation": false
+}

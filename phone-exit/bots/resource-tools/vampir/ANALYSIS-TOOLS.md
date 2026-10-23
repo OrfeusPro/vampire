@@ -14,6 +14,7 @@
 | --- | --- | --- |
 | Функции EXE/DLL, ветвления, callers/callees | Ghidra, сначала существующий экспорт | 22 функции; повторный экспорт совпал побайтно |
 | Инструкции и поведение native-кода | Capstone/Unicorn после Ghidra | Существующие source-bound replay scenarios; подробности в основном README |
+| Сравнение разобранных сборок | BinExport под Ghidra 12.1.4 и BinDiff 8; совпадения остаются кандидатами | [Установка, команды и границы](knowledge/evidence/tools/HEADLESS-BINARY-DIFF.md) |
 | Unreal PAK и cooked assets | CUE4Parse, если формат и входные данные поддержаны | Установка/сборка, заголовки трёх loose assets; четыре PAK заблокированы зашифрованным индексом |
 | Reflection, классы, SDK, mappings | Dumper-7 для отдельного live-эксперимента | DLL собрана; разрешённая проверка 20 октября остановилась на EnumProcessModules до загрузки DLL; SDK ещё нет |
 | Прямой TCP-захват Windows | PktMon с явным включением и правами администратора; затем [импорт PCAPNG](import-pcapng-tcp.py) | Первый прямой захват сохранён; импорт выявил пропуски игровых TCP-байтов. Полная сессия не восстановлена |

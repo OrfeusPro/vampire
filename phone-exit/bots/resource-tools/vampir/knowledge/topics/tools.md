@@ -30,5 +30,8 @@ XIGNCODE3 подтверждено файлами; оно не доказыва�
 Это источники и история проверок; наличие документа не означает завершённую live-функцию.
 
 - [Vampir: зацепки в собранном коде](../evidence/tools/CODE-CLUES.md)
+- [BinExport / BinDiff: сравнение сборок](../evidence/tools/HEADLESS-BINARY-DIFF.md)
 - [Dumper-7: первая разрешённая проверка работающего клиента](../evidence/tools/HEADLESS-DUMPER7-LIVE.md)
 - [Ghidra: пакетная декомпиляция вместо последовательного чтения инструкций](../evidence/tools/HEADLESS-GHIDRA.md)
+- [Импорт только новых экспортов в базу знаний](../evidence/tools/HEADLESS-INCREMENTAL-INDEX.md)
+- [Экспорт явных функций без прежнего comparison project](../evidence/tools/HEADLESS-REQUESTED-GHIDRA.md)
