@@ -11,13 +11,14 @@ sys.path.insert(0, str(HERE.parents[1] / 'vampir-shared'))
 from vampir_core.character_create import CharacterCreatePayload, encode_character_create
 
 
-def run():
+def run(*, producer=False):
     spec = importlib.util.spec_from_file_location('create_writer_strings', HERE / 'replay-release-fstring-input.py')
     strings = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(strings)
     h = strings.make_harness(extra_addresses=(0x1456d8120, 0x1456bb7d0, 0x14578e120,
         0x14578ddd0, 0x14578c800, 0x144aae660, 0x14144c630, 0x1414466d0, 0x144aada00,
-        0x144aadc10, 0x144aadc90, 0x144aadcc0, 0x144aadc60, 0x144aade10, 0x144aade40),
+        0x144aadc10, 0x144aadc90, 0x144aadcc0, 0x144aadc60, 0x144aade10, 0x144aade40,
+        *((0x146449dc0,) if producer else ())),
         extra_leaves=(0x145784790, 0x145783f30, 0x144aae500, 0x144aae8c0, 0x144aadae0, 0x1432ad880,
                       0x141c57110, 0x141e4aef0, 0x144aadaf0, 0x1436af790))
     uc, x = h.uc, h.x
@@ -30,6 +31,9 @@ def run():
         raise ValueError('UTF8 encoder leaf boundary changed')
     h.ranges.append((address, address + length))
     hooks = (0x144aadd50, 0x14690a090, 0x141436da0, 0x141483160, 0x1487eac40, h.copy)
+    if producer:
+        hooks += (0x14644a0c0, 0x14641af30, 0x146447e50, 0x144aaf870,
+                  0x144aafc50, 0x1456d9440, 0x141436fb0)
     pages = {p for a, b in h.ranges for p in range(a & ~4095, (b + 4095) & ~4095, 4096)}
     pages.update(a & ~4095 for a in hooks)
     pages.update(a & ~4095 for a in (0x14992a3a8, 0x149921fb0, 0x149921f68))
@@ -105,6 +109,10 @@ def run():
     def wire_text(value):
         encoded = value.encode('utf-8')
         return struct.pack('<H', len(encoded)) + encoded
+    if producer:
+        spec = importlib.util.spec_from_file_location('create_producer_entry', HERE / 'replay-release-character-create-producer.py')
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        return module.run_with_writer(h, packet, output, chunks, widths)
     cases = []
     inputs = [(1, value, value, 0) for value in ('a' * 15, 'a' * 16, 'a' * 127, 'a' * 128, 'a' * 129, '界' * 80)]
     inputs.extend(itertools.product((0, 0x12345678, 0xffffffff), ('', 'NightRaven', 'Ж界🙂'), ('', '{"x":1}'), (0, 1)))

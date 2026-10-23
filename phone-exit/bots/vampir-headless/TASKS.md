@@ -151,6 +151,15 @@ Completion wrapper и selector прошли 24 native сценария: 18 immed
 кандидатом внешности. Фактическая десериализация / late overrides остаются unknown;
 не нужно повторять обычный constructor ради совпадения с загруженным экраном.
 [Проверки и границы модели](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-OBJECT.md).
+Целый producer `146449dc0`, constructors пакета и writer прошли 37 сценариев:
+24 остановки и 13 перехватов перед отправкой. Sentinel останавливает до PlayerState,
+отсутствующий PlayerState — до JSON. Пустой ник producer не проверяет.
+Порядок scalar bytes установлен по helper exports и подтверждён native чтением;
+модельный Carnage/F дал `[1, 8, 16, 9, 2, 2, 2, 9, 0, 0]`. Тело совпало с encoder.
+JSON пока fixture. Следом — actual key conversion / значения JSON и целый
+handler ID 104 `146796690`, затем подключение создания при принятом пустом списке.
+Новая живая отправка и создание персонажа этим изменением не выполнялись.
+[Producer и воспроизводимые сценарии](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRODUCER.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

@@ -116,6 +116,12 @@ Extractor сохраняет отдельную модельную проекц�
 исходные unknown сохранены, loaded asset не объявлен проверенным. Проекция —
 явный кандидат для следующей offline проверки целого producer / JSON внешности.
 [Обычный объект и происхождение проекции](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-OBJECT.md).
+Целый producer создания прошёл 37 native сценариев: 24 остановки и 13 перехватов
+до границы отправки. Native writer совпал с encoder, включая модельный Carnage/F.
+Порядок Hair / Head / Eye / Decal связан с текущими helper-записями в owner;
+дополнительные байты равны 0/0, items пуст, ожидается ID 104. JSON helper остаётся
+fixture; следом его ключи / значения и целый handler результата. Сети не было.
+[Запрос, порядок полей и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRODUCER.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
