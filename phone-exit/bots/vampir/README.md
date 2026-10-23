@@ -80,6 +80,10 @@ mode gates и раздельная передача токенов. Parser / cha
 OnResult сценария. Return fixtures убраны в новой проверке; DLL / locale CRT
 учтены в кэше. Далее runtime guards / browser boundary и подключение профиля.
 [Helpers, текущие источники и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-PRIMITIVES-11316.md).
+GMC2 geo path и SetCountryCode прошли 672 native случая. Policy 1.13.16
+учитывает A1 / a1 и отвергает смешивание geo разных SHA. Browser smoke прошёл;
+загрузчик SDK profile ещё требует переноса, установленный SHA guard сохранён.
+[Geo policy, проверки и оставшееся ограничение](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-GEO-11316.md).
 
 Атлас переключён на русский язык: названия и описания из именованных таблиц
 текущего клиента, исходный текст при отсутствии однозначного перевода.

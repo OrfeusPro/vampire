@@ -561,7 +561,8 @@
         "audit-nid-result-11316.py",
         "replay-nid-result-11316.py",
         "nid-primitives-11316.py",
-        "replay-nid-primitives-11316.py"
+        "replay-nid-primitives-11316.py",
+        "replay-gmc2-geo-11316.py"
       ],
       "rule": "Follow explicit callers of reviewed FDeviceInfo::GetPlatform; preserve undecodable roots and inspect selected Ghidra exports before assigning NID role.",
       "automation": {
@@ -643,6 +644,34 @@
                 "required_checks": [
                   "nid-primitives-native-11316"
                 ]
+              },
+              {
+                "address": "0x1444dee00",
+                "scope": "Static Refresh callback -> handler link; full callback not executed",
+                "required_checks": [
+                  "gmc2-geo-native-11316"
+                ]
+              },
+              {
+                "address": "0x1444cf500",
+                "scope": "Static response handler -> geo consumer link; whole JSON acceptance/cache not executed",
+                "required_checks": [
+                  "gmc2-geo-native-11316"
+                ]
+              },
+              {
+                "address": "0x1444f8b10",
+                "scope": "Native geo slice through country call; nested/string JSON wrappers are fixtures; rest of map/cache excluded",
+                "required_checks": [
+                  "gmc2-geo-native-11316"
+                ]
+              },
+              {
+                "address": "0x1445515c0",
+                "scope": "Whole SetCountryCode with logging/notification disabled; real case-insensitive A1 compare, FString assignment/free fixtures",
+                "required_checks": [
+                  "gmc2-geo-native-11316"
+                ]
               }
             ],
             "tools": [
@@ -654,7 +683,8 @@
               "audit-nid-result-11316.py",
               "replay-nid-result-11316.py",
               "nid-primitives-11316.py",
-              "replay-nid-primitives-11316.py"
+              "replay-nid-primitives-11316.py",
+              "replay-gmc2-geo-11316.py"
             ],
             "evidence": [
               "evidence/auth/HEADLESS-NID-CONTEXT-11316.md",
@@ -664,7 +694,8 @@
               "evidence/auth/HEADLESS-NID-QUERY-11316.md",
               "evidence/auth/HEADLESS-NID-RESULT-SOURCE-11316.md",
               "evidence/auth/HEADLESS-NID-RESULT-NATIVE-11316.md",
-              "evidence/auth/HEADLESS-NID-PRIMITIVES-11316.md"
+              "evidence/auth/HEADLESS-NID-PRIMITIVES-11316.md",
+              "evidence/auth/HEADLESS-GMC2-GEO-11316.md"
             ]
           }
         ],
