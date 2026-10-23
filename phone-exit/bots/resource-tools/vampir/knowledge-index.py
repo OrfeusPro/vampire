@@ -448,9 +448,14 @@ def main():
         p.add_argument('--request', required=True, type=Path)
         if name == 'finish': p.add_argument('--result', required=True, type=Path)
     p = sub.add_parser('update')
-    p.add_argument('--baseline', required=True, type=Path)
+    source = p.add_mutually_exclusive_group(required=True)
+    source.add_argument('--baseline', type=Path)
+    source.add_argument('--resume', type=Path)
     p.add_argument('--install', type=Path, default=INSTALL.parents[3])
     p.add_argument('--audit-only', action='store_true')
+    p.add_argument('--plan-only', action='store_true')
+    p = sub.add_parser('update-status')
+    p.add_argument('--run', required=True, type=Path)
     for operation in ('search', 'function', 'callers'):
         p = sub.add_parser(operation)
         p.add_argument('value')
@@ -460,6 +465,9 @@ def main():
     database = args.database or args.root / 'knowledge/search.sqlite3'
     if args.operation == 'update':
         print(json.dumps(extension('research-update').update(api(), args, database), ensure_ascii=False))
+        return
+    if args.operation == 'update-status':
+        print(json.dumps(extension('update-run').status(api(), args), ensure_ascii=False))
         return
     if args.operation in ('prepare', 'collect', 'finish', 'check'):
         workflow = extension('research-workflow')

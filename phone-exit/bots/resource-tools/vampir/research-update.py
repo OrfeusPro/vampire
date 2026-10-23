@@ -139,6 +139,14 @@ def run_update_checks(index, workflow, args, sha):
 
 
 def update(index, args, database):
+    if getattr(args, 'resume', None) or (args.knowledge/'update-contracts.json').is_file():
+        return index.extension('update-run').run(index,args,database)
+    if getattr(args, 'plan_only', False):
+        raise ValueError('Plan-only requires the contract registry')
+    return legacy_update(index,args,database)
+
+
+def legacy_update(index, args, database):
     workflow = index.extension('research-workflow')
     with workflow.locked(args.root, 'research'):
         baseline, report, manifest = audit_install(index, workflow, args)

@@ -2,6 +2,127 @@
   "schema": 1,
   "checks": [
     {
+      "id": "update-contract-registry",
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_update_contracts.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/update-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json"
+      ]
+    },
+    {
+      "id": "update-binding-closure",
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_update_bindings.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/test_vampir_update_targets.py"
+      ],
+      "runtime_distributions": [
+        "capstone"
+      ]
+    },
+    {
+      "id": "update-run-offline",
+      "runtime_distributions": ["capstone", "unicorn"],
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_update_run.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/update-run.py",
+        "phone-exit/bots/resource-tools/vampir/update-profile.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/research-update.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-context.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/test_vampir_research_update.py",
+        "phone-exit/bots/test_vampir_knowledge_index.py"
+      ]
+    },
+    {
+      "id": "update-profile-guards",
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_update_profile.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/update-profile.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/test_vampir_update_contracts.py"
+      ]
+    },
+    {
+      "id": "version-login-context",
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_version_login_context.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/verify-version-login-context.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/test_vampir_update_contracts.py"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json"
+      ]
+    },
+    {
       "id": "binary-diff-candidate-adapter",
       "questions": ["release-update-target-discovery"],
       "source_sha256": ["d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"],

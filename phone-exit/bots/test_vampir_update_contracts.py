@@ -47,13 +47,18 @@ class UpdateContractsTests(unittest.TestCase):
 
     def test_invalid_references_cycles_and_builder_are_rejected(self):
         original = self.index.read_json
-        for mutation in ('cycle','check','recipe','builder'):
+        for mutation in ('cycle','check','recipe','builder','report-role','report-path','report-cases'):
             data = copy.deepcopy(self.data)
             c = data['contracts'][0]
             if mutation == 'cycle': c['depends_on'] = ['position']
             if mutation == 'check': c['checks'] = ['missing']
             if mutation == 'recipe': c['recipes'] = [dict(key='bad', method='shell')]
             if mutation == 'builder': c['builder'] = 'arbitrary.py'
+            if mutation.startswith('report-'):
+                c=data['contracts'][1]
+                if mutation=='report-role':del c['profile_reports']['defaults']
+                if mutation=='report-path':c['profile_reports']['defaults']['pattern']='../private/*/manifest.json'
+                if mutation=='report-cases':c['profile_reports']['defaults']['min_cases']=0
             api = self.index.api()
             api.read_json = lambda path: data if path.name == 'update-contracts.json' else original(path)
             with self.subTest(mutation=mutation), self.assertRaises(ValueError):

@@ -73,7 +73,14 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Сверить SDK defaults / overrides, GMC2 URL / headers / geo и NID input chain по текущему SHA; перенести отсутствующие checks.",
+      "targets": [
+        "sdk-defaults-gmc2",
+        "sdk-game-overrides",
+        "gmc2-request-layout",
+        "sdk-platform-current",
+        "nid-context-current"
+      ]
     },
     {
       "id": "launcher",
@@ -108,11 +115,15 @@
       "bindings": {
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
           "token": "0x1444ee9d0",
-          "sign-in": "0x144503b10"
+          "sign-in": "0x144503b10",
+          "anchor-launcher-token": "0x1444ee9d0",
+          "anchor-launcher-sign-in": "0x144503b10"
         },
         "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e": {
           "token": "0x1444ef840",
-          "sign-in": "0x144504980"
+          "sign-in": "0x144504980",
+          "anchor-launcher-token": "0x1444ef840",
+          "anchor-launcher-sign-in": "0x144504980"
         }
       },
       "resources": [],
@@ -121,7 +132,49 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Сверить launcher/token и launcher/sign-in: body, headers, response callbacks и срок действия контекста; затем подготовить профиль без активации.",
+      "targets": [
+        "launcher-fields-callbacks",
+        "sdk-runtime-launcher-current"
+      ],
+      "profile_reports": {
+        "defaults": {
+          "pattern": "code-clues/sdk-defaults-*/*/manifest.json",
+          "min_cases": 9
+        },
+        "override": {
+          "pattern": "code-clues/sdk-overrides-*/*/manifest.json",
+          "min_cases": 106
+        },
+        "platform": {
+          "pattern": "code-clues/sdk-platform-*/*/manifest.json",
+          "min_cases": 12
+        },
+        "start": {
+          "pattern": "code-clues/gmc2-base-*/*/manifest.json",
+          "min_cases": 512
+        },
+        "url": {
+          "pattern": "code-clues/gmc2-url-*/*/manifest.json",
+          "min_cases": 27
+        },
+        "headers": {
+          "pattern": "code-clues/gmc2-headers-*/*/manifest.json",
+          "min_cases": 73
+        },
+        "nid_base": {
+          "pattern": "code-clues/nid-context-*/*/manifest.json",
+          "min_cases": 32
+        },
+        "nid_helpers": {
+          "pattern": "code-clues/nid-primitives-*/*/manifest.json",
+          "min_cases": 1124
+        },
+        "geo": {
+          "pattern": "code-clues/gmc2-geo-*/*/manifest.json",
+          "min_cases": 672
+        }
+      }
     },
     {
       "id": "game-version",
@@ -138,12 +191,17 @@
         {
           "key": "constructor",
           "method": "reviewed"
+        },
+        {
+          "key": "wrapper-constructor",
+          "method": "reviewed"
         }
       ],
       "bindings": {
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
           "prepare": "0x1467ce6a0",
-          "constructor": "0x1456d7be0"
+          "constructor": "0x1456d7be0",
+          "wrapper-constructor": "0x1467cc380"
         }
       },
       "resources": [
@@ -157,7 +215,39 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Проверить целый Version writer и остальные поля текущего game profile; tag slice и ID сами по себе не доказывают весь формат.",
+      "context_checks": [
+        "version-login-tag"
+      ],
+      "tag_check": {
+        "packet_id": 1,
+        "packet_name": "PktVersion",
+        "tag_field": 176,
+        "object_size": 208,
+        "start_offset": 570,
+        "stop_offset": 657,
+        "destination_offset": 80,
+        "temporary_offset": 80
+      },
+      "data_dependencies": {
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
+          "tag-pointer": {
+            "kind": "pointer",
+            "address": "0x14b1b9e98"
+          },
+          "tag-literal": {
+            "kind": "ascii",
+            "address": "0x149960020"
+          },
+          "packet-table": {
+            "kind": "vtable",
+            "address": "0x149926d08"
+          }
+        }
+      },
+      "targets": [
+        "compiled-tag-current"
+      ]
     },
     {
       "id": "game-login",
@@ -192,7 +282,39 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Сверить текущие SDK getters, metadata, язык, clock / sequence и полный Login writer / result reader; использовать готовые exports.",
+      "context_checks": [
+        "version-login-tag"
+      ],
+      "tag_check": {
+        "packet_id": 3,
+        "packet_name": "PktLogin",
+        "tag_field": 272,
+        "object_size": 320,
+        "start_offset": 573,
+        "stop_offset": 678,
+        "destination_offset": 128,
+        "temporary_offset": 64
+      },
+      "data_dependencies": {
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
+          "tag-pointer": {
+            "kind": "pointer",
+            "address": "0x14b1b9e98"
+          },
+          "tag-literal": {
+            "kind": "ascii",
+            "address": "0x149960020"
+          },
+          "packet-table": {
+            "kind": "vtable",
+            "address": "0x1499263d0"
+          }
+        }
+      },
+      "targets": [
+        "compiled-tag-current"
+      ]
     },
     {
       "id": "character-list",
@@ -211,7 +333,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Найти и проверить текущие request / list reader / handler, границы полей и связи с успешным Login."
     },
     {
       "id": "character-select",
@@ -230,7 +352,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Перенести source checks выбора существующего персонажа и разбора результата; не создавать нового при наличии персонажа."
     },
     {
       "id": "world-entry",
@@ -249,7 +371,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Сверить текущую цепочку ID 202 / 203 / 204 / 205 / 206 и условия перехода; не выводить готовность мира из одного ответа."
     },
     {
       "id": "position",
@@ -269,7 +391,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Перенести reader позиции / heading / коллекций, связь world context и проекцию; сверить canaries и короткие префиксы."
     },
     {
       "id": "heartbeat",
@@ -289,7 +411,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Перенести source checks Ping producer / result, clock и gates; отдельно проверить разрыв и восстановление."
     },
     {
       "id": "map-data",
@@ -315,7 +437,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Определить изменённые именованные ресурсы / blobs карты, геометрии и навигации; проверить соответствие миру и проекции."
     },
     {
       "id": "quests",
@@ -338,7 +460,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Сверить затронутые quest / tutorial tables и связи с NPC, действиями и текстовыми ключами; неизвестную идентичность строк оставить в очереди."
     },
     {
       "id": "game-ui",
@@ -364,7 +486,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+      "next_check": "Сверить затронутые UI assets, text keys, controls, anchors и scale; имя виджета само по себе не определяет координату клика."
     }
   ]
 }

@@ -18,6 +18,7 @@ def load(index, knowledge):
     for name in primary.get('additional_target_plans', []):
         plans.append(index.child(knowledge, name))
     anchors = {a['id'] for p in plans for a in index.read_json(p).get('anchors', [])}
+    targets={t['id'] for p in plans for t in index.read_json(p).get('manual_port_targets',[])}
     ids = [c['id'] for c in data['contracts']]
     if len(ids) != len(set(ids)) or any(not ID.fullmatch(v) for v in ids):
         raise ValueError('Duplicate or invalid contract ID')
@@ -34,6 +35,8 @@ def load(index, knowledge):
             raise ValueError('Unknown contract dependency')
         if any(x not in check_ids for x in c['checks']):
             raise ValueError('Unknown contract check')
+        if any(t not in targets for t in c.get('targets',[])):
+            raise ValueError('Unknown reviewed target reference')
         for recipe in c['recipes']:
             if recipe.get('method') not in METHODS or not ID.fullmatch(recipe.get('key', '')):
                 raise ValueError('Unknown binding recipe')
@@ -45,8 +48,24 @@ def load(index, knowledge):
             if not SHA.fullmatch(sha): raise ValueError('Contract needs full source SHA')
             if any(k not in keys or index.address(v) != v for k, v in bindings.items()):
                 raise ValueError('Invalid reviewed binding')
+        for sha, dependencies in c.get('data_dependencies',{}).items():
+            if not SHA.fullmatch(sha):raise ValueError('Data dependency needs full source SHA')
+            for key,spec in dependencies.items():
+                if not ID.fullmatch(key) or not spec.get('kind') or index.address(spec.get('address'))!=spec['address']:
+                    raise ValueError('Invalid data dependency')
         if c.get('builder') not in (None, 'sdk-launcher'):
             raise ValueError('Unreviewed profile builder')
+        if c.get('builder')=='sdk-launcher':
+            reports=c.get('profile_reports',{})
+            if set(reports)!={'defaults','override','platform','start','url','headers','nid_base','nid_helpers','geo'}:
+                raise ValueError('Missing or unknown profile report role')
+            for spec in reports.values():
+                pattern=spec.get('pattern','')
+                if (not isinstance(pattern,str) or not pattern.startswith('code-clues/') or '..' in pattern or
+                    not pattern.endswith('/*/manifest.json') or type(spec.get('min_cases')) is not int or spec['min_cases']<1):
+                    raise ValueError('Invalid profile report selector')
+        if any(x!='version-login-tag' for x in c.get('context_checks',[])):
+            raise ValueError('Unreviewed context check')
         for resource in c.get('resources', []):
             if not isinstance(resource.get('archive'), str) or not isinstance(resource.get('path'), str):
                 raise ValueError('Resource needs archive and logical path patterns')
