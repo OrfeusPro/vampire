@@ -48,6 +48,30 @@ class NidSdkRunnerTests(unittest.TestCase):
             result = self.runner.run('test@example.invalid', _capture=capture, _execute=execute)
         self.assertEqual((result, calls), ('accepted-fixture', ['browser', 'sdk']))
 
+    def test_first_sdk_mode_uses_one_provider_and_fresh_context(self):
+        from vampir_core.gmc2_context import SdkInputs, Gmc2Geo, SOURCE_SHA256
+        import time
+        constants = dict(self.constants, termsUrl='https://terms-api.netmarble.com')
+        prepared = SdkInputs('test@example.invalid', self.binding, self.profile, constants,
+            'recovered-release', None, SOURCE_SHA256, Gmc2Geo('8.8.8.8', 'UA', 'UA', 'fixture'), time.monotonic())
+        with patch.object(self.runner, 'execute_first_sdk_login', return_value='first-flow-fixture') as flow:
+            capture = unittest.mock.Mock(return_value=self.provider)
+            result = self.runner.run('test@example.invalid', first_sdk_login=True, terms_country='UA',
+                terms_locale='en-US', basic_filtered=False, selected_profile='recovered-release',
+                _prepared_inputs=prepared, _capture=capture)
+        self.assertEqual(result, 'first-flow-fixture')
+        capture.assert_called_once()
+        self.assertEqual(flow.call_args.kwargs['credential'].channel_code, 33)
+        self.assertEqual(flow.call_args.kwargs['inputs']['country_code'], 'KR')
+        self.assertEqual(flow.call_args.kwargs['terms_country'], 'UA')
+        flow.call_args.kwargs['check_context']()
+
+    def test_first_sdk_mode_rejects_mixed_modes_before_browser(self):
+        for options in (dict(auth_flow='launcher'), dict(fetch_player=True), dict(create_sdk_player=True),
+                        dict(selected_profile='recovered-base')):
+            with self.assertRaises(ValueError):
+                self.runner.run('test@example.invalid', first_sdk_login=True, **options)
+
     def test_launcher_login_and_explicit_signup_share_the_same_nid_request(self):
         from vampir_core.sdk_launcher_auth import LauncherToken
         captures, endpoints = [], []

@@ -251,8 +251,13 @@ GET получил NO DATA с объектом terms вместо массива
 итоговый код 30057209, signed context сохраняется. При NO DATA / state 2
 и заданном callback игра выбирает переход SDK SignUp для Netmarble 33 / step 13;
 остальные ненулевые ответы дают сообщение об ошибке. Это ещё не сетевой SignUp.
-Следом — точная Fetch challenge и первый SDK вход через реальные ответы условий;
+Добавлен отдельный режим первого SDK-входа: Fetch → ответы условий → SDK SignUp
+при двух NO DATA → SignIn с проверкой player ID. Доступные условия останавливают
+операцию; NID-регистрация не повторяется. 43 выбранных теста прошли. Две живые
+попытки остановились на NID до Fetch, повтор дал HTTP 400 после отправки формы.
+Следом — причина NID-отказа и живая проверка уже подключённой цепочки;
 новых персонажей бот пока не создавал.
+[Первый SDK-вход: запуск и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-SDK-LOGIN.md).
 [Индивидуальный запрос и очередь](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
 [Обработчик ответа и игровой переход](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-RESPONSE.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).

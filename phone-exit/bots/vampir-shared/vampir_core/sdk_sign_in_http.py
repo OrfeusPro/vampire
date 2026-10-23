@@ -11,7 +11,7 @@ import urllib.request
 from urllib.parse import urlsplit
 
 from .sdk_sign_in import SdkSignInRequestPlan
-from .sdk_sign_in_response import parse_sdk_sign_in_response
+from .sdk_sign_in_response import parse_sdk_sign_in_response, _invalid_constant
 from .sdk_sign_up_response import parse_sdk_sign_up_response
 from .sdk_launcher_auth import parse_launcher_token_response
 from .sdk_fetch import parse_sdk_fetch_response
@@ -47,7 +47,7 @@ def _read_error_code(response, *, limit, budget, clock):
                 if key in result: raise ValueError('Duplicate key')
                 result[key] = value
             return result
-        value = json.loads(body.decode('utf-8'), object_pairs_hook=pairs)
+        value = json.loads(body.decode('utf-8'), object_pairs_hook=pairs, parse_constant=_invalid_constant)
         code = value.get('errorCode') if isinstance(value, dict) else None
         if type(code) is str and len(code) <= 11 and code.isascii():
             number = int(code)

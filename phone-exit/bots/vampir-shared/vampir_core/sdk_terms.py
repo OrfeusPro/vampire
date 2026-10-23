@@ -33,6 +33,13 @@ class BasicTermsSummary:
     sdk_creation_ready: bool = False
 
 
+@dataclass(frozen=True, slots=True)
+class IndividualTermsSummary:
+    state: str
+    result_code: int
+    consent_confirmed: bool = False
+
+
 def _validate_terms_inputs(constants, game_code, country, locale, platform):
     if lookup_sdk_url_value(constants, 'termsUrl') != 'https://terms-api.netmarble.com':
         raise ValueError('Unsupported explicit terms endpoint')
@@ -97,3 +104,29 @@ def parse_basic_terms_summary(*, status, body):
     else:
         raise ValueError('Unsupported terms result')
     return BasicTermsSummary(state, code, len(terms))
+
+
+def parse_individual_terms_summary(*, status, body):
+    """Strict current object shape; no term text, URLs or acceptance are returned."""
+    if type(status) is not int or not 200 <= status <= 206:
+        raise ValueError('Individual terms HTTP status rejected')
+    if type(body) is not bytes or not 0 < len(body) <= 524288:
+        raise ValueError('Invalid individual terms response size')
+    try:
+        value = json.loads(body.decode('utf-8'), object_pairs_hook=_object_pairs, parse_constant=_invalid_constant)
+    except (ValueError, UnicodeError, RecursionError):
+        raise ValueError('Invalid individual terms JSON') from None
+    if type(value) is not dict or type(value.get('resultCode')) is not int:
+        raise ValueError('Individual terms requires integer resultCode')
+    data = value.get('resultData')
+    terms = data.get('terms') if type(data) is dict else None
+    fields = {'title', 'url', 'required', 'contentExists', 'useAgree', 'useNotice',
+              'agreeNotice', 'disagreeNotice', 'termsCode', 'imageContent'}
+    if type(terms) is not dict or set(terms) != fields:
+        raise ValueError('Unsupported individual terms object')
+    if value['resultCode'] == -1 and all(item is None for item in terms.values()):
+        return IndividualTermsSummary('no_data', -1)
+    if value['resultCode'] == 0:
+        # Content/UI interpretation remains separate; the first-login flow stops.
+        return IndividualTermsSummary('terms_available', 0)
+    raise ValueError('Unsupported individual terms result')

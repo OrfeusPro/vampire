@@ -8591,6 +8591,113 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Точная Fetch challenge из живого ответа и переносимая первая SDK цепочка с реальными terms ответами; отдельно доступные условия и их принятие. Native handoff не доказывает успешный сетевой SDK SignUp."
+    },
+    {
+      "addresses": [
+        "0x1444ca990",
+        "0x144506cf0",
+        "0x144517fd0",
+        "0x145605440"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "303199f9a465f5e498430892e5319aac8390da77bbf4e6b673960e2df64e271d",
+          "id": "release-sdk-fetch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\17c99d7e71ab20981535ada0bc34f4e424369bcc8a9001114ccd6c43bf7d93a6\\manifest.json",
+          "sha256": "17c99d7e71ab20981535ada0bc34f4e424369bcc8a9001114ccd6c43bf7d93a6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5d31887a62eda105d185a1b969f41abbacbbf690318c93496d740bf43a27d10f",
+          "id": "release-terms-continuation",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5\\manifest.json",
+          "sha256": "69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f94e16fe4da3b17c5ded12b7ea41f477d26354ecfa7edd0fd7bd4ef2c6ef028a",
+          "id": "release-sdk-terms",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0fe1d0c2fa05cf6d84184b0a65bb79b942ff39e84b0f5982f766669ea5000d60\\manifest.json",
+          "sha256": "0fe1d0c2fa05cf6d84184b0a65bb79b942ff39e84b0f5982f766669ea5000d60",
+          "state": "passed"
+        },
+        {
+          "cache_key": "559c2bf20a771b1fa4506a05a6ba89e417556fabd1e3f0d0b278b34fa4217a0e",
+          "id": "release-terms-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2\\manifest.json",
+          "sha256": "326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b4a4c3c29b20bb57c23280428eea4af9386fb23539f5460133b34b5f5a319ce3",
+          "id": "release-individual-terms-response",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e\\manifest.json",
+          "sha256": "ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bf9358f24e9a44369363dafb7f1c964d0631e8a7804f97e6353f49305d95ef4f",
+          "id": "release-sdk-first-login",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3c418fb5c6f552a5bffb5d35695b6ddfc098c5a7d5c87b38fade61e2064256fe\\manifest.json",
+          "sha256": "3c418fb5c6f552a5bffb5d35695b6ddfc098c5a7d5c87b38fade61e2064256fe",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Статически связан Fetch errorCode с native context и aggregate 30050027: domain 0 + base 30050000 + step 27. Body-present getter допускает JSON после HTTP ошибки. Добавлен отдельный first-sdk-login: Fetch success → SignIn; только Fetch HTTP 400 / canonical errorCode 1203 → BasicTerms NO DATA → IndividualTerms NO DATA → один SDK SignUp → SignIn с тем же player ID. Условия читаются анонимным bounded GET; доступные/неоднозначные условия останавливают flow. NID-регистрация и создание персонажа отсутствуют. 12 новых и 31 regression tests прошли. Две живые попытки nightraven остановились на NID до Fetch; повтор дал HTTP 400 / login_failed / submitted, без numeric code.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-FIRST-SDK-LOGIN.md",
+          "sha256": "881a0ed97c95517c2021002340a1d239c164aadc8297a8531288929621dcfdbe"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-3380a52fff6d\\details.json",
+          "sha256": "7b0307a30a6cc0b33c1149c956e12a0c822fa8f54a6b4299fbd07c429ad518aa"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-8c0479e8b8bd\\details.json",
+          "sha256": "c0e9b7937e1d716ecbf03759a5449a60a2f7e4e7fee46fda852643067b4d1cd5"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-313ff5f10ab1\\details.json",
+          "sha256": "d376e82c676025619f3973f6ba86389e192bb85b48223a76d46529d9b914756e"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-429315d23bfb\\details.json",
+          "sha256": "05607a1578f1907e7033e4a3708bee08ed0b64d9f3a13263dd6928f837e65522"
+        }
+      ],
+      "id": "739def442b3d882abadc0212ba5597800fa8b137beb15bc35866be0bca7fe59e",
+      "limits": [
+        "Связь Fetch/constructor/SignUp success callback проверена по текущим полным экспортам и байтам, не новым native replay HTTP/JSON/CRT Fetch.",
+        "Terms country, locale и BasicTerms branch задаются явно; native culture/settings не считываются. Поддерживается только точный Fetch HTTP 400 / errorCode 1203 и строгие текущие NO DATA shapes.",
+        "Новый режим пока отдельный CLI, панель его не запускает. Tests используют deterministic fixtures, не реальную авторизацию. Live не дошёл до SDK/условий/SignUp; первый сетевой SDK-вход не подтверждён."
+      ],
+      "method": "static",
+      "next_check": "Диагностировать NID отказ без вывода секретов; после подтверждённого NID результата проверить отдельный first-sdk-login на одном подготовленном аккаунте, затем список персонажей и создание Carnage только при принятом пустом списке.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Причина NID HTTP 400 после отправки формы и успешность полного первого SDK-входа в живой сессии. Доступные условия и принятие UI пока не реализованы."
     }
   ],
   "schema": 1,

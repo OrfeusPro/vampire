@@ -22,6 +22,8 @@ from vampir_core.nid_sdk_credential import build_nid_sdk_credential
 from vampir_core.sdk_sign_in import plan_nid_sdk_sign_in, plan_nid_sdk_sign_up
 from vampir_core.sdk_launcher_auth import plan_nid_launcher_token, plan_launcher_sign_in
 from vampir_core.sdk_fetch import plan_nid_sdk_fetch
+from vampir_core.sdk_first_login import execute_first_sdk_login, FirstSdkLoginStopped
+from vampir_core.sdk_terms import plan_basic_terms_read
 from vampir_core.sdk_sign_in_http import (execute_sdk_sign_in, execute_sdk_sign_up, SdkSignInHttpError,
     execute_launcher_token, execute_launcher_sign_in, execute_sdk_fetch)
 from vampir_core.socks_route import SocksRoute
@@ -95,9 +97,13 @@ def load_inputs(email, *, route=None, selected_profile='recovered-base'):
     return binding, profile, dict(config.constants)
 
 
-def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_player=False, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
+def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_player=False, first_sdk_login=False,
+        terms_country=None, terms_locale=None, basic_filtered=None, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
         _capture=None, _execute=None, _execute_token=None, _progress=None, _prepared_inputs=None):
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')
+    if type(first_sdk_login) is not bool or (first_sdk_login and (
+            create_sdk_player or fetch_player or auth_flow != 'nid' or selected_profile != 'recovered-release')):
+        raise ValueError('First SDK login requires its separate current NID flow')
     if type(fetch_player) is not bool or (fetch_player and (create_sdk_player or auth_flow != 'nid')):
         raise ValueError('Fetch is a separate explicit NID operation')
     if auth_flow not in ('nid', 'launcher') or (auth_flow == 'launcher' and create_sdk_player):
@@ -109,6 +115,10 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
     if isinstance(prepared, SdkInputs):
         prepared.check_usage(email=email, selected_profile=selected_profile, route=route)
     binding, profile, constants = prepared
+    if first_sdk_login:
+        if not isinstance(prepared, SdkInputs): raise ValueError('First SDK login requires fresh current inputs')
+        plan_basic_terms_read(constants=constants, game_code=profile['game_code'], country=terms_country,
+                              locale=terms_locale, platform=profile['os_type'], filtered=basic_filtered)
     context = prepare_nid_sign_in_context(binding=binding, **profile)
     url = bind_nid_web_url(context, constants=constants, max_url_size=32768)
     if _capture is None:
@@ -128,6 +138,11 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
         device_key=binding.device_key, country_code=profile['country_code'] if route else provider.joined_country_code,
         os_type=profile['os_type'])
     credential = build_nid_sdk_credential(provider)
+    if first_sdk_login:
+        return execute_first_sdk_login(credential=credential, inputs=inputs,
+            terms_country=terms_country, terms_locale=terms_locale, basic_filtered=basic_filtered,
+            route=route, progress=_progress,
+            check_context=lambda: prepared.check_usage(email=email, selected_profile=selected_profile, route=route))
     if fetch_player:
         if _progress: _progress('sdk_fetch_player')
         request = plan_nid_sdk_fetch(credential=credential, **inputs)
@@ -155,6 +170,10 @@ if __name__ == '__main__':
     parser.add_argument('--password-stdin', action='store_true', help='Read the password from stdin, never from process arguments')
     parser.add_argument('--create-sdk-player', action='store_true', help='Explicit SDK SignUp instead of SignIn; never automatic on errors')
     parser.add_argument('--fetch-player', action='store_true', help='Read SDK profile state only; no sign-in, terms or creation after Fetch')
+    parser.add_argument('--first-sdk-login', action='store_true', help='Первый SDK-вход: Fetch → условия → SDK-профиль → SignIn; без повторной регистрации Netmarble')
+    parser.add_argument('--terms-country', help='Явная ISO-страна запроса условий')
+    parser.add_argument('--terms-locale', help='Явный язык запроса условий; язык игры автоматически не определяется')
+    parser.add_argument('--basic-terms-mode', choices=['all', 'filtered-unique'], help='Явный выбор ветви BasicTerms')
     parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for both browser and SDK HTTPS')
     parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid', help='Explicit SDK flow, no automatic fallback')
     parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], default='recovered-base')
@@ -163,6 +182,8 @@ if __name__ == '__main__':
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
         data = run(args.email, timeout=args.timeout, password=password, create_sdk_player=args.create_sdk_player, fetch_player=args.fetch_player,
+                   first_sdk_login=args.first_sdk_login, terms_country=args.terms_country, terms_locale=args.terms_locale,
+                   basic_filtered=None if args.basic_terms_mode is None else args.basic_terms_mode == 'filtered-unique',
                    socks_port=args.socks_port, auth_flow=args.auth_flow, selected_profile=args.profile)
         password = None
         if args.fetch_player:
@@ -175,6 +196,9 @@ if __name__ == '__main__':
     except SdkSignInHttpError as error:
         print(json.dumps(dict(sdk_response_accepted=False, error=error.kind, http_status=error.status,
                               sdk_error_code=error.sdk_code)))
+        sys.exit(2)
+    except FirstSdkLoginStopped as error:
+        print(json.dumps(dict(sdk_response_accepted=False, error=error.kind)))
         sys.exit(2)
     except (ValueError, RuntimeError, PermissionError, KeyError):
         print(json.dumps(dict(sdk_response_accepted=False, error='sign_in_not_completed')))
