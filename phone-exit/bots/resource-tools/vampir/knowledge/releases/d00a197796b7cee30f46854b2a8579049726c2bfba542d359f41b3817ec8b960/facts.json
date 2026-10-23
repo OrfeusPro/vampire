@@ -525,6 +525,54 @@
       "question": "sdk-profile-assembly",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current NID caller inputs, auth lifecycle source guards и runtime integration новой сборки, совместимость живого входа."
+    },
+    {
+      "addresses": [
+        "0x1411b5c10",
+        "0x1444ecf50",
+        "0x144532410"
+      ],
+      "checks": [
+        {
+          "cache_key": "153b5cca047e074342332dda1d4b61886c16fb51c3464cf942fc90214b879ca3",
+          "id": "release-requested-function-export",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dcd96db5cf081af33b83fbc3223dafcdc7d5ed7c1b65187a168499c1bf76d490\\manifest.json",
+          "sha256": "dcd96db5cf081af33b83fbc3223dafcdc7d5ed7c1b65187a168499c1bf76d490",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e0a4f3a2e5f0a51f568b29a23e4451c5ef2f62fa25287c5804841d82bafb1167",
+          "id": "sdk-platform-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6094d94c1a39b2fe3d9a5fd0c5c2b5ac10c77c5d72ae33799238df961b190486\\manifest.json",
+          "sha256": "6094d94c1a39b2fe3d9a5fd0c5c2b5ac10c77c5d72ae33799238df961b190486",
+          "state": "passed"
+        },
+        {
+          "cache_key": "32e84b4410ea24fee816e56b431882d4f70991e4619ab1bc462db86262fc6108",
+          "id": "web-platform-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cc5ce96af0adb9ed23005efde109513f745d00e39580f97c96031228295cd1b9\\manifest.json",
+          "sha256": "cc5ce96af0adb9ed23005efde109513f745d00e39580f97c96031228295cd1b9",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "По проверенному E8 caller найден FDeviceInfo::GetPlatform, diagnostic signature совпала. Caller, platform getter и PC initializer исполнены в 52 native сценариях с initialized TLS и console fixtures. Default byte 3, выбор slot +0 при первом/втором true и +4 при обоих false, short circuit, outputs и canaries подтверждены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-WEB-PLATFORM-11316.md",
+          "sha256": "40d5a906311842c38b399b2d9e5965ec32ee1932a778e7a7aeb67b073b123ad6"
+        }
+      ],
+      "id": "547094e2583b2644b2c5f6d879145b5043db2b1b5f5a5ba9f33282fb4d8a87c2",
+      "limits": [
+        "Сохранённый EXE и synthetic memory; без сети/процесса игры/auth.",
+        "TLS/console state, два thread predicates, FString allocation/storage, memcpy и exit registration — fixtures; logging disabled.",
+        "Lazy console lookup/registration и NID parent/context builder не исполнены; другие platform labels не покрыты."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти verified callers FDeviceInfo::GetPlatform и текущий NID context builder, затем проверить input fields и runtime guards.",
+      "question": "sdk-platform-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Связь с текущим NID parent/context builder, остальные inputs и auth lifecycle новой сборки."
     }
   ],
   "schema": 1,

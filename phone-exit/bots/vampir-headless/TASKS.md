@@ -46,6 +46,9 @@ switch: case blocks входят в проверяемые инструкции,
 Собран отдельный SDK profile-кандидат из шести native reports / 739 случаев.
 Он пока не включён в runtime: NID caller inputs и auth guards ещё требуют сверки.
 [Состав профиля, проверки и следующий этап](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-PROFILE-11316.md).
+FDeviceInfo::GetPlatform проверен в 52 native случаях: default PC и выбор
+console slot при initialized TLS. NID parent / context builder ещё не подтверждён.
+[Caller платформы и fixture limits](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-WEB-PLATFORM-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

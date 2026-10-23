@@ -420,14 +420,15 @@
       "id": "sdk-platform-current",
       "status": "bounded_answer",
       "question": "Как текущий platform getter получает PC и как проверяется полнота switch export?",
-      "known": "Для d00a1977 точный PC initializer 0x1411b5c10 пишет global 0x14b562888; getter 0x144532410 после выгрузки ограниченных блоков содержит 75 инструкций и 11 блоков. Native replay в 12 случаях подтвердил: byte 3 возвращает PC, 2 / 255 — пустую строку, на четырёх poison fills; canaries сохранены. Неполный ранний export сохранён со статусом incomplete. Collector ограничивает blocks исходными unwind ranges.",
-      "unknown": "NID caller binding, TLS/console overrides и полный source-bound SDK profile новой сборки.",
-      "next_action": "Собрать текущий профиль из проверенных native reports; отдельно проверить NID caller inputs и auth lifecycle перед живым входом.",
+      "known": "Для d00a1977 точный PC initializer 0x1411b5c10 пишет global 0x14b562888; getter 0x144532410 после выгрузки ограниченных блоков содержит 75 инструкций и 11 блоков. Native replay в 12 случаях подтвердил: byte 3 возвращает PC, 2 / 255 — пустую строку, на четырёх poison fills; canaries сохранены. Неполный ранний export сохранён со статусом incomplete. Collector ограничивает blocks исходными unwind ranges. По проверенным direct callers getter найден FDeviceInfo::GetPlatform 0x1444ecf50; diagnostic signature подтверждена. Caller/getter/PC initializer исполнены в 52 случаях: initialized TLS, console pointer absent/present, два synthetic thread predicates. Default byte 3 и выбор slot 0/4 подтверждены; lazy registration и NID parent не покрыты.",
+      "unknown": "NID parent/caller binding, lazy console lookup/registration, остальные NID inputs и auth lifecycle новой сборки.",
+      "next_action": "Найти verified callers FDeviceInfo::GetPlatform и текущий NID context builder; проверить build/clientId/webview/country inputs до runtime integration.",
       "decision_rule": "PC byte 3 — explicit local choice; native getter не доказывает фактический caller или весь NID lifecycle. Псевдокод switch не доказывает экспорт case instructions.",
       "do_not_repeat": "Готовые initializer/getter не перевыгружать без смены источника или конкретной неполноты; старый switch export без blocks не использовать как ready.",
       "addresses": [],
       "evidence": [
-        "evidence/auth/HEADLESS-SDK-PLATFORM-11316.md"
+        "evidence/auth/HEADLESS-SDK-PLATFORM-11316.md",
+        "evidence/auth/HEADLESS-WEB-PLATFORM-11316.md"
       ]
     },
     {

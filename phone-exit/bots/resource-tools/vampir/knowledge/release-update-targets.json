@@ -527,13 +527,22 @@
                   "sdk-platform-native-11316",
                   "release-requested-function-export"
                 ]
+              },
+              {
+                "address": "0x1444ecf50",
+                "scope": "FDeviceInfo GetPlatform with initialized TLS/console fixtures; lazy registration and NID parent excluded",
+                "required_checks": [
+                  "web-platform-native-11316"
+                ]
               }
             ],
             "tools": [
-              "replay-sdk-platform-11316.py"
+              "replay-sdk-platform-11316.py",
+              "replay-web-platform-11316.py"
             ],
             "evidence": [
-              "evidence/auth/HEADLESS-SDK-PLATFORM-11316.md"
+              "evidence/auth/HEADLESS-SDK-PLATFORM-11316.md",
+              "evidence/auth/HEADLESS-WEB-PLATFORM-11316.md"
             ]
           }
         ]
