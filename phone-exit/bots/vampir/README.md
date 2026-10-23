@@ -205,6 +205,11 @@ launcher SDK, но получила выбранное лобби 10036 до с�
 приняты, но выбранное лобби снова вернуло 10036 до списка персонажей.
 Это отдельный от авторизации отказ; создание не отправлялось.
 [Текущий mapper и границы вывода](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RELEASE-LOBBY-ERRORS.md).
+Контроль основного аккаунта на Aria 1 и его прежнем Prelude 2 также прошёл NID /
+launcher SDK и получил selected lobby 10036 до Game Login. Назначения сохранены
+без изменений. Это исключает отсутствие нового персонажа как единственное
+объяснение; серверную причину и общий контекст клиента ещё нужно разделить.
+[Сравнение двух EU-серверов](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-EU-LOBBY-CONTROL.md).
 [Первый SDK-вход: запуск и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-SDK-LOGIN.md).
 [Индивидуальный запрос и очередь](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
 [Обработчик ответа и игровой переход](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-RESPONSE.md).

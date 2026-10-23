@@ -484,3 +484,9 @@ Worker создания на Aria 1 получил selected lobby 10036 до с�
 Ручной вход отделил эту капчу от следующего отказа лобби. Текущий native mapper
 подтвердил ключ IsInspect; worker теперь показывает его фиксированное описание.
 [Проверка текущего mapper](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RELEASE-LOBBY-ERRORS.md).
+
+Контроль основного аккаунта на Aria 1 и его прежнем Prelude 2 также прошёл NID /
+launcher SDK и получил selected lobby 10036 до Game Login. Назначения сохранены
+без изменений. Это исключает отсутствие нового персонажа как единственное
+объяснение; серверную причину и общий контекст клиента ещё нужно разделить.
+[Сравнение двух EU-серверов](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-EU-LOBBY-CONTROL.md).

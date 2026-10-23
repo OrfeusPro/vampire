@@ -8904,6 +8904,108 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Почему выбранное Aria 1 лобби нового аккаунта вернуло IsInspect при доступном каталоге; первая игровая сессия и создание персонажа."
+    },
+    {
+      "addresses": [
+        "0x145810700"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "303199f9a465f5e498430892e5319aac8390da77bbf4e6b673960e2df64e271d",
+          "id": "release-sdk-fetch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\17c99d7e71ab20981535ada0bc34f4e424369bcc8a9001114ccd6c43bf7d93a6\\manifest.json",
+          "sha256": "17c99d7e71ab20981535ada0bc34f4e424369bcc8a9001114ccd6c43bf7d93a6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5d31887a62eda105d185a1b969f41abbacbbf690318c93496d740bf43a27d10f",
+          "id": "release-terms-continuation",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5\\manifest.json",
+          "sha256": "69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f94e16fe4da3b17c5ded12b7ea41f477d26354ecfa7edd0fd7bd4ef2c6ef028a",
+          "id": "release-sdk-terms",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0fe1d0c2fa05cf6d84184b0a65bb79b942ff39e84b0f5982f766669ea5000d60\\manifest.json",
+          "sha256": "0fe1d0c2fa05cf6d84184b0a65bb79b942ff39e84b0f5982f766669ea5000d60",
+          "state": "passed"
+        },
+        {
+          "cache_key": "559c2bf20a771b1fa4506a05a6ba89e417556fabd1e3f0d0b278b34fa4217a0e",
+          "id": "release-terms-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2\\manifest.json",
+          "sha256": "326389264ea6fe1e7489f383d171e646c7eabc399bf09cf8a5d3f994f64eb1e2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b4a4c3c29b20bb57c23280428eea4af9386fb23539f5460133b34b5f5a319ce3",
+          "id": "release-individual-terms-response",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e\\manifest.json",
+          "sha256": "ecb2d9b5019bee8db055de3d335b30d0b3f71405b9b8a3c015e55524a246477e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bf9358f24e9a44369363dafb7f1c964d0631e8a7804f97e6353f49305d95ef4f",
+          "id": "release-sdk-first-login",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3c418fb5c6f552a5bffb5d35695b6ddfc098c5a7d5c87b38fade61e2064256fe\\manifest.json",
+          "sha256": "3c418fb5c6f552a5bffb5d35695b6ddfc098c5a7d5c87b38fade61e2064256fe",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2f453faf6f91cc013665362f5aafdbb8f9a7c468bb9457bb02194bbf2dcb469c",
+          "id": "release-nid-http-hints",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cd9e0a5d07460275c4a6759f0160e96d4d596037e2e1b35f7ff44e03ea4587c1\\manifest.json",
+          "sha256": "cd9e0a5d07460275c4a6759f0160e96d4d596037e2e1b35f7ff44e03ea4587c1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6bc3b2bdc1e03e6924985994d1d3c5d19402943cc6e967b85d8b6e1054fea5ac",
+          "id": "release-lobby-errors",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\419cfec6eb81025091a3ce46c7f6d7b2a4d79681f12ac64a87184dba52276a67\\manifest.json",
+          "sha256": "419cfec6eb81025091a3ce46c7f6d7b2a4d79681f12ac64a87184dba52276a67",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Два последовательных живых контроля основного аккаунта на Aria 1 и прежнем Prelude 2 прошли NID/launcher SDK и получили selected lobby 10036 до Game Login. Назначения не изменены. Отказ воспроизводится при существующем персонаже и не специфичен новому SDK-профилю.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-EU-LOBBY-CONTROL.md",
+          "sha256": "ad00fbe982726d0b6c14d2f561aa02ad14446cc1c74ec369803c071edd58c7c5"
+        }
+      ],
+      "id": "a92dc4b5c07b62af8f6f8f4ac723f8e27a1af9e52dfd322715cc91dd559280eb",
+      "limits": [
+        "Метод static обозначает фиксацию наблюдений протокола и привязку к ранее проверенному mapper, не новый native replay.",
+        "Два контроля через один runtime не изолируют техработы сервера от общего несовпадения клиентского контекста.",
+        "Game Login, список, выбор и создание персонажа не отправлялись. Штатный клиент одновременно не проверялся."
+      ],
+      "method": "static",
+      "next_check": "Сопоставить штатный клиент и бот на Prelude 2 при новом наблюдении. При успешном штатном входе проверить поля lobby context / Login. SDK SignUp nightraven не повторять.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Причина selected lobby IsInspect на Aria 1 и Prelude 2 при принятом SDK у основного и нового аккаунтов: серверное состояние либо общий контекст клиента. Нужен контроль штатного клиента в сопоставимое время. Первая игровая сессия nightraven и доступные условия/UI остаются открытыми."
     }
   ],
   "schema": 1,
