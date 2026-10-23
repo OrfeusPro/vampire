@@ -65,6 +65,10 @@ BoneGroup F / M извлечены из текущего PAK: по семь гр
 [Definition и преобразование ключей](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-ENTRY.md).
 [Текущие группы внешности](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-RESOURCES.md).
 [Имена файлов и проверка каталога](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-DIRECTORY.md).
+Сброс перед preview проверен в 24 native случаях: поля внешности, голос и map
+очищаются, пол сохраняется. Последующие записи preset / UI ещё не прослежены;
+это промежуточное состояние, не готовая внешность для отправки создания.
+[Инициализация и следующий вызов](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-RESET.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

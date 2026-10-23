@@ -83,6 +83,11 @@ ID 1–7, списки костей. Следом пары `.uasset` / `.uexp` �
 Диапазонов / начальных float в этой таблице нет; искать их источник и заполнение owner map.
 [Извлечение и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-RESOURCES.md).
 [Именованные пары и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-DIRECTORY.md).
+Сброс owner перед preview прошёл 24 native случая: десять байт внешности,
+VoiceType, FString и map очищаются; пол сохраняется. Проверены buckets 0 / 1,
+освобождение storage — fixture. Далее проверить `14642f090` после preview
+и последующие записи map, затем выбранный preset и диапазоны float.
+[Сброс и статическая последовательность](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-RESET.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
