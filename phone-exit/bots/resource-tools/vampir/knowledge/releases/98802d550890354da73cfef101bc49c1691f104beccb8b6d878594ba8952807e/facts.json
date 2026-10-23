@@ -8051,6 +8051,81 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Как выбираются первоначальные channel и шаг для нового аккаунта перед игровым SignIn; серверная причина SDK 1203."
+    },
+    {
+      "addresses": [
+        "0x1444e91f0",
+        "0x1444e9270",
+        "0x14452d7a0",
+        "0x1445a8df0",
+        "0x1445a8e70",
+        "0x145603ab0",
+        "0x145604910",
+        "0x145605440",
+        "0x14560b250",
+        "0x14561a200"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "В текущем игровом первом входе есть отдельный Fetch. Целый callback 145603ab0 с тремя native getter leaves прошёл 27 сценариев: успех передаёт channel33/step15, только error code30050027 ShowBasicTerm вместе с context1203 ведёт в 14561a200. Текущие PE enum descriptors подтверждают шаги Fetch/SignUp/SignIn и каналы33/100/200. Статически 14561a200 идёт через GetTermsOfService в FBasicTermsContent::Show; это не прямой SDK SignUp. В runner бота отдельного Fetch/terms нет. Причина live launcher1203 и полный контракт первого SDK подключения ещё не установлены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-FIRST-GAME-FETCH.md",
+          "sha256": "b4219a70739552faee0b06e6b195919aedda456f39566ae0fd3023360a9314d3"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-313ff5f10ab1\\details.json",
+          "sha256": "d376e82c676025619f3973f6ba86389e192bb85b48223a76d46529d9b914756e"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-77e3786da51e\\details.json",
+          "sha256": "016100a24be5999fcbd3c2a535d5745d2bcb13b65e72bf4cf4883e15b2351970"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-65955959b5db\\details.json",
+          "sha256": "f8e3fbcab222925c62906f05740c11c832888b4595df3984529282cc7d38c17f"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-9a795062de1a\\details.json",
+          "sha256": "bf2105cdefac3d78cca7be0d286c2a9143509a8daac8bff428a6cd5a94db8741"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-88adae59bed9\\details.json",
+          "sha256": "ad68dbf9e89f0a77232e4c6cad29f0e48f15042af35e5260ed470fb307e57a37"
+        }
+      ],
+      "id": "c1f8d9280ef22a92cc43c07fcc62993bd117395289310df8171278ab98a551cc",
+      "limits": [
+        "Native только целый Fetch callback и три getter leaves; logger, SignIn, terms и UI — captures. SDK HTTP/error construction не исполнялись, raw fields synthetic.",
+        "Статические остальные roots и diagnostics не доказывают полный startup/terms lifecycle. Raw EUIViewState не интерпретирован; связь продолжения с SignUp ещё открыта.",
+        "Нельзя применять точный Fetch gate как автоматический fallback на launcher/sign-in1203. Авторизация, реальные условия и аккаунты не менялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Prepare для 1444e8890 и 1444e9b00 (Fetch backend handoff), а также 14561ace0 (terms continuation). Доказать контракт до явного режима первого игрового подключения; обычный вход и регистрацию NID не смешивать.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Backend endpoint/payload Fetch и продолжение базовых условий до решения о первом SDK SignUp."
     }
   ],
   "schema": 1,

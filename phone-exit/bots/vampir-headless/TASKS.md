@@ -218,6 +218,13 @@ synthetic raw fields не считать живым ответом. Далее c
 и `145605440`: выбрать реальную operation/channel/step до первого входа.
 Два теста и workflow checks прошли; авторизация не запускалась.
 [Результат SDK → игровой callback](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GAME-SIGN-IN-RESULT.md).
+Найден Fetch первого подключения: `14560b250` → channel 33 → `1444e9270`.
+Целый `145603ab0` прошёл 27 сценариев: успех вызывает SignIn 33 / step 15;
+только error 30050027 / context 1203 ведёт в TermsOfService и BasicTerms Show.
+В runtime этого этапа нет. Два теста и три workflow checks прошли offline.
+Далее backend `1444e8890` / `1444e9b00` и terms continuation `14561ace0`;
+не добавлять SignUp fallback на обычный launcher 1203, NID-регистрацию не повторять.
+[Первый игровой Fetch](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-GAME-FETCH.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

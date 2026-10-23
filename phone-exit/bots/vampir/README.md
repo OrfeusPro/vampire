@@ -162,6 +162,12 @@ source-bound audit и три теста прошли без авторизаци
 разделены. UI, журнал и manager actions остаются captures. Причина живого 1203
 не установлена; следующий вопрос — выбор режима до отправки первого входа.
 [Цепочка результата и границы исполнения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-GAME-SIGN-IN-RESULT.md).
+Первый игровой вход содержит отдельный Fetch и базовые условия; в runner бота
+этого этапа пока нет. Целый Fetch callback прошёл 27 native сценариев: только
+ShowBasicTerm 30050027 вместе с контекстом 1203 ведёт в TermsOfService.
+Это не основание для SignUp после любого отказа launcher. Далее backend Fetch
+и продолжение условий, затем явный режим первого подключения.
+[Первый вход, условия и точные границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-GAME-FETCH.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
