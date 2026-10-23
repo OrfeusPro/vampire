@@ -1,0 +1,370 @@
+{
+  "schema": 1,
+  "capabilities": {
+    "launcher": {
+      "requires": [
+        "sdk-gmc2",
+        "launcher"
+      ]
+    },
+    "world-session": {
+      "requires": [
+        "sdk-gmc2",
+        "launcher",
+        "game-version",
+        "game-login",
+        "character-list",
+        "character-select",
+        "world-entry",
+        "position",
+        "heartbeat"
+      ]
+    },
+    "map": {
+      "requires": [
+        "position",
+        "map-data"
+      ]
+    },
+    "quests": {
+      "requires": [
+        "quests"
+      ]
+    },
+    "game-ui": {
+      "requires": [
+        "game-ui"
+      ]
+    }
+  },
+  "contracts": [
+    {
+      "id": "sdk-gmc2",
+      "purpose": "Начальные настройки SDK, свежая конфигурация и geo",
+      "depends_on": [],
+      "checks": [
+        "sdk-profile-assembly-11316",
+        "gmc2-geo-native-11316"
+      ],
+      "recipes": [
+        {
+          "key": "constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "nid-context",
+          "method": "reviewed"
+        },
+        {
+          "key": "nid-result",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
+          "constructor": "0x1444c4210",
+          "nid-context": "0x1450e3c80",
+          "nid-result": "0x1450f3e40"
+        }
+      },
+      "resources": [],
+      "builder": null,
+      "coverage": "source_checks",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "launcher",
+      "purpose": "Вход через launcher",
+      "depends_on": [
+        "sdk-gmc2"
+      ],
+      "checks": [
+        "release-launcher-contract",
+        "sdk-runtime-launcher-11316"
+      ],
+      "recipes": [
+        {
+          "key": "anchor-launcher-token",
+          "method": "anchor",
+          "anchor": "launcher-token"
+        },
+        {
+          "key": "anchor-launcher-sign-in",
+          "method": "anchor",
+          "anchor": "launcher-sign-in"
+        },
+        {
+          "key": "token",
+          "method": "reviewed"
+        },
+        {
+          "key": "sign-in",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
+          "token": "0x1444ee9d0",
+          "sign-in": "0x144503b10"
+        },
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e": {
+          "token": "0x1444ef840",
+          "sign-in": "0x144504980"
+        }
+      },
+      "resources": [],
+      "builder": "sdk-launcher",
+      "coverage": "source_checks",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "game-version",
+      "purpose": "Version и compiled tag",
+      "depends_on": [],
+      "checks": [
+        "compiled-tag-native-11316"
+      ],
+      "recipes": [
+        {
+          "key": "prepare",
+          "method": "reviewed"
+        },
+        {
+          "key": "constructor",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
+          "prepare": "0x1467ce6a0",
+          "constructor": "0x1456d7be0"
+        }
+      },
+      "resources": [
+        {
+          "archive": "*ProjectRED-Windows.pak",
+          "path": "ProjectRED/Config/DefaultGame.ini"
+        }
+      ],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "game-login",
+      "purpose": "Игровой Login и ответ",
+      "depends_on": [
+        "launcher",
+        "game-version"
+      ],
+      "checks": [
+        "release-game-sign-in-result",
+        "release-lobby-errors"
+      ],
+      "recipes": [
+        {
+          "key": "prepare",
+          "method": "reviewed"
+        },
+        {
+          "key": "constructor",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
+          "prepare": "0x1467ce030",
+          "constructor": "0x1456d7570"
+        }
+      },
+      "resources": [],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "character-list",
+      "purpose": "Список персонажей",
+      "depends_on": [
+        "game-login"
+      ],
+      "checks": [
+        "release-character-selection-probe"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "character-select",
+      "purpose": "Выбор существующего персонажа",
+      "depends_on": [
+        "character-list"
+      ],
+      "checks": [
+        "release-character-selection-probe"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "world-entry",
+      "purpose": "Вход в мир",
+      "depends_on": [
+        "character-select"
+      ],
+      "checks": [
+        "release-world-completion-policy"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "position",
+      "purpose": "Серверная позиция персонажа",
+      "depends_on": [
+        "world-entry"
+      ],
+      "checks": [
+        "release-world-position-path",
+        "release-world-finish-collections"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "heartbeat",
+      "purpose": "Поддержание соединения",
+      "depends_on": [
+        "game-login"
+      ],
+      "checks": [
+        "release-ping-producer",
+        "release-ping-result"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "map-data",
+      "purpose": "Проекция и геометрия карты",
+      "depends_on": [],
+      "checks": [
+        "release-map-projection"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [
+        {
+          "archive": "*.pak",
+          "path": "*Map*"
+        },
+        {
+          "archive": "*.pak",
+          "path": "*Nav*"
+        }
+      ],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "quests",
+      "purpose": "Данные и состояние квестов",
+      "depends_on": [],
+      "checks": [
+        "release-quest-list",
+        "release-quest-update"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [
+        {
+          "archive": "*.pak",
+          "path": "*Quest*"
+        }
+      ],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    },
+    {
+      "id": "game-ui",
+      "purpose": "Игровые меню и обучение",
+      "depends_on": [],
+      "checks": [
+        "release-tutorial-update"
+      ],
+      "recipes": [],
+      "bindings": {},
+      "resources": [
+        {
+          "archive": "*.pak",
+          "path": "*UI*"
+        },
+        {
+          "archive": "*.pak",
+          "path": "*Tutorial*"
+        }
+      ],
+      "builder": null,
+      "coverage": "partial",
+      "limits": [
+        "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
+      ],
+      "next_check": "Resolve current bindings and pass required checks; retain unverified relationships in manual queue."
+    }
+  ]
+}
