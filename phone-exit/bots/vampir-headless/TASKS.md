@@ -64,6 +64,10 @@ Writer затем прошёл 42 тела и 24 отказа raw output fixture
 и lookup прошла 54 случая. Далее — producer внешности / JSON и ID 104.
 [Выбор класса](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-LOOKUP.md).
 [Текущая строка Carnage](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-CLASSES.md).
+Constructor / reader ID 104 прошли 16 тел и 729 усечений; все поля записи
+совпали с переносимым decoder. Handler и коды отказа остаются отдельно;
+параметры внешности / JSON и реальное создание пока не подключены.
+[Чтение результата создания](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-READER.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

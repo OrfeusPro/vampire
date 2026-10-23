@@ -49,6 +49,9 @@ storage. Затем singleton связан с ClassInfo / Type loader и Gunner 
 и native lookup охватила 54 случая; отправки создания ещё нет.
 [Цепочка выбора и оставшиеся границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CLASS-LOOKUP.md).
 [Текущие классы и источники](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-CURRENT-CLASSES.md).
+Reader ответа создания ID 104 проверен на 16 телах и 729 коротких префиксах.
+Переносимый decoder возвращает code и запись, но не сохраняет ник автоматически.
+[Ответ создания и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-READER.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
