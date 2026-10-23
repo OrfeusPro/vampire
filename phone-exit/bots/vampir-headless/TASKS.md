@@ -126,6 +126,14 @@ class size, поля пресета от +0x30 не копируются из р
 Следующий шаг — проверить завершение именно этого CDO и применение defaults
 при загрузке asset, затем разрешать отсутствующие поля extractor.
 [Воспроизведение и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-DEFAULT-COPY.md).
+Следом исполнены initializer, context push, constructor пресета и оба base
+constructors: 24 сценария, int32 сохранены, float 0.5 и voice 0. Шесть целых
+postconstruct сценариев без config / subobjects изменили только object flags.
+Текущие UClass callback slots и preset slots +0x58 / +0x60 пустые.
+Далее — wrapper завершения с выбором immediate / deferred и перенос defaults
+при загрузке asset. Config helper не считать целиком служебным: его config-ветка
+может менять свойства, здесь покрыт ранний возврат при отсутствии class flag 0x4.
+[Native цепочка и fixtures](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-INITIALIZER.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

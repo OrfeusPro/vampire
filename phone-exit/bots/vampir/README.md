@@ -98,6 +98,12 @@ int32 остаются неизвестными до проверки CDO. Че�
 пресета от +0x30. Обнуление новой allocation найдено статически; полный цикл
 CDO / загрузки asset ещё не проверен, отсутствующие int32 остаются unknown.
 [Копирование defaults и границы проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-DEFAULT-COPY.md).
+Initializer / context push и вся цепочка constructors пресета прошли 24 native
+сценария без подмены базовых constructors: int32 сохраняются, семь float равны
+0.5, voice равен 0. Ещё шесть postconstruct сценариев с текущими virtual methods
+без config / subobjects изменили только flags. Wrapper завершения и загрузка
+asset ещё не проверены; omitted int32 пока не подставляются автоматически.
+[Инициализация, virtual bindings и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-PRESET-INITIALIZER.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).
