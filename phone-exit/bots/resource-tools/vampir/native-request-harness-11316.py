@@ -106,6 +106,7 @@ def make_harness(exports, functions, leaves=None, root=None):
     if (h.copy_import['dll'].lower(),h.copy_import['name']) != ('vcruntime140.dll','memcpy'):
         raise ValueError('Request copy import identity differs')
     uc.mem_map(h.scratch,0x40000)
+    pages.update(range(h.scratch,h.scratch+0x40000,4096))
     stop = h.scratch+0x3f000
     uc.mem_write(stop,b'\xc3')
 

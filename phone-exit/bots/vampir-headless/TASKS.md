@@ -36,6 +36,9 @@ client ID и путь NMENV. Источники и границы статиче
 GMC2 URL slice с настоящими getters / initializers / append прошёл 27 native
 сценариев. Заголовки и полный профиль пока не перенесены.
 [Выполнение URL и автоматические проверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-URL-NATIVE-11316.md).
+GMC2 headers slice прошёл 73 native случая с synthetic HTTP captures.
+Platform и полный SDK profile ещё требуют проверки.
+[Поля headers, gates и fixtures](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-HEADERS-NATIVE-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

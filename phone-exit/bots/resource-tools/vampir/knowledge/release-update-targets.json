@@ -413,9 +413,10 @@
               },
               {
                 "address": "0x1444fbbc0",
-                "scope": "whole source coverage and masked shape; no native execution",
+                "scope": "whole static coverage; native header slice 0x1444fbe00..0x1444fc051 with device/player/HTTP fixtures",
                 "required_checks": [
-                  "gmc2-request-layout-11316"
+                  "gmc2-request-layout-11316",
+                  "gmc2-headers-native-11316"
                 ]
               },
               {
@@ -463,11 +464,13 @@
             ],
             "tools": [
               "audit-gmc2-request-11316.py",
-              "replay-gmc2-url-11316.py"
+              "replay-gmc2-url-11316.py",
+              "replay-gmc2-headers-11316.py"
             ],
             "evidence": [
               "evidence/auth/HEADLESS-GMC2-REQUEST-LAYOUT-11316.md",
-              "evidence/auth/HEADLESS-GMC2-URL-NATIVE-11316.md"
+              "evidence/auth/HEADLESS-GMC2-URL-NATIVE-11316.md",
+              "evidence/auth/HEADLESS-GMC2-HEADERS-NATIVE-11316.md"
             ]
           }
         ]

@@ -393,6 +393,64 @@
       "question": "gmc2-request-layout",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Native HTTP header outputs, platform и итоговый runtime profile."
+    },
+    {
+      "addresses": [
+        "0x1411b3260",
+        "0x1411b3290",
+        "0x1411b32c0",
+        "0x1444c4210",
+        "0x1444fbbc0",
+        "0x1445320c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "8fdcf5f97ffc596d76242259d38fed3ea88e737e827ee6ffff5cbc8ee8ca50a6",
+          "id": "gmc2-request-layout-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c5385f0e540be72f920dfba9f26c5e5d518d57947082022a503f453ec9e1d9a2\\manifest.json",
+          "sha256": "c5385f0e540be72f920dfba9f26c5e5d518d57947082022a503f453ec9e1d9a2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "680a6338f96c7b36994ee748a2e119729f05f0770ad47153797c28ac4758aa4c",
+          "id": "release-update-plan-dispatch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a7a956556dbfb65671cc387541802cc4b0a1203ca18cabfb7ab47c1c01125fa2\\manifest.json",
+          "sha256": "a7a956556dbfb65671cc387541802cc4b0a1203ca18cabfb7ab47c1c01125fa2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11f7409a8c918efce5e36d95956723a5d1bc12aedf2f7f7a89ec06bcafd188a4",
+          "id": "gmc2-url-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b83e14a553fce6e73caa88bcbb5e8d5dddfbd84a1df95e718b76224b7f1189d9\\manifest.json",
+          "sha256": "b83e14a553fce6e73caa88bcbb5e8d5dddfbd84a1df95e718b76224b7f1189d9",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c41479ca3bcb539b19eb4667ace8c88562eb01dd545cb0eafd5d34ee7cbdbada",
+          "id": "gmc2-headers-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ee3af696d99b07c85544cb0f514c475f2e47b1c3850f519f91fb25422aefcbd3\\manifest.json",
+          "sha256": "ee3af696d99b07c85544cb0f514c475f2e47b1c3850f519f91fb25422aefcbd3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole GMC2 constructor/build getter/initializers и текущий header slice исполнены в 73 synthetic HTTP capture сценариях. Method, URL, имена/значения/порядок headers совпали с portable request plan. Подтверждены ETag/access-token gates, включая один символ, пустой player ID, canaries и вызов player fixture только при token. Исправлен учёт scratch pages harness; четыре URL regression tests и повторные 27 URL cases прошли.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-GMC2-HEADERS-NATIVE-11316.md",
+          "sha256": "9e3fa0bc261ff0b57f60836650356906c14cdb296bde793c0f4e023b18150499"
+        }
+      ],
+      "id": "586acc13fab2756dd5b3d4f6839990e78ae030b195c3101fe97ed4617d18eabc",
+      "limits": [
+        "Сохранённый EXE и synthetic memory, без процесса игры, сети и авторизации.",
+        "HTTP methods, device/player getters, class/CDO, FString storage/allocation, memcpy/free и exit registration — fixtures.",
+        "Request creation, TLS/console gates до slice, HTTP transport и активные startup inputs не проверялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти source-checked текущие platform initializer/getter, исполнить их и собрать новый профиль из актуальных native reports.",
+      "question": "gmc2-request-layout",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Platform initializer/getter, полный runtime profile и совместимость живого входа."
     }
   ],
   "schema": 1,
