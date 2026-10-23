@@ -13,17 +13,20 @@ patch revision **262487**, EXE SHA `d00a197796b7…`. Полная сверка 
 сборки; сверка SDK/GMC2 и перенос остальных auth checks ещё нужны.
 [Что искать при следующем обновлении](../resource-tools/vampir/knowledge/UPDATE-TARGETS.md).
 Получены полные экспорты двух новых launcher-функций; повтор collect использует
-готовые материалы без JVM. Контракт SDK и живой вход ещё не перенесены.
+готовые материалы без JVM. Живой вход новой сборки ещё не подтверждён.
 [Явный экспорт нового SHA и проверки](../resource-tools/vampir/knowledge/evidence/tools/HEADLESS-REQUESTED-GHIDRA.md).
 Статический launcher request/response audit перенесён на новый SHA: 16 функций,
 10 ключей, суффиксы, thunks и локальные ветвления. Живой вход этим не подтверждён.
 [Launcher-контракт 1.13.16](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-CONTRACT-11316.md).
 Новый GMC2 Start проверен на 512 native случаях до границы копирования базы.
-Реальные URL, default zone и полный SDK profile ещё требуют переноса.
+URL и начальные значения отдельно проверены ниже; полный SDK profile ещё требует переноса.
 [Выбор базы и fixtures](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GMC2-START-11316.md).
 Четыре базы GMC2, service/group и SDK 5.2.11 подтверждены новым native replay.
 Начальные zone 1 / пустой market ещё требуют сверки game override.
 [Конструкторы и начальные значения 1.13.16](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-DEFAULTS-11316.md).
+Статически найдена текущая ветка game overrides: семь функций, строки market /
+client ID и путь NMENV. Исполнение ветки остаётся следующей проверкой.
+[Связи настроек SDK 1.13.16](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-SDK-OVERRIDE-LINKS-11316.md).
 
 Атлас переключён на русский язык: названия и описания из именованных таблиц
 текущего клиента, исходный текст при отсутствии однозначного перевода.

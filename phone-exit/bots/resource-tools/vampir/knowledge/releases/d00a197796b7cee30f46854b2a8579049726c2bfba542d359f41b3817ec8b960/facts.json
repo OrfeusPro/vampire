@@ -217,6 +217,44 @@
       "question": "sdk-initial-defaults",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Новый game override и итоговый SDK/GMC2 production profile для 1.13.16."
+    },
+    {
+      "addresses": [
+        "0x14125b710",
+        "0x14125b740",
+        "0x14125b770",
+        "0x14125b7d0",
+        "0x144529d60",
+        "0x14560aed0",
+        "0x1456579d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d21e32622d4f680f46ddeeead97c3acac461dcc7d5e053a0437af2484e31d22e",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f16c5326938c2940e1d98c8fddc6d08c9619279b26f8a2c387262d57474f79e\\manifest.json",
+          "sha256": "3f16c5326938c2940e1d98c8fddc6d08c9619279b26f8a2c387262d57474f79e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "По source-checked client ID initializer destination найден consumer 1456579d0; семь полных exports связывают четыре initializers, settings market/gameCode/clientId, selector и NMENV getter. Пять offline проверок прошли. Семантика записей проверена статически, native выполнение новой ветки ещё не выполнено.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-SDK-OVERRIDE-LINKS-11316.md",
+          "sha256": "9fb3129dc91badc12d652c6e97322b59c6fab9ff24fbb7fdefa06c95ddcf000d"
+        }
+      ],
+      "id": "b51ad7ed36f6dc419888ddbd163ff0214ad3b1eb3772c394dba516835818411f",
+      "limits": [
+        "Сохранённый EXE и Ghidra exports, без процесса игры, авторизации и игровых действий.",
+        "Client ID имеет много initializers; выбранный кандидат проверен по destination и consumer, уникальность строки не заявляется.",
+        "Проверены происхождение и инструкции, но не исполнение comparator, FString/allocator, parser и фактические inputs."
+      ],
+      "method": "static",
+      "next_check": "Исполнить семь текущих функций с явно проверенными comparator leaves и ограниченными fixtures; затем сверить GMC2 URL/headers.",
+      "question": "sdk-game-overrides",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native результат game override для real/NMENV, активная zone, GMC2 URL/headers и runtime profile."
     }
   ],
   "schema": 1,

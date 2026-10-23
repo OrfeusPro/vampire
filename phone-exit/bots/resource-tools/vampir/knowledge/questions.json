@@ -384,6 +384,20 @@
       "evidence": [
         "evidence/auth/HEADLESS-SDK-DEFAULTS-11316.md"
       ]
+    },
+    {
+      "id": "sdk-game-overrides",
+      "status": "bounded_answer",
+      "question": "Какая текущая ветка задаёт игровые market, client ID и zone поверх SDK defaults?",
+      "known": "Для d00a1977 по client ID / initializer destination найден consumer 1456579d0. Получены семь полных exports; статически связаны четыре initializers, поля settings, selector и NMENV getter. Пять offline тестов проверили source/export bytes и ссылки.",
+      "unknown": "Исполнение текущих override / comparators / parser и активные inputs, GMC2 URL/headers, полный runtime profile.",
+      "next_action": "Исполнить current override/selector/getter и initializers в bounded native сценариях real/NMENV; затем перенести URL/headers.",
+      "decision_rule": "Статические записи полей не доказывают исполнение всей ветки или активную zone. Все fixtures и bounds указать отдельно.",
+      "do_not_repeat": "Не перевыгружать семь готовых функций без изменения источника или конкретной неполноты. Не выбирать role по смещению адресов.",
+      "addresses": [],
+      "evidence": [
+        "evidence/auth/HEADLESS-SDK-OVERRIDE-LINKS-11316.md"
+      ]
     }
   ]
 }

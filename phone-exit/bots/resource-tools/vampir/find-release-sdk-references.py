@@ -29,8 +29,11 @@ def main():
     native = load('sdk_refs_native', HERE / 'build-native-entry-code.py')
     evidence_sha = audit.sha256(args.evidence)
     evidence = json.loads(args.evidence.read_text('utf-8'))
-    sha = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
-    if evidence.get('new_source_sha256', evidence.get('source_sha256')) != sha:
+    sha = evidence.get('new_source_sha256', evidence.get('source_sha256'))
+    if sha not in {
+        '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e',
+        'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960',
+    }:
         raise ValueError('Unreviewed SDK source')
     source = native.ROOT / 'client-code-snapshots' / sha / 'ProjectRED-Win64-Shipping.exe'
     if audit.sha256(source) != sha:
@@ -116,6 +119,8 @@ def main():
                     if len(roots) > 64 or len(call_candidates) > 256:
                         raise ValueError('Explicit caller candidate budget exceeded')
                 position = raw.find(b'\xe8', position + 1, end - 4)
+    if len(roots) > 64:
+        raise ValueError('Explicit reference root budget exceeded')
     fragments = native.decode_ranges(image, roots)
     rows = {r['address']: r for f in fragments for r in f['instructions']}
     references = []
@@ -160,6 +165,8 @@ def main():
         globals_set = {int(r['global_address'], 16) for r in initializers}
         uses = native.rip_candidates(image, globals_set)
         use_roots = {image.roots[image.containing(a)] for a, target in uses if image.containing(a)}
+        if len(roots | use_roots) > 64:
+            raise ValueError('Client ID reference root budget exceeded')
         extra = native.decode_ranges(image, use_roots - roots)
         fragments.extend(extra)
         rows.update({r['address']: r for f in extra for r in f['instructions']})
@@ -180,6 +187,8 @@ def main():
                 'Explicit E8 caller candidates are checked on decoded unwind-root boundaries; no indirect, tail or inline call coverage.',
                 'Ghidra database had no recorded literal references; this does not prove absence of native uses.',
                 'No inferred function roles or runtime compatibility; next step is selected Ghidra inspection.'])
+    if audit.sha256(source) != sha or audit.sha256(args.evidence) != evidence_sha:
+        raise ValueError('SDK reference inputs changed during analysis')
     target = audit.save_snapshot(args.evidence.parent.parent.parent / 'sdk-reference-candidates', report)
     print(json.dumps(dict(report=str(target), sha256=audit.sha256(target),
         references=len(references), functions=len({r['function'] for r in references})), indent=2))
