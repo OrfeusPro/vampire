@@ -2817,6 +2817,35 @@
         "phone-exit/bots/test_vampir_account_console.py",
         "phone-exit/bots/test_vampir_selected_game_login.py"
       ]
+    },
+    {
+      "id": "release-lobby-errors",
+      "questions": [
+        "launcher-auth-contract"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "test_pattern": "test_vampir_release_lobby_errors.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-88a1dfed6648/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-116ea21f2ddb/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/replay-release-lobby-errors.py",
+        "phone-exit/bots/resource-tools/vampir/replay-result-error-text.py",
+        "phone-exit/bots/resource-tools/vampir/build-headless-ping-codec.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_login_error.py"
+      ]
     }
   ]
 }

@@ -260,6 +260,11 @@ launcher SDK, но получила выбранное лобби 10036 до с�
 создания не отправлялся. Причина нестабильных NID HTTP 400 остаётся открытой;
 новая диагностика возвращает только фиксированные подсказки без текста ответа.
 [Живой SDK-вход и границы отказа лобби](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-FIRST-SDK-LIVE-AND-NID-HINTS.md).
+Текущий mapper подтвердил 10036 → IsInspect в native replay. После отдельного
+отказа NID с признаком капчи пользователь вошёл вручную: NID и launcher SDK
+приняты, но выбранное лобби снова вернуло 10036 до списка персонажей.
+Это отдельный от авторизации отказ; создание не отправлялось.
+[Текущий mapper и границы вывода](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RELEASE-LOBBY-ERRORS.md).
 [Первый SDK-вход: запуск и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-SDK-LOGIN.md).
 [Индивидуальный запрос и очередь](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-DISPATCH.md).
 [Обработчик ответа и игровой переход](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-INDIVIDUAL-TERMS-RESPONSE.md).

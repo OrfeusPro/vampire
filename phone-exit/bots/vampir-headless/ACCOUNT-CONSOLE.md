@@ -477,3 +477,10 @@ Worker создания на Aria 1 получил selected lobby 10036 до с�
 вернули no_data / -1, consent_confirmed осталось false. Это проверка чтения
 условий без аккаунта, без SDK SignUp и игровых действий.
 [Команда, проверки и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-SDK-LOGIN.md).
+
+Контроль после ручного входа пользователя в nightraven: NID и launcher SDK
+прошли, selected lobby Aria 1 повторно вернул 10036 до Game Login / списка.
+Перед этим автоматическая форма получила HTTP 400 с fixed hint captcha_required.
+Ручной вход отделил эту капчу от следующего отказа лобби. Текущий native mapper
+подтвердил ключ IsInspect; worker теперь показывает его фиксированное описание.
+[Проверка текущего mapper](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-RELEASE-LOBBY-ERRORS.md).

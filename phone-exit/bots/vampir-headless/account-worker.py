@@ -17,6 +17,7 @@ from vampir_core.account_catalog import build_account_catalog
 from vampir_core.patch_revision import parse_patch_client_revision
 from vampir_core.sdk_sign_in_http import SdkSignInHttpError
 from vampir_core.character_creation_candidate import carnage_creation_candidate
+from vampir_core.lobby_login_error import describe_lobby_login_error
 from vampir_core.world_move_start import SOURCE_SHA256
 
 
@@ -160,6 +161,8 @@ def run(args):
         lobby_code = result.get('lobby', {}).get('login_result_code')
         if type(lobby_code) is int and 0 <= lobby_code <= 0xffffffff:
             message += f'. Код входа в лобби: {lobby_code}.'
+            detail = describe_lobby_login_error(lobby_code)
+            if detail is not None: message += ' ' + detail[1]
         if result.get('browser_status') == 'timeout':
             message = 'Истекло время входа Netmarble. Игровое соединение не открыто; проверьте окно авторизации.'
     elif args.operation == 'create' and attempt[0] is not None:
