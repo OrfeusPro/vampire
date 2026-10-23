@@ -52,6 +52,10 @@ console slot при initialized TLS. NID parent / context builder ещё не п
 Текущий NID CheckPossibleToOpen найден через explicit caller export. Десять
 базовых context pairs прошли 32 native случая; extensions / gates ещё открыты.
 [Связи NID inputs и сохранение unknown](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-CONTEXT-11316.md).
+Дополнительные параметры NID проверены в 256 native сценариях: authType,
+выбор аргумента webViewType и условный credential. Converter и ранние gates
+ещё требуют разбора; сеть и авторизация не запускались.
+[Результат, fixtures и проверяемые cleanup tails](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

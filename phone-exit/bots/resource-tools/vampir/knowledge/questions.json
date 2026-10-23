@@ -448,15 +448,16 @@
     {
       "id": "nid-context-current",
       "status": "bounded_answer",
-      "question": "Как текущий NID CheckPossibleToOpen связывает десять базовых key/value inputs с SDK getters?",
-      "known": "Для d00a1977 GetPlatform caller search сохранил 11 verified callers и один undecodable root. Явный export 0x1450e3c80 подтвердил FNetmarbleIDContent::CheckPossibleToOpen: 961 инструкция / 191 block. Slice 0x1450e4058..0x1450e42a8 исполнен в 32 сценариях; десять pairs, build getter/initializers, nidV 3 и шесть getter bindings подтверждены. Context values/storage — fixtures, map/encoding не исполнены.",
-      "unknown": "Текущие webV/authType extensions, URL/availability gates, реализация country/device/language/version getters и весь NID/auth lifecycle.",
-      "next_action": "Сверить extensions и gates текущего NID builder, затем auth source guards и runtime integration профиля-кандидата.",
+      "question": "Как текущий NID CheckPossibleToOpen связывает базовые inputs, дополнительные параметры и gates?",
+      "known": "Для d00a1977 GetPlatform caller search сохранил 11 verified callers и один undecodable root. Явный export 0x1450e3c80 подтвердил FNetmarbleIDContent::CheckPossibleToOpen: 961 инструкция / 191 block. Slice 0x1450e4058..0x1450e42a8 исполнен в 32 сценариях; десять pairs, build getter/initializers, nidV 3 и шесть getter bindings подтверждены. Context values/storage — fixtures, map/encoding не исполнены. Extensions slice 0x1450e43d3..0x1450e48aa прошёл 256 сценариев: webViewType converter получает global byte только для modes 4/5; authType 0..5 даёт signin/linkidp/withdraw/agreements/signin/linkidp; credential добавляется только при непустом optional object в modes 4/5. Converter/serializer/map — fixtures. Шесть отсутствующих cleanup tails проверены отдельно по 64 байтам EXE.",
+      "unknown": "Реальное преобразование webViewType в 0x1450ed350, ранние URL/availability gates, последующие account additions, реализации getters и весь NID/auth lifecycle. Причина отсутствия шести cleanup tails в instruction list export.",
+      "next_action": "Сверить converter 0x1450ed350 и gates по текущей сборке, затем auth source guards и runtime integration.",
       "decision_rule": "Передача synthetic getter outputs доказывает bindings, не реальные device values или успешную авторизацию. Недекодированные roots сохранять отдельно, не считать отсутствующими.",
       "do_not_repeat": "Не перевыгружать ready NID root без смены source или конкретной неполноты. Полный NID lifecycle не выводить из base pairs slice.",
       "addresses": [],
       "evidence": [
-        "evidence/auth/HEADLESS-NID-CONTEXT-11316.md"
+        "evidence/auth/HEADLESS-NID-CONTEXT-11316.md",
+        "evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md"
       ]
     }
   ]

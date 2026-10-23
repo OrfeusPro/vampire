@@ -616,6 +616,52 @@
       "question": "nid-context-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current extensions/gates и весь NID/auth lifecycle; runtime integration профиля-кандидата."
+    },
+    {
+      "addresses": [
+        "0x1450e3c80"
+      ],
+      "checks": [
+        {
+          "cache_key": "8d5c4c2b01a8f110eafb9cb13e6af9e0688e2ca19ef6552aefa8cd46515e4415",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105\\manifest.json",
+          "sha256": "ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105",
+          "state": "passed"
+        },
+        {
+          "cache_key": "95edeeb2782f32a926fe145682cbd3bd473e82794399eea7fa31a5d390c17b58",
+          "id": "nid-context-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610\\manifest.json",
+          "sha256": "a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1f49854d2ac515f167ae322fb9be9b49457409520868b4e787f6e36b2ab6cb4e",
+          "id": "nid-extensions-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\48d39e7a6b8c692ccf311f09e6789b464dd66f4b5a6e08256c06d99a20f51695\\manifest.json",
+          "sha256": "48d39e7a6b8c692ccf311f09e6789b464dd66f4b5a6e08256c06d99a20f51695",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Extensions slice 0x1450e43d3..0x1450e48aa прошёл 256 native сценариев. webViewType converter получает global byte только для modes 4/5; остальные получают 0. authType 0..5: signin/linkidp/withdraw/agreements/signin/linkidp. credential добавляется при непустом optional object только для modes 4/5. Шесть cleanup tails отдельно закреплены по 64 байтам исходного EXE.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-NID-EXTENSIONS-11316.md",
+          "sha256": "e578736fb7e92137e48303daa88a28847d4b5fac58dd208ea06fd037514def7b"
+        }
+      ],
+      "id": "39200628408907094a54516e1b569fa971a8e5d878279e909e8eadfb443ff8c6",
+      "limits": [
+        "Map insertion, webViewType converter, optional getter/virtual object/serializer/cleanup и FString storage/free — fixtures. Реальные credentials не используются.",
+        "Shared pointer без reference controller; destructor branches не покрыты. Ранние gates, account additions, encoding, browser и авторизация не исполнены.",
+        "Ghidra instruction list не содержит шесть cleanup tails; только их явно закреплённые байты допущены дополнительно, произвольный код не разрешён."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подготовить явный экспорт converter 0x1450ed350 и проверить его на текущем SHA; разобрать gates по готовому NID export до runtime integration.",
+      "question": "nid-context-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальный converter 0x1450ed350, ранние URL/availability gates, последующие account additions и весь auth lifecycle. Причина пропуска tails в export."
     }
   ],
   "schema": 1,

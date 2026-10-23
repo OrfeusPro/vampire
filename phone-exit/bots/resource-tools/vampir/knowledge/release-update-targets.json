@@ -553,7 +553,8 @@
       "baseline_functions": [],
       "tools": [
         "find-release-sdk-references.py",
-        "replay-nid-context-11316.py"
+        "replay-nid-context-11316.py",
+        "replay-nid-extensions-11316.py"
       ],
       "rule": "Follow explicit callers of reviewed FDeviceInfo::GetPlatform; preserve undecodable roots and inspect selected Ghidra exports before assigning NID role.",
       "automation": {
@@ -568,18 +569,21 @@
             "functions": [
               {
                 "address": "0x1450e3c80",
-                "scope": "Base NID pairs slice 0x1450e4058..0x1450e42a8; six getter fixtures; map/encoding/gates excluded",
+                "scope": "Base NID pairs slice 0x1450e4058..0x1450e42a8; six getter fixtures; map/encoding/gates excluded; Extension dispatch 0x1450e43d3..0x1450e48aa; exact authType literals/jump table plus six pinned cleanup tails; converter/optional serializer/map are fixtures",
                 "required_checks": [
                   "nid-context-native-11316",
-                  "sdk-override-references-11316"
+                  "sdk-override-references-11316",
+                  "nid-extensions-native-11316"
                 ]
               }
             ],
             "tools": [
-              "replay-nid-context-11316.py"
+              "replay-nid-context-11316.py",
+              "replay-nid-extensions-11316.py"
             ],
             "evidence": [
-              "evidence/auth/HEADLESS-NID-CONTEXT-11316.md"
+              "evidence/auth/HEADLESS-NID-CONTEXT-11316.md",
+              "evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md"
             ]
           }
         ]
