@@ -1960,6 +1960,60 @@
       "question": "release-version-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные зависимости подготовки Version, отдельная подготовка Login, текущие result readers и живая совместимость игрового профиля."
+    },
+    {
+      "addresses": [
+        "0x1444ec890",
+        "0x1445ccee0",
+        "0x1456d7be0",
+        "0x1467ce6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "16eb79a5613b81a0b6d2f4bd95fa721914a9be54cd2aec44a78d2ecd75be5695",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e851929a28415a88a10213314ac68b87d6e37daea08de13a28a37909a7bed128\\manifest.json",
+          "sha256": "e851929a28415a88a10213314ac68b87d6e37daea08de13a28a37909a7bed128",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f35af36db3881f03304a3e3b061fa89df40839b881c1c6d8aca5e690314f4df4",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f4effc1591651a8a98e27196bd3a011398b82a2f6522894914a88d17969267c6\\manifest.json",
+          "sha256": "f4effc1591651a8a98e27196bd3a011398b82a2f6522894914a88d17969267c6",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native NM provider 1445ccee0 и getter 1444ec890 исполнены целиком в 36 сценариях с synthetic cache/storage/parser/GUID fixtures; повторный вызов всегда cache-only. Кэшированный count>=2 обходится без parser, false storage read/write не подменён догадками об отказе. Ещё 64 whole Version prepare случая используют реальные wrapper/getter на initialized synthetic cache, проверяют два native entry calls и NM текст в поле +48. Старый provider fixture в интеграции не устанавливается. Проверка native-version-nm-context включена в update game-version, coverage остаётся partial.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-NM-11316.md",
+          "sha256": "178f46c41d96aae595134b34ce491a66675f5af91803e35d2c15ea6920045ef9"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\VERSION-NM-11316.json",
+          "sha256": "41242ababa847cf72b9eb5201a29e778bd51aea94b04f18f0a250f173c0b193b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-nm-device-11316.json",
+          "sha256": "0f71affd42ec41151b71c4edbef9694b1d6571b14b9eb5226df4faf071083d11"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-prepare-nm-11316.json",
+          "sha256": "44f67716f68692f833fb91d73368791aa61c61b2a3abce7c63c327dca1e77c6a"
+        }
+      ],
+      "id": "f07414e29bd1eea767a0a5df73dcbc16d236ca5eaa55168437d504fbe0e0a4f2",
+      "limits": [
+        "Storage descriptor values и read/write/parser/GUID/string primitives — bounded fixtures; реальные registry paths/values и GUID encoding не подтверждены.",
+        "Cold getter branches отдельно от интеграции Version prepare с populated cache. Diagnostic branch отключена в synthetic memory.",
+        "OS/platform/context/CPU/string helpers, Login prepare/result readers и живой игровой профиль остаются незавершёнными. Нет чтения/изменения реальных ключей, сети или продвижения runtime/baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовый run-09b30ec921d8 для selector/context/lookup и Windows/CPU helpers, не повторять NM exports. После закрытия обязательных checks выполнить разрешённый живой тест только до каталога серверов.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Actual platform/context/Windows/CPU/string helper semantics, Login prepare и текущие result readers; реальная cold registry startup цепочка."
     }
   ],
   "schema": 1,

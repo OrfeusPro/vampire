@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "proofs": {
+    "nm_getter": {
+      "report": "F:/PhoneExit Resources/Vampir/knowledge/native-version-nm-checks/b12309c514c12407d7566fb797b3d91ebde7922441b3d8d14a95c4249ed59d14/manifest.json",
+      "sha256": "b12309c514c12407d7566fb797b3d91ebde7922441b3d8d14a95c4249ed59d14",
+      "cases": 36
+    },
+    "prepare_with_native_nm": {
+      "report": "F:/PhoneExit Resources/Vampir/knowledge/native-version-prepare-checks/dc999d1240b80e85445aea608279a9b53ff4dbfd954e255e04b33a50be4d068a/manifest.json",
+      "sha256": "dc999d1240b80e85445aea608279a9b53ff4dbfd954e255e04b33a50be4d068a",
+      "cases": 64
+    }
+  },
+  "network_used": false,
+  "user_identity_read": false,
+  "profile_activated": false
+}

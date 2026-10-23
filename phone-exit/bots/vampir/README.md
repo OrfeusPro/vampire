@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Version NM provider / getter 1.13.16 исполнены в 36 сценариях cache / storage,
+затем включены в 64 whole prepare сценария с initialized synthetic cache.
+Реальные ключи не менялись; дальше platform/context и Windows / CPU helpers.
+[Источники, fixtures и проверки обновлений](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-NM-11316.md).
+
 Целые Version prepare / constructor 1.13.16 прошли 64 сценария проекции до
 send и cleanup после него. OS/context/string getters ещё fixtures; их перенос,
 Login prepare и result readers остаются до живой проверки игрового профиля.

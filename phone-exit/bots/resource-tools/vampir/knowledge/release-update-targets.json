@@ -1050,6 +1050,49 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-version-nm-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-version-nm-device-context.py",
+        "verify-version-prepare-context.py"
+      ],
+      "rule": "От Version prepare проверить provider wrapper и NM getter по каждому call site, cache/storage descriptors и вызываемым методам. Исполнять cache/storage/GUID branches с явными fixtures и интеграцию prepare с initialized cache. Реальные registry paths/values и новый SHA требуют отдельной сверки; runtime не продвигать.",
+      "automation": {
+        "discovery": "reviewed_constructor_wrapper_table_and_call_sites",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1445ccee0",
+                "scope": "Native provider and NM getter branches; Version integration with initialized synthetic cache. Storage/GUID/string fixtures remain.",
+                "required_checks": [
+                  "native-version-nm-context"
+                ]
+              },
+              {
+                "address": "0x1444ec890",
+                "scope": "Native provider and NM getter branches; Version integration with initialized synthetic cache. Storage/GUID/string fixtures remain.",
+                "required_checks": [
+                  "native-version-nm-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-nm-device-context.py",
+              "verify-version-prepare-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-NM-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

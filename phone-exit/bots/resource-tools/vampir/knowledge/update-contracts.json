@@ -185,7 +185,8 @@
         "native-utf8-context",
         "native-string-writer-context",
         "native-archive-wire-context",
-        "native-version-prepare-context"
+        "native-version-prepare-context",
+        "native-version-nm-context"
       ],
       "recipes": [
         {
@@ -234,7 +235,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Целый Version prepare/constructor проверен на проекцию и cleanup с явными fixtures входов/строк/send. Перенести actual OS/context/string getters, затем Version result reader; это не готовность игрового профиля.",
+      "next_check": "Version prepare исполняется с настоящим NM wrapper/getter на synthetic cache; cold getter flow отдельно проверен со storage/GUID/string fixtures. Дальше actual platform/context/CPU/Windows helpers и Version result reader; профиль остаётся partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -271,7 +272,8 @@
         "native-utf8-current",
         "native-string-writer-current",
         "native-archive-wire-current",
-        "native-version-prepare-current"
+        "native-version-prepare-current",
+        "native-version-nm-current"
       ],
       "writer_check": {
         "object_size": 208,

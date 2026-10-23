@@ -21,7 +21,12 @@ def load(name):
 def verify(context,root):
     prepare,constructor,table,wrapper_table,send=[int(context[k],16) for k in
         ('prepare','constructor','packet_table','wrapper_table','send')]
-    h=load('update-native-harness').make_harness(context,context['exports'],{prepare,constructor},root=root)
+    nm=context.get('native_nm')
+    functions={prepare,constructor};exports=dict(context['exports'])
+    if nm:
+        functions.update(int(nm[k],16) for k in ('wrapper','getter'))
+        exports.update(nm['exports'])
+    h=load('update-native-harness').make_harness(context,exports,functions,root=root)
     native=load('build-native-entry-code');rows=load('update-bindings').rows
     calls={hex(r['address']):{'target':hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
            for a in (prepare,constructor) for r in rows(native,h.image,a) if r['call']}
@@ -42,6 +47,9 @@ def verify(context,root):
         h.uc.mem_write(page,h.raw[off:off+4096])
     map_data(wrapper_table)
     fixture={k:int(v,16) for k,v in context['fixtures'].items()}
+    if nm and (int(nm['wrapper'],16)!=fixture['provider'] or
+            [r['direct_target'] for r in rows(native,h.image,int(nm['wrapper'],16)) if r['call']]!=[int(nm['getter'],16)]):
+        raise ValueError('Version native NM provider link differs')
     globals_={k:int(v,16) for k,v in context['globals'].items()}
     owner,input_descriptor,store=[h.scratch+n for n in (0x1000,0x2000,0x3000)]
     state={}
@@ -133,7 +141,17 @@ def verify(context,root):
             h.finish(result)
         return execute
 
-    for name,address in fixture.items():h.add_fixture(address,handler(name))
+    for name,address in fixture.items():
+        if name=='provider' and nm:continue
+        h.add_fixture(address,handler(name))
+    if nm:
+        import unicorn
+        h.uc.mem_write(int(nm['log_level'],16),b'\0')
+        h.uc.mem_write(int(nm['log_enabled'],16),b'\0')
+        targets={int(nm[k],16) for k in ('wrapper','getter')}
+        def count_nm(machine,address,size,unused):
+            if address in targets:state['nm_calls']+=1
+        h.uc.hook_add(unicorn.UC_HOOK_CODE,count_nm)
 
     def capture_send(machine):
         a,b=reg('RCX'),reg('RDX')
@@ -162,12 +180,16 @@ def verify(context,root):
                             present=present,selector=0x87,context_text='контекст',suffix='' if empty else 'suffix-fixture',
                             first_text='' if empty else 'CPU-Ж🙂',provider='' if empty else 'provider-界',
                             combined='' if empty else 'combined-fixture',context_calls=0,sent=False,
-                            destroyed=False,send_return=send_return)
+                            destroyed=False,send_return=send_return,nm_calls=0)
                         h.uc.mem_write(h.scratch+0x30000,b'\0'*0x8000)
                         owner_bytes=bytearray([poison]*0x180);struct.pack_into('<Q',owner_bytes,0,wrapper_table)
                         h.uc.mem_write(owner-16,b'\xa5'*16+bytes(owner_bytes)+b'\xa6'*16)
                         global_text='' if empty else 'global-fixture';input_text='' if empty else 'input-🙂'
                         write_text(globals_['text'],global_text);write_text(input_descriptor,input_text)
+                        if nm:
+                            # Identity remains populated even when the other fields are empty.
+                            state['provider']='nm-cache-Ж🙂'
+                            write_text(int(nm['cache'],16),state['provider'])
                         input_pointers=set(state['allocations'])
                         input_guard=bytes(h.uc.mem_read(input_descriptor,16))
                         h.uc.mem_write(globals_['enum'],struct.pack('<I',raw_enum))
@@ -179,6 +201,8 @@ def verify(context,root):
                             raise ValueError('Version prepared fields differ')
                         if state['context_calls']!=int(present) or not state['destroyed'] or state['logs']!=2:
                             raise ValueError('Version context/destruction/log lifecycle differs')
+                        if state['nm_calls']!=(2 if nm else 0):
+                            raise ValueError('Version native NM call count differs')
                         if set(state['allocations'])-input_pointers!=state['freed']:
                             raise ValueError('Version preparation temporary leaked or input freed')
                         struct.pack_into('<Q',owner_bytes,0x160,0)
@@ -189,11 +213,14 @@ def verify(context,root):
                         if any(reg(name)!=value for name,value in abi.items()) or reg('RSP')!=h.scratch+0x38008:
                             raise ValueError('Version prepare ABI differs')
                         cases.append(dict(poison=poison,context_present=present,empty=empty,raw_enum=raw_enum,
-                            send_return=send_return,strings=state['strings'],integers=state['integers'],guards=True))
+                            send_return=send_return,strings=state['strings'],integers=state['integers'],
+                            native_nm_calls=state['nm_calls'],guards=True))
     return dict(schema=1,source_sha256=context['source_sha256'],method='bounded_native',cases=cases,
         evidence=h.evidence,network_used=False,profile_activated=False,
         runtime=load('update-native-harness').runtime_inputs(),
-        limits=['Whole prepare and constructor; OS/context/text/string/allocator/free/destructor/log/send are explicit fixtures.',
+        native_nm_used=bool(nm),
+        limits=['Whole prepare/constructor; optional native NM provider/getter uses initialized synthetic cache only.',
+                'OS/context/text/string/allocator/free/destructor/log/send are explicit fixtures; provider is fixture unless native_nm_used.',
                 'Combiner output is supplied, not native concatenation semantics. No real hardware/SDK getter values proved.',
                 'No Login preparation, result readers, framing, auth, socket or runtime activation.'])
 

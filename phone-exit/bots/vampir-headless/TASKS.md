@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Native NM provider / getter прошли 36 сценариев, интеграция с Version prepare —
+64. Семь нужных callees уже экспортированы; дальше platform/context, Windows /
+CPU helpers, затем Login prepare и result readers.
+[Границы и готовые материалы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-NM-11316.md).
+
 Version prepare / constructor исполнены целиком в 64 сценариях проекции и
 cleanup. Дальше — actual OS/context/string getters, отдельный Login prepare
 и текущие result readers. Эти prepare exports уже есть, повторять collect не нужно.
