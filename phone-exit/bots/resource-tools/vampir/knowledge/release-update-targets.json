@@ -919,6 +919,96 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-archive-wire-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-archive-wire-context.py"
+      ],
+      "rule": "Точные prefixes дают кандидатов, не роли. Сверять constructor -> archive table, slots string/u16/u32/u64/u8/bool/raw, объявленные callees и bounded leaves. Проверять whole writer bytes; source preparation/result остаются отдельными воротами.",
+      "automation": {
+        "discovery": "reviewed_prefix_constructor_and_table_slots",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x144aacbd0",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aac6b0",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aac8c0",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aac910",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aac940",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aac970",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacac0",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacaf0",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aaca00",
+                "scope": "Native archive with preallocated buffer; whole Version/Login wire-body vectors, no framing/preparation/result",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-archive-wire-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

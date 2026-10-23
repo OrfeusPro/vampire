@@ -29,6 +29,7 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Проверка обновления клиента, 19 октября 2026](../evidence/updates/CLIENT-RELEASE-AUDIT.md)
 - [Новые индексы и CSV после обновления, 19 октября 2026](../evidence/updates/CLIENT-RELEASE-INDEX.md)
 - [SDK / NID после обновления EXE, 21 октября 2026](../evidence/updates/CLIENT-SDK-PROFILE-UPDATE.md)
+- [Archive и полные тела Version / Login в 1.13.16](../evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md)
 - [CDN: тело ответа и BOM, 19 октября 2026](../evidence/updates/HEADLESS-CDN-BODY.md)
 - [Источник окружения SDK: CDN config](../evidence/updates/HEADLESS-CDN-CONFIG.md)
 - [CDN: запасная расшифровка тела, 19 октября 2026](../evidence/updates/HEADLESS-CDN-FALLBACK.md)

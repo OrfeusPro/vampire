@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Native archive 1.13.16 проверен: 45 случаев primitives и 64 полных тела
+Version / Login с реальными string / UTF-8 / archive methods. Байты совпали;
+дальше preparation и result readers, runtime profile ещё не активирован.
+[Связи, границы и автоматические проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md).
+
 Полный string writer 1.13.16 прошёл 228 native сценариев с реальными UTF-8
 helpers: NUL / count gate, inline / heap, возврат ошибки и cleanup.
 Следующий пробел — native archive encoding; профиль игры пока не активирован.

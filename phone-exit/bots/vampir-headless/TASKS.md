@@ -2,9 +2,10 @@
 
 Version / Login writers проверены на порядок полей и отказы: 160 случаев.
 Native UTF-8 helpers прошли ещё 222 сценария, полный string writer — 228.
-Дальше — native archive string / uint16 / raw IO, затем preparation и result
-readers. Готовые writers, string helper, length / converter повторно не выгружать.
-[Адреса, границы и следующая проверка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-STRING-WRITER-11316.md).
+Native archive прошёл 45 случаев и 64 полных тела Version / Login.
+Дальше — preparation и result readers. Готовые packet / string / UTF-8 /
+archive exports повторно не выгружать.
+[Адреса, границы и следующая проверка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md).
 
 Возобновляемая сверка пары сборок проверена; готов только offline launcher.
 Дальше — полный Version / Login writer / result, затем список / выбор персонажа

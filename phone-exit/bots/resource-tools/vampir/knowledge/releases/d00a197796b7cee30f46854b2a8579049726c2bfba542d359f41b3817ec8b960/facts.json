@@ -1854,6 +1854,71 @@
       "question": "release-utf8-codec",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Текущие archive string/uint16/raw IO methods, полный wire Version/Login, preparation/result и последующая сессия."
+    },
+    {
+      "addresses": [
+        "0x144aac6b0",
+        "0x144aac8c0",
+        "0x144aac910",
+        "0x144aac940",
+        "0x144aac970",
+        "0x144aaca00",
+        "0x144aacac0",
+        "0x144aacaf0",
+        "0x144aacbd0",
+        "0x144aad310",
+        "0x1456e8370",
+        "0x1456e8830"
+      ],
+      "checks": [
+        {
+          "cache_key": "2eff674b19bde55631fb6b87d46e6fd9a527349500c1f0748ded41637d9debed",
+          "id": "native-utf8-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\63f5aa78b819c4f0af06847048f601229d11690ecec7ba3ebeb1d6431d58c56f\\manifest.json",
+          "sha256": "63f5aa78b819c4f0af06847048f601229d11690ecec7ba3ebeb1d6431d58c56f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "72c4cba338e222bf69bf8c2c08d402867c41d0addaba2a23a22305f37f457185",
+          "id": "native-string-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f64014bc697db6aca2232908f8594edc10220b4e308b87d29c5cc2dc7788e\\manifest.json",
+          "sha256": "f52f64014bc697db6aca2232908f8594edc10220b4e308b87d29c5cc2dc7788e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "782b8e257c233f4fe23db11011dd1a96e41872836e74997293113e9c042f24f2",
+          "id": "native-archive-wire-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3c8dd7021029b77c143aff95fef2615d6a0cc93b7eadca284c6cc9c70bde48c7\\manifest.json",
+          "sha256": "3c8dd7021029b77c143aff95fef2615d6a0cc93b7eadca284c6cc9c70bde48c7",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем SHA исполнены native archive constructors/string/u8/u16/u32/u64/bool/raw: 45 отдельных случаев. 64 полных Version/Login тела записаны непрерывно actual packet writer -> FString writer -> UTF-8 -> native archive -> output buffer и совпали с независимым ожиданием. Строки используют uint16 little-endian byte length и bytes без terminator; raw bool inputs не нормализуются. Table/constructor/slots/callees, counters/canaries/cleanup/ABI проверены. Проверка native-archive-wire-context включена в update и оба игровых контракта; runtime не активирован.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ARCHIVE-WIRE-11316.md",
+          "sha256": "4b5acfe0361a56e45e8eb9c0ca5f12aa9ca0c92390856ae2930ceb05aae53582"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\ARCHIVE-WIRE-11316.json",
+          "sha256": "c1f4d061acd4d48167f0690fbbe58b9e30d45cba4f13f1b89dea15bd95d9f0d8"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\archive-wire-11316.json",
+          "sha256": "bace7773a5ee47b46e51dbaba4f7190cd53f89ab762d3201acc703297ebfdf19"
+        }
+      ],
+      "id": "30fee68ac86b5a54d1078c898a3d5d3a2ef45117f16211a8ed616851e59499b3",
+      "limits": [
+        "Заранее выделенный archive buffer 16384 байта; growth target запрещён, реальный allocator/free/security/memcpy заменены bounded fixtures.",
+        "Конечные vectors до 4095 bytes; allocation failure, overflow/growth и строка 65535 bytes не проверялись.",
+        "Нет framing/CRC/XOR/sequence, preparation/result, auth/network/world-session proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовые exports prepare 1467ce6a0/1467ce030 и проверить полную подготовку Version/Login, затем result readers; архивные тела без изменения входов не повторять.",
+      "question": "release-utf8-codec",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Полные preparation и result readers Version/Login, последующая сессия и живая совместимость текущего игрового профиля."
     }
   ],
   "schema": 1,

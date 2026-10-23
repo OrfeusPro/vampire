@@ -1,0 +1,228 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "bindings": {
+    "length": "0x14144c550",
+    "convert": "0x1414465f0",
+    "encoder": "0x14143f320",
+    "string-writer": "0x144aad310"
+  },
+  "exports": {
+    "run-1a6b28373a53": "8f8d65772109b8eb78d043ae41837d8232c36c4b6104abfd71f44872ce488142",
+    "run-dc93ae3f92b7": "462d870177d42665c381ab61e069b9530ddc4239fcc9f55260072fe6e83a1e72",
+    "run-fab5fb09dcf1": "11140c7806c1f120c4cd69ce517ddf061bf104e442cf9e66ebff89783c4e5c99",
+    "run-0cc591b779fd": "aee280e3f0947562e29be27e0e816481559805f6ef22f12027aaf8ae996e3c2d",
+    "run-6f00cf979ea3": "a30f7c5dd6a4e594730aaa7ebe8a3d9bd68b56a6c986696d7f20b332a3131031"
+  },
+  "encoder_leaf": {
+    "bytes": "448bc9418b0885c90f842c0100004181f9000011000f830a010000418d810200ffff83f8010f86fa000000418bc12500f8ffff3d00d800000f84e70000004181f9800000000f82e00000004181f900080000733283f9020f8cdd000000488b02418bc9c1e9064180e13f80c9c04180c980880848ff02488b02448808b00148ff02418300fec34181f900000100734483f9030f8ca2000000488b02418bc9c1e90c80c9e08808418bc148ff024180e13f488b0a4180c980c1e806243f0c80880148ff02488b02448808b00148ff02418300fdc383f9047c62488b02418bc9c1e91280c9f08808418bc148ff02488b0ac1e80c243f0c808801418bc148ff024180e13f488b0a4180c980c1e806243f0c80880148ff02488b02448808b00148ff02418300fcc341b93f000000488b02448808b00148ff0241ff08c332c0c3",
+    "sha256": "c2065e2ae7fdfa62eb40e8bddd54e549d155a4a8e59ba2473b5cce9dcbe5e403",
+    "size": 317
+  },
+  "fixtures": {
+    "utf8_allocate": "0x141436cc0",
+    "utf8_free": "0x141483080",
+    "cpp_allocate": "0x146908950",
+    "cpp_free": "0x141431f80",
+    "security_check": "0x1487e8ce0",
+    "archive_slot": 40
+  },
+  "archive": {
+    "table": "0x149670920",
+    "constructor": "0x144aacbd0",
+    "base-constructor": "0x144aac6b0",
+    "string": "0x144aac8c0",
+    "u8": "0x144aac910",
+    "u16": "0x144aac940",
+    "u32": "0x144aac970",
+    "u64": "0x144aacac0",
+    "bool": "0x144aacaf0",
+    "raw": "0x144aaca00",
+    "growth": "0x1445e4ba0"
+  },
+  "archive_leaves": {
+    "0x144aad1b0": {
+      "bytes": "488d050939bc04c7410800000000488901488bc1c7410c01000000c6411001c3",
+      "sha256": "d1f8a1a786f2d3d188764336f103d9fdf1abf83950c86a452f4f343cda2c1c3e",
+      "size": 32
+    },
+    "0x1445f11f0": {
+      "bytes": "895108c3",
+      "sha256": "7aaa8d9f5fd794be56f764d70b58d2fc7484b4b030dcabff56897cadd4b76a21",
+      "size": 4
+    }
+  },
+  "archive_table_sha256": "81a10aceaef618e3cb18a588ccbe3c58dc8ffc3f636552ee1c20f0a66d38c0fd",
+  "packets": {
+    "game-version": {
+      "writer": "0x1456e8830",
+      "table": "0x149926d08",
+      "fields": [
+        [
+          "string",
+          16
+        ],
+        [
+          "u32",
+          32
+        ],
+        [
+          "string",
+          40
+        ],
+        [
+          "string",
+          56
+        ],
+        [
+          "string",
+          72
+        ],
+        [
+          "string",
+          88
+        ],
+        [
+          "string",
+          104
+        ],
+        [
+          "string",
+          120
+        ],
+        [
+          "string",
+          136
+        ],
+        [
+          "u32",
+          152
+        ],
+        [
+          "string",
+          160
+        ],
+        [
+          "string",
+          176
+        ],
+        [
+          "u32",
+          192
+        ]
+      ],
+      "object_size": 208
+    },
+    "game-login": {
+      "writer": "0x1456e8370",
+      "table": "0x1499263d0",
+      "fields": [
+        [
+          "string",
+          16
+        ],
+        [
+          "string",
+          32
+        ],
+        [
+          "string",
+          48
+        ],
+        [
+          "string",
+          64
+        ],
+        [
+          "u32",
+          80
+        ],
+        [
+          "string",
+          88
+        ],
+        [
+          "string",
+          104
+        ],
+        [
+          "string",
+          120
+        ],
+        [
+          "string",
+          136
+        ],
+        [
+          "u8",
+          152
+        ],
+        [
+          "u8",
+          153
+        ],
+        [
+          "string",
+          160
+        ],
+        [
+          "u32",
+          176
+        ],
+        [
+          "string",
+          184
+        ],
+        [
+          "string",
+          200
+        ],
+        [
+          "string",
+          216
+        ],
+        [
+          "string",
+          232
+        ],
+        [
+          "u32",
+          248
+        ],
+        [
+          "string",
+          256
+        ],
+        [
+          "string",
+          272
+        ],
+        [
+          "u32",
+          288
+        ],
+        [
+          "u8",
+          292
+        ],
+        [
+          "u64",
+          296
+        ],
+        [
+          "bool",
+          304
+        ],
+        [
+          "bool",
+          305
+        ]
+      ],
+      "object_size": 320
+    }
+  }
+}

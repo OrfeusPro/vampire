@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "report": "F:/PhoneExit Resources/Vampir/knowledge/native-archive-wire-checks/d652099b51404e5f98303095fef45806ab6e1a410e3935adb62f7a3f896ca8f5/manifest.json",
+  "sha256": "d652099b51404e5f98303095fef45806ab6e1a410e3935adb62f7a3f896ca8f5",
+  "cases": 45,
+  "wire_cases": 64,
+  "network_used": false,
+  "profile_activated": false
+}

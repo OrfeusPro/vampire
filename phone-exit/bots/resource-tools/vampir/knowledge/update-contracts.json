@@ -183,7 +183,8 @@
       "checks": [
         "compiled-tag-native-11316",
         "native-utf8-context",
-        "native-string-writer-context"
+        "native-string-writer-context",
+        "native-archive-wire-context"
       ],
       "recipes": [
         {
@@ -266,7 +267,9 @@
       "targets": [
         "compiled-tag-current",
         "packet-writers-current",
-        "native-utf8-current"
+        "native-utf8-current",
+        "native-string-writer-current",
+        "native-archive-wire-current"
       ],
       "writer_check": {
         "object_size": 208,
@@ -338,7 +341,8 @@
         "release-game-sign-in-result",
         "release-lobby-errors",
         "native-utf8-context",
-        "native-string-writer-context"
+        "native-string-writer-context",
+        "native-archive-wire-context"
       ],
       "recipes": [
         {
@@ -411,7 +415,9 @@
       "targets": [
         "compiled-tag-current",
         "packet-writers-current",
-        "native-utf8-current"
+        "native-utf8-current",
+        "native-string-writer-current",
+        "native-archive-wire-current"
       ],
       "writer_check": {
         "object_size": 320,
