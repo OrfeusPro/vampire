@@ -128,6 +128,12 @@ fixture; следом его ключи / значения и целый handler
 Добавлен переносимый builder с явным Latin profile и SHA; числовая семантика
 сверена с native setter captures. Native JSON bytes и серверный допуск не заявлены.
 [Ключи, культура и builder](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-JSON-KEYS.md).
+Целый handler ID 104 прошёл 128 успешных и 30 ошибочных native сценариев.
+Code 0 принимает запись независимо от совпадения имени; nonzero не назначает
+персонажа. Добавлено решение runtime `created` / `rejected` / `needs_refresh`
+без автоматического retry. Следом — подключение одной отправки к принятому
+пустому списку и живой контроль; создания ботом пока не было.
+[Ответ, ожидание и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-HANDLER.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

@@ -168,6 +168,15 @@ Portable `encode_character_appearance` требует SHA и `key_profile='latin
 JSON сравнивается семантически с setter captures; native serializer bytes не проверены.
 Далее — целый handler ID 104, затем кандидат Carnage и живое создание при пустом списке.
 [Числовые ключи и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-JSON-KEYS.md).
+Целый handler `146796690` прошёл 128 success / 30 error сценариев. Code 0
+передаёт record manager независимо от name-match callback; key пишется при
+наличии selection state. Error снимает wait при valid UI. В synthetic invalid-UI
+ветках найден null write; это не утверждение о live crash, runtime её не повторяет.
+Portable outcome возвращает created / rejected / needs_refresh, без retry;
+code 0 без identity требует списка, nonzero не сохраняет identity error-record.
+Далее — интеграция одной отправки Create после принятого пустого списка,
+decode ID 104, сохранение серверного ключа и refresh после неоднозначного разрыва.
+[Handler, fixtures и решение runtime](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-RESULT-HANDLER.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
