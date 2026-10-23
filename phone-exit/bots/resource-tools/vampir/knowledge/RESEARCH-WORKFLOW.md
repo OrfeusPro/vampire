@@ -80,6 +80,15 @@ UpdateGmc2 / UpdateSDKSetting. Остальные проверки подклю�
 ошибка / timeout блокируют `finish`. Saved replay metadata остаются историческим
 результатом с fixtures / limits, не подтверждением новой сессии.
 
+`artifact_dependencies` принимает публичные Ghidra-материалы и проверяемые
+ресурсы в `release-snapshots/<SHA>/`: content-addressed `manifest.json` и
+`csv-blobs/<SHA>.csv`. Для record / table manifest с `source` также сверяются
+release manifest, принадлежность PAK к его полным SHA и фактический SHA
+установленного архива до обращения к кэшу. Изменившийся PAK требует нового
+release snapshot; повреждённый CSV отклоняется. Приватные captures и произвольные
+файлы этим допуском не разрешаются. Ключ кэша и проверка неизменности во время
+теста включают эти файлы вместе с исходниками проверки.
+
 После staging перед коммитом:
 
 ```powershell

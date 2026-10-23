@@ -178,5 +178,43 @@ class ResearchWorkflowTests(unittest.TestCase):
             self.assertEqual(run.call_count,2)
             self.assertNotEqual(first[0]['cache_key'],second[0]['cache_key'])
 
+    def test_release_artifacts_track_current_archive_and_reject_private_files(self):
+        archive = self.root / 'installed/Game.pak'
+        archive.parent.mkdir(); archive.write_bytes(b'public game fixture')
+        digest = self.index.digest(archive)
+        release = dict(source='read-only release inventory', files=[dict(path=str(archive), current=dict(sha256=digest))])
+        release_key = self.workflow.hashlib.sha256(self.workflow.canonical(release)).hexdigest()
+        release_path = self.root / 'release-snapshots' / release_key / 'manifest.json'
+        self.workflow.atomic(release_path, self.workflow.canonical(release))
+        resource = dict(source=dict(path=str(archive), sha256=digest))
+        key = self.workflow.hashlib.sha256(self.workflow.canonical(resource)).hexdigest()
+        resource_path = release_path.parent / 'record-indexes' / key / 'manifest.json'
+        self.workflow.atomic(resource_path, self.workflow.canonical(resource))
+        name = str(resource_path.relative_to(self.root))
+        hashes = self.workflow.check_artifacts(self.index.api(), self.root, [str(release_path.relative_to(self.root)), name])
+        self.assertEqual(hashes[str(archive.resolve())], digest)
+        archive.write_bytes(b'changed game fixture')
+        with self.assertRaisesRegex(ValueError, 'source archive changed'):
+            self.workflow.check_artifacts(self.index.api(), self.root, [name])
+        private = self.root / 'captures/private.json'
+        private.parent.mkdir(); private.write_text('{}', encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'public Ghidra or release'):
+            self.workflow.check_artifacts(self.index.api(), self.root, ['captures/private.json'])
+
+    def test_release_csv_rejects_corruption_and_unhashed_names(self):
+        folder = self.root / 'release-snapshots' / ('a' * 64) / 'csv-blobs'
+        folder.mkdir(parents=True)
+        payload = b'Id,Type\n3,3\n'
+        key = self.workflow.hashlib.sha256(payload).hexdigest()
+        path = folder / (key + '.csv'); path.write_bytes(payload)
+        name = str(path.relative_to(self.root))
+        self.workflow.check_artifacts(self.index.api(), self.root, [name])
+        path.write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError, 'CSV content hash'):
+            self.workflow.check_artifacts(self.index.api(), self.root, [name])
+        other = folder / 'arbitrary.csv'; other.write_bytes(payload)
+        with self.assertRaisesRegex(ValueError, 'manifest or CSV blob'):
+            self.workflow.check_artifacts(self.index.api(), self.root, [str(other.relative_to(self.root))])
+
 
 if __name__ == '__main__': unittest.main()

@@ -64,6 +64,44 @@ def registry(index, knowledge):
     return index.read_json(path) if path.is_file() else dict(schema=1, checks=[])
 
 
+def check_artifacts(index, root, names):
+    """Hash public exports and immutable release resources, including their PAK."""
+    external = {}
+    for name in names:
+        path = index.child(root, name)
+        if path.is_relative_to((root / 'ghidra').resolve()):
+            external[str(path)] = index.digest(path)
+            continue
+        parts = path.relative_to(root.resolve()).parts
+        if len(parts) < 3 or parts[0] != 'release-snapshots' or not index.SHA.fullmatch(parts[1]):
+            raise ValueError('Check artifact must be public Ghidra or release evidence')
+        if path.name == 'manifest.json':
+            data = checked_manifest(index, path)
+            # The root release manifest uses "source" as a descriptive string.
+            source = data.get('source') if len(parts) > 3 else None
+            if source is not None:
+                if not isinstance(source, dict) or not isinstance(source.get('path'), str):
+                    raise ValueError('Invalid check release source descriptor')
+                release = checked_manifest(index, root / 'release-snapshots' / parts[1] / 'manifest.json')
+                source_path = Path(source['path']).resolve()
+                expected = source.get('sha256', '')
+                if (source_path.suffix.lower() != '.pak' or not index.SHA.fullmatch(expected)
+                        or not any(Path(row['path']).resolve() == source_path
+                            and row.get('current', {}).get('sha256') == expected for row in release['files'])):
+                    raise ValueError('Check source must be a full-hash release PAK')
+                actual = index.digest(source_path)
+                if actual != expected:
+                    raise ValueError('Check source archive changed; refresh release snapshot')
+                external[str(source_path)] = actual
+        elif path.parent.name == 'csv-blobs' and path.suffix == '.csv' and index.SHA.fullmatch(path.stem):
+            if index.digest(path) != path.stem:
+                raise ValueError('Check CSV content hash changed')
+        else:
+            raise ValueError('Check release artifact must be a manifest or CSV blob')
+        external[str(path)] = index.digest(path)
+    return external
+
+
 def run_checks(index, args, sha, question):
     results = []
     workspace = index.HERE.parents[3]
@@ -82,12 +120,7 @@ def run_checks(index, args, sha, question):
             dependencies.append(index.child(workspace, name))
         dependencies = sorted(set(dependencies))
         inputs = {str(p): index.digest(p) for p in dependencies}
-        external = {}
-        for name in check.get('artifact_dependencies', []):
-            path = index.child(args.root, name)
-            if not path.is_relative_to((args.root / 'ghidra').resolve()):
-                raise ValueError('Check artifact dependency must be public Ghidra evidence')
-            external[str(path)] = index.digest(path)
+        external = check_artifacts(index, args.root, check.get('artifact_dependencies', []))
         definition = dict(check=check, source_sha256=sha, inputs=inputs, artifacts=external,
             python_version=platform.python_version(), executable=sys.executable,
             runner_sha256=index.digest(Path(__file__)))
