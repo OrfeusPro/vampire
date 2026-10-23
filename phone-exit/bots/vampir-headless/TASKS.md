@@ -72,6 +72,10 @@ hex leaves; сборка URL и передача в owner fields — 48 случ
 route, mode mask и семь key bindings. Поиск включён в планы updater;
 валидация результата ещё требует native replay текущей сборки.
 [Обработчики результата и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-RESULT-SOURCE-11316.md).
+Текущий OnResult и FString copy прошли 1100 native случаев: missing / empty,
+mode gates и раздельная передача токенов. Parser / channel / settings ещё fixtures;
+следом реальные helpers и auth source guards, затем живая проверка.
+[Проверки результата и передача токенов](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-RESULT-NATIVE-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.
