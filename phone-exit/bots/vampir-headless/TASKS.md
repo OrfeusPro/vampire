@@ -186,6 +186,16 @@ regression прошли. Это synthetic local exchange, не живая игр
 сохранение server key/name и чтение списка перед новым решением после разрыва.
 UI / worker пока не отправляют Create, остальные классы factory ещё не поддерживает.
 [Сессия и следующий этап](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-SESSION-FLOW.md).
+Explicit worker operation create и кнопка панели подключены только для Carnage.
+Factory готовит payload после свежего accepted empty list; SQLite pending
+фиксируется до очереди. Две конкурентные попытки сериализуются, crash даёт unknown,
+следующий Create требует отдельной сверки списка. Confirmed key/name сохраняются;
+slot назначается по unique key match при прежнем target и без пользовательского назначения.
+Четыре journal/worker теста, семь socket flow, 40 exchange, 20 console и один table
+тест прошли; JS syntax проверен. Браузерный UI и живая отправка ещё не проверены.
+Далее проверить активные worker панели перед перезапуском; один пустой EU-аккаунт,
+один Create, затем новый список и вход по server key. Массовое создание пока не запускать.
+[Журнал и ограничения интеграции](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-WORKER-JOURNAL.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

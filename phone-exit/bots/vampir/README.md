@@ -140,6 +140,12 @@ Timeout / EOF дают unknown без retry; existing character исключае
 Локальная socket-сессия и regression проверки прошли. Worker / UI отправку
 пока не включают; далее постоянный журнал неопределённого исхода и живой контроль.
 [Сессионный lifecycle и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-SESSION-FLOW.md).
+Worker и панель получили отдельное создание Carnage. Постоянный журнал фиксирует
+pending до очереди; crash / unknown блокируют повтор до отдельного свежего списка.
+Подтверждённые key/name сохраняются, слот назначается по уникальному совпадению
+ключа в новом списке. Проверены временная БД, конкурирующие попытки и worker mocks;
+живое создание ещё не запускалось. Далее одна проверка пустого EU-аккаунта.
+[Worker, журнал и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-WORKER-JOURNAL.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

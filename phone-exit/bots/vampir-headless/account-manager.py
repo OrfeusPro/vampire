@@ -23,17 +23,20 @@ class Jobs:
             return {key: {k: v for k, v in job.items() if k != 'process'} for key, job in self.jobs.items()}
 
     def start(self, identifier, operation, *, accept_required_terms=False, manual_mail_code=False, manual_sign_in=False):
-        if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start')):
+        if type(manual_sign_in) is not bool or (manual_sign_in and operation not in ('servers', 'characters', 'start', 'create')):
             raise ValueError('Manual sign-in is only available for login operations')
         if type(manual_mail_code) is not bool or (manual_mail_code and operation != 'register'):
             raise ValueError('Invalid mail-code mode')
-        if operation not in ('servers', 'characters', 'start', 'register'):
+        if operation not in ('servers', 'characters', 'start', 'register', 'create'):
             raise ValueError('Unknown operation')
         account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
         if account is None:
             raise ValueError('Unknown account')
         if not account.get('enabled', True):
             raise ValueError('This account is disabled')
+        if operation == 'create' and (account['create_class'] != 'Gunner' or account['server_id'] is None
+                or account['character_index'] is not None or account['character_key'] is not None):
+            raise ValueError('Сначала сохраните сервер и класс Carnage без назначенного персонажа.')
         if operation == 'register' and (accept_required_terms is not True or (not manual_mail_code and not account['mail_password_saved'])
                 or account['registration_status'] in ('registered', 'in_progress', 'email_in_use', 'nid_verified', 'sdk_created')):
             raise ValueError('Registration requires a mailbox password and explicit terms acceptance')
@@ -95,6 +98,10 @@ class Jobs:
                 account = next(a for a in self.store.accounts() if a['id'] == job['account_id'])
                 if account['registration_status'] == 'in_progress':
                     self.store.registration_status(job['account_id'], 'unconfirmed')
+            if job['operation'] == 'create':
+                for attempt in self.store.creation_attempts():
+                    if attempt['account_id'] == job['account_id'] and attempt['state'] == 'pending':
+                        self.store.finish_creation(attempt['attempt_id'], state='unknown')
             with self.lock:
                 job.update(running=False, active=False)
                 if job['status'] in ('active', 'connecting'):
@@ -182,6 +189,7 @@ def server(store, *, port=17949):
                 return self.response(403, dict(error='Forbidden'))
             return self.response(200, dict(accounts=store.accounts(), jobs=jobs.snapshot(), catalogs=store.catalogs(),
                 character_lists=store.character_lists(),
+                creation_attempts=store.creation_attempts(),
                 creation_classes=[dict(key=key, label=label) for key, label in CLASS_CHOICES],
                 device_profiles=[dict(id='current-pc', name='Текущий ПК · общие данные устройства', available=True)]))
 

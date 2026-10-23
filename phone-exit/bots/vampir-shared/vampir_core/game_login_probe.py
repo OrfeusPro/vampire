@@ -18,12 +18,15 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         observe_world_seconds=0,world_observer=None,tutorial_observer=None,
                         ack_initial_tutorial=False, read_quest_list=False, quest_observer=None,
                         quest_wire_observer=None, expose_character_labels=False, expected_character_key=None,
-                        creation_payload=None):
-    if creation_payload is not None:
+                        creation_payload=None, creation_factory=None):
+    creation_enabled = creation_payload is not None or creation_factory is not None
+    if creation_factory is not None and (not callable(creation_factory) or creation_payload is not None):
+        raise ValueError('Creation factory must be explicit and exclusive with payload')
+    if creation_enabled:
         from .character_create import encode_character_create
         if not read_character_list or character_index is not None or source_sha256 != WORLD_SOURCE_SHA256:
             raise ValueError('Creation requires current source and explicit list operation without selection')
-        encode_character_create(creation_payload, source_sha256=source_sha256)
+        if creation_payload is not None: encode_character_create(creation_payload, source_sha256=source_sha256)
     if expected_character_key is not None and (type(expected_character_key) is not int or
             not 0 <= expected_character_key <= 0xffffffffffffffff or character_index is None):
         raise ValueError('Expected character key requires explicit selection')
@@ -158,7 +161,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     character_select_body_size=(owner.selection.last_body_size
                         if owner.selection.last_packet_id == 110 else None),
                     selection_body_fully_decoded=accepted or refused)
-        if creation_payload is not None:
+        if creation_enabled:
             creation = owner.creation
             if creation is not None and creation.state in ('queued', 'sent'): owner.close()
             outcome = creation.outcome if creation is not None else None
@@ -252,8 +255,10 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     list_requested = True
                     deadline = time.monotonic() + timeout
                 elif owner.selection.state == SelectionState.LIST_AVAILABLE:
-                    if creation_payload is not None and not owner.selection.characters.records:
+                    if creation_enabled and not owner.selection.characters.records:
                         if owner.creation is None:
+                            if creation_factory is not None:
+                                creation_payload = creation_factory(owner.selection.characters)
                             try:
                                 owner.queue_character_create(creation_payload, source_sha256=source_sha256,
                                     now=time.monotonic(), timeout=timeout)

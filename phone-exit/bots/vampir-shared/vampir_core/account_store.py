@@ -72,6 +72,7 @@ class AccountStore:
             db.execute('CREATE TABLE IF NOT EXISTS catalogs(region TEXT PRIMARY KEY,data TEXT NOT NULL)')
             db.execute('CREATE TABLE IF NOT EXISTS character_lists(account_id TEXT,region TEXT,server_id INTEGER,data TEXT NOT NULL,PRIMARY KEY(account_id,region,server_id))')
             db.execute('CREATE TABLE IF NOT EXISTS creation_names(account_id TEXT,region TEXT,server_id INTEGER,data TEXT NOT NULL,PRIMARY KEY(account_id,region,server_id))')
+            db.execute('CREATE TABLE IF NOT EXISTS creation_attempts(attempt_id TEXT PRIMARY KEY,account_id TEXT NOT NULL,region TEXT NOT NULL,server_id INTEGER NOT NULL,data TEXT NOT NULL)')
             columns = {row[1] for row in db.execute('PRAGMA table_info(accounts)')}
             if 'mail_password' not in columns:
                 db.execute('ALTER TABLE accounts ADD COLUMN mail_password BLOB')
@@ -364,3 +365,20 @@ class AccountStore:
         with self._db() as db:
             return {f'{identifier}|{region}|{server}': json.loads(data)
                 for identifier, region, server, data in db.execute('SELECT account_id,region,server_id,data FROM character_lists')}
+
+    def begin_creation(self, identifier, *, region, server_id, nickname, source_sha256):
+        from .creation_journal import begin
+        return begin(self, identifier, region, server_id, nickname, source_sha256)
+
+    def finish_creation(self, attempt_id, *, state, result_code=None, key=None, name=None):
+        from .creation_journal import finish
+        return finish(self, attempt_id, state, result_code, key, name)
+
+    def reconcile_creation(self, identifier, *, region, server_id):
+        from .creation_journal import reconcile
+        return reconcile(self, identifier, region, server_id)
+
+    def creation_attempts(self):
+        with self._db() as db:
+            return [dict(attempt_id=i, account_id=a, region=r, server_id=s, **json.loads(data))
+                for i, a, r, s, data in db.execute('SELECT attempt_id,account_id,region,server_id,data FROM creation_attempts ORDER BY rowid')]

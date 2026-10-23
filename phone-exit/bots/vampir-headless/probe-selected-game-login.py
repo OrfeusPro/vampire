@@ -35,7 +35,10 @@ def module(name, filename):
 
 def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
         extra_number, context, region, server_id=None, selection=None, password='', server_list_only=False, auth_flow='nid', language_code=None,
-        lobby_context='sdk-without-nid-info', read_character_list=False, character_index=None, read_world_start=False, read_world_finish=False, observe_world_seconds=0, world_observer=None, tutorial_observer=None, ack_initial_tutorial=False, read_quest_list=False, quest_observer=None, quest_wire_observer=None, _progress=None, _server_list_observer=None):
+        lobby_context='sdk-without-nid-info', read_character_list=False, character_index=None, read_world_start=False, read_world_finish=False, observe_world_seconds=0, world_observer=None, tutorial_observer=None, ack_initial_tutorial=False, read_quest_list=False, quest_observer=None, quest_wire_observer=None, _progress=None, _server_list_observer=None, creation_factory=None):
+    if creation_factory is not None and (not callable(creation_factory) or not read_character_list
+            or character_index is not None or selected_profile != 'recovered-release'):
+        raise ValueError('Creation factory requires release profile and explicit list without selection')
     if _server_list_observer is not None and (not callable(_server_list_observer) or server_list_only):
         raise ValueError('Server-list observer requires selected login')
     if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
@@ -205,7 +208,7 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
         state['login_language_code'] = login.raw_bytes[2]
         game = exchange_game_login(connection, version, login, timeout=10,
             read_character_list=read_character_list, character_index=character_index, ping_clock=ping_clock, read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, tutorial_observer=tutorial_observer, ack_initial_tutorial=ack_initial_tutorial, read_quest_list=read_quest_list, quest_observer=quest_observer, quest_wire_observer=quest_wire_observer,
-            source_sha256=getattr(source,'source_exe_sha256',''))
+            source_sha256=getattr(source,'source_exe_sha256',''), creation_factory=creation_factory)
         login = None
         return dict(state, status='game_login_probe', selection=selection or 'explicit-id',
             target_source='fresh_lobby_id104', context=context, extra_number=extra_number, game=game)

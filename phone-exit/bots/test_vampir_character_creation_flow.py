@@ -108,10 +108,15 @@ class CreationFlowTests(unittest.TestCase):
 
 
 class CreationSessionTests(unittest.TestCase):
-    def attempt(self, *, mode='success', keys=(), login_code=None):
+    def attempt(self, *, mode='success', keys=(), login_code=None, factory=False):
         client, server = socket.socketpair(); server.settimeout(2)
         captures, failures = [], []
         payload = carnage_creation_candidate('Hero', source_sha256=SOURCE_SHA256)
+        factory_calls = []
+        def prepare(listing):
+            self.assertEqual((listing.result_code, listing.records), (0, ()))
+            factory_calls.append('prepared')
+            return payload
         def serve():
             try:
                 captures.append(receive_frame(server)[0]); server.sendall(incoming(2, RESULT))
@@ -133,11 +138,13 @@ class CreationSessionTests(unittest.TestCase):
         try:
             result = exchange_game_login(client, VERSION, LOGIN, timeout=0.3,
                 read_character_list=True, expose_character_labels=True,
-                source_sha256=SOURCE_SHA256, creation_payload=payload)
+                source_sha256=SOURCE_SHA256, creation_payload=None if factory else payload,
+                creation_factory=prepare if factory else None)
         finally:
             client.close(); worker.join(3)
         self.assertFalse(worker.is_alive()); self.assertEqual(failures, [])
         self.assertEqual(client.fileno(), -1)
+        if factory: self.assertEqual(len(factory_calls), sum(pid == 103 for pid, _ in captures))
         return result, captures
 
     def test_same_connection_login_list_create_and_result(self):
@@ -161,6 +168,13 @@ class CreationSessionTests(unittest.TestCase):
         result, captures = self.attempt(login_code=59)
         self.assertEqual(result['character_creation_state'], 'not_attempted')
         self.assertEqual(captures, [(1, 0), (3, 1)])
+
+    def test_factory_only_runs_on_accepted_empty_list(self):
+        result, _ = self.attempt(factory=True)
+        self.assertEqual(result['character_creation_state'], 'created')
+        for kwargs in (dict(keys=(11,)), dict(login_code=59)):
+            result, _ = self.attempt(factory=True, **kwargs)
+            self.assertEqual(result['character_creation_state'], 'not_attempted')
 
 
 if __name__ == '__main__': unittest.main()

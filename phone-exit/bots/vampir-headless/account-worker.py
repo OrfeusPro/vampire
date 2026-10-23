@@ -16,6 +16,8 @@ from vampir_core.windows_device_identity import observe_windows_device_identity
 from vampir_core.account_catalog import build_account_catalog
 from vampir_core.patch_revision import parse_patch_client_revision
 from vampir_core.sdk_sign_in_http import SdkSignInHttpError
+from vampir_core.character_creation_candidate import carnage_creation_candidate
+from vampir_core.world_move_start import SOURCE_SHA256
 
 
 def load(name, path):
@@ -35,12 +37,15 @@ def run(args):
     email, password, settings = store.credential(args.account)
     if not settings.get('enabled', True):
         raise ValueError('This account is disabled')
-    if args.operation not in ('servers', 'characters', 'start', 'register'):
+    if args.operation not in ('servers', 'characters', 'start', 'register', 'create'):
         raise ValueError('Unknown account operation')
     if getattr(args, 'manual_sign_in', False) and args.operation == 'register':
         raise ValueError('Manual sign-in cannot start registration')
     if settings['server_id'] is None and args.operation not in ('servers', 'register'):
         raise ValueError('Select a server first')
+    if args.operation == 'create' and (settings.get('create_class') != 'Gunner'
+            or settings.get('character_index') is not None or settings.get('character_key') is not None):
+        raise ValueError('Creation supports only explicitly selected Carnage without an assigned character')
     registry = DeviceRegistry(HERE / '.local/accounts.sqlite3')
     try:
         binding = registry.get(email)
@@ -99,14 +104,37 @@ def run(args):
             raise ValueError('Server catalog was not accepted')
         store.save_catalog(settings['region'], build_account_catalog(listing, region=settings['region'],
             observed_utc=datetime.now(timezone.utc).isoformat()))
-    result = tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
-        server_policy_byte=0, extra_number=revision, context='windows-sdk-initial-reset', region=settings['region'],
-        server_id=settings['server_id'], password=password, auth_flow=settings.get('auth_flow', 'launcher'), language_code=1,
-        lobby_context='sdk-with-partial-metadata', read_character_list=True,
-        character_index=settings['character_index'] if start_world else None,
-        read_world_start=start_world, read_world_finish=start_world,
-        observe_world_seconds=300 if start_world else 0, world_observer=world if start_world else None,
-        _progress=progress, _server_list_observer=catalog)
+    attempt = [None]
+    def prepare_creation(characters):
+        if characters.result_code != 0 or characters.records: raise ValueError('Expected accepted empty list')
+        store.save_characters(args.account, region=settings['region'], server_id=settings['server_id'],
+            characters=[], observed_utc=datetime.now(timezone.utc).isoformat())
+        nickname = store.creation_nickname(args.account, region=settings['region'], server_id=settings['server_id'])
+        payload = carnage_creation_candidate(nickname, source_sha256=SOURCE_SHA256)
+        attempt[0] = store.begin_creation(args.account, region=settings['region'], server_id=settings['server_id'],
+            nickname=nickname, source_sha256=SOURCE_SHA256)
+        emit('phase', stage='character_creation')
+        return payload
+    def login_attempt():
+        return tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
+            server_policy_byte=0, extra_number=revision, context='windows-sdk-initial-reset', region=settings['region'],
+            server_id=settings['server_id'], password=password, auth_flow=settings.get('auth_flow', 'launcher'), language_code=1,
+            lobby_context='sdk-with-partial-metadata', read_character_list=True,
+            character_index=settings['character_index'] if start_world else None,
+            read_world_start=start_world, read_world_finish=start_world,
+            observe_world_seconds=300 if start_world else 0, world_observer=world if start_world else None,
+            _progress=progress, _server_list_observer=catalog,
+            creation_factory=prepare_creation if args.operation == 'create' else None)
+    try:
+        result = login_attempt()
+        game = result.get('game', {})
+        if attempt[0] is not None:
+            state = game.get('character_creation_state', 'unknown')
+            store.finish_creation(attempt[0], state=state if state in ('created', 'rejected', 'needs_refresh', 'not_queued') else 'unknown',
+                result_code=game.get('character_creation_result_code'), key=game.get('created_character_key'),
+                name=game.get('created_character_name'))
+    finally:
+        if attempt[0] is not None: store.finish_creation(attempt[0], state='unknown')
     password = None
     if result.get('browser_status') in ('timeout', 'login_failed'):
         browser = load('account_browser_failure', HERE / 'nid-browser.py')
@@ -120,6 +148,9 @@ def run(args):
     game = result.get('game', {})
     code = game.get('login_result_code')
     remember_characters(store, args.account, settings, game)
+    if args.operation == 'characters' and (game.get('login_result_code') == 0
+            and game.get('character_list_received') is True and game.get('character_list_result_code') == 0):
+        store.reconcile_creation(args.account, region=settings['region'], server_id=settings['server_id'])
     if code not in (None, 0):
         message = f"Login {code}: {game.get('login_result_key') or 'отказ сервера'}"
         state = 'error'
@@ -127,6 +158,13 @@ def run(args):
         message, state = 'Вход не завершён: ' + str(result.get('stage', 'unknown')), 'error'
         if result.get('browser_status') == 'timeout':
             message = 'Истекло время входа Netmarble. Игровое соединение не открыто; проверьте окно авторизации.'
+    elif args.operation == 'create' and attempt[0] is not None:
+        status = game.get('character_creation_state')
+        state = 'needs_character'
+        message = {'created': 'Персонаж создан. Прочитайте список, чтобы назначить его и войти.',
+            'rejected': 'Сервер отклонил создание. Ник не менялся; автоматического повтора нет.',
+            'not_queued': 'Создание не отправлено. Прочитайте список перед новой попыткой.'}.get(status,
+            'Исход создания не подтверждён. Прочитайте список перед новой попыткой.')
     elif game.get('character_entry_state') == 'empty_list':
         name = store.creation_nickname(args.account, region=settings['region'], server_id=settings['server_id'])
         message, state = ('Персонажей нет. ' + ('Ник подготовлен; ' if name else 'Укажите ник; ') +
@@ -225,7 +263,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--store', required=True, type=Path)
     parser.add_argument('--account', required=True)
-    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register'], required=True)
+    parser.add_argument('--operation', choices=['servers', 'characters', 'start', 'register', 'create'], required=True)
     parser.add_argument('--accept-required-terms', action='store_true')
     parser.add_argument('--manual-mail-code', action='store_true')
     parser.add_argument('--manual-sign-in', action='store_true')
