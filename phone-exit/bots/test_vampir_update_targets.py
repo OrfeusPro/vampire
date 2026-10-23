@@ -89,5 +89,33 @@ class UpdateTargetsTests(unittest.TestCase):
             self.assertTrue(set(group.get('required_checks',[])) <= checks)
             for name in group.get('tools',[]): self.assertTrue((HERE/name).is_file(),name)
 
+    def test_short_utf16_anchor_requires_a_literal_boundary(self):
+        raw=bytearray(self.image());raw[0x300:0x306]='os\0'.encode('utf-16le')
+        anchor=dict(self.anchor(),text='os',encoding='utf-16le',require_preceding_nul=True)
+        rows,_=tool.locate(bytes(raw),[anchor],self.native)
+        self.assertEqual(rows[0]['state'],'candidate')
+        raw[0x2fe:0x300]=b'x\0'
+        rows,_=tool.locate(bytes(raw),[anchor],self.native)
+        self.assertFalse(rows[0]['literals'])
+
+    def test_decode_budget_is_shared_between_anchors_and_overflow_stays_queued(self):
+        raw=bytearray(0x2200);raw[:0x200]=self.image()[:0x200]
+        for at,rva,offset in ((0x188,0x1000,0x200),(0x1b0,0x3000,0x1200)):
+            struct.pack_into('<IIII',raw,at+8,0x1000,rva,0x1000,offset)
+        struct.pack_into('<II',raw,0x98+112+3*8,0x3100,33*12)
+        raw[0x1200:0x120a]=b'I_fixture\0';raw[0x1220:0x122a]=b'B_fixture\0'
+        raw[0x1700:0x1704]=b'\x01\0\0\0'
+        for number in range(33):
+            begin=0x1000+16*number;offset=0x200+16*number
+            target=0x3020 if number==32 else 0x3000
+            raw[offset:offset+16]=b'\x48\x8d\x05'+struct.pack('<i',target-begin-7)+b'\x90'*8+b'\xc3'
+            struct.pack_into('<III',raw,0x1300+12*number,begin,begin+16,0x3500)
+        rows,gaps=tool.locate(bytes(raw),[self.anchor(),dict(self.anchor(),id='second',text='B_fixture')],self.native)
+        self.assertEqual(rows[0]['state'],'requires_review')
+        self.assertEqual(rows[1]['state'],'candidate')
+        self.assertEqual(len(rows[0]['candidates'])+len(rows[1]['candidates']),32)
+        self.assertEqual(len(gaps),1)
+        self.assertIn('budget exhausted',rows[0]['unresolved'][0]['reason'])
+
 
 if __name__=='__main__': unittest.main()

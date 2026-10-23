@@ -31,6 +31,107 @@
       "required_checks": [
         "release-lobby-errors"
       ]
+    },
+    {
+      "id": "key-buildCode",
+      "text": "buildCode",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d138",
+      "baseline_root": "0x1411b0260",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-gameCode",
+      "text": "gameCode",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d120",
+      "baseline_root": "0x1411b04d0",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-launcherToken",
+      "text": "launcherToken",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d1b8",
+      "baseline_root": "0x1411b0590",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-countryCode",
+      "text": "countryCode",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d2d8",
+      "baseline_root": "0x1411b0350",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-credential",
+      "text": "credential",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d208",
+      "baseline_root": "0x1411b0380",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-deviceKey",
+      "text": "deviceKey",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d1d8",
+      "baseline_root": "0x1411b03e0",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-errorCode",
+      "text": "errorCode",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d330",
+      "baseline_root": "0x1411b0440",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-nmDeviceKey",
+      "text": "nmDeviceKey",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d1f0",
+      "baseline_root": "0x1411b05c0",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
+    },
+    {
+      "id": "key-os",
+      "text": "os",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d2f0",
+      "baseline_root": "0x1411b05f0",
+      "required_checks": [
+        "release-launcher-contract"
+      ],
+      "require_preceding_nul": true
+    },
+    {
+      "id": "key-resultData",
+      "text": "resultData",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x14952d3b0",
+      "baseline_root": "0x1411b06b0",
+      "required_checks": [
+        "release-launcher-contract"
+      ]
     }
   ],
   "resource_checks": [

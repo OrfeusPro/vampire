@@ -7,11 +7,14 @@ patch revision **262487**, EXE SHA `d00a197796b7…`. Полная сверка 
 ниже относятся к предыдущей сборке.
 [Результат обновления и очередь перепроверки](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-UPDATE-11316.md).
 Автоматический поиск по точным ориентирам нашёл два launcher candidates новой
-сборки; сверка контракта и перенос auth checks ещё нужны.
+сборки; сверка SDK/GMC2 и перенос остальных auth checks ещё нужны.
 [Что искать при следующем обновлении](../resource-tools/vampir/knowledge/UPDATE-TARGETS.md).
 Получены полные экспорты двух новых launcher-функций; повтор collect использует
 готовые материалы без JVM. Контракт SDK и живой вход ещё не перенесены.
 [Явный экспорт нового SHA и проверки](../resource-tools/vampir/knowledge/evidence/tools/HEADLESS-REQUESTED-GHIDRA.md).
+Статический launcher request/response audit перенесён на новый SHA: 16 функций,
+10 ключей, суффиксы, thunks и локальные ветвления. Живой вход этим не подтверждён.
+[Launcher-контракт 1.13.16](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-LAUNCHER-CONTRACT-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

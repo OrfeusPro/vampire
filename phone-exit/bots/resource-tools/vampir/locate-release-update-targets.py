@@ -27,8 +27,10 @@ def locate(raw, anchors, native):
         while True:
             offset = raw.find(data, cursor)
             if offset < 0: break
-            if len(positions) >= 16: raise ValueError('Literal match budget exceeded')
             cursor = offset + 1
+            if anchor.get('require_preceding_nul') and raw[max(0,offset-2):offset] != b'\0\0':
+                continue
+            if len(positions) >= 16: raise ValueError('Literal match budget exceeded')
             address = image.pe.address(offset)
             positions.append(address)
             targets.setdefault(address, []).append(anchor['id'])
@@ -40,9 +42,18 @@ def locate(raw, anchors, native):
         if containing is not None:
             root = image.roots[containing]
             roots.setdefault(root, []).append((address, target))
-    if len(roots) > 32: raise ValueError('Explicit anchor roots exceed budget')
     decoded, gaps = {}, []
-    for root in sorted(roots):
+    by_anchor = [[root for root, pairs in sorted(roots.items())
+                  if any(anchor['id'] in targets[target] for _, target in pairs)] for anchor in anchors]
+    ordered = []
+    for position in range(max(map(len, by_anchor), default=0)):
+        for choices in by_anchor:
+            if position < len(choices) and choices[position] not in ordered:
+                ordered.append(choices[position])
+    for ordinal, root in enumerate(ordered):
+        if ordinal >= 32:
+            gaps.append(dict(root=hex(image.pe.base + root[0]), reason='Root decode budget exhausted; requires explicit follow-up'))
+            continue
         try:
             fragments = native.decode_ranges(image, {root})
         except ValueError as error:
@@ -50,6 +61,7 @@ def locate(raw, anchors, native):
             continue
         decoded[root] = {row['address']: row for f in fragments for row in f['instructions']}
     output = []
+    gap_reasons = {row['root']: row['reason'] for row in gaps}
     for anchor in anchors:
         candidates, unresolved = {}, []
         for root, pairs in roots.items():
@@ -58,7 +70,8 @@ def locate(raw, anchors, native):
                 row = decoded.get(root, {}).get(address)
                 entry = hex(image.pe.base + root[0])
                 if row is None or target not in row['rip_references'] or row['mnemonic'] != 'lea':
-                    unresolved.append(dict(root=entry, address=hex(address), reason='Instruction boundary not verified'))
+                    unresolved.append(dict(root=entry, address=hex(address),
+                        reason=gap_reasons.get(entry, 'Instruction boundary not verified')))
                     continue
                 candidates.setdefault(entry, []).append(dict(address=hex(address), target=hex(target), bytes=row['bytes']))
         output.append(dict(id=anchor['id'], literals=[hex(a) for a in literals[anchor['id']]],
@@ -77,7 +90,8 @@ def run(*, root, targets_path, source_sha):
         raise ValueError('Unsupported anchor definition')
     if len({a['id'] for a in anchors}) != len(anchors): raise ValueError('Duplicate target IDs')
     for anchor in anchors:
-        if (anchor['encoding'] not in ('ascii', 'utf-16le') or not 4 <= len(anchor['text']) <= 1024
+        minimum = 2 if anchor['encoding'] == 'utf-16le' and anchor.get('require_preceding_nul') is True else 4
+        if (anchor['encoding'] not in ('ascii', 'utf-16le') or not minimum <= len(anchor['text']) <= 1024
                 or '\0' in anchor['text'] or not anchor['required_checks']):
             raise ValueError('Invalid reviewed anchor')
     native = load_native()
