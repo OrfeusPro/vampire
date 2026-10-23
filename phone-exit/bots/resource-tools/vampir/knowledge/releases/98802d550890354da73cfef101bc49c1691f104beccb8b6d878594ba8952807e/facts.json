@@ -5276,6 +5276,103 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Directory pairing, источник диапазонов/default float и заполнение owner map; actual lookup/key conversion/JSON output, producer и handler ID104."
+    },
+    {
+      "addresses": [
+        "0x145452bb0",
+        "0x145457040"
+      ],
+      "checks": [
+        {
+          "cache_key": "d5f90d9ce1210a1600791d6fed9229c7ee9863a45612aaaa69fccb1d223ae0d0",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326\\manifest.json",
+          "sha256": "7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326",
+          "state": "passed"
+        },
+        {
+          "cache_key": "99ec5cf6fc2412b2fd5690809ce7d186d4a97a2fb0e933938aa1d5f0c88b8030",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b\\manifest.json",
+          "sha256": "8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a51da97fefd155eb0d79da2f4986046c44bdb50c693758d65af97465cc8acfb",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b\\manifest.json",
+          "sha256": "3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b6ec3391a351662f8a4f5a15c68659c175787940cc7b946ec48de91af3ef33ed",
+          "id": "release-character-create-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b\\manifest.json",
+          "sha256": "b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "48ce8511dd27e774a282c8d32eb06abe039ba61358ce27daf2f73dd224bc528c",
+          "id": "release-create-class-lookup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5\\manifest.json",
+          "sha256": "89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "218eebc981b597c74e5cb2d34ebbcb6771e772280f94422ed33f84fb6bd4a8c7",
+          "id": "release-creation-class-data",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34\\manifest.json",
+          "sha256": "556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34",
+          "state": "passed"
+        },
+        {
+          "cache_key": "82cc1a0db07f945cdbd1b1d9cca63777062471ed11e56c2b4078679e8c410345",
+          "id": "release-character-create-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17\\manifest.json",
+          "sha256": "39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8e9ef3ecb9922ed9f229eca97589ef7c7d87da056e8c136ed4c604f0c6d74d91",
+          "id": "release-appearance-json-inputs",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd\\manifest.json",
+          "sha256": "51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a29a123b58040b53012ded3985b8d54304aac5981cfbb11951c082ab401aac77",
+          "id": "release-appearance-json-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d\\manifest.json",
+          "sha256": "c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c663cba7447aca95bba9ea2fd4b4f8f6a48c1268d265833e21ef927172f6e4be",
+          "id": "release-appearance-resources",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b65ea09aed75007c0d403626a2ea0c8872cb0c29ed04f6f9eedad0ab5f342c0c\\manifest.json",
+          "sha256": "b65ea09aed75007c0d403626a2ea0c8872cb0c29ed04f6f9eedad0ab5f342c0c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Для текущего pakchunk100 с полным SHA подтверждены точные именованные пары BoneGroup F/M .uasset/.uexp: SHA1 основного и полного directory индексов совпали; encoded entries совпали со смещениями, размерами и флагами свежего record index. Извлечение больше не зависит от соседства записей. Обе таблицы вновь дали по семь групп ID 1–7; повреждённые материалы и чужой SHA отклоняются, зависимости каталога включены в кэш проверок.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-BONEGROUP-DIRECTORY.md",
+          "sha256": "282834ecaeb3a6d3b41f6a6180aa430d459abca37142575ce57dccf3fa9804c8"
+        }
+      ],
+      "id": "09efcbcc0e22768d52138ecd820624fab9e6f00c403a83ca1e4950da37bb4cda",
+      "limits": [
+        "Исторический key candidate подтверждает расшифровку данного архива, но не binding callback в текущем EXE.",
+        "Path-hash side index отдельно не проверялся.",
+        "Пять тестов извлечения включают synthetic перестановку записей; реальный engine cache, JSON и серверная допустимость внешности не проверены.",
+        "Авторизация и создание персонажа не запускались."
+      ],
+      "method": "static",
+      "next_check": "Найти источник диапазонов и начальных float-значений и запись owner map, затем проверить producer с реальными definitions.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Источник диапазонов и начальных float-значений, заполнение owner map, actual lookup/key converter/JSON output, целый producer и handler ID 104."
     }
   ],
   "schema": 1,

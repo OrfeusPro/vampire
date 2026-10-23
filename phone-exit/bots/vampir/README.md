@@ -59,10 +59,12 @@ Reader ответа создания ID 104 проверен на 16 телах 
 Entry helper внешности прошёл 24 native случая до lookup / JSON captures:
 неизвестная definition пропускается, найденная задаёт отдельный JSON key.
 BoneGroup F / M извлечены из текущего PAK: по семь групп с ID 1–7 и разными
-наборами костей. Схема строки сверена с EXE; directory pairing и default float
-ещё открыты.
+наборами костей. Схема строки сверена с EXE. Затем точные пары `.uasset` / `.uexp`
+подтверждены полным каталогом текущего PAK с проверкой SHA1 обоих индексов.
+Источник диапазонов и начальных float-значений ещё открыт.
 [Definition и преобразование ключей](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-ENTRY.md).
 [Текущие группы внешности](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-RESOURCES.md).
+[Имена файлов и проверка каталога](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-DIRECTORY.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

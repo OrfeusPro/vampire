@@ -78,9 +78,11 @@ Entry helper затем прошёл 24 случая: missing definition про�
 converter / JSON — captures. Следом текущие BoneGroup F / M assets и definitions.
 [Ключи внешности и ресурсы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-ENTRY.md).
 Текущие BoneGroup F / M затем разобраны целиком по EXE-схеме: семь групп,
-ID 1–7, списки костей. Есть structural body pairing, но directory pairing
-не подтверждён. Диапазонов / начальных float в этой таблице нет.
+ID 1–7, списки костей. Следом пары `.uasset` / `.uexp` подтверждены по точным
+именам в полном каталоге текущего PAK; SHA1 обоих индексов совпали.
+Диапазонов / начальных float в этой таблице нет; искать их источник и заполнение owner map.
 [Извлечение и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-RESOURCES.md).
+[Именованные пары и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-BONEGROUP-DIRECTORY.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

@@ -19,7 +19,7 @@ def load(name, path):
     return module
 
 
-def recover(manifest_path, archive_path):
+def recover(manifest_path, archive_path, directory_only=False):
     core = load('release_config_core', HERE / 'recover-pak-game-config.py')
     if core.sha256(manifest_path) != manifest_path.parent.name:
         raise ValueError('Release manifest digest differs')
@@ -65,7 +65,7 @@ def recover(manifest_path, archive_path):
         directory = core.parse_directory(directory_raw, metadata['entry_count'])
         entries = {row['path']: row for row in directory['entries']}
         files, configs = {}, []
-        for name in core.GAME_FILES:
+        for name in (() if directory_only else core.GAME_FILES):
             payload, info = core.extract_config(stream, entries[name], encoded, key, reader, offset)
             label = 'DefaultGame.ini' if name.endswith('/DefaultGame.ini') else 'WindowsGame.ini'
             files[label] = payload
@@ -74,6 +74,8 @@ def recover(manifest_path, archive_path):
     if (before.st_size, before.st_mtime_ns) != (after.st_size, after.st_mtime_ns) or core.sha256(archive_path) != source['sha256']:
         raise ValueError('Archive changed during recovery')
     files['directory.json'] = (json.dumps(directory, ensure_ascii=False, indent=2) + '\n').encode('utf-8')
+    if directory_only:
+        files['encoded-entries.bin'] = encoded
     report = dict(schema_version=1, release_manifest_sha256=manifest_path.parent.name,
         source_exe=release['exe']['path'], exe_sha256=release['exe']['sha256'],
         source_archive=dict(path=str(archive_path), size=before.st_size, modified_ns=before.st_mtime_ns),
@@ -84,16 +86,19 @@ def recover(manifest_path, archive_path):
         main_index=main_info, main_metadata=metadata, directory_index=directory_info,
         directory_sha256=core.hashlib.sha256(directory_raw).hexdigest(),
         directory_paths_file_sha256=core.hashlib.sha256(files['directory.json']).hexdigest(), configs=configs,
+        encoded_entries_file_sha256=core.hashlib.sha256(encoded).hexdigest() if directory_only else None,
         authoritative_directory_for_archive=True, path_hash_side_index_verified=False,
         active_runtime_settings_verified=False, config_precedence_verified=False, network_ready=False)
     target, digest = core.save(report, files)
     print(json.dumps(dict(manifest=str(target), sha256=digest, directory_files=metadata['entry_count'],
                          configs=[dict(file=c['snapshot_file'], sha256=c['payload_sha256'], values=c['values']) for c in configs]), indent=2))
+    return target
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('manifest', type=Path)
     parser.add_argument('--archive', type=Path, required=True)
+    parser.add_argument('--directory-only', action='store_true', help='Verify and save the full named directory without extracting INI files')
     args = parser.parse_args()
-    recover(args.manifest, args.archive)
+    recover(args.manifest, args.archive, args.directory_only)

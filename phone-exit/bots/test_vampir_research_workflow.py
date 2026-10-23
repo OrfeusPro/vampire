@@ -216,5 +216,35 @@ class ResearchWorkflowTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'manifest or CSV blob'):
             self.workflow.check_artifacts(self.index.api(), self.root, [str(other.relative_to(self.root))])
 
+    def test_directory_recovery_tracks_materials_and_current_pak(self):
+        archive = self.root / 'installed/Game.pak'
+        archive.parent.mkdir(); archive.write_bytes(b'public archive fixture')
+        sha = self.index.digest(archive)
+        release = dict(files=[dict(path=str(archive), current=dict(sha256=sha))])
+        release_sha = self.workflow.hashlib.sha256(self.workflow.canonical(release)).hexdigest()
+        release_path = self.root / 'release-snapshots' / release_sha / 'manifest.json'
+        self.workflow.atomic(release_path, self.workflow.canonical(release))
+        data = dict(authoritative_directory_for_archive=True, configs=[], release_manifest_sha256=release_sha,
+            source_archive=dict(path=str(archive)), archive_sha256=sha,
+            directory_paths_file_sha256=self.workflow.hashlib.sha256(b'directory').hexdigest(),
+            encoded_entries_file_sha256=self.workflow.hashlib.sha256(b'entries').hexdigest())
+        key = self.workflow.hashlib.sha256(self.workflow.canonical(data)).hexdigest()
+        path = self.root / 'resource-config-snapshots' / key / 'manifest.json'
+        self.workflow.atomic(path, self.workflow.canonical(data))
+        name = str(path.relative_to(self.root))
+        directory, encoded = path.parent / 'directory.json', path.parent / 'encoded-entries.bin'
+        directory.write_bytes(b'directory'); encoded.write_bytes(b'entries')
+        hashes = self.workflow.check_artifacts(self.index.api(), self.root, [name])
+        self.assertEqual(hashes[str(archive.resolve())], sha)
+        self.assertIn(str(encoded.resolve()), hashes)
+        for material in (directory, encoded):
+            old = material.read_bytes(); material.write_bytes(b'corrupt')
+            with self.assertRaisesRegex(ValueError, 'material hash changed'):
+                self.workflow.check_artifacts(self.index.api(), self.root, [name])
+            material.write_bytes(old)
+        archive.write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'source archive changed'):
+            self.workflow.check_artifacts(self.index.api(), self.root, [name])
+
 
 if __name__ == '__main__': unittest.main()

@@ -73,6 +73,31 @@ def check_artifacts(index, root, names):
             external[str(path)] = index.digest(path)
             continue
         parts = path.relative_to(root.resolve()).parts
+        if (len(parts) == 3 and parts[0] == 'resource-config-snapshots'
+                and index.SHA.fullmatch(parts[1]) and path.name == 'manifest.json'):
+            data = checked_manifest(index, path)
+            if data.get('authoritative_directory_for_archive') is not True or data.get('configs') != []:
+                raise ValueError('Check needs a directory-only recovery manifest')
+            release_sha = data.get('release_manifest_sha256', '')
+            if not index.SHA.fullmatch(release_sha): raise ValueError('Invalid directory release SHA')
+            release = checked_manifest(index, root / 'release-snapshots' / release_sha / 'manifest.json')
+            source = Path(data['source_archive']['path']).resolve()
+            expected = data.get('archive_sha256', '')
+            if (source.suffix.lower() != '.pak' or not index.SHA.fullmatch(expected)
+                    or not any(Path(row['path']).resolve() == source
+                        and row.get('current', {}).get('sha256') == expected for row in release['files'])
+                    or index.digest(source) != expected):
+                raise ValueError('Check directory source archive changed or is not release-bound')
+            external[str(source)] = expected
+            for filename, field in [('directory.json', 'directory_paths_file_sha256'),
+                                    ('encoded-entries.bin', 'encoded_entries_file_sha256')]:
+                material = index.child(path.parent, filename)
+                if index.digest(material) != data.get(field):
+                    raise ValueError('Check directory material hash changed')
+                external[str(material)] = index.digest(material)
+            external[str(path)] = index.digest(path)
+            external[str(root / 'release-snapshots' / release_sha / 'manifest.json')] = release_sha
+            continue
         if len(parts) < 3 or parts[0] != 'release-snapshots' or not index.SHA.fullmatch(parts[1]):
             raise ValueError('Check artifact must be public Ghidra or release evidence')
         if path.name == 'manifest.json':

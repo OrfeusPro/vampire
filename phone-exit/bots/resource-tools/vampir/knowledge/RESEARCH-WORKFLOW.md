@@ -89,6 +89,12 @@ release snapshot; повреждённый CSV отклоняется. Прив�
 файлы этим допуском не разрешаются. Ключ кэша и проверка неизменности во время
 теста включают эти файлы вместе с исходниками проверки.
 
+Для именованных ресурсов дополнительно поддержан directory-only manifest в
+`resource-config-snapshots/<SHA>/manifest.json`: полный SHA PAK должен принадлежать
+release manifest, `configs` — быть пустым. В кэш входят manifest, `directory.json`,
+`encoded-entries.bin`, release manifest и фактический SHA PAK. Повреждение любого
+материала отклоняется до использования сохранённого результата проверки.
+
 После staging перед коммитом:
 
 ```powershell

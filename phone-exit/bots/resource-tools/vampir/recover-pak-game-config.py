@@ -304,7 +304,7 @@ def recover():
 
 
 def save(report, files):
-    if set(files) - {'DefaultGame.ini', 'WindowsGame.ini', 'directory.json'}:
+    if set(files) - {'DefaultGame.ini', 'WindowsGame.ini', 'directory.json', 'encoded-entries.bin'}:
         raise ValueError('Unsupported snapshot output filename')
     manifest = (json.dumps(report, ensure_ascii=False, sort_keys=True, indent=2) + '\n').encode('utf-8')
     identity = hashlib.sha256(manifest).hexdigest()
