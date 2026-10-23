@@ -88,6 +88,12 @@ VoiceType, FString и map очищаются; пол сохраняется. П�
 освобождение storage — fixture. Далее проверить `14642f090` после preview
 и последующие записи map, затем выбранный preset и диапазоны float.
 [Сброс и статическая последовательность](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-RESET.md).
+`14642f090` обновляет preview, затем найдено применение preset / сохранённой map
+через ползунки. Их обработчик и helper записи прошли 44 native случая:
+value / scale как float32 пишется в запись перед JSON / preview. Map lookup /
+insert остаётся fixture. Далее проверить `1464368f0`, predicate `1464479f0`,
+текущий preset и реальные scale / min / max ползунков.
+[Preset → ползунок → запись float](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CREATE-APPEARANCE-SLIDER.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

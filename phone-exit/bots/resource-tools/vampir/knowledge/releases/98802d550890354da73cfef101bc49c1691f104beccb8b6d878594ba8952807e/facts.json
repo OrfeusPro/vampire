@@ -5481,6 +5481,121 @@
       "question": "character-creation-entry",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Какие реальные preset/UI значения записываются после preview, где заполняется owner map и задаются float ranges; целый producer и ответ создания."
+    },
+    {
+      "addresses": [
+        "0x145671130",
+        "0x14642d340",
+        "0x14642d530",
+        "0x14642ddc0",
+        "0x1464568b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d5f90d9ce1210a1600791d6fed9229c7ee9863a45612aaaa69fccb1d223ae0d0",
+          "id": "release-empty-character-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326\\manifest.json",
+          "sha256": "7bfc9b59243595a1029842875efe497b11e5889b9861baf868c65ddf34447326",
+          "state": "passed"
+        },
+        {
+          "cache_key": "99ec5cf6fc2412b2fd5690809ce7d186d4a97a2fb0e933938aa1d5f0c88b8030",
+          "id": "release-create-class-source",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b\\manifest.json",
+          "sha256": "8619e3db795745026da29d86eaf2475d3f46fee4bd374a611282eae88f0ada7b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a51da97fefd155eb0d79da2f4986046c44bdb50c693758d65af97465cc8acfb",
+          "id": "release-character-create-reader",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b\\manifest.json",
+          "sha256": "3b73ecdad026867aca1764a3ecd661ab3c1d634e8f459dd215f878271aeae91b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b6ec3391a351662f8a4f5a15c68659c175787940cc7b946ec48de91af3ef33ed",
+          "id": "release-character-create-writer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b\\manifest.json",
+          "sha256": "b54b6f882fbb476e3330aec48ee62b225926b1f52e06f364afcb73551de90a9b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "48ce8511dd27e774a282c8d32eb06abe039ba61358ce27daf2f73dd224bc528c",
+          "id": "release-create-class-lookup",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5\\manifest.json",
+          "sha256": "89a99160c185130d18d7a777559717b1aadbe3bdc1e695c2ef41ae28296559e5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "218eebc981b597c74e5cb2d34ebbcb6771e772280f94422ed33f84fb6bd4a8c7",
+          "id": "release-creation-class-data",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34\\manifest.json",
+          "sha256": "556e2d9e2613607cbf59a183e201c8e69a144be855d7575dbc309b25356cfa34",
+          "state": "passed"
+        },
+        {
+          "cache_key": "82cc1a0db07f945cdbd1b1d9cca63777062471ed11e56c2b4078679e8c410345",
+          "id": "release-character-create-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17\\manifest.json",
+          "sha256": "39ce4ac3dac3a6933ff64c19319c4f240573bdf36102d40720d625a6b52a3f17",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8e9ef3ecb9922ed9f229eca97589ef7c7d87da056e8c136ed4c604f0c6d74d91",
+          "id": "release-appearance-json-inputs",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd\\manifest.json",
+          "sha256": "51cd0ae3f1aa5f477aab866442524f4042714d3c805e53274f4b79c9548c10cd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a29a123b58040b53012ded3985b8d54304aac5981cfbb11951c082ab401aac77",
+          "id": "release-appearance-json-entry",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d\\manifest.json",
+          "sha256": "c21afb1c31e123a3b2b9e27ce69b7d702985a9a1abe7215a55fdc3014ae58c3d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c663cba7447aca95bba9ea2fd4b4f8f6a48c1268d265833e21ef927172f6e4be",
+          "id": "release-appearance-resources",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b65ea09aed75007c0d403626a2ea0c8872cb0c29ed04f6f9eedad0ab5f342c0c\\manifest.json",
+          "sha256": "b65ea09aed75007c0d403626a2ea0c8872cb0c29ed04f6f9eedad0ab5f342c0c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c8cdd4e4a399397d3b52d271c4cfdcf7c789bf6656c5d6c752ecb0ed86d6b323",
+          "id": "release-appearance-reset",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5833151550c262fbd322d58bbcde74cc56c21050a0217c4b749a7be4138641e4\\manifest.json",
+          "sha256": "5833151550c262fbd322d58bbcde74cc56c21050a0217c4b749a7be4138641e4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e843e2b56a2ad7942ba94a742a36d33f366e963b7a1d24bee6d53daa2bbf7951",
+          "id": "release-appearance-slider",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\112e8154b101752caf5ede9f3d1be90440a9b655127ed6b303252101dba90ee4\\manifest.json",
+          "sha256": "112e8154b101752caf5ede9f3d1be90440a9b655127ed6b303252101dba90ee4",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Прослежены preset и сохранённая внешность через UI ползунки; helper пути формирует Customize/DT_CustomizePreset%s. Семь preset float offsets +0x54..+0x6c масштабируются и передаются ползункам. Целый обработчик 14642d340 и helper записи 1464568b0 прошли 44 native случая: float32(value)/float32(scale) записывается в lookup record+0x10 до JSON и preview. При отсутствующем widget или owner событий map/JSON нет. Handler сам не clamp-ит значения; отдельный setter статически ограничивает их min/max виджета.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-CREATE-APPEARANCE-SLIDER.md",
+          "sha256": "86558629d6cb6df8576af547620f37f72cce564bebbfe61561ce69ed0deb59fd"
+        }
+      ],
+      "id": "6630febc802396d404b78eb5f1c3fb930d816737535d56238399c086f6c43343",
+      "limits": [
+        "Hash, map lookup/insert, FString copy/allocation/free, JSON engine, Actor lookup/rendering и refresh — явные bounded fixtures/captures.",
+        "Фактическая запись четырёх байт float исполнялась; настоящая вставка sparse map и её pointer layout не установлены.",
+        "Preset consumer и setter clamp просмотрены статически, но не выполнялись целиком.",
+        "Значения scale 100/3/255 и имена виджетов синтетические, текущие min/max и выбранный preset не установлены.",
+        "Не покрыты zero scale/nonfinite floats. Сеть, авторизация и создание персонажа не выполнялись."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить map lookup 1464368f0 и predicate 1464479f0, затем извлечь применяемый текущий preset и реальные настройки ползунков.",
+      "question": "character-creation-entry",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Native map lookup/insert 1464368f0, выбор preset predicate 1464479f0, текущие preset значения и UI scale/min/max, actual JSON output и целый producer/handler создания."
     }
   ],
   "schema": 1,

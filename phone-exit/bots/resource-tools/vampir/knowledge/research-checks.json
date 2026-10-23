@@ -1741,6 +1741,38 @@
         "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
       ]
+    },
+    {
+      "id": "release-appearance-slider",
+      "questions": [
+        "character-creation-entry"
+      ],
+      "source_sha256": [
+        "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "test_pattern": "test_vampir_appearance_slider.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-601884ea0d60/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-505e2e29c0bc/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-149218135db0/details.json",
+        "ghidra/release-comparisons/c7552efd2125-98802d550890/run-fd4956a37b3c/details/run-591e487095e6/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/replay-release-appearance-slider.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-archive-input.py",
+        "phone-exit/bots/resource-tools/vampir/replay-release-nested-read-thunk.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
+      ]
     }
   ]
 }
