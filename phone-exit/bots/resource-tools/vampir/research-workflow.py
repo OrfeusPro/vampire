@@ -257,8 +257,10 @@ def collector(index, args, request, addresses):
             if index.digest(path.parent / 'candidates.json') != receipt['files']['candidates.json']:
                 raise ValueError('Comparison candidate hash mismatch')
             candidates.append(path.parent)
-    if len(candidates) != 1:
+    if len(candidates) > 1:
         return dict(state='queued', reason='Missing or ambiguous Ghidra comparison project', addresses=addresses)
+    if not candidates:
+        return index.extension('collect-requested-functions').collect(index, args, request, addresses)
     # Validate requested starts on real unwind boundaries. No guessed data address
     # is passed to createFunction. Leaf/tail candidates need a separate reviewed export.
     native = index.extension('build-native-entry-code')

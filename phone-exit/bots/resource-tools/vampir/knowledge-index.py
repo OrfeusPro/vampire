@@ -112,6 +112,7 @@ def discover(root):
     ghidra = Path(root) / 'ghidra'
     patterns = ('export-*/run-*/functions.json',
         'release-comparisons/*/run-*/details/*/details.json',
+        'request-exports/*/run-*/details.json',
         'release-comparisons/*/run-*/bootstrap/*/export/bootstrap.json')
     return sorted({p for pattern in patterns for p in ghidra.glob(pattern)})
 
@@ -203,18 +204,22 @@ def import_report(db, sources, report):
         if completed and pseudo is None: raise ValueError('Completed decompilation has no pseudocode file')
         pseudo_text = pseudo.read_text('utf-8-sig') if pseudo else ''
         instructions = row.get('instructions', [])
+        message = row.get('message', '')
+        if 'body_bytes' in row and sum(len(bytes.fromhex(ins['bytes'])) for ins in instructions) > row['body_bytes']:
+            completed = False
+            message += ' Instruction coverage exceeds declared function body; export incomplete.'
         for ins in instructions:
             raw = bytes.fromhex(ins['bytes'])
             if not raw: raise ValueError('Empty instruction')
             sources.check_bytes(sha, address(ins['address']), raw)
         body = json.dumps(dict(instructions=instructions, calls=row.get('calls', []),
-            completed=completed, message=row.get('message', '')), sort_keys=True, separators=(',', ':'))
+            completed=completed, message=message), sort_keys=True, separators=(',', ':'))
         pseudo_sha = checked[pseudo] if pseudo else None
         variant = hashlib.sha256((sha + at + (pseudo_sha or '') + body).encode()).hexdigest()
         db.execute('INSERT OR IGNORE INTO releases VALUES(?,?)', (sha, str(source_path)))
         db.execute('INSERT OR IGNORE INTO functions VALUES(?,?)', (sha, at))
         fresh = db.execute('INSERT OR IGNORE INTO variants VALUES(?,?,?,?,?,?,?)',
-            (variant, sha, at, pseudo_sha, int(completed), row.get('message', ''), body)).rowcount
+            (variant, sha, at, pseudo_sha, int(completed), message, body)).rowcount
         # old_analyst_name is a comparison hint on the new side, never a verified role.
         name = (name + (' [comparison hint]' if side == 'new' and name else '')) or at
         db.execute('INSERT INTO observations VALUES(?,?,?,?,?,?,?)', (str(report), sha, at, variant, name, str(pseudo) if pseudo else None, ordinal))

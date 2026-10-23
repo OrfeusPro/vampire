@@ -176,5 +176,27 @@ class KnowledgeIndexTests(unittest.TestCase):
                 self.assertTrue(Path(rows[0]['artifact']).is_file())
             finally: db.close()
 
+    def test_placeholder_body_remains_incomplete_and_cannot_replace_full_export(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            sha, code=self.source(root,1)
+            self.export(root,'complete',sha,code)
+            report=self.export(root,'placeholder',sha,code)
+            data=json.loads(report.read_text(encoding='utf-8'))
+            data['functions'][0]['body_bytes']=1
+            report.write_text(json.dumps(data),encoding='utf-8')
+            receipt=report.parent/'provenance.json'
+            value=json.loads(receipt.read_text(encoding='utf-8'))
+            value['files']['details.json']=self.tool.digest(report)
+            receipt.write_text(json.dumps(value),encoding='utf-8')
+            output=root/'knowledge/search.sqlite3'
+            self.tool.build(root,output)
+            db=self.tool.open_index(output)
+            try:
+                rows=self.tool.query(db,'function','140001000',sha,20)
+                self.assertEqual(sorted(r['completed'] for r in rows),[0,1])
+                self.assertIn('export incomplete',next(r for r in rows if not r['completed'])['message'])
+            finally: db.close()
+
 
 if __name__ == '__main__': unittest.main()

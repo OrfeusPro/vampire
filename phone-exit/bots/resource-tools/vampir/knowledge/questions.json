@@ -344,14 +344,15 @@
       "id": "release-update-target-discovery",
       "status": "open",
       "question": "Какие точные ориентиры автоматически находят кандидатов после обновления EXE без переноса старых ролей?",
-      "known": "Для SHA d00a1977 по проверенным RIP LEA найдены два launcher candidate roots. IsInspect имеет несколько ссылок и undecodable fragments, остаётся в очереди. Машинный план хранит точные строки, старый SHA, проверочные команды и границы переноса.",
-      "unknown": "Полный Ghidra экспорт и протокол кандидатов новой сборки; создание отдельного comparison project для нового SHA.",
-      "next_action": "Использовать code-clues/update-targets report, затем prepare явных кандидатов. Создать отдельный Ghidra project без общего анализа EXE и получить только запрошенные функции.",
+      "known": "Для SHA d00a1977 по проверенным RIP LEA найдены два launcher candidate roots. IsInspect имеет несколько ссылок и undecodable fragments, остаётся в очереди. Машинный план хранит точные строки, старый SHA, проверочные команды и границы переноса. Добавлен collect без comparison project: отдельный noanalysis проект по SHA, только явные unwind roots. Полные Ghidra exports 1444ee9d0 / 144503b10 получены, проверены importer и повторно использованы без JVM. Однобайтные placeholders остаются incomplete. Прошли 6 collector/source tests, 6 index и 12 lifecycle tests.",
+      "unknown": "Новый auth-контракт и SDK/GMC2 profile: ключи, внешние callees, headers и callbacks ещё требуют проверки. Отсутствие comparison project для этого SHA больше не препятствует явному collect.",
+      "next_action": "Использовать полные новые exports, подготовить только явно подтверждённые дополнительные key/callback/SDK candidates и перенести затронутые проверки.",
       "decision_rule": "Уникальная строка и ссылка дают кандидат, а не подтверждённую роль или совместимость. Runtime profile меняется только после source-bound проверки контракта.",
       "do_not_repeat": "Не повторять те же экспорты; не расширять дерево вызовов автоматически и не переносить старые адреса по общему сдвигу.",
       "addresses": [],
       "evidence": [
-        "UPDATE-TARGETS.md"
+        "UPDATE-TARGETS.md",
+        "evidence/tools/HEADLESS-REQUESTED-GHIDRA.md"
       ]
     }
   ]

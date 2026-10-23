@@ -2,6 +2,7 @@
 // @category PhoneExit.Vampir
 import ghidra.app.script.GhidraScript;
 import ghidra.app.decompiler.*;
+import ghidra.app.cmd.function.CreateFunctionCmd;
 import ghidra.program.model.address.Address;
 import ghidra.program.model.listing.*;
 import com.google.gson.*;
@@ -43,6 +44,7 @@ public class InspectVampirSdkProfile extends GhidraScript {
             for (String requested : requestedAddresses) {
                 if (!permitted.contains(requested)) throw new IllegalArgumentException("Function absent from SDK references");
                 Address address = currentProgram.getAddressFactory().getAddress(requested);
+                disassemble(address);
                 Function function = currentProgram.getFunctionManager().getFunctionAt(address);
                 boolean created = false;
                 if (function == null) {
@@ -50,6 +52,7 @@ public class InspectVampirSdkProfile extends GhidraScript {
                     function = createFunction(address, null); created = true;
                 }
                 if (function == null) throw new IllegalStateException("SDK candidate function creation failed");
+                CreateFunctionCmd.fixupFunctionBody(currentProgram, function, monitor);
                 owners.put(address, function);
                 JsonObject selected = new JsonObject(); selected.addProperty("address", requested);
                 selected.addProperty("function_created_for_inspection", created); nativeReferences.add(selected);

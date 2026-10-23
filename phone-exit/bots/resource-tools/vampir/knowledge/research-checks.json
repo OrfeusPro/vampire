@@ -2930,6 +2930,36 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json",
         "phone-exit/bots/test_vampir_research_update.py"
       ]
+    },
+    {
+      "id": "release-requested-function-export",
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "runtime_distributions": [
+        "capstone"
+      ],
+      "test_pattern": "test_vampir_requested_functions.py",
+      "timeout_seconds": 120,
+      "artifact_dependencies": [
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e6508b986175/details.json"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/collect-requested-functions.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/InspectVampirSdkProfile.java",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/ghidra-tools.lock.json",
+        "phone-exit/bots/test_vampir_update_targets.py",
+        "phone-exit/bots/test_vampir_knowledge_index.py",
+        "phone-exit/bots/test_vampir_research_workflow.py"
+      ]
     }
   ]
 }
