@@ -14,6 +14,7 @@ from .sdk_sign_in import SdkSignInRequestPlan
 from .sdk_sign_in_response import parse_sdk_sign_in_response
 from .sdk_sign_up_response import parse_sdk_sign_up_response
 from .sdk_launcher_auth import parse_launcher_token_response
+from .sdk_fetch import parse_sdk_fetch_response
 from .socks_route import SocksRoute
 
 
@@ -69,6 +70,14 @@ def execute_sdk_sign_up(plan, *, expected_url, timeout=10, read_budget=30, max_r
     return _execute_sdk_auth(plan, expected_url=expected_url, suffix='/v1/sign-up', timeout=timeout,
         read_budget=read_budget, max_response_bytes=max_response_bytes, _open=_open, _clock=_clock,
         parse_response=parse_sdk_sign_up_response, route=route)
+
+
+def execute_sdk_fetch(plan, *, expected_url, timeout=10, read_budget=30, max_response_bytes=65536,
+                      route=None, _open=None, _clock=time.monotonic):
+    """One explicit read-only Fetch POST; no automatic continuation or creation."""
+    return _execute_sdk_auth(plan, expected_url=expected_url, suffix='/v1/fetch-player', timeout=timeout,
+        read_budget=read_budget, max_response_bytes=max_response_bytes, _open=_open, _clock=_clock,
+        parse_response=parse_sdk_fetch_response, route=route)
 
 
 def execute_launcher_token(plan, *, expected_url, timeout=10, read_budget=30, max_response_bytes=65536,

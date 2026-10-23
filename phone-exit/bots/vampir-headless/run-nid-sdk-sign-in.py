@@ -21,8 +21,9 @@ from vampir_core.nid_web_url import bind_nid_web_url
 from vampir_core.nid_sdk_credential import build_nid_sdk_credential
 from vampir_core.sdk_sign_in import plan_nid_sdk_sign_in, plan_nid_sdk_sign_up
 from vampir_core.sdk_launcher_auth import plan_nid_launcher_token, plan_launcher_sign_in
+from vampir_core.sdk_fetch import plan_nid_sdk_fetch
 from vampir_core.sdk_sign_in_http import (execute_sdk_sign_in, execute_sdk_sign_up, SdkSignInHttpError,
-    execute_launcher_token, execute_launcher_sign_in)
+    execute_launcher_token, execute_launcher_sign_in, execute_sdk_fetch)
 from vampir_core.socks_route import SocksRoute
 from vampir_core.windows_version import observe_windows_version
 
@@ -94,9 +95,11 @@ def load_inputs(email, *, route=None, selected_profile='recovered-base'):
     return binding, profile, dict(config.constants)
 
 
-def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
+def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_player=False, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
         _capture=None, _execute=None, _execute_token=None, _progress=None, _prepared_inputs=None):
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')
+    if type(fetch_player) is not bool or (fetch_player and (create_sdk_player or auth_flow != 'nid')):
+        raise ValueError('Fetch is a separate explicit NID operation')
     if auth_flow not in ('nid', 'launcher') or (auth_flow == 'launcher' and create_sdk_player):
         raise ValueError('Unsupported explicit SDK auth flow')
     route = SocksRoute(socks_port) if socks_port is not None else None
@@ -125,6 +128,11 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, socks_port=
         device_key=binding.device_key, country_code=profile['country_code'] if route else provider.joined_country_code,
         os_type=profile['os_type'])
     credential = build_nid_sdk_credential(provider)
+    if fetch_player:
+        if _progress: _progress('sdk_fetch_player')
+        request = plan_nid_sdk_fetch(credential=credential, **inputs)
+        credential = provider = None
+        return (_execute or execute_sdk_fetch)(request, expected_url=request.url, route=route)
     if auth_flow == 'launcher':
         # Deliberately selected experiment; never a fallback from ordinary SignIn.
         if _progress: _progress('sdk_launcher_token')
@@ -146,6 +154,7 @@ if __name__ == '__main__':
     parser.add_argument('--timeout', type=int, default=300)
     parser.add_argument('--password-stdin', action='store_true', help='Read the password from stdin, never from process arguments')
     parser.add_argument('--create-sdk-player', action='store_true', help='Explicit SDK SignUp instead of SignIn; never automatic on errors')
+    parser.add_argument('--fetch-player', action='store_true', help='Read SDK profile state only; no sign-in, terms or creation after Fetch')
     parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for both browser and SDK HTTPS')
     parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid', help='Explicit SDK flow, no automatic fallback')
     parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], default='recovered-base')
@@ -153,9 +162,13 @@ if __name__ == '__main__':
     try:
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''
         if args.password_stdin and (not password or len(password) > 256): raise ValueError('Invalid password input')
-        data = run(args.email, timeout=args.timeout, password=password, create_sdk_player=args.create_sdk_player,
+        data = run(args.email, timeout=args.timeout, password=password, create_sdk_player=args.create_sdk_player, fetch_player=args.fetch_player,
                    socks_port=args.socks_port, auth_flow=args.auth_flow, selected_profile=args.profile)
         password = None
+        if args.fetch_player:
+            print(json.dumps(dict(sdk_fetch_accepted=True, result_object_present=data.result_object_present,
+                                  game_session_ready=False, player_created=False)))
+            sys.exit(0)
         print(json.dumps(dict(sdk_response_accepted=True, operation='sign-up' if args.create_sdk_player else 'sign-in', auth_flow=args.auth_flow,
                               player_id_present=bool(data.player_id),
                               sdk_token_present=False if args.create_sdk_player else bool(data.access_token), game_session_ready=False)))

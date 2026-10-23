@@ -168,6 +168,11 @@ ShowBasicTerm 30050027 вместе с контекстом 1203 ведёт в T
 Это не основание для SignUp после любого отказа launcher. Далее backend Fetch
 и продолжение условий, затем явный режим первого подключения.
 [Первый вход, условия и точные границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-GAME-FETCH.md).
+Добавлен отдельный read-only `--fetch-player`: один `v1/fetch-player`, затем
+остановка без входа / условий / создания. Четыре новых и 20 auth regression
+tests прошли. Новый аккаунт получил HTTP 400 / SDK 1203 именно на Fetch;
+контроль основного остановился на NID до запроса. Далее продолжение terms до SDK SignUp.
+[Контракт Fetch, живая проверка и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FETCH-CONTRACT.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

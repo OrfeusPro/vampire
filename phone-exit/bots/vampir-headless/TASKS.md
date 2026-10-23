@@ -225,6 +225,12 @@ synthetic raw fields не считать живым ответом. Далее c
 Далее backend `1444e8890` / `1444e9b00` и terms continuation `14561ace0`;
 не добавлять SignUp fallback на обычный launcher 1203, NID-регистрацию не повторять.
 [Первый игровой Fetch](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FIRST-GAME-FETCH.md).
+Fetch contract подтверждён статически: `v1/fetch-player`, credential + scope=channel.
+Добавлен явный `--fetch-player` без SignIn/SignUp/terms; четыре новых и 20
+auth regression tests прошли. Live nightraven получил Fetch HTTP 400 / SDK 1203;
+bot-test контроль остановился на NID до Fetch, без вывода о его SDK-профиле.
+Следом vtable targets `14560b130` / `14560aff0` и terms implementation `1445ac980`.
+[Read-only Fetch и продолжение условий](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FETCH-CONTRACT.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

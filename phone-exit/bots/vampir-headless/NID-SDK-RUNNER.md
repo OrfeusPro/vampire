@@ -1,5 +1,13 @@
 # NID → SDK: первая попытка входа без игры
 
+23 октября добавлен отдельный режим `--fetch-player --profile recovered-release`.
+Он выполняет NID и один запрос чтения `v1/fetch-player`, затем останавливается.
+Условия, SDK SignUp, SignIn и создание персонажа после Fetch не запускаются.
+Режим несовместим с `--create-sdk-player` и launcher flow. Успешный ответ даёт
+только безопасный summary без identity, а не SDK-сессию. На новом аккаунте
+проверен Fetch HTTP 400 / SDK 1203; контроль основного остановился раньше на NID.
+[Текущий контракт, проверки и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-FETCH-CONTRACT.md).
+
 Windows osVersion теперь заполняется наблюдением GetVersionExW собственного
 процесса бота. Отказ API сохраняет пустое поле. Повторный SDK SignIn через HK
 с заполненным значением успешен. [Источник и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-VERSION-WINDOWS-CONTEXT.md).

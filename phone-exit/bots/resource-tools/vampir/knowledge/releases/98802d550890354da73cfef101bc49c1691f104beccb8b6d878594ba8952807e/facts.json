@@ -8126,6 +8126,74 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Backend endpoint/payload Fetch и продолжение базовых условий до решения о первом SDK SignUp."
+    },
+    {
+      "addresses": [
+        "0x1411b0710",
+        "0x1444ca990",
+        "0x1444cb400",
+        "0x1444e8890",
+        "0x1444e9b00",
+        "0x1445ac900",
+        "0x145604f00",
+        "0x14561ace0"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "19f0e56a253e5f3219a7fb4098ba3ea5475b9d9bb7b2184e1950ac200bda4222",
+          "id": "release-sdk-fetch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0\\manifest.json",
+          "sha256": "7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Статически подтверждён отдельный SDK POST v1/fetch-player: credential и scope=channel, initializer scope текущего SHA. Launcher Fetch имеет другой wrapper и не реализован по предположению. Добавлены явный Fetch planner, bounded HTTP, safe summary без identity и --fetch-player в runner: один запрос, без SignIn/SignUp/terms. Четыре новых и 20 auth regression tests прошли. Live nightraven прошёл NID и получил Fetch HTTP 400 / SDK 1203; bot-test остановился на NID до Fetch. Причина отказа и полный путь условий до SDK SignUp ещё открыты.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-FETCH-CONTRACT.md",
+          "sha256": "29c4d6d54ec99b5e01e054d33fb90fb5d29b2787e20f74ef02fe90773434e11d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-1b2b935daa62\\details.json",
+          "sha256": "fc36502fde60719b09bcbaef04f5fdb21ae45e078f6f50a906c76815896d957b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-3380a52fff6d\\details.json",
+          "sha256": "7b0307a30a6cc0b33c1149c956e12a0c822fa8f54a6b4299fbd07c429ad518aa"
+        }
+      ],
+      "id": "2b42501cbf960125cbcb4b1760fb8d1bc2e39b89b4b06b0cc1b3c690706f10bf",
+      "limits": [
+        "Native тела Fetch/HTTP/Terms не исполнялись; семантика разобрана по двум SHA-bound Ghidra reports и инструкциям. Runtime tests используют mocks.",
+        "Узкий parser требует zero errorCode и объект resultData, отбрасывает identity; успешный Fetch не равен SDK-сессии. Launcher Fetch wrapper method неизвестен и не реализован.",
+        "Живой код 1203 привязан к Fetch endpoint, но причина и construction native error не установлены. Условия, аккаунты и персонажи не создавались/не менялись."
+      ],
+      "method": "static",
+      "next_check": "Prepare для vtable targets 14560b130 / 14560aff0 и terms implementation 1445ac980. Подтвердить EUIViewState и продолжение до SDK SignUp; не повторять NID регистрацию или добавлять fallback на launcher1203.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полное продолжение BasicTerms -> individual terms -> решение о SDK SignUp; точная native обработка Fetch1203 и актуальный контракт terms UI."
     }
   ],
   "schema": 1,
