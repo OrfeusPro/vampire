@@ -58,8 +58,12 @@ console slot при initialized TLS. NID parent / context builder ещё не п
 [Результат, fixtures и проверяемые cleanup tails](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-EXTENSIONS-11316.md).
 Реальный converter webViewType проверен на всех byte: 1024 случая отдельно
 и 448 вместе с NID caller. 30 → steam, 31 → epic, 34 → xbox, иначе sdk.
-Ранние gates и account additions ещё открыты.
+Результаты ранних gates и account additions приведены ниже.
 [Преобразование, источники и автоматизация](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-CONVERTER-11316.md).
+Ранние условия NID прошли 112 native случаев; приоритет NID token и fallback
+полей аккаунта — 512. Реальные getters и error callbacks не исполнены.
+Далее query encoding / browser delivery и auth source guards новой сборки.
+[Условия, поля аккаунта и границы проверки](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-GATES-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

@@ -716,6 +716,66 @@
       "question": "nid-context-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Ранние URL/client ID gates и последующие account additions текущего NID builder; затем auth source guards и runtime integration."
+    },
+    {
+      "addresses": [
+        "0x1450e3c80"
+      ],
+      "checks": [
+        {
+          "cache_key": "8d5c4c2b01a8f110eafb9cb13e6af9e0688e2ca19ef6552aefa8cd46515e4415",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105\\manifest.json",
+          "sha256": "ae5dbc4c61bf91764d6ad221ea63a6fa7cd72315788a3fa013d621dd95146105",
+          "state": "passed"
+        },
+        {
+          "cache_key": "95edeeb2782f32a926fe145682cbd3bd473e82794399eea7fa31a5d390c17b58",
+          "id": "nid-context-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610\\manifest.json",
+          "sha256": "a2decae5c2eaf6feb4e6d0b00c3d8cf4e83b38677a22f6c9ea5222b0b5817610",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e48e5ec12ce24dc97d355a4f063b4f24115bff89990c8f564aeca282f088345a",
+          "id": "nid-extensions-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\49d3783ab446377123827c0c9c90a0940de64d9ff8d827e869d900d804cdf8da\\manifest.json",
+          "sha256": "49d3783ab446377123827c0c9c90a0940de64d9ff8d827e869d900d804cdf8da",
+          "state": "passed"
+        },
+        {
+          "cache_key": "384bd0c52c2d230533da165f1ba3b3749c0dada5f3692c43c0dff5e1f7408863",
+          "id": "nid-converter-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e47a9a0a970d5fb81ffd266ad43f37e078317fe0042cf1fe3abb8a0a72d5be99\\manifest.json",
+          "sha256": "e47a9a0a970d5fb81ffd266ad43f37e078317fe0042cf1fe3abb8a0a72d5be99",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c1579c51aa294134d5ee0d423394bf189b44ed7d718eab0aa5566ac07f37a331",
+          "id": "nid-gates-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\818b42b028343f1b37b3efcaa1d3e54fc84e45adefb4a22a54aa83b9f2403bd1\\manifest.json",
+          "sha256": "818b42b028343f1b37b3efcaa1d3e54fc84e45adefb4a22a54aa83b9f2403bd1",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "112 native cases подтвердили ранние gates: false authWebViewUrl lookup прекращает путь до settings; clientId signed count должен быть >1. 512 account cases подтвердили приоритет непустого NID accessToken; при пустом token fallback требует predicate true и state 0/100 и добавляет playerId/joinedCountryCode/accessToken, включая пустые значения. Проверены lazy CDO bindings и short circuit.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-NID-GATES-11316.md",
+          "sha256": "cf43c8a59ed593119221705ddac375d72fcc4bd0b428730abac279727fd8b158"
+        }
+      ],
+      "id": "60037bad2a11b247b7e30326b64a4b00f6e11a73e472fa44e3837ee9e659af15",
+      "limits": [
+        "Gates останавливаются перед error construction или base-pair assembly; account slice заканчивается до query assembly. Вся функция совместно не исполнена.",
+        "URL lookup, class getters/initialization, account predicates, player/country getters, FString storage/free и map insertions — fixtures. Реальные аккаунты/токены не используются.",
+        "Отрицательные и предельные clientId counts — synthetic boundaries. URL getter semantics, error callbacks, logging, encoding, browser и авторизация не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сверить final query encoding/browser delivery и auth source guards для подключения SDK profile текущей сборки; живой вход после доступности серверов.",
+      "question": "nid-context-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Final query encoding/browser delivery, реальные URL/account/predicate getters, error callbacks и весь NID/auth lifecycle."
     }
   ],
   "schema": 1,
