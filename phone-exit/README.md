@@ -4,6 +4,23 @@
 Прежний журнал из AGENTS.md сохранён в [архиве](docs/history/README.md);
 отменённые требования и старые результаты не определяют текущее поведение.
 
+## Проверка JP realme, 23 октября 2026
+
+Свежий свободный realme RMX3511 / JP / Android 13 / APK 0.9.11: отдельный
+PC native WebRTC транспорт открыл SOCKS на loopback, поддержка UDP согласована.
+HTTPS Cloudflare trace и ipify: одинаковый выходной IPv4 129.227.187.152;
+Cloudflare loc=JP, warp=off. ipinfo: JP / Tokyo / AS21859 Zenlayer Inc.
+UDP Google STUN через SOCKS UDP ASSOCIATE вернул тот же IPv4. Это подтверждает
+проверенные HTTPS TCP и UDP/STUN через удалённый телефон, не системный Windows
+TUN / все приложения / DNS UDP / Vampir / длительную стабильность. Игровые
+команды не отправлялись. Соединение TW не прерывалось.
+
+HTTPS deviceInfo доступен: две validated Wi-Fi Network на wlan0, выбрана
+system default, bindingMode=compatible_default, процесс не привязан; нативный
+wlan0 содержит 2 IPv4. Это наблюдение, не доказательство причины отличия от TW.
+После теста собственный процесс получил Stop и завершён, loopback SOCKS
+закрыт; настройки сетей, профили и APK не менялись. Приватный отчёт вне Git.
+
 ## Проверка TW, 23 октября 2026
 
 По запросу пользователя проверен samsung SM-S9080 / TW / Android 12 / APK
