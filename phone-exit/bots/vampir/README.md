@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+24 октября `bot-tw-test@vampir.top` зарегистрирован в Netmarble через JP;
+проверенный callback подтвердил страну JP. Повторный вход остановился на SDK
+HTTP 400 / 1203 до каталога серверов; персонаж не создавался.
+Другие почты остаются для Global EU без VPN, их регистрация не запускалась.
+[Результат, сохранённая запись и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-JP-REGISTRATION-20261024.md).
+
 Для 1.13.16 нативные UTF-8 length / conversion / encoder прошли 222 сценария,
 включая повреждённые суррогаты и нехватку буфера. Готовые exports сохранены;
 дальше — полный string writer и archive encoding.
