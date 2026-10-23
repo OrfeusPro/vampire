@@ -237,6 +237,12 @@ Raw UI state не доказывает фактическое завершени
 Далее `144584210`, `143d1d470`, `144522040`, callback pointer `1445744b0`:
 query / HTTP / ответ BasicTerms, затем реальный первый игровой вход.
 [Проверка terms continuation](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-TERMS-CONTINUATION.md).
+BasicTerms HTTP wrapper — CreateGet. Callback `14456a870` передаёт resultCode -1
+как raw UI state 2 с error result; это не zero result и не доказательство согласия.
+Public UA / en-US / PC GET дал NO DATA / terms[]. Offline plan и bounded summary
+готовы; четыре теста и шесть workflow checks прошли. Далее `144580990` и callback
+pointer `1445744c0` из готового `1445a0100`: individual terms без player ID.
+[BasicTerms ответ и ограничения](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-BASIC-TERMS-RESPONSE.md).
 [Функции, проверки и следующий unknown](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-EMPTY-LIST-CREATION-ENTRY.md).
 [Проверка прямого маршрута](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Адреса и native selector](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).

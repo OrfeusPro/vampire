@@ -178,6 +178,11 @@ tests прошли. Новый аккаунт получил HTTP 400 / SDK 1203
 UI, HTTP и серверное создание остаются вне проверки. Найдены входы termsUrl:
 страна, язык и платформа. Далее реальный ответ / завершение окна условий.
 [Переход к SDK SignUp и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-TERMS-CONTINUATION.md).
+Подтверждён BasicTerms GET и отдельный ответ NO DATA: resultCode -1 передаётся
+как raw UI state 2 с error result. Публичный запрос UA / en-US / PC получил
+такой ответ. Добавлен offline plan / summary условий; четыре теста прошли,
+summary не подтверждает согласие и не разрешает SDK SignUp. Далее individual terms без player ID.
+[Ответ условий и граница согласия](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-RELEASE-BASIC-TERMS-RESPONSE.md).
 [Прямой маршрут, результат и ограничения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-DIRECT.md).
 [Региональные адреса и native-проверка](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md).
 [Живой EU-вход и отказ 59](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LIVE-GLOBAL-EU.md).

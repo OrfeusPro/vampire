@@ -8288,6 +8288,92 @@
       "question": "launcher-auth-contract",
       "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
       "unknown": "Контракт реального BasicTerms запроса/ответа и происхождение состояния завершения UI, затем явная интеграция первого игрового SDK-подключения."
+    },
+    {
+      "addresses": [
+        "0x1411b74a0",
+        "0x1411b74d0",
+        "0x141258fb0",
+        "0x143d1d470",
+        "0x144522040",
+        "0x1445220d0",
+        "0x14456a870",
+        "0x144584210"
+      ],
+      "checks": [
+        {
+          "cache_key": "90a14df5cfc8c4b2117a319962e10ac35937015682be97530e2834441d583084",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d\\manifest.json",
+          "sha256": "789e56af36c8195a2bd4540ff1643260bdd72a6443a6a386c211c5a05f75d66d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b2537ae72a565bfc2bbda15a41a3fa755c3a42d9023279ace8496f922f7c7eea",
+          "id": "release-game-sign-in-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619\\manifest.json",
+          "sha256": "f52f62e6920b04686b91ada6c79adf3a16e90e9b1a007fae078e0a1998505619",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c923f7cfd9ca670e1cb3f562b68bf1c6f701c9b47babb82bc15a9f724340b9d",
+          "id": "release-fetch-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc\\manifest.json",
+          "sha256": "2521bbf00b1bb9ade37bae744a8dec1e3588e25084ffffb4bceb7e11c79950cc",
+          "state": "passed"
+        },
+        {
+          "cache_key": "19f0e56a253e5f3219a7fb4098ba3ea5475b9d9bb7b2184e1950ac200bda4222",
+          "id": "release-sdk-fetch",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0\\manifest.json",
+          "sha256": "7e579f1226fdabb95eac92915da54245f8dbb31475aca2e401664c58d31289e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5d31887a62eda105d185a1b969f41abbacbbf690318c93496d740bf43a27d10f",
+          "id": "release-terms-continuation",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5\\manifest.json",
+          "sha256": "69bafbc635d89b0ee93632ce944d92fd950f71a358c0220dde19c554a5b35ec5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "cbeb577d02686e293244eff37cb97b90e6eedddb390b813200c998dab1d784af",
+          "id": "release-sdk-terms",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6d2967c1967d1e9fec3a0beefc8cee65a551cdc78100b25ea1660c1f4065aebd\\manifest.json",
+          "sha256": "6d2967c1967d1e9fec3a0beefc8cee65a551cdc78100b25ea1660c1f4065aebd",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "На текущем EXE статически подтверждены CreateGet wrapper, resultCode/resultData initializers и individual argument terms_of_service_ko. BasicTerms parser имеет отдельную resultCode -1 ветвь: error result с context -1 передаётся в UI state2; это не zero result/согласие. Один публичный anonymous GET UA/en-US/PC вернул HTTP200 и NO DATA с пустым terms. Добавлены offline BasicTerms GET plan и bounded summary no_data/empty/terms_available, всегда consent=false/creation_ready=false. Четыре теста source provenance/query/JSON прошли; UI/HTTP lifecycle и аккаунты не изменялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-RELEASE-BASIC-TERMS-RESPONSE.md",
+          "sha256": "ac4f40632eba7969d8c4df53ab291312c3ec62b35a896978c9c562e0b84c1630"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-b3245757b183\\details.json",
+          "sha256": "c3598cec6dd815f76ffa191424a096af5cedfe94f5d74ed7e5301c35e69a626c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-4855ed8063c4\\details.json",
+          "sha256": "363d3050bc6cf769014003e267ca2226e51caa4e9817f6e612c03db7633745aa"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\release-comparisons\\c7552efd2125-98802d550890\\run-fd4956a37b3c\\details\\run-ac97599e2191\\details.json",
+          "sha256": "81ff7f6647afcd199648e8951c39ca30fb4e13b30d70a2487d926af2d0a441bf"
+        }
+      ],
+      "id": "9920069fc7983a2b01058424018d24bf4e2a20a2801e7eb2440d505856cca33f",
+      "limits": [
+        "Native parser/UI/GET не исполнялись целиком; семантика вручную разобрана по SHA-bound экспортам/инструкциям. Тесты planner/parser и provenance не равны native replay.",
+        "Публичный query UA/en-US/PC задан явно, не считан из игры. Ответ NO DATA относится только к этому query; не доказывает отсутствие индивидуальных условий.",
+        "Country helper имеет несколько source branches; locale из culture. Runtime принимает явные строгие значения, не воспроизводит все defaults. Summary не разрешает SDK SignUp."
+      ],
+      "method": "static",
+      "next_check": "Prepare для UI dispatcher144580990; использовать готовый1445a0100 и проследить его callback для individual terms без playerID. Совместить NO DATA basic и terms_of_service_ko до явного первого подключения, без повторной NID регистрации.",
+      "question": "launcher-auth-contract",
+      "source_sha256": "98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e",
+      "unknown": "Полная передача raw UI state2 и error result к basic callback; individual terms без playerID и достоверное завершение перед SDK SignUp."
     }
   ],
   "schema": 1,
