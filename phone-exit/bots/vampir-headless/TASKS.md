@@ -76,6 +76,10 @@ route, mode mask и семь key bindings. Поиск включён в план
 mode gates и раздельная передача токенов. Parser / channel / settings ещё fixtures;
 следом реальные helpers и auth source guards, затем живая проверка.
 [Проверки результата и передача токенов](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-RESULT-NATIVE-11316.md).
+Реальные numeric / channel helpers прошли 112 / 176 случаев и 1124 совместных
+OnResult сценария. Return fixtures убраны в новой проверке; DLL / locale CRT
+учтены в кэше. Далее runtime guards / browser boundary и подключение профиля.
+[Helpers, текущие источники и границы](../resource-tools/vampir/knowledge/evidence/auth/HEADLESS-NID-PRIMITIVES-11316.md).
 
 Статус на 23 октября 2026. Цель продукта сохраняется полностью: клиент без
 игры, 2D-карта с игровыми меню, фарм, обновления данных и Android.

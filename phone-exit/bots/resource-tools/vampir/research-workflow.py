@@ -3,6 +3,7 @@ from contextlib import contextmanager
 import hashlib
 import importlib.metadata
 import json
+import locale
 import os
 import platform
 import re
@@ -62,6 +63,22 @@ def checked_manifest(index, path):
 def registry(index, knowledge):
     path = knowledge / 'research-checks.json'
     return index.read_json(path) if path.is_file() else dict(schema=1, checks=[])
+
+
+def system_runtime_files(names):
+    """Resolve only explicitly supported Windows CRT input, never arbitrary paths."""
+    if not isinstance(names, list) or len(names) > 1 or any(n != 'ucrtbase.dll' for n in names):
+        raise ValueError('Unsupported system runtime dependency')
+    if not names: return []
+    if sys.platform != 'win32': raise ValueError('Windows CRT check requires Windows')
+    import ctypes
+    kernel = ctypes.WinDLL('kernel32', use_last_error=True)
+    kernel.GetSystemDirectoryW.argtypes = [ctypes.c_wchar_p, ctypes.c_uint]
+    kernel.GetSystemDirectoryW.restype = ctypes.c_uint
+    buffer = ctypes.create_unicode_buffer(32768)
+    size = kernel.GetSystemDirectoryW(buffer, len(buffer))
+    if not 0 < size < len(buffer): raise ValueError('Cannot resolve Windows system directory')
+    return [(Path(buffer.value)/name).resolve() for name in names]
 
 
 def check_artifacts(index, root, names):
@@ -146,9 +163,13 @@ def run_checks(index, args, sha, question):
         dependencies = sorted(set(dependencies))
         inputs = {str(p): index.digest(p) for p in dependencies}
         external = check_artifacts(index, args.root, check.get('artifact_dependencies', []))
+        for path in system_runtime_files(check.get('system_runtime_files', [])):
+            external[str(path)] = index.digest(path)
         definition = dict(check=check, source_sha256=sha, inputs=inputs, artifacts=external,
             python_version=platform.python_version(), executable=sys.executable,
             runner_sha256=index.digest(Path(__file__)))
+        if check.get('system_runtime_files'):
+            definition['system_runtime_locale'] = locale.setlocale(locale.LC_ALL)
         definition['runtime_metadata'] = {}
         for name in check.get('runtime_distributions', []):
             matches = list(importlib.metadata.distributions(path=[str(index.HERE.parents[2] / '.tools/vampir-analysis')]))
@@ -177,6 +198,8 @@ def run_checks(index, args, sha, question):
                 if ({str(p): index.digest(p) for p in dependencies} != inputs
                         or any(index.digest(name) != sha for name,sha in external.items())):
                     raise ValueError('Check inputs changed during execution')
+                if check.get('system_runtime_files') and locale.setlocale(locale.LC_ALL) != definition['system_runtime_locale']:
+                    raise ValueError('Check runtime locale changed during execution')
                 log.seek(0)
                 output = log.read(1024 * 1024 + 1)
             report = dict(schema=1, definition=definition, state=state,

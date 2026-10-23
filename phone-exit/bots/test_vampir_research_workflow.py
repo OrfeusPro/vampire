@@ -178,6 +178,29 @@ class ResearchWorkflowTests(unittest.TestCase):
             self.assertEqual(run.call_count,2)
             self.assertNotEqual(first[0]['cache_key'],second[0]['cache_key'])
 
+    def test_system_runtime_changes_invalidate_cache_and_mid_check_changes_fail(self):
+        runtime = self.root/'ucrtbase.dll'; runtime.write_bytes(b'CRT fixture 1')
+        definition = dict(schema=1, checks=[dict(id='crt-fixture', questions=['test-question'],
+            source_sha256=[self.sha], offline_reviewed=True, test_pattern='test_vampir_research_workflow.py',
+            dependencies=[], system_runtime_files=['ucrtbase.dll'])])
+        (self.knowledge/'research-checks.json').write_text(json.dumps(definition), encoding='utf-8')
+        with patch.object(self.workflow,'system_runtime_files',return_value=[runtime]), patch.object(
+                self.workflow.subprocess,'run',return_value=SimpleNamespace(returncode=0)) as run:
+            first=self.prepare(); self.prepare(); self.assertEqual(run.call_count,1)
+            runtime.write_bytes(b'CRT fixture 2'); second=self.prepare()
+            self.assertEqual(run.call_count,2)
+            self.assertNotEqual(first['checks'][0]['cache_key'],second['checks'][0]['cache_key'])
+            runtime.write_bytes(b'CRT fixture 3')
+            def mutate(*args, **kwargs):
+                runtime.write_bytes(b'CRT fixture changed during test')
+                return SimpleNamespace(returncode=0)
+            run.side_effect=mutate
+            with self.assertRaisesRegex(ValueError,'inputs changed during execution'): self.prepare()
+
+    def test_system_runtime_resolver_rejects_arbitrary_paths(self):
+        for names in (['private.bin'],['../ucrtbase.dll'],['ucrtbase.dll','ucrtbase.dll'],'ucrtbase.dll'):
+            with self.assertRaisesRegex(ValueError,'Unsupported system runtime'): self.workflow.system_runtime_files(names)
+
     def test_release_artifacts_track_current_archive_and_reject_private_files(self):
         archive = self.root / 'installed/Game.pak'
         archive.parent.mkdir(); archive.write_bytes(b'public game fixture')

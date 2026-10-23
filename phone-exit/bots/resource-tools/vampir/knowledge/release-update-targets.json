@@ -559,7 +559,9 @@
         "replay-nid-gates-11316.py",
         "replay-nid-query-11316.py",
         "audit-nid-result-11316.py",
-        "replay-nid-result-11316.py"
+        "replay-nid-result-11316.py",
+        "nid-primitives-11316.py",
+        "replay-nid-primitives-11316.py"
       ],
       "rule": "Follow explicit callers of reviewed FDeviceInfo::GetPlatform; preserve undecodable roots and inspect selected Ghidra exports before assigning NID role.",
       "automation": {
@@ -614,10 +616,11 @@
               },
               {
                 "address": "0x1450f3e40",
-                "scope": "Static diagnostic signature, auth mode mask and six result key initializer bindings; native validation/adoption caller with map/parser/channel/settings fixtures and real FString copy; setters, persistence and post-adoption callbacks excluded",
+                "scope": "Static routing/key evidence and bounded validation/adoption caller; real FString copy and numeric/channel helpers also tested; hash/map, storage, CDO/settings captures remain fixtures; post-adoption callbacks excluded",
                 "required_checks": [
                   "nid-result-source-11316",
-                  "nid-result-native-11316"
+                  "nid-result-native-11316",
+                  "nid-primitives-native-11316"
                 ]
               },
               {
@@ -625,6 +628,20 @@
                 "scope": "Whole FString copy inside OnResult caller; allocation/memcpy fixtures; missing-row null fault kept explicit",
                 "required_checks": [
                   "nid-result-native-11316"
+                ]
+              },
+              {
+                "address": "0x1415e4460",
+                "scope": "Whole numeric parser, verified named imports call recorded local Windows CRT; locale/DLL in cache key; Android not verified",
+                "required_checks": [
+                  "nid-primitives-native-11316"
+                ]
+              },
+              {
+                "address": "0x144531900",
+                "scope": "Whole channel mapper with real compare/table and source-bound 13 descriptor literals; initializer storage/free fixtures, printable ASCII scope",
+                "required_checks": [
+                  "nid-primitives-native-11316"
                 ]
               }
             ],
@@ -635,7 +652,9 @@
               "replay-nid-gates-11316.py",
               "replay-nid-query-11316.py",
               "audit-nid-result-11316.py",
-              "replay-nid-result-11316.py"
+              "replay-nid-result-11316.py",
+              "nid-primitives-11316.py",
+              "replay-nid-primitives-11316.py"
             ],
             "evidence": [
               "evidence/auth/HEADLESS-NID-CONTEXT-11316.md",
@@ -644,7 +663,8 @@
               "evidence/auth/HEADLESS-NID-GATES-11316.md",
               "evidence/auth/HEADLESS-NID-QUERY-11316.md",
               "evidence/auth/HEADLESS-NID-RESULT-SOURCE-11316.md",
-              "evidence/auth/HEADLESS-NID-RESULT-NATIVE-11316.md"
+              "evidence/auth/HEADLESS-NID-RESULT-NATIVE-11316.md",
+              "evidence/auth/HEADLESS-NID-PRIMITIVES-11316.md"
             ]
           }
         ],

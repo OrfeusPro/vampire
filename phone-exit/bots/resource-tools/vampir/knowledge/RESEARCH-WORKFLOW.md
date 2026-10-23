@@ -84,6 +84,13 @@ UpdateGmc2 / UpdateSDKSetting. Остальные проверки подклю�
 ошибка / timeout блокируют `finish`. Saved replay metadata остаются историческим
 результатом с fixtures / limits, не подтверждением новой сессии.
 
+Для native checks, вызывающих локальную Windows CRT, есть явная зависимость
+`system_runtime_files: ["ucrtbase.dll"]`. Поддерживается только этот library name:
+произвольные пути и другие файлы отклоняются. Системный каталог определяется
+Windows API, в ключ кэша входят полный SHA DLL и текущая CRT locale. Их сверяют
+также после выполнения проверки. Изменение DLL / locale требует нового результата;
+инструмент не меняет locale. Фактическую DLL и locale дополнительно записывает replay.
+
 `artifact_dependencies` принимает публичные Ghidra-материалы и проверяемые
 ресурсы в `release-snapshots/<SHA>/`: content-addressed `manifest.json` и
 `csv-blobs/<SHA>.csv`. Для record / table manifest с `source` также сверяются

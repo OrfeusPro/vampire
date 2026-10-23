@@ -20,13 +20,19 @@ def load(name, path):
     return module
 
 
-def replay(root=None):
+def replay(root=None,native_primitives=False):
     source_audit = load('nid_result_bindings',HERE/'audit-nid-result-11316.py')
     prior = source_audit.audit(root=root)
     harness = load('nid_result_harness',HERE/'native-request-harness-11316.py')
     exports = {source_audit.EXPORT:source_audit.EXPORT_SHA,
         'run-1740fcc91625':'f2cdd2d5e37669d223dbbf74217780bed1c64090827b75d3b62c78d99f7dce38'}
-    h = harness.make_harness(exports,{ROOT,0x1414266a0},root=root)
+    functions,leaves={ROOT,0x1414266a0},{}
+    if native_primitives:
+        primitives=load('nid_actual_primitives',HERE/'nid-primitives-11316.py')
+        exports[primitives.EXPORT]=primitives.EXPORT_SHA
+        functions.update((0x1415e4460,0x144531900))
+        leaves=primitives.leaves(root or Path(prior['source']).parents[2])
+    h = harness.make_harness(exports,functions,leaves=leaves,root=root)
     import unicorn
     rbp, owner, settings, cls, rows = [h.scratch+n for n in (0x10000,0x18000,0x19000,0x1a000,0x1b000)]
     names = {int(r['global_address'],16):r['text'] for r in prior['bindings']}
@@ -94,7 +100,12 @@ def replay(root=None):
         h.finish(result)
     for at in (0x141425d60,0x14143d950,0x1415e4460,0x141436ed0,0x144531900,
                0x1444b1550,0x144550d80,0x1445523c0,0x144552e10,0x144551210,0x14142a250):
+        if native_primitives and at in (0x1415e4460,0x144531900): continue
         h.add_fixture(at,fixture)
+    primitive_evidence,primitive_cases={},{}
+    if native_primitives:
+        primitive_evidence,verify_crt=primitives.install(h,events)
+        primitive_cases=primitives.standalone(h,put,text,heap,events)
 
     def stop_hook(machine,address,size,user):
         if address in STOPS: outcome[0]=STOPS[address]; machine.emu_stop()
@@ -114,9 +125,19 @@ def replay(root=None):
                          dict(name='empty_'+key,fields={**fields,key:''})])
     fixtures.extend([dict(name='parse_failure',fields={**fields,'resultCode':'bad'},parse_ok=False),
         dict(name='nonzero_result',fields={**fields,'resultCode':'200'},parsed_value=200),
-        dict(name='unknown_channel',fields=fields,channel=0)])
+        dict(name='unknown_channel',fields={**fields,'channelKey':'unknown'} if native_primitives else fields,channel=0)])
     fixtures.extend(dict(name='auth_type_'+str(mode),fields=fields,auth_type=mode)
         for mode in (*range(256),0x100,0x80000000,0xffffffff))
+    if native_primitives:
+        for name,status,channel,expected in (
+                ('prefix_zero_upper_channel','0abc','MAILUSERKEY','adoption_calls_reached'),
+                ('nonzero_prefix','1abc','mailUserKey','invalid_or_nonzero_result'),
+                ('empty_numeric','+','mailUserKey','invalid_or_nonzero_result'),
+                ('trailing_channel_space','0','mailUserKey ','unknown_channel'),
+                ('leading_channel_space','0',' mailUserKey','unknown_channel'),
+                ('unknown_channel_name','0','unknown','unknown_channel')):
+            fixtures.append(dict(name=name,fields={**fields,'resultCode':status,'channelKey':channel},
+                expected_outcome=expected))
     cases=[]
     for poison in (0,0x55,0xaa,0xff):
         for case in fixtures:
@@ -145,6 +166,7 @@ def replay(root=None):
             elif case['name'] in ('parse_failure','nonzero_result'): expected='invalid_or_nonzero_result'
             elif options['auth_type'] & 0xfffffffa: expected='auth_type_gate'
             elif not options['channel']: expected='unknown_channel'
+            expected=case.get('expected_outcome',expected)
             if outcome[0] != expected: raise ValueError('NID result outcome differs: '+repr((case['name'],outcome[0],expected)))
             captures=[e for e in events if e['kind'] in ('settings_capture','country_capture','channel_capture')]
             if expected=='adoption_calls_reached':
@@ -157,17 +179,22 @@ def replay(root=None):
             if bytes(h.uc.mem_read(rbp-0x180,16)) != bytes([poison])*16 or bytes(h.uc.mem_read(rbp+0x2f0,16)) != bytes([poison])*16:
                 raise ValueError('NID result stack canaries changed')
             cases.append(dict(name=case['name'],poison=poison,outcome=outcome[0],
-                inputs={k:options[k] for k in ('parse_ok','parsed_value','channel','auth_type')},
+                inputs={k:options[k] for k in (('auth_type',) if native_primitives else ('parse_ok','parsed_value','channel','auth_type'))},
                 fields=case['fields'],lookups=lookups.copy(),events=events.copy(),canaries_unchanged=True))
+    if native_primitives: verify_crt()
+    dependencies=('replay-nid-result-11316.py','audit-nid-result-11316.py','native-request-harness-11316.py',
+        'build-native-entry-code.py','extract-native-enums.py','build-object-zero-init-code.py')
+    if native_primitives: dependencies+=('nid-primitives-11316.py','research-workflow.py')
     return dict(schema=1,source=str(h.source),source_sha256=h.sha,evidence=h.evidence,
         start=hex(BEGIN),stop=hex(END),cases=cases,native_execution=True,network_ready=False,
-        dependencies={name:hashlib.sha256((HERE/name).read_bytes()).hexdigest() for name in
-            ('replay-nid-result-11316.py','audit-nid-result-11316.py','native-request-harness-11316.py',
-             'build-native-entry-code.py','extract-native-enums.py','build-object-zero-init-code.py')},
+        primitive_evidence=primitive_evidence,primitive_cases=primitive_cases,native_primitives=native_primitives,
+        dependencies={name:hashlib.sha256((HERE/name).read_bytes()).hexdigest() for name in dependencies},
         limits=['Actual current OnResult caller slice and whole FString copy execute; query/service acquisition before entry is bypassed.',
-            'Hash/map lookup, allocation/memcpy, integer/channel returns, class getter and adoption settings/country assignment are fixtures/captures.',
+            ('Actual numeric/channel helpers and compare execute; CRT calls use recorded local Windows library; channel global storage uses source-checked literals.'
+             if native_primitives else 'Integer/channel returns are fixtures; numeric syntax and channel semantics not verified.'),
+            'Hash/map lookup, allocation/memcpy, class getter and adoption settings/country assignment are fixtures/captures.',
             'Null accesses reflect the synthetic missing-row map contract, not an observed live-game crash.',
-            'No actual account/token, numeric syntax/channel semantics, setters/persistence, post-adoption callbacks, browser or authentication verified.'])
+            'No actual account/token, setters/persistence, post-adoption callbacks, browser, full authentication or Android parity verified.'])
 
 
 if __name__=='__main__':

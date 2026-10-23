@@ -1002,6 +1002,96 @@
       "question": "nid-context-current",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные numeric/channel helpers 0x1415e4460 и 0x144531900; затем auth source guards, browser/result lifecycle и runtime integration."
+    },
+    {
+      "addresses": [
+        "0x1415e4460",
+        "0x144531900",
+        "0x1450f3e40"
+      ],
+      "checks": [
+        {
+          "cache_key": "8861594ae9c46e8cd1cb2afa76b549d0928246f80de569d2edae1f8ed8608b85",
+          "id": "sdk-override-references-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5bbe7a5d35334ce67a0d14ad5caf8eabea6d8b0de624b35fa1c8ae509c4c27f8\\manifest.json",
+          "sha256": "5bbe7a5d35334ce67a0d14ad5caf8eabea6d8b0de624b35fa1c8ae509c4c27f8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7549a1d46c466c2dccf4a2babfe92d486e4427adfb71d8f4e7fbc90bf7b23d49",
+          "id": "nid-context-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cbcf982e3c4f9f359411f0cbcf3ce09a5107f0fdde37cf5dd1f2e1391bc465b4\\manifest.json",
+          "sha256": "cbcf982e3c4f9f359411f0cbcf3ce09a5107f0fdde37cf5dd1f2e1391bc465b4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ff3efe9513edfd24cb508eef826def2d5b2970cf67a1ed23baa734515975d667",
+          "id": "nid-extensions-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f7f427ebab374ee681d12811b1133cbc3a141688b15494e898dd6e1d11a9b73f\\manifest.json",
+          "sha256": "f7f427ebab374ee681d12811b1133cbc3a141688b15494e898dd6e1d11a9b73f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "11eb2baa7e880350580f39d7837cca10aae73cefbe2b88a300842843d022e8fd",
+          "id": "nid-converter-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\27eec63861bc4b390d0b5066c762fce428dbfc79a902953f3254ded8da002ce1\\manifest.json",
+          "sha256": "27eec63861bc4b390d0b5066c762fce428dbfc79a902953f3254ded8da002ce1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9ff39a0f3911725933d2f49ba005e41241d48e627a50f559f046c24d623823a0",
+          "id": "nid-gates-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a407ef5713fce8e8190b1ffe7fe4b44d8a7800b7c567b3972ae42427353f8fb8\\manifest.json",
+          "sha256": "a407ef5713fce8e8190b1ffe7fe4b44d8a7800b7c567b3972ae42427353f8fb8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b6eb06fc729797e1a03d8f0f65079f19b27e0a0da807cc2a668cd26795e8d340",
+          "id": "nid-query-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\71c2c08ec808b9e8ad7a4e73b265ed0c450d2c7e8c58952bd65be9e1856da737\\manifest.json",
+          "sha256": "71c2c08ec808b9e8ad7a4e73b265ed0c450d2c7e8c58952bd65be9e1856da737",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e30dfc90d59dbccdecaceb506c2c93bee832c22c8b2962fff20873e5a9378c25",
+          "id": "nid-result-source-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d57e165241008e97dcbb9f39d69398a8e93a02f6de849dc54179b521e098969b\\manifest.json",
+          "sha256": "d57e165241008e97dcbb9f39d69398a8e93a02f6de849dc54179b521e098969b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "52307c9e7c9cc3f665778899d498b1f9dfe9ee558985800152598efbdcaabed4",
+          "id": "nid-result-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ef7b48219e79b376faf6157fa144c35ade8fd7281a5e4f7769880feb03c91103\\manifest.json",
+          "sha256": "ef7b48219e79b376faf6157fa144c35ade8fd7281a5e4f7769880feb03c91103",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f3e8f8bc767a8801464fb8f7f47b53ae790db2922d0c7a27d30b63fcd7d5f929",
+          "id": "nid-primitives-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9d05a495f101fd60e697475a995795a9bc1063ed6b68e845b54ad92840466886\\manifest.json",
+          "sha256": "9d05a495f101fd60e697475a995795a9bc1063ed6b68e845b54ad92840466886",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Реальные numeric/channel helpers и compare leaf текущей сборки прошли 112 numeric / 176 channel / 1124 совместных OnResult случаев без integer/channel return fixtures. mailUserKey ->20 case-insensitive ASCII, без trimming. Numeric вызывает проверенные named imports настоящей локальной CRT. Подтверждены permissive prefix cases вроде 0abc, но portable canonical success policy не ослаблена. Кэш проверок учитывает DLL SHA и CRT locale.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-NID-PRIMITIVES-11316.md",
+          "sha256": "21e276c7caea2b098190326b0932229f0cb5d2a229cc5f80309f572b4acd8984"
+        }
+      ],
+      "id": "0b5a0346b521d302e426c5afc6937b32d62e8d93661ae7aa894215b8f3fbb402",
+      "limits": [
+        "CRT относится к recorded Windows DLL SHA/locale; другие Windows environments и Android parity не проверены. Locale не изменяется.",
+        "Channel initializer bindings статические, global FString storage синтетический по точным literals. Hash/map, storage/allocation/memcpy/free, CDO/settings captures — fixtures.",
+        "Setters/persistence, browser/result callbacks и вся авторизация не исполнены. Реальные аккаунты/токены и сеть не используются."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сверить runtime auth guards и browser-result boundary, явно подключить profile 1.13.16 перед отдельной живой сессией после доступности серверов.",
+      "question": "nid-context-current",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Оставшиеся runtime auth guards / browser-result boundary, setters/persistence и полная авторизация текущей сборки."
     }
   ],
   "schema": 1,
