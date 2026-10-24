@@ -53,6 +53,20 @@ Escape закрывает верхнее модальное окно. Для р�
   Пропорции из кадров — временная адаптация; точный runtime DPI / desired size
   не восстановлен. Постоянное правило расчёта — в
   [AGENTS](../../AGENTS.md#геометрия-интерфейса-как-в-игре).
+- Для кнопок покупки, закрытия карточки, старта и удаления персонажа builder
+  сохраняет отдельные цепочки контрол → слот → родитель в `button-evidence.json`.
+  Canvas-позиции вычисляются из anchors / offsets / alignment, а не из общей
+  CSS-колонки. При изменении размера контейнера выполняется один отложенный
+  пересчёт через ResizeObserver; постоянного покадрового обхода нет.
+  Кнопка покупки расположена снизу по центру (исходный размер 400 × 80,
+  отступ 20 логических единиц). У старта / удаления пока явно обозначено
+  допущение заполнения рамки HorizontalBox / WidgetSwitcher.
+- `geometry.js` разделяет физические, CSS- и логические единицы; для расчёта
+  реального DPI требует явные входы, не подставляя активный масштаб игры.
+  Сейчас экран персонажей использует демонстрационную ширину 2400 логических
+  единиц, а внешние окна — временные профили по кадрам. Поэтому вычисленные
+  внутренние слоты ещё не доказывают полное совпадение со Slate runtime.
+  AutoSize без desired size и неподдержанный контейнер возвращают unknown.
 - 2D-изображения классов имеют ограниченное разрешение. Параметры внешности
   сохраняются; изменение 3D-модели и звуковой preview не реализованы.
 - Неизученные действия, например особый призыв и массовый разбор, показывают
@@ -100,6 +114,7 @@ Sync добавляет новые задачи, сохраняя ID, выпол
 
 ```powershell
 node --test phone-exit/bots/vampir/ui-prototype/model.test.cjs
+node --test phone-exit/bots/vampir/ui-prototype/geometry.test.cjs
 python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_ui_prototype.py -v
 python -X utf8 phone-exit/bots/resource-tools/vampir/verify-ui-prototype.py 'F:/PhoneExit Resources/Vampir/maps/ui-prototype/snapshots/<SHA256>'
 python -X utf8 phone-exit/bots/resource-tools/vampir/knowledge-index.py check
@@ -115,3 +130,16 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/knowledge-index.py check
 карты и демонстрационное прибытие. Магазин и попапы просмотрены при 1280 × 720;
 игровой экран и персонажи — при 1920 × 1080. Это не полная сверка всех окон и DPI.
 Снимки находятся в `F:/PhoneExit Resources/Vampir/ui-prototype-checks/`.
+
+Дополнительно прошли 6 тестов геометрии: нижняя рамка покупки, различие
+растянутых margins и фиксированных размеров, AutoSize, явные неизвестные,
+преобразования при DPI 100 / 125 / 150 / 200% и запрет некорректных размеров.
+Это математические fixtures, не проверка игры при этих DPI. В браузере
+проверены перенос кнопки покупки вниз, её работа при 1280 × 720 / 1920 × 1080,
+кнопка закрытия карточки и пересчёт после смены viewport. Сохранены
+`purchase-button-1280.png`, `purchase-button-1920.png`, `item-button-1920.png`.
+
+Общее назначение Canvas-слотов сверялось с
+[API SConstraintCanvas](https://dev.epicgames.com/documentation/unreal-engine/API/Runtime/Slate/SConstraintCanvas).
+Конкретные значения и цепочки взяты из локального каталога WBP; общая
+документация Unreal не подтверждает поведение установленного клиента Vampir.

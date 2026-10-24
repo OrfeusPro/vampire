@@ -179,6 +179,38 @@ def build(root, baseline=None):
             profile['reference_sha256'] = sha(reference) if reference.exists() else None
             profile['runtime_geometry_verified'] = False
         write(temporary / 'placement-evidence.json', layouts)
+        button_layouts = read(SOURCE / 'button-layouts.json')
+        for binding in button_layouts['bindings'].values():
+            package_file = root / 'ui-catalog' / binding['catalog_file']
+            package = read(package_file)
+            if package['name'] != binding['resource']:
+                raise ValueError('Button resource mismatch: ' + binding['control'])
+            controls = package['controls']
+            candidates = [c for c in controls if c['name'] == binding['control']]
+            if len(candidates) != 1:
+                raise ValueError('Ambiguous button: ' + binding['control'])
+            control = candidates[0]
+            if 'root_name' in binding:
+                roots = [c for c in controls if c['name'] == binding['root_name']]
+                if len(roots) != 1:
+                    raise ValueError('Ambiguous geometry root')
+                binding['root_export'] = roots[0]['export']
+            slots = {s['provenance']['slot_export']: s for s in package['decoded_slots']}
+            chain = []
+            for part in control.get('parent_chain', []):
+                if part['slot_export'] not in slots:
+                    raise ValueError('Missing button slot')
+                chain.append(slots[part['slot_export']])
+                if part['parent_export'] == binding['root_export']:
+                    break
+            if not chain or chain[-1]['decoded']['parent_export'] != binding['root_export']:
+                raise ValueError('Geometry root not reached')
+            binding['chain'] = chain
+            binding['source'] = dict(catalog_sha256=sha(package_file), asset_sha256=package['asset_sha256'],
+                                     body_sha256=package['body_sha256'], control_export=control['export'],
+                                     control_sha256=control['sha256'])
+            binding['runtime_geometry_verified'] = False
+        write(temporary / 'button-evidence.json', button_layouts)
         manifest['named_resource_count'] = sum(not r['path'].startswith('unresolved:') for r in records)
         manifest['unresolved_root_count'] = sum(r['path'].startswith('unresolved:') for r in records)
         # Existing atlas runs in an isolated frame, with session polling disabled.

@@ -33,6 +33,12 @@ def verify(snapshot):
         for profile in placements['profiles'].values():
             record = next(r for r in index if r['name'] == profile['resource'])
             assert manifest['resources'][record['path'] + '|' + profile['catalog_file']] == profile['source']['catalog_sha256']
+    if (snapshot / 'button-evidence.json').exists():
+        bindings = json.loads((snapshot / 'button-evidence.json').read_text('utf-8'))
+        for binding in bindings['bindings'].values():
+            record = next(r for r in index if r['name'] == binding['resource'])
+            assert manifest['resources'][record['path'] + '|' + binding['catalog_file']] == binding['source']['catalog_sha256']
+            assert binding['chain'][-1]['decoded']['parent_export'] == binding['root_export']
     assert sum(row['variants'] for row in index) == manifest['variant_count']
     return dict(state='passed', snapshot=manifest['id'], resources=len(index), textures=len(textures),
                 limits='Byte/provenance checks; does not prove visual fidelity, game behavior or 50 browser windows.')

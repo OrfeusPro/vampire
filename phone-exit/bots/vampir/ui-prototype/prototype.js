@@ -6,7 +6,7 @@
   const profile = /^[a-zA-Z0-9_-]{1,48}$/.test(requestedProfile) ? requestedProfile : 'demo-01';
   const storageKey = M.profileKey(profile);
   const economy = new URLSearchParams(location.search).get('economy') !== 'off';
-  let textures, manifest, registry, sourceItems, layouts, adapter, storageIssue, storageBlocked = false;
+  let textures, manifest, registry, sourceItems, layouts, buttonLayouts, adapter, storageIssue, storageBlocked = false;
   let screen = 'auth', draft = M.appearance(), undo = [], redo = [], createTab = 'Пресет', toastTimer, busy = false;
   const dialogs = [], renderers = new Map(); let characterName = '';
   const state = () => adapter.state;
@@ -14,6 +14,25 @@
   const append = (parent, ...children) => { parent.append(...children.filter(Boolean)); return parent; };
   const fmt = n => Number(n).toLocaleString('ru-RU');
   function button(text, fn, className = '', disabled = false) { const b = el('button', text, className); b.type = 'button'; b.disabled = disabled; b.onclick = fn; return b; }
+  let geometryFrame;
+  function updateButtonGeometry() {
+    cancelAnimationFrame(geometryFrame);
+    geometryFrame = requestAnimationFrame(() => {
+      if (!buttonLayouts) return;
+      for (const node of document.querySelectorAll('[data-native-button]')) {
+        const binding = buttonLayouts.bindings[node.dataset.nativeButton], parent = node.closest('dialog') || app;
+        if (!binding || !parent.clientWidth || !parent.clientHeight) continue;
+        const scale = parent.clientWidth / binding.reference_width * state().settings.scale / 100;
+        const result = VampirGeometry.chain(binding, VampirGeometry.rect(0, 0, parent.clientWidth / scale, parent.clientHeight / scale));
+        node.dataset.geometryState = result.unknown ? 'unresolved' : result.assumptions.length ? 'allocated-frame-assumption' : 'canvas-calculation';
+        if (result.unknown) { node.dataset.geometryUnknown = result.unknown; continue; }
+        const box = VampirGeometry.cssRect(result.rect, scale), origin = parent.getBoundingClientRect();
+        Object.assign(node.style, { position: 'fixed', left: origin.left + parent.clientLeft + box.x + 'px', top: origin.top + parent.clientTop + box.y + 'px', width: box.width + 'px', height: box.height + 'px', margin: '0', minWidth: '0', padding: '0 .4em', zIndex: '2' });
+      }
+    });
+  }
+  const geometryObserver = new ResizeObserver(updateButtonGeometry);
+  function nativeButton(node, key) { node.dataset.nativeButton = key; return node; }
   function image(name, className = '') {
     const value = textures[name];
     if (!value) return el('span', '◇', 'missing-icon ' + className);
@@ -62,11 +81,12 @@
     const header = el('header', undefined, 'window-heading');
     append(header, heading, button('×', () => closeDialog(dialog), 'close'));
     header.lastChild.setAttribute('aria-label', 'Закрыть ' + title);
+    if (className === 'item-card') nativeButton(header.lastChild, 'item-close');
     append(dialog, header, body); windows.append(dialog); dialogs.push(dialog);
-    const redraw = () => { const focused = dialog.contains(document.activeElement) ? focusIdentity(document.activeElement) : null; body.replaceChildren(); render(body, dialog); restoreFocus(focused, dialog); };
+    const redraw = () => { const focused = dialog.contains(document.activeElement) ? focusIdentity(document.activeElement) : null; body.replaceChildren(); render(body, dialog); restoreFocus(focused, dialog); updateButtonGeometry(); };
     renderers.set(dialog, redraw);
-    dialog.addEventListener('close', () => { renderers.delete(dialog); const at = dialogs.indexOf(dialog); if (at >= 0) dialogs.splice(at, 1); dialog.remove(); restoreFocus(invoker, dialogs.filter(d => d.open).at(-1) || app); });
-    redraw(); dialog.showModal(); return dialog;
+    dialog.addEventListener('close', () => { geometryObserver.unobserve(dialog); renderers.delete(dialog); const at = dialogs.indexOf(dialog); if (at >= 0) dialogs.splice(at, 1); dialog.remove(); restoreFocus(invoker, dialogs.filter(d => d.open).at(-1) || app); });
+    redraw(); dialog.showModal(); geometryObserver.observe(dialog); updateButtonGeometry(); return dialog;
   }
   function info(title, message) { return modal(title, body => append(body, el('p', message), button('Понятно', () => closeDialog(dialogs.at(-1)), 'primary'))); }
   function confirm(title, message, fn) {
@@ -89,6 +109,7 @@
     if (screen === 'create') renderCreate();
     if (screen === 'game') renderGame();
     app.append(footerNote());
+    updateButtonGeometry();
   }
   function renderAuth() {
     const panel = el('section', undefined, 'auth-panel');
@@ -152,8 +173,8 @@
     right.append(button('♙ Заблокированная ячейка', () => info('Ячейка персонажа', 'Дополнительная ячейка недоступна в демонстрации.'), 'character-slot locked'));
     if (c) right.append(button(c.primary ? '★ Основной персонаж' : 'Назначить основным', () => { action('primary', { id: c.id }); render(); }));
     const actions = el('div', undefined, 'bottom-actions');
-    append(actions, button('Удалить персонажа', () => confirm('Удаление персонажа', 'Удалить ' + c?.name + ' из локальной демонстрации?', () => { action('delete', { id: c.id }); render(); }), '', !c),
-      button('Начать игру', () => transition('game'), 'primary', !c));
+    append(actions, nativeButton(button('Удалить персонажа', () => confirm('Удаление персонажа', 'Удалить ' + c?.name + ' из локальной демонстрации?', () => { action('delete', { id: c.id }); render(); }), '', !c), 'character-delete'),
+      nativeButton(button('Начать игру', () => transition('game'), 'primary', !c), 'character-start'));
     append(app, left, right, actions);
   }
   function renderClasses() {
@@ -303,7 +324,7 @@
       const layout = el('div', undefined, 'purchase-layout'), art = el('div', undefined, 'product-art'), details = el('div');
       append(art, productImage(id), el('small', 'Локальная демонстрация · игровые условия не подтверждены'));
       const quantity = input('number'); quantity.min = 1; quantity.max = 99; quantity.value = count; quantity.setAttribute('aria-label', 'Количество');
-      const buy = button('', () => { count = Number(quantity.value); if (action('buy', { id, count })) { closeDialog(d); notify('Покупка добавлена в сумку.'); } }, 'primary');
+      const buy = nativeButton(button('', () => { count = Number(quantity.value); if (action('buy', { id, count })) { closeDialog(d); notify('Покупка добавлена в сумку.'); } }, 'primary'), 'purchase-buy');
       const update = () => { buy.textContent = 'Купить за ' + fmt(p.price * Number(quantity.value)) + (p.currency === 'gold' ? ' золота' : ' алмазов'); }; quantity.oninput = () => { count = Number(quantity.value); update(); }; update();
       append(details, el('h3', 'Содержимое товара'), button(p.name, () => itemCard(id)), el('p', p.description), field('Количество', quantity), el('p', 'Доступные ресурсы: ' + fmt(state()[p.currency])), buy);
       append(layout, art, details); body.append(layout);
@@ -423,6 +444,7 @@
     modal('Версии и обновления', body => {
       append(body, el('p', 'Набор интерфейса: ' + manifest.id), el('p', 'Дата сборки: ' + manifest.built_at), el('p', 'Клиент SHA256: ' + (manifest.client.sha256 || 'недоступен')), el('p', 'Совместимость с клиентом: не подтверждена'), el('p', 'Каталог UI SHA256: ' + manifest.inputs['ui-catalog/index.json']), el('p', 'Демосохранение: схема ' + M.SCHEMA), el('p', storageIssue || 'Хранилище доступно.'), el('p', layouts.limits));
       body.append(button('Размещение окон: источники', () => modal('Размещение окон', b => b.append(el('pre', JSON.stringify(layouts, null, 2))), 'catalog-window')));
+      body.append(button('Расположение кнопок: источники', () => modal('Расположение кнопок', b => b.append(el('pre', JSON.stringify(buttonLayouts, null, 2))), 'catalog-window')));
       append(body, el('p', 'Окно бота: ' + profile + ' · экономичный режим: ' + (economy ? 'включён' : 'выключен')), el('p', 'Для отдельного окна используйте ?bot=demo-02 … ?bot=demo-50. Тяжёлые данные каталога загружаются по запросу.'));
       manifest.limits.forEach(text => body.append(el('p', text)));
       body.append(button('Сбросить локальное демо', () => confirm('Сброс демо', 'Сохранённое демосостояние будет удалено. Реальные профили не затрагиваются.', resetDemo)));
@@ -431,6 +453,7 @@
   function setAdapter(initial) {
     adapter = M.adapter(initial, (value, type) => {
       persist(value); document.documentElement.style.setProperty('--user-scale', value.settings.scale / 100);
+      updateButtonGeometry();
       if (screen === 'game') refreshHud();
       // Changes redraw view-only dialogs. Preserve forms and controls being edited.
       for (const d of [...dialogs]) if (d.open && !d.contains(document.activeElement?.closest('input,select'))) renderers.get(d)?.();
@@ -445,6 +468,8 @@
     if (type === 'position' && !state().position) action('map-position', payload);
   });
   addEventListener('visibilitychange', updateMapActivity);
+  addEventListener('resize', updateButtonGeometry);
+  addEventListener('visibilitychange', () => { if (!document.hidden) updateButtonGeometry(); });
   addEventListener('focus', updateMapActivity);
   addEventListener('blur', () => { if (document.activeElement?.tagName !== 'IFRAME') updateMapActivity(); });
   addEventListener('keydown', event => {
@@ -455,8 +480,8 @@
     if (event.key.toLowerCase() === 'm') openWorldMap();
     if (event.key === 'Enter') openSection('Чат');
   });
-  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json'].map(fetchJSON)).then(([t, m, r, items, placement]) => {
-    textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement;
+  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls]) => {
+    textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
     let loaded;
     try { loaded = M.load(localStorage, manifest.data_id || manifest.id, profile); }
     catch { loaded = { state: M.initial(), issue: 'Хранилище недоступно. Работа продолжается без сохранения.' }; }
@@ -464,6 +489,7 @@
     document.title = 'Vampir · ' + profile;
     for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');
     document.getElementById('inspector').onclick = () => openInspector(); render();
+    geometryObserver.observe(app);
     if (storageIssue) info('Демосохранение требует проверки', storageIssue);
   }).catch(error => { app.replaceChildren(el('h1', 'Не удалось загрузить интерфейс'), el('p', error.message), button('Повторить', () => location.reload())); });
 })();

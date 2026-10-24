@@ -6,3 +6,5 @@
 
 /* Per-window geometry: adapted resource/reference profiles, not one generic popup. */
 .placed-window .dialog-body{height:calc(100% - 4em);max-height:calc(100% - 4em)}.inventory-window .bag-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.inventory-window .tabs button{padding:.5em .3em}.inventory-window .dialog-body>input{width:100%}.placed-window.full-window .dialog-body{max-height:calc(100% - 4em)}
+
+.item-card .dialog-body>small{display:block;margin:1em 0}
