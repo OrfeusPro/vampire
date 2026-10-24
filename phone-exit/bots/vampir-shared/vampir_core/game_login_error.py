@@ -19,4 +19,8 @@ def describe_game_login_error(code):
     # HEADLESS-RESULT-ERROR-16.md / result-error-16-replay.json.
     if code == 16:
         return ('InvalidState', 'Недопустимое состояние при входе.')
+    # 1.13.16 dictionary pair and current RU ResultCodeString_Name.csv.
+    # HEADLESS-MESSAGE-COMPONENTS-11316.md; no automatic retry/server switch.
+    if code == 37:
+        return ('CreateRestrictedServer', 'Создание персонажа недоступно на этом сервере.')
     return None

@@ -55,6 +55,7 @@ Game Version 0, Game Login 16. Franz2 — строка сервера 256, гр�
 - [Источники оставшихся полей Version / Login](../evidence/network/HEADLESS-GAME-LOGIN-INPUTS.md)
 - [Прямой маршрут и переход к Global](../evidence/network/HEADLESS-GLOBAL-DIRECT.md)
 - [Региональное лобби в текущем клиенте](../evidence/network/HEADLESS-GLOBAL-LOBBY-REGIONS.md)
+- [Вход существующего персонажа через HK, 24 октября 2026](../evidence/network/HEADLESS-HK-EXISTING-CHARACTER-11316.md)
 - [Vampir — уведомление и подтверждение смены ключа](../evidence/network/HEADLESS-KEY-CHANGE.md)
 - [Vampir — исполнение второго цикла приёма](../evidence/network/HEADLESS-LISTENER-LOOP.md)
 - [Прямой вход на EU / Prelude 2 и отказ 59](../evidence/network/HEADLESS-LIVE-GLOBAL-EU.md)

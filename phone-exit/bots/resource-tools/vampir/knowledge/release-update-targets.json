@@ -2681,6 +2681,42 @@
           }
         ]
       }
+    },
+    {
+      "id": "message-components-errors-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-message-components.py",
+        "verify-login-error-texts.py"
+      ],
+      "rule": "Проверять выбранные named UI payloads и отдельные controls; числовой код связывать с native dictionary pair и уникальным ключом текущего перевода. Не переносить text controls по старым offset и не менять retry policy.",
+      "automation": {
+        "discovery": "reviewed_exact_csv_literals_and_declared_popup_callees",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1457d9210",
+                "scope": "Static 16/InvalidState and 37/CreateRestrictedServer pointer pairs; selected current EN/RU tables and patch UI exports. No runtime map insertion/lookup or live popup.",
+                "required_checks": [
+                  "message-components-error-texts-current"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-message-components.py",
+              "verify-login-error-texts.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-MESSAGE-COMPONENTS-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

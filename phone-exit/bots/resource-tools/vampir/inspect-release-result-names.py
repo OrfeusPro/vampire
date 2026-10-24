@@ -20,17 +20,18 @@ def load(name, path):
     return module
 
 
-def run():
+def run(*, source_sha256=SHA, owner_address=OWNER, values=None, constructor=0x141426a30):
+    values = VALUES if values is None else values
     native = load('result_names_native', HERE / 'build-native-entry-code.py')
     audit = load('result_names_audit', HERE / 'audit-client-release.py')
-    source = native.ROOT / 'client-code-snapshots' / SHA / 'ProjectRED-Win64-Shipping.exe'
-    if audit.sha256(source) != SHA:
+    source = native.ROOT / 'client-code-snapshots' / source_sha256 / 'ProjectRED-Win64-Shipping.exe'
+    if audit.sha256(source) != source_sha256:
         raise ValueError('Result-name source changed')
     if native.capstone.__version__ != '5.0.6':
         raise ValueError('Use pinned Capstone 5.0.6')
     image = native.Image(source.read_bytes())
-    owner = image.containing(OWNER)
-    if owner is None or image.pe.base + image.roots[owner][0] != OWNER:
+    owner = image.containing(owner_address)
+    if owner is None or image.pe.base + image.roots[owner][0] != owner_address:
         raise ValueError('Result-name owner changed')
     root = image.roots[owner]
     fragments = native.decode_ranges(image, {root},
@@ -43,7 +44,7 @@ def run():
             if row['mnemonic'] != 'mov' or match is None:
                 continue
             value = int(match[2], 0)
-            if value not in VALUES:
+            if value not in values:
                 continue
             # String construction precedes storing its name pointer; the next
             # interleaved entry supplies the LEA of this entry's integer slot.
@@ -60,13 +61,13 @@ def run():
             name_address = window[0]['rip_references'][0]
             offset = image.offset(name_address - image.pe.base)
             literal = image.data[offset:offset + 128].split(b'\0', 1)[0]
-            if literal != VALUES[value].encode('ascii'):
+            if literal != values[value].encode('ascii'):
                 raise ValueError('Result-name literal mismatch')
             local = re.fullmatch(r'rcx, (\[rbp \+ 0x[0-9a-f]+\])', window[2]['operands'])
             if local is None:
                 raise ValueError('Result-name string slot changed')
             require(2, 'lea', 'rcx, ' + local[1])
-            require(prefix - 2, 'call', '0x141426a30')
+            require(prefix - 2, 'call', hex(constructor))
             require(prefix - 1, 'lea', 'rax, ' + local[1])
             name_slot = re.fullmatch(r'qword ptr \[rbp \+ (0x[0-9a-f]+)\], rax', window[prefix + 1]['operands'])
             if name_slot is None:
@@ -74,15 +75,15 @@ def run():
             require(prefix + 1, 'mov', window[prefix + 1]['operands'])
             require(prefix + 3, 'lea', 'rax, [rbp + ' + match[1] + ']')
             require(prefix + 5, 'mov', f'qword ptr [rbp + {hex(int(name_slot[1], 0) + 8)}], rax')
-            pairs.append(dict(value=value, name=VALUES[value], literal_address=hex(name_address),
+            pairs.append(dict(value=value, name=values[value], literal_address=hex(name_address),
                 literal_hex=(literal + b'\0').hex(), instructions=window))
-    if sorted(p['value'] for p in pairs) != sorted(VALUES):
+    if sorted(p['value'] for p in pairs) != sorted(values):
         raise ValueError('Missing or ambiguous result-name pair')
-    report = dict(source_sha256=SHA, tool_sha256=audit.sha256(Path(__file__)),
-        owner=hex(OWNER), fragments=[{k:v for k,v in f.items() if k != 'instructions'} for f in fragments],
+    report = dict(source_sha256=source_sha256, tool_sha256=audit.sha256(Path(__file__)),
+        owner=hex(owner_address), fragments=[{k:v for k,v in f.items() if k != 'instructions'} for f in fragments],
         pairs=pairs, limits=[
-            'Whole unwind fragments decoded, four local string/integer pointer pairs checked statically.',
-            'Ghidra skipped this 90467-byte body by budget; no completed whole pseudocode export.',
+            'Whole unwind fragments decoded; selected local string/integer pointer pairs checked statically.',
+            'No whole pseudocode export used for the large dictionary initializer.',
             'Map insertion, string constructor and lookup are not executed by this tool.',
             'No packet-specific handler, request field meaning or server-side cause is established.'])
     path = audit.save_snapshot(native.ROOT / 'code-clues/release-result-names', report)

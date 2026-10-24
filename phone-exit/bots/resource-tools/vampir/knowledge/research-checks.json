@@ -4862,6 +4862,29 @@
         "phone-exit/bots/test_vampir_candidate_game_profile.py",
         "phone-exit/bots/test_vampir_headless_public_cdn.py"
       ]
+    },
+    {
+      "id": "message-components-error-texts-current",
+      "questions": [
+        "release-login-result-reader"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_message_components.py",
+      "timeout_seconds": 90,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/verify-message-components.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-error-texts.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-release-result-names.py",
+        "phone-exit/bots/resource-tools/vampir/recover-pak-game-config.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/evidence/updates/ERROR-COMPONENTS-INVENTORY.json",
+        "phone-exit/bots/resource-tools/rfnext/scan-pak.py",
+        "phone-exit/bots/test_vampir_message_components.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_error.py"
+      ]
     }
   ]
 }

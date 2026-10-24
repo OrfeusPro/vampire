@@ -4570,6 +4570,731 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Связь code37/16 с актуальным текстом и компонентом; причина серверного отказа; текущие creation/world checks."
+    },
+    {
+      "addresses": [
+        "0x144a513a0",
+        "0x145bccec0",
+        "0x145bff0d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "1716809f88493c29b5743b339489403b5d2b97ffc28cb50ed4a462b57f570c3f",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327\\manifest.json",
+          "sha256": "6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3db8e44b4b95ea3603dbe8508eccefb589686647e686d5ff0100f64d29143061",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3\\manifest.json",
+          "sha256": "97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b78920d7a2051a1c1d8dffa89ccdc048e773cfe86deb9161515074a6f5f18c26",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58\\manifest.json",
+          "sha256": "4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b04d72f55e5da1a6eb20f1aa915df0e7617e07e5f04a2c6316ce162aac2df283",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a\\manifest.json",
+          "sha256": "047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fbff22ab156e8448cd13e4d89c92f91527181bae313c23bcaa35549fb06c5ae3",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3\\manifest.json",
+          "sha256": "0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ada553e8729f9eeea144e4eb3f6a85325acf839bfeb7da7b059320e5ccc5ca0f",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf\\manifest.json",
+          "sha256": "665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a806b27476bd57bd7b32e296fdbf70504a0495492b0cbf4e2c237fae1eb5cd3",
+          "id": "native-login-result-body-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be\\manifest.json",
+          "sha256": "1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6b4f1de0bbc6c018fc1e950b221f192213dddac4594ce9caf6a372e73ad86768",
+          "id": "native-login-post-state-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0\\manifest.json",
+          "sha256": "3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "847449cc0301febcbe1e84a935f21db2147a176e178671a51b5dcd5853ce416e",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634\\manifest.json",
+          "sha256": "f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e09f9e7e9a3a44424b9c31d58537335bd7460efd30ae2b29115b826cce8f5d24",
+          "id": "native-waiting-end-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4\\manifest.json",
+          "sha256": "67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "83bf0c9c3dfa0e67d7d71647a7ddd0c3a63b378f5ba9dcfd34b508dab311c090",
+          "id": "native-character-list-envelope-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4\\manifest.json",
+          "sha256": "3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "98894d9ca1f7357e566c3d24f223bdd78e8fd3238a9bafba5ca1abf916c5a292",
+          "id": "native-character-record-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3\\manifest.json",
+          "sha256": "287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9f3c0cacaf7fabc52686d9ec42915e39b754fc0a1a5108948d787c721ca3f0e6",
+          "id": "native-character-extensions-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d\\manifest.json",
+          "sha256": "64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e6e2a4ba53a5f8b0e3469b35e54980770276888b44059c58cccd787ad8a9d174",
+          "id": "native-character-list-records-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100\\manifest.json",
+          "sha256": "1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a960009c15551694549870143aa8a3e1a9ae390998bdea33e83a07dab0068ca",
+          "id": "native-character-list-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882\\manifest.json",
+          "sha256": "af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882",
+          "state": "passed"
+        },
+        {
+          "cache_key": "55015e148cacee10cf7ccbe422cf16997d1ddbe74ab8b9e529fc9bef61fcd840",
+          "id": "candidate-game-profile-boundary",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be\\manifest.json",
+          "sha256": "76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fa6bff143f39bdc365cec26e90c79988c8b1d151255aaf8328d4f14598b0d8c0",
+          "id": "message-components-error-texts-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b\\manifest.json",
+          "sha256": "64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий dedicated helper передаёт numeric code в table lookup; text getter разрешает @ aliases. Popup helper получает конфигурационное окно. Выбранные message компоненты проверены отдельно; live popup не доказан.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-MESSAGE-COMPONENTS-11316.md",
+          "sha256": "469bad4eaf75af89c7c7c2dcdcb4a91202fa8017893c324ef83f643f1cbecb10"
+        }
+      ],
+      "id": "15ed5f2890056991a3635c50ba2b571faceeb0d5ef5fbb3486226d27a5b2220e",
+      "limits": [
+        "Static source/dictionary verification; runtime map insertion, lookup, loaders and popup callbacks not executed.",
+        "Four explicit patch components only; active mount, concrete selector1 WBP and nine changed text properties unresolved.",
+        "No authorization, new live attempt, list, creation, world or baseline/profile activation."
+      ],
+      "method": "static",
+      "next_check": "Inspect selector configuration and changed texts; separately check fresh entry on a creation-enabled server after pause. Never create before an accepted fresh empty list.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current selector 1 WBP binding, changed text semantics and reason for live JP256 result16; accepted live list and current creation checks remain open."
+    },
+    {
+      "addresses": [
+        "0x144a4dfa0",
+        "0x145921090"
+      ],
+      "checks": [
+        {
+          "cache_key": "1716809f88493c29b5743b339489403b5d2b97ffc28cb50ed4a462b57f570c3f",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327\\manifest.json",
+          "sha256": "6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3db8e44b4b95ea3603dbe8508eccefb589686647e686d5ff0100f64d29143061",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3\\manifest.json",
+          "sha256": "97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b78920d7a2051a1c1d8dffa89ccdc048e773cfe86deb9161515074a6f5f18c26",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58\\manifest.json",
+          "sha256": "4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b04d72f55e5da1a6eb20f1aa915df0e7617e07e5f04a2c6316ce162aac2df283",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a\\manifest.json",
+          "sha256": "047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fbff22ab156e8448cd13e4d89c92f91527181bae313c23bcaa35549fb06c5ae3",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3\\manifest.json",
+          "sha256": "0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ada553e8729f9eeea144e4eb3f6a85325acf839bfeb7da7b059320e5ccc5ca0f",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf\\manifest.json",
+          "sha256": "665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a806b27476bd57bd7b32e296fdbf70504a0495492b0cbf4e2c237fae1eb5cd3",
+          "id": "native-login-result-body-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be\\manifest.json",
+          "sha256": "1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6b4f1de0bbc6c018fc1e950b221f192213dddac4594ce9caf6a372e73ad86768",
+          "id": "native-login-post-state-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0\\manifest.json",
+          "sha256": "3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "847449cc0301febcbe1e84a935f21db2147a176e178671a51b5dcd5853ce416e",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634\\manifest.json",
+          "sha256": "f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e09f9e7e9a3a44424b9c31d58537335bd7460efd30ae2b29115b826cce8f5d24",
+          "id": "native-waiting-end-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4\\manifest.json",
+          "sha256": "67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "83bf0c9c3dfa0e67d7d71647a7ddd0c3a63b378f5ba9dcfd34b508dab311c090",
+          "id": "native-character-list-envelope-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4\\manifest.json",
+          "sha256": "3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "98894d9ca1f7357e566c3d24f223bdd78e8fd3238a9bafba5ca1abf916c5a292",
+          "id": "native-character-record-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3\\manifest.json",
+          "sha256": "287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9f3c0cacaf7fabc52686d9ec42915e39b754fc0a1a5108948d787c721ca3f0e6",
+          "id": "native-character-extensions-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d\\manifest.json",
+          "sha256": "64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e6e2a4ba53a5f8b0e3469b35e54980770276888b44059c58cccd787ad8a9d174",
+          "id": "native-character-list-records-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100\\manifest.json",
+          "sha256": "1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a960009c15551694549870143aa8a3e1a9ae390998bdea33e83a07dab0068ca",
+          "id": "native-character-list-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882\\manifest.json",
+          "sha256": "af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882",
+          "state": "passed"
+        },
+        {
+          "cache_key": "55015e148cacee10cf7ccbe422cf16997d1ddbe74ab8b9e529fc9bef61fcd840",
+          "id": "candidate-game-profile-boundary",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be\\manifest.json",
+          "sha256": "76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fa6bff143f39bdc365cec26e90c79988c8b1d151255aaf8328d4f14598b0d8c0",
+          "id": "message-components-error-texts-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b\\manifest.json",
+          "sha256": "64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current popup getter вызывает selector с raw byte 1. Конкретный WBP ещё не установлен; исследованный table slot 145921090 не подтверждён как getter имени таблицы.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-MESSAGE-COMPONENTS-11316.md",
+          "sha256": "469bad4eaf75af89c7c7c2dcdcb4a91202fa8017893c324ef83f643f1cbecb10"
+        }
+      ],
+      "id": "343c07851dde330eac303ba7464639742b2dbdd9d4315470ba6a08c67de1302a",
+      "limits": [
+        "Static source/dictionary verification; runtime map insertion, lookup, loaders and popup callbacks not executed.",
+        "Four explicit patch components only; active mount, concrete selector1 WBP and nine changed text properties unresolved.",
+        "No authorization, new live attempt, list, creation, world or baseline/profile activation."
+      ],
+      "method": "static",
+      "next_check": "Inspect selector configuration and changed texts; separately check fresh entry on a creation-enabled server after pause. Never create before an accepted fresh empty list.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current selector 1 WBP binding, changed text semantics and reason for live JP256 result16; accepted live list and current creation checks remain open."
+    },
+    {
+      "addresses": [
+        "0x144a28140",
+        "0x145bde430",
+        "0x145be8db0"
+      ],
+      "checks": [
+        {
+          "cache_key": "1716809f88493c29b5743b339489403b5d2b97ffc28cb50ed4a462b57f570c3f",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327\\manifest.json",
+          "sha256": "6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3db8e44b4b95ea3603dbe8508eccefb589686647e686d5ff0100f64d29143061",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3\\manifest.json",
+          "sha256": "97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b78920d7a2051a1c1d8dffa89ccdc048e773cfe86deb9161515074a6f5f18c26",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58\\manifest.json",
+          "sha256": "4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b04d72f55e5da1a6eb20f1aa915df0e7617e07e5f04a2c6316ce162aac2df283",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a\\manifest.json",
+          "sha256": "047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fbff22ab156e8448cd13e4d89c92f91527181bae313c23bcaa35549fb06c5ae3",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3\\manifest.json",
+          "sha256": "0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ada553e8729f9eeea144e4eb3f6a85325acf839bfeb7da7b059320e5ccc5ca0f",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf\\manifest.json",
+          "sha256": "665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a806b27476bd57bd7b32e296fdbf70504a0495492b0cbf4e2c237fae1eb5cd3",
+          "id": "native-login-result-body-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be\\manifest.json",
+          "sha256": "1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6b4f1de0bbc6c018fc1e950b221f192213dddac4594ce9caf6a372e73ad86768",
+          "id": "native-login-post-state-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0\\manifest.json",
+          "sha256": "3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "847449cc0301febcbe1e84a935f21db2147a176e178671a51b5dcd5853ce416e",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634\\manifest.json",
+          "sha256": "f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e09f9e7e9a3a44424b9c31d58537335bd7460efd30ae2b29115b826cce8f5d24",
+          "id": "native-waiting-end-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4\\manifest.json",
+          "sha256": "67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "83bf0c9c3dfa0e67d7d71647a7ddd0c3a63b378f5ba9dcfd34b508dab311c090",
+          "id": "native-character-list-envelope-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4\\manifest.json",
+          "sha256": "3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "98894d9ca1f7357e566c3d24f223bdd78e8fd3238a9bafba5ca1abf916c5a292",
+          "id": "native-character-record-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3\\manifest.json",
+          "sha256": "287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9f3c0cacaf7fabc52686d9ec42915e39b754fc0a1a5108948d787c721ca3f0e6",
+          "id": "native-character-extensions-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d\\manifest.json",
+          "sha256": "64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e6e2a4ba53a5f8b0e3469b35e54980770276888b44059c58cccd787ad8a9d174",
+          "id": "native-character-list-records-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100\\manifest.json",
+          "sha256": "1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a960009c15551694549870143aa8a3e1a9ae390998bdea33e83a07dab0068ca",
+          "id": "native-character-list-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882\\manifest.json",
+          "sha256": "af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882",
+          "state": "passed"
+        },
+        {
+          "cache_key": "55015e148cacee10cf7ccbe422cf16997d1ddbe74ab8b9e529fc9bef61fcd840",
+          "id": "candidate-game-profile-boundary",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be\\manifest.json",
+          "sha256": "76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fa6bff143f39bdc365cec26e90c79988c8b1d151255aaf8328d4f14598b0d8c0",
+          "id": "message-components-error-texts-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b\\manifest.json",
+          "sha256": "64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "По точным CSV literal references найдены current ResultCodeString и Name loaders; Name loader использует numeric converter. Selector 1 выбирает строку manager configuration, fixed WBP в getter отсутствует.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-MESSAGE-COMPONENTS-11316.md",
+          "sha256": "469bad4eaf75af89c7c7c2dcdcb4a91202fa8017893c324ef83f643f1cbecb10"
+        }
+      ],
+      "id": "066802608c3c388aaed68ff8af27b88eb7f1a3e5c9ee407ab83b8f47265bdb82",
+      "limits": [
+        "Static source/dictionary verification; runtime map insertion, lookup, loaders and popup callbacks not executed.",
+        "Four explicit patch components only; active mount, concrete selector1 WBP and nine changed text properties unresolved.",
+        "No authorization, new live attempt, list, creation, world or baseline/profile activation."
+      ],
+      "method": "static",
+      "next_check": "Inspect selector configuration and changed texts; separately check fresh entry on a creation-enabled server after pause. Never create before an accepted fresh empty list.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current selector 1 WBP binding, changed text semantics and reason for live JP256 result16; accepted live list and current creation checks remain open."
+    },
+    {
+      "addresses": [
+        "0x145806ed0"
+      ],
+      "checks": [
+        {
+          "cache_key": "1716809f88493c29b5743b339489403b5d2b97ffc28cb50ed4a462b57f570c3f",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327\\manifest.json",
+          "sha256": "6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3db8e44b4b95ea3603dbe8508eccefb589686647e686d5ff0100f64d29143061",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3\\manifest.json",
+          "sha256": "97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b78920d7a2051a1c1d8dffa89ccdc048e773cfe86deb9161515074a6f5f18c26",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58\\manifest.json",
+          "sha256": "4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b04d72f55e5da1a6eb20f1aa915df0e7617e07e5f04a2c6316ce162aac2df283",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a\\manifest.json",
+          "sha256": "047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fbff22ab156e8448cd13e4d89c92f91527181bae313c23bcaa35549fb06c5ae3",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3\\manifest.json",
+          "sha256": "0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ada553e8729f9eeea144e4eb3f6a85325acf839bfeb7da7b059320e5ccc5ca0f",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf\\manifest.json",
+          "sha256": "665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a806b27476bd57bd7b32e296fdbf70504a0495492b0cbf4e2c237fae1eb5cd3",
+          "id": "native-login-result-body-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be\\manifest.json",
+          "sha256": "1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6b4f1de0bbc6c018fc1e950b221f192213dddac4594ce9caf6a372e73ad86768",
+          "id": "native-login-post-state-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0\\manifest.json",
+          "sha256": "3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "847449cc0301febcbe1e84a935f21db2147a176e178671a51b5dcd5853ce416e",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634\\manifest.json",
+          "sha256": "f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e09f9e7e9a3a44424b9c31d58537335bd7460efd30ae2b29115b826cce8f5d24",
+          "id": "native-waiting-end-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4\\manifest.json",
+          "sha256": "67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "83bf0c9c3dfa0e67d7d71647a7ddd0c3a63b378f5ba9dcfd34b508dab311c090",
+          "id": "native-character-list-envelope-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4\\manifest.json",
+          "sha256": "3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "98894d9ca1f7357e566c3d24f223bdd78e8fd3238a9bafba5ca1abf916c5a292",
+          "id": "native-character-record-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3\\manifest.json",
+          "sha256": "287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9f3c0cacaf7fabc52686d9ec42915e39b754fc0a1a5108948d787c721ca3f0e6",
+          "id": "native-character-extensions-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d\\manifest.json",
+          "sha256": "64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e6e2a4ba53a5f8b0e3469b35e54980770276888b44059c58cccd787ad8a9d174",
+          "id": "native-character-list-records-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100\\manifest.json",
+          "sha256": "1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a960009c15551694549870143aa8a3e1a9ae390998bdea33e83a07dab0068ca",
+          "id": "native-character-list-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882\\manifest.json",
+          "sha256": "af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882",
+          "state": "passed"
+        },
+        {
+          "cache_key": "55015e148cacee10cf7ccbe422cf16997d1ddbe74ab8b9e529fc9bef61fcd840",
+          "id": "candidate-game-profile-boundary",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be\\manifest.json",
+          "sha256": "76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fa6bff143f39bdc365cec26e90c79988c8b1d151255aaf8328d4f14598b0d8c0",
+          "id": "message-components-error-texts-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b\\manifest.json",
+          "sha256": "64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "145806ed0 — пятибайтовый E9 thunk в dictionary owner 1457d9210, собственного unwind root нет. Collect не запускался; отдельный target request использован для static pair verification.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-MESSAGE-COMPONENTS-11316.md",
+          "sha256": "469bad4eaf75af89c7c7c2dcdcb4a91202fa8017893c324ef83f643f1cbecb10"
+        }
+      ],
+      "id": "ec32727eec4a72d2da930108a2a89c7e365e55ab3cd28e6ed8ad43422a654261",
+      "limits": [
+        "Static source/dictionary verification; runtime map insertion, lookup, loaders and popup callbacks not executed.",
+        "Four explicit patch components only; active mount, concrete selector1 WBP and nine changed text properties unresolved.",
+        "No authorization, new live attempt, list, creation, world or baseline/profile activation."
+      ],
+      "method": "static",
+      "next_check": "Inspect selector configuration and changed texts; separately check fresh entry on a creation-enabled server after pause. Never create before an accepted fresh empty list.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current selector 1 WBP binding, changed text semantics and reason for live JP256 result16; accepted live list and current creation checks remain open."
+    },
+    {
+      "addresses": [
+        "0x1457d9210"
+      ],
+      "checks": [
+        {
+          "cache_key": "1716809f88493c29b5743b339489403b5d2b97ffc28cb50ed4a462b57f570c3f",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327\\manifest.json",
+          "sha256": "6bf2f9d9026ef4f02043e994258e18a3d14a09946e9d45450e14164810f66327",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3db8e44b4b95ea3603dbe8508eccefb589686647e686d5ff0100f64d29143061",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3\\manifest.json",
+          "sha256": "97a7668ff4aed7a46f4483ed297047b2372f70450782ed1fc723ee888a931de3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b78920d7a2051a1c1d8dffa89ccdc048e773cfe86deb9161515074a6f5f18c26",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58\\manifest.json",
+          "sha256": "4bb4a31d0da3e8f899e4bf0ef10734645429319f07fde052a8af14d66a146d58",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b04d72f55e5da1a6eb20f1aa915df0e7617e07e5f04a2c6316ce162aac2df283",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a\\manifest.json",
+          "sha256": "047e0f90f36a0fd6db160b80e4d75582a9fa8f60c7179ecf5af442b5d41d2e8a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fbff22ab156e8448cd13e4d89c92f91527181bae313c23bcaa35549fb06c5ae3",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3\\manifest.json",
+          "sha256": "0192289f448682dd761c09575b0ebb4c619098b685b21ff2ce66ab8e25c9dce3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ada553e8729f9eeea144e4eb3f6a85325acf839bfeb7da7b059320e5ccc5ca0f",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf\\manifest.json",
+          "sha256": "665a7e2f8a5b1ef3e1e706ce21e265196e63a8f306d18618296bff24416895bf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a806b27476bd57bd7b32e296fdbf70504a0495492b0cbf4e2c237fae1eb5cd3",
+          "id": "native-login-result-body-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be\\manifest.json",
+          "sha256": "1cb68947158e3ad659ac7abb3949fd43f3f0668db310676e1ff1561f2ee1b5be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6b4f1de0bbc6c018fc1e950b221f192213dddac4594ce9caf6a372e73ad86768",
+          "id": "native-login-post-state-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0\\manifest.json",
+          "sha256": "3be9c82dc014d7042ef7c33de9d3b2e4ef30ff49606e7369744bdb939ccee3b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "847449cc0301febcbe1e84a935f21db2147a176e178671a51b5dcd5853ce416e",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634\\manifest.json",
+          "sha256": "f060744099b213f2651a5036d962c54bf907610a61a0149f8cbbadc0e8335634",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e09f9e7e9a3a44424b9c31d58537335bd7460efd30ae2b29115b826cce8f5d24",
+          "id": "native-waiting-end-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4\\manifest.json",
+          "sha256": "67c7920eecc55a2d65b0ac555351e4c756f4d6e9db83068a9d935f57f6468ad4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "83bf0c9c3dfa0e67d7d71647a7ddd0c3a63b378f5ba9dcfd34b508dab311c090",
+          "id": "native-character-list-envelope-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4\\manifest.json",
+          "sha256": "3368c0b07d3f6b85fbda3c39ac22870157402376843f4bc552b4e47b86155bd4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "98894d9ca1f7357e566c3d24f223bdd78e8fd3238a9bafba5ca1abf916c5a292",
+          "id": "native-character-record-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3\\manifest.json",
+          "sha256": "287e591d79eecedc5442c8e2f2de43f86d9d9b3e4bfada5bc55e8fda2f3b21b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9f3c0cacaf7fabc52686d9ec42915e39b754fc0a1a5108948d787c721ca3f0e6",
+          "id": "native-character-extensions-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d\\manifest.json",
+          "sha256": "64aeab1982dc9780705ba18c275d8898557bb9f397f8ed41f5c00c209138163d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e6e2a4ba53a5f8b0e3469b35e54980770276888b44059c58cccd787ad8a9d174",
+          "id": "native-character-list-records-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100\\manifest.json",
+          "sha256": "1f1ad087d0c02f4a0ec1c96e481b60460dcfe1175868c60dc2562de8e3b8c100",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a960009c15551694549870143aa8a3e1a9ae390998bdea33e83a07dab0068ca",
+          "id": "native-character-list-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882\\manifest.json",
+          "sha256": "af6a096e3b96bed42c8c26e016840a6922b5f353a3c424a25a8f874d2bc2c882",
+          "state": "passed"
+        },
+        {
+          "cache_key": "55015e148cacee10cf7ccbe422cf16997d1ddbe74ab8b9e529fc9bef61fcd840",
+          "id": "candidate-game-profile-boundary",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be\\manifest.json",
+          "sha256": "76b9f9c90fbf6eadef31a516e8052cd8c2856519597d69d80a6abddf134394be",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fa6bff143f39bdc365cec26e90c79988c8b1d151255aaf8328d4f14598b0d8c0",
+          "id": "message-components-error-texts-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b\\manifest.json",
+          "sha256": "64ce3344b3017e3b560302b518b8f5877f01c79fd3fce1a9460586fa63016e0b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Полный static instruction decode и local pointer pairs подтвердили 37/CreateRestrictedServer и 16/InvalidState. Текущие named EN/RU CSV связывают 37 с недоступным созданием на сервере. Runtime получил подпись 37 без изменения retry/list policy; 77 из 86 выбранных UI exports совпали, девять текстовых изменились.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-MESSAGE-COMPONENTS-11316.md",
+          "sha256": "469bad4eaf75af89c7c7c2dcdcb4a91202fa8017893c324ef83f643f1cbecb10"
+        }
+      ],
+      "id": "9da5233ed3591c30b29c61ead9778a039dca84ae0fdf1a4adee3f651f96de431",
+      "limits": [
+        "Static source/dictionary verification; runtime map insertion, lookup, loaders and popup callbacks not executed.",
+        "Four explicit patch components only; active mount, concrete selector1 WBP and nine changed text properties unresolved.",
+        "No authorization, new live attempt, list, creation, world or baseline/profile activation."
+      ],
+      "method": "static",
+      "next_check": "Inspect selector configuration and changed texts; separately check fresh entry on a creation-enabled server after pause. Never create before an accepted fresh empty list.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current selector 1 WBP binding, changed text semantics and reason for live JP256 result16; accepted live list and current creation checks remain open."
     }
   ],
   "schema": 1,

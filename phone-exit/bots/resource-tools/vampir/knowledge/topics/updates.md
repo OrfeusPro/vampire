@@ -68,6 +68,7 @@ Windows / Android parity и перенос старых mappings требуют 
 - [LoginResult 1.13.16: регистрация ID 4 и текущий handler](../evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md)
 - [Native строковое чтение LoginResult 1.13.16](../evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md)
 - [SDK getters внутри Login 1.13.16](../evidence/updates/HEADLESS-LOGIN-SDK-11316.md)
+- [Компоненты сообщений и расшифровка отказов 37 / 16](../evidence/updates/HEADLESS-MESSAGE-COMPONENTS-11316.md)
 - [Описания модулей base и patch](../evidence/updates/HEADLESS-MODULE-DESCRIPTORS.md)
 - [Version / Login 1.13.16: порядок полей и отказы writers](../evidence/updates/HEADLESS-PACKET-WRITERS-11316.md)
 - [PAK: ключ callback, каталог и упакованный Game config](../evidence/updates/HEADLESS-PAK-CONFIG-RECOVERY.md)

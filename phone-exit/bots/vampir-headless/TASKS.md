@@ -9,6 +9,15 @@ heartbeat, затем проверять движение и обработку 
 сервера. Новый персонаж не нужен.
 [Живой результат и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-HK-EXISTING-CHARACTER-11316.md).
 
+Для отдельного тестового `bot-tw-test@vampir.top` код 37 на JP 251 расшифрован по текущим native dictionary pairs и RU
+таблице: CreateRestrictedServer — создание персонажа недоступно на этом сервере.
+16 подтверждён как InvalidState; причина отказа JP 256 остаётся неизвестной.
+Четыре patch message компонента сверены: кнопки/root classes совпадают, девять
+text exports изменились. [Доказательства и следующий шаг](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-MESSAGE-COMPONENTS-11316.md).
+Свежий повтор JP 256 после паузы снова дал 16. Initial Ping не отправлен из-за
+неперенесённого clock SHA; следующий игровой шаг — current clock/bootstrap
+проверки, затем отдельный live эксперимент. Причина 16 пока не установлена.
+
 Живая проверка текущего профиля 1.13.16 через HK прошла SDK, каталог и lobby.
 Game Version принят на двух JP-серверах; Game Login вернул 37 (251) и 16 (256).
 Свежего списка нет, персонаж не создан. Далее по уточнению пользователя сначала

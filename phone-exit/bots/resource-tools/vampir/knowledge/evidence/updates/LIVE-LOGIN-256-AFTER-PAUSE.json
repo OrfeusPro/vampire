@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "report": "F:\\PhoneExit Resources\\Vampir\\live-checks\\hk-20261024\\candidate-game-256-after-pause-result.json",
+  "sha256": "9acaa6eed6aaa0a16c630785710bcfae3712d8052aad866dae62f294aab069b6",
+  "cdn_manifest_sha256": "ec35eefe6514ab63de25e7bb1290380dbeb0c7c93442388f588cccd60b2788ca",
+  "server_id": 256,
+  "sdk_auth_flow": "launcher",
+  "route_country": "HK",
+  "lobby_result": 0,
+  "game_version_result": 0,
+  "game_login_result": 16,
+  "initial_ping_queued": false,
+  "character_list_sent": false,
+  "character_count": null,
+  "character_create_sent": false,
+  "transport_closed": true
+}

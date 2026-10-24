@@ -52,3 +52,25 @@ HK Infinix X6525. Повторная регистрация Netmarble/SDK не �
 Game Version приняты. На JP 251 получен 37, на JP 256 — 16. Список и создание
 не отправлялись. Это новые реальные ответы, не прежний локальный source guard.
 [Привязки, границы и поиск компонентов окон](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LIVE-CANDIDATE-11316.md).
+
+## Расшифровка ответа 37
+
+Текущие dictionary pairs и переводы подтвердили 37 / CreateRestrictedServer:
+«Создание персонажа недоступно на этом сервере». Это относится к попытке JP 251.
+16 / InvalidState на JP 256 не устанавливает конкретную причину отказа.
+[Компоненты, таблицы и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-MESSAGE-COMPONENTS-11316.md).
+
+## Свежий вход на JP 256 после паузы
+
+После расшифровки 37 выполнена одна новая попытка на JP 256 через свежий
+свободный HK Infinix. Маршрут повторно подтвердил loc HK, получен новый CDN,
+авторизация и lobby Login приняты. Game Version 0, Game Login снова 16.
+Пауза не устранила отказ; одинаковые входы дальше не повторялись. Список
+и создание не отправлялись. Транспорт завершён штатно, exit code 0; отсутствие
+listener 1087 и владельца проверено.
+
+[Квитанция без credentials](../resource-tools/vampir/knowledge/evidence/updates/LIVE-LOGIN-256-AFTER-PAUSE.json).
+В этой попытке initial_ping_queued=false. Текущий кандидат не создаёт часы Ping,
+поскольку session_clock ещё ограничен прежним SHA. Это проверенная разница
+в последовательности, но не доказанная причина InvalidState. Далее перенести
+current clock/bootstrap checks, затем отдельно проверять влияние начального Ping.
