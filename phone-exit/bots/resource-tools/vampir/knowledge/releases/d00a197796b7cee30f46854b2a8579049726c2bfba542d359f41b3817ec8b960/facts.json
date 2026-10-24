@@ -5354,6 +5354,43 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Refresh body, reflection metadata / inheritance order, entry factory binding and active effect state."
+    },
+    {
+      "addresses": [
+        "0x144626640",
+        "0x144a8f220"
+      ],
+      "checks": [
+        {
+          "cache_key": "b266e03623678e243cb581de9ff033c42fd163dba6c72c075e17058a00b58861",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a590bfec8cc97d7fa2548cf6d50232c832f0759bf2ebf3cff3aa21d6beda850d\\manifest.json",
+          "sha256": "a590bfec8cc97d7fa2548cf6d50232c832f0759bf2ebf3cff3aa21d6beda850d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "24 bounded native cases execute Refresh wrapper plus exact leaf setter: nullable owner+408 controls calls; source block owner+430 copied as 16 bytes to receiver+14b8, flag+14f9 set; shared helper called with DL0 then DL1. Helper is a no-op fixture, not native execution.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\NKTILEVIEW-REFRESH-11316.md",
+          "sha256": "e94f7205a8f4ec82ef47abeb8e6113c774376637c1f7c4527e34d2b51702e42e"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b9b6aa537efc\\details.json",
+          "sha256": "a1690276c109b8cf9c0106e5ee787ce7d5ead84c3803d6e2e8d2f8dcf9a292bd"
+        }
+      ],
+      "id": "7f520821a3d6f27c8077ad34ce21f855b7d17ff4b151ebfcfa7dabcf711cc53d",
+      "limits": [
+        "Only whole wrapper and exact 24-byte leaf execute; helper 144626640 is an argument-recording return fixture.",
+        "24 artificial cases validate memory and call order, not engine state, reentrancy, scheduling, rendering or active effects.",
+        "No proven type or units for the block and no automatic mapping to old cooked fields."
+      ],
+      "method": "bounded_native",
+      "next_check": "Establish source of owner+430 and semantics of helper fields; do not infer runtime optimization from two fixture calls.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Producer/type of source block, reflected property mapping, helper behavior/coalescing, reentrancy, caller and effect data binding."
     }
   ],
   "schema": 1,
