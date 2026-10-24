@@ -16,6 +16,8 @@ spec = importlib.util.spec_from_file_location('game_ui_verify', HERE / 'verify-g
 game_verify = importlib.util.module_from_spec(spec); spec.loader.exec_module(game_verify)
 spec = importlib.util.spec_from_file_location('skill_property_audit', HERE / 'audit-skill-effect-properties.py')
 skill_audit = importlib.util.module_from_spec(spec); spec.loader.exec_module(skill_audit)
+spec = importlib.util.spec_from_file_location('status_effect_audit', HERE / 'audit-status-effect-ui.py')
+status_audit = importlib.util.module_from_spec(spec); spec.loader.exec_module(status_audit)
 
 
 def schema():
@@ -30,6 +32,20 @@ def schema():
 
 
 class PropertyCoverageTests(unittest.TestCase):
+    def test_status_effect_export_headers_do_not_invent_property_names_or_bindings(self):
+        raw = bytes.fromhex('800301')  # one serialized-zero field, schema index 0
+        control = dict(export=1, name='ImageIcon', type='Image', offset=4, size=len(raw),
+            sha256=hashlib.sha256(raw).hexdigest(), parent_chain=[], chain_termination='no_further_decoded_slot')
+        result = status_audit.control_record(control, b'head', raw)
+        self.assertEqual(result['unversioned_header']['fields'], [dict(schema_index=0, serialized_zero=True)])
+        self.assertEqual(result['properties'], {})
+        self.assertIn('unknown', result['unversioned_header']['status'])
+        with self.assertRaisesRegex(ValueError, 'export'):
+            status_audit.control_record(control, b'head', bytes.fromhex('800300'))
+        control['offset'] = 3
+        with self.assertRaisesRegex(ValueError, 'границы'):
+            status_audit.control_record(control, b'head', raw)
+
     def test_skill_property_profiles_preserve_blank_zero_and_unknown_duration_precedence(self):
         nodes = {'Effect:1': dict(kind='Effect', fields=dict(Id='1', Duration='10', MinDuration='20', MaxDuration='30', Period='', provenance=dict(entry=92, csv_record=2))),
                  'Effect:2': dict(kind='Effect', fields=dict(Id='2', Duration='', MinDuration='0', MaxDuration='0', Period='0', provenance=dict(entry=92, csv_record=3)))}
