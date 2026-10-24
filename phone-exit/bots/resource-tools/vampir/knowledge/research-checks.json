@@ -4297,6 +4297,45 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-8ce3965fd27d/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-44e5a260bb97/details.json"
       ]
+    },
+    {
+      "id": "native-login-prepare-metadata-context",
+      "questions": [
+        "release-login-metadata"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_login_prepare_metadata_context.py",
+      "timeout_seconds": 60,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11316.json",
+        "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11316.json",
+        "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11316.json"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2c9766b1ab08/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-44e5a260bb97/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-8ce3965fd27d/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-9dc981740f54/details.json"
+      ]
     }
   ]
 }

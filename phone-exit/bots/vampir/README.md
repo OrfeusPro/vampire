@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Metadata pipeline включён в целый Login на одной памяти: 448 сценариев проверили
+проекцию в `+d8`, единый SDK manager и общий cleanup. Готовые exports использованы
+повторно. Реальные SDK/string/map/variant boundaries и writer/results ещё открыты.
+[Общая проверка и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md).
+
 Metadata Login 1.13.16 проверена целой цепочкой из шести функций: 288 сценариев,
 33 связи полей UserInfo с ключами, условия включения и cleanup. Реальные SDK
 значения и строковые primitives пока fixtures, целый Login ещё требует интеграции.

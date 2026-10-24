@@ -2535,6 +2535,60 @@
       "question": "release-login-metadata",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные SDK UserInfo sources и строковые/map/variant primitives, escaping, интеграция metadata в whole Login, writer/archive и текущий result reader."
+    },
+    {
+      "addresses": [
+        "0x144557a00",
+        "0x145600d00",
+        "0x145601590",
+        "0x145601840",
+        "0x14560a680",
+        "0x14560b0d0",
+        "0x1456d7570",
+        "0x1467ce030"
+      ],
+      "checks": [
+        {
+          "cache_key": "d14b1f9b7c8af1b2b931f4aac0d04f86301bd69cf8be3089892c9af3627932bc",
+          "id": "native-login-metadata-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f20b3ff5c0fc1bd6d50b3036e8e542f456a2683fee3976183b5ddb959d806887\\manifest.json",
+          "sha256": "f20b3ff5c0fc1bd6d50b3036e8e542f456a2683fee3976183b5ddb959d806887",
+          "state": "passed"
+        },
+        {
+          "cache_key": "28b1122e95626c3f70ebe2e5ae26daf8cca122e9b3271483823baca36cf802f0",
+          "id": "native-login-prepare-metadata-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0a1bc7c85975f1616d1dad6feebd95e46e2dac1c1fd07557a40ec2a622b91731\\manifest.json",
+          "sha256": "0a1bc7c85975f1616d1dad6feebd95e46e2dac1c1fd07557a40ec2a622b91731",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Metadata pipeline включён в целый Login на общей памяти с тем же SDK manager и allocator. 448 сценариев проверили фактический collector call/gate, 27 selector calls, проекцию реального результата в Login+d8, optional DeviceKey, поля/refcounts/guards, общий cleanup и ABI. Предыдущие самостоятельные metadata 288, SDK 2016 и caller 672 сценария сохраняются; Ghidra и сеть не запускались.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-prepare-metadata-11316.json",
+          "sha256": "c6a78940dc4ac184f57a2425c59a80acdd24c31eb09cc80dc3169045c1800413"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-PREPARE-METADATA-11316.md",
+          "sha256": "0b1ea70e40d932d1c7e70c96717f29bca88f26abb6f6ba90e67f0031a2277631"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-PREPARE-METADATA-11316.json",
+          "sha256": "6a747cb15a0f942d7a39d58efd05361d7d8c92076ed2c6852c80528fbb4f3cb4"
+        }
+      ],
+      "id": "65813ccab5bb4ccfb50dbaa26633adc9226b17e6bbf93e30945752bfb1ec65d9",
+      "limits": [
+        "SDK backend/settings/UserInfo/getters writer, map/hash/lookup/variant/string primitives и allocator/destructor/send/post-event остаются fixtures; реальные значения и JSON escaping не доказаны.",
+        "Интеграционная матрица фиксирует selector 3/cache warm/poison 55; остальные варианты покрываются прежними отдельными проверками.",
+        "Native writer/archive/result reader ещё не интегрированы; нет авторизации, изменения default preset, реальных keys/аккаунтов, baseline или runtime activation."
+      ],
+      "method": "bounded_native",
+      "next_check": "Перенести оставшиеся реальные SDK/UserInfo/string/map/variant boundaries и соединить caller с native writer/archive/result reader; готовые exports повторно не получать и source guard не ослаблять.",
+      "question": "release-login-metadata",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные SDK UserInfo/string/map/variant boundaries, escaping, интеграция native writer/archive и текущий result reader."
     }
   ],
   "schema": 1,

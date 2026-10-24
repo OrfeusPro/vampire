@@ -31,8 +31,11 @@
   [Значения, ownership и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-SDK-11316.md).
 - Metadata pipeline из шести roots прошёл 288 сценариев на общей памяти:
   33 field mappings, gates, optional branches и refcounts. Реальные SDK значения,
-  строки / map / variants пока fixtures, интеграция в whole Login ещё открыта.
+  строки / map / variants пока fixtures; результат интеграции в whole Login — ниже.
   [Цепочка и следующий патч](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-METADATA-11316.md).
+- Metadata pipeline включён в whole Login на одной памяти: 448 сценариев
+  проверили фактическую проекцию в `+d8`, общий SDK manager и cleanup.
+  [Интеграция и следующие проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
   и прочие зависимости Login, интеграция writer/archive и result readers. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.

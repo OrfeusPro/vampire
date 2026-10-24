@@ -434,7 +434,8 @@
         "native-archive-wire-context",
         "native-login-prepare-context",
         "native-login-sdk-context",
-        "native-login-metadata-context"
+        "native-login-metadata-context",
+        "native-login-prepare-metadata-context"
       ],
       "recipes": [
         {
@@ -473,7 +474,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Цепочка metadata collector/selector/loader/UserInfo copy/move/writer проверена с явными SDK/map/string fixtures; нужны реальные backend values, formatting/escaping, whole Login integration, writer/archive и result reader.",
+      "next_check": "Metadata pipeline включён в whole Login на общей памяти; перенести реальные SDK/UserInfo/string/map/variant boundaries, интегрировать writer/archive и текущий result reader. Coverage partial, runtime не продвигать.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -512,7 +513,8 @@
         "native-archive-wire-current",
         "native-login-prepare-current",
         "native-login-sdk-current",
-        "native-login-metadata-current"
+        "native-login-metadata-current",
+        "native-login-prepare-metadata-current"
       ],
       "writer_check": {
         "object_size": 320,

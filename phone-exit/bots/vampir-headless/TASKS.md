@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+Metadata теперь исполняется внутри целого Login с общими manager / allocator:
+448 сценариев проверили поле `+d8`, SDK gates и cleanup. Далее — реальные SDK /
+string/map/variant boundaries, интеграция writer/archive и текущий result reader.
+[Проверка на общей памяти и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md).
+
 Metadata collector/selector/loader/UserInfo copy/move/writer исполнены на общей
 памяти: 288 случаев, 33 field mappings, optional branches и refcount cleanup.
 Далее — реальные источники UserInfo / primitives и интеграция в whole Login.

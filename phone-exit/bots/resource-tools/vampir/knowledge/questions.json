@@ -494,9 +494,9 @@
       "id": "release-login-prepare",
       "status": "bounded_answer",
       "question": "Как целые Login prepare и constructor текущей сборки проецируют owner / SDK inputs и выполняют действия после send?",
-      "known": "Целые Login prepare 1467ce030 / constructor 1456d7570 исполнены в 672 сценариях: 14 SDK/platform branches, selector 0/1/2/3/4/255, empty/Unicode, send 0/1, poison. Проверены 15 строковых полей, числа / raw flags, SDK handle gates, send arguments, post-send notify / variant event, cleanup, input guards и ABI. Использован готовый export; offline check включён в game-login/update. SDK и вспомогательные границы остаются fixtures. Native mode/main/value getters и шесть leaf getters теперь включены в whole Login: 2 016 случаев warm/resolved/absent caches, источник flag +130 сравнивается с 3, +131 читается отдельно; member +58 сохраняется при отсутствии cache. Проверены post-send lifecycle и ABI. Для metadata collector статически подтверждены 27 key/consumer links, I_World дважды; значения пока неизвестны. Отдельная цепочка metadata collector/selector/loader/UserInfo copy/move/writer проверена в 288 сценариях; см. release-login-metadata.",
+      "known": "Целые Login prepare 1467ce030 / constructor 1456d7570 исполнены в 672 сценариях: 14 SDK/platform branches, selector 0/1/2/3/4/255, empty/Unicode, send 0/1, poison. Проверены 15 строковых полей, числа / raw flags, SDK handle gates, send arguments, post-send notify / variant event, cleanup, input guards и ABI. Использован готовый export; offline check включён в game-login/update. SDK и вспомогательные границы остаются fixtures. Native mode/main/value getters и шесть leaf getters теперь включены в whole Login: 2 016 случаев warm/resolved/absent caches, источник flag +130 сравнивается с 3, +131 читается отдельно; member +58 сохраняется при отсутствии cache. Проверены post-send lifecycle и ABI. Для metadata collector статически подтверждены 27 key/consumer links, I_World дважды; значения пока неизвестны. Отдельная цепочка metadata collector/selector/loader/UserInfo copy/move/writer проверена в 288 сценариях; см. release-login-metadata. Metadata pipeline теперь интегрирован в whole Login: 448 сценариев на общей памяти / manager / allocator, реальный output в +d8 и общий cleanup.",
       "unknown": "Реальные inner SDK/string/platform зависимости и metadata collector/consumer, значения и encoding metadata/clock, интеграция writer/archive и result reader текущего SHA.",
-      "next_action": "Интегрировать проверенную metadata цепочку в whole Login, проверить реальные SDK/string/platform dependencies, затем writer/archive/result reader. Готовые exports повторно не получать.",
+      "next_action": "Перенести реальные SDK/UserInfo/string/map/variant boundaries, затем интегрировать native writer/archive и current result reader. Source guard не ослаблять.",
       "decision_rule": "Caller replay с fixtures не подтверждает SDK getters, авторизацию или готовность игрового профиля.",
       "do_not_repeat": "Готовые run-7c5a462e9d0c, run-9dc981740f54, run-2c9766b1ab08 не выгружать повторно. Шесть leaf getters без unwind закреплены явными source bytes, не отправлять их через unwind-only collect.",
       "addresses": [],
@@ -530,14 +530,15 @@
       "id": "release-login-metadata",
       "status": "bounded_answer",
       "question": "Как текущая цепочка SDK UserInfo / map / selector собирает metadata Login и освобождает временные объекты?",
-      "known": "Целые collector/selector/loader/UserInfo copy/move/writer исполнены на общей памяти в 288 сценариях: 33 field mappings, 37 copied strings, gates, optional DeviceKey/marketing, output, native refcounts, cleanup и ABI. SDK / map / variant / string boundaries остаются fixtures; это не доказательство реального заполнения UserInfo.",
-      "unknown": "Реальные SDK UserInfo sources, map/variant/string primitives, formatting/escaping и интеграция metadata в whole Login.",
-      "next_action": "Использовать готовые шесть roots; проверить реальные SDK source/settings и primitives, затем соединить metadata с whole Login и writer/archive/result reader.",
+      "known": "Целые collector/selector/loader/UserInfo copy/move/writer исполнены на общей памяти в 288 сценариях: 33 field mappings, 37 copied strings, gates, optional DeviceKey/marketing, output, native refcounts, cleanup и ABI. SDK / map / variant / string boundaries остаются fixtures; это не доказательство реального заполнения UserInfo. Цепочка включена в whole Login на одном harness/allocator с тем же manager: 448 сценариев проверили реальную проекцию collector output в +d8 и общий cleanup; готовая строковая fixture удалена.",
+      "unknown": "Реальные SDK/UserInfo/string/map/variant boundaries, JSON escaping, native writer/archive и текущий result reader.",
+      "next_action": "Проверить оставшиеся реальные SDK/UserInfo/string/map/variant boundaries, соединить whole caller с native writer/archive и current result reader; готовые exports не повторять.",
       "decision_rule": "Synthetic UserInfo и строковые primitives не подтверждают реальные SDK values или JSON escaping.",
       "do_not_repeat": "Использовать готовые run-2c9766b1ab08, run-8ce3965fd27d, run-44e5a260bb97.",
       "addresses": [],
       "evidence": [
-        "evidence/updates/HEADLESS-LOGIN-METADATA-11316.md"
+        "evidence/updates/HEADLESS-LOGIN-METADATA-11316.md",
+        "evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md"
       ]
     }
   ]

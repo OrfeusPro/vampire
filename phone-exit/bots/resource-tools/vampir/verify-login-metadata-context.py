@@ -35,9 +35,8 @@ def load(name):
     return module
 
 
-def verify(context, root):
+def session(context, h, bridge=None):
     functions = {key: int(at, 16) for key, at in context['functions'].items()}
-    h = load('update-native-harness').make_harness(context, context['exports'], set(functions.values()), root=root)
     native = load('build-native-entry-code')
     rows = load('update-bindings').rows
     calls = {hex(r['address']): {'target': hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
@@ -57,6 +56,9 @@ def verify(context, root):
     source, output, service, control, control_table, backend, settings, optional_store, entries = [
         h.scratch + n for n in (0x1000, 0x2000, 0x2800, 0x3000, 0x3100, 0x3200, 0x3300, 0x3400, 0x5000)]
     state = {}
+    if bridge:
+        source, output, service, control, control_table, backend, settings, optional_store = [
+            h.scratch + n for n in (0xa000, 0xa400, 0xa500, 0xb000, 0xb100, 0xb200, 0xb300, 0xb400)]
 
     def require(ok, message):
         if not ok:
@@ -114,6 +116,9 @@ def verify(context, root):
                 return raw.decode('utf-16le' if wide else 'ascii')
             raw.extend(chunk)
         raise ValueError('Metadata literal bound')
+
+    if bridge:
+        allocate, release = bridge['allocate'], bridge['release']
 
     def handler(name):
         def execute(machine):
@@ -243,12 +248,27 @@ def verify(context, root):
         return execute
 
     for key, at in fixture.items():
-        h.add_fixture(at, handler(key))
+        callback = handler(key)
+        previous = h.fixtures.get(at)
+        if bridge and previous:
+            def dispatch(machine, callback=callback, previous=previous):
+                (callback if state.get('active') else previous)(machine)
+            h.add_fixture(at, dispatch)
+        else:
+            h.add_fixture(at, callback)
     h.uc.mem_write(control_table, struct.pack('<QQ', fixture['strong_destroy'], fixture['weak_destroy']))
     import unicorn
     targets = {at: key for key, at in functions.items()}
 
     def entered(machine, at, size, unused):
+        if bridge and state.get('active') and at == state['return_address']:
+            state['captured_output'] = text(state['output'])
+            state['active'] = False
+        if at == functions['collector'] and bridge:
+            state['active'] = True
+            state['output'] = reg('RDX')
+            state['return_address'] = int.from_bytes(h.uc.mem_read(reg('RSP'), 8), 'little')
+            bridge['entered']()
         if at in targets:
             key = targets[at]
             state['native_calls'][key] = state['native_calls'].get(key, 0) + 1
@@ -256,14 +276,17 @@ def verify(context, root):
                 state['info'] = reg('RCX')
     h.uc.hook_add(unicorn.UC_HOOK_CODE, entered)
     order = context['collector_order']
-    cases = []
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
-    for backend_case, pattern, optional, marketing, poison in itertools.product(BACKENDS, PATTERNS, (False, True), (False, True), (0x55, 0xaa)):
+    def seed(backend_case, pattern, optional, marketing, poison):
         state.clear()
         state.update(heap=h.scratch + 0x10000, allocations={}, freed=set(), events=[], variants={}, variant_sources={},
                      mapping={}, keys=[], field_map={}, lookups=[], copy_offsets=[], native_calls={},
                      backend=backend_case, marketing=marketing, info=0)
-        h.uc.mem_write(h.scratch + 0x30000, bytes([poison]) * 0x8000)
+        if bridge:
+            state['allocations'] = bridge['outer']['allocations']
+            state['freed'] = bridge['outer']['freed']
+        else:
+            h.uc.mem_write(h.scratch + 0x30000, bytes([poison]) * 0x8000)
         h.uc.mem_write(source - 16, b'\xa5' * 16 + bytes(0x250) + b'\xa6' * 16)
         values = {off: '' if pattern == 'empty' else 'f' + format(off, '03x') for off in range(0, 0x250, 16)}
         if pattern == 'omit-gates':
@@ -284,17 +307,18 @@ def verify(context, root):
         h.uc.mem_write(control - 16, b'\xa5' * 16 + struct.pack('<QII', control_table, strong, weak) + b'\xa6' * 16)
         h.uc.mem_write(optional_store, bytes(0x120))
         # Optional DeviceKey backend is separate from the SDK UserInfo backend.
-        h.uc.mem_write(globals_['optional_manager'], struct.pack('<Q', service if optional else 0))
-        h.uc.mem_write(service + 0x38, struct.pack('<Q', backend if optional else 0))
+        if not bridge:
+            h.uc.mem_write(globals_['optional_manager'], struct.pack('<Q', service if optional else 0))
+            h.uc.mem_write(service + 0x38, struct.pack('<Q', backend if optional else 0))
         h.uc.mem_write(globals_['log_level'], b'\0')
         h.uc.mem_write(globals_['log_enabled'], b'\0')
         input_pointers = set(state['allocations'])
         guards = {at: bytes(h.uc.mem_read(at, size)) for at, size in ((source - 16, 0x270), (service - 16, 0xa0))}
         input_data = {at: bytes(h.uc.mem_read(at - 16, size + 32)) for at, size in state['allocations'].items()}
-        for register, value in abi.items():
-            h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + register), value)
-        h.uc.reg_write(h.x.UC_X86_REG_RDX, output)
-        h.call(functions['collector'], service, budget=100000)
+        state['seed'] = dict(backend_case=backend_case, pattern=pattern, optional=optional, marketing=marketing, poison=poison, values=values, strong=strong, weak=weak, input_pointers=input_pointers, guards=guards, input_data=input_data)
+
+    def check():
+        backend_case, pattern, optional, marketing, poison, values, strong, weak, input_pointers, guards, input_data = [state['seed'][key] for key in ('backend_case', 'pattern', 'optional', 'marketing', 'poison', 'values', 'strong', 'weak', 'input_pointers', 'guards', 'input_data')]
         active = backend_case not in ('none', 'invalid')
         expected_map = {key: values[off] for key, off in FIELD_MAP.items()}
         if not values[0xa0]:
@@ -323,7 +347,7 @@ def verify(context, root):
             if marketing:
                 expected += ',"I_LogDes":{"MktClickId":"click-fixture","MktChannel":202}'
             expected += '}'
-        actual = text(output)
+        actual = state.get('captured_output', '') if bridge else text(output)
         require(actual == expected, 'Metadata collector projection differs: ' + backend_case + '/' + pattern + ' ' + repr(actual))
         require(state['lookups'] == (order if active else []), 'Metadata selector order differs')
         require(state['copy_offsets'] == (list(range(0, 0x250, 16)) if active else []), 'Metadata UserInfo copy fields differ')
@@ -340,16 +364,36 @@ def verify(context, root):
         require(state['events'].count('strong_destroy') == int(touched_control and strong == 1)
                 and state['events'].count('weak_destroy') == int(touched_control and strong == weak == 1),
                 'Metadata shared destructors differ')
-        result_pointer = int.from_bytes(h.uc.mem_read(output, 8), 'little')
-        if result_pointer:
-            release(result_pointer)
-        require(set(state['allocations']) - input_pointers == state['freed'], 'Metadata temporary leak or input free')
+        if not bridge:
+            result_pointer = int.from_bytes(h.uc.mem_read(output, 8), 'little')
+            if result_pointer:
+                release(result_pointer)
+            require(set(state['allocations']) - input_pointers == state['freed'], 'Metadata temporary leak or input free')
         require(all(bytes(h.uc.mem_read(at, len(data))) == data for at, data in guards.items())
                 and all(bytes(h.uc.mem_read(at - 16, len(data))) == data for at, data in input_data.items()), 'Metadata input changed')
         require(bytes(h.uc.mem_read(output - 16, 16)) == b'\xa5' * 16
                 and bytes(h.uc.mem_read(output + 16, 16)) == b'\xa6' * 16, 'Metadata output guard changed')
-        require(all(reg(key) == value for key, value in abi.items()) and reg('RSP') == h.scratch + 0x38008,
-                'Metadata ABI differs')
+        if not bridge:
+            require(all(reg(key) == value for key, value in abi.items()) and reg('RSP') == h.scratch + 0x38008,
+                    'Metadata ABI differs')
+        return actual
+
+    return seed, check, state
+
+
+def verify(context, root):
+    functions = {key: int(at, 16) for key, at in context['functions'].items()}
+    h = load('update-native-harness').make_harness(context, context['exports'], set(functions.values()), root=root)
+    seed, check, state = session(context, h)
+    cases = []
+    abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    for backend_case, pattern, optional, marketing, poison in itertools.product(BACKENDS, PATTERNS, (False, True), (False, True), (0x55, 0xaa)):
+        seed(backend_case, pattern, optional, marketing, poison)
+        for register, value in abi.items():
+            h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + register), value)
+        h.uc.reg_write(h.x.UC_X86_REG_RDX, h.scratch + 0x2000)
+        h.call(functions['collector'], h.scratch + 0x2800, budget=100000)
+        actual = check()
         cases.append(dict(backend=backend_case, pattern=pattern, optional_device=optional, marketing=marketing,
                           poison=poison, output=actual, mapping=state['mapping'], field_map=state['field_map'],
                           native_calls=state['native_calls'], guards=True))

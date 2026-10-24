@@ -95,6 +95,11 @@ CPU/RAM/GPU, язык, часовой пояс и сеть с inputs SDK, но �
 значения или полноту эмуляции. Список map шире итоговой строки Login.
 [Связи полей и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-METADATA-11316.md).
 
+Metadata pipeline включён в общий native replay Login: результат реально
+копируется в поле `+d8` того же пакета. Проверяются один SDK manager и общий
+allocator; реальные значения UserInfo / кодирование строк пока fixtures.
+[Интеграция без изменения рабочего пресета](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md).
+
 ## Проверки
 
 Fixtures проверяют сохранность после перезапуска, разделение двух ботов при общем

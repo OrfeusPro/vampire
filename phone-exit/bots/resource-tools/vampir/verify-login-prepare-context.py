@@ -38,6 +38,7 @@ def load(name):
 def verify(context, root):
     prepare, constructor, table = [int(context[k], 16) for k in ('prepare', 'constructor', 'packet_table')]
     sdk = context.get('native_sdk')
+    metadata = context.get('native_metadata')
     functions = {prepare, constructor}
     exports = dict(context['exports'])
     leaves = {}
@@ -45,6 +46,11 @@ def verify(context, root):
         functions.update(int(v, 16) for v in sdk['functions'].values())
         exports.update(sdk['exports'])
         leaves = {int(at, 16): spec['bytes'] for at, spec in sdk['leaves'].items()}
+    if metadata:
+        if not sdk or metadata['source_sha256'] != context['source_sha256'] or metadata['source'] != context['source']:
+            raise ValueError('Login metadata integration source differs')
+        functions.update(int(v, 16) for v in metadata['functions'].values())
+        exports.update(metadata['exports'])
     h = load('update-native-harness').make_harness(context, exports, functions, leaves=leaves, root=root)
     rows = load('update-bindings').rows
     native = load('build-native-entry-code')
@@ -68,7 +74,7 @@ def verify(context, root):
         return h.uc.reg_read(getattr(h.x, 'UC_X86_REG_' + name))
 
     def allocate(size):
-        if not 1 <= size <= 2048 or state['heap'] + size + 64 > h.scratch + 0x30000:
+        if not 1 <= size <= (8192 if metadata else 2048) or state['heap'] + size + 64 > h.scratch + 0x30000:
             raise ValueError('Login allocation bound')
         at = state['heap'] + 16
         state['heap'] += (size + 63) & ~15
@@ -233,6 +239,10 @@ def verify(context, root):
         return execute
 
     for name, address in fixture.items():
+        if metadata and name == 'sdk_aux_text':
+            if address != int(metadata['functions']['collector'], 16):
+                raise ValueError('Login metadata collector binding differs')
+            continue
         if sdk and name in sdk['native_names']:
             continue
         h.add_fixture(address, handler(name))
@@ -240,6 +250,13 @@ def verify(context, root):
         seed_sdk, check_sdk, metadata_fields = load('login-sdk-fixtures').install(
             load, h, sdk, fixture, state, owner, manager, language, flags, handles,
             allocate, release, write_text, read_text, literal, reg)
+    if metadata:
+        metadata_module = load('verify-login-metadata-context')
+        def metadata_entered():
+            require(reg('RCX') == handles[1], 'Login metadata collector handle differs')
+            state['events'].append('sdk_aux_text')
+        seed_metadata, check_metadata, metadata_state = metadata_module.session(metadata, h,
+            dict(allocate=allocate, release=release, outer=state, entered=metadata_entered))
     tag_pointer = int.from_bytes(h.uc.mem_read(globals_['tag_pointer'], 8), 'little')
     require(tag_pointer == int(context['tag_literal'], 16), 'Login tag source pointer differs')
     page = tag_pointer & ~4095
@@ -253,9 +270,13 @@ def verify(context, root):
     event_literal = literal(int(context['event_literal'], 16), True)
     cases = []
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
-    cache_cases = ('warm', 'resolve', 'absent') if sdk else ('fixture',)
-    for scenario, selector, empty, send_return, poison, cache_case in itertools.product(
-            SCENARIOS, (0, 1, 2, 3, 4, 255), (False, True), (0, 1), (0x55, 0xaa), cache_cases):
+    cache_cases = ('warm',) if metadata else ('warm', 'resolve', 'absent') if sdk else ('fixture',)
+    metadata_cases = (('none', 'full', False), ('invalid', 'full', True), ('ready', 'full', False),
+                      ('ready', 'empty', True), ('ready', 'omit-gates', True), ('shared', 'unicode-quote', True),
+                      ('weak-shared', 'omit-nid', False), ('unmanaged', 'omit-channel', True)) if metadata else (None,)
+    for scenario, selector, empty, send_return, poison, cache_case, metadata_case in itertools.product(
+            SCENARIOS, (3,) if metadata else (0, 1, 2, 3, 4, 255), (False, True), (0, 1),
+            (0x55,) if metadata else (0x55, 0xaa), cache_cases, metadata_cases):
         name, platform, enabled, present, mask, mode = scenario
         state.clear()
         state.update(heap=h.scratch + 0x10000, allocations={}, freed=set(), events=[], sent=False,
@@ -280,6 +301,9 @@ def verify(context, root):
         h.uc.mem_write(globals_['number'], struct.pack('<I', 0 if empty else 0x89abcdef))
         if sdk:
             seed_sdk(cache_case, empty)
+        if metadata:
+            backend_case, pattern, marketing = metadata_case
+            seed_metadata(backend_case, pattern, present and bool(mask & 1), marketing, poison)
         input_pointers = set(state['allocations'])
         inputs = {at: bytes(h.uc.mem_read(at, size)) for at, size in
                   ((owner - 16, 0x1a0), (manager, 0x80), (language, 0x20), (sdk_value, 16), (globals_['text'], 16))}
@@ -292,6 +316,10 @@ def verify(context, root):
         main = enabled and present and bool(mask & 1)
         aux = enabled and present and bool(mask & 2)
         extra = enabled and present and bool(mask & 4)
+        if metadata:
+            require(metadata_state['native_calls'].get('collector', 0) == int(aux),
+                    'Login metadata collector call count differs')
+            state['aux'] = check_metadata() if aux else ''
         expected = {hex(off): '' for off in STRINGS}
         expected.update({'0x10': '' if empty else 'owner-f0-🙂', '0x20': '' if empty else 'owner-e0-🙂',
             '0x30': state['main'] if main else '', '0x40': '' if empty else 'global-Ж', '0x78': state['nm'],
@@ -326,17 +354,21 @@ def verify(context, root):
                           sdk_event=main, lifecycle=['send', 'post_notify'] + (['sdk_event'] if main else []) + ['destructor']))
         if sdk:
             cases[-1].update(cache_case=cache_case, native_calls=dict(state['sdk_native_calls']))
+        if metadata:
+            cases[-1].update(metadata_case=list(metadata_case), metadata_calls=dict(metadata_state['native_calls']))
     return dict(schema=1, source_sha256=context['source_sha256'], method='bounded_native', cases=cases,
         evidence=h.evidence, runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
         native_sdk_used=bool(sdk), metadata_fields=metadata_fields if sdk else None,
+        native_metadata_used=bool(metadata),
+        metadata_tool_sha256=hashlib.sha256((HERE / 'verify-login-metadata-context.py').read_bytes()).hexdigest() if metadata else None,
         sdk_fixture_sha256=hashlib.sha256((HERE / 'login-sdk-fixtures.py').read_bytes()).hexdigest() if sdk else None,
         limits=['Whole Login prepare/constructor plus declared SDK functions/leaves execute native source instructions.' if sdk
                 else 'Only whole Login prepare and constructor execute native source instructions.',
-                'Aux metadata collector, platform text/selector, inner SDK cache/string boundaries, allocator/destructor, send and post-send notifications remain fixtures.' if sdk
+                'Metadata pipeline is native when native_metadata_used; platform text/selector, inner SDK cache/string boundaries, allocator/destructor, send and post-send notifications remain fixtures.' if sdk
                 else 'SDK getters/objects, platform text, selector, language/number, strings/allocator/destructor, send and post-send notifications are explicit fixtures.',
                 'Stable synthetic SDK manager/handles; no concurrent mutation, real SDK values, wire integration or result readers proved.',
                 'When native_sdk_used, declared leaves and mode/main/value getters are native; inner platform text/cache resolver/string boundaries remain fixtures.',
-                'Metadata key/consumer projection is static; auxiliary metadata collector is not executed and field values/encoding are not proven.',
+                'Metadata pipeline executes on the same harness only when native_metadata_used; SDK UserInfo/map/variant/string operations remain fixtures, escaping and real values are not proved.',
                 'Windows source platform branches are fixtures, not Android/IOS runtime compatibility. No authorization or profile activation.'])
 
 

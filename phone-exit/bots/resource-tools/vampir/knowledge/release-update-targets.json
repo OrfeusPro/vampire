@@ -1692,6 +1692,114 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-prepare-metadata-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-prepare-context.py",
+        "verify-login-metadata-context.py",
+        "login-sdk-fixtures.py"
+      ],
+      "rule": "Проверять общую проекцию collector output в Login+d8, единый manager, SDK gates, allocator ownership, сохранность inputs и cleanup после send. Collector / SDK helper calls и exports проверять по полному SHA, fixtures не считать реальными values или escaping.",
+      "automation": {
+        "discovery": "reviewed_call_sites_and_shared_projection",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1467ce030",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x1456d7570",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560aed0",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560b070",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145609e50",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560b0d0",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601840",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560a680",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x144557a00",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601590",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145600d00",
+                "scope": "Whole Login with native metadata pipeline on one harness/allocator; SDK UserInfo/map/variant/string/send boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-prepare-context.py",
+              "verify-login-metadata-context.py",
+              "login-sdk-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [
