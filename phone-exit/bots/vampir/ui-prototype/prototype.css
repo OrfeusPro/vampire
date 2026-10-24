@@ -10,3 +10,11 @@
 .item-card .dialog-body>small{display:block;margin:1em 0}
 
 .character-name-form{display:flex;flex-direction:column;min-height:100%}.character-name-form .actions{margin-top:auto}.name-window .form-error{margin-bottom:1em}.name-window p{font-size:.85em}.name-window .primary{min-width:0}.name-window .actions button{flex:1}.name-window .actions{gap:.5em}
+
+/* Original decoded PNGs; state pairing by name remains a candidate binding. */
+button.original-button:not(.primary){background-image:var(--normal-bg);background-size:100% 100%}
+button.original-button:not(.primary):active:not(:disabled){background-image:var(--normal-press)}
+button.primary:active:not(:disabled){background-image:var(--button-press)}
+.currency{display:inline-flex;align-items:center;gap:.35em;white-space:nowrap}
+.currency img{width:1.6em;height:1.6em;object-fit:contain}
+.resource-control>img{width:5em;height:4em;object-fit:contain}

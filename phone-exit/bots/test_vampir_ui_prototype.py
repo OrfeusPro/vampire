@@ -2,10 +2,13 @@
 import importlib.util
 import json
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 
 HERE = Path(__file__).parent / 'resource-tools/vampir'
+sys.path.insert(0, str(HERE))
+import shared_ui_library as shared
 
 
 def load(name, filename):
@@ -21,6 +24,39 @@ verifier = load('ui_prototype_verifier', 'verify-ui-prototype.py')
 
 
 class PrototypeTests(unittest.TestCase):
+    def test_shared_currency_join_uses_ids_and_rejects_changed_csv(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / 'table-study').mkdir()
+            (root / 'code-clues').mkdir()
+            (root / 'code-clues/native-enums.json').write_text(json.dumps(dict(sha256='historical', enums={'EAsset': [dict(name='EAsset::Gold', value=0), dict(name='EAsset::Diamond', value=1)]})), 'utf-8')
+            definitions = root / 'table-study/ProjectRED-Windows-6076.csv'
+            definitions.write_text('AssetType,Img,OwnerType\n1,Icon,2\n0,Icon,0\n', 'utf-8')
+            labels = root / 'table-study/ProjectRED-Windows-6096.csv'
+            labels.write_text('AssetType,Name\nGold,Gold label\nDiamond,Diamond label\n', 'utf-8')
+            metadata = [dict(file=p.name, sha256=shared.digest(p), entry=i, source={}) for i, p in enumerate([definitions, labels])]
+            (root / 'table-study/index.json').write_text(json.dumps(dict(tables=metadata)), 'utf-8')
+            (root / 'icon.png').write_bytes(b'fixture')
+            registry, _ = shared.build(root, [dict(asset_path='/A/Icon', file='icon.png', sha256=shared.digest(root / 'icon.png'))])
+            self.assertEqual([c['symbol'] for c in registry['currencies']], ['Diamond', 'Gold'])
+            self.assertEqual([c['name_en'] for c in registry['currencies']], ['Diamond label', 'Gold label'])
+            self.assertNotEqual(registry['currencies'][0]['id'], registry['currencies'][1]['id'])
+            self.assertEqual(registry['currencies'][0]['texture_candidates'], registry['currencies'][1]['texture_candidates'])
+            definitions.write_text('changed', 'utf-8')
+            with self.assertRaises(ValueError):
+                shared.build(root, [])
+
+    def test_shared_button_states_do_not_invent_hover(self):
+        rows = shared.button_families({'BTN_A', 'BTN_A_Press', 'BTN_A_On', 'BTN_B'})
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0]['pressed'], 'BTN_A_Press')
+        self.assertIsNone(rows[0]['hover'])
+        self.assertIsNone(rows[1]['pressed'])
+
+    def test_shared_texture_basename_collisions_remain_candidates(self):
+        rows = [dict(asset_path='/A/Icon'), dict(asset_path='/B/Icon')]
+        self.assertEqual(len(shared.texture_candidates(rows)['Icon']), 2)
+
     def test_pathless_roots_are_not_silently_dropped(self):
         index = dict(resource_variants={'/UI/Window': [dict(file='known.json')]}, windows=[
             dict(file='known.json', name='Known'), dict(file='no-path-root-2.json', name='Unknown')])

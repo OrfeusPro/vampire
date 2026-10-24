@@ -11,6 +11,7 @@ import re
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
+import shared_ui_library
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -60,6 +61,7 @@ def build(root, baseline=None):
     index = read(index_path)
     image_path = root / 'archive-image-latest.json'
     images = read(image_path)
+    shared, originals = shared_ui_library.build(root, images)
     # All texture membership is recorded as historical extraction, not active brushes.
     selected = {}
     exact = {'BG_Title', 'BG_PAC', 'BG_Portrait', 'BTN_ConfirmRed256',
@@ -74,6 +76,15 @@ def build(root, baseline=None):
         name = row['asset_path'].rsplit('/', 1)[-1]
         if name in exact or name.startswith(prefixes):
             selected[name] = row
+    # Short aliases are allowed only when unambiguous; full paths retain all originals.
+    candidates = shared_ui_library.texture_candidates(images)
+    for row in originals:
+        selected[row['asset_path']] = row
+        name = row['asset_path'].rsplit('/', 1)[-1]
+        if len(candidates[name]) == 1:
+            selected[name] = row
+        else:
+            selected.pop(name, None)
     # Item names/icons remain source data. Quantities, prices, balances are demo.
     items = read(root / 'maps/loot/items.json')
     demo_items = []
@@ -116,6 +127,8 @@ def build(root, baseline=None):
     inputs = {str(p.relative_to(root)).replace('\\', '/'): sha(p) for p in
               (index_path, image_path, root / 'maps/loot/items.json', root / 'maps/atlas/index.json')}
     source_inputs = {p.name: sha(p) for p in sorted(SOURCE.iterdir()) if p.is_file()}
+    inputs.update(shared['inputs'])
+    source_inputs['shared_ui_library.py'] = sha(HERE / 'shared_ui_library.py')
     schema_match = re.search(r'\bconst SCHEMA = (\d+),', (SOURCE / 'model.js').read_text('utf-8'))
     if not schema_match:
         raise ValueError('Demo state schema is not declared')
@@ -144,6 +157,7 @@ def build(root, baseline=None):
         temporary.mkdir(exist_ok=True)
         (temporary / 'assets').mkdir(exist_ok=True)
         texture_map = {}
+        shutil.copyfile(HERE / "shared_ui_library.py", temporary / "shared_ui_library.py")
         for name, row in selected.items():
             filename = Path(row['file']).name
             shutil.copyfile(root / row['file'], temporary / 'assets' / filename)
@@ -168,6 +182,9 @@ def build(root, baseline=None):
                     'Каталог структуры не является реализацией всех игровых сценариев.'])
         write(temporary / 'manifest.json', manifest)
         write(temporary / 'textures.json', texture_map)
+        for row in shared['textures']:
+            row['url'] = texture_map[row['asset_path']]['url']
+        write(temporary / 'shared-elements.json', shared)
         write(temporary / 'items.json', demo_items)
         layouts = read(SOURCE / 'window-layouts.json')
         for profile in layouts['profiles'].values():
@@ -234,7 +251,7 @@ def build(root, baseline=None):
         manifest['generated_files'] = {p.relative_to(temporary).as_posix(): sha(p)
             for p in temporary.rglob('*') if p.is_file() and p.name != 'manifest.json' and 'assets' not in p.parts}
         write(temporary / 'manifest.json', manifest)
-        if any(sha(SOURCE / name) != digest for name, digest in source_inputs.items()):
+        if any(sha((HERE if name == 'shared_ui_library.py' else SOURCE) / name) != digest for name, digest in source_inputs.items()):
             raise ValueError('Исходники изменились во время сборки. Повторите сборку.')
         temporary.rename(destination)
     current = dict(snapshot='snapshots/' + identity + '/', id=identity)

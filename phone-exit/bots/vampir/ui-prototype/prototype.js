@@ -13,7 +13,7 @@
   const el = (tag, text, className) => { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (className) n.className = className; return n; };
   const append = (parent, ...children) => { parent.append(...children.filter(Boolean)); return parent; };
   const fmt = n => Number(n).toLocaleString('ru-RU');
-  function button(text, fn, className = '', disabled = false) { const b = el('button', text, className); b.type = 'button'; b.disabled = disabled; b.onclick = fn; return b; }
+  function button(text, fn, className = '', disabled = false) { const b = el('button', text, className + ((!className || className === 'primary') ? ' original-button' : '')); b.type = 'button'; b.disabled = disabled; b.onclick = fn; return b; }
   let geometryFrame;
   function updateButtonGeometry() {
     cancelAnimationFrame(geometryFrame);
@@ -52,7 +52,13 @@
   function currentCharacter() { return state().characters.find(c => c.id === state().selected); }
   function className(id) { return M.CLASSES.find(x => x[0] === id)?.[1] || id; }
   function portrait(a = M.appearance(), full = false) { return image(full ? 'IMG_Class_' + a.classId + '_' + a.gender : 'IMG_Customize_Preset_' + a.gender + '_' + String(a.preset).padStart(2, '0'), full ? 'character-image' : 'portrait'); }
-  function currencies() { const n = el('div', undefined, 'currencies'); append(n, el('span', '● ' + fmt(state().gold)), el('span', '◆ ' + fmt(state().diamonds))); return n; }
+  function currency(key, value) {
+    const n = el('span', undefined, 'currency');
+    n.setAttribute('aria-label', (key === 'gold' ? 'Золото: ' : 'Алмазы: ') + fmt(value));
+    return append(n, image(key === 'gold' ? 'IMG_Asset_Gold' : 'IMG_Asset_Diamond'), el('span', fmt(value)));
+  }
+  function currencies() { return append(el('div', undefined, 'currencies'), currency('gold', state().gold), currency('diamonds', state().diamonds)); }
+
   function field(label, input) {
     const direct = /^(INPUT|SELECT|TEXTAREA)$/.test(input.tagName), n = el(direct ? 'label' : 'div', undefined, 'field'), text = el('span', label);
     if (!direct) { text.id = 'label-' + crypto.randomUUID(); input.setAttribute('role', 'group'); input.setAttribute('aria-labelledby', text.id); }
@@ -336,7 +342,7 @@
       else for (const [id, p] of Object.entries(M.PRODUCTS)) {
         if (category === 'Золото' && p.currency !== 'gold' || category === 'Снаряжение' && p.kind !== 'equipment' || category === 'Материалы' && p.kind !== 'material') continue;
         const card = button('', () => section === 'Склад' ? itemCard(id) : purchase(id), 'shop-card');
-        append(card, el('h3', p.name), el('small', 'Демонстрационный товар'), productImage(id), el('strong', (p.currency === 'gold' ? '● ' : '◆ ') + fmt(p.price))); grid.append(card);
+        append(card, el('h3', p.name), el('small', 'Демонстрационный товар'), productImage(id), currency(p.currency, p.price)); grid.append(card);
       }
       append(layout, nav, grid); body.append(layout);
     };
@@ -349,7 +355,7 @@
       append(art, productImage(id), el('small', 'Локальная демонстрация · игровые условия не подтверждены'));
       const quantity = input('number'); quantity.min = 1; quantity.max = 99; quantity.value = count; quantity.setAttribute('aria-label', 'Количество');
       const buy = nativeButton(button('', () => { count = Number(quantity.value); if (action('buy', { id, count })) { closeDialog(d); notify('Покупка добавлена в сумку.'); } }, 'primary'), 'purchase-buy');
-      const update = () => { buy.textContent = 'Купить за ' + fmt(p.price * Number(quantity.value)) + (p.currency === 'gold' ? ' золота' : ' алмазов'); }; quantity.oninput = () => { count = Number(quantity.value); update(); }; update();
+      const update = () => { buy.replaceChildren(el('span', 'Купить за '), currency(p.currency, p.price * Number(quantity.value))); }; quantity.oninput = () => { count = Number(quantity.value); update(); }; update();
       append(details, el('h3', 'Содержимое товара'), button(p.name, () => itemCard(id)), el('p', p.description), field('Количество', quantity), el('p', 'Доступные ресурсы: ' + fmt(state()[p.currency])), buy);
       append(layout, art, details); body.append(layout);
     }, 'purchase-window');
@@ -420,10 +426,37 @@
       }
     }, 'side-window');
   }
+  async function openSharedElements() {
+    try {
+      const response = await fetch('shared-elements.json');
+      if (!response.ok) throw Error(response.status);
+      const shared = await response.json();
+      modal('Общие элементы', body => {
+        append(body, el('p', 'Исторические оригиналы. Привязки к текущему клиенту и области владения валютами требуют проверки.'), el('p', shared.unknown.join(' ')));
+        const selectKind = select(['Валюты', 'Кнопки', 'Иконки и оформление'], 'Валюты', draw);
+        const search = input('search', 'Название или путь'); search.setAttribute('aria-label', 'Поиск общего элемента');
+        const list = el('div', undefined, 'registry-list');
+        function draw() {
+          list.replaceChildren(); const query = search.value.toLowerCase();
+          const rows = selectKind.value === 'Валюты' ? shared.currencies : selectKind.value === 'Кнопки' ? shared.buttons : shared.textures;
+          const matches = rows.filter(row => JSON.stringify(row).toLowerCase().includes(query));
+          list.append(el('p', 'Найдено: ' + matches.length + ' · показано до 60. Уточните поиск.'));
+          matches.slice(0, 60).forEach(row => {
+            const card = el('div', undefined, 'resource-control');
+            if (row.value !== undefined) append(card, image(row.texture_candidates[0]), el('strong', row.id + ' · ' + (row.symbol || 'неизвестно') + ' · ' + (row.name_en || '')), el('p', 'OwnerType: ' + row.data.OwnerType + ' · MaxValue: ' + row.data.MaxValue));
+            else if (row.normal) append(card, image(row.normal), row.pressed ? image(row.pressed) : null, el('p', row.normal + ' / ' + (row.pressed || 'нажатие неизвестно') + ' · hover / disabled неизвестны'));
+            else append(card, image(row.asset_path), el('p', row.asset_path));
+            append(card, button('Источник и SHA256', () => info('Происхождение элемента', JSON.stringify(row, null, 2)))); list.append(card);
+          });
+        }
+        search.oninput = draw; append(body, selectKind, search, list); draw();
+      }, 'catalog-window');
+    } catch (error) { info('Ошибка общих элементов', error.message); }
+  }
   function openInspector(initial = '') {
     let query = '', kind = 'Все';
     const dialog = modal('Каталог проверки', body => {
-      append(body, el('p', manifest.registry_count + ' записей каталога: ' + manifest.named_resource_count + ' ресурсных путей и ' + manifest.unresolved_root_count + ' классов без установленного пути; ' + manifest.variant_count + ' вариантов. Структура не подтверждает игровую логику.'), button('Версии и обновления', openVersions));
+      append(body, el('p', manifest.registry_count + ' записей каталога: ' + manifest.named_resource_count + ' ресурсных путей и ' + manifest.unresolved_root_count + ' классов без установленного пути; ' + manifest.variant_count + ' вариантов. Структура не подтверждает игровую логику.'), button('Версии и обновления', openVersions), button('Общие элементы', openSharedElements));
       const search = input('search', 'Имя окна или путь'); search.value = query; search.setAttribute('aria-label', 'Поиск ресурса');
       const list = el('div', undefined, 'registry-list'), count = el('p');
       const filter = select(['Все', 'Попапы', 'Компоненты и окна'], kind, v => { kind = v; fill(); });
@@ -512,7 +545,7 @@
     catch { loaded = { state: M.initial(), issue: 'Хранилище недоступно. Работа продолжается без сохранения.' }; }
     storageIssue = loaded.issue; storageBlocked = !!storageIssue; setAdapter(loaded.state);
     document.title = 'Vampir · ' + profile;
-    for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');
+    for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256'], ['button-press', 'BTN_ConfirmRed256_Press'], ['normal-bg', 'BTN_ConfirmBlack256'], ['normal-press', 'BTN_ConfirmBlack256_Press']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');
     document.getElementById('inspector').onclick = () => openInspector(); render();
     geometryObserver.observe(app);
     if (storageIssue) info('Демосохранение требует проверки', storageIssue);
