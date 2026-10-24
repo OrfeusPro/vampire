@@ -2765,6 +2765,68 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные storage primitives/concrete input construction и current handler/result gates/dispatch; runtime profile и SDK/UserInfo boundaries остаются открыты."
+    },
+    {
+      "addresses": [
+        "0x144aac130",
+        "0x144aacb40"
+      ],
+      "checks": [
+        {
+          "cache_key": "50b1725d3997082c161cdfa91e132929daed4f2ff071a6bf9ba3af289fa8a5f3",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4eef487d3fdee0e857ed6151c63f1ebb8f472d70bba31e46674a310424e41eb4\\manifest.json",
+          "sha256": "4eef487d3fdee0e857ed6151c63f1ebb8f472d70bba31e46674a310424e41eb4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1cc7e0ca1448fa8f1369b5abcaf6a10192fc81ba20b22cc8ad5a05e9e82e9491",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\61c7c1eebc36c9be6dc04b07fd6821f2dcdd36aea6ed4de97ce0028806b07b4a\\manifest.json",
+          "sha256": "61c7c1eebc36c9be6dc04b07fd6821f2dcdd36aea6ed4de97ce0028806b07b4a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "26ddea515e93d1b26018137255f90d9521928dde8d4fd4ef650e11fff9de78af",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e757a776239e0396a01f1077b4daf1f98f6e6a078263639ea1649f8afbf7d1d6\\manifest.json",
+          "sha256": "e757a776239e0396a01f1077b4daf1f98f6e6a078263639ea1649f8afbf7d1d6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f198df9dc169a783a97fbefce6a6fc4e642b5d5b34077253dfd90218e7d64d63",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eb8cfa67009c54e88c809698d11a7592e1436d19fe513aa281ee753451a154c6\\manifest.json",
+          "sha256": "eb8cfa67009c54e88c809698d11a7592e1436d19fe513aa281ee753451a154c6",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущая цепочка LoginResult constructor/reader, nested readers, concrete/base buffer constructors и numeric/FString/UTF-8 input исполняется на общей памяти: 20 явных roots. Проверены 72 constructor calls с полями/ABI/padding, 160 полных ответов, 332 коротких ввода и 25 отказов. Pointer/size/cursor больше не задаются вручную. Storage primitives остаются fixtures; handler не проверен.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-result-buffer-11316.json",
+          "sha256": "c6fcd6473f0c3efff3e8ae7123047cd528ea3dd94965cd77b211be36c9611d0d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-RESULT-BUFFER-11316.md",
+          "sha256": "785cde0bb7e759cbc9f58997cc38bc6c046d2b9661593e0ed94c67c2122bcfcc"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-RESULT-BUFFER-11316.json",
+          "sha256": "30943ae5647d8f3927532f54d16f5c3dabaae989637ea244f5ea73fb4df5c93e"
+        }
+      ],
+      "id": "f875f882d02012bb4cd3108d4f9fb99d80ccace84bf18d83c96670ca503703b8",
+      "limits": [
+        "Synthetic input buffer <=4096 bytes; whole reading little endian only.",
+        "Storage allocator/growth/assignment/free and memcpy are fixtures; no handler, dispatch or network proof.",
+        "Zero-stack malformed scope and strict local Python policy unchanged."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовые exports; установить current handler/dispatch по source-bound связям ID 4 и проверить success/error gates. Сохранить source guard и строгую Python UTF-8 policy.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current handler/dispatch/result gates и реальные storage primitives. Чтение big endian, повреждённые archive pointers, общая malformed UTF-8 termination semantics и реальная сессия не доказаны."
     }
   ],
   "schema": 1,

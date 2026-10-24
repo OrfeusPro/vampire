@@ -84,9 +84,14 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                 map_page(target)
                 map_page(target+511)
 
-    # Whole Version integration has 19 explicitly reviewed roots; no call-tree discovery.
+    # Reviewed integrations only; no call-tree discovery or arbitrary budget increase.
     budget = context.get('function_budget', 16)
-    if type(budget) is not int or budget not in (16, 19) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= 8:
+    buffer_scope = (budget == 20 and context.get('budget_scope') == 'login-result-buffer'
+                    and len(functions) == 20
+                    and context.get('functions', {}).get('reader') == '0x1456dc140'
+                    and context.get('native_input', {}).get('functions', {}).get('constructor') == '0x144aacb40'
+                    and context.get('native_input', {}).get('functions', {}).get('buffer_constructor') == '0x144aac130')
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= 8:
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

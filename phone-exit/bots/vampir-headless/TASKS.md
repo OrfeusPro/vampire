@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+Входной буфер LoginResult теперь создают native concrete/base constructors:
+72 проверки полей / ABI и общая цепочка чтения прошли без ручной записи cursor.
+Далее — handler/dispatch; storage primitives остаются fixtures.
+[Результат и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md).
+
 Native FString/std::string/UTF-8 теперь включены в целый LoginResult с числовым
 archive. 160 различных полных случаев, 4 границы размеров, 332 коротких тела,
 25 отказов и 6 специальных строк проверены. Далее — input construction / handler.

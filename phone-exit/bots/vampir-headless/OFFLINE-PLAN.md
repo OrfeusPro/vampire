@@ -43,12 +43,15 @@
   [Привязки и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-11316.md).
 - Числовой input archive / raw IO / bool normalization включены в LoginResult:
   320 полных случаев, 332 коротких префикса и 25 отказов повторены native.
-  FString/UTF-8 перенесены следующим этапом ниже; concrete buffer constructor открыт.
+  FString/UTF-8 и buffer constructors перенесены следующими этапами ниже.
   [Границы ввода и новые проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md).
 - FString/std::string/UTF-8 исполняются native в общем LoginResult: 160 различных
   полных случаев, 4 границы размеров, 332 коротких тела, 25 отказов и 6 специальных
   строк. Storage / buffer fixtures и handler/dispatch ещё открыты.
   [Политика UTF-8 и границы проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md).
+- Concrete/base buffer constructors включены в общий LoginResult: 72 проверки
+  полей / ABI / padding; pointer, size и cursor теперь формирует native код.
+  [Границы и автоматическая проверка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
   и прочие зависимости Login, интеграция writer/archive, реальные storage primitives
   и handler/dispatch результата. Только после этого готовить

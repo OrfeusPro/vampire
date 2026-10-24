@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Входной буфер LoginResult теперь создают native concrete/base constructors:
+72 проверки полей / ABI и общая цепочка чтения прошли без ручной записи cursor.
+Далее — handler/dispatch; storage primitives остаются fixtures.
+[Результат и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md).
+
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
 LoginResult теперь исполняет native FString/std::string/UTF-8 input вместе с
 числовым archive: 160 различных полных сценариев, границы 15/16 и 127/128,

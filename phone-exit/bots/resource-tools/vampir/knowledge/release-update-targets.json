@@ -2020,6 +2020,51 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-result-buffer-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-result-context.py",
+        "login-result-input-fixtures.py",
+        "login-result-string-fixtures.py"
+      ],
+      "rule": "Проверить concrete/base buffer constructors, пятую stack-аргумент endian и vtable; исполнить общий LoginResult на явных 20 roots без обхода дерева вызовов. Проверить поля, padding, guards и ABI; чтение пока little endian.",
+      "automation": {
+        "discovery": "reviewed_concrete_constructor_direct_call_and_vtable",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x144aacb40",
+                "scope": "Concrete/base input constructor and whole LoginResult replay; bounded storage fixtures, no handler or session proof.",
+                "required_checks": [
+                  "native-login-result-buffer-context"
+                ]
+              },
+              {
+                "address": "0x144aac130",
+                "scope": "Concrete/base input constructor and whole LoginResult replay; bounded storage fixtures, no handler or session proof.",
+                "required_checks": [
+                  "native-login-result-buffer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "login-result-input-fixtures.py",
+              "login-result-string-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

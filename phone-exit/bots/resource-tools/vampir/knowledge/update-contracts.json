@@ -438,7 +438,8 @@
         "native-login-prepare-metadata-context",
         "native-login-result-context",
         "native-login-result-input-context",
-        "native-login-result-string-context"
+        "native-login-result-string-context",
+        "native-login-result-buffer-context"
       ],
       "recipes": [
         {
@@ -490,7 +491,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Current LoginResult исполняет native FString/std-string/UTF-8 и numeric archive; storage primitives остаются fixtures. Проверить concrete input constructor и handler/dispatch/result gates, не ослаблять строгую локальную UTF-8 policy. SDK/UserInfo и writer integration отдельно.",
+      "next_check": "Проверить current handler/dispatch/result gates; concrete input construction включена в whole reader. Storage primitives и реальные SDK/UserInfo остаются открытыми; source guard и строгую UTF-8 policy сохранить.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -533,7 +534,8 @@
         "native-login-prepare-metadata-current",
         "native-login-result-current",
         "native-login-result-input-current",
-        "native-login-result-string-current"
+        "native-login-result-string-current",
+        "native-login-result-buffer-current"
       ],
       "writer_check": {
         "object_size": 320,

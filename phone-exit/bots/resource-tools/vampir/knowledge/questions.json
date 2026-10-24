@@ -545,16 +545,17 @@
       "id": "release-login-result-reader",
       "status": "bounded_answer",
       "question": "Как текущие constructor/reader игрового ответа ID 4 читают поля и отказывают на коротком вводе?",
-      "known": "Текущие LoginResult constructor 1456d7690 / reader 1456dc140 связаны с table 149926590 и ID4. Общая native цепочка включает nested constructors/readers, numeric archive, raw IO, bool normalization, FString/std::string/UTF-8: 19 явных roots и 6 leaves. Проверены 160 различных полных случаев, 4 строковые границы, 332 коротких тела, 25 отказов, поля/ownership/guards/ABI. Python decoder совпадает на корректных телах и сохраняет строгую policy; 6 специальных тел принимаются native path только в заявленном zero-stack scope. Storage allocator/growth/assignment/free и buffer binding остаются fixtures; handler не проверен.",
-      "unknown": "Реальные storage primitives / concrete input construction и current handler/result gates/dispatch. Общее malformed UTF-8 поведение за границами zero-stack fixtures не доказано.",
-      "next_action": "Использовать готовые 19 roots; проверить concrete input constructor 144aacb40/144aac130 и current handler/result gates/dispatch по source-bound связям. Строгий Python decoder и source guard сохранить.",
+      "known": "Текущая цепочка LoginResult constructor/reader, nested readers, concrete/base buffer constructors и numeric/FString/UTF-8 input исполняется на общей памяти: 20 явных roots. Проверены 72 constructor calls с полями/ABI/padding, 160 полных ответов, 332 коротких ввода и 25 отказов. Pointer/size/cursor больше не задаются вручную. Storage primitives остаются fixtures; handler не проверен.",
+      "unknown": "Current handler/dispatch/result gates и реальные storage primitives. Чтение big endian, повреждённые archive pointers, общая malformed UTF-8 termination semantics и реальная сессия не доказаны.",
+      "next_action": "Использовать готовые exports; установить current handler/dispatch по source-bound связям ID 4 и проверить success/error gates. Сохранить source guard и строгую Python UTF-8 policy.",
       "decision_rule": "Не переносить адреса или факты старой сборки автоматически. Body reading не подтверждает handler, персонажа или сессию.",
-      "do_not_repeat": "Готовые result/numeric exports и run-4ef2b735941d, run-81d1e191e8c5, run-2fe73e379c6f не выгружать повторно. Новый анализ нужен для concrete input construction, handler/dispatch или изменившихся inputs. Не переносить неоднозначные prefix candidates автоматически.",
+      "do_not_repeat": "Готовые result/numeric/string exports и run-80386d1eb460 не выгружать повторно. Новый анализ нужен для current handler/dispatch или изменившихся inputs; старые prefix candidates не подтверждают роль.",
       "addresses": [],
       "evidence": [
         "evidence/updates/HEADLESS-LOGIN-RESULT-11316.md",
         "evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md",
-        "evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md"
+        "evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md",
+        "evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md"
       ]
     }
   ]

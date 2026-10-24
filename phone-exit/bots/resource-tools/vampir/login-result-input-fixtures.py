@@ -1,4 +1,4 @@
-"""Observe real archive scalar entry/return; only input buffer and memcpy are fixtures."""
+"""Observe real archive entry/return with optional native buffer construction."""
 import struct
 
 
@@ -66,12 +66,15 @@ def install(load, h, context, state, packet, archive, order):
     def seed(body, poison):
         state.update(input_pending=None, input_entries={})
         h.uc.mem_write(archive - 16, b'\xa5' * 16 + bytes([poison]) * 0x40 + b'\xa6' * 16)
-        h.call(functions['constructor'], archive)
-        require(int.from_bytes(h.uc.mem_read(archive, 8), 'little') == table, 'Input archive constructor table differs')
         require(len(body) <= 4096, 'Input archive fixture buffer bound')
         h.uc.mem_write(buffer - 16, b'\xa5' * 16 + body + b'\xa6' * 16)
-        h.uc.mem_write(archive + 0x20, struct.pack('<QI', buffer, len(body)))
-        set_position(0)
+        if context.get('buffer_construction'):
+            construct(functions['constructor'], table, len(body), 1, 0, poison)
+        else:
+            h.call(functions['constructor'], archive)
+            require(int.from_bytes(h.uc.mem_read(archive, 8), 'little') == table, 'Input archive constructor table differs')
+            h.uc.mem_write(archive + 0x20, struct.pack('<QI', buffer, len(body)))
+            set_position(0)
         state['input_guard'] = bytes(h.uc.mem_read(archive - 16, 0x60))
         state['buffer_guard'] = bytes(h.uc.mem_read(buffer - 16, len(body) + 32))
 
@@ -83,4 +86,45 @@ def install(load, h, context, state, packet, archive, order):
                 'Input archive wrote outside cursor/bookkeeping')
         require(bytes(h.uc.mem_read(buffer - 16, len(state['buffer_guard']))) == state['buffer_guard'],
                 'Input archive modified source buffer/guards')
-    return seed, position, set_position, check
+    def construct(address, expected_table, size, mode, endian, poison):
+        h.uc.mem_write(archive - 16, b'\xa5' * 16 + bytes([poison]) * 0x40 + b'\xa6' * 16)
+        abi = {name: 0x1122334400000000 + i for i, name in enumerate(('RBX', 'RBP', 'RSI', 'RDI', 'R12', 'R13', 'R14', 'R15'))}
+        for name, value in abi.items():
+            h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + name), value)
+        h.uc.reg_write(h.x.UC_X86_REG_RDX, buffer)
+        h.uc.reg_write(h.x.UC_X86_REG_R8, size)
+        concrete = address == functions['constructor']
+        h.uc.reg_write(h.x.UC_X86_REG_R9, mode if concrete else endian)
+        h.uc.mem_write(h.scratch + 0x38028, struct.pack('<Q', endian))
+        require(h.call(address, archive) == archive, 'Input buffer constructor return differs')
+        require(all(reg(name) == value for name, value in abi.items()) and reg('RSP') == h.scratch + 0x38008,
+                'Input buffer constructor ABI differs')
+        data = bytes(h.uc.mem_read(archive, 0x40))
+        require(int.from_bytes(data[:8], 'little') == expected_table
+                and int.from_bytes(data[8:16], 'little') == 0
+                and int.from_bytes(data[0x10:0x14], 'little') == 0
+                and int.from_bytes(data[0x14:0x18], 'little') == (mode if concrete else 1)
+                and data[0x18] == 1 and data[0x38] == endian
+                and int.from_bytes(data[0x20:0x28], 'little') == buffer
+                and int.from_bytes(data[0x28:0x2c], 'little') == size
+                and int.from_bytes(data[0x30:0x38], 'little') == buffer,
+                'Input buffer constructor fields differ')
+        written = set(range(0x19)) | set(range(0x20, 0x2c)) | set(range(0x30, 0x39))
+        require(all(value == poison for i, value in enumerate(data) if i not in written)
+                and bytes(h.uc.mem_read(archive - 16, 16)) == b'\xa5' * 16
+                and bytes(h.uc.mem_read(archive + 0x40, 16)) == b'\xa6' * 16,
+                'Input buffer constructor changed padding/guards')
+
+    construction_cases = []
+    if context.get('buffer_construction'):
+        spec = context['buffer_construction']
+        require(spec == dict(base_table='0x1496706e8', reading_mode=1, reading_endian=0),
+                'Input buffer construction scope differs')
+        for name, expected_table in (('constructor', table), ('buffer_constructor', int(spec['base_table'], 16))):
+            for size in (0, 1, 4096):
+                for mode in (0, 1, 0xffffffff):
+                    for endian in (0, 1):
+                        for poison in (0x55, 0xaa):
+                            construct(functions[name], expected_table, size, mode, endian, poison)
+                            construction_cases.append(dict(function=name, size=size, mode=mode, endian=endian, guards=True))
+    return seed, position, set_position, check, construction_cases

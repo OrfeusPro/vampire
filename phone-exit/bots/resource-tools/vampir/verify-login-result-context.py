@@ -139,7 +139,7 @@ def verify(context, root):
     h.uc.mem_write(archive - 16, b'\xa5' * 16 + struct.pack('<Q', archive_table) + b'\xa6' * 16)
     archive_guard = bytes(h.uc.mem_read(archive - 16, 40))
     if input_:
-        seed_input, input_position, set_input_position, check_input = load('login-result-input-fixtures').install(
+        seed_input, input_position, set_input_position, check_input, construction_cases = load('login-result-input-fixtures').install(
             load, h, input_, state, packet, archive, ORDER)
         if input_.get('string_fixtures'):
             load('login-result-string-fixtures').install(load, h, input_, state, packet, STRINGS)
@@ -261,12 +261,13 @@ def verify(context, root):
                 truncated=truncated, failures=failures, trailing=trailing, evidence=h.evidence,
                 runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
                 native_input_used=bool(input_),
+                construction_cases=construction_cases if input_ else [],
                 native_string_used=bool(input_ and input_.get('string_fixtures')), special=special, boundaries=boundaries,
                 string_fixture_sha256=hashlib.sha256((HERE / 'login-result-string-fixtures.py').read_bytes()).hexdigest() if input_ and input_.get('string_fixtures') else None,
                 input_fixture_sha256=hashlib.sha256((HERE / 'login-result-input-fixtures.py').read_bytes()).hexdigest() if input_ else None,
                 limits=['Whole current packet/nested constructors and readers plus two leaves and virtual read thunk execute.',
                         'Input constructor/scalars/raw IO/bookkeeping execute when native_input_used; UTF-8/FString readers execute only when native_string_used.',
-                        'Buffer binding, memcpy, bounded string allocation/assignment/growth/free remain fixtures. Little endian only.',
+                        'Buffer binding is native only with explicit buffer_construction; memcpy and bounded string storage remain fixtures. Whole reading is little endian only.',
                         'Native string runs use a zero-filled initial stack; malformed outputs do not prove termination writes or general malformed behavior.',
                         'No handler, dispatch, result semantic names, network, login success or runtime activation proved.'])
 
