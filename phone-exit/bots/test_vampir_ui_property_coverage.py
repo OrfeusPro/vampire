@@ -14,6 +14,8 @@ spec = importlib.util.spec_from_file_location('game_ui_data', HERE / 'scan-game-
 game_data = importlib.util.module_from_spec(spec); spec.loader.exec_module(game_data)
 spec = importlib.util.spec_from_file_location('game_ui_verify', HERE / 'verify-game-ui-data.py')
 game_verify = importlib.util.module_from_spec(spec); spec.loader.exec_module(game_verify)
+spec = importlib.util.spec_from_file_location('skill_property_audit', HERE / 'audit-skill-effect-properties.py')
+skill_audit = importlib.util.module_from_spec(spec); spec.loader.exec_module(skill_audit)
 
 
 def schema():
@@ -28,6 +30,29 @@ def schema():
 
 
 class PropertyCoverageTests(unittest.TestCase):
+    def test_skill_property_profiles_preserve_blank_zero_and_unknown_duration_precedence(self):
+        nodes = {'Effect:1': dict(kind='Effect', fields=dict(Id='1', Duration='10', MinDuration='20', MaxDuration='30', Period='', provenance=dict(entry=92, csv_record=2))),
+                 'Effect:2': dict(kind='Effect', fields=dict(Id='2', Duration='', MinDuration='0', MaxDuration='0', Period='0', provenance=dict(entry=92, csv_record=3)))}
+        before = copy.deepcopy(nodes); report = skill_audit.profile(nodes)
+        props = {p['field']: p for p in report['properties'].values()}
+        self.assertEqual(nodes, before)
+        self.assertEqual(props['Period']['values'], {'': 1, '0': 1})
+        self.assertEqual(props['Period']['blank'], 1)
+        self.assertEqual(props['Period']['explicit_zero'], 1)
+        self.assertIsNone(props['Period']['unit'])
+        self.assertFalse(props['Period']['runtime_application_verified'])
+        finding = report['duration_outside_numeric_bounds'][0]
+        self.assertEqual(finding['node'], 'Effect:1')
+        self.assertEqual(finding['status'], 'numeric_comparison_not_runtime_error')
+        self.assertIsNone(finding['actual_duration'])
+        self.assertEqual(props['Period']['occurrences'][1]['provenance']['csv_record'], 3)
+        nodes['Effect:3'] = dict(kind='Effect', fields=dict(Period='5', provenance=dict(entry=92, csv_record=4)))
+        after = {p['field']: p for p in skill_audit.profile(nodes)['properties'].values()}
+        self.assertEqual(props['Period']['id'], after['Period']['id'])
+        nodes['Effect:3']['fields']['Period'] = 5
+        with self.assertRaisesRegex(ValueError, 'CSV'):
+            skill_audit.profile(nodes)
+
     def test_skill_effect_candidates_never_become_confirmed_buff_applications(self):
         tables = dict(Skill=[dict(Id='7')], Effect=[dict(Id='8')],
             SkillOperation=[dict(Id='1', SkillId='7', OperationType='2001', OperationParam1='8'),

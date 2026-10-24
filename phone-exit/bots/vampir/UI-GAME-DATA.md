@@ -57,6 +57,43 @@ Skill 201006 присутствует в этом каталоге без опр
 Каталог определений не выдаётся за список эффектов персонажа; старые единицы
 времени и правила параметров не переносятся автоматически на все поля.
 
+### Аудит характеристик времени
+
+`audit-skill-effect-properties.py` собрал [141 отдельный пункт](UI-SKILL-EFFECT-PROPERTY-TASKS.md)
+по четырём таблицам. 527719 наблюдений имеют ссылку на узел, поле и точную
+CSV запись; сохранены распределения исходных строк, отдельно пустые значения
+и явные нули. Поля не преобразуются в числа для хранения и не получают default.
+Идентификатор характеристики зависит от типа сущности и имени поля, не от
+значений или порядка строк. Добавление записей не перенумеровывает чекбоксы.
+
+Начат разбор пяти полей. В Skill.TotalTime 734 пустых значения и один явный
+ноль. В Effect.Duration — 283 пустых / 199 нулевых; MinDuration и MaxDuration
+имеют по 339 нулевых без пустых, Period — 1918 нулевых без пустых.
+Нельзя подменять пустое поле нулём, выбирать таймер по внешнему сходству
+числа или переносить единицы cooldown на Duration / Period / TotalTime.
+
+413 Effect записей имеют численный Duration вне MinDuration…MaxDuration.
+Каждая сохранена с исходными полями и CSV provenance как
+`numeric_comparison_not_runtime_error`. Их фактическая длительность и
+приоритет полей остаются неизвестными. Это совпало с прежним исследованием
+[времени эффектов](../resource-tools/vampir/knowledge/evidence/game-data/NPC-LOOT.md).
+
+К аудиту привязаны полные SHA сохранённых effect-time-code, skill-time-code,
+skill-total-time-code и skill-level-mp-code. Все относятся к историческому EXE
+`c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8`;
+они переиспользованы как evidence с ограничениями, без чтения native адресов.
+Effect time report оставляет unit=null / field_precedence_verified=false;
+TotalTime — unit=null, не подтверждает длительность исполнения. Skill time
+report ограничен конкретным cooldown display path. MP report не доказывает
+формулу MpGrowth или фактическое расходование маны.
+
+Отчёт: `ui-game-data-scans/skill-effect-property-audit-01.json`, ID
+`44245a7dfab5971fdd0043601af6b81cdbfda226f8025334eaa0303b67a9e78e`.
+Все 527719 ссылок / значения / частоты отдельно сверены с набором
+`16b67ed0eebee5b7e00453e50b588be50672fd59d335c57c68764b0e5cc47b2d`.
+12 Python fixtures прошли, включая различие пустого / нуля, сохранение строк,
+provenance, неизвестные единицы и устойчивость ID. Применение полей ещё открыто.
+
 ## Карта, полигоны и лифты
 
 В `map_evidence_refs` сканер учитывает существующие atlas/index, projection,
@@ -132,7 +169,7 @@ NavTile.polygons и Lift.placement.RelativeRotation:
 - [ ] UI-23.D-14. Связать overlay поверхности с native tile / polygon index и исходными Z вершин; до этого не применять native соседство к компактным индексам overlay.
 - [x] UI-23.D-15. Проверять сохранённый набор отдельной командой: точные CSV записи, spatial pointers / характеристики, прямые пространственные связи и полный обратный индекс. Проверено: 88739 записей, 18559 объектов, 130380 пространственных связей, включая шесть unresolved. Fixture обнаруживает удалённую связь, подменённый pointer и повреждённый reverse. Семантика остальных игровых связей этим не подтверждается.
 - [x] UI-23.D-16. Перенести четыре полные таблицы навыков / эффектов, связи с Battle и хешированные подробные записи. Проверено: 16082 новые CSV записи / 21557 связей, полнота четырёх таблиц и статусы кандидатов; фиктивное определение Skill 201006 не создано.
-- [ ] UI-23.D-17. Пройти характеристики Skill / SkillOperation / Effect / EffectOperation: поля времени, уровни, условия, цели, параметры и enum; создать отдельные чекбоксы полей и правила применения. Статический join и кандидат применения различать.
+- [ ] ~ UI-23.D-17. Пройти характеристики Skill / SkillOperation / Effect / EffectOperation: поля времени, уровни, условия, цели, параметры и enum; создать отдельные чекбоксы полей и правила применения. Создан 141 отдельный пункт; начат аудит времени, правила применения остаются открытыми. Статический join и кандидат применения различать.
 - [ ] UI-23.D-18. Проверить ключи иконок навыков / бафов до ресурса / Brush в HUD; восстановить отображение активных экземпляров, стаки, таймеры и снятие с отдельным демоадаптером.
 - [ ] UI-23.D-19. Разобрать подробную запись Skill 201006 без определения в таблице Skill: происхождение / вариант, не подставлять похожий ID и не объявлять навык доступным.
 
@@ -143,6 +180,15 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/scan-game-ui-data.py --veri
 python -X utf8 phone-exit/bots/resource-tools/vampir/verify-game-ui-data.py 'F:/PhoneExit Resources/Vampir/ui-game-data-scans/16b67ed0eebee5b7e00453e50b588be50672fd59d335c57c68764b0e5cc47b2d'
 python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_ui_property_coverage.py -v
 ```
+
+Новый аудит полей (выходной файл и чеклист должны иметь новые имена):
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/audit-skill-effect-properties.py 'F:/PhoneExit Resources/Vampir/ui-game-data-scans/16b67ed0eebee5b7e00453e50b588be50672fd59d335c57c68764b0e5cc47b2d' --output 'F:/PhoneExit Resources/Vampir/ui-game-data-scans/skill-effect-property-audit-next.json'
+```
+
+Параметр `--tasks <новый-файл.md>` создаёт отдельные чекбоксы без перезаписи
+старых отметок. Аналитический отчёт хранится вне Git, не загружается в 50 окон.
 
 Наборы хранятся вне Git в `F:/PhoneExit Resources/Vampir/ui-game-data-scans/<SHA>/`.
 SHA набора учитывает входные файлы и сканер. verification.json подтверждает
