@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Новый приоритет пользователя: живой вход и создание персонажа через HK.
+Netmarble/SDK launcher sign-in прошёл; игровой профиль остановился на проверке
+источника, до Game Login и списка. [Проверка и следующий шаг](LIVE-HK-CHECK.md).
+Завершить профиль текущей сборки; затем список и Carnage только при пустом списке.
+
 Current final virtual +28 после LoginResult подтверждён как reset: constructor/
 getter/final table и 8 native сценариев перенесены. Инициатор списка искать
 в current WaitingEndNotify по готовому исследованию старой версии. [Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md).
@@ -20,7 +25,7 @@ state stores, ошибки, signed gates, controller и SDK conditions. Дале
 аргументы и exports. Далее — native gate/handler branches; статическая связь
 не доказывает сессию. [Доказательства и следующий участок](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md).
 
-Текущий приоритет пользователя: **1, 5, 8, 9**, без серверов и живых входов.
+Сохранённые направления пользователя: **1, 5, 8, 9**; HK-проверка разрешена выше.
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 

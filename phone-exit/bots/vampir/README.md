@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+По запросу пользователя проверен вход через HK: текущий SDK launcher sign-in
+принят. Игровой этап остановился на `game_profile_source_changed`; персонажи
+не запрашивались и не создавались. Приоритет — закончить игровой профиль и
+повторить вход/создание. [Результат проверки](../vampir-headless/LIVE-HK-CHECK.md).
+
 Current final virtual +28 после LoginResult подтверждён как reset: constructor/
 getter/final table и 8 native сценариев перенесены. Инициатор списка искать
 в current WaitingEndNotify по готовому исследованию старой версии. [Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md).
