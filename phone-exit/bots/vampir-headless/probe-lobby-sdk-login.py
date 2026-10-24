@@ -27,7 +27,7 @@ def module(name, filename):
 
 
 def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
-        auth_flow='nid', lobby_region=None, auth_timeout=180, _progress=None, _consume_auth=None, _select_server=None, _use_session=None):
+        auth_flow='nid', lobby_region=None, auth_timeout=180, _progress=None, _consume_auth=None, _select_server=None, _use_session=None, device_settings=None):
     if type(auth_timeout) is not int or not 1 <= auth_timeout <= 900:
         raise ValueError('Bounded authentication timeout required')
     if auth_flow not in ('nid', 'launcher'): raise ValueError('Unsupported explicit SDK auth flow')
@@ -42,12 +42,14 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     if read_server_list and (type(server_policy_byte) is not int or not 0 <= server_policy_byte <= 255):
         raise ValueError('Explicit raw server-list policy byte required')
     if not read_server_list and server_policy_byte is not None: raise ValueError('Server-list policy without request')
+    from vampir_core.bot_device_settings import validate, apply_system, metadata_values
+    device_settings = validate(device_settings)
     source = module('lobby_sdk_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
     route = SocksRoute(socks_port) if socks_port is not None else None
     endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path,
         route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256, lobby_region=lobby_region)
     sdk = module('lobby_sdk_signin', 'run-nid-sdk-sign-in.py')
-    prepared = sdk.load_inputs(email, route=route, selected_profile=selected_profile)
+    prepared = sdk.load_inputs(email, route=route, selected_profile=selected_profile, **({'device_settings': device_settings} if device_settings else {}))
     binding, sdk_profile, _ = prepared
     if selected_profile == 'recovered-release' and not isinstance(prepared, SdkInputs):
         raise ValueError('Current SDK profile requires a fresh GMC2 context')
@@ -60,6 +62,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         if _progress: _progress('sdk_sign_in')
         return value
     extra = {'_prepared_inputs': prepared} if isinstance(prepared, SdkInputs) else {}
+    if device_settings: extra['device_settings'] = device_settings
     data = sdk.run(email, timeout=auth_timeout, password=password, socks_port=socks_port, _capture=capture,
         auth_flow=auth_flow, selected_profile=selected_profile, _progress=_progress, **extra)
     password = None
@@ -86,11 +89,12 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
                 nm_device_key=binding.nm_device_key, source_sha256=source.source_exe_sha256)
         if any(type(value) is not str or not value for value in values.values()):
             raise ValueError('Current metadata sources are incomplete')
+        values.update(metadata_values(device_settings))
         metadata = encode_nid_metadata_with_device_key(values,
             device_key=binding.device_key,user_info_available=True)
     version_tool = module('lobby_sdk_version_inputs', 'probe-lobby-version.py')
     version = version_tool.prepare_version(app_version=source.app_version,
-        windows_version=observe_windows_version(), computer_name=version_tool.observe_computer_name(),
+        windows_version=apply_system(None, observe_windows_version(), device_settings)[1], computer_name=version_tool.observe_computer_name(),
         nm_device_key=binding.nm_device_key)
     # Metadata is absent or an explicitly selected subset of current sources.
     # Selection replaces the template's server 0 before any lobby Login is sent.

@@ -13,7 +13,7 @@ class LobbyJoinedCountryTests(unittest.TestCase):
         spec=importlib.util.spec_from_file_location('lobby_joined_country_test',path)
         cls.tool=importlib.util.module_from_spec(spec);spec.loader.exec_module(cls.tool)
 
-    def exercise(self,context,*,sdk_country='HK',nid_country='HK',release=False):
+    def exercise(self,context,*,sdk_country='HK',nid_country='HK',release=False,device_settings=None):
         provider=SimpleNamespace(netmarble_id='nid-fixture',joined_country_code=nid_country)
         binding=SimpleNamespace(nm_device_key='nm-fixture',device_key='device-fixture')
         sdk_data=SimpleNamespace(player_id='player-fixture',access_token='token-fixture',joined_country_code=sdk_country)
@@ -42,7 +42,7 @@ class LobbyJoinedCountryTests(unittest.TestCase):
                         socks_port=17948,context=context)
                 route.return_value.connect.assert_not_called();exchange.assert_not_called();return
             result=self.tool.run('fixture@example.invalid',selected_profile='recovered-release' if release else 'recovered-base',manifest_path=Path('fixture'),
-                socks_port=17948,context=context,_consume_auth=consumer)
+                socks_port=17948,context=context,_consume_auth=consumer,device_settings=device_settings)
             self.assertEqual(tid.call_count, int(release and context=='sdk-with-partial-metadata'))
         login=exchange.call_args.args[2]
         self.assertEqual(login.strings[:5],('player-fixture','token-fixture','nm-fixture',
@@ -54,6 +54,9 @@ class LobbyJoinedCountryTests(unittest.TestCase):
                 I_JoinedCountryCode='HK',I_NMDeviceKey='nm-fixture',I_DeviceKey='device-fixture')
             if release:
                 expected.update(I_TID='0123456789ABCDEFFEDCBA9876543210',I_ConnectIP='1.1.1.1',I_CountryCD='JP')
+            if device_settings:
+                from vampir_core.bot_device_settings import metadata_values
+                expected.update(metadata_values(device_settings))
             self.assertEqual(fields,expected)
             self.assertEqual(result.summary['metadata_bytes'],len(login.strings[5].encode()))
             self.assertNotIn('player-fixture',str(result.summary))
@@ -67,6 +70,9 @@ class LobbyJoinedCountryTests(unittest.TestCase):
     def test_legacy_branch_stays_explicitly_empty(self):self.exercise('sdk-without-nid-info')
     def test_partial_metadata_has_only_current_proven_fields(self):self.exercise('sdk-with-partial-metadata')
     def test_current_partial_metadata_uses_persistent_tid_provider(self):self.exercise('sdk-with-partial-metadata',release=True)
+    def test_custom_device_metadata_preserves_fresh_network_and_auth_fields(self):
+        from vampir_core.bot_device_settings import connection_presets
+        self.exercise('sdk-with-partial-metadata',release=True,device_settings=connection_presets()[1]['device_settings'])
     def test_conflicting_missing_or_noncanonical_country_never_connects(self):
         for country in ('UA',None,'hk',''):
             with self.subTest(country=country):self.exercise('sdk-with-joined-country',sdk_country=country)

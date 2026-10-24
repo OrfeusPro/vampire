@@ -32,7 +32,7 @@ from vampir_core.windows_version import observe_windows_version
 PROFILE_SHA = '1d98be691d899b6c9d6280c86d6f42ceeab8ce01cac9685d5e0b8495793cc7ad'
 
 
-def load_inputs(email, *, route=None, selected_profile='recovered-base'):
+def load_inputs(email, *, device_settings=None, route=None, selected_profile='recovered-base'):
     if selected_profile == 'recovered-release':
         spec = importlib.util.spec_from_file_location('nid_release_source', HERE / 'sdk-source-profile.py')
         loader = importlib.util.module_from_spec(spec)
@@ -55,6 +55,9 @@ def load_inputs(email, *, route=None, selected_profile='recovered-base'):
     if (identity.device_key, identity.nid_device_key, identity.nm_device_key) != (
             binding.device_key, binding.nid_device_key, binding.nm_device_key):
         raise ValueError('Observed device identity differs from the fixed profile')
+    from vampir_core.bot_device_settings import validate, apply_binding
+    settings = validate(device_settings)
+    binding = apply_binding(binding, settings)
     geo = None
     if selected_profile == 'recovered-release':
         public = loader.load_release_profile('public_gmc2', root=ROOT)
@@ -83,6 +86,8 @@ def load_inputs(email, *, route=None, selected_profile='recovered-base'):
     config = decode_gmc2_configuration(body, transport['headers'])
     profile = dict(source['profile'])
     version = observe_windows_version()
+    from vampir_core.bot_device_settings import apply_system
+    _, version = apply_system(None, version, settings)
     profile['os_version'] = version.suffix() if version is not None else ''
     if route:
         country = geo.iso_country if geo is not None else json.loads(body)['resultData']['geoIp']['isoCountry']
@@ -99,7 +104,9 @@ def load_inputs(email, *, route=None, selected_profile='recovered-base'):
 
 def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_player=False, first_sdk_login=False,
         terms_country=None, terms_locale=None, basic_filtered=None, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
-        _capture=None, _execute=None, _execute_token=None, _progress=None, _prepared_inputs=None):
+        _capture=None, _execute=None, _execute_token=None, _progress=None, _prepared_inputs=None, device_settings=None):
+    from vampir_core.bot_device_settings import validate
+    device_settings = validate(device_settings)
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')
     if type(first_sdk_login) is not bool or (first_sdk_login and (
             create_sdk_player or fetch_player or auth_flow != 'nid' or selected_profile != 'recovered-release')):
@@ -109,7 +116,7 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
     if auth_flow not in ('nid', 'launcher') or (auth_flow == 'launcher' and create_sdk_player):
         raise ValueError('Unsupported explicit SDK auth flow')
     route = SocksRoute(socks_port) if socks_port is not None else None
-    prepared = _prepared_inputs if _prepared_inputs is not None else load_inputs(email, route=route, selected_profile=selected_profile)
+    prepared = _prepared_inputs if _prepared_inputs is not None else load_inputs(email, route=route, selected_profile=selected_profile, **({'device_settings': device_settings} if device_settings else {}))
     if _prepared_inputs is not None and not isinstance(prepared, SdkInputs):
         raise TypeError('Expected a fresh in-memory SDK context')
     if isinstance(prepared, SdkInputs):
@@ -130,6 +137,9 @@ def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_playe
         _capture = browser.capture_nid_credential
     # Concurrent accounts must not share WebView cookies or browser-profile locks.
     account_directory = hashlib.sha256(email.strip().lower().encode('utf-8')).hexdigest()[:24]
+    if device_settings and device_settings.get('identity'):
+        identity_digest = hashlib.sha256(('|'.join((binding.device_key, binding.nm_device_key, binding.nid_device_key))).encode()).hexdigest()[:24]
+        account_directory += '/device-' + identity_digest
     if _progress: _progress('nid_browser')
     provider = _capture(url, expected_game_code=profile['game_code'], timeout=timeout,
                         data_directory=HERE / '.local/nid-accounts' / account_directory / ('socks-' + str(route.port) if route else 'direct'),

@@ -62,13 +62,18 @@ class SelectedGameLoginTests(unittest.TestCase):
     def test_world_observation_permission_propagates(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256,world_start=True,world_finish=True,observation=20)
 
-    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False,observation=0,direct=False):
+    def test_custom_profile_reaches_lobby_and_game_version_without_changing_transport(self):
+        from vampir_core.bot_device_settings import connection_presets
+        self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256,device_settings=connection_presets()[1]['device_settings'])
+
+    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False,observation=0,direct=False,device_settings=None):
         from vampir_core.lobby_packets import LobbyVersionResultBody
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
             self.assertEqual(kwargs['socks_port'], None if direct else 17948)
             self.assertEqual(kwargs['auth_flow'], 'launcher')
             self.assertEqual(kwargs['context'], 'sdk-with-partial-metadata')
+            self.assertEqual(kwargs.get('device_settings'), device_settings)
             kwargs['_consume_auth'](**{name: inputs[name] for name in ('binding', 'sdk_data', 'netmarble_id')},
                 nid_metadata='{"I_PID":"current-player-fixture"}')
             record = SimpleNamespace(u32=(7, 42, 0, 0), enums=(0, 1, 0), flags=(False,) * 5,
@@ -105,11 +110,16 @@ class SelectedGameLoginTests(unittest.TestCase):
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
                 lobby_context='sdk-with-partial-metadata', read_character_list=True, character_index=0,
                 read_world_start=world_start, read_world_finish=world_finish, observe_world_seconds=observation,
-                _server_list_observer=catalog, **options)
+                _server_list_observer=catalog, device_settings=device_settings, **options)
         catalog.assert_called_once()
         self.assertEqual(catalog.call_args.args[0].servers[0].u32[1], 42)
         self.assertEqual(sum(call.args[1] == 'probe-lobby-sdk-login.py' for call in loader.call_args_list), 1)
         exchange.assert_called_once()
+        if device_settings:
+            from vampir_core.bot_device_settings import apply_system
+            cpu, windows = apply_system(None,None,device_settings)
+            self.assertEqual(prepare.call_args.kwargs['cpu'],cpu)
+            self.assertEqual(prepare.call_args.kwargs['windows_version'],windows)
         packet = exchange.call_args.args[2]
         clock = exchange.call_args.kwargs['ping_clock']
         if source_sha:

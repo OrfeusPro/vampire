@@ -13,6 +13,7 @@ import sys
 import uuid
 
 from .device_registry import _email
+from .bot_device_settings import validate as device_settings, route_port
 from .character_creation_plan import CLASS_CHOICES, DEFAULT_CLASS, MAX_NAME_ATTEMPTS, random_nickname
 
 ACCOUNT_NICKNAMES = (
@@ -81,6 +82,29 @@ class AccountStore:
             if 'mail_status' not in columns:
                 db.execute("ALTER TABLE accounts ADD COLUMN mail_status TEXT NOT NULL DEFAULT 'unknown'")
             db.execute('CREATE TABLE IF NOT EXISTS prepared_batches(name TEXT PRIMARY KEY,data TEXT NOT NULL)')
+            db.execute('CREATE TABLE IF NOT EXISTS connection_presets(id TEXT PRIMARY KEY,name TEXT UNIQUE NOT NULL,data TEXT NOT NULL)')
+
+    def save_connection_preset(self, name, settings):
+        if type(name) is not str or not 1 <= len(name.strip()) <= 100 or any(ord(c) < 32 for c in name):
+            raise ValueError('Введите название пресета, до 100 символов')
+        if type(settings) is not dict or set(settings) != {'device_profile', 'device_settings', 'socks_port'}:
+            raise ValueError('Invalid connection preset')
+        checked = self.assignment(settings)
+        # Templates share hardware/network choices; identity remains private to each bot.
+        checked['device_settings'].pop('identity', None)
+        data = {key: checked[key] for key in settings}
+        with self._db() as db:
+            identifier = 'saved-' + str(uuid.uuid4())
+            try:
+                db.execute('INSERT INTO connection_presets VALUES(?,?,?)', (identifier, name.strip(), json.dumps(data)))
+            except sqlite3.IntegrityError:
+                raise ValueError('Пресет с таким названием уже существует') from None
+        return identifier
+
+    def connection_presets(self):
+        with self._db() as db:
+            return [dict(id=identifier, name=name, **json.loads(data))
+                    for identifier, name, data in db.execute('SELECT id,name,data FROM connection_presets ORDER BY rowid')]
 
     @contextmanager
     def _db(self):
@@ -93,7 +117,7 @@ class AccountStore:
 
     @staticmethod
     def assignment(value):
-        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname', 'auth_flow'}:
+        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'device_settings', 'socks_port', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname', 'auth_flow'}:
             raise ValueError('Unknown account setting')
         enabled = value.get('enabled', True)
         if type(enabled) is not bool:
@@ -110,8 +134,11 @@ class AccountStore:
         random_name = value.get('create_random_nickname', True)
         if type(create_class) is not str or create_class not in {key for key, _ in CLASS_CHOICES} or type(random_name) is not bool:
             raise ValueError('Invalid character creation choices')
-        if profile != 'current-pc':
-            raise ValueError('Only the observed current PC profile is supported')
+        if profile not in ('current-pc', 'custom'):
+            raise ValueError('Unknown device profile')
+        device = device_settings(value.get('device_settings'))
+        if profile == 'current-pc' and device:
+            raise ValueError('Custom device values require custom mode')
         region = value.get('region', 'EU')
         if region not in ('EU', 'NA', 'SG', 'JP', 'TW', 'ASIA', 'KR'):
             raise ValueError('Invalid server region')
@@ -128,7 +155,8 @@ class AccountStore:
             raise ValueError('A character key requires a selected character')
         if character is not None and server is None:
             raise ValueError('A character requires a server')
-        return dict(label=label, enabled=enabled, device_profile=profile, region=region, server_id=server,
+        return dict(label=label, enabled=enabled, device_profile=profile, device_settings=device,
+            socks_port=route_port(value.get('socks_port')), region=region, server_id=server,
             character_index=character, character_key=key, create_nickname=nickname,
             create_class=create_class, create_random_nickname=random_name, auth_flow=auth_flow)
 
@@ -137,12 +165,16 @@ class AccountStore:
         protected = self.vault.encrypt(password) if password is not None else None
         protected_mail = self.vault.encrypt(mail_password) if mail_password is not None else None
         with self._db() as db:
-            old = db.execute('SELECT id,password FROM accounts WHERE email=?', (email,)).fetchone()
+            old = db.execute('SELECT id,password,assignment FROM accounts WHERE email=?', (email,)).fetchone()
             if old is None and protected is None:
                 raise ValueError('A new account requires a password')
             identifier = old[0] if old else str(uuid.uuid4())
             db.execute('INSERT INTO accounts(id,email,password,assignment) VALUES(?,?,?,?) ON CONFLICT(email) DO UPDATE SET password=excluded.password,assignment=excluded.assignment',
                 (identifier, email, protected if protected is not None else old[1], json.dumps(assignment)))
+            if old:
+                previous = self.assignment(json.loads(old[2]))
+                if any(previous[key] != assignment[key] for key in ('device_profile', 'device_settings', 'socks_port')):
+                    db.execute("UPDATE accounts SET registration_status='nid_verified' WHERE id=? AND registration_status='sdk_created'", (identifier,))
             if protected_mail is not None:
                 db.execute('UPDATE accounts SET mail_password=? WHERE id=?', (protected_mail, identifier))
         return identifier

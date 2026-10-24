@@ -55,7 +55,7 @@ def prepare_observed_profile(runner, address, *, selected_profile='recovered-bas
 
 
 def run(address, *, password, mail_password, socks_port=None, timeout=300, accept_required_terms=False,
-        selected_profile='recovered-base', _progress=None, _code_provider=None):
+        selected_profile='recovered-base', _progress=None, _code_provider=None, device_settings=None):
     if accept_required_terms is not True: raise ValueError('Explicit acceptance of required terms is missing')
     runner = module('registration_runner', 'run-nid-sdk-sign-in.py')
     browser = module('registration_browser', 'nid-browser.py')
@@ -67,7 +67,7 @@ def run(address, *, password, mail_password, socks_port=None, timeout=300, accep
     mailbox = mail.RegistrationMailbox(address, mail_password) if _code_provider is None else None
     try:
         prepare_observed_profile(runner, address, selected_profile=selected_profile)
-        binding, profile, constants = runner.load_inputs(address, route=route, selected_profile=selected_profile)
+        binding, profile, constants = runner.load_inputs(address, route=route, selected_profile=selected_profile, **({'device_settings':device_settings} if device_settings else {}))
         context = runner.prepare_nid_sign_in_context(binding=binding, **profile)
         url = runner.bind_nid_web_url(context, constants=constants, max_url_size=32768)
         completed = False

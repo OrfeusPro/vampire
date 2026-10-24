@@ -6,8 +6,18 @@
 <main><aside><div class="aside-head"><h2>Мои аккаунты</h2><button id="new">＋ Добавить</button></div><div id="accounts"></div><button id="start-all" class="primary full">Запустить два аккаунта</button><p class="muted">Каждый бот работает отдельно. Статус «В мире» появляется после получения серверной позиции.</p></aside>
 <section><div class="section-head"><div><span class="eyebrow">НАСТРОЙКИ БОТА</span><h2 id="heading">Выберите аккаунт</h2></div><span id="badge" class="badge">Остановлен</span></div>
 <div id="readiness" class="hint" aria-live="polite"></div>
-<form id="settings"><div class="grid"><label>Название<input id="label" maxlength="100" placeholder="Например, основной бот"></label><label>Почта Netmarble<input id="email" type="email" required autocomplete="off"></label><label>Пароль Netmarble<input id="password" type="password" maxlength="256" autocomplete="new-password" placeholder="Оставьте пустым, чтобы сохранить текущий"></label><label>Профиль устройства<select id="device"><option value="current-pc">Текущий ПК · общие данные устройства</option></select></label></div>
-<p class="hint">Аккаунты используют наблюдённые данные этого ПК. Пароли зашифрованы Windows; показать сохранённый пароль можно глазиком в таблице.</p>
+<form id="settings"><div class="grid"><label>Название<input id="label" maxlength="100" placeholder="Например, основной бот"></label><label>Почта Netmarble<input id="email" type="email" required autocomplete="off"></label><label>Пароль Netmarble<input id="password" type="password" maxlength="256" autocomplete="new-password" placeholder="Оставьте пустым, чтобы сохранить текущий"></label><label>Профиль устройства<select id="device"><option value="current-pc">Текущий ПК · общие данные устройства</option><option value="custom">Отдельный профиль бота</option></select></label></div>
+<p class="hint">По умолчанию используется этот ПК; отдельный профиль настраивается в пресете ниже. Пароли зашифрованы Windows; показать сохранённый пароль можно глазиком в таблице.</p>
+<details id="connection-settings"><summary>Пресет подключения · устройство и сеть</summary>
+<p class="hint">Единый профиль применяется к этому боту и назначенному персонажу. По умолчанию — текущий ПК и прямой выход. Разные устройства могут использовать один IP. Примеры аппаратных данных не подтверждены как реальные устройства; Windows-протокол остаётся Windows.</p>
+<label>Готовый пресет<select id="connection-preset"><option value="">Ручные настройки</option></select></label>
+<div class="tools"><label>Название нового пресета<input id="preset-name" maxlength="100" placeholder="Например, ПК 2 · общий выход"></label><button id="save-preset" type="button">Сохранить как новый пресет</button></div>
+<p class="muted">В шаблон входят аппаратные настройки и маршрут. Личные ключи не копируются в шаблон: у каждого бота сохраняются свои.</p>
+<div class="grid"><label>Локальный SOCKS-порт<input id="socks-port" type="number" min="1" max="65535" placeholder="Пусто — прямой выход"></label><p class="muted">SOCKS только на 127.0.0.1. Прокси запускается отдельно; при отказе прямого fallback нет. Фактические IP и страна берутся из GMC2, страна регистрации — из аккаунта.</p></div>
+<div id="device-fields" class="grid"></div>
+<button id="generate-device" type="button">Новые постоянные ключи для этого бота</button>
+<p class="muted">Три ключа независимы. Пустые ключи используют существующую привязку ПК. Новые значения сохраняются только кнопкой «Сохранить настройки», не меняются при входе и могут потребовать подтверждения устройства. Все три ключа заполняются вместе.</p>
+</details>
 <label><input id="enabled" type="checkbox" checked> Использовать аккаунт для запуска бота</label>
 <div class="divider"></div><h3>Регистрация Netmarble</h3>
 <label>Пароль почтового ящика<input id="mail-password" type="password" maxlength="256" autocomplete="new-password" placeholder="Для получения кода регистрации по IMAP"></label>

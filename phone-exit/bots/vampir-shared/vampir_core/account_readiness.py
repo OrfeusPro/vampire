@@ -28,7 +28,9 @@ def account_readiness(account, catalogs, character_lists):
         next_step = 'Персонажи уже есть: выбрать существующего; нового не создавать.' if selected is None else 'Персонаж назначен; живой вход проверяется отдельно.'
     else:
         next_step = 'Сохранён пустой список: настроить класс и ник. Перед созданием бот снова проверит список.'
-    return dict(steps=steps, next_step=next_step, route='direct',
-                route_text='Прямой выход ПК; выбор региона не включает VPN.',
+    port = account.get('socks_port')
+    return dict(steps=steps, next_step=next_step, route='direct' if port is None else 'socks5',
+                route_text=('Прямой выход ПК; выбор региона не включает VPN.' if port is None else
+                            'SOCKS 127.0.0.1:' + str(port) + '; IP и страна определяются через этот маршрут.'),
                 live_access_verified=False, catalog_observed_utc=(catalog or {}).get('observed_utc'),
                 characters_observed_utc=(listing or {}).get('observed_utc'))

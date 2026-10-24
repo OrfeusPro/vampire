@@ -177,6 +177,15 @@ class NidSdkRunnerTests(unittest.TestCase):
                 observe_version.return_value = None
                 _, failed_profile, _ = self.runner.load_inputs('fixture@example.invalid', route=self.runner.SocksRoute(17948))
                 self.assertEqual(failed_profile['os_version'], '')
+                from vampir_core.bot_device_settings import new_identity, connection_presets
+                device = dict(connection_presets()[1]['device_settings'], identity=new_identity())
+                custom_binding, custom_profile, _ = self.runner.load_inputs('fixture@example.invalid',
+                    route=self.runner.SocksRoute(17948),device_settings=device)
+                self.assertEqual(custom_binding.device_key,device['identity']['device_key'])
+                self.assertEqual(custom_binding.nid_device_key,device['identity']['nid_device_key'])
+                self.assertEqual(custom_profile['os_version'],'10.0.22631.1.256.64bit')
+                self.assertEqual(custom_profile['country_code'],'HK')
+                self.assertNotEqual(self.binding.device_key,custom_binding.device_key)
                 for wrong in (None, self.runner.SocksRoute(17949)):
                     with self.assertRaisesRegex(ValueError, 'snapshot route differs'):
                         self.runner.load_inputs('fixture@example.invalid', route=wrong)

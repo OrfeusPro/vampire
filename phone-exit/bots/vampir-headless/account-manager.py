@@ -14,6 +14,7 @@ from vampir_core.account_store import AccountStore
 from vampir_core.character_creation_plan import CLASS_CHOICES, random_nickname
 from vampir_core.account_sdk_preparation import validate_sdk_preparation
 from vampir_core.account_readiness import account_readiness
+from vampir_core.bot_device_settings import connection_presets, new_identity
 
 
 class Jobs:
@@ -201,9 +202,11 @@ def server(store, *, port=17949):
             return self.response(200, dict(accounts=accounts, jobs=jobs.snapshot(), catalogs=catalogs,
                 character_lists=lists,
                 readiness={a['id']: account_readiness(a, catalogs, lists) for a in accounts},
+                connection_presets=connection_presets() + store.connection_presets(),
                 creation_attempts=store.creation_attempts(),
                 creation_classes=[dict(key=key, label=label) for key, label in CLASS_CHOICES],
-                device_profiles=[dict(id='current-pc', name='Текущий ПК · общие данные устройства', available=True)]))
+                device_profiles=[dict(id='current-pc', name='Текущий ПК', available=True),
+                                 dict(id='custom', name='Отдельный профиль бота', available=True)]))
 
         def do_POST(self):
             if not self.trusted(True):
@@ -224,6 +227,10 @@ def server(store, *, port=17949):
                     return self.response(200, dict(id=identifier))
                 if self.path == '/api/nickname':
                     return self.response(200, dict(nickname=random_nickname(a.get('create_nickname', '') for a in store.accounts())))
+                if self.path == '/api/device-identity':
+                    return self.response(200, dict(identity=new_identity()))
+                if self.path == '/api/connection-preset':
+                    return self.response(200, dict(id=store.save_connection_preset(body['name'], body['settings'])))
                 if self.path == '/api/reveal':
                     return self.response(200, dict(password=store.reveal_password(body['id'], body['kind'])))
                 if self.path == '/api/job':

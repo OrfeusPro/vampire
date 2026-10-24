@@ -39,6 +39,11 @@ def emit(kind, **values):
 def run(args):
     store = AccountStore(args.store)
     email, password, settings = store.credential(args.account)
+    from vampir_core.bot_device_settings import validate, route_port
+    from vampir_core.socks_route import SocksRoute
+    device = validate(settings.get('device_settings'))
+    port = route_port(settings.get('socks_port'))
+    extras = {'device_settings': device} if device else {}
     if not settings.get('enabled', True):
         raise ValueError('This account is disabled')
     if args.operation not in ('servers', 'characters', 'start', 'register', 'create', 'prepare-sdk'):
@@ -64,7 +69,7 @@ def run(args):
         registry.record_real_nid_identity(email, nid_device_key=identity.nid_device_key,
             source='Observed current Windows PC, account manager')
     if args.operation == 'register':
-        register_account(store, args, email, password)
+        register_account(store, args, email, password, device_settings=device, socks_port=port)
         return
     if getattr(args, 'manual_sign_in', False):
         password = ''
@@ -79,7 +84,7 @@ def run(args):
         tool = load('account_first_sdk', HERE / 'run-nid-sdk-sign-in.py')
         signed_in = tool.run(email, password=password, timeout=300, first_sdk_login=True,
             selected_profile='recovered-release', auth_flow='nid', terms_country=args.terms_country,
-            terms_locale=args.terms_locale, basic_filtered=args.basic_terms_mode == 'filtered-unique', _progress=progress)
+            terms_locale=args.terms_locale, basic_filtered=args.basic_terms_mode == 'filtered-unique', socks_port=port, _progress=progress, **extras)
         password = None
         if type(signed_in) is not SdkSignInData or not signed_in.player_id or not signed_in.access_token:
             raise FirstSdkLoginStopped('sdk_sign_in_result_unknown')
@@ -90,16 +95,16 @@ def run(args):
     emit('phase', stage='configuration')
     cdn = load('account_cdn', HERE.parent / 'resource-tools/vampir/fetch-public-cdn-config.py')
     profile = cdn.profile('recovered-release')
-    body, transport = cdn.fetch(profile['url'])
+    body, transport = cdn.fetch(profile['url'], **({'route': SocksRoute(port)} if port is not None else {}))
     report = dict(profile=profile, transport=transport, body_sha256=cdn.digest(body), body_bytes=len(body),
         fetched_utc=datetime.now(timezone.utc).isoformat(), analysis=cdn.analyze(body))
     manifest, _ = cdn.save(report, body)
     if args.operation == 'servers':
         tool = load('account_lobby', HERE / 'probe-lobby-sdk-login.py')
-        response = tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
+        response = tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=port,
             context='sdk-with-partial-metadata', password=password, read_server_list=True, server_policy_byte=0,
             auth_flow=settings.get('auth_flow', 'launcher'), lobby_region=settings['region'] if settings['region'] in ('EU', 'NA', 'SG') else None,
-            auth_timeout=300, _progress=progress)
+            auth_timeout=300, _progress=progress, **extras)
         password = None
         listing = response.server_list_response
         if listing is None or listing.result_code != 0:
@@ -135,7 +140,7 @@ def run(args):
         emit('phase', stage='character_creation')
         return payload
     def login_attempt():
-        return tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=None,
+        return tool.run(email, selected_profile='recovered-release', manifest_path=manifest, socks_port=port,
             server_policy_byte=0, extra_number=revision, context='windows-sdk-initial-reset', region=settings['region'],
             server_id=settings['server_id'], password=password, auth_flow=settings.get('auth_flow', 'launcher'), language_code=1,
             lobby_context='sdk-with-partial-metadata', read_character_list=True,
@@ -143,7 +148,7 @@ def run(args):
             read_world_start=start_world, read_world_finish=start_world,
             observe_world_seconds=300 if start_world else 0, world_observer=world if start_world else None,
             _progress=progress, _server_list_observer=catalog,
-            creation_factory=prepare_creation if args.operation == 'create' else None)
+            creation_factory=prepare_creation if args.operation == 'create' else None, **extras)
     try:
         result = login_attempt()
         game = result.get('game', {})
@@ -211,7 +216,7 @@ def remember_characters(store, identifier, settings, game):
             characters=game['characters'], observed_utc=datetime.now(timezone.utc).isoformat())
 
 
-def register_account(store, args, email, password):
+def register_account(store, args, email, password, *, device_settings=None, socks_port=None):
     if not args.accept_required_terms:
         raise ValueError('Explicit terms acceptance required')
     if next(a for a in store.accounts() if a['id'] == args.account)['registration_status'] == 'registered':
@@ -235,9 +240,9 @@ def register_account(store, args, email, password):
             raise ValueError('Invalid verification input')
         return value
     try:
-        tool.run(email, password=password, mail_password=mail_password, socks_port=None,
+        tool.run(email, password=password, mail_password=mail_password, socks_port=socks_port,
             selected_profile='recovered-release', timeout=300, accept_required_terms=True, _progress=progress,
-            _code_provider=read_code if args.manual_mail_code else None)
+            _code_provider=read_code if args.manual_mail_code else None, **({'device_settings':device_settings} if device_settings else {}))
     except BaseException:
         account = next(a for a in store.accounts() if a['id'] == args.account)
         if account['registration_status'] == 'email_in_use':
