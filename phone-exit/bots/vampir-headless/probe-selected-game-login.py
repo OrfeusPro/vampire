@@ -119,6 +119,9 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
          read_character_list, character_index, read_world_start, read_world_finish, observe_world_seconds, world_observer, tutorial_observer, ack_initial_tutorial, read_quest_list, quest_observer, quest_wire_observer, state, phase, server_list_observer, creation_factory=None, device_settings=None):
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
+    if getattr(source, 'live_probe_only', False) and (character_index is not None or creation_factory is not None
+            or read_world_start or read_world_finish or observe_world_seconds):
+        raise ValueError('Candidate profile permits Version/Login/list only')
     auth = {}
     selection_proof = {}
     def consume(**values): auth['context'] = AuthForGame(**values)
@@ -231,7 +234,7 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release', 'candidate-11316'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     route_choice = parser.add_mutually_exclusive_group(required=True)
     route_choice.add_argument('--socks-port', type=int)

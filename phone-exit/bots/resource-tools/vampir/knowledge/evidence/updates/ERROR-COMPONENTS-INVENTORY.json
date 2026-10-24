@@ -1,0 +1,319 @@
+{
+  "schema": 1,
+  "source_scope": "historical component inventory; not current runtime binding",
+  "native_source_sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
+  "index_sha256": "c2aa37337cf0b9429d2dbe34b13527d4a5de47b521cb3e10196673e841cd211e",
+  "translation": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\table-study\\ProjectRED-Windows-6106.csv",
+    "sha256": "0139351e6a9c56a86903c24f55d3d90933167661e60994e203b34c34e97110c3",
+    "language": "en",
+    "numeric_code_mapping_verified": false
+  },
+  "components": [
+    {
+      "name": "WBP_MessageBoxConfirmPopup",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\pakchunk500-Windows-559.json",
+      "catalog_sha256": "74c08adc91eab33c5d19a5ce4672177e7a36422669b30331f1c9e57d18ce09f3",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxConfirmPopup"
+      ],
+      "asset_sha256": "6bb9a1910fb0ebd1208b634bb1bd59a1bad5b0d99de365d1567f3bb2a3ef26f7",
+      "body_sha256": "a01f4289493d70f85bbcd65cae322b847e64dad97831333237a68f18f92e435a",
+      "controls": [
+        {
+          "name": "CanvasPanelButton",
+          "type": "CanvasPanel",
+          "export": 7
+        },
+        {
+          "name": "ButtonOk",
+          "type": "NkButton",
+          "export": 23
+        },
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 24
+        },
+        {
+          "name": "TextOk",
+          "type": "NkTextBlock",
+          "export": 25
+        },
+        {
+          "name": "ButtonOkShortKey",
+          "type": "WBP_ShortcutkeyHudT_C",
+          "export": 39
+        }
+      ],
+      "current_resource_verified": false
+    },
+    {
+      "name": "WBP_MessageBoxPopup",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\pakchunk500-Windows-561.json",
+      "catalog_sha256": "3ee449557f1e7f2e65ccad0662f354fc5470d0385cf266161a08f995494a0710",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxPopup"
+      ],
+      "asset_sha256": "4ced75199317a84715d47319f7f78b1ce48c2559221c81511aaf4c07219fcb1c",
+      "body_sha256": "5ec690a70e8120f42f1d5072a3580be3997417b3925ec2564fd7c0a96f532ba1",
+      "controls": [
+        {
+          "name": "CanvasPanelButton",
+          "type": "CanvasPanel",
+          "export": 8
+        },
+        {
+          "name": "ButtonCancel",
+          "type": "NkButton",
+          "export": 28
+        },
+        {
+          "name": "ButtonOk",
+          "type": "NkButton",
+          "export": 29
+        },
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 30
+        },
+        {
+          "name": "TextCloseButton",
+          "type": "NkTextBlock",
+          "export": 31
+        },
+        {
+          "name": "TextOk",
+          "type": "NkTextBlock",
+          "export": 32
+        },
+        {
+          "name": "ButtonOkShortKey",
+          "type": "WBP_ShortcutkeyHudT_C",
+          "export": 47
+        }
+      ],
+      "current_resource_verified": false
+    },
+    {
+      "name": "WBP_SystemMessageBoxPopup",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\pakchunk500-Windows-573.json",
+      "catalog_sha256": "33d3073c228537c4a1028f8e07a97bc8d336d443bb5c36f9418378ebcd2a8da9",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_SystemMessageBoxPopup"
+      ],
+      "asset_sha256": "6d18c0ad62be1cc00fd0e38eace5484da3d7986aaeda909bee900d74f032b313",
+      "body_sha256": "362a6e6300406e665ba1c79a083e8b1cbb48a90067f4989c525a31305d665556",
+      "controls": [
+        {
+          "name": "ButtonCancel",
+          "type": "NkButton",
+          "export": 22
+        },
+        {
+          "name": "ButtonOk",
+          "type": "NkButton",
+          "export": 23
+        },
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 24
+        },
+        {
+          "name": "TextCloseButton",
+          "type": "NkTextBlock",
+          "export": 25
+        },
+        {
+          "name": "TextOk",
+          "type": "NkTextBlock",
+          "export": 26
+        },
+        {
+          "name": "ButtonOkShortKey",
+          "type": "WBP_ShortcutkeyHudT_C",
+          "export": 40
+        }
+      ],
+      "current_resource_verified": false
+    },
+    {
+      "name": "WBP_SystemMessageUI",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\pakchunk500-Windows-575.json",
+      "catalog_sha256": "3d22f2bf9a4b14bac0a911b2a6f00d2dc8bd299a38c3a00da5ac3e825b188f4a",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_SystemMessageUI"
+      ],
+      "asset_sha256": "ee5fb0a3a5deda2aed4fa6b444efbafdf20961011b6afcde4f6f648cbc80f163",
+      "body_sha256": "0e6f339176102fe42b18b3dddb138ceb9480a0b508528e61d2fc2fead34c4739",
+      "controls": [
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 17
+        },
+        {
+          "name": "CommonMessageNotifyLightUI",
+          "type": "WBP_CommonMessageNotifyLightUI_C",
+          "export": 18
+        }
+      ],
+      "current_resource_verified": false
+    },
+    {
+      "name": "WBP_MessageBoxConfirmPopup",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\ProjectRED-Windows-7867.json",
+      "catalog_sha256": "d6592111b6a3f5a69cc0616bbbb99ff229917f03e75df413a9a30c2cc01ca6cb",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxConfirmPopup"
+      ],
+      "asset_sha256": "6bb9a1910fb0ebd1208b634bb1bd59a1bad5b0d99de365d1567f3bb2a3ef26f7",
+      "body_sha256": "a01f4289493d70f85bbcd65cae322b847e64dad97831333237a68f18f92e435a",
+      "controls": [
+        {
+          "name": "CanvasPanelButton",
+          "type": "CanvasPanel",
+          "export": 7
+        },
+        {
+          "name": "ButtonOk",
+          "type": "NkButton",
+          "export": 23
+        },
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 24
+        },
+        {
+          "name": "TextOk",
+          "type": "NkTextBlock",
+          "export": 25
+        },
+        {
+          "name": "ButtonOkShortKey",
+          "type": "WBP_ShortcutkeyHudT_C",
+          "export": 39
+        }
+      ],
+      "current_resource_verified": false
+    },
+    {
+      "name": "WBP_MessageBoxPopup",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\ProjectRED-Windows-7869.json",
+      "catalog_sha256": "deb3789a1b63e23b296188aa911c094dc77fb9ae394e3c9fdb337d9cc76da7b4",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_MessageBoxPopup"
+      ],
+      "asset_sha256": "4ced75199317a84715d47319f7f78b1ce48c2559221c81511aaf4c07219fcb1c",
+      "body_sha256": "5ec690a70e8120f42f1d5072a3580be3997417b3925ec2564fd7c0a96f532ba1",
+      "controls": [
+        {
+          "name": "CanvasPanelButton",
+          "type": "CanvasPanel",
+          "export": 8
+        },
+        {
+          "name": "ButtonCancel",
+          "type": "NkButton",
+          "export": 28
+        },
+        {
+          "name": "ButtonOk",
+          "type": "NkButton",
+          "export": 29
+        },
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 30
+        },
+        {
+          "name": "TextCloseButton",
+          "type": "NkTextBlock",
+          "export": 31
+        },
+        {
+          "name": "TextOk",
+          "type": "NkTextBlock",
+          "export": 32
+        },
+        {
+          "name": "ButtonOkShortKey",
+          "type": "WBP_ShortcutkeyHudT_C",
+          "export": 47
+        }
+      ],
+      "current_resource_verified": false
+    },
+    {
+      "name": "WBP_SystemMessageBoxPopup",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\ProjectRED-Windows-7881.json",
+      "catalog_sha256": "ab90cb07ea5ab99a64f64f6ebda441cd8b4a47833dfd591b074ac83de1e9bbfb",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_SystemMessageBoxPopup"
+      ],
+      "asset_sha256": "6d18c0ad62be1cc00fd0e38eace5484da3d7986aaeda909bee900d74f032b313",
+      "body_sha256": "362a6e6300406e665ba1c79a083e8b1cbb48a90067f4989c525a31305d665556",
+      "controls": [
+        {
+          "name": "ButtonCancel",
+          "type": "NkButton",
+          "export": 22
+        },
+        {
+          "name": "ButtonOk",
+          "type": "NkButton",
+          "export": 23
+        },
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 24
+        },
+        {
+          "name": "TextCloseButton",
+          "type": "NkTextBlock",
+          "export": 25
+        },
+        {
+          "name": "TextOk",
+          "type": "NkTextBlock",
+          "export": 26
+        },
+        {
+          "name": "ButtonOkShortKey",
+          "type": "WBP_ShortcutkeyHudT_C",
+          "export": 40
+        }
+      ],
+      "current_resource_verified": false
+    },
+    {
+      "name": "WBP_SystemMessageUI",
+      "catalog_path": "F:\\PhoneExit Resources\\Vampir\\ui-catalog\\ProjectRED-Windows-7883.json",
+      "catalog_sha256": "e2a6034aca27bb13fb8ec1f74157ccc1770384f9f70594760ee17b8f008b8cf6",
+      "resource_paths": [
+        "/Game/RED/UI/Common/MessageBox/WBP_SystemMessageUI"
+      ],
+      "asset_sha256": "ee5fb0a3a5deda2aed4fa6b444efbafdf20961011b6afcde4f6f648cbc80f163",
+      "body_sha256": "0e6f339176102fe42b18b3dddb138ceb9480a0b508528e61d2fc2fead34c4739",
+      "controls": [
+        {
+          "name": "TextMessage",
+          "type": "NkRichTextBlock",
+          "export": 17
+        },
+        {
+          "name": "CommonMessageNotifyLightUI",
+          "type": "WBP_CommonMessageNotifyLightUI_C",
+          "export": 18
+        }
+      ],
+      "current_resource_verified": false
+    }
+  ],
+  "current_code37_component_binding_verified": false
+}

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "capabilities": [
+    "version",
+    "login",
+    "character-list"
+  ],
+  "live_verified": false,
+  "limits": [
+    "Explicit bounded live probe only; no creation, selection, world, heartbeat or baseline promotion.",
+    "Storage/services fixtures and transport integration remain bounded hypotheses until live observation."
+  ],
+  "reports": [
+    {
+      "path": "knowledge/native-archive-wire-checks/d652099b51404e5f98303095fef45806ab6e1a410e3935adb62f7a3f896ca8f5/manifest.json",
+      "sha256": "d652099b51404e5f98303095fef45806ab6e1a410e3935adb62f7a3f896ca8f5"
+    },
+    {
+      "path": "knowledge/native-login-prepare-checks/5bc837aae7d93a78cc2ad7d0fce92726e0902c376ed8720fef02b3cc328920b9/manifest.json",
+      "sha256": "5bc837aae7d93a78cc2ad7d0fce92726e0902c376ed8720fef02b3cc328920b9"
+    },
+    {
+      "path": "knowledge/native-version-prepare-checks/7a7e0b491b521b14e2ba08fbdd658006d6714204d8b7ba07c63b29c555744715/manifest.json",
+      "sha256": "7a7e0b491b521b14e2ba08fbdd658006d6714204d8b7ba07c63b29c555744715"
+    },
+    {
+      "path": "knowledge/native-version-result-checks/fa8b336e355153dfa03aa8a09b64d250c7cf6359302afc30a50fe693fbe44011/manifest.json",
+      "sha256": "fa8b336e355153dfa03aa8a09b64d250c7cf6359302afc30a50fe693fbe44011"
+    },
+    {
+      "path": "knowledge/native-version-result-handler-checks/b76cdc39c1f96f8e2579620a72fa3cf417379e00f739687c3367de38ee841723/manifest.json",
+      "sha256": "b76cdc39c1f96f8e2579620a72fa3cf417379e00f739687c3367de38ee841723"
+    },
+    {
+      "path": "knowledge/native-login-result-checks/20eb524a9be1311636546ff9e1810fca9582c8cc56330f44df995a759642ae5e/manifest.json",
+      "sha256": "20eb524a9be1311636546ff9e1810fca9582c8cc56330f44df995a759642ae5e"
+    },
+    {
+      "path": "knowledge/native-waiting-end-checks/14711f3d34bb9d5f81402a9e90c8c401a5924210cbf3798301faba84a06a767c/manifest.json",
+      "sha256": "14711f3d34bb9d5f81402a9e90c8c401a5924210cbf3798301faba84a06a767c"
+    },
+    {
+      "path": "knowledge/native-character-list-records-checks/fef3af45fceaa96d4cf7f112d47ce198e7661a995646ea35a72c8b84b45f73f8/manifest.json",
+      "sha256": "fef3af45fceaa96d4cf7f112d47ce198e7661a995646ea35a72c8b84b45f73f8"
+    },
+    {
+      "path": "knowledge/native-character-list-handler-checks/50bb48269e0a5ad0bc2c533ef153253172263e5f4f3762222766ce3a3bbbedfd/manifest.json",
+      "sha256": "50bb48269e0a5ad0bc2c533ef153253172263e5f4f3762222766ce3a3bbbedfd"
+    }
+  ]
+}

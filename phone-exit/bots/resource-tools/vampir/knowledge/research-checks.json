@@ -4839,6 +4839,29 @@
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
         "phone-exit/bots/test_vampir_character_list_handler_context.py"
       ]
+    },
+    {
+      "id": "candidate-game-profile-boundary",
+      "questions": [
+        "release-login-result-reader"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_candidate_game_profile.py",
+      "timeout_seconds": 60,
+      "dependencies": [
+        "phone-exit/bots/vampir-headless/game-source-profile.py",
+        "phone-exit/bots/vampir-headless/game-candidate-11316.json",
+        "phone-exit/bots/vampir-headless/probe-lobby-connection.py",
+        "phone-exit/bots/vampir-headless/probe-lobby-sdk-login.py",
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/resource-tools/vampir/fetch-public-cdn-config.py",
+        "phone-exit/bots/test_vampir_candidate_game_profile.py",
+        "phone-exit/bots/test_vampir_headless_public_cdn.py"
+      ]
     }
   ]
 }

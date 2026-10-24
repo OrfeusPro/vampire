@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "route": "HK Phone Exit SOCKS5 1087",
+  "account": "bot-tw-test@vampir.top",
+  "sdk_joined_country": "JP",
+  "attempts": [
+    {
+      "report": "F:\\PhoneExit Resources\\Vampir\\live-checks\\hk-20261024\\candidate-game-result.json",
+      "sha256": "7e38c49db483af94bb27ba33a50c8895123a68a6531eee91c93e1935f047d237",
+      "server_id": 251,
+      "lobby_result": 0,
+      "game_version_result": 0,
+      "game_login_result": 37,
+      "character_list_sent": false,
+      "character_list_received": false,
+      "creation_sent": false
+    },
+    {
+      "report": "F:\\PhoneExit Resources\\Vampir\\live-checks\\hk-20261024\\candidate-game-256-result.json",
+      "sha256": "9acaa6eed6aaa0a16c630785710bcfae3712d8052aad866dae62f294aab069b6",
+      "server_id": 256,
+      "lobby_result": 0,
+      "game_version_result": 0,
+      "game_login_result": 16,
+      "character_list_sent": false,
+      "character_list_received": false,
+      "creation_sent": false
+    }
+  ],
+  "baseline_promoted": false,
+  "profile_activated": false
+}

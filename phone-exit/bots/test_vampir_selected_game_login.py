@@ -169,6 +169,15 @@ class SelectedGameLoginTests(unittest.TestCase):
         route.assert_not_called()
         self.assertEqual(result['status'], 'selected_lobby_context_not_received')
 
+    def test_candidate_selection_stops_before_auth(self):
+        source = SimpleNamespace(live_probe_only=True)
+        with patch.object(self.tool, 'module', return_value=SimpleNamespace(load_profile=lambda **kwargs: source)) as load:
+            result = self.tool.run('fixture@example.invalid', **dict(self.kwargs(),
+                selected_profile='candidate-11316', read_character_list=True, character_index=0))
+        self.assertEqual(load.call_count, 1)
+        self.assertEqual(result['stage'], 'source_validation')
+        self.assertEqual(result['error_type'], 'ValueError')
+
     def test_wrong_or_closed_lobby_context_never_opens_game_connection(self):
         _, inputs = input_tests.InitialGameLoginTests().inputs()
         target = SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001)
