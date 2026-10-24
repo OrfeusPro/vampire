@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "baseline_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "anchors": [
+    {
+      "id": "ui-nktileview-class",
+      "text": "NkTileView",
+      "encoding": "utf-16le",
+      "baseline_literal": "0x1496538c2",
+      "baseline_root": "0x144a66f20",
+      "required_checks": ["ui-nktileview-refresh-current"]
+    }
+  ],
+  "manual_port_targets": [
+    {
+      "id": "ui-nktileview-layout-flow",
+      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0"],
+      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py"],
+      "required_checks": ["ui-nktileview-refresh-current"],
+      "rule": "Addresses belong only to this plan baseline SHA. Literal matches are candidates; verify getter, table ownership, transfers and port bounded checks before use. Native checks do not validate historical cooked resources or generator rules.",
+      "automation": {
+        "discovery": "exact_literal_candidates_then_explicit_vtable_and_call_edges",
+        "validation": "bounded_replay_for_registered_source_static_inspectors_require_review",
+        "reuse": "Only identical full source SHA and check dependency hashes",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {"address": "0x144a66f20", "scope": "Static getter literals and cached pointer only; property metadata unknown", "required_checks": []},
+              {"address": "0x144a8f220", "scope": "24 bounded wrapper/setter cases; shared helper is a fixture", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x144626640", "scope": "128 positive-integer packing fixtures; 32 complete cached exits, 96 prefixes; fmodf is a fixture", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x144a898e0", "scope": "Static three-block transfer only; producer/property names not recovered", "required_checks": []}
+            ],
+            "evidence": [
+              "evidence/interface/NKTILEVIEW-REGISTRATION-11316.md",
+              "evidence/interface/NKTILEVIEW-REFRESH-11316.md",
+              "evidence/interface/NKTILEVIEW-PACKING-11316.md",
+              "evidence/interface/NKTILEVIEW-PARAMETER-FLOW-11316.md"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

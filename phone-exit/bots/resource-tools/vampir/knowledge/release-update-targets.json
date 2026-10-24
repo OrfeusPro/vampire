@@ -2720,6 +2720,7 @@
     }
   ],
   "additional_target_plans": [
+    "release-ui-list-targets.json",
     "release-gmc2-request-targets.json",
     "release-nid-result-targets.json"
   ]

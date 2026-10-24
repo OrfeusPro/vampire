@@ -5427,6 +5427,80 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Producer/property binding of copied block, field names and units, downstream layout and effect entries, update scheduling/reentrancy."
+    },
+    {
+      "addresses": [
+        "0x144a66f20",
+        "0x144a6a620"
+      ],
+      "checks": [
+        {
+          "cache_key": "f064883b16b46e4d2424a52516663e24b6eb4b68c63881a7b933ffbab6b20769",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8cc462bb26cefae7268dbf13c9116f6a5eb08823daf4f289cc20bc60e1fe0224\\manifest.json",
+          "sha256": "8cc462bb26cefae7268dbf13c9116f6a5eb08823daf4f289cc20bc60e1fe0224",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Limited descriptor-name/offset search did not establish a compatible field description. Comparing 109 code pointers in each observed class table span found13 differing slots; these are candidates, not a complete reflection schema.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\NKTILEVIEW-PARAMETER-FLOW-11316.md",
+          "sha256": "f89097628bc6eff59d9560f92e1ac58f4f4020bf48d0bf80e685fcf4e28ade38"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-92aa17e5e33c\\details.json",
+          "sha256": "fbb61b925bd99ee9c30455c69606b0a74df39658db883a763c40784cbad6f6d8"
+        }
+      ],
+      "id": "fe50d89a1343350b4ce99574b98d9f5678715c8a633d7d87ba452e1bdd11d709",
+      "limits": [
+        "Static instructions and data only, no native execution of new functions.",
+        "Names/units/producers, complete vtable hierarchy, reflection schema and old cooked compatibility not established."
+      ],
+      "method": "static",
+      "next_check": "Find actual writes or metadata linked to the three owner blocks before generation.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Producer and named property binding for owner blocks430/440/450 and entry factory."
+    },
+    {
+      "addresses": [
+        "0x144a82420",
+        "0x144a84a60",
+        "0x144a863d0",
+        "0x144a898e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "f064883b16b46e4d2424a52516663e24b6eb4b68c63881a7b933ffbab6b20769",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8cc462bb26cefae7268dbf13c9116f6a5eb08823daf4f289cc20bc60e1fe0224\\manifest.json",
+          "sha256": "8cc462bb26cefae7268dbf13c9116f6a5eb08823daf4f289cc20bc60e1fe0224",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Four vtable-selected roots in 14 fragments statically show transfers owner+430/+440/+450 to receiver+14b8/+14d0/+14e0. Slot 0xd8 calls slot 0x300; creation path stores owner+408. No writer/producer of source block+430 established.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\NKTILEVIEW-PARAMETER-FLOW-11316.md",
+          "sha256": "f89097628bc6eff59d9560f92e1ac58f4f4020bf48d0bf80e685fcf4e28ade38"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-92aa17e5e33c\\details.json",
+          "sha256": "fbb61b925bd99ee9c30455c69606b0a74df39658db883a763c40784cbad6f6d8"
+        }
+      ],
+      "id": "e4c583fcc30c016f06d174c28e7b0dfd48ddcf14ae461591b944ff04eea57f4b",
+      "limits": [
+        "Static instructions and data only, no native execution of new functions.",
+        "Names/units/producers, complete vtable hierarchy, reflection schema and old cooked compatibility not established."
+      ],
+      "method": "static",
+      "next_check": "Find actual writes or metadata linked to the three owner blocks before generation.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Producer and named property binding for owner blocks430/440/450 and entry factory."
     }
   ],
   "schema": 1,
