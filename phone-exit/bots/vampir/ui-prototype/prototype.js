@@ -5,6 +5,10 @@
   const requestedProfile = new URLSearchParams(location.search).get('bot') || 'demo-01';
   const profile = /^[a-zA-Z0-9_-]{1,48}$/.test(requestedProfile) ? requestedProfile : 'demo-01';
   const storageKey = M.profileKey(profile);
+  let lockManager;
+  try { lockManager = navigator.locks; } catch { /* Ownership stays unavailable. */ }
+  const profileLease = VampirProfileLease.create(lockManager, 'vampir-ui-writer:' + storageKey);
+  let resourcesReady = false, pageActive = true, activationRevision = 0, flowRevision = 0, releasing = Promise.resolve();
   const economy = new URLSearchParams(location.search).get('economy') !== 'off';
   let skillSources, textures, manifest, registry, sourceItems, layouts, buttonLayouts, adapter, storageIssue, storageBlocked = false;
   let screen = 'auth', draft = M.appearance(), undo = [], redo = [], createTab = 'Пресет', toastTimer, busy = false;
@@ -43,9 +47,9 @@
     append(b, image(name), el('span', label)); if (key) append(b, el('kbd', key)); return b;
   }
   function notify(text) { const n = document.getElementById('toast'); n.textContent = text; n.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => n.hidden = true, 4500); }
-  function action(type, payload) { try { adapter.dispatch(type, payload); return true; } catch (error) { info('Действие недоступно', error.message); return false; } }
+  function action(type, payload) { if (!profileLease.owned) { showOwnershipGate({ status: 'released' }); return false; } try { adapter.dispatch(type, payload); return true; } catch (error) { info('Действие недоступно', error.message); return false; } }
   function persist(value) {
-    if (storageBlocked) return;
+    if (storageBlocked || !profileLease.owned) return;
     try { localStorage.setItem(storageKey, JSON.stringify({ dataset: manifest.data_id || manifest.id, state: M.serialize(value) })); }
     catch { storageBlocked = true; storageIssue = 'Не удалось сохранить демо. Текущее состояние доступно до закрытия страницы.'; notify(storageIssue); }
   }
@@ -106,7 +110,7 @@
       append(body, el('p', message), actions);
     });
   }
-  function transition(next) { dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; clearTimeout(skillTimer); screen = next; render(); }
+  function transition(next) { if (!profileLease.owned) return; flowRevision++; dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; clearTimeout(skillTimer); screen = next; render(); }
   function pageTitle(text, back) { const n = el('header', undefined, 'page-title'); append(n, button('❮', back, 'back'), el('h1', text)); return n; }
   function footerNote() { return el('small', 'Демонстрационный режим · игровые команды не отправляются', 'demo-note'); }
   function render() {
@@ -134,7 +138,7 @@
       if (!name.value.trim()) { error.textContent = 'Укажите имя для демонстрации.'; return; }
       if (name.value.trim().toLowerCase() === 'error') { error.textContent = 'Демонстрация отказа входа. Измените имя и повторите.'; return; }
       busy = true; submit.disabled = true; submit.textContent = 'Вход…';
-      password.value = ''; setTimeout(() => { busy = false; transition('servers'); }, 350);
+      password.value = ''; const revision = flowRevision; setTimeout(() => { if (revision !== flowRevision || !profileLease.owned) return; busy = false; transition('servers'); }, 350);
     };
     append(form, field('Имя демопользователя', name), field('Тестовый пароль', password), error, submit);
     append(panel, el('div', 'VAMPIR', 'wordmark'), el('h1', 'Авторизация'), el('p', 'Локальный прототип интерфейса. Используйте вымышленные данные.'), form,
@@ -165,7 +169,7 @@
     const center = el('section', undefined, 'title-center');
     const enter = button('Пожалуйста, коснитесь экрана.', () => {
       if (busy) return; busy = true; enter.disabled = true; enter.textContent = 'Загрузка персонажей…';
-      setTimeout(() => { busy = false; transition('characters'); }, 450);
+      const revision = flowRevision; setTimeout(() => { if (revision !== flowRevision || !profileLease.owned) return; busy = false; transition('characters'); }, 450);
     }, 'enter-game');
     append(center, el('div', 'VAMPIR', 'wordmark'), enter, el('p', '◎ ' + state().region), button(state().server + '  ⟳', () => transition('servers'), 'server-choice'));
     append(app, tools, center);
@@ -259,14 +263,14 @@
     const hud = el('div', undefined, 'hud'); hud.id = 'hud'; append(app, holder, hud); updateMapActivity(); refreshHud();
   }
   function updateMapActivity() {
-    const holder = document.getElementById('map-holder'); if (!holder) return;
+    const holder = document.getElementById('map-holder'); if (!holder || !profileLease.owned) return;
     const active = !document.hidden && (!economy || document.hasFocus());
     if (!active) {
       if (gameFrame() || !holder.firstChild) holder.replaceChildren(button('Карта приостановлена · активируйте окно', () => { window.focus(); mountMap(); }, 'map-paused'));
     } else if (!gameFrame()) mountMap();
   }
   function mountMap() {
-    const holder = document.getElementById('map-holder'); if (!holder || gameFrame()) return;
+    const holder = document.getElementById('map-holder'); if (!holder || !profileLease.owned || gameFrame()) return;
     const frame = el('iframe'); frame.id = 'world'; frame.title = '2D-карта игрового мира'; frame.src = 'map.html'; frame.onload = mapState; holder.replaceChildren(frame);
   }
   function refreshHud() {
@@ -459,6 +463,7 @@
     });
   }
   function resetDemo() {
+    if (!profileLease.owned) { showOwnershipGate({ status: 'released' }); return; }
     try { localStorage.removeItem(storageKey); storageBlocked = false; storageIssue = null; }
     catch { storageBlocked = true; storageIssue = 'Хранилище недоступно. Сброшено только состояние текущей страницы.'; }
     setAdapter(M.initial()); persist(state()); transition('auth');
@@ -575,19 +580,63 @@
       append(body, el('p', 'Набор интерфейса: ' + manifest.id), el('p', 'Дата сборки: ' + manifest.built_at), el('p', 'Клиент SHA256: ' + (manifest.client.sha256 || 'недоступен')), el('p', 'Совместимость с клиентом: не подтверждена'), el('p', 'Каталог UI SHA256: ' + manifest.inputs['ui-catalog/index.json']), el('p', 'Демосохранение: схема ' + M.SCHEMA), el('p', storageIssue || 'Хранилище доступно.'), el('p', layouts.limits));
       body.append(button('Размещение окон: источники', () => modal('Размещение окон', b => b.append(el('pre', JSON.stringify(layouts, null, 2))), 'catalog-window')));
       body.append(button('Расположение кнопок: источники', () => modal('Расположение кнопок', b => b.append(el('pre', JSON.stringify(buttonLayouts, null, 2))), 'catalog-window')));
-      append(body, el('p', 'Окно бота: ' + profile + ' · экономичный режим: ' + (economy ? 'включён' : 'выключен')), el('p', 'Для отдельного окна используйте ?bot=demo-02 … ?bot=demo-50. Тяжёлые данные каталога загружаются по запросу.'));
+      append(body, el('p', 'Владение ID: ' + (profileLease.owned ? 'это окно' : 'отсутствует')), el('p', 'Окно бота: ' + profile + ' · экономичный режим: ' + (economy ? 'включён' : 'выключен')), el('p', 'Для отдельного окна используйте ?bot=demo-02 … ?bot=demo-50. Тяжёлые данные каталога загружаются по запросу.'));
+      body.append(button('Освободить ID бота', releaseProfile));
       manifest.limits.forEach(text => body.append(el('p', text)));
       body.append(button('Сбросить локальное демо', () => confirm('Сброс демо', 'Сохранённое демосостояние будет удалено. Реальные профили не затрагиваются.', resetDemo)));
     }, 'catalog-window');
   }
   function setAdapter(initial) {
-    adapter = M.adapter(initial, (value, type) => {
+    const local = M.adapter(initial, (value, type) => {
       persist(value); document.documentElement.style.setProperty('--user-scale', value.settings.scale / 100);
       updateButtonGeometry();
       if (screen === 'game') refreshHud();
       // Changes redraw view-only dialogs. Preserve forms and controls being edited.
       for (const d of [...dialogs]) if (d.open && !d.contains(document.activeElement?.closest('input,select'))) renderers.get(d)?.();
     });
+    adapter = { get state() { return local.state; }, dispatch(type, payload) {
+      if (!profileLease.owned) throw Error('ID бота не принадлежит этому окну. Получите управление заново.');
+      return local.dispatch(type, payload);
+    } };
+  }
+  function showOwnershipGate(result) {
+    activationRevision++; flowRevision++; busy = false; screen = 'ownership';
+    clearTimeout(toastTimer); clearTimeout(skillTimer); cancelAnimationFrame(geometryFrame);
+    document.getElementById('toast').hidden = true;
+    dialogs.slice().reverse().forEach(closeDialog);
+    adapter = null;
+    document.getElementById('inspector').hidden = true;
+    app.className = 'screen screen-auth';
+    const panel = el('section', undefined, 'auth-panel ownership-panel');
+    const occupied = result.status === 'occupied', released = result.status === 'released';
+    append(panel, el('h1', occupied ? 'ID бота уже открыт' : released ? 'Управление освобождено' : 'Владение ID недоступно'),
+      el('p', 'ID окна: ' + profile),
+      el('p', occupied ? 'Другое окно управляет этим ID. Здесь демосостояние не загружается и не изменяется.' : released ? 'Это окно не изменяет демосостояние. Для продолжения получите управление и загрузите актуальное сохранение.' : 'Браузер не предоставил Web Locks. Одновременная безопасная запись недоступна; интерфейс демо не запущен.'),
+      button('Получить управление', activateProfile, 'primary'),
+      el('small', 'Для другого бота откройте страницу с отдельным ?bot=demo-02 … ?bot=demo-50. Проверка владения повторяется только по нажатию.'));
+    app.replaceChildren(panel);
+  }
+  function releaseProfile() {
+    releasing = profileLease.release();
+    showOwnershipGate({ status: 'released' });
+  }
+  async function activateProfile() {
+    if (!resourcesReady || !pageActive) return;
+    const revision = ++activationRevision;
+    const retry = app.querySelector('.auth-panel button'); if (retry) retry.disabled = true;
+    await releasing;
+    if (!pageActive || revision !== activationRevision) return;
+    const result = await profileLease.acquire();
+    if (!pageActive || revision !== activationRevision) return;
+    if (result.status !== 'owned') { showOwnershipGate(result); return; }
+    let loaded;
+    try { loaded = M.load(localStorage, manifest.data_id || manifest.id, profile); }
+    catch { loaded = { state: M.initial(), issue: 'Хранилище недоступно. Работа продолжается без сохранения.' }; }
+    storageIssue = loaded.issue; storageBlocked = !!storageIssue; setAdapter(loaded.state);
+    document.documentElement.style.setProperty('--user-scale', loaded.state.settings.scale / 100);
+    document.getElementById('inspector').hidden = false;
+    transition('auth');
+    if (storageIssue) info('Демосохранение требует проверки', storageIssue);
   }
   async function fetchJSON(url) { const r = await fetch(url); if (!r.ok) throw Error(url + ': HTTP ' + r.status); return r.json(); }
   addEventListener('message', event => {
@@ -611,17 +660,16 @@
     if (event.key.toLowerCase() === 'm') openWorldMap();
     if (event.key === 'Enter') openSection('Чат');
   });
+  document.getElementById('inspector').hidden = true;
+  addEventListener('pagehide', () => { pageActive = false; releaseProfile(); });
+  addEventListener('pageshow', event => { pageActive = true; if (event.persisted) activateProfile(); });
   Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls, skills]) => {
     skillSources = skills; textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
     if (manifest.state_schema !== M.SCHEMA) throw Error('Версия модели не соответствует manifest этой сборки.');
-    let loaded;
-    try { loaded = M.load(localStorage, manifest.data_id || manifest.id, profile); }
-    catch { loaded = { state: M.initial(), issue: 'Хранилище недоступно. Работа продолжается без сохранения.' }; }
-    storageIssue = loaded.issue; storageBlocked = !!storageIssue; setAdapter(loaded.state);
     document.title = 'Vampir · ' + profile;
     for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256'], ['button-press', 'BTN_ConfirmRed256_Press'], ['normal-bg', 'BTN_ConfirmBlack256'], ['normal-press', 'BTN_ConfirmBlack256_Press']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');
-    document.getElementById('inspector').onclick = () => openInspector(); render();
-    geometryObserver.observe(app);
-    if (storageIssue) info('Демосохранение требует проверки', storageIssue);
+    document.getElementById('inspector').onclick = () => openInspector();
+    geometryObserver.observe(app); resourcesReady = true;
+    return activateProfile();
   }).catch(error => { app.replaceChildren(el('h1', 'Не удалось загрузить интерфейс'), el('p', error.message), button('Повторить', () => location.reload())); });
 })();
