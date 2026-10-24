@@ -12,12 +12,16 @@
 также проверены отдельными компонентами, включая повторные ключи и коллизии.
 Целый reader списка уже прошёл общий прогон на одной памяти: разные записи
 сохраняют свои строки и коллекции, частичные ответы отклоняются.
-Далее — регистрация и обработчик ответа, затем подготовка игрового профиля.
+Регистрация и handler ответа проверены отдельно в 101 сценарии. Пустой список
+в native UI сохраняет index 0; это не наличие персонажа и не команда создания.
+Далее — ограниченный source-bound профиль для отдельной живой проверки и
+оставшиеся clock/transport/create checks.
 [Инициатор](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-WAITING-END-11316.md),
 [ответ и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md).
 [Проверка записи персонажа](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-RECORD-11316.md).
 [Непустые коллекции](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-EXTENSIONS-11316.md).
 [Общий reader списка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-RECORDS-11316.md).
+[Регистрация и handler](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-HANDLER-11316.md).
 Профиль текущей сборки ещё не активирован; живое создание не выполнено.
 
 Post-state wrapper/tail callee прошли 44 native сценария; отказ Ghidra устранён

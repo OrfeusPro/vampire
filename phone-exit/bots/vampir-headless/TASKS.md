@@ -5,6 +5,13 @@ Netmarble/SDK launcher sign-in прошёл; игровой профиль ос�
 источника, до Game Login и списка. [Проверка и следующий шаг](LIVE-HK-CHECK.md).
 Завершить профиль текущей сборки; затем список и Carnage только при пустом списке.
 
+Регистрация и handler ID 102 прошли 101 сценарий на synthetic packet/services:
+публикация только при code 0 и policy 1, preferred first-match, native empty
+index 0 и общий mode 6. Пустое тело запроса ID 101 подтверждено отдельно.
+Далее — source-bound профиль для живого probe и оставшиеся clock/transport/create
+checks; общий reader-handler ещё не исполнен.
+[Условия и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-HANDLER-11316.md).
+
 Целый reader списка, записи и непустые коллекции проверены на общей памяти:
 32 полных ответа с разными персонажами, 291 короткий ввод и 154 отказа.
 Частичный список не принимается; storage/copy/cleanup остаются fixtures.

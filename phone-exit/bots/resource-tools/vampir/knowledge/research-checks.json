@@ -4816,6 +4816,29 @@
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
         "phone-exit/bots/test_vampir_character_list_records_context.py"
       ]
+    },
+    {
+      "id": "native-character-list-handler-context",
+      "questions": [
+        "release-login-result-reader"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_character_list_handler_context.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/verify-character-list-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-handler-11316.json",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/verify-character-record-context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_list.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/test_vampir_character_list_handler_context.py"
+      ]
     }
   ]
 }

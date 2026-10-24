@@ -679,7 +679,8 @@
         "native-character-list-envelope-context",
         "native-character-record-context",
         "native-character-extensions-context",
-        "native-character-list-records-context"
+        "native-character-list-records-context",
+        "native-character-list-handler-context"
       ],
       "recipes": [
         {
@@ -777,6 +778,10 @@
         {
           "key": "optional-value-reader",
           "method": "reviewed"
+        },
+        {
+          "key": "result-handler",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -804,7 +809,8 @@
           "optional-insert": "0x1456bd7a0",
           "optional-pair-constructor": "0x1456bbbd0",
           "optional-value-constructor": "0x1457841c0",
-          "optional-value-reader": "0x1457893b0"
+          "optional-value-reader": "0x1457893b0",
+          "result-handler": "0x146796360"
         }
       },
       "resources": [],
@@ -813,13 +819,14 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Whole list/records/collections проверены на общей памяти: 32 полных ответа, 291 короткий ввод, 154 отказа и distinct records. Перенести current result registration/handler и publication/empty-create gates; source profile/clock ещё неполны.",
+      "next_check": "Current registration/handler/gate/policy и request ID101 empty writer подтверждены отдельно от whole reader. Подготовить source-bound ограниченный профиль для живой проверки и необходимые clock/transport/creation checks; UI/services/dispatcher и shared reader-handler не доказаны.",
       "targets": [
         "native-waiting-end-current",
         "native-character-list-envelope-current",
         "native-character-record-current",
         "native-character-extensions-current",
-        "native-character-list-records-current"
+        "native-character-list-records-current",
+        "native-character-list-handler-current"
       ]
     },
     {

@@ -2633,6 +2633,54 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-character-list-handler-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-character-list-handler-context.py"
+      ],
+      "rule": "Проверить ID102 registration/handler/gate/policy, preferred scan/state stores, ID101 empty writer и peer reset. Empty native index 0 не означает персонажа; mode 6 не доказывает create request.",
+      "automation": {
+        "discovery": "reviewed_packet_registration_and_handler_callees",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x146796360",
+                "scope": "101 handler scenarios on synthetic packet/services; no shared reader-handler, UI lifecycle or live session.",
+                "required_checks": [
+                  "native-character-list-handler-context"
+                ]
+              },
+              {
+                "address": "0x1467cd7b0",
+                "scope": "101 handler scenarios on synthetic packet/services; no shared reader-handler, UI lifecycle or live session.",
+                "required_checks": [
+                  "native-character-list-handler-context"
+                ]
+              },
+              {
+                "address": "0x145c9ad90",
+                "scope": "101 handler scenarios on synthetic packet/services; no shared reader-handler, UI lifecycle or live session.",
+                "required_checks": [
+                  "native-character-list-handler-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-list-handler-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-HANDLER-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [
