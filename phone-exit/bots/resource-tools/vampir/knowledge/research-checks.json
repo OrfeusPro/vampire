@@ -15,13 +15,15 @@
         "phone-exit/bots/resource-tools/vampir/replay-nktileview-packing.py",
         "phone-exit/bots/resource-tools/vampir/replay-nktileview-scroll-style.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-resource-setter.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ui-content-config.py",
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
         "phone-exit/bots/resource-tools/vampir/inspect-nktileview-registration.py",
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py"
       ],
       "artifact_dependencies": [
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-b9b6aa537efc/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-b9b6aa537efc/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-40f646b1556a/details.json"
       ]
     },
     {

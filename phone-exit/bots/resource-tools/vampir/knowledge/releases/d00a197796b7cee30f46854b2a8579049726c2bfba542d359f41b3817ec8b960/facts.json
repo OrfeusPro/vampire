@@ -5613,6 +5613,42 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Full config reader/precedence, native string helper edge cases, active mounted prefix and actual resource binding."
+    },
+    {
+      "addresses": [
+        "0x1445c2c30"
+      ],
+      "checks": [
+        {
+          "cache_key": "004efcde462b1a0fda3bcfeeb399b700dc47039720639d3980cc391cb47d182a",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dca198d32492070e6adc3e9dfa2dcefacf35c5147b759474615d312eb3f1164f\\manifest.json",
+          "sha256": "dca198d32492070e6adc3e9dfa2dcefacf35c5147b759474615d312eb3f1164f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Начальная ветвь 1445c2c30 до 1445c2cb4 использует global config object и virtual lookup +0x58; missing обходит string assignment, present передаёт data и UTF16 length без terminator (0 при length 0). Проверены 26 prefixes с lookup/string fixtures; весь reader не исполнен.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONTENT-CONFIG-11316.md",
+          "sha256": "e5eb6a38ff8221c61dfd5432248a2354a50cda52223463a028da78c6c5963ea8"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-40f646b1556a\\details.json",
+          "sha256": "7e531a5bd23c58ae8711644f28467b7ff0701183f1b3718da4b8703760cfc869"
+        }
+      ],
+      "id": "9867dab1e2d1ed36fc2383ddd173a24a2e4dab09c8180ae808506af24e8d2e04",
+      "limits": [
+        "Глобальный объект всегда присутствует; его отсутствие и invalid state не моделируются.",
+        "Lookup и string assignment заменены fixtures, native allocation / config precedence не исполняются.",
+        "Остановка до callback setup; вывод не распространяется на последующие события, cleanup и полный возврат."
+      ],
+      "method": "bounded_native",
+      "next_check": "Отдельный запрос для 1445c1f50 и callback addresses 1445c78d0 / 1445c7970 из инструкций; проверить границы и роли до native исполнения.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Callbacks, global initialization / precedence, native string helpers, active resource и Brush binding."
     }
   ],
   "schema": 1,

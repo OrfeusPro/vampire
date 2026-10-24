@@ -13,9 +13,24 @@ spec = importlib.util.spec_from_file_location('tile_scroll_style_replay', HERE /
 scroll_style = importlib.util.module_from_spec(spec); spec.loader.exec_module(scroll_style)
 spec = importlib.util.spec_from_file_location('ui_resource_setter_replay', HERE / 'replay-ui-resource-setter.py')
 resource_setter = importlib.util.module_from_spec(spec); spec.loader.exec_module(resource_setter)
+spec = importlib.util.spec_from_file_location('ui_content_config_replay', HERE / 'replay-ui-content-config.py')
+content_config = importlib.util.module_from_spec(spec); spec.loader.exec_module(content_config)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_config_lookup_prefix_and_missing_assignment(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = content_config.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address='0x1445c2c30')]))
+        self.assertEqual(len(result['cases']), 26)
+        self.assertEqual(sum(c['zero_length_fstring_fixture'] for c in result['cases']), 2)
+        for case in result['cases']:
+            self.assertEqual(case['lookup_calls'], 1)
+            self.assertEqual(len(case['assignment_calls']), int(case['found_fixture']))
+            self.assertTrue(case['stopped_before_callback_setup'])
+            if case['found_fixture']:
+                self.assertEqual(case['assignment_calls'][0]['utf16_units'], len(case['value_fixture'].encode('utf-16le')) // 2)
+
     def test_native_resource_setter_identity_and_cache_invalidation(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = resource_setter.run(dict(source=source, source_sha256=replay.getter.SHA,
