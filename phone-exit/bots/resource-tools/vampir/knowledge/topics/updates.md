@@ -54,6 +54,7 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Metadata внутри целого Login 1.13.16](../evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md)
 - [Reader игрового LoginResult 1.13.16](../evidence/updates/HEADLESS-LOGIN-RESULT-11316.md)
 - [Native числовой input archive в LoginResult 1.13.16](../evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md)
+- [Native строковое чтение LoginResult 1.13.16](../evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md)
 - [SDK getters внутри Login 1.13.16](../evidence/updates/HEADLESS-LOGIN-SDK-11316.md)
 - [Описания модулей base и patch](../evidence/updates/HEADLESS-MODULE-DESCRIPTORS.md)
 - [Version / Login 1.13.16: порядок полей и отказы writers](../evidence/updates/HEADLESS-PACKET-WRITERS-11316.md)

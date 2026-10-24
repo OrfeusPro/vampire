@@ -38,14 +38,19 @@
   [Интеграция и следующие проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md).
 - Текущие LoginResult/nested constructors/readers проверены с archive fixtures:
   320 полных случаев, 332 коротких префикса, 25 отказов; прежний Python decoder
-  совпал по полям. Actual input primitives/UTF-8 и handler/dispatch ещё открыты.
+  совпал по полям. Следующие этапы input primitives/UTF-8 приведены ниже;
+  handler/dispatch ещё открыты.
   [Привязки и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-11316.md).
 - Числовой input archive / raw IO / bool normalization включены в LoginResult:
   320 полных случаев, 332 коротких префикса и 25 отказов повторены native.
-  FString/UTF-8 и concrete buffer constructor остаются открытыми.
+  FString/UTF-8 перенесены следующим этапом ниже; concrete buffer constructor открыт.
   [Границы ввода и новые проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md).
+- FString/std::string/UTF-8 исполняются native в общем LoginResult: 160 различных
+  полных случаев, 4 границы размеров, 332 коротких тела, 25 отказов и 6 специальных
+  строк. Storage / buffer fixtures и handler/dispatch ещё открыты.
+  [Политика UTF-8 и границы проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
-  и прочие зависимости Login, интеграция writer/archive, actual FString/UTF-8 input
+  и прочие зависимости Login, интеграция writer/archive, реальные storage primitives
   и handler/dispatch результата. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.
 

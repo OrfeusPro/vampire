@@ -1,0 +1,306 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "functions": {
+    "constructor": "0x1456d7690",
+    "reader": "0x1456dc140",
+    "time_constructor": "0x1457a3500",
+    "period_constructor": "0x1457a23a0",
+    "time_reader": "0x1457fdce0",
+    "period_reader": "0x1457a5820"
+  },
+  "exports": {
+    "run-3c0581002a58": "9b73422747e785cc55dff3fe0559cac75521c2a020021d7536f56572c9e23945",
+    "run-cfe450e70430": "08ceca13a1eef50edbb9e38ac4d3f63b1d0880e4dd5455f3b0257cfff49c93a6"
+  },
+  "packet_table": "0x149926590",
+  "time_table": "0x14991f3b8",
+  "period_table": "0x149926548",
+  "id_getter": "0x141453c40",
+  "leaves": {
+    "0x1457fdaf0": {
+      "bytes": "488d05c118120448c7410800000000488901488bc1c3",
+      "sha256": "1f2d53d8adba287a86fde40f31874ca32464dfbbcfb66499091876cff96a487c"
+    },
+    "0x141453c40": {
+      "bytes": "b804000000c3",
+      "sha256": "e36623525b7c35b277173e56616b2d865cf6515aa2be1d12d6814ef725cecffb"
+    },
+    "0x144aad190": {
+      "bytes": "488b024c8bc2488bd1498bc848ff6020",
+      "sha256": "87c7aeb6a627b8c042931a5ac499fc1d65a5eb46d4e6216d29ca570147fa0e59"
+    }
+  },
+  "fixtures": {
+    "string": "0x144aacfd0",
+    "time": "0x2800d000",
+    "u64": "0x2800d010",
+    "u32": "0x2800d020",
+    "raw32": "0x2800d030",
+    "u16": "0x2800d040",
+    "bool": "0x2800d050"
+  },
+  "tables": [
+    {
+      "address": "0x149926590",
+      "bytes": "40a16d4501000000b03a404101000000d0856e4501000000b03a40410100000040c16d4501000000403c454101000000b03a404101000000e0606e4501000000902f6e4501000000",
+      "sha256": "420fc258f70e6a553a97c44f5bbae56a1f6b7d75debc05a0d512f87514eefcda"
+    },
+    {
+      "address": "0x14991f3b8",
+      "bytes": "c06a6b4501000000b03a40410100000070e07f4501000000b03a404101000000e0dc7f450100000050a36b4501000000",
+      "sha256": "210058d270a81d062639f5fed3c0ccde70fcf646d0e583c0ed3bee8541bcc1fd"
+    },
+    {
+      "address": "0x149926548",
+      "bytes": "70a26d4501000000b03a40410100000060a27a4501000000b03a40410100000020587a4501000000c0626e4501000000",
+      "sha256": "7f3dd8c479277005d1c4a83a2ea7faf05bca541f2949a3d5c84f5de4b3f1285d"
+    },
+    {
+      "address": "0x1499265e0",
+      "bytes": "506b744c6f67696e526573756c7400",
+      "sha256": "79170b6c8010c2b01084966ebc23efe65ff77df6416f9cdd230192e92f0f333f"
+    }
+  ],
+  "call_sites": {
+    "0x1456d76cc": {
+      "target": "0x1457a3500"
+    },
+    "0x1456d770b": {
+      "target": "0x1457a3500"
+    },
+    "0x1456d7733": {
+      "target": "0x1457a23a0"
+    },
+    "0x1456dc15a": {
+      "target": "qword ptr [rax + 0x58]"
+    },
+    "0x1456dc16c": {
+      "target": "0x144aacfd0"
+    },
+    "0x1456dc180": {
+      "target": "0x144aacfd0"
+    },
+    "0x1456dc194": {
+      "target": "0x144aacfd0"
+    },
+    "0x1456dc1ab": {
+      "target": "qword ptr [rax + 0x70]"
+    },
+    "0x1456dc1bd": {
+      "target": "0x144aad190"
+    },
+    "0x1456dc1d4": {
+      "target": "qword ptr [rax + 0x70]"
+    },
+    "0x1456dc1e9": {
+      "target": "qword ptr [rax + 0x50]"
+    },
+    "0x1456dc1fb": {
+      "target": "0x144aacfd0"
+    },
+    "0x1456dc215": {
+      "target": "qword ptr [rax + 0x50]"
+    },
+    "0x1456dc22d": {
+      "target": "qword ptr [rax + 0x88]"
+    },
+    "0x1456dc245": {
+      "target": "0x144aacfd0"
+    },
+    "0x1456dc25f": {
+      "target": "qword ptr [rax + 0x88]"
+    },
+    "0x1456dc277": {
+      "target": "0x144aad190"
+    },
+    "0x1456dc28e": {
+      "target": "0x144aacfd0"
+    },
+    "0x1456dc2a1": {
+      "target": "0x144aacfd0"
+    },
+    "0x1456dc2b4": {
+      "target": "0x144aad190"
+    },
+    "0x1456dc2ca": {
+      "target": "qword ptr [rax + 0x60]"
+    },
+    "0x1456dc2de": {
+      "target": "qword ptr [rax + 0x60]"
+    },
+    "0x1456dc2f2": {
+      "target": "qword ptr [rax + 0x88]"
+    },
+    "0x1457a3509": {
+      "target": "0x1457fdaf0"
+    },
+    "0x1457a23c4": {
+      "target": "0x1457fdaf0"
+    },
+    "0x1457a23d8": {
+      "target": "0x1457fdaf0"
+    },
+    "0x1457a23e5": {
+      "target": "0x1457fdaf0"
+    },
+    "0x1457a23f2": {
+      "target": "0x1457fdaf0"
+    },
+    "0x1457fdcf1": {
+      "target": "qword ptr [rax + 0x28]"
+    },
+    "0x1457a583a": {
+      "target": "qword ptr [rax + 0x88]"
+    },
+    "0x1457a584b": {
+      "target": "0x144aad190"
+    },
+    "0x1457a585b": {
+      "target": "0x144aad190"
+    },
+    "0x1457a586b": {
+      "target": "0x144aad190"
+    },
+    "0x1457a587b": {
+      "target": "0x144aad190"
+    },
+    "0x1457a588e": {
+      "target": "qword ptr [rax + 0x88]"
+    }
+  },
+  "native_input": {
+    "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+    "exports": {
+      "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+      "run-4ef2b735941d": "81d790be1d457535a6cf9ab5a70d56ea4208dc83c79783c0b64ef1ba75bc3a8e",
+      "run-81d1e191e8c5": "0e221782b32811ff26ed05661b0a539e2781693a4c4c26357a77a39d3503e2e5",
+      "run-2fe73e379c6f": "f11b8a560a8a05ee7bffdd64cf18fb3c7cb87daa945758b3d98c74ce38b9b226"
+    },
+    "functions": {
+      "constructor": "0x144aac190",
+      "u16": "0x144aac250",
+      "u32": "0x144aac2a0",
+      "time": "0x144aac470",
+      "u64": "0x144aac4a0",
+      "bool": "0x144aac4f0",
+      "raw": "0x144aac5c0",
+      "string": "0x144aacfd0",
+      "std_string": "0x144aac390",
+      "utf8_length": "0x14144c440",
+      "utf8_convert": "0x1414466a0",
+      "utf8_core": "0x14143bd30",
+      "utf8_scalar": "0x14143b9a0"
+    },
+    "leaves": {
+      "0x144aace10": {
+        "bytes": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+        "sha256": "761c7c524a7e8e3f43af08beeec9ada9786b6b78ce1aed34e54e2824bcb0036d"
+      },
+      "0x144aad1a0": {
+        "bytes": "895110c3",
+        "sha256": "3118e42787a6f4545e3111ffd4f059154e0a2d5899f7b46c609eb89fb299f2b4"
+      },
+      "0x144aac240": {
+        "bytes": "488b0141b80100000048ffa090000000",
+        "sha256": "f18be45431396ae7b48a88f58df8279b2ddf521f9671b9591d2182bd4946b1c7"
+      }
+    },
+    "table": "0x1496706e8",
+    "call_sites": {
+      "0x144aac199": {
+        "target": "0x144aace10"
+      },
+      "0x144aac269": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac287": {
+        "target": "0x1445e03e0"
+      },
+      "0x144aac2b9": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac2d6": {
+        "target": "0x1445e03f0"
+      },
+      "0x144aac481": {
+        "target": "qword ptr [rax + 0x50]"
+      },
+      "0x144aac4b9": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac4d7": {
+        "target": "0x1445e0420"
+      },
+      "0x144aac50c": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac5fb": {
+        "target": "0x1487f5ab9"
+      },
+      "0x144aac609": {
+        "target": "0x144aad1a0"
+      },
+      "0x144aad019": {
+        "target": "qword ptr [rax + 0x30]"
+      },
+      "0x144aad072": {
+        "target": "0x14144c440"
+      },
+      "0x144aad0ae": {
+        "target": "0x141436cc0"
+      },
+      "0x144aad0d8": {
+        "target": "0x1414466a0"
+      },
+      "0x144aad101": {
+        "target": "0x1414277b0"
+      },
+      "0x144aad11b": {
+        "target": "0x141483080"
+      },
+      "0x144aad15e": {
+        "target": "qword ptr [rip + 0x3eeeeb4]"
+      },
+      "0x144aad165": {
+        "target": "0x141431f80"
+      },
+      "0x144aad178": {
+        "target": "0x1487e8ce0"
+      },
+      "0x144aac3c2": {
+        "target": "qword ptr [rax + 0x68]"
+      },
+      "0x144aac3eb": {
+        "target": "qword ptr [rax + 0x78]"
+      },
+      "0x144aac436": {
+        "target": "0x1421e7340"
+      },
+      "0x14144c4c1": {
+        "target": "0x14143b9a0"
+      },
+      "0x1414466ae": {
+        "target": "0x14143bd30"
+      },
+      "0x14143be67": {
+        "target": "0x14143b9a0"
+      }
+    },
+    "table_bytes": "f0c1aa440100000030c6aa4401000000a0c6aa440100000030c5aa440100000070c4aa440100000070c4aa440100000090c3aa440100000040c3aa4401000000f0c2aa4401000000a0c4aa4401000000a0c4aa4401000000a0c2aa4401000000a0c2aa440100000050c2aa440100000050c2aa440100000040c2aa440100000040c2aa4401000000f0c4aa4401000000c0c5aa4401000000",
+    "string_fixtures": {
+      "growth": "0x1421e7340",
+      "utf16_allocate": "0x141436cc0",
+      "assign": "0x1414277b0",
+      "free": "0x141483080",
+      "cpp_free": "0x141431f80",
+      "security": "0x1487e8ce0"
+    },
+    "cookie": "0x14b271780"
+  },
+  "function_budget": 19
+}

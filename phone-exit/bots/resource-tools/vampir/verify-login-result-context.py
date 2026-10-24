@@ -129,6 +129,8 @@ def verify(context, root):
 
     fixture = {key: int(at, 16) for key, at in context['fixtures'].items()}
     for kind, at in fixture.items():
+        if input_ and input_.get('string_fixtures'):
+            continue
         if input_ and kind != 'string':
             continue
         h.add_fixture(at, archive_fixture(kind))
@@ -139,6 +141,8 @@ def verify(context, root):
     if input_:
         seed_input, input_position, set_input_position, check_input = load('login-result-input-fixtures').install(
             load, h, input_, state, packet, archive, ORDER)
+        if input_.get('string_fixtures'):
+            load('login-result-string-fixtures').install(load, h, input_, state, packet, STRINGS)
     all_tables = ((0, packet_table), (0x50, time_table), (0xa8, time_table), (0xd8, period_table)) + tuple(
         (off, time_table) for off in (0xe8, 0xf8, 0x108, 0x118))
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
@@ -157,6 +161,9 @@ def verify(context, root):
         state.clear()
         state.update(body=body, position=0, operations=[], written=[], heap=h.scratch + 0x10000,
                      allocations={}, fail_at=fail_at, primitive_true=primitive_true)
+        if input_ and input_.get('string_fixtures'):
+            # Explicit initial stack contents; malformed conversion may consume its NUL.
+            h.uc.mem_write(h.scratch + 0x30000, bytes(0x8000))
         h.uc.mem_write(packet - 16, b'\xa5' * 16 + bytes([poison]) * 0x140 + b'\xa6' * 16)
         h.call(functions['constructor'], packet)
         if input_:
@@ -165,7 +172,7 @@ def verify(context, root):
         for name, value in abi.items():
             h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + name), value)
         h.uc.reg_write(h.x.UC_X86_REG_RDX, archive)
-        returned = h.call(functions['reader'], packet) & 255
+        returned = h.call(functions['reader'], packet, budget=1000000 if input_ and input_.get('string_fixtures') else 30000) & 255
         if input_:
             state['position'] = input_position()
             check_input()
@@ -187,6 +194,10 @@ def verify(context, root):
         for pointer, size in state['allocations'].items():
             require(bytes(h.uc.mem_read(pointer - 16, 16)) == b'\xa5' * 16
                     and bytes(h.uc.mem_read(pointer + size, 16)) == b'\xa6' * 16, 'LoginResult string guard changed')
+        if input_ and input_.get('string_fixtures'):
+            final_pointers = {int.from_bytes(h.uc.mem_read(packet + off, 8), 'little') for off in STRINGS} - {0}
+            require(set(state['allocations']) - final_pointers == state.get('string_freed', set()),
+                    'LoginResult temporary leak or final string freed')
         require(state['position'] <= len(body), 'LoginResult reads past available body')
         result = dict(returned=returned, consumed=state['position'], operations=list(state['operations']),
                       fields=capture(), guards=True, body_hex=body.hex(), fail_at=fail_at)
@@ -210,12 +221,14 @@ def verify(context, root):
         return b''.join(parts), expected
 
     cases = []
+    # Once all primitives are native, the fixture return-value dimension has no effect.
+    true_values = (1,) if input_ and input_.get('string_fixtures') else (1, 128)
     for text, code, flag, poison, true_value in itertools.product(
-            ('', 'ASCII', 'x' * 128, 'Ж界🙂'), (0, 1, 16, 58, 0xffffffff), (0, 1, 2, 255), (0x55, 0xaa), (1, 128)):
+            ('', 'ASCII', 'x' * 128, 'Ж界🙂'), (0, 1, 16, 58, 0xffffffff), (0, 1, 2, 255), (0x55, 0xaa), true_values):
         body, expected = payload(text, code, flag)
         case = read(body, poison, primitive_true=true_value)
         require(case['returned'] == 1 and case['consumed'] == len(body) and case['fields'] == expected,
-                'LoginResult full field projection differs')
+                'LoginResult full field projection differs ' + repr((text, code, flag, case['returned'], case['consumed'], len(body), case['fields'])))
         cases.append(case)
     truncated = []
     for text in ('', 'x', '🙂'):
@@ -233,14 +246,28 @@ def verify(context, root):
     trailing_body, _ = payload('', 0, 0)
     trailing = read(trailing_body + b'extra')
     require(trailing['returned'] == 1 and trailing['consumed'] == len(trailing_body), 'LoginResult trailing behavior differs')
+    special, boundaries = [], []
+    if input_ and input_.get('string_fixtures'):
+        for size in (15, 16, 127, 128):
+            body, expected = payload('x' * size, 0, 255)
+            case = read(body)
+            require(case['returned'] == 1 and case['fields'] == expected, 'Native string boundary differs')
+            boundaries.append(case)
+        minimal, _ = payload('', 0, 0)
+        for data in (b'\xff', b'\xc0\xaf', b'\xed\xa0\x80', b'\xf4\x90\x80\x80', b'a\0b', b'\xef\xbf\xbe'):
+            body = minimal[:4] + len(data).to_bytes(2, 'little') + data + minimal[6:]
+            special.append(read(body))
     return dict(schema=1, source_sha256=context['source_sha256'], method='bounded_native', cases=cases,
                 truncated=truncated, failures=failures, trailing=trailing, evidence=h.evidence,
                 runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
                 native_input_used=bool(input_),
+                native_string_used=bool(input_ and input_.get('string_fixtures')), special=special, boundaries=boundaries,
+                string_fixture_sha256=hashlib.sha256((HERE / 'login-result-string-fixtures.py').read_bytes()).hexdigest() if input_ and input_.get('string_fixtures') else None,
                 input_fixture_sha256=hashlib.sha256((HERE / 'login-result-input-fixtures.py').read_bytes()).hexdigest() if input_ else None,
                 limits=['Whole current packet/nested constructors and readers plus two leaves and virtual read thunk execute.',
-                        'Input constructor/scalars/raw IO/bookkeeping execute when native_input_used; buffer binding, memcpy and UTF-8/FString operations remain fixtures.',
-                        'Bool normalization is native only when native_input_used; UTF-8 acceptance is still a fixture policy. Little endian only.',
+                        'Input constructor/scalars/raw IO/bookkeeping execute when native_input_used; UTF-8/FString readers execute only when native_string_used.',
+                        'Buffer binding, memcpy, bounded string allocation/assignment/growth/free remain fixtures. Little endian only.',
+                        'Native string runs use a zero-filled initial stack; malformed outputs do not prove termination writes or general malformed behavior.',
                         'No handler, dispatch, result semantic names, network, login success or runtime activation proved.'])
 
 

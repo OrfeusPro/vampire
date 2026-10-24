@@ -1947,6 +1947,79 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-result-string-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-result-context.py",
+        "login-result-input-fixtures.py",
+        "login-result-string-fixtures.py"
+      ],
+      "rule": "Сверять current string reader/table slot30, UTF-8 call closure и explicit budget19; replay entire result on common archive with storage guards/cleanup. Malformed cases on zero stack do not prove general termination behavior; strict local policy preserved.",
+      "automation": {
+        "discovery": "reviewed_input_string_slot_and_utf8_calls",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x144aacfd0",
+                "scope": "Whole result/string/UTF-8 input on shared archive; storage and memcpy fixtures, zero stack for malformed cases, no handler proof.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x144aac390",
+                "scope": "Whole result/string/UTF-8 input on shared archive; storage and memcpy fixtures, zero stack for malformed cases, no handler proof.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x14144c440",
+                "scope": "Whole result/string/UTF-8 input on shared archive; storage and memcpy fixtures, zero stack for malformed cases, no handler proof.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x1414466a0",
+                "scope": "Whole result/string/UTF-8 input on shared archive; storage and memcpy fixtures, zero stack for malformed cases, no handler proof.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x14143bd30",
+                "scope": "Whole result/string/UTF-8 input on shared archive; storage and memcpy fixtures, zero stack for malformed cases, no handler proof.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x14143b9a0",
+                "scope": "Whole result/string/UTF-8 input on shared archive; storage and memcpy fixtures, zero stack for malformed cases, no handler proof.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "login-result-input-fixtures.py",
+              "login-result-string-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

@@ -1,6 +1,12 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+LoginResult теперь исполняет native FString/std::string/UTF-8 input вместе с
+числовым archive: 160 различных полных сценариев, границы 15/16 и 127/128,
+короткие тела и cleanup. Storage primitives остаются fixtures; строгая локальная
+UTF-8 policy сохранена. Далее — concrete input construction и handler/dispatch.
+[Результаты и malformed limits](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md).
+
 В LoginResult включены native числовые archive методы, raw IO и bool normalization:
 320 полных случаев, 332 коротких префикса и 25 отказов прошли повторно.
 FString/UTF-8 input, concrete buffer constructor и handler/dispatch ещё открыты.

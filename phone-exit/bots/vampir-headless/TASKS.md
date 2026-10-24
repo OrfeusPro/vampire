@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+Native FString/std::string/UTF-8 теперь включены в целый LoginResult с числовым
+archive. 160 различных полных случаев, 4 границы размеров, 332 коротких тела,
+25 отказов и 6 специальных строк проверены. Далее — input construction / handler.
+[Storage boundaries и готовые exports](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md).
+
 Input archive/scalar/raw методы теперь native внутри LoginResult; 320 полных
 случаев, 332 коротких ввода и 25 отказов прошли. Далее — actual FString/UTF-8,
 concrete buffer constructor и current handler/dispatch. Runtime guard сохранён.

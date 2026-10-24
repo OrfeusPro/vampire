@@ -20,6 +20,10 @@ def install(load, h, context, state, packet, archive, order):
             raise ValueError('Input archive slot differs')
     buffer = h.scratch + 0x5000
     targets = {functions[name]: name for name in ('time', 'u64', 'u32', 'u16', 'bool')}
+    if context.get('string_fixtures'):
+        targets[functions['string']] = 'string'
+        if struct.unpack_from('<Q', data, 0x30)[0] != functions['std_string']:
+            raise ValueError('Input archive std-string slot differs')
 
     def reg(name):
         return h.uc.reg_read(getattr(h.x, 'UC_X86_REG_' + name))
