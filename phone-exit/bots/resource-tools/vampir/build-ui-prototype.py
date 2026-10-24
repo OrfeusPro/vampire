@@ -187,6 +187,13 @@ def build(root, baseline=None):
     inputs.update(skill_inputs)
     inputs.update(skin_inputs)
     inputs.update(collection_catalog['inputs'])
+    for profile in read(SOURCE / 'window-layouts.json')['profiles'].values():
+        reference = profile.get('reference_resource')
+        if reference:
+            path = root / reference['file']
+            if sha(path) != reference['sha256']:
+                raise ValueError('Изменился эталон окна: ' + reference['file'])
+            inputs[reference['file']] = reference['sha256']
     source_inputs['shared_ui_library.py'] = sha(HERE / 'shared_ui_library.py')
     schema_match = re.search(r'\bconst SCHEMA = (\d+),', (SOURCE / 'model.js').read_text('utf-8'))
     if not schema_match:
@@ -266,7 +273,7 @@ def build(root, baseline=None):
                 size_constraints=[dict(name=c['name'], export=c['export'], values=c['size_constraints'])
                                   for c in package['controls'] if c.get('size_constraints')])
             reference = Path('C:/Users/754C~1/AppData/Local/Temp') / profile['reference'] if profile.get('reference') else None
-            profile['reference_sha256'] = sha(reference) if reference and reference.exists() else None
+            profile['reference_sha256'] = profile.get('reference_resource', {}).get('sha256') or (sha(reference) if reference and reference.exists() else None)
             profile['runtime_geometry_verified'] = False
         write(temporary / 'placement-evidence.json', layouts)
         button_layouts = read(SOURCE / 'button-layouts.json')

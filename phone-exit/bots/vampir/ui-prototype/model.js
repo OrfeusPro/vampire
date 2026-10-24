@@ -1,8 +1,9 @@
 /* Local demo adapter. This file has no transport and never accepts credentials. */
 (function (root) {
   'use strict';
-  const SCHEMA = 4, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
+  const SCHEMA = 5, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
   const Skill = typeof module !== 'undefined' && module.exports ? require('./skills.js') : root.VampirSkills;
+  const Collection = typeof module !== 'undefined' && module.exports ? require('./collection-state.js') : root.VampirCollections;
   const CLASSES = [['SwordMan', 'Кровавый рыцарь'], ['Gunner', 'Стрелок'], ['Fighter', 'Карнаж'], ['DarkMage', 'Тёмный маг'], ['Reaper', 'Мрачный Жнец']];
   const clone = value => JSON.parse(JSON.stringify(value));
   function profileKey(profile = 'demo-01') {
@@ -10,12 +11,12 @@
     return STORAGE_KEY + '.' + profile;
   }
   function appearance() { return { gender: 'Female', classId: 'Reaper', preset: 1, hair: 1, face: 1, eyes: 1, makeup: 1, voice: 1, body: [50, 50, 50, 50, 50, 50, 50] }; }
-  const CHARACTER_FIELDS = ['gold', 'diamonds', 'inventory', 'equipped', 'quest', 'hp', 'mp', 'experience', 'position', 'target', 'follow', 'quick', 'mailClaimed', 'collection', 'skills'];
+  const CHARACTER_FIELDS = ['gold', 'diamonds', 'inventory', 'equipped', 'quest', 'hp', 'mp', 'experience', 'position', 'target', 'follow', 'quick', 'mailClaimed', 'collection', 'skills', 'collections'];
   function characterState(classId = 'Reaper') {
     return { gold: 16880438, diamonds: 2400, inventory: { blade: 1, helm: 1, armor: 1, potion: 30, blessing: 1, book: 2 }, equipped: {},
       quest: { progress: 0, claimed: false, auto: false }, hp: 10576, mp: 2453, experience: 0,
       position: null, target: null, follow: false, quick: ['potion', 'blessing', 'book', null, null],
-      mailClaimed: false, collection: false, skills: Skill.initial(classId) };
+      mailClaimed: false, collection: false, skills: Skill.initial(classId), collections: Collection.initial() };
   }
   const SERVERS = ['Franz 2', 'Kurzel 1'];
   const SERVER_FIELDS = ['characters', 'selected', 'characterStates'];
@@ -52,7 +53,7 @@
       typeof state.quest.claimed === 'boolean' && typeof state.quest.auto === 'boolean' &&
       Number.isFinite(state.hp) && state.hp >= 0 && state.hp <= 12440 && Number.isFinite(state.mp) && state.mp >= 0 && state.mp <= 4085 &&
       Number.isSafeInteger(state.experience) && state.experience >= 0 && typeof state.follow === 'boolean' &&
-      typeof state.mailClaimed === 'boolean' && typeof state.collection === 'boolean' &&
+      typeof state.mailClaimed === 'boolean' && typeof state.collection === 'boolean' && Collection.valid(state.collections) &&
       Array.isArray(state.quick) && state.quick.length === 5 && state.quick.every(x => x === null || Object.hasOwn(PRODUCTS, x)) &&
       [state.position, state.target].every(p => p === null || (p && typeof p === 'object' && Number.isFinite(p.x) && Number.isFinite(p.y) && Math.abs(p.x) <= 1e9 && Math.abs(p.y) <= 1e9)));
   }
@@ -207,6 +208,12 @@
       case 'collection':
         if (next.collection || !next.inventory.book) fail('Нет подходящего предмета или коллекция уже заполнена.');
         next.collection = true; next.inventory.book--; break;
+      case 'collection-supply':
+      case 'collection-enroll':
+      case 'collection-favorite':
+      case 'collection-lock':
+        if (payload.scope?.server !== next.server || payload.scope?.character !== next.selected) fail('Персонаж или сервер изменился. Откройте коллекцию заново.');
+        next.collections = Collection.change(next.collections, type.slice('collection-'.length), payload.bundle, payload.requirementId); break;
       case 'map-target': next.target = { x: payload.x, y: payload.y }; break;
       case 'map-arrive': next.position = next.target; next.target = null; break;
       case 'map-position': next.position = { x: payload.x, y: payload.y }; break;
@@ -230,7 +237,7 @@
     return { get state() { return clone(state); }, dispatch(type, payload) { state = apply(state, type, payload); onChange?.(clone(state), type); return clone(state); } };
   }
   function serialize(state) { if (!validate(state)) throw Error('Некорректное сохранение.'); return canonical(state); }
-  const api = { SCHEMA, SERVERS, SKILLS: Skill.skills, skillsForClass: Skill.forClass, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
+  const api = { SCHEMA, SERVERS, SKILLS: Skill.skills, skillsForClass: Skill.forClass, COLLECTIONS: Collection, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.VampirDemo = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

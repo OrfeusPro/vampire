@@ -1,10 +1,76 @@
 {
   "schema": 1,
-  "limits": "Цепочки из исторического каталога. Масштаб родителя в демо адаптирован; runtime DPI и desired size не подтверждены. Выделенная рамка контейнера не доказывает brush size. Reference width 2400 для экрана персонажей — явная демонстрационная система координат, не установленное разрешение игры; 1236 и 590 взяты из SizeBox / Canvas ограничений соответствующих ресурсов.",
+  "limits": "Цепочки из исторического каталога. Масштаб родителя в демо адаптирован; runtime DPI и desired size не подтверждены. Выделенная рамка контейнера не доказывает brush size. Reference width 2400 для экрана персонажей — явная демонстрационная система координат, не установленное разрешение игры; 1236 и 590 взяты из SizeBox / Canvas ограничений соответствующих ресурсов. Контейнеры коллекций рассчитаны относительно CanvasPanel_41: его рамка в демо выделена по viewport; внешняя SafeZone и активный масштаб игры неизвестны. Имя файла сохранено для совместимости; bindings содержат также контейнеры.",
   "bindings": {
-    "purchase-buy": {"catalog_file": "pakchunk500-Windows-8930.json", "resource": "WBP_ShopPurchasePopup", "control": "ButtonPurchase", "root_export": 10, "reference_width": 1236},
-    "item-close": {"catalog_file": "pakchunk500-Windows-2241.json", "resource": "WBP_ItemInfoPopup", "control": "ButtonClose", "root_export": 56, "reference_width": 590},
-    "character-start": {"catalog_file": "pakchunk500-Windows-2371.json", "resource": "WBP_CharacterSelectUI", "control": "ButtonStart", "root_name": "CanvasPanel_29", "reference_width": 2400, "allowAllocatedFrame": true},
-    "character-delete": {"catalog_file": "pakchunk500-Windows-2371.json", "resource": "WBP_CharacterSelectUI", "control": "ButtonDelete", "root_name": "CanvasPanel_29", "reference_width": 2400, "allowAllocatedFrame": true}
+    "purchase-buy": {
+      "catalog_file": "pakchunk500-Windows-8930.json",
+      "resource": "WBP_ShopPurchasePopup",
+      "control": "ButtonPurchase",
+      "root_export": 10,
+      "reference_width": 1236
+    },
+    "item-close": {
+      "catalog_file": "pakchunk500-Windows-2241.json",
+      "resource": "WBP_ItemInfoPopup",
+      "control": "ButtonClose",
+      "root_export": 56,
+      "reference_width": 590
+    },
+    "character-start": {
+      "catalog_file": "pakchunk500-Windows-2371.json",
+      "resource": "WBP_CharacterSelectUI",
+      "control": "ButtonStart",
+      "root_name": "CanvasPanel_29",
+      "reference_width": 2400,
+      "allowAllocatedFrame": true
+    },
+    "character-delete": {
+      "catalog_file": "pakchunk500-Windows-2371.json",
+      "resource": "WBP_CharacterSelectUI",
+      "control": "ButtonDelete",
+      "root_name": "CanvasPanel_29",
+      "reference_width": 2400,
+      "allowAllocatedFrame": true
+    },
+    "collection-list-frame": {
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "control": "TableViewCollectionList",
+      "root_name": "CanvasPanel_41",
+      "reference_width": 2400,
+      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены."
+    },
+    "collection-effects-frame": {
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "control": "CanvasPanel",
+      "root_name": "CanvasPanel_41",
+      "reference_width": 2400,
+      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены."
+    },
+    "collection-tabs-frame": {
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "control": "TabBarMain",
+      "root_name": "CanvasPanel_41",
+      "reference_width": 2400,
+      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены."
+    },
+    "name-window-frame": {
+      "catalog_file": "pakchunk500-Windows-2385.json",
+      "resource": "WBP_NameInputPopup",
+      "control": "PanelPopup",
+      "root_name": "CanvasPanel_38",
+      "reference_width": 2400,
+      "root_frame_assumption": "Внешний Canvas получает viewport демо; runtime DPI / UI Scale игры и внешняя иерархия не подтверждены."
+    },
+    "skills-window-frame": {
+      "catalog_file": "pakchunk500-Windows-8976.json",
+      "resource": "WBP_SkillSettingPopup",
+      "control": "PanelPopup",
+      "root_name": "CanvasPanel_50",
+      "reference_width": 2400,
+      "root_frame_assumption": "Внешний Canvas получает viewport демо; runtime DPI / UI Scale игры и внешняя иерархия не подтверждены."
+    }
   }
 }

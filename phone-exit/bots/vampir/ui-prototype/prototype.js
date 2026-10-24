@@ -26,10 +26,12 @@
     geometryFrame = requestAnimationFrame(() => {
       if (!buttonLayouts) return;
       for (const node of document.querySelectorAll('[data-native-button]')) {
-        const binding = buttonLayouts.bindings[node.dataset.nativeButton], parent = node.closest('dialog') || app;
+        const binding = buttonLayouts.bindings[node.dataset.nativeButton], parent = node.tagName === 'DIALOG' ? app : node.closest('dialog') || app;
         if (!binding || !parent.clientWidth || !parent.clientHeight) continue;
         const scale = parent.clientWidth / binding.reference_width * state().settings.scale / 100;
+        if (node.dataset.nativeButton.startsWith('collection-')) parent.style.setProperty('--collection-unit', scale + 'px');
         const result = VampirGeometry.chain(binding, VampirGeometry.rect(0, 0, parent.clientWidth / scale, parent.clientHeight / scale));
+        if (!result.unknown && binding.root_frame_assumption) result.assumptions.push(binding.root_frame_assumption);
         node.dataset.geometryState = result.unknown ? 'unresolved' : result.assumptions.length ? 'allocated-frame-assumption' : 'canvas-calculation';
         if (result.unknown) { node.dataset.geometryUnknown = result.unknown; continue; }
         const box = VampirGeometry.cssRect(result.rect, scale), origin = parent.getBoundingClientRect();
@@ -82,7 +84,8 @@
     const candidates = [...scope.querySelectorAll('button,input,select,a')];
     const match = candidates.find(n => n.tagName === identity.tag && !n.disabled &&
       (identity.label ? n.getAttribute('aria-label') === identity.label : identity.title ? n.getAttribute('title') === identity.title : n.textContent === identity.text));
-    match?.focus({ preventScroll: true });
+    if (match) match.focus({ preventScroll: true });
+    else if (scope.tagName === 'DIALOG') scope.querySelector('button.close')?.focus({ preventScroll: true });
   }
   function modal(title, render, className = '') {
     const invoker = focusIdentity(document.activeElement);
@@ -92,6 +95,7 @@
       const [x, y, w, h] = placement.rect;
       dialog.classList.add('placed-window'); dialog.dataset.layoutResource = placement.resource;
       Object.assign(dialog.style, { left: x * 100 + 'vw', top: y * 100 + 'dvh', width: w * 100 + 'vw', height: h * 100 + 'dvh', margin: '0', maxWidth: '100vw', maxHeight: '100dvh' });
+      if (placement.native_frame) nativeButton(dialog, placement.native_frame);
     }
     heading.id = 'window-' + crypto.randomUUID(); dialog.setAttribute('aria-labelledby', heading.id);
     const header = el('header', undefined, 'window-heading');
@@ -105,12 +109,12 @@
     redraw(); dialog.showModal(); geometryObserver.observe(dialog); updateButtonGeometry(); return dialog;
   }
   function info(title, message) { return modal(title, body => append(body, el('p', message), button('Понятно', () => closeDialog(dialogs.at(-1)), 'primary'))); }
-  function confirm(title, message, fn) {
+  function confirm(title, message, fn, className = '') {
     return modal(title, (body, dialog) => {
       const actions = el('div', undefined, 'actions');
       append(actions, button('Отмена', () => closeDialog(dialog)), button('Подтвердить', () => { closeDialog(dialog); fn(); }, 'primary'));
       append(body, el('p', message), actions);
-    });
+    }, className);
   }
   function transition(next) { if (!profileLease.owned) return; entryFlow.cancel(); flowRevision++; dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; clearTimeout(skillTimer); screen = next; render(); }
   function pageTitle(text, back) { const n = el('header', undefined, 'page-title'); append(n, button('❮', back, 'back'), el('h1', text)); return n; }
@@ -457,12 +461,20 @@
   function openBag() {
     let category = 'Все', query = '';
     const draw = body => {
-      body.append(tabs(['Все', 'Снаряжение', 'Расходники', 'Материалы'], category, value => { category = value; renderers.get(dialog)(); }));
+      body.append(tabs(['Все', 'Снаряжение', 'Расходники', 'Материалы', 'Коллекционные'], category, value => { category = value; renderers.get(dialog)(); }));
       const search = input('search', 'Поиск предмета'); search.value = query;
       search.oninput = () => { query = search.value; fill(); }; body.append(search);
       const grid = el('div', undefined, 'bag-grid');
-      const fill = () => { grid.replaceChildren(); for (const [id, p] of Object.entries(M.PRODUCTS)) if (state().inventory[id] && p.name.toLowerCase().includes(query.toLowerCase()) && (category === 'Все' || p.kind === ({ 'Снаряжение': 'equipment', 'Расходники': 'consumable', 'Материалы': 'material' }[category]))) grid.append(itemSlot(id)); };
-      fill(); append(body, grid, el('p', 'Занято: ' + Object.values(state().inventory).filter(n => n > 0).length + '/116'), button('Экипировка', () => openSection('Персонаж')),
+      const fill = () => {
+        grid.replaceChildren();
+        for (const [id, p] of Object.entries(M.PRODUCTS)) if (state().inventory[id] && p.name.toLowerCase().includes(query.toLowerCase()) && (category === 'Все' || p.kind === ({ 'Снаряжение': 'equipment', 'Расходники': 'consumable', 'Материалы': 'material' }[category]))) grid.append(itemSlot(id));
+        if (category === 'Все' || category === 'Коллекционные') for (const [key, item] of Object.entries(state().collections.items)) if (item.count > 0 && (item.name + ' ' + item.itemId).toLowerCase().includes(query.toLowerCase())) {
+          const name = item.name + ' +' + item.enchant, slot = button('', () => openCollectionBagItem(key), 'item-slot'); slot.title = name; slot.setAttribute('aria-label', name);
+          append(slot, collectionItemImage(item), el('small', String(item.count))); grid.append(slot);
+        }
+      };
+      const occupied = Object.values(state().inventory).filter(n => n > 0).length + Object.values(state().collections.items).filter(item => item.count > 0).length;
+      fill(); append(body, grid, el('p', 'Занято в демо: ' + occupied + ' · ёмкость 116 не ограничивает учебную выдачу'), button('Экипировка', () => openSection('Персонаж')),
         button('Массовый разбор', () => info('Массовый разбор', 'Правила разбора и наград пока не восстановлены. Предметы сохранены.')));
     };
     const dialog = modal('Сумка', draw, 'inventory-window');
@@ -535,7 +547,8 @@
   }
   function openCollections() {
     const catalog = VampirCollectionCatalog.create();
-    let meta, issue, query = '', tab = '', rarity = '', page = 0, section = 'Каталог источников';
+    let meta, issue, query = '', tab = '', rarity = '', page = 0, favorites = false, listRevision = 0;
+    const scope = { server: state().server, character: state().selected };
     const refresh = () => { if (dialog.open) renderers.get(dialog)?.(); };
     const load = async () => {
       issue = null;
@@ -543,53 +556,103 @@
       refresh();
     };
     const dialog = modal('Коллекции', body => {
-      body.append(tabs(['Каталог источников', 'Учебная коллекция'], section, value => { section = value; refresh(); }));
-      if (section === 'Учебная коллекция') {
-        append(body, el('h3', 'Наследие ночи · демо'), el('p', 'Учебный сценарий с книгой. Его требования и результат не связаны с игровыми коллекциями.'),
-          el('p', state().collection ? 'Учебная коллекция заполнена' : 'Требуется: Книга гравировки ×1'),
-          button('Добавить книгу · демо', () => confirm('Учебная коллекция', 'Потратить одну книгу только в локальной демонстрации?', () => action('collection')), 'primary', state().collection));
-        return;
-      }
-      append(body, el('p', 'Исторические данные клиента. Доступность на сервере, регистрация предметов и действие бонусов ещё не проверены.', 'catalog-notice'));
+      const current = state();
+      const masthead = el('div', undefined, 'collection-masthead');
+      append(masthead, append(el('div', undefined, 'collection-player'), portrait(currentCharacter()?.appearance), el('span', (currentCharacter()?.name || 'Демо') + '\nHP ' + fmt(current.hp) + '/12 440\nMP ' + fmt(current.mp) + '/4 085')), currencies()); body.append(masthead);
       if (!meta) {
         append(body, el('p', issue || 'Загрузка каталога…'), issue && button('Повторить загрузку', load)); return;
       }
+      const nav = el('nav', undefined, 'tabs collection-main-tabs'); nav.setAttribute('aria-label', 'Разделы коллекций'); nativeButton(nav, 'collection-tabs-frame');
+      for (const group of meta.tabs.slice(0, 4)) { const b = button(group.name, () => { tab = group.id; favorites = false; page = 0; refresh(); }, !favorites && tab === group.id ? 'active' : ''); b.setAttribute('aria-pressed', String(!favorites && tab === group.id)); nav.append(b); }
+      nav.append(button('Избранное', () => { favorites = !favorites; page = 0; refresh(); }, favorites ? 'active' : '')); body.append(nav);
       const filters = el('div', undefined, 'collection-filters'), search = input('search', 'Название или ID коллекции'); search.value = query;
-      const region = select([['', 'Все разделы'], ...meta.tabs.map(row => [row.id, row.name])], tab, value => { tab = value; page = 0; fill(); });
       const grades = [...new Map(meta.entries.map(row => [row.rarity_id, row.rarity])).entries()];
-      const grade = select([['', 'Любая редкость'], ...grades], rarity, value => { rarity = value; page = 0; fill(); });
       search.oninput = () => { query = search.value; page = 0; fill(); };
-      append(filters, field('Поиск', search), field('Раздел', region), field('Редкость', grade)); body.append(filters);
-      const status = el('p'), list = el('div', undefined, 'collection-list'), pager = el('div', undefined, 'actions');
+      append(filters, search, button('Фильтры', () => {
+        let chosenTab = tab, chosenGrade = rarity;
+        modal('Фильтры коллекций', (n, d) => append(n,
+          field('Исходный раздел', select([['', 'Все разделы'], ...meta.tabs.map(row => [row.id, row.name])], chosenTab, value => chosenTab = value)),
+          field('Редкость', select([['', 'Любая редкость'], ...grades], chosenGrade, value => chosenGrade = value)),
+          el('small', 'Названия Krvna / Poenari / Kicel / Bezdan сохранены из таблиц. Соответствие русским вкладкам кадра ещё не установлено.'),
+          button('Применить фильтры', () => { tab = chosenTab; rarity = chosenGrade; favorites = false; page = 0; closeDialog(d); refresh(); }, 'primary')));
+      }),
+        button('Сбросить поиск', () => { query = ''; tab = ''; rarity = ''; favorites = false; page = 0; refresh(); })); body.append(filters);
+      const status = el('p'), list = nativeButton(el('div', undefined, 'collection-list'), 'collection-list-frame'), pager = el('div', undefined, 'actions collection-footer');
       status.setAttribute('role', 'status');
       const fill = () => {
-        const rows = VampirCollectionCatalog.select(meta, { query, tab, rarity }), result = VampirCollectionCatalog.page(rows, page); page = result.number;
+        const revision = ++listRevision, bank = state().collections;
+        const rows = VampirCollectionCatalog.select(meta, { query, tab, rarity }).filter(row => !favorites || bank.entries[row.id]?.favorite), result = VampirCollectionCatalog.page(rows, page); page = result.number;
         status.textContent = 'Найдено: ' + rows.length + ' / ' + meta.entries.length + ' · страница ' + (page + 1) + ' / ' + result.count;
         list.replaceChildren();
         for (const row of result.rows) {
-          const card = button('', () => openCollectionDetail(catalog, row.id, meta), 'collection-row');
-          append(card, el('strong', row.name), el('span', 'ID ' + row.id + ' · ' + row.rarity + ' · предметов: ' + row.requirements)); list.append(card);
+          const card = el('article', undefined, 'collection-row'), progress = bank.entries[row.id], flags = el('div', undefined, 'collection-flags'), slots = el('div', undefined, 'collection-row-items');
+          let bundle;
+          const favorite = button('', () => action('collection-favorite', { bundle, scope }), 'collection-flag', true), lock = button('', () => action('collection-lock', { bundle, scope }), 'collection-flag', true);
+          favorite.append(image(progress?.favorite ? 'IMG_Flat_Favorite_On' : 'IMG_Flat_Favorite_Off')); lock.append(image(progress?.locked ? 'IMG_Flat_Lock' : 'IMG_Flat_UnLock'));
+          favorite.setAttribute('aria-label', 'Избранное: ' + row.name); favorite.setAttribute('aria-pressed', String(!!progress?.favorite)); lock.setAttribute('aria-label', 'Блокировка регистрации: ' + row.name); lock.setAttribute('aria-pressed', String(!!progress?.locked));
+          append(flags, favorite, lock);
+          const title = button('', () => openCollectionDetail(catalog, row.id, meta), 'collection-row-title'), bonusText = el('span', 'Загрузка бонусов…');
+          append(title, el('strong', row.name + ' (' + (progress?.registered.length || 0) + '/' + row.requirements + ')'), bonusText, el('small', 'ID ' + row.id + ' · ' + row.rarity)); append(card, flags, title, slots); list.append(card);
+          catalog.entry(row.id).then(data => {
+            if (!dialog.open || revision !== listRevision || !card.isConnected) return;
+            bundle = M.COLLECTIONS.normalize(data, meta.source.sha256); favorite.disabled = false; lock.disabled = false;
+            bonusText.textContent = data.entry.bonuses.map(b => (b.name?.Name || b.row.Type) + ' ' + b.row.Min + (b.row.Max === b.row.Min ? '' : '–' + b.row.Max)).join(' · ');
+            for (const requirement of data.entry.requirements) {
+              const source = bundle.items[M.COLLECTIONS.key(requirement.item_id, Number(requirement.row.EnchantLevel))], slot = button('', () => openCollectionDetail(catalog, row.id, meta), 'item-slot collection-row-slot');
+              slot.setAttribute('aria-label', source.name + ' · коллекция ' + row.id);
+              append(slot, collectionItemImage(source), el('small', '+' + requirement.row.EnchantLevel));
+              if (progress?.registered.includes(requirement.row.Id)) slot.append(image('IMG_Flat_Check', 'collection-registered-mark'));
+              slots.append(slot);
+            }
+          }).catch(error => { if (revision === listRevision && card.isConnected && error.name !== 'AbortError') bonusText.textContent = 'Не удалось загрузить состав. Откройте карточку для повтора.'; });
         }
         if (!rows.length) list.append(el('p', 'Совпадений нет. Измените фильтры.'));
         pager.replaceChildren(button('Предыдущая страница', () => { page--; fill(); }, '', page === 0), button('Следующая страница', () => { page++; fill(); }, '', page + 1 === result.count));
       };
-      append(body, status, list, pager, el('small', 'Названия из английских таблиц. Русский перевод не установлен. Каталог загружается только при открытии; в списке до 40 строк.'));
+      const sidebar = nativeButton(el('aside', undefined, 'collection-effects'), 'collection-effects-frame'), completed = Object.values(current.collections.entries).filter(M.COLLECTIONS.complete).length, percent = completed / meta.entries.length * 100, progressBar = document.createElement('progress'); progressBar.max = meta.entries.length; progressBar.value = completed;
+      append(sidebar, el('h3', 'Прогресс коллекции · демо'), el('p', percent.toFixed(2) + '% · ' + completed + '/' + meta.entries.length), progressBar, el('h3', 'Эффект коллекции'));
+      const totals = M.COLLECTIONS.bonuses(current.collections);
+      if (!totals.length) sidebar.append(el('p', 'Завершённых коллекций пока нет.'));
+      for (const bonus of totals) sidebar.append(el('p', bonus.name + ' ' + bonus.min + (bonus.min === bonus.max ? '' : '–' + bonus.max)));
+      append(sidebar, button('Все эффекты', () => openSection('Персонаж')), el('small', 'Исторические данные; серверные условия не проверены.'), button('Учебная коллекция', () => modal('Наследие ночи · демо', n => append(n, el('p', 'Отдельный учебный сценарий с книгой; не игровая коллекция.'), button('Добавить книгу · демо', () => confirm('Учебная коллекция', 'Списать одну книгу в демо?', () => action('collection')), 'primary', state().collection)))));
+      const footer = el('div', undefined, 'collection-status-footer'); append(footer, status, pager, button('Сумка', openBag)); append(body, list, sidebar, footer);
       fill();
     }, 'collections-window');
     dialog.addEventListener('close', () => catalog.close(), { once: true });
     load(); return dialog;
   }
+  function collectionItemImage(item) {
+    if (!item.icon) return el('span', 'Иконка не определена', 'missing-icon');
+    const img = document.createElement('img'); img.src = item.icon.url; img.alt = item.name; img.loading = 'lazy'; img.width = 72; img.height = 72; img.className = 'product-icon'; return img;
+  }
+  function openCollectionBagItem(key) {
+    modal('Коллекционный предмет · демо', body => {
+      const item = state().collections.items[key];
+      if (!item) { body.append(el('p', 'Предмет отсутствует у выбранного персонажа.')); return; }
+      append(body, collectionItemImage(item), el('h3', item.name), el('p', 'ID ' + item.itemId + ' · усиление ' + item.enchant + ' · в сумке: ' + item.count),
+        el('p', 'Предмет выдан для локальной проверки коллекций. Экипировка, продажа и применение этого типа предмета ещё не восстановлены.'),
+        button('Открыть коллекции', openCollections), el('pre', JSON.stringify({ catalog_sha256: state().collections.source, icon: item.icon }, null, 2)));
+    }, 'collection-source-window');
+  }
   function openCollectionDetail(catalog, id, meta) {
-    let data, issue;
+    let data, issue, bundle, bundleIssue;
+    const scope = { server: state().server, character: state().selected };
     const load = async () => {
       issue = null;
-      try { data = await catalog.entry(id); } catch (error) { if (error.name !== 'AbortError') issue = error.message; }
+      try {
+        data = await catalog.entry(id);
+        try { bundle = M.COLLECTIONS.normalize(data, meta.source.sha256); } catch (error) { bundleIssue = error.message; }
+      } catch (error) { if (error.name !== 'AbortError') issue = error.message; }
       if (dialog.open) renderers.get(dialog)?.();
     };
     const dialog = modal('Состав коллекции · ' + id, body => {
       if (!data) { append(body, el('p', issue || 'Загрузка состава…'), issue && button('Повторить загрузку', load)); return; }
       const entry = data.entry;
-      append(body, el('h3', entry.name), el('p', 'Исторические требования; регистрация в общую модель ещё не подключена.', 'catalog-notice'));
+      const progress = state().collections.entries[id], registered = progress?.registered || [];
+      const status = el('p', 'Демо: зарегистрировано ' + registered.length + '/' + entry.requirements.length + (progress && M.COLLECTIONS.complete(progress) ? ' · коллекция завершена' : '')); status.setAttribute('role', 'status');
+      append(body, el('h3', entry.name), el('p', 'Локальная регистрация по историческим требованиям. Усиление должно точно совпасть. Серверная доступность и область действия бонусов не подтверждены.', 'catalog-notice'), status);
+      if (bundleIssue) body.append(el('p', 'Регистрация недоступна: ' + bundleIssue));
+      body.append(button('Выдать недостающие предметы · демо', () => confirm('Тестовый набор коллекции', 'Добавить недостающие предметы в общую демосумку? Один набор на коллекцию; игровые команды не отправляются.', () => action('collection-supply', { bundle, scope })), '', !bundle || progress?.supplied || (progress && M.COLLECTIONS.complete(progress))));
       const grid = el('div', undefined, 'collection-requirements');
       for (const requirement of entry.requirements) {
         const item = data.items[requirement.item_id], row = requirement.row, card = el('div', undefined, 'collection-requirement');
@@ -600,11 +663,19 @@
           button('Источник предмета ' + item.id, () => modal('Предмет коллекции · ' + item.id, n => {
             append(n, el('h3', item.name), el('p', 'Исходный тип требования: ' + (requirement.collect_type?.name || row.CollectType)), el('pre', JSON.stringify({ item: item.provenance, requirement: row, icon: item.icon }, null, 2)));
           }, 'collection-source-window')));
+        const owned = state().collections.items[M.COLLECTIONS.key(item.id, Number(row.EnchantLevel))]?.count || 0, done = registered.includes(row.Id);
+        append(card, el('small', 'В сумке с этим усилением: ' + owned), button(done ? 'Зарегистрировано' : 'Зарегистрировать ' + item.name, () => confirm('Регистрация предмета', 'Списать из демосумки ' + item.name + ' ×' + row.Count + ' с усилением ' + row.EnchantLevel + '? Предмет будет зарегистрирован только в коллекцию ' + id + '.', () => {
+          if (action('collection-enroll', { bundle, scope, requirementId: row.Id })) {
+            (dialog.querySelector('.collection-enroll:not(:disabled)') || dialog.querySelector('button.close'))?.focus();
+            notify('Предмет зарегистрирован в локальной коллекции.');
+          }
+        }, 'collection-enroll-window'), 'primary original-button collection-enroll', !bundle || progress?.locked || done || owned < Number(row.Count)));
         grid.append(card);
       }
       body.append(grid, el('h3', 'Бонусы из источника'));
       for (const bonus of entry.bonuses) body.append(el('p', (bonus.name?.Name || bonus.enum?.name || bonus.row.Type) + ': Min ' + bonus.row.Min + ' / Max ' + bonus.row.Max + ' · тип ' + bonus.row.Type + ' · IsPercentage ' + (bonus.display?.IsPercentage ?? 'неизвестно')));
       const provenance = el('details'); provenance.append(el('summary', 'Происхождение и ограничения'), el('pre', JSON.stringify({ source: meta.source, definition: entry.row, name: entry.name_source, bonuses: entry.bonuses }, null, 2))); body.append(provenance);
+      append(body, button('Проверить сумку', openBag), button('Проверить характеристики', () => openSection('Персонаж')));
     }, 'collection-detail-window');
     load(); return dialog;
   }
@@ -615,6 +686,13 @@
       if (title === 'Персонаж') {
         const c = currentCharacter(); append(body, portrait(c?.appearance), el('h3', c?.name || 'Демоперсонаж'), el('p', className(c?.appearance.classId || 'Reaper')));
         const stats = M.stats(state()); append(body, el('p', 'Атака: ' + stats.attack + ' · Защита: ' + stats.defense));
+        const collectionBonuses = M.COLLECTIONS.bonuses(state().collections);
+        body.append(el('h3', 'Бонусы завершённых коллекций · демо'));
+        if (!collectionBonuses.length) body.append(el('p', 'Завершённых коллекций нет.'));
+        else {
+          body.append(el('small', 'Сумма исходных значений Min / Max по типу параметра; игровая формула и область действия не подтверждены.'));
+          for (const bonus of collectionBonuses) body.append(el('p', bonus.name + ' · тип ' + bonus.type + ': ' + bonus.min + (bonus.min === bonus.max ? '' : '–' + bonus.max) + ' · IsPercentage ' + (bonus.percentage ?? 'неизвестно') + ' · коллекций ' + bonus.collections));
+        }
         for (const [slot, name] of [['weapon', 'Оружие'], ['head', 'Голова'], ['body', 'Доспех']]) {
           const id = state().equipped[slot]; append(body, el('p', name + ': ' + (id ? M.PRODUCTS[id].name : 'пусто'))); if (id) body.append(button('Снять ' + name.toLowerCase(), () => action('unequip', { slot })));
         } body.append(button('Открыть сумку', openBag));

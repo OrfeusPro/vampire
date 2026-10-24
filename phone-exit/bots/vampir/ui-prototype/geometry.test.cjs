@@ -4,6 +4,24 @@ const assert = require('node:assert/strict');
 const G = require('./geometry.js');
 const slot = (offsets, minimum, maximum, alignment, extra = {}) => ({ layout: { offsets, anchors: { minimum, maximum }, alignment }, ...extra });
 
+test('collection source Canvas chains keep the list and effects column adjacent at both viewport sizes', () => {
+  // WBP_ItemCollectionUI: CanvasPanel_41 -> slots 83/92 and 88.
+  // Caller allocates the root; this does not resolve the outer SafeZone or native DPI curve.
+  const list = { chain: [
+    { decoded: slot({ left: -20, top: 0, right: -20, bottom: 2 }, [0, 0], [1, 1], [0, 0]), provenance: { slot_export: 92 } },
+    { decoded: slot({ left: 20, top: 220, right: 695, bottom: 120 }, [0, 0], [1, 1], [0, 0]), provenance: { slot_export: 83 } }
+  ] };
+  const effects = { chain: [{ decoded: slot({ left: -20, top: 200, right: 655, bottom: 122 }, [1, 0], [1, 1], [1, 0]), provenance: { slot_export: 88 } }] };
+  const root = G.rect(0, 0, 2400, 1350), l = G.chain(list, root), r = G.chain(effects, root);
+  assert.deepEqual(l.rect, { x: 0, y: 220, width: 1725, height: 1008 });
+  assert.deepEqual(r.rect, { x: 1725, y: 200, width: 655, height: 1028 });
+  for (const width of [1280, 1920]) {
+    const left = G.cssRect(l.rect, width / 2400), right = G.cssRect(r.rect, width / 2400);
+    assert.equal(left.x + left.width, right.x);
+    assert.ok(right.x + right.width < width);
+  }
+});
+
 test('source purchase footer and button chain preserve bottom-center placement', () => {
   // WBP_ShopPurchasePopup / ButtonPurchase; full source chain is in button-evidence.json.
   const footer = slot({ left: 7, top: -7, right: 7, bottom: 120 }, [0, 1], [1, 1], [.5, 1]);

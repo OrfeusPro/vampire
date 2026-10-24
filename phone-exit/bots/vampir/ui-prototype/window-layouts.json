@@ -12,7 +12,8 @@
         0.268,
         0.356
       ],
-      "basis": "PanelPopup slot 14: 640 × 480, центральные anchors / alignment. Масштаб демо адаптирован; прямой callback кастомизации в этот WBP не подтверждён."
+      "basis": "PanelPopup slot 14: 640 × 480, центральные anchors / alignment. Масштаб демо адаптирован; прямой callback кастомизации в этот WBP не подтверждён. Внешняя рамка теперь рассчитывается через native_frame по Canvas-цепочке PanelPopup; rect сохранён только как явно временный резерв при неразрешимой цепочке.",
+      "native_frame": "name-window-frame"
     },
     "inventory-window": {
       "resource": "WBP_InventoryUI",
@@ -71,7 +72,8 @@
         0.754,
         1
       ],
-      "basis": "PanelPopup slot 37: right anchors [1,0]–[1,1], alignment [1,0], width 1810. Демо использует reference width 2400; полная внешняя иерархия и runtime DPI неизвестны. Внутренние колонки временные."
+      "basis": "PanelPopup slot 37: right anchors [1,0]–[1,1], alignment [1,0], width 1810. Демо использует reference width 2400; полная внешняя иерархия и runtime DPI неизвестны. Внутренние колонки временные. Внешняя рамка теперь рассчитывается через native_frame по Canvas-цепочке PanelPopup; rect сохранён только как явно временный резерв при неразрешимой цепочке.",
+      "native_frame": "skills-window-frame"
     },
     "skill-info-window": {
       "resource": "WBP_SkillInfoPopup",
@@ -115,7 +117,11 @@
         1,
         1
       ],
-      "basis": "Временная полноэкранная адаптация исторического WBP_ItemCollectionUI. Нативная иерархия внутренних контейнеров, активный DPI, desired size и игровое размещение ещё не подтверждены; проценты не используются для команд игры."
+      "basis": "Полноэкранная рамка демо; CanvasPanel_41 получает выделенный viewport. Список, правая колонка и вкладки рассчитываются по исходным Canvas slots через button-evidence, без процентов скриншота. SafeZone, DPI / UI Scale игры и AutoSize дочерних списков остаются неизвестными.",
+      "reference_resource": {
+        "file": "ui-references/collection-1177cd4fa4059932c3c09e7f34046487e09fc59318dffd1f6df501c75f06b95f.png",
+        "sha256": "1177cd4fa4059932c3c09e7f34046487e09fc59318dffd1f6df501c75f06b95f"
+      }
     },
     "collection-detail-window": {
       "resource": "WBP_ItemCollectionListInfoPopup",
@@ -127,6 +133,17 @@
         0.8
       ],
       "basis": "Временная центральная карточка состава. SizeBox_74 хранит 100 × 100 для дочернего элемента, это не размер всего попапа. Runtime DPI и размер внешнего контейнера неизвестны. Источники показаны отдельным служебным попапом, не выданы за игровое окно."
+    },
+    "collection-enroll-window": {
+      "resource": "WBP_ItemCollectionEnrollPopup",
+      "catalog_file": "pakchunk500-Windows-451.json",
+      "rect": [
+        0.3,
+        0.3,
+        0.4,
+        0.4
+      ],
+      "basis": "Центральное подтверждение деморегистрации; источник содержит ButtonEnroll / ButtonCancel. Native внешний desired size и DPI не подтверждены; прямоугольник временный."
     }
   }
 }
