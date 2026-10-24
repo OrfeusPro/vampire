@@ -67,3 +67,49 @@ test('adapter emits independent immutable snapshots; 50 models remain isolated',
   const snapshot = bots[1].state; snapshot.gold = 0; assert.notEqual(bots[1].state.gold, 0);
   console.log('50 models / 1000 actions: ' + elapsed.toFixed(2) + ' ms; browser windows and live sessions not measured');
 });
+
+test('switching characters restores their independent inventory, equipment, balances and progress', () => {
+  let s = M.initial();
+  for (const [type, payload] of [['buy', { id: 'blade' }], ['equip', { id: 'blade' }], ['quest-step'], ['mail-claim'], ['collection'], ['map-target', { x: 30, y: 40 }], ['map-arrive'], ['quick', { slot: 4, id: 'blade' }]]) s = M.apply(s, type, payload);
+  s = M.apply(s, 'create', { name: 'Второй', appearance: M.appearance(), uid: 'two' });
+  assert.equal(s.diamonds, 2400); assert.deepEqual(s.equipped, {}); assert.equal(s.quest.progress, 0);
+  assert.equal(s.inventory.potion, 30); assert.equal(s.inventory.book, 2); assert.equal(s.position, null); assert.equal(s.quick[4], null);
+  s = M.apply(s, 'buy', { id: 'potion', count: 2 });
+  s = M.apply(s, 'select', { id: 'demo-1' });
+  assert.equal(s.diamonds, 2250); assert.equal(s.inventory.blade, 2); assert.equal(s.inventory.potion, 35); assert.equal(s.inventory.book, 1);
+  assert.equal(s.equipped.weapon, 'blade'); assert.equal(s.quest.progress, 1); assert.equal(s.mailClaimed, true); assert.equal(s.collection, true);
+  assert.deepEqual(s.position, { x: 30, y: 40 }); assert.equal(s.quick[4], 'blade');
+  s = M.apply(s, 'select', { id: 'demo-two' });
+  assert.equal(s.gold, M.initial().gold - 80); assert.equal(s.inventory.potion, 32); assert.equal(s.quest.progress, 0);
+});
+test('canonical saves contain no duplicated active projection and restore both characters', () => {
+  let s = M.apply(M.initial(), 'buy', { id: 'blade' });
+  s = M.apply(s, 'create', { name: 'Второй', appearance: M.appearance(), uid: 'two' });
+  s = M.apply(s, 'buy', { id: 'helm' });
+  const saved = M.serialize(s);
+  assert.equal(Object.hasOwn(saved, 'gold'), false); assert.equal(Object.hasOwn(saved, 'inventory'), false);
+  const loaded = M.load({ getItem: () => JSON.stringify({ dataset: 'same', state: saved }) }, 'same');
+  assert.equal(loaded.issue, null); assert.equal(loaded.state.diamonds, 2310);
+  const first = M.apply(loaded.state, 'select', { id: 'demo-1' }); assert.equal(first.diamonds, 2250);
+  assert.equal(M.adapter(saved).state.diamonds, 2310);
+});
+test('deletion removes only the chosen character bank and empty profiles reject gameplay', () => {
+  let s = M.apply(M.initial(), 'create', { name: 'Второй', appearance: M.appearance(), uid: 'two' });
+  s = M.apply(s, 'buy', { id: 'helm' });
+  s = M.apply(s, 'delete', { id: 'demo-1' });
+  assert.equal(s.selected, 'demo-two'); assert.equal(s.diamonds, 2310); assert.equal(s.characterStates['demo-1'], undefined);
+  s = M.apply(s, 'delete', { id: 'demo-two' });
+  assert.deepEqual(s.characterStates, {}); assert.throws(() => M.apply(s, 'buy', { id: 'blade' }), /Сначала/);
+  s = M.apply(s, 'create', { name: 'Новый', appearance: M.appearance(), uid: 'fresh' });
+  assert.equal(s.diamonds, 2400); assert.equal(s.characters[0].primary, true);
+});
+test('schema 1 is preserved until explicit reset and inconsistent projections are rejected', () => {
+  const old = JSON.stringify({ dataset: 'same', state: { ...M.initial(), schema: 1 } });
+  let reads = 0;
+  const loaded = M.load({ getItem: () => { reads++; return old; } }, 'same');
+  assert.ok(loaded.issue); assert.equal(reads, 1); assert.equal(loaded.state.schema, 2);
+  const s = M.initial(); s.characterStates['demo-1'].diamonds = 1;
+  assert.equal(M.validate(s), false); assert.throws(() => M.serialize(s));
+  const orphan = M.serialize(M.initial()); orphan.characterStates.orphan = orphan.characterStates['demo-1'];
+  assert.equal(M.validate(orphan), false);
+});

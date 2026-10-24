@@ -1,7 +1,7 @@
 /* Local demo adapter. This file has no transport and never accepts credentials. */
 (function (root) {
   'use strict';
-  const SCHEMA = 1, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
+  const SCHEMA = 2, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
   const CLASSES = [['SwordMan', 'Кровавый рыцарь'], ['Gunner', 'Стрелок'], ['Fighter', 'Карнаж'], ['DarkMage', 'Тёмный маг'], ['Reaper', 'Мрачный Жнец']];
   const clone = value => JSON.parse(JSON.stringify(value));
   function profileKey(profile = 'demo-01') {
@@ -9,12 +9,22 @@
     return STORAGE_KEY + '.' + profile;
   }
   function appearance() { return { gender: 'Female', classId: 'Reaper', preset: 1, hair: 1, face: 1, eyes: 1, makeup: 1, voice: 1, body: [50, 50, 50, 50, 50, 50, 50] }; }
-  function initial() {
-    return { schema: SCHEMA, server: 'Franz 2', region: 'Весь мир', characters: [{ id: 'demo-1', name: 'Nocturne', level: 18, appearance: appearance(), primary: true }], selected: 'demo-1',
-      gold: 16880438, diamonds: 2400, inventory: { blade: 1, helm: 1, armor: 1, potion: 30, blessing: 1, book: 2 }, equipped: {},
+  const CHARACTER_FIELDS = ['gold', 'diamonds', 'inventory', 'equipped', 'quest', 'hp', 'mp', 'experience', 'position', 'target', 'follow', 'quick', 'mailClaimed', 'collection'];
+  function characterState() {
+    return { gold: 16880438, diamonds: 2400, inventory: { blade: 1, helm: 1, armor: 1, potion: 30, blessing: 1, book: 2 }, equipped: {},
       quest: { progress: 0, claimed: false, auto: false }, hp: 10576, mp: 2453, experience: 0,
       position: null, target: null, follow: false, quick: ['potion', 'blessing', 'book', null, null],
-      settings: { labels: true, sounds: false, scale: 100 }, mailClaimed: false, collection: false };
+      mailClaimed: false, collection: false };
+  }
+  function project(state) { return { ...state, ...clone(state.characterStates[state.selected] || characterState()) }; }
+  function characterFields(state) { return Object.fromEntries(CHARACTER_FIELDS.map(key => [key, clone(state[key])])); }
+  function canonical(state) {
+    return clone(Object.fromEntries(['schema', 'server', 'region', 'characters', 'selected', 'characterStates', 'settings'].map(key => [key, state[key]])));
+  }
+  function initial() {
+    return project({ schema: SCHEMA, server: 'Franz 2', region: 'Весь мир',
+      characters: [{ id: 'demo-1', name: 'Nocturne', level: 18, appearance: appearance(), primary: true }], selected: 'demo-1',
+      characterStates: { 'demo-1': characterState() }, settings: { labels: true, sounds: false, scale: 100 } });
   }
   const PRODUCTS = {
     blade: { name: 'Меч сумерек', kind: 'equipment', slot: 'weapon', icon: 'IMG_Flat_Character', price: 150, currency: 'diamonds', attack: 42, description: 'Демонстрационный предмет. Повышает атаку при экипировке.' },
@@ -24,25 +34,35 @@
     blessing: { name: 'Благодать добычи (28 дн.)', kind: 'consumable', icon: 'IMG_Flat_Item', price: 1200, currency: 'diamonds', description: 'Демонстрационный эффект: получение опыта +3%. Цены и условия не являются данными сервера.' },
     book: { name: 'Книга гравировки', kind: 'material', icon: 'IMG_Flat_Skill', price: 30, currency: 'diamonds', description: 'Материал локальной демонстрации коллекции.' }
   };
-  function validate(state) {
-    if (!state || state.schema !== SCHEMA || !Array.isArray(state.characters) || state.characters.length > 3) return false;
+  function validCharacterState(state) {
+    if (!state || typeof state !== 'object') return false;
     if (!Number.isSafeInteger(state.gold) || !Number.isSafeInteger(state.diamonds) || state.gold < 0 || state.diamonds < 0) return false;
-    if (!state.inventory || Object.entries(state.inventory).some(([id, n]) => !PRODUCTS[id] || !Number.isSafeInteger(n) || n < 0)) return false;
-    if (!state.equipped || Object.entries(state.equipped).some(([slot, id]) => !PRODUCTS[id] || PRODUCTS[id].slot !== slot || !(state.inventory[id] > 0))) return false;
-    const ids = new Set();
-    for (const c of state.characters) {
-      if (!c || typeof c.id !== 'string' || ids.has(c.id) || typeof c.name !== 'string' || !/^.{2,16}$/u.test(c.name) || !validAppearance(c.appearance) || !Number.isFinite(c.level)) return false;
-      ids.add(c.id);
-    }
-    if (state.selected !== null && !ids.has(state.selected)) return false;
-    return state.quest && Number.isInteger(state.quest.progress) && state.quest.progress >= 0 && state.quest.progress <= 3 &&
+    if (!state.inventory || Array.isArray(state.inventory) || Object.keys(PRODUCTS).some(id => !Object.hasOwn(state.inventory, id)) || Object.entries(state.inventory).some(([id, n]) => !Object.hasOwn(PRODUCTS, id) || !Number.isSafeInteger(n) || n < 0)) return false;
+    if (!state.equipped || Array.isArray(state.equipped) || Object.entries(state.equipped).some(([slot, id]) => !Object.hasOwn(PRODUCTS, id) || PRODUCTS[id].slot !== slot || !(state.inventory[id] > 0))) return false;
+    return !!(state.quest && Number.isInteger(state.quest.progress) && state.quest.progress >= 0 && state.quest.progress <= 3 &&
       typeof state.quest.claimed === 'boolean' && typeof state.quest.auto === 'boolean' &&
       Number.isFinite(state.hp) && state.hp >= 0 && state.hp <= 12440 && Number.isFinite(state.mp) && state.mp >= 0 && state.mp <= 4085 &&
-      Number.isSafeInteger(state.experience) && state.experience >= 0 &&
-      Array.isArray(state.quick) && state.quick.length === 5 && state.quick.every(x => x === null || PRODUCTS[x]) &&
-      state.settings && typeof state.settings.labels === 'boolean' && [80, 90, 100, 110, 120].includes(state.settings.scale) &&
-      typeof state.region === 'string' && ['Franz 2', 'Kurzel 1', 'Franz 3'].includes(state.server) &&
-      [state.position, state.target].every(p => p === null || (Number.isFinite(p.x) && Number.isFinite(p.y) && Math.abs(p.x) <= 1e9 && Math.abs(p.y) <= 1e9));
+      Number.isSafeInteger(state.experience) && state.experience >= 0 && typeof state.follow === 'boolean' &&
+      typeof state.mailClaimed === 'boolean' && typeof state.collection === 'boolean' &&
+      Array.isArray(state.quick) && state.quick.length === 5 && state.quick.every(x => x === null || Object.hasOwn(PRODUCTS, x)) &&
+      [state.position, state.target].every(p => p === null || (p && typeof p === 'object' && Number.isFinite(p.x) && Number.isFinite(p.y) && Math.abs(p.x) <= 1e9 && Math.abs(p.y) <= 1e9)));
+  }
+  function validate(state) {
+    if (!state || state.schema !== SCHEMA || !Array.isArray(state.characters) || state.characters.length > 2) return false;
+    if (!state.characterStates || typeof state.characterStates !== 'object' || Array.isArray(state.characterStates)) return false;
+    const ids = new Set();
+    for (const c of state.characters) {
+      if (!c || !/^demo-[a-zA-Z0-9_-]{1,64}$/.test(c.id) || ids.has(c.id) || typeof c.name !== 'string' || !/^[\p{L}\p{N}_-]{2,16}$/u.test(c.name) || !validAppearance(c.appearance) || !Number.isInteger(c.level) || c.level < 1 || c.level > 1000 || typeof c.primary !== 'boolean') return false;
+      if (!Object.hasOwn(state.characterStates, c.id) || !validCharacterState(state.characterStates[c.id])) return false;
+      ids.add(c.id);
+    }
+    if ((state.characters.length === 0) !== (state.selected === null) || (state.selected !== null && !ids.has(state.selected))) return false;
+    if (state.characters.filter(c => c.primary).length !== (ids.size ? 1 : 0) || Object.keys(state.characterStates).some(id => !ids.has(id))) return false;
+    // Render projections are accepted only if they agree with the canonical bank.
+    const active = state.characterStates[state.selected] || characterState();
+    if (CHARACTER_FIELDS.some(key => Object.hasOwn(state, key)) && CHARACTER_FIELDS.some(key => JSON.stringify(state[key]) !== JSON.stringify(active[key]))) return false;
+    return !!(state.settings && typeof state.settings.labels === 'boolean' && typeof state.settings.sounds === 'boolean' && [80, 90, 100, 110, 120].includes(state.settings.scale) &&
+      ['Весь мир', 'Европа', 'Азия'].includes(state.region) && ['Franz 2', 'Kurzel 1', 'Franz 3'].includes(state.server));
   }
   function validAppearance(a) {
     return a && ['Female', 'Male'].includes(a.gender) && CLASSES.some(x => x[0] === a.classId) &&
@@ -55,14 +75,17 @@
       if (!raw) return { state: initial(), issue: null };
       const value = JSON.parse(raw);
       if (value.dataset !== dataset || !validate(value.state)) return { state: initial(), issue: 'Сохранение относится к другому набору данных или повреждено. Выберите явный сброс; исходная запись сохранена.' };
-      return { state: value.state, issue: null };
+      return { state: project(value.state), issue: null };
     } catch { return { state: initial(), issue: 'Локальное сохранение недоступно или повреждено. Автоматическая перезапись отключена.' }; }
   }
   function stats(state) {
     return Object.values(state.equipped).reduce((out, id) => ({ attack: out.attack + (PRODUCTS[id].attack || 0), defense: out.defense + (PRODUCTS[id].defense || 0) }), { attack: 120, defense: 80 });
   }
   function apply(state, type, payload = {}) {
-    const next = clone(state), fail = message => { throw Error(message); };
+    if (!validate(state)) throw Error('Некорректное исходное состояние.');
+    const next = project(canonical(state)), fail = message => { throw Error(message); };
+    const previousCharacter = next.selected;
+    if (!previousCharacter && !['create', 'server', 'settings'].includes(type)) fail('Сначала создайте персонажа.');
     const item = PRODUCTS[payload.id];
     switch (type) {
       case 'server':
@@ -87,8 +110,9 @@
       case 'delete':
         if (!next.characters.some(c => c.id === payload.id)) fail('Персонаж уже удалён.');
         next.characters = next.characters.filter(c => c.id !== payload.id);
+        delete next.characterStates[payload.id];
         if (!next.characters.some(c => c.primary) && next.characters[0]) next.characters[0].primary = true;
-        next.selected = next.characters[0]?.id || null; break;
+        if (next.selected === payload.id) next.selected = next.characters[0]?.id || null; break;
       case 'buy': {
         if (!item) fail('Товар отсутствует.');
         const count = payload.count ?? 1;
@@ -132,13 +156,21 @@
         for (const key of ['labels', 'sounds', 'scale']) if (Object.hasOwn(payload, key)) next.settings[key] = payload[key]; break;
       default: fail('Действие не реализовано: ' + type);
     }
+    if (next.selected !== previousCharacter) {
+      if (previousCharacter && next.characters.some(c => c.id === previousCharacter)) next.characterStates[previousCharacter] = characterFields(next);
+      if (next.selected && !next.characterStates[next.selected]) next.characterStates[next.selected] = characterState();
+      Object.assign(next, clone(next.characterStates[next.selected] || characterState()));
+    } else if (next.selected) next.characterStates[next.selected] = characterFields(next);
     if (!validate(next)) fail('Изменение не прошло проверку состояния.');
     return next;
   }
   function adapter(state, onChange) {
+    if (!validate(state)) throw Error('Некорректное начальное состояние.');
+    state = project(canonical(state));
     return { get state() { return clone(state); }, dispatch(type, payload) { state = apply(state, type, payload); onChange?.(clone(state), type); return clone(state); } };
   }
-  const api = { SCHEMA, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, stats, apply, adapter };
+  function serialize(state) { if (!validate(state)) throw Error('Некорректное сохранение.'); return canonical(state); }
+  const api = { SCHEMA, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.VampirDemo = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

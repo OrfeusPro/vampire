@@ -1061,7 +1061,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-bbee7b36e206. `/Game/RED/UI/Inventory/TabBar/WBP_TombInventoryTabBarUI` — вариантов: 1.
 - [ ] UI-W-61d3b25ea3c0. `/Game/RED/UI/Inventory/TabBar/WBP_VehicleInventoryTabBarUI` — вариантов: 1.
 - [ ] UI-W-66ddeefa99e2. `/Game/RED/UI/Inventory/WBP_InventoryExpandPopup` — вариантов: 1.
-- [ ] UI-W-664f46c2d2b7. `/Game/RED/UI/Inventory/WBP_InventoryUI` — вариантов: 1.
+- [ ] ~ UI-W-664f46c2d2b7. `/Game/RED/UI/Inventory/WBP_InventoryUI` — вариантов: 1.
 - [ ] UI-W-8cae66695901. `/Game/RED/UI/Inventory/WBP_InventoryUI_Auction` — вариантов: 1.
 - [ ] UI-W-a8acd7e87b90. `/Game/RED/UI/Inventory/WBP_InventoryUI_HUD` — вариантов: 1.
 - [ ] UI-W-aebe1a2ee057. `/Game/RED/UI/Inventory/WBP_InventoryWeightInfoT` — вариантов: 1.
@@ -1098,7 +1098,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-be9bdce31bd2. `/Game/RED/UI/Item/WBP_ItemInfoExpansionModalPopup` — вариантов: 1.
 - [ ] UI-W-fc6fe5c0e2e7. `/Game/RED/UI/Item/WBP_ItemInfoExpansionPopup` — вариантов: 1.
 - [ ] UI-W-5989b37164f4. `/Game/RED/UI/Item/WBP_ItemInfoKeyT` — вариантов: 1.
-- [ ] UI-W-b876effc7942. `/Game/RED/UI/Item/WBP_ItemInfoPopup` — вариантов: 1.
+- [ ] ~ UI-W-b876effc7942. `/Game/RED/UI/Item/WBP_ItemInfoPopup` — вариантов: 1.
 - [ ] UI-W-f72f5a1450ce. `/Game/RED/UI/Item/WBP_ItemLargeT` — вариантов: 1.
 - [ ] UI-W-648a58ce3a1a. `/Game/RED/UI/Item/WBP_ItemMultiUsePopup` — вариантов: 1.
 - [ ] UI-W-beac9305c7ea. `/Game/RED/UI/Item/WBP_ItemPeriodLimitT` — вариантов: 1.
@@ -1153,7 +1153,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-41e5686f6b39. `/Game/RED/UI/Lobby/WBP_CharacterCreateCustomizeMenuT` — вариантов: 2.
 - [ ] UI-W-8a86e3838d25. `/Game/RED/UI/Lobby/WBP_CharacterCreateUI` — вариантов: 2.
 - [ ] UI-W-e397d29b2156. `/Game/RED/UI/Lobby/WBP_CharacterCustomizeEyeT` — вариантов: 2.
-- [ ] UI-W-9f90d8c9f316. `/Game/RED/UI/Lobby/WBP_CharacterCustomizeUI` — вариантов: 2.
+- [ ] ~ UI-W-9f90d8c9f316. `/Game/RED/UI/Lobby/WBP_CharacterCustomizeUI` — вариантов: 2.
 - [ ] UI-W-77d60dfae134. `/Game/RED/UI/Lobby/WBP_CharacterCustomizeVoiceT` — вариантов: 2.
 - [ ] UI-W-eb90a11ede69. `/Game/RED/UI/Lobby/WBP_CharacterDeleteCancelPopup` — вариантов: 2.
 - [ ] UI-W-baaa184b1a98. `/Game/RED/UI/Lobby/WBP_CharacterDeletePopup` — вариантов: 2.
@@ -1161,14 +1161,14 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-45ef56dbdc70. `/Game/RED/UI/Lobby/WBP_CharacterGiftListT` — вариантов: 2.
 - [ ] UI-W-45edb998da64. `/Game/RED/UI/Lobby/WBP_CharacterGiftMessagePopup` — вариантов: 2.
 - [ ] UI-W-3e449badf11d. `/Game/RED/UI/Lobby/WBP_CharacterGiftPopup` — вариантов: 2.
-- [ ] UI-W-01e5365438b2. `/Game/RED/UI/Lobby/WBP_CharacterSelectUI` — вариантов: 2.
+- [ ] ~ UI-W-01e5365438b2. `/Game/RED/UI/Lobby/WBP_CharacterSelectUI` — вариантов: 2.
 - [ ] UI-W-c00b931dc43e. `/Game/RED/UI/Lobby/WBP_CharacterSkillPreviewPopup` — вариантов: 2.
 - [ ] UI-W-acd96c2be5fe. `/Game/RED/UI/Lobby/WBP_CharacterSlotT` — вариантов: 2.
 - [ ] UI-W-cc7b2a63b69b. `/Game/RED/UI/Lobby/WBP_ClassSelectUI` — вариантов: 2.
 - [ ] UI-W-d2d5f2f455a5. `/Game/RED/UI/Lobby/WBP_CreateUsernamePopup` — вариантов: 2.
 - [ ] UI-W-9bff8d8a715b. `/Game/RED/UI/Lobby/WBP_LoadingPageUI` — вариантов: 2.
 - [ ] UI-W-cdbd3859c35c. `/Game/RED/UI/Lobby/WBP_LoadingUI` — вариантов: 2.
-- [ ] UI-W-3200025cb74c. `/Game/RED/UI/Lobby/WBP_NameInputPopup` — вариантов: 2.
+- [ ] ~ UI-W-3200025cb74c. `/Game/RED/UI/Lobby/WBP_NameInputPopup` — вариантов: 2.
 - [ ] UI-W-b0428ef6cf58. `/Game/RED/UI/Lobby/WBP_PatchPopup` — вариантов: 2.
 - [ ] UI-W-47579d591532. `/Game/RED/UI/Lobby/WBP_PatchUI` — вариантов: 2.
 - [ ] UI-W-fd08c28d8839. `/Game/RED/UI/Lobby/WBP_RealmSelectT` — вариантов: 2.
@@ -1601,14 +1601,14 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-e7c833ac352b. `/Game/RED/UI/Shop/WBP_ShopProductMultiPopup` — вариантов: 2.
 - [ ] UI-W-0f9a275a04c8. `/Game/RED/UI/Shop/WBP_ShopProductReceivePopup` — вариантов: 2.
 - [ ] UI-W-6b7bc2995960. `/Game/RED/UI/Shop/WBP_ShopProductReceiveResultUI` — вариантов: 2.
-- [ ] UI-W-9f6f8d4d9613. `/Game/RED/UI/Shop/WBP_ShopPurchasePopup` — вариантов: 2.
+- [ ] ~ UI-W-9f6f8d4d9613. `/Game/RED/UI/Shop/WBP_ShopPurchasePopup` — вариантов: 2.
 - [ ] UI-W-1dbd7fe64766. `/Game/RED/UI/Shop/WBP_ShopPurchaseStepupListT` — вариантов: 2.
 - [ ] UI-W-2d4b618fd411. `/Game/RED/UI/Shop/WBP_ShopServerAccumulatedT` — вариантов: 2.
 - [ ] UI-W-96973af96783. `/Game/RED/UI/Shop/WBP_ShopStorageListT` — вариантов: 2.
 - [ ] UI-W-299039e6bf07. `/Game/RED/UI/Shop/WBP_ShopStoragePanelUI` — вариантов: 2.
 - [ ] UI-W-51f524b377cf. `/Game/RED/UI/Shop/WBP_ShopTabMainT` — вариантов: 2.
 - [ ] UI-W-e81049ae49b3. `/Game/RED/UI/Shop/WBP_ShopTabSubT` — вариантов: 2.
-- [ ] UI-W-9650b210304d. `/Game/RED/UI/Shop/WBP_ShopUI` — вариантов: 2.
+- [ ] ~ UI-W-9650b210304d. `/Game/RED/UI/Shop/WBP_ShopUI` — вариантов: 2.
 - [ ] UI-W-76d839b4c547. `/Game/RED/UI/Shop/WBP_ShopUserAgePopup` — вариантов: 2.
 - [ ] UI-W-c0fbc5ad6eb8. `/Game/RED/UI/Skill/WBP_DefaultSkillT` — вариантов: 2.
 - [ ] UI-W-e9b765aa4ff0. `/Game/RED/UI/Skill/WBP_ItemInfoSkillT` — вариантов: 1.

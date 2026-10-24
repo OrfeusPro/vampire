@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 from datetime import datetime, timezone
 from pathlib import Path
@@ -115,6 +116,10 @@ def build(root, baseline=None):
     inputs = {str(p.relative_to(root)).replace('\\', '/'): sha(p) for p in
               (index_path, image_path, root / 'maps/loot/items.json', root / 'maps/atlas/index.json')}
     source_inputs = {p.name: sha(p) for p in sorted(SOURCE.iterdir()) if p.is_file()}
+    schema_match = re.search(r'\bconst SCHEMA = (\d+),', (SOURCE / 'model.js').read_text('utf-8'))
+    if not schema_match:
+        raise ValueError('Demo state schema is not declared')
+    state_schema = int(schema_match.group(1))
     image_hashes = {}
     for name, row in selected.items():
         path = root / row['file']
@@ -155,7 +160,7 @@ def build(root, baseline=None):
         write(temporary / 'registry-index.json', [dict(id=x['id'], name=x['name'], path=x['path'],
             popup=any(v['popup'] for v in x['variants']), variants=len(x['variants']),
             controls=max(len(v['controls']) for v in x['variants']), status=x['status']) for x in records])
-        manifest = dict(fingerprint, id=identity, data_id=data_id, built_at=datetime.now(timezone.utc).isoformat(),
+        manifest = dict(fingerprint, id=identity, data_id=data_id, state_schema=state_schema, built_at=datetime.now(timezone.utc).isoformat(),
             schema=1, registry_count=len(records), variant_count=sum(len(x['variants']) for x in records),
             limits=['Исторический каталог не подтверждает совместимость с установленным клиентом.',
                     'Размещение веб-интерфейса адаптировано; runtime DPI и brush bindings не подтверждены.',
@@ -175,8 +180,8 @@ def build(root, baseline=None):
                 slots=[s['provenance'] for s in package['decoded_slots']],
                 size_constraints=[dict(name=c['name'], export=c['export'], values=c['size_constraints'])
                                   for c in package['controls'] if c.get('size_constraints')])
-            reference = Path('C:/Users/754C~1/AppData/Local/Temp') / profile['reference']
-            profile['reference_sha256'] = sha(reference) if reference.exists() else None
+            reference = Path('C:/Users/754C~1/AppData/Local/Temp') / profile['reference'] if profile.get('reference') else None
+            profile['reference_sha256'] = sha(reference) if reference and reference.exists() else None
             profile['runtime_geometry_verified'] = False
         write(temporary / 'placement-evidence.json', layouts)
         button_layouts = read(SOURCE / 'button-layouts.json')

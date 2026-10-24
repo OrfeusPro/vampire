@@ -3,6 +3,12 @@
   "coordinate_space": "viewport_fraction",
   "limits": "Пропорции адаптированы по приложенным кадрам и структуре WBP. Runtime DPI, desired size и анимации не восстановлены полностью.",
   "profiles": {
+    "name-window": {
+      "resource": "WBP_NameInputPopup",
+      "catalog_file": "pakchunk500-Windows-2385.json",
+      "rect": [0.366, 0.322, 0.268, 0.356],
+      "basis": "PanelPopup slot 14: 640 × 480, центральные anchors / alignment. Масштаб демо адаптирован; прямой callback кастомизации в этот WBP не подтверждён."
+    },
     "inventory-window": {
       "resource": "WBP_InventoryUI",
       "catalog_file": "pakchunk500-Windows-2167.json",

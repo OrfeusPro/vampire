@@ -8,3 +8,5 @@
 .placed-window .dialog-body{height:calc(100% - 4em);max-height:calc(100% - 4em)}.inventory-window .bag-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.inventory-window .tabs button{padding:.5em .3em}.inventory-window .dialog-body>input{width:100%}.placed-window.full-window .dialog-body{max-height:calc(100% - 4em)}
 
 .item-card .dialog-body>small{display:block;margin:1em 0}
+
+.character-name-form{display:flex;flex-direction:column;min-height:100%}.character-name-form .actions{margin-top:auto}.name-window .form-error{margin-bottom:1em}.name-window p{font-size:.85em}.name-window .primary{min-width:0}.name-window .actions button{flex:1}.name-window .actions{gap:.5em}

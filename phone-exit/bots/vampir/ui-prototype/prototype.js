@@ -46,14 +46,18 @@
   function action(type, payload) { try { adapter.dispatch(type, payload); return true; } catch (error) { info('Действие недоступно', error.message); return false; } }
   function persist(value) {
     if (storageBlocked) return;
-    try { localStorage.setItem(storageKey, JSON.stringify({ dataset: manifest.data_id || manifest.id, state: value })); }
+    try { localStorage.setItem(storageKey, JSON.stringify({ dataset: manifest.data_id || manifest.id, state: M.serialize(value) })); }
     catch { storageBlocked = true; storageIssue = 'Не удалось сохранить демо. Текущее состояние доступно до закрытия страницы.'; notify(storageIssue); }
   }
   function currentCharacter() { return state().characters.find(c => c.id === state().selected); }
   function className(id) { return M.CLASSES.find(x => x[0] === id)?.[1] || id; }
   function portrait(a = M.appearance(), full = false) { return image(full ? 'IMG_Class_' + a.classId + '_' + a.gender : 'IMG_Customize_Preset_' + a.gender + '_' + String(a.preset).padStart(2, '0'), full ? 'character-image' : 'portrait'); }
   function currencies() { const n = el('div', undefined, 'currencies'); append(n, el('span', '● ' + fmt(state().gold)), el('span', '◆ ' + fmt(state().diamonds))); return n; }
-  function field(label, input) { const n = el('label', undefined, 'field'); append(n, el('span', label), input); return n; }
+  function field(label, input) {
+    const direct = /^(INPUT|SELECT|TEXTAREA)$/.test(input.tagName), n = el(direct ? 'label' : 'div', undefined, 'field'), text = el('span', label);
+    if (!direct) { text.id = 'label-' + crypto.randomUUID(); input.setAttribute('role', 'group'); input.setAttribute('aria-labelledby', text.id); }
+    append(n, text, input); return n;
+  }
   function input(type, placeholder = '') { const n = document.createElement('input'); n.type = type; n.placeholder = placeholder; return n; }
   function select(values, value, fn) { const n = document.createElement('select'); values.forEach(x => { const option = el('option', typeof x === 'string' ? x : x[1]); option.value = typeof x === 'string' ? x : x[0]; n.append(option); }); n.value = value; n.onchange = () => fn(n.value); return n; }
   function tabs(names, current, fn) { const n = el('nav', undefined, 'tabs'); n.setAttribute('aria-label', 'Вкладки'); names.forEach(name => { const b = button(name, () => fn(name), name === current ? 'active' : ''); b.setAttribute('aria-pressed', String(name === current)); n.append(b); }); return n; }
@@ -96,10 +100,11 @@
       append(body, el('p', message), actions);
     });
   }
-  function transition(next) { dialogs.slice().reverse().forEach(closeDialog); screen = next; render(); }
+  function transition(next) { dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; cooldowns.clear(); screen = next; render(); }
   function pageTitle(text, back) { const n = el('header', undefined, 'page-title'); append(n, button('❮', back, 'back'), el('h1', text)); return n; }
   function footerNote() { return el('small', 'Демонстрационный режим · игровые команды не отправляются', 'demo-note'); }
   function render() {
+    const focused = app.contains(document.activeElement) ? focusIdentity(document.activeElement) : null;
     app.replaceChildren(); app.className = 'screen screen-' + screen;
     if (screen === 'auth') renderAuth();
     if (screen === 'servers') renderServers();
@@ -109,6 +114,7 @@
     if (screen === 'create') renderCreate();
     if (screen === 'game') renderGame();
     app.append(footerNote());
+    restoreFocus(focused, app);
     updateButtonGeometry();
   }
   function renderAuth() {
@@ -181,7 +187,7 @@
     append(app, pageTitle('Выбор класса', () => transition('characters')));
     const list = el('section', undefined, 'class-list');
     M.CLASSES.forEach(([id, name]) => {
-      const card = button('', () => { draft = M.appearance(); draft.classId = id; undo = []; redo = []; characterName = ''; transition('create'); }, 'class-card');
+      const card = button('', () => { draft = M.appearance(); draft.classId = id; undo = []; redo = []; createTab = 'Пресет'; characterName = ''; transition('create'); }, 'class-card');
       append(card, portrait({ ...M.appearance(), classId: id }, true), el('h2', name)); list.append(card);
     });
     append(app, list, el('p', 'Выберите желаемый класс.', 'class-instruction'));
@@ -212,14 +218,32 @@
         const value = el('output', String(draft.body[i]));
         range.oninput = () => value.textContent = range.value;
         range.onchange = () => editDraft(a => a.body[i] = Number(range.value));
-        const row = el('div', undefined, 'slider-row'); append(row, button('−', () => editDraft(a => a.body[i] = Math.max(0, a.body[i] - 1))), range, button('+', () => editDraft(a => a.body[i] = Math.min(100, a.body[i] + 1))), value); options.append(field(name, row));
+        const row = el('div', undefined, 'slider-row'), minus = button('−', () => editDraft(a => a.body[i] = Math.max(0, a.body[i] - 1))), plus = button('+', () => editDraft(a => a.body[i] = Math.min(100, a.body[i] + 1)));
+        minus.setAttribute('aria-label', 'Уменьшить: ' + name); plus.setAttribute('aria-label', 'Увеличить: ' + name);
+        append(row, minus, range, plus, value); options.append(field(name, row));
       });
     } else for (let i = 1; i <= 3; i++) options.append(button('Голос (тип ' + ['A', 'B', 'C'][i - 1] + ')', () => { editDraft(a => a.voice = i); notify('Тип голоса сохранён. Звуковое превью пока отсутствует.'); }, draft.voice === i ? 'selected' : ''));
     const gender = el('div', undefined, 'gender');
     append(gender, button('♂', () => editDraft(a => { a.gender = 'Male'; a.preset = 1; }), draft.gender === 'Male' ? 'selected' : ''), button('♀', () => editDraft(a => { a.gender = 'Female'; a.preset = 1; }), draft.gender === 'Female' ? 'selected' : ''));
-    const name = input('text', 'Имя персонажа'); name.maxLength = 16; name.value = characterName; name.oninput = () => characterName = name.value; name.setAttribute('aria-label', 'Имя персонажа');
-    const actions = el('div', undefined, 'create-actions'); append(actions, name, button('Создать персонажа', () => { if (action('create', { name: characterName, appearance: draft })) transition('characters'); }, 'primary'));
+    const actions = el('div', undefined, 'create-actions'); actions.append(button('Создать персонажа', openCharacterName, 'primary'));
     append(app, side, preview, options, gender, actions);
+  }
+  function openCharacterName() {
+    modal('Имя персонажа', (body, dialog) => {
+      const form = el('form', undefined, 'character-name-form'), name = input('text', 'Имя персонажа');
+      name.required = true; name.maxLength = 16; name.value = characterName; name.autocomplete = 'off'; name.autofocus = true;
+      name.oninput = () => characterName = name.value;
+      const error = el('p', '', 'form-error'); error.setAttribute('role', 'alert');
+      const submit = el('button', 'Создать', 'primary'); submit.type = 'submit';
+      form.onsubmit = event => {
+        event.preventDefault();
+        try { adapter.dispatch('create', { name: name.value, appearance: draft }); transition('characters'); }
+        catch (e) { error.textContent = e.message; name.focus(); }
+      };
+      const controls = el('div', undefined, 'actions'); append(controls, button('Отмена', () => closeDialog(dialog)), submit);
+      append(form, field('Имя персонажа', name), el('p', 'От 2 до 16 букв, цифр, знаков _ или -.'), error, controls);
+      body.append(form); name.focus();
+    }, 'name-window');
   }
   function gameFrame() { return document.getElementById('world'); }
   function sendMap(type, payload) { gameFrame()?.contentWindow?.postMessage({ source: 'vampir-demo', type, payload }, location.origin); }
@@ -482,6 +506,7 @@
   });
   Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls]) => {
     textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
+    if (manifest.state_schema !== M.SCHEMA) throw Error('Версия модели не соответствует manifest этой сборки.');
     let loaded;
     try { loaded = M.load(localStorage, manifest.data_id || manifest.id, profile); }
     catch { loaded = { state: M.initial(), issue: 'Хранилище недоступно. Работа продолжается без сохранения.' }; }
