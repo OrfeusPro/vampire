@@ -107,9 +107,49 @@ test('schema 1 is preserved until explicit reset and inconsistent projections ar
   const old = JSON.stringify({ dataset: 'same', state: { ...M.initial(), schema: 1 } });
   let reads = 0;
   const loaded = M.load({ getItem: () => { reads++; return old; } }, 'same');
-  assert.ok(loaded.issue); assert.equal(reads, 1); assert.equal(loaded.state.schema, 2);
+  assert.ok(loaded.issue); assert.equal(reads, 1); assert.equal(loaded.state.schema, M.SCHEMA);
   const s = M.initial(); s.characterStates['demo-1'].diamonds = 1;
   assert.equal(M.validate(s), false); assert.throws(() => M.serialize(s));
-  const orphan = M.serialize(M.initial()); orphan.characterStates.orphan = orphan.characterStates['demo-1'];
+  const orphan = M.serialize(M.initial()); orphan.serverStates['Franz 2'].characterStates.orphan = orphan.serverStates['Franz 2'].characterStates['demo-1'];
   assert.equal(M.validate(orphan), false);
+});
+
+test('server banks isolate same character IDs, names, purchases, deletion and persisted progress', () => {
+  let s = M.apply(M.initial(), 'buy', { id: 'blade' });
+  s = M.apply(s, 'equip', { id: 'blade' });
+  s = M.apply(s, 'quest-step');
+  s = M.apply(s, 'server', { server: 'Kurzel 1', region: 'Азия' });
+  assert.deepEqual(s.characters, []); assert.equal(s.selected, null);
+  assert.throws(() => M.apply(s, 'buy', { id: 'blade' }), /Сначала/);
+  s = M.apply(s, 'create', { name: 'Nocturne', uid: '1', appearance: M.appearance() });
+  assert.equal(s.selected, 'demo-1'); assert.equal(s.diamonds, 2400);
+  s = M.apply(s, 'buy', { id: 'helm' });
+  s = M.apply(s, 'settings', { scale: 110 });
+  const saved = M.serialize(s);
+  assert.equal(Object.hasOwn(saved, 'characters'), false);
+  const loaded = M.load({ getItem: () => JSON.stringify({ dataset: 'same', state: saved }) }, 'same');
+  assert.equal(loaded.issue, null); assert.equal(loaded.state.diamonds, 2310);
+  s = M.apply(loaded.state, 'server', { server: 'Franz 2' });
+  assert.equal(s.characters[0].name, 'Nocturne'); assert.equal(s.diamonds, 2250);
+  assert.equal(s.quest.progress, 1); assert.equal(s.equipped.weapon, 'blade');
+  assert.equal(s.settings.scale, 110);
+  s = M.apply(s, 'delete', { id: 'demo-1' });
+  s = M.apply(s, 'server', { server: 'Kurzel 1' });
+  assert.equal(s.characters.length, 1); assert.equal(s.diamonds, 2310);
+  s = M.apply(s, 'server', { server: 'Kurzel 1' });
+  assert.equal(s.diamonds, 2310);
+  assert.throws(() => M.apply(s, 'server', { server: 'Franz 3' }), /недоступен/);
+  assert.throws(() => M.apply(s, 'server', { server: 'Franz 2', region: 'unknown' }));
+});
+
+test('inactive server corruption and schema 2 are rejected without overwriting storage', () => {
+  const corrupt = M.serialize(M.initial());
+  corrupt.serverStates['Kurzel 1'].characterStates.orphan = {};
+  assert.equal(M.validate(corrupt), false);
+  const old = JSON.stringify({ dataset: 'same', state: { ...M.serialize(M.initial()), schema: 2 } });
+  const store = { getItem: () => old, setItem: () => { throw Error('must not overwrite'); } };
+  assert.ok(M.load(store, 'same').issue);
+  assert.equal(store.getItem(), old);
+  const unknown = M.serialize(M.initial()); unknown.serverStates.Unknown = unknown.serverStates['Franz 2'];
+  assert.equal(M.validate(unknown), false);
 });

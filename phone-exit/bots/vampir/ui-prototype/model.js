@@ -1,7 +1,7 @@
 /* Local demo adapter. This file has no transport and never accepts credentials. */
 (function (root) {
   'use strict';
-  const SCHEMA = 2, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
+  const SCHEMA = 3, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
   const CLASSES = [['SwordMan', 'Кровавый рыцарь'], ['Gunner', 'Стрелок'], ['Fighter', 'Карнаж'], ['DarkMage', 'Тёмный маг'], ['Reaper', 'Мрачный Жнец']];
   const clone = value => JSON.parse(JSON.stringify(value));
   function profileKey(profile = 'demo-01') {
@@ -16,16 +16,24 @@
       position: null, target: null, follow: false, quick: ['potion', 'blessing', 'book', null, null],
       mailClaimed: false, collection: false };
   }
-  function project(state) { return { ...state, ...clone(state.characterStates[state.selected] || characterState()) }; }
+  const SERVERS = ['Franz 2', 'Kurzel 1'];
+  const SERVER_FIELDS = ['characters', 'selected', 'characterStates'];
+  function serverFields(state) { return Object.fromEntries(SERVER_FIELDS.map(key => [key, clone(state[key])])); }
+  function project(state) {
+    const bank = clone(state.serverStates[state.server]);
+    return { ...state, ...bank, ...clone(bank.characterStates[bank.selected] || characterState()) };
+  }
   function characterFields(state) { return Object.fromEntries(CHARACTER_FIELDS.map(key => [key, clone(state[key])])); }
   function canonical(state) {
-    return clone(Object.fromEntries(['schema', 'server', 'region', 'characters', 'selected', 'characterStates', 'settings'].map(key => [key, state[key]])));
+    return clone(Object.fromEntries(['schema', 'server', 'region', 'serverStates', 'settings'].map(key => [key, state[key]])));
   }
   function initial() {
-    return project({ schema: SCHEMA, server: 'Franz 2', region: 'Весь мир',
-      characters: [{ id: 'demo-1', name: 'Nocturne', level: 18, appearance: appearance(), primary: true }], selected: 'demo-1',
-      characterStates: { 'demo-1': characterState() }, settings: { labels: true, sounds: false, scale: 100 } });
+    return project({ schema: SCHEMA, server: 'Franz 2', region: 'Весь мир', serverStates: {
+      'Franz 2': { characters: [{ id: 'demo-1', name: 'Nocturne', level: 18, appearance: appearance(), primary: true }], selected: 'demo-1', characterStates: { 'demo-1': characterState() } },
+      'Kurzel 1': { characters: [], selected: null, characterStates: {} }
+    }, settings: { labels: true, sounds: false, scale: 100 } });
   }
+
   const PRODUCTS = {
     blade: { name: 'Меч сумерек', kind: 'equipment', slot: 'weapon', icon: 'IMG_Flat_Character', price: 150, currency: 'diamonds', attack: 42, description: 'Демонстрационный предмет. Повышает атаку при экипировке.' },
     helm: { name: 'Шлем стража', kind: 'equipment', slot: 'head', icon: 'IMG_Flat_Dress', price: 90, currency: 'diamonds', defense: 18, description: 'Демонстрационная экипировка для ячейки головы.' },
@@ -47,7 +55,7 @@
       Array.isArray(state.quick) && state.quick.length === 5 && state.quick.every(x => x === null || Object.hasOwn(PRODUCTS, x)) &&
       [state.position, state.target].every(p => p === null || (p && typeof p === 'object' && Number.isFinite(p.x) && Number.isFinite(p.y) && Math.abs(p.x) <= 1e9 && Math.abs(p.y) <= 1e9)));
   }
-  function validate(state) {
+  function validateActive(state) {
     if (!state || state.schema !== SCHEMA || !Array.isArray(state.characters) || state.characters.length > 2) return false;
     if (!state.characterStates || typeof state.characterStates !== 'object' || Array.isArray(state.characterStates)) return false;
     const ids = new Set();
@@ -63,6 +71,22 @@
     if (CHARACTER_FIELDS.some(key => Object.hasOwn(state, key)) && CHARACTER_FIELDS.some(key => JSON.stringify(state[key]) !== JSON.stringify(active[key]))) return false;
     return !!(state.settings && typeof state.settings.labels === 'boolean' && typeof state.settings.sounds === 'boolean' && [80, 90, 100, 110, 120].includes(state.settings.scale) &&
       ['Весь мир', 'Европа', 'Азия'].includes(state.region) && ['Franz 2', 'Kurzel 1', 'Franz 3'].includes(state.server));
+  }
+  function validate(state) {
+    if (!state || state.schema !== SCHEMA || !SERVERS.includes(state.server) ||
+        !state.serverStates || typeof state.serverStates !== 'object' || Array.isArray(state.serverStates) ||
+        Object.keys(state.serverStates).length !== SERVERS.length) return false;
+    for (const server of SERVERS) {
+      const bank = state.serverStates[server];
+      if (!bank || typeof bank !== 'object' || Array.isArray(bank) ||
+          Object.keys(bank).length !== SERVER_FIELDS.length || !SERVER_FIELDS.every(key => Object.hasOwn(bank, key)) ||
+          !validateActive({ schema: state.schema, server, region: state.region, settings: state.settings, ...bank })) return false;
+    }
+    const bank = state.serverStates[state.server];
+    if (SERVER_FIELDS.some(key => Object.hasOwn(state, key)) &&
+        SERVER_FIELDS.some(key => JSON.stringify(state[key]) !== JSON.stringify(bank[key]))) return false;
+    return validateActive({ schema: state.schema, server: state.server, region: state.region,
+      settings: state.settings, ...bank, ...Object.fromEntries(CHARACTER_FIELDS.filter(key => Object.hasOwn(state, key)).map(key => [key, state[key]])) });
   }
   function validAppearance(a) {
     return a && ['Female', 'Male'].includes(a.gender) && CLASSES.some(x => x[0] === a.classId) &&
@@ -88,9 +112,13 @@
     if (!previousCharacter && !['create', 'server', 'settings'].includes(type)) fail('Сначала создайте персонажа.');
     const item = PRODUCTS[payload.id];
     switch (type) {
-      case 'server':
-        if (!['Franz 2', 'Kurzel 1'].includes(payload.server)) fail('Сервер недоступен для входа.');
-        next.server = payload.server; next.region = payload.region || 'Весь мир'; break;
+      case 'server': {
+        if (!SERVERS.includes(payload.server)) fail('Сервер недоступен для входа.');
+        next.server = payload.server; next.region = payload.region || 'Весь мир';
+        const result = project(canonical(next));
+        if (!validate(result)) fail('Изменение сервера не прошло проверку состояния.');
+        return result;
+      }
       case 'select':
       case 'primary':
         if (!next.characters.some(c => c.id === payload.id)) fail('Выберите персонажа.');
@@ -161,6 +189,7 @@
       if (next.selected && !next.characterStates[next.selected]) next.characterStates[next.selected] = characterState();
       Object.assign(next, clone(next.characterStates[next.selected] || characterState()));
     } else if (next.selected) next.characterStates[next.selected] = characterFields(next);
+    next.serverStates[next.server] = serverFields(next);
     if (!validate(next)) fail('Изменение не прошло проверку состояния.');
     return next;
   }
@@ -170,7 +199,7 @@
     return { get state() { return clone(state); }, dispatch(type, payload) { state = apply(state, type, payload); onChange?.(clone(state), type); return clone(state); } };
   }
   function serialize(state) { if (!validate(state)) throw Error('Некорректное сохранение.'); return canonical(state); }
-  const api = { SCHEMA, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
+  const api = { SCHEMA, SERVERS, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.VampirDemo = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

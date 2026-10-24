@@ -142,14 +142,14 @@
     app.append(panel);
   }
   function renderServers() {
-    const panel = el('section', undefined, 'server-panel'); let region = state().region, group = 'Franz';
+    const panel = el('section', undefined, 'server-panel'); let region = state().region, group = state().server.split(' ')[0];
     append(app, pageTitle('Выбор сервера', () => transition('auth')));
     const groups = ['Franz', 'Kurzel'], list = el('div', undefined, 'server-list');
     function refresh() {
       list.replaceChildren();
       for (const server of group === 'Franz' ? ['Franz 2', 'Franz 3'] : ['Kurzel 1']) {
         const row = button('', () => { if (action('server', { server, region })) transition('title'); }, 'server-row');
-        append(row, el('strong', server), el('span', server === 'Franz 3' ? 'Технические работы' : server === state().server ? 'Выбран · доступен' : 'Доступен', server === 'Franz 3' ? 'danger' : 'available')); list.append(row);
+        append(row, el('strong', server), el('span', server === 'Franz 3' ? 'Технические работы' : server === state().server ? 'Выбран · доступен' : 'Доступен', server === 'Franz 3' ? 'danger' : 'available')); if (server !== 'Franz 3') row.append(el('small', 'Персонажей в демо: ' + state().serverStates[server].characters.length)); list.append(row);
       }
     }
     append(panel, field('Регион', select(['Весь мир', 'Европа', 'Азия'], region, value => region = value)),
