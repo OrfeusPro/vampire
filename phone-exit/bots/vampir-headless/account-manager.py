@@ -203,6 +203,7 @@ def server(store, *, port=17949):
                 character_lists=lists,
                 readiness={a['id']: account_readiness(a, catalogs, lists) for a in accounts},
                 connection_presets=connection_presets() + store.connection_presets(),
+                character_connections=store.character_connections(),
                 creation_attempts=store.creation_attempts(),
                 creation_classes=[dict(key=key, label=label) for key, label in CLASS_CHOICES],
                 device_profiles=[dict(id='current-pc', name='Текущий ПК', available=True),

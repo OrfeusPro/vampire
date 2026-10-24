@@ -60,8 +60,9 @@ el('terms').onchange=()=>render();
 el('manual-mail-code').onchange=()=>render();
 el('send-code').onclick=async()=>{try{const value=el('registration-code').value;el('registration-code').value='';await api('/api/registration-code',{id:selected,code:value});notice('Код передан в форму регистрации.');await refresh();}catch(error){notice(error.message);}};
 el('new').onclick=()=>edit(null);
-el('region').onchange=()=>{servers(null);characters(null);};
-el('server').onchange=()=>characters(null);
+el('region').onchange=()=>{servers(null);characters(null);restoreCharacterConnection();};
+el('server').onchange=()=>{characters(null);restoreCharacterConnection();};
+el('character').onchange=()=>restoreCharacterConnection();
 el('settings').onsubmit=async event=>{event.preventDefault();try{const assignment={enabled:el('enabled').checked,label:el('label').value,device_profile:el('device').value,device_settings:readDevice(),socks_port:el('socks-port').value?Number(el('socks-port').value):null,region:el('region').value,server_id:el('server').value?Number(el('server').value):null,character_index:el('character').value===''?null:Number(el('character').value),character_key:el('character').selectedOptions[0]?.dataset.key||null,create_nickname:el('nickname').value,create_class:el('create-class').value,create_random_nickname:el('random-nickname').checked,auth_flow:el('auth-flow').value};const result=await api('/api/save',{email:el('email').value,password:el('password').value,mail_password:el('mail-password').value,assignment});await refresh();edit(snapshot.accounts.find(a=>a.id===result.id));notice('Настройки сохранены. Пароль скрыт.');}catch(error){notice(error.message);}};
 async function job(operation){try{if(!selected)return;await api('/api/job',{id:selected,operation,...(operation==='register'?{accept_required_terms:el('terms').checked,manual_mail_code:el('manual-mail-code').checked}:operation==='stop'?{}:{manual_sign_in:el('manual-sign-in').checked,...(operation==='prepare-sdk'?{terms_country:el('sdk-country').value,terms_locale:el('sdk-locale').value,basic_terms_mode:el('sdk-terms-mode').value}:{})})});if(operation==='register')el('terms').checked=false;else if(operation!=='stop')el('manual-sign-in').checked=false;await refresh();notice(operation==='stop'?'Бот остановлен.':'Операция запущена. Для входа может открыться отдельное окно Netmarble.');}catch(error){notice(error.message);}}
 for(const operation of ['start','stop','servers','characters','register','create','prepare-sdk'])el(operation).onclick=()=>job(operation);
@@ -82,6 +83,13 @@ function editConnection(account){
  el('connection-preset').value=matched?.id||'';
  el('socks-port').value=account?.socks_port??'';fillDevice(account?.device_settings||{});
 }
+function restoreCharacterConnection(){
+ const key=el('character').selectedOptions[0]?.dataset.key;
+ const target=[selected,el('region').value,el('server').value,key].join('|');
+ const saved=key?snapshot.character_connections?.[target]:null;
+ if(saved){el('device').value=saved.device_profile;editConnection(saved);notice('Загружен сохранённый профиль выбранного персонажа. Назначение применяется после сохранения настроек.');}
+ else{el('device').value=current()?.device_profile||'current-pc';editConnection(current());notice('Для этой цели отдельный профиль не сохранён. Используются настройки выбранного бота; сохранение привяжет их к подтверждённому персонажу.');}
+}
 function readDevice(){
  if(el('device').value==='current-pc')return {};
  const settings={};for(const [key,,group] of deviceFields){const value=el('device-'+key).value;if(value!==''){settings[group]??={};settings[group][key]=group==='windows'?Number(value):value;}}
@@ -89,10 +97,10 @@ function readDevice(){
 }
 el('connection-preset').onchange=async()=>{
  const preset=snapshot.connection_presets?.find(p=>p.id===el('connection-preset').value);if(!preset)return;
- const owner=selected;
+ const owner=selected,characterTarget=el('character').selectedOptions[0]?.dataset.key;
  try{let identity=readDevice().identity;
  if(preset.device_profile==='custom'&&!identity)identity=(await api('/api/device-identity',{})).identity;
- if(selected!==owner||el('connection-preset').value!==preset.id)return;
+ if(selected!==owner||el('character').selectedOptions[0]?.dataset.key!==characterTarget||el('connection-preset').value!==preset.id)return;
  el('device').value=preset.device_profile;el('socks-port').value=preset.socks_port??'';
  fillDevice({...preset.device_settings,...(identity&&preset.device_profile==='custom'?{identity}:{})});
  notice('Пресет заполнен в форме. Применяется после сохранения настроек.');

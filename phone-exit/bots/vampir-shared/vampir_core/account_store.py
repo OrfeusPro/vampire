@@ -83,6 +83,15 @@ class AccountStore:
                 db.execute("ALTER TABLE accounts ADD COLUMN mail_status TEXT NOT NULL DEFAULT 'unknown'")
             db.execute('CREATE TABLE IF NOT EXISTS prepared_batches(name TEXT PRIMARY KEY,data TEXT NOT NULL)')
             db.execute('CREATE TABLE IF NOT EXISTS connection_presets(id TEXT PRIMARY KEY,name TEXT UNIQUE NOT NULL,data TEXT NOT NULL)')
+            db.execute('''CREATE TABLE IF NOT EXISTS character_connections(
+                account_id TEXT,region TEXT,server_id INTEGER,character_key TEXT,data TEXT NOT NULL,
+                PRIMARY KEY(account_id,region,server_id,character_key))''')
+
+    def character_connections(self):
+        with self._db() as db:
+            return {'|'.join(map(str, (account, region, server, key))): json.loads(data)
+                    for account, region, server, key, data in db.execute(
+                        'SELECT account_id,region,server_id,character_key,data FROM character_connections')}
 
     def save_connection_preset(self, name, settings):
         if type(name) is not str or not 1 <= len(name.strip()) <= 100 or any(ord(c) < 32 for c in name):
@@ -177,6 +186,17 @@ class AccountStore:
                     db.execute("UPDATE accounts SET registration_status='nid_verified' WHERE id=? AND registration_status='sdk_created'", (identifier,))
             if protected_mail is not None:
                 db.execute('UPDATE accounts SET mail_password=? WHERE id=?', (protected_mail, identifier))
+            if assignment['character_key'] is not None:
+                row = db.execute('SELECT data FROM character_lists WHERE account_id=? AND region=? AND server_id=?',
+                    (identifier, assignment['region'], assignment['server_id'])).fetchone()
+                # A stale slot number must never acquire another character's device profile.
+                if row and any(c['key'] == assignment['character_key'] and c['index'] == assignment['character_index']
+                               for c in json.loads(row[0])['characters']):
+                    connection = {key: assignment[key] for key in ('device_profile', 'device_settings', 'socks_port')}
+                    db.execute('INSERT INTO character_connections VALUES(?,?,?,?,?) '
+                        'ON CONFLICT(account_id,region,server_id,character_key) DO UPDATE SET data=excluded.data',
+                        (identifier, assignment['region'], assignment['server_id'], assignment['character_key'],
+                         json.dumps(connection)))
         return identifier
 
     def accounts(self):
