@@ -677,7 +677,8 @@
         "release-character-selection-probe",
         "native-waiting-end-context",
         "native-character-list-envelope-context",
-        "native-character-record-context"
+        "native-character-record-context",
+        "native-character-extensions-context"
       ],
       "recipes": [
         {
@@ -739,6 +740,42 @@
         {
           "key": "record-u16-quad-reader",
           "method": "reviewed"
+        },
+        {
+          "key": "appearance-resize",
+          "method": "reviewed"
+        },
+        {
+          "key": "appearance-callback",
+          "method": "reviewed"
+        },
+        {
+          "key": "appearance-item-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "optional-resize",
+          "method": "reviewed"
+        },
+        {
+          "key": "optional-callback",
+          "method": "reviewed"
+        },
+        {
+          "key": "optional-insert",
+          "method": "reviewed"
+        },
+        {
+          "key": "optional-pair-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "optional-value-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "optional-value-reader",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -757,7 +794,16 @@
           "record-time-reader": "0x1457fdce0",
           "record-appearance-reader": "0x145787a30",
           "record-optional-reader": "0x1456c3000",
-          "record-u16-quad-reader": "0x145794bc0"
+          "record-u16-quad-reader": "0x145794bc0",
+          "appearance-resize": "0x1456ba460",
+          "appearance-callback": "0x14573b9c0",
+          "appearance-item-reader": "0x145786390",
+          "optional-resize": "0x1456d2260",
+          "optional-callback": "0x1456c6e70",
+          "optional-insert": "0x1456bd7a0",
+          "optional-pair-constructor": "0x1456bbbd0",
+          "optional-value-constructor": "0x1457841c0",
+          "optional-value-reader": "0x1457893b0"
         }
       },
       "resources": [],
@@ -766,11 +812,12 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Current CharacterRecord с пустыми extensions прошёл 128 полных случаев, 201 короткий body и 128 отказов. Перенести непустые appearance/optional containers, затем whole list и handler. Профиль остаётся partial.",
+      "next_check": "Непустые appearance/optional компоненты проверены отдельно, включая native duplicate lookup/overwrite и rehash fixture. Объединить whole record/list на общей памяти, затем handler; runtime profile остаётся partial.",
       "targets": [
         "native-waiting-end-current",
         "native-character-list-envelope-current",
-        "native-character-record-current"
+        "native-character-record-current",
+        "native-character-extensions-current"
       ]
     },
     {

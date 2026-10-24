@@ -2495,6 +2495,96 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-character-extensions-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-character-extensions-context.py"
+      ],
+      "rule": "Проверить callback/item/value tables, clamps и hash-chain lookup/overwrite. Rehash/storage fixtures не считать native container lifetime proof. E9 resize требует явных callee roots для CALL_RETURN модели.",
+      "automation": {
+        "discovery": "reviewed_vector_callbacks_and_map_insert_callees",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456ba460",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x14573b9c0",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x145786390",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456d2260",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456c6e70",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456bd7a0",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456bbbd0",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1457841c0",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1457893b0",
+                "scope": "Separate appearance/map native components; bounded storage/rehash/reset fixtures, no whole-record/list or live session.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-extensions-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-EXTENSIONS-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

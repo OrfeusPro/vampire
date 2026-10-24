@@ -1,0 +1,302 @@
+{
+  "schema": 1,
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "function_budget": 19,
+  "input_functions": {
+    "u16": "0x144aac250",
+    "u32": "0x144aac2a0",
+    "u64": "0x144aac4a0",
+    "bool": "0x144aac4f0",
+    "raw": "0x144aac5c0",
+    "archive_constructor": "0x144aacb40",
+    "buffer_constructor": "0x144aac130"
+  },
+  "components": {
+    "appearance": {
+      "vector": "0x144aac530",
+      "resize": "0x1456ba460",
+      "callback": "0x14573b9c0",
+      "item_reader": "0x145786390"
+    },
+    "optional": {
+      "vector": "0x144aac530",
+      "optional_reader": "0x1456c3000",
+      "resize": "0x1456d2260",
+      "callback": "0x1456c6e70",
+      "insert": "0x1456bd7a0",
+      "pair_constructor": "0x1456bbbd0",
+      "value_constructor": "0x1457841c0",
+      "value_reader": "0x1457893b0",
+      "time_constructor": "0x1457a3500",
+      "time_reader": "0x1457fdce0",
+      "archive_time": "0x144aac470"
+    }
+  },
+  "bindings": {
+    "appearance_callbacks": "0x14993f850",
+    "appearance_item_table": "0x149920048",
+    "optional_table": "0x149921c80",
+    "optional_callbacks": "0x149924f18",
+    "optional_value_table": "0x149921b18",
+    "time_table": "0x14991f3b8",
+    "archive_table": "0x149670880"
+  },
+  "blocks": [
+    {
+      "address": "0x14993f850",
+      "bytes": "50aab0410100000060a46b4501000000c0b9734501000000",
+      "sha256": "1da34ed20ddaa0b5f7fac1108c8197d5886aface1e37206bfee4cd478f02fc8c"
+    },
+    {
+      "address": "0x149920048",
+      "bytes": "c06a6b4501000000b03a40410100000030b5784501000000b03a4041010000009063784501000000809d6b4501000000",
+      "sha256": "b4bf766b6c0d8d26f305ee2cf59af852ac3ad80e55561c79209dc0b82f4fb3fd"
+    },
+    {
+      "address": "0x149921c80",
+      "bytes": "000b6c4501000000b03a404101000000b0256d4501000000b03a40410100000000306c4501000000b01f6c4501000000",
+      "sha256": "48920033da1b0311ea97cc3a5ae99fba30c9164e00f01f19b28ffaede8dec0f3"
+    },
+    {
+      "address": "0x149924f18",
+      "bytes": "50aab0410100000060226d4501000000706e6c4501000000",
+      "sha256": "25e78d3acd999d3a8afae78b3e6e300066a7ec642a303e20e3136d844e058dec"
+    },
+    {
+      "address": "0x149921b18",
+      "bytes": "80216c4501000000b03a404101000000b0e2784501000000b03a404101000000b09378450100000060036d4501000000",
+      "sha256": "e0d3ce3486f9f3d3ce740596c5b2ef9f69a204f7d20c16ad8347e7b0d2112037"
+    },
+    {
+      "address": "0x14991f3b8",
+      "bytes": "c06a6b4501000000b03a40410100000070e07f4501000000b03a404101000000e0dc7f450100000050a36b4501000000",
+      "sha256": "210058d270a81d062639f5fed3c0ccde70fcf646d0e583c0ed3bee8541bcc1fd"
+    },
+    {
+      "address": "0x149670880",
+      "bytes": "90cbaa440100000030c6aa4401000000a0c6aa440100000030c5aa440100000070c4aa440100000070c4aa4401000000",
+      "sha256": "b35fa82a81a3a521f955eb453a6952609891607e97d064ae98e0aa1f8258ccfb"
+    }
+  ],
+  "leaves": {
+    "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad1a0": "895110c3",
+    "0x144aac240": "488b0141b80100000048ffa090000000",
+    "0x1457fdaf0": "488d05c118120448c7410800000000488901488bc1c3",
+    "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+    "0x145782c60": "488d05e1d3190448890133c089410888410c6689410e488bc1c3",
+    "0x1456b66c0": "488d0579872604488901c3"
+  },
+  "call_sites": {
+    "appearance": {
+      "u16": {
+        "0x144aac269": "qword ptr [rax + 0x90]",
+        "0x144aac287": "0x1445e03e0"
+      },
+      "u32": {
+        "0x144aac2b9": "qword ptr [rax + 0x90]",
+        "0x144aac2d6": "0x1445e03f0"
+      },
+      "u64": {
+        "0x144aac4b9": "qword ptr [rax + 0x90]",
+        "0x144aac4d7": "0x1445e0420"
+      },
+      "bool": {
+        "0x144aac50c": "qword ptr [rax + 0x90]"
+      },
+      "raw": {
+        "0x144aac5fb": "0x1487f5ab9",
+        "0x144aac609": "0x144aad1a0"
+      },
+      "archive_constructor": {
+        "0x144aacb56": "0x144aac130"
+      },
+      "buffer_constructor": {
+        "0x144aac151": "0x144aace10"
+      },
+      "vector": {
+        "0x144aac555": "qword ptr [rax + 0x68]",
+        "0x144aac56b": "qword ptr [rax + 8]",
+        "0x144aac594": "qword ptr [rax + 0x10]"
+      },
+      "resize": {
+        "0x1456ba477": "0x1456b59c0",
+        "0x1456ba48d": "0x14141ccf0"
+      },
+      "callback": {
+        "0x14573b9d5": "0x145782c60",
+        "0x14573b9e2": "0x144aad190",
+        "0x14573ba03": "0x14141c840",
+        "0x14573ba3b": "0x1456b66c0"
+      },
+      "item_reader": {
+        "0x1457863aa": "qword ptr [rax + 0x60]",
+        "0x1457863bc": "qword ptr [rax + 0x78]",
+        "0x1457863df": "qword ptr [rax + 0x70]"
+      }
+    },
+    "optional": {
+      "u16": {
+        "0x144aac269": "qword ptr [rax + 0x90]",
+        "0x144aac287": "0x1445e03e0"
+      },
+      "u32": {
+        "0x144aac2b9": "qword ptr [rax + 0x90]",
+        "0x144aac2d6": "0x1445e03f0"
+      },
+      "u64": {
+        "0x144aac4b9": "qword ptr [rax + 0x90]",
+        "0x144aac4d7": "0x1445e0420"
+      },
+      "bool": {
+        "0x144aac50c": "qword ptr [rax + 0x90]"
+      },
+      "raw": {
+        "0x144aac5fb": "0x1487f5ab9",
+        "0x144aac609": "0x144aad1a0"
+      },
+      "archive_constructor": {
+        "0x144aacb56": "0x144aac130"
+      },
+      "buffer_constructor": {
+        "0x144aac151": "0x144aace10"
+      },
+      "vector": {
+        "0x144aac555": "qword ptr [rax + 0x68]",
+        "0x144aac56b": "qword ptr [rax + 8]",
+        "0x144aac594": "qword ptr [rax + 0x10]"
+      },
+      "optional_reader": {
+        "0x1456c301f": "qword ptr [rax + 0x88]",
+        "0x1456c303b": "0x1456c7280",
+        "0x1456c304b": "0x1456d19c0",
+        "0x1456c3052": "0x14168a950",
+        "0x1456c305d": "0x1456c7280",
+        "0x1456c307d": "qword ptr [rax + 0x18]"
+      },
+      "resize": {
+        "0x1456d2274": "0x1456c7280",
+        "0x1456d228d": "0x14168a950"
+      },
+      "callback": {
+        "0x1456c6e8b": "qword ptr [rax + 0x78]",
+        "0x1456c6f0d": "0x1456bd7a0",
+        "0x1456c6f25": "0x144aad190"
+      },
+      "insert": {
+        "0x1456bd816": "0x141539850",
+        "0x1456bd824": "0x141429680",
+        "0x1456bd871": "0x1456bbbd0",
+        "0x1456bd89c": "0x1456d4b20",
+        "0x1456bd8d4": "0x1456d19c0"
+      },
+      "pair_constructor": {
+        "0x1456bbbe5": "0x1457841c0",
+        "0x1456bbc3b": "0x145785b90"
+      },
+      "value_constructor": {
+        "0x1457841e4": "0x1457a3500"
+      },
+      "value_reader": {
+        "0x1457893cb": "qword ptr [rax + 0x78]",
+        "0x1457893f2": "qword ptr [rax + 0x60]",
+        "0x145789403": "qword ptr [rax + 0x60]",
+        "0x145789414": "qword ptr [rax + 0x60]",
+        "0x145789422": "0x144aad190"
+      },
+      "time_constructor": {
+        "0x1457a3509": "0x1457fdaf0"
+      },
+      "time_reader": {
+        "0x1457fdcf1": "qword ptr [rax + 0x28]"
+      },
+      "archive_time": {
+        "0x144aac481": "qword ptr [rax + 0x50]"
+      }
+    }
+  },
+  "links": {
+    "appearance": [
+      [
+        "0x149670880",
+        24,
+        "0x144aac530"
+      ],
+      [
+        "0x14993f850",
+        8,
+        "0x1456ba460"
+      ],
+      [
+        "0x14993f850",
+        16,
+        "0x14573b9c0"
+      ],
+      [
+        "0x149920048",
+        32,
+        "0x145786390"
+      ]
+    ],
+    "optional": [
+      [
+        "0x149670880",
+        24,
+        "0x144aac530"
+      ],
+      [
+        "0x149921c80",
+        32,
+        "0x1456c3000"
+      ],
+      [
+        "0x149924f18",
+        8,
+        "0x1456d2260"
+      ],
+      [
+        "0x149924f18",
+        16,
+        "0x1456c6e70"
+      ],
+      [
+        "0x149921b18",
+        32,
+        "0x1457893b0"
+      ],
+      [
+        "0x14991f3b8",
+        32,
+        "0x1457fdce0"
+      ]
+    ]
+  },
+  "exports": {
+    "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+    "run-80386d1eb460": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1",
+    "run-0b2ae7adfcf9": "8d1c778db72a8bddbe34fd288f77cf2e199ed47092182af40fabb3cb7b781324",
+    "run-cfe450e70430": "08ceca13a1eef50edbb9e38ac4d3f63b1d0880e4dd5455f3b0257cfff49c93a6",
+    "run-e6ab6fd97914": "9828dfd4a26853235433aa7b702150ceec552d05796a8bea82ce915332284454",
+    "run-96408f02c1d2": "8a7978466120131aafae77dba1ec9361e39c95b63c15efb346e62efb99fcb16f"
+  },
+  "fixtures": {
+    "appearance": {
+      "appearance_clear": "0x1456b59c0",
+      "appearance_allocate": "0x14141ccf0",
+      "appearance_grow": "0x14141c840"
+    },
+    "optional": {
+      "map_init": "0x14168a950",
+      "map_clear": "0x1456c7280",
+      "map_rehash": "0x1456d19c0",
+      "map_grow": "0x141539850",
+      "bit_append": "0x141429680",
+      "insert_predicate": "0x1456d4b20",
+      "value_cleanup": "0x145785b90"
+    }
+  }
+}
