@@ -65,6 +65,27 @@
       "resource": "WBP_CharacterSelectUI",
       "category": "Обычные кнопки",
       "control": "ButtonDelete"
+    },
+    "collection-filter-icon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Filter",
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "category": "Коллекции: иконки поиска и фильтра",
+      "control": "ImageFilterOff"
+    },
+    "collection-refresh-icon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Refresh",
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "category": "Коллекции: иконки поиска и фильтра",
+      "control": "ButtonRefresh"
+    },
+    "collection-search-icon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Search",
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "category": "Коллекции: иконки поиска и фильтра",
+      "control": "ButtonSearch"
     }
   }
 }

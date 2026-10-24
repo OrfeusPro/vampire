@@ -43,6 +43,30 @@
     }
     return { rect: current, assumptions, used };
   }
+  function desiredTree(node) {
+    if (!node || typeof node !== 'object') return { unknown: 'Нет схемы desired size.' };
+    const assumptions = [...(node.assumptions || [])];
+    if (node.excluded_reason) return { width: 0, height: 0, assumptions: [...assumptions, node.excluded_reason] };
+    if (node.kind === 'fixed') {
+      if (![node.width, node.height].every(n => finite(n) && n >= 0)) return { unknown: 'Нет обеих явных размеров SizeBox.' };
+      return { width: node.width, height: node.height, assumptions };
+    }
+    if (!['HorizontalBox', 'VerticalBox', 'Overlay'].includes(node.kind) || !Array.isArray(node.children) || !node.children.length) return { unknown: 'Desired size контейнера ' + node.kind + ' не разобран.' };
+    let width = 0, height = 0;
+    for (const child of node.children) {
+      const result = desiredTree(child.node);
+      if (result.unknown) return result;
+      assumptions.push(...result.assumptions);
+      const padding = child.padding;
+      if (!padding || !['left', 'right', 'top', 'bottom'].every(k => finite(padding[k]))) return { unknown: 'Padding слота desired size не установлен.' };
+      const w = result.width + padding.left + padding.right, h = result.height + padding.top + padding.bottom;
+      if (node.kind === 'HorizontalBox') { width += w; height = Math.max(height, h); }
+      else if (node.kind === 'VerticalBox') { width = Math.max(width, w); height += h; }
+      else { width = Math.max(width, w); height = Math.max(height, h); }
+    }
+    if (![width, height].every(n => finite(n) && n >= 0)) return { unknown: 'Недопустимый desired size.' };
+    return { width, height, assumptions: [...new Set(assumptions)] };
+  }
   function units({ cssWidth, cssHeight, devicePixelRatio, osDpiScale, applicationScale, uiScale, dpiCurveScale }) {
     const values = [cssWidth, cssHeight, devicePixelRatio, osDpiScale, applicationScale, uiScale, dpiCurveScale];
     if (!values.every(n => finite(n) && n > 0)) return { unknown: 'Нужно явно установить DPI, ApplicationScale, UI Scale и DPI curve scale.' };
@@ -54,7 +78,16 @@
     if (!finite(scale) || scale <= 0) throw Error('Некорректный масштаб.');
     return rect(value.x * scale, value.y * scale, value.width * scale, value.height * scale);
   }
-  const api = { rect, canvas, chain, units, cssRect };
+  function referenceScale(parent, binding, uiScale = 1) {
+    if (![parent.width, parent.height, binding.reference_width, uiScale].every(n => finite(n) && n > 0)) throw Error('Некорректные входы масштаба демо.');
+    let scale = parent.width / binding.reference_width;
+    if (binding.reference_height !== undefined) {
+      if (!finite(binding.reference_height) || binding.reference_height <= 0) throw Error('Некорректная высота reference frame.');
+      scale = Math.min(scale, parent.height / binding.reference_height);
+    }
+    return scale * uiScale;
+  }
+  const api = { rect, canvas, chain, desiredTree, referenceScale, units, cssRect };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.VampirGeometry = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

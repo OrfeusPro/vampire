@@ -28,12 +28,20 @@
       for (const node of document.querySelectorAll('[data-native-button]')) {
         const binding = buttonLayouts.bindings[node.dataset.nativeButton], parent = node.tagName === 'DIALOG' ? app : node.closest('dialog') || app;
         if (!binding || !parent.clientWidth || !parent.clientHeight) continue;
-        const scale = parent.clientWidth / binding.reference_width * state().settings.scale / 100;
+        const scale = VampirGeometry.referenceScale({ width: parent.clientWidth, height: parent.clientHeight }, binding, state().settings.scale / 100);
         if (node.dataset.nativeButton.startsWith('collection-')) parent.style.setProperty('--collection-unit', scale + 'px');
-        const result = VampirGeometry.chain(binding, VampirGeometry.rect(0, 0, parent.clientWidth / scale, parent.clientHeight / scale));
+        const desired = {}, measuredAssumptions = []; let measurementIssue;
+        for (const [index, tree] of Object.entries(binding.desired_trees || {})) {
+          const measurement = VampirGeometry.desiredTree(tree);
+          if (measurement.unknown) { measurementIssue = measurement.unknown; break; }
+          desired[index] = { width: measurement.width, height: measurement.height }; measuredAssumptions.push(...measurement.assumptions);
+        }
+        const result = measurementIssue ? { unknown: measurementIssue } : VampirGeometry.chain(binding, VampirGeometry.rect(0, 0, parent.clientWidth / scale, parent.clientHeight / scale), desired);
+        if (!result.unknown) result.assumptions.push(...measuredAssumptions);
         if (!result.unknown && binding.root_frame_assumption) result.assumptions.push(binding.root_frame_assumption);
         node.dataset.geometryState = result.unknown ? 'unresolved' : result.assumptions.length ? 'allocated-frame-assumption' : 'canvas-calculation';
         if (result.unknown) { node.dataset.geometryUnknown = result.unknown; continue; }
+        delete node.dataset.geometryUnknown; node.dataset.geometryAssumptions = result.assumptions.join('\n');
         const box = VampirGeometry.cssRect(result.rect, scale), origin = parent.getBoundingClientRect();
         Object.assign(node.style, { position: 'fixed', left: origin.left + parent.clientLeft + box.x + 'px', top: origin.top + parent.clientTop + box.y + 'px', width: box.width + 'px', height: box.height + 'px', margin: '0', minWidth: '0', padding: '0 .4em', zIndex: '2' });
       }
@@ -568,15 +576,18 @@
       const filters = el('div', undefined, 'collection-filters'), search = input('search', 'Название или ID коллекции'); search.value = query;
       const grades = [...new Map(meta.entries.map(row => [row.rarity_id, row.rarity])).entries()];
       search.oninput = () => { query = search.value; page = 0; fill(); };
-      append(filters, search, button('Фильтры', () => {
+      const searchFrame = nativeButton(append(el('div', undefined, 'collection-search-field'), search, image('/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Search', 'collection-search-symbol')), 'collection-search-frame');
+      const filterButton = nativeButton(icon('/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Filter', 'Фильтры', () => {
         let chosenTab = tab, chosenGrade = rarity;
         modal('Фильтры коллекций', (n, d) => append(n,
           field('Исходный раздел', select([['', 'Все разделы'], ...meta.tabs.map(row => [row.id, row.name])], chosenTab, value => chosenTab = value)),
           field('Редкость', select([['', 'Любая редкость'], ...grades], chosenGrade, value => chosenGrade = value)),
           el('small', 'Названия Krvna / Poenari / Kicel / Bezdan сохранены из таблиц. Соответствие русским вкладкам кадра ещё не установлено.'),
           button('Применить фильтры', () => { tab = chosenTab; rarity = chosenGrade; favorites = false; page = 0; closeDialog(d); refresh(); }, 'primary')));
-      }),
-        button('Сбросить поиск', () => { query = ''; tab = ''; rarity = ''; favorites = false; page = 0; refresh(); })); body.append(filters);
+      }), 'collection-filter-button');
+      const resetButton = nativeButton(icon('/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Refresh', 'Сбросить фильтры', () => { query = ''; tab = ''; rarity = ''; favorites = false; page = 0; refresh(); }), 'collection-refresh-button');
+      filterButton.setAttribute('aria-pressed', String(!!tab || !!rarity));
+      append(filters, searchFrame, filterButton, resetButton); body.append(filters);
       const status = el('p'), list = nativeButton(el('div', undefined, 'collection-list'), 'collection-list-frame'), pager = el('div', undefined, 'actions collection-footer');
       status.setAttribute('role', 'status');
       const fill = () => {

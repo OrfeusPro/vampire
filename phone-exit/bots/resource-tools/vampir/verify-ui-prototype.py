@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import ui_desired_geometry
 
 
 def sha(path):
@@ -81,6 +82,13 @@ def verify(snapshot):
             record = next(r for r in index if r['name'] == binding['resource'])
             assert manifest['resources'][record['path'] + '|' + binding['catalog_file']] == binding['source']['catalog_sha256']
             assert binding['chain'][-1]['decoded']['parent_export'] == binding['root_export']
+            if binding.get('desired_trees'):
+                assert manifest['tools']['ui_desired_geometry.py'] == sha(Path(__file__).with_name('ui_desired_geometry.py'))
+                window = json.loads((snapshot / 'windows' / (record['id'] + '.json')).read_text('utf-8'))
+                variant = next(v for v in window['variants'] if v['file'] == binding['catalog_file'])
+                policy = binding['measure_desired']
+                rebuilt = ui_desired_geometry.compile_tree(dict(controls=variant['controls'], decoded_slots=variant['slots']), policy['control'], policy)
+                assert rebuilt == binding['desired_trees'], 'Desired-size tree differs from source controls'
     assert sum(row['variants'] for row in index) == manifest['variant_count']
     return dict(state='passed', snapshot=manifest['id'], resources=len(index), textures=len(textures),
                 limits='Byte/provenance checks; does not prove visual fidelity, game behavior or 50 browser windows.')

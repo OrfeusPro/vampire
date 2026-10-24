@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import shared_ui_library
 import ui_collection_catalog
+import ui_desired_geometry
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -214,7 +215,8 @@ def build(root, baseline=None):
     fingerprint = dict(resources=resources, images=image_hashes, inputs=inputs,
                        implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)),
                        tools={'inspect-ui.py': skin_evidence['decoder']['sha256'],
-                              'ui_collection_catalog.py': sha(HERE / 'ui_collection_catalog.py')})
+                              'ui_collection_catalog.py': sha(HERE / 'ui_collection_catalog.py'),
+                              'ui_desired_geometry.py': sha(HERE / 'ui_desired_geometry.py')})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -303,6 +305,9 @@ def build(root, baseline=None):
             if not chain or chain[-1]['decoded']['parent_export'] != binding['root_export']:
                 raise ValueError('Geometry root not reached')
             binding['chain'] = chain
+            if binding.get('measure_desired'):
+                policy = binding['measure_desired']
+                binding['desired_trees'] = ui_desired_geometry.compile_tree(package, policy['control'], policy)
             binding['source'] = dict(catalog_sha256=sha(package_file), asset_sha256=package['asset_sha256'],
                                      body_sha256=package['body_sha256'], control_export=control['export'],
                                      control_sha256=control['sha256'])

@@ -24,6 +24,34 @@ verifier = load('ui_prototype_verifier', 'verify-ui-prototype.py')
 
 
 class PrototypeTests(unittest.TestCase):
+    def test_desired_tree_retains_source_slots_and_rejects_missing_branches(self):
+        import ui_desired_geometry as desired
+        controls = [dict(export=1, name='Root', type='Overlay', sha256='root'), dict(export=2, name='Body', type='SizeBox', sha256='body', size_constraints={k: dict(status='explicitly_enabled', value=v) for k, v in [('WidthOverride', 1236), ('HeightOverride', 816)]}), dict(export=3, name='StepUp', type='CanvasPanel', sha256='extra')]
+        slots = [dict(decoded=dict(parent_export=1, content_export=2, padding=dict(left=0, top=107, right=0, bottom=0)), provenance=dict(slot_export=10)), dict(decoded=dict(parent_export=1, content_export=3, padding=dict(left=20, top=20, right=20, bottom=20)), provenance=dict(slot_export=11))]
+        package = dict(controls=controls, decoded_slots=slots)
+        policy = dict(exclude={'StepUp': 'Not rendered in demo; native visibility unknown'})
+        tree = desired.compile_tree(package, 'Root', policy)['1']
+        self.assertEqual(tree['children'][0]['padding']['top'], 107)
+        self.assertEqual(tree['children'][0]['node']['source']['sha256'], 'body')
+        self.assertEqual(tree['children'][1]['padding']['top'], 0)
+        self.assertIn('native visibility unknown', tree['children'][1]['node']['excluded_reason'])
+        with self.assertRaises(ValueError):
+            desired.compile_tree(package, 'Root', {})
+        with self.assertRaises(ValueError):
+            desired.compile_tree(package, 'Root', dict(exclude={'Missing': 'must not silently ignore a stale policy'}))
+
+    def test_desired_tree_does_not_invent_inherited_padding_or_disabled_size_overrides(self):
+        import ui_desired_geometry as desired
+        leaf = dict(export=2, name='Body', type='SizeBox', sha256='body', size_constraints={k: dict(status='explicitly_enabled', value=100) for k in ['WidthOverride', 'HeightOverride']})
+        package = dict(controls=[dict(export=1, name='Root', type='HorizontalBox', sha256='root'), leaf], decoded_slots=[dict(decoded=dict(parent_export=1, content_export=2), provenance=dict(slot_export=10))])
+        with self.assertRaisesRegex(ValueError, 'padding'):
+            desired.compile_tree(package, 'Root', {})
+        result = desired.compile_tree(package, 'Root', dict(omitted_padding_zero=True))['1']
+        self.assertTrue(any('padding' in a for a in result['children'][0]['node']['assumptions']))
+        leaf['size_constraints']['WidthOverride']['status'] = 'unresolved_default_or_archetype'
+        with self.assertRaisesRegex(ValueError, 'размерности'):
+            desired.compile_tree(package, 'Root', dict(omitted_padding_zero=True))
+
     def test_collections_preserve_sources_and_reject_changed_icons(self):
         import ui_collection_catalog as collections
         with tempfile.TemporaryDirectory() as folder:

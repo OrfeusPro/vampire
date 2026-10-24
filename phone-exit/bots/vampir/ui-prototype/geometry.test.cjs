@@ -4,6 +4,45 @@ const assert = require('node:assert/strict');
 const G = require('./geometry.js');
 const slot = (offsets, minimum, maximum, alignment, extra = {}) => ({ layout: { offsets, anchors: { minimum, maximum }, alignment }, ...extra });
 
+test('source desired-size composition includes Overlay padding and keeps demo exclusions explicit', () => {
+  const zero = { left: 0, top: 0, right: 0, bottom: 0 };
+  const tree = { kind: 'Overlay', children: [
+    { padding: { ...zero, top: 107 }, node: { kind: 'HorizontalBox', children: [
+      { padding: zero, node: { kind: 'fixed', width: 1236, height: 816 } },
+      { padding: zero, node: { kind: 'CanvasPanel', excluded_reason: 'StepUp hidden only in demo' } }
+    ] } },
+    { padding: zero, node: { kind: 'NativeTitle', excluded_reason: 'Title intrinsic size unresolved; excluded only in demo' } }
+  ] };
+  const result = G.desiredTree(tree);
+  assert.equal(result.width, 1236); assert.equal(result.height, 923);
+  assert.equal(result.assumptions.length, 2);
+  const auto = slot({ left: 0, top: -55, right: 0, bottom: 0 }, [.5, .5], [.5, .5], [.5, .5], { auto_size: true });
+  assert.deepEqual(G.canvas(auto, G.rect(0, 4, 2400, 1350), result).rect, { x: 582, y: 162.5, width: 1236, height: 923 });
+});
+
+test('desired size refuses unknown content and padding rather than taking zero silently', () => {
+  assert.ok(G.desiredTree({ kind: 'Text', text: 'unknown metrics' }).unknown);
+  assert.ok(G.desiredTree({ kind: 'Overlay', children: [{ node: { kind: 'fixed', width: 100, height: 50 } }] }).unknown);
+  assert.ok(G.desiredTree({ kind: 'fixed', width: NaN, height: 50 }).unknown);
+});
+
+test('desired-size rows, columns and overlays have different combining rules', () => {
+  const children = [100, 200].map(width => ({ padding: { left: 5, right: 5, top: 10, bottom: 0 }, node: { kind: 'fixed', width, height: 40 } }));
+  assert.deepEqual(G.desiredTree({ kind: 'HorizontalBox', children }), { width: 320, height: 50, assumptions: [] });
+  assert.deepEqual(G.desiredTree({ kind: 'VerticalBox', children }), { width: 210, height: 100, assumptions: [] });
+  assert.deepEqual(G.desiredTree({ kind: 'Overlay', children }), { width: 210, height: 50, assumptions: [] });
+});
+
+test('explicit demo reference frame respects height on wide screens and applies UI Scale once', () => {
+  const binding = { reference_width: 2400, reference_height: 1350 };
+  assert.equal(G.referenceScale({ width: 1920, height: 1080 }, binding), .8);
+  const wide = G.referenceScale({ width: 3440, height: 1440 }, binding);
+  assert.equal(wide, 1440 / 1350);
+  assert.ok(3440 / wide > 2400);
+  assert.equal(G.referenceScale({ width: 1920, height: 1080 }, binding, 1.2), .96);
+  assert.throws(() => G.referenceScale({ width: 0, height: 1080 }, binding));
+});
+
 test('collection source Canvas chains keep the list and effects column adjacent at both viewport sizes', () => {
   // WBP_ItemCollectionUI: CanvasPanel_41 -> slots 83/92 and 88.
   // Caller allocates the root; this does not resolve the outer SafeZone or native DPI curve.

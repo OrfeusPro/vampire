@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "limits": "Цепочки из исторического каталога. Масштаб родителя в демо адаптирован; runtime DPI и desired size не подтверждены. Выделенная рамка контейнера не доказывает brush size. Reference width 2400 для экрана персонажей — явная демонстрационная система координат, не установленное разрешение игры; 1236 и 590 взяты из SizeBox / Canvas ограничений соответствующих ресурсов. Контейнеры коллекций рассчитаны относительно CanvasPanel_41: его рамка в демо выделена по viewport; внешняя SafeZone и активный масштаб игры неизвестны. Имя файла сохранено для совместимости; bindings содержат также контейнеры.",
+  "limits": "Цепочки из исторического каталога. Масштаб родителя в демо адаптирован; runtime DPI и desired size не подтверждены. Выделенная рамка контейнера не доказывает brush size. Reference width 2400 для экрана персонажей — явная демонстрационная система координат, не установленное разрешение игры; 1236 и 590 взяты из SizeBox / Canvas ограничений соответствующих ресурсов. Контейнеры коллекций рассчитаны относительно CanvasPanel_41: его рамка в демо выделена по viewport; внешняя SafeZone и активный масштаб игры неизвестны. Имя файла сохранено для совместимости; bindings содержат также контейнеры. Reference frame 2400 × 1350 — явная система координат демо: scale = min(viewportWidth / 2400, viewportHeight / 1350) × UI Scale. Это не восстановленная DPI curve клиента; широкий viewport расширяет растянутые контейнеры, не увеличивая постоянные размеры по одной только ширине.",
   "bindings": {
     "purchase-buy": {
       "catalog_file": "pakchunk500-Windows-8930.json",
@@ -22,7 +22,8 @@
       "control": "ButtonStart",
       "root_name": "CanvasPanel_29",
       "reference_width": 2400,
-      "allowAllocatedFrame": true
+      "allowAllocatedFrame": true,
+      "reference_height": 1350
     },
     "character-delete": {
       "catalog_file": "pakchunk500-Windows-2371.json",
@@ -30,7 +31,8 @@
       "control": "ButtonDelete",
       "root_name": "CanvasPanel_29",
       "reference_width": 2400,
-      "allowAllocatedFrame": true
+      "allowAllocatedFrame": true,
+      "reference_height": 1350
     },
     "collection-list-frame": {
       "catalog_file": "pakchunk500-Windows-483.json",
@@ -38,7 +40,8 @@
       "control": "TableViewCollectionList",
       "root_name": "CanvasPanel_41",
       "reference_width": 2400,
-      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены."
+      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены.",
+      "reference_height": 1350
     },
     "collection-effects-frame": {
       "catalog_file": "pakchunk500-Windows-483.json",
@@ -46,7 +49,8 @@
       "control": "CanvasPanel",
       "root_name": "CanvasPanel_41",
       "reference_width": 2400,
-      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены."
+      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены.",
+      "reference_height": 1350
     },
     "collection-tabs-frame": {
       "catalog_file": "pakchunk500-Windows-483.json",
@@ -54,7 +58,8 @@
       "control": "TabBarMain",
       "root_name": "CanvasPanel_41",
       "reference_width": 2400,
-      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены."
+      "root_frame_assumption": "CanvasPanel_41 получает рамку viewport демо; внешняя SafeZone и runtime DPI не установлены.",
+      "reference_height": 1350
     },
     "name-window-frame": {
       "catalog_file": "pakchunk500-Windows-2385.json",
@@ -62,7 +67,8 @@
       "control": "PanelPopup",
       "root_name": "CanvasPanel_38",
       "reference_width": 2400,
-      "root_frame_assumption": "Внешний Canvas получает viewport демо; runtime DPI / UI Scale игры и внешняя иерархия не подтверждены."
+      "root_frame_assumption": "Внешний Canvas получает viewport демо; runtime DPI / UI Scale игры и внешняя иерархия не подтверждены.",
+      "reference_height": 1350
     },
     "skills-window-frame": {
       "catalog_file": "pakchunk500-Windows-8976.json",
@@ -70,7 +76,63 @@
       "control": "PanelPopup",
       "root_name": "CanvasPanel_50",
       "reference_width": 2400,
-      "root_frame_assumption": "Внешний Canvas получает viewport демо; runtime DPI / UI Scale игры и внешняя иерархия не подтверждены."
+      "root_frame_assumption": "Внешний Canvas получает viewport демо; runtime DPI / UI Scale игры и внешняя иерархия не подтверждены.",
+      "reference_height": 1350
+    },
+    "purchase-window-frame": {
+      "catalog_file": "pakchunk500-Windows-8930.json",
+      "resource": "WBP_ShopPurchasePopup",
+      "control": "Overlay_1",
+      "root_name": "CanvasPanel_12",
+      "reference_width": 2400,
+      "root_frame_assumption": "Внешний Canvas получает viewport демо; активный DPI и внешняя иерархия не подтверждены.",
+      "measure_desired": {
+        "control": "Overlay_1",
+        "omitted_padding_zero": true,
+        "exclude": {
+          "CanvasPanelStepup": "StepUp в текущей демонстрации отсутствует; native visibility не подтверждена, ветка исключена только в демо.",
+          "CanvasPanel_10": "Декоративная ветка CanvasPanel_10 не входит в desired size демо; native visibility / desired size не подтверждены.",
+          "ButtonClose": "Крестик отрисован отдельно и не увеличивает desired size демо; native intrinsic size не подтверждён.",
+          "WBP_PopupBgTitle": "Фоновый составной виджет не увеличивает desired size демо; собственный native desired size не подтверждён."
+        }
+      },
+      "reference_height": 1350
+    },
+    "shop-window-frame": {
+      "catalog_file": "pakchunk500-Windows-8944.json",
+      "resource": "WBP_ShopUI",
+      "control": "CanvasPanel_4",
+      "root_name": "CanvasPanel_21",
+      "reference_width": 2400,
+      "root_frame_assumption": "Корневой CanvasPanel_21 получает viewport демо; внешняя иерархия и DPI игры не подтверждены.",
+      "reference_height": 1350
+    },
+    "collection-filter-button": {
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "control": "ButtonFilter",
+      "root_name": "CanvasPanel_41",
+      "reference_width": 2400,
+      "reference_height": 1350,
+      "root_frame_assumption": "CanvasPanel_41 получает viewport демо; внешняя SafeZone и активный DPI не установлены."
+    },
+    "collection-refresh-button": {
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "control": "ButtonRefresh",
+      "root_name": "CanvasPanel_41",
+      "reference_width": 2400,
+      "reference_height": 1350,
+      "root_frame_assumption": "CanvasPanel_41 получает viewport демо; внешняя SafeZone и активный DPI не установлены."
+    },
+    "collection-search-frame": {
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "resource": "WBP_ItemCollectionUI",
+      "control": "Overlay",
+      "root_name": "CanvasPanel_41",
+      "reference_width": 2400,
+      "reference_height": 1350,
+      "root_frame_assumption": "CanvasPanel_41 получает viewport демо; внешняя SafeZone и активный DPI не установлены."
     }
   }
 }

@@ -37,7 +37,8 @@
         1
       ],
       "reference": "codex-clipboard-63b3f0f9-2c70-4221-bb6d-4ee632a14463.png",
-      "basis": "Полноэкранный магазин на изображении 8; растянутые root Canvas slots в WBP."
+      "basis": "CanvasPanel_4 через slot 28 растянут на CanvasPanel_21; корню выделен viewport демо. Внешняя иерархия и DPI игры неизвестны. Внутренние категории и товары требуют отдельных цепочек.",
+      "native_frame": "shop-window-frame"
     },
     "purchase-window": {
       "resource": "WBP_ShopPurchasePopup",
@@ -49,7 +50,8 @@
         0.68
       ],
       "reference": "codex-clipboard-cd945f03-0857-49f0-b5e4-248a579d37c1.png",
-      "basis": "Попап покупки по центру на изображении 9; SizeBox_1 хранит WidthOverride 1236 и HeightOverride 816. Они не равны экранным пикселям."
+      "basis": "Overlay_1: AutoSize и центральная привязка со смещением Y −55; внешний PanelPopup сдвинут на +4. Desired size рассчитывается по исходным SizeBox_1 1236 × 816 и Overlay padding сверху 107. Ветви StepUp / декораций исключены из размера только в демо с явными допущениями; native visibility и min/max archetype не установлены. rect — временный резерв.",
+      "native_frame": "purchase-window-frame"
     },
     "item-card": {
       "resource": "WBP_ItemInfoPopup",
