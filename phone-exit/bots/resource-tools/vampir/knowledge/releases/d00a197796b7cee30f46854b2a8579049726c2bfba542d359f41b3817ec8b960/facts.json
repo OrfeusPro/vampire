@@ -2432,6 +2432,64 @@
       "question": "release-login-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные SDK/string/platform/language/number зависимости, входные metadata/clock, интеграция с writer/archive и result reader текущего SHA."
+    },
+    {
+      "addresses": [
+        "0x144ab0c80",
+        "0x144ffe460",
+        "0x14556ae90",
+        "0x145609e50",
+        "0x14560ad80",
+        "0x14560aed0",
+        "0x14560b070",
+        "0x14560b0d0",
+        "0x1456d7570",
+        "0x145cc6a80",
+        "0x145ccd310",
+        "0x1467ce030"
+      ],
+      "checks": [
+        {
+          "cache_key": "17f9d275d2ab9e9aaff40d150663efcb2c0c33206c10eb11f1079eb64808a979",
+          "id": "native-login-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9b371899dd5779f39416cea3a7eefdc50cf6161fbe26d3460990ceca9d790e7e\\manifest.json",
+          "sha256": "9b371899dd5779f39416cea3a7eefdc50cf6161fbe26d3460990ceca9d790e7e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "49a83652c0d1352b38f8b5e7563157680f504a424b3f8d342e0ad2eff9c22f58",
+          "id": "native-login-sdk-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\73a832b7adfbfa0044c7729ae50f32f1d7d8b0c9cb5867a0dd7e1a469d11ea5c\\manifest.json",
+          "sha256": "73a832b7adfbfa0044c7729ae50f32f1d7d8b0c9cb5867a0dd7e1a469d11ea5c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole Login включает native mode/main/value getters и шесть source-bound leaf getters: 2 016 сценариев warm/resolved/absent caches, поля / SDK gates / persistent member ownership / post-send lifecycle / ABI. Отдельно статически подтверждены 27 metadata key/consumer links (26 разных ключей, I_World дважды). Получен только недостающий batch из трёх unwind roots; прежние exports повторно использованы.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-prepare-sdk-11316.json",
+          "sha256": "2e22e750871ab3dd1b959f426600f63727b022122257c8221a870f112a529a64"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-SDK-11316.md",
+          "sha256": "22d431ecf409bd3fc3a6183eda6f0b320559748b2f77aa786e5444fae2228aa9"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-SDK-11316.json",
+          "sha256": "e86779a0796966d3af4c64a929087a13d300c67c72ccb92e34bf99e7e0265122"
+        }
+      ],
+      "id": "38a4609afd0244f04bdf4ed20d8622d7a2b5a22b3930b8f54a1247ea28f64185",
+      "limits": [
+        "SDK inner singleton/cache resolver/text/string методы, aux metadata collector, platform/selector, allocator/destructor/send/post-event остаются fixtures; metadata keys проверены статически, значения и encoding не доказаны.",
+        "SDK state synthetic и стабилен внутри сценария; реальные storage, токены и конкурентные изменения не проверены.",
+        "Нет интеграции writer/archive/result reader, авторизации, изменения default preset, baseline или активации игрового профиля."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать новый готовый metadata export; проверить consumer и источник values по явным roots, затем интегрировать writer/archive и result reader. Leaf getters без unwind повторно через collect не запрашивать; source guard сохранить.",
+      "question": "release-login-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Целые metadata collector/consumer 14560b0d0/145601840 и 14560a680, реальные inner SDK/string/platform зависимости, wire integration и текущий result reader."
     }
   ],
   "schema": 1,

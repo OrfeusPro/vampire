@@ -37,7 +37,15 @@ def load(name):
 
 def verify(context, root):
     prepare, constructor, table = [int(context[k], 16) for k in ('prepare', 'constructor', 'packet_table')]
-    h = load('update-native-harness').make_harness(context, context['exports'], {prepare, constructor}, root=root)
+    sdk = context.get('native_sdk')
+    functions = {prepare, constructor}
+    exports = dict(context['exports'])
+    leaves = {}
+    if sdk:
+        functions.update(int(v, 16) for v in sdk['functions'].values())
+        exports.update(sdk['exports'])
+        leaves = {int(at, 16): spec['bytes'] for at, spec in sdk['leaves'].items()}
+    h = load('update-native-harness').make_harness(context, exports, functions, leaves=leaves, root=root)
     rows = load('update-bindings').rows
     native = load('build-native-entry-code')
     calls = {hex(r['address']): {'target': hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
@@ -225,7 +233,13 @@ def verify(context, root):
         return execute
 
     for name, address in fixture.items():
+        if sdk and name in sdk['native_names']:
+            continue
         h.add_fixture(address, handler(name))
+    if sdk:
+        seed_sdk, check_sdk, metadata_fields = load('login-sdk-fixtures').install(
+            load, h, sdk, fixture, state, owner, manager, language, flags, handles,
+            allocate, release, write_text, read_text, literal, reg)
     tag_pointer = int.from_bytes(h.uc.mem_read(globals_['tag_pointer'], 8), 'little')
     require(tag_pointer == int(context['tag_literal'], 16), 'Login tag source pointer differs')
     page = tag_pointer & ~4095
@@ -239,7 +253,9 @@ def verify(context, root):
     event_literal = literal(int(context['event_literal'], 16), True)
     cases = []
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
-    for scenario, selector, empty, send_return, poison in itertools.product(SCENARIOS, (0, 1, 2, 3, 4, 255), (False, True), (0, 1), (0x55, 0xaa)):
+    cache_cases = ('warm', 'resolve', 'absent') if sdk else ('fixture',)
+    for scenario, selector, empty, send_return, poison, cache_case in itertools.product(
+            SCENARIOS, (0, 1, 2, 3, 4, 255), (False, True), (0, 1), (0x55, 0xaa), cache_cases):
         name, platform, enabled, present, mask, mode = scenario
         state.clear()
         state.update(heap=h.scratch + 0x10000, allocations={}, freed=set(), events=[], sent=False,
@@ -262,6 +278,8 @@ def verify(context, root):
         h.uc.mem_write(globals_['enabled'], bytes([int(enabled)]))
         h.uc.mem_write(globals_['enum'], struct.pack('<I', 0 if empty else 0xffffffff))
         h.uc.mem_write(globals_['number'], struct.pack('<I', 0 if empty else 0x89abcdef))
+        if sdk:
+            seed_sdk(cache_case, empty)
         input_pointers = set(state['allocations'])
         inputs = {at: bytes(h.uc.mem_read(at, size)) for at, size in
                   ((owner - 16, 0x1a0), (manager, 0x80), (language, 0x20), (sdk_value, 16), (globals_['text'], 16))}
@@ -269,13 +287,16 @@ def verify(context, root):
         for register, value in abi.items():
             h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + register), value)
         h.call(prepare, owner, budget=20000)
+        if sdk:
+            check_sdk()
         main = enabled and present and bool(mask & 1)
         aux = enabled and present and bool(mask & 2)
         extra = enabled and present and bool(mask & 4)
         expected = {hex(off): '' for off in STRINGS}
         expected.update({'0x10': '' if empty else 'owner-f0-🙂', '0x20': '' if empty else 'owner-e0-🙂',
             '0x30': state['main'] if main else '', '0x40': '' if empty else 'global-Ж', '0x78': state['nm'],
-            '0x88': '' if empty else 'owner-100-🙂', '0xa0': read_text(sdk_value) if main else '',
+            '0x88': '' if empty else 'owner-100-🙂',
+            '0xa0': (state['sdk_value_expected'] if sdk else read_text(sdk_value)) if main else '',
             '0xd8': state['aux'] if aux else '', '0x110': compiled_tag})
         os_code = 0 if platform == 'Android' else 1 if platform == 'IOS' else 6 if platform == 'Windows' and main and mode == 1 else 3
         integers = {'0x50': 0 if empty else 0x89abcdef, '0x98': {1: 1, 2: 2, 3: 3, 4: 5}.get(selector, 0),
@@ -295,18 +316,27 @@ def verify(context, root):
         require(events.count('sdk_aux_text') == int(aux) and events.count('sdk_main_text') == int(main)
                 and events.count('sdk_value') == int(main) and events.count('sdk_flag') == int(enabled)
                 and events.count('sdk_extra_flag') == int(extra), 'Login SDK projection branches differ')
-        require(set(state['allocations']) - input_pointers == state['freed'], 'Login preparation leak or input free')
+        require(set(state['allocations']) - input_pointers - state.get('sdk_retained', set()) == state['freed'],
+                'Login preparation leak or input free')
         require(all(bytes(h.uc.mem_read(at, len(data))) == data for at, data in inputs.items())
                 and all(bytes(h.uc.mem_read(at - 16, len(data))) == data for at, data in input_buffers.items()), 'Login input changed')
         require(all(reg(k) == v for k, v in abi.items()) and reg('RSP') == h.scratch + 0x38008, 'Login prepare ABI differs')
         cases.append(dict(scenario=name, selector=selector, empty=empty, send_return=send_return, poison=poison,
                           strings=state['strings'], integers=state['integers'], guards=True,
                           sdk_event=main, lifecycle=['send', 'post_notify'] + (['sdk_event'] if main else []) + ['destructor']))
+        if sdk:
+            cases[-1].update(cache_case=cache_case, native_calls=dict(state['sdk_native_calls']))
     return dict(schema=1, source_sha256=context['source_sha256'], method='bounded_native', cases=cases,
         evidence=h.evidence, runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
-        limits=['Only whole Login prepare and constructor execute native source instructions.',
-                'SDK getters/objects, platform text, selector, language/number, strings/allocator/destructor, send and post-send notifications are explicit fixtures.',
+        native_sdk_used=bool(sdk), metadata_fields=metadata_fields if sdk else None,
+        sdk_fixture_sha256=hashlib.sha256((HERE / 'login-sdk-fixtures.py').read_bytes()).hexdigest() if sdk else None,
+        limits=['Whole Login prepare/constructor plus declared SDK functions/leaves execute native source instructions.' if sdk
+                else 'Only whole Login prepare and constructor execute native source instructions.',
+                'Aux metadata collector, platform text/selector, inner SDK cache/string boundaries, allocator/destructor, send and post-send notifications remain fixtures.' if sdk
+                else 'SDK getters/objects, platform text, selector, language/number, strings/allocator/destructor, send and post-send notifications are explicit fixtures.',
                 'Stable synthetic SDK manager/handles; no concurrent mutation, real SDK values, wire integration or result readers proved.',
+                'When native_sdk_used, declared leaves and mode/main/value getters are native; inner platform text/cache resolver/string boundaries remain fixtures.',
+                'Metadata key/consumer projection is static; auxiliary metadata collector is not executed and field values/encoding are not proven.',
                 'Windows source platform branches are fixtures, not Android/IOS runtime compatibility. No authorization or profile activation.'])
 
 

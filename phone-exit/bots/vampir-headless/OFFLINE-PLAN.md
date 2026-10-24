@@ -25,6 +25,10 @@
 - Целые Login prepare / constructor проверены в 672 сценариях с явными SDK,
   строковыми и post-send fixtures: все поля, gates, cleanup и ABI.
   [Поля и ещё неизвестное](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md).
+- SDK mode/main/value и шесть leaf getters теперь native внутри Login:
+  2 016 случаев cache warm/resolve/absent. Закреплены также 27 статических
+  metadata key/consumer links, готовый collector повторно не выгружать.
+  [Значения, ownership и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-SDK-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
   и прочие зависимости Login, интеграция writer/archive и result readers. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.

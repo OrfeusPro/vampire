@@ -494,14 +494,15 @@
       "id": "release-login-prepare",
       "status": "bounded_answer",
       "question": "Как целые Login prepare и constructor текущей сборки проецируют owner / SDK inputs и выполняют действия после send?",
-      "known": "Целые Login prepare 1467ce030 / constructor 1456d7570 исполнены в 672 сценариях: 14 SDK/platform branches, selector 0/1/2/3/4/255, empty/Unicode, send 0/1, poison. Проверены 15 строковых полей, числа / raw flags, SDK handle gates, send arguments, post-send notify / variant event, cleanup, input guards и ABI. Использован готовый export; offline check включён в game-login/update. SDK и вспомогательные границы остаются fixtures.",
-      "unknown": "Реальные SDK/string/platform/language/number зависимости, inputs metadata/clock, интеграция с writer/archive и result reader текущего SHA.",
-      "next_action": "Перенести реальные зависимости Login по явным адресам, затем соединить caller с проверенными writer/archive и разобрать текущий result reader; source guard сохранить.",
+      "known": "Целые Login prepare 1467ce030 / constructor 1456d7570 исполнены в 672 сценариях: 14 SDK/platform branches, selector 0/1/2/3/4/255, empty/Unicode, send 0/1, poison. Проверены 15 строковых полей, числа / raw flags, SDK handle gates, send arguments, post-send notify / variant event, cleanup, input guards и ABI. Использован готовый export; offline check включён в game-login/update. SDK и вспомогательные границы остаются fixtures. Native mode/main/value getters и шесть leaf getters теперь включены в whole Login: 2 016 случаев warm/resolved/absent caches, источник flag +130 сравнивается с 3, +131 читается отдельно; member +58 сохраняется при отсутствии cache. Проверены post-send lifecycle и ABI. Для metadata collector статически подтверждены 27 key/consumer links, I_World дважды; значения пока неизвестны.",
+      "unknown": "Реальные inner SDK/string/platform зависимости и metadata collector/consumer, значения и encoding metadata/clock, интеграция writer/archive и result reader текущего SHA.",
+      "next_action": "Использовать готовый metadata collector 14560b0d0; проверить consumer 145601840 и источник 14560a680 по явным roots. Затем интегрировать writer/archive и result reader; source guard сохранить.",
       "decision_rule": "Caller replay с fixtures не подтверждает SDK getters, авторизацию или готовность игрового профиля.",
-      "do_not_repeat": "Использовать готовый run-7c5a462e9d0c; не повторять экспорт этих roots.",
+      "do_not_repeat": "Готовые run-7c5a462e9d0c, run-9dc981740f54, run-2c9766b1ab08 не выгружать повторно. Шесть leaf getters без unwind закреплены явными source bytes, не отправлять их через unwind-only collect.",
       "addresses": [],
       "evidence": [
-        "evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md"
+        "evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md",
+        "evidence/updates/HEADLESS-LOGIN-SDK-11316.md"
       ]
     },
     {

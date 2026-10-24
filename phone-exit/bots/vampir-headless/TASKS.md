@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+В Login включены native SDK mode/main/value и шесть leaf getters: 2 016 случаев
+с cache warm/resolve/absent. Metadata collector экспортирован, 27 связей ключей
+проверены статически. Далее — его consumer и реальные источники значений.
+[Прогон, ограничения и готовые материалы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-SDK-11316.md).
+
 Целые Login prepare / constructor проверены в 672 сценариях с явными fixtures.
 Далее — реальные SDK/string/platform/language/number зависимости, интеграция
 writer/archive и текущий result reader. Готовый export повторно не получать.

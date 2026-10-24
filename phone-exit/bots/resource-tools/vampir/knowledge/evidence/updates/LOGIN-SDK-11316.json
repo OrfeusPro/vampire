@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "proofs": {
+    "whole_prepare": {
+      "report": "F:/PhoneExit Resources/Vampir/knowledge/native-login-prepare-checks/ec814ac4f5599d00d21b3769d3ac4bf4ec0ea1f9d4b51f44dd5c94e1bcba3fed/manifest.json",
+      "sha256": "ec814ac4f5599d00d21b3769d3ac4bf4ec0ea1f9d4b51f44dd5c94e1bcba3fed",
+      "cases": 2016
+    }
+  },
+  "metadata_key_calls": 27,
+  "metadata_unique_keys": 26,
+  "network_used": false,
+  "profile_activated": false
+}

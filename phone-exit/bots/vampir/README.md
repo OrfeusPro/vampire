@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Login 1.13.16 теперь включает три native SDK getters и шесть leaf getters:
+2 016 сценариев проверили cache branches, поля, lifecycle и ABI. Отдельно
+закреплены 27 статических metadata key/consumer links; значения ещё не доказаны.
+[Результат, источники для пресетов и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-SDK-11316.md).
+
 Целые Login prepare / constructor 1.13.16 прошли 672 сценария с явными SDK
 fixtures: проекция полей, отдельные gates, post-send уведомления, cleanup и ABI.
 Проверка подключена к обновлениям; реальные SDK getters / result reader ещё открыты.

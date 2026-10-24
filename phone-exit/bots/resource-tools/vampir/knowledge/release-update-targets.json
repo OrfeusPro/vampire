@@ -1510,6 +1510,119 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-sdk-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-prepare-context.py",
+        "login-sdk-fixtures.py"
+      ],
+      "rule": "Сверять SDK getters / leaves по явным instruction bytes, globals, call sites, mode literals и ownership member +58; metadata keys / consumer проверять статически, collector не объявлять исполненным. Новый SHA требует review / переноса, source guard не ослаблять.",
+      "automation": {
+        "discovery": "reviewed_calls_globals_and_explicit_leaf_bytes",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1467ce030",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x1456d7570",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560aed0",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560b070",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x145609e50",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560ad80",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x145ccd310",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x144ffe460",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x144ab0c80",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14556ae90",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x145cc6a80",
+                "scope": "Whole Login with native mode/main/value and six leaves; inner SDK/cache/string boundaries remain fixtures.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560b0d0",
+                "scope": "Static source-bound ordered keys and direct consumer links only; no collector execution or values proved.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-prepare-context.py",
+              "login-sdk-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-SDK-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [
