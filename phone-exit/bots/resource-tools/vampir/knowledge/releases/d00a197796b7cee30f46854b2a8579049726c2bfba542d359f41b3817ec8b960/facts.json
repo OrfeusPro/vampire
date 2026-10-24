@@ -2972,6 +2972,90 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Общая body-reader/handler интеграция, реальные services/getters/storage и dispatch. Post-state 146755540 export отклонён: decompiler block outside unwind. Остальные gate branches и live session не доказаны."
+    },
+    {
+      "addresses": [
+        "0x1456dc140",
+        "0x14679aec0",
+        "0x1467cd7b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d16aa918b660431186416bb3036e8972b01b3982f76943a7420db59576943901",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\63f7327ad3ce5a545dbde3fdcf784b0c6f54a19ed8fe6df821ea930cf356b107\\manifest.json",
+          "sha256": "63f7327ad3ce5a545dbde3fdcf784b0c6f54a19ed8fe6df821ea930cf356b107",
+          "state": "passed"
+        },
+        {
+          "cache_key": "62e3e93b65a2079b9463755eca1e957f6b9c91e09c86b21f5661925ff2c8dce5",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4a72a8d550a4e623f9a9f1609d2e917653a712b9207388e85ef5835bc19b3cfd\\manifest.json",
+          "sha256": "4a72a8d550a4e623f9a9f1609d2e917653a712b9207388e85ef5835bc19b3cfd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "65b9e0638323f1a21958d4c2bf7d7f59171e5d50bda7be6bf71b338716206baa",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\33c0dd7ddbac2fb08dad9f95089571d0a4e0916b983f389d8fdc33d809b09198\\manifest.json",
+          "sha256": "33c0dd7ddbac2fb08dad9f95089571d0a4e0916b983f389d8fdc33d809b09198",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5cbca056d188ecbbbdd6ecb6fc829444248c899334924b70cbfc8dd2f3640029",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b2531f885e0377407501692aed8070fe844a19414c82c9feed05c06a714f1839\\manifest.json",
+          "sha256": "b2531f885e0377407501692aed8070fe844a19414c82c9feed05c06a714f1839",
+          "state": "passed"
+        },
+        {
+          "cache_key": "86571bc9b9af8e496a7064ebd40b99715a66ada0796d82f0cb0c7163fdbd1d48",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b8891cd0c2fdab279f65802276b133e974a97e1d224caa68f565f4bd27801316\\manifest.json",
+          "sha256": "b8891cd0c2fdab279f65802276b133e974a97e1d224caa68f565f4bd27801316",
+          "state": "passed"
+        },
+        {
+          "cache_key": "82fa5418f5f917edf095eabaf6ab30fe2b9284589b9d77f42fe9703b34f27c6b",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\18d4eaf8fb53b929e01b9659068384cdb476f4b33c734426903da44366fd78cb\\manifest.json",
+          "sha256": "18d4eaf8fb53b929e01b9659068384cdb476f4b33c734426903da44366fd78cb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "66cc541c670e9fe01a88a7710fe3204ff17c714dc5692b63343438268b03cd41",
+          "id": "native-login-result-body-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b6b09b97d4dffeb00c366b805b4f76bc099fa73d0ddc2f6c955085ceb5a6f548\\manifest.json",
+          "sha256": "b6b09b97d4dffeb00c366b805b4f76bc099fa73d0ddc2f6c955085ceb5a6f548",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native input constructors/numeric/raw/FString/UTF-8/nested/packet reader и handler/gate исполняются на одном packet без host перезаписи полей: 44 общих сценария, включая Unicode/string boundaries. 131 reader failure не вызывает handler. Сохранены отдельные reader matrices, input/string guards, ownership/ABI.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-result-body-handler-11316.json",
+          "sha256": "7c0768ddb3cdf39c3bc961302ae9b77a2251fa6acdf6f4e907f01c8c3a118eef"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md",
+          "sha256": "6d307701d14e69b7531b5590428006edf4a8afae218b40a2bf87efa1250dbcb7"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-RESULT-BODY-HANDLER-11316.json",
+          "sha256": "cbe7d14ae4ddaaa10362658566475cbcfab204b2761de58438cb2327da077567"
+        }
+      ],
+      "id": "5f79e717c18eb862652fa1f0a82e4a2b43f78db0dc2cc607db24b10a67b108a9",
+      "limits": [
+        "Synthetic bodies and services/getters/storage; UI/SDK/clock/persistence/disconnect/post-state remain captures.",
+        "Reader failure gate is a replay harness boundary, not proof of real network dispatch.",
+        "22 explicit roots/9 saved exports only; little endian, existing zero-stack malformed scope; no session/runtime promotion."
+      ],
+      "method": "bounded_native",
+      "next_check": "Разобрать out-of-unwind post-state block до повторного collect; использовать готовую общую цепочку для реальных getter/service/dispatch связей и перехода virtual+28 -> CharacterListRead.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные services/getters/storage/dispatch, post-state 146755540 с rejected out-of-unwind export, остальные result codes и live session."
     }
   ],
   "schema": 1,

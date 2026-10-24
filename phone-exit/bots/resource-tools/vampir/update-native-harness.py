@@ -91,7 +91,13 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                     and context.get('functions', {}).get('reader') == '0x1456dc140'
                     and context.get('native_input', {}).get('functions', {}).get('constructor') == '0x144aacb40'
                     and context.get('native_input', {}).get('functions', {}).get('buffer_constructor') == '0x144aac130')
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= 8:
+    handler_scope = (budget == 22 and context.get('budget_scope') == 'login-result-body-handler'
+                     and len(functions) == 22
+                     and context.get('functions', {}).get('reader') == '0x1456dc140'
+                     and context.get('native_input', {}).get('functions', {}).get('constructor') == '0x144aacb40'
+                     and context.get('native_input', {}).get('functions', {}).get('buffer_constructor') == '0x144aac130'
+                     and context.get('native_handler', {}).get('functions') == dict(handler='0x14679aec0', gate='0x1467cd7b0'))
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (9 if handler_scope else 8):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

@@ -41,6 +41,13 @@ def verify(context, root):
         roots.update(int(at, 16) for at in input_['functions'].values())
         exports.update(input_['exports'])
         leaves.update({int(at, 16): spec['bytes'] for at, spec in input_['leaves'].items()})
+    handler = context.get('native_handler')
+    if handler:
+        if handler['source_sha256'] != context['source_sha256']:
+            raise ValueError('LoginResult handler source differs')
+        roots.update(int(at, 16) for at in handler['functions'].values())
+        exports.update(handler['exports'])
+        leaves.update({int(at, 16): code for at, code in handler['leaves'].items()})
     h = load('update-native-harness').make_harness(context, exports, roots, leaves=leaves, root=root)
     native, rows = load('build-native-entry-code'), load('update-bindings').rows
     calls = {hex(r['address']): {'target': hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
@@ -257,10 +264,51 @@ def verify(context, root):
         for data in (b'\xff', b'\xc0\xaf', b'\xed\xa0\x80', b'\xf4\x90\x80\x80', b'a\0b', b'\xef\xbf\xbe'):
             body = minimal[:4] + len(data).to_bytes(2, 'little') + data + minimal[6:]
             special.append(read(body))
+    handler_report = None
+    if handler:
+        def body_for_handler(code, field48, raw16, settings):
+            values = dict(strings=[settings.get('reader_text', 'fixture'), '', settings['message'], '', '', '', ''],
+                          u32=[code, 0xfedcba98, 0x89abcdef], u16=[field48, raw16],
+                          u64=[0x8000000000000000 + i for i in range(8)],
+                          flags=[1, 1, 1, 1, settings['flag138']])
+            parts = []
+            for kind, off in ORDER:
+                if kind == 'string':
+                    data = values['strings'][STRINGS.index(off)].encode('utf-8')
+                    parts.extend((len(data).to_bytes(2, 'little'), data))
+                else:
+                    key, offsets = ('u32', U32) if off in U32 else ('u16', U16) if off in U16 else (
+                        ('u64', U64) if off in U64 else ('flags', FLAGS))
+                    parts.append(values[key][offsets.index(off)].to_bytes(WIDTH[kind], 'little'))
+            return b''.join(parts), values
+
+        def read_packet(code, field48, raw16, settings):
+            body, expected = body_for_handler(code, field48, raw16, settings)
+            if 'reader_cut' in settings:
+                body = body[:settings['reader_cut']]
+            result = read(body, fail_at=settings.get('reader_fail'))
+            if result['returned'] == 1:
+                require(result['fields'] == expected and result['consumed'] == len(body), 'Handler input projection differs')
+            require(state['heap'] < h.scratch + 0x28000, 'Reader heap overlaps handler storage')
+            return result
+
+        def check_after_handler():
+            check_input()
+            for pointer, size in state['allocations'].items():
+                require(bytes(h.uc.mem_read(pointer - 16, 16)) == b'\xa5' * 16
+                        and bytes(h.uc.mem_read(pointer + size, 16)) == b'\xa6' * 16,
+                        'Handler changed reader allocation guards')
+
+        normal, _ = body_for_handler(0, 0, 0x8000, dict(message='', flag138=1))
+        handler_report = load('verify-login-result-handler-context').verify(handler, root, shared=dict(
+            h=h, read_packet=read_packet, check_after=check_after_handler,
+            additional_settings=[dict(reader_text=value) for value in ('', 'Ж界🙂', 'x' * 15, 'x' * 16, 'x' * 127, 'x' * 128)],
+            rejected_settings=[dict(reader_cut=i) for i in range(len(normal))] + [dict(reader_fail=i) for i in range(len(ORDER))]))
     return dict(schema=1, source_sha256=context['source_sha256'], method='bounded_native', cases=cases,
                 truncated=truncated, failures=failures, trailing=trailing, evidence=h.evidence,
                 runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
                 native_input_used=bool(input_),
+                handler=handler_report,
                 construction_cases=construction_cases if input_ else [],
                 native_string_used=bool(input_ and input_.get('string_fixtures')), special=special, boundaries=boundaries,
                 string_fixture_sha256=hashlib.sha256((HERE / 'login-result-string-fixtures.py').read_bytes()).hexdigest() if input_ and input_.get('string_fixtures') else None,
@@ -269,7 +317,7 @@ def verify(context, root):
                         'Input constructor/scalars/raw IO/bookkeeping execute when native_input_used; UTF-8/FString readers execute only when native_string_used.',
                         'Buffer binding is native only with explicit buffer_construction; memcpy and bounded string storage remain fixtures. Whole reading is little endian only.',
                         'Native string runs use a zero-filled initial stack; malformed outputs do not prove termination writes or general malformed behavior.',
-                        'No handler, dispatch, result semantic names, network, login success or runtime activation proved.'])
+                        'Handler/gate only execute when handler report is present; no real dispatch, network, login success or runtime activation proved.'])
 
 
 if __name__ == '__main__':

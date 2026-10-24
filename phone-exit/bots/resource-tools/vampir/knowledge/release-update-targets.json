@@ -2147,6 +2147,56 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-result-body-handler-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-result-context.py",
+        "verify-login-result-handler-context.py"
+      ],
+      "rule": "Перенести явную общую цепочку из 22 roots/9 готовых exports: input constructors/readers/UTF-8 и current handler/gate. Проверить один packet без host переписывания после reader, раздельные storage phases и запрет handler после отказа чтения. Unknown dispatch/post-state не переносить автоматически.",
+      "automation": {
+        "discovery": "reviewed_reader_input_handler_registration_and_gate_links",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456dc140",
+                "scope": "Whole native body-reader -> same packet -> handler/gate; storage and services remain fixtures, no live dispatch/session proof.",
+                "required_checks": [
+                  "native-login-result-body-handler-context"
+                ]
+              },
+              {
+                "address": "0x14679aec0",
+                "scope": "Whole native body-reader -> same packet -> handler/gate; storage and services remain fixtures, no live dispatch/session proof.",
+                "required_checks": [
+                  "native-login-result-body-handler-context"
+                ]
+              },
+              {
+                "address": "0x1467cd7b0",
+                "scope": "Whole native body-reader -> same packet -> handler/gate; storage and services remain fixtures, no live dispatch/session proof.",
+                "required_checks": [
+                  "native-login-result-body-handler-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "verify-login-result-handler-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

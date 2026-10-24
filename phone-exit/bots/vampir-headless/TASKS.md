@@ -1,5 +1,9 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Reader → handler LoginResult теперь работают на одном packet без host перезаписи:
+44 общих сценария, включая Unicode и string boundaries; 131 отказ чтения не
+вызывает handler. Далее — реальные сервисы и post-state. [Проверки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md).
+
 Текущие LoginResult handler/gate прошли 38 native сценариев на synthetic packet:
 state stores, ошибки, signed gates, controller и SDK conditions. Далее — body
 интеграция и post-state с отклонённым unwind export. [Границы и доказательства](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md).

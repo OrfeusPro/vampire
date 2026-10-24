@@ -16,25 +16,31 @@ def load(name):
     return module
 
 
-def verify(context, root):
+def verify(context, root, shared=None):
     roots = {name: int(at, 16) for name, at in context['functions'].items()}
-    h = load('update-native-harness').make_harness(context, context['exports'], set(roots.values()),
+    h = shared['h'] if shared else load('update-native-harness').make_harness(
+        context, context['exports'], set(roots.values()),
         leaves={int(at, 16): code for at, code in context['leaves'].items()}, root=root)
+    if h.sha != context['source_sha256']:
+        raise ValueError('Handler shared source differs')
     native, bindings = load('build-native-entry-code'), load('update-bindings')
     calls = {name: {hex(r['address']): hex(r['direct_target']) if r['direct_target'] is not None else r['operands']
                    for r in bindings.rows(native, h.image, at) if r['call']} for name, at in roots.items()}
     if calls != context['call_sites']:
         raise ValueError('Handler/gate call sites differ')
     labels = {int(at, 16): name for name, at in context['fixtures'].items()}
-    if len(labels) != len(context['fixtures']) or set(labels) & (set(roots.values()) | {int(at, 16) for at in context['leaves']}):
+    protected = set(roots.values()) | {int(at, 16) for at in context['leaves']}
+    if shared:
+        protected.update(int(f['address'], 16) for f in h.fragments)
+    if len(labels) != len(context['fixtures']) or set(labels) & protected:
         raise ValueError('Handler fixture overlaps native code')
     direct = {int(at, 16) for sites in calls.values() for at in sites.values() if at.startswith('0x')}
     if direct - set(roots.values()) - set(labels):
         raise ValueError('Handler/gate undeclared fixture')
     table = int(context['packet_table'], 16)
-    packet, state, controller, manager = [h.scratch + off for off in (0x1000, 0x3000, 0x4000, 0x5000)]
-    service, view, options = [h.scratch + off for off in (0x6000, 0x7000, 0x8000)]
-    callback = dict(exit=h.scratch + 0xd000, view=h.scratch + 0xd010, sdk=h.scratch + 0xd020)
+    packet, state, controller, manager = [h.scratch + off for off in (0x1000, 0xa000, 0xb000, 0xc000)]
+    service, view, options = [h.scratch + off for off in (0xd000, 0xe000, 0xf000)]
+    callback = dict(exit=h.scratch + 0xf800, view=h.scratch + 0xf810, sdk=h.scratch + 0xf820)
     current, events, writes = {}, [], []
     x, uc = h.x, h.uc
     import unicorn
@@ -72,7 +78,7 @@ def verify(context, root):
         data = value.encode('utf-16le') + b'\0\0' if value else b''
         pointer = current['heap'] if data else 0
         if data:
-            require(current['heap'] + len(data) < h.scratch + 0x28000, 'Handler string fixture heap bound')
+            require(current['heap'] + len(data) < h.scratch + 0x30000, 'Handler string fixture heap bound')
             uc.mem_write(pointer, data)
             current['heap'] += (len(data) + 15) & ~15
         put(at, 'QII', pointer, len(data) // 2, len(data) // 2)
@@ -114,11 +120,11 @@ def verify(context, root):
         elif name == 'view_service':
             value = view
         elif name in ('optional_positive', 'optional_9818', 'optional_90021'):
-            value = h.scratch + 0x9000 if current['optional_object'] else 0
+            value = h.scratch + 0xf400 if current['optional_object'] else 0
         elif name == 'post_predicate':
             value = int(current['post_predicate'])
         elif name in ('peer', 'clock_service', 'time_service', 'localizer', 'post_service', 'other_service', 'sdk_service', 'predicate_service'):
-            value = h.scratch + 0xa000
+            value = h.scratch + 0xf500
         elif name == 'clock':
             value = 0
         elif name in ('early', 'time_pair', 'toggle', 'positive', 'post_state', 'server_store', 'predicate_action',
@@ -130,7 +136,13 @@ def verify(context, root):
         h.finish(value)
 
     for at, name in labels.items():
-        h.add_fixture(at, lambda machine, name=name: fixture(machine, name))
+        previous = h.fixtures.get(at)
+        def dispatch(machine, name=name, previous=previous):
+            if previous and not current.get('handler_phase'):
+                previous(machine)
+            else:
+                fixture(machine, name)
+        h.add_fixture(at, dispatch)
     for name, at in callback.items():
         def capture(machine, name=name):
             events.append(dict(action='virtual_' + name)); h.finish()
@@ -155,32 +167,37 @@ def verify(context, root):
 
     def run(code=0, field48=0, raw16=0x8000, **settings):
         current.clear()
-        current.update(heap=h.scratch + 0x18000, peer_flag=0, selected_server=42, previous_server=7,
+        current.update(heap=h.scratch + 0x28000, peer_flag=0, selected_server=42, previous_server=7,
                        gate_state=0, optional_object=True, sdk_enabled=False, manager_present=True,
                        sdk_callbacks=False, auth_present=False, post_predicate=False, flag138=1, message='')
         current.update(settings)
         events.clear(); writes.clear()
         uc.mem_write(h.scratch + 0x30000, bytes(0x8000))
-        for at, size in ((packet, 0x140), (state, 0x100), (controller, 0x320)):
+        decoded = shared['read_packet'](code, field48, raw16, current) if shared else None
+        if shared and decoded['returned'] != 1:
+            require(not events and not writes, 'Incomplete packet reached handler services')
+            return dict(decoded=decoded, handler_invoked=False, events=[], writes=[], settings=settings)
+        for at, size in (((state, 0x100), (controller, 0x320)) if shared else ((packet, 0x140), (state, 0x100), (controller, 0x320))):
             uc.mem_write(at - 16, b'\xa5' * 16 + bytes(size) + b'\xa6' * 16)
-        put(packet, 'Q', table); put(packet + 0x10, 'I', code)
-        for off in (0x18, 0x28, 0x38, 0x70, 0x90, 0xb8, 0xc8):
-            text(packet + off, current['message'] if off == 0x38 else 'fixture' if off == 0x18 else '')
-        put(packet + 0x48, 'H', field48); put(packet + 0x60, 'H', raw16)
-        for i, off in enumerate((0x58, 0x68, 0x80, 0xb0, 0xf0, 0x100, 0x110, 0x120)):
-            put(packet + off, 'Q', 0x1234000000000000 + i)
-        for off in (0x88, 0xa0, 0xe0, 0x128):
-            put(packet + off, 'B', 1)
-        put(packet + 0x138, 'B', current['flag138'])
+        if not shared:
+            put(packet, 'Q', table); put(packet + 0x10, 'I', code)
+            for off in (0x18, 0x28, 0x38, 0x70, 0x90, 0xb8, 0xc8):
+                text(packet + off, current['message'] if off == 0x38 else 'fixture' if off == 0x18 else '')
+            put(packet + 0x48, 'H', field48); put(packet + 0x60, 'H', raw16)
+            for i, off in enumerate((0x58, 0x68, 0x80, 0xb0, 0xf0, 0x100, 0x110, 0x120)):
+                put(packet + off, 'Q', 0x1234000000000000 + i)
+            for off in (0x88, 0xa0, 0xe0, 0x128):
+                put(packet + off, 'B', 1)
+            put(packet + 0x138, 'B', current['flag138'])
         text(state + 0x28, 'before'); put(state + 0x38, 'Q', 0xabcdef)
         put(controller + 0x308, 'II', current['previous_server'], current['previous_server'])
         put(options + 8, 'B', current['gate_state'])
         for at, slot, target in ((service, 0x38, callback['exit']), (view, 0x28, callback['view']),
-                                 (h.scratch + 0xb000, 0x20, callback['sdk'])):
+                                 (h.scratch + 0xf100, 0x20, callback['sdk'])):
             put(at, 'Q', at + 0x100); put(at + 0x100 + slot, 'Q', target)
-        put(manager + 0x88, 'Q', h.scratch + 0xb000 if current['sdk_callbacks'] else 0)
-        put(manager + 0xa0, 'Q', h.scratch + 0xc000 if current['sdk_callbacks'] else 0)
-        put(manager + 0x38, 'Q', h.scratch + 0xc100 if current['auth_present'] else 0)
+        put(manager + 0x88, 'Q', h.scratch + 0xf100 if current['sdk_callbacks'] else 0)
+        put(manager + 0xa0, 'Q', h.scratch + 0xf300 if current['sdk_callbacks'] else 0)
+        put(manager + 0x38, 'Q', h.scratch + 0xf380 if current['auth_present'] else 0)
         put(globals_['sdk_enabled'], 'B', int(current['sdk_enabled']))
         put(globals_['special22'], 'B', 0); put(globals_['derived'], 'q', 0xabcdef)
         before = bytes(uc.mem_read(packet, 0x140))
@@ -188,14 +205,19 @@ def verify(context, root):
         for name, value in abi.items():
             uc.reg_write(getattr(x, 'UC_X86_REG_' + name), value)
         uc.reg_write(x.UC_X86_REG_RDX, 0x12345678); uc.reg_write(x.UC_X86_REG_R8, packet)
-        h.call(roots['handler'], h.scratch + 0xe000, budget=250000)
+        current['handler_phase'] = True
+        h.call(roots['handler'], h.scratch + 0xf600, budget=250000)
+        current['handler_phase'] = False
+        if shared:
+            shared['check_after']()
         require(all(reg(name) == value for name, value in abi.items()) and reg('RSP') == h.scratch + 0x38008,
                 'Handler ABI differs')
         require(bytes(uc.mem_read(packet, 0x140)) == before, 'Handler modified packet fixture')
         for at, size in ((packet, 0x140), (state, 0x100), (controller, 0x320)):
             require(bytes(uc.mem_read(at - 16, 16)) == b'\xa5' * 16 and bytes(uc.mem_read(at + size, 16)) == b'\xa6' * 16,
                     'Handler guards changed')
-        return dict(code=code, field48=field48, raw16=raw16, settings=settings, events=list(events), writes=list(writes),
+        return dict(code=code, field48=field48, raw16=raw16, settings=settings, decoded=decoded,
+                    handler_invoked=True, events=list(events), writes=list(writes),
                     state=dict(text=read_text(state + 0x28), qwords={hex(o): qword(state + o) for o in (0x38, 0x88, 0xb0, 0xc0, 0xd0, 0xe0)},
                                flags={hex(o): bytes(uc.mem_read(state + o, 1))[0] for o in (0xa0, 0xe8)}),
                     controller_server=list(struct.unpack('<II', bytes(uc.mem_read(controller + 0x308, 8)))),
@@ -211,10 +233,14 @@ def verify(context, root):
     cases += [run(code=code, optional_object=False, message='error') for code in (1, 9818, 9819, 90021)]
     cases += [run(code=1, gate_state=1), run(field48=1, optional_object=False), run(flag138=0)]
     cases += [run(raw16=value) for value in (0, 1, 65535)]
-    return dict(schema=1, source_sha256=context['source_sha256'], cases=cases, evidence=h.evidence,
+    if shared:
+        cases += [run(**settings) for settings in shared.get('additional_settings', [])]
+    rejected = [run(**settings) for settings in shared['rejected_settings']] if shared else []
+    return dict(schema=1, source_sha256=context['source_sha256'], cases=cases, rejected=rejected, evidence=h.evidence,
                 runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
-                limits=['Synthetic packet layout, services/getters, strings/storage, UI/SDK/clock/persistence/disconnect/post-state fixtures.',
-                        'Handler and covered result-gate instructions execute; no packet reader integration, real dispatch or live session proof.',
+                same_packet_reader_used=bool(shared),
+                limits=['Synthetic packet only without shared reader; services/getters/storage and UI/SDK/clock/persistence/disconnect/post-state fixtures in both modes.',
+                        'Handler and covered result-gate instructions execute; reader integration only when same_packet_reader_used. No dispatch/session proof.',
                         'Post-state export rejected an out-of-unwind decompiler block; preserved in manual queue.'])
 
 
