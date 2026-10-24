@@ -341,7 +341,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-14887884dc6c. `/Game/RED/UI/Common/WBP_CommonTabChracrterInfoT` — вариантов: 2.
 - [ ] UI-W-74ecdf6bd31b. `/Game/RED/UI/Common/WBP_CommonTabLabelT` — вариантов: 2.
 - [ ] UI-W-d9ae6fabe011. `/Game/RED/UI/Common/WBP_CommonTabMainSmallT` — вариантов: 2.
-- [ ] UI-W-ef807cd83c2d. `/Game/RED/UI/Common/WBP_CommonTabMainT` — вариантов: 2.
+- [ ] ~ UI-W-ef807cd83c2d. `/Game/RED/UI/Common/WBP_CommonTabMainT` — вариантов: 2.
 - [ ] UI-W-2323caeb3b50. `/Game/RED/UI/Common/WBP_CommonTabMainT_Sub` — вариантов: 2.
 - [ ] UI-W-b11e180d35ba. `/Game/RED/UI/Common/WBP_CommonTabSmallIconT` — вариантов: 2.
 - [ ] UI-W-76bffca72571. `/Game/RED/UI/Common/WBP_CommonTabSmallT_Left` — вариантов: 2.
@@ -401,7 +401,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-ebcfed15d97d. `/Game/RED/UI/Common/WBP_PopupBgAlpha` — вариантов: 2.
 - [ ] UI-W-60bf5bc20901. `/Game/RED/UI/Common/WBP_PopupBgAlpha_Darker` — вариантов: 2.
 - [ ] UI-W-fd43dde8feda. `/Game/RED/UI/Common/WBP_PopupBgCommonTitle` — вариантов: 2.
-- [ ] UI-W-aec6c1101fd0. `/Game/RED/UI/Common/WBP_PopupBgTitle` — вариантов: 2.
+- [ ] ~ UI-W-aec6c1101fd0. `/Game/RED/UI/Common/WBP_PopupBgTitle` — вариантов: 2.
 - [ ] UI-W-833dda9f1fd9. `/Game/RED/UI/Common/WBP_PopupBgTitle2` — вариантов: 2.
 - [ ] UI-W-aa8cb7326cfe. `/Game/RED/UI/Common/WBP_ProgressCountT` — вариантов: 2.
 - [ ] UI-W-c3d8b89a9f88. `/Game/RED/UI/Common/WBP_ReconnectUI` — вариантов: 2.
@@ -1094,7 +1094,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-86400da60f59. `/Game/RED/UI/Item/WBP_ItemDisassemblyCountPopup` — вариантов: 1.
 - [ ] UI-W-09f012896fe3. `/Game/RED/UI/Item/WBP_ItemDisassemblyPopup` — вариантов: 1.
 - [ ] UI-W-597e0e2d8a51. `/Game/RED/UI/Item/WBP_ItemIconLargeT` — вариантов: 1.
-- [ ] UI-W-77487887d04f. `/Game/RED/UI/Item/WBP_ItemIconT` — вариантов: 2.
+- [ ] ~ UI-W-77487887d04f. `/Game/RED/UI/Item/WBP_ItemIconT` — вариантов: 2.
 - [ ] UI-W-be9bdce31bd2. `/Game/RED/UI/Item/WBP_ItemInfoExpansionModalPopup` — вариантов: 1.
 - [ ] UI-W-fc6fe5c0e2e7. `/Game/RED/UI/Item/WBP_ItemInfoExpansionPopup` — вариантов: 1.
 - [ ] UI-W-5989b37164f4. `/Game/RED/UI/Item/WBP_ItemInfoKeyT` — вариантов: 1.
@@ -1325,7 +1325,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-fc3091f40a30. `/Game/RED/UI/Option/Template/WBP_ShortcutkeyButton05T` — вариантов: 2.
 - [ ] UI-W-8cecda84cb9f. `/Game/RED/UI/Option/Template/WBP_ShortcutkeyButton06T` — вариантов: 2.
 - [ ] UI-W-343e9c58e80a. `/Game/RED/UI/Option/Template/WBP_ShortcutkeyControlT` — вариантов: 2.
-- [ ] UI-W-badeb0609493. `/Game/RED/UI/Option/Template/WBP_ShortcutkeyHudT` — вариантов: 2.
+- [ ] ~ UI-W-badeb0609493. `/Game/RED/UI/Option/Template/WBP_ShortcutkeyHudT` — вариантов: 2.
 - [ ] UI-W-f74c7b2707c3. `/Game/RED/UI/Option/Template/WBP_ShortcutkeyListT` — вариантов: 2.
 - [ ] UI-W-59dd1d265317. `/Game/RED/UI/Option/WBP_OptionAccountSettingUI` — вариантов: 2.
 - [ ] UI-W-3418e2bd20f7. `/Game/RED/UI/Option/WBP_OptionLanguageSettingTab` — вариантов: 2.

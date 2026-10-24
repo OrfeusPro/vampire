@@ -28,6 +28,20 @@ def verify(snapshot):
     for name, digest in manifest['implementation'].items():
         if '.test.' not in name:
             assert sha(snapshot / name) == digest, 'Changed source: ' + name
+    if (snapshot / 'skin-evidence.json').exists():
+        skins = json.loads((snapshot / 'skin-evidence.json').read_text('utf-8'))
+        tokens = json.loads((snapshot / 'skin-tokens.json').read_text('utf-8'))
+        assert skins['decoder']['sha256'] == manifest['tools']['inspect-ui.py']
+        assert tokens.keys() == skins['roles'].keys()
+        for key, role in skins['roles'].items():
+            record = next(r for r in index if r['name'] == role['resource'])
+            file, source = role['catalog_file'], role['source']
+            assert source['catalog_sha256'] == manifest['resources'][record['path'] + '|' + file]
+            assert source['package_sha256'] == manifest['inputs']['ui-layout-study/' + file]
+            for suffix, field in [('.uasset', 'asset_sha256'), ('.uexp', 'body_sha256')]:
+                assert source[field] == manifest['inputs']['ui-layout-study/' + file.removesuffix('.json') + suffix]
+            assert tokens[key]['sha256'] == role['texture']['sha256'] == textures[role['asset_path']]['sha256']
+            assert tokens[key]['url'] == textures[role['asset_path']]['url']
     if (snapshot / 'placement-evidence.json').exists():
         placements = json.loads((snapshot / 'placement-evidence.json').read_text('utf-8'))
         for profile in placements['profiles'].values():

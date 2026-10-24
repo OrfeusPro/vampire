@@ -26,3 +26,12 @@ button.primary:active:not(:disabled){background-image:var(--button-press)}
 @media(max-width:800px){.skills-layout{grid-template-columns:1fr}.skill-details{padding:.5em}}
 
 .ownership-panel small{display:block;margin-top:1em}.ownership-panel>button{margin:.6em 0}
+
+/* Original assets; package references verified, runtime brush margins/tints unresolved. */
+dialog{background-image:var(--popup-fill);background-size:100% 100%}
+button.close{width:1.2em;height:1.2em;flex-shrink:0;padding:0;background:var(--close-icon) center/contain no-repeat}
+button.close:active:not(:disabled){background-image:var(--close-icon);opacity:.75}
+.item-slot{background:var(--item-slot-bg) center/100% 100% no-repeat;border:0}
+kbd{background:var(--shortcut-frame) center/100% 100% no-repeat;border:0}
+.tabs button{background-image:var(--tab-normal);background-size:100% 100%;overflow-wrap:normal;font-size:.8em;padding:.6em .5em}
+.tabs button.original-button:not(.primary):active:not(:disabled),.tabs button:active:not(:disabled){background-image:var(--tab-normal)}

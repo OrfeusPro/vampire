@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "roles": {
+    "item-slot-bg": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/Slot_ItemSlot",
+      "catalog_file": "pakchunk500-Windows-2233.json",
+      "resource": "WBP_ItemIconT",
+      "category": "Слоты предметов"
+    },
+    "popup-fill": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/PopUp_DefaultBG_texture_01",
+      "catalog_file": "pakchunk500-Windows-811.json",
+      "resource": "WBP_PopupBgTitle",
+      "category": "Фоны попапов"
+    },
+    "popup-title-deco": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/PopUp_Default_Title_texture",
+      "catalog_file": "pakchunk500-Windows-811.json",
+      "resource": "WBP_PopupBgTitle",
+      "category": "Оформление заголовка"
+    },
+    "close-icon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/BTN_Close",
+      "catalog_file": "pakchunk500-Windows-2167.json",
+      "resource": "WBP_InventoryUI",
+      "category": "Закрытие окна",
+      "control": "ButtonClose"
+    },
+    "shortcut-frame": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/HUDShortcutkey_Frame",
+      "catalog_file": "pakchunk500-Windows-2699.json",
+      "resource": "WBP_ShortcutkeyHudT",
+      "category": "Горячие клавиши"
+    },
+    "tab-normal": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/BTN_NormalBox_Horizontal128",
+      "catalog_file": "pakchunk500-Windows-695.json",
+      "resource": "WBP_CommonTabMainT",
+      "category": "Основные вкладки"
+    },
+    "button-bg": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/BTN_ConfirmRed256",
+      "catalog_file": "pakchunk500-Windows-8930.json",
+      "resource": "WBP_ShopPurchasePopup",
+      "category": "Основные кнопки",
+      "control": "ButtonPurchase"
+    },
+    "button-press": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/BTN_ConfirmRed256_Press",
+      "catalog_file": "pakchunk500-Windows-8930.json",
+      "resource": "WBP_ShopPurchasePopup",
+      "category": "Основные кнопки",
+      "control": "ButtonPurchase"
+    },
+    "normal-bg": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/BTN_ConfirmBlack256",
+      "catalog_file": "pakchunk500-Windows-2371.json",
+      "resource": "WBP_CharacterSelectUI",
+      "category": "Обычные кнопки",
+      "control": "ButtonDelete"
+    },
+    "normal-press": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/_Common/BTN_ConfirmBlack256_Press",
+      "catalog_file": "pakchunk500-Windows-2371.json",
+      "resource": "WBP_CharacterSelectUI",
+      "category": "Обычные кнопки",
+      "control": "ButtonDelete"
+    }
+  }
+}

@@ -46,6 +46,42 @@ class PrototypeTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 shared.build(root, [])
 
+    def test_skin_package_sources_are_checked_without_inventing_brush_binding(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / 'ui-catalog').mkdir(); (root / 'ui-layout-study').mkdir()
+            asset, body = root / 'ui-layout-study/test.uasset', root / 'ui-layout-study/test.uexp'
+            asset.write_bytes(b'asset fixture'); body.write_bytes(b'body fixture')
+            texture = root / 'icon.png'; texture.write_bytes(b'original PNG fixture')
+            control = dict(name='ButtonClose', export=1, sha256='control-source')
+            metadata = dict(asset_sha256=shared.digest(asset), body_sha256=shared.digest(body))
+            catalog = dict(metadata, name='WBP_Test', controls=[control], source={'path': 'archive'}, entry=8)
+            package = dict(metadata, names=['/Texture/Close'])
+            (root / 'ui-catalog/test.json').write_text(json.dumps(catalog), 'utf-8')
+            parsed = root / 'ui-layout-study/test.json'
+            parsed.write_text(json.dumps(package), 'utf-8')
+            images = [dict(asset_path='/Texture/Close', file='icon.png', sha256=shared.digest(texture))]
+            definitions = dict(roles={'close-icon': dict(asset_path='/Texture/Close', catalog_file='test.json', resource='WBP_Test', control='ButtonClose')})
+            decode = lambda a, b: dict(names=['/Texture/Close'], exports=[control])
+            evidence, originals, inputs = shared.skin_roles(root, images, definitions, decode)
+            row = evidence['roles']['close-icon']
+            self.assertEqual(row['source']['name_index'], 0)
+            self.assertEqual(row['source']['control']['sha256'], 'control-source')
+            self.assertFalse(row['runtime_brush_binding_verified'])
+            self.assertEqual(originals, images); self.assertIn('ui-layout-study/test.uasset', inputs)
+            body.write_bytes(b'changed')
+            with self.assertRaises(ValueError): shared.skin_roles(root, images, definitions, decode)
+            body.write_bytes(b'body fixture')
+            package['names'] = ['/Texture/Other']
+            parsed.write_text(json.dumps(package), 'utf-8')
+            with self.assertRaises(ValueError): shared.skin_roles(root, images, definitions, decode)
+
+    def test_skin_roles_reject_ambiguous_texture_paths(self):
+        with tempfile.TemporaryDirectory() as folder:
+            image = dict(asset_path='/Texture/Close')
+            with self.assertRaises(ValueError):
+                shared.skin_roles(Path(folder), [image, image], dict(roles={'close': dict(asset_path='/Texture/Close')}), lambda a, b: {})
+
     def test_shared_button_states_do_not_invent_hover(self):
         rows = shared.button_families({'BTN_A', 'BTN_A_Press', 'BTN_A_On', 'BTN_B'})
         self.assertEqual(len(rows), 2)
@@ -65,12 +101,13 @@ class PrototypeTests(unittest.TestCase):
         self.assertEqual(entries['unresolved:no-path-root-2.json'][0]['unresolved_name'], 'Unknown')
 
     def test_update_lists_removal_and_client_sha_changes(self):
-        old = dict(resources={'old': 'a', 'changed': 'x'}, images={'icon': 'a'}, client={'sha256': 'old'})
-        new = dict(resources={'new': 'b', 'changed': 'y'}, images={'icon': 'a'}, client={'sha256': 'new'})
+        old = dict(resources={'old': 'a', 'changed': 'x'}, images={'icon': 'a'}, client={'sha256': 'old'}, tools={'inspect-ui.py': 'old'})
+        new = dict(resources={'new': 'b', 'changed': 'y'}, images={'icon': 'a'}, client={'sha256': 'new'}, tools={'inspect-ui.py': 'new'})
         changes = builder.compare(old, new)
         self.assertEqual(changes['resources'], dict(added=['new'], removed=['old'], changed=['changed']))
         self.assertEqual(changes['images']['changed'], [])
         self.assertEqual(changes['client']['changed'], ['sha256'])
+        self.assertEqual(changes['tools']['changed'], ['inspect-ui.py'])
 
     def test_task_sync_preserves_checked_and_in_progress_entries(self):
         with tempfile.TemporaryDirectory() as folder:

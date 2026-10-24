@@ -1,8 +1,10 @@
 """Reuse historical extracted originals; never infer live brush bindings."""
 import csv
 import hashlib
+import importlib.util
 import json
 from collections import defaultdict
+from pathlib import Path
 
 
 def digest(path):
@@ -21,6 +23,68 @@ def button_families(names):
     return [dict(normal=n, pressed=n + '_Press' if n + '_Press' in names else None,
                  binding='name_candidate', hover=None, disabled=None)
             for n in sorted(names) if n.startswith('BTN_') and not n.endswith(('_Press', '_On'))]
+
+
+def skin_roles(root, images, definitions, decoder=None):
+    """Prove package membership without claiming an unversioned brush decode."""
+    tool = Path(__file__).with_name('inspect-ui.py')
+    if decoder is None:
+        spec = importlib.util.spec_from_file_location('vampir_skin_package_decoder', tool)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        decoder = module.exports
+    decoder_source = dict(file=tool.name, sha256=digest(tool))
+    by_path = defaultdict(list)
+    for image in images:
+        by_path[image['asset_path']].append(image)
+    inputs, cache, result, originals = {}, {}, {}, []
+    for variable, role in definitions['roles'].items():
+        candidates = by_path[role['asset_path']]
+        if len(candidates) != 1:
+            raise ValueError('Неоднозначная текстура оформления: ' + role['asset_path'])
+        image = candidates[0]
+        file = role['catalog_file']
+        if file not in cache:
+            paths = ['ui-catalog/' + file, 'ui-layout-study/' + file,
+                     'ui-layout-study/' + file.removesuffix('.json') + '.uasset',
+                     'ui-layout-study/' + file.removesuffix('.json') + '.uexp']
+            for relative in paths:
+                inputs[relative] = digest(root / relative)
+            catalog = json.loads((root / paths[0]).read_text('utf-8'))
+            package = json.loads((root / paths[1]).read_text('utf-8'))
+            if (catalog['asset_sha256'] != package['asset_sha256'] or
+                catalog['body_sha256'] != package['body_sha256'] or
+                inputs[paths[2]] != package['asset_sha256'] or inputs[paths[3]] != package['body_sha256']):
+                raise ValueError('Изменился пакет оформления: ' + file)
+            decoded = decoder((root / paths[2]).read_bytes(), (root / paths[3]).read_bytes())
+            if decoded['names'] != package['names']:
+                raise ValueError('Таблица имён отличается от исходного UAsset: ' + file)
+            for control in catalog['controls']:
+                raw = decoded['exports'][control['export'] - 1]
+                if raw['name'] != control['name'] or raw['sha256'] != control['sha256']:
+                    raise ValueError('Экспорт контрола отличается от исходного пакета: ' + file)
+            cache[file] = (catalog, package)
+        catalog, package = cache[file]
+        if catalog['name'] != role['resource']:
+            raise ValueError('Другой ресурс оформления: ' + file)
+        indices = [i for i, name in enumerate(package['names']) if name == role['asset_path']]
+        if len(indices) != 1:
+            raise ValueError('Нет однозначной ссылки на текстуру в пакете: ' + variable)
+        controls = [c for c in catalog['controls'] if c['name'] == role.get('control')]
+        if role.get('control') and len(controls) != 1:
+            raise ValueError('Нет однозначного контрола оформления: ' + variable)
+        if digest(root / image['file']) != image['sha256']:
+            raise ValueError('Изменилась текстура оформления: ' + variable)
+        originals.append(image)
+        result[variable] = dict(role, texture=image, source=dict(
+            catalog_sha256=inputs['ui-catalog/' + file],
+            package_sha256=inputs['ui-layout-study/' + file],
+            asset_sha256=package['asset_sha256'], body_sha256=package['body_sha256'],
+            archive=catalog['source'], entry=catalog['entry'], name_index=indices[0],
+            control=controls[0] if controls else None, decoder=decoder_source),
+            status='package_reference_verified', runtime_brush_binding_verified=False,
+            limitation='Ссылка на текстуру и контрол сохранены раздельно. Brush fields, margins / nine-slice, tint и runtime состояния не декодированы.')
+    return dict(schema=1, decoder=decoder_source, roles=result), originals, inputs
 
 
 def build(root, images):

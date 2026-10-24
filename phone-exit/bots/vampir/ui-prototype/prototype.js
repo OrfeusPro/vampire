@@ -93,7 +93,7 @@
     }
     heading.id = 'window-' + crypto.randomUUID(); dialog.setAttribute('aria-labelledby', heading.id);
     const header = el('header', undefined, 'window-heading');
-    append(header, heading, button('×', () => closeDialog(dialog), 'close'));
+    append(header, heading, button('', () => closeDialog(dialog), 'close'));
     header.lastChild.setAttribute('aria-label', 'Закрыть ' + title);
     if (className === 'item-card') nativeButton(header.lastChild, 'item-close');
     append(dialog, header, body); windows.append(dialog); dialogs.push(dialog);
@@ -509,21 +509,22 @@
       const response = await fetch('shared-elements.json');
       if (!response.ok) throw Error(response.status);
       const shared = await response.json();
+      const skinRoles = await fetchJSON('skin-evidence.json');
       modal('Общие элементы', body => {
         append(body, el('p', 'Исторические оригиналы. Привязки к текущему клиенту и области владения валютами требуют проверки.'), el('p', shared.unknown.join(' ')));
-        const selectKind = select(['Валюты', 'Кнопки', 'Иконки и оформление'], 'Валюты', draw);
+        const selectKind = select(['Валюты', 'Кнопки', 'Иконки и оформление', 'Привязки оформления'], 'Валюты', draw);
         const search = input('search', 'Название или путь'); search.setAttribute('aria-label', 'Поиск общего элемента');
         const list = el('div', undefined, 'registry-list');
         function draw() {
           list.replaceChildren(); const query = search.value.toLowerCase();
-          const rows = selectKind.value === 'Валюты' ? shared.currencies : selectKind.value === 'Кнопки' ? shared.buttons : shared.textures;
+          const rows = selectKind.value === 'Валюты' ? shared.currencies : selectKind.value === 'Кнопки' ? shared.buttons : selectKind.value === 'Привязки оформления' ? Object.entries(skinRoles.roles).map(([id, row]) => ({ id, ...row })) : shared.textures;
           const matches = rows.filter(row => JSON.stringify(row).toLowerCase().includes(query));
           list.append(el('p', 'Найдено: ' + matches.length + ' · показано до 60. Уточните поиск.'));
           matches.slice(0, 60).forEach(row => {
             const card = el('div', undefined, 'resource-control');
             if (row.value !== undefined) append(card, image(row.texture_candidates[0]), el('strong', row.id + ' · ' + (row.symbol || 'неизвестно') + ' · ' + (row.name_en || '')), el('p', 'OwnerType: ' + row.data.OwnerType + ' · MaxValue: ' + row.data.MaxValue));
             else if (row.normal) append(card, image(row.normal), row.pressed ? image(row.pressed) : null, el('p', row.normal + ' / ' + (row.pressed || 'нажатие неизвестно') + ' · hover / disabled неизвестны'));
-            else append(card, image(row.asset_path), el('p', row.asset_path));
+            else append(card, image(row.asset_path), el('p', row.category ? row.id + ' · ' + row.category : row.asset_path), row.category ? el('small', row.resource + ' · ссылка в пакете подтверждена; brush binding не проверен') : null);
             append(card, button('Источник и SHA256', () => info('Происхождение элемента', JSON.stringify(row, null, 2)))); list.append(card);
           });
         }
@@ -663,11 +664,12 @@
   document.getElementById('inspector').hidden = true;
   addEventListener('pagehide', () => { pageActive = false; releaseProfile(); });
   addEventListener('pageshow', event => { pageActive = true; if (event.persisted) activateProfile(); });
-  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls, skills]) => {
+  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json', 'skin-tokens.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls, skills, skinTokens]) => {
     skillSources = skills; textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
     if (manifest.state_schema !== M.SCHEMA) throw Error('Версия модели не соответствует manifest этой сборки.');
     document.title = 'Vampir · ' + profile;
     for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256'], ['button-press', 'BTN_ConfirmRed256_Press'], ['normal-bg', 'BTN_ConfirmBlack256'], ['normal-press', 'BTN_ConfirmBlack256_Press']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');
+    for (const [key, token] of Object.entries(skinTokens)) document.documentElement.style.setProperty('--' + key, 'url("' + token.url + '")');
     document.getElementById('inspector').onclick = () => openInspector();
     geometryObserver.observe(app); resourcesReady = true;
     return activateProfile();

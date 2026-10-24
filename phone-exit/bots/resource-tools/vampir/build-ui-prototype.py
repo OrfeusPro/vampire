@@ -46,7 +46,7 @@ def catalog_entries(index):
 def compare(old, new):
     """Content changes only; paths and timestamps alone are not compatibility."""
     changes = {}
-    for group in ('resources', 'images', 'inputs', 'implementation', 'client'):
+    for group in ('resources', 'images', 'inputs', 'implementation', 'client', 'tools'):
         left, right = old.get(group, {}), new.get(group, {})
         changes[group] = {
             'added': sorted(right.keys() - left.keys()),
@@ -105,6 +105,12 @@ def build(root, baseline=None):
     image_path = root / 'archive-image-latest.json'
     images = read(image_path)
     shared, originals = shared_ui_library.build(root, images)
+    skin_evidence, skin_images, skin_inputs = shared_ui_library.skin_roles(root, images, read(SOURCE / 'skin-roles.json'))
+    known_shared = {row['asset_path'] for row in shared['textures']}
+    for row in skin_images:
+        if row['asset_path'] not in known_shared:
+            shared['textures'].append(dict(row, id='texture:' + row['asset_path'], status='historical_extraction'))
+            known_shared.add(row['asset_path'])
     skill_evidence, skill_images, skill_inputs = skill_sources(root)
     # All texture membership is recorded as historical extraction, not active brushes.
     selected = {}
@@ -130,6 +136,8 @@ def build(root, baseline=None):
         else:
             selected.pop(name, None)
     for row in skill_images:
+        selected[row['asset_path']] = row
+    for row in skin_images:
         selected[row['asset_path']] = row
     # Item names/icons remain source data. Quantities, prices, balances are demo.
     items = read(root / 'maps/loot/items.json')
@@ -175,6 +183,7 @@ def build(root, baseline=None):
     source_inputs = {p.name: sha(p) for p in sorted(SOURCE.iterdir()) if p.is_file()}
     inputs.update(shared['inputs'])
     inputs.update(skill_inputs)
+    inputs.update(skin_inputs)
     source_inputs['shared_ui_library.py'] = sha(HERE / 'shared_ui_library.py')
     schema_match = re.search(r'\bconst SCHEMA = (\d+),', (SOURCE / 'model.js').read_text('utf-8'))
     if not schema_match:
@@ -193,7 +202,8 @@ def build(root, baseline=None):
     data_id = hashlib.sha256(json.dumps(dict(resources=resources, images=image_hashes,
         inputs=inputs, schema=1), sort_keys=True).encode()).hexdigest()
     fingerprint = dict(resources=resources, images=image_hashes, inputs=inputs,
-                       implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)))
+                       implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)),
+                       tools={'inspect-ui.py': skin_evidence['decoder']['sha256']})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -232,6 +242,10 @@ def build(root, baseline=None):
         for row in shared['textures']:
             row['url'] = texture_map[row['asset_path']]['url']
         write(temporary / 'shared-elements.json', shared)
+        write(temporary / 'skin-evidence.json', skin_evidence)
+        write(temporary / 'skin-tokens.json', {key: dict(url=texture_map[role['asset_path']]['url'],
+            sha256=role['texture']['sha256'], asset_path=role['asset_path'],
+            status=role['status'], runtime_brush_binding_verified=False) for key, role in skin_evidence['roles'].items()})
         write(temporary / 'skills-evidence.json', skill_evidence)
         write(temporary / 'skills-index.json', {key: dict(icon=row['icon'], class_id=row['detail']['record']['ClassType'], names=row['detail']['display_names']) for key, row in skill_evidence.items()})
         write(temporary / 'items.json', demo_items)
