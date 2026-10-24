@@ -13,6 +13,7 @@
       "dependencies": [
         "phone-exit/bots/resource-tools/vampir/replay-nktileview-refresh.py",
         "phone-exit/bots/resource-tools/vampir/replay-nktileview-packing.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nktileview-scroll-style.py",
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
         "phone-exit/bots/resource-tools/vampir/inspect-nktileview-registration.py",
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",

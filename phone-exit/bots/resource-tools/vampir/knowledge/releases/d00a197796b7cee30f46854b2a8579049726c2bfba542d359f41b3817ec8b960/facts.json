@@ -5501,6 +5501,42 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Producer and named property binding for owner blocks430/440/450 and entry factory."
+    },
+    {
+      "addresses": [
+        "0x144a8b800"
+      ],
+      "checks": [
+        {
+          "cache_key": "c7465f9fb7546925a0b7bcb2303da0b074432c2f5485ea37532ccd781d903f73",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\74d565e5c26136e7b50e5f10068654a61e5703afba12c34e96362f10e3398823\\manifest.json",
+          "sha256": "74d565e5c26136e7b50e5f10068654a61e5703afba12c34e96362f10e3398823",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "32 native preparation-function cases verify conditional fallback: both nonnull pointers preserve owner; otherwise gate-controlled exact scroll texture keys, float4 ones and float32 dimension pairs 9/8 and 8/9 are observed. Resolver/loader/setter/scheduling are fixtures; no writer of owner430/440/450 found.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\NKTILEVIEW-SCROLL-STYLE-11316.md",
+          "sha256": "99d9657bb0f7e07063355cdff86072c4f2d2bdb411b7a7aefc6369bb75b4116b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-2518dbc2add4\\details.json",
+          "sha256": "ace857c9976bdc65e44e5c1a51e18804b6c4826267d360c0fe946433d02bd658"
+        }
+      ],
+      "id": "474e2d0b0f2d174c939b4d82c71fbb3c2418893928a3cb69ec17f30444c661f4",
+      "limits": [
+        "Only 144a8b800 executes; external gate, resolver, loading, resource setter, free and scheduling are fixtures.",
+        "No successful load or brush/render proof; historical PNG suffix candidates checked separately by CLI.",
+        "Only low flag byte is initialized zero; color space, DPI, native field names and global defaults unknown."
+      ],
+      "method": "bounded_native",
+      "next_check": "Trace exact resolver/resource setter and name/units before applying appearance; do not infer global defaults from one fallback branch.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Resolver full path/active variant, resource setter/Brush schema, gate identity, property metadata and producer for owner blocks430/440/450."
     }
   ],
   "schema": 1,
