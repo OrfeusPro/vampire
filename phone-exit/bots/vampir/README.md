@@ -1,5 +1,9 @@
 # Vampir — главный указатель разработки
 
+Post-state wrapper/tail callee прошли 44 native сценария; отказ Ghidra устранён
+явной моделью E9 без расширения unwind. В общей цепочке это пока capture.
+[Доказательства и следующие связи](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-POST-STATE-11316.md).
+
 Reader → handler LoginResult теперь работают на одном packet без host перезаписи:
 44 общих сценария, включая Unicode и string boundaries; 131 отказ чтения не
 вызывает handler. Далее — реальные сервисы и post-state. [Проверки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md).

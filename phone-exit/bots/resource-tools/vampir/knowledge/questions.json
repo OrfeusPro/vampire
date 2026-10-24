@@ -545,11 +545,11 @@
       "id": "release-login-result-reader",
       "status": "bounded_answer",
       "question": "Как текущие constructor/reader игрового ответа ID 4 читают поля и отказывают на коротком вводе?",
-      "known": "Current ID 4 constructor/reader/table и registration связаны с handler 14679aec0 / gate 1467cd7b0. Native concrete buffer, numeric/raw archive, FString/std-string/UTF-8, nested/packet reader и handler/gate исполняются на одном packet: 22 explicit roots, 9 готовых exports. Проверены 44 общих сценария и 131 reader failure без вызова handler; сохранены 160 reader cases, 332 коротких тела, 25 field failures, 72 constructor calls, storage guards/ABI и строгая Python policy. Services/getters/storage и post-state остаются fixtures.",
-      "unknown": "Реальные services/getters/storage, dispatch и post-state 146755540 (decompiler block вне unwind). Остальные result gate branches, lifecycle сокета и live session не доказаны; malformed UTF-8 ограничен прежним zero-stack scope.",
-      "next_action": "Для post-state 146755540 проверить хвостовой JMP 146755599 -> 144a2d8c0 как кандидат объяснения out-of-unwind block; готовый failed run-aaeae96c7f8b сохранить. Не переносить роль по псевдокоду. Затем реальные getter/service/dispatch связи и virtual+28 -> CharacterListRead.",
+      "known": "Current ID 4 constructor/reader/table и registration связаны с handler 14679aec0 / gate 1467cd7b0. Native concrete buffer, numeric/raw archive, FString/std-string/UTF-8, nested/packet reader и handler/gate исполняются на одном packet: 22 explicit roots, 9 готовых exports. Проверены 44 общих сценария и 131 reader failure без вызова handler; сохранены 160 reader cases, 332 коротких тела, 25 field failures, 72 constructor calls, storage guards/ABI и строгая Python policy. Services/getters/storage и post-state остаются fixtures. Post-state wrapper 146755540 и tail target 144a2d8c0 отдельно исполнены в 44 сценариях с synthetic service/class/object; actual getter 144a27d00, virtual order, native +250 zero store и tail ABI проверены. Out-of-unwind export решён явной Ghidra E9 model без изменения EXE/границ. В общей reader/handler цепочке post-state пока capture.",
+      "unknown": "Интеграция actual post-state в handler, реальные services/getters/storage и dispatcher. Объект getter 1464af340 и virtual+28 ещё не связаны с CharacterListRead. Остальные gate codes, lifecycle сокета и live session не доказаны.",
+      "next_action": "Использовать готовые run-41aca37e5552 / run-c0c472fc6e1c, включить post-state в handler; отдельно проверить getter 1464af340 и его объект/vtable+28 до доказанного CharacterListRead. Не трактовать raw RAX wrapper как Boolean success.",
       "decision_rule": "Не переносить адреса или факты старой сборки автоматически. Body reading не подтверждает handler, персонажа или сессию.",
-      "do_not_repeat": "Девять ready exports перечислены в login-result-body-handler-11316.json: повторный collect для них не нужен. Owner 1467b4c60 превышает budget, registration проверена окном. Post-state run-aaeae96c7f8b отклонён по unwind: повтор без разбора причины не выполнять.",
+      "do_not_repeat": "Все reader/handler exports из login-result-body-handler-11316.json и post-state run-41aca37e5552 / run-c0c472fc6e1c готовы. Старые failed runs run-aaeae96c7f8b / run-5f80b4f65c04 сохранены; не повторять их. E9 model уже устранила поглощение callee; новые exports нужны только для следующих явных связей или изменившихся inputs.",
       "addresses": [],
       "evidence": [
         "evidence/updates/HEADLESS-LOGIN-RESULT-11316.md",
@@ -558,7 +558,8 @@
         "evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md",
         "evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md",
         "evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md",
-        "evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md"
+        "evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md",
+        "evidence/updates/HEADLESS-LOGIN-POST-STATE-11316.md"
       ]
     }
   ]

@@ -442,7 +442,8 @@
         "native-login-result-buffer-context",
         "login-result-registration",
         "native-login-result-handler-context",
-        "native-login-result-body-handler-context"
+        "native-login-result-body-handler-context",
+        "native-login-post-state-context"
       ],
       "recipes": [
         {
@@ -494,7 +495,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Native reader/buffer/FString/UTF-8 и handler/gate работают на одном packet в общей памяти; 131 отказ не вызывает handler. Далее реальные services/getters/storage, dispatch и post-state 146755540 с rejected out-of-unwind export.",
+      "next_check": "Post-state wrapper/tail target отдельно проверены в 44 сценариях; out-of-unwind export исправлен явной моделью E9. Body/handler пока используют post-state capture. Далее интеграция и getter 1464af340 / vtable+28 -> CharacterListRead, реальные services/getters/dispatch.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -541,7 +542,8 @@
         "native-login-result-buffer-current",
         "login-result-registration-current",
         "native-login-result-handler-current",
-        "native-login-result-body-handler-current"
+        "native-login-result-body-handler-current",
+        "native-login-post-state-current"
       ],
       "writer_check": {
         "object_size": 320,

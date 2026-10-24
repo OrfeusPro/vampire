@@ -99,6 +99,28 @@ public class InspectVampirSdkProfile extends GhidraScript {
         for (Function owner : owners.values()) {
             println("Inspecting SDK literal owner " + owner.getEntryPoint());
             JsonObject row = new JsonObject(); row.addProperty("address", "0x" + owner.getEntryPoint());
+            JsonArray tailModels = new JsonArray();
+            String ownerKey = "0x" + owner.getEntryPoint();
+            if (source.has("requested_tail_calls") && source.getAsJsonObject("requested_tail_calls").has(ownerKey)) {
+                for (JsonElement item : source.getAsJsonObject("requested_tail_calls").getAsJsonArray(ownerKey)) {
+                    JsonObject tail = item.getAsJsonObject();
+                    Address at = currentProgram.getAddressFactory().getAddress(tail.get("address").getAsString());
+                    Address target = currentProgram.getAddressFactory().getAddress(tail.get("target").getAsString());
+                    Instruction ins = currentProgram.getListing().getInstructionAt(at);
+                    byte[] expected = HexFormat.of().parseHex(tail.get("bytes").getAsString());
+                    Function callee = currentProgram.getFunctionManager().getFunctionAt(target);
+                    if (ins == null || !ins.getMnemonicString().equalsIgnoreCase("JMP") || expected.length != 5
+                        || expected[0] != (byte)0xe9 || !Arrays.equals(ins.getBytes(), expected)
+                        || !owner.getBody().contains(at) || callee == null || target.equals(owner.getEntryPoint()))
+                        throw new IllegalStateException("Unverified explicit tail-call model at " + at);
+                    int displacement = java.nio.ByteBuffer.wrap(expected, 1, 4).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+                    if (!at.add(5L + displacement).equals(target)) throw new IllegalStateException("Tail-call target differs");
+                    // Analysis metadata only. The native E9 bytes and PE ranges are unchanged.
+                    ins.setFlowOverride(FlowOverride.CALL_RETURN);
+                    tailModels.add(tail.deepCopy());
+                }
+            }
+            row.add("tail_call_models", tailModels);
             // The result-code mapper reached from a selected popup is about 42 KiB.
             // Keep a finite budget for these explicitly referenced functions.
             if (owner.getBody().getNumAddresses() > (args.length >= 4 ? 65536 : 20000)) {

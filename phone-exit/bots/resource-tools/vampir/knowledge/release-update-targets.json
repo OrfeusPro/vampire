@@ -2197,6 +2197,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-post-state-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-post-state-context.py"
+      ],
+      "rule": "Проверить source-bound wrapper E9 tail link на отдельный explicit unwind root, модель CALL_RETURN должна совпасть с фактическим E9. Replay обеих функций на synthetic class/object/services; проверить flags/ABI/virtual order/native zero store. Не объявлять это CharacterListRead.",
+      "automation": {
+        "discovery": "reviewed_handler_call_and_explicit_tail_target",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x146755540",
+                "scope": "Whole post-state wrapper/tail callee on synthetic class/services; backend and virtual captures; no handler integration or character request proof.",
+                "required_checks": [
+                  "native-login-post-state-context"
+                ]
+              },
+              {
+                "address": "0x144a2d8c0",
+                "scope": "Whole post-state wrapper/tail callee on synthetic class/services; backend and virtual captures; no handler integration or character request proof.",
+                "required_checks": [
+                  "native-login-post-state-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-post-state-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-POST-STATE-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

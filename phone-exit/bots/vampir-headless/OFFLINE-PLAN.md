@@ -58,6 +58,8 @@
   [Stores, ошибки и очередь post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md).
 - Reader/FString/UTF-8 и handler/gate работают на одном packet: 44 общих случая
   и 131 отказ без вызова handler. [Границы и следующие связи](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md).
+- Post-state wrapper/tail callee отдельно прошли 44 native сценария; source E9
+  model решила отказ export. [Границы и интеграция далее](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-POST-STATE-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
   и прочие зависимости Login, интеграция writer/archive, реальные storage primitives
   и handler/dispatch результата. Только после этого готовить

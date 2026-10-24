@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "functions": {
+    "wrapper": "0x146755540",
+    "target": "0x144a2d8c0"
+  },
+  "exports": {
+    "run-41aca37e5552": "82c37e525b3ab1c44b74fe3f9edb85b518c53b479c89d8ac9ab849bdc1a1559d",
+    "run-c0c472fc6e1c": "ade156d520c3be3d85d0d5113d09103b3a70791bf860228ca4b390091825e4f2"
+  },
+  "leaves": {
+    "0x144a27d00": "488b05418fb606c3"
+  },
+  "service_getter": "0x144a27d00",
+  "globals": {
+    "service": "0x14b590c48",
+    "count": "0x14b3dec44",
+    "chunks": "0x14b3dec30"
+  },
+  "fixtures": {
+    "class": "0x1467187c0",
+    "lookup": "0x144a26c40",
+    "occupied": "0x1422cb940",
+    "assign": "0x1417f4140",
+    "mode": "0x144a7ab90",
+    "predicate": "0x1435b93e0",
+    "fallback": "0x1435b5060",
+    "hide": "0x144a772a0",
+    "list_match": "0x144a54a10",
+    "settle": "0x144a32840",
+    "eligible": "0x1417db1b0",
+    "mark": "0x1416cce30"
+  },
+  "call_sites": {
+    "wrapper": {
+      "0x146755546": "0x144a27d00",
+      "0x14675554e": "0x1467187c0",
+      "0x146755559": "0x144a26c40",
+      "0x146755566": "0x1467187c0",
+      "0x146755586": "0x144a27d00"
+    },
+    "target": {
+      "0x144a2d90b": "0x1422cb940",
+      "0x144a2d91e": "0x1417f4140",
+      "0x144a2d926": "0x144a7ab90",
+      "0x144a2d932": "0x1435b93e0",
+      "0x144a2d93e": "0x1435b5060",
+      "0x144a2d95a": "0x144a772a0",
+      "0x144a2d96e": "0x144a54a10",
+      "0x144a2d97d": "qword ptr [rax + 0x2e8]",
+      "0x144a2d989": "qword ptr [rax + 0x540]",
+      "0x144a2d9a8": "0x144a32840",
+      "0x144a2d9b0": "0x1417db1b0",
+      "0x144a2d9c1": "qword ptr [rax + 0x4c8]",
+      "0x144a2d9cd": "qword ptr [rax + 0x540]",
+      "0x144a2d9d9": "qword ptr [rax + 0x2e8]",
+      "0x144a2da0b": "0x1416cce30",
+      "0x144a2da1f": "0x1416cce30"
+    }
+  },
+  "tail_calls": [
+    {
+      "address": "0x146755599",
+      "target": "0x144a2d8c0",
+      "bytes": "e922832dfe"
+    }
+  ]
+}

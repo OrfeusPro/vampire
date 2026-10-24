@@ -3056,6 +3056,96 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные services/getters/storage/dispatch, post-state 146755540 с rejected out-of-unwind export, остальные result codes и live session."
+    },
+    {
+      "addresses": [
+        "0x144a2d8c0",
+        "0x146755540"
+      ],
+      "checks": [
+        {
+          "cache_key": "d16aa918b660431186416bb3036e8972b01b3982f76943a7420db59576943901",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\63f7327ad3ce5a545dbde3fdcf784b0c6f54a19ed8fe6df821ea930cf356b107\\manifest.json",
+          "sha256": "63f7327ad3ce5a545dbde3fdcf784b0c6f54a19ed8fe6df821ea930cf356b107",
+          "state": "passed"
+        },
+        {
+          "cache_key": "62e3e93b65a2079b9463755eca1e957f6b9c91e09c86b21f5661925ff2c8dce5",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4a72a8d550a4e623f9a9f1609d2e917653a712b9207388e85ef5835bc19b3cfd\\manifest.json",
+          "sha256": "4a72a8d550a4e623f9a9f1609d2e917653a712b9207388e85ef5835bc19b3cfd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "65b9e0638323f1a21958d4c2bf7d7f59171e5d50bda7be6bf71b338716206baa",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\33c0dd7ddbac2fb08dad9f95089571d0a4e0916b983f389d8fdc33d809b09198\\manifest.json",
+          "sha256": "33c0dd7ddbac2fb08dad9f95089571d0a4e0916b983f389d8fdc33d809b09198",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5cbca056d188ecbbbdd6ecb6fc829444248c899334924b70cbfc8dd2f3640029",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b2531f885e0377407501692aed8070fe844a19414c82c9feed05c06a714f1839\\manifest.json",
+          "sha256": "b2531f885e0377407501692aed8070fe844a19414c82c9feed05c06a714f1839",
+          "state": "passed"
+        },
+        {
+          "cache_key": "86571bc9b9af8e496a7064ebd40b99715a66ada0796d82f0cb0c7163fdbd1d48",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b8891cd0c2fdab279f65802276b133e974a97e1d224caa68f565f4bd27801316\\manifest.json",
+          "sha256": "b8891cd0c2fdab279f65802276b133e974a97e1d224caa68f565f4bd27801316",
+          "state": "passed"
+        },
+        {
+          "cache_key": "82fa5418f5f917edf095eabaf6ab30fe2b9284589b9d77f42fe9703b34f27c6b",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\18d4eaf8fb53b929e01b9659068384cdb476f4b33c734426903da44366fd78cb\\manifest.json",
+          "sha256": "18d4eaf8fb53b929e01b9659068384cdb476f4b33c734426903da44366fd78cb",
+          "state": "passed"
+        },
+        {
+          "cache_key": "66cc541c670e9fe01a88a7710fe3204ff17c714dc5692b63343438268b03cd41",
+          "id": "native-login-result-body-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b6b09b97d4dffeb00c366b805b4f76bc099fa73d0ddc2f6c955085ceb5a6f548\\manifest.json",
+          "sha256": "b6b09b97d4dffeb00c366b805b4f76bc099fa73d0ddc2f6c955085ceb5a6f548",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4d64fe04013d4fffd3908713cc780acec3271df0f657f37b5ff03c37cb1af62c",
+          "id": "native-login-post-state-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\730ee698cbe629072380cf93561816dcf7a65550d0ff30f57333eaa8b189db9d\\manifest.json",
+          "sha256": "730ee698cbe629072380cf93561816dcf7a65550d0ff30f57333eaa8b189db9d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current post-state wrapper/tail callee исполнены в 44 сценариях с actual singleton getter и synthetic service/class/object: class gates, flags/predicates, virtual order, native zero store +250, chunks/index backend arguments, guards и tail ABI. Source E9 model позволила экспортировать wrapper в его PE unwind ranges; handler integration ещё не выполнена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-post-state-11316.json",
+          "sha256": "c6bfd9de49a07d09bca107e659cbe6a2e2e530ed6313c2a083cb9121b0a24e28"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-POST-STATE-11316.md",
+          "sha256": "a1546b58d30aae863e470b5f13be89ca8581ecd9d97cff0b77c90f47ab0378ed"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-POST-STATE-11316.json",
+          "sha256": "2aac97d4281fc84b75e16b6b642f80b7d574d6252924d490b532a4303c5d826f"
+        }
+      ],
+      "id": "79f26b31ffc3140f2a9b4930807d2bfbb4721841169765eb0180d45e5d5cda09",
+      "limits": [
+        "Synthetic objects/class arrays and backend/virtual captures; real services not executed.",
+        "Wrapper raw RAX is not Boolean success; target AL and side effects checked separately.",
+        "Post-state remains capture in whole reader/handler; no CharacterListRead/dispatch/session/runtime promotion proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовые run-41aca37e5552 / run-c0c472fc6e1c, включить post-state в handler; отдельно проверить getter 1464af340 и его объект/vtable+28 до доказанного CharacterListRead. Не трактовать raw RAX wrapper как Boolean success.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Интеграция actual post-state в handler, реальные services/getters/storage и dispatcher. Объект getter 1464af340 и virtual+28 ещё не связаны с CharacterListRead. Остальные gate codes, lifecycle сокета и live session не доказаны."
     }
   ],
   "schema": 1,
