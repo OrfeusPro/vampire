@@ -7,9 +7,19 @@ import unittest
 HERE = Path(__file__).parent / 'resource-tools/vampir'
 spec = importlib.util.spec_from_file_location('tile_refresh_replay', HERE / 'replay-nktileview-refresh.py')
 replay = importlib.util.module_from_spec(spec); spec.loader.exec_module(replay)
+spec = importlib.util.spec_from_file_location('tile_packing_replay', HERE / 'replay-nktileview-packing.py')
+packing = importlib.util.module_from_spec(spec); spec.loader.exec_module(packing)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_packing_prefix_and_cached_exits(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = packing.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address='0x144626640')]))
+        self.assertEqual(len(result['cases']), 128)
+        self.assertEqual(sum(c['complete_cached_exit'] for c in result['cases']), 32)
+        self.assertTrue(all(c['entered_recalculation'] for c in result['cases'] if c['force_flag']))
+
     def test_native_wrapper_and_leaf_preserve_payload_and_call_order(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         request = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema',

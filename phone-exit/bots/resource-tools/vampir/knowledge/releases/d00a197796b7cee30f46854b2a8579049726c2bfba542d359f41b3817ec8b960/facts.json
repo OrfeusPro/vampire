@@ -5391,6 +5391,42 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Producer/type of source block, reflected property mapping, helper behavior/coalescing, reentrancy, caller and effect data binding."
+    },
+    {
+      "addresses": [
+        "0x144626640"
+      ],
+      "checks": [
+        {
+          "cache_key": "f064883b16b46e4d2424a52516663e24b6eb4b68c63881a7b933ffbab6b20769",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8cc462bb26cefae7268dbf13c9116f6a5eb08823daf4f289cc20bc60e1fe0224\\manifest.json",
+          "sha256": "8cc462bb26cefae7268dbf13c9116f6a5eb08823daf4f289cc20bc60e1fe0224",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Copied block participates in native packing arithmetic as two doubles converted to float32. 128 positive-integer fixtures validate axis selection and force/cache gates: 32 complete cached exits, 96 prefixes stopped before item-count provider. Force1 bypasses same-count gate; cache override reads object+11d8.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\NKTILEVIEW-PACKING-11316.md",
+          "sha256": "b2d81d9488f91da1a3c6d00d218b06f27a3f94581742bf43cb8ac6a474bbd41d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b9b6aa537efc\\details.json",
+          "sha256": "a1690276c109b8cf9c0106e5ee787ce7d5ead84c3803d6e2e8d2f8dcf9a292bd"
+        }
+      ],
+      "id": "34b0869b88e323b6edb337128917ba237d9f7a7ee8ce19ac8f321f712d202b79",
+      "limits": [
+        "fmodf and stack-cookie checks are fixtures; recalculation is stopped before provider 14462f090.",
+        "No general float32/NaN/Inf/negative/zero-denominator proof, no downstream layout or engine scheduling.",
+        "Field type reads do not establish source property names, logical units, DPI or old cooked compatibility."
+      ],
+      "method": "bounded_native",
+      "next_check": "Trace producer and reflection binding for owner+430 and named field units before renderer application; complete downstream layout separately.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Producer/property binding of copied block, field names and units, downstream layout and effect entries, update scheduling/reentrancy."
     }
   ],
   "schema": 1,
