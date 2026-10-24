@@ -44,6 +44,7 @@ Windows / Android parity и перенос старых mappings требуют 
 - [Актуальный источник CDN: ограниченные проверки, 19 октября 2026](../evidence/updates/HEADLESS-CDN-SOURCE-PROBE.md)
 - [CDN URI parser → GET request line](../evidence/updates/HEADLESS-CDN-URI.md)
 - [CDN URL: завершающая сборка строки](../evidence/updates/HEADLESS-CDN-URL.md)
+- [CharacterListReadResult 1.13.16: внешний reader и счётчик](../evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md)
 - [Строка версии пакетов 1.13.16](../evidence/updates/HEADLESS-COMPILED-TAG-11316.md)
 - [NetworkSetting: callback вызывается при регистрации](../evidence/updates/HEADLESS-CONFIG-STARTUP.md)
 - [RequestGMC2: аргументы GET и условия заголовков](../evidence/updates/HEADLESS-GMC2-HEADERS.md)

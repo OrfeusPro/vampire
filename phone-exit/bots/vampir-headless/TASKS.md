@@ -5,6 +5,12 @@ Netmarble/SDK launcher sign-in прошёл; игровой профиль ос�
 источника, до Game Login и списка. [Проверка и следующий шаг](LIVE-HK-CHECK.md).
 Завершить профиль текущей сборки; затем список и Carnage только при пустом списке.
 
+Внешний reader ответа ID 102 прошёл 24 полных случая пустого списка,
+38 коротких вводов и 7 отказов. Ненулевой счётчик требует отдельного чтения
+записей персонажей. Далее — CharacterRecord, вложенные структуры, целый список
+и обработчик ответа; профиль не активирован.
+[Доказательства и следующий участок](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md).
+
 Current WaitingEndNotify ID 27 → request ID 101 проверен в 24 native сценариях:
 handler, policy gates, request/quick-select и packet constructors. Следом —
 reader/handler ответа списка; сеть и dispatch ещё не проверены.

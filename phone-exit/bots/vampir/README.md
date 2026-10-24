@@ -5,9 +5,13 @@
 не запрашивались и не создавались. Приоритет — закончить игровой профиль и
 повторить вход/создание. [Результат проверки](../vampir-headless/LIVE-HK-CHECK.md).
 
-Current final virtual +28 после LoginResult подтверждён как reset: constructor/
-getter/final table и 8 native сценариев перенесены. Инициатор списка искать
-в current WaitingEndNotify по готовому исследованию старой версии. [Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md).
+Текущий путь WaitingEndNotify → запрос ID 101 подтверждён в 24 native сценариях.
+В ответе ID 102 проверены внешние поля и чтение счётчика: полный ответ с пустым
+списком требует 38 байт. Чтение записей персонажей ещё не перенесено.
+Далее — CharacterRecord, вложенные структуры и обработчик ответа.
+[Инициатор](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-WAITING-END-11316.md),
+[ответ и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md).
+Профиль текущей сборки ещё не активирован; живое создание не выполнено.
 
 Post-state wrapper/tail callee прошли 44 native сценария; отказ Ghidra устранён
 явной моделью E9 без расширения unwind. В общей цепочке это пока capture.

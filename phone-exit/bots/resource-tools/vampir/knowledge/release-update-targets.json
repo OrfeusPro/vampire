@@ -2378,6 +2378,61 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-character-list-envelope-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-character-list-envelope-context.py"
+      ],
+      "rule": "Проверить ID102 constructor/table, outer reader/vector callbacks и archive callees. Empty body требует все 38 байт; nonempty нельзя заменять пустым списком. Records/handler проверять отдельно.",
+      "automation": {
+        "discovery": "reviewed_packet_table_and_vector_callbacks",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456dbc30",
+                "scope": "Empty envelope/vector native IO; records stop at explicit boundary, no live list or profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              },
+              {
+                "address": "0x144aac530",
+                "scope": "Empty envelope/vector native IO; records stop at explicit boundary, no live list or profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              },
+              {
+                "address": "0x1456e6a20",
+                "scope": "Empty envelope/vector native IO; records stop at explicit boundary, no live list or profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              },
+              {
+                "address": "0x1456dcdc0",
+                "scope": "Empty envelope/vector native IO; records stop at explicit boundary, no live list or profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-list-envelope-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

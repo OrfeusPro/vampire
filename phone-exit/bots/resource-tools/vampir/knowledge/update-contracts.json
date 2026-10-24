@@ -675,7 +675,8 @@
       ],
       "checks": [
         "release-character-selection-probe",
-        "native-waiting-end-context"
+        "native-waiting-end-context",
+        "native-character-list-envelope-context"
       ],
       "recipes": [
         {
@@ -693,6 +694,22 @@
         {
           "key": "quick_select",
           "method": "reviewed"
+        },
+        {
+          "key": "result-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-vector",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-resize",
+          "method": "reviewed"
+        },
+        {
+          "key": "record-thunk",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -700,7 +717,11 @@
           "handler": "0x14679d2d0",
           "predicate": "0x145c9ad90",
           "request": "0x145dadc40",
-          "quick_select": "0x145d5c120"
+          "quick_select": "0x145d5c120",
+          "result-reader": "0x1456dbc30",
+          "result-vector": "0x144aac530",
+          "result-resize": "0x1456e6a20",
+          "record-thunk": "0x1456dcdc0"
         }
       },
       "resources": [],
@@ -709,9 +730,10 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Current ID 27 -> ID 101 initiator подтверждён в 24 native сценариях. Проверить reader/handler ответа списка и соответствие runtime decoder; время события после Login и network dispatch не доказаны.",
+      "next_check": "Current envelope/vector подтверждён: полный empty body 38 байт, короткие тела/отказы отклоняются, nonempty остаётся explicit record boundary. Перенести CharacterRecord/nested readers и whole list/handler; runtime profile остаётся partial.",
       "targets": [
-        "native-waiting-end-current"
+        "native-waiting-end-current",
+        "native-character-list-envelope-current"
       ]
     },
     {

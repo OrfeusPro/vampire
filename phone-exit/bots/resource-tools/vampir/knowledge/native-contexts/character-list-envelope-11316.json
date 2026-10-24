@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "functions": {
+    "reader": "0x1456dbc30",
+    "vector": "0x144aac530",
+    "resize": "0x1456e6a20",
+    "record_thunk": "0x1456dcdc0",
+    "archive_constructor": "0x144aacb40",
+    "buffer_constructor": "0x144aac130",
+    "u16": "0x144aac250",
+    "u32": "0x144aac2a0",
+    "u64": "0x144aac4a0",
+    "raw": "0x144aac5c0"
+  },
+  "bindings": {
+    "packet_constructor": "0x1456d7220",
+    "packet_table": "0x149928a48",
+    "id_getter": "0x1456e4c10",
+    "archive_table": "0x149670880",
+    "vector_table": "0x149928ed0"
+  },
+  "leaves": {
+    "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad1a0": "895110c3",
+    "0x144aac240": "488b0141b80100000048ffa090000000",
+    "0x1456d7220": "488d052118250448890133c0488941104889411848894120488941288941304889413848894140488bc1c3",
+    "0x1456e4c10": "b866000000c3"
+  },
+  "blocks": [
+    {
+      "address": "0x149928a48",
+      "bytes": "009d6d4501000000b03a404101000000c0806e4501000000b03a40410100000030bc6d4501000000104c6e4501000000b03a404101000000e05d6e4501000000f01b6e450100000020e1444101000000",
+      "sha256": "2c3a226e874fbc54b40d84939f6ea1186d3b3905686b410cb555fc74ce890c42"
+    },
+    {
+      "address": "0x149928a98",
+      "bytes": "506b744368617261637465724c69737452656164526573756c74",
+      "sha256": "7bb4cd5bdc318bc530dc40c48097861bceaada20f748f812956600faaaa6e0df"
+    },
+    {
+      "address": "0x149928ed0",
+      "bytes": "50aab04101000000206a6e4501000000c0cd6d4501000000",
+      "sha256": "0fe072e8a65df1ec0becb2fa71f71899a1c3ccd37260942b6834533dfe51d19a"
+    },
+    {
+      "address": "0x149670880",
+      "bytes": "90cbaa440100000030c6aa4401000000a0c6aa440100000030c5aa440100000070c4aa440100000070c4aa440100000090c3aa440100000040c3aa4401000000f0c2aa4401000000a0c4aa4401000000a0c4aa4401000000a0c2aa4401000000a0c2aa440100000050c2aa440100000050c2aa440100000040c2aa440100000040c2aa4401000000f0c4aa4401000000c0c5aa4401000000",
+      "sha256": "a9bbd1fc7a44aa8e57afea35f4a2678c3a7dfa35080e93e4bd795536320ff3d6"
+    }
+  ],
+  "call_sites": {
+    "reader": {
+      "0x1456dbc4a": "qword ptr [rax + 0x58]",
+      "0x1456dbc5f": "qword ptr [rax + 0x60]",
+      "0x1456dbc76": "0x1456d5ca0",
+      "0x1456dbc8e": "0x1420e86d0",
+      "0x1456dbcae": "qword ptr [rax + 0x18]",
+      "0x1456dbcc4": "qword ptr [rax + 0x50]",
+      "0x1456dbcd5": "qword ptr [rax + 0x60]",
+      "0x1456dbce6": "qword ptr [rax + 0x50]",
+      "0x1456dbcf7": "qword ptr [rax + 0x50]"
+    },
+    "vector": {
+      "0x144aac555": "qword ptr [rax + 0x68]",
+      "0x144aac56b": "qword ptr [rax + 8]",
+      "0x144aac594": "qword ptr [rax + 0x10]"
+    },
+    "resize": {
+      "0x1456e6a37": "0x1456d5ca0",
+      "0x1456e6a4d": "0x1420e86d0"
+    },
+    "record_thunk": {
+      "0x1456dcdea": "0x145783840",
+      "0x1456dcdf7": "0x144aad190",
+      "0x1456dce18": "0x141ef45b0",
+      "0x1456dce2c": "0x1456d72f0",
+      "0x1456dce38": "0x1457853a0",
+      "0x1456dce4b": "0x1487e8ce0"
+    },
+    "archive_constructor": {
+      "0x144aacb56": "0x144aac130"
+    },
+    "buffer_constructor": {
+      "0x144aac151": "0x144aace10"
+    },
+    "u16": {
+      "0x144aac269": "qword ptr [rax + 0x90]",
+      "0x144aac287": "0x1445e03e0"
+    },
+    "u32": {
+      "0x144aac2b9": "qword ptr [rax + 0x90]",
+      "0x144aac2d6": "0x1445e03f0"
+    },
+    "u64": {
+      "0x144aac4b9": "qword ptr [rax + 0x90]",
+      "0x144aac4d7": "0x1445e0420"
+    },
+    "raw": {
+      "0x144aac5fb": "0x1487f5ab9",
+      "0x144aac609": "0x144aad1a0"
+    }
+  },
+  "exports": {
+    "run-e6ab6fd97914": "9828dfd4a26853235433aa7b702150ceec552d05796a8bea82ce915332284454",
+    "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+    "run-80386d1eb460": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1"
+  },
+  "fixtures": {
+    "clear": "0x1456d5ca0",
+    "allocate": "0x1420e86d0",
+    "record_constructor": "0x145783840"
+  }
+}
