@@ -60,6 +60,8 @@ desired size, порядок HorizontalBox и активные visibility / tran
 - [ ] UI-21.E-06. Восстановить Flashing / WidgetSwitcher / Omit / Unusable: условия, выбранный индекс, style и события; статические слои не объявлять активными.
 - [ ] UI-21.E-07. Сверить общий компонент у игрока и разных целей; определить различия порядка, лимитов, фильтров и размеров, не копировать один вариант во все окна.
 - [ ] UI-21.E-08. После аудита подключить компонент через явный демоадаптер: cleanup, обновление изменённых экземпляров, изоляция 50 окон без отдельного фонового таймера на каждую иконку; реальные события сессии проверять отдельно.
+- [x] UI-21.E-09. Статически проверить кандидаты getter: таблицу native функций и путь инициализации. Проверено: пять current функций / семь unwind-фрагментов, пара Refresh → 144a8f220, related getter NkScrollView и явные записи памяти. [Доказательства](../resource-tools/vampir/knowledge/evidence/interface/NKTILEVIEW-CLASS-FUNCTIONS-11316.md). Имена свойств / defaults и schema этим не подтверждены.
+- [ ] UI-21.E-10. Отдельным заданием исследовать тело Refresh 144a8f220: вызовы, данные и границы эффекта; не считать его кликом по кнопке или updater без проверки.
 
 ```powershell
 python -X utf8 phone-exit/bots/resource-tools/vampir/audit-status-effect-ui.py --output 'F:/PhoneExit Resources/Vampir/ui-property-scans/status-effect-ui-audit-next.json'

@@ -5322,6 +5322,38 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "NkTileView reflected properties, inheritance, entry factory and compatibility with historical cooked packages."
+    },
+    {
+      "addresses": [
+        "0x1416b2c10",
+        "0x144a6a620",
+        "0x144a6f9e0",
+        "0x144a7b370",
+        "0x144a88f70"
+      ],
+      "checks": [],
+      "conclusion": "Static association NkTileView Refresh -> 144a8f220: 144a88f70 passes getter result and one 16-byte name/pointer row to 1416b2c10; helper appends converted-name/pointer rows at object+1f0. Related getter names NkScrollView; initialization writes are preserved without reflected property names.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\NKTILEVIEW-CLASS-FUNCTIONS-11316.md",
+          "sha256": "7e9566f64a6a33055fe276546a8ba50d06edec8982bbb08be5e5e8108225cd9d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-56f78863fe46\\details.json",
+          "sha256": "a1b07cf4d789b8fc1e9de0cd2b9802749ed73dddf1f0efcc431b308d9a4afe83"
+        }
+      ],
+      "id": "09aeb497ddf3a3ce883d9bce98c0b6ce5fc4a0fe384a54902815d7ccd64e14c2",
+      "limits": [
+        "Five functions, seven complete unwind fragments; no native execution or runtime dispatch proof.",
+        "Initialization stores are not serialization defaults; relation to reflected property order and historical cooked packages is unverified.",
+        "Two prior failed collection requests retained; explicit tail target enabled existing CALL_RETURN modeling without changing executable."
+      ],
+      "method": "static",
+      "next_check": "Prepare exact Refresh callback 144a8f220, then trace confirmed NkTileView/NkScrollView reflection metadata; never name fields by numeric resemblance.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Refresh body, reflection metadata / inheritance order, entry factory binding and active effect state."
     }
   ],
   "schema": 1,
