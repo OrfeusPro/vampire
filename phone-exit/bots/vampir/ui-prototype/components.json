@@ -4,6 +4,16 @@
     "player_status": {
       "resource": "WBP_PCStatusProgressBarT",
       "catalog_file": "pakchunk500-Windows-1747.json",
+      "frame_root": "CanvasPanel_3",
+      "layout_targets": {
+        "hp": "CanvasPanelHP",
+        "mp": "CanvasPanelMP",
+        "portrait": "CanvasPanel_0",
+        "portrait_button": "ButtonPortraitMove"
+      },
+      "layout_policy": {
+        "omitted_auto_size_false": true
+      },
       "frame": {
         "width": 390,
         "height": 100

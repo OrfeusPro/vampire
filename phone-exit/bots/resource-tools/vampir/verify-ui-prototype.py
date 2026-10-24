@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import ui_desired_geometry
 import ui_composition_graph
+import ui_layout_schema
 
 
 def sha(path):
@@ -122,6 +123,31 @@ def verify(snapshot):
         graph = json.loads((snapshot / 'composition-graph.json').read_text('utf-8'))
         assert graph == ui_composition_graph.from_snapshot(snapshot), 'Composition graph differs from source records'
         assert manifest['tools']['ui_composition_graph.py'] == sha(Path(__file__).with_name('ui_composition_graph.py'))
+    if (snapshot / 'layout-schema-index.json').exists():
+        schemas = json.loads((snapshot / 'layout-schema-index.json').read_text('utf-8'))
+        assert manifest['tools']['ui_layout_schema.py'] == sha(Path(__file__).with_name('ui_layout_schema.py'))
+        expected_keys = set()
+        totals = dict(variants=0, nodes=0, slots=0, issues=0, excluded_slots=0)
+        for row in index:
+            record = json.loads((snapshot / 'windows' / (row['id'] + '.json')).read_text('utf-8'))
+            for variant in record['variants']:
+                key = record['path'] + '|' + variant['file']
+                expected_keys.add(key)
+                spec = schemas['entries'][key]
+                assert spec['source_sha256'] == variant['sha256']
+                assert sha(snapshot / spec['file']) == spec['sha256']
+                compiled = json.loads((snapshot / spec['file']).read_text('utf-8'))
+                assert compiled == ui_layout_schema.compile_schema(record, variant), 'Widget schema differs from source slots'
+                totals['variants'] += 1
+                for field in ('nodes', 'slots', 'issues', 'excluded_slots'):
+                    assert spec[field] == len(compiled[field])
+                    totals[field] += spec[field]
+        assert expected_keys == schemas['entries'].keys()
+        assert schemas['statistics'] == totals
+        component_layouts = json.loads((snapshot / 'component-layouts.json').read_text('utf-8'))
+        for key, spec in components['modules'].items():
+            source = evidence['modules'][key]['source']
+            assert component_layouts[key] == schemas['entries'][source['resource_path'] + '|' + source['catalog_file']]
     assert sum(row['variants'] for row in index) == manifest['variant_count']
     return dict(state='passed', snapshot=manifest['id'], resources=len(index), textures=len(textures),
                 limits='Byte/provenance checks; does not prove visual fidelity, game behavior or 50 browser windows.')

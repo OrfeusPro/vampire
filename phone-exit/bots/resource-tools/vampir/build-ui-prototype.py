@@ -15,6 +15,7 @@ import shared_ui_library
 import ui_collection_catalog
 import ui_desired_geometry
 import ui_composition_graph
+import ui_layout_schema
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -228,7 +229,8 @@ def build(root, baseline=None):
                 controls=[{k: c.get(k) for k in ('name', 'type', 'export', 'sha256', 'parent_chain',
                                                'local_slots', 'size_constraints', 'container_geometry')}
                           for c in package.get('controls', [])],
-                slots=package.get('decoded_slots', [])))
+                slots=package.get('decoded_slots', []), excluded_slots=package.get('excluded_slots', []),
+                limitations=package.get('limitations', [])))
         records.append(record)
     inputs = {str(p.relative_to(root)).replace('\\', '/'): sha(p) for p in
               (index_path, image_path, root / 'maps/loot/items.json', root / 'maps/atlas/index.json')}
@@ -266,7 +268,8 @@ def build(root, baseline=None):
                        tools={'inspect-ui.py': skin_evidence['decoder']['sha256'],
                               'ui_collection_catalog.py': sha(HERE / 'ui_collection_catalog.py'),
                               'ui_desired_geometry.py': sha(HERE / 'ui_desired_geometry.py'),
-                              'ui_composition_graph.py': sha(HERE / 'ui_composition_graph.py')})
+                              'ui_composition_graph.py': sha(HERE / 'ui_composition_graph.py'),
+                              'ui_layout_schema.py': sha(HERE / 'ui_layout_schema.py')})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -364,6 +367,16 @@ def build(root, baseline=None):
             binding['runtime_geometry_verified'] = False
         write(temporary / 'button-evidence.json', button_layouts)
         write(temporary / 'component-evidence.json', component_sources(root, read(SOURCE / 'components.json'), records, button_layouts))
+        schemas = ui_layout_schema.publish(records, temporary)
+        write(temporary / 'layout-schema-index.json', schemas)
+        component_layouts = {}
+        definitions = read(SOURCE / 'components.json')
+        for key, spec in definitions['modules'].items():
+            candidates = [r for r in records if r['name'] == spec['resource'] and any(v['file'] == spec['catalog_file'] for v in r['variants'])]
+            if len(candidates) != 1:
+                raise ValueError('Неоднозначный вариант схемы компонента: ' + key)
+            component_layouts[key] = schemas['entries'][candidates[0]['path'] + '|' + spec['catalog_file']]
+        write(temporary / 'component-layouts.json', component_layouts)
         composition = ui_composition_graph.compile_graph(records)
         write(temporary / 'composition-graph.json', composition)
         manifest['named_resource_count'] = sum(not r['path'].startswith('unresolved:') for r in records)

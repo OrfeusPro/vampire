@@ -24,6 +24,39 @@ verifier = load('ui_prototype_verifier', 'verify-ui-prototype.py')
 
 
 class PrototypeTests(unittest.TestCase):
+    def test_local_layout_schema_keeps_source_slots_and_detached_metadata(self):
+        import copy
+        import ui_layout_schema as layout
+        control = lambda i, name, kind: dict(export=i, name=name, type=kind, sha256=str(i))
+        record = dict(id='fixture', path='/Game/Test')
+        slot = dict(provenance=dict(slot_export=10, sha256='slot SHA'), decoded=dict(parent_export=1, content_export=2, padding=dict(left=4, right=5, top=6, bottom=7)))
+        variant = dict(file='fixture.json', sha256='catalog SHA', controls=[control(1, 'Root', 'Overlay'), control(2, 'HP', 'ProgressBar'), control(3, 'Animation', 'MovieScene')], slots=[slot], excluded_slots=[dict(reason='unknown layout')], root=dict(type='WidgetBlueprintGeneratedClass', index=20))
+        before = copy.deepcopy(variant)
+        schema = layout.compile_schema(record, variant)
+        self.assertEqual(schema['slots']['10'], slot)
+        self.assertEqual(schema['nodes']['2']['incoming'], [dict(slot='10', parent='1')])
+        self.assertEqual(schema['root_candidates'], ['1'])
+        self.assertIsNone(schema['runtime_root'])
+        self.assertEqual(schema['blueprint_root']['index'], 20)
+        self.assertEqual(schema['excluded_slots'], variant['excluded_slots'])
+        self.assertEqual(schema['nodes']['3']['category'], 'metadata')
+        self.assertEqual(variant, before)
+        schema['slots']['10']['decoded']['padding']['left'] = 999
+        self.assertEqual(variant, before)
+        variant['controls'].append(variant['controls'][0])
+        with self.assertRaisesRegex(ValueError, 'Повторный'):
+            layout.compile_schema(record, variant)
+
+    def test_local_layout_schema_reports_cycles_multiple_parents_and_missing_endpoints(self):
+        import ui_layout_schema as layout
+        record = dict(id='fixture', path='/Game/Test')
+        controls = [dict(export=i, name=str(i), type='CanvasPanel', sha256=str(i)) for i in [1, 2, 3]]
+        slots = [dict(provenance=dict(slot_export=i), decoded=dict(parent_export=p, content_export=c)) for i, p, c in [(10, 1, 2), (11, 2, 1), (12, 3, 2), (13, 3, 99)]]
+        result = layout.compile_schema(record, dict(file='fixture', sha256='SHA', controls=controls, slots=slots))
+        codes = {i['code'] for i in result['issues']}
+        self.assertEqual(codes, {'dangling_slot', 'multiple_parents', 'cycle_or_dependent_on_cycle'})
+        self.assertEqual(len(result['slots']), 4)
+
     def test_composition_graph_preserves_variants_unresolved_classes_and_source_controls(self):
         import ui_composition_graph as graph
         def record(path, name, files, controls):

@@ -1,19 +1,19 @@
 /* Shared view components: explicit input state and callbacks, no transport/subscriptions/timers. */
 (function(root) {
   'use strict';
-  function create({ el, append, image, portrait, button, icon, fmt, vitals, geometry, bindings, definitions }) {
+  function create({ el, append, image, portrait, button, icon, fmt, vitals, geometry, definitions, schemas }) {
     const spec = definitions.modules.player_status;
-    const boxes = Object.fromEntries(Object.entries(spec.bindings).map(([key, id]) => {
-      const result = geometry.chain(bindings[id], geometry.rect(0, 0, spec.frame.width, spec.frame.height));
-      if (result.unknown) throw Error('Не разобрана геометрия общего статуса: ' + result.unknown);
-      return [key, result.rect];
-    }));
+    const compiled = VampirLayoutSchema.solve(schemas.player_status, { root: spec.frame_root,
+      frame: geometry.rect(0, 0, spec.frame.width, spec.frame.height), targets: spec.layout_targets, policy: spec.layout_policy });
+    if (Object.keys(compiled.unknowns).length) throw Error('Не разобрана геометрия общего статуса: ' + JSON.stringify(compiled.unknowns));
+    const boxes = compiled.rects;
     function position(node, box) {
       Object.assign(node.style, { position: 'absolute', left: `calc(${box.x} * var(--ui-component-unit))`, top: `calc(${box.y} * var(--ui-component-unit))`, width: `calc(${box.width} * var(--ui-component-unit))`, height: `calc(${box.height} * var(--ui-component-unit))` });
       return node;
     }
     function playerStatus({ state, character, onOpen }) {
       const node = el('div', undefined, 'player-status'); node.dataset.component = 'player-status'; node.dataset.sourceResource = spec.resource; node.dataset.geometryState = 'allocated-component-frame';
+      node.dataset.layoutEngine = 'local-widget-schema'; node.dataset.layoutAssumptions = JSON.stringify(compiled.assumptions);
       const avatar = position(button('', onOpen, 'player-status-portrait'), boxes.portrait_button);
       let appearanceKey;
       node.append(avatar);
