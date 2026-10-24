@@ -60,6 +60,8 @@
   и 131 отказ без вызова handler. [Границы и следующие связи](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md).
 - Post-state wrapper/tail callee отдельно прошли 44 native сценария; source E9
   model решила отказ export. [Границы и интеграция далее](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-POST-STATE-11316.md).
+- Current continuation constructor/getter/final slot28 reset: 8 перенесённых
+  сценариев. [Далее current WaitingEndNotify, не повторный поиск внутри reset](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
   и прочие зависимости Login, интеграция writer/archive, реальные storage primitives
   и handler/dispatch результата. Только после этого готовить

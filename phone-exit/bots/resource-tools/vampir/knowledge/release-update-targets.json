@@ -2238,6 +2238,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-continuation-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-continuation-context.py"
+      ],
+      "rule": "Перенести actual getter/global и constructor base->final vtable; проверять final slot28, не base no-op. Повторить established 8 reset invariants и helper closure. Не считать reset запросом персонажей; WaitingEndNotify искать отдельно.",
+      "automation": {
+        "discovery": "reviewed_singleton_constructor_final_vtable_slot",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1464a6450",
+                "scope": "Current constructor/getter/final virtual reset; container helpers fixtures, factory static anchors only. No handler integration or CharacterListRead send proof.",
+                "required_checks": [
+                  "native-login-continuation-context"
+                ]
+              },
+              {
+                "address": "0x1464ac910",
+                "scope": "Current constructor/getter/final virtual reset; container helpers fixtures, factory static anchors only. No handler integration or CharacterListRead send proof.",
+                "required_checks": [
+                  "native-login-continuation-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-continuation-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

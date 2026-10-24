@@ -443,7 +443,8 @@
         "login-result-registration",
         "native-login-result-handler-context",
         "native-login-result-body-handler-context",
-        "native-login-post-state-context"
+        "native-login-post-state-context",
+        "native-login-continuation-context"
       ],
       "recipes": [
         {
@@ -495,7 +496,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Post-state wrapper/tail target отдельно проверены в 44 сценариях; out-of-unwind export исправлен явной моделью E9. Body/handler пока используют post-state capture. Далее интеграция и getter 1464af340 / vtable+28 -> CharacterListRead, реальные services/getters/dispatch.",
+      "next_check": "Current continuation getter/constructor/final vtable+28 reset проверены отдельно. Не искать CharacterListRead внутри reset повторно: проверить текущую регистрацию WaitingEndNotify и известный исторический request initiator. Post-state/continuation ещё captures в общем handler; реальные services/dispatch открыты.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -543,7 +544,8 @@
         "login-result-registration-current",
         "native-login-result-handler-current",
         "native-login-result-body-handler-current",
-        "native-login-post-state-current"
+        "native-login-post-state-current",
+        "native-login-continuation-current"
       ],
       "writer_check": {
         "object_size": 320,

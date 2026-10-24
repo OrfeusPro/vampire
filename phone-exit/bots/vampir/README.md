@@ -1,5 +1,9 @@
 # Vampir — главный указатель разработки
 
+Current final virtual +28 после LoginResult подтверждён как reset: constructor/
+getter/final table и 8 native сценариев перенесены. Инициатор списка искать
+в current WaitingEndNotify по готовому исследованию старой версии. [Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md).
+
 Post-state wrapper/tail callee прошли 44 native сценария; отказ Ghidra устранён
 явной моделью E9 без расширения unwind. В общей цепочке это пока capture.
 [Доказательства и следующие связи](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-POST-STATE-11316.md).
