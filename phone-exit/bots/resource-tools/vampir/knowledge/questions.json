@@ -540,6 +540,20 @@
         "evidence/updates/HEADLESS-LOGIN-METADATA-11316.md",
         "evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md"
       ]
+    },
+    {
+      "id": "release-login-result-reader",
+      "status": "bounded_answer",
+      "question": "Как текущие constructor/reader игрового ответа ID 4 читают поля и отказывают на коротком вводе?",
+      "known": "Текущие constructor 1456d7690 / reader 1456dc140 связаны с table 149926590, ID getter 141453c40 возвращает 4. Вместе с nested constructors/readers и virtual thunk исполнены 320 полных случаев, 332 коротких префикса и 25 отказов; проверены порядок/адреса полей, vptrs, guards/ABI и trailing consumption. Python decoder совпал; archive/UTF-8 primitives остаются fixtures.",
+      "unknown": "Actual input archive/UTF-8 и malformed semantics, current handler/dispatch/result gates и переход к персонажам.",
+      "next_action": "Использовать готовые run-3c0581002a58 и run-cfe450e70430; перенести actual archive/string input и current handler/dispatch по source-bound связям. Source guard сохранить.",
+      "decision_rule": "Не переносить адреса или факты старой сборки автоматически. Body reading не подтверждает handler, персонажа или сессию.",
+      "do_not_repeat": "Готовые шесть roots текущего SHA не выгружать повторно. Неоднозначные префиксы constructor/reader не считать подтверждёнными bindings; ID/table/calls уже проверены отдельно.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-LOGIN-RESULT-11316.md"
+      ]
     }
   ]
 }

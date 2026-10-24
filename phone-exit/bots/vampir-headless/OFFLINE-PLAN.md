@@ -36,8 +36,13 @@
 - Metadata pipeline включён в whole Login на одной памяти: 448 сценариев
   проверили фактическую проекцию в `+d8`, общий SDK manager и cleanup.
   [Интеграция и следующие проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md).
+- Текущие LoginResult/nested constructors/readers проверены с archive fixtures:
+  320 полных случаев, 332 коротких префикса, 25 отказов; прежний Python decoder
+  совпал по полям. Actual input primitives/UTF-8 и handler/dispatch ещё открыты.
+  [Привязки и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
-  и прочие зависимости Login, интеграция writer/archive и result readers. Только после этого готовить
+  и прочие зависимости Login, интеграция writer/archive, actual input archive/UTF-8
+  и handler/dispatch результата. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.
 
 [Точные адреса, доказательства и ограничения fixtures](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md).

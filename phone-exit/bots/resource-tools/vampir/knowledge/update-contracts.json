@@ -435,7 +435,8 @@
         "native-login-prepare-context",
         "native-login-sdk-context",
         "native-login-metadata-context",
-        "native-login-prepare-metadata-context"
+        "native-login-prepare-metadata-context",
+        "native-login-result-context"
       ],
       "recipes": [
         {
@@ -458,6 +459,17 @@
           "method": "direct_call",
           "from": "writer",
           "offset": 23
+        },
+        {
+          "key": "result-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-reader",
+          "method": "vtable",
+          "from": "result-constructor",
+          "rip_offset": 12,
+          "slot": 32
         }
       ],
       "bindings": {
@@ -465,7 +477,9 @@
           "prepare": "0x1467ce030",
           "constructor": "0x1456d7570",
           "writer": "0x1456e8370",
-          "string-writer": "0x144aad310"
+          "string-writer": "0x144aad310",
+          "result-constructor": "0x1456d7690",
+          "result-reader": "0x1456dc140"
         }
       },
       "resources": [],
@@ -474,7 +488,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Metadata pipeline включён в whole Login на общей памяти; перенести реальные SDK/UserInfo/string/map/variant boundaries, интегрировать writer/archive и текущий result reader. Coverage partial, runtime не продвигать.",
+      "next_check": "Current LoginResult/nested reader projection проверена с archive/string fixtures. Перенести actual input primitives/UTF-8 и handler/dispatch; сохранить отдельную задачу writer/archive integration и SDK/UserInfo boundaries. Runtime partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -514,7 +528,8 @@
         "native-login-prepare-current",
         "native-login-sdk-current",
         "native-login-metadata-current",
-        "native-login-prepare-metadata-current"
+        "native-login-prepare-metadata-current",
+        "native-login-result-current"
       ],
       "writer_check": {
         "object_size": 320,

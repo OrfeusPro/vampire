@@ -1800,6 +1800,75 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-result-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-result-context.py"
+      ],
+      "rule": "На новом SHA проверить constructor/table/ID4/reader links, nested constructors/readers и virtual thunk, destinations/order и прекращение после отказа. Archive/UTF-8 fixtures не выдавать за actual decoder; handler/dispatch отдельно.",
+      "automation": {
+        "discovery": "reviewed_constructor_vtable_id_and_nested_calls",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456d7690",
+                "scope": "Whole current packet/nested constructor and reader; explicit archive primitive and UTF-8/string fixtures, no handler proof.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1456dc140",
+                "scope": "Whole current packet/nested constructor and reader; explicit archive primitive and UTF-8/string fixtures, no handler proof.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457a3500",
+                "scope": "Whole current packet/nested constructor and reader; explicit archive primitive and UTF-8/string fixtures, no handler proof.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457a23a0",
+                "scope": "Whole current packet/nested constructor and reader; explicit archive primitive and UTF-8/string fixtures, no handler proof.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457fdce0",
+                "scope": "Whole current packet/nested constructor and reader; explicit archive primitive and UTF-8/string fixtures, no handler proof.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457a5820",
+                "scope": "Whole current packet/nested constructor and reader; explicit archive primitive and UTF-8/string fixtures, no handler proof.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-RESULT-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

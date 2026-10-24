@@ -2589,6 +2589,51 @@
       "question": "release-login-metadata",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные SDK UserInfo/string/map/variant boundaries, escaping, интеграция native writer/archive и текущий result reader."
+    },
+    {
+      "addresses": [
+        "0x1456d7690",
+        "0x1456dc140",
+        "0x1457a23a0",
+        "0x1457a3500",
+        "0x1457a5820",
+        "0x1457fdce0"
+      ],
+      "checks": [
+        {
+          "cache_key": "23f43321e3825753902c71bcc8962e4af987bed9189c2a487b056bd8f3efa62d",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f60e9e36bf2063b09ab0583ad862db860dc356a94adb5eca8741ddeed70f22b8\\manifest.json",
+          "sha256": "f60e9e36bf2063b09ab0583ad862db860dc356a94adb5eca8741ddeed70f22b8",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие LoginResult/nested constructors/readers привязаны к packet table/ID4 и исполнены целиком: 320 полных сценариев совпали с portable decoder, 332 коротких тела отвергнуты caller, 25 принудительных отказов прекращают дальнейшее чтение. Проверены field destinations/order, nested vptrs, guards/ABI и trailing consumption. Неоднозначный prefix search не использован как роль.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-result-11316.json",
+          "sha256": "0bfeaf847515396be91f61fa72a40a7f93c9d304e2ab5520730ecdbde2779bbf"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-RESULT-11316.md",
+          "sha256": "3ff3d134ff998ca0bef778b0416022f1ff81c007a90aa28b6a8128b5eb417db9"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-RESULT-11316.json",
+          "sha256": "52df4b7bbc0341a47cfabe54de69afafcedf7d2b519e9136dcbd7d61f825f87a"
+        }
+      ],
+      "id": "7fc48c3fad2a59f79ffc5d2b96c64e5f2835f3c3f0d072da10bd8c2a7f0b6c36",
+      "limits": [
+        "Archive primitives, UTF-8/FString conversion/allocation — fixtures; нормализация bool/UTF-8 semantics реального archive не доказаны.",
+        "Native caller принимает trailing bytes без потребления хвоста; Python decoder сознательно строже.",
+        "Handler/dispatch/result semantic gates, список персонажей, авторизация и runtime activation не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать готовые six roots; перенести actual archive/string inputs и current handler/dispatch через явные source-bound links. Не ослаблять runtime guard и не считать body decode готовой сессией.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Actual input archive primitives/UTF-8 и malformed semantics, handler/dispatch/current result gates и переход к персонажам."
     }
   ],
   "schema": 1,

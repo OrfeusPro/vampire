@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Reader игрового LoginResult 1.13.16 привязан к ID 4 и проверен вместе с nested
+constructors/readers: 320 полных случаев, 332 коротких тела и 25 отказов.
+Archive primitives / UTF-8 пока fixtures; handler/dispatch остаются открыты.
+[Привязки, поля и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-11316.md).
+
 Metadata pipeline включён в целый Login на одной памяти: 448 сценариев проверили
 проекцию в `+d8`, единый SDK manager и общий cleanup. Готовые exports использованы
 повторно. Реальные SDK/string/map/variant boundaries и writer/results ещё открыты.

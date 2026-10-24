@@ -1,0 +1,223 @@
+"""Current whole LoginResult/nested reader projection with explicit archive fixtures."""
+import argparse
+import hashlib
+import itertools
+import json
+from pathlib import Path
+import struct
+from importlib.util import spec_from_file_location, module_from_spec
+
+HERE = Path(__file__).resolve().parent
+STRINGS = (0x18, 0x28, 0x38, 0x70, 0x90, 0xb8, 0xc8)
+U32 = (0x10, 0x130, 0x134)
+U16 = (0x48, 0x60)
+U64 = (0x58, 0x68, 0x80, 0xb0, 0xf0, 0x100, 0x110, 0x120)
+FLAGS = (0x88, 0xa0, 0xe0, 0x128, 0x138)
+ORDER = (('u32', 0x10), ('string', 0x18), ('string', 0x28), ('string', 0x38),
+         ('u16', 0x48), ('time', 0x58), ('u16', 0x60), ('u64', 0x68),
+         ('string', 0x70), ('u64', 0x80), ('bool', 0x88), ('string', 0x90),
+         ('bool', 0xa0), ('time', 0xb0), ('string', 0xb8), ('string', 0xc8),
+         ('bool', 0xe0), ('time', 0xf0), ('time', 0x100), ('time', 0x110),
+         ('time', 0x120), ('bool', 0x128), ('raw32', 0x130), ('raw32', 0x134), ('bool', 0x138))
+WIDTH = dict(u32=4, raw32=4, u16=2, time=8, u64=8, bool=1)
+
+
+def load(name):
+    spec = spec_from_file_location(name.replace('-', '_'), HERE / (name + '.py'))
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def verify(context, root):
+    functions = {key: int(at, 16) for key, at in context['functions'].items()}
+    leaves = {int(at, 16): spec['bytes'] for at, spec in context['leaves'].items()}
+    h = load('update-native-harness').make_harness(context, context['exports'], set(functions.values()), leaves=leaves, root=root)
+    native, rows = load('build-native-entry-code'), load('update-bindings').rows
+    calls = {hex(r['address']): {'target': hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
+             for at in functions.values() for r in rows(native, h.image, at) if r['call']}
+    if calls != context['call_sites']:
+        raise ValueError('LoginResult call sites differ')
+    for spec in context['tables']:
+        at = int(spec['address'], 16)
+        data = bytes.fromhex(spec['bytes'])
+        off = h.image.offset(at - h.image.pe.base)
+        if h.raw[off:off + len(data)] != data or hashlib.sha256(data).hexdigest() != spec['sha256']:
+            raise ValueError('LoginResult table bytes differ')
+    packet_table, time_table, period_table = [int(context[key], 16) for key in ('packet_table', 'time_table', 'period_table')]
+    for table, reader in ((packet_table, functions['reader']), (time_table, functions['time_reader']),
+                          (period_table, functions['period_reader'])):
+        if struct.unpack_from('<Q', h.raw, h.image.offset(table - h.image.pe.base) + 0x20)[0] != reader:
+            raise ValueError('LoginResult reader table link differs')
+    id_getter = int(context['id_getter'], 16)
+    if struct.unpack_from('<Q', h.raw, h.image.offset(packet_table - h.image.pe.base) + 0x28)[0] != id_getter:
+        raise ValueError('LoginResult ID table link differs')
+    if h.call(id_getter) != 4:
+        raise ValueError('LoginResult ID differs')
+    packet, archive, archive_table = [h.scratch + n for n in (0x1000, 0x2000, 0x3000)]
+    state = {}
+
+    def require(ok, message):
+        if not ok:
+            raise ValueError(message)
+
+    def reg(name):
+        return h.uc.reg_read(getattr(h.x, 'UC_X86_REG_' + name))
+
+    def archive_fixture(kind):
+        def execute(machine):
+            a, b = reg('RCX'), reg('RDX')
+            require(a == archive and len(state['operations']) < len(ORDER), 'LoginResult archive receiver/budget differs')
+            expected_kind, offset = ORDER[len(state['operations'])]
+            require((kind, b) == (expected_kind, packet + offset), 'LoginResult field order or destination differs')
+            state['operations'].append([kind, hex(offset)])
+            if state['fail_at'] == len(state['operations']) - 1:
+                h.finish(0)
+                return
+            position = state['position']
+            if kind == 'string':
+                if position + 2 > len(state['body']):
+                    h.finish(0)
+                    return
+                size = int.from_bytes(state['body'][position:position + 2], 'little')
+                state['position'] += 2
+                position += 2
+            else:
+                size = WIDTH[kind]
+            if position + size > len(state['body']):
+                h.finish(0)
+                return
+            raw = state['body'][position:position + size]
+            state['position'] += size
+            if kind == 'string':
+                text = raw.decode('utf-8')
+                require('\0' not in text, 'LoginResult fixture NUL unsupported')
+                data = text.encode('utf-16le') + b'\0\0' if text else b''
+                pointer = state['heap'] + 16 if data else 0
+                require(len(data) <= 2048 and state['heap'] + len(data) + 64 < h.scratch + 0x30000,
+                        'LoginResult string allocation bound')
+                if data:
+                    h.uc.mem_write(pointer - 16, b'\xa5' * 16 + data + b'\xa6' * 16)
+                    state['heap'] += (len(data) + 63) & ~15
+                    state['allocations'][pointer] = len(data)
+                count = len(data) // 2
+                h.uc.mem_write(b, struct.pack('<QII', pointer, count, count))
+            else:
+                if kind == 'bool':
+                    # Explicit primitive policy; normalization inside the real archive is not proved here.
+                    raw = bytes([int(raw[0] != 0)])
+                h.uc.mem_write(b, raw)
+            state['written'].append(offset)
+            h.finish(state['primitive_true'])
+        return execute
+
+    fixture = {key: int(at, 16) for key, at in context['fixtures'].items()}
+    for kind, at in fixture.items():
+        h.add_fixture(at, archive_fixture(kind))
+    for slot, kind in ((0x28, 'time'), (0x50, 'u64'), (0x58, 'u32'), (0x60, 'raw32'), (0x70, 'u16'), (0x88, 'bool')):
+        h.uc.mem_write(archive_table + slot, struct.pack('<Q', fixture[kind]))
+    h.uc.mem_write(archive - 16, b'\xa5' * 16 + struct.pack('<Q', archive_table) + b'\xa6' * 16)
+    archive_guard = bytes(h.uc.mem_read(archive - 16, 40))
+    all_tables = ((0, packet_table), (0x50, time_table), (0xa8, time_table), (0xd8, period_table)) + tuple(
+        (off, time_table) for off in (0xe8, 0xf8, 0x108, 0x118))
+    abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+
+    def capture():
+        values = dict(strings=[], u32=[], u16=[], u64=[], flags=[])
+        for off in STRINGS:
+            pointer, count, capacity = struct.unpack('<QII', h.uc.mem_read(packet + off, 16))
+            require(count == capacity and 0 <= count <= 1024, 'LoginResult descriptor differs')
+            values['strings'].append(bytes(h.uc.mem_read(pointer, count * 2))[:-2].decode('utf-16le') if count else '')
+        for key, offsets, size in (('u32', U32, 4), ('u16', U16, 2), ('u64', U64, 8), ('flags', FLAGS, 1)):
+            values[key] = [int.from_bytes(h.uc.mem_read(packet + off, size), 'little') for off in offsets]
+        return values
+
+    def read(body, poison=0x55, fail_at=None, primitive_true=1):
+        state.clear()
+        state.update(body=body, position=0, operations=[], written=[], heap=h.scratch + 0x10000,
+                     allocations={}, fail_at=fail_at, primitive_true=primitive_true)
+        h.uc.mem_write(packet - 16, b'\xa5' * 16 + bytes([poison]) * 0x140 + b'\xa6' * 16)
+        h.call(functions['constructor'], packet)
+        before = bytes(h.uc.mem_read(packet, 0x140))
+        for name, value in abi.items():
+            h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + name), value)
+        h.uc.reg_write(h.x.UC_X86_REG_RDX, archive)
+        returned = h.call(functions['reader'], packet) & 255
+        require(all(reg(name) == value for name, value in abi.items()) and reg('RSP') == h.scratch + 0x38008,
+                'LoginResult ABI differs')
+        require(bytes(h.uc.mem_read(packet - 16, 16)) == b'\xa5' * 16
+                and bytes(h.uc.mem_read(packet + 0x140, 16)) == b'\xa6' * 16, 'LoginResult object guards changed')
+        require(bytes(h.uc.mem_read(archive - 16, 40)) == archive_guard, 'LoginResult archive input changed')
+        for off, table in all_tables:
+            require(int.from_bytes(h.uc.mem_read(packet + off, 8), 'little') == table, 'LoginResult nested vptr differs')
+        allowed = set()
+        for off in state['written']:
+            kind = next(kind for kind, field in ORDER if field == off)
+            allowed.update(range(off, off + (16 if kind == 'string' else WIDTH[kind])))
+        after = bytes(h.uc.mem_read(packet, 0x140))
+        require(all(a == b for i, (a, b) in enumerate(zip(before, after)) if i not in allowed),
+                'LoginResult write outside decoded field')
+        for pointer, size in state['allocations'].items():
+            require(bytes(h.uc.mem_read(pointer - 16, 16)) == b'\xa5' * 16
+                    and bytes(h.uc.mem_read(pointer + size, 16)) == b'\xa6' * 16, 'LoginResult string guard changed')
+        require(state['position'] <= len(body), 'LoginResult reads past available body')
+        return dict(returned=returned, consumed=state['position'], operations=list(state['operations']),
+                    fields=capture(), guards=True, body_hex=body.hex(), fail_at=fail_at)
+
+    def payload(text, code, raw_flag):
+        parts = []
+        expected = dict(strings=[text] * 7, u32=[code, 0xfedcba98, 0x89abcdef], u16=[0x8000, 0xffff],
+                        u64=[0x8000000000000000 + i for i in range(8)], flags=[int(raw_flag != 0)] * 5)
+        for kind, off in ORDER:
+            if kind == 'string':
+                data = text.encode('utf-8')
+                parts.extend((len(data).to_bytes(2, 'little'), data))
+            else:
+                value = expected['u32'][U32.index(off)] if off in U32 else expected['u16'][U16.index(off)] if off in U16 else (
+                    expected['u64'][U64.index(off)] if off in U64 else raw_flag)
+                parts.append(value.to_bytes(WIDTH[kind], 'little'))
+        return b''.join(parts), expected
+
+    cases = []
+    for text, code, flag, poison, true_value in itertools.product(
+            ('', 'ASCII', 'x' * 128, 'Ж界🙂'), (0, 1, 16, 58, 0xffffffff), (0, 1, 2, 255), (0x55, 0xaa), (1, 128)):
+        body, expected = payload(text, code, flag)
+        case = read(body, poison, primitive_true=true_value)
+        require(case['returned'] == 1 and case['consumed'] == len(body) and case['fields'] == expected,
+                'LoginResult full field projection differs')
+        cases.append(case)
+    truncated = []
+    for text in ('', 'x', '🙂'):
+        body, _ = payload(text, 0, 255)
+        for size in range(len(body)):
+            case = read(body[:size])
+            require(case['returned'] == 0, 'LoginResult accepted short body')
+            truncated.append(case)
+    body, _ = payload('Ж🙂', 0, 255)
+    failures = []
+    for at in range(len(ORDER)):
+        case = read(body, fail_at=at)
+        require(case['returned'] == 0 and len(case['operations']) == at + 1, 'LoginResult read continued after failure')
+        failures.append(case)
+    trailing_body, _ = payload('', 0, 0)
+    trailing = read(trailing_body + b'extra')
+    require(trailing['returned'] == 1 and trailing['consumed'] == len(trailing_body), 'LoginResult trailing behavior differs')
+    return dict(schema=1, source_sha256=context['source_sha256'], method='bounded_native', cases=cases,
+                truncated=truncated, failures=failures, trailing=trailing, evidence=h.evidence,
+                runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
+                limits=['Whole current packet/nested constructors and readers plus two leaves and virtual read thunk execute.',
+                        'Archive primitives/UTF-8 decoding/FString allocation are explicit fixtures; widths/destinations/order and failure propagation are native caller evidence.',
+                        'Bool normalization and UTF-8 acceptance are fixture policies, not proof of actual archive conversion.',
+                        'No handler, dispatch, result semantic names, network, login success or runtime activation proved.'])
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--context', type=Path, required=True)
+    parser.add_argument('--root', type=Path, default=Path('F:/PhoneExit Resources/Vampir'))
+    args = parser.parse_args()
+    report = verify(json.loads(args.context.read_text('utf-8')), args.root)
+    report['context_sha256'] = hashlib.sha256(args.context.read_bytes()).hexdigest()
+    report['tool_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    target = load('research-workflow').snapshot(args.root, 'native-login-result-checks', report)
+    print(json.dumps(dict(report=str(target), cases=len(report['cases']), truncated=len(report['truncated']), failures=len(report['failures']))))

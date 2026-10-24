@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+Текущие LoginResult/nested readers прошли 320 полных случаев, 332 коротких
+префикса и 25 отказов; Python decoder совпал с полями native caller.
+Далее — actual input archive/UTF-8 и handler/dispatch; код 0 не означает сессию.
+[Готовые exports и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-11316.md).
+
 Metadata теперь исполняется внутри целого Login с общими manager / allocator:
 448 сценариев проверили поле `+d8`, SDK gates и cleanup. Далее — реальные SDK /
 string/map/variant boundaries, интеграция writer/archive и текущий result reader.
