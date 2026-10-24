@@ -1469,6 +1469,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-prepare-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-prepare-context.py"
+      ],
+      "rule": "Переносить целые Login prepare/constructor по call sites, constructor table и globals; проверить owner fields, selector / platform / SDK gates, post-send lifecycle и cleanup. SDK values, строки и send остаются fixtures. Новый SHA требует review и переноса проверки; runtime автоматически не продвигать.",
+      "automation": {
+        "discovery": "reviewed_constructor_and_call_sites",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1467ce030",
+                "scope": "Whole Login caller/constructor with explicit SDK, string, send and post-send fixtures; no real SDK state or result readers.",
+                "required_checks": [
+                  "native-login-prepare-context"
+                ]
+              },
+              {
+                "address": "0x1456d7570",
+                "scope": "Whole Login caller/constructor with explicit SDK, string, send and post-send fixtures; no real SDK state or result readers.",
+                "required_checks": [
+                  "native-login-prepare-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-prepare-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

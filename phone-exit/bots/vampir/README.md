@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Целые Login prepare / constructor 1.13.16 прошли 672 сценария с явными SDK
+fixtures: проекция полей, отдельные gates, post-send уведомления, cleanup и ABI.
+Проверка подключена к обновлениям; реальные SDK getters / result reader ещё открыты.
+[Поля, границы и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md).
+
 Selector / store / lookup теперь исполняются внутри whole Version prepare вместе
 с Windows / CPU / NM / combiners: 288 сценариев. FName/type/resolver/value-at
 сохраняют явные границы fixtures; whole Login prepare/results ещё открыты.

@@ -22,8 +22,11 @@
   тёплым cache, отсутствием контекста и разными таблицами. Их FName/type/value
   зависимости пока fixtures.
   [Общая цепочка и точные ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PREPARE-PLATFORM-11316.md).
-- Далее: реальные platform text / FName / type / resolver / value-at, Login prepare
-  и result readers. Только после этого готовить
+- Целые Login prepare / constructor проверены в 672 сценариях с явными SDK,
+  строковыми и post-send fixtures: все поля, gates, cleanup и ABI.
+  [Поля и ещё неизвестное](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md).
+- Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
+  и прочие зависимости Login, интеграция writer/archive и result readers. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.
 
 [Точные адреса, доказательства и ограничения fixtures](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md).

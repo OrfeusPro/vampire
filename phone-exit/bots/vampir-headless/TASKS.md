@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+Целые Login prepare / constructor проверены в 672 сценариях с явными fixtures.
+Далее — реальные SDK/string/platform/language/number зависимости, интеграция
+writer/archive и текущий result reader. Готовый export повторно не получать.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md).
+
 Native NM provider / getter прошли 36 сценариев, интеграция с Version prepare —
 64. Семь нужных callees уже экспортированы; дальше platform/context, Windows /
 CPU helpers, затем Login prepare и result readers.

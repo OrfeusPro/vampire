@@ -2391,6 +2391,47 @@
       "question": "release-version-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные platform/FName/context type/resolver/value dependencies и whole Login prepare/result readers текущего SHA."
+    },
+    {
+      "addresses": [
+        "0x1456d7570",
+        "0x1467ce030"
+      ],
+      "checks": [
+        {
+          "cache_key": "824d123f1d6bc422e1605dd868938fc3a1660a43ad6a286c1387c23450dca471",
+          "id": "native-login-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d438860827a0ea5aec798fdd33339b24011fce202ed13764d2e108f1d3d3994d\\manifest.json",
+          "sha256": "d438860827a0ea5aec798fdd33339b24011fce202ed13764d2e108f1d3d3994d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целые Login prepare / constructor проверены в 672 bounded native сценариях: owner/global/NM/SDK fields, selector mapping, platform mode, независимые SDK gates, send arguments, post-send notifications / variant event, temporary ownership и ABI. Готовый export использован повторно; Ghidra и сеть не запускались.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-prepare-11316.json",
+          "sha256": "58d38abdb872ae7b467155faccf0ee90aad34024b1522865c01f3d58ef792a71"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-PREPARE-11316.md",
+          "sha256": "db2a2065d9899a4e609b1fde5c6c1e41c56b60eebed980062428bcc0023bc0ee"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-PREPARE-11316.json",
+          "sha256": "7d4fd61a821eab42a2ed11342ddf3c8d241e8768294497f1905a10fe8eeb801f"
+        }
+      ],
+      "id": "49ba6f1e474e90ffce7c836b480b589c4706339ebe48654740f7ac85e3b1e168",
+      "limits": [
+        "SDK getters, строки / allocator / destructor, platform / selector, language / owner number, send и post-send объекты — явные fixtures.",
+        "SDK manager / handles стабильны внутри сценария; конкурентные изменения не моделируются.",
+        "Нет интеграции с native writer/archive, result readers, живой авторизацией или активацией игрового профиля."
+      ],
+      "method": "bounded_native",
+      "next_check": "Перенести явные SDK и прочие callees Login по готовым / недостающим адресным exports, затем соединить caller с проверенным writer/archive и проверить result reader; не ослаблять source guard.",
+      "question": "release-login-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные SDK/string/platform/language/number зависимости, входные metadata/clock, интеграция с writer/archive и result reader текущего SHA."
     }
   ],
   "schema": 1,

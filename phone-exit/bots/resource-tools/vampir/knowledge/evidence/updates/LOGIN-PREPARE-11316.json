@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "proofs": {
+    "whole_prepare": {
+      "report": "F:/PhoneExit Resources/Vampir/knowledge/native-login-prepare-checks/0cb6b1517924816640afc4d286744f7fe01dd7514194ddab534872f16ad23ad2/manifest.json",
+      "sha256": "0cb6b1517924816640afc4d286744f7fe01dd7514194ddab534872f16ad23ad2",
+      "cases": 672
+    }
+  },
+  "network_used": false,
+  "profile_activated": false
+}

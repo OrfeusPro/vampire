@@ -1,0 +1,313 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "exports": {
+    "run-7c5a462e9d0c": "c94200451d70a9eb459767aa9076b5f98a90325605c135686db082f31a290619"
+  },
+  "prepare": "0x1467ce030",
+  "constructor": "0x1456d7570",
+  "packet_table": "0x1499263d0",
+  "tag_literal": "0x149960020",
+  "send_argument_global": "0x1496706d8",
+  "format_literal": "0x149dc9430",
+  "event_literal": "0x1489fe2e0",
+  "globals": {
+    "text": "0x14b592080",
+    "enum": "0x14b194560",
+    "tag_pointer": "0x14b1b9e98",
+    "enabled": "0x14b592033",
+    "number": "0x14b592028"
+  },
+  "fixtures": {
+    "platform_text": "0x143c19620",
+    "wide_string": "0x141426b30",
+    "wide_compare": "0x14145f1e0",
+    "free": "0x141483080",
+    "sdk_manager": "0x14560ad80",
+    "sdk_mode": "0x14560aed0",
+    "nm_provider": "0x1445ccee0",
+    "copy_string": "0x141441d60",
+    "selector": "0x1445ce2e0",
+    "owner_number": "0x144ab0c80",
+    "ascii_string": "0x141426950",
+    "resize": "0x141436ed0",
+    "language": "0x14556ae90",
+    "sdk_aux_text": "0x14560b0d0",
+    "flags_manager": "0x145cc6a80",
+    "sdk_flag": "0x145ccd310",
+    "sdk_extra_flag": "0x144ffe460",
+    "sdk_main_text": "0x14560b070",
+    "sdk_value": "0x145609e50",
+    "session": "0x144aae520",
+    "send": "0x144aae900",
+    "log": "0x141403b70",
+    "post_receiver": "0x14563dd30",
+    "format_number": "0x141433340",
+    "post_notify": "0x145639100",
+    "variant_number": "0x14156f7b0",
+    "variant_reserve": "0x1414370f0",
+    "variant_copy": "0x1414e32e0",
+    "event_object": "0x14157b110",
+    "sdk_event": "0x145618990",
+    "variant_destroy": "0x1414a55e0",
+    "destructor": "0x1456d82e0"
+  },
+  "call_sites": {
+    "0x1467ce05c": {
+      "target": "0x143c19620"
+    },
+    "0x1467ce06f": {
+      "target": "0x141426b30"
+    },
+    "0x1467ce09b": {
+      "target": "0x14145f1e0"
+    },
+    "0x1467ce0b5": {
+      "target": "0x141483080"
+    },
+    "0x1467ce0d5": {
+      "target": "0x141426b30"
+    },
+    "0x1467ce101": {
+      "target": "0x14145f1e0"
+    },
+    "0x1467ce11b": {
+      "target": "0x141483080"
+    },
+    "0x1467ce138": {
+      "target": "0x141426b30"
+    },
+    "0x1467ce164": {
+      "target": "0x14145f1e0"
+    },
+    "0x1467ce17e": {
+      "target": "0x141483080"
+    },
+    "0x1467ce191": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce19b": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce1a6": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce1b0": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce1be": {
+      "target": "0x14560aed0"
+    },
+    "0x1467ce1d3": {
+      "target": "0x1456d7570"
+    },
+    "0x1467ce1dd": {
+      "target": "0x1445ccee0"
+    },
+    "0x1467ce1e9": {
+      "target": "0x141441d60"
+    },
+    "0x1467ce1f8": {
+      "target": "0x141483080"
+    },
+    "0x1467ce20b": {
+      "target": "0x141441d60"
+    },
+    "0x1467ce21b": {
+      "target": "0x141441d60"
+    },
+    "0x1467ce220": {
+      "target": "0x1445ce2e0"
+    },
+    "0x1467ce260": {
+      "target": "0x141441d60"
+    },
+    "0x1467ce268": {
+      "target": "0x144ab0c80"
+    },
+    "0x1467ce27c": {
+      "target": "0x141426950"
+    },
+    "0x1467ce2b3": {
+      "target": "0x141436ed0"
+    },
+    "0x1467ce2cc": {
+      "target": "0x1487f5ab9"
+    },
+    "0x1467ce2de": {
+      "target": "0x141483080"
+    },
+    "0x1467ce31d": {
+      "target": "0x141436ed0"
+    },
+    "0x1467ce333": {
+      "target": "0x1487f5ab9"
+    },
+    "0x1467ce338": {
+      "target": "0x14556ae90"
+    },
+    "0x1467ce354": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce362": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce377": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce381": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce394": {
+      "target": "0x14560b0d0"
+    },
+    "0x1467ce3bf": {
+      "target": "0x141436ed0"
+    },
+    "0x1467ce3d5": {
+      "target": "0x1487f5ab9"
+    },
+    "0x1467ce3e7": {
+      "target": "0x141483080"
+    },
+    "0x1467ce3ec": {
+      "target": "0x145cc6a80"
+    },
+    "0x1467ce3f4": {
+      "target": "0x145ccd310"
+    },
+    "0x1467ce3ff": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce409": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce414": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce41e": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce42c": {
+      "target": "0x144ffe460"
+    },
+    "0x1467ce437": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce441": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce44c": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce456": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce469": {
+      "target": "0x14560b070"
+    },
+    "0x1467ce475": {
+      "target": "0x141441d60"
+    },
+    "0x1467ce484": {
+      "target": "0x141483080"
+    },
+    "0x1467ce489": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce493": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce4a1": {
+      "target": "0x145609e50"
+    },
+    "0x1467ce4ad": {
+      "target": "0x141441d60"
+    },
+    "0x1467ce4b2": {
+      "target": "0x144aae520"
+    },
+    "0x1467ce4d5": {
+      "target": "0x144aae900"
+    },
+    "0x1467ce4e6": {
+      "target": "0x141426b30"
+    },
+    "0x1467ce521": {
+      "target": "0x141403b70"
+    },
+    "0x1467ce530": {
+      "target": "0x141483080"
+    },
+    "0x1467ce535": {
+      "target": "0x14563dd30"
+    },
+    "0x1467ce540": {
+      "target": "0x144ab0c80"
+    },
+    "0x1467ce554": {
+      "target": "0x141433340"
+    },
+    "0x1467ce561": {
+      "target": "0x145639100"
+    },
+    "0x1467ce570": {
+      "target": "0x141483080"
+    },
+    "0x1467ce582": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce590": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce59f": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce5a9": {
+      "target": "0x14560ad80"
+    },
+    "0x1467ce5ba": {
+      "target": "0x144ab0c80"
+    },
+    "0x1467ce5c8": {
+      "target": "0x14156f7b0"
+    },
+    "0x1467ce5e6": {
+      "target": "0x1414370f0"
+    },
+    "0x1467ce5fd": {
+      "target": "0x1414e32e0"
+    },
+    "0x1467ce613": {
+      "target": "0x14157b110"
+    },
+    "0x1467ce61e": {
+      "target": "0x145618990"
+    },
+    "0x1467ce62d": {
+      "target": "0x141483080"
+    },
+    "0x1467ce63b": {
+      "target": "0x1414a55e0"
+    },
+    "0x1467ce64a": {
+      "target": "0x141483080"
+    },
+    "0x1467ce65c": {
+      "target": "0x141483080"
+    },
+    "0x1467ce666": {
+      "target": "0x1456d82e0"
+    },
+    "0x1467ce675": {
+      "target": "0x141483080"
+    },
+    "0x1456d764a": {
+      "target": "0x141426950"
+    }
+  }
+}
