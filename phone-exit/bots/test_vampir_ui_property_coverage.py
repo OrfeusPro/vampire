@@ -12,6 +12,8 @@ spec = importlib.util.spec_from_file_location('coverage_audit', HERE / 'audit-ui
 coverage = importlib.util.module_from_spec(spec); spec.loader.exec_module(coverage)
 spec = importlib.util.spec_from_file_location('game_ui_data', HERE / 'scan-game-ui-data.py')
 game_data = importlib.util.module_from_spec(spec); spec.loader.exec_module(game_data)
+spec = importlib.util.spec_from_file_location('game_ui_verify', HERE / 'verify-game-ui-data.py')
+game_verify = importlib.util.module_from_spec(spec); spec.loader.exec_module(game_verify)
 
 
 def schema():
@@ -26,6 +28,33 @@ def schema():
 
 
 class PropertyCoverageTests(unittest.TestCase):
+    def test_saved_spatial_verifier_detects_removed_links_and_forged_pointers(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); atlas = root / 'maps/atlas'; atlas.mkdir(parents=True)
+            tables = {k: [] for k in game_data.SPATIAL_TABLES}
+            tables['World'] = [dict(Id='1', MapId='99')]
+            overlay = dict(tiles=[dict(id=1, vertices=[[0, 0]], polygons=[[0]], bounds=[0, 0, 0, 0], height_range=[0, 0])],
+                special_links=[], navigation_filter_presets=[], coordinate_space='world_xy', navigation_ready=False,
+                stats=dict(tiles=1, surface_polygons=1))
+            lifts = dict(lifts=[]); inputs = {}
+            for name, value in [('tables.json', tables), ('navigation-overlay.json', overlay), ('lift-preview.json', lifts)]:
+                path = atlas / name; path.write_text(json.dumps(value), 'utf-8')
+                inputs['maps/atlas/' + name] = game_data.sha(path)
+            nodes, edges = game_data.spatial_graph(tables, {})
+            inventory = game_data.overlay_inventory(overlay, lifts)
+            report = dict(inputs=inputs, nodes=nodes, relations=edges, reverse={'Map:99': edges},
+                spatial_inventory=inventory, spatial_properties=game_data.spatial_properties(tables, inventory))
+            self.assertEqual(game_verify.verify_spatial(root, report)['unresolved_spatial_relations'], 1)
+            forged = copy.deepcopy(report); forged['relations'] = []; forged['reverse'] = {}
+            with self.assertRaisesRegex(ValueError, 'связи'):
+                game_verify.verify_spatial(root, forged)
+            forged = copy.deepcopy(report); forged['spatial_inventory']['objects']['NavTile:1']['pointer'] = '/tiles/99'
+            with self.assertRaisesRegex(ValueError, 'указатели'):
+                game_verify.verify_spatial(root, forged)
+            forged = copy.deepcopy(report); forged['reverse'] = {}
+            with self.assertRaisesRegex(ValueError, 'Обратный'):
+                game_verify.verify_spatial(root, forged)
+
     def test_spatial_joins_preserve_missing_targets_and_reject_conflicting_world_spots(self):
         tables = {k: [] for k in game_data.SPATIAL_TABLES}
         tables['World'] = [dict(Id='1', MapId='999', StartSpotInfoId='2')]
