@@ -4666,6 +4666,27 @@
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-c288c83765a6/details.json"
       ]
+    },
+    {
+      "id": "native-version-result-context",
+      "questions": [
+        "release-version-prepare"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_version_result_context.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11316.json",
+        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+        "phone-exit/bots/test_vampir_version_result_context.py"
+      ]
     }
   ]
 }

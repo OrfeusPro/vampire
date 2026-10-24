@@ -2279,6 +2279,40 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-version-result-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-version-result-context.py"
+      ],
+      "rule": "Найти constructor/table/ID2/reader и проверить archive callees и порядок чтения; literal и нормализованное тело сами по себе не подтверждают роль.",
+      "automation": {
+        "discovery": "reviewed_packet_constructor_table_reader",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456dc5e0",
+                "scope": "17-byte reader with native buffer/scalar IO; no registration, handler or live session.",
+                "required_checks": [
+                  "native-version-result-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-result-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-RESULT-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

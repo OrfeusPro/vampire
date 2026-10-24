@@ -3244,6 +3244,94 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Интеграция actual post-state/continuation в общий handler и реальные services/getters/storage/dispatch. Current WaitingEndNotify registration/ID/handler/predicate/request entry ещё не перенесены; старые адреса и ID27 не подтверждают новую сборку. Live session открыта."
+    },
+    {
+      "addresses": [
+        "0x1456dc5e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "2ba19f585e1a7b3538896b7bd273bda14bcef7fe356998e2fcb4113522c71c75",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b443c591de47a0020d5a5af47de053bdbc59945b766e502b25620daa3f0f5996\\manifest.json",
+          "sha256": "b443c591de47a0020d5a5af47de053bdbc59945b766e502b25620daa3f0f5996",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3030502cf222375a3ed0ed7866c324b1a0a80ffc666f7a0f68dd78b293bb316f",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e23ffa9140ab6c9eb26da92510ae5536415a23e2df01d8b96b072fb2f1683f59\\manifest.json",
+          "sha256": "e23ffa9140ab6c9eb26da92510ae5536415a23e2df01d8b96b072fb2f1683f59",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d3ceaa3bc2a38d67db04a45c73d27335f9f9bec0b2a4e744c7567fe0bfbce005",
+          "id": "native-version-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\adf99e98e9b0bee0d5f73426b82efee43170658bcf5fd0246df01ad9511f90a6\\manifest.json",
+          "sha256": "adf99e98e9b0bee0d5f73426b82efee43170658bcf5fd0246df01ad9511f90a6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1dde4ae1ef4ab9cb11a9eb54e05a45cf63348b934a88e7dee153e1e9c53807a0",
+          "id": "native-version-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6be42ceed5bbc1cb0946559894a5a63c9fa7b31effd9fa64d22855e3be4b4d43\\manifest.json",
+          "sha256": "6be42ceed5bbc1cb0946559894a5a63c9fa7b31effd9fa64d22855e3be4b4d43",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6e09a625e8635890e55b4b34df6201d8f34af188b708abac8e79917a3c2febfb",
+          "id": "native-version-prepare-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\72fd248488d092591d34d4c527d6f3f52552b3fd9002a388db7f809139a9a4d6\\manifest.json",
+          "sha256": "72fd248488d092591d34d4c527d6f3f52552b3fd9002a388db7f809139a9a4d6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f86a09fe72ac4b94c633c90182d1711a8b63f40adcef2b3660cd3cdb68ac98d5",
+          "id": "native-version-combiner-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d22603f1b4dedaf79aaa7538004e0563ab8e4fd01d8cdc3ad4ed58e8bff99bc3\\manifest.json",
+          "sha256": "d22603f1b4dedaf79aaa7538004e0563ab8e4fd01d8cdc3ad4ed58e8bff99bc3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "94b0eddeb9a5b5337a3a6b74d3ad48e56211ca146d1393b03334aa45a5596e37",
+          "id": "native-version-prepare-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d2ee19eff354c95200ac13ecd36d3819858c347f805f6cba8b55dd38c897083f\\manifest.json",
+          "sha256": "d2ee19eff354c95200ac13ecd36d3819858c347f805f6cba8b55dd38c897083f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1c2f028e10f209121d58e7832e36fef947eb305e3321771ff0fcbae7125132ff",
+          "id": "native-version-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\22c298a3819fb86fda2d1c4cbbfa62fb9d2d00a6d076e9b22a824bf616eae911\\manifest.json",
+          "sha256": "22c298a3819fb86fda2d1c4cbbfa62fb9d2d00a6d076e9b22a824bf616eae911",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current ID 2 reader с native input archive подтверждает 17-byte runtime projection: 32 полных случая, 17 коротких вводов и остановка при 5 отказах. Constructor/table/ID getter проверены; профиль не активирован.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-RESULT-11316.md",
+          "sha256": "4885f7f6e6519b705fb06fbd405c23479d93a8a261c8e614c022468709176a7f"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-result-11316.json",
+          "sha256": "82104cfc30a209b20cdc2aec29d40d0b5a637c89569fbe8b9e461f9e5ab9a112"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-c363c26b9abc\\details.json",
+          "sha256": "f894fc2d8ac828ca35b8ada9c5cf63073321196fe36d53f22d8ab6ca5c277d2c"
+        }
+      ],
+      "id": "cb1b5f98c1f9b013f124df4a53d90eda984c750c11f021115836ea07c5efeeed",
+      "limits": [
+        "Synthetic input allocation; explicit little-endian archive and allowlisted instructions only.",
+        "Registration/dispatch/handler/Login transition and live compatibility not verified."
+      ],
+      "method": "bounded_native",
+      "next_check": "Port current handler/transition and profile dependencies before live Game Login/list/create.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current VersionResult registration/handler and remaining game profile dependencies."
     }
   ],
   "schema": 1,

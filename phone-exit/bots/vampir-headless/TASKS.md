@@ -5,6 +5,10 @@ Netmarble/SDK launcher sign-in прошёл; игровой профиль ос�
 источника, до Game Login и списка. [Проверка и следующий шаг](LIVE-HK-CHECK.md).
 Завершить профиль текущей сборки; затем список и Carnage только при пустом списке.
 
+Current VersionResult reader проверен на native input archive: 32 полных случая,
+17 коротких тел и 5 отказов операций. Следом — current handler/переход к Login;
+игровой профиль ещё не активирован. [Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-11316.md).
+
 Current final virtual +28 после LoginResult подтверждён как reset: constructor/
 getter/final table и 8 native сценариев перенесены. Инициатор списка искать
 в current WaitingEndNotify по готовому исследованию старой версии. [Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md).
