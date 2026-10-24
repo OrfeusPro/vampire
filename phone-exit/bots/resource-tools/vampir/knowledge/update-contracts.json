@@ -436,7 +436,8 @@
         "native-login-sdk-context",
         "native-login-metadata-context",
         "native-login-prepare-metadata-context",
-        "native-login-result-context"
+        "native-login-result-context",
+        "native-login-result-input-context"
       ],
       "recipes": [
         {
@@ -488,7 +489,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Current LoginResult/nested reader projection проверена с archive/string fixtures. Перенести actual input primitives/UTF-8 и handler/dispatch; сохранить отдельную задачу writer/archive integration и SDK/UserInfo boundaries. Runtime partial.",
+      "next_check": "Числовой input archive, raw IO и bool normalization исполняются native внутри LoginResult. Перенести FString/UTF-8 input и handler/dispatch; writer/archive integration и SDK/UserInfo boundaries остаются. Runtime partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -529,7 +530,8 @@
         "native-login-sdk-current",
         "native-login-metadata-current",
         "native-login-prepare-metadata-current",
-        "native-login-result-current"
+        "native-login-result-current",
+        "native-login-result-input-current"
       ],
       "writer_check": {
         "object_size": 320,

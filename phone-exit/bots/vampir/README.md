@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+В LoginResult включены native числовые archive методы, raw IO и bool normalization:
+320 полных случаев, 332 коротких префикса и 25 отказов прошли повторно.
+FString/UTF-8 input, concrete buffer constructor и handler/dispatch ещё открыты.
+[Реальный cursor/count и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md).
+
 Reader игрового LoginResult 1.13.16 привязан к ID 4 и проверен вместе с nested
 constructors/readers: 320 полных случаев, 332 коротких тела и 25 отказов.
 Archive primitives / UTF-8 пока fixtures; handler/dispatch остаются открыты.

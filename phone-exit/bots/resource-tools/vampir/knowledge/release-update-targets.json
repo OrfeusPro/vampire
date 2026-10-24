@@ -1869,6 +1869,84 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-result-input-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-result-context.py",
+        "login-result-input-fixtures.py"
+      ],
+      "rule": "Сверять default input constructor/table, scalar/raw slots, bookkeeping +10, buffer/cursor layout, endian gate и truncated/failure behavior внутри целого LoginResult. String/UTF-8 fixture не считать actual reader; конкретный buffer constructor и handler отдельно.",
+      "automation": {
+        "discovery": "reviewed_input_constructor_table_and_scalar_slots",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x144aac190",
+                "scope": "Actual default archive/scalars/raw IO inside whole LoginResult; explicit buffer/memcpy and UTF-8/FString boundaries, little endian only.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac250",
+                "scope": "Actual default archive/scalars/raw IO inside whole LoginResult; explicit buffer/memcpy and UTF-8/FString boundaries, little endian only.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac2a0",
+                "scope": "Actual default archive/scalars/raw IO inside whole LoginResult; explicit buffer/memcpy and UTF-8/FString boundaries, little endian only.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac470",
+                "scope": "Actual default archive/scalars/raw IO inside whole LoginResult; explicit buffer/memcpy and UTF-8/FString boundaries, little endian only.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac4a0",
+                "scope": "Actual default archive/scalars/raw IO inside whole LoginResult; explicit buffer/memcpy and UTF-8/FString boundaries, little endian only.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac4f0",
+                "scope": "Actual default archive/scalars/raw IO inside whole LoginResult; explicit buffer/memcpy and UTF-8/FString boundaries, little endian only.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac5c0",
+                "scope": "Actual default archive/scalars/raw IO inside whole LoginResult; explicit buffer/memcpy and UTF-8/FString boundaries, little endian only.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "login-result-input-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

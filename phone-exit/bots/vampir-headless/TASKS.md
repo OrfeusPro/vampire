@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+Input archive/scalar/raw методы теперь native внутри LoginResult; 320 полных
+случаев, 332 коротких ввода и 25 отказов прошли. Далее — actual FString/UTF-8,
+concrete buffer constructor и current handler/dispatch. Runtime guard сохранён.
+[Проверка и готовые exports](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md).
+
 Текущие LoginResult/nested readers прошли 320 полных случаев, 332 коротких
 префикса и 25 отказов; Python decoder совпал с полями native caller.
 Далее — actual input archive/UTF-8 и handler/dispatch; код 0 не означает сессию.

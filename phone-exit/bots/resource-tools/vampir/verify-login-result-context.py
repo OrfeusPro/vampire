@@ -32,7 +32,16 @@ def load(name):
 def verify(context, root):
     functions = {key: int(at, 16) for key, at in context['functions'].items()}
     leaves = {int(at, 16): spec['bytes'] for at, spec in context['leaves'].items()}
-    h = load('update-native-harness').make_harness(context, context['exports'], set(functions.values()), leaves=leaves, root=root)
+    input_ = context.get('native_input')
+    exports = dict(context['exports'])
+    roots = set(functions.values())
+    if input_:
+        if input_['source_sha256'] != context['source_sha256']:
+            raise ValueError('LoginResult input source differs')
+        roots.update(int(at, 16) for at in input_['functions'].values())
+        exports.update(input_['exports'])
+        leaves.update({int(at, 16): spec['bytes'] for at, spec in input_['leaves'].items()})
+    h = load('update-native-harness').make_harness(context, exports, roots, leaves=leaves, root=root)
     native, rows = load('build-native-entry-code'), load('update-bindings').rows
     calls = {hex(r['address']): {'target': hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
              for at in functions.values() for r in rows(native, h.image, at) if r['call']}
@@ -75,6 +84,9 @@ def verify(context, root):
                 h.finish(0)
                 return
             position = state['position']
+            if input_:
+                position = input_position()
+                state['position'] = position
             if kind == 'string':
                 if position + 2 > len(state['body']):
                     h.finish(0)
@@ -82,6 +94,8 @@ def verify(context, root):
                 size = int.from_bytes(state['body'][position:position + 2], 'little')
                 state['position'] += 2
                 position += 2
+                if input_:
+                    set_input_position(state['position'])
             else:
                 size = WIDTH[kind]
             if position + size > len(state['body']):
@@ -89,6 +103,8 @@ def verify(context, root):
                 return
             raw = state['body'][position:position + size]
             state['position'] += size
+            if input_:
+                set_input_position(state['position'])
             if kind == 'string':
                 text = raw.decode('utf-8')
                 require('\0' not in text, 'LoginResult fixture NUL unsupported')
@@ -113,11 +129,16 @@ def verify(context, root):
 
     fixture = {key: int(at, 16) for key, at in context['fixtures'].items()}
     for kind, at in fixture.items():
+        if input_ and kind != 'string':
+            continue
         h.add_fixture(at, archive_fixture(kind))
     for slot, kind in ((0x28, 'time'), (0x50, 'u64'), (0x58, 'u32'), (0x60, 'raw32'), (0x70, 'u16'), (0x88, 'bool')):
         h.uc.mem_write(archive_table + slot, struct.pack('<Q', fixture[kind]))
     h.uc.mem_write(archive - 16, b'\xa5' * 16 + struct.pack('<Q', archive_table) + b'\xa6' * 16)
     archive_guard = bytes(h.uc.mem_read(archive - 16, 40))
+    if input_:
+        seed_input, input_position, set_input_position, check_input = load('login-result-input-fixtures').install(
+            load, h, input_, state, packet, archive, ORDER)
     all_tables = ((0, packet_table), (0x50, time_table), (0xa8, time_table), (0xd8, period_table)) + tuple(
         (off, time_table) for off in (0xe8, 0xf8, 0x108, 0x118))
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
@@ -138,20 +159,26 @@ def verify(context, root):
                      allocations={}, fail_at=fail_at, primitive_true=primitive_true)
         h.uc.mem_write(packet - 16, b'\xa5' * 16 + bytes([poison]) * 0x140 + b'\xa6' * 16)
         h.call(functions['constructor'], packet)
+        if input_:
+            seed_input(body, poison)
         before = bytes(h.uc.mem_read(packet, 0x140))
         for name, value in abi.items():
             h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + name), value)
         h.uc.reg_write(h.x.UC_X86_REG_RDX, archive)
         returned = h.call(functions['reader'], packet) & 255
+        if input_:
+            state['position'] = input_position()
+            check_input()
         require(all(reg(name) == value for name, value in abi.items()) and reg('RSP') == h.scratch + 0x38008,
                 'LoginResult ABI differs')
         require(bytes(h.uc.mem_read(packet - 16, 16)) == b'\xa5' * 16
                 and bytes(h.uc.mem_read(packet + 0x140, 16)) == b'\xa6' * 16, 'LoginResult object guards changed')
-        require(bytes(h.uc.mem_read(archive - 16, 40)) == archive_guard, 'LoginResult archive input changed')
+        if not input_:
+            require(bytes(h.uc.mem_read(archive - 16, 40)) == archive_guard, 'LoginResult archive input changed')
         for off, table in all_tables:
             require(int.from_bytes(h.uc.mem_read(packet + off, 8), 'little') == table, 'LoginResult nested vptr differs')
         allowed = set()
-        for off in state['written']:
+        for off in ([int(at, 16) for _, at in state['operations']] if input_ else state['written']):
             kind = next(kind for kind, field in ORDER if field == off)
             allowed.update(range(off, off + (16 if kind == 'string' else WIDTH[kind])))
         after = bytes(h.uc.mem_read(packet, 0x140))
@@ -161,8 +188,12 @@ def verify(context, root):
             require(bytes(h.uc.mem_read(pointer - 16, 16)) == b'\xa5' * 16
                     and bytes(h.uc.mem_read(pointer + size, 16)) == b'\xa6' * 16, 'LoginResult string guard changed')
         require(state['position'] <= len(body), 'LoginResult reads past available body')
-        return dict(returned=returned, consumed=state['position'], operations=list(state['operations']),
-                    fields=capture(), guards=True, body_hex=body.hex(), fail_at=fail_at)
+        result = dict(returned=returned, consumed=state['position'], operations=list(state['operations']),
+                      fields=capture(), guards=True, body_hex=body.hex(), fail_at=fail_at)
+        if input_:
+            result.update(input_entries=dict(state['input_entries']),
+                          last_count=int.from_bytes(h.uc.mem_read(archive + 0x10, 4), 'little'))
+        return result
 
     def payload(text, code, raw_flag):
         parts = []
@@ -205,9 +236,11 @@ def verify(context, root):
     return dict(schema=1, source_sha256=context['source_sha256'], method='bounded_native', cases=cases,
                 truncated=truncated, failures=failures, trailing=trailing, evidence=h.evidence,
                 runtime=load('update-native-harness').runtime_inputs(), network_used=False, profile_activated=False,
+                native_input_used=bool(input_),
+                input_fixture_sha256=hashlib.sha256((HERE / 'login-result-input-fixtures.py').read_bytes()).hexdigest() if input_ else None,
                 limits=['Whole current packet/nested constructors and readers plus two leaves and virtual read thunk execute.',
-                        'Archive primitives/UTF-8 decoding/FString allocation are explicit fixtures; widths/destinations/order and failure propagation are native caller evidence.',
-                        'Bool normalization and UTF-8 acceptance are fixture policies, not proof of actual archive conversion.',
+                        'Input constructor/scalars/raw IO/bookkeeping execute when native_input_used; buffer binding, memcpy and UTF-8/FString operations remain fixtures.',
+                        'Bool normalization is native only when native_input_used; UTF-8 acceptance is still a fixture policy. Little endian only.',
                         'No handler, dispatch, result semantic names, network, login success or runtime activation proved.'])
 
 

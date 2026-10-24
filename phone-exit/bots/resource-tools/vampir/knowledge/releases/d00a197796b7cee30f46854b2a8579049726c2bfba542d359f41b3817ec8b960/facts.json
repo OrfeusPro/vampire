@@ -2634,6 +2634,65 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Actual input archive primitives/UTF-8 и malformed semantics, handler/dispatch/current result gates и переход к персонажам."
+    },
+    {
+      "addresses": [
+        "0x144aac190",
+        "0x144aac250",
+        "0x144aac2a0",
+        "0x144aac470",
+        "0x144aac4a0",
+        "0x144aac4f0",
+        "0x144aac5c0",
+        "0x1456d7690",
+        "0x1456dc140",
+        "0x1457a23a0",
+        "0x1457a3500",
+        "0x1457a5820",
+        "0x1457fdce0"
+      ],
+      "checks": [
+        {
+          "cache_key": "a80c1486d3f4d2bbcdb7a38aa5702d0480eb7c4676a966653f1b62e4b401fa95",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e07c02fb803ee490baf37a40483fd920aeb9e6205707e4baab0ac340af9932da\\manifest.json",
+          "sha256": "e07c02fb803ee490baf37a40483fd920aeb9e6205707e4baab0ac340af9932da",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d116695fd7e78a1c0fb7810fe6ce57f37b3a2cc2c994a6dfd0c1c53a18ca6b95",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fbe0a1aaa5ea622cd483180ee1e708fc6e9e9310e92594f089c2e97eafb80ef2\\manifest.json",
+          "sha256": "fbe0a1aaa5ea622cd483180ee1e708fc6e9e9310e92594f089c2e97eafb80ef2",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Actual default input constructor, scalar/time adapters, bool normalization, raw IO и bookkeeping включены в whole LoginResult/nested readers. Повторены 320 полных случаев, 332 коротких префикса и 25 отказов; поля совпали с Python decoder. Native raw read частично потребляет/пишет короткое число, bool пишет normalized byte только после успеха. Проверены actual table/slots, cursor/count/guards/ABI. String conversion остаётся fixture.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-result-input-11316.json",
+          "sha256": "d5541110ec88befc4c561f658ee11ee0d032cb24106b1b9c13842f05258c11af"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-RESULT-INPUT-11316.md",
+          "sha256": "4922ba87639cc5dd06d466a425ea975f8d30f2d7c8d86515f2f41f6c5e6c2fba"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-RESULT-INPUT-11316.json",
+          "sha256": "699c7848b6da002deb0c279afb2a6aba1ee6fcb739323fbaffa54b547f89597d"
+        }
+      ],
+      "id": "1fe2279d677f102f8a61440757749e3ee446ce2c2ccb8dbded76ec1933e10048",
+      "limits": [
+        "Little endian, корректные buffer/cursor fixtures до 4096 байт; memcpy bounded scratch-only fixture. Malformed pointers/low32 overflow и byte-swap ветви не проверены.",
+        "UTF-8/FString input/length/allocation остаются fixtures; concrete buffer constructor 144aacb40/144aac130 не исполнен.",
+        "Handler/dispatch/result gates, список персонажей, авторизация и runtime activation не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать готовые archive roots; перенести actual string input и UTF-8, затем handler/dispatch без ослабления source guard. Не считать совпавший body готовой сессией.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Actual FString/UTF-8 input, concrete buffer construction и current handler/dispatch/result gates."
     }
   ],
   "schema": 1,

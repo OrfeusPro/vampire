@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "report": "F:/PhoneExit Resources/Vampir/knowledge/native-login-result-checks/0d9f104d3be4c672f882b3f0e1a0c578d0a9e1ea1a4dabe3e40180e8afaaf0ff/manifest.json",
+  "sha256": "0d9f104d3be4c672f882b3f0e1a0c578d0a9e1ea1a4dabe3e40180e8afaaf0ff",
+  "cases": 320,
+  "truncated": 332,
+  "failures": 25,
+  "native_input_used": true,
+  "network_used": false,
+  "profile_activated": false
+}
