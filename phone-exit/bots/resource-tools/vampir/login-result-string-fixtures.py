@@ -49,7 +49,8 @@ def install(load, h, context, state, packet, string_offsets):
                         and int.from_bytes(h.uc.mem_read(a, 8), 'little') == 0, 'Reader UTF16 scratch allocation differs')
                 h.uc.mem_write(a, struct.pack('<Q', allocate(c * 2)))
             elif name == 'assign':
-                require(a - packet in string_offsets and int.from_bytes(h.uc.mem_read(a, 8), 'little') == 0,
+                owner = packet() if callable(packet) else packet
+                require(a - owner in string_offsets and int.from_bytes(h.uc.mem_read(a, 8), 'little') == 0,
                         'Reader FString assignment destination differs')
                 data = bytearray()
                 if b:

@@ -678,7 +678,8 @@
         "native-waiting-end-context",
         "native-character-list-envelope-context",
         "native-character-record-context",
-        "native-character-extensions-context"
+        "native-character-extensions-context",
+        "native-character-list-records-context"
       ],
       "recipes": [
         {
@@ -812,12 +813,13 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Непустые appearance/optional компоненты проверены отдельно, включая native duplicate lookup/overwrite и rehash fixture. Объединить whole record/list на общей памяти, затем handler; runtime profile остаётся partial.",
+      "next_check": "Whole list/records/collections проверены на общей памяти: 32 полных ответа, 291 короткий ввод, 154 отказа и distinct records. Перенести current result registration/handler и publication/empty-create gates; source profile/clock ещё неполны.",
       "targets": [
         "native-waiting-end-current",
         "native-character-list-envelope-current",
         "native-character-record-current",
-        "native-character-extensions-current"
+        "native-character-extensions-current",
+        "native-character-list-records-current"
       ]
     },
     {

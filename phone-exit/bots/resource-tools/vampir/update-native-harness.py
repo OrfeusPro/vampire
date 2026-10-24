@@ -105,7 +105,14 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                         vector='0x144aac530', u16_quad_reader='0x145794bc0')
                     and context.get('native_input', {}).get('functions', {}).get('constructor') == '0x144aacb40'
                     and context.get('native_input', {}).get('functions', {}).get('buffer_constructor') == '0x144aac130')
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (9 if handler_scope or record_scope else 8):
+    list_scope = (budget == 34 and context.get('budget_scope') == 'character-list-records'
+                  and len(functions) == 34 and SHA == 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
+                  and all(context.get('functions', {}).get(key) == value for key, value in dict(
+                      list_reader='0x1456dbc30', list_resize='0x1456e6a20', list_record_thunk='0x1456dcdc0',
+                      constructor='0x145783840', reader='0x145788500', optional_insert='0x1456bd7a0',
+                      appearance_callback='0x14573b9c0', input_constructor='0x144aacb40',
+                      input_buffer_constructor='0x144aac130').items()))
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (10 if list_scope else (9 if handler_scope or record_scope else 8)):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

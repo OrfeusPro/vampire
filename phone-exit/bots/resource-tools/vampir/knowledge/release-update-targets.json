@@ -2585,6 +2585,54 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-character-list-records-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-character-list-records-context.py"
+      ],
+      "rule": "После component checks объединить whole list на общей памяти, проверить distinct records и отклонение partial count. Scope 34 roots/10 exports только для явного проверенного набора текущего SHA; не расширять call tree.",
+      "automation": {
+        "discovery": "reuse_verified_list_record_extension_contexts",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456dbc30",
+                "scope": "Whole list on shared memory with storage/shallow-copy fixtures; no handler, dispatch or live session.",
+                "required_checks": [
+                  "native-character-list-records-context"
+                ]
+              },
+              {
+                "address": "0x1456dcdc0",
+                "scope": "Whole list on shared memory with storage/shallow-copy fixtures; no handler, dispatch or live session.",
+                "required_checks": [
+                  "native-character-list-records-context"
+                ]
+              },
+              {
+                "address": "0x145788500",
+                "scope": "Whole list on shared memory with storage/shallow-copy fixtures; no handler, dispatch or live session.",
+                "required_checks": [
+                  "native-character-list-records-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-list-records-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-RECORDS-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

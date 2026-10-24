@@ -46,6 +46,7 @@ Windows / Android parity и перенос старых mappings требуют 
 - [CDN URL: завершающая сборка строки](../evidence/updates/HEADLESS-CDN-URL.md)
 - [CharacterRecord 1.13.16: непустые коллекции внешности и optional map](../evidence/updates/HEADLESS-CHARACTER-EXTENSIONS-11316.md)
 - [CharacterListReadResult 1.13.16: внешний reader и счётчик](../evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md)
+- [CharacterListReadResult 1.13.16: общий reader с непустыми записями](../evidence/updates/HEADLESS-CHARACTER-LIST-RECORDS-11316.md)
 - [CharacterRecord 1.13.16: чтение полей и вложенных структур](../evidence/updates/HEADLESS-CHARACTER-RECORD-11316.md)
 - [Строка версии пакетов 1.13.16](../evidence/updates/HEADLESS-COMPILED-TAG-11316.md)
 - [NetworkSetting: callback вызывается при регистрации](../evidence/updates/HEADLESS-CONFIG-STARTUP.md)

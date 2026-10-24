@@ -10,11 +10,14 @@
 списком требует 38 байт. Поля CharacterRecord уже сверены с декодером в 128
 сценариях с пустыми расширениями. Непустые коллекции внешности и optional map
 также проверены отдельными компонентами, включая повторные ключи и коллизии.
-Далее — объединение целого списка на общей памяти и обработчик ответа.
+Целый reader списка уже прошёл общий прогон на одной памяти: разные записи
+сохраняют свои строки и коллекции, частичные ответы отклоняются.
+Далее — регистрация и обработчик ответа, затем подготовка игрового профиля.
 [Инициатор](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-WAITING-END-11316.md),
 [ответ и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md).
 [Проверка записи персонажа](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-RECORD-11316.md).
 [Непустые коллекции](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-EXTENSIONS-11316.md).
+[Общий reader списка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-RECORDS-11316.md).
 Профиль текущей сборки ещё не активирован; живое создание не выполнено.
 
 Post-state wrapper/tail callee прошли 44 native сценария; отказ Ghidra устранён
