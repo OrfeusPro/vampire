@@ -1618,13 +1618,13 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-cb0eb2ecc2a4. `/Game/RED/UI/Skill/WBP_SkillCyclePopup` — вариантов: 1.
 - [ ] UI-W-1e427eebdbb3. `/Game/RED/UI/Skill/WBP_SkillDescInfoT` — вариантов: 1.
 - [ ] UI-W-1f26ca3009ba. `/Game/RED/UI/Skill/WBP_SkillEffectInfoT` — вариантов: 1.
-- [ ] UI-W-d654727bf5e9. `/Game/RED/UI/Skill/WBP_SkillInfoPopup` — вариантов: 1.
+- [ ] ~ UI-W-d654727bf5e9. `/Game/RED/UI/Skill/WBP_SkillInfoPopup` — вариантов: 1.
 - [ ] UI-W-f7a3a4671b55. `/Game/RED/UI/Skill/WBP_SkillInfoT` — вариантов: 2.
 - [ ] UI-W-90bf833686f6. `/Game/RED/UI/Skill/WBP_SkillPreviewT` — вариантов: 2.
 - [ ] UI-W-05bc2cd9f51a. `/Game/RED/UI/Skill/WBP_SkillSequencePopup` — вариантов: 1.
 - [ ] UI-W-bc2d250fc378. `/Game/RED/UI/Skill/WBP_SkillSequenceT` — вариантов: 1.
 - [ ] UI-W-ea56cf9a975e. `/Game/RED/UI/Skill/WBP_SkillSettingListT` — вариантов: 1.
-- [ ] UI-W-b5d08e2a8498. `/Game/RED/UI/Skill/WBP_SkillSettingPopup` — вариантов: 1.
+- [ ] ~ UI-W-b5d08e2a8498. `/Game/RED/UI/Skill/WBP_SkillSettingPopup` — вариантов: 1.
 - [ ] UI-W-8c0b902e1987. `/Game/RED/UI/Skill/WBP_SkillSummaryInfoT` — вариантов: 1.
 - [ ] UI-W-1334bcd031d9. `/Game/RED/UI/Skill/WBP_SkillT` — вариантов: 2.
 - [ ] UI-W-f67ad50f7323. `/Game/RED/UI/Skill/WBP_StackableSkillT` — вариантов: 2.

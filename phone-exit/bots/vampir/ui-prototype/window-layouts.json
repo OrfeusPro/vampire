@@ -6,36 +6,83 @@
     "name-window": {
       "resource": "WBP_NameInputPopup",
       "catalog_file": "pakchunk500-Windows-2385.json",
-      "rect": [0.366, 0.322, 0.268, 0.356],
+      "rect": [
+        0.366,
+        0.322,
+        0.268,
+        0.356
+      ],
       "basis": "PanelPopup slot 14: 640 × 480, центральные anchors / alignment. Масштаб демо адаптирован; прямой callback кастомизации в этот WBP не подтверждён."
     },
     "inventory-window": {
       "resource": "WBP_InventoryUI",
       "catalog_file": "pakchunk500-Windows-2167.json",
-      "rect": [0.738, 0.07, 0.262, 0.85],
+      "rect": [
+        0.738,
+        0.07,
+        0.262,
+        0.85
+      ],
       "reference": "codex-clipboard-d4d58ad1-cc4e-4040-9f61-bfff322343a4.png",
       "basis": "Сумка справа на изображении 7; цепочки контейнеров из WBP. Абсолютное размещение адаптировано по кадру."
     },
     "full-window": {
       "resource": "WBP_ShopUI",
       "catalog_file": "pakchunk500-Windows-8944.json",
-      "rect": [0, 0, 1, 1],
+      "rect": [
+        0,
+        0,
+        1,
+        1
+      ],
       "reference": "codex-clipboard-63b3f0f9-2c70-4221-bb6d-4ee632a14463.png",
       "basis": "Полноэкранный магазин на изображении 8; растянутые root Canvas slots в WBP."
     },
     "purchase-window": {
       "resource": "WBP_ShopPurchasePopup",
       "catalog_file": "pakchunk500-Windows-8930.json",
-      "rect": [0.242, 0.125, 0.516, 0.68],
+      "rect": [
+        0.242,
+        0.125,
+        0.516,
+        0.68
+      ],
       "reference": "codex-clipboard-cd945f03-0857-49f0-b5e4-248a579d37c1.png",
       "basis": "Попап покупки по центру на изображении 9; SizeBox_1 хранит WidthOverride 1236 и HeightOverride 816. Они не равны экранным пикселям."
     },
     "item-card": {
       "resource": "WBP_ItemInfoPopup",
       "catalog_file": "pakchunk500-Windows-2241.json",
-      "rect": [0.378, 0.12, 0.245, 0.756],
+      "rect": [
+        0.378,
+        0.12,
+        0.245,
+        0.756
+      ],
       "reference": "codex-clipboard-c1c2c495-f662-4aa6-939a-9c5bbebf627f.png",
       "basis": "Узкая высокая карточка поверх покупки на изображении 10; PanelPopup в slot 70 имеет центральную X-привязку и AutoSize."
+    },
+    "skills-window": {
+      "resource": "WBP_SkillSettingPopup",
+      "catalog_file": "pakchunk500-Windows-8976.json",
+      "rect": [
+        0.246,
+        0,
+        0.754,
+        1
+      ],
+      "basis": "PanelPopup slot 37: right anchors [1,0]–[1,1], alignment [1,0], width 1810. Демо использует reference width 2400; полная внешняя иерархия и runtime DPI неизвестны. Внутренние колонки временные."
+    },
+    "skill-info-window": {
+      "resource": "WBP_SkillInfoPopup",
+      "catalog_file": "pakchunk500-Windows-8964.json",
+      "rect": [
+        0.34,
+        0.08,
+        0.32,
+        0.84
+      ],
+      "basis": "Временная центральная карточка без кадра игры. Runtime desired size и цепочка внешней геометрии требуют проверки."
     }
   }
 }

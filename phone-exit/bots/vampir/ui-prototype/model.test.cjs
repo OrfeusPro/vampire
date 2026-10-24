@@ -153,3 +153,75 @@ test('inactive server corruption and schema 2 are rejected without overwriting s
   const unknown = M.serialize(M.initial()); unknown.serverStates.Unknown = unknown.serverStates['Franz 2'];
   assert.equal(M.validate(unknown), false);
 });
+
+test('class skills learn, upgrade, slot swap and auto settings update one shared state', () => {
+  for (const [classId] of M.CLASSES) {
+    let s = M.apply(M.initial(), 'create', { name: 'Ученик', uid: classId, appearance: { ...M.appearance(), classId } });
+    const rows = M.skillsForClass(classId), [first, second, locked] = rows;
+    assert.deepEqual(Object.keys(s.skills.levels), [first.id, second.id]);
+    assert.throws(() => M.apply(s, 'skill-slot', { slot: 3, id: locked.id }), /слот/);
+    assert.throws(() => M.apply(s, 'skill-cast', { id: locked.id, now: 1000 }), /изучен/);
+    const before = s.gold;
+    s = M.apply(s, 'skill-learn', { id: locked.id });
+    assert.equal(s.gold, before - locked.learnCost);
+    assert.throws(() => M.apply(s, 'skill-learn', { id: locked.id }));
+    s = M.apply(s, 'skill-upgrade', { id: locked.id });
+    s = M.apply(s, 'skill-upgrade', { id: locked.id });
+    assert.equal(s.skills.levels[locked.id], 3); assert.equal(s.gold, before - 800);
+    assert.throws(() => M.apply(s, 'skill-upgrade', { id: locked.id }));
+    s = M.apply(s, 'skill-slot', { slot: 1, id: first.id });
+    assert.deepEqual(s.skills.slots.slice(0, 2), [second.id, first.id]);
+    s = M.apply(s, 'skill-slot', { slot: 4, id: locked.id });
+    s = M.apply(s, 'skill-auto', { id: locked.id });
+    assert.deepEqual(s.skills.auto, [locked.id]);
+    s = M.apply(s, 'skill-slot', { slot: 4, id: null }); assert.equal(s.skills.slots[4], null);
+    assert.throws(() => M.apply(s, 'skill-slot', { slot: 5, id: first.id }));
+    const foreign = Object.values(M.SKILLS).find(skill => skill.classId !== classId);
+    assert.throws(() => M.apply(s, 'skill-learn', { id: foreign.id }));
+    s = M.apply(s, 'select', { id: 'demo-1' });
+    assert.equal(s.gold, M.initial().gold);
+  }
+});
+
+test('skill MP and cooldown are atomic, persistent, scoped to character and server', () => {
+  let s = M.initial(), id = s.skills.slots[0], now = 1000;
+  const startMp = s.mp;
+  s = M.apply(s, 'skill-cast', { id, now });
+  assert.equal(s.mp, startMp - M.SKILLS[id].mp); assert.equal(s.skills.readyAt[id], 4000);
+  assert.throws(() => M.apply(s, 'skill-cast', { id, now: 3999 }), /перезарядке/);
+  assert.equal(s.mp, startMp - M.SKILLS[id].mp);
+  const restored = M.load({ getItem: () => JSON.stringify({ dataset: 'same', state: M.serialize(s) }) }, 'same');
+  assert.equal(restored.issue, null);
+  assert.throws(() => M.apply(restored.state, 'skill-cast', { id, now: 3999 }));
+  s = M.apply(restored.state, 'skill-cast', { id, now: 4000 });
+  s = M.apply(s, 'create', { name: 'Второй', uid: 'two', appearance: M.appearance() });
+  assert.deepEqual(s.skills.readyAt, {});
+  s = M.apply(s, 'select', { id: 'demo-1' }); assert.equal(s.skills.readyAt[id], 7000);
+  s = M.apply(s, 'server', { server: 'Kurzel 1' });
+  s = M.apply(s, 'create', { name: 'Третий', uid: '1', appearance: M.appearance() });
+  assert.deepEqual(s.skills.readyAt, {});
+  for (const time of [NaN, -1, Infinity, 1e16]) assert.throws(() => M.apply(s, 'skill-cast', { id, now: time }));
+  while (s.mp >= M.SKILLS[id].mp) { s = M.apply(s, 'skill-cast', { id, now }); now += 3000; }
+  const balance = s.mp; assert.throws(() => M.apply(s, 'skill-cast', { id, now }), /MP/); assert.equal(s.mp, balance);
+});
+
+test('corrupt skill levels, slots, auto and cooldown values are rejected', () => {
+  for (const corrupt of [
+    v => v.slots.push(null), v => { v.slots[1] = v.slots[0]; },
+    v => { v.levels['120011'] = 4; }, v => { v.levels['140011'] = 1; },
+    v => { v.auto = ['not-learned']; }, v => { v.readyAt['120011'] = -1; },
+    v => { v.readyAt['120011'] = Infinity; }
+  ]) {
+    const s = M.serialize(M.initial()); corrupt(s.serverStates['Franz 2'].characterStates['demo-1'].skills);
+    assert.equal(M.validate(s), false);
+  }
+});
+
+test('skill training rejects insufficient gold without mutating a valid low-balance save', () => {
+  const s = M.serialize(M.initial()), bank = s.serverStates['Franz 2'].characterStates['demo-1'];
+  bank.gold = 50;
+  const before = JSON.stringify(s);
+  assert.throws(() => M.apply(s, 'skill-learn', { id: '120013' }), /золота/);
+  assert.throws(() => M.apply(s, 'skill-upgrade', { id: '120011' }), /золота/);
+  assert.equal(JSON.stringify(s), before);
+});

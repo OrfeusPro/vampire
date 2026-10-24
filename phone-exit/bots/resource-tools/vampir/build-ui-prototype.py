@@ -56,12 +56,56 @@ def compare(old, new):
     return changes
 
 
+def skill_sources(root):
+    """Publish only the curated demo set; preserve historical source records."""
+    inputs = {}
+    def tracked(relative, expected=None):
+        path = root / relative
+        inputs[relative] = sha(path)
+        if expected and inputs[relative] != expected:
+            raise ValueError('Изменился источник навыков: ' + relative)
+        return read(path)
+    class_manifest = tracked('maps/catalog-classes-manifest.json')
+    classes = tracked('maps/' + class_manifest['file'], class_manifest['sha256'])
+    monster_manifest = tracked('maps/atlas/monster-manifest.json')
+    index_spec = monster_manifest['skill_index']
+    index = tracked('maps/atlas/' + index_spec['file'], index_spec['sha256'])['skills']
+    declared = {}
+    for class_id, group in re.findall(r'^\s+(\w+): \[(.+)\],?$', (SOURCE / 'skills.js').read_text('utf-8'), re.MULTILINE):
+        for skill_id in re.findall(r"\['(\d+)',", group):
+            if skill_id in declared:
+                raise ValueError('Повторный навык в демокаталоге: ' + skill_id)
+            declared[skill_id] = class_id
+    if len(declared) != 15:
+        raise ValueError('Демокаталог должен явно объявлять 15 навыков пяти классов')
+    ids = sorted(declared)
+    evidence, images = {}, []
+    for skill_id in ids:
+        spec = index[skill_id]['detail']
+        relative = 'maps/atlas/' + spec['file']
+        detail = tracked(relative, spec['sha256'])
+        binding = classes['skills'][skill_id]
+        if binding['keys'] != [declared[skill_id]] or detail['record']['ClassType'] != declared[skill_id]:
+            raise ValueError('Неоднозначный класс навыка: ' + skill_id)
+        candidates = detail['images']['Img']['images']
+        if len(candidates) != 1:
+            raise ValueError('Неоднозначная иконка навыка: ' + skill_id)
+        images.extend(candidates)
+        evidence[skill_id] = dict(detail=detail, class_binding=binding,
+            source=dict(file=relative, sha256=inputs[relative], classes_sha256=inputs['maps/' + class_manifest['file']],
+                        client_exe_sha256=classes['client_exe_sha256']),
+            icon=candidates[0]['asset_path'], status='historical_not_current_verified',
+            demo_rules='Русские названия, обучение, уровни, MP и перезарядка — правила демо из skills.js; серверное применение не проверено.')
+    return evidence, images, inputs
+
+
 def build(root, baseline=None):
     index_path = root / 'ui-catalog/index.json'
     index = read(index_path)
     image_path = root / 'archive-image-latest.json'
     images = read(image_path)
     shared, originals = shared_ui_library.build(root, images)
+    skill_evidence, skill_images, skill_inputs = skill_sources(root)
     # All texture membership is recorded as historical extraction, not active brushes.
     selected = {}
     exact = {'BG_Title', 'BG_PAC', 'BG_Portrait', 'BTN_ConfirmRed256',
@@ -85,6 +129,8 @@ def build(root, baseline=None):
             selected[name] = row
         else:
             selected.pop(name, None)
+    for row in skill_images:
+        selected[row['asset_path']] = row
     # Item names/icons remain source data. Quantities, prices, balances are demo.
     items = read(root / 'maps/loot/items.json')
     demo_items = []
@@ -128,6 +174,7 @@ def build(root, baseline=None):
               (index_path, image_path, root / 'maps/loot/items.json', root / 'maps/atlas/index.json')}
     source_inputs = {p.name: sha(p) for p in sorted(SOURCE.iterdir()) if p.is_file()}
     inputs.update(shared['inputs'])
+    inputs.update(skill_inputs)
     source_inputs['shared_ui_library.py'] = sha(HERE / 'shared_ui_library.py')
     schema_match = re.search(r'\bconst SCHEMA = (\d+),', (SOURCE / 'model.js').read_text('utf-8'))
     if not schema_match:
@@ -185,6 +232,8 @@ def build(root, baseline=None):
         for row in shared['textures']:
             row['url'] = texture_map[row['asset_path']]['url']
         write(temporary / 'shared-elements.json', shared)
+        write(temporary / 'skills-evidence.json', skill_evidence)
+        write(temporary / 'skills-index.json', {key: dict(icon=row['icon'], class_id=row['detail']['record']['ClassType'], names=row['detail']['display_names']) for key, row in skill_evidence.items()})
         write(temporary / 'items.json', demo_items)
         layouts = read(SOURCE / 'window-layouts.json')
         for profile in layouts['profiles'].values():

@@ -1,7 +1,8 @@
 /* Local demo adapter. This file has no transport and never accepts credentials. */
 (function (root) {
   'use strict';
-  const SCHEMA = 3, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
+  const SCHEMA = 4, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
+  const Skill = typeof module !== 'undefined' && module.exports ? require('./skills.js') : root.VampirSkills;
   const CLASSES = [['SwordMan', 'Кровавый рыцарь'], ['Gunner', 'Стрелок'], ['Fighter', 'Карнаж'], ['DarkMage', 'Тёмный маг'], ['Reaper', 'Мрачный Жнец']];
   const clone = value => JSON.parse(JSON.stringify(value));
   function profileKey(profile = 'demo-01') {
@@ -9,12 +10,12 @@
     return STORAGE_KEY + '.' + profile;
   }
   function appearance() { return { gender: 'Female', classId: 'Reaper', preset: 1, hair: 1, face: 1, eyes: 1, makeup: 1, voice: 1, body: [50, 50, 50, 50, 50, 50, 50] }; }
-  const CHARACTER_FIELDS = ['gold', 'diamonds', 'inventory', 'equipped', 'quest', 'hp', 'mp', 'experience', 'position', 'target', 'follow', 'quick', 'mailClaimed', 'collection'];
-  function characterState() {
+  const CHARACTER_FIELDS = ['gold', 'diamonds', 'inventory', 'equipped', 'quest', 'hp', 'mp', 'experience', 'position', 'target', 'follow', 'quick', 'mailClaimed', 'collection', 'skills'];
+  function characterState(classId = 'Reaper') {
     return { gold: 16880438, diamonds: 2400, inventory: { blade: 1, helm: 1, armor: 1, potion: 30, blessing: 1, book: 2 }, equipped: {},
       quest: { progress: 0, claimed: false, auto: false }, hp: 10576, mp: 2453, experience: 0,
       position: null, target: null, follow: false, quick: ['potion', 'blessing', 'book', null, null],
-      mailClaimed: false, collection: false };
+      mailClaimed: false, collection: false, skills: Skill.initial(classId) };
   }
   const SERVERS = ['Franz 2', 'Kurzel 1'];
   const SERVER_FIELDS = ['characters', 'selected', 'characterStates'];
@@ -61,7 +62,7 @@
     const ids = new Set();
     for (const c of state.characters) {
       if (!c || !/^demo-[a-zA-Z0-9_-]{1,64}$/.test(c.id) || ids.has(c.id) || typeof c.name !== 'string' || !/^[\p{L}\p{N}_-]{2,16}$/u.test(c.name) || !validAppearance(c.appearance) || !Number.isInteger(c.level) || c.level < 1 || c.level > 1000 || typeof c.primary !== 'boolean') return false;
-      if (!Object.hasOwn(state.characterStates, c.id) || !validCharacterState(state.characterStates[c.id])) return false;
+      if (!Object.hasOwn(state.characterStates, c.id) || !validCharacterState(state.characterStates[c.id]) || !Skill.validate(state.characterStates[c.id].skills, c.appearance.classId)) return false;
       ids.add(c.id);
     }
     if ((state.characters.length === 0) !== (state.selected === null) || (state.selected !== null && !ids.has(state.selected))) return false;
@@ -162,6 +163,36 @@
         if (payload.id === 'potion') next.hp = Math.min(12440, next.hp + 1200);
         if (payload.id === 'blessing') next.experience += 30;
         break;
+      case 'skill-learn': {
+        const skill = Skill.skills[payload.id], c = next.characters.find(c => c.id === next.selected);
+        if (!skill || skill.classId !== c.appearance.classId || next.skills.levels[payload.id]) fail('Навык недоступен для изучения.');
+        if (next.gold < skill.learnCost) fail('Недостаточно золота.');
+        next.gold -= skill.learnCost; next.skills.levels[payload.id] = 1; break;
+      }
+      case 'skill-upgrade': {
+        const level = next.skills.levels[payload.id], skill = Skill.skills[payload.id];
+        if (!level || level >= skill.maxLevel) fail('Повышение уровня недоступно.');
+        const cost = level * 100;
+        if (next.gold < cost) fail('Недостаточно золота.');
+        next.gold -= cost; next.skills.levels[payload.id]++; break;
+      }
+      case 'skill-slot': {
+        if (!Number.isInteger(payload.slot) || payload.slot < 0 || payload.slot >= 5 || (payload.id !== null && !Object.hasOwn(next.skills.levels, payload.id))) fail('Некорректный слот навыка.');
+        const other = payload.id === null ? -1 : next.skills.slots.indexOf(payload.id);
+        if (other >= 0) next.skills.slots[other] = next.skills.slots[payload.slot];
+        next.skills.slots[payload.slot] = payload.id; break;
+      }
+      case 'skill-auto':
+        if (!Object.hasOwn(next.skills.levels, payload.id)) fail('Сначала изучите навык.');
+        next.skills.auto = next.skills.auto.includes(payload.id) ? next.skills.auto.filter(id => id !== payload.id) : [...next.skills.auto, payload.id]; break;
+      case 'skill-cast': {
+        const skill = Skill.skills[payload.id], now = payload.now;
+        if (!skill || !Object.hasOwn(next.skills.levels, payload.id)) fail('Навык не изучен.');
+        if (!Number.isSafeInteger(now) || now < 0 || now > 1e15 - skill.cooldown) fail('Некорректное время применения.');
+        if ((next.skills.readyAt[payload.id] || 0) > now) fail('Навык на перезарядке.');
+        if (next.mp < skill.mp) fail('Недостаточно MP.');
+        next.mp -= skill.mp; next.skills.readyAt[payload.id] = now + skill.cooldown; break;
+      }
       case 'quick':
         if (!Number.isInteger(payload.slot) || payload.slot < 0 || payload.slot >= 5 || (payload.id !== null && !item)) fail('Некорректный быстрый слот.');
         next.quick[payload.slot] = payload.id; break;
@@ -186,7 +217,7 @@
     }
     if (next.selected !== previousCharacter) {
       if (previousCharacter && next.characters.some(c => c.id === previousCharacter)) next.characterStates[previousCharacter] = characterFields(next);
-      if (next.selected && !next.characterStates[next.selected]) next.characterStates[next.selected] = characterState();
+      if (next.selected && !next.characterStates[next.selected]) next.characterStates[next.selected] = characterState(next.characters.find(c => c.id === next.selected).appearance.classId);
       Object.assign(next, clone(next.characterStates[next.selected] || characterState()));
     } else if (next.selected) next.characterStates[next.selected] = characterFields(next);
     next.serverStates[next.server] = serverFields(next);
@@ -199,7 +230,7 @@
     return { get state() { return clone(state); }, dispatch(type, payload) { state = apply(state, type, payload); onChange?.(clone(state), type); return clone(state); } };
   }
   function serialize(state) { if (!validate(state)) throw Error('Некорректное сохранение.'); return canonical(state); }
-  const api = { SCHEMA, SERVERS, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
+  const api = { SCHEMA, SERVERS, SKILLS: Skill.skills, skillsForClass: Skill.forClass, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.VampirDemo = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

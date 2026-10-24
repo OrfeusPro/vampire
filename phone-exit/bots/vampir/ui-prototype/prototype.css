@@ -18,3 +18,9 @@ button.primary:active:not(:disabled){background-image:var(--button-press)}
 .currency{display:inline-flex;align-items:center;gap:.35em;white-space:nowrap}
 .currency img{width:1.6em;height:1.6em;object-fit:contain}
 .resource-control>img{width:5em;height:4em;object-fit:contain}
+
+.skills-layout{display:grid;grid-template-columns:minmax(10em,1fr) minmax(15em,1.5fr);gap:1.5em;margin-top:1em}
+.skills-list{display:flex;flex-direction:column;gap:.7em}.skill-card{display:grid;grid-template-columns:4em 1fr;text-align:left;gap:.5em;align-items:center}.skill-card small{grid-column:2}.skill-art{width:4em;height:4em;object-fit:contain}.skill-card .skill-art{grid-row:span 2}
+.skill-details{padding:1em;background:#07130e88;border:1px solid #536155}.skill-details>button{margin:.5em .4em .5em 0}.skill-details small{display:block}.skill-assign,.skill-quick-settings{display:flex;gap:.5em;flex-wrap:wrap}.skill-quick-settings button{font-size:.8em}.skill-info-window .dialog-body>button{display:inline-block;margin:.5em}
+.skillbar .icon-button{position:relative}.skill-cooldown{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-shadow:0 1px 3px black;font-size:1em;background:#0008;pointer-events:none}.skill-cooldown:empty{display:none}
+@media(max-width:800px){.skills-layout{grid-template-columns:1fr}.skill-details{padding:.5em}}

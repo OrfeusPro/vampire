@@ -6,14 +6,14 @@
   const profile = /^[a-zA-Z0-9_-]{1,48}$/.test(requestedProfile) ? requestedProfile : 'demo-01';
   const storageKey = M.profileKey(profile);
   const economy = new URLSearchParams(location.search).get('economy') !== 'off';
-  let textures, manifest, registry, sourceItems, layouts, buttonLayouts, adapter, storageIssue, storageBlocked = false;
+  let skillSources, textures, manifest, registry, sourceItems, layouts, buttonLayouts, adapter, storageIssue, storageBlocked = false;
   let screen = 'auth', draft = M.appearance(), undo = [], redo = [], createTab = 'Пресет', toastTimer, busy = false;
   const dialogs = [], renderers = new Map(); let characterName = '';
   const state = () => adapter.state;
   const el = (tag, text, className) => { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (className) n.className = className; return n; };
   const append = (parent, ...children) => { parent.append(...children.filter(Boolean)); return parent; };
   const fmt = n => Number(n).toLocaleString('ru-RU');
-  function button(text, fn, className = '', disabled = false) { const b = el('button', text, className + ((!className || className === 'primary') ? ' original-button' : '')); b.type = 'button'; b.disabled = disabled; b.onclick = fn; return b; }
+  function button(text, fn, className = '', disabled = false) { const b = el('button', text, className + ((!className || className === 'primary') ? ' original-button' : '')); b.type = 'button'; b.disabled = disabled; b.onclick = event => { b.focus({ preventScroll: true }); fn?.(event); }; return b; }
   let geometryFrame;
   function updateButtonGeometry() {
     cancelAnimationFrame(geometryFrame);
@@ -106,7 +106,7 @@
       append(body, el('p', message), actions);
     });
   }
-  function transition(next) { dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; cooldowns.clear(); screen = next; render(); }
+  function transition(next) { dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; clearTimeout(skillTimer); screen = next; render(); }
   function pageTitle(text, back) { const n = el('header', undefined, 'page-title'); append(n, button('❮', back, 'back'), el('h1', text)); return n; }
   function footerNote() { return el('small', 'Демонстрационный режим · игровые команды не отправляются', 'demo-note'); }
   function render() {
@@ -289,19 +289,95 @@
     const quick = el('div', undefined, 'quickbar');
     s.quick.forEach((id, i) => { const b = button('', () => id ? itemCard(id, true) : chooseQuick(i), 'item-slot'); if (id) append(b, productImage(id), el('small', String(s.inventory[id] || 0))); append(b, el('kbd', String(i + 1))); b.title = id ? M.PRODUCTS[id].name : 'Назначить предмет'; b.setAttribute('aria-label', 'Быстрый слот ' + (i + 1) + ': ' + (id ? M.PRODUCTS[id].name : 'пусто')); quick.append(b); });
     const skills = el('div', undefined, 'skillbar');
-    ['F1', 'F2', 'F3', 'F4', 'F5'].forEach((key, i) => skills.append(icon('IMG_Flat_Skill', 'Навык ' + (i + 1), event => castSkill(i, key), key)));
+    s.skills.slots.forEach((id, i) => {
+      const key = 'F' + (i + 1), skill = M.SKILLS[id];
+      const b = icon(skillSources[id]?.icon || 'IMG_Flat_Skill', skill ? skill.name + ' · ' + key : 'Пустой слот ' + key, () => skill ? castSkill(i, key) : chooseSkillSlot(i), key);
+      if (skill) { const remaining = el('small', '', 'skill-cooldown'); remaining.dataset.skillCooldown = id; append(b, remaining); }
+      skills.append(b);
+    });
     const attack = el('div', undefined, 'attack-controls');
     append(attack, button('◎ Цель', () => notify('Выбрана демонстрационная цель.')), button('ЗАДАНИЕ', openQuests), button('⚔', () => castSkill(5, 'F'), 'attack'));
     const bottom = el('div', undefined, 'level'); append(bottom, el('strong', String(c.level)), el('span', c.name + '\nОпыт ' + fmt(s.experience)), button('Выйти', () => transition('characters')));
     const route = el('div', undefined, 'route-controls');
     if (s.target) append(route, el('p', 'Выбрана точка карты'), button('Идти пешком · демо', () => { if (action('map-arrive')) notify('Маркер перемещён в демо. Проходимость маршрута не проверялась.'); }));
-    append(hud, health, currencies(), top, mapTools, quests, left, quick, skills, attack, bottom, route); mapState();
+    append(hud, health, currencies(), top, mapTools, quests, left, quick, skills, attack, bottom, route); mapState(); updateSkillCooldowns();
   }
-  const cooldowns = new Map();
+  let skillTimer;
+  function updateSkillCooldowns() {
+    clearTimeout(skillTimer);
+    if (document.hidden || screen !== 'game') return;
+    const ready = state().skills.readyAt, now = Date.now(); let pending = false;
+    document.querySelectorAll('[data-skill-cooldown]').forEach(n => {
+      const seconds = Math.max(0, Math.ceil(((ready[n.dataset.skillCooldown] || 0) - now) / 1000));
+      n.textContent = seconds ? seconds + ' с.' : ''; pending ||= seconds > 0;
+    });
+    if (pending) skillTimer = setTimeout(updateSkillCooldowns, 1000);
+  }
   function castSkill(i, key) {
-    const until = cooldowns.get(i) || 0;
-    if (until > Date.now()) { notify('Перезарядка: ' + Math.ceil((until - Date.now()) / 1000) + ' с.'); return; }
-    cooldowns.set(i, Date.now() + 3000); notify((i === 5 ? 'Атака' : 'Навык ' + (i + 1)) + ' · демонстрация, клавиша ' + key);
+    if (i === 5) { notify('Базовая атака · локальная демонстрация'); return; }
+    const id = state().skills.slots[i];
+    if (!id) { chooseSkillSlot(i); return; }
+    if (action('skill-cast', { id, now: Date.now() })) notify(M.SKILLS[id].name + ' · демо, клавиша ' + key);
+  }
+  function chooseSkillSlot(slot) {
+    modal('Назначить навык · F' + (slot + 1), (body, d) => {
+      for (const id of Object.keys(state().skills.levels)) body.append(button(M.SKILLS[id].name, () => { if (action('skill-slot', { slot, id })) closeDialog(d); }));
+      body.append(button('Очистить слот', () => { if (action('skill-slot', { slot, id: null })) closeDialog(d); }));
+    });
+  }
+  function skillArt(id) { return image(skillSources[id]?.icon || 'IMG_Flat_Skill', 'skill-art'); }
+  function skillDetails(body, id) {
+    const skill = M.SKILLS[id], s = state(), level = s.skills.levels[id] || 0;
+    append(body, skillArt(id), el('h3', skill.name), el('p', level ? 'Изучен · уровень ' + level + '/' + skill.maxLevel : 'Не изучен'),
+      el('p', 'Демо: MP ' + skill.mp + ' · перезарядка ' + skill.cooldown / 1000 + ' с.'),
+      el('small', 'Название переведено для прототипа. Обучение, улучшение и применение используют локальные правила; урон и серверные эффекты не рассчитываются.'));
+    if (!level) body.append(button('Изучить · ' + skill.learnCost + ' золота', () => confirm('Изучение навыка', 'Потратить ' + skill.learnCost + ' золота в демо?', () => action('skill-learn', { id })), 'primary', s.gold < skill.learnCost));
+    else {
+      body.append(button(level >= skill.maxLevel ? 'Максимальный уровень' : 'Повысить · ' + level * 100 + ' золота', () => action('skill-upgrade', { id }), 'primary', level >= skill.maxLevel || s.gold < level * 100));
+      body.append(button('Применить · демо', () => { if (action('skill-cast', { id, now: Date.now() })) notify(skill.name + ' · локальное применение'); }));
+      const auto = input('checkbox'); auto.checked = s.skills.auto.includes(id); auto.onchange = () => action('skill-auto', { id });
+      append(body, field('Автоприменение · настройка демо', auto), el('small', 'Настройка сохраняется; автоматический бой не запускается.'));
+      const slots = el('div', undefined, 'skill-assign');
+      for (let i = 0; i < 5; i++) slots.append(button('F' + (i + 1), () => action('skill-slot', { slot: i, id }), s.skills.slots[i] === id ? 'selected' : ''));
+      append(body, el('p', 'Назначить в слот · занятые навыки меняются местами'), slots);
+    }
+    body.append(button('Исходные данные навыка', async () => {
+      try { const source = await fetchJSON('skills-evidence.json'); info('Источник навыка ' + id, JSON.stringify(source[id], null, 2)); }
+      catch (error) { info('Ошибка источника', error.message); }
+    }));
+  }
+  function openSkillInfo(id) { modal('Навык: ' + M.SKILLS[id].name, body => skillDetails(body, id), 'skill-info-window'); }
+  function openSkills() {
+    if (!currentCharacter()) return info('Навыки', 'Сначала выберите персонажа.');
+    let selected = M.skillsForClass(currentCharacter().appearance.classId)[0].id, filter = 'Все', query = '';
+    modal('Навыки', (body, d) => {
+      append(body, el('p', 'Класс: ' + className(currentCharacter().appearance.classId) + ' · локальная демонстрация'), currencies());
+      const layout = el('div', undefined, 'skills-layout'), list = el('div', undefined, 'skills-list'), detail = el('section', undefined, 'skill-details');
+      const search = input('search', 'Название навыка'); search.value = query; search.setAttribute('aria-label', 'Поиск навыка');
+      const fill = () => {
+        list.replaceChildren();
+        const rows = M.skillsForClass(currentCharacter().appearance.classId).filter(skill => skill.name.toLowerCase().includes(query.toLowerCase()) && (filter === 'Все' || Boolean(state().skills.levels[skill.id]) === (filter === 'Изученные')));
+        if (!rows.length) list.append(el('p', 'Навыки не найдены.'));
+        if (!rows.some(skill => skill.id === selected)) selected = rows[0]?.id || null;
+        rows.forEach(skill => {
+          const level = state().skills.levels[skill.id] || 0;
+          const card = button('', () => { selected = skill.id; renderers.get(d)(); }, 'skill-card' + (selected === skill.id ? ' selected' : ''));
+          card.setAttribute('aria-pressed', String(selected === skill.id));
+          append(card, skillArt(skill.id), el('strong', skill.name), el('small', level ? 'Уровень ' + level : 'Не изучен')); list.append(card);
+        });
+        detail.replaceChildren();
+        if (selected) { skillDetails(detail, selected); detail.append(button('Открыть карточку навыка', () => openSkillInfo(selected))); }
+        else detail.append(el('p', 'Выберите навык из списка.'));
+      };
+      search.oninput = () => { query = search.value; fill(); };
+      append(body, tabs(['Все', 'Изученные', 'Неизученные'], filter, value => { filter = value; renderers.get(d)(); }), search);
+      fill();
+      append(layout, list, detail); body.append(layout);
+      const slots = el('div', undefined, 'skill-quick-settings');
+      state().skills.slots.forEach((id, i) => slots.append(button('F' + (i + 1) + ': ' + (M.SKILLS[id]?.name || 'пусто'), () => chooseSkillSlot(i))));
+      append(body, el('h3', 'Панель способностей'), slots, button('Геометрия и контролы источника', () => openInspector('WBP_SkillSettingPopup')));
+      catalogLink(body, 'Полный справочник навыков', '/maps/atlas/skills.html');
+    }, 'skills-window');
   }
   function productImage(id) {
     const icons = { blade: 'IMG_Weapon_BloodSword_Rare_03', helm: 'IMG_Armor_Helmet_Common_01', armor: 'IMG_Armor_Armor_Common_01', blessing: 'IMG_Item_Subscription_01', book: 'IMG_MatrixEnchantMaterial_02' };
@@ -398,7 +474,7 @@
     const link = el('a', title); link.href = url; link.target = '_blank'; link.rel = 'noopener'; body.append(link);
   }
   function openSection(title) {
-    const handlers = { 'Сумка': openBag, 'Магазин': openShop, 'Задания': openQuests, 'Настройки': openSettings, 'Карта': openWorldMap };
+    const handlers = { 'Сумка': openBag, 'Магазин': openShop, 'Задания': openQuests, 'Настройки': openSettings, 'Карта': openWorldMap, 'Навыки': openSkills };
     if (handlers[title]) return handlers[title]();
     return modal(title, body => {
       if (title === 'Персонаж') {
@@ -410,9 +486,6 @@
       } else if (title === 'Коллекции') {
         append(body, el('h3', 'Наследие ночи'), el('p', state().collection ? 'Коллекция заполнена' : 'Требуется: Книга гравировки ×1'), button('Добавить предмет', () => confirm('Коллекция', 'Потратить одну книгу в демо?', () => action('collection')), 'primary', state().collection));
         catalogLink(body, 'Полный справочник коллекций', '/maps/collections/index.html');
-      } else if (title === 'Навыки') {
-        for (let i = 0; i < 5; i++) body.append(button('Навык ' + (i + 1) + ' · применить', () => castSkill(i, 'F' + (i + 1))));
-        catalogLink(body, 'Изученные навыки и эффекты', '/maps/atlas/skills.html');
       } else if (title === 'Почта') {
         append(body, el('h3', 'Добро пожаловать'), el('p', 'Демонстрационный подарок: 5 зелий.'), button(state().mailClaimed ? 'Получено' : 'Получить подарок', () => action('mail-claim'), 'primary', state().mailClaimed));
       } else if (title === 'Чат') {
@@ -525,6 +598,7 @@
     if (type === 'position' && !state().position) action('map-position', payload);
   });
   addEventListener('visibilitychange', updateMapActivity);
+  addEventListener('visibilitychange', updateSkillCooldowns);
   addEventListener('resize', updateButtonGeometry);
   addEventListener('visibilitychange', () => { if (!document.hidden) updateButtonGeometry(); });
   addEventListener('focus', updateMapActivity);
@@ -537,8 +611,8 @@
     if (event.key.toLowerCase() === 'm') openWorldMap();
     if (event.key === 'Enter') openSection('Чат');
   });
-  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls]) => {
-    textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
+  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls, skills]) => {
+    skillSources = skills; textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
     if (manifest.state_schema !== M.SCHEMA) throw Error('Версия модели не соответствует manifest этой сборки.');
     let loaded;
     try { loaded = M.load(localStorage, manifest.data_id || manifest.id, profile); }
