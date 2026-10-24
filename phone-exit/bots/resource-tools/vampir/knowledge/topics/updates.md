@@ -85,3 +85,4 @@ Windows / Android parity и перенос старых mappings требуют 
 - [VersionResult 1.13.16: текущий reader](../evidence/updates/HEADLESS-VERSION-RESULT-11316.md)
 - [VersionResult 1.13.16: регистрация, handler и переход](../evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11316.md)
 - [Version: Windows и CPU helpers 1.13.16](../evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md)
+- [WaitingEndNotify 1.13.16 → запрос персонажей](../evidence/updates/HEADLESS-WAITING-END-11316.md)

@@ -2323,6 +2323,61 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-waiting-end-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-waiting-end-context.py"
+      ],
+      "rule": "Искать notify literal/table/ID/constructor и registration, затем handler/predicate/request. Отсутствующая handler diagnostic не означает отсутствие пути; reset не является request initiator.",
+      "automation": {
+        "discovery": "reviewed_packet_table_registration_and_explicit_callees",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x14679d2d0",
+                "scope": "24 bounded native scenarios; synthetic UI/policy/types and captured send; no notify reader, dispatch or live session.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              },
+              {
+                "address": "0x145c9ad90",
+                "scope": "24 bounded native scenarios; synthetic UI/policy/types and captured send; no notify reader, dispatch or live session.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              },
+              {
+                "address": "0x145dadc40",
+                "scope": "24 bounded native scenarios; synthetic UI/policy/types and captured send; no notify reader, dispatch or live session.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              },
+              {
+                "address": "0x145d5c120",
+                "scope": "24 bounded native scenarios; synthetic UI/policy/types and captured send; no notify reader, dispatch or live session.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-waiting-end-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-WAITING-END-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

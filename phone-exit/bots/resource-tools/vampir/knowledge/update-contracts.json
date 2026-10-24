@@ -509,7 +509,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Current continuation getter/constructor/final vtable+28 reset проверены отдельно. Не искать CharacterListRead внутри reset повторно: проверить текущую регистрацию WaitingEndNotify и известный исторический request initiator. Post-state/continuation ещё captures в общем handler; реальные services/dispatch открыты.",
+      "next_check": "Reset continuation и WaitingEndNotify -> ID 101 подтверждены отдельно. Проверить текущий ответ списка, зависимости профиля и Ping clock; post-state/continuation ещё captures в общем handler, реальные services/dispatch открыты.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -674,17 +674,45 @@
         "game-login"
       ],
       "checks": [
-        "release-character-selection-probe"
+        "release-character-selection-probe",
+        "native-waiting-end-context"
       ],
-      "recipes": [],
-      "bindings": {},
+      "recipes": [
+        {
+          "key": "handler",
+          "method": "reviewed"
+        },
+        {
+          "key": "predicate",
+          "method": "reviewed"
+        },
+        {
+          "key": "request",
+          "method": "reviewed"
+        },
+        {
+          "key": "quick_select",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": {
+          "handler": "0x14679d2d0",
+          "predicate": "0x145c9ad90",
+          "request": "0x145dadc40",
+          "quick_select": "0x145d5c120"
+        }
+      },
       "resources": [],
       "builder": null,
       "coverage": "partial",
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Найти и проверить текущие request / list reader / handler, границы полей и связи с успешным Login."
+      "next_check": "Current ID 27 -> ID 101 initiator подтверждён в 24 native сценариях. Проверить reader/handler ответа списка и соответствие runtime decoder; время события после Login и network dispatch не доказаны.",
+      "targets": [
+        "native-waiting-end-current"
+      ]
     },
     {
       "id": "character-select",
