@@ -18,7 +18,11 @@
 - Native combiners / copy / append / grow прошли 256 сценариев и 2 overflow;
   интегрированы в whole prepare ещё на 64 сценариях без готового текста fixture.
   [Сборка поля, ownership и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-COMBINERS-11316.md).
-- Далее: реальные context / platform в общей цепочке, Login prepare
+- Selector / store / lookup включены в whole prepare: 288 сценариев с холодным /
+  тёплым cache, отсутствием контекста и разными таблицами. Их FName/type/value
+  зависимости пока fixtures.
+  [Общая цепочка и точные ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PREPARE-PLATFORM-11316.md).
+- Далее: реальные platform text / FName / type / resolver / value-at, Login prepare
   и result readers. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.
 

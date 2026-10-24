@@ -190,7 +190,8 @@
         "native-version-platform-context",
         "native-version-system-context",
         "native-version-prepare-system-context",
-        "native-version-combiner-context"
+        "native-version-combiner-context",
+        "native-version-prepare-platform-context"
       ],
       "recipes": [
         {
@@ -314,7 +315,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Whole Version prepare исполняет native combiners/Windows/CPU/NM в 64 сценариях; отдельные combiners прошли 256 случаев и 2 overflow. Platform/context в общей цепочке ещё fixtures. Дальше их интеграция, затем Login prepare/result readers; профиль остаётся partial.",
+      "next_check": "Whole Version prepare исполняет selector/store/lookup вместе с Windows/CPU/NM/combiners в 288 сценариях. Реальные platform text/FName/type/resolver/value-at ещё fixtures; дальше их перенос и целый Login prepare/result readers. Профиль остаётся partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -356,7 +357,8 @@
         "native-version-platform-current",
         "native-version-system-current",
         "native-version-prepare-system-current",
-        "native-version-combiner-current"
+        "native-version-combiner-current",
+        "native-version-prepare-platform-current"
       ],
       "writer_check": {
         "object_size": 208,

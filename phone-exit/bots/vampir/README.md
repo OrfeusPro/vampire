@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Selector / store / lookup теперь исполняются внутри whole Version prepare вместе
+с Windows / CPU / NM / combiners: 288 сценариев. FName/type/resolver/value-at
+сохраняют явные границы fixtures; whole Login prepare/results ещё открыты.
+[Общая цепочка и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PREPARE-PLATFORM-11316.md).
+
 Объединение строк Version 1.13.16 проверено на 256 сценариях и 2 overflow;
 native combiners включены в 64 whole prepare сценария с Windows / CPU / NM.
 Context/platform в общей цепочке ещё fixtures, Login prepare/results остаются.

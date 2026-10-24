@@ -24,6 +24,7 @@ def verify(context,root):
     nm=context.get('native_nm')
     system=context.get('native_system')
     combiners=context.get('native_combiners')
+    platform=context.get('native_platform')
     functions={prepare,constructor};exports=dict(context['exports'])
     if nm:
         functions.update(int(nm[k],16) for k in ('wrapper','getter'))
@@ -35,6 +36,9 @@ def verify(context,root):
     if combiners:
         functions.update(int(at,16) for at in combiners['functions'].values())
         exports.update(combiners['exports'])
+    if platform:
+        functions.update(int(platform[key],16) for key in ('selector','store','lookup'))
+        exports.update(platform['exports'])
     h=load('update-native-harness').make_harness(context,exports,functions,root=root)
     native=load('build-native-entry-code');rows=load('update-bindings').rows
     calls={hex(r['address']):{'target':hex(r['direct_target']) if r['direct_target'] is not None else r['operands']}
@@ -56,6 +60,9 @@ def verify(context,root):
         h.uc.mem_write(page,h.raw[off:off+4096])
     map_data(wrapper_table)
     fixture={k:int(v,16) for k,v in context['fixtures'].items()}
+    if platform and (fixture['selector'],fixture['context_store'],fixture['context_value']) != (
+            int(platform['selector'],16),int(platform['store'],16),int(platform['lookup'],16)):
+        raise ValueError('Version platform helper links differ')
     if combiners and (fixture['combine_first'],fixture['combine_second']) != (
             int(combiners['functions']['first'],16),int(combiners['functions']['second'],16)):
         raise ValueError('Version combiner links differ')
@@ -160,6 +167,7 @@ def verify(context,root):
         if name=='provider' and nm:continue
         if system and name in ('suffix','first_text'):continue
         if combiners and name in ('combine_first','combine_second'):continue
+        if platform and name in ('selector','context_store','context_value'):continue
         h.add_fixture(address,handler(name))
     if system:
         seed_system,check_system=load('version-system-fixtures').install(
@@ -172,6 +180,9 @@ def verify(context,root):
             if address in combiner_targets:
                 key=combiner_targets[address];state['combiner_calls'][key]=state['combiner_calls'].get(key,0)+1
         h.uc.hook_add(unicorn.UC_HOOK_CODE,count_combiner)
+    if platform:
+        platform_module=load('version-platform-fixtures')
+        seed_platform,check_platform=platform_module.install(load,h,platform,fixture,state,store,write_text,literal,reg)
     if nm:
         import unicorn
         h.uc.mem_write(int(nm['log_level'],16),b'\0')
@@ -199,8 +210,10 @@ def verify(context,root):
         raise ValueError('Version compiled tag differs')
     cases=[]
     abi={name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R14','R15'))}
+    platform_cases=platform_module.SCENARIOS if platform else (dict(present=False),dict(present=True))
     for poison in (0,0x55,0xaa,0xff):
-        for present in (False,True):
+        for platform_case in platform_cases:
+            present=platform_case['present']
             for empty in (False,True):
                 for raw_enum in (0,0xffffffff):
                     for send_return in (0,1):
@@ -211,6 +224,7 @@ def verify(context,root):
                             destroyed=False,send_return=send_return,nm_calls=0,combiner_events=[],combiner_calls={})
                         h.uc.mem_write(h.scratch+0x30000,b'\0'*0x8000)
                         if system:seed_system()
+                        if platform:seed_platform(platform_case)
                         if combiners:state['combined']=(state['context_text'] if present else '')+'_'+state['suffix']
                         owner_bytes=bytearray([poison]*0x180);struct.pack_into('<Q',owner_bytes,0,wrapper_table)
                         h.uc.mem_write(owner-16,b'\xa5'*16+bytes(owner_bytes)+b'\xa6'*16)
@@ -227,8 +241,9 @@ def verify(context,root):
                         h.uc.reg_write(h.x.UC_X86_REG_RDX,input_descriptor)
                         h.call(prepare,owner,budget=100000)
                         if system:check_system()
+                        if platform:check_platform()
                         if combiners and (state['combiner_calls'].get('first')!=1 or state['combiner_calls'].get('second')!=1
-                                or state['combiner_calls'].get('append')!=1+int(present)):
+                                or state['combiner_calls'].get('append')!=1+int(present and bool(state['context_text']))):
                             raise ValueError('Version native combiner calls differ')
                         expected=[global_text,state['combined'],state['first_text'],state['provider'],input_text,'','','','',compiled_tag]
                         if not state['sent'] or state['strings']!=expected or state['integers']!=[0,207,raw_enum]:
@@ -250,17 +265,22 @@ def verify(context,root):
                             send_return=send_return,strings=state['strings'],integers=state['integers'],
                             native_nm_calls=state['nm_calls'],native_system_calls=dict(state.get('system_calls',{})),
                             native_combiner_calls=dict(state['combiner_calls']),guards=True))
+                        if platform:cases[-1].update(platform_scenario=platform_case['name'],
+                            native_platform_calls=dict(state['platform_calls']),platform_index=state['platform_index'])
     return dict(schema=1,source_sha256=context['source_sha256'],method='bounded_native',cases=cases,
         evidence=h.evidence,network_used=False,profile_activated=False,
         runtime=load('update-native-harness').runtime_inputs(),
         native_nm_used=bool(nm),
         native_system_used=bool(system),
         native_combiners_used=bool(combiners),
+        native_platform_used=bool(platform),
+        platform_fixture_sha256=hashlib.sha256((HERE/'version-platform-fixtures.py').read_bytes()).hexdigest() if platform else None,
         combiner_fixture_sha256=hashlib.sha256((HERE/'version-combiner-fixtures.py').read_bytes()).hexdigest() if combiners else None,
         system_fixture_sha256=hashlib.sha256((HERE/'version-system-fixtures.py').read_bytes()).hexdigest() if system else None,
         limits=['Whole prepare/constructor; optional native NM provider/getter uses initialized synthetic cache only.',
                 'Windows/CPU helpers are native only when native_system_used; OS/CRT/cache boundaries and context/string/allocator/free/destructor/log/send remain fixtures.',
                 'Combiners are native only when native_combiners_used; allocation/copy boundaries stay fixtures. No real hardware/SDK getter values proved.',
+                'Platform selector/store/lookup are native only when native_platform_used; FName/type/resolver/value-at remain fixtures.',
                 'No Login preparation, result readers, framing, auth, socket or runtime activation.'])
 
 

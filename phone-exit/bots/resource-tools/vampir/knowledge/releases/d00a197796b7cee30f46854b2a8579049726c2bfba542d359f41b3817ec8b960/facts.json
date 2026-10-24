@@ -2304,6 +2304,93 @@
       "question": "release-version-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные platform/context в whole Version prepare, CPU initialization, whole Login prepare и result readers."
+    },
+    {
+      "addresses": [
+        "0x1416dd660",
+        "0x1445c4b90",
+        "0x1445ce2e0",
+        "0x1456d7be0",
+        "0x1467ce6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "7a532de61a60a037ff9b97a88be11cca19c1f18457aa0e42f08d6c80e828dfdd",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\36b281ae62d60b2cd3b8e224e9d971865098240856d3fe81e322633b4aa95fce\\manifest.json",
+          "sha256": "36b281ae62d60b2cd3b8e224e9d971865098240856d3fe81e322633b4aa95fce",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b4b1885ade4325eef38baa90fba368306a1e3c9d217907cb45b9815806efc8ea",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\340ef077445572292cf93ccc60bbedd6ecd8354901c3e8ccca9f91a370374811\\manifest.json",
+          "sha256": "340ef077445572292cf93ccc60bbedd6ecd8354901c3e8ccca9f91a370374811",
+          "state": "passed"
+        },
+        {
+          "cache_key": "12421b8f2c0abeebf2210910a7906c2fae1fa3d2197ebb4e3d679f09703cc0bc",
+          "id": "native-version-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a94508c7487c8496a5c93de197e354b5fefa16bbc2d5c12986f5cfd95bc55e79\\manifest.json",
+          "sha256": "a94508c7487c8496a5c93de197e354b5fefa16bbc2d5c12986f5cfd95bc55e79",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8050c0eedc8defa5e838430c03ea0d1ad5ff89e0478d418208ade3ebd9c7ddea",
+          "id": "native-version-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c2f2438428538aaa79b42b15733c7d9fa7a421927105ba753a379153806a6911\\manifest.json",
+          "sha256": "c2f2438428538aaa79b42b15733c7d9fa7a421927105ba753a379153806a6911",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ef0adc6ce1a66eee03668f8ff1a4ce3f2bb090ef3af61d028e758bd8e1f93130",
+          "id": "native-version-prepare-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\166ae5fbdab99712ea3859b76347d57b84031cd94ecaba4f849511921d8a7861\\manifest.json",
+          "sha256": "166ae5fbdab99712ea3859b76347d57b84031cd94ecaba4f849511921d8a7861",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ae70a692616a37759d32623fcbe293b9bf080d708792de12aa7f454e8df11480",
+          "id": "native-version-combiner-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\947a5d66e493a473a9ea2460c590af4a46a5f0ed706deed6e731df178a66bf28\\manifest.json",
+          "sha256": "947a5d66e493a473a9ea2460c590af4a46a5f0ed706deed6e731df178a66bf28",
+          "state": "passed"
+        },
+        {
+          "cache_key": "cfdd507380478485c4fbad3d3c4ace8c336de5f6a952e26454b6801b4ac0b1e1",
+          "id": "native-version-prepare-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b33392982385848e88028626f564404a8952c29b06c95fc6a40a6411f5bae701\\manifest.json",
+          "sha256": "b33392982385848e88028626f564404a8952c29b06c95fc6a40a6411f5bae701",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "В 288 whole Version prepare сценариях 19 явных native roots включают selector/store/lookup совместно с Windows/CPU/NM/combiners. Selector передаёт actual value в lookup, lookup индекс первого совпадения либо ffffffff в value-at fixture; полученный текст реально объединяется в поле +28. Проверены cold/warm/absent context, duplicate/missing/negative count, Windows/Android/IOS/unknown branches, cache/input guards, packet fields и cleanup. Готовые exports повторно использованы без Ghidra.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-PREPARE-PLATFORM-11316.md",
+          "sha256": "8bfd59176c5d2859de91e8c6837b693bc9fdee52797ecc8a47e7d6831e92ef28"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\VERSION-PREPARE-PLATFORM-11316.json",
+          "sha256": "e65c5ca575bb3b118369b5aeacc60dcc5f4a140e6dd1b98f33b6f6ebe88fa96e"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-prepare-platform-11316.json",
+          "sha256": "01e7d89926c9f84cdab8fdd33e9fdd39140e9744485c560bdea489bfaf180b81"
+        }
+      ],
+      "id": "ad700ed2d348175a12ce49636e7cd06f3d52c1ab68185c73d854b278e24b5c79",
+      "limits": [
+        "Platform text/FName ctor/equality, type/resolver/value-at остаются fixtures. Реальная FName normalization и enum strings не подтверждены.",
+        "OS/CPU/NM state синтетические; allocation/CRT/internal copy/string constructors/destructor/log/send сохраняют границы fixtures. Android/IOS cases не доказывают Android runtime.",
+        "Harness разрешает только явные reviewed budgets 16 или 19 и до 8 exports; обхода callees нет. Без явного 19 этот context отклоняется.",
+        "Нет whole Login prepare/result readers, framing, сети, auth, runtime promotion или смены baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "Исследовать оставшиеся явные callees по готовым данным, затем целый Login prepare/results. Не переизвлекать подтверждённые roots и не переносить новый SHA автоматически.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные platform/FName/context type/resolver/value dependencies и whole Login prepare/result readers текущего SHA."
     }
   ],
   "schema": 1,
