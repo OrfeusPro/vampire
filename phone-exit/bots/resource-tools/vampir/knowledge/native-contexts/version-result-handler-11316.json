@@ -1,0 +1,203 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "packet_table": "0x149926d68",
+  "id_getter": "0x14148a940",
+  "functions": {
+    "handler": "0x14679d1b0",
+    "gate": "0x1467cd7b0"
+  },
+  "packet_constructor": "0x1456d7c90",
+  "handler_table": "0x149dc6690",
+  "login_prepare": "0x1467ce030",
+  "exports": {
+    "run-74fac8b21253": "0791edf0a9c4154a14734461afe2ad8e30f024401f2d0c2792e5d3d644b567f3",
+    "run-eff5f37ca91c": "4e22414b4f8c1c431e4b3c417917f72aee1223df0049b08d50d121275619b43d"
+  },
+  "leaves": {
+    "0x1456d7c90": "488d05d1f0240448890133c0488941108841188b05278af90389411c8b05aec8ab05894120488bc1c3",
+    "0x14148a940": "b802000000c3"
+  },
+  "fixtures": {
+    "string_init": "0x141426b30",
+    "log": "0x141403b70",
+    "free": "0x141483080",
+    "gate_state": "0x145594db0",
+    "gate_error": "0x145fd3ee0",
+    "peer": "0x144ab0c40",
+    "login_prepare": "0x1467ce030"
+  },
+  "registration_window": {
+    "address": "0x1467b4c8b",
+    "owner": "0x1467b4c60",
+    "bytes": "8d4b08e8bd3c1500488bf84885c0740c488d05ee196103488907eb03488bfbb928000000e89c3c15004885c0740a488bc8e8cf2ff2feeb03488bc34c8bc7488bd0488bcee8ec690100",
+    "sha256": "9c5691cba7b81d6b96ebfb4299729d95f9935f1d88f7cdea70f6f0825db77ec9",
+    "instructions": [
+      [
+        "0x1467b4c8b",
+        "lea",
+        "ecx, [rbx + 8]"
+      ],
+      [
+        "0x1467b4c8e",
+        "call",
+        "0x146908950"
+      ],
+      [
+        "0x1467b4c93",
+        "mov",
+        "rdi, rax"
+      ],
+      [
+        "0x1467b4c96",
+        "test",
+        "rax, rax"
+      ],
+      [
+        "0x1467b4c99",
+        "je",
+        "0x1467b4ca7"
+      ],
+      [
+        "0x1467b4c9b",
+        "lea",
+        "rax, [rip + 0x36119ee]"
+      ],
+      [
+        "0x1467b4ca2",
+        "mov",
+        "qword ptr [rdi], rax"
+      ],
+      [
+        "0x1467b4ca5",
+        "jmp",
+        "0x1467b4caa"
+      ],
+      [
+        "0x1467b4ca7",
+        "mov",
+        "rdi, rbx"
+      ],
+      [
+        "0x1467b4caa",
+        "mov",
+        "ecx, 0x28"
+      ],
+      [
+        "0x1467b4caf",
+        "call",
+        "0x146908950"
+      ],
+      [
+        "0x1467b4cb4",
+        "test",
+        "rax, rax"
+      ],
+      [
+        "0x1467b4cb7",
+        "je",
+        "0x1467b4cc3"
+      ],
+      [
+        "0x1467b4cb9",
+        "mov",
+        "rcx, rax"
+      ],
+      [
+        "0x1467b4cbc",
+        "call",
+        "0x1456d7c90"
+      ],
+      [
+        "0x1467b4cc1",
+        "jmp",
+        "0x1467b4cc6"
+      ],
+      [
+        "0x1467b4cc3",
+        "mov",
+        "rax, rbx"
+      ],
+      [
+        "0x1467b4cc6",
+        "mov",
+        "r8, rdi"
+      ],
+      [
+        "0x1467b4cc9",
+        "mov",
+        "rdx, rax"
+      ],
+      [
+        "0x1467b4ccc",
+        "mov",
+        "rcx, rsi"
+      ],
+      [
+        "0x1467b4ccf",
+        "call",
+        "0x1467cb6c0"
+      ]
+    ]
+  },
+  "call_sites": {
+    "handler": {
+      "0x14679d1c5": "0x141426b30",
+      "0x14679d200": "0x141403b70",
+      "0x14679d20f": "0x141483080",
+      "0x14679d22a": "qword ptr [rax + 0x28]",
+      "0x14679d23b": "0x1467cd7b0",
+      "0x14679d244": "0x144ab0c40"
+    },
+    "gate": {
+      "0x1467cd7d4": "0x145594db0",
+      "0x1467cd83e": "0x1455be460",
+      "0x1467cd848": "0x145d842a0",
+      "0x1467cd85d": "0x141426950",
+      "0x1467cd862": "0x1445cd3a0",
+      "0x1467cd872": "0x1445cef00",
+      "0x1467cd880": "0x145fd3c40",
+      "0x1467cd88e": "0x141483080",
+      "0x1467cd8a0": "0x141483080",
+      "0x1467cd8d4": "0x145813530",
+      "0x1467cd8f2": "0x141426b30",
+      "0x1467cd92c": "0x141403b70",
+      "0x1467cd93a": "0x141483080",
+      "0x1467cd94c": "0x141483080",
+      "0x1467cd961": "0x141426b30",
+      "0x1467cd966": "0x1445cd3a0",
+      "0x1467cd976": "0x1445cef00",
+      "0x1467cd981": "0x145fd3c40",
+      "0x1467cd9f2": "0x145975060",
+      "0x1467cd9fb": "0x141488490",
+      "0x1467cda13": "0x141488490",
+      "0x1467cda1b": "0x145978560",
+      "0x1467cda2e": "0x141426b30",
+      "0x1467cda3e": "0x141426b30",
+      "0x1467cda43": "0x1445cd3a0",
+      "0x1467cda53": "0x1445cef00",
+      "0x1467cda86": "0x141435320",
+      "0x1467cda94": "0x141483080",
+      "0x1467cda9f": "0x144a51370",
+      "0x1467cdaad": "0x141483080",
+      "0x1467cdabb": "0x141483080",
+      "0x1467cdacd": "0x141483080",
+      "0x1467cdb18": "0x141426b30",
+      "0x1467cdb1d": "0x1445cd3a0",
+      "0x1467cdb2d": "0x1445cef00",
+      "0x1467cdb38": "0x145fd3c40",
+      "0x1467cdb46": "0x141483080",
+      "0x1467cdb54": "0x141483080",
+      "0x1467cdb5b": "0x145ef10b0",
+      "0x1467cdb68": "0x145efc430",
+      "0x1467cdb71": "0x145fd3ee0",
+      "0x1467cdb7f": "0x141483080",
+      "0x1467cdb99": "0x145fd3ee0",
+      "0x1467cdba7": "0x141483080"
+    }
+  }
+}

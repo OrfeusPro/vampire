@@ -192,7 +192,8 @@
         "native-version-prepare-system-context",
         "native-version-combiner-context",
         "native-version-prepare-platform-context",
-        "native-version-result-context"
+        "native-version-result-context",
+        "native-version-result-handler-context"
       ],
       "recipes": [
         {
@@ -283,6 +284,10 @@
         {
           "key": "result-reader",
           "method": "reviewed"
+        },
+        {
+          "key": "result-handler",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -307,7 +312,8 @@
           "combiner-copy": "0x1414266a0",
           "combiner-append": "0x141429e10",
           "combiner-grow": "0x141438050",
-          "result-reader": "0x1456dc5e0"
+          "result-reader": "0x1456dc5e0",
+          "result-handler": "0x14679d1b0"
         }
       },
       "resources": [
@@ -321,7 +327,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Current VersionResult reader подтверждён на native input archive; регистрация, handler и переход к Login ещё требуют проверки. Подготовить ограниченный профиль только после проверки оставшихся зависимостей; readiness остаётся partial.",
+      "next_check": "Current reader и handler/gate проверены отдельно; объединить reader/handler и проверить остальные зависимости игрового профиля до живого Login/list/create. Покрытие остаётся partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -364,7 +370,8 @@
         "native-version-system-current",
         "native-version-prepare-system-current",
         "native-version-combiner-current",
-        "native-version-prepare-platform-current"
+        "native-version-prepare-platform-current",
+        "native-version-result-current"
       ],
       "writer_check": {
         "object_size": 208,

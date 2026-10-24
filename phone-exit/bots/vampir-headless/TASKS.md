@@ -9,6 +9,10 @@ Current VersionResult reader проверен на native input archive: 32 по
 17 коротких тел и 5 отказов операций. Следом — current handler/переход к Login;
 игровой профиль ещё не активирован. [Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-11316.md).
 
+Регистрация ID 2 и current handler/gate проверены в 14 сценариях: только result 0
+доходит до captured Login prepare. Далее — объединение с reader и зависимости
+профиля. [Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11316.md).
+
 Current final virtual +28 после LoginResult подтверждён как reset: constructor/
 getter/final table и 8 native сценариев перенесены. Инициатор списка искать
 в current WaitingEndNotify по готовому исследованию старой версии. [Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md).

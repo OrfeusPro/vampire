@@ -2284,7 +2284,8 @@
       "id": "native-version-result-current",
       "baseline_functions": [],
       "tools": [
-        "verify-version-result-context.py"
+        "verify-version-result-context.py",
+        "verify-version-result-handler-context.py"
       ],
       "rule": "Найти constructor/table/ID2/reader и проверить archive callees и порядок чтения; literal и нормализованное тело сами по себе не подтверждают роль.",
       "automation": {
@@ -2302,13 +2303,22 @@
                 "required_checks": [
                   "native-version-result-context"
                 ]
+              },
+              {
+                "address": "0x14679d1b0",
+                "scope": "Static registration window plus native handler/gate; synthetic packet/services and captured Login prepare. No live compatibility.",
+                "required_checks": [
+                  "native-version-result-handler-context"
+                ]
               }
             ],
             "tools": [
-              "verify-version-result-context.py"
+              "verify-version-result-context.py",
+              "verify-version-result-handler-context.py"
             ],
             "evidence": [
-              "evidence/updates/HEADLESS-VERSION-RESULT-11316.md"
+              "evidence/updates/HEADLESS-VERSION-RESULT-11316.md",
+              "evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11316.md"
             ]
           }
         ]
