@@ -217,6 +217,38 @@ def spatial_checklist(report):
     return '\n'.join(lines) + '\n'
 
 
+def skill_graph(tables, existing):
+    """Static explicit joins; Effect parameter matching stays a candidate."""
+    nodes, edges = {}, []
+    for kind in ('Skill', 'SkillOperation', 'Effect', 'EffectOperation'):
+        for row in tables[kind]:
+            key = kind + ':' + row['Id']
+            if key in nodes or key in existing:
+                raise ValueError('Повторная запись навыка / эффекта: ' + key)
+            nodes[key] = dict(kind=kind, id=row['Id'], fields=row)
+    def link(source, kind, value, field, candidate=False):
+        target = kind + ':' + value
+        present = target in nodes or target in existing
+        status = ('candidate_param1_id_match_only' if present else 'candidate_definition_missing') if candidate else (
+            'prior_catalog_static_join_not_current_behavior' if present else 'unresolved_static_table_reference')
+        edges.append(dict(source=source, target=target, field=field, status=status))
+    for key, node in nodes.items():
+        row = node['fields']
+        if node['kind'] == 'SkillOperation':
+            link(key, 'Skill', row['SkillId'], 'SkillId')
+            if row['OperationType'] == '2001' and row['OperationParam1'] not in ('', '0'):
+                link(key, 'Effect', row['OperationParam1'], 'OperationParam1', candidate=True)
+        elif node['kind'] == 'EffectOperation':
+            link(key, 'Effect', row['EffectInfoId'], 'EffectInfoId')
+    for key, node in existing.items():
+        if node['kind'] == 'Battle':
+            # Preserve repeated skill tokens and their source order.
+            for index, token in enumerate(node['fields'].get('SkillIdList', '').split(',')):
+                if token.strip():
+                    link(key, 'Skill', token.strip(), 'SkillIdList[' + str(index) + ']')
+    return nodes, edges
+
+
 def scan(root, output):
     if any(output.resolve().is_relative_to((root / area).resolve()) for area in ('table-study', 'quest-graph', 'maps/atlas')):
         raise ValueError('Результат должен быть вне исходных каталогов')
@@ -260,6 +292,29 @@ def scan(root, output):
     if set(npc_refs) != set(catalog['npcs']):
         raise ValueError('Каталог NPC и подробные записи неполны')
     spatial_refs = map_registry(root, read, tracked)
+    skill_sources = dict(manifest['sources']['skills'])
+    skill_sources.update(manifest['sources']['effects']['sources'])
+    skill_tables = {}
+    for kind in ('Skill', 'SkillOperation', 'Effect', 'EffectOperation'):
+        source = skill_sources[kind]
+        path = tracked('table-study/' + source['file'], source['sha256'])
+        with path.open(encoding='utf-8-sig', newline='') as stream:
+            reader = csv.DictReader(stream)
+            if reader.fieldnames != source['header']:
+                raise ValueError('Изменилась схема навыков / эффектов')
+            skill_tables[kind] = [dict(row, provenance=dict(table=kind, entry=source['entry'], csv_record=i + 2))
+                                  for i, row in enumerate(reader)]
+        if len(skill_tables[kind]) != source['rows']:
+            raise ValueError('Изменилось число записей навыков / эффектов')
+    group, links = skill_graph(skill_tables, nodes)
+    nodes.update(group); edges.extend(links)
+    skill_index = read(atlas + manifest['skill_index']['file'], manifest['skill_index']['sha256'])
+    skill_refs = {}
+    for sid, entry in skill_index['skills'].items():
+        detail = entry['detail']; path = tracked(atlas + detail['file'], detail['sha256'])
+        skill_refs[sid] = dict(file=atlas + detail['file'], sha256=detail['sha256'],
+            has_static_definition='Skill:' + sid in nodes,
+            status='prior_catalog_annotations_not_current_bindings_or_active_buffs')
     atlas_index = read(atlas + 'index.json')
     spatial_tables = read(atlas + 'tables.json', atlas_index['tables_sha256'])
     for kind in SPATIAL_TABLES:
@@ -283,13 +338,14 @@ def scan(root, output):
     # Namespaced IDs prevent unrelated Quest/Npc/Item integer IDs from being joined.
     reverse = defaultdict(list)
     for edge in edges:
-        if edge['target'] not in nodes and edge['status'] not in ('unresolved_previous_token', 'unresolved_static_table_reference'):
+        if edge['target'] not in nodes and edge['status'] not in ('unresolved_previous_token', 'unresolved_static_table_reference', 'candidate_definition_missing'):
             raise ValueError('Неожиданная отсутствующая цель связи')
         reverse[edge['target']].append(edge)
     identity = hashlib.sha256(json.dumps(dict(inputs=inputs, scanner=sha(Path(__file__))), sort_keys=True).encode()).hexdigest()
     result = dict(schema=1, dataset_id=identity, inputs=inputs, table_schemas=table_registry,
         nodes=nodes, relations=edges, reverse=dict(reverse), npc_detail_refs=npc_refs,
         map_evidence_refs=spatial_refs,
+        skill_detail_refs=skill_refs,
         spatial_inventory=spatial_inventory,
         spatial_properties=spatial_properties(spatial_tables, spatial_inventory),
         native_enum_source=quests.get('native_enum_source'),

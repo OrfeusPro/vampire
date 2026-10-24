@@ -28,6 +28,28 @@ def schema():
 
 
 class PropertyCoverageTests(unittest.TestCase):
+    def test_skill_effect_candidates_never_become_confirmed_buff_applications(self):
+        tables = dict(Skill=[dict(Id='7')], Effect=[dict(Id='8')],
+            SkillOperation=[dict(Id='1', SkillId='7', OperationType='2001', OperationParam1='8'),
+                            dict(Id='2', SkillId='7', OperationType='2001', OperationParam1='999')],
+            EffectOperation=[dict(Id='3', EffectInfoId='8')])
+        existing = {'Battle:1:record:2': dict(kind='Battle', id='1', fields=dict(SkillIdList='7, 7,404'))}
+        before = copy.deepcopy(tables)
+        nodes, edges = game_data.skill_graph(tables, existing)
+        self.assertEqual(tables, before)
+        self.assertEqual(sum(e['target'] == 'Skill:7' for e in edges), 4)
+        self.assertTrue(any(e['target'] == 'Effect:8' and e['status'] == 'candidate_param1_id_match_only' for e in edges))
+        self.assertTrue(any(e['target'] == 'Effect:999' and e['status'] == 'candidate_definition_missing' for e in edges))
+        report = dict(nodes=dict(existing, **nodes), relations=edges)
+        self.assertEqual(game_verify.verify_skills(report, tables)['effect_candidates'], 2)
+        forged = copy.deepcopy(report)
+        next(e for e in forged['relations'] if e['target'] == 'Effect:999')['status'] = 'verified'
+        with self.assertRaisesRegex(ValueError, 'статус'):
+            game_verify.verify_skills(forged, tables)
+        forged = copy.deepcopy(report); del forged['nodes']['Skill:7']
+        with self.assertRaisesRegex(ValueError, 'ключи'):
+            game_verify.verify_skills(forged, tables)
+
     def test_saved_spatial_verifier_detects_removed_links_and_forged_pointers(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder); atlas = root / 'maps/atlas'; atlas.mkdir(parents=True)
