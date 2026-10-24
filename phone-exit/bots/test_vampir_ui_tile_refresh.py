@@ -15,9 +15,24 @@ spec = importlib.util.spec_from_file_location('ui_resource_setter_replay', HERE 
 resource_setter = importlib.util.module_from_spec(spec); spec.loader.exec_module(resource_setter)
 spec = importlib.util.spec_from_file_location('ui_content_config_replay', HERE / 'replay-ui-content-config.py')
 content_config = importlib.util.module_from_spec(spec); spec.loader.exec_module(content_config)
+spec = importlib.util.spec_from_file_location('ui_config_callables_replay', HERE / 'replay-ui-config-callables.py')
+config_callables = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_callables)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_config_string_clone_and_assignment_forwarding(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
+        result = config_callables.run(dict(base, functions=[dict(address=hex(a)) for a in config_callables.ROOTS]),
+            dict(base, functions=[dict(address=hex(config_callables.LEAF))]))
+        self.assertEqual(len(result['clone_cases']), 32)
+        self.assertEqual(len(result['leaf_cases']), 3)
+        self.assertEqual(sum(c['source_count'] == 0 for c in result['clone_cases']), 4)
+        for case in result['clone_cases']:
+            self.assertTrue(case['complete_return'])
+            self.assertEqual(case['copies'], int(case['source_count'] != 0))
+        self.assertEqual(result['registration']['status'], 'static_sparse_container_shape_not_event_dispatch')
+
     def test_native_config_lookup_prefix_and_missing_assignment(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = content_config.run(dict(source=source, source_sha256=replay.getter.SHA,

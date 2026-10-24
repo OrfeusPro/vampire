@@ -14,8 +14,8 @@
   "manual_port_targets": [
     {
       "id": "ui-nktileview-layout-flow",
-      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30"],
-      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py"],
+      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0"],
+      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py"],
       "required_checks": ["ui-nktileview-refresh-current"],
       "rule": "Addresses belong only to this plan baseline SHA. Literal matches are candidates; verify getter, table ownership, transfers and port bounded checks before use. Native checks do not validate historical cooked resources or generator rules.",
       "automation": {
@@ -36,7 +36,10 @@
               {"address": "0x14191ab70", "scope": "54 setter identity/invalidation cases; ownership and side effect callees are fixtures", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445cf4f0", "scope": "Static branch/call/template checks only; string helpers and runtime prefix unknown", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c6820", "scope": "Static /Game and NnCoreSetting.ContentSubName call flow; snapshot RED not active runtime proof", "required_checks": []},
-              {"address": "0x1445c2c30", "scope": "26 native initial prefixes to 1445c2cb4; lookup and string assignment fixtures; callbacks, precedence and full return excluded", "required_checks": ["ui-nktileview-refresh-current"]}
+              {"address": "0x1445c2c30", "scope": "26 native initial prefixes to 1445c2cb4; lookup and string assignment fixtures; callbacks, precedence and full return excluded", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1445c1f50", "scope": "Static sparse insertion / key transfer / callees only; container not executed", "required_checks": []},
+              {"address": "0x1445c67a0", "scope": "32 full string clone helper/wrapper scenarios combined; allocation and byte-copy fixtures, malformed counts excluded", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1445c78d0", "scope": "String clone wrapper, part of the same 32 scenarios; leaf 1445c7970 has 3 forwarding-only scenarios, no event dispatch proof", "required_checks": ["ui-nktileview-refresh-current"]}
             ],
             "evidence": [
               "evidence/interface/NKTILEVIEW-REGISTRATION-11316.md",
@@ -46,7 +49,8 @@
               "evidence/interface/NKTILEVIEW-SCROLL-STYLE-11316.md",
               "evidence/interface/UI-RESOURCE-SETTER-11316.md",
               "evidence/interface/UI-RESOURCE-PREFIX-11316.md",
-              "evidence/interface/UI-CONTENT-CONFIG-11316.md"
+              "evidence/interface/UI-CONTENT-CONFIG-11316.md",
+              "evidence/interface/UI-CONFIG-CALLABLES-11316.md"
             ]
           }
         ]

@@ -5649,6 +5649,45 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Callbacks, global initialization / precedence, native string helpers, active resource и Brush binding."
+    },
+    {
+      "addresses": [
+        "0x1445c1f50",
+        "0x1445c67a0",
+        "0x1445c78d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9727217e63e28d6b743ad43b5115fab6e38f906583957c805f5ef7862155fb8f",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8f7680cc4f5e608ff9498d042ae63cc8d502e60a7e1091f00cf99456c4cbe4ed\\manifest.json",
+          "sha256": "8f7680cc4f5e608ff9498d042ae63cc8d502e60a7e1091f00cf99456c4cbe4ed",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "1445c78d0 / 1445c67a0 копируют строковый объект по сохранённому UTF16 count: 32 полных native сценария с allocation/byte-copy fixtures. Отдельный leaf 1445c7970 без unwind передаёт разыменованные аргументы в assignment fixture (3 случая). 1445c1f50 статически имеет форму sparse insertion с шагом 0xb0, переносом ключа и вызовом 1445c4f60; event dispatch не доказан.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-CALLABLES-11316.md",
+          "sha256": "84170f0a64aefdd670bb238192235d1d8f7f19861162823b16cac3648bc37421"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b25bb2ea1a0f\\details.json",
+          "sha256": "336bf3091a16da247a3f7162f5ae6f1bb3d7a02bddf3d9a40a9e620d8ec2e047"
+        }
+      ],
+      "id": "55a3f122f1d3ed3439b899a3f2f55947708e0532d4d2ee23a49733cc46d97ab7",
+      "limits": [
+        "Native allocator, ownership, malformed counts и aliasing не проверены.",
+        "Assignment leaf только forward к fixture; реализация присваивания не исполнялась.",
+        "Insertion / hashing / payload-copy helpers статические; полный reader и события обновления не исполнены.",
+        "Первый collect отклонил leaf без unwind; повтор с теми же входами не запускался, экспортированы только три явных roots нового задания."
+      ],
+      "method": "bounded_native",
+      "next_check": "Отдельный запрос на callee 1445c4f60: проверить сохранение обоих callable-объектов и последующие потребители, не объявлять source тип или событие по форме контейнера.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Payload callable lifetime / dispatch, полный reader / cleanup, global config precedence и active resource / Brush."
     }
   ],
   "schema": 1,
