@@ -5574,6 +5574,45 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Runtime prefix producer, complete native string helper semantics, active resource and named Brush fields."
+    },
+    {
+      "addresses": [
+        "0x141426b30",
+        "0x1414277b0",
+        "0x141429e10",
+        "0x1445c6820"
+      ],
+      "checks": [
+        {
+          "cache_key": "a75d15b448a18d6eac3c3eee6148a390683c99933060b37ba24af8d3383ed214",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\60c43db9d378c7428830a75f2f1fd523b6a5578f1d0a86598cb1aaf7191b558c\\manifest.json",
+          "sha256": "60c43db9d378c7428830a75f2f1fd523b6a5578f1d0a86598cb1aaf7191b558c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Static prefix producer uses exact /Game literal and conditionally combines slash with NnCoreSetting.ContentSubName when source length>1. Same-EXE config snapshot contains RED at line 27; active settings and precedence remain false. No complete native config/string execution or active full path claim.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-RESOURCE-PREFIX-11316.md",
+          "sha256": "ddabcfb716c60ec6196b4e550c2c43abe5ac97167deebc591ebbd284f3313fb5"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d8dc7f6c51b7\\details.json",
+          "sha256": "3d657d6fb0d305a0e8bddaffdad7e79042c4b259e9a1e647f062e00c2261d12f"
+        }
+      ],
+      "id": "f5c6780f622f966e728c74d819f323799c95cdb70aece411ece73c1088246d39",
+      "limits": [
+        "Four explicit roots in seven complete unwind fragments; config reader and string-helper chain not executed.",
+        "Snapshot plaintext hash recorded separately from stored ciphertext payload hash; snapshot is not runtime precedence proof.",
+        "Prior failed startup initializer tail export retained and not used as completed proof."
+      ],
+      "method": "static",
+      "next_check": "Trace exact config reader and execute reviewed string-helper chain before generator path application.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Full config reader/precedence, native string helper edge cases, active mounted prefix and actual resource binding."
     }
   ],
   "schema": 1,

@@ -18,6 +18,8 @@ spec = importlib.util.spec_from_file_location('skill_property_audit', HERE / 'au
 skill_audit = importlib.util.module_from_spec(spec); spec.loader.exec_module(skill_audit)
 spec = importlib.util.spec_from_file_location('status_effect_audit', HERE / 'audit-status-effect-ui.py')
 status_audit = importlib.util.module_from_spec(spec); spec.loader.exec_module(status_audit)
+spec = importlib.util.spec_from_file_location('ui_prefix_audit', HERE / 'inspect-ui-resource-prefix.py')
+prefix_audit = importlib.util.module_from_spec(spec); spec.loader.exec_module(prefix_audit)
 
 
 def schema():
@@ -32,6 +34,14 @@ def schema():
 
 
 class PropertyCoverageTests(unittest.TestCase):
+    def test_prefix_config_requires_exact_section_and_single_explicit_value(self):
+        self.assertEqual(prefix_audit.config_value('[Other]\nContentSubName=ignored\n[NnCoreSetting]\nContentSubName=RED\n'), dict(line=4, value='RED'))
+        self.assertEqual(prefix_audit.config_value('[NnCoreSetting]\nContentSubName=\n')['value'], '')
+        for text in ('[DEFAULT]\nContentSubName=RED\n[NnCoreSetting]\n',
+                     '[NnCoreSetting]\nContentSubName=RED\nContentSubName=OTHER\n',
+                     '[nncoresetting]\nContentSubName=RED\n'):
+            with self.assertRaises(ValueError): prefix_audit.config_value(text)
+
     def test_status_effect_export_headers_do_not_invent_property_names_or_bindings(self):
         raw = bytes.fromhex('800301')  # one serialized-zero field, schema index 0
         control = dict(export=1, name='ImageIcon', type='Image', offset=4, size=len(raw),
