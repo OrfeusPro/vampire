@@ -26,6 +26,51 @@ def schema():
 
 
 class PropertyCoverageTests(unittest.TestCase):
+    def test_spatial_joins_preserve_missing_targets_and_reject_conflicting_world_spots(self):
+        tables = {k: [] for k in game_data.SPATIAL_TABLES}
+        tables['World'] = [dict(Id='1', MapId='999', StartSpotInfoId='2')]
+        tables['WorldSpot'] = [dict(Id='2', WorldInfoId='1', PosZ='20')]
+        tables['NpcSpawn'] = [dict(Id='3', WorldInfoId='1', NpcInfoId='2')]
+        old = {'Npc:2': dict(kind='Npc', id='2', fields=dict(Id='2'))}
+        before = copy.deepcopy(tables)
+        nodes, edges = game_data.spatial_graph(tables, old)
+        self.assertEqual(tables, before)
+        self.assertIn('WorldSpot:2', nodes)
+        self.assertTrue(any(e['target'] == 'Map:999' and e['status'] == 'unresolved_static_table_reference' for e in edges))
+        self.assertTrue(any(e['source'] == 'NpcSpawn:3' and e['target'] == 'Npc:2' for e in edges))
+        with self.assertRaisesRegex(ValueError, 'Несогласованные'):
+            game_data.spatial_graph(tables, {'WorldSpot:2': dict(kind='WorldSpot', id='2', fields=dict(Id='2', PosZ='21'))})
+        tables['World'].append(copy.deepcopy(tables['World'][0]))
+        with self.assertRaisesRegex(ValueError, 'Повторный'):
+            game_data.spatial_graph(tables, {})
+
+    def test_spatial_inventory_checks_geometry_without_promoting_it_to_routes(self):
+        overlay = dict(tiles=[dict(id=7, vertices=[[0, 0], [1, 0], [1, 1]], polygons=[[0, 1, 2]], bounds=[0, 0, 1, 1], height_range=[0, 2])],
+            special_links=[dict(id='link', start=[0, 0, 0], end=[1, 1, 2], attachment_verified=False)],
+            navigation_filter_presets=[], navigation_ready=False, coordinate_space='world_xy', stats=dict(tiles=1, surface_polygons=1))
+        lifts = dict(lifts=[dict(id='7', missing=['RelativeRotation'], world_transform_verified=False)])
+        before = copy.deepcopy(overlay)
+        inventory = game_data.overlay_inventory(overlay, lifts)
+        self.assertEqual(overlay, before)
+        self.assertFalse(inventory['source_navigation_ready'])
+        self.assertEqual(inventory['objects']['NavTile:7']['pointer'], '/tiles/0')
+        self.assertIn('Lift:7', inventory['objects'])
+        tables = {k: [] for k in game_data.SPATIAL_TABLES}; tables['World'] = [dict(Id='1')]
+        properties = game_data.spatial_properties(tables, inventory)
+        ids = {p['owner'] + '.' + p['field']: p['id'] for p in properties}
+        tables['World'].append(dict(Id='2'))
+        self.assertEqual(ids, {p['owner'] + '.' + p['field']: p['id'] for p in game_data.spatial_properties(tables, inventory)})
+        overlay['tiles'][0]['polygons'][0][0] = -1
+        with self.assertRaisesRegex(ValueError, 'индекс'):
+            game_data.overlay_inventory(overlay, lifts)
+        overlay['tiles'][0]['polygons'][0][0] = True
+        with self.assertRaisesRegex(ValueError, 'индекс'):
+            game_data.overlay_inventory(overlay, lifts)
+        overlay['tiles'][0]['polygons'][0][0] = 0
+        overlay['stats']['surface_polygons'] = 2
+        with self.assertRaisesRegex(ValueError, 'Сводка'):
+            game_data.overlay_inventory(overlay, lifts)
+
     def test_spatial_registry_keeps_hashed_evidence_and_rejects_escape(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder).resolve(); atlas = root / 'maps/atlas'; atlas.mkdir(parents=True)
