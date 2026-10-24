@@ -14,8 +14,8 @@
   "manual_port_targets": [
     {
       "id": "ui-nktileview-layout-flow",
-      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800"],
-      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py"],
+      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0"],
+      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py"],
       "required_checks": ["ui-nktileview-refresh-current"],
       "rule": "Addresses belong only to this plan baseline SHA. Literal matches are candidates; verify getter, table ownership, transfers and port bounded checks before use. Native checks do not validate historical cooked resources or generator rules.",
       "automation": {
@@ -32,14 +32,17 @@
               {"address": "0x144a8f220", "scope": "24 bounded wrapper/setter cases; shared helper is a fixture", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x144626640", "scope": "128 positive-integer packing fixtures; 32 complete cached exits, 96 prefixes; fmodf is a fixture", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x144a898e0", "scope": "Static three-block transfer only; producer/property names not recovered", "required_checks": []},
-              {"address": "0x144a8b800", "scope": "32 fallback-style native cases; environment/resolver/loader/setter/scheduling fixtures; no successful load or brush/render proof", "required_checks": ["ui-nktileview-refresh-current"]}
+              {"address": "0x144a8b800", "scope": "32 fallback-style native cases; environment/resolver/loader/setter/scheduling fixtures; no successful load or brush/render proof", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x14191ab70", "scope": "54 setter identity/invalidation cases; ownership and side effect callees are fixtures", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1445cf4f0", "scope": "Static branch/call/template checks only; string helpers and runtime prefix unknown", "required_checks": ["ui-nktileview-refresh-current"]}
             ],
             "evidence": [
               "evidence/interface/NKTILEVIEW-REGISTRATION-11316.md",
               "evidence/interface/NKTILEVIEW-REFRESH-11316.md",
               "evidence/interface/NKTILEVIEW-PACKING-11316.md",
               "evidence/interface/NKTILEVIEW-PARAMETER-FLOW-11316.md",
-              "evidence/interface/NKTILEVIEW-SCROLL-STYLE-11316.md"
+              "evidence/interface/NKTILEVIEW-SCROLL-STYLE-11316.md",
+              "evidence/interface/UI-RESOURCE-SETTER-11316.md"
             ]
           }
         ]

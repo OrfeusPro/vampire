@@ -5537,6 +5537,43 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Resolver full path/active variant, resource setter/Brush schema, gate identity, property metadata and producer for owner blocks430/440/450."
+    },
+    {
+      "addresses": [
+        "0x14191ab70",
+        "0x1445cf4f0"
+      ],
+      "checks": [
+        {
+          "cache_key": "a75d15b448a18d6eac3c3eee6148a390683c99933060b37ba24af8d3383ed214",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\60c43db9d378c7428830a75f2f1fd523b6a5578f1d0a86598cb1aaf7191b558c\\manifest.json",
+          "sha256": "60c43db9d378c7428830a75f2f1fd523b6a5578f1d0a86598cb1aaf7191b558c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "54 bounded setter cases validate pointer identity exits and resource pointer update/cache invalidation with atomic counter branches. Resolver statically distinguishes null, absolute slash path and relative /UI/Resource/Texture/%s template with global prefix at 14b5646b0; runtime prefix unknown.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-RESOURCE-SETTER-11316.md",
+          "sha256": "b897e9fcc3601873c240edb7a97de8bd40bd0b1226f25ef936acd7d94053541c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-3dc07db36be8\\details.json",
+          "sha256": "0d41fb949eb3bb9a9f3eb9ddbfe01b38183a831e0d109962eaef7adb4abd8753"
+        }
+      ],
+      "id": "34b6d742ad0fc2967898b951a46fd0fe1bbabf29a4e8bf9c4767776a1f14a0e9",
+      "limits": [
+        "Only setter executes natively; ownership swap/resource side effect/destructor/deallocator are fixtures. Resolver helpers not executed.",
+        "Synthetic pointers/refcounts do not prove actual UObject cleanup, thread safety, full Brush layout, loading or rendering.",
+        "Runtime prefix and mounted resource remain unresolved; no /Game/RED substitution by PNG suffix."
+      ],
+      "method": "bounded_native",
+      "next_check": "Trace exact prefix producer and string helpers before resolver application; validate actual resource independently.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Runtime prefix producer, complete native string helper semantics, active resource and named Brush fields."
     }
   ],
   "schema": 1,

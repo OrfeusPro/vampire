@@ -11,9 +11,20 @@ spec = importlib.util.spec_from_file_location('tile_packing_replay', HERE / 'rep
 packing = importlib.util.module_from_spec(spec); spec.loader.exec_module(packing)
 spec = importlib.util.spec_from_file_location('tile_scroll_style_replay', HERE / 'replay-nktileview-scroll-style.py')
 scroll_style = importlib.util.module_from_spec(spec); spec.loader.exec_module(scroll_style)
+spec = importlib.util.spec_from_file_location('ui_resource_setter_replay', HERE / 'replay-ui-resource-setter.py')
+resource_setter = importlib.util.module_from_spec(spec); spec.loader.exec_module(resource_setter)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_resource_setter_identity_and_cache_invalidation(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = resource_setter.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=a) for a in ('0x14191ab70', '0x1445cf4f0')]))
+        self.assertEqual(len(result['cases']), 54)
+        self.assertEqual(sum(not c['changed'] for c in result['cases']), 18)
+        self.assertEqual(result['resolver']['template'], '/UI/Resource/Texture/%s')
+        self.assertIsNone(result['resolver']['global_prefix_value'])
+
     def test_native_scroll_style_fallback_preserves_existing_parameters(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = scroll_style.run(dict(source=source, source_sha256=replay.getter.SHA,
