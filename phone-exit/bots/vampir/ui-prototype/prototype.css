@@ -35,3 +35,9 @@ button.close:active:not(:disabled){background-image:var(--close-icon);opacity:.7
 kbd{background:var(--shortcut-frame) center/100% 100% no-repeat;border:0}
 .tabs button{background-image:var(--tab-normal);background-size:100% 100%;overflow-wrap:normal;font-size:.8em;padding:.6em .5em}
 .tabs button.original-button:not(.primary):active:not(:disabled),.tabs button:active:not(:disabled){background-image:var(--tab-normal)}
+
+.entry-loading-window .dialog-body{text-align:center}.entry-status{min-height:2em}.entry-loading-window progress{width:90%;accent-color:#b88552;display:block;margin:1em auto}.entry-loading-window small{display:block;margin:1em 0}.entry-error-window .actions{flex-wrap:wrap;gap:.5em;margin-top:1em}.entry-error-window .actions button{min-width:0;font-size:.85em}
+.entry-spinner{width:2.5em;height:2.5em;border:2px solid #6e725c;border-top-color:#e6ca91;border-radius:50%;margin:1em auto;animation:entry-spin 1s linear infinite}@keyframes entry-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.entry-spinner{animation:none}}
+
+:root[data-ui-hidden="true"] .entry-spinner{animation-play-state:paused}

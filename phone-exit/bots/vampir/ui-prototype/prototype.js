@@ -13,6 +13,8 @@
   let skillSources, textures, manifest, registry, sourceItems, layouts, buttonLayouts, adapter, storageIssue, storageBlocked = false;
   let screen = 'auth', draft = M.appearance(), undo = [], redo = [], createTab = 'Пресет', toastTimer, busy = false;
   const dialogs = [], renderers = new Map(); let characterName = '';
+  let entryDialog = null, nextEntryScenario = 'success';
+  const entryFlow = VampirEntryFlow.create({ onChange: entryChanged });
   const state = () => adapter.state;
   const el = (tag, text, className) => { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (className) n.className = className; return n; };
   const append = (parent, ...children) => { parent.append(...children.filter(Boolean)); return parent; };
@@ -71,7 +73,7 @@
   function input(type, placeholder = '') { const n = document.createElement('input'); n.type = type; n.placeholder = placeholder; return n; }
   function select(values, value, fn) { const n = document.createElement('select'); values.forEach(x => { const option = el('option', typeof x === 'string' ? x : x[1]); option.value = typeof x === 'string' ? x : x[0]; n.append(option); }); n.value = value; n.onchange = () => fn(n.value); return n; }
   function tabs(names, current, fn) { const n = el('nav', undefined, 'tabs'); n.setAttribute('aria-label', 'Вкладки'); names.forEach(name => { const b = button(name, () => fn(name), name === current ? 'active' : ''); b.setAttribute('aria-pressed', String(name === current)); n.append(b); }); return n; }
-  function closeDialog(dialog) { if (!dialog.open) return; dialog.close(); }
+  function closeDialog(dialog) { if (!dialog?.open) return; if (dialog === entryDialog && entryFlow.state.phase === 'loading') entryFlow.cancel(); if (dialog.open) dialog.close(); }
   function focusIdentity(node) {
     return node && node !== document.body ? { label: node.getAttribute('aria-label'), title: node.getAttribute('title'), text: node.textContent, tag: node.tagName } : null;
   }
@@ -110,7 +112,7 @@
       append(body, el('p', message), actions);
     });
   }
-  function transition(next) { if (!profileLease.owned) return; flowRevision++; dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; clearTimeout(skillTimer); screen = next; render(); }
+  function transition(next) { if (!profileLease.owned) return; entryFlow.cancel(); flowRevision++; dialogs.slice().reverse().forEach(closeDialog); clearTimeout(toastTimer); document.getElementById('toast').hidden = true; clearTimeout(skillTimer); screen = next; render(); }
   function pageTitle(text, back) { const n = el('header', undefined, 'page-title'); append(n, button('❮', back, 'back'), el('h1', text)); return n; }
   function footerNote() { return el('small', 'Демонстрационный режим · игровые команды не отправляются', 'demo-note'); }
   function render() {
@@ -167,12 +169,65 @@
     const tools = el('nav', undefined, 'top-tools');
     append(tools, icon('IMG_Flat_AccountGiftReceive', 'Подарки', () => openSection('Почта')), icon('IMG_Flat_Setting', 'Настройки', openSettings), icon('IMG_Flat_Change', 'Обновить', () => notify('Демонстрационный каталог сервера обновлён.')));
     const center = el('section', undefined, 'title-center');
-    const enter = button('Пожалуйста, коснитесь экрана.', () => {
-      if (busy) return; busy = true; enter.disabled = true; enter.textContent = 'Загрузка персонажей…';
-      const revision = flowRevision; setTimeout(() => { if (revision !== flowRevision || !profileLease.owned) return; busy = false; transition('characters'); }, 450);
-    }, 'enter-game');
+    const enter = button('Пожалуйста, коснитесь экрана.', startEntry, 'enter-game');
+    enter.title = 'Войти на сервер';
     append(center, el('div', 'VAMPIR', 'wordmark'), enter, el('p', '◎ ' + state().region), button(state().server + '  ⟳', () => transition('servers'), 'server-choice'));
     append(app, tools, center);
+  }
+  function setEntryBusy(value) {
+    busy = value;
+    const enter = app.querySelector('.enter-game');
+    if (enter) { enter.disabled = value; enter.textContent = value ? 'Вход на сервер…' : 'Пожалуйста, коснитесь экрана.'; }
+  }
+  function bindEntryDialog(dialog) {
+    entryDialog = dialog;
+    dialog.addEventListener('cancel', event => {
+      if (entryDialog === dialog && entryFlow.state.phase === 'loading') { event.preventDefault(); entryFlow.cancel(); }
+    });
+    dialog.addEventListener('close', () => {
+      if (entryDialog === dialog) { entryDialog = null; entryFlow.cancel(); setEntryBusy(false); }
+    });
+  }
+  function startEntry() {
+    if (!profileLease.owned) { showOwnershipGate({ status: 'released' }); return; }
+    if (entryFlow.state.phase === 'loading') return;
+    const previous = entryDialog; entryDialog = null; if (previous) closeDialog(previous);
+    const context = { profile, server: state().server, region: state().region }, scenario = nextEntryScenario;
+    nextEntryScenario = 'success';
+    bindEntryDialog(modal('Вход на сервер', body => {
+      const value = entryFlow.state, current = value.phase === 'loading' ? value.step : 0, total = VampirEntryFlow.STEPS.length;
+      append(body, el('p', context.server + ' · ' + context.region));
+      const spinner = el('div', undefined, 'entry-spinner'); spinner.setAttribute('aria-hidden', 'true');
+      const message = el('p', VampirEntryFlow.STEPS[Math.min(current, total - 1)], 'entry-status'); message.setAttribute('role', 'status'); message.dataset.entryMessage = 'true';
+      const progress = el('progress'); progress.max = total; progress.value = current; progress.setAttribute('aria-label', 'Этапы демовхода'); progress.dataset.entryProgress = 'true';
+      append(body, spinner, message, progress, el('small', 'Локальные этапы демонстрации; сетевых запросов нет.'), button('Отмена входа', () => entryFlow.cancel()));
+    }, 'entry-loading-window'));
+    setEntryBusy(true); entryFlow.start(context, scenario);
+  }
+  function updateEntryPresentation(value) {
+    if (!entryDialog?.open || document.hidden) return;
+    const message = entryDialog.querySelector('[data-entry-message]'), progress = entryDialog.querySelector('[data-entry-progress]');
+    if (message) message.textContent = VampirEntryFlow.STEPS[Math.min(value.step, VampirEntryFlow.STEPS.length - 1)];
+    if (progress) progress.value = value.step;
+  }
+  function entryChanged(value) {
+    if (value.phase === 'loading') { updateEntryPresentation(value); return; }
+    setEntryBusy(false);
+    const previous = entryDialog; entryDialog = null;
+    if (previous) closeDialog(previous);
+    if (value.phase === 'ready') {
+      if (profileLease.owned && screen === 'title' && value.context.profile === profile && value.context.server === state().server && value.context.region === state().region) transition('characters');
+    } else if (value.phase === 'failed' && profileLease.owned && screen === 'title') {
+      app.querySelector('.enter-game')?.focus({ preventScroll: true });
+      bindEntryDialog(modal('Не удалось войти', (body, dialog) => {
+        const message = el('p', value.error.message, 'form-error'); message.setAttribute('role', 'alert');
+        append(body, el('p', value.context.server + ' · попытка ' + value.attempt), message,
+          el('small', 'Тестовый код: ' + value.error.code + '. Игровой сервер не опрашивался.'));
+        const actions = el('div', undefined, 'actions');
+        append(actions, button('Повторить вход', startEntry, 'primary'), button('Выбрать другой сервер', () => transition('servers')), button('Закрыть', () => closeDialog(dialog)));
+        body.append(actions);
+      }, 'entry-error-window'));
+    }
   }
   function renderCharacters() {
     append(app, pageTitle('Выбор персонажа', () => transition('title')));
@@ -582,6 +637,10 @@
       body.append(button('Размещение окон: источники', () => modal('Размещение окон', b => b.append(el('pre', JSON.stringify(layouts, null, 2))), 'catalog-window')));
       body.append(button('Расположение кнопок: источники', () => modal('Расположение кнопок', b => b.append(el('pre', JSON.stringify(buttonLayouts, null, 2))), 'catalog-window')));
       append(body, el('p', 'Владение ID: ' + (profileLease.owned ? 'это окно' : 'отсутствует')), el('p', 'Окно бота: ' + profile + ' · экономичный режим: ' + (economy ? 'включён' : 'выключен')), el('p', 'Для отдельного окна используйте ?bot=demo-02 … ?bot=demo-50. Тяжёлые данные каталога загружаются по запросу.'));
+      const scenarios = [['success', 'Успех'], ['rejected', 'Тестовый отказ'], ['timeout', 'Тестовый таймаут']];
+      append(body, field('Сценарий следующего демовхода', select(scenarios, nextEntryScenario, value => nextEntryScenario = value)),
+        el('small', 'Сценарий применяется один раз. Повтор по умолчанию успешен; реальные настройки не меняются.'),
+        el('p', 'Демовход: ' + entryFlow.state.phase + ' · попыток ' + entryFlow.state.attempt));
       body.append(button('Освободить ID бота', releaseProfile));
       manifest.limits.forEach(text => body.append(el('p', text)));
       body.append(button('Сбросить локальное демо', () => confirm('Сброс демо', 'Сохранённое демосостояние будет удалено. Реальные профили не затрагиваются.', resetDemo)));
@@ -589,6 +648,7 @@
   }
   function setAdapter(initial) {
     const local = M.adapter(initial, (value, type) => {
+      if (type === 'server') entryFlow.cancel();
       persist(value); document.documentElement.style.setProperty('--user-scale', value.settings.scale / 100);
       updateButtonGeometry();
       if (screen === 'game') refreshHud();
@@ -601,6 +661,7 @@
     } };
   }
   function showOwnershipGate(result) {
+    entryFlow.cancel();
     activationRevision++; flowRevision++; busy = false; screen = 'ownership';
     clearTimeout(toastTimer); clearTimeout(skillTimer); cancelAnimationFrame(geometryFrame);
     document.getElementById('toast').hidden = true;
@@ -647,6 +708,11 @@
     if (type === 'target') action('map-target', payload);
     if (type === 'position' && !state().position) action('map-position', payload);
   });
+  function updateEntryActivity() {
+    document.documentElement.dataset.uiHidden = String(document.hidden);
+    if (!document.hidden && entryFlow.state.phase === 'loading') updateEntryPresentation(entryFlow.state);
+  }
+  addEventListener('visibilitychange', updateEntryActivity); updateEntryActivity();
   addEventListener('visibilitychange', updateMapActivity);
   addEventListener('visibilitychange', updateSkillCooldowns);
   addEventListener('resize', updateButtonGeometry);

@@ -279,7 +279,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-1c3cc95a8eac. `/Game/RED/UI/Common/MessageBox/WBP_FieldBossSpawnMessageUI` — вариантов: 2.
 - [ ] UI-W-1f49c47b5430. `/Game/RED/UI/Common/MessageBox/WBP_InputTextMessageBoxPopup` — вариантов: 2.
 - [ ] UI-W-d20f68f05fce. `/Game/RED/UI/Common/MessageBox/WBP_MessageBoxConfirmPopup` — вариантов: 2.
-- [ ] UI-W-1737090506af. `/Game/RED/UI/Common/MessageBox/WBP_MessageBoxPopup` — вариантов: 2.
+- [ ] ~ UI-W-1737090506af. `/Game/RED/UI/Common/MessageBox/WBP_MessageBoxPopup` — вариантов: 2.
 - [ ] UI-W-865993c8aa6c. `/Game/RED/UI/Common/MessageBox/WBP_PreCharacterMessageBoxPopup` — вариантов: 2.
 - [ ] UI-W-abcd60b7b9ba. `/Game/RED/UI/Common/MessageBox/WBP_PriceConfirmPopup` — вариантов: 2.
 - [ ] UI-W-be2983f5f4cc. `/Game/RED/UI/Common/MessageBox/WBP_ScrollableMessageBoxDescT` — вариантов: 2.
@@ -1166,7 +1166,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-acd96c2be5fe. `/Game/RED/UI/Lobby/WBP_CharacterSlotT` — вариантов: 2.
 - [ ] UI-W-cc7b2a63b69b. `/Game/RED/UI/Lobby/WBP_ClassSelectUI` — вариантов: 2.
 - [ ] UI-W-d2d5f2f455a5. `/Game/RED/UI/Lobby/WBP_CreateUsernamePopup` — вариантов: 2.
-- [ ] UI-W-9bff8d8a715b. `/Game/RED/UI/Lobby/WBP_LoadingPageUI` — вариантов: 2.
+- [ ] ~ UI-W-9bff8d8a715b. `/Game/RED/UI/Lobby/WBP_LoadingPageUI` — вариантов: 2.
 - [ ] UI-W-cdbd3859c35c. `/Game/RED/UI/Lobby/WBP_LoadingUI` — вариантов: 2.
 - [ ] ~ UI-W-3200025cb74c. `/Game/RED/UI/Lobby/WBP_NameInputPopup` — вариантов: 2.
 - [ ] UI-W-b0428ef6cf58. `/Game/RED/UI/Lobby/WBP_PatchPopup` — вариантов: 2.

@@ -83,6 +83,28 @@
         0.84
       ],
       "basis": "Временная центральная карточка без кадра игры. Runtime desired size и цепочка внешней геометрии требуют проверки."
+    },
+    "entry-loading-window": {
+      "resource": "WBP_LoadingPageUI",
+      "catalog_file": "pakchunk500-Windows-2381.json",
+      "rect": [
+        0.3,
+        0.3,
+        0.4,
+        0.4
+      ],
+      "basis": "Кандидат загрузки по TextMessage / TextTipMessage / ImageLoading. Прямой callback входа не подтверждён. Прогресс и отмена — локальные контролы демо; расположение временное, runtime DPI неизвестен."
+    },
+    "entry-error-window": {
+      "resource": "WBP_MessageBoxPopup",
+      "catalog_file": "pakchunk500-Windows-561.json",
+      "rect": [
+        0.3,
+        0.28,
+        0.4,
+        0.44
+      ],
+      "basis": "Кандидат общего сообщения с ButtonOk / ButtonCancel / TextMessage; MinDesiredHeight 400 логических единиц. Прямая привязка тестового отказа к WBP не утверждается; третье действие выбора сервера добавлено только в демо."
     }
   }
 }
