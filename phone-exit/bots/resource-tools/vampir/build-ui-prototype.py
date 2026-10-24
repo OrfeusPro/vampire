@@ -16,6 +16,7 @@ import ui_collection_catalog
 import ui_desired_geometry
 import ui_composition_graph
 import ui_layout_schema
+import ui_display_settings
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -50,7 +51,7 @@ def catalog_entries(index):
 def compare(old, new):
     """Content changes only; paths and timestamps alone are not compatibility."""
     changes = {}
-    for group in ('resources', 'images', 'inputs', 'implementation', 'client', 'tools'):
+    for group in ('resources', 'images', 'inputs', 'implementation', 'client', 'tools', 'display_settings'):
         left, right = old.get(group, {}), new.get(group, {})
         changes[group] = {
             'added': sorted(right.keys() - left.keys()),
@@ -137,7 +138,18 @@ def component_sources(root, definitions, records, bindings):
             binding = bindings['bindings'][key]
             if binding['catalog_file'] != spec['catalog_file'] or binding['resource'] != spec['resource']:
                 raise ValueError('Геометрия относится к другому компоненту')
+        projection = []
+        used = set()
+        for key, binding in spec.get('render_bindings', {}).items():
+            c = control(data, binding['control'])
+            if c['type'] != binding['kind'] or c['export'] in used:
+                raise ValueError('Неверный тип или повторная привязка проекции: ' + key)
+            used.add(c['export'])
+            projection.append(dict(key=key, binding=binding, control_source=c, status='demo_adapter_not_native_event_binding'))
+        for target in spec.get('layout_targets', {}).values():
+            control(data, target)
         evidence['modules'][name] = dict(source=source, controls=[control(data, n) for n in spec['members']], dependencies=dependencies,
+            projection=projection, frame_root=control(data, spec['frame_root']) if spec.get('frame_root') else None,
             status=spec.get('status', 'composition_checked_runtime_not_verified'))
     for spec in definitions['consumers']:
         data, source = package(spec)
@@ -152,6 +164,9 @@ def component_sources(root, definitions, records, bindings):
 
 
 def build(root, baseline=None):
+    gate = read(SOURCE.parent / 'UI-GENERATION-GATE.json')
+    if gate.get('generation_allowed') is not True or gate.get('phase') != 'generation':
+        raise ValueError('Генерация внешнего вида отложена до аудита характеристик UI-23. Сначала запустите scan-ui-properties.py; опубликованный snapshot сохранён.')
     index_path = root / 'ui-catalog/index.json'
     index = read(index_path)
     image_path = root / 'archive-image-latest.json'
@@ -263,13 +278,16 @@ def build(root, baseline=None):
                   version='не определена автоматически', compatibility='not_established')
     data_id = hashlib.sha256(json.dumps(dict(resources=resources, images=image_hashes,
         inputs=inputs, schema=1), sort_keys=True).encode()).hexdigest()
+    display_settings = ui_display_settings.collect(Path(os.environ.get('PHONEEXIT_VAMPIR_DISPLAY_CONFIG', str(ui_display_settings.DEFAULT))))
     fingerprint = dict(resources=resources, images=image_hashes, inputs=inputs,
+                       display_settings={'sanitized_sha256': hashlib.sha256(json.dumps(display_settings, sort_keys=True).encode()).hexdigest()},
                        implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)),
                        tools={'inspect-ui.py': skin_evidence['decoder']['sha256'],
                               'ui_collection_catalog.py': sha(HERE / 'ui_collection_catalog.py'),
                               'ui_desired_geometry.py': sha(HERE / 'ui_desired_geometry.py'),
                               'ui_composition_graph.py': sha(HERE / 'ui_composition_graph.py'),
-                              'ui_layout_schema.py': sha(HERE / 'ui_layout_schema.py')})
+                              'ui_layout_schema.py': sha(HERE / 'ui_layout_schema.py'),
+                              'ui_display_settings.py': sha(HERE / 'ui_display_settings.py')})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -304,6 +322,7 @@ def build(root, baseline=None):
                     'Цены, количества, персонажи, задания и действия — демонстрационные.',
                     'Каталог структуры не является реализацией всех игровых сценариев.'])
         write(temporary / 'manifest.json', manifest)
+        write(temporary / 'display-settings.json', display_settings)
         write(temporary / 'textures.json', texture_map)
         for row in shared['textures']:
             row['url'] = texture_map[row['asset_path']]['url']
@@ -399,6 +418,8 @@ def build(root, baseline=None):
         write(temporary / 'manifest.json', manifest)
         if any(sha((HERE if name == 'shared_ui_library.py' else SOURCE) / name) != digest for name, digest in source_inputs.items()):
             raise ValueError('Исходники изменились во время сборки. Повторите сборку.')
+        if display_settings != ui_display_settings.collect(Path(display_settings['source']['path'])):
+            raise ValueError('Настройки экрана изменились во время сборки. Повторите сборку.')
         temporary.rename(destination)
     current = dict(snapshot='snapshots/' + identity + '/', id=identity)
     write(out / 'current.json.tmp', current)

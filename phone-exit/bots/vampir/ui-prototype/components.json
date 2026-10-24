@@ -6,13 +6,23 @@
       "catalog_file": "pakchunk500-Windows-1747.json",
       "frame_root": "CanvasPanel_3",
       "layout_targets": {
-        "hp": "CanvasPanelHP",
-        "mp": "CanvasPanelMP",
+        "hp": "ProgressBarHP",
+        "mp": "ProgressBarMP",
+        "hp_text": "TextHP",
+        "mp_text": "TextMP",
         "portrait": "CanvasPanel_0",
         "portrait_button": "ButtonPortraitMove"
       },
       "layout_policy": {
-        "omitted_auto_size_false": true
+        "omitted_auto_size_false": true,
+        "omitted_padding_zero": true
+      },
+      "render_bindings": {
+        "hp": { "control": "ProgressBarHP", "kind": "ProgressBar", "className": "vital-bar hp", "label": "HP", "demo_layer": 1 },
+        "mp": { "control": "ProgressBarMP", "kind": "ProgressBar", "className": "vital-bar mp", "label": "MP", "demo_layer": 1 },
+        "hp_text": { "control": "TextHP", "kind": "NkTextBlock", "className": "vital-value", "demo_layer": 2 },
+        "mp_text": { "control": "TextMP", "kind": "NkTextBlock", "className": "vital-value", "demo_layer": 2 },
+        "portrait_button": { "control": "ButtonPortraitMove", "kind": "NkButton", "className": "player-status-portrait", "action": "open-character" }
       },
       "frame": {
         "width": 390,

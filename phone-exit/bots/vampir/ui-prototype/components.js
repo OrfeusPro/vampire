@@ -7,22 +7,15 @@
       frame: geometry.rect(0, 0, spec.frame.width, spec.frame.height), targets: spec.layout_targets, policy: spec.layout_policy });
     if (Object.keys(compiled.unknowns).length) throw Error('Не разобрана геометрия общего статуса: ' + JSON.stringify(compiled.unknowns));
     const boxes = compiled.rects;
-    function position(node, box) {
-      Object.assign(node.style, { position: 'absolute', left: `calc(${box.x} * var(--ui-component-unit))`, top: `calc(${box.y} * var(--ui-component-unit))`, width: `calc(${box.width} * var(--ui-component-unit))`, height: `calc(${box.height} * var(--ui-component-unit))` });
-      return node;
-    }
     function playerStatus({ state, character, onOpen }) {
-      const node = el('div', undefined, 'player-status'); node.dataset.component = 'player-status'; node.dataset.sourceResource = spec.resource; node.dataset.geometryState = 'allocated-component-frame';
-      node.dataset.layoutEngine = 'local-widget-schema'; node.dataset.layoutAssumptions = JSON.stringify(compiled.assumptions);
-      const avatar = position(button('', onOpen, 'player-status-portrait'), boxes.portrait_button);
+      const view = VampirWidgetRenderer.mount({ document, schema: schemas.player_status,
+        options: { root: spec.frame_root, frame: geometry.rect(0, 0, spec.frame.width, spec.frame.height), policy: spec.layout_policy },
+        bindings: spec.render_bindings, actions: { 'open-character': onOpen } });
+      const node = view.node; node.classList.add('player-status'); node.dataset.component = 'player-status'; node.dataset.sourceResource = spec.resource; node.dataset.geometryState = 'allocated-component-frame';
+      node.dataset.layoutEngine = 'projected-widget-tree'; node.dataset.layoutAssumptions = JSON.stringify(view.compiled.assumptions);
+      const avatar = view.elements.portrait_button;
       let appearanceKey;
-      node.append(avatar);
-      const views = new Map();
-      for (const id of ['hp', 'mp']) {
-        const bar = position(el('div', undefined, 'vital-bar ' + id), boxes[id]);
-        bar.dataset.vital = id; bar.setAttribute('role', 'progressbar'); bar.setAttribute('aria-label', id.toUpperCase()); bar.setAttribute('aria-valuemin', '0');
-        const fill = el('div', undefined, 'vital-fill'), text = el('span', undefined, 'vital-value'); append(bar, fill, text); node.append(bar); views.set(id, { bar, fill, text });
-      }
+      for (const id of ['hp', 'mp']) view.elements[id].dataset.vital = id;
       function update(next, person) {
         avatar.setAttribute('aria-label', 'Открыть персонажа ' + (person?.name || 'Демо')); avatar.title = person?.name || 'Персонаж';
         const nextAppearance = JSON.stringify(person?.appearance || null);
@@ -30,13 +23,11 @@
           const picture = portrait(person?.appearance); picture.style.setProperty('--portrait-x', String(boxes.portrait.x - boxes.portrait_button.x)); picture.style.setProperty('--portrait-y', String(boxes.portrait.y - boxes.portrait_button.y)); picture.style.setProperty('--portrait-size', String(boxes.portrait.width));
           avatar.replaceChildren(picture); appearanceKey = nextAppearance;
         }
-        for (const value of vitals(next)) {
-          const view = views.get(value.id), label = String(value.value) + '/' + String(value.max);
-          view.fill.style.width = value.ratio * 100 + '%'; view.text.textContent = label;
-          view.bar.setAttribute('aria-valuenow', String(value.value)); view.bar.setAttribute('aria-valuemax', String(value.max)); view.bar.setAttribute('aria-valuetext', label);
-        }
+        const values = {};
+        for (const value of vitals(next)) { values[value.id] = { value: value.value, max: value.max }; values[value.id + '_text'] = String(value.value) + '/' + String(value.max); }
+        view.update(values);
       }
-      update(state, character); return { node, update };
+      update(state, character); return { node, update, dispose: view.dispose };
     }
     function currency(key, value) {
       const node = el('span', undefined, 'currency'); node.setAttribute('aria-label', (key === 'gold' ? 'Золото: ' : 'Алмазы: ') + fmt(value));
@@ -51,7 +42,7 @@
       append(tools, heading, menu, close); append(node, status.node, balance, tools);
       let balanceKey;
       function update(next, person) { status.update(next, person); const key = next.gold + ':' + next.diamonds; if (key !== balanceKey) { balance.replaceChildren(wallets(next)); balanceKey = key; } }
-      update(state, character); return { node, update };
+      update(state, character); return { node, update, dispose: status.dispose };
     }
     return { playerStatus, titleBar, currency, wallets };
   }

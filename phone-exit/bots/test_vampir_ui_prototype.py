@@ -21,9 +21,85 @@ def load(name, filename):
 builder = load('ui_prototype_builder', 'build-ui-prototype.py')
 task_sync = load('ui_prototype_tasks', 'sync-ui-window-tasks.py')
 verifier = load('ui_prototype_verifier', 'verify-ui-prototype.py')
+property_scanner = load('ui_property_scanner', 'scan-ui-properties.py')
+property_verifier = load('ui_property_verifier', 'verify-ui-property-scan.py')
 
 
 class PrototypeTests(unittest.TestCase):
+    def test_property_scanner_preserves_matrix_and_reverse_relations_without_promoting_candidates(self):
+        import copy
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); catalog = root / 'ui-catalog'; catalog.mkdir()
+            index = dict(resource_variants={'/Game/Main': [dict(file='main.json')], '/Game/Child': [dict(file='child.json')]}, windows=[dict(file='main.json', name='WBP_Main'), dict(file='child.json', name='WBP_Child')])
+            (catalog / 'index.json').write_text(json.dumps(index), 'utf-8')
+            control = lambda i, name, kind: dict(export=i, name=name, type=kind, sha256='control SHA', offset=123, size=456)
+            parent = dict(name='WBP_Main', controls=[control(1, 'Root', 'CanvasPanel'), control(2, 'Nested', 'WBP_Child_C')], decoded_slots=[dict(provenance=dict(slot_export=10, sha256='slot SHA'), decoded=dict(parent_export=1, content_export=2, parent=dict(type='CanvasPanel'), layout=dict(offsets=dict(left=7))))])
+            child = dict(name='WBP_Child', controls=[control(3, 'Root', 'SizeBox')], decoded_slots=[])
+            child['controls'][0]['container_geometry'] = dict(decoded=dict(explicit_properties=dict(WidthOverride=42), slots=[11]))
+            for name, value in [('main.json', parent), ('child.json', child)]:
+                (catalog / name).write_text(json.dumps(value), 'utf-8')
+            requirements = dict(characteristics=[dict(id='UI-23.R-test', name='Ширина', aliases=['WidthOverride'])]); before = copy.deepcopy(requirements)
+            destination, report = property_scanner.scan(root, root / 'reports', requirements)
+            self.assertEqual(requirements, before)
+            self.assertEqual(report['statistics']['variants'], 2)
+            self.assertEqual(report['required_characteristics'][0]['status'], 'not_reviewed')
+            self.assertTrue(report['required_characteristics'][0]['candidate_properties'])
+            matrix = json.loads((destination / 'variants/main.json').read_text('utf-8'))
+            self.assertEqual(matrix['widgets']['1']['offset'], 123)
+            self.assertEqual(matrix['slots']['10']['decoded']['layout']['offsets']['left'], 7)
+            reverse = json.loads((destination / 'reverse-components.json').read_text('utf-8'))
+            self.assertEqual(reverse['child.json'], [dict(variant='main.json', control=2)])
+            _, again = property_scanner.scan(root, root / 'reports', requirements)
+            self.assertEqual(report, again)
+            self.assertEqual(property_verifier.verify(root, destination)['state'], 'passed')
+            ids = set(report['properties']); parent['controls'][0]['offset'] = 999
+            (catalog / 'main.json').write_text(json.dumps(parent), 'utf-8')
+            _, changed = property_scanner.scan(root, root / 'reports', requirements)
+            self.assertEqual(ids, set(changed['properties']))
+            self.assertNotEqual(report['dataset_id'], changed['dataset_id'])
+
+    def test_property_scanner_rejects_duplicate_requirements_and_writing_under_sources(self):
+        self.assertEqual(list(property_scanner.leaves({})), [])
+        self.assertEqual(list(property_scanner.leaves({'Undecoded': {}})), [('Undecoded', {})])
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            with self.assertRaisesRegex(ValueError, 'Повторные'):
+                property_scanner.scan(root, root / 'reports', dict(characteristics=[dict(id='same'), dict(id='same')]))
+            with self.assertRaisesRegex(ValueError, 'вне исходного'):
+                property_scanner.scan(root, root / 'ui-catalog/reports', dict(characteristics=[]))
+
+    def test_generation_gate_preserves_published_interface_during_property_audit(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            with self.assertRaisesRegex(ValueError, 'UI-23'):
+                builder.build(root)
+            self.assertEqual(list(root.iterdir()), [])
+
+    def test_saved_display_import_is_allowlisted_read_only_and_never_a_ui_scale(self):
+        import ui_display_settings as settings
+        with tempfile.TemporaryDirectory() as folder:
+            p = Path(folder) / 'settings.ini'
+            data = '[DEFAULT]\nDesiredScreenWidth=999\n[/Script/Engine.GameUserSettings]\nResolutionSizeX=1920\nResolutionSizeY=1080\nDesiredScreenHeight=720\nDisplayUIScale=2\nToken=private fixture\n[Other]\nResolutionSizeX=4000\n'
+            p.write_text(data, 'utf-8')
+            result = settings.collect(p)
+            self.assertEqual(set(result['saved']), {'ResolutionSizeX', 'ResolutionSizeY', 'DesiredScreenHeight'})
+            self.assertEqual(result['saved']['ResolutionSizeX']['value'], 1920)
+            self.assertIsNone(result['ui_scale']['value'])
+            self.assertNotIn('private fixture', json.dumps(result))
+            self.assertNotIn('DisplayUIScale', result['saved'])
+            self.assertEqual(p.read_text('utf-8'), data)
+
+    def test_saved_display_import_reports_missing_malformed_and_out_of_range_values(self):
+        import ui_display_settings as settings
+        with tempfile.TemporaryDirectory() as folder:
+            p = Path(folder) / 'settings.ini'
+            self.assertEqual(settings.collect(p)['source']['status'], 'not_found')
+            p.write_text('not an ini file', 'utf-8')
+            self.assertEqual(settings.collect(p)['source']['status'], 'invalid_config')
+            p.write_text('[/Script/Engine.GameUserSettings]\nResolutionSizeX=-1\nResolutionSizeY=999999\nFullscreenMode=4\n', 'utf-8')
+            result = settings.collect(p)
+            self.assertFalse(result['saved']); self.assertEqual(len(result['issues']), 3)
+
     def test_local_layout_schema_keeps_source_slots_and_detached_metadata(self):
         import copy
         import ui_layout_schema as layout
@@ -101,6 +177,12 @@ class PrototypeTests(unittest.TestCase):
             result = builder.component_sources(root, definitions, records, bindings)
             self.assertEqual(result['consumers'][0]['control_source']['type'], 'WBP_Title_C')
             self.assertEqual(result['modules']['player']['source']['resource_path'], '/Game/Test/WBP_Player')
+            definitions['modules']['player']['render_bindings'] = dict(hp=dict(control='HP', kind='NkButton'))
+            with self.assertRaisesRegex(ValueError, 'тип'):
+                builder.component_sources(root, definitions, records, bindings)
+            definitions['modules']['player']['render_bindings']['hp']['kind'] = 'ProgressBar'
+            projection = builder.component_sources(root, definitions, records, bindings)['modules']['player']['projection']
+            self.assertEqual(projection[0]['status'], 'demo_adapter_not_native_event_binding')
             bindings['bindings']['hp']['resource'] = 'WBP_Other'
             with self.assertRaisesRegex(ValueError, 'Геометрия'):
                 builder.component_sources(root, definitions, records, bindings)

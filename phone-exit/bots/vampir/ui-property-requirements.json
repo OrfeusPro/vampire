@@ -1,0 +1,688 @@
+{
+  "schema": 1,
+  "notes": "Требуемые характеристики; наличие кандидата по имени не означает подтверждение. ID постоянны, новые строки добавляются без перенумерации.",
+  "characteristics": [
+    {
+      "id": "UI-23.R-001",
+      "key": "Источники и версии.ClientIdentity",
+      "category": "Источники и версии",
+      "name": "Версия клиента и полный SHA EXE",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-002",
+      "key": "Источники и версии.PackageIdentity",
+      "category": "Источники и версии",
+      "name": "Архив / полный путь ресурса / SHA uasset и uexp",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-003",
+      "key": "Источники и версии.VariantSelection",
+      "category": "Источники и версии",
+      "name": "Активный вариант и совместимость набора",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-004",
+      "key": "Источники и версии.DecoderSchema",
+      "category": "Источники и версии",
+      "name": "Версия декодера / usmap и недекодированные свойства",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-005",
+      "key": "Иерархия и связи.Owner",
+      "category": "Иерархия и связи",
+      "name": "Владелец окна / виджета и область экземпляра",
+      "aliases": [
+        "outer"
+      ]
+    },
+    {
+      "id": "UI-23.R-006",
+      "key": "Иерархия и связи.Root",
+      "category": "Иерархия и связи",
+      "name": "Blueprint root и фактический runtime root",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-007",
+      "key": "Иерархия и связи.Parent",
+      "category": "Иерархия и связи",
+      "name": "Родитель, content и slot",
+      "aliases": [
+        "parent_export",
+        "content_export"
+      ]
+    },
+    {
+      "id": "UI-23.R-008",
+      "key": "Иерархия и связи.Slots",
+      "category": "Иерархия и связи",
+      "name": "Исходный порядок детей",
+      "aliases": [
+        "slots"
+      ]
+    },
+    {
+      "id": "UI-23.R-009",
+      "key": "Иерархия и связи.NestedWidget",
+      "category": "Иерархия и связи",
+      "name": "Вложенный WBP и выбранный вариант",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-010",
+      "key": "Иерархия и связи.Inheritance",
+      "category": "Иерархия и связи",
+      "name": "Родительский класс / archetype / inherited defaults",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-011",
+      "key": "Иерархия и связи.NamedSlot",
+      "category": "Иерархия и связи",
+      "name": "NamedSlot и точки внедрения",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-012",
+      "key": "Иерархия и связи.SharedConsumer",
+      "category": "Иерархия и связи",
+      "name": "Общие компоненты и обратные зависимости",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-013",
+      "key": "Геометрия и масштаб.Units",
+      "category": "Геометрия и масштаб",
+      "name": "Физические / CSS / логические единицы",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-014",
+      "key": "Геометрия и масштаб.Viewport",
+      "category": "Геометрия и масштаб",
+      "name": "Фактический viewport и оконный режим",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-015",
+      "key": "Геометрия и масштаб.MonitorDPI",
+      "category": "Геометрия и масштаб",
+      "name": "DPI монитора и смена монитора",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-016",
+      "key": "Геометрия и масштаб.ApplicationScale",
+      "category": "Геометрия и масштаб",
+      "name": "ApplicationScale и его происхождение",
+      "aliases": [
+        "ApplicationScale"
+      ]
+    },
+    {
+      "id": "UI-23.R-017",
+      "key": "Геометрия и масштаб.DisplayUIScale",
+      "category": "Геометрия и масштаб",
+      "name": "Сохранённое значение UI Scale и преобразование пресета",
+      "aliases": [
+        "DisplayUIScale"
+      ]
+    },
+    {
+      "id": "UI-23.R-018",
+      "key": "Геометрия и масштаб.UIScaleRule",
+      "category": "Геометрия и масштаб",
+      "name": "Активное правило масштабирования",
+      "aliases": [
+        "UIScaleRule"
+      ]
+    },
+    {
+      "id": "UI-23.R-019",
+      "key": "Геометрия и масштаб.UIScaleCurve",
+      "category": "Геометрия и масштаб",
+      "name": "DPI curve / custom scaling class",
+      "aliases": [
+        "UIScaleCurve",
+        "CustomScalingRuleClass"
+      ]
+    },
+    {
+      "id": "UI-23.R-020",
+      "key": "Геометрия и масштаб.ReferenceSize",
+      "category": "Геометрия и масштаб",
+      "name": "Design reference size / platform profile",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-021",
+      "key": "Геометрия и масштаб.SafeZone",
+      "category": "Геометрия и масштаб",
+      "name": "SafeZone и внешние отступы",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-022",
+      "key": "Геометрия и масштаб.Anchors",
+      "category": "Геометрия и масштаб",
+      "name": "Anchors minimum / maximum",
+      "aliases": [
+        "minimum",
+        "maximum"
+      ]
+    },
+    {
+      "id": "UI-23.R-023",
+      "key": "Геометрия и масштаб.Offsets",
+      "category": "Геометрия и масштаб",
+      "name": "Offsets / margins по каждой оси",
+      "aliases": [
+        "left",
+        "top",
+        "right",
+        "bottom"
+      ]
+    },
+    {
+      "id": "UI-23.R-024",
+      "key": "Геометрия и масштаб.Alignment",
+      "category": "Геометрия и масштаб",
+      "name": "Horizontal / vertical alignment",
+      "aliases": [
+        "horizontal_alignment",
+        "vertical_alignment",
+        "alignment"
+      ]
+    },
+    {
+      "id": "UI-23.R-025",
+      "key": "Геометрия и масштаб.Pivot",
+      "category": "Геометрия и масштаб",
+      "name": "Render pivot / alignment pivot",
+      "aliases": [
+        "RenderTransformPivot"
+      ]
+    },
+    {
+      "id": "UI-23.R-026",
+      "key": "Геометрия и масштаб.Padding",
+      "category": "Геометрия и масштаб",
+      "name": "Padding родителя и дочернего slot",
+      "aliases": [
+        "padding"
+      ]
+    },
+    {
+      "id": "UI-23.R-027",
+      "key": "Геометрия и масштаб.AutoSize",
+      "category": "Геометрия и масштаб",
+      "name": "AutoSize и правило desired size",
+      "aliases": [
+        "auto_size"
+      ]
+    },
+    {
+      "id": "UI-23.R-028",
+      "key": "Геометрия и масштаб.DesiredSize",
+      "category": "Геометрия и масштаб",
+      "name": "Desired size текста / картинки / составного блока",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-029",
+      "key": "Геометрия и масштаб.WidthOverride",
+      "category": "Геометрия и масштаб",
+      "name": "Явные ширина / высота и флаги override",
+      "aliases": [
+        "WidthOverride",
+        "HeightOverride",
+        "bOverride_WidthOverride",
+        "bOverride_HeightOverride"
+      ]
+    },
+    {
+      "id": "UI-23.R-030",
+      "key": "Геометрия и масштаб.MinMax",
+      "category": "Геометрия и масштаб",
+      "name": "Min / Max / aspect constraints",
+      "aliases": [
+        "MinDesiredWidth",
+        "MinDesiredHeight",
+        "MaxDesiredWidth",
+        "MaxDesiredHeight"
+      ]
+    },
+    {
+      "id": "UI-23.R-031",
+      "key": "Геометрия и масштаб.ScaleBox",
+      "category": "Геометрия и масштаб",
+      "name": "ScaleBox Stretch / StretchDirection",
+      "aliases": [
+        "Stretch",
+        "StretchDirection"
+      ]
+    },
+    {
+      "id": "UI-23.R-032",
+      "key": "Геометрия и масштаб.Transform",
+      "category": "Геометрия и масштаб",
+      "name": "Translation / scale / rotation / shear",
+      "aliases": [
+        "RenderTransform"
+      ]
+    },
+    {
+      "id": "UI-23.R-033",
+      "key": "Геометрия и масштаб.ZOrder",
+      "category": "Геометрия и масштаб",
+      "name": "ZOrder и порядок наложения",
+      "aliases": [
+        "z_order",
+        "ZOrder"
+      ]
+    },
+    {
+      "id": "UI-23.R-034",
+      "key": "Геометрия и масштаб.Clipping",
+      "category": "Геометрия и масштаб",
+      "name": "Clipping / overflow / scroll bounds",
+      "aliases": [
+        "Clipping"
+      ]
+    },
+    {
+      "id": "UI-23.R-035",
+      "key": "Геометрия и масштаб.Visibility",
+      "category": "Геометрия и масштаб",
+      "name": "Visibility / collapsed / hidden и геометрическое участие",
+      "aliases": [
+        "Visibility"
+      ]
+    },
+    {
+      "id": "UI-23.R-036",
+      "key": "Геометрия и масштаб.FlowDirection",
+      "category": "Геометрия и масштаб",
+      "name": "LTR / RTL / content scale",
+      "aliases": [
+        "FlowDirectionPreference"
+      ]
+    },
+    {
+      "id": "UI-23.R-037",
+      "key": "Оформление.Brush",
+      "category": "Оформление",
+      "name": "Image / Brush / Style и полный ресурсный путь",
+      "aliases": [
+        "Brush",
+        "WidgetStyle"
+      ]
+    },
+    {
+      "id": "UI-23.R-038",
+      "key": "Оформление.Texture",
+      "category": "Оформление",
+      "name": "Атлас, UV, размер и режим выборки",
+      "aliases": [
+        "ImageSize",
+        "UVRegion"
+      ]
+    },
+    {
+      "id": "UI-23.R-039",
+      "key": "Оформление.NineSlice",
+      "category": "Оформление",
+      "name": "DrawAs / margins / nine-slice",
+      "aliases": [
+        "DrawAs",
+        "Margin"
+      ]
+    },
+    {
+      "id": "UI-23.R-040",
+      "key": "Оформление.Tint",
+      "category": "Оформление",
+      "name": "Tint / ColorAndOpacity и наследование",
+      "aliases": [
+        "TintColor",
+        "ColorAndOpacity"
+      ]
+    },
+    {
+      "id": "UI-23.R-041",
+      "key": "Оформление.ColorSpace",
+      "category": "Оформление",
+      "name": "LinearColor / sRGB преобразования",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-042",
+      "key": "Оформление.RenderOpacity",
+      "category": "Оформление",
+      "name": "RenderOpacity родителя и ребёнка",
+      "aliases": [
+        "RenderOpacity"
+      ]
+    },
+    {
+      "id": "UI-23.R-043",
+      "key": "Оформление.Material",
+      "category": "Оформление",
+      "name": "Material instance / dynamic parameters",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-044",
+      "key": "Оформление.Font",
+      "category": "Оформление",
+      "name": "Семейство / face / размер / weight / fallback",
+      "aliases": [
+        "Font",
+        "TypefaceFontName",
+        "Size"
+      ]
+    },
+    {
+      "id": "UI-23.R-045",
+      "key": "Оформление.TextLayout",
+      "category": "Оформление",
+      "name": "Kerning / wrap / line height / justification",
+      "aliases": [
+        "AutoWrapText",
+        "Justification",
+        "LetterSpacing"
+      ]
+    },
+    {
+      "id": "UI-23.R-046",
+      "key": "Оформление.Outline",
+      "category": "Оформление",
+      "name": "Обводка текста / рамки и их цвета",
+      "aliases": [
+        "OutlineSettings"
+      ]
+    },
+    {
+      "id": "UI-23.R-047",
+      "key": "Оформление.Shadow",
+      "category": "Оформление",
+      "name": "Тени, смещения и прозрачность",
+      "aliases": [
+        "ShadowOffset",
+        "ShadowColorAndOpacity"
+      ]
+    },
+    {
+      "id": "UI-23.R-048",
+      "key": "Оформление.PaintEffects",
+      "category": "Оформление",
+      "name": "Glow / blur / mask / blend",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-049",
+      "key": "Состояния.Normal",
+      "category": "Состояния",
+      "name": "Normal / hover / pressed / released",
+      "aliases": [
+        "Normal",
+        "Hovered",
+        "Pressed"
+      ]
+    },
+    {
+      "id": "UI-23.R-050",
+      "key": "Состояния.Selected",
+      "category": "Состояния",
+      "name": "Selected / checked / indeterminate / active",
+      "aliases": [
+        "Checked",
+        "Unchecked"
+      ]
+    },
+    {
+      "id": "UI-23.R-051",
+      "key": "Состояния.Focus",
+      "category": "Состояния",
+      "name": "Focus / keyboard navigation / focus style",
+      "aliases": [
+        "Navigation",
+        "IsFocusable"
+      ]
+    },
+    {
+      "id": "UI-23.R-052",
+      "key": "Состояния.Disabled",
+      "category": "Состояния",
+      "name": "Disabled / loading / недоступность по условию",
+      "aliases": [
+        "IsEnabled"
+      ]
+    },
+    {
+      "id": "UI-23.R-053",
+      "key": "Состояния.StateTransition",
+      "category": "Состояния",
+      "name": "Переходы состояний и их отмена",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-054",
+      "key": "Состояния.Switcher",
+      "category": "Состояния",
+      "name": "WidgetSwitcher active index и его binding",
+      "aliases": [
+        "ActiveWidgetIndex"
+      ]
+    },
+    {
+      "id": "UI-23.R-055",
+      "key": "События и действия.Delegates",
+      "category": "События и действия",
+      "name": "Контрол → delegate → binding",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-056",
+      "key": "События и действия.Handler",
+      "category": "События и действия",
+      "name": "Handler → callees / аргументы / условия",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-057",
+      "key": "События и действия.Result",
+      "category": "События и действия",
+      "name": "Изменение состояния / запрос / подтверждённый результат",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-058",
+      "key": "События и действия.Input",
+      "category": "События и действия",
+      "name": "Mouse / touch / keyboard / gamepad / repeat",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-059",
+      "key": "События и действия.Cancel",
+      "category": "События и действия",
+      "name": "Release вне контрола / cancel / focus loss",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-060",
+      "key": "События и действия.HitTest",
+      "category": "События и действия",
+      "name": "Hit test / modal input / блокировка кликов сквозь",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-061",
+      "key": "События и действия.FocusRestore",
+      "category": "События и действия",
+      "name": "Escape / возврат фокуса / вложенные окна",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-062",
+      "key": "События и действия.Session",
+      "category": "События и действия",
+      "name": "Потеря окна / сессии / соединения",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-063",
+      "key": "События и действия.DemoBoundary",
+      "category": "События и действия",
+      "name": "Разделение native callback / демодействия / транспорта",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-064",
+      "key": "Данные и тексты.Binding",
+      "category": "Данные и тексты",
+      "name": "Dynamic / property bindings и условия обновления",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-065",
+      "key": "Данные и тексты.Localization",
+      "category": "Данные и тексты",
+      "name": "Text key / string table / locale / fallback",
+      "aliases": [
+        "Text"
+      ]
+    },
+    {
+      "id": "UI-23.R-066",
+      "key": "Данные и тексты.Formatting",
+      "category": "Данные и тексты",
+      "name": "Формат чисел / единиц / переносов / времени",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-067",
+      "key": "Данные и тексты.Identity",
+      "category": "Данные и тексты",
+      "name": "ID предмета / валюты / навыка / сервера / персонажа",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-068",
+      "key": "Данные и тексты.Currency",
+      "category": "Данные и тексты",
+      "name": "Тип валюты / баланс / иконка / доступность",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-069",
+      "key": "Данные и тексты.Vitals",
+      "category": "Данные и тексты",
+      "name": "HP / MP current / max / ratio / обновление",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-070",
+      "key": "Данные и тексты.Effects",
+      "category": "Данные и тексты",
+      "name": "Баф: ID / иконка / источник / стаки / duration / снятие",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-071",
+      "key": "Данные и тексты.Cooldown",
+      "category": "Данные и тексты",
+      "name": "Cooldown / charges / таймер / доступность действия",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-072",
+      "key": "Данные и тексты.Collection",
+      "category": "Данные и тексты",
+      "name": "Коллекция / требования / бонусы / регистрация",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-073",
+      "key": "Данные и тексты.Inventory",
+      "category": "Данные и тексты",
+      "name": "Inventory / equip / количество / сортировка / фильтры",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-074",
+      "key": "Данные и тексты.Ownership",
+      "category": "Данные и тексты",
+      "name": "Область данных: профиль / сервер / персонаж",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-075",
+      "key": "Анимации.Tracks",
+      "category": "Анимации",
+      "name": "Animation / tracks / keyframes / easing",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-076",
+      "key": "Анимации.Playback",
+      "category": "Анимации",
+      "name": "Play / loop / reverse / duration",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-077",
+      "key": "Анимации.Interruption",
+      "category": "Анимации",
+      "name": "Прерывание / visibility / состояние после закрытия",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-078",
+      "key": "Жизненный цикл и обновления.Cache",
+      "category": "Жизненный цикл и обновления",
+      "name": "Общие неизменяемые ресурсы / cache / lazy load",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-079",
+      "key": "Жизненный цикл и обновления.Invalidation",
+      "category": "Жизненный цикл и обновления",
+      "name": "Пересчёт при viewport / настройках / данных",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-080",
+      "key": "Жизненный цикл и обновления.Cleanup",
+      "category": "Жизненный цикл и обновления",
+      "name": "Подписки / callbacks / timers / observers / cleanup",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-081",
+      "key": "Жизненный цикл и обновления.Isolation",
+      "category": "Жизненный цикл и обновления",
+      "name": "Изоляция состояния и 50 отдельных окон",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-082",
+      "key": "Жизненный цикл и обновления.Migration",
+      "category": "Жизненный цикл и обновления",
+      "name": "Baseline / delta / совместимость / миграция",
+      "aliases": []
+    },
+    {
+      "id": "UI-23.R-083",
+      "key": "Жизненный цикл и обновления.Verification",
+      "category": "Жизненный цикл и обновления",
+      "name": "Источник / чтение / применение / проверка для каждого свойства",
+      "aliases": []
+    }
+  ]
+}

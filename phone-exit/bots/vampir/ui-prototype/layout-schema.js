@@ -28,15 +28,24 @@
       const parent = resolve(edge.parent);
       visiting.delete(id);
       if (parent.unknown) return parent;
-      if (nodes[edge.parent].kind !== 'CanvasPanel' || !slot.decoded.layout) return fail('unsupported_container', id, edge.slot, 'Расчёт контейнера ' + nodes[edge.parent].kind + ' ещё не подключён.');
       const decoded = { ...slot.decoded };
-      if (decoded.auto_size === undefined) {
-        if (!policy.omitted_auto_size_false) return fail('unknown_auto_size', id, edge.slot, 'Наследуемый AutoSize не установлен.');
-        decoded.auto_size = false;
-        assumptions.add('slot ' + edge.slot + ': отсутствующий AutoSize принят false только по явной политике демо.');
-      } else if (![0, 1, false, true].includes(decoded.auto_size)) return fail('invalid_auto_size', id, edge.slot, 'Некорректный AutoSize.');
-      const result = G.canvas(decoded, parent.rect, desired[id]);
-      const value = result.unknown ? fail('unknown_canvas', id, edge.slot, result.unknown) : result;
+      const kind = nodes[edge.parent].kind;
+      let result;
+      if (['Overlay', 'SizeBox'].includes(kind)) {
+        if (decoded.padding === undefined && policy.omitted_padding_zero) {
+          decoded.padding = { left: 0, top: 0, right: 0, bottom: 0 };
+          assumptions.add('slot ' + edge.slot + ': отсутствующий padding принят нулевым только по явной политике демо.');
+        }
+        result = G.aligned(decoded, parent.rect, desired[id]);
+      } else if (kind === 'CanvasPanel' && decoded.layout) {
+        if (decoded.auto_size === undefined) {
+          if (!policy.omitted_auto_size_false) return fail('unknown_auto_size', id, edge.slot, 'Наследуемый AutoSize не установлен.');
+          decoded.auto_size = false;
+          assumptions.add('slot ' + edge.slot + ': отсутствующий AutoSize принят false только по явной политике демо.');
+        } else if (![0, 1, false, true].includes(decoded.auto_size)) return fail('invalid_auto_size', id, edge.slot, 'Некорректный AutoSize.');
+        result = G.canvas(decoded, parent.rect, desired[id]);
+      } else return fail('unsupported_container', id, edge.slot, 'Расчёт контейнера ' + kind + ' ещё не подключён; порядок / свойства не подтверждены.');
+      const value = result.unknown ? fail(kind === 'CanvasPanel' ? 'unknown_canvas' : 'unknown_alignment', id, edge.slot, result.unknown) : result;
       cache.set(id, value); return value;
     }
     const rects = {}, unknowns = {};
@@ -45,7 +54,7 @@
       if (result.unknown) unknowns[key] = result.unknown;
       else rects[key] = result.rect;
     }
-    return { rects, unknowns, assumptions: [...assumptions].sort(), scope: 'local_canvas_only' };
+    return { rects, unknowns, assumptions: [...assumptions].sort(), scope: 'local_supported_containers_only' };
   }
   const api = { solve };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

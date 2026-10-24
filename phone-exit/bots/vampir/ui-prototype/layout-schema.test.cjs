@@ -37,7 +37,7 @@ test('unknown desired size, unsupported containers, cycles, missing nodes and du
   let schema = fixture(); schema.slots['11'].decoded.auto_size = true;
   assert.equal(solve(schema).unknowns.hp.code, 'unknown_canvas');
   assert.equal(solve(schema, { desired: { '3': { width: 500, height: 22 } } }).rects.hp.height, 22);
-  schema = fixture(); schema.nodes['2'].kind = 'Overlay'; assert.equal(solve(schema).unknowns.hp.code, 'unsupported_container');
+  schema = fixture(); schema.nodes['2'].kind = 'HorizontalBox'; assert.equal(solve(schema).unknowns.hp.code, 'unsupported_container');
   schema = fixture(); schema.nodes['3'].incoming.push({ parent: '1', slot: '20' }); assert.equal(solve(schema).unknowns.hp.code, 'multiple_parents');
   schema = fixture(); schema.nodes['2'].incoming = [{ parent: '3', slot: '10' }]; schema.slots['10'].decoded.parent_export = 3; assert.equal(solve(schema).unknowns.hp.code, 'cycle');
   schema = fixture(); delete schema.nodes['2']; assert.equal(solve(schema).unknowns.hp.code, 'missing_node');

@@ -14,6 +14,11 @@ def sha(path):
 
 def verify(snapshot):
     manifest = json.loads((snapshot / 'manifest.json').read_text('utf-8'))
+    if (snapshot / 'display-settings.json').exists():
+        display = json.loads((snapshot / 'display-settings.json').read_text('utf-8'))
+        assert hashlib.sha256(json.dumps(display, sort_keys=True).encode()).hexdigest() == manifest['display_settings']['sanitized_sha256']
+        assert set(display['saved']) <= {'ResolutionSizeX', 'ResolutionSizeY', 'LastUserConfirmedResolutionSizeX', 'LastUserConfirmedResolutionSizeY', 'DesiredScreenWidth', 'DesiredScreenHeight', 'LastUserConfirmedDesiredScreenWidth', 'LastUserConfirmedDesiredScreenHeight', 'FullscreenMode', 'LastConfirmedFullscreenMode'}
+        assert display['ui_scale']['value'] is None and display['ui_scale']['status'] == 'unresolved_active_setting'
     for name, digest in manifest.get('generated_files', {}).items():
         assert sha(snapshot / name) == digest, 'Changed generated file: ' + name
     textures = json.loads((snapshot / 'textures.json').read_text('utf-8'))
@@ -109,6 +114,14 @@ def verify(snapshot):
             assert [c['name'] for c in module['controls']] == spec['members']
             for control in module['controls']:
                 check_component_control(module['source'], control)
+            if module.get('frame_root'):
+                check_component_control(module['source'], module['frame_root'])
+                assert module['frame_root']['name'] == spec['frame_root']
+            for projection in module.get('projection', []):
+                check_component_control(module['source'], projection['control_source'])
+                assert projection['binding'] == spec['render_bindings'][projection['key']]
+                assert projection['control_source']['type'] == projection['binding']['kind']
+            assert len(module.get('projection', [])) == len(spec.get('render_bindings', {}))
             for dependency in module['dependencies']:
                 check_component_control(module['source'], dependency['control_source'])
                 assert dependency['control_source']['type'] == components['modules'][dependency['module']]['resource'] + '_C'

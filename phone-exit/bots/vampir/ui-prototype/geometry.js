@@ -28,6 +28,20 @@
     }
     return { rect: result };
   }
+  function aligned(slot, parent, desired) {
+    const p = slot.padding, h = slot.horizontal_alignment, v = slot.vertical_alignment;
+    if (!p || !['left', 'right', 'top', 'bottom'].every(k => finite(p[k]))) return { unknown: 'Padding контейнера не установлен.' };
+    if (![h, v].every(n => Number.isInteger(n) && n >= 0 && n <= 3)) return { unknown: 'Alignment контейнера не установлен.' };
+    const result = {};
+    for (const [axis, size, start, end, alignment] of [['x', 'width', 'left', 'right', h], ['y', 'height', 'top', 'bottom', v]]) {
+      const available = Math.max(0, parent[size] - p[start] - p[end]);
+      if (alignment !== 0 && (!desired || !finite(desired[size]) || desired[size] < 0)) return { unknown: 'Нужен desired size для alignment ' + axis + '.' };
+      const length = alignment === 0 ? available : Math.min(available, desired[size]);
+      const extra = alignment === 2 ? (available - length) / 2 : alignment === 3 ? available - length : 0;
+      result[axis] = parent[axis] + p[start] + extra; result[size] = length;
+    }
+    return { rect: result };
+  }
   function chain(binding, parent, desired = {}) {
     let current = parent;
     const assumptions = [], used = [];
@@ -87,7 +101,7 @@
     }
     return scale * uiScale;
   }
-  const api = { rect, canvas, chain, desiredTree, referenceScale, units, cssRect };
+  const api = { rect, canvas, aligned, chain, desiredTree, referenceScale, units, cssRect };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.VampirGeometry = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -11,7 +11,7 @@
   let resourcesReady = false, pageActive = true, activationRevision = 0, flowRevision = 0, releasing = Promise.resolve();
   const economy = new URLSearchParams(location.search).get('economy') !== 'off';
   let skillSources, textures, manifest, registry, sourceItems, layouts, buttonLayouts, components, componentDefinitions, adapter, storageIssue, storageBlocked = false;
-  let screen = 'auth', draft = M.appearance(), undo = [], redo = [], createTab = 'Пресет', toastTimer, busy = false;
+  let screen = 'auth', draft = M.appearance(), undo = [], redo = [], createTab = 'Пресет', toastTimer, busy = false, hudStatusView;
   const dialogs = [], renderers = new Map(); let characterName = '';
   let entryDialog = null, nextEntryScenario = 'success';
   const entryFlow = VampirEntryFlow.create({ onChange: entryChanged });
@@ -113,7 +113,7 @@
     append(dialog, header, body); windows.append(dialog); dialogs.push(dialog);
     const redraw = () => { const focused = dialog.contains(document.activeElement) ? focusIdentity(document.activeElement) : null; sharedHeader?.update(state(), currentCharacter()); body.replaceChildren(); render(body, dialog); restoreFocus(focused, dialog); updateButtonGeometry(); };
     renderers.set(dialog, redraw);
-    dialog.addEventListener('close', () => { geometryObserver.unobserve(dialog); renderers.delete(dialog); const at = dialogs.indexOf(dialog); if (at >= 0) dialogs.splice(at, 1); dialog.remove(); restoreFocus(invoker, dialogs.filter(d => d.open).at(-1) || app); });
+    dialog.addEventListener('close', () => { sharedHeader?.dispose(); geometryObserver.unobserve(dialog); renderers.delete(dialog); const at = dialogs.indexOf(dialog); if (at >= 0) dialogs.splice(at, 1); dialog.remove(); restoreFocus(invoker, dialogs.filter(d => d.open).at(-1) || app); });
     redraw(); dialog.showModal(); geometryObserver.observe(dialog); updateButtonGeometry(); return dialog;
   }
   function info(title, message) { return modal(title, body => append(body, el('p', message), button('Понятно', () => closeDialog(dialogs.at(-1)), 'primary'))); }
@@ -128,6 +128,7 @@
   function pageTitle(text, back) { const n = el('header', undefined, 'page-title'); append(n, button('❮', back, 'back'), el('h1', text)); return n; }
   function footerNote() { return el('small', 'Демонстрационный режим · игровые команды не отправляются', 'demo-note'); }
   function render() {
+    hudStatusView?.dispose(); hudStatusView = null;
     const focused = app.contains(document.activeElement) ? focusIdentity(document.activeElement) : null;
     app.replaceChildren(); app.className = 'screen screen-' + screen;
     if (screen === 'auth') renderAuth();
@@ -342,8 +343,10 @@
   }
   function refreshHud() {
     const hud = document.getElementById('hud'); if (!hud) return; hud.replaceChildren();
+    hudStatusView?.dispose(); hudStatusView = null;
     const s = state(), c = currentCharacter(); if (!c) { transition('characters'); return; }
-    const health = components.playerStatus({ state: s, character: c, onOpen: () => openSection('Персонаж') }).node; health.classList.add('health');
+    hudStatusView = components.playerStatus({ state: s, character: c, onOpen: () => openSection('Персонаж') });
+    const health = hudStatusView.node; health.classList.add('health');
     const top = el('nav', undefined, 'hud-top');
     [['Alarm', 'Уведомления', () => openSection('Уведомления')], ['Quest', 'Задания', openQuests], ['Shop', 'Магазин', openShop], ['Inventory', 'Сумка', openBag], ['Menu', 'Меню', openMenu]].forEach(([ico, label, fn]) => top.append(icon('IMG_Flat_' + ico, label, fn)));
     const mapTools = el('div', undefined, 'minimap');
@@ -786,7 +789,11 @@
     } catch (error) { info('Ошибка каталога', error.message); }
   }
   function openVersions() {
-    modal('Версии и обновления', body => {
+    const dialog = modal('Версии и обновления', body => {
+      body.append(button('Прочитанные настройки экрана', async () => {
+        try { const data = await fetchJSON('display-settings.json'); if (profileLease.owned && dialog.open) modal('Настройки экрана клиента', b => append(b, el('p', 'Прочитано автоматически при сборке. Сохранённые значения не подтверждают активный UI Scale; коэффициент демо пока отдельный.'), el('pre', JSON.stringify(data, null, 2))), 'catalog-window'); }
+        catch (error) { if (profileLease.owned && dialog.open) info('Ошибка чтения настроек', error.message); }
+      }));
       append(body, el('p', 'Набор интерфейса: ' + manifest.id), el('p', 'Дата сборки: ' + manifest.built_at), el('p', 'Клиент SHA256: ' + (manifest.client.sha256 || 'недоступен')), el('p', 'Совместимость с клиентом: не подтверждена'), el('p', 'Каталог UI SHA256: ' + manifest.inputs['ui-catalog/index.json']), el('p', 'Демосохранение: схема ' + M.SCHEMA), el('p', storageIssue || 'Хранилище доступно.'), el('p', layouts.limits));
       body.append(button('Размещение окон: источники', () => modal('Размещение окон', b => b.append(el('pre', JSON.stringify(layouts, null, 2))), 'catalog-window')));
       body.append(button('Расположение кнопок: источники', () => modal('Расположение кнопок', b => b.append(el('pre', JSON.stringify(buttonLayouts, null, 2))), 'catalog-window')));
@@ -815,6 +822,7 @@
     } };
   }
   function showOwnershipGate(result) {
+    hudStatusView?.dispose(); hudStatusView = null;
     entryFlow.cancel();
     activationRevision++; flowRevision++; busy = false; screen = 'ownership';
     clearTimeout(toastTimer); clearTimeout(skillTimer); cancelAnimationFrame(geometryFrame);
