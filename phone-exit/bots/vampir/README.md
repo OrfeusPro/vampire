@@ -1,5 +1,9 @@
 # Vampir — главный указатель разработки
 
+Текущая регистрация ID 4 связана с handler `14679aec0`; проверены таблицы,
+аргументы и exports. Далее — native gate/handler branches; статическая связь
+не доказывает сессию. [Доказательства и следующий участок](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md).
+
 Входной буфер LoginResult теперь создают native concrete/base constructors:
 72 проверки полей / ABI и общая цепочка чтения прошли без ручной записи cursor.
 Далее — handler/dispatch; storage primitives остаются fixtures.

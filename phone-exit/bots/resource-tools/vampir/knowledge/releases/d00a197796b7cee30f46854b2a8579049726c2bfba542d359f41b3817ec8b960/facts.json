@@ -2827,6 +2827,75 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current handler/dispatch/result gates и реальные storage primitives. Чтение big endian, повреждённые archive pointers, общая malformed UTF-8 termination semantics и реальная сессия не доказаны."
+    },
+    {
+      "addresses": [
+        "0x14679aec0",
+        "0x1467cb6c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "50b1725d3997082c161cdfa91e132929daed4f2ff071a6bf9ba3af289fa8a5f3",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4eef487d3fdee0e857ed6151c63f1ebb8f472d70bba31e46674a310424e41eb4\\manifest.json",
+          "sha256": "4eef487d3fdee0e857ed6151c63f1ebb8f472d70bba31e46674a310424e41eb4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1cc7e0ca1448fa8f1369b5abcaf6a10192fc81ba20b22cc8ad5a05e9e82e9491",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\61c7c1eebc36c9be6dc04b07fd6821f2dcdd36aea6ed4de97ce0028806b07b4a\\manifest.json",
+          "sha256": "61c7c1eebc36c9be6dc04b07fd6821f2dcdd36aea6ed4de97ce0028806b07b4a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "26ddea515e93d1b26018137255f90d9521928dde8d4fd4ef650e11fff9de78af",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e757a776239e0396a01f1077b4daf1f98f6e6a078263639ea1649f8afbf7d1d6\\manifest.json",
+          "sha256": "e757a776239e0396a01f1077b4daf1f98f6e6a078263639ea1649f8afbf7d1d6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f198df9dc169a783a97fbefce6a6fc4e642b5d5b34077253dfd90218e7d64d63",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eb8cfa67009c54e88c809698d11a7592e1436d19fe513aa281ee753451a154c6\\manifest.json",
+          "sha256": "eb8cfa67009c54e88c809698d11a7592e1436d19fe513aa281ee753451a154c6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4ad351df383089e899477efa74d74852fee26de5707a2a1a95acb411ea2aeabb",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f3ad1458bc5bd1513b8c76aa6a126bffddaad43d4291456fafd55296d4839aba\\manifest.json",
+          "sha256": "f3ad1458bc5bd1513b8c76aa6a126bffddaad43d4291456fafd55296d4839aba",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Статическая цепочка constructor/ID 4 registration связывает текущий LoginResult с handler 14679aec0 через table 149dc65b8 slot10 и helper 1467cb6c0. Проверены exact 75-byte window, argument/control flow, packet table/ID getter, exports и call inventory.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-result-registration-11316.json",
+          "sha256": "7d7800b8f1f3abfe0fd4d1f85885fd9ef2527ef2b69274f2bbf1a310e50949b9"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md",
+          "sha256": "eab9855cc0464b9f7a8290f698ddf84fa0f1d4368ba15f4c3ccdacf0a4385ee8"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-RESULT-REGISTRATION-11316.json",
+          "sha256": "35d44e5f4ce96cd757233ac69ce28ce9df6414c07c0f61e1bfd563f2c76a7ea5"
+        }
+      ],
+      "id": "ecba9ce82273a165daadaf67104921c0e940365ff4a21d0e496a95e144d2b9b0",
+      "limits": [
+        "No native execution, allocation outcome, live dispatch, handler branch/state semantic or session proof.",
+        "Oversized registration owner 67858 bytes not exported; only reviewed 75-byte static window.",
+        "Current result gate/post-state are next explicit candidates, not proven replacements of old behavior."
+      ],
+      "method": "static",
+      "next_check": "Использовать готовый run-83255b6c29bc: проверить current gate 1467cd7b0 и handler 14679aec0 native branches, затем post-state 146755540 / getter 1464af340 / virtual+28. Native dispatch и CharacterListRead пока не доказаны.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native gate/handler branches, dispatch container/ownership and chain to CharacterListRead."
     }
   ],
   "schema": 1,

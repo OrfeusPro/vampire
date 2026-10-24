@@ -2065,6 +2065,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "login-result-registration-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-result-registration.py"
+      ],
+      "rule": "По точному constructor xref проверить allocation/table/packet/handler argument chain, ID getter и handler slot10. Большой owner не выгружать целиком: reviewed window 75 bytes, полный SHA. Call inventory не доказывает native branches.",
+      "automation": {
+        "discovery": "reviewed_constructor_callsite_handler_table",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x14679aec0",
+                "scope": "Static ID 4 registration and exported handler/helper call inventory; no native branch or session proof.",
+                "required_checks": [
+                  "login-result-registration"
+                ]
+              },
+              {
+                "address": "0x1467cb6c0",
+                "scope": "Static ID 4 registration and exported handler/helper call inventory; no native branch or session proof.",
+                "required_checks": [
+                  "login-result-registration"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-registration.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [
