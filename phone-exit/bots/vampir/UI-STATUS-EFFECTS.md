@@ -52,6 +52,8 @@ desired size, порядок HorizontalBox и активные visibility / tran
 
 - [x] UI-21.E-01. Сверить cooked источники и exports выбранных компонентов. Проверено: 10 вариантов / 234 контрола, полные SHA и границы body, каталог соответствует exports.
 - [ ] ~ UI-21.E-02. Восстановить NkTileView entry class / factory и выбор варианта; package names / sample ZBP сохранять как кандидаты. Найдены локальные цепочки и индексы, схема свойств ещё неизвестна.
+  - [x] UI-21.E-02.01. Найти и статически проверить current getter класса NkTileView. Проверено: точные строки /Script/NkUMG / NkTileView, глобальный кеш и целая unwind функция на SHA d00a1977; Ghidra и инспектор согласованы. [Доказательства и ограничения](../resource-tools/vampir/knowledge/evidence/interface/NKTILEVIEW-REGISTRATION-11316.md).
+  - [ ] UI-21.E-02.02. Через отдельное задание исследовать три передаваемых указателя на функции; подтвердить роли и путь к reflection metadata, порядок свойств / наследование. Getter не закрывает эту задачу.
 - [ ] UI-21.E-03. Восстановить данные экземпляра эффекта → ImageIcon / ImageCustom / BG / grade Brush; отдельно обычные и small ресурсы, tint, alpha и visibility.
 - [ ] UI-21.E-04. Восстановить stack count, оставшееся время, progress, правило обновления и снятие; статическое Effect.StackCount не считать текущими стаками персонажа.
 - [ ] UI-21.E-05. Восстановить ButtonBuffPanelOpen → binding → handler → popup, возврат фокуса и закрытие. Название WBP_SkillEffectInfoT не является доказательством целевого окна.

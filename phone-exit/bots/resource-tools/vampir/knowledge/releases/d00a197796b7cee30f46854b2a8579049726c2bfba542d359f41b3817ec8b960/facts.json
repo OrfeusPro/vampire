@@ -5295,6 +5295,33 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current selector 1 WBP binding, changed text semantics and reason for live JP256 result16; accepted live list and current creation checks remain open."
+    },
+    {
+      "addresses": [
+        "0x144a66f20"
+      ],
+      "checks": [],
+      "conclusion": "NkTileView getter tests global 14b591718; zero path supplies exact UTF16 NkTileView and /Script/NkUMG to 1416ab8d0 and reloads global before return.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\NKTILEVIEW-REGISTRATION-11316.md",
+          "sha256": "1ca9f2e429e45eae0ecb61fff80281604d155505b57d298b4a09ef972d9e2f66"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-8024950972b3\\details.json",
+          "sha256": "6be674793ec41c3511a75fe52b4d55919e958bf5175f7ded60b333ed0235059b"
+        }
+      ],
+      "id": "c769c9e8d1e8d6bd19ec792eff593dc50eb63506722fafd63993f0a7f175e992",
+      "limits": [
+        "One complete unwind function and exact literals; no native execution or helper semantic proof.",
+        "Passed function pointers and 0x470 argument do not establish property metadata or object size."
+      ],
+      "method": "static",
+      "next_check": "Prepare explicit 144a88f70, 144a6a620, 144a2ec60 on this source; establish pointer roles and metadata route.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "NkTileView reflected properties, inheritance, entry factory and compatibility with historical cooked packages."
     }
   ],
   "schema": 1,
