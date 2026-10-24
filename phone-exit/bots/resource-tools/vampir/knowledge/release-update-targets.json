@@ -1325,6 +1325,86 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-version-combiner-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-version-combiner-context.py",
+        "verify-version-prepare-context.py",
+        "version-combiner-fixtures.py"
+      ],
+      "rule": "От текущего Version prepare проверить оба combiners, copy/append/grow по call sites и ownership, затем выполнить на общей памяти с остальными helpers. Allocation/copy boundaries остаются явными fixtures. Новый SHA требует сверки; runtime не продвигать.",
+      "automation": {
+        "discovery": "reviewed_constructor_wrapper_table_and_call_sites",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1467ce6a0",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x1456d7be0",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x14142bc30",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x14142bb60",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x1414266a0",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x141429e10",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x141438050",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-combiner-context.py",
+              "verify-version-prepare-context.py",
+              "version-combiner-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-COMBINERS-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

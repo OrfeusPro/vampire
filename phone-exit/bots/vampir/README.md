@@ -1,6 +1,11 @@
 # Vampir — главный указатель разработки
 
 Актуальный offline-план: [четыре выбранных направления](../vampir-headless/OFFLINE-PLAN.md).
+Объединение строк Version 1.13.16 проверено на 256 сценариях и 2 overflow;
+native combiners включены в 64 whole prepare сценария с Windows / CPU / NM.
+Context/platform в общей цепочке ещё fixtures, Login prepare/results остаются.
+[Сборка поля, ownership и автоматизация](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-COMBINERS-11316.md).
+
 Windows / CPU / NM включены в целый Version prepare: 64 сценария на общей памяти
 проверили поля, cleanup и send 0 / 1. Context/platform и combiners ещё fixtures;
 дальше их перенос и whole Login prepare / result readers.

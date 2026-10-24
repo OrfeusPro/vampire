@@ -15,7 +15,10 @@
 - Windows / CPU / NM теперь исполняются внутри whole Version prepare на общей
   памяти: 64 сценария полей, ownership, cleanup и send 0 / 1.
   [Интеграция и оставшиеся fixtures](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-PREPARE-SYSTEM-11316.md).
-- Далее: реальные context / platform и combiners в общей цепочке, Login prepare
+- Native combiners / copy / append / grow прошли 256 сценариев и 2 overflow;
+  интегрированы в whole prepare ещё на 64 сценариях без готового текста fixture.
+  [Сборка поля, ownership и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-VERSION-COMBINERS-11316.md).
+- Далее: реальные context / platform в общей цепочке, Login prepare
   и result readers. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.
 

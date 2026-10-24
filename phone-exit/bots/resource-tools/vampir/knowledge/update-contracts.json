@@ -189,7 +189,8 @@
         "native-version-nm-context",
         "native-version-platform-context",
         "native-version-system-context",
-        "native-version-prepare-system-context"
+        "native-version-prepare-system-context",
+        "native-version-combiner-context"
       ],
       "recipes": [
         {
@@ -256,6 +257,26 @@
         {
           "key": "cpu-trim-start",
           "method": "reviewed"
+        },
+        {
+          "key": "combine-first",
+          "method": "reviewed"
+        },
+        {
+          "key": "combine-second",
+          "method": "reviewed"
+        },
+        {
+          "key": "combiner-copy",
+          "method": "reviewed"
+        },
+        {
+          "key": "combiner-append",
+          "method": "reviewed"
+        },
+        {
+          "key": "combiner-grow",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -274,7 +295,12 @@
           "cpu-second": "0x1415c6e60",
           "cpu-trim": "0x141439fc0",
           "cpu-trim-end": "0x141439db0",
-          "cpu-trim-start": "0x14143a030"
+          "cpu-trim-start": "0x14143a030",
+          "combine-first": "0x14142bc30",
+          "combine-second": "0x14142bb60",
+          "combiner-copy": "0x1414266a0",
+          "combiner-append": "0x141429e10",
+          "combiner-grow": "0x141438050"
         }
       },
       "resources": [
@@ -288,7 +314,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Whole Version prepare включает native Windows/CPU/NM в 64 сценариях. Context/platform и combiners в общей цепочке ещё fixtures. Дальше реальные context/combiners и Login prepare/results; runtime остаётся partial.",
+      "next_check": "Whole Version prepare исполняет native combiners/Windows/CPU/NM в 64 сценариях; отдельные combiners прошли 256 случаев и 2 overflow. Platform/context в общей цепочке ещё fixtures. Дальше их интеграция, затем Login prepare/result readers; профиль остаётся partial.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -329,7 +355,8 @@
         "native-version-nm-current",
         "native-version-platform-current",
         "native-version-system-current",
-        "native-version-prepare-system-current"
+        "native-version-prepare-system-current",
+        "native-version-combiner-current"
       ],
       "writer_check": {
         "object_size": 208,

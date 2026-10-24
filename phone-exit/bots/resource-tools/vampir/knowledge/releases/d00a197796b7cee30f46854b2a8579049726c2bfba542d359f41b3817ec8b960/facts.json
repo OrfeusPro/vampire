@@ -2219,6 +2219,91 @@
       "question": "release-version-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Реальные context/platform/combiner зависимости whole Version prepare, CPU initializer, whole Login prepare и result readers."
+    },
+    {
+      "addresses": [
+        "0x1414266a0",
+        "0x141429e10",
+        "0x14142bb60",
+        "0x14142bc30",
+        "0x141438050",
+        "0x1456d7be0",
+        "0x1467ce6a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "61fd105b7d9cdea8d4c9b527605e8ee31be396118db3380164400d945092ddda",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0878e0b5b3eb7cae328d920ea7c1a034ce6ec7b1e73b04e3549fe7b9c6ad4bcd\\manifest.json",
+          "sha256": "0878e0b5b3eb7cae328d920ea7c1a034ce6ec7b1e73b04e3549fe7b9c6ad4bcd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "88acca1194ddf30b9ee6d45bb79ba72b1a3ace26e2a207d22b6fbe013aa8f5a9",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a9aea2a8cf60e7beca5acccb6c7670b555a7faf49686ace6c17402990808b255\\manifest.json",
+          "sha256": "a9aea2a8cf60e7beca5acccb6c7670b555a7faf49686ace6c17402990808b255",
+          "state": "passed"
+        },
+        {
+          "cache_key": "efed211a6dfb11dd4d753d2afb7cee4fab1c598cb40fc819b53b92d08f2b683a",
+          "id": "native-version-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd\\manifest.json",
+          "sha256": "cc2bc69078572bdcd68d70bb42152a999e788bc66edabcbd099107f0ed443fcd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "406700ad9b37413d49897ad3c29604846c6e7f9f0c4ab3314e53a32b8ef0d89d",
+          "id": "native-version-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7021ae6dfe881f717afc926021b30777e53436cdf3e4e5819064db83ab2e6863\\manifest.json",
+          "sha256": "7021ae6dfe881f717afc926021b30777e53436cdf3e4e5819064db83ab2e6863",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4987a9acf6e9672357e7c0f5db49851f5ceb202a7ee16de47385133e3880080f",
+          "id": "native-version-prepare-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ab5b067de60dd566f2dd7345645d9eb6e79af3151bf7bd5618135dca3e8c5f67\\manifest.json",
+          "sha256": "ab5b067de60dd566f2dd7345645d9eb6e79af3151bf7bd5618135dca3e8c5f67",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ab798b919863ebfe4dec4f84ba578797cd7e8524f29217b3113ba566f7e774be",
+          "id": "native-version-combiner-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8213b0d714ee34d49aca894e2db5d8b4cdad065df583ed5ef56c31d015f73a24\\manifest.json",
+          "sha256": "8213b0d714ee34d49aca894e2db5d8b4cdad065df583ed5ef56c31d015f73a24",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Два целых combiners, copy constructor, append и capacity grow исполнены в 256 сценариях; 2 int32 overflow остановлены на handler fixture. Проверены Unicode/embedded NUL, empty allocated/unallocated, capacity growth, ownership/canaries/ABI. В 64 whole Version prepare сценариях эти функции совместно с native Windows/CPU/NM формируют поле +28 как context+underscore+Windows suffix на общей памяти, без final concatenation output fixtures. Caller cleanup и send 0/1 прошли.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-COMBINERS-11316.md",
+          "sha256": "6e557bd7ac1fcebf9a8670ebf746dba7caa8a2e82c1a2cb13306cc8d46d4d7b2"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\VERSION-COMBINERS-11316.json",
+          "sha256": "dbdb2804ff1012c82e0ab52a9e5dc2c8981e04e6b397583283580637541339b6"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-combiner-11316.json",
+          "sha256": "a48932ad6330faab6613c0a007ba3afd8eed103edd9ba4d51457cd7a50586c30"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\version-prepare-combiner-11316.json",
+          "sha256": "453aef3bb29492eb4e42c6edec32487a3b3275e6b87044579d373f4a81ac2c20"
+        }
+      ],
+      "id": "88b9034bbe335fc30ec06ac30971f6e1c77aa38e54efe1956f40df0865bddc71",
+      "limits": [
+        "Allocation/resize/append-grow/size quantization/internal copy/overflow остаются fixtures. Internal copy возвращает destination; alternate short-copy и реальные allocation failures не подтверждены.",
+        "Aliasing дескрипторов не проверен. Platform/context в целом prepare ещё fixtures; OS/CPU/NM caches синтетические.",
+        "String constructors/destructor/log/send остаются fixtures. Нет Login prepare/results, framing, сети, runtime promotion или смены baseline."
+      ],
+      "method": "bounded_native",
+      "next_check": "Включить существующие platform/context helpers в whole prepare с проверкой их границ; затем переносить Login prepare/results. Использовать сохранённые exports и не переносить новый SHA автоматически.",
+      "question": "release-version-prepare",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные platform/context в whole Version prepare, CPU initialization, whole Login prepare и result readers."
     }
   ],
   "schema": 1,
