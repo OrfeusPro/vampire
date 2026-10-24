@@ -676,7 +676,8 @@
       "checks": [
         "release-character-selection-probe",
         "native-waiting-end-context",
-        "native-character-list-envelope-context"
+        "native-character-list-envelope-context",
+        "native-character-record-context"
       ],
       "recipes": [
         {
@@ -710,6 +711,34 @@
         {
           "key": "record-thunk",
           "method": "reviewed"
+        },
+        {
+          "key": "record-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "record-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "record-time-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "record-time-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "record-appearance-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "record-optional-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "record-u16-quad-reader",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -721,7 +750,14 @@
           "result-reader": "0x1456dbc30",
           "result-vector": "0x144aac530",
           "result-resize": "0x1456e6a20",
-          "record-thunk": "0x1456dcdc0"
+          "record-thunk": "0x1456dcdc0",
+          "record-constructor": "0x145783840",
+          "record-reader": "0x145788500",
+          "record-time-constructor": "0x1457a3500",
+          "record-time-reader": "0x1457fdce0",
+          "record-appearance-reader": "0x145787a30",
+          "record-optional-reader": "0x1456c3000",
+          "record-u16-quad-reader": "0x145794bc0"
         }
       },
       "resources": [],
@@ -730,10 +766,11 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Current envelope/vector подтверждён: полный empty body 38 байт, короткие тела/отказы отклоняются, nonempty остаётся explicit record boundary. Перенести CharacterRecord/nested readers и whole list/handler; runtime profile остаётся partial.",
+      "next_check": "Current CharacterRecord с пустыми extensions прошёл 128 полных случаев, 201 короткий body и 128 отказов. Перенести непустые appearance/optional containers, затем whole list и handler. Профиль остаётся partial.",
       "targets": [
         "native-waiting-end-current",
-        "native-character-list-envelope-current"
+        "native-character-list-envelope-current",
+        "native-character-record-current"
       ]
     },
     {

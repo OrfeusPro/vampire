@@ -2433,6 +2433,68 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-character-record-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-character-record-context.py"
+      ],
+      "rule": "Проверить record/nested table slots, constructor, scalar/string callees и clamps. Пустые extensions не подтверждают непустые коллекции. Scope 22 roots/9 exports только для явно проверенного набора, без автоматического расширения.",
+      "automation": {
+        "discovery": "reviewed_list_record_callback_and_nested_tables",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x145783840",
+                "scope": "Whole record with native input/strings and empty extensions; nonempty collections explicit boundaries, no whole-list or live session.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x145788500",
+                "scope": "Whole record with native input/strings and empty extensions; nonempty collections explicit boundaries, no whole-list or live session.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x145787a30",
+                "scope": "Whole record with native input/strings and empty extensions; nonempty collections explicit boundaries, no whole-list or live session.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x1456c3000",
+                "scope": "Whole record with native input/strings and empty extensions; nonempty collections explicit boundaries, no whole-list or live session.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x145794bc0",
+                "scope": "Whole record with native input/strings and empty extensions; nonempty collections explicit boundaries, no whole-list or live session.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-record-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-RECORD-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

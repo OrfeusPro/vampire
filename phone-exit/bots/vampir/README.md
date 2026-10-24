@@ -7,10 +7,12 @@
 
 Текущий путь WaitingEndNotify → запрос ID 101 подтверждён в 24 native сценариях.
 В ответе ID 102 проверены внешние поля и чтение счётчика: полный ответ с пустым
-списком требует 38 байт. Чтение записей персонажей ещё не перенесено.
-Далее — CharacterRecord, вложенные структуры и обработчик ответа.
+списком требует 38 байт. Поля CharacterRecord уже сверены с декодером в 128
+сценариях с пустыми расширениями. Далее — непустые коллекции внешности и optional
+map, объединение целого списка и обработчик ответа.
 [Инициатор](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-WAITING-END-11316.md),
 [ответ и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md).
+[Проверка записи персонажа](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CHARACTER-RECORD-11316.md).
 Профиль текущей сборки ещё не активирован; живое создание не выполнено.
 
 Post-state wrapper/tail callee прошли 44 native сценария; отказ Ghidra устранён

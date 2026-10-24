@@ -1,0 +1,289 @@
+{
+  "schema": 1,
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "function_budget": 22,
+  "budget_scope": "character-record",
+  "native_input": {
+    "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+    "exports": {
+      "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+      "run-4ef2b735941d": "81d790be1d457535a6cf9ab5a70d56ea4208dc83c79783c0b64ef1ba75bc3a8e",
+      "run-81d1e191e8c5": "0e221782b32811ff26ed05661b0a539e2781693a4c4c26357a77a39d3503e2e5",
+      "run-2fe73e379c6f": "f11b8a560a8a05ee7bffdd64cf18fb3c7cb87daa945758b3d98c74ce38b9b226",
+      "run-80386d1eb460": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1"
+    },
+    "functions": {
+      "constructor": "0x144aacb40",
+      "u16": "0x144aac250",
+      "u32": "0x144aac2a0",
+      "time": "0x144aac470",
+      "u64": "0x144aac4a0",
+      "bool": "0x144aac4f0",
+      "raw": "0x144aac5c0",
+      "string": "0x144aacfd0",
+      "std_string": "0x144aac390",
+      "utf8_length": "0x14144c440",
+      "utf8_convert": "0x1414466a0",
+      "utf8_core": "0x14143bd30",
+      "utf8_scalar": "0x14143b9a0",
+      "buffer_constructor": "0x144aac130"
+    },
+    "leaves": {
+      "0x144aace10": {
+        "bytes": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+        "sha256": "761c7c524a7e8e3f43af08beeec9ada9786b6b78ce1aed34e54e2824bcb0036d"
+      },
+      "0x144aad1a0": {
+        "bytes": "895110c3",
+        "sha256": "3118e42787a6f4545e3111ffd4f059154e0a2d5899f7b46c609eb89fb299f2b4"
+      },
+      "0x144aac240": {
+        "bytes": "488b0141b80100000048ffa090000000",
+        "sha256": "f18be45431396ae7b48a88f58df8279b2ddf521f9671b9591d2182bd4946b1c7"
+      }
+    },
+    "table": "0x149670880",
+    "call_sites": {
+      "0x144aacb56": {
+        "target": "0x144aac130"
+      },
+      "0x144aac269": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac287": {
+        "target": "0x1445e03e0"
+      },
+      "0x144aac2b9": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac2d6": {
+        "target": "0x1445e03f0"
+      },
+      "0x144aac481": {
+        "target": "qword ptr [rax + 0x50]"
+      },
+      "0x144aac4b9": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac4d7": {
+        "target": "0x1445e0420"
+      },
+      "0x144aac50c": {
+        "target": "qword ptr [rax + 0x90]"
+      },
+      "0x144aac5fb": {
+        "target": "0x1487f5ab9"
+      },
+      "0x144aac609": {
+        "target": "0x144aad1a0"
+      },
+      "0x144aad019": {
+        "target": "qword ptr [rax + 0x30]"
+      },
+      "0x144aad072": {
+        "target": "0x14144c440"
+      },
+      "0x144aad0ae": {
+        "target": "0x141436cc0"
+      },
+      "0x144aad0d8": {
+        "target": "0x1414466a0"
+      },
+      "0x144aad101": {
+        "target": "0x1414277b0"
+      },
+      "0x144aad11b": {
+        "target": "0x141483080"
+      },
+      "0x144aad15e": {
+        "target": "qword ptr [rip + 0x3eeeeb4]"
+      },
+      "0x144aad165": {
+        "target": "0x141431f80"
+      },
+      "0x144aad178": {
+        "target": "0x1487e8ce0"
+      },
+      "0x144aac3c2": {
+        "target": "qword ptr [rax + 0x68]"
+      },
+      "0x144aac3eb": {
+        "target": "qword ptr [rax + 0x78]"
+      },
+      "0x144aac436": {
+        "target": "0x1421e7340"
+      },
+      "0x14144c4c1": {
+        "target": "0x14143b9a0"
+      },
+      "0x1414466ae": {
+        "target": "0x14143bd30"
+      },
+      "0x14143be67": {
+        "target": "0x14143b9a0"
+      },
+      "0x144aac151": {
+        "target": "0x144aace10"
+      }
+    },
+    "table_bytes": "90cbaa440100000030c6aa4401000000a0c6aa440100000030c5aa440100000070c4aa440100000070c4aa440100000090c3aa440100000040c3aa4401000000f0c2aa4401000000a0c4aa4401000000a0c4aa4401000000a0c2aa4401000000a0c2aa440100000050c2aa440100000050c2aa440100000040c2aa440100000040c2aa4401000000f0c4aa4401000000c0c5aa4401000000",
+    "string_fixtures": {
+      "growth": "0x1421e7340",
+      "utf16_allocate": "0x141436cc0",
+      "assign": "0x1414277b0",
+      "free": "0x141483080",
+      "cpp_free": "0x141431f80",
+      "security": "0x1487e8ce0"
+    },
+    "cookie": "0x14b271780",
+    "buffer_construction": {
+      "base_table": "0x1496706e8",
+      "reading_mode": 1,
+      "reading_endian": 0
+    }
+  },
+  "functions": {
+    "constructor": "0x145783840",
+    "reader": "0x145788500",
+    "time_constructor": "0x1457a3500",
+    "time_reader": "0x1457fdce0",
+    "appearance_reader": "0x145787a30",
+    "optional_reader": "0x1456c3000",
+    "vector": "0x144aac530",
+    "u16_quad_reader": "0x145794bc0"
+  },
+  "bindings": {
+    "record_table": "0x149928500",
+    "time_table": "0x14991f3b8",
+    "quad_table": "0x149920550",
+    "appearance_table": "0x149920090",
+    "optional_table": "0x149921c80"
+  },
+  "leaves": {
+    "0x1457fdaf0": "488d05c118120448c7410800000000488901488bc1c3",
+    "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+    "0x1457904d0": "488d057900190448890133c048894108488bc1c3"
+  },
+  "blocks": [
+    {
+      "address": "0x149928500",
+      "bytes": "e09e6d4501000000b03a40410100000080d5784501000000b03a4041010000000085784501000000005f6e4501000000",
+      "sha256": "192719e41d9e60597ea82915e1d12db9c08a534c56fa1e6cc8b7db2beaf73057"
+    },
+    {
+      "address": "0x14991f3b8",
+      "bytes": "c06a6b4501000000b03a40410100000070e07f4501000000b03a404101000000e0dc7f450100000050a36b4501000000",
+      "sha256": "210058d270a81d062639f5fed3c0ccde70fcf646d0e583c0ed3bee8541bcc1fd"
+    },
+    {
+      "address": "0x149920550",
+      "bytes": "c06a6b4501000000b03a404101000000f091794501000000b03a404101000000c04b794501000000c0096d4501000000",
+      "sha256": "46da647fc8ea807aff73c9bb36e498cb9f1e12eacc549244e821c4ecb1137d67"
+    },
+    {
+      "address": "0x149920090",
+      "bytes": "d06c6b4501000000b03a40410100000000cb784501000000b03a404101000000307a784501000000309f6b4501000000",
+      "sha256": "d0b8c15323493bc7cfb840e9479b89cba53548d12cb075e33568081b9a69b5a7"
+    },
+    {
+      "address": "0x149921c80",
+      "bytes": "000b6c4501000000b03a404101000000b0256d4501000000b03a40410100000000306c4501000000b01f6c4501000000",
+      "sha256": "48920033da1b0311ea97cc3a5ae99fba30c9164e00f01f19b28ffaede8dec0f3"
+    },
+    {
+      "address": "0x14993f850",
+      "bytes": "50aab0410100000060a46b4501000000c0b9734501000000",
+      "sha256": "1da34ed20ddaa0b5f7fac1108c8197d5886aface1e37206bfee4cd478f02fc8c"
+    }
+  ],
+  "call_sites": {
+    "constructor": {
+      "0x145783873": "0x1457a3500",
+      "0x14578388c": "0x1457904d0",
+      "0x145783895": "0x1457a3500",
+      "0x1457838a8": "0x1457a3500"
+    },
+    "reader": {
+      "0x14578851a": "qword ptr [rax + 0x50]",
+      "0x14578852f": "qword ptr [rax + 0x60]",
+      "0x145788541": "0x144aacfd0",
+      "0x145788558": "qword ptr [rax + 0x50]",
+      "0x14578856d": "qword ptr [rax + 0x60]",
+      "0x14578857f": "0x144aad190",
+      "0x145788596": "qword ptr [rax + 0x50]",
+      "0x1457885a8": "0x144aacfd0",
+      "0x1457885c0": "qword ptr [rax + 0x78]",
+      "0x1457885e4": "0x144aad190",
+      "0x1457885f8": "0x144aad190",
+      "0x145788612": "qword ptr [rax + 0x50]",
+      "0x145788627": "0x144aad190",
+      "0x145788641": "qword ptr [rax + 0x50]",
+      "0x145788659": "qword ptr [rax + 0x50]",
+      "0x14578866e": "0x144aad190",
+      "0x145788684": "qword ptr [rax + 0x50]",
+      "0x145788698": "qword ptr [rax + 0x50]",
+      "0x1457886ac": "qword ptr [rax + 0x50]",
+      "0x1457886c0": "qword ptr [rax + 0x88]",
+      "0x1457886d4": "0x144aad190"
+    },
+    "time_constructor": {
+      "0x1457a3509": "0x1457fdaf0"
+    },
+    "time_reader": {
+      "0x1457fdcf1": "qword ptr [rax + 0x28]"
+    },
+    "appearance_reader": {
+      "0x145787a4b": "qword ptr [rax + 0x78]",
+      "0x145787a76": "qword ptr [rax + 0x80]",
+      "0x145787a8e": "qword ptr [rax + 0x80]",
+      "0x145787aa6": "qword ptr [rax + 0x80]",
+      "0x145787abe": "qword ptr [rax + 0x80]",
+      "0x145787ad6": "qword ptr [rax + 0x80]",
+      "0x145787aee": "qword ptr [rax + 0x80]",
+      "0x145787b06": "qword ptr [rax + 0x80]",
+      "0x145787b1e": "qword ptr [rax + 0x80]",
+      "0x145787b36": "qword ptr [rax + 0x80]",
+      "0x145787b4b": "0x144aacfd0",
+      "0x145787b5e": "qword ptr [rax + 0x88]",
+      "0x145787b72": "qword ptr [rax + 0x80]",
+      "0x145787b83": "0x1456b59c0",
+      "0x145787b9b": "0x14141ccf0",
+      "0x145787bbb": "qword ptr [rax + 0x18]"
+    },
+    "optional_reader": {
+      "0x1456c301f": "qword ptr [rax + 0x88]",
+      "0x1456c303b": "0x1456c7280",
+      "0x1456c304b": "0x1456d19c0",
+      "0x1456c3052": "0x14168a950",
+      "0x1456c305d": "0x1456c7280",
+      "0x1456c307d": "qword ptr [rax + 0x18]"
+    },
+    "vector": {
+      "0x144aac555": "qword ptr [rax + 0x68]",
+      "0x144aac56b": "qword ptr [rax + 8]",
+      "0x144aac594": "qword ptr [rax + 0x10]"
+    },
+    "u16_quad_reader": {
+      "0x145794bda": "qword ptr [rax + 0x70]",
+      "0x145794beb": "qword ptr [rax + 0x70]",
+      "0x145794bfc": "qword ptr [rax + 0x70]",
+      "0x145794c0d": "qword ptr [rax + 0x70]"
+    }
+  },
+  "exports": {
+    "run-0b2ae7adfcf9": "8d1c778db72a8bddbe34fd288f77cf2e199ed47092182af40fabb3cb7b781324",
+    "run-5f5962528f71": "eb61261ff01b2107b0b8a341a7419114c7e40f3b852e37f31ab470416090b632",
+    "run-cfe450e70430": "08ceca13a1eef50edbb9e38ac4d3f63b1d0880e4dd5455f3b0257cfff49c93a6",
+    "run-e6ab6fd97914": "9828dfd4a26853235433aa7b702150ceec552d05796a8bea82ce915332284454"
+  },
+  "fixtures": {
+    "appearance_clear": "0x1456b59c0",
+    "appearance_allocate": "0x14141ccf0",
+    "appearance_resize": "0x1456ba460",
+    "optional_storage": "0x14168a950"
+  }
+}
