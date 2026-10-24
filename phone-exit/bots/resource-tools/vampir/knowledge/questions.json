@@ -545,18 +545,19 @@
       "id": "release-login-result-reader",
       "status": "bounded_answer",
       "question": "Как текущие constructor/reader игрового ответа ID 4 читают поля и отказывают на коротком вводе?",
-      "known": "Текущая цепочка LoginResult constructor/reader, nested readers, concrete/base buffer constructors и numeric/FString/UTF-8 input исполняется на общей памяти: 20 явных roots. Проверены 72 constructor calls с полями/ABI/padding, 160 полных ответов, 332 коротких ввода и 25 отказов. Pointer/size/cursor больше не задаются вручную. Storage primitives остаются fixtures; handler не проверен. Статическая цепочка current constructor/ID 4 registration связана с handler table 149dc65b8 slot10 -> 14679aec0 и helper 1467cb6c0; exports и 75-byte registration window проверены по полному SHA.",
-      "unknown": "Current handler/dispatch/result gates и реальные storage primitives. Чтение big endian, повреждённые archive pointers, общая malformed UTF-8 termination semantics и реальная сессия не доказаны.",
-      "next_action": "Использовать готовый run-83255b6c29bc: проверить current gate 1467cd7b0 и handler 14679aec0 native branches, затем post-state 146755540 / getter 1464af340 / virtual+28. Native dispatch и CharacterListRead пока не доказаны.",
+      "known": "Текущая цепочка LoginResult constructor/reader, nested readers, concrete/base buffer constructors и numeric/FString/UTF-8 input исполняется на общей памяти: 20 явных roots. Проверены 72 constructor calls с полями/ABI/padding, 160 полных ответов, 332 коротких ввода и 25 отказов. Pointer/size/cursor больше не задаются вручную. Storage primitives остаются fixtures; handler не проверен. Статическая цепочка current constructor/ID 4 registration связана с handler table 149dc65b8 slot10 -> 14679aec0 и helper 1467cb6c0; exports и 75-byte registration window проверены по полному SHA. Handler 14679aec0 и gate 1467cd7b0 исполнены отдельно на synthetic packet/services в 38 сценариях: success/error branches, signed+48, 8 state stores, controller updates, raw16 calculation, SDK gates, guards/ABI. Reader integration с handler ещё не выполнена.",
+      "unknown": "Общая body-reader/handler интеграция, реальные services/getters/storage и dispatch. Post-state 146755540 export отклонён: decompiler block outside unwind. Остальные gate branches и live session не доказаны.",
+      "next_action": "Объединить проверенный body reader с handler; для post-state 146755540 сначала сверить out-of-unwind block по сохранённому run-aaeae96c7f8b, не повторять collect без новых входов. Далее getter 1464af340 / virtual+28 и доказанная цепочка CharacterListRead.",
       "decision_rule": "Не переносить адреса или факты старой сборки автоматически. Body reading не подтверждает handler, персонажа или сессию.",
-      "do_not_repeat": "Готовые result/numeric/string exports и run-80386d1eb460 не выгружать повторно. Новый анализ нужен для current handler/dispatch или изменившихся inputs; старые prefix candidates не подтверждают роль. Готовый run-83255b6c29bc использовать повторно; owner 1467b4c60 превышает export budget, вместо него проверено окно регистрации.",
+      "do_not_repeat": "Готовые result/numeric/string exports и run-80386d1eb460 не выгружать повторно. Новый анализ нужен для current handler/dispatch или изменившихся inputs; старые prefix candidates не подтверждают роль. Готовый run-83255b6c29bc использовать повторно; owner 1467b4c60 превышает export budget, вместо него проверено окно регистрации. Handler/gate exports run-83255b6c29bc и run-eff5f37ca91c готовы. Post-state run-aaeae96c7f8b отклонён по unwind: повтор без разбора причины не выполнять.",
       "addresses": [],
       "evidence": [
         "evidence/updates/HEADLESS-LOGIN-RESULT-11316.md",
         "evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md",
         "evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md",
         "evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md",
-        "evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md"
+        "evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md",
+        "evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md"
       ]
     }
   ]

@@ -2896,6 +2896,82 @@
       "question": "release-login-result-reader",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Native gate/handler branches, dispatch container/ownership and chain to CharacterListRead."
+    },
+    {
+      "addresses": [
+        "0x14679aec0",
+        "0x1467cd7b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "50b1725d3997082c161cdfa91e132929daed4f2ff071a6bf9ba3af289fa8a5f3",
+          "id": "native-login-result-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4eef487d3fdee0e857ed6151c63f1ebb8f472d70bba31e46674a310424e41eb4\\manifest.json",
+          "sha256": "4eef487d3fdee0e857ed6151c63f1ebb8f472d70bba31e46674a310424e41eb4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1cc7e0ca1448fa8f1369b5abcaf6a10192fc81ba20b22cc8ad5a05e9e82e9491",
+          "id": "native-login-result-input-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\61c7c1eebc36c9be6dc04b07fd6821f2dcdd36aea6ed4de97ce0028806b07b4a\\manifest.json",
+          "sha256": "61c7c1eebc36c9be6dc04b07fd6821f2dcdd36aea6ed4de97ce0028806b07b4a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "26ddea515e93d1b26018137255f90d9521928dde8d4fd4ef650e11fff9de78af",
+          "id": "native-login-result-string-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e757a776239e0396a01f1077b4daf1f98f6e6a078263639ea1649f8afbf7d1d6\\manifest.json",
+          "sha256": "e757a776239e0396a01f1077b4daf1f98f6e6a078263639ea1649f8afbf7d1d6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f198df9dc169a783a97fbefce6a6fc4e642b5d5b34077253dfd90218e7d64d63",
+          "id": "native-login-result-buffer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eb8cfa67009c54e88c809698d11a7592e1436d19fe513aa281ee753451a154c6\\manifest.json",
+          "sha256": "eb8cfa67009c54e88c809698d11a7592e1436d19fe513aa281ee753451a154c6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4ad351df383089e899477efa74d74852fee26de5707a2a1a95acb411ea2aeabb",
+          "id": "login-result-registration",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f3ad1458bc5bd1513b8c76aa6a126bffddaad43d4291456fafd55296d4839aba\\manifest.json",
+          "sha256": "f3ad1458bc5bd1513b8c76aa6a126bffddaad43d4291456fafd55296d4839aba",
+          "state": "passed"
+        },
+        {
+          "cache_key": "550fdb702babf46122e97c06b5f8271e5977493faca2ae12ae48530f885eb91d",
+          "id": "native-login-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f528e1f39b0003bb9277689a43e20ed69ded1d5f039d1e4006fca4220276e045\\manifest.json",
+          "sha256": "f528e1f39b0003bb9277689a43e20ed69ded1d5f039d1e4006fca4220276e045",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущие whole handler/gate исполняются на synthetic packet/services: 38 сценариев проверили covered success/error/early paths, 8 native state stores, signed raw16 calculation, controller/SDK gates, packet immutability/guards/ABI. Post-state остаётся capture; reader не интегрирован.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-result-handler-11316.json",
+          "sha256": "f4c81c6d7609b401f32e1f9607339b069631e9b621763de462e7df70e4a3ed3c"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-RESULT-HANDLER-11316.md",
+          "sha256": "8e3e3d88d19912eb4887c36065eada4281e06e229ffacbf348f8988dbd970355"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-RESULT-HANDLER-11316.json",
+          "sha256": "16e96769594a0bf3cb9f5ceca57b82f3da62cb6e9ff865e55bf66fc3fce2f53e"
+        }
+      ],
+      "id": "fd8e9f70745db06c9c37d8cbdd1b439a6cfe90646f222539f53158b0a8ea705c",
+      "limits": [
+        "Synthetic packet/services/getters/string storage and UI/SDK/clock/persistence/disconnect/post-state backends.",
+        "Only declared result-gate codes; other branches fail on unsupported fixture/target.",
+        "Post-state export rejected out-of-unwind decompiler block; no native dispatch/CharacterListRead/session proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "Объединить проверенный body reader с handler; для post-state 146755540 сначала сверить out-of-unwind block по сохранённому run-aaeae96c7f8b, не повторять collect без новых входов. Далее getter 1464af340 / virtual+28 и доказанная цепочка CharacterListRead.",
+      "question": "release-login-result-reader",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Общая body-reader/handler интеграция, реальные services/getters/storage и dispatch. Post-state 146755540 export отклонён: decompiler block outside unwind. Остальные gate branches и live session не доказаны."
     }
   ],
   "schema": 1,

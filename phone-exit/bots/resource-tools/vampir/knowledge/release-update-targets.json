@@ -2106,6 +2106,47 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-result-handler-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-result-handler-context.py"
+      ],
+      "rule": "Перенести текущие handler/gate по registration table и explicit call; проверить callees, signed fields, stores, error paths и SDK gates на synthetic packet/services. Не переносить post-state как доказанный CharacterListRead; out-of-unwind export остаётся ручной задачей.",
+      "automation": {
+        "discovery": "reviewed_registration_handler_and_direct_gate_call",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x14679aec0",
+                "scope": "Whole native handler and covered result gate branches; synthetic packet/services/getters/storage/backends. No reader/dispatch/session proof.",
+                "required_checks": [
+                  "native-login-result-handler-context"
+                ]
+              },
+              {
+                "address": "0x1467cd7b0",
+                "scope": "Whole native handler and covered result gate branches; synthetic packet/services/getters/storage/backends. No reader/dispatch/session proof.",
+                "required_checks": [
+                  "native-login-result-handler-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-handler-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

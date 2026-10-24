@@ -54,6 +54,8 @@
   [Границы и автоматическая проверка](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md).
 - Статическая цепочка регистрации ID 4 связана с current handler `14679aec0`.
   [Проверенные связи и следующие gate/post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md).
+- Current handler/gate прошли 38 native сценариев на synthetic packet/services.
+  [Stores, ошибки и очередь post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
   и прочие зависимости Login, интеграция writer/archive, реальные storage primitives
   и handler/dispatch результата. Только после этого готовить

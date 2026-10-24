@@ -440,7 +440,8 @@
         "native-login-result-input-context",
         "native-login-result-string-context",
         "native-login-result-buffer-context",
-        "login-result-registration"
+        "login-result-registration",
+        "native-login-result-handler-context"
       ],
       "recipes": [
         {
@@ -492,7 +493,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Текущая регистрация ID 4 связана с handler 14679aec0; проверить native result gate 1467cd7b0 и handler state/error branches, затем post-state 146755540 и virtual+28. Static registration не доказывает сессию.",
+      "next_check": "Handler/gate исполнены в 38 сценариях с synthetic packet/services. Соединить с whole body reader, проверить реальные getters/dispatch и post-state 146755540: его export отклонён из-за блока вне unwind. Не считать post-state запросом персонажей.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -537,7 +538,8 @@
         "native-login-result-input-current",
         "native-login-result-string-current",
         "native-login-result-buffer-current",
-        "login-result-registration-current"
+        "login-result-registration-current",
+        "native-login-result-handler-current"
       ],
       "writer_check": {
         "object_size": 320,

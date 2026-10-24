@@ -1,5 +1,9 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Текущие LoginResult handler/gate прошли 38 native сценариев на synthetic packet:
+state stores, ошибки, signed gates, controller и SDK conditions. Далее — body
+интеграция и post-state с отклонённым unwind export. [Границы и доказательства](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md).
+
 Текущая регистрация ID 4 связана с handler `14679aec0`; проверены таблицы,
 аргументы и exports. Далее — native gate/handler branches; статическая связь
 не доказывает сессию. [Доказательства и следующий участок](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md).
