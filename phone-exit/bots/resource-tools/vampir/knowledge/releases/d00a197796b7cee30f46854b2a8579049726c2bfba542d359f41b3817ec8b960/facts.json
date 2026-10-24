@@ -2490,6 +2490,51 @@
       "question": "release-login-prepare",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Целые metadata collector/consumer 14560b0d0/145601840 и 14560a680, реальные inner SDK/string/platform зависимости, wire integration и текущий result reader."
+    },
+    {
+      "addresses": [
+        "0x144557a00",
+        "0x145600d00",
+        "0x145601590",
+        "0x145601840",
+        "0x14560a680",
+        "0x14560b0d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "c6f03082df87b9d8560c415e1fd20e9e009b94af33c35ea2976c2bb43bca4812",
+          "id": "native-login-metadata-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\38ddd6e0710ac65cccfbfc2e01040779cba2b16f476a6e8cfc4cec6a4c2f8378\\manifest.json",
+          "sha256": "38ddd6e0710ac65cccfbfc2e01040779cba2b16f476a6e8cfc4cec6a4c2f8378",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целиком исполнена цепочка collector/selector/loader/UserInfo copy/move/writer в 288 сценариях на общей памяти. Подтверждены 33 field mappings, отдельные NM/ADID getters, условия пустых GameCode/BuildCode/CharacterID/NID, 27 selector calls, optional DeviceKey/marketing, refcount branches, ownership/guards/ABI. Для полного SHA сохранены exports и offline check; реальные SDK значения остаются неизвестными.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-metadata-11316.json",
+          "sha256": "5197e5de6b42b7d91357004509368264d3efd631af0b72ccb653c0c5eebdcc68"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-METADATA-11316.md",
+          "sha256": "9f972af50a2aa8d5fe403ce439f29ef729e179bff51222b6c68f58cbb9a8abaa"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-METADATA-11316.json",
+          "sha256": "1521c7eaaf8f07c03b381feb39ed095b6a676b4f90804ba48c65cca0577437c6"
+        }
+      ],
+      "id": "b45fca7c9b735c8e26e31d318f2f4eb9b173359c060db975662fe93ab2727cd1",
+      "limits": [
+        "SDK backend/settings/UserInfo и getters, map/hash/lookup/variant/string primitives и destructor bodies — явные fixtures; diagnostic branch выключена.",
+        "Format fixture делает буквальную подстановку; реальное JSON escaping не доказано.",
+        "Нет whole Login integration, авторизации, игровых действий, изменения default preset или активации runtime."
+      ],
+      "method": "bounded_native",
+      "next_check": "Использовать шесть готовых roots без повторного экспорта; проверить реальные SDK settings/UserInfo и format/variant boundaries, затем интегрировать metadata и wire в whole Login; source guard сохранить.",
+      "question": "release-login-metadata",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Реальные SDK UserInfo sources и строковые/map/variant primitives, escaping, интеграция metadata в whole Login, writer/archive и текущий result reader."
     }
   ],
   "schema": 1,

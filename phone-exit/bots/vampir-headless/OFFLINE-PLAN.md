@@ -29,6 +29,10 @@
   2 016 случаев cache warm/resolve/absent. Закреплены также 27 статических
   metadata key/consumer links, готовый collector повторно не выгружать.
   [Значения, ownership и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-SDK-11316.md).
+- Metadata pipeline из шести roots прошёл 288 сценариев на общей памяти:
+  33 field mappings, gates, optional branches и refcounts. Реальные SDK значения,
+  строки / map / variants пока fixtures, интеграция в whole Login ещё открыта.
+  [Цепочка и следующий патч](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-METADATA-11316.md).
 - Далее: реальные platform text / FName / type / resolver / value-at, SDK getters
   и прочие зависимости Login, интеграция writer/archive и result readers. Только после этого готовить
   соответствующую возможность профиля для отдельной живой проверки.

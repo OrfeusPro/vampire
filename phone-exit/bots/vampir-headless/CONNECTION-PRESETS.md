@@ -89,6 +89,12 @@ Windows WebView. MAC, оператор, SIM, Android ID, Wi-Fi SSID не обн�
 целого Login; поля +130 и +131 имеют разные источники.
 [Точные поля, происхождение и оставшиеся ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-SDK-11316.md).
 
+Цепочка UserInfo → map → selector → metadata также проверена на текущем SHA
+в 288 сценариях: установлены смещения 33 полей и условия включения. Это связывает
+CPU/RAM/GPU, язык, часовой пояс и сеть с inputs SDK, но не подтверждает их реальные
+значения или полноту эмуляции. Список map шире итоговой строки Login.
+[Связи полей и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-METADATA-11316.md).
+
 ## Проверки
 
 Fixtures проверяют сохранность после перезапуска, разделение двух ботов при общем

@@ -4,6 +4,11 @@
 [Актуальный offline checklist](OFFLINE-PLAN.md). Ниже сохранены результаты прежних
 этапов; старые «дальше» не заменяют текущий план.
 
+Metadata collector/selector/loader/UserInfo copy/move/writer исполнены на общей
+памяти: 288 случаев, 33 field mappings, optional branches и refcount cleanup.
+Далее — реальные источники UserInfo / primitives и интеграция в whole Login.
+[Готовые exports и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-METADATA-11316.md).
+
 В Login включены native SDK mode/main/value и шесть leaf getters: 2 016 случаев
 с cache warm/resolve/absent. Metadata collector экспортирован, 27 связей ключей
 проверены статически. Далее — его consumer и реальные источники значений.

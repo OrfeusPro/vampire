@@ -1623,6 +1623,75 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-metadata-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-metadata-context.py"
+      ],
+      "rule": "Сверять все call sites шести roots, поля UserInfo 0..240, map keys/gates, selector order, optional DeviceKey/marketing и refcount lifecycle. SDK/map/variant/string fixtures не считать реальными values; новый SHA переносить явно.",
+      "automation": {
+        "discovery": "reviewed_direct_calls_and_field_projection",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x14560b0d0",
+                "scope": "Whole metadata pipeline on common memory with explicit SDK/map/variant/string boundaries; no real SDK values or escaping proved.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601840",
+                "scope": "Whole metadata pipeline on common memory with explicit SDK/map/variant/string boundaries; no real SDK values or escaping proved.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560a680",
+                "scope": "Whole metadata pipeline on common memory with explicit SDK/map/variant/string boundaries; no real SDK values or escaping proved.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x144557a00",
+                "scope": "Whole metadata pipeline on common memory with explicit SDK/map/variant/string boundaries; no real SDK values or escaping proved.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601590",
+                "scope": "Whole metadata pipeline on common memory with explicit SDK/map/variant/string boundaries; no real SDK values or escaping proved.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145600d00",
+                "scope": "Whole metadata pipeline on common memory with explicit SDK/map/variant/string boundaries; no real SDK values or escaping proved.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-metadata-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-METADATA-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

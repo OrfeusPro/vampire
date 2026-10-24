@@ -49,6 +49,7 @@ Windows / Android parity и перенос старых mappings требуют 
 - [RequestGMC2: аргументы GET и условия заголовков](../evidence/updates/HEADLESS-GMC2-HEADERS.md)
 - [GMC2: native сборка URL из явных значений](../evidence/updates/HEADLESS-GMC2-URL.md)
 - [GMC2 DecryptXOR: 16-битные единицы и пропуск нуля](../evidence/updates/HEADLESS-GMC2-XOR.md)
+- [Цепочка metadata Login 1.13.16](../evidence/updates/HEADLESS-LOGIN-METADATA-11316.md)
 - [Целая подготовка Login 1.13.16](../evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md)
 - [SDK getters внутри Login 1.13.16](../evidence/updates/HEADLESS-LOGIN-SDK-11316.md)
 - [Описания модулей base и patch](../evidence/updates/HEADLESS-MODULE-DESCRIPTORS.md)

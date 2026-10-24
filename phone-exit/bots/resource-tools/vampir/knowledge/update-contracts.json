@@ -433,7 +433,8 @@
         "native-string-writer-context",
         "native-archive-wire-context",
         "native-login-prepare-context",
-        "native-login-sdk-context"
+        "native-login-sdk-context",
+        "native-login-metadata-context"
       ],
       "recipes": [
         {
@@ -472,7 +473,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Перенести metadata collector / consumer и реальные inner SDK/string/platform зависимости; включить native writer/archive и result reader. Whole Login уже включает mode/main/value getters и шесть leaf getters, готовность остаётся partial.",
+      "next_check": "Цепочка metadata collector/selector/loader/UserInfo copy/move/writer проверена с явными SDK/map/string fixtures; нужны реальные backend values, formatting/escaping, whole Login integration, writer/archive и result reader.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"
@@ -510,7 +511,8 @@
         "native-string-writer-current",
         "native-archive-wire-current",
         "native-login-prepare-current",
-        "native-login-sdk-current"
+        "native-login-sdk-current",
+        "native-login-metadata-current"
       ],
       "writer_check": {
         "object_size": 320,
