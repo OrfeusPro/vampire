@@ -28,6 +28,34 @@ def verify(snapshot):
     for name, digest in manifest['implementation'].items():
         if '.test.' not in name:
             assert sha(snapshot / name) == digest, 'Changed source: ' + name
+    if (snapshot / 'collection-index.json').exists():
+        catalog = json.loads((snapshot / 'collection-index.json').read_text('utf-8'))
+        source = catalog['source']
+        assert source['sha256'] == manifest['inputs'][source['file']]
+        assert source['manifest_sha256'] == manifest['inputs']['maps/collections/manifest.json']
+        assert len(catalog['entries']) == catalog['statistics']['collections']
+        assert len({row['id'] for row in catalog['entries']}) == len(catalog['entries'])
+        assert len(catalog['items']) == catalog['statistics']['items']
+        chunks = {}
+        for file, digest in catalog['chunks'].items():
+            assert digest == manifest['generated_files'][file]
+            chunks[file] = json.loads((snapshot / file).read_text('utf-8'))
+        requirements = 0
+        for row in catalog['entries']:
+            entry = chunks[row['file']][row['id']]
+            assert entry['id'] == row['id'] and entry['name'] == row['name']
+            assert row['requirements'] == len(entry['requirements'])
+            requirements += row['requirements']
+            for requirement in entry['requirements']:
+                assert requirement['row']['GroupId'] == entry['id']
+                assert requirement['item_id'] in catalog['items']
+        assert requirements == catalog['statistics']['requirements']
+        for item_id, file in catalog['items'].items():
+            item = chunks[file][item_id]
+            assert item['id'] == item_id
+            for image in item.get('icon', {}).get('images', []):
+                assert image['url'] == 'collection-assets/' + image['sha256'] + '.png'
+                assert sha(snapshot / image['url']) == image['sha256']
     if (snapshot / 'skin-evidence.json').exists():
         skins = json.loads((snapshot / 'skin-evidence.json').read_text('utf-8'))
         tokens = json.loads((snapshot / 'skin-tokens.json').read_text('utf-8'))

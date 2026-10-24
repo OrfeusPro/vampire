@@ -105,6 +105,28 @@
         0.44
       ],
       "basis": "Кандидат общего сообщения с ButtonOk / ButtonCancel / TextMessage; MinDesiredHeight 400 логических единиц. Прямая привязка тестового отказа к WBP не утверждается; третье действие выбора сервера добавлено только в демо."
+    },
+    "collections-window": {
+      "resource": "WBP_ItemCollectionUI",
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "rect": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "basis": "Временная полноэкранная адаптация исторического WBP_ItemCollectionUI. Нативная иерархия внутренних контейнеров, активный DPI, desired size и игровое размещение ещё не подтверждены; проценты не используются для команд игры."
+    },
+    "collection-detail-window": {
+      "resource": "WBP_ItemCollectionListInfoPopup",
+      "catalog_file": "pakchunk500-Windows-463.json",
+      "rect": [
+        0.18,
+        0.1,
+        0.64,
+        0.8
+      ],
+      "basis": "Временная центральная карточка состава. SizeBox_74 хранит 100 × 100 для дочернего элемента, это не размер всего попапа. Runtime DPI и размер внешнего контейнера неизвестны. Источники показаны отдельным служебным попапом, не выданы за игровое окно."
     }
   }
 }

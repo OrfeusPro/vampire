@@ -24,6 +24,36 @@ verifier = load('ui_prototype_verifier', 'verify-ui-prototype.py')
 
 
 class PrototypeTests(unittest.TestCase):
+    def test_collections_preserve_sources_and_reject_changed_icons(self):
+        import ui_collection_catalog as collections
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            target = root / 'maps/collections'; target.mkdir(parents=True)
+            (root / 'archive-images').mkdir()
+            icon = root / 'archive-images/icon.png'; icon.write_bytes(b'historical fixture PNG')
+            image = dict(file='archive-images/icon.png', sha256=collections.digest(icon), asset_path='/Old/Icon')
+            entry = dict(id='11001', name='Source name', row=dict(CollectionTabId='1', Rarity='0', DisplayOrder='2'), rarity=dict(label='Common'),
+                requirements=[dict(item_id='11', row=dict(Id='7', GroupId='11001', Count='1'))], bonuses=[dict(row=dict(Min='3', Max='3'))])
+            data = dict(entries=[entry], items={'11': dict(id='11', name='Sword', icon=dict(images=[image]), provenance=dict(entry=194, csv_record=513))}, tabs=[dict(id='1', name='Krvna')], statistics=dict(collections=1, items=1, requirements=1))
+            source = target / 'collections.json'; source.write_text(json.dumps(data), 'utf-8')
+            metadata = dict(file='collections.json', sha256=collections.digest(source), sources={'historical-input': 'old SHA, not current'})
+            (target / 'manifest.json').write_text(json.dumps(metadata), 'utf-8')
+            prepared = collections.prepare(root)
+            output = root / 'published'; output.mkdir()
+            collections.publish(prepared, output, root)
+            index = json.loads((output / 'collection-index.json').read_text('utf-8'))
+            self.assertEqual(index['source']['original_manifest'], metadata)
+            self.assertEqual(index['entries'][0]['id'], '11001')
+            items = json.loads((output / index['items']['11']).read_text('utf-8'))
+            self.assertEqual(items['11']['provenance']['csv_record'], 513)
+            self.assertEqual((output / items['11']['icon']['images'][0]['url']).read_bytes(), icon.read_bytes())
+            icon.write_bytes(b'changed original')
+            with self.assertRaisesRegex(ValueError, 'иконка'):
+                collections.prepare(root)
+            source.write_text('changed catalog', 'utf-8')
+            with self.assertRaisesRegex(ValueError, 'каталог'):
+                collections.prepare(root)
+
     def test_shared_currency_join_uses_ids_and_rejects_changed_csv(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

@@ -533,8 +533,83 @@
   function catalogLink(body, title, url) {
     const link = el('a', title); link.href = url; link.target = '_blank'; link.rel = 'noopener'; body.append(link);
   }
+  function openCollections() {
+    const catalog = VampirCollectionCatalog.create();
+    let meta, issue, query = '', tab = '', rarity = '', page = 0, section = 'Каталог источников';
+    const refresh = () => { if (dialog.open) renderers.get(dialog)?.(); };
+    const load = async () => {
+      issue = null;
+      try { meta = await catalog.index(); } catch (error) { if (error.name !== 'AbortError') issue = error.message; }
+      refresh();
+    };
+    const dialog = modal('Коллекции', body => {
+      body.append(tabs(['Каталог источников', 'Учебная коллекция'], section, value => { section = value; refresh(); }));
+      if (section === 'Учебная коллекция') {
+        append(body, el('h3', 'Наследие ночи · демо'), el('p', 'Учебный сценарий с книгой. Его требования и результат не связаны с игровыми коллекциями.'),
+          el('p', state().collection ? 'Учебная коллекция заполнена' : 'Требуется: Книга гравировки ×1'),
+          button('Добавить книгу · демо', () => confirm('Учебная коллекция', 'Потратить одну книгу только в локальной демонстрации?', () => action('collection')), 'primary', state().collection));
+        return;
+      }
+      append(body, el('p', 'Исторические данные клиента. Доступность на сервере, регистрация предметов и действие бонусов ещё не проверены.', 'catalog-notice'));
+      if (!meta) {
+        append(body, el('p', issue || 'Загрузка каталога…'), issue && button('Повторить загрузку', load)); return;
+      }
+      const filters = el('div', undefined, 'collection-filters'), search = input('search', 'Название или ID коллекции'); search.value = query;
+      const region = select([['', 'Все разделы'], ...meta.tabs.map(row => [row.id, row.name])], tab, value => { tab = value; page = 0; fill(); });
+      const grades = [...new Map(meta.entries.map(row => [row.rarity_id, row.rarity])).entries()];
+      const grade = select([['', 'Любая редкость'], ...grades], rarity, value => { rarity = value; page = 0; fill(); });
+      search.oninput = () => { query = search.value; page = 0; fill(); };
+      append(filters, field('Поиск', search), field('Раздел', region), field('Редкость', grade)); body.append(filters);
+      const status = el('p'), list = el('div', undefined, 'collection-list'), pager = el('div', undefined, 'actions');
+      status.setAttribute('role', 'status');
+      const fill = () => {
+        const rows = VampirCollectionCatalog.select(meta, { query, tab, rarity }), result = VampirCollectionCatalog.page(rows, page); page = result.number;
+        status.textContent = 'Найдено: ' + rows.length + ' / ' + meta.entries.length + ' · страница ' + (page + 1) + ' / ' + result.count;
+        list.replaceChildren();
+        for (const row of result.rows) {
+          const card = button('', () => openCollectionDetail(catalog, row.id, meta), 'collection-row');
+          append(card, el('strong', row.name), el('span', 'ID ' + row.id + ' · ' + row.rarity + ' · предметов: ' + row.requirements)); list.append(card);
+        }
+        if (!rows.length) list.append(el('p', 'Совпадений нет. Измените фильтры.'));
+        pager.replaceChildren(button('Предыдущая страница', () => { page--; fill(); }, '', page === 0), button('Следующая страница', () => { page++; fill(); }, '', page + 1 === result.count));
+      };
+      append(body, status, list, pager, el('small', 'Названия из английских таблиц. Русский перевод не установлен. Каталог загружается только при открытии; в списке до 40 строк.'));
+      fill();
+    }, 'collections-window');
+    dialog.addEventListener('close', () => catalog.close(), { once: true });
+    load(); return dialog;
+  }
+  function openCollectionDetail(catalog, id, meta) {
+    let data, issue;
+    const load = async () => {
+      issue = null;
+      try { data = await catalog.entry(id); } catch (error) { if (error.name !== 'AbortError') issue = error.message; }
+      if (dialog.open) renderers.get(dialog)?.();
+    };
+    const dialog = modal('Состав коллекции · ' + id, body => {
+      if (!data) { append(body, el('p', issue || 'Загрузка состава…'), issue && button('Повторить загрузку', load)); return; }
+      const entry = data.entry;
+      append(body, el('h3', entry.name), el('p', 'Исторические требования; регистрация в общую модель ещё не подключена.', 'catalog-notice'));
+      const grid = el('div', undefined, 'collection-requirements');
+      for (const requirement of entry.requirements) {
+        const item = data.items[requirement.item_id], row = requirement.row, card = el('div', undefined, 'collection-requirement');
+        const variants = item.icon?.images || [];
+        if (variants.length === 1) { const img = document.createElement('img'); img.src = variants[0].url; img.alt = item.name; img.loading = 'lazy'; img.width = 72; img.height = 72; card.append(img); }
+        else card.append(el('span', variants.length ? 'Неоднозначная иконка' : 'Иконка не извлечена'));
+        append(card, el('strong', item.name), el('small', 'ID ' + item.id + ' · ×' + row.Count + ' · усиление ' + row.EnchantLevel),
+          button('Источник предмета ' + item.id, () => modal('Предмет коллекции · ' + item.id, n => {
+            append(n, el('h3', item.name), el('p', 'Исходный тип требования: ' + (requirement.collect_type?.name || row.CollectType)), el('pre', JSON.stringify({ item: item.provenance, requirement: row, icon: item.icon }, null, 2)));
+          }, 'collection-source-window')));
+        grid.append(card);
+      }
+      body.append(grid, el('h3', 'Бонусы из источника'));
+      for (const bonus of entry.bonuses) body.append(el('p', (bonus.name?.Name || bonus.enum?.name || bonus.row.Type) + ': Min ' + bonus.row.Min + ' / Max ' + bonus.row.Max + ' · тип ' + bonus.row.Type + ' · IsPercentage ' + (bonus.display?.IsPercentage ?? 'неизвестно')));
+      const provenance = el('details'); provenance.append(el('summary', 'Происхождение и ограничения'), el('pre', JSON.stringify({ source: meta.source, definition: entry.row, name: entry.name_source, bonuses: entry.bonuses }, null, 2))); body.append(provenance);
+    }, 'collection-detail-window');
+    load(); return dialog;
+  }
   function openSection(title) {
-    const handlers = { 'Сумка': openBag, 'Магазин': openShop, 'Задания': openQuests, 'Настройки': openSettings, 'Карта': openWorldMap, 'Навыки': openSkills };
+    const handlers = { 'Сумка': openBag, 'Магазин': openShop, 'Задания': openQuests, 'Настройки': openSettings, 'Карта': openWorldMap, 'Навыки': openSkills, 'Коллекции': openCollections };
     if (handlers[title]) return handlers[title]();
     return modal(title, body => {
       if (title === 'Персонаж') {
@@ -543,9 +618,6 @@
         for (const [slot, name] of [['weapon', 'Оружие'], ['head', 'Голова'], ['body', 'Доспех']]) {
           const id = state().equipped[slot]; append(body, el('p', name + ': ' + (id ? M.PRODUCTS[id].name : 'пусто'))); if (id) body.append(button('Снять ' + name.toLowerCase(), () => action('unequip', { slot })));
         } body.append(button('Открыть сумку', openBag));
-      } else if (title === 'Коллекции') {
-        append(body, el('h3', 'Наследие ночи'), el('p', state().collection ? 'Коллекция заполнена' : 'Требуется: Книга гравировки ×1'), button('Добавить предмет', () => confirm('Коллекция', 'Потратить одну книгу в демо?', () => action('collection')), 'primary', state().collection));
-        catalogLink(body, 'Полный справочник коллекций', '/maps/collections/index.html');
       } else if (title === 'Почта') {
         append(body, el('h3', 'Добро пожаловать'), el('p', 'Демонстрационный подарок: 5 зелий.'), button(state().mailClaimed ? 'Получено' : 'Получить подарок', () => action('mail-claim'), 'primary', state().mailClaimed));
       } else if (title === 'Чат') {

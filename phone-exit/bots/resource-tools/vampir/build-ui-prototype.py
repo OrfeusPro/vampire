@@ -12,6 +12,7 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 import shared_ui_library
+import ui_collection_catalog
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -112,6 +113,7 @@ def build(root, baseline=None):
             shared['textures'].append(dict(row, id='texture:' + row['asset_path'], status='historical_extraction'))
             known_shared.add(row['asset_path'])
     skill_evidence, skill_images, skill_inputs = skill_sources(root)
+    collection_catalog = ui_collection_catalog.prepare(root)
     # All texture membership is recorded as historical extraction, not active brushes.
     selected = {}
     exact = {'BG_Title', 'BG_PAC', 'BG_Portrait', 'BTN_ConfirmRed256',
@@ -184,6 +186,7 @@ def build(root, baseline=None):
     inputs.update(shared['inputs'])
     inputs.update(skill_inputs)
     inputs.update(skin_inputs)
+    inputs.update(collection_catalog['inputs'])
     source_inputs['shared_ui_library.py'] = sha(HERE / 'shared_ui_library.py')
     schema_match = re.search(r'\bconst SCHEMA = (\d+),', (SOURCE / 'model.js').read_text('utf-8'))
     if not schema_match:
@@ -203,7 +206,8 @@ def build(root, baseline=None):
         inputs=inputs, schema=1), sort_keys=True).encode()).hexdigest()
     fingerprint = dict(resources=resources, images=image_hashes, inputs=inputs,
                        implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)),
-                       tools={'inspect-ui.py': skin_evidence['decoder']['sha256']})
+                       tools={'inspect-ui.py': skin_evidence['decoder']['sha256'],
+                              'ui_collection_catalog.py': sha(HERE / 'ui_collection_catalog.py')})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -249,6 +253,7 @@ def build(root, baseline=None):
         write(temporary / 'skills-evidence.json', skill_evidence)
         write(temporary / 'skills-index.json', {key: dict(icon=row['icon'], class_id=row['detail']['record']['ClassType'], names=row['detail']['display_names']) for key, row in skill_evidence.items()})
         write(temporary / 'items.json', demo_items)
+        ui_collection_catalog.publish(collection_catalog, temporary, root)
         layouts = read(SOURCE / 'window-layouts.json')
         for profile in layouts['profiles'].values():
             package = read(root / 'ui-catalog' / profile['catalog_file'])

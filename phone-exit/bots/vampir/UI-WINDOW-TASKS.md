@@ -230,7 +230,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-5bc072801a46. `/Game/RED/UI/Collection/WBP_ItemCollectionFilterListT` — вариантов: 1.
 - [ ] UI-W-b100d50a6704. `/Game/RED/UI/Collection/WBP_ItemCollectionFilterPopup` — вариантов: 1.
 - [ ] UI-W-e00ebd9c2ece. `/Game/RED/UI/Collection/WBP_ItemCollectionItemT` — вариантов: 1.
-- [ ] UI-W-81b281bff93a. `/Game/RED/UI/Collection/WBP_ItemCollectionListInfoPopup` — вариантов: 1.
+- [ ] ~ UI-W-81b281bff93a. `/Game/RED/UI/Collection/WBP_ItemCollectionListInfoPopup` — вариантов: 1.
 - [ ] UI-W-b65a2cef1d9f. `/Game/RED/UI/Collection/WBP_ItemCollectionListInfoT` — вариантов: 1.
 - [ ] UI-W-1693a9c0ae4b. `/Game/RED/UI/Collection/WBP_ItemCollectionListLargeT` — вариантов: 1.
 - [ ] UI-W-b3ba4d2e9e9b. `/Game/RED/UI/Collection/WBP_ItemCollectionListT` — вариантов: 1.
@@ -240,7 +240,7 @@ ID построен из полного пути ресурса и не зави
 - [ ] UI-W-0b862740a570. `/Game/RED/UI/Collection/WBP_ItemCollectionSelectPopup` — вариантов: 1.
 - [ ] UI-W-ae8bdfded87d. `/Game/RED/UI/Collection/WBP_ItemCollectionStatListArrayT` — вариантов: 1.
 - [ ] UI-W-14a38565d251. `/Game/RED/UI/Collection/WBP_ItemCollectionStatListT` — вариантов: 1.
-- [ ] UI-W-82f94a2468f0. `/Game/RED/UI/Collection/WBP_ItemCollectionUI` — вариантов: 1.
+- [ ] ~ UI-W-82f94a2468f0. `/Game/RED/UI/Collection/WBP_ItemCollectionUI` — вариантов: 1.
 - [ ] UI-W-438aadec3d6d. `/Game/RED/UI/Collection/WBP_ItemCollectionWandererPopup` — вариантов: 1.
 - [ ] UI-W-89a7f1868858. `/Game/RED/UI/Combat/WBP_CombatAreaListT` — вариантов: 1.
 - [ ] UI-W-4f335265226d. `/Game/RED/UI/Combat/WBP_CombatAreaSaveCyclePopup` — вариантов: 1.
