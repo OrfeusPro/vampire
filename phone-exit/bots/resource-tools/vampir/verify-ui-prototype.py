@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import ui_desired_geometry
+import ui_composition_graph
 
 
 def sha(path):
@@ -89,6 +90,38 @@ def verify(snapshot):
                 policy = binding['measure_desired']
                 rebuilt = ui_desired_geometry.compile_tree(dict(controls=variant['controls'], decoded_slots=variant['slots']), policy['control'], policy)
                 assert rebuilt == binding['desired_trees'], 'Desired-size tree differs from source controls'
+    if (snapshot / 'component-evidence.json').exists():
+        components = json.loads((snapshot / 'components.json').read_text('utf-8'))
+        evidence = json.loads((snapshot / 'component-evidence.json').read_text('utf-8'))
+        assert evidence['modules'].keys() == components['modules'].keys()
+        assert evidence['references'] == components.get('references', [])
+        def check_component_control(source, control):
+            record = next(r for r in index if r['path'] == source['resource_path'])
+            file = source['catalog_file']
+            assert source['catalog_sha256'] == manifest['resources'][record['path'] + '|' + file]
+            window = json.loads((snapshot / 'windows' / (record['id'] + '.json')).read_text('utf-8'))
+            variant = next(v for v in window['variants'] if v['file'] == file)
+            original = next(c for c in variant['controls'] if c['export'] == control['export'])
+            assert all(original[k] == v for k, v in control.items()), 'Changed component control'
+        for key, module in evidence['modules'].items():
+            spec = components['modules'][key]
+            assert [c['name'] for c in module['controls']] == spec['members']
+            for control in module['controls']:
+                check_component_control(module['source'], control)
+            for dependency in module['dependencies']:
+                check_component_control(module['source'], dependency['control_source'])
+                assert dependency['control_source']['type'] == components['modules'][dependency['module']]['resource'] + '_C'
+            for binding_id in spec.get('bindings', {}).values():
+                assert bindings['bindings'][binding_id]['catalog_file'] == module['source']['catalog_file']
+        assert len(evidence['consumers']) == len(components['consumers'])
+        for consumer, spec in zip(evidence['consumers'], components['consumers']):
+            assert all(consumer[k] == v for k, v in spec.items())
+            check_component_control(consumer['source'], consumer['control_source'])
+            assert consumer['control_source']['type'] == components['modules'][consumer['module']]['resource'] + '_C'
+    if (snapshot / 'composition-graph.json').exists():
+        graph = json.loads((snapshot / 'composition-graph.json').read_text('utf-8'))
+        assert graph == ui_composition_graph.from_snapshot(snapshot), 'Composition graph differs from source records'
+        assert manifest['tools']['ui_composition_graph.py'] == sha(Path(__file__).with_name('ui_composition_graph.py'))
     assert sum(row['variants'] for row in index) == manifest['variant_count']
     return dict(state='passed', snapshot=manifest['id'], resources=len(index), textures=len(textures),
                 limits='Byte/provenance checks; does not prove visual fidelity, game behavior or 50 browser windows.')

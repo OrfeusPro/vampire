@@ -14,6 +14,7 @@ from pathlib import Path
 import shared_ui_library
 import ui_collection_catalog
 import ui_desired_geometry
+import ui_composition_graph
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -99,6 +100,54 @@ def skill_sources(root):
             icon=candidates[0]['asset_path'], status='historical_not_current_verified',
             demo_rules='Русские названия, обучение, уровни, MP и перезарядка — правила демо из skills.js; серверное применение не проверено.')
     return evidence, images, inputs
+
+
+def component_sources(root, definitions, records, bindings):
+    """Verify actual nested widget classes, not a similarity of their names."""
+    cache = {}
+    def package(spec):
+        file = spec['catalog_file']
+        if file not in cache:
+            cache[file] = read(root / 'ui-catalog' / file)
+        value = cache[file]
+        if value['name'] != spec['resource']:
+            raise ValueError('Другой ресурс общего компонента')
+        candidates = [r for r in records if r['name'] == spec['resource'] and any(v['file'] == file for v in r['variants'])]
+        if len(candidates) != 1:
+            raise ValueError('Неоднозначный путь общего компонента')
+        return value, dict(resource_path=candidates[0]['path'], catalog_file=file,
+            catalog_sha256=sha(root / 'ui-catalog' / file), asset_sha256=value['asset_sha256'], body_sha256=value['body_sha256'],
+            archive=value['source'], entry=value['entry'])
+    def control(data, name):
+        matches = [c for c in data['controls'] if c['name'] == name]
+        if len(matches) != 1:
+            raise ValueError('Неоднозначный контрол общего компонента: ' + name)
+        return {k: matches[0][k] for k in ['name', 'type', 'export', 'sha256']}
+    evidence = dict(schema=1, modules={}, consumers=[], references=definitions.get('references', []), limits=definitions['limits'])
+    for name, spec in definitions['modules'].items():
+        data, source = package(spec)
+        dependencies = []
+        for dependency in spec.get('dependencies', []):
+            c = control(data, dependency['control'])
+            if c['type'] != definitions['modules'][dependency['module']]['resource'] + '_C':
+                raise ValueError('Неверный класс дочернего компонента')
+            dependencies.append(dict(dependency, control_source=c))
+        for key in spec.get('bindings', {}).values():
+            binding = bindings['bindings'][key]
+            if binding['catalog_file'] != spec['catalog_file'] or binding['resource'] != spec['resource']:
+                raise ValueError('Геометрия относится к другому компоненту')
+        evidence['modules'][name] = dict(source=source, controls=[control(data, n) for n in spec['members']], dependencies=dependencies,
+            status=spec.get('status', 'composition_checked_runtime_not_verified'))
+    for spec in definitions['consumers']:
+        data, source = package(spec)
+        c = control(data, spec['control'])
+        if c['type'] != definitions['modules'][spec['module']]['resource'] + '_C':
+            raise ValueError('Неверный класс подключённого компонента')
+        evidence['consumers'].append(dict(spec, source=source, control_source=c))
+    for reference in evidence['references']:
+        if sha(root / reference['file']) != reference['sha256']:
+            raise ValueError('Изменился кадр общего компонента')
+    return evidence
 
 
 def build(root, baseline=None):
@@ -216,7 +265,8 @@ def build(root, baseline=None):
                        implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)),
                        tools={'inspect-ui.py': skin_evidence['decoder']['sha256'],
                               'ui_collection_catalog.py': sha(HERE / 'ui_collection_catalog.py'),
-                              'ui_desired_geometry.py': sha(HERE / 'ui_desired_geometry.py')})
+                              'ui_desired_geometry.py': sha(HERE / 'ui_desired_geometry.py'),
+                              'ui_composition_graph.py': sha(HERE / 'ui_composition_graph.py')})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -313,6 +363,9 @@ def build(root, baseline=None):
                                      control_sha256=control['sha256'])
             binding['runtime_geometry_verified'] = False
         write(temporary / 'button-evidence.json', button_layouts)
+        write(temporary / 'component-evidence.json', component_sources(root, read(SOURCE / 'components.json'), records, button_layouts))
+        composition = ui_composition_graph.compile_graph(records)
+        write(temporary / 'composition-graph.json', composition)
         manifest['named_resource_count'] = sum(not r['path'].startswith('unresolved:') for r in records)
         manifest['unresolved_root_count'] = sum(r['path'].startswith('unresolved:') for r in records)
         # Existing atlas runs in an isolated frame, with session polling disabled.
@@ -345,6 +398,8 @@ def build(root, baseline=None):
         '</script></html>', 'utf-8')
     if baseline:
         old = read(baseline)
+        write(destination.parent / (old['id'] + '-to-' + identity + '-composition.json'),
+              ui_composition_graph.compare(ui_composition_graph.from_snapshot(baseline.parent), ui_composition_graph.from_snapshot(destination)))
         changes = compare(old, read(destination / 'manifest.json'))
         write(destination.parent / (old['id'] + '-to-' + identity + '.json'), changes)
         lines = ['# Проверка обновления интерфейса', '', 'Baseline: ' + old['id'], '',

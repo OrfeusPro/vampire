@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "modules": {
+    "player_status": {
+      "resource": "WBP_PCStatusProgressBarT",
+      "catalog_file": "pakchunk500-Windows-1747.json",
+      "frame": {
+        "width": 390,
+        "height": 100
+      },
+      "frame_basis": "Локальная рамка демо; CanvasPanel_4 имеет явные 390 × 80 при top 10. Внешнее подключение / DPI требуют проверки.",
+      "members": [
+        "CanvasPanelHP",
+        "CanvasPanelMP",
+        "TextHP",
+        "TextMP",
+        "ProgressBarHP",
+        "ProgressBarMP",
+        "ButtonPortraitMove",
+        "PortraitSmallT"
+      ],
+      "bindings": {
+        "hp": "component-player-hp",
+        "mp": "component-player-mp",
+        "portrait": "component-player-portrait",
+        "portrait_button": "component-player-portrait-button"
+      }
+    },
+    "title_bar": {
+      "resource": "WBP_TitleBarUI",
+      "catalog_file": "pakchunk500-Windows-897.json",
+      "members": [
+        "ButtonMenu",
+        "ButtonBack",
+        "PCStatusProgressBarT"
+      ],
+      "dependencies": [
+        {
+          "control": "PCStatusProgressBarT",
+          "module": "player_status"
+        }
+      ]
+    },
+    "status_effects": {
+      "resource": "WBP_PCStatusUI",
+      "catalog_file": "pakchunk500-Windows-1749.json",
+      "members": [
+        "TileViewOperationPanelList",
+        "PCStatusProgressBarT_Dummy"
+      ],
+      "dependencies": [
+        {
+          "control": "PCStatusProgressBarT_Dummy",
+          "module": "player_status"
+        }
+      ],
+      "status": "data_and_popup_not_implemented"
+    }
+  },
+  "consumers": [
+    {
+      "resource": "WBP_ItemCollectionUI",
+      "catalog_file": "pakchunk500-Windows-483.json",
+      "control": "TitleBarUI",
+      "module": "title_bar"
+    },
+    {
+      "resource": "WBP_ShopUI",
+      "catalog_file": "pakchunk500-Windows-8944.json",
+      "control": "TitleBarUI",
+      "module": "title_bar"
+    }
+  ],
+  "references": [
+    {
+      "file": "ui-references/hud-status-87b4294c15628f84e99ff28400602aef75e470237cc0f8eab06369d6ead56490.png",
+      "sha256": "87b4294c15628f84e99ff28400602aef75e470237cc0f8eab06369d6ead56490"
+    },
+    {
+      "file": "ui-references/main-menu-dcb952cf683657ec5d41cf8ca6284522d6e196a1a108e1e60e81f1fb4cb45166.png",
+      "sha256": "dcb952cf683657ec5d41cf8ca6284522d6e196a1a108e1e60e81f1fb4cb45166"
+    }
+  ],
+  "limits": [
+    "Подтверждён состав cooked WBP, не C++ исходники и не native callback привязки.",
+    "Цвета / шрифты / прозрачность полос пока адаптация демо; количество HP / MP берётся из общей модели.",
+    "Баффы и сведения не подключены; не выводить фиктивные эффекты из картинки или остатка предметов."
+  ]
+}

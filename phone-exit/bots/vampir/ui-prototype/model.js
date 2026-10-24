@@ -2,6 +2,7 @@
 (function (root) {
   'use strict';
   const SCHEMA = 5, STORAGE_KEY = 'phone-exit.vampir.ui-demo.v1';
+  const VITAL_LIMITS = Object.freeze({ hp: 12440, mp: 4085 });
   const Skill = typeof module !== 'undefined' && module.exports ? require('./skills.js') : root.VampirSkills;
   const Collection = typeof module !== 'undefined' && module.exports ? require('./collection-state.js') : root.VampirCollections;
   const CLASSES = [['SwordMan', 'Кровавый рыцарь'], ['Gunner', 'Стрелок'], ['Fighter', 'Карнаж'], ['DarkMage', 'Тёмный маг'], ['Reaper', 'Мрачный Жнец']];
@@ -51,7 +52,7 @@
     if (!state.equipped || Array.isArray(state.equipped) || Object.entries(state.equipped).some(([slot, id]) => !Object.hasOwn(PRODUCTS, id) || PRODUCTS[id].slot !== slot || !(state.inventory[id] > 0))) return false;
     return !!(state.quest && Number.isInteger(state.quest.progress) && state.quest.progress >= 0 && state.quest.progress <= 3 &&
       typeof state.quest.claimed === 'boolean' && typeof state.quest.auto === 'boolean' &&
-      Number.isFinite(state.hp) && state.hp >= 0 && state.hp <= 12440 && Number.isFinite(state.mp) && state.mp >= 0 && state.mp <= 4085 &&
+      Number.isFinite(state.hp) && state.hp >= 0 && state.hp <= VITAL_LIMITS.hp && Number.isFinite(state.mp) && state.mp >= 0 && state.mp <= VITAL_LIMITS.mp &&
       Number.isSafeInteger(state.experience) && state.experience >= 0 && typeof state.follow === 'boolean' &&
       typeof state.mailClaimed === 'boolean' && typeof state.collection === 'boolean' && Collection.valid(state.collections) &&
       Array.isArray(state.quick) && state.quick.length === 5 && state.quick.every(x => x === null || Object.hasOwn(PRODUCTS, x)) &&
@@ -107,6 +108,13 @@
   function stats(state) {
     return Object.values(state.equipped).reduce((out, id) => ({ attack: out.attack + (PRODUCTS[id].attack || 0), defense: out.defense + (PRODUCTS[id].defense || 0) }), { attack: 120, defense: 80 });
   }
+  function vitals(state) {
+    return Object.entries(VITAL_LIMITS).map(([id, max]) => {
+      const value = state[id];
+      if (!Number.isFinite(value) || value < 0 || value > max) throw Error('Некорректное значение ' + id.toUpperCase());
+      return { id, name: id.toUpperCase(), value, max, ratio: value / max };
+    });
+  }
   function apply(state, type, payload = {}) {
     if (!validate(state)) throw Error('Некорректное исходное состояние.');
     const next = project(canonical(state)), fail = message => { throw Error(message); };
@@ -159,9 +167,9 @@
         delete next.equipped[payload.slot]; break;
       case 'use':
         if (item?.kind !== 'consumable' || !next.inventory[payload.id]) fail('Предмет нельзя использовать.');
-        if (payload.id === 'potion' && next.hp === 12440) fail('Здоровье уже восстановлено.');
+        if (payload.id === 'potion' && next.hp === VITAL_LIMITS.hp) fail('Здоровье уже восстановлено.');
         next.inventory[payload.id]--;
-        if (payload.id === 'potion') next.hp = Math.min(12440, next.hp + 1200);
+        if (payload.id === 'potion') next.hp = Math.min(VITAL_LIMITS.hp, next.hp + 1200);
         if (payload.id === 'blessing') next.experience += 30;
         break;
       case 'skill-learn': {
@@ -237,7 +245,7 @@
     return { get state() { return clone(state); }, dispatch(type, payload) { state = apply(state, type, payload); onChange?.(clone(state), type); return clone(state); } };
   }
   function serialize(state) { if (!validate(state)) throw Error('Некорректное сохранение.'); return canonical(state); }
-  const api = { SCHEMA, SERVERS, SKILLS: Skill.skills, skillsForClass: Skill.forClass, COLLECTIONS: Collection, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, apply, adapter };
+  const api = { SCHEMA, VITAL_LIMITS, SERVERS, SKILLS: Skill.skills, skillsForClass: Skill.forClass, COLLECTIONS: Collection, STORAGE_KEY, profileKey, CLASSES, PRODUCTS, initial, appearance, clone, validate, load, serialize, stats, vitals, apply, adapter };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.VampirDemo = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this);

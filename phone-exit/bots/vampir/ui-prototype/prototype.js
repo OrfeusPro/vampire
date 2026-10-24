@@ -10,7 +10,7 @@
   const profileLease = VampirProfileLease.create(lockManager, 'vampir-ui-writer:' + storageKey);
   let resourcesReady = false, pageActive = true, activationRevision = 0, flowRevision = 0, releasing = Promise.resolve();
   const economy = new URLSearchParams(location.search).get('economy') !== 'off';
-  let skillSources, textures, manifest, registry, sourceItems, layouts, buttonLayouts, adapter, storageIssue, storageBlocked = false;
+  let skillSources, textures, manifest, registry, sourceItems, layouts, buttonLayouts, components, componentDefinitions, adapter, storageIssue, storageBlocked = false;
   let screen = 'auth', draft = M.appearance(), undo = [], redo = [], createTab = 'Пресет', toastTimer, busy = false;
   const dialogs = [], renderers = new Map(); let characterName = '';
   let entryDialog = null, nextEntryScenario = 'success';
@@ -25,6 +25,7 @@
     cancelAnimationFrame(geometryFrame);
     geometryFrame = requestAnimationFrame(() => {
       if (!buttonLayouts) return;
+      if (profileLease.owned && adapter) document.documentElement.style.setProperty('--ui-component-unit', VampirGeometry.referenceScale({ width: document.documentElement.clientWidth, height: document.documentElement.clientHeight }, { reference_width: 2400, reference_height: 1350 }, state().settings.scale / 100) + 'px');
       for (const node of document.querySelectorAll('[data-native-button]')) {
         const binding = buttonLayouts.bindings[node.dataset.nativeButton], parent = node.tagName === 'DIALOG' ? app : node.closest('dialog') || app;
         if (!binding || !parent.clientWidth || !parent.clientHeight) continue;
@@ -68,12 +69,8 @@
   function currentCharacter() { return state().characters.find(c => c.id === state().selected); }
   function className(id) { return M.CLASSES.find(x => x[0] === id)?.[1] || id; }
   function portrait(a = M.appearance(), full = false) { return image(full ? 'IMG_Class_' + a.classId + '_' + a.gender : 'IMG_Customize_Preset_' + a.gender + '_' + String(a.preset).padStart(2, '0'), full ? 'character-image' : 'portrait'); }
-  function currency(key, value) {
-    const n = el('span', undefined, 'currency');
-    n.setAttribute('aria-label', (key === 'gold' ? 'Золото: ' : 'Алмазы: ') + fmt(value));
-    return append(n, image(key === 'gold' ? 'IMG_Asset_Gold' : 'IMG_Asset_Diamond'), el('span', fmt(value)));
-  }
-  function currencies() { return append(el('div', undefined, 'currencies'), currency('gold', state().gold), currency('diamonds', state().diamonds)); }
+  function currency(key, value) { return components.currency(key, value); }
+  function currencies(value = state()) { return components.wallets(value); }
 
   function field(label, input) {
     const direct = /^(INPUT|SELECT|TEXTAREA)$/.test(input.tagName), n = el(direct ? 'label' : 'div', undefined, 'field'), text = el('span', label);
@@ -93,7 +90,7 @@
     const match = candidates.find(n => n.tagName === identity.tag && !n.disabled &&
       (identity.label ? n.getAttribute('aria-label') === identity.label : identity.title ? n.getAttribute('title') === identity.title : n.textContent === identity.text));
     if (match) match.focus({ preventScroll: true });
-    else if (scope.tagName === 'DIALOG') scope.querySelector('button.close')?.focus({ preventScroll: true });
+    else if (scope.tagName === 'DIALOG') scope.querySelector('[data-window-close],button.close')?.focus({ preventScroll: true });
   }
   function modal(title, render, className = '') {
     const invoker = focusIdentity(document.activeElement);
@@ -106,12 +103,15 @@
       if (placement.native_frame) nativeButton(dialog, placement.native_frame);
     }
     heading.id = 'window-' + crypto.randomUUID(); dialog.setAttribute('aria-labelledby', heading.id);
-    const header = el('header', undefined, 'window-heading');
-    append(header, heading, button('', () => closeDialog(dialog), 'close'));
-    header.lastChild.setAttribute('aria-label', 'Закрыть ' + title);
-    if (className === 'item-card') nativeButton(header.lastChild, 'item-close');
+    let sharedHeader;
+    const header = placement?.shared_header ? (sharedHeader = components.titleBar({ heading, state: state(), character: currentCharacter(), onMenu: openMenu, onClose: () => closeDialog(dialog), onCharacter: () => openSection('Персонаж') })).node : el('header', undefined, 'window-heading');
+    if (!sharedHeader) {
+      append(header, heading, button('', () => closeDialog(dialog), 'close'));
+      header.lastChild.setAttribute('aria-label', 'Закрыть ' + title); header.lastChild.dataset.windowClose = 'true';
+      if (className === 'item-card') nativeButton(header.lastChild, 'item-close');
+    }
     append(dialog, header, body); windows.append(dialog); dialogs.push(dialog);
-    const redraw = () => { const focused = dialog.contains(document.activeElement) ? focusIdentity(document.activeElement) : null; body.replaceChildren(); render(body, dialog); restoreFocus(focused, dialog); updateButtonGeometry(); };
+    const redraw = () => { const focused = dialog.contains(document.activeElement) ? focusIdentity(document.activeElement) : null; sharedHeader?.update(state(), currentCharacter()); body.replaceChildren(); render(body, dialog); restoreFocus(focused, dialog); updateButtonGeometry(); };
     renderers.set(dialog, redraw);
     dialog.addEventListener('close', () => { geometryObserver.unobserve(dialog); renderers.delete(dialog); const at = dialogs.indexOf(dialog); if (at >= 0) dialogs.splice(at, 1); dialog.remove(); restoreFocus(invoker, dialogs.filter(d => d.open).at(-1) || app); });
     redraw(); dialog.showModal(); geometryObserver.observe(dialog); updateButtonGeometry(); return dialog;
@@ -343,12 +343,7 @@
   function refreshHud() {
     const hud = document.getElementById('hud'); if (!hud) return; hud.replaceChildren();
     const s = state(), c = currentCharacter(); if (!c) { transition('characters'); return; }
-    const health = button('', () => openSection('Персонаж'), 'health');
-    const bars = el('div', undefined, 'health-bars');
-    for (const [name, value, max] of [['HP', s.hp, 12440], ['MP', s.mp, 4085]]) {
-      const bar = el('div', undefined, 'bar ' + name.toLowerCase()); bar.style.setProperty('--fill', value / max * 100 + '%'); bar.setAttribute('aria-label', name + ' ' + value + ' из ' + max); bar.append(el('span', fmt(value) + '/' + fmt(max))); bars.append(bar);
-    }
-    append(health, portrait(c.appearance), bars);
+    const health = components.playerStatus({ state: s, character: c, onOpen: () => openSection('Персонаж') }).node; health.classList.add('health');
     const top = el('nav', undefined, 'hud-top');
     [['Alarm', 'Уведомления', () => openSection('Уведомления')], ['Quest', 'Задания', openQuests], ['Shop', 'Магазин', openShop], ['Inventory', 'Сумка', openBag], ['Menu', 'Меню', openMenu]].forEach(([ico, label, fn]) => top.append(icon('IMG_Flat_' + ico, label, fn)));
     const mapTools = el('div', undefined, 'minimap');
@@ -490,7 +485,7 @@
   function openShop() {
     let category = 'Алмаз', section = 'Обмен';
     const draw = body => {
-      append(body, currencies(), tabs(['Товар', 'Особый призыв', 'Обмен', 'Склад'], section, value => { section = value; renderers.get(dialog)(); }));
+      append(body, tabs(['Товар', 'Особый призыв', 'Обмен', 'Склад'], section, value => { section = value; renderers.get(dialog)(); }));
       const layout = el('div', undefined, 'shop-layout'), nav = el('nav', undefined, 'shop-categories'), grid = el('div', undefined, 'shop-grid');
       ['Алмаз', 'Золото', 'Снаряжение', 'Материалы'].forEach(name => nav.append(button(name, () => { category = name; renderers.get(dialog)(); }, category === name ? 'active' : '')));
       if (section === 'Особый призыв') grid.append(el('p', 'Стоимость и результат призыва не подтверждены. Сценарий остаётся в очереди.'));
@@ -565,8 +560,6 @@
     };
     const dialog = modal('Коллекции', body => {
       const current = state();
-      const masthead = el('div', undefined, 'collection-masthead');
-      append(masthead, append(el('div', undefined, 'collection-player'), portrait(currentCharacter()?.appearance), el('span', (currentCharacter()?.name || 'Демо') + '\nHP ' + fmt(current.hp) + '/12 440\nMP ' + fmt(current.mp) + '/4 085')), currencies()); body.append(masthead);
       if (!meta) {
         append(body, el('p', issue || 'Загрузка каталога…'), issue && button('Повторить загрузку', load)); return;
       }
@@ -891,8 +884,10 @@
   document.getElementById('inspector').hidden = true;
   addEventListener('pagehide', () => { pageActive = false; releaseProfile(); });
   addEventListener('pageshow', event => { pageActive = true; if (event.persisted) activateProfile(); });
-  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json', 'skin-tokens.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls, skills, skinTokens]) => {
+  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json', 'skin-tokens.json', 'components.json'].map(fetchJSON)).then(([t, m, r, items, placement, nativeControls, skills, skinTokens, sharedComponents]) => {
     skillSources = skills; textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
+    componentDefinitions = sharedComponents;
+    components = VampirUiComponents.create({ el, append, image, portrait, button, icon, fmt, vitals: M.vitals, geometry: VampirGeometry, bindings: buttonLayouts.bindings, definitions: componentDefinitions });
     if (manifest.state_schema !== M.SCHEMA) throw Error('Версия модели не соответствует manifest этой сборки.');
     document.title = 'Vampir · ' + profile;
     for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256'], ['button-press', 'BTN_ConfirmRed256_Press'], ['normal-bg', 'BTN_ConfirmBlack256'], ['normal-press', 'BTN_ConfirmBlack256_Press']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');

@@ -38,7 +38,8 @@
       ],
       "reference": "codex-clipboard-63b3f0f9-2c70-4221-bb6d-4ee632a14463.png",
       "basis": "CanvasPanel_4 через slot 28 растянут на CanvasPanel_21; корню выделен viewport демо. Внешняя иерархия и DPI игры неизвестны. Внутренние категории и товары требуют отдельных цепочек.",
-      "native_frame": "shop-window-frame"
+      "native_frame": "shop-window-frame",
+      "shared_header": "title_bar"
     },
     "purchase-window": {
       "resource": "WBP_ShopPurchasePopup",
@@ -123,7 +124,8 @@
       "reference_resource": {
         "file": "ui-references/collection-1177cd4fa4059932c3c09e7f34046487e09fc59318dffd1f6df501c75f06b95f.png",
         "sha256": "1177cd4fa4059932c3c09e7f34046487e09fc59318dffd1f6df501c75f06b95f"
-      }
+      },
+      "shared_header": "title_bar"
     },
     "collection-detail-window": {
       "resource": "WBP_ItemCollectionListInfoPopup",

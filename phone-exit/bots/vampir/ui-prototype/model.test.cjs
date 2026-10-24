@@ -3,6 +3,27 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const M = require('./model.js');
 
+test('shared vitals agree with potion limits, MP spending and character isolation', () => {
+  let s = M.initial();
+  assert.deepEqual(M.vitals(s).map(v => [v.id, v.value, v.max]), [['hp', 10576, 12440], ['mp', 2453, 4085]]);
+  s = M.apply(s, 'use', { id: 'potion' });
+  assert.equal(M.vitals(s)[0].value, 11776);
+  s = M.apply(s, 'use', { id: 'potion' });
+  assert.equal(M.vitals(s)[0].ratio, 1);
+  assert.throws(() => M.apply(s, 'use', { id: 'potion' }), /восстановлено/);
+  s = M.apply(s, 'skill-cast', { id: s.skills.slots[0], now: 1000 });
+  assert.equal(M.vitals(s)[1].value, 2413);
+  s = M.apply(s, 'create', { name: 'Другой', appearance: M.appearance(), uid: 'vitals' });
+  assert.equal(M.vitals(s)[0].value, 10576);
+  s = M.apply(s, 'select', { id: 'demo-1' });
+  assert.equal(M.vitals(s)[0].value, 12440); assert.equal(M.vitals(s)[1].value, 2413);
+});
+
+test('vitals expose zero exactly and reject values that cannot be shown as a valid bar', () => {
+  assert.deepEqual(M.vitals({ hp: 0, mp: 0 }).map(v => v.ratio), [0, 0]);
+  for (const hp of [-1, NaN, Infinity, 12441]) assert.throws(() => M.vitals({ hp, mp: 0 }));
+});
+
 test('creation, unique names, locked slot, deletion and primary selection', () => {
   let s = M.apply(M.initial(), 'create', { name: 'Вампир', appearance: M.appearance(), uid: 'second' });
   assert.equal(s.characters.length, 2);

@@ -24,6 +24,58 @@ verifier = load('ui_prototype_verifier', 'verify-ui-prototype.py')
 
 
 class PrototypeTests(unittest.TestCase):
+    def test_composition_graph_preserves_variants_unresolved_classes_and_source_controls(self):
+        import ui_composition_graph as graph
+        def record(path, name, files, controls):
+            return dict(id=path, path=path, name=name, variants=[dict(file=f, sha256=f, controls=controls, slots=[]) for f in files])
+        control = dict(name='Header', type='WBP_Header_C', export=7, sha256='control SHA')
+        missing = dict(name='Unknown', type='WBP_Missing_C', export=8, sha256='unknown SHA')
+        records = [record('/Game/Shop', 'WBP_Shop', ['shop'], [control, missing]), record('/Game/Header', 'WBP_Header', ['old', 'new'], [])]
+        result = graph.compile_graph(records)
+        edge, unknown = result['nodes']['/Game/Shop|shop']['dependencies']
+        self.assertEqual(edge['control'], control)
+        self.assertEqual(edge['candidates'], ['/Game/Header|new', '/Game/Header|old'])
+        self.assertEqual(unknown['status'], 'unresolved_class')
+        self.assertEqual(result['statistics']['ambiguous_classes'], 1)
+        self.assertEqual(result, graph.compile_graph(list(reversed(records))))
+        with self.assertRaisesRegex(ValueError, 'Повторный'):
+            graph.compile_graph(records + [records[0]])
+
+    def test_composition_impact_traverses_old_and_new_graphs_and_cycles(self):
+        import copy
+        import ui_composition_graph as graph
+        node = lambda targets: dict(sha256='unchanged', dependencies=[dict(candidates=targets)])
+        old = dict(nodes={'leaf': node([]), 'header': node(['leaf', 'screen']), 'screen': node(['header'])})
+        new = copy.deepcopy(old)
+        new['nodes']['leaf']['sha256'] = 'changed'
+        self.assertEqual(graph.compare(old, new)['recheck'], ['header', 'leaf', 'screen'])
+        del new['nodes']['leaf']
+        new['nodes']['header']['dependencies'] = []
+        self.assertEqual(graph.compare(old, new)['removed'], ['leaf'])
+        self.assertEqual(graph.compare(old, new)['recheck'], ['header', 'leaf', 'screen'])
+        self.assertEqual(graph.compare(old, old)['recheck'], [])
+
+    def test_shared_components_check_nested_widget_classes_and_geometry_ownership(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); (root / 'ui-catalog').mkdir()
+            control = lambda name, kind: dict(name=name, type=kind, export=1, sha256='control SHA')
+            rows = [('player.json', 'WBP_Player', control('HP', 'ProgressBar')), ('title.json', 'WBP_Title', control('Player', 'WBP_Player_C')), ('shop.json', 'WBP_Shop', control('Title', 'WBP_Title_C'))]
+            for file, name, c in rows:
+                (root / 'ui-catalog' / file).write_text(json.dumps(dict(name=name, controls=[c], asset_sha256='asset SHA', body_sha256='body SHA', source='fixture archive', entry=1)), 'utf-8')
+            records = [dict(name=name, path='/Game/Test/' + name, variants=[dict(file=file)]) for file, name, c in rows]
+            definitions = dict(modules={'player': dict(resource='WBP_Player', catalog_file='player.json', members=['HP'], bindings={'hp': 'hp'}), 'title': dict(resource='WBP_Title', catalog_file='title.json', members=['Player'], dependencies=[dict(control='Player', module='player')])}, consumers=[dict(resource='WBP_Shop', catalog_file='shop.json', control='Title', module='title')], limits=['fixture only'])
+            bindings = dict(bindings={'hp': dict(resource='WBP_Player', catalog_file='player.json')})
+            result = builder.component_sources(root, definitions, records, bindings)
+            self.assertEqual(result['consumers'][0]['control_source']['type'], 'WBP_Title_C')
+            self.assertEqual(result['modules']['player']['source']['resource_path'], '/Game/Test/WBP_Player')
+            bindings['bindings']['hp']['resource'] = 'WBP_Other'
+            with self.assertRaisesRegex(ValueError, 'Геометрия'):
+                builder.component_sources(root, definitions, records, bindings)
+            bindings['bindings']['hp']['resource'] = 'WBP_Player'
+            path = root / 'ui-catalog/title.json'; value = json.loads(path.read_text('utf-8')); value['controls'][0]['type'] = 'WBP_Unrelated_C'; path.write_text(json.dumps(value), 'utf-8')
+            with self.assertRaisesRegex(ValueError, 'класс'):
+                builder.component_sources(root, definitions, records, bindings)
+
     def test_desired_tree_retains_source_slots_and_rejects_missing_branches(self):
         import ui_desired_geometry as desired
         controls = [dict(export=1, name='Root', type='Overlay', sha256='root'), dict(export=2, name='Body', type='SizeBox', sha256='body', size_constraints={k: dict(status='explicitly_enabled', value=v) for k, v in [('WidthOverride', 1236), ('HeightOverride', 816)]}), dict(export=3, name='StepUp', type='CanvasPanel', sha256='extra')]

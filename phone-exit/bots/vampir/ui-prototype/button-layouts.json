@@ -133,6 +133,42 @@
       "reference_width": 2400,
       "reference_height": 1350,
       "root_frame_assumption": "CanvasPanel_41 получает viewport демо; внешняя SafeZone и активный DPI не установлены."
+    },
+    "component-player-hp": {
+      "catalog_file": "pakchunk500-Windows-1747.json",
+      "resource": "WBP_PCStatusProgressBarT",
+      "control": "CanvasPanelHP",
+      "root_name": "CanvasPanel_3",
+      "reference_width": 390,
+      "reference_height": 100,
+      "root_frame_assumption": "CanvasPanel_3 получает локальную рамку общего статуса в демо; внешний SafeZone / ScaleBox и brush tint не подтверждены."
+    },
+    "component-player-mp": {
+      "catalog_file": "pakchunk500-Windows-1747.json",
+      "resource": "WBP_PCStatusProgressBarT",
+      "control": "CanvasPanelMP",
+      "root_name": "CanvasPanel_3",
+      "reference_width": 390,
+      "reference_height": 100,
+      "root_frame_assumption": "CanvasPanel_3 получает локальную рамку общего статуса в демо; внешний SafeZone / ScaleBox и brush tint не подтверждены."
+    },
+    "component-player-portrait": {
+      "catalog_file": "pakchunk500-Windows-1747.json",
+      "resource": "WBP_PCStatusProgressBarT",
+      "control": "CanvasPanel_0",
+      "root_name": "CanvasPanel_3",
+      "reference_width": 390,
+      "reference_height": 100,
+      "root_frame_assumption": "CanvasPanel_3 получает локальную рамку общего статуса в демо; внешний SafeZone / ScaleBox и brush tint не подтверждены."
+    },
+    "component-player-portrait-button": {
+      "catalog_file": "pakchunk500-Windows-1747.json",
+      "resource": "WBP_PCStatusProgressBarT",
+      "control": "ButtonPortraitMove",
+      "root_name": "CanvasPanel_3",
+      "reference_width": 390,
+      "reference_height": 100,
+      "root_frame_assumption": "CanvasPanel_3 получает локальную рамку общего статуса в демо; внешний SafeZone / ScaleBox и brush tint не подтверждены."
     }
   }
 }
