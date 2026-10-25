@@ -6666,6 +6666,46 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Registration helper semantics, complete superclass and construction/CDO defaults, Nudge struct, historical cooked compatibility and runtime geometry."
+    },
+    {
+      "addresses": [
+        "0x1416ab8d0",
+        "0x1417cba90"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a560f7ee3aca8405af01708a4808e632114666cdc03f09c5c0c0d96fbfc91ee1",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432\\manifest.json",
+          "sha256": "7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Class helper statically stores getter argument 10 in class object +0xb0 and invokes arg13 named PanelSlot getter; tail invokes saved R9 registration callback. Base initialization reaches unresolved14174c9f0, so observed writes cannot establish absent GridSlot defaults.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-GRID-CONSTRUCTION-FLOW-11316.md",
+          "sha256": "57325254ee8a2c5671ea5b7273be99d245efe6e35bbef5aff2ce99ff1346f994"
+        }
+      ],
+      "id": "7b65c652caa5ba855e3ec2c61a1562e73ecf89b4b9c35ac1a826a1f7cbae017d",
+      "limits": [
+        "Four source-bound unwind fragments; no native or game execution.",
+        "No CDO allocation/archetype copy or complete helper side effects proven.",
+        "Omitted Row/Column/Span remain unknown; runtime geometry and cooked compatibility not established."
+      ],
+      "method": "static",
+      "next_check": "Explicit prepare/collect for14174c9f0 then allocation/CDO initialization before applying omitted GridSlot properties.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "14174c9f0 and preceding initialization/CDO copy; complete property/default provenance and runtime compatibility."
     }
   ],
   "schema": 1,
