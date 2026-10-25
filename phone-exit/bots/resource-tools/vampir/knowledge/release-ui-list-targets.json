@@ -14,8 +14,8 @@
   "manual_port_targets": [
     {
       "id": "ui-nktileview-layout-flow",
-      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0", "0x141425d60", "0x1445cbd00", "0x1445d6ec0", "0x1445cb6c0", "0x1414277b0", "0x1455086b0", "0x145509470", "0x145517810", "0x1445d1cd0", "0x14157cf70", "0x141534f70"],
-      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py", "replay-ui-config-hash.py", "replay-ui-config-consumers.py", "replay-ui-string-assignment.py", "inspect-ui-config-callers.py", "replay-ui-config-reload.py", "replay-ui-config-load-wrapper.py"],
+      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0", "0x141425d60", "0x1445cbd00", "0x1445d6ec0", "0x1445cb6c0", "0x1414277b0", "0x1455086b0", "0x145509470", "0x145517810", "0x1445d1cd0", "0x14157cf70", "0x141534f70", "0x14144b5b0"],
+      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py", "replay-ui-config-hash.py", "replay-ui-config-consumers.py", "replay-ui-string-assignment.py", "inspect-ui-config-callers.py", "replay-ui-config-reload.py", "replay-ui-config-load-wrapper.py", "replay-ui-config-path-provider.py"],
       "required_checks": ["ui-nktileview-refresh-current"],
       "rule": "Addresses belong only to this plan baseline SHA. Literal matches are candidates; verify getter, table ownership, transfers and port bounded checks before use. Native checks do not validate historical cooked resources or generator rules.",
       "automation": {
@@ -54,7 +54,8 @@
               {"address": "0x145517810", "scope": "Static GNn/NNV diagnostic literals and gates; Reload wrapper checked separately with services fixtures; not a UI event/active settings proof", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445d1cd0", "scope": "48 complete wrapper cases / 72 synthetic callbacks; config-helper ABI and separate registry stride 0x60, native initial bit selection/getter; path/config/free/advance/callback fixtures; no file/precedence/UI proof", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x14157cf70", "scope": "6 complete path-copy wrapper cases; provider and string-copy fixtures, no actual path proof", "required_checks": ["ui-nktileview-refresh-current"]},
-              {"address": "0x141534f70", "scope": "768 complete load-wrapper cases; context flag bytes/override/low-byte return checked; all services fixtures, no file/precedence/UI proof", "required_checks": ["ui-nktileview-refresh-current"]}
+              {"address": "0x141534f70", "scope": "768 complete load-wrapper cases; context flag bytes/override/low-byte return checked; all services fixtures, no file/precedence/UI proof", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x14144b5b0", "scope": "18 cached / 12 lazy-initialization cases; native TLS/guard branches and call ABI, all services fixtures; Config/ literal not actual path/precedence proof", "required_checks": ["ui-nktileview-refresh-current"]}
             ],
             "evidence": [
               "evidence/interface/NKTILEVIEW-REGISTRATION-11316.md",
@@ -76,7 +77,8 @@
               "evidence/interface/UI-CONFIG-REGISTRATION-DISPATCH-11316.md",
               "evidence/interface/UI-CONFIG-CALLERS-11316.md",
               "evidence/interface/UI-CONFIG-RELOAD-11316.md",
-              "evidence/interface/UI-CONFIG-LOAD-WRAPPERS-11316.md"
+              "evidence/interface/UI-CONFIG-LOAD-WRAPPERS-11316.md",
+              "evidence/interface/UI-CONFIG-PATH-PROVIDER-11316.md"
             ]
           }
         ]

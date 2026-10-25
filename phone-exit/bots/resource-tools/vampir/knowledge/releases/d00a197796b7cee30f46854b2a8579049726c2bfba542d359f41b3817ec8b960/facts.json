@@ -6215,6 +6215,41 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Actual path/provider, context type/flag meaning, loader source precedence/errors, Reload callback registration."
+    },
+    {
+      "addresses": [
+        "0x14144b5b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "47d8f978e7c136f7f9c28a5e1815d61ab6c4cd50f351b30530d0f5c4560e555a",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\220842e84ec30f66fcdeb74ed5774db8e2b83ea71bab1934dbd74d2db6529747\\manifest.json",
+          "sha256": "220842e84ec30f66fcdeb74ed5774db8e2b83ea71bab1934dbd74d2db6529747",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Provider пути: native TLS / signed guard gates, cached global FString, при инициализации base helper 141585780 и append ABI literal Config/ count 7, atexit target 14885e690. Проверены 18 cached / 12 initialization scenarios.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-PATH-PROVIDER-11316.md",
+          "sha256": "6ac903fa68816df31897997041d7310a6643ddff7cd610747cc52356a306f0fe"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-52b76b2d8385\\details.json",
+          "sha256": "2e6cd7551c9eeb8221d7b44af7c799eab994a1d0d28b8c49dddb47a5b52b1044"
+        }
+      ],
+      "id": "f652d8defe97f9a9a4cdae929b632b0f1063d1363296910ab9fc15ab19f1f549",
+      "limits": [
+        "TLS/GS memory, guard header/footer, base path, allocation/copy/append/atexit fixtures.",
+        "No actual file path, native string append, concurrency, overflow/error execution, precedence or UI proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "Explicit current-SHA requests for 141585780 and 1414324d0; loader 14155bbe0 / constructor 141547b10 remain open.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Actual base path, append semantics, context constructor/loader source precedence, callback registration and UI application."
     }
   ],
   "schema": 1,

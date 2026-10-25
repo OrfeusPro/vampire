@@ -35,7 +35,23 @@ config_reload = importlib.util.module_from_spec(spec); spec.loader.exec_module(c
 spec = importlib.util.spec_from_file_location('ui_config_load_wrapper_replay', HERE / 'replay-ui-config-load-wrapper.py')
 config_load = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_load)
 
+spec = importlib.util.spec_from_file_location('ui_config_path_provider_replay', HERE / 'replay-ui-config-path-provider.py')
+config_path = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_path)
+
+
 class TileRefreshTests(unittest.TestCase):
+    def test_native_config_path_provider_cached_and_initial_branches(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_path.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(config_path.ROOT))]))
+        self.assertEqual(len(result['cached_cases']), 18)
+        self.assertEqual(len(result['initial_cases']), 12)
+        self.assertEqual(result['literals']['Config/']['address'], '0x1489f3fb0')
+        self.assertEqual(result['atexit_target'], '0x14885e690')
+        for case in result['initial_cases']:
+            self.assertTrue(case['complete_return'])
+            self.assertEqual(case['services'][-3:], ['append', 'atexit', 'footer'])
+
     def test_native_config_load_wrappers_forward_context_flags_and_low_byte(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_load.run(dict(source=source, source_sha256=replay.getter.SHA,
