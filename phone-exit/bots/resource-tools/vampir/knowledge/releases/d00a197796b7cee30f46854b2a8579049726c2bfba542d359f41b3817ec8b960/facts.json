@@ -6706,6 +6706,55 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "14174c9f0 and preceding initialization/CDO copy; complete property/default provenance and runtime compatibility."
+    },
+    {
+      "addresses": [
+        "0x14174c9f0",
+        "0x1417cba90",
+        "0x14358e000"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a560f7ee3aca8405af01708a4808e632114666cdc03f09c5c0c0d96fbfc91ee1",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432\\manifest.json",
+          "sha256": "7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1e3cfc10b31b55005ea29775a8da2fd0214a9e01086024469985d4140656b4df",
+          "id": "ui-grid-initialization-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\29fa8e86c1b5ae20a5677cbc203a5cb330daf4ceb99045d9cea6f81348d60d67\\manifest.json",
+          "sha256": "29fa8e86c1b5ae20a5677cbc203a5cb330daf4ceb99045d9cea6f81348d60d67",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Exact diagnostic leaf returns on zero flag without object writes; 40 whole initialization probes preserve input bytes object+0x4c..0x5b. Twenty normal returns and twenty diagnostic terminal stops. This disproves using this observed normal chain alone as zero/one defaults; CDO/allocation origins remain unknown.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-GRID-INITIALIZATION-REPLAY-11316.md",
+          "sha256": "495cb21bd24dfe28eedfdb897044a8ac52b19bfaee63c65d039438091f483e0f"
+        }
+      ],
+      "id": "b3d94451a8ede2b15e4f71459e8abdeea40937378272a8a6c380163e7b6147c0",
+      "limits": [
+        "Initial object/context/allocation/flag bytes are fixtures, not live CDO or archetype state.",
+        "Diagnostic entry is a terminal stop; its body and outcome are not executed or assumed to return.",
+        "Normal initialization executes reviewed native bodies without service callbacks; omitted defaults are not inferred.",
+        "No game process, game commands, current cooked compatibility or runtime geometry checked."
+      ],
+      "method": "bounded_native",
+      "next_check": "Trace source-bound allocation/property initialization before class+0xb0 callback, then audit absent values before applying menu grid.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Pre-callback object allocation, CDO/archetype/property copying and omitted GridSlot defaults; current cooked compatibility and runtime geometry."
     }
   ],
   "schema": 1,

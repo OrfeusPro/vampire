@@ -4984,6 +4984,26 @@
         "phone-exit/bots/test_vampir_message_components.py",
         "phone-exit/bots/vampir-shared/vampir_core/game_login_error.py"
       ]
+    },
+    {
+      "id": "ui-grid-initialization-current",
+      "questions": [
+        "ui-nktileview-property-schema"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": false,
+      "test_pattern": "test_vampir_grid_initialization.py",
+      "timeout_seconds": 30,
+      "runtime_distributions": ["capstone", "unicorn"],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_grid_initialization.py",
+        "phone-exit/bots/resource-tools/vampir/replay-grid-initialization.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py"
+      ]
     }
   ]
 }
