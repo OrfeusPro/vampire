@@ -1,0 +1,36 @@
+/* Temporary placement for observation mode; original shared skins/components remain. */
+.live-prototype{background:#0a1614;isolation:isolate}
+.live-prototype .map-holder{position:absolute;inset:0}
+.live-prototype .map-holder iframe{width:100%;height:100%;border:0}
+.live-hud{position:absolute;inset:0;pointer-events:none}
+.live-hud button,.live-hud a,.live-hud aside{pointer-events:auto}
+.live-player{position:absolute;left:22px;top:18px;display:flex;flex-direction:column;gap:5px;padding:12px 18px;background:linear-gradient(110deg,#07130feb,#07130f70);border-left:2px solid #9b8455;max-width:42vw}
+.live-player strong{font-size:1.05rem;color:#e5d8b5}
+.live-status-holder{margin:4px 0}
+.live-summary{display:flex;gap:16px;font-size:.72rem;flex-wrap:wrap}
+.live-player [role=status]{color:#a6b6a8;font-size:.65rem}
+.live-toolbar{position:absolute;right:22px;top:18px;display:flex;align-items:center;gap:12px}
+.live-toolbar .icon-button{background:#07130fba}
+.live-log-button{font-size:.75rem;padding:.7em 1.3em;background:#0b1b17dd;border:1px solid #667361}
+.live-quests{position:absolute;top:140px;right:22px;left:auto;width:260px;max-height:48vh;overflow:auto;background:#07130fc9;border-left:2px solid #6f7b64;padding:15px}
+.live-quests h3{font-weight:400;margin:0 0 12px;color:#e5d8b5;font-size:.9rem}
+.live-quests p{font-size:.75rem;line-height:1.5;margin:.5em 0}
+.live-quests small{font-size:.6rem;color:#a8ada1;display:block;margin-top:14px}
+.live-quest{display:block;width:100%;text-align:left;font-size:.8rem;padding:.7em;background:#1b2d24}
+.live-map-info{position:absolute;bottom:22px;left:22px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;font-size:.66rem;background:#07130fd9;padding:14px 18px;border-left:2px solid #6f7b64;max-width:calc(100vw - 44px)}
+.live-map-info a{color:#d6c79f}.live-map-button{font-size:inherit;margin-top:5px}
+.live-reference{position:absolute;bottom:20px;right:22px;max-width:38vw;font-size:.6rem;color:#9aa89c;pointer-events:none;text-align:right}
+.live-dialog{width:min(740px,94vw);max-height:88dvh}
+.live-dialog .window-heading{display:flex;align-items:center;justify-content:space-between}
+.live-dialog .window-heading h2{font-size:1.1rem}
+.live-dialog .dialog-body{max-height:70dvh;overflow:auto}
+.live-menu{position:fixed;inset:0 0 0 auto;margin:0;width:min(650px,100vw);height:100dvh;max-height:100dvh}
+.live-menu .dialog-body{max-height:none}
+.live-data{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.85rem}.live-data dd{margin:0;overflow-wrap:anywhere;color:#ead8b1}
+.live-setting{display:flex;gap:10px;align-items:center}
+.live-stats{width:100%;border-collapse:collapse;font-size:.75rem}.live-stats td,.live-stats th{padding:8px;border-bottom:1px solid #53666055;text-align:left}
+.live-log-tools{display:flex;gap:10px;margin-bottom:10px}.live-log-tools input{min-width:0;width:150px;font-size:.8rem}
+.live-log,.live-analysis{white-space:pre-wrap;overflow-wrap:anywhere;background:#06110d;padding:12px;font-size:.65rem;line-height:1.55;overflow:auto;max-height:35vh}
+.live-analysis{max-height:18vh}.live-log-dialog small{font-size:.65rem;color:#a8ada1}
+.live-error{padding:40px}
+@media(max-width:800px){.live-player{left:10px;top:10px;max-width:52vw;padding:8px}.live-quests{width:190px;right:10px;top:110px;padding:10px}.live-toolbar{right:10px;top:10px;gap:4px}.live-map-info{left:10px;bottom:10px;max-width:55vw;padding:10px}.live-reference{right:10px;bottom:10px}.live-summary{gap:7px}}

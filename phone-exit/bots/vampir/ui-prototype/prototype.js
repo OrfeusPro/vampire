@@ -2,6 +2,8 @@
 (() => {
   'use strict';
   const M = VampirDemo, app = document.getElementById('app'), windows = document.getElementById('windows');
+  const liveMode = new URLSearchParams(location.search).get('mode') === 'live' || new URLSearchParams(location.search).has('session');
+  let liveController;
   const requestedProfile = new URLSearchParams(location.search).get('bot') || 'demo-01';
   const profile = /^[a-zA-Z0-9_-]{1,48}$/.test(requestedProfile) ? requestedProfile : 'demo-01';
   const storageKey = M.profileKey(profile);
@@ -885,6 +887,7 @@
   }
   async function fetchJSON(url) { const r = await fetch(url); if (!r.ok) throw Error(url + ': HTTP ' + r.status); return r.json(); }
   addEventListener('message', event => {
+    if (liveMode) return;
     if (event.origin !== location.origin || event.source !== gameFrame()?.contentWindow || event.data?.source !== 'vampir-demo-map') return;
     const { type, payload } = event.data;
     if (type === 'ready') mapState();
@@ -911,21 +914,27 @@
     if (event.key === 'Enter') openSection('Чат');
   });
   document.getElementById('inspector').hidden = true;
-  addEventListener('pagehide', () => { pageActive = false; releaseProfile(); });
-  addEventListener('pageshow', event => { pageActive = true; if (event.persisted) activateProfile(); });
+  addEventListener('pagehide', () => { pageActive = false; if (liveMode) liveController?.dispose(); else releaseProfile(); });
+  addEventListener('pageshow', event => { pageActive = true; if (event.persisted) { if (liveMode) liveController?.resume(); else activateProfile(); } });
   Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json', 'skin-tokens.json', 'components.json', 'component-layouts.json', 'status-skin.json'].map(fetchJSON)).then(async ([t, m, r, items, placement, nativeControls, skills, skinTokens, sharedComponents, componentLayouts, statusSkin]) => {
     skillSources = skills; textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
     componentDefinitions = sharedComponents;
     const statusSchema = await fetchJSON(componentLayouts.player_status.file);
     const portraitSchema = await fetchJSON(componentLayouts.player_portrait.file);
     if (statusSchema.source.catalog_file !== sharedComponents.modules.player_status.catalog_file || statusSchema.source.catalog_sha256 !== componentLayouts.player_status.source_sha256) throw Error('Схема статуса относится к другому источнику.');
-    components = VampirUiComponents.create({ el, append, image, portrait, button, icon, fmt, vitals: M.vitals, geometry: VampirGeometry, definitions: componentDefinitions, schemas: { player_status: statusSchema, player_portrait: portraitSchema }, statusSkin });
+    components = VampirUiComponents.create({ el, append, image, portrait, button, icon, fmt, vitals: liveMode ? () => [] : M.vitals, geometry: VampirGeometry, definitions: componentDefinitions, schemas: { player_status: statusSchema, player_portrait: portraitSchema }, statusSkin });
     if (manifest.state_schema !== M.SCHEMA) throw Error('Версия модели не соответствует manifest этой сборки.');
     document.title = 'Vampir · ' + profile;
     for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256'], ['button-press', 'BTN_ConfirmRed256_Press'], ['normal-bg', 'BTN_ConfirmBlack256'], ['normal-press', 'BTN_ConfirmBlack256_Press']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');
     for (const [key, token] of Object.entries(skinTokens)) document.documentElement.style.setProperty('--' + key, 'url("' + token.url + '")');
     document.getElementById('inspector').onclick = () => openInspector();
-    geometryObserver.observe(app); resourcesReady = true;
+    resourcesReady = true;
+    if (liveMode) {
+      liveController = VampirPrototypeLive.mount({ app, windows, components, el, append, image, icon, button, profile:requestedProfile });
+      if (!pageActive) liveController.dispose();
+      return;
+    }
+    geometryObserver.observe(app);
     return activateProfile();
   }).catch(error => { app.replaceChildren(el('h1', 'Не удалось загрузить интерфейс'), el('p', error.message), button('Повторить', () => location.reload())); });
 })();

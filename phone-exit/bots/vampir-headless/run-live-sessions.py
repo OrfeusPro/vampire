@@ -82,7 +82,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
     # API outlives every owned worker; Ctrl+C asks all owners to stop and joins them.
     with LiveSessionServer(registry,port=port) as server:
         emit(dict(event='live_api_ready',port=server.server.server_port,sessions=registry.list(),
-            ui_urls=[dict(bot_id=session.bot_id,url='http://127.0.0.1:17946/maps/ui-prototype/live.html?bot='+session.bot_id+'&session='+session.session_id)
+            ui_urls=[dict(bot_id=session.bot_id,url='http://127.0.0.1:17946/maps/ui-prototype/index.html?mode=live&bot='+session.bot_id+'&session='+session.session_id)
                 for session in sessions.values()]))
         with ThreadPoolExecutor(max_workers=len(accounts),thread_name_prefix='vampir-live') as pool:
             futures=[]

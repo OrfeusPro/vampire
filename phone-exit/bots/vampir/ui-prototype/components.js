@@ -40,6 +40,7 @@
       for (const id of ['hp', 'mp']) view.elements[id].dataset.vital = id;
       function update(next, person) {
         node.dataset.stateSource = 'demo';
+        avatar.disabled = false;
         for (const id of ['hp', 'mp']) delete view.elements[id].dataset.liveValueKnown;
         avatar.setAttribute('aria-label', 'Открыть персонажа ' + (person?.name || 'Демо')); avatar.title = person?.name || 'Персонаж';
         const values = {};
@@ -50,6 +51,7 @@
         if (!root.VampirLiveState) throw Error('Не загружен адаптер живого состояния.');
         const live = root.VampirLiveState.playerStatus(snapshot), values = {};
         node.dataset.stateSource = 'live';
+        avatar.disabled = !live.connected;
         avatar.setAttribute('aria-label', live.name || 'Персонаж'); avatar.title = live.name || 'Персонаж';
         for (const vital of live.vitals) {
           values[vital.id] = { value: vital.known ? vital.value : 0, max: vital.known ? vital.max : 1 };
@@ -79,23 +81,33 @@
       function update(next, person) { status.update(next, person); const key = next.gold + ':' + next.diamonds; if (key !== balanceKey) { balance.replaceChildren(wallets(next)); balanceKey = key; } }
       update(state, character); return { node, update, updateLive: status.updateLive, dispose: status.dispose };
     }
-    function mainMenu({ onSelect }) {
+    function mainMenu({ onSelect, availability }) {
       const definition = definitions.modules.main_menu;
       const node = el('nav', undefined, 'source-main-menu');
       node.setAttribute('aria-label', 'Разделы игры'); node.dataset.component = 'main-menu';
       node.dataset.sourceResource = definition.resource;
       node.dataset.appearanceState = definition.status;
+      const entriesWithNodes = [];
       definition.groups.forEach((entries, index) => {
         const group = el('div', undefined, index === definition.groups.length - 1 ? 'source-menu-footer' : 'source-menu-group');
         for (const entry of entries) {
           const item = icon('/Game/RED/UI/Resource/Texture/Image/' + entry.icon, entry.label, () => onSelect(entry));
           item.dataset.sourceControl = entry.control;
           item.dataset.brushBinding = 'package-reference-candidate';
+          entriesWithNodes.push([entry, item]);
           group.append(item);
         }
         node.append(group);
       });
-      return node;
+      node.refreshAvailability = () => {
+        for (const [entry, item] of entriesWithNodes) {
+          const status = availability?.(entry) || { enabled:true };
+          item.disabled = !status.enabled;
+          item.title = entry.label + (status.enabled ? '' : ' · ' + status.reason);
+          item.setAttribute('aria-disabled', String(!status.enabled));
+        }
+      };
+      node.refreshAvailability(); return node;
     }
     return { playerStatus, titleBar, currency, wallets, mainMenu };
   }

@@ -62,6 +62,8 @@
   }
   function connect() {
     if (disposed || !components) return;
+    const main = document.getElementById('main-prototype');
+    main.href = 'index.html?mode=live&bot=' + encodeURIComponent(botId) + '&session=' + encodeURIComponent(sessionId); main.hidden = false;
     adapter?.dispose(); view?.dispose(); statKey = undefined;
     view = components.playerStatus({ state: {}, character: null });
     view.updateLive(null); document.getElementById('player-status').replaceChildren(view.node);
