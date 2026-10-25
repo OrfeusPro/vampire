@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import math
 from pathlib import Path
 import struct
 
@@ -13,6 +14,10 @@ SPECS = {
         metadata=0x148fddad0, getter=0x1435b51e0, thunk=0x14356ab00),
     'UniformGridSlot': dict(fields=['HorizontalAlignment', 'VerticalAlignment', 'Row', 'Column'],
         flags=[0, 0, 3, 3], array=0x148fe5080, metadata=0x148fe51a0, getter=0x14357f1d0),
+    'ScrollBoxSlot': dict(fields=['Size', 'Padding', 'HorizontalAlignment', 'VerticalAlignment'],
+        flags=[25,25,0,0], array=0x148ff13f8, metadata=0x148ff14e0, getter=0x143583190, direct_array=True),
+    'NamedSlot': dict(fields=[], flags=[], array=0, metadata=0x148fd58e0, getter=0x143579140,
+        parent_thunk=0x14356aad0, parent_getter=0x1435b5080, parent_name='ContentWidget', container=True),
 }
 
 
@@ -34,7 +39,7 @@ def sha(raw):
 
 
 def decode(raw, kind):
-    if kind not in SPECS:
+    if kind not in SPECS or SPECS[kind].get('container'):
         raise ValueError('Unsupported slot candidate class')
     fields = SPECS[kind]['fields'] + (['Parent', 'Content'] if kind != 'PanelSlot' else [])
     reader, values, explicit = canvas.Reader(raw), {}, []
@@ -44,7 +49,24 @@ def decode(raw, kind):
         name = fields[index]
         if name in values:
             raise ValueError('Repeated property')
-        values[name] = 0 if zero else reader.read('<B' if name.endswith('Alignment') else '<i')
+        if name in ('Size','Padding'):
+            # Preserve omissions inside nested structs too; never supply Slate defaults.
+            nested_fields = ['Value','SizeRule'] if name == 'Size' else ['Left','Top','Right','Bottom']
+            nested = {}
+            if not zero:
+                if name=='Size':
+                    raise ValueError('Explicit Size struct schema unreviewed')
+                for child_index, child_zero in reader.header():
+                    if child_index >= len(nested_fields) or nested_fields[child_index] in nested:
+                        raise ValueError('Unknown/repeated nested property')
+                    key = nested_fields[child_index]
+                    nested[key] = 0 if child_zero else reader.read('<B' if key=='SizeRule' else '<f')
+                    if isinstance(nested[key],float) and not math.isfinite(nested[key]):
+                        raise ValueError('Invalid nested float')
+            values[name] = dict(serialized_zero=zero, explicit_properties=nested,
+                omitted_properties=[] if zero else [f for f in nested_fields if f not in nested])
+        else:
+            values[name] = 0 if zero else reader.read('<B' if name.endswith('Alignment') else '<i')
         explicit.append(name)
         if name.endswith('Alignment') and values[name] not in range(4):
             raise ValueError('Unreviewed alignment')
@@ -59,8 +81,10 @@ def decode(raw, kind):
 def schemas(request):
     if request['source_sha256'] != SHA or request['question'] != 'ui-nktileview-property-schema':
         raise ValueError('Unreviewed native request')
-    roots = {s['getter'] for s in SPECS.values()}
-    if not roots <= {int(f['address'], 16) for f in request['functions']}:
+    available={int(f['address'],16) for f in request['functions']}
+    selected={kind:s for kind,s in SPECS.items() if s['getter'] in available}
+    roots = {s['getter'] for s in selected.values()} | {s['parent_getter'] for s in selected.values() if 'parent_getter' in s}
+    if not selected or not roots <= available:
         raise ValueError('Missing explicit getter root')
     raw = source.checked(Path(request['source']), SHA)
     image = native.Image(raw)
@@ -72,9 +96,21 @@ def schemas(request):
         ranges.add(image.roots[r])
     fragments = native.decode_ranges(image, ranges)
     result = {}
-    for kind, spec in SPECS.items():
-        descriptor = props.extract(raw, spec['fields'], spec['flags'], anchor_index=0)
-        if image.pe.address(descriptor['array_offset']) != spec['array']:
+    for kind, spec in selected.items():
+        descriptor = None
+        if spec.get('direct_array'):
+            rows=[]; array_offset=image.offset(spec['array']-image.pe.base)
+            for i,(name,flag) in enumerate(zip(spec['fields'],spec['flags'])):
+                pointer=struct.unpack_from('<Q',raw,array_offset+i*8)[0]; at=image.offset(pointer-image.pe.base)
+                string_pointer=struct.unpack_from('<Q',raw,at)[0]; start=image.offset(string_pointer-image.pe.base)
+                flags=struct.unpack_from('<I',raw,at+24)[0]
+                if raw[start:start+len(name)+1] != name.encode()+b'\0' or flags&255 != flag:
+                    raise ValueError('Explicit class property descriptor changed')
+                rows.append(dict(index=i,name=name,descriptor_offset=at,gen_flags=flags,descriptor_prefix_hex=raw[at:at+32].hex()))
+            descriptor=dict(array_offset=array_offset,properties=rows)
+        elif spec['fields']:
+            descriptor = props.extract(raw, spec['fields'], spec['flags'], anchor_index=0)
+        if descriptor and image.pe.address(descriptor['array_offset']) != spec['array']:
             raise ValueError('Descriptor array moved')
         o = image.offset(spec['metadata'] - image.pe.base)
         block = raw[o:o+64]
@@ -109,6 +145,14 @@ def schemas(request):
             sha256=sha(block), bytes=block.hex(), property_array=hex(spec['array']), getter=hex(spec['getter'])),
             thunk=thunk, class_literal=literal(kind), package_literal=literal('/Script/UMG'),
             fragment=fragment)
+        if 'parent_getter' in spec:
+            at=spec['parent_thunk'];pos=image.offset(at-image.pe.base);b=raw[pos:pos+5]
+            if b[:1]!=b'\xe9' or at+5+struct.unpack_from('<i',b,1)[0]!=spec['parent_getter'] or at not in refs:
+                raise ValueError('Container parent getter thunk differs')
+            parent_fragment=next(f for f in fragments if f['instructions'][0]['address']==spec['parent_getter'])
+            refs={target for row in parent_fragment['instructions'] for target in row['rip_references']}
+            result[kind]['parent_candidate']=dict(thunk=hex(at),bytes=b.hex(),getter=hex(spec['parent_getter']),
+                class_literal=literal(spec['parent_name']),fragment=parent_fragment)
     return result
 
 
@@ -123,7 +167,7 @@ def run(root, request, audit_path):
     records, failures, cache = [], [], {}
     for record in audit['records']:
         for variant in record['variants']:
-            candidates = [c for c in variant.get('unaccounted_slot_candidates', []) if c['type'] in SPECS]
+            candidates = [c for c in variant.get('unaccounted_slot_candidates', []) if c['type'] in definitions]
             if not candidates:
                 continue
             identity = 'W-' + sha(record['path'].encode())[:12]
@@ -152,10 +196,20 @@ def run(root, request, audit_path):
                     actual = exports[candidate['index']]
                     if any(actual[k] != candidate[k] for k in ['index','name','type','sha256','offset','size']):
                         raise ValueError('Candidate export differs from source bytes')
+                    if SPECS[actual['type']].get('container'):
+                        outer=exports[actual['outer']]
+                        if outer['type']!='WidgetTree':
+                            raise ValueError('NamedSlot outer is not WidgetTree')
+                        records.append(dict(source=proof,decoded=None,raw_serialization_hex=actual['serialized_hex'],
+                            outer={k:outer[k] for k in ['index','name','type','sha256']},candidate_role='container_class_candidate',
+                            inherited_properties_decoded=False,geometry_verified=False,class_metadata_association_verified=True,
+                            cooked_current_compatibility_verified=False,inherited_serialization_verified=False))
+                        continue
                     value = decode(bytes.fromhex(actual['serialized_hex']), actual['type'])
                     fields = value['explicit_properties']; parent = exports[fields['Parent']]; content = exports[fields['Content']]
-                    if actual['type']=='UniformGridSlot' and parent['type']!='UniformGridPanel':
-                        raise ValueError('Unexpected UniformGridSlot parent class')
+                    expected_parent={'UniformGridSlot':'UniformGridPanel','ScrollBoxSlot':'ScrollBox'}.get(actual['type'])
+                    if expected_parent and parent['type']!=expected_parent:
+                        raise ValueError('Unexpected layout slot parent class')
                     records.append(dict(source=proof, decoded=value, parent={k:parent[k] for k in ['index','name','type','sha256']},
                         content={k:content[k] for k in ['index','name','type','sha256']}, geometry_verified=False,
                         class_metadata_association_verified=True, cooked_current_compatibility_verified=False,
@@ -168,7 +222,8 @@ def run(root, request, audit_path):
         tools={p.name:sha(p.read_bytes()) for p in [Path(__file__),HERE/'extract-ui-properties.py',HERE/'decode-canvas-slots.py',HERE/'inspect-ui.py',HERE/'build-native-entry-code.py']},
         limits=['Static class metadata association; generic registration helper not executed.',
             'Historical cooked compatibility with current native schema is not established.',
-            'UniformGridSlot inherited Parent/Content indices are observed candidates, not a proven superclass contract.',
+            'UniformGridSlot/ScrollBoxSlot inherited Parent/Content indices are observed candidates, not a proven superclass contract.',
+            'NamedSlot is classified as container candidate; inherited serialized fields remain opaque.',
             'Omitted values remain unknown; no defaults, runtime order, desired size or geometry applied.'])
 
 

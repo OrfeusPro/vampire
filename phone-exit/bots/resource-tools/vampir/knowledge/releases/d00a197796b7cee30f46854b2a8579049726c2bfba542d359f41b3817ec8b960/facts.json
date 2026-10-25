@@ -6802,6 +6802,54 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "NamedSlot/ScrollBoxSlot schema; inherited defaults, current compatibility and runtime geometry."
+    },
+    {
+      "addresses": [
+        "0x143579140",
+        "0x143583190",
+        "0x1435b5080"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a560f7ee3aca8405af01708a4808e632114666cdc03f09c5c0c0d96fbfc91ee1",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432\\manifest.json",
+          "sha256": "7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1e3cfc10b31b55005ea29775a8da2fd0214a9e01086024469985d4140656b4df",
+          "id": "ui-grid-initialization-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\29fa8e86c1b5ae20a5677cbc203a5cb330daf4ceb99045d9cea6f81348d60d67\\manifest.json",
+          "sha256": "29fa8e86c1b5ae20a5677cbc203a5cb330daf4ceb99045d9cea6f81348d60d67",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "ScrollBoxSlot getter/metadata identifies Size/Padding/HAlign/VAlign four-field array; four historical instances parsed completely with inherited Parent/Content candidates. NamedSlot metadata has null own property array and getter passes thunk to named ContentWidget getter; eleven WidgetTree exports classified as container candidates with opaque payload. Combined providers cover 440 suffix candidates: 429 explicit candidate reads and 11 classifications, not geometry.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-SCROLL-NAMED-SLOT-CANDIDATES-11316.md",
+          "sha256": "5b06cc00851f7ceb84f2148f82ce25136b43be77ef4197a39c12048d6bc11d80"
+        }
+      ],
+      "id": "70a4997d68a1b52cccbe468c8497ad7521b1ec40a4512537281c0b663c04a0ea",
+      "limits": [
+        "Generic class registration not executed; full superclass contract and defaults unknown.",
+        "Historical/current compatibility not established. NamedSlot inherited payload undecoded; nonzero explicit ScrollBoxSlot Size rejected.",
+        "Classification does not close parse/geometry/implementation checks. Original catalogs and snapshot unchanged."
+      ],
+      "method": "static",
+      "next_check": "Link evidence to scanner in a separate candidate layer; resolve NamedSlot inheritance and explicit Size before confirmed geometry import.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "NamedSlot inherited fields, explicit Size inner schema, complete superclass/defaults/current compatibility and runtime geometry."
     }
   ],
   "schema": 1,

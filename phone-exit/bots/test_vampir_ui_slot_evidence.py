@@ -77,6 +77,37 @@ class SlotEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'not UniformGridPanel'):
             evidence.reproduce(c,v,'sample.json',x,p)
 
+    def test_named_container_classification_keeps_inherited_payload_opaque(self):
+        raw=bytes.fromhex('01032600000000000000')
+        c=dict(index=34,name='Named',type='NamedSlot',sha256=evidence.sha(raw),offset=100,size=len(raw))
+        x={34:dict(c,outer=44,serialized_hex=raw.hex()),44:dict(index=44,name='Tree',type='WidgetTree',sha256='a'*64)}
+        v=dict(source=dict(asset_sha256='c'*64,body_sha256='d'*64))
+        p=dict(kind='NamedSlot',source=dict(file='sample.json',slot_export=34,offset=100,size=len(raw),sha256=evidence.sha(raw),**v['source']),
+            decoded=None,raw_serialization_hex=raw.hex(),outer=x[44])
+        result=evidence.reproduce(c,v,'sample.json',x,p)
+        self.assertTrue(result['automatic_check_passed'])
+        self.assertEqual(result['status'],'container_candidate_classified')
+        self.assertFalse(result['candidate_parse_complete'])
+        self.assertFalse(result['inherited_properties_decoded'])
+        self.assertFalse(result['geometry_verified'])
+        p['raw_serialization_hex']='00'
+        with self.assertRaisesRegex(ValueError,'opaque payload differs'):
+            evidence.reproduce(c,v,'sample.json',x,p)
+
+    def test_scroll_provider_requires_scrollbox_parent(self):
+        raw=bytes.fromhex('0102020502030000a041170000001400000000000000')
+        c=dict(index=24,name='Scroll',type='ScrollBoxSlot',sha256=evidence.sha(raw),offset=100,size=len(raw))
+        x={24:dict(c,serialized_hex=raw.hex()),23:dict(index=23,name='Scroll',type='ScrollBox',sha256='a'*64),
+            20:dict(index=20,name='Text',type='TextBlock',sha256='b'*64)}
+        v=dict(source=dict(asset_sha256='c'*64,body_sha256='d'*64))
+        p=dict(kind='ScrollBoxSlot',source=dict(file='sample.json',slot_export=24,offset=100,size=len(raw),sha256=evidence.sha(raw),**v['source']),
+            decoded=evidence.basic.decode(raw,'ScrollBoxSlot'),parent=x[23],content=x[20])
+        result=evidence.reproduce(c,v,'sample.json',x,p)
+        self.assertTrue(result['candidate_parse_complete'])
+        x[23]['type']='Overlay'
+        with self.assertRaisesRegex(ValueError,'not ScrollBox'):
+            evidence.reproduce(c,v,'sample.json',x,p)
+
     def test_incomplete_or_duplicate_evidence_is_rejected(self):
         _,_,_,p=fixture()
         report=dict(kind='grid_slot_candidate_decode',failures=[],

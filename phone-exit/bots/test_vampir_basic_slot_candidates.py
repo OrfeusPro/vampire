@@ -8,6 +8,7 @@ spec=importlib.util.spec_from_file_location('basic_slots',HERE/'decode-basic-slo
 slots=importlib.util.module_from_spec(spec);spec.loader.exec_module(slots)
 PANEL=bytes.fromhex('0005bf0000001100000000000000')
 UNIFORM=bytes.fromhex('8004020503480000005a00000000000000')
+SCROLL=bytes.fromhex('0102020502030000a041170000001400000000000000')
 
 
 class BasicSlotTests(unittest.TestCase):
@@ -30,6 +31,22 @@ class BasicSlotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Unsupported'):
             slots.decode(PANEL,'NamedSlot')
         with self.assertRaises(ValueError):slots.decode(UNIFORM,'PanelSlot')
+
+    def test_scroll_preserves_nested_margin_and_outer_omissions(self):
+        v=slots.decode(SCROLL,'ScrollBoxSlot')
+        self.assertEqual(v['explicit_properties']['Parent'],23)
+        self.assertEqual(v['explicit_properties']['Content'],20)
+        padding=v['explicit_properties']['Padding']
+        self.assertEqual(padding['explicit_properties'],dict(Right=20.0))
+        self.assertEqual(padding['omitted_properties'],['Left','Top','Bottom'])
+        self.assertEqual(v['omitted_properties'],['Size','HorizontalAlignment','VerticalAlignment'])
+
+    def test_scroll_does_not_guess_explicit_size_or_accept_nonfinite_margin(self):
+        with self.assertRaisesRegex(ValueError,'Size struct schema unreviewed'):
+            slots.decode(b'\0'+SCROLL[1:],'ScrollBoxSlot')
+        damaged=bytearray(SCROLL);damaged[6:10]=bytes.fromhex('0000c07f')
+        with self.assertRaisesRegex(ValueError,'Invalid nested float'):
+            slots.decode(bytes(damaged),'ScrollBoxSlot')
 
 
 if __name__=='__main__':unittest.main()

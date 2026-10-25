@@ -52,7 +52,7 @@ def reproduce(candidate, variant, source_file, exports, proof):
     source = proof['source']
     actual = exports[candidate['index']]
     kind = proof.get('kind', 'GridSlot')
-    if kind not in ('GridSlot', 'PanelSlot', 'UniformGridSlot') or actual['type'] != kind:
+    if kind not in ('GridSlot', 'PanelSlot', 'UniformGridSlot', 'ScrollBoxSlot', 'NamedSlot') or actual['type'] != kind:
         raise ValueError('Evidence cannot reclassify another export type')
     if any(actual[k] != candidate[k] for k in ['index', 'name', 'type', 'sha256', 'offset', 'size']):
         raise ValueError('Source audit candidate differs from actual export')
@@ -61,13 +61,23 @@ def reproduce(candidate, variant, source_file, exports, proof):
         body_sha256=variant['source']['body_sha256'])
     if source != expected:
         raise ValueError('GridSlot evidence belongs to different package/export bytes')
+    if kind=='NamedSlot':
+        outer=exports[actual['outer']]
+        if proof['decoded'] is not None or proof['raw_serialization_hex']!=actual['serialized_hex'] or outer['type']!='WidgetTree':
+            raise ValueError('Container candidate source/opaque payload differs')
+        if {k:outer[k] for k in ['index','name','type','sha256']} != proof['outer']:
+            raise ValueError('Container outer differs')
+        return dict(status='container_candidate_classified',automatic_check_passed=True,
+            candidate_parse_complete=False,inherited_properties_decoded=False,
+            interpretation='NamedSlot container class candidate; inherited serialized fields remain opaque',
+            raw_serialization_hex=actual['serialized_hex'],geometry_verified=False,implementation_verified=False)
     raw = bytes.fromhex(actual['serialized_hex'])
     decoded = grid.decode(raw) if kind == 'GridSlot' else basic.decode(raw, kind)
     if decoded != proof['decoded']:
         raise ValueError('Reproduced GridSlot explicit values differ')
     fields = decoded['explicit_properties']
     parent, content = exports[fields['Parent']], exports[fields['Content']]
-    expected_parent = {'GridSlot':'GridPanel','UniformGridSlot':'UniformGridPanel'}.get(kind)
+    expected_parent = {'GridSlot':'GridPanel','UniformGridSlot':'UniformGridPanel','ScrollBoxSlot':'ScrollBox'}.get(kind)
     if expected_parent and parent['type'] != expected_parent:
         raise ValueError('Candidate parent is not ' + expected_parent)
     for value, recorded in [(parent, proof['parent']), (content, proof['content'])]:
@@ -75,7 +85,7 @@ def reproduce(candidate, variant, source_file, exports, proof):
             raise ValueError('Candidate object link differs from actual exports')
     return dict(status='candidate_evidence_reproduced', automatic_check_passed=True,
         interpretation=kind + ' explicit candidate properties; inherited schema/defaults unresolved',
-        decoded=decoded, parent=proof['parent'], content=proof['content'],
+        decoded=decoded, parent=proof['parent'], content=proof['content'], candidate_parse_complete=True,
         geometry_verified=False, implementation_verified=False)
 
 
@@ -88,8 +98,10 @@ def basic_evidence_index(report):
     for name, expected in report['tools'].items():
         if sha((HERE/name).read_bytes()) != expected:
             raise ValueError('Basic evidence tool changed: ' + name)
+    selected=[basic.SPECS[kind] for kind in report['definitions']]
+    roots={s['getter'] for s in selected} | {s['parent_getter'] for s in selected if 'parent_getter' in s}
     request = dict(source_sha256=report['native_source']['sha256'], source=report['native_source']['path'],
-        question='ui-nktileview-property-schema',functions=[dict(address=hex(s['getter'])) for s in basic.SPECS.values()])
+        question='ui-nktileview-property-schema',functions=[dict(address=hex(root)) for root in sorted(roots)])
     if basic.schemas(request) != report['definitions']:
         raise ValueError('Basic native schema evidence differs from current bytes')
     result = {}
@@ -97,7 +109,11 @@ def basic_evidence_index(report):
         p = row['source']; key=(p['source_file'],p['export'])
         normalized = dict(kind=p['type'],source=dict(file=p['source_file'],slot_export=p['export'],
             offset=p['offset'],size=p['size'],sha256=p['sha256'],asset_sha256=p['asset_sha256'],body_sha256=p['body_sha256']),
-            decoded=row['decoded'],parent=row['parent'],content=row['content'])
+            decoded=row['decoded'])
+        if p['type']=='NamedSlot':
+            normalized.update(raw_serialization_hex=row['raw_serialization_hex'],outer=row['outer'])
+        else:
+            normalized.update(parent=row['parent'],content=row['content'])
         if key in result and result[key] != normalized:
             raise ValueError('Conflicting basic slot evidence identity')
         result[key]=normalized
