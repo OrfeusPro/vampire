@@ -72,6 +72,34 @@ Achievement / Archive воспроизвёл [результат двух нез
 
 ## Дальше автоматизировать
 
+### Повторное использование разбора GridSlot
+
+`reconcile-ui-slot-evidence.py` связывает остаток source audit с готовым
+`grid-slot-candidates-02.json` по полным SHA пакетов и конкретным exports.
+Перед применением проверяются полный SHA текущего EXE, fingerprints прежних
+декодеров, manifest / каталожный index / ID окон и ссылки на варианты snapshot.
+Для каждого GridSlot повторно читаются actual bytes и explicit properties;
+Parent / Content сверяются с исходными exports. Прежний native поиск не повторяется.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/reconcile-ui-slot-evidence.py --audit 'F:/PhoneExit Resources/Vampir/ui-property-scans/ui-auto-source-audit-04.json' --grid-evidence 'F:/PhoneExit Resources/Vampir/ui-property-scans/grid-slot-candidates-02.json' --grid-evidence-sha256 6c19285248436c5adf271abe6fab554b920b24ede37b74ac9f40ba97ddb61340 --output 'F:/PhoneExit Resources/Vampir/ui-property-scans/ui-slot-evidence-reconciliation-next.json'
+```
+
+Получены 300 `candidate_evidence_reproduced` и 140 `no_reviewed_provider`:
+PanelSlot 117, NamedSlot 11, UniformGridSlot 8, ScrollBoxSlot 4.
+Первое автоматически закрывает проверку воспроизводимости **кандидатного**
+разбора, сохраняя `geometry_verified=false` и `implementation_verified=false`.
+Наследование, defaults и совместимость остаются открытыми. Старый source audit
+и его 52 неполных варианта не переписываются. Код выхода 0 здесь означает
+успешную сверку отчётов без source mismatch, а не отсутствие unknowns.
+
+Проверены 5 тестов переноса evidence и 3 прежних теста GridSlot: чужой package /
+тип / parent / результат, неполные fingerprints и дубли отклоняются;
+пропущенные Span сохраняются неизвестными. Отчёт:
+`F:/PhoneExit Resources/Vampir/ui-property-scans/ui-slot-evidence-reconciliation-04.json`,
+SHA256 `cb4c309a9ab143bac2e575817d11aa8b04f9edd74a786ec8acc5120707813adc`.
+Его SHA не переносится на будущие запуски.
+
 Очередь с чекбоксами — UI-27 в [общем плане](UI-TASKS.md). Следующие блоки:
 учёт оставшихся slot types / defaults, декодирование Brush / styles / состояний,
 подтверждённые delegates / handlers, применение правил геометрии, тестовые сценарии
