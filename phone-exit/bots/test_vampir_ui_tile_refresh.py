@@ -21,9 +21,24 @@ spec = importlib.util.spec_from_file_location('ui_config_payload_replay', HERE /
 config_payload = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_payload)
 spec = importlib.util.spec_from_file_location('ui_config_reader_replay', HERE / 'replay-ui-config-reader.py')
 config_reader = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_reader)
+spec = importlib.util.spec_from_file_location('ui_config_uniqueness_replay', HERE / 'replay-ui-config-uniqueness.py')
+config_uniqueness = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_uniqueness)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_config_key_lookup_and_replacement_preserve_hash_links(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
+        result = config_uniqueness.run(dict(base, functions=[dict(address=hex(a)) for a in config_uniqueness.ROOTS]),
+            dict(base, functions=[dict(address=hex(config_uniqueness.COMPARE))]))
+        self.assertEqual(len(result['cases']), 512)
+        self.assertEqual(sum(c['expected_match'] for c in result['cases']), 288)
+        self.assertEqual(len(result['lookup_cases']), 8)
+        self.assertEqual(len(result['fast_cases']), 2)
+        for case in result['cases']:
+            self.assertEqual(case['moves'], int(case['expected_match']))
+            self.assertEqual(case['cleanups'], int(case['expected_match']) * sum(case['active']))
+
     def test_native_complete_config_reader_keeps_three_independent_bindings(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_reader.run(dict(source=source, source_sha256=replay.getter.SHA,

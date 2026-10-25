@@ -5782,6 +5782,50 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Потребители invoke pointers / условия вызова, uniqueness / replacement, lifetime, precedence и active resource / Brush."
+    },
+    {
+      "addresses": [
+        "0x141421b80",
+        "0x1445c29f0",
+        "0x1445d8430"
+      ],
+      "checks": [
+        {
+          "cache_key": "2d8394b3b5524c7186462cf9553a2f2686edc1935023e09540c82b8d0f3a80a8",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1f2c93d6bb4caeee5e9d750efcefab3abdb424003d4fd3c341a2e05ffd5eaede\\manifest.json",
+          "sha256": "1f2c93d6bb4caeee5e9d750efcefab3abdb424003d4fd3c341a2e05ffd5eaede",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native uniqueness / lookup / compare / capture cleanup прошли 512 сценариев: 288 replacements, 224 misses, сохранение hash links, bitmap / free-list и out index / bool. Дополнительно 8 direct lookup и 2 single-active fast exits. Compare leaf 14145f1e0 (71 byte) использует ASCII folding table, а различающиеся non-ASCII UTF16 units сравнивает без folding. Только old-key free и memmove0xa0 — fixtures; полный reader с replacement не исполнен.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-UNIQUENESS-11316.md",
+          "sha256": "112d8e1af011dffeef8b68ad89781ad3b32ba4ff3dee74e473f83a6a42f70112"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-8dcb78ce41f7\\details.json",
+          "sha256": "2336c2258eb5b279a0fb38f1fbdf3d628217675c52af0e8e1d89d92fd1fede7a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-34b2db3bcded\\details.json",
+          "sha256": "9f63dfcc96b6f010d731210c773c4baa7594ec440a5276e1d1a81bfe6b29fa6d"
+        }
+      ],
+      "id": "63015a62a40cd5c107e196cf27b8c7847753ebaf7b6162beb169be814c33373b",
+      "limits": [
+        "Явные same-bucket synthetic входы; native hash алгоритм, growth и весь reader с replacement не проверены.",
+        "Освобождение старого ключа и перенос 0xa0 bytes заменены fixtures; фактическая память не освобождается.",
+        "External storage synthetic; allocation origin / ownership и общий lifetime не установлены.",
+        "Embedded NUL — synthetic adversarial payload, не подтверждённый допустимый setting key.",
+        "Последующий dispatch, config precedence, active resource / Brush и cooked compatibility не доказаны."
+      ],
+      "method": "bounded_native",
+      "next_check": "Убрать uniqueness=false fixture из общего reader и проверить повторный ключ / новый destination / reuse; отдельно найти потребителей сохранённых invoke pointers и условия вызова.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Общий reader с заменой / reuse слота, реальные hash / invoke consumers / lifetime, precedence и active resource / Brush."
     }
   ],
   "schema": 1,
