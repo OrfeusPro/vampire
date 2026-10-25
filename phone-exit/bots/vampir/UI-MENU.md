@@ -76,3 +76,19 @@ python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_ui_slot_co
 Следующий шаг — подтвердить GridSlot row / column / spans / layer / padding
 и наследование по источникам, затем обновить декодер, граф и renderer. До этого
 порядок меню остаётся явно временным, UI-M-04 не закрыт.
+
+
+## Кандидат декодирования GridSlot
+
+[Отдельное доказательство и ограничения](../resource-tools/vampir/knowledge/evidence/interface/UI-GRID-SLOT-CANDIDATES-11316.md):
+в текущем EXE найден массив 9 дескрипторов по адресу данных 0x148fdbbf0;
+все 472 исторических GridSlot прочитаны без остатка, включая 39 меню.
+Native association класса и совместимость cooked набора ещё открыты.
+У Matrix получены Row 3 / Column 5, у Engraving — Row 3 / Column 1;
+у Character оба положения пропущены. Текущая сетка демо остаётся временной:
+отсутствующий Row / Column не превращается в ноль, отсутствующий Span — в один.
+
+UI-25.07 закрывает отдельный candidate parse, а UI-25.06 / UI-M-04 остаются
+в процессе до metadata / defaults / importer / renderer. Шесть локальных тестов
+двух новых инструментов прошли; workflow finish сохранил static факт
+8d2194a9e0ad47784dcd161caed907c5089f34506892fe40bf9b126890f50316.
