@@ -7211,6 +7211,117 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Семантика и единицы vitals, полные visibility records, handler/application, исходящий move producer."
+    },
+    {
+      "addresses": [
+        "0x1457a8030",
+        "0x14679cce0"
+      ],
+      "checks": [],
+      "conclusion": "Reader 1457a8030 читает три поля; функция 14679cce0 ищет сущность по packet+10 и передаёт packet+18 в 145d8b830. Это статическая связь, не runtime coverage.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-7c95e2163ff6\\details.json",
+          "sha256": "3bd4b085406a4338804e54953f6604438d41c40df6cc0920a91cf37d1432581f"
+        }
+      ],
+      "id": "950adc52b7f47d069c2b68704d60483ae83f550f48e2c48f1ce89bcb32527dbe",
+      "limits": [
+        "Статический просмотр Ghidra и source-bound инструкций; не native replay и не подтверждение runtime HP/MP.",
+        "Косвенные engine services и ownership не исполнялись; единицы отображения ещё открыты."
+      ],
+      "method": "static",
+      "next_check": "Явный 1455f0130 и native reader/apply fixtures, затем отдельная live интеграция.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Целевой setter1455f0130, reader success/failure replay, UI единицы и initial stat source."
+    },
+    {
+      "addresses": [
+        "0x145d8b830"
+      ],
+      "checks": [],
+      "conclusion": "145d8b830 обходит элементы stride32, передаёт stat type +8 и signed value +18 в 1455f10f0; для type134 выполняется отдельное масштабирование. Значение +10 не применяется этим путём.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-71c48dcf365c\\details.json",
+          "sha256": "cb82d39394a9ed73a6e9b0676e3ebef0393c5ba8dce5c1e4a8fcd8323eb1ac99"
+        }
+      ],
+      "id": "fe94105f77b39ebeae2b45cbb28097631d190d97460c8747f49885735c7a8ef1",
+      "limits": [
+        "Статический просмотр Ghidra и source-bound инструкций; не native replay и не подтверждение runtime HP/MP.",
+        "Косвенные engine services и ownership не исполнялись; единицы отображения ещё открыты."
+      ],
+      "method": "static",
+      "next_check": "Явный 1455f0130 и native reader/apply fixtures, затем отдельная live интеграция.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Целевой setter1455f0130, reader success/failure replay, UI единицы и initial stat source."
+    },
+    {
+      "addresses": [
+        "0x1455f10f0"
+      ],
+      "checks": [
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "1455f10f0 использует slot+70, проверяет полученный объект/счётчики и передаёт type/value в 1455f0130. Для HP/MP ещё нужны целевой setter, reader replay и UI единицы.",
+      "evidence": [
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-6458edef35c9\\details.json",
+          "sha256": "8340f1696782cf3d95b580f673515d96c1f4e48ac6209fa5dd6c2b51cb7ab210"
+        }
+      ],
+      "id": "fec379b097f26e1320f0afbb06948d655b3313e686c28fa87f5a7ff78d1d5f50",
+      "limits": [
+        "Статический просмотр Ghidra и source-bound инструкций; не native replay и не подтверждение runtime HP/MP.",
+        "Косвенные engine services и ownership не исполнялись; единицы отображения ещё открыты."
+      ],
+      "method": "static",
+      "next_check": "Явный 1455f0130 и native reader/apply fixtures, затем отдельная live интеграция.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Целевой setter1455f0130, reader success/failure replay, UI единицы и initial stat source."
+    },
+    {
+      "addresses": [
+        "0x1457a8030",
+        "0x145d8b830"
+      ],
+      "checks": [
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current stat record reader и apply прошли 130 native-сценариев: полные/короткие тела, signed64 границы и повторный type. Для типов 3 / 4 / 5 / 9 / 10 применяется второе значение native +18 в порядке массива.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-STAT-VALUES-11316.md",
+          "sha256": "89ced429a5c0b8799a7d4d54c1a5e57e9d86c76866017b595e9400816b179b1d"
+        }
+      ],
+      "id": "3c8eb401ec7372d8d0befc29f2ac5817cb1768b60b125c448e346b0ed6a5e1e0",
+      "limits": [
+        "Archive scalar IO, setter модели и storage являются явными fixtures.",
+        "Полный ID 322 / array framing, регистрация, entity lookup, UI units и type 134 не исполнялись.",
+        "Runtime HP/MP интеграция не включена этим replay."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить 1455f0130 и общий внешний reader с callback, затем отдельная live интеграция.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Целевой setter 1455f0130, внешний ID 322, начальные stats и единицы UI."
     }
   ],
   "schema": 1,

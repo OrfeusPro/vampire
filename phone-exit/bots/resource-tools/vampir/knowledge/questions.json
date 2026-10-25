@@ -5,7 +5,7 @@
       "id": "live-world-state-11316",
       "status": "open",
       "question": "Как получать общую живую модель персонажа, vitals, уровня и ближайших NPC/игроков из текущей сессии для карты и существующего UI?",
-      "known": "Current Login/Select/world и 120 секунд heartbeat прошли. Найдены named table/getter candidates ID301/302 sight, ID324/325 NPC, ID321 level, ID322 stats и ID305/306/307 movement. UI HP/MP пока демонстрационные. Получены 8 внешних и 9 вложенных current Ghidra exports; семантика vitals/visibility не подтверждена. Реализованы registry, owner Stop и nullable UI adapter; две fixture-сессии изолированы. Живая попытка постоянной сессии: Login 58 BlockedIp, до мира не дошла. На новом Redmi/HK текущая постоянная сессия прошла 315 секунд: 63 periodic Ping/64 ответа; Stop API 202, session_stopped, транспорт закрыт.",
+      "known": "Current Login/Select/world и 120 секунд heartbeat прошли. Найдены named table/getter candidates ID301/302 sight, ID324/325 NPC, ID321 level, ID322 stats и ID305/306/307 movement. UI HP/MP пока демонстрационные. Получены 8 внешних и 9 вложенных current Ghidra exports; семантика vitals/visibility не подтверждена. Реализованы registry, owner Stop и nullable UI adapter; две fixture-сессии изолированы. Живая попытка постоянной сессии: Login 58 BlockedIp, до мира не дошла. На новом Redmi/HK текущая постоянная сессия прошла 315 секунд: 63 periodic Ping/64 ответа; Stop API 202, session_stopped, транспорт закрыт. Текущие stat record reader/apply прошли 130 native fixtures: применяется второе signed64 значение +18 для типов 3 / 4 / 5 / 9 / 10. Полный внешний пакет и UI units ещё не проверены.",
       "unknown": "Тела событий, ключи/типы сущностей, единицы vitals/level, lifecycle visibility и источник исходящего движения. Имена пакетов не доказывают поля.",
       "next_action": "Проверить current stat reader на native fixtures, setter модели и UI-единицы; затем подключать HP/MP/level. Продолжить visibility и исходящее движение. Постоянная сессия одного аккаунта уже прошла 315 секунд через новый HK-телефон; массовые live-сессии не проверены.",
       "decision_rule": "Не считать неизвестный field HP/MP/level по величине. Новые поля требуют current reader и семантическую связь; raw packets по умолчанию не сохранять.",
@@ -24,7 +24,8 @@
         "evidence/characters/HEADLESS-WORLD-ENTRY-11316.md",
         "evidence/network/HEADLESS-CHARACTER-MOVE-EVENTS.md",
         "evidence/characters/HEADLESS-LIVE-STATE-11316.md",
-        "evidence/characters/HEADLESS-PERSISTENT-SESSION-11316.md"
+        "evidence/characters/HEADLESS-PERSISTENT-SESSION-11316.md",
+        "evidence/characters/HEADLESS-STAT-VALUES-11316.md"
       ]
     },
     {

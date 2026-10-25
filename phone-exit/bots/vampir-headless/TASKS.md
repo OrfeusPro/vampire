@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current stat record reader/apply прошли 130 native-сценариев: поля и порядок,
+короткий ввод, signed64 границы и повторные types. Полный ID322 и UI units ещё
+не проверены; HP/MP остаются неизвестными.
+[Доказательства и следующий setter](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-STAT-VALUES-11316.md).
+
 На новом Redmi / HK постоянный owner проверен 315 секунд в мире: Login / Select /
 world — 0, 63 periodic Ping / 64 ответа, Stop API — HTTP 202 и `session_stopped`.
 Состояние очищено, тестовый транспорт закрыт. Отказ 58 на новом выходе не повторился.
