@@ -10,7 +10,7 @@ HERE=Path(__file__).resolve().parent
 SHA='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 
 
-def run(packet='PktPingResult', *, source_sha=SHA):
+def run(packet='PktPingResult', *, source_sha=SHA, record=False):
     if source_sha not in (SHA,'d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'):
         raise ValueError('Explicit reviewed source snapshot required')
     if packet not in ('PktPingResult','PktCharacterPosition','PktCharacterMove','PktCharacterMoveResult','PktCharacterMoveNotify',
@@ -26,8 +26,10 @@ def run(packet='PktPingResult', *, source_sha=SHA):
             'PktTutorialUpdate','PktTutorialUpdateResult','PktTutorialUpdateNotify',
             'PktSightEnterNotify','PktSightLeaveNotify','PktNpcCreateNotify',
             'PktNpc','PktNpcCreateData','PktNpcParam','PktNpcMoveNotify','PktCharacterOther',
-            'PktCharacterLevelUpNotify','PktStat','PktStatChangeNotify','PktCharacterStopNotify'):
+            'PktCharacterLevelUpNotify','PktStat','PktStatChange','PktCharacter','PktStatChangeNotify','PktCharacterStopNotify'):
         raise ValueError('Explicit supported packet name required')
+    if type(record) is not bool or (record and packet not in ('PktStat','PktStatChange','PktCharacter')):
+        raise ValueError('Explicit supported record name required')
     spec=importlib.util.spec_from_file_location('ping_result_native',HERE/'build-native-entry-code.py')
     native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
     spec=importlib.util.spec_from_file_location('ping_result_audit',HERE/'audit-client-release.py')
@@ -43,7 +45,8 @@ def run(packet='PktPingResult', *, source_sha=SHA):
         literal_bytes=packet.encode()+b'\0'
         at=raw.find(literal_bytes,start,end)
         while at>=0:
-            literals.append(image.pe.address(at));at=raw.find(literal_bytes,at+1,end)
+            if not record or at==start or raw[at-1]==0:literals.append(image.pe.address(at))
+            at=raw.find(literal_bytes,at+1,end)
     if len(literals)!=1:raise ValueError('Ambiguous literal: '+packet)
     def references(target):
         candidates=native.rip_candidates(image,{target:{}})
@@ -78,23 +81,29 @@ def run(packet='PktPingResult', *, source_sha=SHA):
             if at%8==0:locations.append(at)
             at=raw.find(struct.pack('<Q',getter),at+1,end)
     if len(locations)!=1:raise ValueError('Ambiguous current name slot')
-    table=image.pe.address(locations[0]-0x38)
-    slots=struct.unpack_from('<8Q',raw,locations[0]-0x38)
+    name_slot=0x28 if record else 0x38
+    table=image.pe.address(locations[0]-name_slot)
+    slots=struct.unpack_from('<6Q' if record else '<8Q',raw,locations[0]-name_slot)
+    if record and not all(any(section['name']=='.text' and image.pe.base+section['rva']<=value<image.pe.base+section['rva']+section['raw_size'] for section in image.pe.sections) for value in slots):
+        raise ValueError('Candidate record table contains non-code slots')
     id_bytes=raw[image.offset(slots[5]-image.pe.base):][:6]
-    if len(id_bytes)!=6 or id_bytes[0]!=0xb8 or id_bytes[-1]!=0xc3:
+    if not record and (len(id_bytes)!=6 or id_bytes[0]!=0xb8 or id_bytes[-1]!=0xc3):
         raise ValueError('Candidate getter '+hex(slots[5])+' is not MOV EAX,imm;RET: '+id_bytes.hex())
-    packet_id=struct.unpack_from('<I',id_bytes,1)[0]
-    if packet_id>65535 or (packet=='PktPingResult' and packet_id!=17):raise ValueError('Unexpected packet ID')
+    packet_id=None if record else struct.unpack_from('<I',id_bytes,1)[0]
+    if not record and (packet_id>65535 or (packet=='PktPingResult' and packet_id!=17)):raise ValueError('Unexpected packet ID')
     ctors,ctor_fragments=references(table)
     report=dict(source_sha256=source_sha,tool_sha256=audit.sha256(Path(__file__)),
         packet=packet,packet_id=packet_id,literal=hex(literals[0]),literal_bytes=literal_bytes.hex(),name_references=names,
-        candidate_table=hex(table),table_bytes=raw[locations[0]-0x38:locations[0]+8].hex(),
+        candidate_table=hex(table),table_bytes=raw[locations[0]-name_slot:locations[0]+8].hex(),
         slots=[hex(a) for a in slots],id_getter_bytes=id_bytes.hex(),constructor_candidates=ctors,
         fragments=name_fragments+ctor_fragments,
-        limits=['Name-slot displacement 0x38 remains a hypothesis until constructor vptr store is reviewed.',
+        limits=['Name-slot displacement '+hex(name_slot)+' remains a hypothesis until constructor vptr store is reviewed.',
             'Exact source SHA and whole-unwind instruction boundaries are checked; no Ghidra analysis or game IO.',
             'Reader and handler semantics are not established by names or table candidates.'])
-    category='release-ping-result-discovery' if packet=='PktPingResult' else 'release-world-packet-discovery'
+    if record:
+        report['kind']='record_candidate'
+        report['slot5_bytes']=report.pop('id_getter_bytes')
+    category='release-record-discovery' if record else 'release-ping-result-discovery' if packet=='PktPingResult' else 'release-world-packet-discovery'
     target=audit.save_snapshot(native.ROOT/'code-clues'/category,report)
     return target,report
 
@@ -103,6 +112,7 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--packet',default='PktPingResult')
     parser.add_argument('--source-sha',default=SHA)
+    parser.add_argument('--record',action='store_true',help='Discover a named data record without inventing a network packet ID')
     args=parser.parse_args()
-    path,r=run(args.packet,source_sha=args.source_sha);print(json.dumps(dict(report=str(path),packet_id=r['packet_id'],table=r['candidate_table'],
+    path,r=run(args.packet,source_sha=args.source_sha,record=args.record);print(json.dumps(dict(report=str(path),packet_id=r['packet_id'],table=r['candidate_table'],
         slots=r['slots'],constructors=[v['owner'] for v in r['constructor_candidates']])))

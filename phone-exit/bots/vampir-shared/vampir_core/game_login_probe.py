@@ -66,6 +66,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         raise ValueError('Quest observer requires explicit list diagnostic')
     if quest_wire_observer is not None and (not callable(quest_wire_observer) or not read_quest_list):
         raise ValueError('Quest wire observer requires explicit list diagnostic')
+    if session_control is not None:session_control.bind_source(source_sha256)
     unknown = []  # Bounded first-packet sample, not a processing limit.
     packet_counts = {}
     other_packet_count = 0
@@ -90,7 +91,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             now=time.monotonic()
             if now-packet_window>=60:packet_window,packet_window_count=now,0
             packet_window_count+=1
-            session_control.packet(packet.packet_id,packet.body)
+            selected=owner.selection.response
+            session_control.packet(packet.packet_id,packet.body,
+                character_key=selected.player.at(8) if selected is not None else None)
         other_packet_count += 1
         if len(unknown) < 32: unknown.append(packet.packet_id)
         if (packet_window_count if session_control is not None else other_packet_count) > 4096 or (packet.packet_id not in packet_counts and len(packet_counts) >= 128):

@@ -489,12 +489,13 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
     current = dict(snapshot='snapshots/' + identity + '/', id=identity)
     write(out / 'current.json.tmp', current)
     os.replace(out / 'current.json.tmp', out / 'current.json')
-    (out / 'index.html').write_text('<!doctype html><html lang="ru"><meta charset="utf-8">'
-        '<title>Vampir · прототип</title><p id="status">Загрузка интерфейса…</p><script>'
-        'fetch("current.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})'
-        '.then(x=>location.replace(x.snapshot+"index.html"+location.search))'
-        '.catch(e=>document.getElementById("status").textContent="Ошибка загрузки: "+e.message)'
-        '</script></html>', 'utf-8')
+    for entry in ('index.html','live.html'):
+        (out / entry).write_text('<!doctype html><html lang="ru"><meta charset="utf-8">'
+            '<title>Vampir · интерфейс</title><p id="status">Загрузка интерфейса…</p><script>'
+            'fetch("current.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})'
+            '.then(x=>location.replace(x.snapshot+'+json.dumps(entry)+'+location.search))'
+            '.catch(e=>document.getElementById("status").textContent="Ошибка загрузки: "+e.message)'
+            '</script></html>', 'utf-8')
     if baseline:
         old = read(baseline)
         write(destination.parent / (old['id'] + '-to-' + identity + '-composition.json'),

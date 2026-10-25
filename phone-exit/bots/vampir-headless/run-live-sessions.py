@@ -6,6 +6,7 @@ import importlib.util
 import json
 from pathlib import Path
 import sys
+from threading import BoundedSemaphore
 
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE.parent/'vampir-shared'))
@@ -32,8 +33,10 @@ def validate_accounts(value):
     return value
 
 
-def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947):
+def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947,sign_in_parallelism=2):
     accounts=validate_accounts(accounts)
+    if type(sign_in_parallelism) is not int or not 1<=sign_in_parallelism<=8:raise ValueError('Параллельных входов должно быть 1–8')
+    sign_in_slots=BoundedSemaphore(sign_in_parallelism)
     if set(passwords)!={row['bot_id'] for row in accounts} or any(not isinstance(p,str) or not p for p in passwords.values()):
         raise ValueError('Нужен пароль каждого выбранного аккаунта')
     if probe is None:
@@ -45,8 +48,20 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
     def emit(value):print(json.dumps(value,ensure_ascii=False),flush=True)
     def worker(row):
         bot=row['bot_id'];session=sessions[bot]
-        password=passwords.pop(bot)
+        password=None;permit=False
+        def release_sign_in():
+            nonlocal permit
+            if permit:permit=False;sign_in_slots.release()
+        def progress(stage):
+            # Keep all world connections running, while limiting simultaneous
+            # SDK/browser setup. This stage runs after the browser is closed.
+            if stage=='game_login_exchange':release_sign_in()
+            emit(dict(event='phase',bot_id=bot,stage=stage))
         try:
+            while not session.stop_requested:
+                if sign_in_slots.acquire(timeout=.1):permit=True;break
+            if session.stop_requested:return dict(bot_id=bot,status='session_stopped')
+            password=passwords.pop(bot)
             result=probe.run(row['email'],password=password,selected_profile=profile,
                 manifest_path=manifest,socks_port=row['socks_port'],server_policy_byte=0,
                 extra_number=client_version,context='windows-sdk-initial-reset',region=row['region'],
@@ -54,7 +69,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
                 lobby_context='sdk-with-partial-metadata',read_character_list=True,
                 character_index=row['character_index'],read_world_start=True,read_world_finish=True,
                 observe_world_seconds=300,session_control=session,
-                _progress=lambda stage:emit(dict(event='phase',bot_id=bot,stage=stage)))
+                _progress=progress)
             game=result.get('game',{})
             session.close(game.get('login_result_key') if game.get('login_result_code') not in (None,0) else game.get('error'))
             return dict(bot_id=bot,status=result.get('status'),game_status=game.get('status'),
@@ -62,14 +77,17 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
         except Exception as error:
             return dict(bot_id=bot,status='failed',error_type=type(error).__name__)
         finally:
-            password=None;session.close()
+            release_sign_in();password=None;session.close()
     summaries=[]
     # API outlives every owned worker; Ctrl+C asks all owners to stop and joins them.
     with LiveSessionServer(registry,port=port) as server:
-        emit(dict(event='live_api_ready',port=server.server.server_port,sessions=registry.list()))
+        emit(dict(event='live_api_ready',port=server.server.server_port,sessions=registry.list(),
+            ui_urls=[dict(bot_id=session.bot_id,url='http://127.0.0.1:17946/maps/ui-prototype/live.html?bot='+session.bot_id+'&session='+session.session_id)
+                for session in sessions.values()]))
         with ThreadPoolExecutor(max_workers=len(accounts),thread_name_prefix='vampir-live') as pool:
-            futures=[pool.submit(worker,row) for row in accounts]
+            futures=[]
             try:
+                for row in accounts:futures.append(pool.submit(worker,row))
                 for future in as_completed(futures):
                     summary=future.result();summaries.append(summary);emit(summary)
             finally:
@@ -82,12 +100,13 @@ if __name__=='__main__':
     parser.add_argument('--accounts',type=Path,required=True)
     parser.add_argument('--manifest',type=Path,required=True)
     parser.add_argument('--client-version',type=int,required=True)
+    parser.add_argument('--sign-in-parallelism',type=int,default=2,help='Одновременные SDK-входы; все вошедшие боты остаются активны')
     args=parser.parse_args()
     try:
         if args.accounts.stat().st_size>65536:raise ValueError('Слишком большой список аккаунтов')
         accounts=validate_accounts(json.loads(args.accounts.read_text(encoding='utf-8')))
         passwords={row['bot_id']:getpass.getpass('Пароль '+row['bot_id']+': ') for row in accounts}
-        run_accounts(accounts,passwords,manifest=args.manifest,client_version=args.client_version)
+        run_accounts(accounts,passwords,manifest=args.manifest,client_version=args.client_version,sign_in_parallelism=args.sign_in_parallelism)
     except KeyboardInterrupt:
         print('Сессии остановлены.')
     except (OSError,ValueError) as error:

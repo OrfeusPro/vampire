@@ -1,26 +1,102 @@
 import http.client
 import json
 import unittest
+import struct
 import importlib.util
 import io
 from contextlib import redirect_stdout
 from pathlib import Path
-from threading import Barrier,Event
+from threading import Barrier,Event,Lock
 from types import SimpleNamespace as N
 
 from vampir_core.live_session import LiveSession, LiveSessions
 from vampir_core.live_session_server import LiveSessionServer
 
 
-def owner(key=42):
+def owner(key=42,stats=()):
     position=N(world_id=10010,vector=N(finite_values=lambda:(1.,2.,3.)))
     return N(world_entry=N(state='finish_response',target_position=position),
-        selection=N(response=N(player=N(at=lambda offset:key)),
+        selection=N(response=N(player=N(at=lambda offset:{8:key,0x1c8:stats}[offset])),
             characters=N(records=[N(u64=[key],strings=['Персонаж'])])),
         heartbeat=N(queued_count=3,response_count=2))
 
 
 class LiveSessionTests(unittest.TestCase):
+    def test_fifty_fixture_worlds_keep_individual_stats_with_bounded_sign_in(self):
+        import time
+        from vampir_core.stat_change import SOURCE_SHA256
+        path=Path(__file__).parent/'vampir-headless/run-live-sessions.py'
+        spec=importlib.util.spec_from_file_location('test_live_fifty',path)
+        launcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(launcher)
+        accounts=[dict(bot_id='bot-'+str(i),email=str(i)+'@example.com',socks_port=20000+i,region='JP',server_id=256,character_index=0) for i in range(50)]
+        lock=Lock();ready=Barrier(50);active=0;peak=0;seen={}
+        def run(email,**kwargs):
+            nonlocal active,peak
+            with lock:active+=1;peak=max(peak,active)
+            time.sleep(.003)
+            with lock:active-=1
+            kwargs['_progress']('game_login_exchange')
+            session=kwargs['session_control'];i=int(email.split('@')[0])
+            session.bind_source(SOURCE_SHA256)
+            body=struct.pack('<QHiqqBH',42,1,4,0,i,0,0)
+            session.packet(322,body,character_key=42);session.publish(owner())
+            ready.wait(5)
+            with lock:seen[session.bot_id]=session.snapshot()['character']['hp']
+            session.request_stop()
+            return dict(status='fixture',game=dict(status='session_stopped'))
+        with redirect_stdout(io.StringIO()):
+            result=launcher.run_accounts(accounts,{row['bot_id']:'fixture' for row in accounts},manifest=Path('fixture'),client_version=1,probe=N(run=run),port=0)
+        self.assertEqual(len(result),50)
+        self.assertTrue(all(row.get('game_status')=='session_stopped' for row in result))
+        self.assertEqual(seen,{'bot-'+str(i):i for i in range(50)})
+        self.assertLessEqual(peak,2)
+
+    def test_initial_values_do_not_overwrite_changes_and_are_cleared_on_disconnect(self):
+        from vampir_core.stat_change import SOURCE_SHA256
+        from vampir_core.character_select_result import SelectionRecord
+        stats=tuple(SelectionRecord(((8,stat),(16,value))) for stat,value in [(3,12),(4,90),(5,100),(9,25),(10,50)])
+        session=LiveSession(bot_id='initial');session.bind_source(SOURCE_SHA256)
+        body=struct.pack('<QHiqqBH',42,1,4,90,80,0,0)
+        session.packet(322,body,character_key=42)
+        session.publish(owner(stats=stats))
+        state=session.snapshot()
+        self.assertEqual(state['character']['hp'],80)
+        self.assertEqual(state['character']['max_hp'],100)
+        self.assertEqual(state['character']['level'],12)
+        self.assertEqual(state['coverage']['vitals'],'received')
+        session.packet(322,b'bad',character_key=42)
+        session.publish(owner(stats=stats))
+        self.assertIsNone(session.snapshot()['character']['hp'])
+        session.close();self.assertIsNone(session.snapshot()['character'])
+
+    def test_current_stats_are_bound_to_character_and_account_before_publication(self):
+        from vampir_core.stat_change import SOURCE_SHA256
+        def body(key,values):
+            return struct.pack('<QH',key,len(values))+b''.join(struct.pack('<iqq',stat,999,value) for stat,value in values)+bytes(3)
+        a,b=LiveSession(bot_id='a'),LiveSession(bot_id='b')
+        for session in (a,b):session.bind_source(SOURCE_SHA256)
+        values=[(3,12),(4,0),(5,100),(9,25),(10,50)]
+        a.packet(322,body(42,values),character_key=42)
+        self.assertIsNone(a.snapshot()['character'])
+        a.publish(owner());b.publish(owner())
+        self.assertEqual([a.snapshot()['character'][k] for k in ('level','hp','max_hp','mp','max_mp')],[12,0,100,25,50])
+        self.assertIsNone(b.snapshot()['character']['hp'])
+        self.assertEqual(a.snapshot()['coverage']['vitals'],'received')
+        self.assertEqual(a.snapshot()['character']['stats'][1]['name'],'Hp')
+        a.packet(322,body(777,[(4,99999)]),character_key=42)
+        self.assertEqual(a.snapshot()['character']['hp'],0)
+        a.packet(322,body(42,[(4,30),(4,40),(10,2**63-1)]),character_key=42)
+        self.assertEqual(a.snapshot()['character']['hp'],40)
+        self.assertIsNone(a.snapshot()['character']['max_mp'])
+        self.assertEqual(a.snapshot()['character']['stats'][-1]['value'],str(2**63-1))
+        a.publish(owner())
+        self.assertEqual(a.snapshot()['character']['hp'],40)
+        a.packet(322,b'bad',character_key=42)
+        self.assertIsNone(a.snapshot()['character']['hp'])
+        self.assertEqual(a.snapshot()['coverage']['stats'],'decode_error')
+        a.close();self.assertIsNone(a.snapshot()['character'])
+        with self.assertRaises(ValueError):b.bind_source('a'*64)
+
     def test_parallel_launcher_keeps_routes_and_credentials_separate(self):
         path=Path(__file__).parent/'vampir-headless/run-live-sessions.py'
         spec=importlib.util.spec_from_file_location('test_live_launcher',path)

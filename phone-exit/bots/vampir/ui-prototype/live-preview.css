@@ -1,0 +1,6 @@
+:root{color-scheme:dark;--ui-component-unit:.8px;font:16px system-ui,sans-serif;background:#101917;color:#ecefe7}
+body{margin:0}main{max-width:900px;margin:32px auto;padding:0 20px}header{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+h1{font-size:24px;margin:0}header p,.note{color:#a8b7af;font-size:14px}button{font:inherit;padding:9px 16px;border:1px solid #7a5b52;border-radius:5px;background:#482d29;color:inherit;cursor:pointer}button:disabled{opacity:.5;cursor:default}
+section{padding:22px 0;border-top:1px solid #35433e}#connection{min-height:24px;color:#b6d6c0}#player-status{max-width:100%;overflow-x:auto;min-height:80px;padding-bottom:8px}h2{font-size:18px}h2 span{font-weight:normal;color:#a8b7af}
+dl{display:flex;gap:32px;flex-wrap:wrap;margin-top:20px}dl div{display:flex;gap:10px}dt{color:#a8b7af}dd{margin:0;font-variant-numeric:tabular-nums}
+.table-scroll{max-height:50vh;overflow:auto}table{width:100%;border-collapse:collapse;text-align:left;font-size:14px}th{position:sticky;top:0;background:#172520}td,th{padding:8px 12px;border-bottom:1px solid #293a32}td:last-child{text-align:right;font-variant-numeric:tabular-nums}td:nth-child(2){overflow-wrap:anywhere}

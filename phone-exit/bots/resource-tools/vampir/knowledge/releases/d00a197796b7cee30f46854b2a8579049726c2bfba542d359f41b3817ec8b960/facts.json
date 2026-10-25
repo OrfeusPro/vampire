@@ -7322,6 +7322,197 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Целевой setter 1455f0130, внешний ID 322, начальные stats и единицы UI."
+    },
+    {
+      "addresses": [
+        "0x1457a3310"
+      ],
+      "checks": [
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Collect с ctor 1457a3310 отклонён: у него нет unwind root. Проверен отдельный 27-байтный leaf до RET, закреплён в current replay context; новые roots исключают этот leaf.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-STAT-NOTIFY-11316.md",
+          "sha256": "fcc1eca9abf05066d2043737593952b6c9b9bd6f8b854fd98932542c1d766fe6"
+        }
+      ],
+      "id": "b60c66eb05b96ff94a88519e7b58387699668de46d6227daeec28d029ad6ed80",
+      "limits": [
+        "Array storage/reset, cleanup, memcpy, ownership wrapper и внешний identity service являются fixtures.",
+        "Полный PktCharacter reader и entity lookup не исполнены; map insertion/listeners и эффекты engine/UI не доказаны.",
+        "Для 207 записей выбраны восемь префиксов; меньшие случаи проверяют каждый префикс."
+      ],
+      "method": "static",
+      "next_check": "Живые stats/UI и close; затем current visibility records и актуальная проекция карты.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Окружение / карта, реальный level-up, UI units модификаторов и масштабирование 50 реальных сессий."
+    },
+    {
+      "addresses": [
+        "0x1455f0130",
+        "0x1456c5630",
+        "0x1456c6690",
+        "0x1457a8030"
+      ],
+      "checks": [
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Полные stat notify reader/callback/input/apply и existing-key model setter проверены на одной памяти: 1119 сценариев ID 321 / 322, включая 207 записей, signed64, bool, повторы, map collisions и особое деление type 134.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-STAT-NOTIFY-11316.md",
+          "sha256": "fcc1eca9abf05066d2043737593952b6c9b9bd6f8b854fd98932542c1d766fe6"
+        }
+      ],
+      "id": "534619f15669c822a75c338c447d7a3b6726eb81469152f337168163040d5387",
+      "limits": [
+        "Array storage/reset, cleanup, memcpy, ownership wrapper и внешний identity service являются fixtures.",
+        "Полный PktCharacter reader и entity lookup не исполнены; map insertion/listeners и эффекты engine/UI не доказаны.",
+        "Для 207 записей выбраны восемь префиксов; меньшие случаи проверяют каждый префикс."
+      ],
+      "method": "bounded_native",
+      "next_check": "Живые stats/UI и close; затем current visibility records и актуальная проекция карты.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Окружение / карта, реальный level-up, UI units модификаторов и масштабирование 50 реальных сессий."
+    },
+    {
+      "addresses": [
+        "0x14573d240",
+        "0x145787640",
+        "0x1457a7f70",
+        "0x146795ef0"
+      ],
+      "checks": [
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий PktCharacter reader передаёт main+1c8 в 145734dd0; PktStat reader и callback сохраняют type +8 / value +10. Level-up handler создаёт эти же PktStat из вторых полей изменений и вызывает initial apply.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-STAT-NOTIFY-11316.md",
+          "sha256": "fcc1eca9abf05066d2043737593952b6c9b9bd6f8b854fd98932542c1d766fe6"
+        }
+      ],
+      "id": "4883644931096984bee85a9e47088671cc6805159aca207dd5aa57c5179cde85",
+      "limits": [
+        "Array storage/reset, cleanup, memcpy, ownership wrapper и внешний identity service являются fixtures.",
+        "Полный PktCharacter reader и entity lookup не исполнены; map insertion/listeners и эффекты engine/UI не доказаны.",
+        "Для 207 записей выбраны восемь префиксов; меньшие случаи проверяют каждый префикс."
+      ],
+      "method": "static",
+      "next_check": "Живые stats/UI и close; затем current visibility records и актуальная проекция карты.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Окружение / карта, реальный level-up, UI units модификаторов и масштабирование 50 реальных сессий."
+    },
+    {
+      "addresses": [
+        "0x145734dd0",
+        "0x145d8b8d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Начальный stat array wrapper, callback/record/input, apply и existing-key model setter прошли 203 native-сценария на одной памяти, включая 207 записей и type 134. Main+1c8 call-site проверен статически.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-STAT-NOTIFY-11316.md",
+          "sha256": "fcc1eca9abf05066d2043737593952b6c9b9bd6f8b854fd98932542c1d766fe6"
+        }
+      ],
+      "id": "1453621f9a775ab1b8c05723d63fe8aa3a4337b95c496572cae4c9bea22f56f4",
+      "limits": [
+        "Array storage/reset, cleanup, memcpy, ownership wrapper и внешний identity service являются fixtures.",
+        "Полный PktCharacter reader и entity lookup не исполнены; map insertion/listeners и эффекты engine/UI не доказаны.",
+        "Для 207 записей выбраны восемь префиксов; меньшие случаи проверяют каждый префикс."
+      ],
+      "method": "bounded_native",
+      "next_check": "Живые stats/UI и close; затем current visibility records и актуальная проекция карты.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Окружение / карта, реальный level-up, UI units модификаторов и масштабирование 50 реальных сессий."
     }
   ],
   "schema": 1,

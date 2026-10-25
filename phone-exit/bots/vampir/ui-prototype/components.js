@@ -57,6 +57,10 @@
           view.elements[vital.id].dataset.liveValueKnown = String(vital.known);
         }
         view.update(values);
+        for (const vital of live.vitals) if (!vital.known) {
+          view.elements[vital.id].removeAttribute('aria-valuenow');
+          view.elements[vital.id].setAttribute('aria-valuetext', 'Данные недоступны');
+        }
       }
       update(state, character); return { node, update, updateLive, dispose() { portraitView.dispose(); view.dispose(); } };
     }

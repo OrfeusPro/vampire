@@ -2824,6 +2824,155 @@
           }
         ]
       }
+    },
+    {
+      "id": "live-character-stats-current",
+      "baseline_functions": [],
+      "tools": [
+        "inspect-release-ping-result.py",
+        "build-stat-names-11316.py",
+        "replay-stat-notify-11316.py",
+        "replay-stat-initial-11316.py"
+      ],
+      "rule": "Искать имена / tables, проверять constructor vptr stores, packet IDs и текущие readers/callbacks/application. Record name slot +28 и packet name slot +38 не смешивать. EStat descriptors, initial main+1c8 и UI fields перенести отдельно. Old SHA и fixtures не разрешают runtime будущей версии.",
+      "automation": {
+        "discovery": "named_getter_data_or_packet_vtable_then_explicit_callers_and_binary_diff_candidates",
+        "validation": "automatic_only_for_registered_source_and_pinned_contexts",
+        "next_release": "requires_current_candidate_review_descriptor_extraction_check_port_and_live_validation",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456c4740",
+                "scope": "Native ID 321 reader on shared current input/record/model fixtures.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x1456c5630",
+                "scope": "Native ID 322 reader on shared current input/record/model fixtures.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x1456c6690",
+                "scope": "Native delta callback; bounded allocation/reset and temporary cleanup fixtures.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x1457a8030",
+                "scope": "Native stat change record: int32 and two raw64 fields; second is applied.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x145734dd0",
+                "scope": "Native initial array wrapper; up to 207 records in replay.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x14573d240",
+                "scope": "Native initial callback / PktStat object copy.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x1457a7f70",
+                "scope": "Native initial PktStat record fields.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x145d8b830",
+                "scope": "Native delta application; type 134 signed division included.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x145d8b8d0",
+                "scope": "Native initial application; external identity service fixture.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x1455f0130",
+                "scope": "Native existing-key map setter with collisions; insertion/listeners not replayed.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x145787640",
+                "scope": "Static current main+1c8 call-site only; not whole character reader execution.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x1457a3310",
+                "scope": "Explicit 27-byte ctor leaf, no unwind; do not export as an unwind root.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              },
+              {
+                "address": "0x1457a32d0",
+                "scope": "Explicit 23-byte PktStat ctor leaf, checked from source and context.",
+                "required_checks": [
+                  "live-stat-values-11316",
+                  "live-stat-notify-11316",
+                  "live-stat-initial-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-stat-notify-11316.py",
+              "replay-stat-initial-11316.py"
+            ],
+            "evidence": [
+              "evidence/characters/HEADLESS-STAT-NOTIFY-11316.md",
+              "evidence/characters/HEADLESS-LIVE-STATS-CHECK-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' http://127.0.0.1:17947; object-src 'none'; base-uri 'self'">
+  <title>Vampir · живые данные</title>
+  <link rel="stylesheet" href="components.css">
+  <link rel="stylesheet" href="live-preview.css">
+</head>
+<body>
+  <main>
+    <header><div><p>Vampir · просмотр сессии</p><h1 id="identity">Подключение…</h1></div><button id="stop" disabled>Остановить сессию</button></header>
+    <p id="connection" role="status">Подготовка компонентов…</p>
+    <section aria-label="Характеристики персонажа">
+      <div id="player-status"></div>
+      <dl><div><dt>Уровень</dt><dd id="level">—</dd></div><div><dt>Мир</dt><dd id="world">—</dd></div><div><dt>Ответы Ping</dt><dd id="heartbeat">—</dd></div></dl>
+      <p class="note">Портрет пока статический. HP / MP используют общий компонент интерфейса и данные выбранной сессии.</p>
+    </section>
+    <section>
+      <h2>Полученные характеристики <span id="stat-count"></span></h2>
+      <p class="note">Названия из клиента; значения — исходные целые числа. Единицы модификаторов и оформление игрового окна ещё проверяются.</p>
+      <div class="table-scroll"><table><thead><tr><th scope="col">Код</th><th scope="col">Название в клиенте</th><th scope="col">Значение</th></tr></thead><tbody id="stats"></tbody></table></div>
+    </section>
+  </main>
+  <script src="geometry.js"></script><script src="layout-schema.js"></script>
+  <script src="widget-renderer.js"></script><script src="components.js"></script>
+  <script src="live-state.js"></script><script src="live-preview.js"></script>
+</body>
+</html>

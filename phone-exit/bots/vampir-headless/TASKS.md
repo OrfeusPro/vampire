@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Живые HP/MP и уровень подключены к общему компоненту: через Xiaomi / HK
+получены HP 2700/2700, MP 2000/2000, уровень 1 и 207 stats. На 315 секундах
+нет stat decode errors; 63 periodic Ping / 64 ответа. Stop и очистка UI проверены.
+Native: 1119 сценариев ID 321 / 322 и 203 начального массива / модели.
+Окружение / карта и реальные 50 аккаунтов остаются открытыми.
+[Данные, UI и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-STATS-CHECK-11316.md).
+
 Current stat record reader/apply прошли 130 native-сценариев: поля и порядок,
 короткий ввод, signed64 границы и повторные types. Полный ID322 и UI units ещё
 не проверены; HP/MP остаются неизвестными.
