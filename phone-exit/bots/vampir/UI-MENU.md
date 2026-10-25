@@ -25,7 +25,7 @@ Native callbacks не подключены. Нереализованные ра�
 - [x] UI-M-01. Проверить наличие 41 контрола и 41 однозначной исходной текстуры при сборке.
 - [x] UI-M-02. Применить исходную ширину / anchors через общий geometry pipeline.
 - [x] UI-M-03. Проверить 1280 × 720, 1920 × 1080, 3440 × 1440; иконки, переносы, нижнюю строку, навигацию и фокус.
-- [ ] UI-M-04. Восстановить grid slots / порядок, полный состав внешнего заголовка и его размещение.
+- [ ] ~ UI-M-04. Восстановить grid slots / порядок, полный состав внешнего заголовка и его размещение.
 - [ ] UI-M-05. Восстановить Brush / tint / alpha / шрифты / все состояния и active visibility.
 - [ ] UI-M-06. Подтвердить callbacks / данные / условия; подключение бота проверять отдельно по UI-17.
 
@@ -38,3 +38,41 @@ Native callbacks не подключены. Нереализованные ра�
 в F:/PhoneExit Resources/Vampir/ui-prototype-checks. Временный viewport сброшен.
 Это проверка демо; полнота игрового меню, точность шрифтов и 50 браузерных окон
 не подтверждены. Подписи длинных пунктов пока могут переноситься внутри слова.
+
+
+## Проверка полноты слотов перед восстановлением сетки
+
+Новый audit-ui-slot-coverage.py читает uasset / uexp через существующий
+inspect-ui.py, сверяет полные SHA с каталогом и классифицирует каждый export
+с суффиксом Slot как decoded / rejected / unaccounted. Повторная запись одного
+слота, неизвестный export или несовпадение SHA / offset / типа останавливают
+проверку. Исходные каталоги и опубликованный snapshot не изменяются.
+
+В пакете меню: 264 decoded, 43 rejected ButtonSlot, 39 unaccounted GridSlot.
+GridSlot отсутствовали даже в excluded_slots, поскольку decode-panel-slots.py
+не включает этот класс. ButtonSlot отклонены проверкой parent type: исходный
+родитель NkButton отличается от ожидаемого Button. Нельзя просто снять эту
+проверку: контракт наследования / схема свойств требуют отдельного подтверждения.
+
+Полный проход 2376 вариантов: 72153 decoded, 2783 rejected, 964 unaccounted
+кандидата. Среди последних: PanelSlot 432, GridSlot 472, ScrollBoxSlot 8,
+NamedSlot 44, UniformGridSlot 8. NamedSlot может быть самим виджетом, а не
+слотом размещения; это инвентаризация по суффиксу, не доказательство 964
+потерянных layout links. Разные roots одного пакета считаются по вариантам.
+
+Отчёт: F:/PhoneExit Resources/Vampir/ui-property-scans/cooked-slot-coverage-02.json.
+SHA256: 07b01118bcc7bbaf6768e82b62d82fb16ab428c97677df2fcb6fdfc91d9014c6.
+Каталог меню SHA256: 296cf37f3b28e07288f7391527fbf77b10e526b2ff277ada6ed1daef2ce308ac.
+uasset SHA256: b825f42ee7d16ea03c67ee5fa184e916ee430866c53388b9ec47df04d9410950.
+uexp SHA256: 6a526d9dba9c4e882278603c5657cf053b88a864f860f5a52192e5a51092550a.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/audit-ui-slot-coverage.py --output 'F:/PhoneExit Resources/Vampir/ui-property-scans/cooked-slot-coverage-next.json'
+python -X utf8 -m unittest discover -s phone-exit/bots -p test_vampir_ui_slot_coverage.py
+```
+
+Три проверки инструмента прошли: пропуск GridSlot не скрывается, stale SHA и
+двойной учёт отклоняются. Это не аудит native-схемы или текущей совместимости.
+Следующий шаг — подтвердить GridSlot row / column / spans / layer / padding
+и наследование по источникам, затем обновить декодер, граф и renderer. До этого
+порядок меню остаётся явно временным, UI-M-04 не закрыт.
