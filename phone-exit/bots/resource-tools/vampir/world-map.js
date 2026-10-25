@@ -241,7 +241,7 @@ function drawSpecialNavigation(){
   }
   ctx.restore();
 }
-function focusNavSpecial(p){
+function focusNavSpecial(p,{center=false}={}){
   if(!p)return;
   ++cardEpoch;selected=null;selectedLift=null;selectedNavSpecial=p;
   $('worlds').value='all';$('search').value='';update();$('navSpecialLayer').checked=true;$('navSpecialChoice').value=p.id;
@@ -294,8 +294,9 @@ function focusNavSpecial(p){
   const baked=el('details');baked.append(el('summary','Точки в сохранённом полигоне'),el('p','A: '+fmt(p.baked_start)),el('p','B: '+fmt(p.baked_end)),el('p','Уточнение концов на поверхности и условия перехода требуют проверки.','muted'));card.append(baked);
   if(navOverlay.special_source)card.append(link('Записи и источники специальных переходов',navOverlay.special_source.file));
   const bounds=model.extent([p.start,p.end].map(v=>({x:v[0],y:v[1]})),scene.projection.world_bounds),panel=$('selection').getBoundingClientRect().width,available=Math.max(300,dimensions.width-panel-40);
-  view.s=Math.min((available-60)/Math.max(bounds[2]-bounds[0],12000),(dimensions.height-65)/Math.max(bounds[3]-bounds[1],12000));
-  view.x=(bounds[0]+bounds[2])/2+(dimensions.width-available)/(2*view.s);view.y=(bounds[1]+bounds[3])/2;schedule();updateUrl();
+  if(center){view.s=Math.min((available-60)/Math.max(bounds[2]-bounds[0],12000),(dimensions.height-65)/Math.max(bounds[3]-bounds[1],12000));
+    view.x=(bounds[0]+bounds[2])/2+(dimensions.width-available)/(2*view.s);view.y=(bounds[1]+bounds[3])/2;}
+  schedule();updateUrl();
 }
 function drawRelation() {
   if (!$('relations').checked || !selected) return;
@@ -340,7 +341,7 @@ function nearestLift(x,y) {
   }
   return nearest;
 }
-function focusLift(lift) {
+function focusLift(lift,{center=false}={}) {
   if(!lift)return;
   selectedNavSpecial=null;
   ++cardEpoch;selected=null;$('worlds').value='all';update();
@@ -360,9 +361,9 @@ function focusLift(lift) {
   }
   card.append(el('p','Класс: '+lift.class_name,'muted'),link('Расчёты и источники','lift-preview.json'));
   const raw=el('details');raw.append(el('summary','Исходные записи'),el('pre',JSON.stringify(lift,null,2)));card.append(raw);
-  const points=liftPoints(lift);fitPoints(points);
+  const points=liftPoints(lift);if(center)fitPoints(points);
   const panelWidth=$('selection').getBoundingClientRect().width,available=dimensions.width-panelWidth-40;
-  if(available>300){
+  if(center&&available>300){
     const bounds=model.extent(points,scene.projection.world_bounds);
     view.s=Math.min((available-60)/Math.max(bounds[2]-bounds[0],4000),(dimensions.height-65)/Math.max(bounds[3]-bounds[1],4000));
     view.x=(bounds[0]+bounds[2])/2+(dimensions.width-available)/(2*view.s);
@@ -421,7 +422,7 @@ function draw() {
   drawRelation(); drawLiftPreview(); drawSpecialNavigation(); drawSession();
   $('viewScale').textContent = 'Масштаб ' + Math.round(view.s / (dimensions.height / 615000) * 100) + '% · ' + groups.length + ' отметок в окне'+($('labels').checked?' · названий '+placed.length+' из '+candidates.length:'');
 }
-function focus(p) {
+function focus(p,{center=false}={}) {
   selectedNavSpecial=null;
   selectedLift = null;
   if (!p) return;
@@ -429,8 +430,9 @@ function focus(p) {
   if ($('worlds').value !== 'all' && $('worlds').value !== p.world_id) $('worlds').value = p.world_id;
   if (!visible.includes(p)) { $('search').value = ''; if ((npcFilter && (p.type !== 'NpcSpawn' || !npcFilter.has(p.npc_id))) || (areaFilter && (p.type !== 'Area' || !areaFilter.has(p.id)))) { itemId = ''; npcFilter = null; areaFilter = null; $('lootItem').value = ''; $('lootStatus').textContent = 'Фильтр снят для просмотра связанной точки.'; } update(); }
   if (!types.has(p.type)) { types.add(p.type); document.querySelector('[data-layer="' + p.type + '"]').checked = true; update(); }
-  selected = p; view.x = p.x; view.y = p.y;
-  view.s = Math.max(view.s, Math.min(dimensions.width, dimensions.height) / 65000);
+  selected = p;
+  if(center){view.x = p.x; view.y = p.y;
+    view.s = Math.max(view.s, Math.min(dimensions.width, dimensions.height) / 65000);}
   showPoint(p).catch(fail); schedule(); updateUrl();
 }
 function rawWorld(id) {
@@ -836,7 +838,7 @@ window.addEventListener('resize', schedule);
   if(requested.has('skill'))await applySkill(requested.get('skill'),false,requested.get('skillNpc')==='1');
   const point = pointByKey.get(requested.get('point')) || pointByKey.get('NpcSpawn:' + requested.get('spawn'))
     || scene.points.find(p => p.type === 'NpcSpawn' && p.npc_id === requested.get('npc') && ($('worlds').value === 'all' || p.world_id === $('worlds').value));
-  if (point && (!skillFilter || visible.includes(point))) focus(point);
-  if(requested.has('lift'))focusLift(liftPreview?.lifts.find(lift=>lift.id===requested.get('lift')));
-  if(requested.has('navLink')&&scene.navigation_overlay){await loadNavOverlay();focusNavSpecial(navOverlay.special_links?.find(p=>p.id===requested.get('navLink')));}
+  if (point && (!skillFilter || visible.includes(point))) focus(point,{center:true});
+  if(requested.has('lift'))focusLift(liftPreview?.lifts.find(lift=>lift.id===requested.get('lift')),{center:true});
+  if(requested.has('navLink')&&scene.navigation_overlay){await loadNavOverlay();focusNavSpecial(navOverlay.special_links?.find(p=>p.id===requested.get('navLink')),{center:true});}
 })().catch(fail);
