@@ -7989,6 +7989,107 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Начальный SightEnter, другие игроки, имена NPC, текущие NPC stats/движение, актуальная проекция карты и реальный поток окружения."
+    },
+    {
+      "addresses": [
+        "0x1456c5390",
+        "0x1456c5e60",
+        "0x1456c6270",
+        "0x1456c62f0",
+        "0x1456c6400",
+        "0x1456c67a0",
+        "0x1456d1d30",
+        "0x1456d1eb0",
+        "0x1456d1ef0",
+        "0x1456d1f30",
+        "0x1456d1ff0",
+        "0x145783670",
+        "0x145788180",
+        "0x14578fe30",
+        "0x14578fef0",
+        "0x1457938b0",
+        "0x145793a90",
+        "0x14579a5a0",
+        "0x14579e590",
+        "0x1457a3480",
+        "0x1457a83c0"
+      ],
+      "checks": [
+        {
+          "cache_key": "a71f64f548a986d3b86ae4ea8b2fc7eefff724ae544eeec9c44910031cccd8dd",
+          "id": "live-sight-leave-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885\\manifest.json",
+          "sha256": "eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1372b8092555b652cea2ce6c354010d8038976c3d860bb1f13d45077dce7a6bb",
+          "id": "live-environment-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8a4e42c6327fa4b00925c7e30aa2f458f88c4965050ba07c136d2a1480d36aa9\\manifest.json",
+          "sha256": "8a4e42c6327fa4b00925c7e30aa2f458f88c4965050ba07c136d2a1480d36aa9",
+          "state": "passed"
+        },
+        {
+          "cache_key": "88f90b0d5ece2c8a81b434e7acb5eb85c3f51ce02f453b502d982788fd501c67",
+          "id": "live-npc-create-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\44d1beb14e78480e996541045abfdfa28a30ab9a80e7272562bf04ccde4fa3b7\\manifest.json",
+          "sha256": "44d1beb14e78480e996541045abfdfa28a30ab9a80e7272562bf04ccde4fa3b7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a191607ff175c4de6fc80514862e17084b29132bca51184fb0537e70661f8e1f",
+          "id": "live-npc-effect-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac\\manifest.json",
+          "sha256": "88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a41fe3a8d9f56db6053baf8b559ddc3f5d4e7bb6520ee0f0c072f27513055b7",
+          "id": "live-npc-move-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4\\manifest.json",
+          "sha256": "98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Точная current SightEnter descriptor/callback/constructor/vtable/name-getter цепочка задаёт пять разных массивов: CharacterOther, NpcCreateData, GroundEffectData, Gadget, TetherEffectData; native strides 230/240/78/d0/90 hex. Между четвёртым и пятым массивами читается virtual packet+50, tail byte clamp32. Это не единый список NPC; runtime partial coverage сохраняется.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-SIGHT-ENTER-CONTRACT-11316.md",
+          "sha256": "af17d6675762b8f35250cecacb05c02e2ec80cd09d40d4cc4bdcbcd42414c3b1"
+        }
+      ],
+      "id": "234e521c453c671b413fae7a2da36ba777b82143b7f815c3fe2c01c9e2a14e64",
+      "limits": [
+        "Проверены полный SHA, 16 explicit unwind roots, source instructions и table pointers; whole SightEnter native replay ещё не выполнялся.",
+        "Native stride не является размером wire записи. CharacterOther и Gadget nested types, packet+50 и handler/actor остаются отдельными задачами.",
+        "Нет нового игрового входа или доказательства live visibility; runtime не изменён."
+      ],
+      "method": "static",
+      "next_check": "Установить packet+50 и nested CharacterOther/Gadget, затем whole mixed-array native replay с portable сравнением и handler проверкой перед runtime.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Полный wire формат SightEnter и вложенных типов, actor/world semantics и живой поток initial entities."
     }
   ],
   "schema": 1,

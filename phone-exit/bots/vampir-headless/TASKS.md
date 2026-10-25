@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+SightEnter: подтверждены пять отдельных массивов — CharacterOther, NPC create,
+ground effects, gadget и tether effects. Получены их callbacks / nested readers;
+полный wire разбор и live подключение ещё впереди.
+[Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
+
 Частичный NPC subset подключён к owner / API / UI: source-bound ID 324 / 302,
 начальные HP / XYZ, world/close cleanup, лимит 512. 3726 native leave сценариев,
 50 synthetic sessions и браузерная карточка проверены; живой поток пока не проверен.

@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+SightEnter: подтверждены пять отдельных массивов — CharacterOther, NPC create,
+ground effects, gadget и tether effects. Получены их callbacks / nested readers;
+полный wire разбор и live подключение ещё впереди.
+[Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
+
 Частичное окружение подключено к сессиям и основному UI: NPC create / sight leave,
 начальные HP / MaxHP и XYZ, очистка по миру / close и отдельная кнопка просмотра.
 Проверены 50 изолированных synthetic owners и браузер через loopback API;
