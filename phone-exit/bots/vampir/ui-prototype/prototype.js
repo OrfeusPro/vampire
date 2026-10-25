@@ -749,14 +749,20 @@
     } catch (error) { info('Ошибка общих элементов', error.message); }
   }
   function openInspector(initial = '') {
-    let query = '', kind = 'Все';
+    let query = '', kind = 'Все', scope = 'all';
     const dialog = modal('Каталог проверки', body => {
       append(body, el('p', manifest.registry_count + ' записей каталога: ' + manifest.named_resource_count + ' ресурсных путей и ' + manifest.unresolved_root_count + ' классов без установленного пути; ' + manifest.variant_count + ' вариантов. Структура не подтверждает игровую логику.'), button('Версии и обновления', openVersions), button('Общие элементы', openSharedElements));
       const search = input('search', 'Имя окна или путь'); search.value = query; search.setAttribute('aria-label', 'Поиск ресурса');
       const list = el('div', undefined, 'registry-list'), count = el('p');
       const filter = select(['Все', 'Попапы', 'Компоненты и окна'], kind, v => { kind = v; fill(); });
+      filter.setAttribute('aria-label', 'Тип ресурса');
+      const scopeSelect = select([['all', 'Имя и путь'], ['name', 'Только имя'], ['ui-name', 'Заглавные UI в имени']], scope, v => { scope = v; fill(); });
+      scopeSelect.setAttribute('aria-label', 'Область поиска');
+      const scopeNote = el('p');
+      const uiOnly = button('Пройти имена с UI', () => { scope = 'ui-name'; scopeSelect.value = scope; query = ''; search.value = ''; kind = 'Все'; filter.value = kind; fill(); });
       const fill = () => {
-        list.replaceChildren(); const matches = registry.filter(x => (kind === 'Все' || x.popup === (kind === 'Попапы')) && (x.name + x.path).toLowerCase().includes(query.toLowerCase()));
+        list.replaceChildren(); const matches = VampirCatalogQuery.filter(registry, { query, scope, kind: kind === 'Все' ? 'all' : kind === 'Попапы' ? 'popup' : 'other' });
+        scopeNote.textContent = scope === 'ui-name' ? 'Отбор: точные заглавные UI в имени ресурса или класса. Тип окна, активный вариант и связи требуют проверки.' : scope === 'name' ? 'Поиск по имени ресурса или класса.' : 'Поиск по имени и полному пути, включая названия каталогов.';
         count.textContent = 'Найдено: ' + matches.length;
         let limit = 60;
         const more = () => {
@@ -767,7 +773,7 @@
           if (matches.length > limit) list.append(button('Ещё 60', () => { limit += 60; more(); }, 'load-more'));
         }; more();
       };
-      search.oninput = () => { query = search.value; fill(); }; append(body, search, filter, count, list); fill();
+      search.oninput = () => { query = search.value; fill(); }; append(body, search, scopeSelect, filter, uiOnly, scopeNote, count, list); fill();
       if (initial) body.prepend(el('p', 'Раздел: ' + initial + '. Точное соответствие ищите по имени и пути ресурса.'));
     }, 'catalog-window'); return dialog;
   }

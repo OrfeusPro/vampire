@@ -352,6 +352,9 @@ class PrototypeTests(unittest.TestCase):
             index_path.write_text(json.dumps(index), 'utf-8')
             self.assertEqual(task_sync.sync(index_path, tasks), 1)
             original = tasks.read_text('utf-8').replace('- [ ] UI-W-', '- [x] UI-W-')
+            task_id = next(line.split()[2].rstrip('.') for line in original.splitlines() if line.startswith('- [x] UI-W-'))
+            original = original.replace('- [x] ' + task_id + '.', '<a id="' + task_id.lower() + '"></a>\n- [x] ' + task_id + '.')
+            original += '  - [x] ' + task_id + '.01. Источники проверены.\n'
             tasks.write_text(original, 'utf-8')
             index['resource_variants']['/UI/B'] = [dict(file='b')]
             index_path.write_text(json.dumps(index), 'utf-8')
