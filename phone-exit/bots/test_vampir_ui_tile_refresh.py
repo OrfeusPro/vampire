@@ -39,7 +39,37 @@ spec = importlib.util.spec_from_file_location('ui_config_path_provider_replay', 
 config_path = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_path)
 
 
+spec = importlib.util.spec_from_file_location('ui_config_path_join_replay', HERE / 'replay-ui-config-path-join.py')
+config_join = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_join)
+
+
 class TileRefreshTests(unittest.TestCase):
+    def test_native_counted_path_join_and_static_saved_source(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_join.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in (config_join.ROOT,0x141585780)]))
+        self.assertEqual(len(result['cases']), 378)
+        self.assertEqual(result['base_path_static']['method'], 'static_instructions_only_not_executed')
+        self.assertIn('-saveddirsuffix=', result['base_path_static']['literals'])
+        variants={(c['prefix'],c['suffix']):c['result'] for c in result['cases']}
+        self.assertEqual(variants[('A','Config/')], 'A/Config/')
+        self.assertEqual(variants[('A/','/Config/')], 'A//Config/')
+        self.assertEqual(variants[('A','')], 'A/')
+        self.assertEqual(variants[('A\0B','Config/')], 'A\0B/Config/')
+
+    def test_native_path_provider_calls_native_join_on_same_memory(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
+        result = config_path.run(dict(base, functions=[dict(address=hex(config_path.ROOT))]),
+            dict(base, functions=[dict(address=hex(config_join.ROOT))]))
+        self.assertTrue(result['native_join'])
+        self.assertEqual(len(result['initial_cases']), 28)
+        self.assertEqual(len(result['cached_cases']), 18)
+        for case in result['initial_cases']:
+            self.assertIn('append_native', case['services'])
+            self.assertNotIn('append', case['services'])
+            self.assertTrue(case['complete_return'])
+
     def test_native_config_path_provider_cached_and_initial_branches(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_path.run(dict(source=source, source_sha256=replay.getter.SHA,
