@@ -179,3 +179,25 @@ WidgetTree stage заняла 0,004 с вместо 28,894 с. Независи�
 coverage выполнено отдельной классификацией: 44 контейнера учтены, 920 других
 кандидатов остаются открытыми. Восстановление inherited properties не завершено;
 результаты полного и частичного source audit различаются явно.
+
+### Кандидатный слой наследования NamedSlot
+
+Пятая стадия `named-slot-inheritance-candidates` запускает ограниченный provider
+`decode-named-slot-candidates.py`. Результат находится в `candidate_evidence`
+readiness, отдельно от rules / confirmed_checks: `candidate_only=true`,
+`renderer_allowed=false`. Его присутствие не разрешает применение значений.
+Request по умолчанию закреплён на полном SHA текущего EXE; для нового источника
+есть `--named-slot-request`. Исходные пакеты / request / native SHA / инструменты
+входят в ключ кеша. Родительские metadata / arrays перепроверяются provider.
+
+Получены 44 полных кандидатных чтения, 54 explicit значения и 48 local links;
+43 совпали с ранее decoded relations, пять требуют child slot schema.
+76 тестов прошли. Подробности и следующий барьер:
+[NamedSlot inheritance](../resource-tools/vampir/knowledge/evidence/interface/UI-NAMED-SLOT-INHERITANCE-11316.md).
+Native serializer / defaults / совместимость и оформление остаются неизвестными.
+
+Audit-only `run-1792952123035071300.json` занял 235,951 с;
+повтор `run-1792953069399368500.json` — 29,872 с, все пять стадий reused=true,
+новая стадия — 0,002 с. Readiness совпал. Данные общие для 50 окон;
+native анализ и сканирование в браузер не перенесены. В этом проходе внешний
+вид не менялся и новая генерация не заявляется.

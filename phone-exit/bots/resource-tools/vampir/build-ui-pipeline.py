@@ -32,7 +32,8 @@ def checked_readiness(path, expected_sha):
     return ready, json.loads((layer / 'composition-graph.json').read_bytes())
 
 
-def run(root, snapshot, output, build_ready=False, baseline_readiness=None, baseline_sha256=None, widget_root_request=None):
+def run(root, snapshot, output, build_ready=False, baseline_readiness=None, baseline_sha256=None,
+        widget_root_request=None, named_slot_request=None):
     root, snapshot, output = (Path(p).resolve() for p in (root, snapshot, output))
     if any(output.is_relative_to(p) or p.is_relative_to(output) for p in
            [HERE.parents[3], snapshot, root / 'ui-catalog', root / 'ui-layout-study']):
@@ -81,6 +82,15 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
             'scan-ui-outer-scopes.py', 'ui_outer_scope.py', 'ui_layout_schema.py')),
         lambda folder: load('scan-ui-widget-roots').build(root, Path(scopes['result']['output']), request_path, folder / 'layers'))
     root_index = Path(roots['result']['output']) / 'index.json'
+    named_request = Path(named_slot_request or root / 'knowledge/requests/b35f2ba11fc0482aecdccb64b590627763b7b72728c3589b05cb9dbd3785cd77/manifest.json').resolve()
+    named_manifest = json.loads(named_request.read_bytes())
+    if cache.sha(named_manifest['source']) != named_manifest['source_sha256']:
+        raise ValueError('NamedSlot native source SHA differs')
+    named = execute('named-slot-inheritance-candidates', dict(roots=roots['id'], roots_sha256=cache.sha(root_index),
+        request=str(named_request), request_sha256=cache.sha(named_request), native_sha256=named_manifest['source_sha256'],
+        tools=tools('decode-named-slot-candidates.py', 'ui_named_slot.py', 'decode-basic-slot-candidates.py',
+            'decode-canvas-slots.py', 'extract-ui-properties.py', 'extract-native-enums.py', 'build-native-entry-code.py', 'inspect-ui.py')),
+        lambda folder: load('decode-named-slot-candidates').build(root, root_index, cache.sha(root_index), named_request, folder / 'layers'))
     consumers = execute('component-consumers', dict(scopes=scopes['id'],
         tools=tools('scan-ui-component-consumers.py', 'ui_component_consumers.py', 'ui_composition_graph.py')),
         lambda folder: load('scan-ui-component-consumers').build(root, Path(scopes['result']['output']), folder / 'layers'))
@@ -92,6 +102,8 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
         source_widget_roots=str(root_index), source_widget_roots_sha256=cache.sha(root_index),
         widget_root_request=str(request_path), widget_root_request_sha256=cache.sha(request_path),
         source_widget_root_statistics=roots['result'],
+        candidate_evidence={'named_slot_inheritance': dict(**named['result'], renderer_allowed=False,
+            candidate_only=True)},
         component_index_sha256=cache.sha(Path(consumers['result']['output']) / 'index.json'),
         component_graph_sha256=cache.sha(Path(consumers['result']['output']) / 'composition-graph.json'),
         components={name: index['classes'].get(name) for name in priorities},
@@ -101,7 +113,8 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
                           'serialized_widget_roots', 'named_slot_import_classification'],
         renderer_rules=[],
         unknowns=['Active resource variants and runtime roots', 'Inherited defaults and dynamic bindings',
-                  'Brush/style/state contracts and event handlers', 'Per-consumer runtime layout and DPI'],
+                  'Brush/style/state contracts and event handlers', 'Per-consumer runtime layout and DPI',
+                  'NamedSlot candidate inherited ordinal order, defaults and runtime binding'],
         implementation_verified=False, visual_verified=False)
     registry = HERE.parents[1] / 'vampir' / 'UI-RULES.json'
     rules = json.loads(registry.read_bytes())
@@ -165,8 +178,9 @@ if __name__ == '__main__':
     p.add_argument('--baseline-readiness', type=Path)
     p.add_argument('--baseline-sha256')
     p.add_argument('--widget-root-request', type=Path)
+    p.add_argument('--named-slot-request', type=Path)
     args = p.parse_args()
     if bool(args.baseline_readiness) != bool(args.baseline_sha256):
         p.error('Use --baseline-readiness and --baseline-sha256 together')
     run(args.root, args.snapshot, args.output or args.root / 'ui-property-scans/pipeline', args.build_ready,
-        args.baseline_readiness, args.baseline_sha256, args.widget_root_request)
+        args.baseline_readiness, args.baseline_sha256, args.widget_root_request, args.named_slot_request)

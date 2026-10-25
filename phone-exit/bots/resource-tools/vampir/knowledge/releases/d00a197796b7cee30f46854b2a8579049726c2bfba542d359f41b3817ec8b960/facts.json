@@ -7051,6 +7051,33 @@
       "question": "login-invalid-state",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Individual geo-field causality, server internal InvalidState reason and current world/selection compatibility."
+    },
+    {
+      "addresses": [
+        "0x143579140",
+        "0x14357d570",
+        "0x1435b5080",
+        "0x1435b5290",
+        "0x1435b5340"
+      ],
+      "checks": [],
+      "conclusion": "Проверены static class/package literals, metadata и parent callback цепочка NamedSlot/ContentWidget/PanelWidget/Widget/Visual. NamedSlot/ContentWidget/Visual не имеют own arrays; PanelWidget Slots rows и Widget descriptors дают явную кандидатную ordinal table. 44 payload прочитаны полностью: 54 explicit значения, 48 local links; 43 согласованы с decoded slot relations, 5 только slot-type candidates.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-NAMED-SLOT-INHERITANCE-11316.md",
+          "sha256": "d082337a15f16cd4e9d4012062a932b7133eeec2ff9be7a4c275ef0853ca58e5"
+        }
+      ],
+      "id": "ec3538df1699d2f05e6df7ca0dae283cf73925a4f7b3fd071ac4f08e3959d9ba",
+      "limits": [
+        "Native registration / property construction / serializer не исполнялись; ordinal table остаётся candidate.",
+        "Defaults, cooked/current compatibility, desired size и runtime geometry не установлены; renderer_allowed=false."
+      ],
+      "method": "static",
+      "next_check": "Проверить inherited property construction и порядок serializer; затем отдельные child relations / defaults до допуска renderer.",
+      "question": "ui-named-slot-inheritance-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Inherited serializer order / CDO archetype defaults, пять child slot relations, active variant / runtime geometry."
     }
   ],
   "schema": 1,
