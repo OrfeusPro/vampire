@@ -145,6 +145,11 @@ def verify(snapshot):
         assert graph == ui_composition_graph.from_snapshot(snapshot), 'Composition graph differs from source records'
         assert manifest['tools']['ui_composition_graph.py'] == sha(Path(__file__).with_name('ui_composition_graph.py'))
     if (snapshot / 'layout-schema-index.json').exists():
+        import ui_source_roots
+        root_report = None
+        if (snapshot / 'source-widget-roots.json').exists():
+            root_report = ui_source_roots.read(snapshot / 'source-widget-roots.json', manifest['generated_files']['source-widget-roots.json'])
+            assert manifest['tools']['ui_source_roots.py'] == sha(Path(__file__).with_name('ui_source_roots.py'))
         schemas = json.loads((snapshot / 'layout-schema-index.json').read_text('utf-8'))
         assert manifest['tools']['ui_layout_schema.py'] == sha(Path(__file__).with_name('ui_layout_schema.py'))
         expected_keys = set()
@@ -158,7 +163,10 @@ def verify(snapshot):
                 assert spec['source_sha256'] == variant['sha256']
                 assert sha(snapshot / spec['file']) == spec['sha256']
                 compiled = json.loads((snapshot / spec['file']).read_text('utf-8'))
-                assert compiled == ui_layout_schema.compile_schema(record, variant), 'Widget schema differs from source slots'
+                expected = ui_layout_schema.compile_schema(record, variant)
+                if root_report is not None:
+                    ui_source_roots.annotate(expected, root_report)
+                assert compiled == expected, 'Widget schema differs from source slots / root annotations'
                 totals['variants'] += 1
                 for field in ('nodes', 'slots', 'issues', 'excluded_slots'):
                     assert spec[field] == len(compiled[field])

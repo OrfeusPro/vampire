@@ -32,7 +32,7 @@ def checked_readiness(path, expected_sha):
     return ready, json.loads((layer / 'composition-graph.json').read_bytes())
 
 
-def run(root, snapshot, output, build_ready=False, baseline_readiness=None, baseline_sha256=None):
+def run(root, snapshot, output, build_ready=False, baseline_readiness=None, baseline_sha256=None, widget_root_request=None):
     root, snapshot, output = (Path(p).resolve() for p in (root, snapshot, output))
     if any(output.is_relative_to(p) or p.is_relative_to(output) for p in
            [HERE.parents[3], snapshot, root / 'ui-catalog', root / 'ui-layout-study']):
@@ -68,6 +68,19 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
     scopes = execute('outer-scopes', dict(audit=audit['id'], audit_sha256=cache.sha(audit_path),
         tools=tools('scan-ui-outer-scopes.py', 'ui_outer_scope.py', 'ui_layout_schema.py')),
         lambda folder: load('scan-ui-outer-scopes').build(root, audit_path, cache.sha(audit_path), folder / 'layers'))
+    request_path = Path(widget_root_request or root / 'knowledge/requests/7dc3d7b0a03afafed6f82c362776d8ecda440e1eeaf3e564a8303bd49299ba47/manifest.json').resolve()
+    request = json.loads(request_path.read_bytes())
+    native_sha = cache.sha(request['source'])
+    if native_sha != request['source_sha256']:
+        raise ValueError('Widget root native source SHA differs')
+    roots = execute('widget-roots', dict(scopes=scopes['id'], request=str(request_path),
+        request_sha256=cache.sha(request_path), native_sha256=native_sha,
+        tools=tools('scan-ui-widget-roots.py', 'ui_widget_tree.py', 'ui_source_roots.py',
+            'decode-basic-slot-candidates.py', 'decode-canvas-slots.py', 'decode-package-references.py',
+            'extract-ui-properties.py', 'extract-native-enums.py', 'inspect-ui.py', 'audit-ui-sources.py', 'build-native-entry-code.py',
+            'scan-ui-outer-scopes.py', 'ui_outer_scope.py', 'ui_layout_schema.py')),
+        lambda folder: load('scan-ui-widget-roots').build(root, Path(scopes['result']['output']), request_path, folder / 'layers'))
+    root_index = Path(roots['result']['output']) / 'index.json'
     consumers = execute('component-consumers', dict(scopes=scopes['id'],
         tools=tools('scan-ui-component-consumers.py', 'ui_component_consumers.py', 'ui_composition_graph.py')),
         lambda folder: load('scan-ui-component-consumers').build(root, Path(scopes['result']['output']), folder / 'layers'))
@@ -76,12 +89,15 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
     priorities = ['WBP_PopupBgTitle_C', 'WBP_ShortcutkeyHudT_C', 'WBP_ItemIconT_C', 'WBP_Badge_C']
     readiness = dict(schema=1, source_snapshot=str(snapshot), component_dataset=index['dataset_id'],
         source_scopes=scopes['result']['output'], component_layer=consumers['result']['output'],
+        source_widget_roots=str(root_index), source_widget_roots_sha256=cache.sha(root_index),
+        widget_root_request=str(request_path), widget_root_request_sha256=cache.sha(request_path),
+        source_widget_root_statistics=roots['result'],
         component_index_sha256=cache.sha(Path(consumers['result']['output']) / 'index.json'),
         component_graph_sha256=cache.sha(Path(consumers['result']['output']) / 'composition-graph.json'),
         components={name: index['classes'].get(name) for name in priorities},
         priority_coverage=ui_rule_impact.priority_coverage(graph, priorities),
         impact_analysis_tools=tools('ui_rule_impact.py', 'ui_composition_graph.py'),
-        confirmed_checks=['source_hashes_and_exports', 'source_outer_ownership', 'static_consumer_indices'],
+        confirmed_checks=['source_hashes_and_exports', 'source_outer_ownership', 'static_consumer_indices', 'serialized_widget_roots'],
         renderer_rules=[],
         unknowns=['Active resource variants and runtime roots', 'Inherited defaults and dynamic bindings',
                   'Brush/style/state contracts and event handlers', 'Per-consumer runtime layout and DPI'],
@@ -147,8 +163,9 @@ if __name__ == '__main__':
     p.add_argument('--output', type=Path)
     p.add_argument('--baseline-readiness', type=Path)
     p.add_argument('--baseline-sha256')
+    p.add_argument('--widget-root-request', type=Path)
     args = p.parse_args()
     if bool(args.baseline_readiness) != bool(args.baseline_sha256):
         p.error('Use --baseline-readiness and --baseline-sha256 together')
     run(args.root, args.snapshot, args.output or args.root / 'ui-property-scans/pipeline', args.build_ready,
-        args.baseline_readiness, args.baseline_sha256)
+        args.baseline_readiness, args.baseline_sha256, args.widget_root_request)

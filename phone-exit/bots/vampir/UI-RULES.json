@@ -14,6 +14,18 @@
       "renderer_allowed": false
     },
     {
+      "id": "serialized-widget-roots",
+      "version": 1,
+      "provider": "ui_source_roots.py",
+      "scope": "analysis",
+      "widget_types": ["*"],
+      "criteria": ["01"],
+      "properties": ["source_widget_trees", "source_widget_tree_status"],
+      "dependencies": ["source-outer-ownership"],
+      "checks": ["source_hashes_and_exports", "source_outer_ownership", "serialized_widget_roots"],
+      "renderer_allowed": false
+    },
+    {
       "id": "static-component-consumers",
       "version": 1,
       "provider": "ui_component_consumers.py",

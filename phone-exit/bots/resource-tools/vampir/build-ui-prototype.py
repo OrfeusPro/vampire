@@ -18,6 +18,7 @@ import ui_composition_graph
 import ui_layout_schema
 import ui_display_settings
 import ui_status_skin
+import ui_source_roots
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -190,6 +191,17 @@ def generation_policy(gate, preview_during_audit=False, ready_report=None, root=
         result = verifier.build(root, Path(ready['source_scopes']), layer.parent)
         if result['dataset_id'] != ready['component_dataset'] or Path(result['output']).resolve() != layer.resolve():
             raise ValueError('Изменился проверенный набор компонентов')
+        roots_path = Path(ready['source_widget_roots'])
+        ui_source_roots.read(roots_path, ready['source_widget_roots_sha256'])
+        request = Path(ready['widget_root_request'])
+        if sha(request) != ready['widget_root_request_sha256']:
+            raise ValueError('Изменился request исходных корней')
+        root_spec = importlib.util.spec_from_file_location('ready_root_verification', HERE / 'scan-ui-widget-roots.py')
+        root_verifier = importlib.util.module_from_spec(root_spec)
+        root_spec.loader.exec_module(root_verifier)
+        root_result = root_verifier.build(root, Path(ready['source_scopes']), request, roots_path.parent.parent)
+        if Path(root_result['output']).resolve() != roots_path.parent.resolve():
+            raise ValueError('Изменился проверенный набор исходных корней')
         return dict(mode='incremental_verified_rules', phase=gate['phase'],
                     gate_generation_allowed=False, readiness_sha256=sha(ready_report),
                     confirmed_analysis_rules=[r['id'] for r in registry['rules']],
@@ -204,6 +216,10 @@ def generation_policy(gate, preview_during_audit=False, ready_report=None, root=
 
 def build(root, baseline=None, *, preview_during_audit=False, ready_report=None):
     policy = generation_policy(read(SOURCE.parent / 'UI-GENERATION-GATE.json'), preview_during_audit, ready_report, root)
+    roots_report = None
+    if ready_report is not None:
+        readiness = read(ready_report)
+        roots_report = ui_source_roots.read(readiness['source_widget_roots'], readiness['source_widget_roots_sha256'])
     index_path = root / 'ui-catalog/index.json'
     index = read(index_path)
     image_path = root / 'archive-image-latest.json'
@@ -331,7 +347,8 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
                               'ui_composition_graph.py': sha(HERE / 'ui_composition_graph.py'),
                               'ui_layout_schema.py': sha(HERE / 'ui_layout_schema.py'),
                               'ui_display_settings.py': sha(HERE / 'ui_display_settings.py'),
-                              'ui_status_skin.py': sha(HERE / 'ui_status_skin.py')})
+                              'ui_status_skin.py': sha(HERE / 'ui_status_skin.py'),
+                              'ui_source_roots.py': sha(HERE / 'ui_source_roots.py')})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -432,7 +449,9 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
         write(temporary / 'component-evidence.json', component_sources(root, read(SOURCE / 'components.json'), records, button_layouts))
         write(temporary / 'status-skin.json', dict(schema=1, texture=status_texture['asset_path'],
             brushes=status_skin['brushes'], portrait_brushes=status_skin['portrait_brushes'], limits=status_skin['limits']))
-        schemas = ui_layout_schema.publish(records, temporary)
+        if roots_report is not None:
+            write(temporary / 'source-widget-roots.json', roots_report)
+        schemas = ui_layout_schema.publish(records, temporary, source_roots=roots_report)
         write(temporary / 'layout-schema-index.json', schemas)
         component_layouts = {}
         definitions = read(SOURCE / 'components.json')

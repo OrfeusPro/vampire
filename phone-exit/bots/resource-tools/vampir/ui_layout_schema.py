@@ -63,13 +63,16 @@ def compile_schema(record, variant):
         source_limits=copy.deepcopy(variant.get('limitations', [])))
 
 
-def publish(records, folder):
+def publish(records, folder, source_roots=None):
     directory = folder / 'layout-schemas'
     directory.mkdir(exist_ok=True)
     entries, totals = {}, Counter()
     for record in records:
         for variant in record['variants']:
             schema = compile_schema(record, variant)
+            if source_roots is not None:
+                import ui_source_roots
+                ui_source_roots.annotate(schema, source_roots)
             data = json.dumps(schema, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
             digest = hashlib.sha256(data).hexdigest()
             file = 'layout-schemas/' + digest + '.json'
