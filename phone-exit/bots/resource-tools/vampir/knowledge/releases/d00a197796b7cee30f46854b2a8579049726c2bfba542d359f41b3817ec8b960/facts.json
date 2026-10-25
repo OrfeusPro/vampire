@@ -6020,6 +6020,87 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Общий registration → read/write, callers/условия consumers, allocator lifetime, persistence, precedence и active resource/Brush."
+    },
+    {
+      "addresses": [
+        "0x141421b80",
+        "0x141425d60",
+        "0x1414277b0",
+        "0x1445c1f50",
+        "0x1445c29f0",
+        "0x1445c2c30",
+        "0x1445c4f60",
+        "0x1445c67a0",
+        "0x1445c78d0",
+        "0x1445cbd00",
+        "0x1445d6ec0",
+        "0x1445d8430"
+      ],
+      "checks": [
+        {
+          "cache_key": "40263e7a45abac03f5e269fefc038113924650e1965941fec4ca824b0ad530ab",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b9cd36958afa27e1771e1fc026797ca481be0e10fc6c5285b05fad497c425b43\\manifest.json",
+          "sha256": "b9cd36958afa27e1771e1fc026797ca481be0e10fc6c5285b05fad497c425b43",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Общая native registration/replacement/reuse → read/write/read цепочка прошла 384 последовательности на одной памяти: 2304 reader и 4608 consumer полных возвратов. Bindings созданы кодом reader, без host-подстановки entries/invokes/captures перед consumer вызовами; 2304 read invokes и 1152 native write/assignment invokes используют последние destination, прежние адреса и другие bindings сохранены. Проверены container/free entries/buckets snapshots, key buffers, guards и read-after.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-REGISTRATION-DISPATCH-11316.md",
+          "sha256": "8caef847c8b96f595e53cd494941d94a703c0aff4061ef4282f10435fceeb943"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-40f646b1556a\\details.json",
+          "sha256": "7e531a5bd23c58ae8711644f28467b7ff0701183f1b3718da4b8703760cfc869"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b25bb2ea1a0f\\details.json",
+          "sha256": "336bf3091a16da247a3f7162f5ae6f1bb3d7a02bddf3d9a40a9e620d8ec2e047"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-218ed676dfab\\details.json",
+          "sha256": "b2d468647ed1c90a3eb8ce6967ec78eed53f99fa0b4156dd031b98154c969c43"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-21a346cf8c62\\details.json",
+          "sha256": "64bfd80ae3d7bb109d26e5a61b00b6cf53ace539670542618db43b938ae9daed"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-8dcb78ce41f7\\details.json",
+          "sha256": "2336c2258eb5b279a0fb38f1fbdf3d628217675c52af0e8e1d89d92fd1fede7a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-34b2db3bcded\\details.json",
+          "sha256": "9f63dfcc96b6f010d731210c773c4baa7594ec440a5276e1d1a81bfe6b29fa6d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-3318f40a35c0\\details.json",
+          "sha256": "e2277c705fd0418674879b0914a2a60683044098879fcb6c93e68713a2262253"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dae2243fbae2\\details.json",
+          "sha256": "cba3a568ef1da9ab84757b2c81c319df60abde13f88eb386b4a1cd89471e2b59"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d8dc7f6c51b7\\details.json",
+          "sha256": "3d657d6fb0d305a0e8bddaffdad7e79042c4b259e9a1e647f062e00c2261d12f"
+        }
+      ],
+      "id": "4fb10c9b1196570ddcf71b3c7988eef7d9b0c0454989c23c5f75cc4fa2916f80",
+      "limits": [
+        "Десять fixtures: config lookup, initial counted FString assignment, key/query construction, append-bit, string free, replacement memmove, cookie, clone allocation, byte-copy, value resize. Consumer terminator assignment исполняется native.",
+        "Preallocated четыре slots, 8 buckets; allocator/growth/rehash/failure и общий container lifetime не проверены.",
+        "Запросы consumer вызываются явно тестом; caller/event source, persistence, precedence, active settings/UI/resource/Brush не доказаны.",
+        "Сохранённые captures проверены в пределах последовательностей, не за пределами lifetime владельца.",
+        "Реальные профили/настройки/игра не изменяются; генерация остаётся закрытой."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти callers и условия read/write consumers; отдельно проверить источник/precedence, iterator 1445cb6c0 и counted assignment 14142a250, не объявлять локальную запись автоматическим UI событием.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Callers/условия consumers, source initialization/precedence, iterator, native initial counted assignment, allocator/lifetime и active UI/Brush."
     }
   ],
   "schema": 1,

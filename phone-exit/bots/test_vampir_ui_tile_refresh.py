@@ -30,6 +30,20 @@ string_assignment = importlib.util.module_from_spec(spec); spec.loader.exec_modu
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_registered_bindings_dispatch_after_replacement_and_reuse(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_reader.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_reader.DISPATCH_ROOTS]),
+            native_replacement=True, native_hash=True, dispatch=True)
+        self.assertEqual(len(result['cases']), 384)
+        self.assertEqual(sum(len(c['dispatch_calls']) for c in result['cases']), 4608)
+        self.assertEqual(sum(d['native_assignments'] for c in result['cases'] for d in c['dispatch_calls']), 1152)
+        for case in result['cases']:
+            self.assertEqual(len(case['dispatch_calls']), 12)
+            self.assertEqual(sum(d['native_read_invokes'] for d in case['dispatch_calls']), 6)
+            self.assertEqual(sum(d['slot'] is None for d in case['dispatch_calls']), 3)
+            self.assertTrue(all(d['complete_return'] for d in case['dispatch_calls']))
+
     def test_native_string_assignment_identity_empty_and_resize_paths(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = string_assignment.run(dict(source=source, source_sha256=replay.getter.SHA,

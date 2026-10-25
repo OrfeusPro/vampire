@@ -36,7 +36,7 @@
               {"address": "0x14191ab70", "scope": "54 setter identity/invalidation cases; ownership and side effect callees are fixtures", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445cf4f0", "scope": "Static branch/call/template checks only; string helpers and runtime prefix unknown", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c6820", "scope": "Static /Game and NnCoreSetting.ContentSubName call flow; snapshot RED not active runtime proof", "required_checks": []},
-              {"address": "0x1445c2c30", "scope": "144 legacy new-entry calls plus 2304 complete six-call native replacement/reuse calls; service fixtures remain, no active settings or later dispatch proof", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1445c2c30", "scope": "Native registration/replacement/reuse followed by read/write consumers on same memory: 2304 registration + 4608 consumer calls; services remain fixtures, no active config/event proof", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c1f50", "scope": "Native insertion/replacement/free-slot reuse in whole reader; four preallocated slots, three live keys, string/storage services are fixtures; native hash mode uses 8 buckets; growth/rehash excluded", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c67a0", "scope": "32 full string clone helper/wrapper scenarios combined; allocation and byte-copy fixtures, malformed counts excluded", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c78d0", "scope": "String clone wrapper, part of the same 32 scenarios; leaf 1445c7970 has 3 forwarding-only scenarios, no event dispatch proof", "required_checks": ["ui-nktileview-refresh-current"]},
@@ -45,8 +45,8 @@
               {"address": "0x1445d8430", "scope": "512 standalone uniqueness cases plus native replacement in 2304 whole reader calls; actual lookup/compare/cleanup, free/memmove services fixtures, no later dispatch proof", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c29f0", "scope": "Native lookup in standalone and whole-reader replacement tests; exact 71-byte compare leaf and ASCII table, no universal Unicode folding claim", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x141425d60", "scope": "537 standalone counted-UTF16 cases / 8 native compare pairs, bitwise oracle and file-backed table; 2304 whole-reader calls across 8 buckets with no hash fixture; decompiler void output is not algorithm proof", "required_checks": ["ui-nktileview-refresh-current"]},
-              {"address": "0x1445cbd00", "scope": "Read consumer in 96 read/write/read sequences, 192 complete read calls; native lookup/capture/clone, string allocation/copy fixtures; synthetic bindings", "required_checks": ["ui-nktileview-refresh-current"]},
-              {"address": "0x1445d6ec0", "scope": "Legacy assignment-fixture mode and new native assignment mode each cover 96 write calls / 64 hits; primitive resize/copy fixtures remain; caller/event source unknown", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1445cbd00", "scope": "Read consumer in standalone and registration-to-dispatch modes; latter has 4608 consumer calls total and 2304 actual read invokes from native-registered bindings; services remain fixtures", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1445d6ec0", "scope": "Standalone modes plus 1152 native write/assignment invokes from native-registered bindings; query/allocation/copy/resize services remain fixtures; caller/event source unknown", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445cb6c0", "scope": "Static occupied-entry iteration and caller-supplied callback only; not executed, event meaning unknown", "required_checks": []},
               {"address": "0x1414277b0", "scope": "80 standalone assignment variants / 4 identity cases, resize and byte-copy fixtures; 64 native assignments inside 288 consumer calls; allocator/registration/caller unknown", "required_checks": ["ui-nktileview-refresh-current"]}
             ],
@@ -66,7 +66,8 @@
               "evidence/interface/UI-CONFIG-READER-REPLACEMENT-11316.md",
               "evidence/interface/UI-CONFIG-HASH-11316.md",
               "evidence/interface/UI-CONFIG-CONSUMERS-11316.md",
-              "evidence/interface/UI-STRING-ASSIGNMENT-11316.md"
+              "evidence/interface/UI-STRING-ASSIGNMENT-11316.md",
+              "evidence/interface/UI-CONFIG-REGISTRATION-DISPATCH-11316.md"
             ]
           }
         ]
