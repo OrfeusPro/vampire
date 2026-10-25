@@ -26,6 +26,22 @@ config_uniqueness = importlib.util.module_from_spec(spec); spec.loader.exec_modu
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_reader_replacement_and_free_slot_reuse_share_one_memory(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_reader.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_reader.REPLACEMENT_ROOTS]),
+            native_replacement=True)
+        self.assertEqual(len(result['cases']), 384)
+        self.assertEqual(sum(len(c['sequence']) for c in result['cases']), 2304)
+        self.assertNotIn('uniqueness_false', result['fixtures'])
+        for case in result['cases']:
+            self.assertEqual(case['native_bucket_chain'], [2, 1, 0])
+            self.assertEqual(case['free_slot'], 3)
+            self.assertEqual([e['retained_slot'] for e in case['sequence']], [0, 0, 1, 1, 2, 0])
+            self.assertEqual(sum(e['replacement'] for e in case['sequence']), 3)
+            self.assertEqual(sum(e['reused_slot'] for e in case['sequence']), 2)
+            self.assertEqual(sum(e['native_compares'] for e in case['sequence']), 3)
+
     def test_native_config_key_lookup_and_replacement_preserve_hash_links(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')

@@ -9,25 +9,34 @@ import struct
 HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('reader_payload', HERE / 'replay-ui-config-payload.py')
 payload = importlib.util.module_from_spec(spec); spec.loader.exec_module(payload)
+spec = importlib.util.spec_from_file_location('reader_uniqueness', HERE / 'replay-ui-config-uniqueness.py')
+uniqueness = importlib.util.module_from_spec(spec); spec.loader.exec_module(uniqueness)
 native, getter, unicorn, x = payload.native, payload.getter, payload.unicorn, payload.x
 ROOTS = (0x1445c2c30, 0x1445c1f50, 0x1445c4f60, 0x141421b80)
+REPLACEMENT_ROOTS = ROOTS + (0x1445d8430, 0x1445c29f0)
 CONTAINER = 0x14b186130
 FIXTURES = {0x14142a250: 'assign_string', 0x141426b30: 'construct_key',
     0x141429680: 'append_bit', 0x141425d60: 'hash_key', 0x1445d8430: 'uniqueness_false',
     0x141483080: 'free_temp', 0x1487e8ce0: 'check_cookie'}
 
 
-def run(request):
+def run(request, native_replacement=False):
     if request['source_sha256'] != getter.SHA or request['question'] != 'ui-nktileview-property-schema':
         raise ValueError('Другой источник / вопрос')
-    if not {hex(a) for a in ROOTS} <= {f['address'] for f in request['functions']}:
+    roots = REPLACEMENT_ROOTS if native_replacement else ROOTS
+    fixtures = dict(FIXTURES)
+    if native_replacement:
+        del fixtures[0x1445d8430]
+        fixtures[uniqueness.MOVE] = 'replace_payload'
+        fixtures[0x141483080] = 'free_string'
+    if not {hex(a) for a in roots} <= {f['address'] for f in request['functions']}:
         raise ValueError('Не все явные roots входят в задание')
     if native.capstone.__version__ != '5.0.6' or unicorn.__version__ != '2.1.4':
         raise ValueError('Изменились закреплённые инструменты')
     raw = Path(request['source']).read_bytes()
     if getter.sha(raw) != getter.SHA: raise ValueError('Изменился EXE')
     image = native.Image(raw); selected = set()
-    for address in ROOTS:
+    for address in roots:
         row = image.containing(address)
         if row is None or image.pe.base + image.roots[row][0] != address:
             raise ValueError('Изменился unwind root')
@@ -35,7 +44,9 @@ def run(request):
     fragments = native.decode_ranges(image, selected)
     ranges = [(image.pe.base + f['begin_rva'], image.pe.base + f['end_rva']) for f in fragments]
     # Reuse the exact already-reviewed copy / capture-address / cleanup leaves, not guessed unwind ranges.
-    for address, expected_hex in payload.LEAVES.items():
+    leaves = dict(payload.LEAVES)
+    if native_replacement: leaves[uniqueness.COMPARE] = uniqueness.COMPARE_HEX
+    for address, expected_hex in leaves.items():
         offset = image.offset(address - image.pe.base); data = bytes.fromhex(expected_hex)
         if image.containing(address) is not None or raw[offset:offset + len(data)] != data:
             raise ValueError('Изменились leaf boundaries / bytes')
@@ -48,8 +59,13 @@ def run(request):
         raise ValueError('Изменилась таблица capture operations')
     pages = {p for a, b in ranges for p in range(a & ~4095, (b + 4095) & ~4095, 4096)}
     pages.update(a & ~4095 for f in fragments for r in f['instructions'] for a in r['rip_references'])
-    pages.update(a & ~4095 for a in FIXTURES)
+    pages.update(a & ~4095 for a in fixtures)
     pages.add(payload.TABLE & ~4095)
+    if native_replacement:
+        offset = image.offset(uniqueness.ASCII_TABLE - image.pe.base)
+        if raw[offset:offset + 128] != bytes(a + 32 if 65 <= a <= 90 else a for a in range(128)):
+            raise ValueError('Изменилась ASCII folding table')
+        pages.add(uniqueness.ASCII_TABLE & ~4095)
     uc = unicorn.Uc(unicorn.UC_ARCH_X86, unicorn.UC_MODE_64)
     for page in pages:
         uc.mem_map(page, 4096)
@@ -71,17 +87,20 @@ def run(request):
         uc.reg_write(x.UC_X86_REG_RAX, result); uc.reg_write(x.UC_X86_REG_RIP, qword(sp))
         uc.reg_write(x.UC_X86_REG_RSP, sp + 8)
     def hook(machine, address, size, unused):
-        if address not in FIXTURES and address != lookup:
+        if address not in fixtures and address != lookup:
             if not any(a <= address and address + size <= b for a, b in ranges):
                 raise ValueError('Исполнение вне выбранной полной цепочки: ' + hex(address))
             if address == 0x141421b50: state['native_copies'] += 1
             if address == 0x141421b80: state['native_cleanups'] += 1
             if address == 0x1445c1f50:
                 state['moved_key_object'] = qword(uc.reg_read(x.UC_X86_REG_R8))
+                state['returned_index_object'] = uc.reg_read(x.UC_X86_REG_RDX)
+            if native_replacement and address == uniqueness.COMPARE: state['native_compares'] += 1
+            if native_replacement and address == 0x1445c29f0: state['native_key_lookups'] += 1
             return
         rcx, rdx, r8, r9 = [uc.reg_read(r) for r in
             (x.UC_X86_REG_RCX, x.UC_X86_REG_RDX, x.UC_X86_REG_R8, x.UC_X86_REG_R9)]
-        name = 'lookup' if address == lookup else FIXTURES[address]
+        name = 'lookup' if address == lookup else fixtures[address]
         state['calls'].append(name)
         if name == 'lookup':
             if (rcx, rdx, r8, qword(uc.reg_read(x.UC_X86_REG_RSP) + 0x28)) != (config, state['section'], state['key'], 0x14b2e5678):
@@ -106,10 +125,11 @@ def run(request):
             uc.mem_write(rcx, struct.pack('<Qii', state['key_data'], len(state['key_bytes']) // 2, len(state['key_bytes']) // 2))
             ret(rcx)
         elif name == 'append_bit':
-            if (rcx, rdx, integer(CONTAINER + 0x28)) != (CONTAINER + 0x10, 0, state['index']):
+            new_slot = state.get('new_slot', state['index'])
+            if (rcx, rdx, integer(CONTAINER + 0x28)) != (CONTAINER + 0x10, 0, new_slot):
                 raise ValueError('Неверное добавление occupancy bit')
-            uc.mem_write(CONTAINER + 0x28, struct.pack('<i', state['index'] + 1))
-            ret(state['index'])
+            uc.mem_write(CONTAINER + 0x28, struct.pack('<i', new_slot + 1))
+            ret(new_slot)
         elif name == 'hash_key':
             if (rcx, rdx) != (len(state['key_bytes']) // 2 - 1, state['key_data']):
                 raise ValueError('Неверные аргументы key hash')
@@ -119,14 +139,32 @@ def run(request):
                     CONTAINER, state['hash'], entries + state['index'] * 0xb0, state['index'], 0):
                 raise ValueError('Неверные аргументы uniqueness helper')
             ret(0)  # exact new-entry scenario; duplicate / replacement path deliberately excluded
-        elif name == 'free_temp':
-            if rcx != state['temp'] or not state['found'] or state['zero_length']:
+        elif name in ('free_temp', 'free_string'):
+            if native_replacement and rcx == state['old_key_pointer']:
+                state['calls'][-1] = 'free_old_key'
+                uc.mem_write(rcx, b'\xdd' * state['old_key_size'])
+            elif rcx == state['temp'] and state['found'] and not state['zero_length']:
+                state['calls'][-1] = 'free_temp'
+            else:
                 raise ValueError('Освобождается key / capture / неподтверждённый temporary')
             ret()
+        elif name == 'replace_payload':
+            expected = (entries + state['result_slot'] * 0xb0, entries + state['new_slot'] * 0xb0, 0xa0)
+            if (rcx, rdx, r8) != expected: raise ValueError('Неверный replacement memmove')
+            uc.mem_write(rcx, bytes(uc.mem_read(rdx, r8))); ret(rcx)
         else:
             if rcx != cookie: raise ValueError('Неверный stack cookie после полного reader')
             ret()
     uc.hook_add(unicorn.UC_HOOK_CODE, hook)
+    if native_replacement:
+        results = replacement_sequences(uc, base, entries, stack, stop, state)
+        return dict(source_sha256=getter.SHA, fragments=fragments, cases=results,
+            fixtures=list(fixtures.values()) + ['lookup'], native_replacement=True,
+            limits=['Whole native reader/insertion/lookup/compare/replacement/capture-copy/cleanup on one memory.',
+                '384 six-call sequences; preallocated four slots, three live keys; no allocation growth or rehash.',
+                'Lookup, FString construction/assignment, bit append, hash, string free, memmove and cookie are fixtures.',
+                'Old key free poisons its synthetic storage; actual allocator and general ownership not executed.',
+                'Real hash, later callable invocation, config precedence, active settings and Brush binding unknown.'])
     results = []
     groups = [(('RED', False), ('Other', False), ('', False)),
               (('', False), ('Тест', False), ('A😀', False)),
@@ -213,12 +251,126 @@ def run(request):
             'No later callable dispatch, precedence, live settings, successful resource loading or Brush binding proof.'])
 
 
+def replacement_sequences(uc, base, entries, stack, stop, state):
+    def integer(at): return int.from_bytes(uc.mem_read(at, 4), 'little', signed=True)
+    def qword(at): return int.from_bytes(uc.mem_read(at, 8), 'little')
+    keys = ('ContentSubName', 'contentsubname', 'Demo.Second', 'Demo.Second', 'Demo.Third', 'CONTENTSUBNAME')
+    logical_keys = (0, 0, 1, 1, 2, 0)
+    new_slots, result_slots = (0, 1, 1, 2, 2, 3), (0, 0, 1, 1, 2, 0)
+    allocated_counts, live_masks = (1, 2, 2, 3, 3, 4), (1, 1, 3, 3, 7, 7)
+    free_heads, heads = (-1, 1, -1, 2, -1, 3), (0, 0, 1, 1, 2, 2)
+    groups = [(('RED', False), ('Other', False), ('', False), ('Again', False), ('Тест', False), ('A/B', False)),
+              (('', False), ('Тест', False), ('A😀', False), ('', True), ('Alt', False), ('X😀', False)),
+              (('', True), ('A/B', False), ('Long' * 20, False), ('Last', False), ('', False), ('END', False))]
+    results = []
+    for found_mask, group, shared_destination in itertools.product(range(64), range(3), (False, True)):
+        uc.mem_write(CONTAINER, bytes(0x60)); uc.mem_write(CONTAINER, struct.pack('<Qii', entries, 0, 4))
+        uc.mem_write(CONTAINER + 0x28, struct.pack('<iiii', 0, 128, -1, 0))
+        uc.mem_write(CONTAINER + 0x38, struct.pack('<i', -1)); uc.mem_write(CONTAINER + 0x48, struct.pack('<i', 1))
+        uc.mem_write(entries - 8, b'\xa5' * (0xb0 * 4 + 16))
+        live = {}; destinations = {}; sequence = []
+        for index, (value, zero_length) in enumerate(groups[group]):
+            slot = base + 0x8000 + index * 0x1000
+            target = base + 0x8000 + (logical_keys[index] if shared_destination else index) * 0x1000
+            dest, dest_data = target, target + 0x100
+            temp, key, section, key_data = [slot + at for at in (0x300, 0x500, 0x600, 0x700)]
+            new_slot, result_slot = new_slots[index], result_slots[index]
+            replacement = new_slot != result_slot
+            old_key_pointer = live[result_slot][0][0] if replacement else None
+            old_key_size = len(live[result_slot][1]) if replacement else 0
+            key_bytes = (keys[index] + '\0').encode('utf-16le')
+            state.clear(); state.update(index=index, new_slot=new_slot, result_slot=result_slot,
+                value=value, zero_length=zero_length, found=bool(found_mask & (1 << index)),
+                dest=dest, dest_data=dest_data, temp=temp, key=key, key_data=key_data,
+                section=section, key_bytes=key_bytes, hash=0x12345000 + index * 0x23,
+                old_key_pointer=old_key_pointer, old_key_size=old_key_size,
+                calls=[], native_copies=0, native_cleanups=0, native_compares=0, native_key_lookups=0)
+            if dest not in destinations:
+                uc.mem_write(dest - 8, b'\x5a' * 8 + bytes(16) + b'\x5a' * 8)
+                destinations[dest] = (bytes(16), None)
+            uc.mem_write(key, key_bytes)
+            uc.mem_write(section, (('NnCoreSetting' if index == 0 else 'DemoSection') + '\0').encode('utf-16le'))
+            uc.mem_write(stack - 0x1000, b'\x91' * 0x1100); uc.mem_write(stack, struct.pack('<Q', stop))
+            for reg, val in ((x.UC_X86_REG_RCX, 0), (x.UC_X86_REG_RDX, dest),
+                             (x.UC_X86_REG_R8, section), (x.UC_X86_REG_R9, key), (x.UC_X86_REG_RSP, stack)):
+                uc.reg_write(reg, val)
+            uc.emu_start(ROOTS[0], stop, count=4096)
+            if uc.reg_read(x.UC_X86_REG_RIP) != stop or uc.reg_read(x.UC_X86_REG_RSP) != stack + 8:
+                raise ValueError('Нет полного native reader возврата с replacement')
+            calls = ['lookup'] + (['assign_string'] if state['found'] else []) + ['construct_key']
+            if index in (0, 1, 3, 5): calls.append('append_bit')
+            calls.append('hash_key')
+            if replacement: calls += ['free_old_key', 'replace_payload']
+            if state['found'] and not zero_length: calls.append('free_temp')
+            calls.append('check_cookie')
+            if state['calls'] != calls or (state['native_copies'], state['native_cleanups']) != (2, 4 if replacement else 2):
+                raise ValueError('Неверный общий service / native copy / cleanup path')
+            if (state['native_key_lookups'], state['native_compares']) != (int(index != 0), int(replacement)):
+                raise ValueError('Не исполнен ожидаемый native lookup / compare')
+            if integer(state['returned_index_object']) != result_slot:
+                raise ValueError('Insertion не вернул индекс сохранённой привязки')
+            if bytes(uc.mem_read(state['moved_key_object'], 16)) != bytes(16):
+                raise ValueError('Source key не очищен после native переноса')
+            expected_container = (allocated_counts[index], allocated_counts[index], live_masks[index],
+                free_heads[index], int(replacement), heads[index])
+            if tuple(integer(CONTAINER + at) for at in (8, 0x28, 0x10, 0x30, 0x34, 0x38)) != expected_container:
+                raise ValueError('Неверные counts / occupancy / free-list / bucket после reuse')
+            if (qword(CONTAINER), integer(CONTAINER + 12), qword(CONTAINER + 0x20),
+                    qword(CONTAINER + 0x40), integer(CONTAINER + 0x48)) != (entries, 4, 0, 0, 1):
+                raise ValueError('Изменились preallocated storage / capacity / inline bucket')
+            if replacement:
+                if (integer(entries + new_slot * 0xb0), integer(entries + new_slot * 0xb0 + 4)) != (-1, -1):
+                    raise ValueError('Неверные поля освобождённого временного слота')
+                if bytes(uc.mem_read(old_key_pointer, old_key_size)) != b'\xdd' * old_key_size:
+                    raise ValueError('Old key free fixture не пометил storage')
+            fields = {0: key_data, 0x10: dest, 0x20: 0x1445c78d0, 0x30: 0,
+                0x40: payload.TABLE, 0x48: dest, 0x60: 0x1445c7970, 0x70: 0,
+                0x80: payload.TABLE, 0x88: dest}
+            live[result_slot] = (fields, key_bytes)
+            if state['found']:
+                length = len(value.encode('utf-16le')) // 2
+                destinations[dest] = (struct.pack('<Qii', dest_data if length else 0,
+                    length + 1 if length else 0, length + 1 if length else 0), value)
+            for live_slot, (expected_fields, expected_key) in live.items():
+                node = entries + live_slot * 0xb0
+                if any(qword(node + at) != expected for at, expected in expected_fields.items()):
+                    raise ValueError('Повреждены retained native captures / key')
+                if (integer(node + 8), integer(node + 12), integer(node + 0xa0), integer(node + 0xa4)) != (
+                        len(expected_key) // 2, len(expected_key) // 2, live_slot - 1, 0):
+                    raise ValueError('Повреждены key count / capacity / hash links')
+                if bytes(uc.mem_read(expected_fields[0], len(expected_key))) != expected_key:
+                    raise ValueError('Live key ссылается на освобождённый storage')
+            for old_dest, (expected_bytes, expected_value) in destinations.items():
+                if bytes(uc.mem_read(old_dest - 8, 32)) != b'\x5a' * 8 + expected_bytes + b'\x5a' * 8:
+                    raise ValueError('Повреждён destination / guard при регистрации другого ключа')
+                if expected_value:
+                    encoded = expected_value.encode('utf-16le') + b'\0\0'
+                    if bytes(uc.mem_read(qword(old_dest), len(encoded))) != encoded:
+                        raise ValueError('Повреждены bytes assignment fixture')
+            sequence.append(dict(index=index, key_fixture=keys[index], found_fixture=state['found'],
+                new_slot=new_slot, retained_slot=result_slot, replacement=replacement,
+                reused_slot=index in (2, 4), calls=calls, native_capture_copies=state['native_copies'],
+                native_cleanups=state['native_cleanups'], native_key_lookups=state['native_key_lookups'],
+                native_compares=state['native_compares'], complete_reader_return=True))
+        if bytes(uc.mem_read(entries - 8, 8)) != b'\xa5' * 8 or bytes(uc.mem_read(entries + 4 * 0xb0, 8)) != b'\xa5' * 8:
+            raise ValueError('Запись за preallocated storage')
+        chain = []; current = integer(CONTAINER + 0x38)
+        while current != -1:
+            if current not in live or current in chain: raise ValueError('Повреждён native bucket chain / цикл')
+            chain.append(current); current = integer(entries + current * 0xb0 + 0xa0)
+        if chain != [2, 1, 0]: raise ValueError('Потеряна сохранённая привязка')
+        results.append(dict(found_mask=found_mask, group=group, shared_destination=shared_destination,
+            sequence=sequence, live_bindings=3, free_slot=3, native_bucket_chain=chain))
+    return results
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--request', type=Path, required=True); parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--native-replacement', action='store_true')
     args = parser.parse_args()
     if args.output.exists(): parser.error('Прежний отчёт не перезаписывается')
-    result = run(json.loads(args.request.read_text('utf-8')))
+    result = run(json.loads(args.request.read_text('utf-8')), args.native_replacement)
     result['replay_sha256'] = getter.sha(Path(__file__).read_bytes())
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2), 'utf-8')
     print(json.dumps(dict(sequences=len(result['cases']), reader_calls=sum(len(c['sequence']) for c in result['cases']))))

@@ -5826,6 +5826,69 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Общий reader с заменой / reuse слота, реальные hash / invoke consumers / lifetime, precedence и active resource / Brush."
+    },
+    {
+      "addresses": [
+        "0x141421b80",
+        "0x1445c1f50",
+        "0x1445c29f0",
+        "0x1445c2c30",
+        "0x1445c4f60",
+        "0x1445d8430"
+      ],
+      "checks": [
+        {
+          "cache_key": "2ce69a0e95a2afac9ab8a677cb07552cdaaa4872e516cedda0555eed5ee6cbea",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d07b1e1b652f19bbb77b3dbf3c78ef7d00af90092b52bd1ff20dae41186ab8fa\\manifest.json",
+          "sha256": "d07b1e1b652f19bbb77b3dbf3c78ef7d00af90092b52bd1ff20dae41186ab8fa",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Общий native reader / insertion / lookup / compare / replacement / capture-copy / cleanup прошёл 384 шестишаговые последовательности: 2304 полных возврата, 1152 replacements и 768 reuse. Проверены отдельный / общий destination, все found masks, live captures, poisoned old-key storage, moved-key source, counts / free-list / bitmap / hash links и финальная цепочка 2 -> 1 -> 0. Uniqueness=false fixture в новом режиме отсутствует; service fixtures перечислены отдельно.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-READER-REPLACEMENT-11316.md",
+          "sha256": "9f14865bcf556a1b2c60c1a7626b2c137ce559ecd2a860cda119b505f1d563d4"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-40f646b1556a\\details.json",
+          "sha256": "7e531a5bd23c58ae8711644f28467b7ff0701183f1b3718da4b8703760cfc869"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b25bb2ea1a0f\\details.json",
+          "sha256": "336bf3091a16da247a3f7162f5ae6f1bb3d7a02bddf3d9a40a9e620d8ec2e047"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-218ed676dfab\\details.json",
+          "sha256": "b2d468647ed1c90a3eb8ce6967ec78eed53f99fa0b4156dd031b98154c969c43"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-21a346cf8c62\\details.json",
+          "sha256": "64bfd80ae3d7bb109d26e5a61b00b6cf53ace539670542618db43b938ae9daed"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-8dcb78ce41f7\\details.json",
+          "sha256": "2336c2258eb5b279a0fb38f1fbdf3d628217675c52af0e8e1d89d92fd1fede7a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-34b2db3bcded\\details.json",
+          "sha256": "9f63dfcc96b6f010d731210c773c4baa7594ec440a5276e1d1a81bfe6b29fa6d"
+        }
+      ],
+      "id": "6fa686e64795772dcc177d6303557b4783a92e560b8fd7fb22895a9fd1e671e2",
+      "limits": [
+        "Контейнер заранее выделен на четыре slots; три живых ключа, не более одного свободного слота, без growth / rehash.",
+        "Fixtures: virtual lookup, FString construction/assignment, append-bit, hash, string free, memmove и cookie; реальный allocator не выполняется.",
+        "Старые key buffers помечаются free fixture; это не доказательство полного allocation origin / ownership / lifetime.",
+        "Новый режим исполняет native uniqueness / compare; прежний new-entry режим сохранён отдельно для регрессии.",
+        "Реальный hash, последующий invoke dispatch, config precedence, active resource / Brush и cooked compatibility открыты."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить native hash helper 141425d60, затем убрать hash fixture; отдельно найти потребителей сохранённых invoke pointers и условия их вызова.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native hash и согласованность с compare, потребители invoke pointers / условия вызова, container lifetime, precedence и active resource / Brush."
     }
   ],
   "schema": 1,
