@@ -111,3 +111,54 @@ SHA, затем проверяет каждое наблюдение, тип з�
 audit-ui-slot-coverage.py сверяет исходные uasset / uexp и сохраняет отдельный
 отчёт; наличие 72153 decoded слотов не доказывает полный охват. Прежние
 результаты сканирования остаются результатами прежних входных каталогов.
+
+## Дополнительный слой кандидатных свойств
+
+`scan-ui-candidate-layer.py` связывает базовую матрицу с проверенными отчётами
+разбора слотов. Базовый набор и его UI-23 ID остаются прежними. Новый слой
+хранится отдельно, имеет собственный SHA ID и не подключается к renderer.
+Перед переносом скрипт проверяет всю базовую матрицу, повторяет reconciliation,
+сверяет raw package / export SHA и принадлежность каждого ресурса варианту.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-candidate-layer.py build --base 'F:/PhoneExit Resources/Vampir/ui-property-scans/ae23e2f540c216777073fb621b03e668312022f9441a913bc3cb458890a24e60' --reconciliation 'F:/PhoneExit Resources/Vampir/ui-property-scans/ui-slot-evidence-reconciliation-07.json' --reconciliation-sha256 5078276570f13d9adaaa0eb06f073690803d63d2f4e8a1efe33e6374521f70eb
+python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-candidate-layer.py verify 'F:/PhoneExit Resources/Vampir/ui-property-scans/candidate-layers/a7e46459e1e2f484adb6e0268447368af368f56640e1990587957fd148d62f98'
+```
+
+Подтверждён перенос слоя `a7e46459e1e2f484adb6e0268447368af368f56640e1990587957fd148d62f98`:
+440 узлов (429 кандидатных разборов, 11 классификаций контейнера), 25 свойств,
+2077 наблюдений значений, 1529 отметок пропуска и 869 отношений. Проверка повторно
+строит весь слой из источников и сравнивает все файлы, включая каждый указатель
+наблюдения / пропуска и прямой / обратной связи. Результат проверки:
+`ui-property-scans/candidate-layer-verification-01.json` вне Git.
+SHA256 результата: `180f14aa27a1b988562e3edffedad5c1471ad5c195aa473436238948518a9685`;
+SHA256 index слоя: `6adb334a7db724a4b9d318427857792824881c29cb0bbf7b85a9b6da31387a33`.
+Повторный build вернул `reused=true` после сравнения всего набора.
+
+Формат слоя:
+
+```text
+index.json → source/base/reconciliation SHA, native_source, версии схем, статистика
+  nodes[UI-CN-ID] → variants/<catalog file>.json, export
+  properties[UI-27.CP-ID] → типы, число наблюдений и пропусков
+  resources[полный путь или unresolved] → ID кандидатных узлов
+variants/<catalog file>.json → узлы, исходные значения, omissions, unknowns, SHA
+properties/<ID>.json → указатели наблюдений node / field
+properties/<ID>-omissions.json → указатели пропусков node / field
+relations.json[UI-CR-ID] → candidate parent / content / outer, target export / SHA
+reverse-relations.json[variant#export] → постоянные ID отношений
+```
+
+Составные значения хранятся атомарно: вложенные числа legacy-кандидата не
+становятся независимо подтверждёнными native полями. Непрочитанный NamedSlot
+payload сохраняется без перечня придуманных свойств. Поля без наблюдаемых значений
+также остаются в индексе: например GridSlot.Layer имеет 300 пропусков, а не ноль.
+Все `geometry_verified` / `implementation_verified` остаются false.
+
+[25 отдельных чекбоксов](UI-CANDIDATE-PROPERTY-TASKS.md) имеют собственные стабильные
+ID. Для нового списка можно передать `--tasks <новый файл.md>`; существующие
+отметки не перезаписываются. При совпадении входов build проверяет и переиспользует
+готовый слой, изменённые файлы отвергает. Неизвестные версии схем не читаются
+по старым правилам. Сборка выполняется при подготовке общего набора, а не в каждом
+из 50 окон. Полный runtime UI, совместимость клиента и свойства по-прежнему требуют
+своих проверок; перенос данных не открывает фазу генерации.
