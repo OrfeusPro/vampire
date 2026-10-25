@@ -24,6 +24,7 @@
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-consumers.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-string-assignment.py",
         "phone-exit/bots/resource-tools/vampir/inspect-ui-config-callers.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ui-config-reload.py",
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
         "phone-exit/bots/resource-tools/vampir/inspect-nktileview-registration.py",
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
@@ -40,7 +41,8 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3318f40a35c0/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-dae2243fbae2/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-d8dc7f6c51b7/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e33a32096278/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e33a32096278/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-02b2772620dd/details.json"
       ]
     },
     {

@@ -29,9 +29,24 @@ spec = importlib.util.spec_from_file_location('ui_string_assignment_replay', HER
 string_assignment = importlib.util.module_from_spec(spec); spec.loader.exec_module(string_assignment)
 spec = importlib.util.spec_from_file_location('ui_config_callers_inspector', HERE / 'inspect-ui-config-callers.py')
 config_callers = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_callers)
+spec = importlib.util.spec_from_file_location('ui_config_reload_replay', HERE / 'replay-ui-config-reload.py')
+config_reload = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_reload)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_reload_wrapper_config_service_precedes_sparse_callbacks(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_reload.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(config_reload.ROOT))]))
+        self.assertEqual(len(result['cases']), 48)
+        self.assertEqual(sum(len(c['callbacks']) for c in result['cases']), 72)
+        self.assertEqual(result['registry']['address'], '0x14b1867f0')
+        self.assertEqual(result['registry']['stride'], '0x60')
+        for case in result['cases']:
+            self.assertEqual(case['callbacks'], case['occupied'])
+            self.assertTrue(case['complete_return'])
+            self.assertEqual(case['events'][:2], ['path_value', 'config_service'])
+
     def test_static_config_callers_preserve_diagnostic_scope_and_gates(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_callers.inspect(dict(source=source, source_sha256=replay.getter.SHA,

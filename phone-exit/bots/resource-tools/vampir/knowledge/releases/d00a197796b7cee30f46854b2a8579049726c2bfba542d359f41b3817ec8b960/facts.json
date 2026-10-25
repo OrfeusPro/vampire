@@ -6141,6 +6141,44 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Роль target 1445d1cd0, prefix helpers, регистрация/инициатор caller, source precedence и active UI/Brush."
+    },
+    {
+      "addresses": [
+        "0x1445d1cd0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9e4f75a35869eae41759adf173df623946ec1cd1e4cf1f469f59deeaae0ef819",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0322220bc65d168932b91324c55c586236775349013bebbd805764ddc706e4e0\\manifest.json",
+          "sha256": "0322220bc65d168932b91324c55c586236775349013bebbd805764ddc706e4e0",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый Reload-target wrapper прошёл 48 случаев / 72 callback invocations: path helper → config-helper с literal Game и 9 ABI arguments → временный cleanup → occupied traversal отдельного реестра 14b1867f0 со stride 0x60. Native initial bit selection и capture getter исполняются; false/true config service result не управляет обходом в wrapper. Key binding registry 14b186130 со stride 0xb0 — другой объект; связь двух реестров не установлена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-RELOAD-11316.md",
+          "sha256": "ec011a58b7acd1a1c7f000215e19e944dbc10817c668523d4a8fdabcd45d6f62"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-02b2772620dd\\details.json",
+          "sha256": "ba66bd0a20e24fa4cdfb41782098848a2f1b8aeeda1dbcd350f7f8d1cb7760d4"
+        }
+      ],
+      "id": "401ae451a0b12ac3b5b6893f39869ee28b58bd5ba2145f35481260651106248e",
+      "limits": [
+        "Path/config/free/iterator advance/callback bodies — fixtures; фактический конфиг не читается, callbacks не считаются setters.",
+        "Начальный выбор битов native; последующее продвижение iterator synthetic с явной моделью, не доказательство полного iterator.",
+        "Config-helper return false/true проверен только как fixture; исключения/failure contract helper неизвестны.",
+        "External bitmap и external captures выбирались вместе; независимые сочетания не покрыты.",
+        "Active file/source precedence/UI application/persistence/Brush и callback registration/lifetime не доказаны."
+      ],
+      "method": "bounded_native",
+      "next_check": "Отдельные задания на helpers 14157cf70/141534f70 и регистрацию callbacks 14b1867f0; подтвердить роль источников до вывода о перечитывании конфигурации.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Роли helpers 14157cf70/141534f70, регистрация callbacks и связь с key bindings, источники/precedence/active UI."
     }
   ],
   "schema": 1,
