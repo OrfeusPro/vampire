@@ -22,6 +22,14 @@
       <p class="note">Названия из клиента; значения — исходные целые числа. Единицы модификаторов и оформление игрового окна ещё проверяются.</p>
       <div class="table-scroll"><table><thead><tr><th scope="col">Код</th><th scope="col">Название в клиенте</th><th scope="col">Значение</th></tr></thead><tbody id="stats"></tbody></table></div>
     </section>
+    <section aria-label="Онлайн-журнал">
+      <h2>Онлайн-журнал</h2>
+      <p class="note">Последние события выбранной сессии. Обновляется раз в секунду; пауза журнала не останавливает персонажа. Содержимое пакетов по умолчанию не сохраняется.</p>
+      <div class="log-controls"><label>ID пакета <input id="log-filter" inputmode="numeric" placeholder="Все события" maxlength="5"></label><button id="log-pause">Пауза журнала</button></div>
+      <p id="log-gap" class="note"></p><pre id="live-log" aria-label="События сессии"></pre>
+      <h2>Результат локального обработчика</h2><p id="analysis-revision" class="note">Обработчик не подключён</p><pre id="analysis-values">—</pre>
+      <p id="trace-status" class="note">Захват содержимого пакетов выключен</p>
+    </section>
   </main>
   <script src="geometry.js"></script><script src="layout-schema.js"></script>
   <script src="widget-renderer.js"></script><script src="components.js"></script>

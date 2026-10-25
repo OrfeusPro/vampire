@@ -3,6 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import secrets
 import re
+from urllib.parse import urlsplit,parse_qs
 from threading import Thread
 from .live_session import LiveSession,LiveSessions
 
@@ -23,7 +24,7 @@ class LiveSessionServer:
                 return (self.headers.get('Host')=='127.0.0.1:'+str(self.server.server_port)
                     and self.headers.get('Origin') in (None,'http://127.0.0.1:17946'))
             def selected(self):
-                match=re.fullmatch('/bots/([a-zA-Z0-9_-]{1,48})/(state|control|stop)',self.path)
+                match=re.fullmatch('/bots/([a-zA-Z0-9_-]{1,48})/(state|control|stop|events|trace|samples|analysis)',urlsplit(self.path).path)
                 if match:return registry.get(match[1]),match[2]
                 # Legacy atlas endpoint is unambiguous only for one attached bot.
                 listed=registry.list()
@@ -48,7 +49,22 @@ class LiveSessionServer:
                 if action=='state':self.send_json(200,selected.snapshot())
                 elif action=='control':
                     token=tokens.setdefault(selected.session_id,secrets.token_urlsafe(32))
-                    self.send_json(200,dict(bot_id=selected.bot_id,session_id=selected.session_id,token=token,actions=['stop']))
+                    self.send_json(200,dict(bot_id=selected.bot_id,session_id=selected.session_id,token=token,actions=['stop','trace','analysis']))
+                elif action in ('events','samples'):
+                    try:
+                        params=parse_qs(urlsplit(self.path).query,strict_parsing=True)
+                        if params.get('session')!=[selected.session_id] or set(params)-{'session','after','lease'}:raise ValueError()
+                        if len(params.get('after',['0']))!=1:raise ValueError()
+                        after=int(params.get('after',['0'])[0])
+                        if action=='events':value=selected.journal(after)
+                        else:
+                            token=tokens.get(selected.session_id)
+                            if token is None or not secrets.compare_digest(self.headers.get('X-Session-Token',''),token):self.send_error(403);return
+                            if len(params.get('lease',[]))!=1:raise ValueError()
+                            value=selected.samples(params['lease'][0],after)
+                    except (ValueError,UnicodeError):self.send_error(400);return
+                    except RuntimeError:self.send_error(409);return
+                    self.send_json(200,value)
                 else:self.send_error(404)
             def do_OPTIONS(self):
                 if not self.allowed():self.send_error(403);return
@@ -62,14 +78,23 @@ class LiveSessionServer:
                 token=tokens.get(selected.session_id) if selected else None
                 if not self.allowed() or token is None or not secrets.compare_digest(self.headers.get('X-Session-Token',''),token):
                     self.send_error(403);return
-                if action!='stop':self.send_error(404);return
+                if action not in ('stop','trace','analysis'):self.send_error(404);return
                 try:
                     size=int(self.headers.get('Content-Length','-1'))
-                    if not 0<size<=1024:raise ValueError()
+                    if not 0<size<=(32768 if action=='analysis' else 1024):raise ValueError()
                     value=json.loads(self.rfile.read(size))
-                    if value!={'bot_id':selected.bot_id,'session_id':selected.session_id}:raise ValueError()
-                except (ValueError,UnicodeError):self.send_error(400);return
-                selected.request_stop();self.send_json(202,dict(state='stopping'))
+                    if type(value) is not dict or value.pop('bot_id',None)!=selected.bot_id or value.pop('session_id',None)!=selected.session_id:raise ValueError()
+                    if action=='stop':
+                        if value:raise ValueError()
+                        selected.request_stop();result=dict(state='stopping')
+                    elif action=='trace':
+                        if set(value)!={'lease','packet_ids'}:raise ValueError()
+                        result=selected.configure_trace(value['lease'],value['packet_ids'])
+                    else:
+                        selected.analysis(value);result=dict(state='analysis_updated')
+                except (ValueError,UnicodeError,RecursionError):self.send_error(400);return
+                except RuntimeError:self.send_error(409);return
+                self.send_json(202,result)
         self.session=registry
         self.server=HTTPServer(('127.0.0.1',port),Handler)
         self.thread=Thread(target=self.server.serve_forever,kwargs={'poll_interval':.1},daemon=True)

@@ -7,6 +7,24 @@
   const status = document.getElementById('connection'), stop = document.getElementById('stop');
   const el = (tag, text, className) => { const node = document.createElement(tag); if (text !== undefined) node.textContent = text; if (className) node.className = className; return node; };
   const append = (parent, ...children) => { parent.append(...children.filter(Boolean)); return parent; };
+  let logPaused = false, logCursor = 0, logGap = false, analysisKey;
+  const logRows = [], filter = document.getElementById('log-filter'), pause = document.getElementById('log-pause');
+  const eventNames = { session_created:'Сессия создана', source_bound:'Источник привязан', packet_received:'Получен пакет', stats_received:'Получены характеристики', vitals_changed:'HP / MP / уровень изменены', stat_decode_error:'Ошибка разбора характеристик', world_ready:'Вход в мир', stop_requested:'Запрошена остановка', session_closed:'Сессия закрыта', trace_configured:'Захват настроен', trace_expired:'Срок захвата истёк', analysis_updated:'Обработчик обновлён', analysis_expired:'Наблюдатель перестал обновлять данные' };
+  function renderLog(forceFollow = false) {
+    if (logPaused) return;
+    const output = document.getElementById('live-log');
+    const follow = forceFollow || output.scrollHeight - output.clientHeight - output.scrollTop < 24;
+    const packet = filter.value.trim(), valid = !packet || /^\d{1,5}$/.test(packet);
+    filter.setCustomValidity(valid ? '' : 'Укажите числовой ID пакета');
+    output.textContent = logRows.filter(row => !packet || String(row.packet_id) === packet).map(row => {
+      const { seq, time_ms, kind, ...fields } = row;
+      return new Date(time_ms).toLocaleTimeString('ru-RU') + ' #' + seq + ' ' + (eventNames[kind] || kind) + ' ' + JSON.stringify(fields);
+    }).join('\n') || 'Событий пока нет';
+    if (follow) output.scrollTop = output.scrollHeight;
+    document.getElementById('log-gap').textContent = logGap ? 'Часть ранних событий пропущена: журнал ограничен и хранится только в памяти.' : 'Журнал хранится только в памяти; показаны последние 256 событий.';
+  }
+  filter.oninput = () => renderLog(true);
+  pause.onclick = () => { logPaused = !logPaused; pause.textContent = logPaused ? 'Продолжить журнал' : 'Пауза журнала'; renderLog(true); };
   async function json(url, options = {}) {
     const response = await fetch(url, { cache: 'force-cache', ...options, signal: AbortSignal.timeout(3000) });
     if (!response.ok) throw Error('Ответ сервиса: ' + response.status);
@@ -14,6 +32,20 @@
   }
   function update(snapshot) {
     view?.updateLive(snapshot);
+    if (Array.isArray(snapshot?.journal)) {
+      const fresh = snapshot.journal.filter(row => Number.isSafeInteger(row.seq) && row.seq > logCursor);
+      if (fresh.length && fresh[0].seq > logCursor + 1) logGap = true;
+      logRows.push(...fresh); if (logRows.length > 256) { logRows.splice(0, logRows.length - 256); logGap = true; }
+      if (fresh.length) logCursor = fresh[fresh.length - 1].seq;
+      renderLog();
+    }
+    const analysis = snapshot?.analysis, nextAnalysis = JSON.stringify(analysis);
+    if (analysisKey !== nextAnalysis) {
+      analysisKey = nextAnalysis;
+      document.getElementById('analysis-revision').textContent = analysis ? 'Ревизия ' + analysis.revision + (analysis.error ? ' · ошибка ' + analysis.error : ' · обработан текущий поток') : 'Обработчик не подключён';
+      document.getElementById('analysis-values').textContent = analysis ? JSON.stringify(analysis.values, null, 2) : '—';
+    }
+    document.getElementById('trace-status').textContent = snapshot?.trace?.packet_ids?.length ? 'Временный захват пакетов: ' + snapshot.trace.packet_ids.join(', ') + ' · ' + snapshot.trace.sample_bytes + ' байт в памяти' : 'Захват содержимого пакетов выключен';
     const person = snapshot?.state === 'connected' ? snapshot.character : null;
     document.getElementById('identity').textContent = person?.name || botId;
     document.getElementById('level').textContent = person?.level ?? '—';

@@ -7,6 +7,8 @@ from threading import Event, Lock
 import time
 from .stat_change import SOURCE_SHA256 as STAT_SOURCE_SHA256,decode_stat_change,decode_character_level_up,initial_stat_values
 from .stat_names import STAT_NAMES,SOURCE_SHA256 as STAT_NAMES_SOURCE
+from .live_diagnostics import LiveDiagnostics
+import json
 
 STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
 
@@ -33,12 +35,16 @@ class LiveSession:
         self._stats_applied=-1
         self._stats_limit=False
         self._initial_stats_seeded=False
+        self._diagnostics=LiveDiagnostics()
         self._snapshot=dict(schema=2,mode='live',bot_id=bot_id,session_id=self.session_id,state='connecting',position=None,
             character=None,entities=[],updated_at_ms=None,heartbeat=dict(sent=0,received=0),
             coverage=dict(vitals='not_verified',level='not_verified',entities='not_verified',movement='not_verified'),
             packets={},error=None)
 
-    def request_stop(self):self._stop.set()
+    def request_stop(self):
+        with self._lock:
+            if not self._stop.is_set():self._diagnostics.event('stop_requested')
+            self._stop.set()
     @property
     def stop_requested(self):return self._stop.is_set()
 
@@ -47,15 +53,20 @@ class LiveSession:
         if source_sha256==STAT_SOURCE_SHA256 and STAT_NAMES_SOURCE!=STAT_SOURCE_SHA256:raise ValueError('Stat names source differs')
         with self._lock:
             if self._closed or self._source not in (None,source_sha256):raise ValueError('Session source cannot change')
+            if self._source is None:self._diagnostics.event('source_bound',source_sha256=source_sha256)
             self._source=source_sha256
 
     def _apply_stats(self):
         character=self._snapshot['character']
         if character is None or self._stats_applied==self._stats_revision:return
+        changed={}
         for stat,name in STAT_FIELDS.items():
             value=self._stats.get(stat)
             number=value['number'] if value else None
-            character[name]=number if type(number) is int and 0<=number<=2**53-1 else None
+            current=number if type(number) is int and 0<=number<=2**53-1 else None
+            if current!=character[name]:changed[name]=current
+            character[name]=current
+        if changed:self._diagnostics.event('vitals_changed',values=changed)
         character['stats']=[dict(id=stat,name=STAT_NAMES.get(stat),value=str(value['number']),source=value['source']) for stat,value in sorted(self._stats.items())]
         character['stat_unit']='native_integer'
         character['stats_semantics']='wire_stat_i64'
@@ -72,6 +83,7 @@ class LiveSession:
         # Unknown traffic is counted, never retained or mistaken for decoded state.
         with self._lock:
             if self._closed:return
+            self._diagnostics.packet(packet_id,body)
             counts=self._snapshot['packets']
             key=str(packet_id)
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
@@ -81,8 +93,10 @@ class LiveSession:
             try:change=decoder(body,source_sha256=self._source)
             except (ValueError,BufferError):
                 self._stat_errors=min(self._stat_errors+1,2**53-1)
+                self._diagnostics.event('stat_decode_error',packet_id=packet_id)
                 self._stats.clear();self._stats_revision+=1;self._apply_stats();return
             if change.entity_key!=character_key:return
+            self._diagnostics.event('stats_received',packet_id=packet_id,records=len(change.values))
             if self._stats_key not in (None,character_key):raise RuntimeError('Character identity changed')
             self._stats_key=character_key
             for value in change.values:
@@ -127,6 +141,7 @@ class LiveSession:
                 self._stats_revision+=1
             character=self._snapshot['character']
             if character is None:
+                self._diagnostics.event('world_ready',world_id=position.world_id)
                 character=dict(key=str(key),name=name,world_id=position.world_id,
                     position=dict(x=xyz[0],y=xyz[1],z=xyz[2],semantics='server_target_before_engine_correction'),
                     level=None,hp=None,max_hp=None,mp=None,max_mp=None)
@@ -140,7 +155,9 @@ class LiveSession:
         if error is not None and (not isinstance(error,str) or not re.fullmatch('[a-zA-Z0-9_]{1,96}',error)):
             error='session_failed'
         with self._lock:
+            if not self._closed:self._diagnostics.event('session_closed',error=error)
             self._closed=True
+            self._diagnostics.close()
             self._stats.clear();self._stats_key=None
             self._snapshot.update(state='disconnected',position=None,character=None,entities=[],
                 updated_at_ms=time.time_ns()//1000000,error=error or self._snapshot['error'])
@@ -148,8 +165,44 @@ class LiveSession:
     def snapshot(self):
         with self._lock:
             value=copy.deepcopy(self._snapshot)
+            self._diagnostics.expire()
+            value['journal']=copy.deepcopy(list(self._diagnostics.events)[-32:])
+            value['journal_cursor']=self._diagnostics.sequence
+            value['analysis']=copy.deepcopy(self._diagnostics.analysis)
+            value['trace']=dict(packet_ids=list(self._diagnostics.ids),sample_bytes=self._diagnostics.sample_bytes)
         value['uptime_seconds']=round(time.monotonic()-self._started,1)
         return value
+
+    def journal(self,after=0):
+        if type(after) is not int or not 0<=after<=2**53-1:raise ValueError('Invalid event cursor')
+        with self._lock:return dict(bot_id=self.bot_id,session_id=self.session_id,**self._diagnostics.journal(after))
+
+    def configure_trace(self,lease,ids):
+        with self._lock:
+            if self._closed:raise RuntimeError('Session closed')
+            return self._diagnostics.trace(lease,ids)
+
+    def samples(self,lease,after=0):
+        if type(after) is not int or not 0<=after<=2**53-1:raise ValueError('Invalid sample cursor')
+        with self._lock:return dict(bot_id=self.bot_id,session_id=self.session_id,source_sha256=self._source,
+            **self._diagnostics.read_samples(lease,after))
+
+    def analysis(self,value):
+        # Separate observational output; it never overwrites verified character
+        # fields, sends commands or executes code in the socket owner.
+        if type(value) is not dict or set(value)!={'revision','values','error'}:raise ValueError('Invalid analysis result')
+        if not isinstance(value['revision'],str) or not re.fullmatch('[a-f0-9]{64}',value['revision']):raise ValueError('Invalid analysis revision')
+        if type(value['values']) is not dict or (value['error'] is not None and
+            (not isinstance(value['error'],str) or not re.fullmatch('[a-zA-Z0-9_]{1,64}',value['error']))):raise ValueError('Invalid analysis values')
+        if len(json.dumps(value,allow_nan=False).encode())>16384:raise ValueError('Analysis result too large')
+        with self._lock:
+            if self._closed:raise RuntimeError('Session closed')
+            if value!=self._diagnostics.analysis:
+                previous=self._diagnostics.analysis
+                if previous is None or previous['revision']!=value['revision'] or previous['error']!=value['error']:
+                    self._diagnostics.event('analysis_updated',revision=value['revision'],error=value['error'])
+                self._diagnostics.analysis=copy.deepcopy(value)
+            self._diagnostics.analysis_until=time.monotonic()+6
 
     def status(self):
         with self._lock:return dict(bot_id=self.bot_id,session_id=self.session_id,state=self._snapshot['state'])
