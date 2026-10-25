@@ -5933,6 +5933,49 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Потребители сохранённых invoke pointers / условия вызова, source initialization / precedence, container lifetime и active resource / Brush."
+    },
+    {
+      "addresses": [
+        "0x141425d60",
+        "0x1445c29f0",
+        "0x1445c67a0",
+        "0x1445c78d0",
+        "0x1445cbd00",
+        "0x1445d6ec0"
+      ],
+      "checks": [
+        {
+          "cache_key": "4a028d6cbc8771504c47867ca720ed3da779a0e3828483844eda9b399f9a2f1d",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6c25b350dbcf5762251e36433353a6f9166d84ce32ea79422f458846b300da0f\\manifest.json",
+          "sha256": "6c25b350dbcf5762251e36433353a6f9166d84ce32ea79422f458846b300da0f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native read consumer 1445cbd00 / write consumer 1445d6ec0 выбирают сохранённую привязку через hash/lookup и вызывают read clone / write forwarding через capture-address getter. 96 последовательностей read-write-read / 288 полных вызовов: 128 read invokes и 64 write invokes, miss обнуляет read output и обходит write invoke. Container/остальные destinations неизменны; 5 string/storage services — fixtures.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-CONSUMERS-11316.md",
+          "sha256": "6cb945a9b5393c6b9806a49d7c52146379b30a01fa063f2ced215cf637013740"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dae2243fbae2\\details.json",
+          "sha256": "cba3a568ef1da9ab84757b2c81c319df60abde13f88eb386b4a1cd89471e2b59"
+        }
+      ],
+      "id": "de782b87bbebd9faeaf69374859963bb6c434762a1711c9eeeef8a77d37915ba",
+      "limits": [
+        "Binding records synthetic и соответствуют ранее проверенной структуре; общий registration-to-dispatch replay не выполнен.",
+        "Fixtures: query FString construction/free, clone allocation/byte copy, target FString assignment. Native assignment 1414277b0 не выполнен.",
+        "Found binding требует валидных active callable objects; malformed/inactive state и runtime ownership не моделируются.",
+        "Source event/callers, persistence, config precedence, active settings/resource/Brush и общий lifetime неизвестны.",
+        "Перечисление 1445cb6c0 статически указывает на внешний callback; оно не исполнялось и не объявляется событием обновления."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить native string assignment 1414277b0 и общий registration → read/write на одной памяти; отдельно найти callers/условия и исследовать iterator 1445cb6c0.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native string assignment, registration-to-dispatch интеграция, callers/условия consumers, precedence и active resource/Brush."
     }
   ],
   "schema": 1,

@@ -23,9 +23,23 @@ spec = importlib.util.spec_from_file_location('ui_config_reader_replay', HERE / 
 config_reader = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_reader)
 spec = importlib.util.spec_from_file_location('ui_config_uniqueness_replay', HERE / 'replay-ui-config-uniqueness.py')
 config_uniqueness = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_uniqueness)
+spec = importlib.util.spec_from_file_location('ui_config_consumers_replay', HERE / 'replay-ui-config-consumers.py')
+config_consumers = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_consumers)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_config_consumers_read_write_read_preserve_other_bindings(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_consumers.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_consumers.ROOTS]))
+        self.assertEqual(len(result['cases']), 96)
+        self.assertEqual(sum(c['complete_consumer_calls'] for c in result['cases']), 288)
+        self.assertEqual(sum(c['native_read_invokes'] for c in result['cases']), 128)
+        self.assertEqual(sum(c['native_write_invokes'] for c in result['cases']), 64)
+        for case in result['cases']:
+            self.assertEqual(len(case['reads']), 2)
+            self.assertEqual(case['reads'][1]['missing_zeroed'], case['target_index'] is None)
+
     def test_native_counted_utf16_hash_matches_bitwise_reference(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_reader.key_hash.run(dict(source=source, source_sha256=replay.getter.SHA,

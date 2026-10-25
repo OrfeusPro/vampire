@@ -7,7 +7,7 @@
       "question": "Как NkTileView связывает динамический список эффектов с шаблоном строки и какие свойства сериализованы?",
       "known": "В cooked WBP_PCStatusUI найден export 31 TileViewOperationPanelList типа NkTileView; имена и unversioned indices не доказывают entry factory binding. На установленном SHA d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960 целый unwind root 144a66f20 статически проверен по Ghidra и инструкциям: читает кеш 14b591718, в нулевой ветви передаёт точные UTF16 NkTileView / /Script/NkUMG в helper 1416ab8d0, затем повторно читает кеш и возвращает указатель. Native не исполнялся; назначение аргументов и helper не доказано.",
       "unknown": "Регистрация класса / схема свойств / наследование; entry template, dynamic updater и активный вариант cooked пакета.",
-      "next_action": "Native hash 141425d60 проверен в 537 отдельных случаях / 8 парах с compare: signed count, UTF16 units, ASCII uppercase и file-backed таблица; Ghidra void-листинг не подтверждает алгоритм, роль проверена по инструкциям / native EAX. Общий reader с настоящим hash / uniqueness / lookup / compare / cleanup прошёл 2304 вызова с 8 buckets; 7 services остаются fixtures. Далее найти потребителей invoke pointers в контейнере 14b186130 и условия вызова, не считать регистрацию событием обновления. Source initialization / precedence, active resource / Brush, общий lifetime и producer блоков owner +0x430 / +0x440 / +0x450 открыты.",
+      "next_action": "Найдены consumers контейнера 14b186130: read 1445cbd00 / write 1445d6ec0. Проверены 96 read/write/read последовательностей (288 полных вызовов), native hash / lookup / capture getter / read clone и setter leaf forwarding; 5 string/storage services fixtures. Binding records synthetic; registration→dispatch интеграция ещё не проверена. Iterator 1445cb6c0 статически обходит occupied entries и вызывает внешний callback, его событие неизвестно. Далее native string assignment 1414277b0 и общий registration→read/write; отдельно найти callers/условия consumers. Precedence, active resource/Brush, общий lifetime и producer owner blocks открыты.",
       "decision_rule": "Роль не переносить со старого EXE. Литерал / xref — кандидат, не доказательство класса; индексы свойств без схемы не именовать по значениям. Не смешивать current native metadata и исторические cooked пакеты без проверки совместимости.",
       "do_not_repeat": "Повторный полный экспорт EXE, применение исторических адресов или произвольная привязка NkTileView к sample ZBP по имени.",
       "addresses": [],
@@ -18,7 +18,8 @@
         "evidence/interface/UI-CONFIG-READER-11316.md",
         "evidence/interface/UI-CONFIG-UNIQUENESS-11316.md",
         "evidence/interface/UI-CONFIG-READER-REPLACEMENT-11316.md",
-        "evidence/interface/UI-CONFIG-HASH-11316.md"]
+        "evidence/interface/UI-CONFIG-HASH-11316.md",
+        "evidence/interface/UI-CONFIG-CONSUMERS-11316.md"]
     },
     {
       "id": "sdk-first-player",
