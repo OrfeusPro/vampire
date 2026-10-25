@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Вложенная запись `PktEffectData` ветви NPC create прошла 7656 native-сценариев:
+полные constructor / reader / optional vector / input, каждый префикс и guards.
+Внешний NPC create и семантика actor ещё открыты; runtime не расширен предположениями.
+[Проверка и продолжение](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-EFFECT-11316.md).
+
 На OPPO / HK проверены реальный онлайн-журнал, смена локального обработчика,
 SyntaxError / восстановление без нового входа: около 484 секунд в мире,
 96 periodic Ping / 97 ответов, 207 stats, decoder errors = 0. Тест закрыт Stop.
