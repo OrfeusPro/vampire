@@ -6922,6 +6922,100 @@
       "question": "ui-shared-shortcut-properties-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "SlateBrush struct schema, inherited defaults, runtime selection/visibility/DPI, font and dynamic Brush bindings."
+    },
+    {
+      "addresses": [
+        "0x1418d9130"
+      ],
+      "checks": [],
+      "conclusion": "SlateBrush getter статически связан с metadata14b0cedb0 и 13 descriptor rows; source HP/MP Image.Brush prefix содержит прямой ResourceObject к ProgressBG_HP.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-HP-MP-SKIN-11316.md",
+          "sha256": "665e0931985d820dc7cc886b5611c5db56ddb264ec1f7297eaebc6a433e86f1d"
+        }
+      ],
+      "id": "6054f3bfd6e487ff1b8815a878fc48f4c19fdbf4c3e60de74d8dc900891b2cfe",
+      "limits": [
+        "Native registration, serialization and loader helpers не исполнялись.",
+        "Source preview policy не подтверждает active runtime variant, inherited defaults, visibility, shaders или DPI."
+      ],
+      "method": "static",
+      "next_check": "Проследить native DeferredResourceObject updater и динамический выбор рамки/лица по данным персонажа; не объявлять статический WBP preview фактическим состоянием игры.",
+      "question": "ui-shared-shortcut-properties-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native deferred loader/priority and dynamic portrait/frame selection; inherited visibility/tint/ZOrder; current cooked compatibility."
+    },
+    {
+      "addresses": [
+        "0x141887510",
+        "0x141887570",
+        "0x1418d9130"
+      ],
+      "checks": [],
+      "conclusion": "Подтверждены SlateBrush, Margin четыре float поля и DeprecateSlateVector2D: восемь bytes, без собственных properties, super getter141621e60. Прочитан ограниченный Brush prefix HP/MP; хвост сохранён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-HP-MP-SKIN-11316.md",
+          "sha256": "665e0931985d820dc7cc886b5611c5db56ddb264ec1f7297eaebc6a433e86f1d"
+        }
+      ],
+      "id": "d2eca1b2612f05872c53abbfc2f39e53f84c5a2af9b72f13f6a52881b597f690",
+      "limits": [
+        "Native registration, serialization and loader helpers не исполнялись.",
+        "Source preview policy не подтверждает active runtime variant, inherited defaults, visibility, shaders или DPI."
+      ],
+      "method": "static",
+      "next_check": "Проследить native DeferredResourceObject updater и динамический выбор рамки/лица по данным персонажа; не объявлять статический WBP preview фактическим состоянием игры.",
+      "question": "ui-shared-shortcut-properties-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native deferred loader/priority and dynamic portrait/frame selection; inherited visibility/tint/ZOrder; current cooked compatibility."
+    },
+    {
+      "addresses": [
+        "0x141621e60"
+      ],
+      "checks": [],
+      "conclusion": "Getter связан с Vector2f metadata14b0c9a20; X/Y имеют float descriptors, размер8. Это статическая schema association; native serializer не исполнен.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-HP-MP-SKIN-11316.md",
+          "sha256": "665e0931985d820dc7cc886b5611c5db56ddb264ec1f7297eaebc6a433e86f1d"
+        }
+      ],
+      "id": "a6a1a9988d352fe4fc1777a7c4a46a2a898b864b056fbb6a96a166a5b27e057a",
+      "limits": [
+        "Native registration, serialization and loader helpers не исполнялись.",
+        "Source preview policy не подтверждает active runtime variant, inherited defaults, visibility, shaders или DPI."
+      ],
+      "method": "static",
+      "next_check": "Проследить native DeferredResourceObject updater и динамический выбор рамки/лица по данным персонажа; не объявлять статический WBP preview фактическим состоянием игры.",
+      "question": "ui-shared-shortcut-properties-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native deferred loader/priority and dynamic portrait/frame selection; inherited visibility/tint/ZOrder; current cooked compatibility."
+    },
+    {
+      "addresses": [
+        "0x144a34fa0"
+      ],
+      "checks": [],
+      "conclusion": "NkImage getter связан с именем /Script/NkUMG и родительским Image callback, metadata149648810/array1496487a0: три own fields DeferredResourceObject/CachePolicy/AsyncLoad. Прочитаны explicit source deferred paths трёх portrait controls; runtime precedence не установлена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-HP-MP-SKIN-11316.md",
+          "sha256": "665e0931985d820dc7cc886b5611c5db56ddb264ec1f7297eaebc6a433e86f1d"
+        }
+      ],
+      "id": "1973ce8b3ae4944500aa6fbf481efe3af64d38cb0415e2e8ef70835c9b7cbcc1",
+      "limits": [
+        "Native registration, serialization and loader helpers не исполнялись.",
+        "Source preview policy не подтверждает active runtime variant, inherited defaults, visibility, shaders или DPI."
+      ],
+      "method": "static",
+      "next_check": "Проследить native DeferredResourceObject updater и динамический выбор рамки/лица по данным персонажа; не объявлять статический WBP preview фактическим состоянием игры.",
+      "question": "ui-shared-shortcut-properties-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native deferred loader/priority and dynamic portrait/frame selection; inherited visibility/tint/ZOrder; current cooked compatibility."
     }
   ],
   "schema": 1,

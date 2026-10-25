@@ -51,3 +51,16 @@ test('omitted Overlay padding stays unknown until the demo policy explicitly per
   assert.deepEqual(plan.unknowns, {}); assert.equal(plan.assumptions.length, 2);
   assert.equal(schema.slots['11'].decoded.padding, undefined);
 });
+
+test('source Image frame shares the bar parent and preserves its own source rectangle', () => {
+  const schema = fixture();
+  schema.nodes['6'] = { ...schema.nodes['3'], name: 'Frame', kind: 'Image', incoming: [{ parent: '2', slot: '13' }] };
+  schema.slots['13'] = { decoded: { parent_export: 2, content_export: 6,
+    padding: { left: 0, top: 0, right: 0, bottom: 0 }, horizontal_alignment: 0, vertical_alignment: 0 } };
+  const result = R.plan(schema, options, { ...bindings, frame: { control: 'Frame', kind: 'Image' } });
+  assert.deepEqual(result.unknowns, {});
+  const frame = result.widgets.find(w => w.id === '6');
+  assert.equal(frame.parent, '2');
+  assert.deepEqual(frame.rect, { x: 0, y: 0, width: 200, height: 30 });
+  assert.equal(result.widgets.filter(w => w.id === '2').length, 1);
+});

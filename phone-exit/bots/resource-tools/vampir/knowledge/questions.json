@@ -5,13 +5,13 @@
       "id": "ui-shared-shortcut-properties-11316",
       "status": "open",
       "question": "Какие текущие native схемы WidgetTree / Image и подтверждённые исходные связи позволяют восстановить общий ShortcutkeyHudT?",
-      "known": "Current getters 1435f6360 WidgetTree / 14357fc60 Image статически связаны с class/package literals и точными property arrays. Source RootWidget index0 прочитан в 2376 деревьях: 2375 explicit local candidates, 1 omission; класс импорта и Outer проверены, результат воспроизведён. Brush descriptor Image подтверждён; payload не прочитан. 39 тестов проходят вместе с прежними pipeline / impact / builder проверками.",
-      "unknown": "Brush struct schema / serialization, наследование, текст / шрифты / dynamic bindings, активный cooked вариант и применение геометрии. Current native/cooked compatibility не подтверждена.",
-      "next_action": "Подключить source roots как отдельную аннотацию IR без выбора runtime root; подготовить явный Brush struct getter 1418d9130 из descriptor и проверить его metadata / поля перед чтением изображений.",
+      "known": "Current getters 1435f6360 WidgetTree / 14357fc60 Image статически связаны с class/package literals и точными property arrays. Source RootWidget index0 прочитан в 2376 деревьях: 2375 explicit local candidates, 1 omission; класс импорта и Outer проверены, результат воспроизведён. Brush descriptor Image подтверждён; ограниченный HP / MP Brush prefix и три NkImage DeferredResourceObject прочитаны отдельно, остальные payload остаются открытыми. 39 тестов проходят вместе с прежними pipeline / impact / builder проверками.",
+      "unknown": "Остальные Brush payload / наследование, текст / шрифты / dynamic bindings, активный cooked вариант и native DPI. Для портрета неизвестны runtime loader, выбор лица / рамки и приоритет fallback Brush против deferred path. Current native/cooked compatibility не подтверждена.",
+      "next_action": "Продолжить раздельный аудит наследуемых свойств и runtime оформления. Для HP / MP уже подключены ограниченный source-bound Brush prefix, оригинальная FloatRGBA рамка и вложенные NkImage DeferredResourceObject; проверки и границы в UI-HP-MP-SKIN-11316.md. Не объявлять статический вариант активным оформлением персонажа.",
       "decision_rule": "Metadata, схема чтения, наследование и применение закрываются раздельно. Старые адреса и значения по умолчанию не переносить; source RootWidget не объявлять активным окном игры.",
       "do_not_repeat": "Полный экспорт EXE, подстановка Brush по имени текстуры, повтор уже сохранённых getter exports без изменённых входов.",
       "addresses": ["1435b51e0", "1435f6360", "14357fc60"],
-      "evidence": ["evidence/interface/UI-WIDGET-ROOTS-IMAGE-11316.md"]
+      "evidence": ["evidence/interface/UI-WIDGET-ROOTS-IMAGE-11316.md", "evidence/interface/UI-HP-MP-SKIN-11316.md"]
     },
     {
       "id": "ui-nktileview-property-schema",

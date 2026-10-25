@@ -11,6 +11,7 @@
         "hp_text": "TextHP",
         "mp_text": "TextMP",
         "portrait": "CanvasPanel_0",
+        "portrait_component": "PortraitSmallT",
         "portrait_button": "ButtonPortraitMove"
       },
       "layout_policy": {
@@ -18,6 +19,28 @@
         "omitted_padding_zero": true
       },
       "render_bindings": {
+        "portrait_component": {
+          "control": "PortraitSmallT",
+          "kind": "WBP_PortraitSmallT_C"
+        },
+        "portrait_visual": {
+          "control": "CanvasPanel_0",
+          "kind": "CanvasPanel",
+          "className": "player-status-portrait-visual",
+          "demo_layer": 3
+        },
+        "hp_frame": {
+          "control": "Image_224",
+          "kind": "Image",
+          "className": "vital-frame",
+          "demo_layer": 0
+        },
+        "mp_frame": {
+          "control": "Image",
+          "kind": "Image",
+          "className": "vital-frame",
+          "demo_layer": 0
+        },
         "hp": {
           "control": "ProgressBarHP",
           "kind": "ProgressBar",
@@ -48,7 +71,8 @@
           "control": "ButtonPortraitMove",
           "kind": "NkButton",
           "className": "player-status-portrait",
-          "action": "open-character"
+          "action": "open-character",
+          "demo_layer": 4
         }
       },
       "frame": {
@@ -71,6 +95,21 @@
         "mp": "component-player-mp",
         "portrait": "component-player-portrait",
         "portrait_button": "component-player-portrait-button"
+      },
+      "dependencies": [{"control": "PortraitSmallT", "module": "player_portrait"}]
+    },
+    "player_portrait": {
+      "resource": "WBP_PortraitSmallT",
+      "catalog_file": "pakchunk500-Windows-2793.json",
+      "frame_root": "CanvasPanel_17",
+      "frame": {"width": 118, "height": 118},
+      "frame_basis": "Размер выделенного PortraitSmallT из parent slot 18: 84 × 84 и margins −17 с каждой стороны.",
+      "members": ["ImageBG", "ImageFrame", "ImagePortrait"],
+      "layout_policy": {"omitted_auto_size_false": true},
+      "render_bindings": {
+        "background": {"control": "ImageBG", "kind": "NkImage", "demo_layer": 0},
+        "portrait": {"control": "ImagePortrait", "kind": "NkImage", "demo_layer": 1},
+        "frame": {"control": "ImageFrame", "kind": "NkImage", "demo_layer": 2}
       }
     },
     "title_bar": {

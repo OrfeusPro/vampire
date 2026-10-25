@@ -913,12 +913,13 @@
   document.getElementById('inspector').hidden = true;
   addEventListener('pagehide', () => { pageActive = false; releaseProfile(); });
   addEventListener('pageshow', event => { pageActive = true; if (event.persisted) activateProfile(); });
-  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json', 'skin-tokens.json', 'components.json', 'component-layouts.json'].map(fetchJSON)).then(async ([t, m, r, items, placement, nativeControls, skills, skinTokens, sharedComponents, componentLayouts]) => {
+  Promise.all(['textures.json', 'manifest.json', 'registry-index.json', 'items.json', 'placement-evidence.json', 'button-evidence.json', 'skills-index.json', 'skin-tokens.json', 'components.json', 'component-layouts.json', 'status-skin.json'].map(fetchJSON)).then(async ([t, m, r, items, placement, nativeControls, skills, skinTokens, sharedComponents, componentLayouts, statusSkin]) => {
     skillSources = skills; textures = t; manifest = m; registry = r; sourceItems = items; layouts = placement; buttonLayouts = nativeControls;
     componentDefinitions = sharedComponents;
     const statusSchema = await fetchJSON(componentLayouts.player_status.file);
+    const portraitSchema = await fetchJSON(componentLayouts.player_portrait.file);
     if (statusSchema.source.catalog_file !== sharedComponents.modules.player_status.catalog_file || statusSchema.source.catalog_sha256 !== componentLayouts.player_status.source_sha256) throw Error('Схема статуса относится к другому источнику.');
-    components = VampirUiComponents.create({ el, append, image, portrait, button, icon, fmt, vitals: M.vitals, geometry: VampirGeometry, definitions: componentDefinitions, schemas: { player_status: statusSchema } });
+    components = VampirUiComponents.create({ el, append, image, portrait, button, icon, fmt, vitals: M.vitals, geometry: VampirGeometry, definitions: componentDefinitions, schemas: { player_status: statusSchema, player_portrait: portraitSchema }, statusSkin });
     if (manifest.state_schema !== M.SCHEMA) throw Error('Версия модели не соответствует manifest этой сборки.');
     document.title = 'Vampir · ' + profile;
     for (const [key, name] of [['title-bg', 'BG_Title'], ['scene-bg', 'BG_PAC'], ['button-bg', 'BTN_ConfirmRed256'], ['button-press', 'BTN_ConfirmRed256_Press'], ['normal-bg', 'BTN_ConfirmBlack256'], ['normal-press', 'BTN_ConfirmBlack256_Press']]) if (textures[name]) document.documentElement.style.setProperty('--' + key, 'url("' + textures[name].url + '")');

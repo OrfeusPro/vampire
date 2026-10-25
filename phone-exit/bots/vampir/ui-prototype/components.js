@@ -1,7 +1,7 @@
 /* Shared view components: explicit input state and callbacks, no transport/subscriptions/timers. */
 (function(root) {
   'use strict';
-  function create({ el, append, image, portrait, button, icon, fmt, vitals, geometry, definitions, schemas }) {
+  function create({ el, append, image, portrait, button, icon, fmt, vitals, geometry, definitions, schemas, statusSkin }) {
     const spec = definitions.modules.player_status;
     const compiled = VampirLayoutSchema.solve(schemas.player_status, { root: spec.frame_root,
       frame: geometry.rect(0, 0, spec.frame.width, spec.frame.height), targets: spec.layout_targets, policy: spec.layout_policy });
@@ -14,20 +14,37 @@
       const node = view.node; node.classList.add('player-status'); node.dataset.component = 'player-status'; node.dataset.sourceResource = spec.resource; node.dataset.geometryState = 'allocated-component-frame';
       node.dataset.layoutEngine = 'projected-widget-tree'; node.dataset.layoutAssumptions = JSON.stringify(view.compiled.assumptions);
       const avatar = view.elements.portrait_button;
-      let appearanceKey;
+      for (const [key, control] of [['hp_frame', 'Image_224'], ['mp_frame', 'Image']]) {
+        const node = view.elements[key], brush = statusSkin.brushes[control];
+        if (brush.export.sha256 !== schemas.player_status.nodes[String(brush.export.index)].source.sha256) throw Error('Brush рамки относится к другому источнику.');
+        const texture = image(statusSkin.texture), [left, top, right, bottom] = brush.margin;
+        if (!texture.src) throw Error('Не опубликована исходная текстура рамки HP / MP.');
+        node.style.borderImageSource = 'url("' + texture.src + '")';
+        node.style.borderImageSlice = [top, right, bottom, left].map(v => v * 100).join(' ') + ' fill';
+        node.style.borderWidth = [top * brush.image_size[1], right * brush.image_size[0], bottom * brush.image_size[1], left * brush.image_size[0]].map(v => 'calc(' + v + ' * var(--ui-component-unit))').join(' ');
+        node.dataset.brushBinding = 'explicit-image-brush-resource-object';
+      }
+      const portraitSpec = definitions.modules.player_portrait;
+      const portraitView = VampirWidgetRenderer.mount({ document, schema: schemas.player_portrait,
+        options: { root: portraitSpec.frame_root, frame: geometry.rect(0, 0, boxes.portrait_component.width, boxes.portrait_component.height), policy: portraitSpec.layout_policy },
+        bindings: portraitSpec.render_bindings });
+      for (const [key, control] of [['background', 'ImageBG'], ['portrait', 'ImagePortrait'], ['frame', 'ImageFrame']]) {
+        const source = statusSkin.portrait_brushes[control];
+        if (source.export.sha256 !== schemas.player_portrait.nodes[String(source.export.index)].source.sha256) throw Error('Портрет относится к другому источнику.');
+        const art = image(source.asset_path, 'player-portrait-art');
+        if (!art.src) throw Error('Не опубликован исходный ресурс портрета.');
+        portraitView.elements[key].append(art);
+      }
+      view.elements.portrait_component.append(portraitView.node);
+      node.dataset.portraitMode = 'static-source-deferred-resources';
       for (const id of ['hp', 'mp']) view.elements[id].dataset.vital = id;
       function update(next, person) {
         avatar.setAttribute('aria-label', 'Открыть персонажа ' + (person?.name || 'Демо')); avatar.title = person?.name || 'Персонаж';
-        const nextAppearance = JSON.stringify(person?.appearance || null);
-        if (appearanceKey !== nextAppearance) {
-          const picture = portrait(person?.appearance); picture.style.setProperty('--portrait-x', String(boxes.portrait.x - boxes.portrait_button.x)); picture.style.setProperty('--portrait-y', String(boxes.portrait.y - boxes.portrait_button.y)); picture.style.setProperty('--portrait-size', String(boxes.portrait.width));
-          avatar.replaceChildren(picture); appearanceKey = nextAppearance;
-        }
         const values = {};
         for (const value of vitals(next)) { values[value.id] = { value: value.value, max: value.max }; values[value.id + '_text'] = String(value.value) + '/' + String(value.max); }
         view.update(values);
       }
-      update(state, character); return { node, update, dispose: view.dispose };
+      update(state, character); return { node, update, dispose() { portraitView.dispose(); view.dispose(); } };
     }
     function currency(key, value) {
       const node = el('span', undefined, 'currency'); node.setAttribute('aria-label', (key === 'gold' ? 'Золото: ' : 'Алмазы: ') + fmt(value));

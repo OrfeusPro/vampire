@@ -22,6 +22,14 @@ def verify(snapshot):
     for name, digest in manifest.get('generated_files', {}).items():
         assert sha(snapshot / name) == digest, 'Changed generated file: ' + name
     textures = json.loads((snapshot / 'textures.json').read_text('utf-8'))
+    if (snapshot / 'status-skin.json').exists():
+        status_skin = json.loads((snapshot / 'status-skin.json').read_text('utf-8'))
+        assert status_skin['schema'] == 1 and status_skin['texture'] in textures, 'Missing published HP/MP frame texture'
+        assert set(status_skin['brushes']) == {'Image', 'Image_224'}
+        assert all(b['resource_reference']['path'] == status_skin['texture'] + '.ProgressBG_HP'
+                   for b in status_skin['brushes'].values()), 'Frame Brush points at a different texture'
+        assert set(status_skin['portrait_brushes']) == {'ImageBG', 'ImageFrame', 'ImagePortrait'}
+        assert all(b['asset_path'] in textures for b in status_skin['portrait_brushes'].values()), 'Missing published portrait resource'
     index = json.loads((snapshot / 'registry-index.json').read_text('utf-8'))
     assert len(index) == manifest['registry_count'], 'Incomplete registry'
     assert len({row['id'] for row in index}) == len(index), 'Duplicate resource IDs'

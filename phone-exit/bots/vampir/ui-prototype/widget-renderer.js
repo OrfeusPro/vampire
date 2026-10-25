@@ -2,7 +2,7 @@
 (function(root) {
   'use strict';
   const L = typeof module !== 'undefined' && module.exports ? require('./layout-schema.js') : root.VampirLayoutSchema;
-  const supported = new Set(['CanvasPanel', 'Overlay', 'SizeBox', 'ProgressBar', 'NkTextBlock', 'NkButton']);
+  const supported = new Set(['CanvasPanel', 'Overlay', 'SizeBox', 'ProgressBar', 'NkTextBlock', 'NkButton', 'Image', 'NkImage', 'WBP_PortraitSmallT_C']);
   function plan(schema, options, bindings) {
     const ids = {}, targets = {}, parents = {}, problems = {}, bound = new Set();
     const find = value => Object.hasOwn(schema.nodes, value) ? String(value) : (() => {

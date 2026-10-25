@@ -17,6 +17,7 @@ import ui_desired_geometry
 import ui_composition_graph
 import ui_layout_schema
 import ui_display_settings
+import ui_status_skin
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -207,6 +208,8 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
     index = read(index_path)
     image_path = root / 'archive-image-latest.json'
     images = read(image_path)
+    status_skin, status_texture, status_inputs = ui_status_skin.prepare(root)
+    images = [*images, status_texture]
     shared, originals = shared_ui_library.build(root, images)
     skin_evidence, skin_images, skin_inputs = shared_ui_library.skin_roles(root, images, read(SOURCE / 'skin-roles.json'))
     known_shared = {row['asset_path'] for row in shared['textures']}
@@ -217,8 +220,11 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
     skill_evidence, skill_images, skill_inputs = skill_sources(root)
     collection_catalog = ui_collection_catalog.prepare(root)
     # All texture membership is recorded as historical extraction, not active brushes.
-    selected = {}
+    selected = {status_texture['asset_path']: status_texture}
+    for portrait_texture in status_skin['portrait_textures']:
+        selected[portrait_texture['asset_path']] = portrait_texture
     exact = {'BG_Title', 'BG_PAC', 'BG_Portrait', 'BTN_ConfirmRed256',
+             'ProgressBG_HP',
              'BTN_ConfirmBlack256', 'PopUp_Default_Title_texture',
              'PopUp_DefaultBG_texture_01', 'IMG_Weapon_BloodSword_Rare_03',
              'IMG_Armor_Helmet_Common_01', 'IMG_Armor_Armor_Common_01',
@@ -289,6 +295,7 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
     inputs.update(shared['inputs'])
     inputs.update(skill_inputs)
     inputs.update(skin_inputs)
+    inputs.update(status_inputs)
     inputs.update(collection_catalog['inputs'])
     for profile in read(SOURCE / 'window-layouts.json')['profiles'].values():
         reference = profile.get('reference_resource')
@@ -323,7 +330,8 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
                               'ui_desired_geometry.py': sha(HERE / 'ui_desired_geometry.py'),
                               'ui_composition_graph.py': sha(HERE / 'ui_composition_graph.py'),
                               'ui_layout_schema.py': sha(HERE / 'ui_layout_schema.py'),
-                              'ui_display_settings.py': sha(HERE / 'ui_display_settings.py')})
+                              'ui_display_settings.py': sha(HERE / 'ui_display_settings.py'),
+                              'ui_status_skin.py': sha(HERE / 'ui_status_skin.py')})
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -422,6 +430,8 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
             binding['runtime_geometry_verified'] = False
         write(temporary / 'button-evidence.json', button_layouts)
         write(temporary / 'component-evidence.json', component_sources(root, read(SOURCE / 'components.json'), records, button_layouts))
+        write(temporary / 'status-skin.json', dict(schema=1, texture=status_texture['asset_path'],
+            brushes=status_skin['brushes'], portrait_brushes=status_skin['portrait_brushes'], limits=status_skin['limits']))
         schemas = ui_layout_schema.publish(records, temporary)
         write(temporary / 'layout-schema-index.json', schemas)
         component_layouts = {}
