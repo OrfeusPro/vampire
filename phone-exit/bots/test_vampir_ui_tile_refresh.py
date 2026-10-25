@@ -26,6 +26,32 @@ config_uniqueness = importlib.util.module_from_spec(spec); spec.loader.exec_modu
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_counted_utf16_hash_matches_bitwise_reference(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_reader.key_hash.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(config_reader.key_hash.HASH))]))
+        self.assertEqual(len(result['cases']), 537)
+        self.assertEqual(len(result['consistency']), 8)
+        for pair in result['consistency']:
+            if pair['compared_equal'] and not pair['embedded_nul_synthetic']:
+                self.assertEqual(pair['left_hash'], pair['right_hash'])
+        adversarial = [p for p in result['consistency'] if p['embedded_nul_synthetic']]
+        self.assertEqual(len(adversarial), 1)
+        self.assertNotEqual(adversarial[0]['left_hash'], adversarial[0]['right_hash'])
+
+    def test_native_hash_drives_reader_lookup_across_eight_buckets(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_reader.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_reader.HASH_ROOTS]),
+            native_replacement=True, native_hash=True)
+        self.assertEqual(len(result['cases']), 384)
+        self.assertNotIn('hash_key', result['fixtures'])
+        self.assertNotIn('uniqueness_false', result['fixtures'])
+        for case in result['cases']:
+            self.assertEqual(case['bucket_count'], 8)
+            self.assertEqual(sorted(i for chain in case['native_bucket_chains'] for i in chain), [0, 1, 2])
+            self.assertTrue(all(e['native_hash_calls'] == 1 and e['native_hash_result'] is not None for e in case['sequence']))
+
     def test_native_reader_replacement_and_free_slot_reuse_share_one_memory(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_reader.run(dict(source=source, source_sha256=replay.getter.SHA,

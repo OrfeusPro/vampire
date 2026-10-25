@@ -5889,6 +5889,50 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Native hash и согласованность с compare, потребители invoke pointers / условия вызова, container lifetime, precedence и active resource / Brush."
+    },
+    {
+      "addresses": [
+        "0x141421b80",
+        "0x141425d60",
+        "0x1445c1f50",
+        "0x1445c29f0",
+        "0x1445c2c30",
+        "0x1445c4f60",
+        "0x1445d8430"
+      ],
+      "checks": [
+        {
+          "cache_key": "78424001034fdf7cf553e89454471925edffa2145ef3b233b307660d7dd4f293",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\66aed9106aa67fe5aa4c98a5524225f6fa5687cc56f6314019c1c73bdc3f1c5f\\manifest.json",
+          "sha256": "66aed9106aa67fe5aa4c98a5524225f6fa5687cc56f6314019c1c73bdc3f1c5f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native counted UTF16 hash 141425d60 / file-backed таблица проверены в 537 случаях по независимому bitwise oracle и 8 парах с native compare. ASCII uppercasing, zero seed, два table updates на unit, count<=0 обходит чтение; embedded NUL выявляет различие counted hash и terminator compare. Общий reader без hash fixture прошёл 2304 вызова с 8 buckets: реальные hash направляют lookup/replacement/reuse, финальные slots 2/1/0 находятся в buckets 4/5/6. Ghidra void-листинг не восстанавливает алгоритм; доказательство — инструкции / unwind / native EAX.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-HASH-11316.md",
+          "sha256": "bd94edd193b1ef95adf27f18a65e614473cb73549d44a2d3a9d761345a95cd0a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-3318f40a35c0\\details.json",
+          "sha256": "e2277c705fd0418674879b0914a2a60683044098879fcb6c93e68713a2262253"
+        }
+      ],
+      "id": "8d3e0f63816f1e169fb7dec06c7b3ae6a6fe6a9e8452c7109d21be0a5b62b849",
+      "limits": [
+        "File-backed CRC table проверена; runtime writers / active image state не исследованы.",
+        "537 случаев и 8 пар ограничены выбранными доменами; odd alignment, isolated surrogate и embedded NUL — synthetic adversarial входы, не поддержанный контракт настроек.",
+        "В общем reader остаются virtual lookup, FString construction/assignment, append-bit, string free, memmove и cookie fixtures.",
+        "Preallocated storage, без growth/rehash/полного allocator; общий lifetime и последующий invoke dispatch не подтверждены.",
+        "Source initialization / precedence, active settings / resource / Brush и cooked compatibility открыты."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти потребителей invoke pointers контейнера 14b186130 и условия их вызова; не считать регистрацию ключа событием обновления настройки.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Потребители сохранённых invoke pointers / условия вызова, source initialization / precedence, container lifetime и active resource / Brush."
     }
   ],
   "schema": 1,

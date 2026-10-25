@@ -14,8 +14,8 @@
   "manual_port_targets": [
     {
       "id": "ui-nktileview-layout-flow",
-      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0"],
-      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py"],
+      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0", "0x141425d60"],
+      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py", "replay-ui-config-hash.py"],
       "required_checks": ["ui-nktileview-refresh-current"],
       "rule": "Addresses belong only to this plan baseline SHA. Literal matches are candidates; verify getter, table ownership, transfers and port bounded checks before use. Native checks do not validate historical cooked resources or generator rules.",
       "automation": {
@@ -37,13 +37,14 @@
               {"address": "0x1445cf4f0", "scope": "Static branch/call/template checks only; string helpers and runtime prefix unknown", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c6820", "scope": "Static /Game and NnCoreSetting.ContentSubName call flow; snapshot RED not active runtime proof", "required_checks": []},
               {"address": "0x1445c2c30", "scope": "144 legacy new-entry calls plus 2304 complete six-call native replacement/reuse calls; service fixtures remain, no active settings or later dispatch proof", "required_checks": ["ui-nktileview-refresh-current"]},
-              {"address": "0x1445c1f50", "scope": "Native insertion/replacement/free-slot reuse in whole reader; four preallocated slots, three live keys, hash/string/storage services are fixtures; growth/rehash excluded", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1445c1f50", "scope": "Native insertion/replacement/free-slot reuse in whole reader; four preallocated slots, three live keys, string/storage services are fixtures; native hash mode uses 8 buckets; growth/rehash excluded", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c67a0", "scope": "32 full string clone helper/wrapper scenarios combined; allocation and byte-copy fixtures, malformed counts excluded", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c78d0", "scope": "String clone wrapper, part of the same 32 scenarios; leaf 1445c7970 has 3 forwarding-only scenarios, no event dispatch proof", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445c4f60", "scope": "48 complete paired callable copy cases, actual virtual capture-copy leaf, no fixtures in copy paths", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x141421b80", "scope": "16 direct/tail cleanup cases with deallocation fixture; 3 related capture-address leaf cases; not container lifetime proof", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445d8430", "scope": "512 standalone uniqueness cases plus native replacement in 2304 whole reader calls; actual lookup/compare/cleanup, free/memmove services fixtures, no later dispatch proof", "required_checks": ["ui-nktileview-refresh-current"]},
-              {"address": "0x1445c29f0", "scope": "Native lookup in standalone and whole-reader replacement tests; exact 71-byte compare leaf and ASCII table, no universal Unicode folding claim", "required_checks": ["ui-nktileview-refresh-current"]}
+              {"address": "0x1445c29f0", "scope": "Native lookup in standalone and whole-reader replacement tests; exact 71-byte compare leaf and ASCII table, no universal Unicode folding claim", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x141425d60", "scope": "537 standalone counted-UTF16 cases / 8 native compare pairs, bitwise oracle and file-backed table; 2304 whole-reader calls across 8 buckets with no hash fixture; decompiler void output is not algorithm proof", "required_checks": ["ui-nktileview-refresh-current"]}
             ],
             "evidence": [
               "evidence/interface/NKTILEVIEW-REGISTRATION-11316.md",
@@ -58,7 +59,8 @@
               "evidence/interface/UI-CONFIG-PAYLOAD-11316.md",
               "evidence/interface/UI-CONFIG-READER-11316.md",
               "evidence/interface/UI-CONFIG-UNIQUENESS-11316.md",
-              "evidence/interface/UI-CONFIG-READER-REPLACEMENT-11316.md"
+              "evidence/interface/UI-CONFIG-READER-REPLACEMENT-11316.md",
+              "evidence/interface/UI-CONFIG-HASH-11316.md"
             ]
           }
         ]
