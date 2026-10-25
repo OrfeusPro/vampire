@@ -6444,6 +6444,57 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Cold installed/file-vtable contract, no-unwind environment leaf boundary, CRT locale, whole override/fallback/base path and UI sources."
+    },
+    {
+      "addresses": [
+        "0x141465720",
+        "0x141466840",
+        "0x141533f40",
+        "0x1415351b0",
+        "0x141586fe0"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1ccc97b92791ab6f03de9b91e6089e4b4127691e669fbbcb29858be3f4deba55",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a4ebf80f6da221d714de8c54b6c33eab17cbe4b07eb49cf1c41dc5f207b9ac2e\\manifest.json",
+          "sha256": "a4ebf80f6da221d714de8c54b6c33eab17cbe4b07eb49cf1c41dc5f207b9ac2e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "128 normal cold installed predicate scenarios / 128 cache repeats, native source wrapper/join/manager getter/file-backed slot+48→141465720/flag/compare. Next platform slot+78 remains fixture. 1415351b0 static diagnostic LowLevelFatalError, not normal initialization.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-INSTALLED-COLD-11316.md",
+          "sha256": "f3f32532053415dc20a4e4f008c3bb825aea3c5453f7ce36546546136bb75504"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d0f01414a99f\\details.json",
+          "sha256": "193e4cdfbd910be61e7a883ae9f9f542294d03aa5bd52c367e235bb11005d759"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-ccbca26b013d\\details.json",
+          "sha256": "6ed3eabc4fdb9a6958b119f73228923078ed8dfbbd6ce46e44823c3d48c5fbc0"
+        }
+      ],
+      "id": "311a219206e3a652e99aec8202bb680439f4c400c378cbc90a496e15b1f68d4d",
+      "limits": [
+        "Base-directory source/copy/reserve/byte-copy/normalization/platform manager/resolver/backend/free/iswspace fixtures.",
+        "All cold runs use initialized command-line flag=1 and ready filesystem manager guard; diagnostic body static only.",
+        "No real file existence, actual path/command line/config precedence/UI proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "UI-21.E-13.02.36 source/normalization/platform chain; .34 diagnostic/leaf/CRT; whole base-path/loader/precedence remain open.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "141459960 source, normalization 141584080, actual platform manager/resolver/backend, diagnostic failure behavior and UI configuration binding."
     }
   ],
   "schema": 1,
