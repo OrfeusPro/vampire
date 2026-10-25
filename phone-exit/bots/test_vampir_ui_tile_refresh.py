@@ -47,7 +47,28 @@ spec = importlib.util.spec_from_file_location('ui_config_source_helpers_replay',
 config_sources = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_sources)
 
 
+spec = importlib.util.spec_from_file_location('ui_config_parser_core_replay', HERE / 'replay-ui-config-parser-core.py')
+config_parser = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_parser)
+
+
 class TileRefreshTests(unittest.TestCase):
+    def test_native_parser_core_and_compare_integrated_with_wrapper(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
+        result = config_parser.run(dict(base, functions=[dict(address=hex(a)) for a in config_parser.ROOTS]),
+            dict(base, functions=[dict(address='0x14158edf0')]))
+        self.assertEqual(len(result['core_cases']), 600)
+        self.assertEqual(len(result['wrapper_cases']), 128)
+        for case in result['wrapper_cases']:
+            self.assertEqual(case['core_calls'], int(bool(case['input_units'])))
+            self.assertNotIn('parse_core', case['services'])
+        cases=[c for c in result['core_cases'] if c['capacity']==64 and c['extra']]
+        unquoted={c['flag']:c for c in cases if c['input_fixture']==config_parser.KEY+'one,two)end'}
+        self.assertEqual(unquoted[0]['result_utf16'], config_parser.units('one,two)end'))
+        self.assertEqual(unquoted[1]['result_utf16'], config_parser.units('one'))
+        self.assertTrue(all(c['success'] for c in cases if c['input_fixture']==config_parser.KEY))
+        self.assertFalse(any(c['success'] for c in cases if c['input_fixture']=='x'+config_parser.KEY+'bad'))
+
     def test_native_manager_and_parser_buffer_cleanup_boundaries(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_sources.run(dict(source=source, source_sha256=replay.getter.SHA,

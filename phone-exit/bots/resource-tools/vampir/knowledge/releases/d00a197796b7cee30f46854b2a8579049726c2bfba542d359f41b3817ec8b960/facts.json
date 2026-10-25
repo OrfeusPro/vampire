@@ -6325,6 +6325,47 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Core parser semantics, manager constructor, actual directory sources and condition, source precedence/UI binding."
+    },
+    {
+      "addresses": [
+        "0x14145f4a0",
+        "0x14158f1a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "34b3ae4bbe8dac8faa6d8216cbcae99933e9b83b1dff1e04f59d6c8eb49d0a44",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ff6f2e45b8b19a302fc741cc94a80e8554b1bbbf23a416ec5114eb2ce85102ea\\manifest.json",
+          "sha256": "ff6f2e45b8b19a302fc741cc94a80e8554b1bbbf23a416ec5114eb2ce85102ea",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native core parser и bounded compare: 600 случаев, ASCII table, границы ключа / quotes / delimiters / capacity / end pointer. Общая цепочка wrapper→core→compare без parser result fixture прошла 128 случаев, включая heap input.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-PARSER-CORE-11316.md",
+          "sha256": "986d01f391a8519458e661fe49b7d0a1b422915e58977031afd9b7233c9a8bd1"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-eaaf586161a6\\details.json",
+          "sha256": "dac2a578cd9f0f5f3948b35607ac32c704d7098f00b3e366ce3fdb6c4bbab55d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-cf2acdf8d5bb\\details.json",
+          "sha256": "0ed9b6cfdf89fb0829086e01ee49466f4d944ccc305e1351539da851d9f4b873"
+        }
+      ],
+      "id": "b729e252286b6da164af604379da603ed1dcd3c0399f8f39ca22b7f991dd4d7c",
+      "limits": [
+        "Quote-search/byte-copy fixtures; wrapper string/storage/probe/cookie primitives remain fixtures.",
+        "Fixed nonempty ASCII key, nonnegative capacity, valid non-overlapping UTF16 buffers; malformed keys/capacity/aliasing/errors excluded.",
+        "No actual command line, directory/config precedence or active UI proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "UI-21.E-13.02.28 primitives/boundaries, .25 directory sources, .26 manager constructor, .29 whole base path.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Remaining CRT/string primitives, invalid-input boundaries, actual directory sources, whole base-path and config loader/precedence/UI binding."
     }
   ],
   "schema": 1,
