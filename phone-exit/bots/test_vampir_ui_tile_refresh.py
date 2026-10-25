@@ -55,7 +55,27 @@ spec = importlib.util.spec_from_file_location('ui_config_directory_sources_repla
 config_directories = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_directories)
 
 
+spec = importlib.util.spec_from_file_location('ui_config_directory_predicates_replay', HERE / 'replay-ui-config-directory-predicates.py')
+config_predicates = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_predicates)
+
+
 class TileRefreshTests(unittest.TestCase):
+    def test_native_flag_search_folder_selector_and_cached_mode_in_gate(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
+        result = config_predicates.run(dict(base, functions=[dict(address=hex(a)) for a in config_predicates.ROOTS]),
+            dict(base, functions=[dict(address='0x141589b30')]))
+        self.assertEqual([len(result[k]) for k in ('flag_cases','folder_cases','cached_folder_cases','installed_cached_cases','gate_cases')], [120,20,8,5,64])
+        save={c['text_fixture']:c['result'] for c in result['flag_cases'] if c['key']=='SaveToUserDir'}
+        self.assertEqual(save['-SaveToUserDir'],1)
+        self.assertEqual(save['SaveToUserDir'],0)
+        self.assertEqual(save['--SaveToUserDir'],0)
+        self.assertEqual(save['-SaveToUserDir=1'],0)
+        for case in result['gate_cases']:
+            self.assertEqual(case['native_flag_calls'],int(not case['installed_cache_fixture']))
+        for case in result['folder_cases']:
+            self.assertEqual(case['native_flag_calls'],1 if case['result'] else 2)
+
     def test_native_directory_gate_and_os_folder_error_cache(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_directories.run(dict(source=source, source_sha256=replay.getter.SHA,
