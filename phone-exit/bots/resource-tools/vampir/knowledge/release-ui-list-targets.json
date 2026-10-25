@@ -14,8 +14,8 @@
   "manual_port_targets": [
     {
       "id": "ui-nktileview-layout-flow",
-      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0", "0x141425d60", "0x1445cbd00", "0x1445d6ec0", "0x1445cb6c0", "0x1414277b0", "0x1455086b0", "0x145509470", "0x145517810", "0x1445d1cd0", "0x14157cf70", "0x141534f70", "0x14144b5b0", "0x1414324d0", "0x141585780", "0x14157d1d0", "0x141585960", "0x14158edf0", "0x14158f1a0", "0x14145f4a0"],
-      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py", "replay-ui-config-hash.py", "replay-ui-config-consumers.py", "replay-ui-string-assignment.py", "inspect-ui-config-callers.py", "replay-ui-config-reload.py", "replay-ui-config-load-wrapper.py", "replay-ui-config-path-provider.py", "replay-ui-config-path-join.py", "replay-ui-config-source-helpers.py", "replay-ui-config-parser-core.py"],
+      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0", "0x141425d60", "0x1445cbd00", "0x1445d6ec0", "0x1445cb6c0", "0x1414277b0", "0x1455086b0", "0x145509470", "0x145517810", "0x1445d1cd0", "0x14157cf70", "0x141534f70", "0x14144b5b0", "0x1414324d0", "0x141585780", "0x14157d1d0", "0x141585960", "0x14158edf0", "0x14158f1a0", "0x14145f4a0", "0x141578190", "0x141589b30", "0x1415d9250", "0x141455330"],
+      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py", "replay-ui-config-hash.py", "replay-ui-config-consumers.py", "replay-ui-string-assignment.py", "inspect-ui-config-callers.py", "replay-ui-config-reload.py", "replay-ui-config-load-wrapper.py", "replay-ui-config-path-provider.py", "replay-ui-config-path-join.py", "replay-ui-config-source-helpers.py", "replay-ui-config-parser-core.py", "replay-ui-config-directory-sources.py"],
       "required_checks": ["ui-nktileview-refresh-current"],
       "rule": "Addresses belong only to this plan baseline SHA. Literal matches are candidates; verify getter, table ownership, transfers and port bounded checks before use. Native checks do not validate historical cooked resources or generator rules.",
       "automation": {
@@ -62,7 +62,11 @@
               {"address": "0x141585960", "scope": "Static directory-selection branches and direct calls only; not executed, actual sources/condition/global unknown", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x14158edf0", "scope": "192 complete parser-wrapper cases, inline/heap boundary 4096 and cleanup; core parser/string/storage/stack/cookie fixtures, no parsing or actual config proof", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x14158f1a0", "scope": "600 native core cases plus 128 wrapper/core/compare scenarios; quote-search/copy and wrapper primitives fixtures; fixed ASCII key, no actual command-line/config proof", "required_checks": ["ui-nktileview-refresh-current"]},
-              {"address": "0x14145f4a0", "scope": "Whole native bounded compare in core scenarios, exact ASCII table; non-ASCII raw units, no universal Unicode folding claim", "required_checks": ["ui-nktileview-refresh-current"]}
+              {"address": "0x14145f4a0", "scope": "Whole native bounded compare in core scenarios, exact ASCII table; non-ASCII raw units, no universal Unicode folding claim", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x141578190", "scope": "Static override UserDir= / manager cache and call graph only; whole body not executed", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x141589b30", "scope": "64 initialization / 16 cached gate cases, native short circuit/store/return; predicates/guard fixtures", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1415d9250", "scope": "64 native system-folder wrapper cases, PE import/GUID/ABI/HRESULT/cache/cleanup; OS/string/guard/free fixtures, no actual folder proof", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x141455330", "scope": "Static fallback fields/flags/literals/direct calls only; not executed, actual path/source unknown", "required_checks": ["ui-nktileview-refresh-current"]}
             ],
             "evidence": [
               "evidence/interface/NKTILEVIEW-REGISTRATION-11316.md",
@@ -88,7 +92,8 @@
               "evidence/interface/UI-CONFIG-PATH-PROVIDER-11316.md",
               "evidence/interface/UI-CONFIG-PATH-JOIN-11316.md",
               "evidence/interface/UI-CONFIG-SOURCE-HELPERS-11316.md",
-              "evidence/interface/UI-CONFIG-PARSER-CORE-11316.md"
+              "evidence/interface/UI-CONFIG-PARSER-CORE-11316.md",
+              "evidence/interface/UI-CONFIG-DIRECTORY-SOURCES-11316.md"
             ]
           }
         ]

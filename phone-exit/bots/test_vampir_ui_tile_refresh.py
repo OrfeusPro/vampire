@@ -51,7 +51,26 @@ spec = importlib.util.spec_from_file_location('ui_config_parser_core_replay', HE
 config_parser = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_parser)
 
 
+spec = importlib.util.spec_from_file_location('ui_config_directory_sources_replay', HERE / 'replay-ui-config-directory-sources.py')
+config_directories = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_directories)
+
+
 class TileRefreshTests(unittest.TestCase):
+    def test_native_directory_gate_and_os_folder_error_cache(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_directories.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_directories.ROOTS]))
+        self.assertEqual(len(result['gate_cases']), 64)
+        self.assertEqual(len(result['cached_gate_cases']), 16)
+        self.assertEqual(len(result['folder_cases']), 64)
+        self.assertEqual(result['imports']['0x14899b2c0']['name'], 'SHGetKnownFolderPath')
+        self.assertEqual(result['imports']['0x14899c440']['name'], 'CoTaskMemFree')
+        for case in result['folder_cases']:
+            self.assertEqual(case['queried'], case['initial_count'] <= 1)
+            self.assertEqual(case['success'], case['queried'] and case['hresult_fixture'] >= 0)
+            self.assertEqual(case['services'].count('os_free'), int(case['success']))
+        self.assertEqual({c['value_fixture'] for c in result['cached_gate_cases']}, {0,1,2,255})
+
     def test_native_parser_core_and_compare_integrated_with_wrapper(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')

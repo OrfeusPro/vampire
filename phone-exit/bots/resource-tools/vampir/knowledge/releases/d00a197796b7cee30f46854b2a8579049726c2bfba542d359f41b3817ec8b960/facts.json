@@ -6366,6 +6366,45 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Remaining CRT/string primitives, invalid-input boundaries, actual directory sources, whole base-path and config loader/precedence/UI binding."
+    },
+    {
+      "addresses": [
+        "0x141455330",
+        "0x141578190",
+        "0x141589b30",
+        "0x1415d9250"
+      ],
+      "checks": [
+        {
+          "cache_key": "ca541bf53f02ed4e49bc2542f391ad7a4048aed17651debb44efa96515340841",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\06e8bc41bb290f61038088870ee489e486df2e2f8d238a22c4116bac6c9b9785\\manifest.json",
+          "sha256": "06e8bc41bb290f61038088870ee489e486df2e2f8d238a22c4116bac6c9b9785",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native gate/system-folder: 64 gate / 16 cached / 64 folder cases; SaveToUserDir short circuit, PE imports SHGetKnownFolderPath/CoTaskMemFree, GUID/ABI/HRESULT/cache/cleanup. UserDir override / fallback checked statically only.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-DIRECTORY-SOURCES-11316.md",
+          "sha256": "156804759042b76265bb7dcbc6545475de3582654da0b7cbfe2c00f60003fa19"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b459eef1dc6f\\details.json",
+          "sha256": "a733618d1bd4f39219d5a5529cb79e62e8a1e1b75f758f14e2708dee3d607610"
+        }
+      ],
+      "id": "009e480256d0fc77c215c326386f08d9cee3d576de476b5821af2482305e007d",
+      "limits": [
+        "All external predicates, OS, string/storage/guard/cleanup calls remain fixtures.",
+        "Override 141578190 / fallback 141455330 static only; malformed cache descriptors synthetic branch probes.",
+        "No actual Windows folder, command line, file precedence or UI application proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "UI-21.E-13.02.31 predicates/whole override/fallback and .32 system-folder normalization, then .29 whole base path; .28 parser primitives / .26 manager constructor remain open.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Predicates, whole override/fallback, string normalization/ownership, actual sources/precedence and UI bindings."
     }
   ],
   "schema": 1,
