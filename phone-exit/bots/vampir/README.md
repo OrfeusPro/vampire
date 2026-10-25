@@ -20,7 +20,7 @@
 
 Текущая цель пользователя — существующий персонаж `bot-hk-test@vampir.top`
 на Franz 2, постоянная сессия и обработка команд движения с карты / из квестов.
-24 октября через HK прошли NID / SDK / lobby и Game Version, но Game Login
+24 и 25 октября через HK прошли NID / SDK / lobby и Game Version, но Game Login
 вернул 16 до списка персонажей. Сессия в мире не открыта; туннель остановлен.
 [Результат и условия продолжения](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-HK-EXISTING-CHARACTER-11316.md).
 

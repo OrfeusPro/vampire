@@ -2,7 +2,7 @@
 
 Текущая цель — удерживать существующего персонажа `bot-hk-test@vampir.top`
 на Franz 2 и обрабатывать команды движения с карты / из квестов в той же сессии.
-Проверка 24 октября на 1.13.16 через HK прошла SDK / lobby / Game Version,
+Проверки 24 и 25 октября на 1.13.16 через HK прошли SDK / lobby / Game Version,
 но Game Login вернул 16 до списка. Вход в мир и движение не выполнены.
 [Результат, границы и следующий шаг](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-HK-EXISTING-CHARACTER-11316.md).
 
