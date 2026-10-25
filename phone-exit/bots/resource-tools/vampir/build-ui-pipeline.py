@@ -11,6 +11,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import ui_pipeline as cache
 import ui_rule_impact
+ORCHESTRATOR_SHA256 = cache.sha(Path(__file__))
 
 
 def load(name):
@@ -32,6 +33,29 @@ def checked_readiness(path, expected_sha):
     return ready, json.loads((layer / 'composition-graph.json').read_bytes())
 
 
+def source_audit_action(root, snapshot, folder):
+    value = load('audit-ui-sources').build(root, snapshot, [], 'all')
+    (folder / 'audit.json').write_bytes(cache.encoded(value))
+    errors = [v['error'] for r in value['records'] for v in r['variants'] if 'error' in v]
+    return dict(counts=value['counts'], errors=errors)
+
+
+def outer_scopes_action(root, audit_path, audit_sha, folder):
+    return load('scan-ui-outer-scopes').build(root, audit_path, audit_sha, folder / 'layers')
+
+
+def widget_roots_action(root, scopes_path, request_path, folder):
+    return load('scan-ui-widget-roots').build(root, scopes_path, request_path, folder / 'layers')
+
+
+def named_candidates_action(root, root_index, root_sha, request_path, folder):
+    return load('decode-named-slot-candidates').build(root, root_index, root_sha, request_path, folder / 'layers')
+
+
+def component_consumers_action(root, scopes_path, folder):
+    return load('scan-ui-component-consumers').build(root, scopes_path, folder / 'layers')
+
+
 def run(root, snapshot, output, build_ready=False, baseline_readiness=None, baseline_sha256=None,
         widget_root_request=None, named_slot_request=None):
     root, snapshot, output = (Path(p).resolve() for p in (root, snapshot, output))
@@ -44,9 +68,23 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
     baseline = checked_readiness(baseline_readiness, baseline_sha256) if baseline_readiness else None
     steps = []
     def tools(*names):
-        return {name: cache.sha(HERE / name) for name in (*names, 'ui_pipeline.py', 'build-ui-pipeline.py')}
-    def execute(name, inputs, action):
-        value = cache.stage(output / 'cache', name, inputs, action)
+        return {name: cache.sha(HERE / name) for name in (*names, 'ui_pipeline.py')}
+    def execute(name, inputs, action, *arguments):
+        if cache.sha(Path(__file__)) != ORCHESTRATOR_SHA256:
+            raise ValueError('Orchestrator changed after import; rerun with stable inputs')
+        invocation = cache.invocation_inputs(inputs, action, arguments, helpers=(load, execute))
+        def checked_action(folder):
+            result = action(*arguments, folder)
+            if any(cache.sha(HERE / tool) != digest for tool, digest in inputs['tools'].items()):
+                raise ValueError('Stage tools changed during execution; incomplete output preserved')
+            if cache.sha(Path(__file__)) != ORCHESTRATOR_SHA256:
+                raise ValueError('Orchestrator changed during execution; incomplete output preserved')
+            return result
+        value = cache.stage(output / 'cache', name, invocation, checked_action)
+        if any(cache.sha(HERE / tool) != digest for tool, digest in inputs['tools'].items()):
+            raise ValueError('Stage tools changed during verification; rerun with stable inputs')
+        if cache.sha(Path(__file__)) != ORCHESTRATOR_SHA256:
+            raise ValueError('Orchestrator changed during verification; rerun with stable inputs')
         steps.append(value)
         print(json.dumps(dict(stage=name, reused=value['reused'], seconds=value['seconds'])), flush=True)
         return value
@@ -55,20 +93,13 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
     inputs = dict(root=str(root), snapshot=str(snapshot), tools=common,
                   catalogs=cache.tree(root / 'ui-catalog'), raw=cache.tree(root / 'ui-layout-study'),
                   published=cache.tree(snapshot))
-    def audit_action(folder):
-        value = load('audit-ui-sources').build(root, snapshot, [], 'all')
-        if any(cache.sha(HERE / name) != expected for name, expected in common.items()):
-            raise ValueError('Pipeline tools changed during source audit; rerun with stable inputs')
-        (folder / 'audit.json').write_bytes(cache.encoded(value))
-        errors = [v['error'] for r in value['records'] for v in r['variants'] if 'error' in v]
-        return dict(counts=value['counts'], errors=errors)
-    audit = execute('source-audit', inputs, audit_action)
+    audit = execute('source-audit', inputs, source_audit_action, root, snapshot)
     if audit['result']['errors']:
         raise ValueError('Source audit failed; inspect ' + audit['output'])
     audit_path = Path(audit['output']) / 'audit.json'
     scopes = execute('outer-scopes', dict(audit=audit['id'], audit_sha256=cache.sha(audit_path),
         tools=tools('scan-ui-outer-scopes.py', 'ui_outer_scope.py', 'ui_layout_schema.py')),
-        lambda folder: load('scan-ui-outer-scopes').build(root, audit_path, cache.sha(audit_path), folder / 'layers'))
+        outer_scopes_action, root, audit_path, cache.sha(audit_path))
     request_path = Path(widget_root_request or root / 'knowledge/requests/7dc3d7b0a03afafed6f82c362776d8ecda440e1eeaf3e564a8303bd49299ba47/manifest.json').resolve()
     request = json.loads(request_path.read_bytes())
     native_sha = cache.sha(request['source'])
@@ -80,7 +111,7 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
             'decode-basic-slot-candidates.py', 'decode-canvas-slots.py', 'decode-package-references.py',
             'extract-ui-properties.py', 'extract-native-enums.py', 'inspect-ui.py', 'audit-ui-sources.py', 'build-native-entry-code.py',
             'scan-ui-outer-scopes.py', 'ui_outer_scope.py', 'ui_layout_schema.py')),
-        lambda folder: load('scan-ui-widget-roots').build(root, Path(scopes['result']['output']), request_path, folder / 'layers'))
+        widget_roots_action, root, Path(scopes['result']['output']), request_path)
     root_index = Path(roots['result']['output']) / 'index.json'
     named_request = Path(named_slot_request or root / 'knowledge/requests/48999392d4227b3a10e82869be197617c67dbce5b0757262a6b7449e97a41244/manifest.json').resolve()
     named_manifest = json.loads(named_request.read_bytes())
@@ -90,10 +121,10 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
         request=str(named_request), request_sha256=cache.sha(named_request), native_sha256=named_manifest['source_sha256'],
         tools=tools('decode-named-slot-candidates.py', 'ui_named_slot.py', 'decode-basic-slot-candidates.py',
             'decode-canvas-slots.py', 'decode-package-references.py', 'extract-ui-properties.py', 'extract-native-enums.py', 'build-native-entry-code.py', 'inspect-ui.py')),
-        lambda folder: load('decode-named-slot-candidates').build(root, root_index, cache.sha(root_index), named_request, folder / 'layers'))
+        named_candidates_action, root, root_index, cache.sha(root_index), named_request)
     consumers = execute('component-consumers', dict(scopes=scopes['id'],
         tools=tools('scan-ui-component-consumers.py', 'ui_component_consumers.py', 'ui_composition_graph.py')),
-        lambda folder: load('scan-ui-component-consumers').build(root, Path(scopes['result']['output']), folder / 'layers'))
+        component_consumers_action, root, Path(scopes['result']['output']))
     index = json.loads((Path(consumers['result']['output']) / 'index.json').read_bytes())
     graph = json.loads((Path(consumers['result']['output']) / 'composition-graph.json').read_bytes())
     priorities = ['WBP_PopupBgTitle_C', 'WBP_ShortcutkeyHudT_C', 'WBP_ItemIconT_C', 'WBP_Badge_C']
@@ -155,7 +186,11 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
         build_result = load('verify-ui-prototype').verify(destination)
         steps.append(dict(name='build-and-verify', seconds=round(time.perf_counter() - build_started, 3),
                           output=str(destination), result=build_result, reused=False))
+    if cache.sha(Path(__file__)) != ORCHESTRATOR_SHA256:
+        raise ValueError('Orchestrator changed before publication; rerun with stable inputs')
     report = dict(schema=1, mode='build-ready' if build_ready else 'audit-only', stages=steps,
+                  orchestrator_sha256=ORCHESTRATOR_SHA256,
+                  stage_cache_contract='explicit_action_ast_and_arguments_v1',
                   readiness=str(ready_file), impact=impact_result, build=build_result,
                   seconds=round(time.perf_counter() - started, 3),
                   limits=readiness['unknowns'], window_completion_claimed=False)

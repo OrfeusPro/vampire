@@ -3,6 +3,8 @@ import sys
 import tempfile
 import unittest
 import json
+import types
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / 'resource-tools/vampir'))
@@ -18,6 +20,61 @@ spec.loader.exec_module(runner)
 
 
 class PipelineTests(unittest.TestCase):
+    def test_runner_rejects_orchestrator_changed_after_import_before_executing_action(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            with patch.object(runner, 'ORCHESTRATOR_SHA256', '0' * 64), patch.object(pipeline, 'tree', return_value={}), patch.object(runner, 'load') as provider:
+                with self.assertRaisesRegex(ValueError, 'Orchestrator changed after import'):
+                    runner.run(folder / 'root', folder / 'snapshot', folder / 'output')
+                provider.assert_not_called()
+
+    def test_action_contract_ignores_comments_and_line_offsets_but_not_execution(self):
+        source = "def action(value, folder):\n    return value + 1\n"
+        same = "\n\n# Independent scheduling change\ndef action(value, folder):\n    # comment\n    return value + 1\n"
+        self.assertEqual(pipeline.action_source_sha(source), pipeline.action_source_sha(same))
+        self.assertNotEqual(pipeline.action_source_sha(source), pipeline.action_source_sha(source.replace('+ 1', '+ 2')))
+        for unsupported in ('value = 1', 'def a(): pass\ndef b(): pass', 'lambda: 1'):
+            with self.assertRaises(ValueError): pipeline.action_source_sha(unsupported)
+
+    def test_invocation_pins_arguments_paths_and_helper_contracts(self):
+        dependencies = dict(source='sha', provider='v1')
+        first = pipeline.invocation_inputs(dependencies, runner.widget_roots_action, (Path('.'), 'request'), helpers=(runner.load,))
+        same = pipeline.invocation_inputs(dependencies, runner.widget_roots_action, (Path('.').resolve(), 'request'), helpers=(runner.load,))
+        self.assertEqual(first, same)
+        self.assertNotEqual(first, pipeline.invocation_inputs(dependencies, runner.widget_roots_action, (Path('.'), 'other'), helpers=(runner.load,)))
+        self.assertNotEqual(first, pipeline.invocation_inputs(dict(source='changed'), runner.widget_roots_action, (Path('.'), 'request'), helpers=(runner.load,)))
+        self.assertNotEqual(first, pipeline.invocation_inputs(dependencies, runner.widget_roots_action, (Path('.'), 'request')))
+        with self.assertRaises(ValueError): pipeline.invocation_inputs({}, runner.load, (object(),))
+        with self.assertRaises(ValueError): pipeline.invocation_inputs({}, runner.load, (), helpers=(runner.load,))
+
+    def test_only_changed_branch_and_reverse_consumer_are_rebuilt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = "def action(value, folder):\n    (folder / 'data').write_text(str(value), encoding='utf8')\n    return {'value': value}\n"
+            actions = []
+            for index, text in enumerate([source, source.replace("{'value': value}", "{'value': value + 1}")]):
+                path = root / ('provider' + str(index) + '.py')
+                path.write_text(text, 'utf8')
+                module = types.ModuleType('stage_fixture' + str(index))
+                exec(compile(text, str(path), 'exec'), module.__dict__)
+                actions.append(module.action)
+            def run(action):
+                def call(name, inputs, fn, value):
+                    contract = pipeline.invocation_inputs(inputs, fn, (value,))
+                    return pipeline.stage(root / 'cache', name, contract, lambda folder: fn(value, folder))
+                common = call('common', dict(source='original'), actions[0], 2)
+                branch = call('branch', dict(common=common['id']), action, common['result']['value'])
+                sibling = call('sibling', dict(common=common['id']), actions[0], common['result']['value'])
+                consumer = call('consumer', dict(branch=branch['id']), actions[0], branch['result']['value'])
+                return common, branch, sibling, consumer
+            first = run(actions[0])
+            repeated = run(actions[0])
+            changed = run(actions[1])
+            self.assertTrue(all(s['reused'] for s in repeated))
+            self.assertEqual([s['reused'] for s in changed], [True, False, True, False])
+            self.assertEqual(changed[3]['result']['value'], 3)
+            self.assertEqual(changed[2]['id'], first[2]['id'])
+
     def test_baseline_is_pinned_to_graph_and_index_bytes(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp)

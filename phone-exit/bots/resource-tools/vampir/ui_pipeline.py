@@ -1,12 +1,43 @@
 """Content-bound offline pipeline cache. Timings never participate in artifact identity."""
 import hashlib
+import ast
+import inspect
 import json
+import textwrap
 import time
 from pathlib import Path
 
 
 def encoded(value):
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
+
+
+def action_source_sha(source):
+    """Hash executable structure, excluding comments and unrelated line offsets."""
+    tree = ast.parse(textwrap.dedent(source))
+    if len(tree.body) != 1 or not isinstance(tree.body[0], ast.FunctionDef):
+        raise ValueError('Expected one explicit stage function')
+    return hashlib.sha256(ast.dump(tree, include_attributes=False).encode('utf8')).hexdigest()
+
+
+def invocation_inputs(inputs, action, arguments, helpers=()):
+    def serial(value):
+        if isinstance(value, Path):
+            return {'path': str(value.resolve())}
+        if isinstance(value, (list, tuple)):
+            return [serial(v) for v in value]
+        if isinstance(value, dict):
+            if any(not isinstance(k, str) for k in value):
+                raise ValueError('Stage argument keys must be strings')
+            return {k: serial(v) for k, v in value.items()}
+        if value is None or isinstance(value, (str, int, float, bool)):
+            return value
+        raise ValueError('Unsupported stage argument type: ' + type(value).__name__)
+    functions = (action, *helpers)
+    if len({f.__name__ for f in functions}) != len(functions):
+        raise ValueError('Ambiguous stage function names')
+    return dict(dependencies=inputs, arguments=serial(arguments),
+        action_contracts={f.__name__: action_source_sha(inspect.getsource(f)) for f in functions})
 
 
 def sha(path):
