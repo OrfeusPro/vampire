@@ -179,6 +179,70 @@
   ],
   "manual_port_targets": [
     {
+      "id": "live-npc-move-current",
+      "baseline_functions": [],
+      "tools": [
+        "inspect-release-ping-result.py",
+        "replay-npc-move-11316.py"
+      ],
+      "rule": "Проверять literal PktNpcMoveNotify, constructor vptr, ID getter отдельно от name getter, array descriptor/callback/record и archive. Не переносить coordinate/actor semantics из wire формы.",
+      "automation": {
+        "discovery": "named_packet_table_and_explicit_descriptor_callers",
+        "validation": "source_bound_native_replay_only",
+        "next_release": "requires_review_new_tables_readers_leaves_and_live_visibility",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456c5230",
+                "scope": "Whole NPC move reader path; bounded allocation/empty cleanup, no actor application.",
+                "required_checks": [
+                  "live-npc-move-11316"
+                ]
+              },
+              {
+                "address": "0x14579e690",
+                "scope": "Whole NPC move reader path; bounded allocation/empty cleanup, no actor application.",
+                "required_checks": [
+                  "live-npc-move-11316"
+                ]
+              },
+              {
+                "address": "0x1456c68d0",
+                "scope": "Whole NPC move reader path; bounded allocation/empty cleanup, no actor application.",
+                "required_checks": [
+                  "live-npc-move-11316"
+                ]
+              },
+              {
+                "address": "0x145821cb0",
+                "scope": "Whole NPC move reader path; bounded allocation/empty cleanup, no actor application.",
+                "required_checks": [
+                  "live-npc-move-11316"
+                ]
+              },
+              {
+                "address": "0x144aaced0",
+                "scope": "Whole NPC move reader path; bounded allocation/empty cleanup, no actor application.",
+                "required_checks": [
+                  "live-npc-move-11316"
+                ]
+              },
+              {
+                "address": "0x144aac2f0",
+                "scope": "Whole NPC move reader path; bounded allocation/empty cleanup, no actor application.",
+                "required_checks": [
+                  "live-npc-move-11316"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "id": "sdk-defaults-gmc2",
       "baseline_functions": [
         "0x1444b4100",

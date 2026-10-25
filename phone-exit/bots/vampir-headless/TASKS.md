@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+На OPPO / HK проверены реальный онлайн-журнал, смена локального обработчика,
+SyntaxError / восстановление без нового входа: около 484 секунд в мире,
+96 periodic Ping / 97 ответов, 207 stats, decoder errors = 0. Тест закрыт Stop.
+Offline NPC325 / nested readers прошли 2375 native-сценариев; portable wire
+decoder добавлен, actor / create / sight и карта остаются открытыми.
+[Живой журнал](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-JOURNAL-11316.md),
+[NPC move scope](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-MOVE-11316.md).
+
 Живые HP/MP и уровень подключены к общему компоненту: через Xiaomi / HK
 получены HP 2700/2700, MP 2000/2000, уровень 1 и 207 stats. На 315 секундах
 нет stat decode errors; 63 periodic Ping / 64 ответа. Stop и очистка UI проверены.

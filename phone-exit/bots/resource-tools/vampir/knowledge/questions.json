@@ -5,9 +5,9 @@
       "id": "live-world-state-11316",
       "status": "open",
       "question": "Как получать общую живую модель персонажа, vitals, уровня и ближайших NPC/игроков из текущей сессии для карты и существующего UI?",
-      "known": "Текущий owner на 1.13.16 прошёл Login/Select/world и 315 секунд через Xiaomi/HK: 63 periodic Ping / 64 ответа. Получены и показаны общим HP/MP-компонентом 207 stats: HP 2700/2700, MP 2000/2000, уровень 1; decoder errors = 0. Полные ID 321/322 и начальный stat array → existing-key модель прошли 1119/203 native-сценария, включая 207 записей. Реестр 208 EStat имён извлечён из current descriptor pairs. Stop/очистка UI проверены; изоляция 50 одновременных fixture owners проверена при двух SDK sign-in slots. Это не 50 реальных игровых аккаунтов. Sight/NPC/move current outer exports уже готовы; окружение и актуальная карта не подключены.",
-      "unknown": "Current visibility / NPC / player records, актуальная проекция карты и исходящее движение. Реальный level-up не вызывался; units модификаторов и engine/listener side effects не восстановлены. 50 реальных аккаунтов не проверены.",
-      "next_action": "Продолжить current visibility/NPC/player records и актуальную проекцию карты. Характеристики, постоянный owner одного аккаунта и привязка общего HP/MP-компонента уже проверены; сохранить изоляцию и не подменять unknown окружение отсутствием объектов.",
+      "known": "Текущий owner 1.13.16 прошёл Login/Select/world и около 484 секунд через OPPO/HK: 96 periodic Ping / 97 ответов, 207 stats, HP 2700/2700, MP 2000/2000, уровень 1, decoder errors = 0. Реальные UI/журнал, смена локального обработчика, SyntaxError и восстановление проверены без нового входа. Stop и очистка проверены; сессия/транспорт закрыты. Native: 1119 сценариев ID 321/322, 203 начального массива; реестр 208 EStat имён извлечён. NPC 325/nested move readers прошли 2375 native-сценариев, portable wire decoder добавлен. Локально проверены изоляция 50 fixture owners и два SDK sign-in слота; реальные 50 аккаунтов, actor visibility и актуальная карта не подтверждены.",
+      "unknown": "Current NPC create/sight/player records и handlers, актуальная проекция карты и исходящее движение. NPC move wire reader проверен offline, живые ID325/actor position не доказаны. Изменение локального наблюдателя подтверждено в игре; hot reload самого socket owner/wire-протокола не реализован. Реальные 50 аккаунтов и engine/listener эффекты не проверены.",
+      "next_action": "Продолжить current NPC create/sight/player records и handlers, затем актуальную проекцию карты. Следующий живой эксперимент готовить через локальный наблюдатель без повторного входа в течение сессии; неизвестное окружение не считать отсутствием объектов.",
       "decision_rule": "Не считать неизвестный field HP/MP/level по величине. Новые поля требуют current reader и семантическую связь; raw packets по умолчанию не сохранять.",
       "do_not_repeat": "Не перестраивать UI или массовый EXE export ради state adapter. Использовать существующие extracts и explicit roots.",
       "addresses": [
@@ -27,7 +27,9 @@
         "evidence/characters/HEADLESS-PERSISTENT-SESSION-11316.md",
         "evidence/characters/HEADLESS-STAT-VALUES-11316.md",
         "evidence/characters/HEADLESS-STAT-NOTIFY-11316.md",
-        "evidence/characters/HEADLESS-LIVE-STATS-CHECK-11316.md"
+        "evidence/characters/HEADLESS-LIVE-STATS-CHECK-11316.md",
+        "evidence/characters/HEADLESS-NPC-MOVE-11316.md",
+        "evidence/characters/HEADLESS-LIVE-JOURNAL-11316.md"
       ]
     },
     {
