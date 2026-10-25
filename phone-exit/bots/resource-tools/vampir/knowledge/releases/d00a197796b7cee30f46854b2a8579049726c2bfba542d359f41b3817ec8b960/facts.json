@@ -6541,6 +6541,50 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Backend1415c6140, constructor1414400f0, cache source14144b6b0 and cold base construction; generic normalization/error/lifetime and active configuration."
+    },
+    {
+      "addresses": [
+        "0x14144b6b0",
+        "0x1415c6140"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a560f7ee3aca8405af01708a4808e632114666cdc03f09c5c0c0d96fbfc91ee1",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432\\manifest.json",
+          "sha256": "7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native file backend72 cases: GetFileAttributesW import, UTF16 threshold256, -1/directory bit0x10 classification and context cleanup. Constructor leaf3 / ready cache getter3; whole installed960 /960 cache repeats now use native backend/constructor/getter, not ready bool fixture.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-FILE-BACKEND-11316.md",
+          "sha256": "dd604737d1238088b901a0fea1a04a591131f4af060a8abe3a2c156aac9fb722"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-bea8f5e7691a\\details.json",
+          "sha256": "79d49906b18a1dbdc432d53bb16d362e3f982f19b5a0b230074e06c0afb31469"
+        }
+      ],
+      "id": "8fbf6cd80b5d871706614999c88f179078fb2bcbbf8aa028857baff0ebb47580",
+      "limits": [
+        "Path allocation/copy/prepare/cleanup, API attributes/cookie and remaining string/guard fixtures.",
+        "Constructor exact14 bytes+2 int3+next unwind checked against explicit leaf request; source/cache cold init not executed.",
+        "Synthetic API outcomes do not prove actual file existence/path/config precedence/UI application."
+      ],
+      "method": "bounded_native",
+      "next_check": "UI-21.E-13.02.40 path primitives/base manager init; cold base construction and whole base-path/loader/precedence remain open.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Path primitives/error/ownership, base-cache initialization/cold base path, actual mounted sources and configuration precedence."
     }
   ],
   "schema": 1,

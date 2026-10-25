@@ -85,6 +85,7 @@
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-directory-sources.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-hash.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-installed-cold.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ui-config-file-backend.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-load-wrapper.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-payload.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-uniqueness.py"
@@ -95,7 +96,8 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-0b803e5b448e/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-d0f01414a99f/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-ccbca26b013d/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09bf4a9674b0/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09bf4a9674b0/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-bea8f5e7691a/details.json"
       ]
     },
     {

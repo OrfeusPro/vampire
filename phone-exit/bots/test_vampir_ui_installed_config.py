@@ -9,6 +9,35 @@ cold=importlib.util.module_from_spec(spec);spec.loader.exec_module(cold)
 
 
 class InstalledConfigTests(unittest.TestCase):
+    def test_file_backend_boundaries_constructor_and_ready_cache_getter(self):
+        source=json.loads((cold.native.ROOT/'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base=dict(source=source,source_sha256=cold.getter.SHA,question='ui-nktileview-property-schema')
+        req=lambda addresses:dict(base,functions=[dict(address=hex(a)) for a in addresses])
+        result=cold.backend.run(req(cold.backend.ROOTS),req((cold.backend.CONSTRUCTOR,)))
+        self.assertEqual([len(result[k]) for k in ('backend_cases','constructor_cases','cache_cases')],[72,3,3])
+        self.assertEqual(result['api_import']['name'],'GetFileAttributesW')
+        for case in result['backend_cases']:
+            self.assertEqual(case['heap'],case['path_units']>=256)
+            self.assertEqual(case['result'],int(case['attributes_fixture']!=-1 and not(case['attributes_fixture']&0x10)))
+
+    def test_whole_installed_chain_uses_native_attributes_classification(self):
+        source=json.loads((cold.native.ROOT/'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base=dict(source=source,source_sha256=cold.getter.SHA,question='ui-nktileview-property-schema')
+        req=lambda addresses:dict(base,functions=[dict(address=hex(a)) for a in addresses])
+        result=cold.run(req(cold.ROOTS),req(cold.PREDICATES),req((0x1414324d0,)),
+            req((0x141459960,0x141435f10,0x1414891c0,0x1415ca400)),req((0x141584080,0x1414833a0)),
+            req(cold.backend.ROOTS),req((cold.backend.CONSTRUCTOR,)))
+        self.assertTrue(result['native_backend'])
+        self.assertEqual(len(result['cases']),960)
+        self.assertEqual(result['constructor_leaf']['padding'],'cccc')
+        for case in result['cases']:
+            self.assertNotIn('backend_query',case['services'])
+            self.assertNotIn('base_manager_fixture',case['services'])
+            self.assertNotIn('physical_constructor',case['services'])
+            self.assertEqual(case['services'].count('attributes_fixture'),1)
+            self.assertEqual(case['query_bool'],case['attributes_fixture']!=-1 and not(case['attributes_fixture']&0x10))
+            self.assertTrue(case['cached_repeat'])
+
     def test_native_cached_source_normalizer_and_physical_resolver_chain(self):
         source=json.loads((cold.native.ROOT/'code-clues/ui-properties.json').read_text('utf-8'))['source']
         base=dict(source=source,source_sha256=cold.getter.SHA,question='ui-nktileview-property-schema')

@@ -7,7 +7,7 @@
       "question": "Как NkTileView связывает динамический список эффектов с шаблоном строки и какие свойства сериализованы?",
       "known": "В cooked WBP_PCStatusUI найден export 31 TileViewOperationPanelList типа NkTileView; имена и unversioned indices не доказывают entry factory binding. На установленном SHA d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960 целый unwind root 144a66f20 статически проверен по Ghidra и инструкциям: читает кеш 14b591718, в нулевой ветви передаёт точные UTF16 NkTileView / /Script/NkUMG в helper 1416ab8d0, затем повторно читает кеш и возвращает указатель. Native не исполнялся; назначение аргументов и helper не доказано.",
       "unknown": "Регистрация класса / схема свойств / наследование; entry template, dynamic updater и активный вариант cooked пакета.",
-      "next_action": "Whole installed native source chain прошла 384 full / 384 cache повторов: cached branch141459960, exact no-unwind leaf1414833a0 / tail141584080→replace141435f10, resolver1414891c0 и physical provider1415ca400 с native final table148a21698. Точный slot78 target1415c6140 пока fixture. Base cache, substring, storage/constructor/guard/atexit/backend остаются fixtures; source cold и generic replace ветви не исполнены. Далее .38 backend/constructor/cache source/cold construction, .36 ограничения normalizer, .34 diagnostics/leaf/CRT, whole override/base path/context loader/precedence/UI.",
+      "next_action": "Backend1415c6140 исполняется native: GetFileAttributesW PE import, inline/heap boundary256 UTF16 units, -1/directory-bit0x10 classification. Standalone72 + ctorleaf3/cachegetter3; whole960 +960 cache repeats с native constructor1414400f0 / ready getter14144b6b0. Path primitives/API attributes/cookie и string/guard fixtures остаются. Далее .40 backend buffer/conversion/cleanup и cache-manager init, cold base construction141459960, whole base path/context loader/precedence/UI. Фактический файл и путь не подтверждены.",
       "decision_rule": "Роль не переносить со старого EXE. Литерал / xref — кандидат, не доказательство класса; индексы свойств без схемы не именовать по значениям. Не смешивать current native metadata и исторические cooked пакеты без проверки совместимости.",
       "do_not_repeat": "Повторный полный экспорт EXE, применение исторических адресов или произвольная привязка NkTileView к sample ZBP по имени.",
       "addresses": [],
@@ -32,7 +32,8 @@
         "evidence/interface/UI-CONFIG-DIRECTORY-SOURCES-11316.md",
         "evidence/interface/UI-CONFIG-DIRECTORY-PREDICATES-11316.md",
         "evidence/interface/UI-CONFIG-INSTALLED-COLD-11316.md",
-        "evidence/interface/UI-CONFIG-NATIVE-SOURCE-CHAIN-11316.md"]
+        "evidence/interface/UI-CONFIG-NATIVE-SOURCE-CHAIN-11316.md",
+        "evidence/interface/UI-CONFIG-FILE-BACKEND-11316.md"]
     },
     {
       "id": "sdk-first-player",
