@@ -165,7 +165,7 @@ def verify(snapshot):
                 compiled = json.loads((snapshot / spec['file']).read_text('utf-8'))
                 expected = ui_layout_schema.compile_schema(record, variant)
                 if root_report is not None:
-                    ui_source_roots.annotate(expected, root_report)
+                    expected = ui_source_roots.compile_schema(record, variant, root_report)
                 assert compiled == expected, 'Widget schema differs from source slots / root annotations'
                 totals['variants'] += 1
                 for field in ('nodes', 'slots', 'issues', 'excluded_slots'):

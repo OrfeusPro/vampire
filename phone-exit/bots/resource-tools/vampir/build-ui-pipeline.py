@@ -50,7 +50,7 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
         print(json.dumps(dict(stage=name, reused=value['reused'], seconds=value['seconds'])), flush=True)
         return value
     common = tools('audit-ui-sources.py', 'inspect-ui.py', 'audit-ui-slot-coverage.py',
-                   'ui_layout_schema.py', 'inventory-ui-names.py', 'build-ui-prototype.py')
+                   'ui_layout_schema.py', 'ui_source_roots.py', 'inventory-ui-names.py', 'build-ui-prototype.py')
     inputs = dict(root=str(root), snapshot=str(snapshot), tools=common,
                   catalogs=cache.tree(root / 'ui-catalog'), raw=cache.tree(root / 'ui-layout-study'),
                   published=cache.tree(snapshot))
@@ -97,7 +97,8 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
         components={name: index['classes'].get(name) for name in priorities},
         priority_coverage=ui_rule_impact.priority_coverage(graph, priorities),
         impact_analysis_tools=tools('ui_rule_impact.py', 'ui_composition_graph.py'),
-        confirmed_checks=['source_hashes_and_exports', 'source_outer_ownership', 'static_consumer_indices', 'serialized_widget_roots'],
+        confirmed_checks=['source_hashes_and_exports', 'source_outer_ownership', 'static_consumer_indices',
+                          'serialized_widget_roots', 'named_slot_import_classification'],
         renderer_rules=[],
         unknowns=['Active resource variants and runtime roots', 'Inherited defaults and dynamic bindings',
                   'Brush/style/state contracts and event handlers', 'Per-consumer runtime layout and DPI'],

@@ -69,6 +69,16 @@ class SourceAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'schema reproduction'):
             self.run_audit(schema={})
 
+    def test_published_source_root_annotations_are_reproduced_during_reaudit(self):
+        report = dict(records=[])
+        schema = audit.ui_source_roots.compile_schema(self.record, self.variant, report)
+        with patch.object(audit.inspector, 'exports', return_value={'exports': self.exports}):
+            result = audit.audit_variant(self.root, self.record, self.variant, schema, {}, self.edges, report)
+            self.assertTrue(result['automatic_source_checks_passed'])
+            schema['runtime_root'] = 1
+            with self.assertRaisesRegex(ValueError, 'schema reproduction'):
+                audit.audit_variant(self.root, self.record, self.variant, schema, {}, self.edges, report)
+
     def test_unaccounted_slot_does_not_pass_automatic_check(self):
         self.exports.append(dict(index=2,name='Unknown',type='GridSlot',sha256='d'*64,offset=120,size=14))
         value=self.run_audit()

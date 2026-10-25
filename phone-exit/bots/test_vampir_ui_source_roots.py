@@ -84,5 +84,52 @@ class RootAnnotationTests(unittest.TestCase):
                     with self.assertRaises(ValueError): roots.read(path, digest)
 
 
+class NamedSlotProjectionTests(unittest.TestCase):
+    def fixture(self):
+        payload = bytes.fromhex('180100000000')
+        digest = roots.hashlib.sha256(payload).hexdigest()
+        entry = dict(index=3, name='NamedSlot', type='NamedSlot', sha256=digest, size=len(payload))
+        container = dict(source_file='a.json', asset_sha256='a', body_sha256='b', source_owner_root=10,
+            export=entry, imported_class='/Script/UMG.NamedSlot', raw_hex=payload.hex(),
+            geometry_verified=False, inherited_properties_decoded=False)
+        _, report = RootAnnotationTests().fixture()
+        report['records'][0]['source_root_widget'] = copy.deepcopy(entry)
+        report['container_candidates'] = [container]
+        variant = dict(file='a.json', sha256='catalog', asset_sha256='a', body_sha256='b', root=dict(index=10),
+            controls=[dict(export=2, name='WidgetTree', type='WidgetTree', sha256='tree'),
+                      dict(export=4, name='Child', type='CanvasPanel', sha256='child')],
+            slots=[dict(provenance=dict(slot_export=5), decoded=dict(parent_export=3, content_export=4))])
+        return dict(id='W-test', path='/Game/Test'), variant, report
+
+    def test_named_slot_is_preserved_before_slot_linking_without_decoding_inherited_fields(self):
+        record, variant, report = self.fixture()
+        original = copy.deepcopy(variant)
+        schema = roots.compile_schema(record, variant, report)
+        self.assertEqual(schema['nodes']['3']['kind'], 'NamedSlot')
+        self.assertEqual(schema['nodes']['3']['children'], [dict(slot='5', child='4')])
+        self.assertEqual(schema['source_widget_tree_ir_gaps'], [])
+        self.assertEqual(schema['source_container_candidates'], report['container_candidates'])
+        self.assertIsNone(schema['runtime_root'])
+        self.assertIn('named_slot_inherited_properties_and_geometry', schema['unresolved'])
+        self.assertEqual(variant, original)
+
+    def test_bad_import_geometry_or_payload_cannot_be_projected(self):
+        for change in ['import', 'geometry', 'payload', 'size']:
+            record, variant, report = self.fixture()
+            row = report['container_candidates'][0]
+            if change == 'import': row['imported_class'] = '/Other/NamedSlot'
+            if change == 'geometry': row['geometry_verified'] = True
+            if change == 'payload': row['raw_hex'] = 'ff'
+            if change == 'size': row['export']['size'] += 1
+            with self.assertRaises(ValueError): roots.compile_schema(record, variant, report)
+
+    def test_other_owner_does_not_leak_a_container_into_variant(self):
+        record, variant, report = self.fixture()
+        report['container_candidates'][0]['source_owner_root'] = 11
+        schema = roots.compile_schema(record, variant, report)
+        self.assertNotIn('3', schema['nodes'])
+        self.assertEqual(len(schema['source_widget_tree_ir_gaps']), 1)
+
+
 if __name__ == '__main__':
     unittest.main()

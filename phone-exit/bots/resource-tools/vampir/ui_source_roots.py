@@ -1,8 +1,52 @@
 """Attach verified serialized WidgetTree roots to IR without choosing runtime roots."""
 import copy
+import hashlib
 import json
 from pathlib import Path
 import ui_pipeline as cache
+
+
+def containers_for(variant, report):
+    rows = [r for r in report.get('container_candidates', []) if
+            (r['asset_sha256'], r['body_sha256'], r['source_owner_root']) ==
+            (variant.get('asset_sha256'), variant.get('body_sha256'), (variant.get('root') or {}).get('index'))]
+    exact = [r for r in rows if r['source_file'] == variant['file']]
+    return exact or rows
+
+
+def compile_schema(record, variant, report):
+    import ui_layout_schema
+    if 'container_candidates' not in report:
+        return annotate(ui_layout_schema.compile_schema(record, variant), report)
+    enriched = copy.deepcopy(variant)
+    added = {}
+    for row in containers_for(variant, report):
+        entry = row['export']
+        if entry['type'] != 'NamedSlot' or row['imported_class'] != '/Script/UMG.NamedSlot':
+            raise ValueError('Unreviewed source container kind')
+        if row.get('geometry_verified') is not False or row.get('inherited_properties_decoded') is not False:
+            raise ValueError('Source container must not promote inherited geometry')
+        payload = bytes.fromhex(row['raw_hex'])
+        if len(payload) != entry['size'] or hashlib.sha256(payload).hexdigest() != entry['sha256']:
+            raise ValueError('Source container payload differs')
+        key = entry['index']
+        if key in added:
+            if added[key]['sha256'] != entry['sha256']:
+                raise ValueError('Conflicting source container exports')
+            continue
+        added[key] = entry
+        existing = next((c for c in enriched['controls'] if c['export'] == key), None)
+        if existing:
+            if existing['sha256'] != entry['sha256'] or existing['type'] != entry['type']:
+                raise ValueError('Source container differs from existing control')
+            continue
+        enriched['controls'].append(dict(export=key, name=entry['name'], type=entry['type'],
+            sha256=entry['sha256'], size_constraints=None, container_geometry=None))
+    schema = ui_layout_schema.compile_schema(record, enriched)
+    schema['source_container_candidates'] = copy.deepcopy(containers_for(variant, report))
+    if added:
+        schema['unresolved'].append('named_slot_inherited_properties_and_geometry')
+    return annotate(schema, report)
 
 
 def read(path, expected_sha):

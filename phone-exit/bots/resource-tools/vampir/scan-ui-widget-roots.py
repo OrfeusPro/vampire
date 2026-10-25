@@ -96,7 +96,7 @@ def build(root, scope_folder, request_path, output):
     proof = native_schema(request_path)
     scopes.verify(root, scope_folder)
     index = json.loads((scope_folder / 'index.json').read_bytes())
-    records, totals = [], Counter()
+    records, containers, totals = [], [], Counter()
     for pid, package in sorted(index['packages'].items()):
         stem = Path(package['source_file']).stem
         asset = basic.source.checked(root / 'ui-layout-study' / (stem + '.uasset'), package['asset_sha256'])
@@ -106,6 +106,22 @@ def build(root, scope_folder, request_path, output):
         targets = [e for e in exports.values() if e['type'] == 'WidgetTree']
         refs = references.references(asset, parsed)['references'] if targets else {}
         ownership = json.loads((scope_folder / package['ref']).read_bytes())
+        for entry in exports.values():
+            if entry['type'] != 'NamedSlot':
+                continue
+            cls = refs[entry['index']]['class_index']
+            if refs[cls]['path'] != '/Script/UMG.NamedSlot' or exports[entry['outer']]['type'] != 'WidgetTree':
+                raise ValueError('Unreviewed NamedSlot import / owner')
+            at = entry['offset'] - len(asset)
+            payload = body[at:at + entry['size']]
+            if basic.sha(payload) != entry['sha256']:
+                raise ValueError('NamedSlot source bytes differ')
+            containers.append(dict(source_file=package['source_file'], export=entry,
+                asset_sha256=package['asset_sha256'], body_sha256=package['body_sha256'],
+                source_owner_root=ownership['exports'][str(entry['index'])]['owner_root'],
+                imported_class=refs[cls]['path'], raw_hex=payload.hex(),
+                classification='imported_named_slot_container_candidate',
+                inherited_properties_decoded=False, geometry_verified=False))
         for entry in targets:
             at = entry['offset'] - len(asset)
             raw = body[at:at + entry['size']]
@@ -136,11 +152,13 @@ def build(root, scope_folder, request_path, output):
                 row['raw_hex'] = raw.hex()
             totals[row['status']] += 1
             records.append(row)
-    result = dict(schema=1, kind='source_widget_tree_roots', native=proof, records=records, statistics=dict(totals),
+    result = dict(schema=1, kind='source_widget_tree_roots', native=proof, records=records,
+        container_candidates=containers, statistics=dict(totals, named_slot_candidates=len(containers)),
         inputs=dict(scope_index_sha256=cache.sha(scope_folder / 'index.json'), request_sha256=cache.sha(request_path)),
         tools={p.name: cache.sha(p) for p in [Path(__file__), HERE / 'ui_widget_tree.py', HERE / 'decode-canvas-slots.py',
                HERE / 'decode-package-references.py', HERE / 'inspect-ui.py', HERE / 'build-native-entry-code.py']},
         limits=['RootWidget is serialized source structure, not the visible game window or runtime variant.',
+                'NamedSlot import / source owner identify a container candidate; inherited fields remain opaque.',
                 'Current native/cooked compatibility, inheritance, visibility, bindings, DPI and Brush remain open.'])
     identity = basic.sha(cache.encoded(result))
     folder = output / identity

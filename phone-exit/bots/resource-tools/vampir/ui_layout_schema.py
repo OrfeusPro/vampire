@@ -72,7 +72,7 @@ def publish(records, folder, source_roots=None):
             schema = compile_schema(record, variant)
             if source_roots is not None:
                 import ui_source_roots
-                ui_source_roots.annotate(schema, source_roots)
+                schema = ui_source_roots.compile_schema(record, variant, source_roots)
             data = json.dumps(schema, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
             digest = hashlib.sha256(data).hexdigest()
             file = 'layout-schemas/' + digest + '.json'

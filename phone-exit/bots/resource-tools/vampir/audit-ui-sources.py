@@ -10,6 +10,7 @@ import sys
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import ui_layout_schema
+import ui_source_roots
 
 
 def module(name, filename):
@@ -35,7 +36,7 @@ def checked(path, expected):
     return raw
 
 
-def audit_variant(root, record, variant, published_schema, classes, dependencies):
+def audit_variant(root, record, variant, published_schema, classes, dependencies, source_roots=None):
     """Verify bytes and decoder provenance; neither infer defaults nor select runtime branches."""
     catalog_path = inventory.child(root / 'ui-catalog', variant['file'])
     package = json.loads(checked(catalog_path, variant['sha256']))
@@ -71,6 +72,11 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
             raise ValueError('Slot provenance differs from package bytes')
     unaccounted = [row['export'] for row in accounting if row['status']=='unaccounted']
     schema = ui_layout_schema.compile_schema(record, variant)
+    if source_roots is not None:
+        schema = ui_source_roots.compile_schema(record, variant, source_roots)
+        for row in schema.get('source_container_candidates', []):
+            if exports.get(row['export']['index']) != row['export']:
+                raise ValueError('Source container differs from raw exports')
     if schema != published_schema:
         raise ValueError('Local schema reproduction differs')
     expected = []
@@ -158,6 +164,9 @@ def build(root, snapshot, families=(), scope='ui-names'):
     registry = published('registry-index.json')
     schema_index = published('layout-schema-index.json')
     graph = published('composition-graph.json')
+    source_roots = None
+    if 'source-widget-roots.json' in manifest['generated_files']:
+        source_roots = ui_source_roots.read(snapshot / 'source-widget-roots.json', manifest['generated_files']['source-widget-roots.json'])
     classes = defaultdict(list)
     by_id = {row['id']: row for row in registry}
     for key, node in graph['nodes'].items():
@@ -182,7 +191,7 @@ def build(root, snapshot, families=(), scope='ui-names'):
                 schema = published(entry['file'])
                 if digest((snapshot / entry['file']).read_bytes()) != entry['sha256']:
                     raise ValueError('Schema index SHA mismatch')
-                value = audit_variant(root, record, variant, schema, classes, graph['nodes'][key]['dependencies'])
+                value = audit_variant(root, record, variant, schema, classes, graph['nodes'][key]['dependencies'], source_roots)
                 totals.update(value['counts'])
                 totals['source_checks_passed' if value['automatic_source_checks_passed'] else 'source_checks_failed'] += 1
             except (ValueError, OSError, KeyError, TypeError, IndexError) as error:
@@ -196,7 +205,7 @@ def build(root, snapshot, families=(), scope='ui-names'):
     return dict(schema=1, kind='automated_ui_source_audit', selection=dict(scope=scope,uppercase_UI_in_name=scope=='ui-names', families=list(families),
         dependency_candidates_not_runtime_bindings=True),
         snapshot=dict(path=str(snapshot), id=manifest['id'], manifest_sha256=digest(manifest_path.read_bytes())),
-        tools={p.name: digest(p.read_bytes()) for p in [Path(__file__), HERE/'inspect-ui.py', HERE/'audit-ui-slot-coverage.py', HERE/'ui_layout_schema.py', HERE/'inventory-ui-names.py', HERE/'build-ui-prototype.py']},
+        tools={p.name: digest(p.read_bytes()) for p in [Path(__file__), HERE/'inspect-ui.py', HERE/'audit-ui-slot-coverage.py', HERE/'ui_layout_schema.py', HERE/'ui_source_roots.py', HERE/'inventory-ui-names.py', HERE/'build-ui-prototype.py']},
         counts=dict(totals), records=records,
         limits=['Passed checks are automatically confirmed only for the recorded bytes and tool versions.',
             'Raw export hashes and decoded catalog agreement do not prove complete native UProperty decoding.',

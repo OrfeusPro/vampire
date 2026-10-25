@@ -15,14 +15,14 @@
     },
     {
       "id": "serialized-widget-roots",
-      "version": 1,
+      "version": 2,
       "provider": "ui_source_roots.py",
       "scope": "analysis",
       "widget_types": ["*"],
       "criteria": ["01"],
-      "properties": ["source_widget_trees", "source_widget_tree_status"],
+      "properties": ["source_widget_trees", "source_widget_tree_status", "source_container_candidates"],
       "dependencies": ["source-outer-ownership"],
-      "checks": ["source_hashes_and_exports", "source_outer_ownership", "serialized_widget_roots"],
+      "checks": ["source_hashes_and_exports", "source_outer_ownership", "serialized_widget_roots", "named_slot_import_classification"],
       "renderer_allowed": false
     },
     {
