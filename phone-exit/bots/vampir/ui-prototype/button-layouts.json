@@ -169,6 +169,15 @@
       "reference_width": 390,
       "reference_height": 100,
       "root_frame_assumption": "CanvasPanel_3 получает локальную рамку общего статуса в демо; внешний SafeZone / ScaleBox и brush tint не подтверждены."
+    },
+    "menu-window-frame": {
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "control": "OverlayMain",
+      "root_name": "CanvasPanel_13",
+      "reference_width": 2400,
+      "reference_height": 1350,
+      "root_frame_assumption": "CanvasPanel_13 получает viewport демо; SafeZone и активный DPI игры неизвестны. Ширина 751 и правые anchors взяты из исходного слота."
     }
   }
 }

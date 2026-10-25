@@ -163,10 +163,16 @@ def component_sources(root, definitions, records, bindings):
     return evidence
 
 
-def build(root, baseline=None):
-    gate = read(SOURCE.parent / 'UI-GENERATION-GATE.json')
-    if gate.get('generation_allowed') is not True or gate.get('phase') != 'generation':
+def generation_policy(gate, preview_during_audit=False):
+    blocked = gate.get('generation_allowed') is not True or gate.get('phase') != 'generation'
+    if blocked and not preview_during_audit:
         raise ValueError('Генерация внешнего вида отложена до аудита характеристик UI-23. Сначала запустите scan-ui-properties.py; опубликованный snapshot сохранён.')
+    return dict(mode='requested_preview' if blocked else 'normal_generation',
+                phase=gate.get('phase'), gate_generation_allowed=gate.get('generation_allowed') is True)
+
+
+def build(root, baseline=None, *, preview_during_audit=False):
+    policy = generation_policy(read(SOURCE.parent / 'UI-GENERATION-GATE.json'), preview_during_audit)
     index_path = root / 'ui-catalog/index.json'
     index = read(index_path)
     image_path = root / 'archive-image-latest.json'
@@ -281,7 +287,7 @@ def build(root, baseline=None):
     display_settings = ui_display_settings.collect(Path(os.environ.get('PHONEEXIT_VAMPIR_DISPLAY_CONFIG', str(ui_display_settings.DEFAULT))))
     fingerprint = dict(resources=resources, images=image_hashes, inputs=inputs,
                        display_settings={'sanitized_sha256': hashlib.sha256(json.dumps(display_settings, sort_keys=True).encode()).hexdigest()},
-                       implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)),
+                       implementation=source_inputs, client=client, builder_sha256=sha(Path(__file__)), generation_policy=policy,
                        tools={'inspect-ui.py': skin_evidence['decoder']['sha256'],
                               'ui_collection_catalog.py': sha(HERE / 'ui_collection_catalog.py'),
                               'ui_desired_geometry.py': sha(HERE / 'ui_desired_geometry.py'),
@@ -455,5 +461,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir')))
     parser.add_argument('--baseline', type=Path)
+    parser.add_argument('--preview-during-audit', action='store_true',
+                        help='Явная пересборка текущего демоварианта по запросу пользователя; фазу аудита не меняет.')
     args = parser.parse_args()
-    build(args.root, args.baseline)
+    build(args.root, args.baseline, preview_during_audit=args.preview_during_audit)

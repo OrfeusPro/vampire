@@ -44,7 +44,25 @@
       function update(next, person) { status.update(next, person); const key = next.gold + ':' + next.diamonds; if (key !== balanceKey) { balance.replaceChildren(wallets(next)); balanceKey = key; } }
       update(state, character); return { node, update, dispose: status.dispose };
     }
-    return { playerStatus, titleBar, currency, wallets };
+    function mainMenu({ onSelect }) {
+      const definition = definitions.modules.main_menu;
+      const node = el('nav', undefined, 'source-main-menu');
+      node.setAttribute('aria-label', 'Разделы игры'); node.dataset.component = 'main-menu';
+      node.dataset.sourceResource = definition.resource;
+      node.dataset.appearanceState = definition.status;
+      definition.groups.forEach((entries, index) => {
+        const group = el('div', undefined, index === definition.groups.length - 1 ? 'source-menu-footer' : 'source-menu-group');
+        for (const entry of entries) {
+          const item = icon('/Game/RED/UI/Resource/Texture/Image/' + entry.icon, entry.label, () => onSelect(entry));
+          item.dataset.sourceControl = entry.control;
+          item.dataset.brushBinding = 'package-reference-candidate';
+          group.append(item);
+        }
+        node.append(group);
+      });
+      return node;
+    }
+    return { playerStatus, titleBar, currency, wallets, mainMenu };
   }
   root.VampirUiComponents = { create };
 })(typeof globalThis !== 'undefined' ? globalThis : this);

@@ -86,6 +86,293 @@
       "resource": "WBP_ItemCollectionUI",
       "category": "Коллекции: иконки поиска и фильтра",
       "control": "ButtonSearch"
+    },
+    "menu-ButtonCharacter": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Character",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonCharacter"
+    },
+    "menu-ButtonSkill": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Skill",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonSkill"
+    },
+    "menu-ButtonSkillCard": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_SkillCard",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonSkillCard"
+    },
+    "menu-ButtonCostume": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Costume",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonCostume"
+    },
+    "menu-ButtonVehicle": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Vehicle",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonVehicle"
+    },
+    "menu-ButtonPet": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Pet",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonPet"
+    },
+    "menu-ButtonCollection": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_ItemCollection",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonCollection"
+    },
+    "menu-ButtonEnchant": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Enchant",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonEnchant"
+    },
+    "menu-ButtonCraft": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_ItemCraft",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonCraft"
+    },
+    "menu-ButtonAuction": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Tradable",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonAuction"
+    },
+    "menu-ButtonWanted": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Wanted",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonWanted"
+    },
+    "menu-ButtonPortrait": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Portrait",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonPortrait"
+    },
+    "menu-ButtonMatrix": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Matrix",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonMatrix"
+    },
+    "menu-ButtonExtract": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Extract",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonExtract"
+    },
+    "menu-ButtonArtifact": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Artifact",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonArtifact"
+    },
+    "menu-ButtonDailyLifeTree": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_LifeTree",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonDailyLifeTree"
+    },
+    "menu-ButtonConquest": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Conquest",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonConquest"
+    },
+    "menu-ButtonTomb": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Tomb",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonTomb"
+    },
+    "menu-ButtonFollower": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Follower",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonFollower"
+    },
+    "menu-ButtonGuild": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Guild",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonGuild"
+    },
+    "menu-ButtonGuildContents": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_GuildContents",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonGuildContents"
+    },
+    "menu-ButtonQuest": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Quest",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonQuest"
+    },
+    "menu-ButtonCharacterCollection": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_NpcCollection",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonCharacterCollection"
+    },
+    "menu-ButtonBloodLine": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_BloodLineQuest",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonBloodLine"
+    },
+    "menu-ButtonWanderer": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Wanderer",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonWanderer"
+    },
+    "menu-ButtonDungeon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Dungeon",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonDungeon"
+    },
+    "menu-ButtonEliteDungeon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_EliteDungeon",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonEliteDungeon"
+    },
+    "menu-ButtonInfiniteDungeon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_InfiniteDungeon",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonInfiniteDungeon"
+    },
+    "menu-ButtonServerGroupDungeon": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_ServerGroupDungeon",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonServerGroupDungeon"
+    },
+    "menu-ButtonArena": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Arena",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonArena"
+    },
+    "menu-ButtonRanking": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Ranking",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonRanking"
+    },
+    "menu-ButtonAchievement": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Achievement",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonAchievement"
+    },
+    "menu-ButtonArchive": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Archive",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonArchive"
+    },
+    "menu-ButtonCombatStats": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_CombatStats",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonCombatStats"
+    },
+    "menu-ButtonPvp": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_War_PVP",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonPvp"
+    },
+    "menu-ButtonSupportMode": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_SupportMode_Detail",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonSupportMode"
+    },
+    "menu-ButtonMail": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Post",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonMail"
+    },
+    "menu-ButtonOptionSetting": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_Setting",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonOptionSetting"
+    },
+    "menu-ButtonShortcutKeySetting": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_ShortCut",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonShortcutKeySetting"
+    },
+    "menu-ButtonLogOffPlay": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_LogOffPlay",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonLogOffPlay"
+    },
+    "menu-ButtonCharacterSelect": {
+      "asset_path": "/Game/RED/UI/Resource/Texture/Image/IMG_Flat_character_Change",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "resource": "WBP_MainMenuUI",
+      "category": "Главное меню: кандидат иконки",
+      "control": "ButtonCharacterSelect"
     }
   }
 }

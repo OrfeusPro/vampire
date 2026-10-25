@@ -542,10 +542,14 @@
     setAdapter(M.initial()); persist(state()); transition('auth');
   }
   function openMenu() {
+    const existing = dialogs.find(dialog => dialog.open && dialog.classList.contains('menu-window'));
+    if (existing && dialogs.filter(dialog => dialog.open).at(-1) === existing) { existing.querySelector('[data-window-close]')?.focus(); return existing; }
+    if (existing) closeDialog(existing);
     modal('Меню', body => {
-      const grid = el('div', undefined, 'menu-grid');
-      [['Character', 'Персонаж'], ['Inventory', 'Сумка'], ['Skill', 'Навыки'], ['Quest', 'Задания'], ['ItemCollection', 'Коллекции'], ['Shop', 'Магазин'], ['ItemCraft', 'Создание'], ['Pet', 'Питомцы'], ['Post', 'Почта'], ['Setting', 'Настройки'], ['Achievement', 'Достижения'], ['Community', 'Сообщество']].forEach(([name, title]) => grid.append(icon('IMG_Flat_' + name, title, () => openSection(title))));
-      append(body, grid, button('Все восстановленные ресурсы', openInspector), button('Выбор персонажа', () => transition('characters')));
+      body.append(components.mainMenu({ onSelect: entry => {
+        if (entry.control === 'ButtonCharacterSelect') transition('characters');
+        else openSection(entry.label);
+      } }));
     }, 'menu-window');
   }
   function catalogLink(body, title, url) {

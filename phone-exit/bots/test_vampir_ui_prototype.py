@@ -75,6 +75,16 @@ class PrototypeTests(unittest.TestCase):
                 builder.build(root)
             self.assertEqual(list(root.iterdir()), [])
 
+    def test_explicit_preview_records_closed_phase_without_opening_generation(self):
+        gate = dict(phase='property_inventory_and_review', generation_allowed=False)
+        policy = builder.generation_policy(gate, preview_during_audit=True)
+        self.assertEqual(policy['mode'], 'requested_preview')
+        self.assertEqual(policy['phase'], gate['phase'])
+        self.assertFalse(policy['gate_generation_allowed'])
+        self.assertEqual(gate, dict(phase='property_inventory_and_review', generation_allowed=False))
+        with self.assertRaisesRegex(ValueError, 'UI-23'):
+            builder.generation_policy(gate)
+
     def test_saved_display_import_is_allowlisted_read_only_and_never_a_ui_scale(self):
         import ui_display_settings as settings
         with tempfile.TemporaryDirectory() as folder:

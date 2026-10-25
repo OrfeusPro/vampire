@@ -22,3 +22,20 @@
 .game-header-tools>.icon-button>span{display:none}
 .full-window>.game-titlebar+.dialog-body{position:absolute;inset:calc(100 * var(--ui-component-unit)) 0 0;max-height:none;overflow:auto;padding:1em}
 .collections-window>.game-titlebar+.dialog-body{position:absolute;inset:0;max-height:none;height:100%;padding:0}
+
+/* Menu shell width is source-bound; grid order, tint and opacity are an explicit demo adaptation. */
+.menu-window{max-height:100dvh;border-color:#56615b;background-image:linear-gradient(#071511eb,#08130ff0);box-shadow:-10px 0 35px #0006}
+.menu-window::backdrop{background:#0002;backdrop-filter:none}
+.menu-window>.window-heading{height:calc(100 * var(--ui-component-unit));padding:0 calc(20 * var(--ui-component-unit));background:#11201c80;box-sizing:border-box}
+.menu-window>.window-heading h2{font-size:calc(30 * var(--ui-component-unit));font-weight:400}
+.menu-window>.window-heading .close{width:calc(80 * var(--ui-component-unit));height:100%;font-size:calc(65 * var(--ui-component-unit))}
+.menu-window>.dialog-body{height:calc(100% - 100 * var(--ui-component-unit));max-height:none;padding:0;overflow:auto}
+.source-main-menu{display:flex;flex-direction:column;min-height:100%;font-size:calc(18 * var(--ui-component-unit))}
+.source-menu-group{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid #61706655;padding:calc(8 * var(--ui-component-unit)) 0}
+.source-menu-footer{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid #61706655;margin-top:auto;padding-top:calc(10 * var(--ui-component-unit))}
+.source-main-menu .icon-button{width:100%;height:calc(120 * var(--ui-component-unit));padding:calc(5 * var(--ui-component-unit));border:0;background:transparent;gap:calc(3 * var(--ui-component-unit));justify-content:flex-start;line-height:1.05}
+.source-main-menu .icon-button img{width:calc(60 * var(--ui-component-unit));height:calc(60 * var(--ui-component-unit));flex-shrink:0}
+.source-main-menu .icon-button span{font-size:inherit;text-align:center;overflow-wrap:anywhere;max-width:100%;min-width:0}
+.source-main-menu .icon-button:hover{background:#b5bba017}
+.source-main-menu .icon-button:active{background:#b5bba02b;transform:translateY(1px)}
+.source-main-menu [data-source-control=ButtonPortrait],.source-main-menu [data-source-control=ButtonTomb]{grid-column:1}

@@ -148,6 +148,18 @@
         0.4
       ],
       "basis": "Центральное подтверждение деморегистрации; источник содержит ButtonEnroll / ButtonCancel. Native внешний desired size и DPI не подтверждены; прямоугольник временный."
+    },
+    "menu-window": {
+      "resource": "WBP_MainMenuUI",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "rect": [
+        0.687,
+        0,
+        0.313,
+        1
+      ],
+      "native_frame": "menu-window-frame",
+      "basis": "OverlayMain: исходная ширина 751, правые anchors с растяжением по высоте; корень получает viewport демо. Внутренняя сетка по кадру, runtime DPI / SafeZone неизвестны."
     }
   }
 }

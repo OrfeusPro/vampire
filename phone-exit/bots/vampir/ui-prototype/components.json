@@ -18,11 +18,38 @@
         "omitted_padding_zero": true
       },
       "render_bindings": {
-        "hp": { "control": "ProgressBarHP", "kind": "ProgressBar", "className": "vital-bar hp", "label": "HP", "demo_layer": 1 },
-        "mp": { "control": "ProgressBarMP", "kind": "ProgressBar", "className": "vital-bar mp", "label": "MP", "demo_layer": 1 },
-        "hp_text": { "control": "TextHP", "kind": "NkTextBlock", "className": "vital-value", "demo_layer": 2 },
-        "mp_text": { "control": "TextMP", "kind": "NkTextBlock", "className": "vital-value", "demo_layer": 2 },
-        "portrait_button": { "control": "ButtonPortraitMove", "kind": "NkButton", "className": "player-status-portrait", "action": "open-character" }
+        "hp": {
+          "control": "ProgressBarHP",
+          "kind": "ProgressBar",
+          "className": "vital-bar hp",
+          "label": "HP",
+          "demo_layer": 1
+        },
+        "mp": {
+          "control": "ProgressBarMP",
+          "kind": "ProgressBar",
+          "className": "vital-bar mp",
+          "label": "MP",
+          "demo_layer": 1
+        },
+        "hp_text": {
+          "control": "TextHP",
+          "kind": "NkTextBlock",
+          "className": "vital-value",
+          "demo_layer": 2
+        },
+        "mp_text": {
+          "control": "TextMP",
+          "kind": "NkTextBlock",
+          "className": "vital-value",
+          "demo_layer": 2
+        },
+        "portrait_button": {
+          "control": "ButtonPortraitMove",
+          "kind": "NkButton",
+          "className": "player-status-portrait",
+          "action": "open-character"
+        }
       },
       "frame": {
         "width": 390,
@@ -75,6 +102,275 @@
         }
       ],
       "status": "data_and_popup_not_implemented"
+    },
+    "main_menu": {
+      "resource": "WBP_MainMenuUI",
+      "catalog_file": "pakchunk500-Windows-1707.json",
+      "members": [
+        "OverlayMain",
+        "ButtonCharacter",
+        "ButtonSkill",
+        "ButtonSkillCard",
+        "ButtonCostume",
+        "ButtonVehicle",
+        "ButtonPet",
+        "ButtonCollection",
+        "ButtonEnchant",
+        "ButtonCraft",
+        "ButtonAuction",
+        "ButtonWanted",
+        "ButtonPortrait",
+        "ButtonMatrix",
+        "ButtonExtract",
+        "ButtonArtifact",
+        "ButtonDailyLifeTree",
+        "ButtonConquest",
+        "ButtonTomb",
+        "ButtonFollower",
+        "ButtonGuild",
+        "ButtonGuildContents",
+        "ButtonQuest",
+        "ButtonCharacterCollection",
+        "ButtonBloodLine",
+        "ButtonWanderer",
+        "ButtonDungeon",
+        "ButtonEliteDungeon",
+        "ButtonInfiniteDungeon",
+        "ButtonServerGroupDungeon",
+        "ButtonArena",
+        "ButtonRanking",
+        "ButtonAchievement",
+        "ButtonArchive",
+        "ButtonCombatStats",
+        "ButtonPvp",
+        "ButtonSupportMode",
+        "ButtonMail",
+        "ButtonOptionSetting",
+        "ButtonShortcutKeySetting",
+        "ButtonLogOffPlay",
+        "ButtonCharacterSelect"
+      ],
+      "groups": [
+        [
+          {
+            "control": "ButtonCharacter",
+            "label": "Персонаж",
+            "icon": "IMG_Flat_Character"
+          },
+          {
+            "control": "ButtonSkill",
+            "label": "Навыки",
+            "icon": "IMG_Flat_Skill"
+          },
+          {
+            "control": "ButtonSkillCard",
+            "label": "Карты навыков",
+            "icon": "IMG_Flat_SkillCard"
+          },
+          {
+            "control": "ButtonCostume",
+            "label": "Форма крови",
+            "icon": "IMG_Flat_Costume"
+          },
+          {
+            "control": "ButtonVehicle",
+            "label": "Ездовые животные",
+            "icon": "IMG_Flat_Vehicle"
+          },
+          {
+            "control": "ButtonPet",
+            "label": "Питомцы",
+            "icon": "IMG_Flat_Pet"
+          },
+          {
+            "control": "ButtonCollection",
+            "label": "Коллекции",
+            "icon": "IMG_Flat_ItemCollection"
+          },
+          {
+            "control": "ButtonEnchant",
+            "label": "Улучшение",
+            "icon": "IMG_Flat_Enchant"
+          },
+          {
+            "control": "ButtonCraft",
+            "label": "Создание",
+            "icon": "IMG_Flat_ItemCraft"
+          },
+          {
+            "control": "ButtonAuction",
+            "label": "Рынок",
+            "icon": "IMG_Flat_Tradable"
+          },
+          {
+            "control": "ButtonWanted",
+            "label": "Чёрный рынок",
+            "icon": "IMG_Flat_Wanted"
+          },
+          {
+            "control": "ButtonPortrait",
+            "label": "Портреты",
+            "icon": "IMG_Flat_Portrait"
+          },
+          {
+            "control": "ButtonMatrix",
+            "label": "Дисциплина",
+            "icon": "IMG_Flat_Matrix"
+          },
+          {
+            "control": "ButtonExtract",
+            "label": "Исследование магии",
+            "icon": "IMG_Flat_Extract"
+          },
+          {
+            "control": "ButtonArtifact",
+            "label": "Артефакты",
+            "icon": "IMG_Flat_Artifact"
+          },
+          {
+            "control": "ButtonDailyLifeTree",
+            "label": "Сефира",
+            "icon": "IMG_Flat_LifeTree"
+          },
+          {
+            "control": "ButtonConquest",
+            "label": "Эволюция Царства крови",
+            "icon": "IMG_Flat_Conquest"
+          },
+          {
+            "control": "ButtonTomb",
+            "label": "Гробница",
+            "icon": "IMG_Flat_Tomb"
+          },
+          {
+            "control": "ButtonFollower",
+            "label": "Последователи",
+            "icon": "IMG_Flat_Follower"
+          }
+        ],
+        [
+          {
+            "control": "ButtonGuild",
+            "label": "Клан",
+            "icon": "IMG_Flat_Guild"
+          },
+          {
+            "control": "ButtonGuildContents",
+            "label": "Клановые события",
+            "icon": "IMG_Flat_GuildContents"
+          },
+          {
+            "control": "ButtonQuest",
+            "label": "Задания",
+            "icon": "IMG_Flat_Quest"
+          },
+          {
+            "control": "ButtonCharacterCollection",
+            "label": "Кодекс персонажей",
+            "icon": "IMG_Flat_NpcCollection"
+          },
+          {
+            "control": "ButtonBloodLine",
+            "label": "Родословная",
+            "icon": "IMG_Flat_BloodLineQuest"
+          },
+          {
+            "control": "ButtonWanderer",
+            "label": "Долина Нарцисса",
+            "icon": "IMG_Flat_Wanderer"
+          },
+          {
+            "control": "ButtonDungeon",
+            "label": "Подземелья",
+            "icon": "IMG_Flat_Dungeon"
+          },
+          {
+            "control": "ButtonEliteDungeon",
+            "label": "Элитное подземелье",
+            "icon": "IMG_Flat_EliteDungeon"
+          },
+          {
+            "control": "ButtonInfiniteDungeon",
+            "label": "Геенна",
+            "icon": "IMG_Flat_InfiniteDungeon"
+          },
+          {
+            "control": "ButtonServerGroupDungeon",
+            "label": "Схватка",
+            "icon": "IMG_Flat_ServerGroupDungeon"
+          },
+          {
+            "control": "ButtonArena",
+            "label": "Арена",
+            "icon": "IMG_Flat_Arena"
+          }
+        ],
+        [
+          {
+            "control": "ButtonRanking",
+            "label": "Рейтинг",
+            "icon": "IMG_Flat_Ranking"
+          },
+          {
+            "control": "ButtonAchievement",
+            "label": "Достижения",
+            "icon": "IMG_Flat_Achievement"
+          },
+          {
+            "control": "ButtonArchive",
+            "label": "Архив",
+            "icon": "IMG_Flat_Archive"
+          },
+          {
+            "control": "ButtonCombatStats",
+            "label": "Боевая статистика",
+            "icon": "IMG_Flat_CombatStats"
+          },
+          {
+            "control": "ButtonPvp",
+            "label": "PvP",
+            "icon": "IMG_Flat_War_PVP"
+          },
+          {
+            "control": "ButtonSupportMode",
+            "label": "Режим поддержки",
+            "icon": "IMG_Flat_SupportMode_Detail"
+          }
+        ],
+        [
+          {
+            "control": "ButtonMail",
+            "label": "Почта",
+            "icon": "IMG_Flat_Post"
+          },
+          {
+            "control": "ButtonOptionSetting",
+            "label": "Настройки",
+            "icon": "IMG_Flat_Setting"
+          },
+          {
+            "control": "ButtonShortcutKeySetting",
+            "label": "Назначение клавиш",
+            "icon": "IMG_Flat_ShortCut"
+          },
+          {
+            "control": "ButtonLogOffPlay",
+            "label": "Офлайн-режим",
+            "icon": "IMG_Flat_LogOffPlay"
+          },
+          {
+            "control": "ButtonCharacterSelect",
+            "label": "Выбор персонажа",
+            "icon": "IMG_Flat_character_Change"
+          }
+        ]
+      ],
+      "status": "source_controls_demo_order_and_brush_candidates",
+      "limits": [
+        "Порядок сетки и подписи адаптированы по кадру пользователя; excluded grid slots не восстановлены.",
+        "Иконки — проверенные ссылки пакета, не подтверждённые brush bindings.",
+        "Цвет, прозрачность, шрифт, eligibility и callbacks остаются демонстрационными."
+      ]
     }
   },
   "consumers": [
