@@ -14,8 +14,8 @@
   "manual_port_targets": [
     {
       "id": "ui-nktileview-layout-flow",
-      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0", "0x141425d60", "0x1445cbd00", "0x1445d6ec0", "0x1445cb6c0", "0x1414277b0"],
-      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py", "replay-ui-config-hash.py", "replay-ui-config-consumers.py", "replay-ui-string-assignment.py"],
+      "baseline_functions": ["0x144a66f20", "0x144a8f220", "0x144626640", "0x144a898e0", "0x144a8b800", "0x14191ab70", "0x1445cf4f0", "0x1445c6820", "0x1445c2c30", "0x1445c1f50", "0x1445c67a0", "0x1445c78d0", "0x1445c4f60", "0x141421b80", "0x1445d8430", "0x1445c29f0", "0x141425d60", "0x1445cbd00", "0x1445d6ec0", "0x1445cb6c0", "0x1414277b0", "0x1455086b0", "0x145509470", "0x145517810"],
+      "tools": ["inspect-nktileview-registration.py", "inspect-nktileview-parameter-flow.py", "replay-nktileview-refresh.py", "replay-nktileview-packing.py", "replay-nktileview-scroll-style.py", "replay-ui-resource-setter.py", "inspect-ui-resource-prefix.py", "replay-ui-content-config.py", "replay-ui-config-callables.py", "replay-ui-config-payload.py", "replay-ui-config-reader.py", "replay-ui-config-uniqueness.py", "replay-ui-config-hash.py", "replay-ui-config-consumers.py", "replay-ui-string-assignment.py", "inspect-ui-config-callers.py"],
       "required_checks": ["ui-nktileview-refresh-current"],
       "rule": "Addresses belong only to this plan baseline SHA. Literal matches are candidates; verify getter, table ownership, transfers and port bounded checks before use. Native checks do not validate historical cooked resources or generator rules.",
       "automation": {
@@ -48,7 +48,10 @@
               {"address": "0x1445cbd00", "scope": "Read consumer in standalone and registration-to-dispatch modes; latter has 4608 consumer calls total and 2304 actual read invokes from native-registered bindings; services remain fixtures", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445d6ec0", "scope": "Standalone modes plus 1152 native write/assignment invokes from native-registered bindings; query/allocation/copy/resize services remain fixtures; caller/event source unknown", "required_checks": ["ui-nktileview-refresh-current"]},
               {"address": "0x1445cb6c0", "scope": "Static occupied-entry iteration and caller-supplied callback only; not executed, event meaning unknown", "required_checks": []},
-              {"address": "0x1414277b0", "scope": "80 standalone assignment variants / 4 identity cases, resize and byte-copy fixtures; 64 native assignments inside 288 consumer calls; allocator/registration/caller unknown", "required_checks": ["ui-nktileview-refresh-current"]}
+              {"address": "0x1414277b0", "scope": "80 standalone assignment variants / 4 identity cases, resize and byte-copy fixtures; 64 native assignments inside 288 consumer calls; allocator/registration/caller unknown", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x1455086b0", "scope": "Static read consumer edge and key/value formatting only; caller not executed", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x145509470", "scope": "Static gated read consumer and formatter; search helper semantics unknown", "required_checks": ["ui-nktileview-refresh-current"]},
+              {"address": "0x145517810", "scope": "Static GNn/NNV diagnostic literals and gates; Reload target unverified; not a UI event/active settings proof", "required_checks": ["ui-nktileview-refresh-current"]}
             ],
             "evidence": [
               "evidence/interface/NKTILEVIEW-REGISTRATION-11316.md",
@@ -67,7 +70,8 @@
               "evidence/interface/UI-CONFIG-HASH-11316.md",
               "evidence/interface/UI-CONFIG-CONSUMERS-11316.md",
               "evidence/interface/UI-STRING-ASSIGNMENT-11316.md",
-              "evidence/interface/UI-CONFIG-REGISTRATION-DISPATCH-11316.md"
+              "evidence/interface/UI-CONFIG-REGISTRATION-DISPATCH-11316.md",
+              "evidence/interface/UI-CONFIG-CALLERS-11316.md"
             ]
           }
         ]

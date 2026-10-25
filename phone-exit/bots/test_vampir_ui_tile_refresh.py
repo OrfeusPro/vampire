@@ -27,9 +27,24 @@ spec = importlib.util.spec_from_file_location('ui_config_consumers_replay', HERE
 config_consumers = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_consumers)
 spec = importlib.util.spec_from_file_location('ui_string_assignment_replay', HERE / 'replay-ui-string-assignment.py')
 string_assignment = importlib.util.module_from_spec(spec); spec.loader.exec_module(string_assignment)
+spec = importlib.util.spec_from_file_location('ui_config_callers_inspector', HERE / 'inspect-ui-config-callers.py')
+config_callers = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_callers)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_static_config_callers_preserve_diagnostic_scope_and_gates(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_callers.inspect(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_callers.ROOTS]))
+        self.assertEqual(len(result['call_edges']), 7)
+        self.assertEqual(len(result['literals']), 8)
+        self.assertEqual(result['conditions']['special_keys'], ['~', 'Reload'])
+        self.assertIn('count <=1', result['conditions']['missing_or_empty_value'])
+        self.assertTrue(all(e['boundary_verified'] for e in result['call_edges']))
+        with self.assertRaises(ValueError):
+            config_callers.inspect(dict(source=source, source_sha256='0' * 64,
+                question='ui-nktileview-property-schema', functions=[]))
+
     def test_native_registered_bindings_dispatch_after_replacement_and_reuse(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_reader.run(dict(source=source, source_sha256=replay.getter.SHA,

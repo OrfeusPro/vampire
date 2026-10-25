@@ -6101,6 +6101,46 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Callers/условия consumers, source initialization/precedence, iterator, native initial counted assignment, allocator/lifetime и active UI/Brush."
+    },
+    {
+      "addresses": [
+        "0x1455086b0",
+        "0x145509470",
+        "0x145517810"
+      ],
+      "checks": [
+        {
+          "cache_key": "ad67a1877eb3eed65a656cbb098784f403ad3e3bd8fb3f441451296519bac4f0",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\aecbcedc18035cf2904c3aeb464bf840ffdd4aa213819efa818d6cedce88dce1\\manifest.json",
+          "sha256": "aecbcedc18035cf2904c3aeb464bf840ffdd4aa213819efa818d6cedce88dce1",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Узкий E8 поиск выявил 4 подтверждённых consumer callsites в 3 unwind roots. Caller 145517810 содержит GNn/~ /Reload и NNV diagnostics; empty key перечисляет все, read result count<=1 вызывает вывод candidates, а запись допускается только при read count>1 и непустом входном value. Count<=1 объединяет missing и existing empty binding. Другие два callers читают и форматируют key/value. Проверены 7 calls / 8 UTF16 literals и gates; это статический диагностический контекст, не подтверждённое событие UI-настроек.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-CALLERS-11316.md",
+          "sha256": "602fc119a660c08d82dbbc92e641bb41450296748383fd6d0de3aeb00ac5dda4"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-e33a32096278\\details.json",
+          "sha256": "fdc94fb45fbc05154c60aa1839b6b78589ec4ff2b6ad49a2fc8a909736d8c31b"
+        }
+      ],
+      "id": "592069a31b731877687343314a6a16f8ab232a1354aefeeae86ad04b5aa3ecb6",
+      "limits": [
+        "Новые callers не исполнялись; prefix matching/strip helpers, formatting/output, iterator callbacks и Reload target семантически не проверены.",
+        "Direct-E8 поиск ограничен .text и двумя exact targets; косвенные callers и регистрация команд не покрыты.",
+        "Diagnostic NNV роль следует из литералов/ветвей; фактическая console exposure, permissions, initiator и persistence неизвестны.",
+        "Прежние прямые consumer replay не доказывают доступность тех же действий через найденный gated caller.",
+        "Active config/source precedence/UI application/Brush и реальные игровые действия не доказаны."
+      ],
+      "method": "static",
+      "next_check": "Отдельное задание на 1445d1cd0 и prefix helpers; проверить роль и регистрацию/инициатор caller. Не запускать GNn/Reload в игре по этому выводу.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Роль target 1445d1cd0, prefix helpers, регистрация/инициатор caller, source precedence и active UI/Brush."
     }
   ],
   "schema": 1,
