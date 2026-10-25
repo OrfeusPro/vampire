@@ -32,8 +32,22 @@ config_callers = importlib.util.module_from_spec(spec); spec.loader.exec_module(
 spec = importlib.util.spec_from_file_location('ui_config_reload_replay', HERE / 'replay-ui-config-reload.py')
 config_reload = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_reload)
 
+spec = importlib.util.spec_from_file_location('ui_config_load_wrapper_replay', HERE / 'replay-ui-config-load-wrapper.py')
+config_load = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_load)
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_config_load_wrappers_forward_context_flags_and_low_byte(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_load.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_load.ROOTS]))
+        self.assertEqual(len(result['path_cases']), 6)
+        self.assertEqual(len(result['load_cases']), 768)
+        self.assertEqual(result['context_fields'], dict(override_string='0x50', flag6='0x181', flag4='0x182', flag7='0x183'))
+        self.assertEqual({c['loader_result'] for c in result['load_cases']}, {0, 1, 0x1234, 0x123400})
+        for case in result['load_cases']:
+            self.assertEqual(case['forwarded_low_byte'], case['loader_result'] & 255)
+            self.assertTrue(case['complete_return'])
+
     def test_native_reload_wrapper_config_service_precedes_sparse_callbacks(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_reload.run(dict(source=source, source_sha256=replay.getter.SHA,
