@@ -6495,6 +6495,52 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "141459960 source, normalization 141584080, actual platform manager/resolver/backend, diagnostic failure behavior and UI configuration binding."
+    },
+    {
+      "addresses": [
+        "0x141435f10",
+        "0x141459960",
+        "0x1414891c0",
+        "0x1415ca400"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "67edb36c0e257022ddf2347563b486253ef156344c6ad1c409b87b37cec9fc9f",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ea1e3907132a8b67637ee77adf47e7ebf1c4bfdefff75579b81acb9b9c7eac66\\manifest.json",
+          "sha256": "ea1e3907132a8b67637ee77adf47e7ebf1c4bfdefff75579b81acb9b9c7eac66",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "384 whole installed scenarios / 384 cached repeats with native cached base-source branch, exact no-unwind normalization/getter leaves, native equal-length replace, platform resolver/physical provider. File-backed table148a21698 slot78 target1415c6140 now exact backend fixture.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-NATIVE-SOURCE-CHAIN-11316.md",
+          "sha256": "0990bf8af62ba4dabff01ee327e9b046fae7f66eed55507d167059cad64d1812"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-09bf4a9674b0\\details.json",
+          "sha256": "ba550eb5b292ff1279a7f9f3f9f480e40243e10bdf422fa1ccca51f0e861aa45"
+        }
+      ],
+      "id": "78258892f9c15f1070814721f55f66a04a763714ce93958d2062f163f3a9da49",
+      "limits": [
+        "Base manager/cache, substring, FString storage/copy, physical constructor/TLS/guard/atexit, backend/free/iswspace fixtures.",
+        "Source cold construction excluded; replace only equal-length backslash/slash mode0. Exact leaf bytes+padding checked against explicit leaf request, no invented unwind.",
+        "No actual filesystem result/path/config precedence/UI proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "UI-21.E-13.02.38 backend/constructor/cache source/cold source; .36 normalization limits, .34 diagnostics/leaf/CRT; base-path/loader/precedence remain open.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Backend1415c6140, constructor1414400f0, cache source14144b6b0 and cold base construction; generic normalization/error/lifetime and active configuration."
     }
   ],
   "schema": 1,
