@@ -43,7 +43,24 @@ spec = importlib.util.spec_from_file_location('ui_config_path_join_replay', HERE
 config_join = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_join)
 
 
+spec = importlib.util.spec_from_file_location('ui_config_source_helpers_replay', HERE / 'replay-ui-config-source-helpers.py')
+config_sources = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_sources)
+
+
 class TileRefreshTests(unittest.TestCase):
+    def test_native_manager_and_parser_buffer_cleanup_boundaries(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_sources.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_sources.ROOTS]))
+        self.assertEqual(len(result['manager_cases']), 14)
+        self.assertEqual(len(result['parser_cases']), 192)
+        self.assertEqual(result['directory_static']['method'], 'static_only_not_executed')
+        self.assertEqual({c['input_units'] for c in result['parser_cases']}, {0, 2, 3, 4095, 4096})
+        for case in result['parser_cases']:
+            self.assertEqual(case['large_buffer'], case['input_units'] >= 4096)
+            self.assertEqual(case['success'], bool(case['input_units'] and case['core_result_fixture']))
+            self.assertTrue(case['complete_return'])
+
     def test_native_counted_path_join_and_static_saved_source(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_join.run(dict(source=source, source_sha256=replay.getter.SHA,
