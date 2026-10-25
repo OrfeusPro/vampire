@@ -1,5 +1,6 @@
 """Find relocation-masked clock/Ping candidates; matches do not establish roles."""
 import hashlib
+import argparse
 import importlib.util
 import json
 from pathlib import Path
@@ -17,6 +18,12 @@ SEEDS = dict(producer=0x1467d0d10, ready=0x144ab2060, ready_core=0x144ab35d0,
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--seeds',type=Path,help='Explicit JSON name/address seeds from reviewed historical evidence')
+    args = parser.parse_args()
+    seeds = {k:int(v,16) for k,v in json.loads(args.seeds.read_text('utf-8')).items()} if args.seeds else SEEDS
+    if not 1 <= len(seeds) <= 32:
+        raise ValueError('Explicit candidate seed budget is 1..32')
     spec = importlib.util.spec_from_file_location('ping_candidate_native', HERE/'build-native-entry-code.py')
     native = importlib.util.module_from_spec(spec); spec.loader.exec_module(native)
     images = []
@@ -32,7 +39,7 @@ def main():
     text = next(s for s in ni.pe.sections if s['name'] == '.text')
     lo, hi = text['raw'], text['raw'] + text['raw_size']
     results = {}
-    for name, address in SEEDS.items():
+    for name, address in seeds.items():
         offset = oi.offset(address - oi.pe.base)
         pattern, mask = bytearray(), bytearray()
         for ins in cs.disasm(old[offset:offset+160], address):

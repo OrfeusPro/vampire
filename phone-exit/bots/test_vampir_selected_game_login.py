@@ -54,6 +54,10 @@ class SelectedGameLoginTests(unittest.TestCase):
         from vampir_core.session_clock import INITIAL_PING_SOURCE_SHA256
         self.check_auth_and_clock(INITIAL_PING_SOURCE_SHA256)
 
+    def test_11316_world_probe_requires_verified_candidate_capability(self):
+        from vampir_core.session_clock import INITIAL_PING_SOURCE_SHA256
+        self.check_auth_and_clock(INITIAL_PING_SOURCE_SHA256,world_start=True,world_finish=True,observation=20,candidate=True)
+
     def test_direct_route_reaches_game_with_socket_address_and_no_socks(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256, direct=True)
 
@@ -70,7 +74,7 @@ class SelectedGameLoginTests(unittest.TestCase):
         from vampir_core.bot_device_settings import connection_presets
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256,device_settings=connection_presets()[1]['device_settings'])
 
-    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False,observation=0,direct=False,device_settings=None):
+    def check_auth_and_clock(self, source_sha, world_start=False,world_finish=False,observation=0,direct=False,device_settings=None,candidate=False):
         from vampir_core.lobby_packets import LobbyVersionResultBody
         version, inputs = input_tests.InitialGameLoginTests().inputs()
         def lobby(email, **kwargs):
@@ -95,7 +99,8 @@ class SelectedGameLoginTests(unittest.TestCase):
         prepare = Mock(return_value=version)
         target_module = SimpleNamespace(choose_target=lambda *args, **kwargs:
                 SimpleNamespace(server_id=42, group_id=7, host='game.example.com', port=12001))
-        modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14', compiled_tag=version.strings[9], source_exe_sha256=source_sha)),
+        modules = [SimpleNamespace(load_profile=lambda **kwargs: SimpleNamespace(app_version='1.12.14', compiled_tag=version.strings[9], source_exe_sha256=source_sha,
+            live_probe_only=candidate,bounded_world_probe=candidate)),
             SimpleNamespace(run=lobby), target_module, target_module,
             SimpleNamespace(observe_inputs=lambda: ('cpu', 'windows')),
             SimpleNamespace(prepare_version=prepare)]
@@ -111,6 +116,7 @@ class SelectedGameLoginTests(unittest.TestCase):
             options = self.kwargs()
             if direct: options['socks_port'] = None
             if world_start: options['selected_profile'] = 'recovered-release'
+            if candidate: options['selected_profile'] = 'candidate-11316'
             result = self.tool.run('fixture@example.invalid', auth_flow='launcher', language_code=1,
                 lobby_context='sdk-with-partial-metadata', read_character_list=True, character_index=0,
                 read_world_start=world_start, read_world_finish=world_finish, observe_world_seconds=observation,

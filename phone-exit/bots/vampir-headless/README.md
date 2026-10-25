@@ -1,5 +1,13 @@
 # Самостоятельный клиент Vampir
 
+25 октября `candidate-11316` прошёл ограниченный вход существующего персонажа
+`bot-hk-test@vampir.top` на Franz 2 через HK: Select 0, ID202/204/206 0,
+серверный вектор получен. 120 секунд наблюдения — 24 periodic Ping / 25 ID17,
+ошибок нет. После теста соединения закрыты. Движение и квесты не выполнялись.
+ID110/206 nested остаются строгими historical parsers с проверкой конкретных
+live bodies; весь формат новой сборки не объявлен подтверждённым.
+[Профиль и границы результата](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-ENTRY-11316.md).
+
 25 октября на 1.13.16 через HK исправлен игровой вход `bot-hk-test@vampir.top`
 на Franz 2: Game Login 0, список с одним персонажем. Geo-поля свежего GMC2
 теперь включаются по текущему SHA независимо от guard TID. Initial Ping

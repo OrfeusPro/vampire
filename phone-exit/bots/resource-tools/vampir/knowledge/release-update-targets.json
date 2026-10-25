@@ -2767,6 +2767,63 @@
           }
         ]
       }
+    },
+    {
+      "id": "bounded-world-entry-current",
+      "baseline_functions": [],
+      "tools": [
+        "replay-world-entry-11316.py",
+        "verify-world-entry-relocation.py"
+      ],
+      "rule": "При новом SHA искать candidates и проверять весь instruction contract, ID/table/writer и зависимости отдельно. Historical ID110/206 parsers остаются bounded до проверки nested; native IO fixtures и ID202 opaque suffix не считать целой сессией.",
+      "automation": {
+        "discovery": "explicit_historical_masked_prefix_then_full_instruction_contract_review",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1456e8280",
+                "scope": "Bounded native writers/readers/receiver with explicit archive/vector fixtures; historical nested decoders retained as strict parsers.",
+                "required_checks": [
+                  "native-world-entry-probe-current"
+                ]
+              },
+              {
+                "address": "0x14584f3d0",
+                "scope": "Bounded native writers/readers/receiver with explicit archive/vector fixtures; historical nested decoders retained as strict parsers.",
+                "required_checks": [
+                  "native-world-entry-probe-current"
+                ]
+              },
+              {
+                "address": "0x14584f4f0",
+                "scope": "Bounded native writers/readers/receiver with explicit archive/vector fixtures; historical nested decoders retained as strict parsers.",
+                "required_checks": [
+                  "native-world-entry-probe-current"
+                ]
+              },
+              {
+                "address": "0x1467cf320",
+                "scope": "Bounded native writers/readers/receiver with explicit archive/vector fixtures; historical nested decoders retained as strict parsers.",
+                "required_checks": [
+                  "native-world-entry-probe-current"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-world-entry-11316.py",
+              "verify-world-entry-relocation.py"
+            ],
+            "evidence": [
+              "evidence/characters/HEADLESS-WORLD-ENTRY-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

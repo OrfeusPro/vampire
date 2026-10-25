@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+25 октября существующий персонаж `bot-hk-test@vampir.top` на Franz 2 вошёл
+через HK в мир на 1.13.16: Login / Select / world result codes 0, серверная цель
+получена. Проверены 120 секунд: 24 periodic Ping / 25 ответов без ошибок.
+Сессия и тестовый транспорт закрыты; движение и квесты ещё не запускались.
+[Текущий bounded профиль, проверки и живой результат](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-ENTRY-11316.md).
+
 25 октября исправлен Game Login `bot-hk-test@vampir.top` через HK на Franz 2:
 сервер вернул 0 и список с одним персонажем. Ошибочное условие старого SHA
 исключало свежие I_ConnectIP / I_CountryCD из metadata 1.13.16.

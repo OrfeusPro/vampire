@@ -1,6 +1,10 @@
 """Current Ping producer policy; single-owner queue, no reconnect or game IO."""
 from .ping import PingPayload, PingResultPayload
-from .session_clock import LobbyPingClock, SOURCE_SHA256
+from .session_clock import LobbyPingClock, SOURCE_SHA256, INITIAL_PING_SOURCE_SHA256
+
+# Reviewed producer and receiver, plus bounded live observation. Initial Ping
+# support alone must not expand this set on a future client update.
+HEARTBEAT_SOURCES=frozenset((SOURCE_SHA256,INITIAL_PING_SOURCE_SHA256))
 
 
 class PingRecoveryRequired(TimeoutError):
@@ -9,7 +13,7 @@ class PingRecoveryRequired(TimeoutError):
 
 class PeriodicPing:
     def __init__(self,clock,initial_ping,*,source_sha256):
-        if source_sha256!=SOURCE_SHA256:raise ValueError('Unsupported heartbeat source')
+        if source_sha256 not in HEARTBEAT_SOURCES:raise ValueError('Unsupported heartbeat source')
         if not isinstance(clock,LobbyPingClock) or not isinstance(initial_ping,PingPayload):
             raise TypeError('Verified clock and queued initial Ping required')
         if initial_ping.first_bits!=initial_ping.second_bits or not 5000<initial_ping.first_bits<2**63:

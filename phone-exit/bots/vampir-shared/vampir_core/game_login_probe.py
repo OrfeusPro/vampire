@@ -8,7 +8,7 @@ from .receive_stream import ReceiveLimits
 from .selection_flow import SelectionLimits, SelectionState
 from .game_login_error import describe_game_login_error
 from .session_clock import LobbyPingClock
-from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256
+from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256, WORLD_PROBE_SOURCES
 from .character_target import CharacterTargetTracker
 from .tutorial_update import decode_tutorial_update
 
@@ -45,7 +45,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     if ping_clock is not None and not isinstance(ping_clock, LobbyPingClock):
         raise TypeError('Expected verified lobby Ping clock')
     if type(read_world_start) is not bool or (read_world_start and
-            (character_index is None or source_sha256 != WORLD_SOURCE_SHA256)):
+            (character_index is None or source_sha256 not in WORLD_PROBE_SOURCES)):
         raise ValueError('World start requires explicit character selection and current source')
     if type(read_world_finish) is not bool or (read_world_finish and not read_world_start):
         raise ValueError('World finish requires explicit world start')

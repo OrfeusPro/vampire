@@ -7106,6 +7106,42 @@
       "question": "ui-named-slot-inheritance-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Native inherited serializer/property construction order; CDO/archetype defaults, active variant and desired sizes."
+    },
+    {
+      "addresses": [
+        "0x1456e8280",
+        "0x14584f3d0",
+        "0x14584f4f0",
+        "0x1467cf320"
+      ],
+      "checks": [
+        {
+          "cache_key": "b7b024979b03b6cd1066b7df048d9973bd9b6d64efb6d13795154e5770f1e5a9",
+          "id": "native-world-entry-probe-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8bfd23ab0a9988dc88e6b763a24031d78e577a5992421d710b2a22c3a2d2e202\\manifest.json",
+          "sha256": "8bfd23ab0a9988dc88e6b763a24031d78e577a5992421d710b2a22c3a2d2e202",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Bounded current world entry accepted through HK on Franz 2 for existing bot-hk-test: Login/Select/ID202/204/206 code 0, finite server target, 120 seconds with 24 periodic Ping and 25 responses, no errors. Current writers/readers/receiver passed 201 IO-boundary native scenarios and 102 local tests.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-WORLD-ENTRY-11316.md",
+          "sha256": "9dcc61fd2b7dcb7ac5744922557851b3d6d489d7d683ebb439c326f16fae19e1"
+        }
+      ],
+      "id": "8981db7255731625b77cf9766a5297de9e4ed81d993f078e160e25da766a6ebf",
+      "limits": [
+        "Archive/nested thunk/vector and output IO are fixtures; ID202 suffix opaque.",
+        "Full shapes of selected outer/request functions match; external callee pairs and historical ID110/206 nested parsers are not a whole-current-format proof.",
+        "One current live response set only; no world engine streaming, actor correction, movement, quests, indefinite session or reconnect.",
+        "Test sockets and transport closed; no baseline promotion."
+      ],
+      "method": "bounded_native",
+      "next_check": "Port current read-only map state and source-bound outgoing movement; keep command handling concurrent with socket pump/heartbeat.",
+      "question": "world-entry-bounded-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current map feed, ID305 movement/server result, full nested compatibility and durable interactive session."
     }
   ],
   "schema": 1,

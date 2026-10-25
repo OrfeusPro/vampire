@@ -41,6 +41,7 @@ class BaseGameProfile:
     compiled_tag: str = ''
     source_exe_sha256: str = ''
     live_probe_only: bool = False
+    bounded_world_probe: bool = False
 
 
 def verify_file(path, expected):
@@ -90,21 +91,22 @@ def load_profile(*, selected_profile, root=ROOT):
     url = prepare_cdn_config_url_ascii(normal=values['CdnConfigUrl'], qa=values['CdnConfigUrlQA'],
         prefix=values['ConfigPrefix'], app_version=values['AppVersion'], platform_code=2)
     return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, snapshot,
-        compiled_tag=compiled_tag, source_exe_sha256=source_sha, live_probe_only=selected_profile == CANDIDATE)
+        compiled_tag=compiled_tag, source_exe_sha256=source_sha, live_probe_only=selected_profile == CANDIDATE,
+        bounded_world_probe=selected_profile == CANDIDATE)
 
 
 def verify_candidate_evidence(*, root=ROOT):
     """Frozen offline evidence for an explicit read-only live experiment, not promotion."""
     evidence = json.loads((HERE / 'game-candidate-11316.json').read_text('utf-8'))
     if (evidence['source_sha256'] != CURRENT_SHA or
-            evidence['capabilities'] != ['version', 'login', 'character-list', 'initial-ping'] or
+            evidence['capabilities'] != ['version', 'login', 'character-list', 'initial-ping', 'bounded-world-probe'] or
             evidence['live_verified'] is not False):
         raise ValueError('Candidate scope changed')
     required = {'native-archive-wire-checks', 'native-login-prepare-checks',
         'native-version-prepare-checks', 'native-version-result-checks',
         'native-version-result-handler-checks', 'native-login-result-checks',
         'native-waiting-end-checks', 'native-character-list-records-checks',
-        'native-character-list-handler-checks', 'login-clock-11316', 'login-ping-11316'}
+        'native-character-list-handler-checks', 'login-clock-11316', 'login-ping-11316', 'world-entry-11316'}
     reports = evidence['reports']
     if len(reports) != len(required) or {Path(item['path']).parts[1] for item in reports} != required:
         raise ValueError('Candidate evidence is incomplete')

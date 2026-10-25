@@ -5,14 +5,19 @@
     "version",
     "login",
     "character-list",
-    "initial-ping"
+    "initial-ping",
+    "bounded-world-probe"
   ],
   "live_verified": false,
   "limits": [
-    "Explicit bounded live probe with initial Ping only; no creation, selection, world, periodic heartbeat or baseline promotion.",
-    "Storage/services fixtures and transport integration remain bounded hypotheses until live observation."
+    "Explicit bounded world probe with selection, world transitions and periodic Ping; no creation or baseline promotion.",
+    "ID110/206 nested decoders are strict historical parsers; source instruction shapes and live bodies do not prove all current variants. Engine streaming and indefinite sessions are not established."
   ],
   "reports": [
+    {
+      "path": "code-clues/world-entry-11316/e08456a3836ae25fc4b964e1aea695cba4aed819b61913fba5d18ba0f6a41cc6/manifest.json",
+      "sha256": "e08456a3836ae25fc4b964e1aea695cba4aed819b61913fba5d18ba0f6a41cc6"
+    },
     {
       "path": "code-clues/login-clock-11316/d9be90c721a67fc92d6692baa78cc0801fa6c237eeeb84c75662b75b639a175f/manifest.json",
       "sha256": "d9be90c721a67fc92d6692baa78cc0801fa6c237eeeb84c75662b75b639a175f"

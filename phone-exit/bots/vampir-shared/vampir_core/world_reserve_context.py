@@ -6,7 +6,7 @@ Nested world collections, vector and tail remain uninterpreted. No IO.
 from dataclasses import dataclass, field
 import struct
 
-from .world_move_start import SOURCE_SHA256
+from .world_move_start import SOURCE_SHA256, WORLD_PROBE_SOURCES
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,7 +26,7 @@ def decode_world_reserve_context(body, *, max_payload_size, source_sha256):
     Consumers may use these proven fields for a protocol step but must not call
     the whole ID202 body validated or use opaque world data as game state.
     """
-    if source_sha256 != SOURCE_SHA256:
+    if source_sha256 not in WORLD_PROBE_SOURCES:
         raise ValueError('World reserve context policy is not verified for source')
     if type(max_payload_size) is not int or not 19 <= max_payload_size <= 0xffffff:
         raise ValueError('World reserve context requires an explicit byte budget')

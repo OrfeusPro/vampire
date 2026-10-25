@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+25 октября выполнен current bounded world probe через HK для существующего
+`bot-hk-test@vampir.top` / Franz 2. Select / ID202 / ID204 / ID206 — 0,
+серверная цель получена; 120 секунд / 24 periodic Ping / 25 ID17 без ошибок.
+Соединения закрыты. Следом — текущий read-only слой карты и проверка исходящего
+движения / приёма команд, не блокирующего heartbeat. Nested совместимость
+ID110/206 ограничена strict parser и конкретными live bodies, не всеми вариантами.
+[Доказательства и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-WORLD-ENTRY-11316.md).
+
 25 октября Game Login существующего `bot-hk-test@vampir.top` на Franz 2 через
 HK принят: code 0 и список с одним персонажем. Исправлено исключение свежих
 I_ConnectIP / I_CountryCD из metadata текущей сборки по старому TID SHA guard.
