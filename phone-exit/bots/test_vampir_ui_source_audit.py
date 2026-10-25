@@ -70,7 +70,7 @@ class SourceAuditTests(unittest.TestCase):
             self.run_audit(schema={})
 
     def test_unaccounted_slot_does_not_pass_automatic_check(self):
-        self.exports.append(dict(index=2,name='Unknown',type='GridSlot',sha256='d'*64,offset=120))
+        self.exports.append(dict(index=2,name='Unknown',type='GridSlot',sha256='d'*64,offset=120,size=14))
         value=self.run_audit()
         self.assertFalse(value['automatic_source_checks_passed'])
         self.assertEqual(value['unaccounted_slot_exports'],[2])
@@ -85,6 +85,58 @@ class SourceAuditTests(unittest.TestCase):
         self.edges[0]['candidates']=['invented variant']
         with self.assertRaisesRegex(ValueError,'class candidates'):
             self.run_audit()
+
+    def test_virtual_catalog_alias_keeps_physical_slot_source_and_multiple_roots_explicit(self):
+        self.exports.extend([dict(index=2,name='Slot',type='ButtonSlot',sha256='d'*64,offset=120,size=14),
+            dict(index=3,name='First_C',type='WidgetBlueprintGeneratedClass',sha256='e'*64),
+            dict(index=4,name='Second_C',type='WidgetBlueprintGeneratedClass',sha256='f'*64)])
+        self.package['excluded_slots']=[dict(provenance=dict(slot_export=2,slot_type='ButtonSlot',file='test.json',sha256='d'*64,offset=120))]
+        self.variant['excluded_slots']=copy.deepcopy(self.package['excluded_slots'])
+        self.variant['file']='test-root-3.json'
+        raw=json.dumps(self.package).encode();(self.root/'ui-catalog/test-root-3.json').write_bytes(raw)
+        self.variant['sha256']=audit.digest(raw)
+        value=self.run_audit()
+        self.assertTrue(value['automatic_source_checks_passed'])
+        self.assertEqual(len(value['package_blueprint_roots']),2)
+        self.assertIn('multiple_blueprint_roots_share_package_scope',value['unknowns'])
+        self.assertIsNone(value['runtime_root'])
+
+
+class SourceAuditScopeTests(unittest.TestCase):
+    def fixture(self):
+        rows=[dict(registry_id='A',path='/Game/RED/UI/Lobby/StartUI',flags=dict(name_contains_UI=True)),
+            dict(registry_id='B',path='/Game/RED/UI/Common/ButtonT',flags=dict(name_contains_UI=False)),
+            dict(registry_id='C',path='unresolved:child.json',flags=dict(name_contains_UI=False)),
+            dict(registry_id='D',path='/Game/RED/UI/Common/LabelT',flags=dict(name_contains_UI=False)),
+            dict(registry_id='Z',path='/Game/RED/UI/Other/OtherUI',flags=dict(name_contains_UI=True))]
+        graph=dict(nodes={
+            'a':dict(resource_id='A',dependencies=[dict(candidates=['b-old'])]),
+            'b-old':dict(resource_id='B',dependencies=[dict(candidates=['c'])]),
+            'b-new':dict(resource_id='B',dependencies=[dict(candidates=['d'])]),
+            'c':dict(resource_id='C',dependencies=[dict(candidates=['b-old'])]),
+            'd':dict(resource_id='D',dependencies=[dict(candidates=[])]),
+            'z':dict(resource_id='Z',dependencies=[])})
+        return rows,graph
+
+    def test_default_and_full_scopes_have_distinct_cohorts(self):
+        rows,graph=self.fixture()
+        self.assertEqual([r['registry_id'] for r in audit.select_records(rows,graph)],['A','Z'])
+        self.assertEqual(audit.select_records(rows,graph,scope='all'),rows)
+        self.assertEqual([r['registry_id'] for r in audit.select_records(rows,graph,['Lobby'],'all')],['A'])
+
+    def test_dependency_closure_retains_unresolved_sibling_versions_and_cycles(self):
+        rows,graph=self.fixture()
+        original=copy.deepcopy((rows,graph))
+        selected=audit.select_records(rows,graph,['Lobby'],'dependencies')
+        self.assertEqual([r['registry_id'] for r in selected],['A','B','C','D'])
+        self.assertEqual((rows,graph),original)
+
+    def test_missing_graph_target_or_unknown_scope_is_not_silently_ignored(self):
+        rows,graph=self.fixture();graph['nodes']['a']['dependencies'][0]['candidates']=['missing']
+        with self.assertRaisesRegex(ValueError,'missing from graph'):
+            audit.select_records(rows,graph,['Lobby'],'dependencies')
+        with self.assertRaisesRegex(ValueError,'Unknown'):
+            audit.select_records(rows,graph,scope='guess')
 
 
 if __name__ == '__main__':

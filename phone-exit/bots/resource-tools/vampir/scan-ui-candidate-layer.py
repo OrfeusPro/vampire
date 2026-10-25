@@ -81,6 +81,9 @@ def compile_layer(base, report, source_exports):
                 raise ValueError('Explicit/omitted property coverage inconsistent')
         unknowns = ['current_client_compatibility','inherited_defaults','native_superclass_contract',
             'runtime_visibility_and_order','desired_size_and_dpi','runtime_geometry','events_and_behavior']
+        unknowns.extend(k for k in row.get('source_audit_unknowns',[]) if k not in unknowns)
+        if row.get('export_scope','not_recorded')=='not_recorded':
+            unknowns.append('package_export_scope_not_recorded')
         if not parse_complete:
             unknowns.append('opaque_inherited_payload')
         if omitted:
@@ -93,6 +96,8 @@ def compile_layer(base, report, source_exports):
             export_sha256=row['sha256'],status=status,observed_properties=observed,omitted_properties=omitted,
             candidate_parse_complete=parse_complete,geometry_verified=False,implementation_verified=False,
             unknowns=unknowns,interpretation=row['interpretation'],base_reference=variants[file]['file'])
+        node['export_scope']=row.get('export_scope','not_recorded')
+        node['package_blueprint_roots']=copy.deepcopy(row.get('package_blueprint_roots',[]))
         if not parse_complete:
             node['raw_serialization_hex']=row['raw_serialization_hex']
         nodes[nid]=node

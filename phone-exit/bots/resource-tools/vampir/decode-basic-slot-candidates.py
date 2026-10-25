@@ -9,6 +9,7 @@ import struct
 
 HERE = Path(__file__).resolve().parent
 SHA = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
+SIZE_GETTER=0x143572e20
 SPECS = {
     'PanelSlot': dict(fields=['Parent', 'Content'], flags=[82, 82], array=0x148fdd840,
         metadata=0x148fddad0, getter=0x1435b51e0, thunk=0x14356ab00),
@@ -38,7 +39,7 @@ def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
-def decode(raw, kind):
+def decode(raw, kind, allow_size=False):
     if kind not in SPECS or SPECS[kind].get('container'):
         raise ValueError('Unsupported slot candidate class')
     fields = SPECS[kind]['fields'] + (['Parent', 'Content'] if kind != 'PanelSlot' else [])
@@ -54,7 +55,7 @@ def decode(raw, kind):
             nested_fields = ['Value','SizeRule'] if name == 'Size' else ['Left','Top','Right','Bottom']
             nested = {}
             if not zero:
-                if name=='Size':
+                if name=='Size' and not allow_size:
                     raise ValueError('Explicit Size struct schema unreviewed')
                 for child_index, child_zero in reader.header():
                     if child_index >= len(nested_fields) or nested_fields[child_index] in nested:
@@ -78,12 +79,35 @@ def decode(raw, kind):
         omitted_properties=[f for f in fields if f not in values])
 
 
+def size_schema(raw,image,fragment):
+    descriptor=image.offset(0x148ff12b0-image.pe.base)
+    if struct.unpack_from('<Q',raw,descriptor+56)[0]!=SIZE_GETTER:
+        raise ValueError('ScrollBoxSlot Size struct getter changed')
+    rows={row['address']:row for row in fragment['instructions']}
+    if rows[0x143572e30]['rip_references']!=[0x14b102d08] or rows[0x143572e30]['mnemonic']!='lea':
+        raise ValueError('SlateChildSize metadata reference changed')
+    if rows[0x143572e3e]['direct_target']!=0x1417d2560:
+        raise ValueError('SlateChildSize registration helper changed')
+    at=image.offset(0x14b102d08-image.pe.base);block=raw[at:at+64]
+    name_pointer,array_pointer=struct.unpack_from('<QQ',block,24)
+    name=image.offset(name_pointer-image.pe.base)
+    if raw[name:name+15]!=b'SlateChildSize\0' or array_pointer!=0x148fc7150:
+        raise ValueError('SlateChildSize metadata/array association changed')
+    schema=props.extract(raw,['Value','SizeRule'],[10,0],anchor_index=0)
+    if image.pe.address(schema['array_offset'])!=array_pointer:
+        raise ValueError('SlateChildSize descriptor array moved')
+    return dict(getter=hex(SIZE_GETTER),descriptor_address='0x148ff12b0',
+        metadata=dict(address='0x14b102d08',bytes=block.hex(),sha256=sha(block)),
+        schema=schema,fragment=fragment,defaults_verified=False)
+
+
 def schemas(request):
     if request['source_sha256'] != SHA or request['question'] != 'ui-nktileview-property-schema':
         raise ValueError('Unreviewed native request')
     available={int(f['address'],16) for f in request['functions']}
     selected={kind:s for kind,s in SPECS.items() if s['getter'] in available}
     roots = {s['getter'] for s in selected.values()} | {s['parent_getter'] for s in selected.values() if 'parent_getter' in s}
+    if 'ScrollBoxSlot' in selected and SIZE_GETTER in available:roots.add(SIZE_GETTER)
     if not selected or not roots <= available:
         raise ValueError('Missing explicit getter root')
     raw = source.checked(Path(request['source']), SHA)
@@ -153,6 +177,8 @@ def schemas(request):
             refs={target for row in parent_fragment['instructions'] for target in row['rip_references']}
             result[kind]['parent_candidate']=dict(thunk=hex(at),bytes=b.hex(),getter=hex(spec['parent_getter']),
                 class_literal=literal(spec['parent_name']),fragment=parent_fragment)
+    if SIZE_GETTER in roots:
+        result['ScrollBoxSlot']['size_schema']=size_schema(raw,image,next(f for f in fragments if f['instructions'][0]['address']==SIZE_GETTER))
     return result
 
 
@@ -205,7 +231,8 @@ def run(root, request, audit_path):
                             inherited_properties_decoded=False,geometry_verified=False,class_metadata_association_verified=True,
                             cooked_current_compatibility_verified=False,inherited_serialization_verified=False))
                         continue
-                    value = decode(bytes.fromhex(actual['serialized_hex']), actual['type'])
+                    value = decode(bytes.fromhex(actual['serialized_hex']), actual['type'],
+                        allow_size='size_schema' in definitions.get('ScrollBoxSlot',{}))
                     fields = value['explicit_properties']; parent = exports[fields['Parent']]; content = exports[fields['Content']]
                     expected_parent={'UniformGridSlot':'UniformGridPanel','ScrollBoxSlot':'ScrollBox'}.get(actual['type'])
                     if expected_parent and parent['type']!=expected_parent:

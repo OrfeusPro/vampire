@@ -121,11 +121,11 @@ audit-ui-slot-coverage.py сверяет исходные uasset / uexp и со�
 сверяет raw package / export SHA и принадлежность каждого ресурса варианту.
 
 ```powershell
-python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-candidate-layer.py build --base 'F:/PhoneExit Resources/Vampir/ui-property-scans/ae23e2f540c216777073fb621b03e668312022f9441a913bc3cb458890a24e60' --reconciliation 'F:/PhoneExit Resources/Vampir/ui-property-scans/ui-slot-evidence-reconciliation-07.json' --reconciliation-sha256 5078276570f13d9adaaa0eb06f073690803d63d2f4e8a1efe33e6374521f70eb
-python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-candidate-layer.py verify 'F:/PhoneExit Resources/Vampir/ui-property-scans/candidate-layers/a7e46459e1e2f484adb6e0268447368af368f56640e1990587957fd148d62f98'
+python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-candidate-layer.py build --base 'F:/PhoneExit Resources/Vampir/ui-property-scans/ae23e2f540c216777073fb621b03e668312022f9441a913bc3cb458890a24e60' --reconciliation 'F:/PhoneExit Resources/Vampir/ui-property-scans/ui-slot-evidence-reconciliation-all-01.json' --reconciliation-sha256 eb338aed22670d216863db30bf668f053c435fc6642ae3fc27a7486552f8f6bd
+python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-candidate-layer.py verify 'F:/PhoneExit Resources/Vampir/ui-property-scans/candidate-layers/8ded226119edbc34a5d3bbf45c64e5eb994b5b7405a57584fa6d1f9eaa38c614'
 ```
 
-Подтверждён перенос слоя `a7e46459e1e2f484adb6e0268447368af368f56640e1990587957fd148d62f98`:
+Первоначально подтверждён перенос слоя `a7e46459e1e2f484adb6e0268447368af368f56640e1990587957fd148d62f98`:
 440 узлов (429 кандидатных разборов, 11 классификаций контейнера), 25 свойств,
 2077 наблюдений значений, 1529 отметок пропуска и 869 отношений. Проверка повторно
 строит весь слой из источников и сравнивает все файлы, включая каждый указатель
@@ -162,3 +162,22 @@ ID. Для нового списка можно передать `--tasks <но�
 по старым правилам. Сборка выполняется при подготовке общего набора, а не в каждом
 из 50 окон. Полный runtime UI, совместимость клиента и свойства по-прежнему требуют
 своих проверок; перенос данных не открывает фазу генерации.
+
+
+## Полный каталог после именной выборки
+
+Source audit `--scope all` охватил все 1970 записей / 2376 вариантов; dependency
+closure от имён UI — 952 записи / 1186 вариантов. [Доказательства и SHA](../resource-tools/vampir/knowledge/evidence/interface/UI-FULL-CATALOG-SIZE-11316.md).
+Новый полный слой: `8ded226119edbc34a5d3bbf45c64e5eb994b5b7405a57584fa6d1f9eaa38c614`.
+Он содержит 964 узла (920 чтений / 44 контейнерных классификации), 25 свойств,
+3512 наблюдений, 2640 пропусков и 1884 отношения. 10 ресурсов не имеют установленного
+пути и сохранены как unresolved. ID всех 25 свойств прежние; чеклист обновлён
+по полному набору, все пункты остаются открытыми.
+
+Verifier повторно прошёл всю базовую матрицу / source audit inputs / raw exports /
+native schema links и сравнил каждый файл слоя. Результат:
+`ui-property-scans/candidate-layer-verification-all-01.json`, SHA256
+`2104065775590c0ac6f48715fefe2874b388c548ff4fa40a6578d44474fb98e1`.
+41 тест прошёл. Whole-package scope и список Blueprint roots перенесены вместе
+с source unknowns; слой не подставляет runtime root или defaults.
+Прежний набор a7e46459… сохранён как результат прежней выборки и версий tools.

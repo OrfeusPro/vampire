@@ -108,6 +108,23 @@ class SlotEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'not ScrollBox'):
             evidence.reproduce(c,v,'sample.json',x,p)
 
+    def test_explicit_size_needs_verified_provider_and_does_not_supply_weight(self):
+        raw=bytes.fromhex('00020305010301180100000f01000000000000')
+        c=dict(index=281,name='Scroll',type='ScrollBoxSlot',sha256=evidence.sha(raw),offset=100,size=len(raw))
+        x={281:dict(c,serialized_hex=raw.hex()),280:dict(index=280,name='Scroll',type='ScrollBox',sha256='a'*64),
+            271:dict(index=271,name='Content',type='TextBlock',sha256='b'*64)}
+        v=dict(source=dict(asset_sha256='c'*64,body_sha256='d'*64))
+        p=dict(kind='ScrollBoxSlot',source=dict(file='sample.json',slot_export=281,offset=100,size=len(raw),sha256=evidence.sha(raw),**v['source']),
+            decoded=evidence.basic.decode(raw,'ScrollBoxSlot',allow_size=True),parent=x[280],content=x[271])
+        with self.assertRaisesRegex(ValueError,'Size struct schema unreviewed'):
+            evidence.reproduce(c,v,'sample.json',x,p)
+        p['allow_explicit_size']=True
+        result=evidence.reproduce(c,v,'sample.json',x,p)
+        size=result['decoded']['explicit_properties']['Size']
+        self.assertNotIn('Value',size['explicit_properties'])
+        self.assertEqual(size['omitted_properties'],['Value'])
+        self.assertFalse(result['geometry_verified'])
+
     def test_incomplete_or_duplicate_evidence_is_rejected(self):
         _,_,_,p=fixture()
         report=dict(kind='grid_slot_candidate_decode',failures=[],

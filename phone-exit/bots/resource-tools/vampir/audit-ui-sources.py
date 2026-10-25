@@ -21,6 +21,7 @@ def module(name, filename):
 
 inventory = module('audit_ui_inventory', 'inventory-ui-names.py')
 inspector = module('audit_ui_inspector', 'inspect-ui.py')
+slot_coverage = module('audit_ui_slot_coverage', 'audit-ui-slot-coverage.py')
 
 
 def digest(raw):
@@ -59,18 +60,16 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
     blueprint = variant['root']
     if blueprint is not None and exports[blueprint['index']] != blueprint:
         raise ValueError('Blueprint export differs from package bytes')
-    accounted = set()
+    try:
+        accounting=slot_coverage.coverage(list(exports.values()),package)
+    except ValueError as error:
+        raise ValueError('Slot provenance differs from package bytes: '+str(error)) from error
+    source_file=package.get('source_file',package['file'])
     for slot in variant['slots'] + variant['excluded_slots']:
         p = slot['provenance']
-        index = p['slot_export']
-        if index in accounted:
-            raise ValueError('Duplicate accounted slot export')
-        accounted.add(index)
-        source = exports[index]
-        if p['sha256'] != source['sha256'] or p['offset'] != source['offset'] or p['file'] != variant['file']:
+        if p['file'] not in {variant['file'],source_file}:
             raise ValueError('Slot provenance differs from package bytes')
-    candidates = {i for i, e in exports.items() if e['type'].endswith('Slot')}
-    unaccounted = sorted(candidates - accounted)
+    unaccounted = [row['export'] for row in accounting if row['status']=='unaccounted']
     schema = ui_layout_schema.compile_schema(record, variant)
     if schema != published_schema:
         raise ValueError('Local schema reproduction differs')
@@ -97,10 +96,14 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
         unknowns.append('missing_nested_classes')
     if any(len(edge['candidates']) > 1 for edge in expected):
         unknowns.append('ambiguous_nested_variants')
+    roots=[{k:e[k] for k in ['index','name','sha256']} for e in exports.values() if e['type']=='WidgetBlueprintGeneratedClass']
+    if len(roots)>1:
+        unknowns.append('multiple_blueprint_roots_share_package_scope')
     return dict(file=variant['file'], source=dict(catalog_sha256=variant['sha256'],
         asset_sha256=variant['asset_sha256'], body_sha256=variant['body_sha256']),
         checks=checks, automatic_source_checks_passed=all(checks.values()),
         implementation_verified=False, runtime_root=None, root_candidates=schema['root_candidates'],
+        export_scope='whole_package_not_selected_runtime_root',package_blueprint_roots=roots,
         counts=dict(controls=len(variant['controls']), decoded_slots=len(variant['slots']),
             excluded_slots=len(variant['excluded_slots']), unaccounted_slots=len(unaccounted)),
         unaccounted_slot_exports=unaccounted,
@@ -109,7 +112,41 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
         dependencies=expected, unknowns=unknowns)
 
 
-def build(root, snapshot, families=()):
+def select_records(records, graph, families=(), scope='ui-names'):
+    if scope not in ('ui-names','dependencies','all'):
+        raise ValueError('Unknown source audit scope')
+    def family(row):
+        return not families or any(row['path'].startswith('/Game/RED/UI/'+f+'/') for f in families)
+    seeds=[r for r in records if r['flags']['name_contains_UI'] and family(r)]
+    if scope=='all':
+        return [r for r in records if family(r)]
+    if scope=='ui-names':
+        return seeds
+    known={r['registry_id'] for r in records}
+    seed_ids={r['registry_id'] for r in seeds}
+    selected=set(seed_ids)
+    pending=[key for key,node in graph['nodes'].items() if node['resource_id'] in seed_ids]
+    siblings=defaultdict(list)
+    for key,node in graph['nodes'].items():siblings[node['resource_id']].append(key)
+    visited,expanded=set(),set()
+    while pending:
+        key=pending.pop()
+        if key in visited:continue
+        visited.add(key)
+        if key not in graph['nodes']:
+            raise ValueError('Dependency candidate missing from graph')
+        node=graph['nodes'][key]
+        if node['resource_id'] not in known:
+            raise ValueError('Dependency resource missing from inventory')
+        selected.add(node['resource_id'])
+        if node['resource_id'] not in expanded:
+            expanded.add(node['resource_id']);pending.extend(siblings[node['resource_id']])
+        for edge in node['dependencies']:
+            pending.extend(edge['candidates'])
+    return [r for r in records if r['registry_id'] in selected]
+
+
+def build(root, snapshot, families=(), scope='ui-names'):
     root, snapshot = root.resolve(), snapshot.resolve()
     census = inventory.build(root, snapshot)
     manifest_path = snapshot / 'manifest.json'
@@ -126,8 +163,7 @@ def build(root, snapshot, families=()):
     for key, node in graph['nodes'].items():
         # Use graph identities for candidates, preserving every historical variant.
         classes[by_id[node['resource_id']]['name'] + '_C'].append(key)
-    selected = [r for r in census['records'] if r['flags']['name_contains_UI'] and
-        (not families or any(r['path'].startswith('/Game/RED/UI/' + f + '/') for f in families))]
+    selected = select_records(census['records'],graph,families,scope)
     if not selected:
         raise ValueError('No records selected; check exact family names')
     records, totals = [], Counter()
@@ -157,9 +193,10 @@ def build(root, snapshot, families=()):
             result['variants'].append(value)
         totals['resources'] += 1
         records.append(result)
-    return dict(schema=1, kind='automated_ui_source_audit', selection=dict(uppercase_UI_in_name=True, families=list(families)),
+    return dict(schema=1, kind='automated_ui_source_audit', selection=dict(scope=scope,uppercase_UI_in_name=scope=='ui-names', families=list(families),
+        dependency_candidates_not_runtime_bindings=True),
         snapshot=dict(path=str(snapshot), id=manifest['id'], manifest_sha256=digest(manifest_path.read_bytes())),
-        tools={p.name: digest(p.read_bytes()) for p in [Path(__file__), HERE/'inspect-ui.py', HERE/'ui_layout_schema.py', HERE/'inventory-ui-names.py', HERE/'build-ui-prototype.py']},
+        tools={p.name: digest(p.read_bytes()) for p in [Path(__file__), HERE/'inspect-ui.py', HERE/'audit-ui-slot-coverage.py', HERE/'ui_layout_schema.py', HERE/'inventory-ui-names.py', HERE/'build-ui-prototype.py']},
         counts=dict(totals), records=records,
         limits=['Passed checks are automatically confirmed only for the recorded bytes and tool versions.',
             'Raw export hashes and decoded catalog agreement do not prove complete native UProperty decoding.',
@@ -172,6 +209,7 @@ def main():
     parser.add_argument('--root', type=Path, default=Path('F:/PhoneExit Resources/Vampir'))
     parser.add_argument('--snapshot', type=Path, required=True)
     parser.add_argument('--family', action='append', default=[])
+    parser.add_argument('--scope',choices=['ui-names','dependencies','all'],default='ui-names')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     output = args.output.resolve()
@@ -179,7 +217,7 @@ def main():
         parser.error('Keep reports outside the repository and immutable snapshot')
     if output.exists():
         parser.error('Use a new output path; previous evidence is immutable')
-    result = build(args.root, args.snapshot, args.family)
+    result = build(args.root, args.snapshot, args.family, args.scope)
     with output.open('x', encoding='utf-8') as stream:
         json.dump(result, stream, ensure_ascii=False, indent=2)
     print(json.dumps(dict(output=str(output), counts=result['counts']), ensure_ascii=False))

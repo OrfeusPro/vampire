@@ -72,7 +72,7 @@ def reproduce(candidate, variant, source_file, exports, proof):
             interpretation='NamedSlot container class candidate; inherited serialized fields remain opaque',
             raw_serialization_hex=actual['serialized_hex'],geometry_verified=False,implementation_verified=False)
     raw = bytes.fromhex(actual['serialized_hex'])
-    decoded = grid.decode(raw) if kind == 'GridSlot' else basic.decode(raw, kind)
+    decoded = grid.decode(raw) if kind == 'GridSlot' else basic.decode(raw, kind,allow_size=proof.get('allow_explicit_size',False))
     if decoded != proof['decoded']:
         raise ValueError('Reproduced GridSlot explicit values differ')
     fields = decoded['explicit_properties']
@@ -100,6 +100,7 @@ def basic_evidence_index(report):
             raise ValueError('Basic evidence tool changed: ' + name)
     selected=[basic.SPECS[kind] for kind in report['definitions']]
     roots={s['getter'] for s in selected} | {s['parent_getter'] for s in selected if 'parent_getter' in s}
+    if 'size_schema' in report['definitions'].get('ScrollBoxSlot',{}):roots.add(basic.SIZE_GETTER)
     request = dict(source_sha256=report['native_source']['sha256'], source=report['native_source']['path'],
         question='ui-nktileview-property-schema',functions=[dict(address=hex(root)) for root in sorted(roots)])
     if basic.schemas(request) != report['definitions']:
@@ -114,6 +115,8 @@ def basic_evidence_index(report):
             normalized.update(raw_serialization_hex=row['raw_serialization_hex'],outer=row['outer'])
         else:
             normalized.update(parent=row['parent'],content=row['content'])
+        if p['type']=='ScrollBoxSlot':
+            normalized['allow_explicit_size']='size_schema' in report['definitions']['ScrollBoxSlot']
         if key in result and result[key] != normalized:
             raise ValueError('Conflicting basic slot evidence identity')
         result[key]=normalized
@@ -171,7 +174,10 @@ def build(root, audit_path, evidence_path, evidence_sha, basic_path=None, basic_
             for candidate in variant.get('unaccounted_slot_candidates', []):
                 row = dict(task_id=record['task_id'], resource_path=record['path'],
                     catalog_file=variant['file'], export=candidate['index'], name=candidate['name'],
-                    type=candidate['type'], sha256=candidate['sha256'])
+                    type=candidate['type'], sha256=candidate['sha256'],
+                    export_scope=variant.get('export_scope','not_recorded'),
+                    package_blueprint_roots=variant.get('package_blueprint_roots',[]),
+                    source_audit_unknowns=variant.get('unknowns',[]))
                 try:
                     if variant['file'] not in cache:
                         p = source_audit.inventory.child(root / 'ui-catalog', variant['file'])

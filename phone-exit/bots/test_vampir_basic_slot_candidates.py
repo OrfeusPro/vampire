@@ -48,5 +48,23 @@ class BasicSlotTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Invalid nested float'):
             slots.decode(bytes(damaged),'ScrollBoxSlot')
 
+    def test_verified_size_schema_preserves_absent_weight(self):
+        raw=bytes.fromhex('00020305010301180100000f01000000000000')
+        with self.assertRaisesRegex(ValueError,'Size struct schema unreviewed'):
+            slots.decode(raw,'ScrollBoxSlot')
+        value=slots.decode(raw,'ScrollBoxSlot',allow_size=True)
+        size=value['explicit_properties']['Size']
+        self.assertEqual(size['explicit_properties'],dict(SizeRule=1))
+        self.assertEqual(size['omitted_properties'],['Value'])
+        self.assertNotIn('Value',size['explicit_properties'])
+        self.assertEqual(value['explicit_properties']['Parent'],280)
+        self.assertEqual(value['explicit_properties']['Content'],271)
+
+    def test_verified_size_reads_explicit_float_and_rule_without_defaults(self):
+        raw=bytes.fromhex('0002030500050000204001180100000f01000000000000')
+        size=slots.decode(raw,'ScrollBoxSlot',allow_size=True)['explicit_properties']['Size']
+        self.assertEqual(size['explicit_properties'],dict(Value=2.5,SizeRule=1))
+        self.assertEqual(size['omitted_properties'],[])
+
 
 if __name__=='__main__':unittest.main()

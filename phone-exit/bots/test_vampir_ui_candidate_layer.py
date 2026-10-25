@@ -137,5 +137,17 @@ class CandidateLayerTests(unittest.TestCase):
                     layer.materialize(root,base,report,layer.sha(raw))
                 repeat.assert_not_called()
 
+    def test_shared_package_root_scope_unknowns_survive_transfer(self):
+        base,report,exports=fixture()
+        row=report['records'][0]
+        row.update(export_scope='whole_package_not_selected_runtime_root',
+            package_blueprint_roots=[dict(index=10,name='First_C'),dict(index=11,name='Second_C')],
+            source_audit_unknowns=['multiple_blueprint_roots_share_package_scope'])
+        index,files=layer.compile_layer(base,report,exports.__getitem__)
+        node=next(n for n in files['variants/a.json']['nodes'].values() if n['export']==3)
+        self.assertEqual(node['package_blueprint_roots'],row['package_blueprint_roots'])
+        self.assertIn('multiple_blueprint_roots_share_package_scope',node['unknowns'])
+        self.assertFalse(node['geometry_verified'])
+
 
 if __name__=='__main__':unittest.main()

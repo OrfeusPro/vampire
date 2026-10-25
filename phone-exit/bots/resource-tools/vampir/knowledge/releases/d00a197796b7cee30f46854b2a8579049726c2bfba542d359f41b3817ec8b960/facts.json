@@ -6850,6 +6850,53 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "NamedSlot inherited fields, explicit Size inner schema, complete superclass/defaults/current compatibility and runtime geometry."
+    },
+    {
+      "addresses": [
+        "0x143572e20",
+        "0x143583190"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a560f7ee3aca8405af01708a4808e632114666cdc03f09c5c0c0d96fbfc91ee1",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432\\manifest.json",
+          "sha256": "7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1e3cfc10b31b55005ea29775a8da2fd0214a9e01086024469985d4140656b4df",
+          "id": "ui-grid-initialization-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\29fa8e86c1b5ae20a5677cbc203a5cb330daf4ceb99045d9cea6f81348d60d67\\manifest.json",
+          "sha256": "29fa8e86c1b5ae20a5677cbc203a5cb330daf4ceb99045d9cea6f81348d60d67",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "ScrollBoxSlot Size descriptor+56 points to struct getter143572e20; getter references metadata14b102d08 with SlateChildSize name and Value/SizeRule array148fc7150. Enabled explicit Size only with this source-bound schema; real export281 has SizeRule1 and omitted Value. Full catalog source audit covers1970 resources/2376 variants, and providers/layer preserve964 candidates as920 reads+44 opaque container classifications, not runtime geometry.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-FULL-CATALOG-SIZE-11316.md",
+          "sha256": "fe890b1a2a30c27bf0117e98ea79979b833605368739ed495f6d715ce1a91d5f"
+        }
+      ],
+      "id": "20c94902223cd9605f350d540a476ed87890e6d05bb8a4eca629a5d23a26e40a",
+      "limits": [
+        "Struct registration/default constructor and superclass serialization not executed. Historical/current compatibility not established.",
+        "Missing Value remains unknown; enum semantics, defaults/archetypes and geometry not inferred.",
+        "Whole-package multi-root scope preserved for four aliases; runtime root not selected. 964 candidates do not establish complete native UI properties."
+      ],
+      "method": "static",
+      "next_check": "Isolate source Outer branches and audit the25 property criteria; verify defaults/inheritance before renderer import.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Defaults/archetypes/inheritance, NamedSlot inherited payload, multi-root branch selection and runtime geometry/behavior."
     }
   ],
   "schema": 1,
