@@ -181,3 +181,11 @@ native schema links и сравнил каждый файл слоя. Резул
 41 тест прошёл. Whole-package scope и список Blueprint roots перенесены вместе
 с source unknowns; слой не подставляет runtime root или defaults.
 Прежний набор a7e46459… сохранён как результат прежней выборки и версий tools.
+
+## Исходное владение и разделение корней
+
+Дополнительный [слой Outer scopes](UI-OUTER-SCOPES.md) связывает каждый экспорт
+с его исходным Blueprint-корнем. Он разделяет многокорневые пакеты, сохраняет
+foreign / unowned / unresolved данные и строит source-scoped схемы. Outer /
+Parent-Content / runtime visibility остаются разными отношениями. Scope слой
+не изменяет старую матрицу и не запускается отдельно в каждом окне бота.
