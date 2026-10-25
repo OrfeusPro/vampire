@@ -18,6 +18,7 @@ def load(name, file):
 
 source_audit = load('slot_evidence_source_audit', 'audit-ui-sources.py')
 grid = load('slot_evidence_grid', 'decode-grid-slots.py')
+basic = load('slot_evidence_basic', 'decode-basic-slot-candidates.py')
 
 
 def sha(raw):
@@ -50,7 +51,8 @@ def reproduce(candidate, variant, source_file, exports, proof):
     """A reused result must still match actual export bytes and its parsed explicit values."""
     source = proof['source']
     actual = exports[candidate['index']]
-    if actual['type'] != 'GridSlot':
+    kind = proof.get('kind', 'GridSlot')
+    if kind not in ('GridSlot', 'PanelSlot', 'UniformGridSlot') or actual['type'] != kind:
         raise ValueError('Evidence cannot reclassify another export type')
     if any(actual[k] != candidate[k] for k in ['index', 'name', 'type', 'sha256', 'offset', 'size']):
         raise ValueError('Source audit candidate differs from actual export')
@@ -59,31 +61,71 @@ def reproduce(candidate, variant, source_file, exports, proof):
         body_sha256=variant['source']['body_sha256'])
     if source != expected:
         raise ValueError('GridSlot evidence belongs to different package/export bytes')
-    decoded = grid.decode(bytes.fromhex(actual['serialized_hex']))
+    raw = bytes.fromhex(actual['serialized_hex'])
+    decoded = grid.decode(raw) if kind == 'GridSlot' else basic.decode(raw, kind)
     if decoded != proof['decoded']:
         raise ValueError('Reproduced GridSlot explicit values differ')
     fields = decoded['explicit_properties']
     parent, content = exports[fields['Parent']], exports[fields['Content']]
-    if parent['type'] != 'GridPanel':
-        raise ValueError('Candidate parent is not GridPanel')
+    expected_parent = {'GridSlot':'GridPanel','UniformGridSlot':'UniformGridPanel'}.get(kind)
+    if expected_parent and parent['type'] != expected_parent:
+        raise ValueError('Candidate parent is not ' + expected_parent)
     for value, recorded in [(parent, proof['parent']), (content, proof['content'])]:
         if {k: value[k] for k in ['index', 'name', 'type', 'sha256']} != recorded:
             raise ValueError('Candidate object link differs from actual exports')
     return dict(status='candidate_evidence_reproduced', automatic_check_passed=True,
-        interpretation='GridSlot explicit candidate properties; inherited schema/defaults unresolved',
+        interpretation=kind + ' explicit candidate properties; inherited schema/defaults unresolved',
         decoded=decoded, parent=proof['parent'], content=proof['content'],
         geometry_verified=False, implementation_verified=False)
 
 
-def build(root, audit_path, evidence_path, evidence_sha):
+def basic_evidence_index(report):
+    if report['kind'] != 'basic_slot_candidate_decode' or report['failures']:
+        raise ValueError('Expected successful basic slot candidate evidence')
+    expected_tools = {'decode-basic-slot-candidates.py','extract-ui-properties.py','decode-canvas-slots.py','inspect-ui.py','build-native-entry-code.py'}
+    if set(report['tools']) != expected_tools:
+        raise ValueError('Incomplete basic evidence tool fingerprint')
+    for name, expected in report['tools'].items():
+        if sha((HERE/name).read_bytes()) != expected:
+            raise ValueError('Basic evidence tool changed: ' + name)
+    request = dict(source_sha256=report['native_source']['sha256'], source=report['native_source']['path'],
+        question='ui-nktileview-property-schema',functions=[dict(address=hex(s['getter'])) for s in basic.SPECS.values()])
+    if basic.schemas(request) != report['definitions']:
+        raise ValueError('Basic native schema evidence differs from current bytes')
+    result = {}
+    for row in report['records']:
+        p = row['source']; key=(p['source_file'],p['export'])
+        normalized = dict(kind=p['type'],source=dict(file=p['source_file'],slot_export=p['export'],
+            offset=p['offset'],size=p['size'],sha256=p['sha256'],asset_sha256=p['asset_sha256'],body_sha256=p['body_sha256']),
+            decoded=row['decoded'],parent=row['parent'],content=row['content'])
+        if key in result and result[key] != normalized:
+            raise ValueError('Conflicting basic slot evidence identity')
+        result[key]=normalized
+    return result
+
+
+def build(root, audit_path, evidence_path, evidence_sha, basic_path=None, basic_sha=None):
     root = root.resolve()
     evidence_raw = source_audit.checked(evidence_path, evidence_sha)
     evidence = json.loads(evidence_raw)
     proofs = evidence_index(evidence)
+    basic_input = None
+    if (basic_path is None) != (basic_sha is None):
+        raise ValueError('Provide both basic evidence path and SHA')
+    if basic_path is not None:
+        basic_raw = source_audit.checked(basic_path, basic_sha)
+        basic_report = json.loads(basic_raw)
+        additions = basic_evidence_index(basic_report)
+        if proofs.keys() & additions.keys():
+            raise ValueError('Conflicting evidence providers')
+        proofs.update(additions)
+        basic_input = dict(path=str(basic_path),sha256=basic_sha)
     audit_raw = audit_path.read_bytes()
     audit = json.loads(audit_raw)
     if audit['kind'] != 'automated_ui_source_audit':
         raise ValueError('Wrong source audit kind')
+    if basic_input and basic_report['source_audit']['sha256'] != sha(audit_raw):
+        raise ValueError('Basic evidence belongs to another source audit')
     snapshot = Path(audit['snapshot']['path'])
     manifest = json.loads(source_audit.checked(snapshot / 'manifest.json', audit['snapshot']['manifest_sha256']))
     if manifest['inputs']['ui-catalog/index.json'] != evidence['catalog_index_sha256']:
@@ -143,9 +185,9 @@ def build(root, audit_path, evidence_path, evidence_sha):
                 records.append(row)
     return dict(schema=1, kind='slot_candidate_evidence_reconciliation',
         inputs=dict(source_audit=dict(path=str(audit_path), sha256=sha(audit_raw)),
-            grid_evidence=dict(path=str(evidence_path), sha256=evidence_sha), snapshot=audit['snapshot'],
+            grid_evidence=dict(path=str(evidence_path), sha256=evidence_sha), basic_evidence=basic_input, snapshot=audit['snapshot'],
             native_source=evidence['native_source']),
-        tools={p.name: sha(p.read_bytes()) for p in [Path(__file__), HERE/'audit-ui-sources.py', HERE/'decode-grid-slots.py']},
+        tools={p.name: sha(p.read_bytes()) for p in [Path(__file__), HERE/'audit-ui-sources.py', HERE/'decode-grid-slots.py', HERE/'decode-basic-slot-candidates.py']},
         counts=dict(totals), records=records,
         limits=['Only candidate interpretations are reproduced; missing defaults/inheritance/compatibility stay unknown.',
             'Original catalog/snapshot and source audit checks are unchanged; no verified geometry is added.',
@@ -158,12 +200,15 @@ def main():
     parser.add_argument('--audit', type=Path, required=True)
     parser.add_argument('--grid-evidence', type=Path, required=True)
     parser.add_argument('--grid-evidence-sha256', required=True)
+    parser.add_argument('--basic-evidence', type=Path)
+    parser.add_argument('--basic-evidence-sha256')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists() or output.is_relative_to(HERE.parents[3]) or output.is_relative_to((args.root/'maps/ui-prototype').resolve()):
         parser.error('Use a new external report path')
-    result = build(args.root, args.audit, args.grid_evidence, args.grid_evidence_sha256)
+    result = build(args.root, args.audit, args.grid_evidence, args.grid_evidence_sha256,
+        args.basic_evidence, args.basic_evidence_sha256)
     with output.open('x', encoding='utf8') as stream:
         json.dump(result, stream, ensure_ascii=False, indent=2)
     print(json.dumps(dict(output=str(output), counts=result['counts']), ensure_ascii=False))

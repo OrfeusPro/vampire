@@ -1,0 +1,35 @@
+"""Bounded PanelSlot/UniformGridSlot reads preserve omissions and reject unexplained bytes."""
+import importlib.util
+from pathlib import Path
+import unittest
+
+HERE=Path(__file__).parent/'resource-tools/vampir'
+spec=importlib.util.spec_from_file_location('basic_slots',HERE/'decode-basic-slot-candidates.py')
+slots=importlib.util.module_from_spec(spec);spec.loader.exec_module(slots)
+PANEL=bytes.fromhex('0005bf0000001100000000000000')
+UNIFORM=bytes.fromhex('8004020503480000005a00000000000000')
+
+
+class BasicSlotTests(unittest.TestCase):
+    def test_panel_links_have_no_invented_geometry(self):
+        v=slots.decode(PANEL,'PanelSlot')
+        self.assertEqual(v['explicit_properties'],dict(Parent=191,Content=17))
+        self.assertEqual(v['omitted_properties'],[])
+        self.assertNotIn('padding',v)
+
+    def test_uniform_zero_alignments_do_not_create_row_column_defaults(self):
+        v=slots.decode(UNIFORM,'UniformGridSlot')
+        self.assertEqual(v['explicit_properties'],dict(HorizontalAlignment=0,VerticalAlignment=0,Parent=72,Content=90))
+        self.assertEqual(v['omitted_properties'],['Row','Column'])
+
+    def test_opaque_suffix_truncation_and_null_links_fail(self):
+        for raw in [PANEL[:-1],PANEL+b'\0',PANEL[:-1]+b'\1',PANEL[:2]+b'\0'*4+PANEL[6:]]:
+            with self.subTest(raw=raw.hex()),self.assertRaises(ValueError):slots.decode(raw,'PanelSlot')
+
+    def test_wrong_class_or_property_schema_is_rejected(self):
+        with self.assertRaisesRegex(ValueError,'Unsupported'):
+            slots.decode(PANEL,'NamedSlot')
+        with self.assertRaises(ValueError):slots.decode(UNIFORM,'PanelSlot')
+
+
+if __name__=='__main__':unittest.main()

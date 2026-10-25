@@ -50,6 +50,33 @@ class SlotEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'another export type'):
             evidence.reproduce(c,v,'sample.json',x,p)
 
+    def test_panel_provider_reuses_only_explicit_links(self):
+        raw=bytes.fromhex('0005bf0000001100000000000000')
+        c=dict(index=248,name='PanelSlot_0',type='PanelSlot',sha256=evidence.sha(raw),offset=100,size=len(raw))
+        x={248:dict(c,serialized_hex=raw.hex()),191:dict(index=191,name='Check',type='NkCheckBox',sha256='a'*64),
+            17:dict(index=17,name='Canvas',type='CanvasPanel',sha256='b'*64)}
+        v=dict(source=dict(asset_sha256='c'*64,body_sha256='d'*64))
+        p=dict(kind='PanelSlot',source=dict(file='sample.json',slot_export=248,offset=100,size=len(raw),sha256=evidence.sha(raw),**v['source']),
+            decoded=evidence.basic.decode(raw,'PanelSlot'),parent=x[191],content=x[17])
+        result=evidence.reproduce(c,v,'sample.json',x,p)
+        self.assertTrue(result['automatic_check_passed'])
+        self.assertFalse(result['geometry_verified'])
+        self.assertEqual(result['decoded']['explicit_properties'],dict(Parent=191,Content=17))
+
+    def test_uniform_provider_preserves_missing_coordinates(self):
+        raw=bytes.fromhex('8004020503480000005a00000000000000')
+        c=dict(index=73,name='Uniform',type='UniformGridSlot',sha256=evidence.sha(raw),offset=100,size=len(raw))
+        x={73:dict(c,serialized_hex=raw.hex()),72:dict(index=72,name='Grid',type='UniformGridPanel',sha256='a'*64),
+            90:dict(index=90,name='Entry',type='Entry_C',sha256='b'*64)}
+        v=dict(source=dict(asset_sha256='c'*64,body_sha256='d'*64))
+        p=dict(kind='UniformGridSlot',source=dict(file='sample.json',slot_export=73,offset=100,size=len(raw),sha256=evidence.sha(raw),**v['source']),
+            decoded=evidence.basic.decode(raw,'UniformGridSlot'),parent=x[72],content=x[90])
+        result=evidence.reproduce(c,v,'sample.json',x,p)
+        self.assertEqual(result['decoded']['omitted_properties'],['Row','Column'])
+        x[72]['type']='Overlay'
+        with self.assertRaisesRegex(ValueError,'not UniformGridPanel'):
+            evidence.reproduce(c,v,'sample.json',x,p)
+
     def test_incomplete_or_duplicate_evidence_is_rejected(self):
         _,_,_,p=fixture()
         report=dict(kind='grid_slot_candidate_decode',failures=[],

@@ -100,6 +100,33 @@ PanelSlot 117, NamedSlot 11, UniformGridSlot 8, ScrollBoxSlot 4.
 SHA256 `cb4c309a9ab143bac2e575817d11aa8b04f9edd74a786ec8acc5120707813adc`.
 Его SHA не переносится на будущие запуски.
 
+### PanelSlot и UniformGridSlot
+
+Добавлены `decode-basic-slot-candidates.py` и дополнительный provider общего
+reconciliation. [Статическое доказательство](../resource-tools/vampir/knowledge/evidence/interface/UI-BASIC-SLOT-CANDIDATES-11316.md)
+связывает именованные getters текущего SHA с metadata / массивами собственных
+свойств. Скрипт повторно проверяет эти связи, полные SHA исторических экземпляров,
+explicit values и object links. Наследование UniformGridSlot, defaults и совместимость
+остаются отдельными критериями; генерация геометрии не включена.
+
+Разобраны 117 PanelSlot и 8 UniformGridSlot без ошибок. Четыре теста нового
+декодера и семь тестов переноса evidence с тремя прежними GridSlot прошли.
+Отчёт `ui-property-scans/basic-slot-candidates-02.json`, SHA256
+`68648f2c2436c7af9b30d8feac97aa057897c31f79708fefa978150f202280a1`.
+
+Для повторного reconciliation добавить к команде выше:
+
+```powershell
+--basic-evidence 'F:/PhoneExit Resources/Vampir/ui-property-scans/basic-slot-candidates-02.json' --basic-evidence-sha256 68648f2c2436c7af9b30d8feac97aa057897c31f79708fefa978150f202280a1
+```
+
+Указать новый `--output`. Результат с двумя providers:
+`ui-property-scans/ui-slot-evidence-reconciliation-05.json`, SHA256
+`230e7405fcc83025532aa3cf228f5d40334f8488f224961da05f19eab29458ab`.
+Теперь воспроизводятся **425 / 440** кандидатных интерпретаций; осталось
+15 без provider: NamedSlot 11 и ScrollBoxSlot 4. Это дополняет старый отчёт,
+а не переписывает его и не закрывает проверку внешнего вида.
+
 Очередь с чекбоксами — UI-27 в [общем плане](UI-TASKS.md). Следующие блоки:
 учёт оставшихся slot types / defaults, декодирование Brush / styles / состояний,
 подтверждённые delegates / handlers, применение правил геометрии, тестовые сценарии
