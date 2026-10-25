@@ -5730,6 +5730,58 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Полный reader на одной памяти, container lifetime / dispatch, config precedence и активный ресурс."
+    },
+    {
+      "addresses": [
+        "0x141421b80",
+        "0x1445c1f50",
+        "0x1445c2c30",
+        "0x1445c4f60"
+      ],
+      "checks": [
+        {
+          "cache_key": "3153392b990f0fcb58497082197bc6fcdc100e15ea5204be5ad29eb3839f5c8b",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dc0c28489c673d456049dc4d0e5e2e6aced377228cf4962df19dc959df3f4c3b\\manifest.json",
+          "sha256": "dc0c28489c673d456049dc4d0e5e2e6aced377228cf4962df19dc959df3f4c3b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Reader / insertion / capture-copy / inline cleanup исполнены вместе на одной памяти: 48 последовательностей, 144 полных возврата, три новые независимые привязки в каждой. Native код переносит ключ с обнулением источника, сохраняет invoke pointers / captures и bucket chain 2 -> 1 -> 0; последующие чтения сохраняют предыдущие key bytes / destination. Lookup и служебные операции — явные fixtures; последующий dispatch не выполнен.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-READER-11316.md",
+          "sha256": "722ade25eb46b3e3e86bfecd0bb9f3cc7ffcc1adf79744808c9d7eb74b50b7ab"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-40f646b1556a\\details.json",
+          "sha256": "7e531a5bd23c58ae8711644f28467b7ff0701183f1b3718da4b8703760cfc869"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b25bb2ea1a0f\\details.json",
+          "sha256": "336bf3091a16da247a3f7162f5ae6f1bb3d7a02bddf3d9a40a9e620d8ec2e047"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-218ed676dfab\\details.json",
+          "sha256": "b2d468647ed1c90a3eb8ce6967ec78eed53f99fa0b4156dd031b98154c969c43"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-21a346cf8c62\\details.json",
+          "sha256": "64bfd80ae3d7bb109d26e5a61b00b6cf53ace539670542618db43b938ae9daed"
+        }
+      ],
+      "id": "234641544a9bcfc042b2fa43a62d8241cb53e0a084df0d1763991ff96c0813ea",
+      "limits": [
+        "Global config присутствует; контейнер заранее выделен на четыре slots, исполняются три new-entry insertion без growth / reuse / rehash.",
+        "Fixtures: lookup, FString construction/assignment, append-bit, hash, uniqueness=false, temporary free и cookie service. Bit-count в модели меняется fixture, не является доказанной схемой bit-array.",
+        "Duplicates / replacement / ошибки / дальнейшее исполнение callable и container lifetime не проверены.",
+        "Active settings, config precedence, успешная загрузка ресурса, Brush и совместимость cooked компонентов не доказаны; генерация остаётся закрытой."
+      ],
+      "method": "bounded_native",
+      "next_check": "Найти native потребителей сохранённых invoke pointers и условия вызова; отдельно исследовать uniqueness helper 1445d8430 и replacement path, без угадывания события по сохранённому callable.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Потребители invoke pointers / условия вызова, uniqueness / replacement, lifetime, precedence и active resource / Brush."
     }
   ],
   "schema": 1,

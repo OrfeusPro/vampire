@@ -18,6 +18,7 @@
         "phone-exit/bots/resource-tools/vampir/replay-ui-content-config.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-callables.py",
         "phone-exit/bots/resource-tools/vampir/replay-ui-config-payload.py",
+        "phone-exit/bots/resource-tools/vampir/replay-ui-config-reader.py",
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
         "phone-exit/bots/resource-tools/vampir/inspect-nktileview-registration.py",
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",

@@ -19,9 +19,25 @@ spec = importlib.util.spec_from_file_location('ui_config_callables_replay', HERE
 config_callables = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_callables)
 spec = importlib.util.spec_from_file_location('ui_config_payload_replay', HERE / 'replay-ui-config-payload.py')
 config_payload = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_payload)
+spec = importlib.util.spec_from_file_location('ui_config_reader_replay', HERE / 'replay-ui-config-reader.py')
+config_reader = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_reader)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_complete_config_reader_keeps_three_independent_bindings(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_reader.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_reader.ROOTS]))
+        self.assertEqual(len(result['cases']), 48)
+        self.assertEqual(sum(len(c['sequence']) for c in result['cases']), 144)
+        for case in result['cases']:
+            self.assertEqual(case['native_bucket_chain'], [2, 1, 0])
+            self.assertEqual([entry['previous_bindings_preserved'] for entry in case['sequence']], [0, 1, 2])
+            for entry in case['sequence']:
+                self.assertTrue(entry['complete_reader_return'])
+                self.assertTrue(entry['moved_key_source_cleared'])
+                self.assertEqual(entry['calls'].count('assign_string'), int(entry['found_fixture']))
+
     def test_native_config_callable_payload_copy_and_cleanup(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
