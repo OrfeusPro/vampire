@@ -1,5 +1,16 @@
 # Изолированные живые сессии
 
+[Наблюдаемый NPC subset](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OBSERVED-ENVIRONMENT-11316.md):
+ID 324 добавляет / обновляет NPC, ID 302 убирает actor keys. `coverage.entities=partial`
+не означает полный список рядом; начальный SightEnter и players ещё не подключены.
+HP и XYZ — при появлении, с явными `stats_current=false` / `position_current=false`.
+Максимум 512 NPC на сессию; world / close и decoder errors очищают subset.
+HTTP `/bots/<bot>/state?entity_page=0|1` отдаёт по 256 NPC, без параметра —
+первую страницу. `environment` содержит `known_count`, `entity_page`,
+`page_size`, `shown_count`; страницы отражают изменяемое состояние, а не архив.
+Состояние нескольких аккаунтов не разделяется. Это проверено на fixtures,
+игровая live проверка этого слоя ещё не выполнена.
+
 [Онлайн-журнал и изменяемый локальный обработчик](LIVE-DIAGNOSTICS.md):
 API / браузер проверены на fixture и реальном персонаже через OPPO / HK;
 смена локальной обработки и SyntaxError не разорвали игровую сессию.

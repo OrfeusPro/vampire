@@ -8,6 +8,7 @@ import time
 from .stat_change import SOURCE_SHA256 as STAT_SOURCE_SHA256,decode_stat_change,decode_character_level_up,initial_stat_values
 from .stat_names import STAT_NAMES,SOURCE_SHA256 as STAT_NAMES_SOURCE
 from .live_diagnostics import LiveDiagnostics
+from .environment import ObservedEnvironment,SOURCE_SHA256 as ENVIRONMENT_SOURCE
 import json
 
 STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
@@ -36,6 +37,8 @@ class LiveSession:
         self._stats_limit=False
         self._initial_stats_seeded=False
         self._diagnostics=LiveDiagnostics()
+        self._environment=ObservedEnvironment()
+        self._environment_applied=-1
         self._snapshot=dict(schema=2,mode='live',bot_id=bot_id,session_id=self.session_id,state='connecting',position=None,
             character=None,entities=[],updated_at_ms=None,heartbeat=dict(sent=0,received=0),
             coverage=dict(vitals='not_verified',level='not_verified',entities='not_verified',movement='not_verified'),
@@ -55,6 +58,7 @@ class LiveSession:
             if self._closed or self._source not in (None,source_sha256):raise ValueError('Session source cannot change')
             if self._source is None:self._diagnostics.event('source_bound',source_sha256=source_sha256)
             self._source=source_sha256
+            self._environment_applied=-1
 
     def _apply_stats(self):
         character=self._snapshot['character']
@@ -79,7 +83,7 @@ class LiveSession:
         self._snapshot['stat_decode_errors']=self._stat_errors
         self._stats_applied=self._stats_revision
 
-    def packet(self, packet_id, body, *, character_key=None):
+    def packet(self, packet_id, body, *, character_key=None,world_id=None):
         # Unknown traffic is counted, never retained or mistaken for decoded state.
         with self._lock:
             if self._closed:return
@@ -87,6 +91,10 @@ class LiveSession:
             counts=self._snapshot['packets']
             key=str(packet_id)
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
+            if packet_id in (302,324) and self._source==ENVIRONMENT_SOURCE:
+                event=self._environment.receive(packet_id,body,source_sha256=self._source,world_id=world_id)
+                if event:self._diagnostics.event(event,packet_id=packet_id)
+                self._apply_environment()
             if packet_id not in (321,322) or self._source!=STAT_SOURCE_SHA256 or character_key is None:return
             if len(body)>=8 and struct.unpack_from('<Q',body)[0]!=character_key:return
             decoder=decode_stat_change if packet_id==322 else decode_character_level_up
@@ -106,9 +114,19 @@ class LiveSession:
             self._stats_revision+=1
             self._apply_stats()
 
+    def _apply_environment(self):
+        if self._environment_applied==self._environment.revision:return
+        state=self._environment.snapshot()
+        self._snapshot['entities']=state['entities'];self._snapshot['environment']=state['summary']
+        self._snapshot['coverage']['entities']=state['coverage'] if self._source==ENVIRONMENT_SOURCE else 'not_verified'
+        self._environment_applied=self._environment.revision
+
     def publish(self, owner):
         world=owner.world_entry
-        if world is None or world.state!='finish_response':return
+        if world is None or world.state!='finish_response':
+            with self._lock:
+                self._environment.world(None);self._apply_environment()
+            return
         selection=owner.selection
         key=selection.response.player.at(8)
         matches=[r for r in selection.characters.records if r.u64[0]==key]
@@ -123,6 +141,7 @@ class LiveSession:
         heartbeat=owner.heartbeat
         with self._lock:
             if self._closed:return
+            self._environment.world(position.world_id);self._apply_environment()
             if self._stats_key not in (None,key):raise RuntimeError('Character identity changed')
             self._stats_key=key
             if not self._initial_stats_seeded and self._source==STAT_SOURCE_SHA256:
@@ -140,7 +159,8 @@ class LiveSession:
                         else:self._stats_limit=True
                 self._stats_revision+=1
             character=self._snapshot['character']
-            if character is None:
+            if character is None or character['world_id']!=position.world_id:
+                self._stats_applied=-1
                 self._diagnostics.event('world_ready',world_id=position.world_id)
                 character=dict(key=str(key),name=name,world_id=position.world_id,
                     position=dict(x=xyz[0],y=xyz[1],z=xyz[2],semantics='server_target_before_engine_correction'),
@@ -159,12 +179,18 @@ class LiveSession:
             self._closed=True
             self._diagnostics.close()
             self._stats.clear();self._stats_key=None
+            self._environment.world(None);self._apply_environment()
             self._snapshot.update(state='disconnected',position=None,character=None,entities=[],
                 updated_at_ms=time.time_ns()//1000000,error=error or self._snapshot['error'])
 
-    def snapshot(self):
+    def snapshot(self,*,for_api=False,entity_page=0):
+        if type(entity_page) is not int or entity_page not in (0,1):raise ValueError('Invalid entity page')
         with self._lock:
             value=copy.deepcopy(self._snapshot)
+            if for_api:
+                total=len(value['entities']);page=entity_page if total>256 else 0
+                value['entities']=value['entities'][page*256:(page+1)*256]
+                value.setdefault('environment',{}).update(known_count=total,entity_page=page,page_size=256,shown_count=len(value['entities']))
             self._diagnostics.expire()
             value['journal']=copy.deepcopy(list(self._diagnostics.events)[-32:])
             value['journal_cursor']=self._diagnostics.sequence

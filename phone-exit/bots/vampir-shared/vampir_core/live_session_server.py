@@ -46,7 +46,13 @@ class LiveSessionServer:
                 if self.path=='/sessions':self.send_json(200,dict(sessions=registry.list()));return
                 selected,action=self.selected()
                 if selected is None:self.send_error(404);return
-                if action=='state':self.send_json(200,selected.snapshot())
+                if action=='state':
+                    try:
+                        params=parse_qs(urlsplit(self.path).query,strict_parsing=True,keep_blank_values=True)
+                        if set(params)-{'entity_page'} or params.get('entity_page',['0']) not in (['0'],['1']):raise ValueError()
+                        page=int(params.get('entity_page',['0'])[0])
+                    except (ValueError,UnicodeError):self.send_error(400);return
+                    self.send_json(200,selected.snapshot(for_api=True,entity_page=page))
                 elif action=='control':
                     token=tokens.setdefault(selected.session_id,secrets.token_urlsafe(32))
                     self.send_json(200,dict(bot_id=selected.bot_id,session_id=selected.session_id,token=token,actions=['stop','trace','analysis']))

@@ -30,5 +30,22 @@ assert.throws(()=>live.validate({...state,entities:Array(2049).fill({})},'a','se
   assert.equal(requests,2);
   adapter.dispose();adapter.dispose();
   assert.equal(callbacks.size,0);assert.equal(adapter.state,null);
+  const pending=[],pages=[];
+  const paged=live.create({botId:'a',sessionId:'session-a',documentImpl,onChange:value=>pages.push(value),
+    fetchImpl:(url,options)=>new Promise(resolve=>pending.push({url,signal:options.signal,resolve}))});
+  paged.setEntityPage(1);
+  assert.equal(pending.length,2);assert.equal(pending[0].signal.aborted,true);
+  assert.equal(pending[1].url,'http://127.0.0.1:17947/bots/a/state?entity_page=1');
+  pending[1].resolve({ok:true,text:async()=>JSON.stringify({...state,environment:{entity_page:1,known_count:512}})});
+  await new Promise(resolve=>setImmediate(resolve));
+  pending[0].resolve({ok:true,text:async()=>JSON.stringify(state)});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(paged.state.environment.entity_page,1);assert.equal(pages.length,1);
+  assert.throws(()=>paged.setEntityPage(2));
+  paged.setEntityPage(0);assert.equal(pending.length,3);
+  paged.dispose();assert.equal(pending[2].signal.aborted,true);
+  pending[2].resolve({ok:true,text:async()=>JSON.stringify(state)});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(paged.state,null);assert.equal(callbacks.size,0);
   console.log('Live state: identity, nullable vitals, visibility and disposal passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});

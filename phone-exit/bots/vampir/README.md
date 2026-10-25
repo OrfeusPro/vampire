@@ -1,9 +1,16 @@
 # Vampir — главный указатель разработки
 
+Частичное окружение подключено к сессиям и основному UI: NPC create / sight leave,
+начальные HP / MaxHP и XYZ, очистка по миру / close и отдельная кнопка просмотра.
+Проверены 50 изолированных synthetic owners и браузер через loopback API;
+это не новый live proof. Начальный SightEnter / players, изменение NPC stats /
+движение и карта остаются открытыми. [Контракт и доказательства](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OBSERVED-ENVIRONMENT-11316.md).
+
 Полный NPC create ID 324 проверен offline: 323 native/portable сценария,
 454 обрезанных префикса, вложенные effects / appearance / map / stats / move /
 owner / quest records. Добавлен ограниченный source-bound wire decoder;
-actor association, sight leave и живое окружение остаются открытыми.
+Create/leave association и частичная модель описаны выше; начальный SightEnter,
+players и живой поток остаются открытыми.
 [Формат, проверки и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-CREATE-11316.md).
 
 В ветви окружения отдельно проверена вложенная `PktEffectData`: 7656 native

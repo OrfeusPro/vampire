@@ -13,12 +13,16 @@
     const quests = questsKnown && Array.isArray(snapshot.quests) ? snapshot.quests.slice(0,128).filter(q => q
       && typeof q.id === 'string' && /^\d{1,20}$/.test(q.id) && typeof q.title === 'string' && q.title.length <= 256) : [];
     let power = null;
+    const entityRows = person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities) ? snapshot.entities : [];
     if (person?.stats_semantics === 'wire_stat_i64' && /^-?\d{1,20}$/.test(raw(134) ?? '')) power = String(BigInt(raw(134)) / 100n);
     return { person, stats, experience:raw(1), power, quests, questsKnown,
       position:verifiedPosition ? { x:position.x,y:position.y } : null,
       xyz:person?.position && ['x','y','z'].every(k => Number.isFinite(person.position[k])) ? person.position : null,
-      entitiesKnown:!!person && snapshot.coverage?.entities === 'received' && Array.isArray(snapshot.entities),
-      entities:person && snapshot?.coverage?.entities === 'received' && Array.isArray(snapshot.entities) ? snapshot.entities.length : null };
+      entitiesKnown:!!person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities),
+      entitiesPartial:!!person && snapshot.coverage?.entities === 'partial',entityRows,
+      entityPage:[0,1].includes(snapshot?.environment?.entity_page) ? snapshot.environment.entity_page : 0,
+      entities:person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities)
+        ? Number.isSafeInteger(snapshot.environment?.known_count) && snapshot.environment.known_count >= entityRows.length && snapshot.environment.known_count <= 512 ? snapshot.environment.known_count : entityRows.length : null };
   }
   function availability(control, value) {
     const supported = { ButtonCharacter:!!value.person, ButtonCombatStats:value.stats.length > 0,

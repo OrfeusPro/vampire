@@ -92,8 +92,10 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
             if now-packet_window>=60:packet_window,packet_window_count=now,0
             packet_window_count+=1
             selected=owner.selection.response
+            world=owner.world_entry
             session_control.packet(packet.packet_id,packet.body,
-                character_key=selected.player.at(8) if selected is not None else None)
+                character_key=selected.player.at(8) if selected is not None else None,
+                world_id=world.target_position.world_id if world is not None and world.state=='finish_response' else None)
         other_packet_count += 1
         if len(unknown) < 32: unknown.append(packet.packet_id)
         if (packet_window_count if session_control is not None else other_packet_count) > 4096 or (packet.packet_id not in packet_counts and len(packet_counts) >= 128):

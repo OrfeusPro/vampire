@@ -26,4 +26,9 @@ assert.equal(model.project({...snapshot,character:{...snapshot.character,stats_s
 assert.equal(model.project({...snapshot,coverage:{},quests:[{id:'1',title:'Unverified'}]}).questsKnown,false);
 assert.equal(model.project({...snapshot,quests:undefined}).questsKnown,false);
 assert.equal(model.project({...snapshot,quests:[{id:'1',title:'Received'}, {id:'bad',title:'Invalid'}]}).quests.length,1);
+const partial = model.project({...snapshot,coverage:{entities:'partial'},entities:[{key:'42',kind:'npc'}]});
+assert.equal(partial.entitiesKnown,true);assert.equal(partial.entitiesPartial,true);assert.equal(partial.entities,1);
+const paged = model.project({...snapshot,coverage:{entities:'partial'},entities:Array(256).fill({key:'42'}),environment:{known_count:512,entity_page:1}});
+assert.equal(paged.entities,512);assert.equal(paged.entityRows.length,256);assert.equal(paged.entityPage,1);
+assert.equal(model.project({...snapshot,state:'disconnected',coverage:{entities:'partial'}}).entitiesKnown,false);
 console.log('Main live projection: precision, unknowns, disconnect, map and menu gates passed');

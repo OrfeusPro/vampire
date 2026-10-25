@@ -26,18 +26,18 @@
   function create({botId,sessionId,onChange,fetchImpl=root.fetch,documentImpl=root.document}){
     if(!id(botId)||!id(sessionId)||typeof onChange!=='function'||typeof fetchImpl!=='function')throw Error('Нужны ID бота и сессии.');
     const base='http://127.0.0.1:17947/bots/'+encodeURIComponent(botId);
-    let closed=false,timer=null,request=null,snapshot=null,epoch=0;
+    let closed=false,timer=null,request=null,snapshot=null,epoch=0,entityPage=0;
     function clear(){snapshot=null;onChange(null);}
     async function poll(version){
       if(closed||version!==epoch||documentImpl?.hidden)return;
       request=new AbortController();const current=request;
       const timeout=setTimeout(()=>current.abort(),2000);
       try{
-        const response=await fetchImpl(base+'/state',{cache:'no-store',signal:current.signal});
+        const response=await fetchImpl(base+'/state'+(entityPage?'?entity_page='+entityPage:''),{cache:'no-store',signal:current.signal});
         if(!response.ok)throw Error('Нет сессии.');
         const text=await response.text();if(text.length>262144)throw Error('Превышен лимит состояния.');
         const next=validate(JSON.parse(text),botId,sessionId);
-        if(!closed&&version===epoch){snapshot=next;onChange(next);}
+        if(!closed&&version===epoch){snapshot=next;if([0,1].includes(next.environment?.entity_page))entityPage=next.environment.entity_page;onChange(next);}
       }catch(error){if(!closed&&version===epoch)clear();}
       finally{
         clearTimeout(timeout);if(request===current)request=null;
@@ -49,6 +49,8 @@
     documentImpl?.addEventListener('visibilitychange',visibility);
     poll(epoch);
     return {get state(){return snapshot&&JSON.parse(JSON.stringify(snapshot));},
+      setEntityPage(page){if(![0,1].includes(page)||closed)throw Error('Неверная страница окружения.');
+        if(page===entityPage)return;entityPage=page;visibility();},
       dispose(){if(closed)return;closed=true;epoch++;clearTimeout(timer);request?.abort();
         documentImpl?.removeEventListener('visibilitychange',visibility);clear();}};
   }

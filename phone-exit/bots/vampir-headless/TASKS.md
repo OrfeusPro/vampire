@@ -1,8 +1,14 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Частичный NPC subset подключён к owner / API / UI: source-bound ID 324 / 302,
+начальные HP / XYZ, world/close cleanup, лимит 512. 3726 native leave сценариев,
+50 synthetic sessions и браузерная карточка проверены; живой поток пока не проверен.
+Далее — SightEnter / players, текущие NPC stats / движение и проекция карты.
+[Подробности и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OBSERVED-ENVIRONMENT-11316.md).
+
 Полный ID 324 NPC create: 323 целых native/portable сценария и 454 префикса
-пройдены; source-bound decoder добавлен. Следом — handler / actor association,
-sight leave и lifecycle окружения по сессиям, затем живой поток.
+пройдены; source-bound decoder используется частичной моделью выше. Следом —
+начальный SightEnter, player records и живой поток.
 [Формат и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-CREATE-11316.md).
 
 Вложенная запись `PktEffectData` ветви NPC create прошла 7656 native-сценариев:

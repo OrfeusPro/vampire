@@ -28,6 +28,7 @@
 .live-menu .dialog-body{max-height:none}
 .live-data{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.85rem}.live-data dd{margin:0;overflow-wrap:anywhere;color:#ead8b1}
 .live-setting{display:flex;gap:10px;align-items:center}
+.live-pagination{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:12px 0;font-size:.75rem}
 .live-stats{width:100%;border-collapse:collapse;font-size:.75rem}.live-stats td,.live-stats th{padding:8px;border-bottom:1px solid #53666055;text-align:left}
 .live-log-tools{display:flex;gap:10px;margin-bottom:10px}.live-log-tools input{min-width:0;width:150px;font-size:.8rem}
 .live-log,.live-analysis{white-space:pre-wrap;overflow-wrap:anywhere;background:#06110d;padding:12px;font-size:.65rem;line-height:1.55;overflow:auto;max-height:35vh}
