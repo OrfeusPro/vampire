@@ -112,7 +112,15 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                       constructor='0x145783840', reader='0x145788500', optional_insert='0x1456bd7a0',
                       appearance_callback='0x14573b9c0', input_constructor='0x144aacb40',
                       input_buffer_constructor='0x144aac130').items()))
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (10 if list_scope else (9 if handler_scope or record_scope else 8)):
+    npc_scope = (budget == 54 and context.get('budget_scope') == 'npc-create-record'
+                 and len(functions) == 54 and SHA == 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
+                 and all(context.get('functions', {}).get(key) == value for key, value in dict(
+                     packet_constructor='0x1456c01c0', reader='0x1456c5180', create_constructor='0x14579a5a0',
+                     create_reader='0x14579e590', npc_reader='0x14579e350', effect_reader='0x145792250',
+                     optional_insert='0x1456bd7a0', appearance_callback='0x14573b9c0',
+                     input_constructor='0x144aacb40', input_buffer_constructor='0x144aac130',
+                     trig_sse2='0x1487ea130').items()))
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (20 if npc_scope else (10 if list_scope else (9 if handler_scope or record_scope else 8))):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

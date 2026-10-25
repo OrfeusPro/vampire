@@ -1,8 +1,15 @@
 # Vampir — главный указатель разработки
 
+Полный NPC create ID 324 проверен offline: 323 native/portable сценария,
+454 обрезанных префикса, вложенные effects / appearance / map / stats / move /
+owner / quest records. Добавлен ограниченный source-bound wire decoder;
+actor association, sight leave и живое окружение остаются открытыми.
+[Формат, проверки и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-CREATE-11316.md).
+
 В ветви окружения отдельно проверена вложенная `PktEffectData`: 7656 native
 сценариев полного reader / optional vector с каждым префиксом ввода.
-Внешний NPC create, actor / видимость и live-модель ещё не подтверждены.
+Эта вложенная запись также включена в полную проверку NPC create выше;
+actor / видимость и live-модель ещё не подтверждены.
 [Доказательства и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-EFFECT-11316.md).
 
 В основной прототип добавлен режим выбранной живой сессии через общий адаптер:

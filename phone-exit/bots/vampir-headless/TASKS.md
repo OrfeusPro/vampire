@@ -1,8 +1,14 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Полный ID 324 NPC create: 323 целых native/portable сценария и 454 префикса
+пройдены; source-bound decoder добавлен. Следом — handler / actor association,
+sight leave и lifecycle окружения по сессиям, затем живой поток.
+[Формат и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-CREATE-11316.md).
+
 Вложенная запись `PktEffectData` ветви NPC create прошла 7656 native-сценариев:
 полные constructor / reader / optional vector / input, каждый префикс и guards.
-Внешний NPC create и семантика actor ещё открыты; runtime не расширен предположениями.
+Полный NPC create проверен отдельно выше; семантика actor ещё открыта,
+runtime не расширен предположениями.
 [Проверка и продолжение](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-NPC-EFFECT-11316.md).
 
 На OPPO / HK проверены реальный онлайн-журнал, смена локального обработчика,

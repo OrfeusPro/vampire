@@ -7796,6 +7796,102 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "NPC create/sight/player ownership and current map semantics remain unverified."
+    },
+    {
+      "addresses": [
+        "0x14150b060",
+        "0x14150d330",
+        "0x144aac190",
+        "0x144aac2f0",
+        "0x144aacf40",
+        "0x1456b7060",
+        "0x1456c01c0",
+        "0x1456c5180",
+        "0x1456c68d0",
+        "0x14573d240",
+        "0x145786290",
+        "0x14578a310",
+        "0x14578f6b0",
+        "0x1457909e0",
+        "0x145792250",
+        "0x14579a5a0",
+        "0x14579e350",
+        "0x14579e590",
+        "0x14579e690",
+        "0x14579e6f0",
+        "0x1457a6850",
+        "0x1457a7f70",
+        "0x145821cb0",
+        "0x145821d00",
+        "0x1458220f0",
+        "0x1487ea130"
+      ],
+      "checks": [
+        {
+          "cache_key": "88f90b0d5ece2c8a81b434e7acb5eb85c3f51ce02f453b502d982788fd501c67",
+          "id": "live-npc-create-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\44d1beb14e78480e996541045abfdfa28a30ab9a80e7272562bf04ccde4fa3b7\\manifest.json",
+          "sha256": "44d1beb14e78480e996541045abfdfa28a30ab9a80e7272562bf04ccde4fa3b7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a191607ff175c4de6fc80514862e17084b29132bca51184fb0537e70661f8e1f",
+          "id": "live-npc-effect-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac\\manifest.json",
+          "sha256": "88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a41fe3a8d9f56db6053baf8b559ddc3f5d4e7bb6520ee0f0c072f27513055b7",
+          "id": "live-npc-move-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4\\manifest.json",
+          "sha256": "98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current ID324 NPC create and nested NPC/effects/appearance/map/stats/move/owner/quest records execute on one memory. 323 complete scenarios and 454 prefixes agree with the portable source-bound decoder; source-checked ctor/table/getter return ID324. All 32 optional combinations, Unicode, duplicate keys, all 256 heading bytes and zero minimum body covered.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-NPC-CREATE-11316.md",
+          "sha256": "091498b689b4ef565a2d513a729e53c648817c915180e447f38c6ddad8994e27"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\npc-create-11316.json",
+          "sha256": "b2a309c94e69e3adfdadffc4b42e0c5fc8be3f173909ba3691d7b6f17e6838b0"
+        }
+      ],
+      "id": "9773a64054cb80490a94bf7510e81c17afa58a783aa01a7ec6b5892ae98f7712",
+      "limits": [
+        "Bounded empty-previous arrays/maps/string storage fixtures; no allocator lifetime, growth beyond reserves or reuse proof.",
+        "SSE2 sincos dispatch selected; source-checked atan2/fmod imports call the hash-bound system UCRT. AVX and exceptional huge/nonfinite math inputs untested.",
+        "Portable retains raw heading and float bits, strict UTF-8 and exact-size policy; no engine canonicalization or world semantics inferred."
+      ],
+      "method": "bounded_native",
+      "next_check": "Resolve current ID324 handler and sight leave, prove key/definition/position association and lifecycle per world/session, then use the existing observer in a live session.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current handler/actor identity, NPC definition linkage, sight leave, player records and live visibility are not proven; runtime owner does not add entities based only on ID324."
     }
   ],
   "schema": 1,
