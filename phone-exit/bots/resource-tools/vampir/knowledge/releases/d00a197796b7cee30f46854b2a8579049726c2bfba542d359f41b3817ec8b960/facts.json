@@ -7016,6 +7016,41 @@
       "question": "ui-shared-shortcut-properties-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Native deferred loader/priority and dynamic portrait/frame selection; inherited visibility/tint/ZOrder; current cooked compatibility."
+    },
+    {
+      "addresses": [
+        "0x1445d9ed0",
+        "0x1467ab7a0",
+        "0x1467cf680"
+      ],
+      "checks": [
+        {
+          "cache_key": "ff2820a1486d56d8c860fa16dababdd0513f873b2b14e02e50cb2a5527639a8e",
+          "id": "native-login-clock-ping-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\19d409c190bcf3c7d2237465ca9df34b9cbfad6fd4da8dd3252663dc726e341c\\manifest.json",
+          "sha256": "19d409c190bcf3c7d2237465ca9df34b9cbfad6fd4da8dd3252663dc726e341c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Current clock/handler and initial Ping confirmed on 24/10/36 native cases. Ping-only live still returned 16; fixing old-TID-SHA gating of fresh GMC2 geo metadata produced Game Login 0 and one character on HK / Franz 2 for the existing account.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\network\\HEADLESS-LOGIN-GEO-FIX-11316.md",
+          "sha256": "c626f986a7a67981257c10e11de8e731f45e61221deca76f233add970680bd2d"
+        }
+      ],
+      "id": "ac5ec6dcb8ef5c1a76b510cb0be091372a6ee2b7fa2aa6dd206a2d71c6afa007",
+      "limits": [
+        "Clock OS/calendar validation/local offset/cookie and producer context/send/recovery/cleanup use explicit fixtures.",
+        "Lobby handler receives synthetic decoded packets; full reader/dispatch not executed.",
+        "Live geo field pair changed together; individual field necessity and time/auth effects not isolated.",
+        "No selection/world/periodic heartbeat or profile baseline promotion."
+      ],
+      "method": "bounded_native",
+      "next_check": "Port current selection/world/periodic heartbeat, then explicit existing-character world entry; retain accepted fresh geo metadata.",
+      "question": "login-invalid-state",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Individual geo-field causality, server internal InvalidState reason and current world/selection compatibility."
     }
   ],
   "schema": 1,

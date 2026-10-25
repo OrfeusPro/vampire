@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+25 октября Game Login существующего `bot-hk-test@vampir.top` на Franz 2 через
+HK принят: code 0 и список с одним персонажем. Исправлено исключение свежих
+I_ConnectIP / I_CountryCD из metadata текущей сборки по старому TID SHA guard.
+Current initial Ping перенесён и проверен, но сам по себе код 16 не устранил.
+Следом — current selection / world / periodic heartbeat, затем движение.
+[Проверки и границы](../resource-tools/vampir/knowledge/evidence/network/HEADLESS-LOGIN-GEO-FIX-11316.md).
+
 Последнее уточнение пользователя: использовать существующего персонажа
 `bot-hk-test@vampir.top` на Franz 2, держать соединение и обрабатывать команды
 движения с карты / из квестов в той же сессии. HK-проверка 1.13.16 прошла SDK,

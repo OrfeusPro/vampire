@@ -4,14 +4,23 @@
   "capabilities": [
     "version",
     "login",
-    "character-list"
+    "character-list",
+    "initial-ping"
   ],
   "live_verified": false,
   "limits": [
-    "Explicit bounded live probe only; no creation, selection, world, heartbeat or baseline promotion.",
+    "Explicit bounded live probe with initial Ping only; no creation, selection, world, periodic heartbeat or baseline promotion.",
     "Storage/services fixtures and transport integration remain bounded hypotheses until live observation."
   ],
   "reports": [
+    {
+      "path": "code-clues/login-clock-11316/d9be90c721a67fc92d6692baa78cc0801fa6c237eeeb84c75662b75b639a175f/manifest.json",
+      "sha256": "d9be90c721a67fc92d6692baa78cc0801fa6c237eeeb84c75662b75b639a175f"
+    },
+    {
+      "path": "code-clues/login-ping-11316/0cea49eb9a34d5993b03752fd3f7c4a071a3997815b3d6ea172aa46a5c82d216/manifest.json",
+      "sha256": "0cea49eb9a34d5993b03752fd3f7c4a071a3997815b3d6ea172aa46a5c82d216"
+    },
     {
       "path": "knowledge/native-archive-wire-checks/d652099b51404e5f98303095fef45806ab6e1a410e3935adb62f7a3f896ca8f5/manifest.json",
       "sha256": "d652099b51404e5f98303095fef45806ab6e1a410e3935adb62f7a3f896ca8f5"

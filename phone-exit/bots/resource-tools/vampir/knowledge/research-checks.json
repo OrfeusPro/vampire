@@ -5004,6 +5004,38 @@
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py"
       ]
+    },
+    {
+      "id": "native-login-clock-ping-current",
+      "questions": [
+        "login-invalid-state",
+        "session-keepalive"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_login_ping_11316.py",
+      "timeout_seconds": 90,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_login_ping_11316.py",
+        "phone-exit/bots/test_vampir_session_clock.py",
+        "phone-exit/bots/test_vampir_lobby_joined_country.py",
+        "phone-exit/bots/vampir-shared/vampir_core/session_clock.py",
+        "phone-exit/bots/vampir-headless/probe-lobby-sdk-login.py",
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-clock-11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-login-ping-11316.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-ping-exports-11316.json"
+      ]
     }
   ]
 }

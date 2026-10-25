@@ -38,7 +38,7 @@ class CandidateProfileTests(unittest.TestCase):
 
     def test_missing_required_report_rejected(self):
         with patch.object(profile.json, 'loads', return_value={
-                'source_sha256': profile.CURRENT_SHA, 'capabilities': ['version', 'login', 'character-list'],
+                'source_sha256': profile.CURRENT_SHA, 'capabilities': ['version', 'login', 'character-list', 'initial-ping'],
                 'live_verified': False, 'reports': []}):
             with self.assertRaisesRegex(ValueError, 'incomplete'):
                 profile.verify_candidate_evidence()

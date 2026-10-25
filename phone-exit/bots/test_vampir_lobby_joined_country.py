@@ -13,19 +13,21 @@ class LobbyJoinedCountryTests(unittest.TestCase):
         spec=importlib.util.spec_from_file_location('lobby_joined_country_test',path)
         cls.tool=importlib.util.module_from_spec(spec);spec.loader.exec_module(cls.tool)
 
-    def exercise(self,context,*,sdk_country='HK',nid_country='HK',release=False,device_settings=None):
+    def exercise(self,context,*,sdk_country='HK',nid_country='HK',release=False,current=False,device_settings=None):
         provider=SimpleNamespace(netmarble_id='nid-fixture',joined_country_code=nid_country)
         binding=SimpleNamespace(nm_device_key='nm-fixture',device_key='device-fixture')
         sdk_data=SimpleNamespace(player_id='player-fixture',access_token='token-fixture',joined_country_code=sdk_country)
-        from vampir_core.gmc2_context import SdkInputs, Gmc2Geo
+        from vampir_core.gmc2_context import SdkInputs, Gmc2Geo, CURRENT_SOURCE_SHA256
+        source_sha = CURRENT_SOURCE_SHA256 if current else self.tool.METADATA_TID_SOURCE_SHA256
+        selected_profile = 'candidate-11316' if current else 'recovered-release' if release else 'recovered-base'
         prepared = SdkInputs('fixture@example.invalid', binding, {'game_code':'thered'}, {},
-            'recovered-release', 17948, self.tool.METADATA_TID_SOURCE_SHA256,
-            Gmc2Geo('1.1.1.1','JP','HK','fixture-body-sha'), time.monotonic()) if release else (binding,{'game_code':'thered'},{})
+            'recovered-release', 17948, source_sha,
+            Gmc2Geo('1.1.1.1','JP','HK','fixture-body-sha',source_sha), time.monotonic()) if release or current else (binding,{'game_code':'thered'},{})
         def sdk_run(email,**kwargs):
-            if release: self.assertIs(kwargs['_prepared_inputs'],prepared)
+            if release or current: self.assertIs(kwargs['_prepared_inputs'],prepared)
             kwargs['_capture']('https://example.invalid');return sdk_data
         modules=[SimpleNamespace(load_profile=lambda **k:SimpleNamespace(app_version='fixture',source_snapshot_sha256='fixture-snapshot',
-            source_exe_sha256=self.tool.METADATA_TID_SOURCE_SHA256 if release else '')),
+            source_exe_sha256=source_sha if release or current else '',live_probe_only=current)),
             SimpleNamespace(selected_endpoint=lambda *a,**k:('lobby.example',12000)),
             SimpleNamespace(load_inputs=lambda *a,**k:prepared,run=sdk_run),
             SimpleNamespace(capture_nid_credential=lambda *a,**k:provider),
@@ -38,10 +40,10 @@ class LobbyJoinedCountryTests(unittest.TestCase):
             route.return_value.port = 17948
             if context in ('sdk-with-joined-country','sdk-with-partial-metadata') and (sdk_country!=nid_country or sdk_country in (None,'hk','')):
                 with self.assertRaises(ValueError):
-                    self.tool.run('fixture@example.invalid',selected_profile='recovered-release' if release else 'recovered-base',manifest_path=Path('fixture'),
+                    self.tool.run('fixture@example.invalid',selected_profile=selected_profile,manifest_path=Path('fixture'),
                         socks_port=17948,context=context)
                 route.return_value.connect.assert_not_called();exchange.assert_not_called();return
-            result=self.tool.run('fixture@example.invalid',selected_profile='recovered-release' if release else 'recovered-base',manifest_path=Path('fixture'),
+            result=self.tool.run('fixture@example.invalid',selected_profile=selected_profile,manifest_path=Path('fixture'),
                 socks_port=17948,context=context,_consume_auth=consumer,device_settings=device_settings)
             self.assertEqual(tid.call_count, int(release and context=='sdk-with-partial-metadata'))
         login=exchange.call_args.args[2]
@@ -54,6 +56,8 @@ class LobbyJoinedCountryTests(unittest.TestCase):
                 I_JoinedCountryCode='HK',I_NMDeviceKey='nm-fixture',I_DeviceKey='device-fixture')
             if release:
                 expected.update(I_TID='0123456789ABCDEFFEDCBA9876543210',I_ConnectIP='1.1.1.1',I_CountryCD='JP')
+            if current:
+                expected.update(I_ConnectIP='1.1.1.1',I_CountryCD='JP')
             if device_settings:
                 from vampir_core.bot_device_settings import metadata_values
                 expected.update(metadata_values(device_settings))
@@ -70,6 +74,7 @@ class LobbyJoinedCountryTests(unittest.TestCase):
     def test_legacy_branch_stays_explicitly_empty(self):self.exercise('sdk-without-nid-info')
     def test_partial_metadata_has_only_current_proven_fields(self):self.exercise('sdk-with-partial-metadata')
     def test_current_partial_metadata_uses_persistent_tid_provider(self):self.exercise('sdk-with-partial-metadata',release=True)
+    def test_11316_geo_uses_same_fresh_context_without_unported_tid(self):self.exercise('sdk-with-partial-metadata',current=True)
     def test_custom_device_metadata_preserves_fresh_network_and_auth_fields(self):
         from vampir_core.bot_device_settings import connection_presets
         self.exercise('sdk-with-partial-metadata',release=True,device_settings=connection_presets()[1]['device_settings'])

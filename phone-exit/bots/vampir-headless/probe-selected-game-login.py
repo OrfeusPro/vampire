@@ -15,7 +15,7 @@ from vampir_core.socks_route import SocksRoute, socks_game_address_context
 from vampir_core.direct_route import connect_direct, direct_game_address_context
 from vampir_core.game_server_target import SERVER_REGION_CODES, is_game_server_state_excluded, game_server_allows_joined_country
 from vampir_core.patch_revision import parse_patch_client_revision
-from vampir_core.session_clock import LobbyPingClock, SOURCE_SHA256 as PING_CLOCK_SOURCE_SHA256
+from vampir_core.session_clock import LobbyPingClock, SOURCE_SHA256 as PING_CLOCK_SOURCE_SHA256, INITIAL_PING_SOURCES
 
 
 @dataclass(frozen=True)
@@ -196,7 +196,7 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
         if len(groups) == 1: state['reference_server_101_region_code'] = groups[0].raw_20
     phase('game_system_inputs')
     ping_clock = None
-    if getattr(source, 'source_exe_sha256', '') == PING_CLOCK_SOURCE_SHA256:
+    if getattr(source, 'source_exe_sha256', '') in INITIAL_PING_SOURCES:
         ping_clock = LobbyPingClock.from_version_result(lobby.version_response,
             source_sha256=source.source_exe_sha256)
     cpu, windows = module('game_login_system', 'windows-system-inputs.py').observe_inputs()

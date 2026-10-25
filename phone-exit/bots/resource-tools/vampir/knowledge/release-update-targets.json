@@ -2717,6 +2717,56 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-clock-ping-current",
+      "baseline_functions": [],
+      "tools": [
+        "replay-login-clock-11316.py",
+        "replay-login-ping-11316.py"
+      ],
+      "rule": "При новом SHA искать только кандидатов по historical masked prefix; проверять полный source, explicit unwind/callees/data и native сценарии. Geo metadata должна использовать свежий SdkInputs текущего SHA независимо от TID guard. Initial Ping не разрешает world/periodic heartbeat.",
+      "automation": {
+        "discovery": "historical_masked_prefix_then_reviewed_current_callees_and_data",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x1445d9ed0",
+                "scope": "Native clock/handler or Ping producer with explicit OS/services/send fixtures; not full transport/world.",
+                "required_checks": [
+                  "native-login-clock-ping-current"
+                ]
+              },
+              {
+                "address": "0x1467ab7a0",
+                "scope": "Native clock/handler or Ping producer with explicit OS/services/send fixtures; not full transport/world.",
+                "required_checks": [
+                  "native-login-clock-ping-current"
+                ]
+              },
+              {
+                "address": "0x1467cf680",
+                "scope": "Native clock/handler or Ping producer with explicit OS/services/send fixtures; not full transport/world.",
+                "required_checks": [
+                  "native-login-clock-ping-current"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-login-clock-11316.py",
+              "replay-login-ping-11316.py"
+            ],
+            "evidence": [
+              "evidence/network/HEADLESS-LOGIN-GEO-FIX-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

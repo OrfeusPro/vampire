@@ -16,7 +16,7 @@ from vampir_core.direct_route import connect_direct
 from vampir_core.windows_version import observe_windows_version
 from vampir_core.nid_metadata import encode_nid_metadata_with_device_key
 from vampir_core.metadata_tid import resolve_metadata_tid, SOURCE_SHA256 as METADATA_TID_SOURCE_SHA256
-from vampir_core.gmc2_context import SdkInputs
+from vampir_core.gmc2_context import SdkInputs, VERIFIED_SOURCE_SHA256 as GEO_SOURCES
 
 
 def module(name, filename):
@@ -80,12 +80,13 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         # TID is persistent bot-owned state under the verified generation policy.
         values = dict(I_GameCode=sdk_profile['game_code'],I_GameVersion=source.app_version,
             I_PID=data.player_id,I_JoinedCountryCode=country,I_NMDeviceKey=binding.nm_device_key)
-        if getattr(source, 'source_exe_sha256', '') == METADATA_TID_SOURCE_SHA256:
+        if getattr(source, 'source_exe_sha256', '') in GEO_SOURCES:
             if not isinstance(prepared, SdkInputs) or prepared.source_sha256 != source.source_exe_sha256:
                 raise ValueError('Current metadata requires matching fresh GMC2 source')
             prepared.check_usage(email=email, selected_profile=sdk_profile_name, route=route)
             # Bot-owned geo state starts empty for each run; no game cache read.
             values.update(prepared.geo.metadata(previous_country=''))
+        if getattr(source, 'source_exe_sha256', '') == METADATA_TID_SOURCE_SHA256:
             values['I_TID'] = resolve_metadata_tid(HERE / '.local/metadata.sqlite3',
                 nm_device_key=binding.nm_device_key, source_sha256=source.source_exe_sha256)
         if any(type(value) is not str or not value for value in values.values()):

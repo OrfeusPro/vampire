@@ -97,14 +97,14 @@ def verify_candidate_evidence(*, root=ROOT):
     """Frozen offline evidence for an explicit read-only live experiment, not promotion."""
     evidence = json.loads((HERE / 'game-candidate-11316.json').read_text('utf-8'))
     if (evidence['source_sha256'] != CURRENT_SHA or
-            evidence['capabilities'] != ['version', 'login', 'character-list'] or
+            evidence['capabilities'] != ['version', 'login', 'character-list', 'initial-ping'] or
             evidence['live_verified'] is not False):
         raise ValueError('Candidate scope changed')
     required = {'native-archive-wire-checks', 'native-login-prepare-checks',
         'native-version-prepare-checks', 'native-version-result-checks',
         'native-version-result-handler-checks', 'native-login-result-checks',
         'native-waiting-end-checks', 'native-character-list-records-checks',
-        'native-character-list-handler-checks'}
+        'native-character-list-handler-checks', 'login-clock-11316', 'login-ping-11316'}
     reports = evidence['reports']
     if len(reports) != len(required) or {Path(item['path']).parts[1] for item in reports} != required:
         raise ValueError('Candidate evidence is incomplete')

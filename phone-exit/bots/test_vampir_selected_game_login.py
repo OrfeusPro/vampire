@@ -50,6 +50,10 @@ class SelectedGameLoginTests(unittest.TestCase):
     def test_current_source_uses_fresh_lobby_clock(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256)
 
+    def test_11316_initial_ping_receives_fresh_clock_without_world_permission(self):
+        from vampir_core.session_clock import INITIAL_PING_SOURCE_SHA256
+        self.check_auth_and_clock(INITIAL_PING_SOURCE_SHA256)
+
     def test_direct_route_reaches_game_with_socket_address_and_no_socks(self):
         self.check_auth_and_clock(self.tool.PING_CLOCK_SOURCE_SHA256, direct=True)
 

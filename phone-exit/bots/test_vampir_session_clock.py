@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parent / 'vampir-shared'))
 
 from vampir_core.lobby_packets import decode_lobby_version_result
-from vampir_core.session_clock import LobbyPingClock, SOURCE_SHA256
+from vampir_core.session_clock import LobbyPingClock, SOURCE_SHA256, INITIAL_PING_SOURCE_SHA256
 
 
 class SessionClockTests(unittest.TestCase):
@@ -26,6 +26,13 @@ class SessionClockTests(unittest.TestCase):
             utc = 1792600142863
             expected = int(float((utc + offset * 60000) * 10000) * 0.0001)
             self.assertEqual(clock.initial_ping(utc_millis=utc).first_bits, expected)
+
+    def test_11316_initial_ping_uses_current_lobby_signed_offset(self):
+        for offset in (-32768, -180, 0, 540, 32767):
+            self.assertEqual(self.clock(offset, source=INITIAL_PING_SOURCE_SHA256).initial_ping(utc_millis=1792600142863),
+                self.clock(offset).initial_ping(utc_millis=1792600142863))
+        for kwargs in (dict(code=16), dict(flag=1)):
+            with self.assertRaises(ValueError): self.clock(540, source=INITIAL_PING_SOURCE_SHA256, **kwargs)
 
     def test_unverified_or_rejected_lobby_context_is_refused(self):
         for kwargs in (dict(code=16), dict(flag=1), dict(source='old-source')):
