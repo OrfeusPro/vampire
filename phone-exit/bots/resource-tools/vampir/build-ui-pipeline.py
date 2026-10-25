@@ -1,5 +1,6 @@
 """Run existing offline UI audits and generation with immutable, verified stage reuse."""
 import argparse
+import hashlib
 import importlib.util
 import json
 import sys
@@ -9,6 +10,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import ui_pipeline as cache
+import ui_rule_impact
 
 
 def load(name):
@@ -18,12 +20,27 @@ def load(name):
     return module
 
 
-def run(root, snapshot, output, build_ready=False):
+def checked_readiness(path, expected_sha):
+    if cache.sha(path) != expected_sha:
+        raise ValueError('Baseline readiness SHA differs')
+    ready = json.loads(Path(path).read_bytes())
+    layer = Path(ready['component_layer'])
+    if cache.sha(layer / 'index.json') != ready['component_index_sha256']:
+        raise ValueError('Baseline component index differs')
+    if cache.sha(layer / 'composition-graph.json') != ready.get('component_graph_sha256'):
+        raise ValueError('Baseline graph is missing a verified SHA; create a new baseline with audit-only')
+    return ready, json.loads((layer / 'composition-graph.json').read_bytes())
+
+
+def run(root, snapshot, output, build_ready=False, baseline_readiness=None, baseline_sha256=None):
     root, snapshot, output = (Path(p).resolve() for p in (root, snapshot, output))
     if any(output.is_relative_to(p) or p.is_relative_to(output) for p in
            [HERE.parents[3], snapshot, root / 'ui-catalog', root / 'ui-layout-study']):
         raise ValueError('Use a separate external pipeline output directory')
     started = time.perf_counter()
+    if bool(baseline_readiness) != bool(baseline_sha256):
+        raise ValueError('Baseline readiness and full SHA must be supplied together')
+    baseline = checked_readiness(baseline_readiness, baseline_sha256) if baseline_readiness else None
     steps = []
     def tools(*names):
         return {name: cache.sha(HERE / name) for name in (*names, 'ui_pipeline.py', 'build-ui-pipeline.py')}
@@ -55,11 +72,15 @@ def run(root, snapshot, output, build_ready=False):
         tools=tools('scan-ui-component-consumers.py', 'ui_component_consumers.py', 'ui_composition_graph.py')),
         lambda folder: load('scan-ui-component-consumers').build(root, Path(scopes['result']['output']), folder / 'layers'))
     index = json.loads((Path(consumers['result']['output']) / 'index.json').read_bytes())
+    graph = json.loads((Path(consumers['result']['output']) / 'composition-graph.json').read_bytes())
     priorities = ['WBP_PopupBgTitle_C', 'WBP_ShortcutkeyHudT_C', 'WBP_ItemIconT_C', 'WBP_Badge_C']
     readiness = dict(schema=1, source_snapshot=str(snapshot), component_dataset=index['dataset_id'],
         source_scopes=scopes['result']['output'], component_layer=consumers['result']['output'],
         component_index_sha256=cache.sha(Path(consumers['result']['output']) / 'index.json'),
+        component_graph_sha256=cache.sha(Path(consumers['result']['output']) / 'composition-graph.json'),
         components={name: index['classes'].get(name) for name in priorities},
+        priority_coverage=ui_rule_impact.priority_coverage(graph, priorities),
+        impact_analysis_tools=tools('ui_rule_impact.py', 'ui_composition_graph.py'),
         confirmed_checks=['source_hashes_and_exports', 'source_outer_ownership', 'static_consumer_indices'],
         renderer_rules=[],
         unknowns=['Active resource variants and runtime roots', 'Inherited defaults and dynamic bindings',
@@ -71,7 +92,7 @@ def run(root, snapshot, output, build_ready=False):
     readiness['providers'] = {r['provider']: cache.sha(HERE / r['provider']) for r in rules['rules']}
     readiness['rules'] = [{**rule, 'checks_passed': all(c in readiness['confirmed_checks'] for c in rule['checks'])}
                           for rule in rules['rules']]
-    readiness_id = __import__('hashlib').sha256(cache.encoded(readiness)).hexdigest()
+    readiness_id = hashlib.sha256(cache.encoded(readiness)).hexdigest()
     ready_folder = output / 'readiness' / readiness_id
     ready_folder.mkdir(parents=True, exist_ok=True)
     ready_file = ready_folder / 'index.json'
@@ -80,6 +101,23 @@ def run(root, snapshot, output, build_ready=False):
     if not ready_file.exists():
         with ready_file.open('xb') as stream:
             stream.write(cache.encoded(readiness))
+    impact_result = None
+    if baseline:
+        old_ready, old_graph = baseline
+        impact = ui_rule_impact.compile_impact(old_graph, graph, old_ready, readiness)
+        impact['inputs'] = dict(baseline_sha256=baseline_sha256, current_sha256=cache.sha(ready_file),
+            tools=tools('ui_rule_impact.py', 'ui_composition_graph.py'))
+        impact_id = hashlib.sha256(cache.encoded(impact)).hexdigest()
+        folder = output / 'impact' / impact_id
+        folder.mkdir(parents=True, exist_ok=True)
+        for name, raw in [('index.json', cache.encoded(impact)), ('TASKS.md', ui_rule_impact.markdown(impact).encode('utf8'))]:
+            target = folder / name
+            if target.exists() and target.read_bytes() != raw:
+                raise ValueError('Published impact queue differs')
+            if not target.exists():
+                with target.open('xb') as stream:
+                    stream.write(raw)
+        impact_result = dict(output=str(folder), **impact['statistics'])
     build_result = None
     if build_ready:
         build_started = time.perf_counter()
@@ -88,7 +126,7 @@ def run(root, snapshot, output, build_ready=False):
         steps.append(dict(name='build-and-verify', seconds=round(time.perf_counter() - build_started, 3),
                           output=str(destination), result=build_result, reused=False))
     report = dict(schema=1, mode='build-ready' if build_ready else 'audit-only', stages=steps,
-                  readiness=str(ready_file), build=build_result,
+                  readiness=str(ready_file), impact=impact_result, build=build_result,
                   seconds=round(time.perf_counter() - started, 3),
                   limits=readiness['unknowns'], window_completion_claimed=False)
     output.mkdir(parents=True, exist_ok=True)
@@ -107,5 +145,10 @@ if __name__ == '__main__':
     p.add_argument('--root', type=Path, default=Path('F:/PhoneExit Resources/Vampir'))
     p.add_argument('--snapshot', type=Path, required=True)
     p.add_argument('--output', type=Path)
+    p.add_argument('--baseline-readiness', type=Path)
+    p.add_argument('--baseline-sha256')
     args = p.parse_args()
-    run(args.root, args.snapshot, args.output or args.root / 'ui-property-scans/pipeline', args.build_ready)
+    if bool(args.baseline_readiness) != bool(args.baseline_sha256):
+        p.error('Use --baseline-readiness and --baseline-sha256 together')
+    run(args.root, args.snapshot, args.output or args.root / 'ui-property-scans/pipeline', args.build_ready,
+        args.baseline_readiness, args.baseline_sha256)

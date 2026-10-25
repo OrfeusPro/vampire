@@ -2,6 +2,7 @@
 import sys
 import tempfile
 import unittest
+import json
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / 'resource-tools/vampir'))
@@ -11,9 +12,33 @@ import importlib.util
 spec = importlib.util.spec_from_file_location('pipeline_builder_test', Path(__file__).parent / 'resource-tools/vampir/build-ui-prototype.py')
 builder = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(builder)
+spec = importlib.util.spec_from_file_location('ui_pipeline_runner_test', Path(__file__).parent / 'resource-tools/vampir/build-ui-pipeline.py')
+runner = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(runner)
 
 
 class PipelineTests(unittest.TestCase):
+    def test_baseline_is_pinned_to_graph_and_index_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            index, graph = folder / 'index.json', folder / 'composition-graph.json'
+            index.write_text('{}', 'utf8')
+            graph.write_text('{"nodes":{}}', 'utf8')
+            ready = folder / 'ready.json'
+            ready.write_text(json.dumps(dict(component_layer=str(folder), component_index_sha256=pipeline.sha(index),
+                                            component_graph_sha256=pipeline.sha(graph))), 'utf8')
+            digest = pipeline.sha(ready)
+            self.assertEqual(runner.checked_readiness(ready, digest)[1], {'nodes': {}})
+            with self.assertRaises(ValueError):
+                runner.checked_readiness(ready, '0' * 64)
+            graph.write_text('{"nodes":{"changed":{}}}', 'utf8')
+            with self.assertRaises(ValueError):
+                runner.checked_readiness(ready, digest)
+            graph.write_text('{"nodes":{}}', 'utf8')
+            index.write_text('{"changed":true}', 'utf8')
+            with self.assertRaises(ValueError):
+                runner.checked_readiness(ready, digest)
+
     def test_incremental_gate_does_not_grant_unrestricted_generation(self):
         gate = {'schema': 2, 'phase': 'incremental_verified_rules', 'incremental_allowed': True,
                 'generation_allowed': False}
