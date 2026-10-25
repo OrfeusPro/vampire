@@ -216,6 +216,36 @@ controls / 168 decoded slots / 8 excluded slots; unowned объект Enchant с
 Полный verifier и 48 тестов прошли. Runtime root не выбирается и геометрия
 не подтверждается этой классификацией.
 
+### Общие компоненты и потребители
+
+`scan-ui-component-consumers.py` сначала повторно проверяет весь Outer слой,
+затем переиспользует `ui_composition_graph.compile_graph` на source-root проекциях.
+`ui_component_consumers.py` формирует class → consumer resources / control exports /
+candidate variants и обратный индекс variant → consumers. Повторные controls и
+исторические версии сохраняются отдельными связями; приоритет считает число
+различных ресурсов. Quarantine source scopes остаётся в отчёте.
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-component-consumers.py --scopes 'F:/PhoneExit Resources/Vampir/ui-property-scans/outer-scopes/c5881efd622a6cba6c604d5e7fadbf21296c38ee6d84bf6209043e656bf9018f'
+```
+
+Набор `b4915b924d4220986285b5d6ec0403ab8acb01fc8ab0883e0f206adfe3fb8736`
+находится в ui-property-scans/component-consumers вне Git. Получены 893 класса,
+8545 control-ссылок, 182 класса без найденных candidates. Это не 182 ошибки игры:
+часть классов ещё не извлечена. Есть source-scoped composition graph и reverse
+indices, active runtime variant не выбирается. Классы остаются кандидатами даже
+при единственном найденном ресурсе.
+
+Приоритет по различным ресурсам-потребителям: PopupBgTitle 232, ShortcutkeyHudT
+177, ItemIconT 130, Badge 106, CommonTabMainT 56, TitleBarUI 56. Ненайденный
+UIA_PageDim_BG присутствует у 72 ресурсов и сохраняется в очереди пробелов.
+Числа описывают статические ссылки каталога, не одновременные окна игры.
+
+Два теста проверяют сохранение controls / historical variants, подсчёт уникальных
+ресурсов, обратные связи и отказ на отсутствующий graph target. Повтор команды
+заново строит результат и побайтно сравнивает оба файла, не перезаписывая набор.
+Этот анализ выполняется при подготовке общих данных, а не в каждом окне бота.
+
 Очередь с чекбоксами — UI-27 в [общем плане](UI-TASKS.md). Следующие блоки:
 учёт оставшихся slot types / defaults, декодирование Brush / styles / состояний,
 подтверждённые delegates / handlers, применение правил геометрии, тестовые сценарии
