@@ -5688,6 +5688,48 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Payload callable lifetime / dispatch, полный reader / cleanup, global config precedence и active resource / Brush."
+    },
+    {
+      "addresses": [
+        "0x141421b80",
+        "0x1445c4f60"
+      ],
+      "checks": [
+        {
+          "cache_key": "79b00fada86853fe682ea5b0a85d50fca20bf7345e43f3254166dd7868730dd7",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fc00777d7848d77ea2500b5da66585f63fa9e3c9cb594234134e66e22e38a69c\\manifest.json",
+          "sha256": "fc00777d7848d77ea2500b5da66585f63fa9e3c9cb594234134e66e22e38a69c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "1445c4f60 переносит первый qword и два callable-объекта через native virtual capture copy: 48 полных сценариев, без fixtures на copy path. Связанная таблица 1489e4448 и три exact leaf boundaries проверены. 16 native cleanup сценариев подтверждают tail с EDX=0 / прямой destructor с low-bit deallocation gate, free helper — fixture; 3 address getter случая возвращают адрес захвата.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-CONFIG-PAYLOAD-11316.md",
+          "sha256": "6b6b4511db5b7159335d8e2cc8d6fb8e2338068c2c63e89e9d0bb14c4595f022"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-218ed676dfab\\details.json",
+          "sha256": "b2d468647ed1c90a3eb8ce6967ec78eed53f99fa0b4156dd031b98154c969c43"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-21a346cf8c62\\details.json",
+          "sha256": "64bfd80ae3d7bb109d26e5a61b00b6cf53ace539670542618db43b938ae9daed"
+        }
+      ],
+      "id": "4e4c07bf2a7ef80de649bb4ef43066185bcc5dee053cc5bf6f0436052059765a",
+      "limits": [
+        "Захваченный указатель непрозрачен; synthetic external storage не доказывает allocation origin / ownership.",
+        "Deallocation заменена fixture; реальная память не освобождается.",
+        "Полный reader, insertion, callable invocation и последующее config update событие не исполнены.",
+        "Результат относится только к текущему полному SHA; active config, cooked compatibility и Brush binding не доказаны."
+      ],
+      "method": "bounded_native",
+      "next_check": "Исполнить целый reader 1445c2c30 вместе с insertion 1445c1f50 и payload copy; явно ограничить storage / hash / uniqueness helpers и проверить сохранённые захваты / cleanup.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Полный reader на одной памяти, container lifetime / dispatch, config precedence и активный ресурс."
     }
   ],
   "schema": 1,

@@ -17,9 +17,25 @@ spec = importlib.util.spec_from_file_location('ui_content_config_replay', HERE /
 content_config = importlib.util.module_from_spec(spec); spec.loader.exec_module(content_config)
 spec = importlib.util.spec_from_file_location('ui_config_callables_replay', HERE / 'replay-ui-config-callables.py')
 config_callables = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_callables)
+spec = importlib.util.spec_from_file_location('ui_config_payload_replay', HERE / 'replay-ui-config-payload.py')
+config_payload = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_payload)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_config_callable_payload_copy_and_cleanup(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
+        result = config_payload.run(dict(base, functions=[dict(address=hex(a)) for a in config_payload.ROOTS]),
+            dict(base, functions=[dict(address=hex(a)) for a in config_payload.LEAVES]))
+        self.assertEqual(len(result['copy_cases']), 48)
+        self.assertEqual(len(result['cleanup_cases']), 16)
+        self.assertEqual(len(result['address_cases']), 3)
+        for case in result['copy_cases']:
+            self.assertEqual(case['native_capture_copies'], sum(case['active']))
+            self.assertTrue(case['complete_return'])
+        for case in result['cleanup_cases']:
+            self.assertEqual(case['deallocation_fixture_calls'], int(case['entry'] == '0x141421b80' and bool(case['flags'] & 1)))
+
     def test_native_config_string_clone_and_assignment_forwarding(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         base = dict(source=source, source_sha256=replay.getter.SHA, question='ui-nktileview-property-schema')
