@@ -25,9 +25,31 @@ spec = importlib.util.spec_from_file_location('ui_config_uniqueness_replay', HER
 config_uniqueness = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_uniqueness)
 spec = importlib.util.spec_from_file_location('ui_config_consumers_replay', HERE / 'replay-ui-config-consumers.py')
 config_consumers = importlib.util.module_from_spec(spec); spec.loader.exec_module(config_consumers)
+spec = importlib.util.spec_from_file_location('ui_string_assignment_replay', HERE / 'replay-ui-string-assignment.py')
+string_assignment = importlib.util.module_from_spec(spec); spec.loader.exec_module(string_assignment)
 
 
 class TileRefreshTests(unittest.TestCase):
+    def test_native_string_assignment_identity_empty_and_resize_paths(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = string_assignment.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(string_assignment.ASSIGN))]))
+        self.assertEqual(len(result['cases']), 80)
+        self.assertEqual(len(result['identity_cases']), 4)
+        for case in result['cases']:
+            self.assertTrue(case['complete_return'])
+            self.assertEqual(case['copy_calls'], int(not case['identity'] and case['native_units'] > 0))
+            if case['value_fixture'] == 'A\0B': self.assertEqual(case['native_units'], 2)
+
+    def test_native_assignment_runs_inside_config_consumer_write(self):
+        source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
+        result = config_consumers.run(dict(source=source, source_sha256=replay.getter.SHA,
+            question='ui-nktileview-property-schema', functions=[dict(address=hex(a)) for a in config_consumers.ROOTS + (string_assignment.ASSIGN,)]),
+            native_assignment=True)
+        self.assertEqual(len(result['cases']), 96)
+        self.assertEqual(sum(c['native_assignment_calls'] for c in result['cases']), 64)
+        self.assertTrue(result['native_assignment'])
+
     def test_native_config_consumers_read_write_read_preserve_other_bindings(self):
         source = json.loads((replay.native.ROOT / 'code-clues/ui-properties.json').read_text('utf-8'))['source']
         result = config_consumers.run(dict(source=source, source_sha256=replay.getter.SHA,

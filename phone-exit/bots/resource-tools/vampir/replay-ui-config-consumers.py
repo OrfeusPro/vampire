@@ -15,17 +15,22 @@ FIXTURES = {0x141426b30: 'query_string', 0x141483080: 'free_query',
             0x141436ed0: 'allocate_clone', 0x1487f5ab9: 'copy_clone', 0x1414277b0: 'assign_value'}
 
 
-def run(request):
+def run(request, native_assignment=False):
     if request['source_sha256'] != getter.SHA or request['question'] != 'ui-nktileview-property-schema':
         raise ValueError('Другой источник / вопрос')
-    if not {hex(a) for a in ROOTS} <= {f['address'] for f in request['functions']}:
+    roots = ROOTS + (0x1414277b0,) if native_assignment else ROOTS
+    fixtures = dict(FIXTURES)
+    if native_assignment:
+        del fixtures[0x1414277b0]
+        fixtures[0x141438050] = 'resize_value'
+    if not {hex(a) for a in roots} <= {f['address'] for f in request['functions']}:
         raise ValueError('Нет явных consumer roots')
     if native.capstone.__version__ != '5.0.6' or unicorn.__version__ != '2.1.4':
         raise ValueError('Изменились закреплённые инструменты')
     raw = Path(request['source']).read_bytes()
     if getter.sha(raw) != getter.SHA: raise ValueError('Изменился EXE')
     image = native.Image(raw); selected = set()
-    for address in ROOTS:
+    for address in roots:
         row = image.containing(address)
         if row is None or image.pe.base + image.roots[row][0] != address:
             raise ValueError('Изменился unwind root')
@@ -57,7 +62,7 @@ def run(request):
         raise ValueError('Изменилась compare table')
     pages = {p for a, b in ranges for p in range(a & ~4095, (b + 4095) & ~4095, 4096)}
     pages.update(a & ~4095 for f in fragments for r in f['instructions'] for a in r['rip_references'])
-    pages.update(a & ~4095 for a in (*FIXTURES, table, key_hash.TABLE, key_hash.uniqueness.ASCII_TABLE))
+    pages.update(a & ~4095 for a in (*fixtures, table, key_hash.TABLE, key_hash.uniqueness.ASCII_TABLE))
     uc = unicorn.Uc(unicorn.UC_ARCH_X86, unicorn.UC_MODE_64)
     for page in pages:
         uc.mem_map(page, 4096)
@@ -73,15 +78,16 @@ def run(request):
         sp = uc.reg_read(x.UC_X86_REG_RSP); uc.reg_write(x.UC_X86_REG_RAX, result)
         uc.reg_write(x.UC_X86_REG_RIP, qword(sp)); uc.reg_write(x.UC_X86_REG_RSP, sp + 8)
     def hook(machine, address, size, unused):
-        if address not in FIXTURES:
+        if address not in fixtures:
             if not any(a <= address and address + size <= b for a, b in ranges):
                 raise ValueError('Исполнение вне consumer chain: ' + hex(address))
             if address == 0x1445c78d0: state['read_invokes'] += 1
             if address == 0x1445c7970: state['write_invokes'] += 1
             if address == 0x14140e2f0: state['capture_getters'] += 1
+            if address == 0x1414277b0: state['native_assignments'] += 1
             return
         rcx, rdx, r8 = [uc.reg_read(r) for r in (x.UC_X86_REG_RCX, x.UC_X86_REG_RDX, x.UC_X86_REG_R8)]
-        name = FIXTURES[address]; state['calls'].append(name)
+        name = fixtures[address]; state['calls'].append(name)
         if name == 'query_string':
             if rdx != query: raise ValueError('Другой query pointer')
             data = state['query'].encode('utf-16le') + b'\0\0'
@@ -95,9 +101,18 @@ def run(request):
             if bytes(uc.mem_read(rcx, 12)) != struct.pack('<Qi', 0, rdx): raise ValueError('Clone временная строка не обнулена')
             uc.mem_write(rcx, struct.pack('<Q', output_data)); uc.mem_write(rcx + 12, struct.pack('<i', rdx + 3)); ret(0)
         elif name == 'copy_clone':
-            if (rcx, rdx, r8) != (output_data, state['expected_data'], state['expected_count'] * 2):
+            expected = (state['destination_data'], new_data, len((state['new_value'] + '\0').encode('utf-16le'))) if state['phase'] == 1 else (
+                output_data, state['expected_data'], state['expected_count'] * 2)
+            if (rcx, rdx, r8) != expected:
                 raise ValueError('Неверные clone copy arguments')
             uc.mem_write(rcx, bytes(uc.mem_read(rdx, r8))); ret(rcx)
+        elif name == 'resize_value':
+            count = len((state['new_value'] + '\0').encode('utf-16le')) // 2
+            if (rcx, rdx) != (state['destination'], count) or bytes(uc.mem_read(rcx + 8, 4)) != bytes(4):
+                raise ValueError('Неверные native assignment resize аргументы / count reset')
+            state['assigned_capacity'] = count + 7
+            uc.mem_write(rcx, struct.pack('<Q', state['destination_data']))
+            uc.mem_write(rcx + 12, struct.pack('<i', state['assigned_capacity'])); ret(0)
         else:
             if (rcx, rdx) != (state['destination'], new_data): raise ValueError('Write invoke выбрал другой destination / value')
             encoded = state['new_value'].encode('utf-16le') + b'\0\0'
@@ -105,7 +120,7 @@ def run(request):
             uc.mem_write(rcx, struct.pack('<Qii', target, len(encoded) // 2, len(encoded) // 2)); ret(rcx)
     uc.hook_add(unicorn.UC_HOOK_CODE, hook)
     def execute(entry, rcx, rdx):
-        state.update(calls=[], read_invokes=0, write_invokes=0, capture_getters=0)
+        state.update(calls=[], read_invokes=0, write_invokes=0, capture_getters=0, native_assignments=0)
         uc.mem_write(stack - 0x1000, b'\x91' * 0x1100); uc.mem_write(stack, struct.pack('<Q', stop))
         for reg, value in ((x.UC_X86_REG_RCX, rcx), (x.UC_X86_REG_RDX, rdx), (x.UC_X86_REG_RSP, stack)):
             uc.reg_write(reg, value)
@@ -145,12 +160,22 @@ def run(request):
                 before_data = [bytes(uc.mem_read(base + 0x8500 + i * 0x2000, 256)) for i in range(3)]
                 reads = []
                 for phase in range(3):
+                    state['phase'] = phase
                     if phase == 1:
+                        state['assigned_capacity'] = int.from_bytes(uc.mem_read(state['destination'] + 12, 4), 'little')
                         uc.mem_write(new_data, (state['new_value'] + '\0').encode('utf-16le'))
                         execute(0x1445d6ec0, query, new_data)
                         if (state['write_invokes'], state['read_invokes'], state['capture_getters']) != (int(target_index is not None), 0, int(target_index is not None)):
                             raise ValueError('Неверный write invoke / capture getter')
-                        expected_calls = ['query_string', 'free_query'] + (['assign_value'] if target_index is not None else [])
+                        expected_calls = ['query_string', 'free_query']
+                        if target_index is not None:
+                            if native_assignment:
+                                new_count = len((state['new_value'] + '\0').encode('utf-16le')) // 2
+                                if state['assigned_capacity'] != new_count: expected_calls.append('resize_value')
+                                expected_calls.append('copy_clone')
+                            else: expected_calls.append('assign_value')
+                        if state['native_assignments'] != int(native_assignment and target_index is not None):
+                            raise ValueError('Assignment body не исполнен native')
                     else:
                         encoded = (original.encode('utf-16le') + b'\0\0') if phase == 0 and original is not None else b''
                         if phase == 2: encoded = (state['new_value'] + '\0').encode('utf-16le')
@@ -181,15 +206,18 @@ def run(request):
                                 raise ValueError('Изменён посторонний destination / source clone')
                         else:
                             encoded = (state['new_value'] + '\0').encode('utf-16le')
-                            expected = struct.pack('<Qii', at + 0x100, len(encoded) // 2, len(encoded) // 2)
+                            expected = struct.pack('<Qii', at + 0x100, len(encoded) // 2,
+                                state['assigned_capacity'] if native_assignment else len(encoded) // 2)
                             if bytes(uc.mem_read(at - 8, 32)) != b'\xa5' * 8 + expected + b'\xa5' * 8:
                                 raise ValueError('Write fixture не сохранил value / guards')
                 cases.append(dict(original_fixture=original, external_capture=external, query=query_value,
                     target_index=target_index, reads=reads, native_read_invokes=2 * int(target_index is not None),
-                    native_write_invokes=int(target_index is not None), complete_consumer_calls=3))
-    return dict(source_sha256=getter.SHA, fragments=fragments, cases=cases,
+                    native_write_invokes=int(target_index is not None), complete_consumer_calls=3,
+                    native_assignment_calls=int(native_assignment and target_index is not None)))
+    return dict(source_sha256=getter.SHA, fragments=fragments, cases=cases, native_assignment=native_assignment,
         limits=['Native consumers/hash/lookup/compare/capture-address/read-clone and setter leaf execute together.',
-            'Query string, query free, clone allocation/byte copy and target string assignment are fixtures.',
+            ('Query string, query free, clone allocation/byte copy and value resize are fixtures; target assignment body is native.' if native_assignment else
+             'Query string, query free, clone allocation/byte copy and target string assignment are fixtures.'),
             'Bindings are synthetic initialized records matching previously proved layout, not registration-to-dispatch integration.',
             'Read consumer requires valid active callable for a found binding; invalid/inactive state not modeled.',
             'No caller/event source, config precedence, active settings, actual allocator or Brush binding proof.'])
@@ -198,9 +226,10 @@ def run(request):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--request', type=Path, required=True); parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--native-assignment', action='store_true')
     args = parser.parse_args()
     if args.output.exists(): parser.error('Прежний отчёт не перезаписывается')
-    result = run(json.loads(args.request.read_text('utf-8')))
+    result = run(json.loads(args.request.read_text('utf-8')), args.native_assignment)
     result['replay_sha256'] = getter.sha(Path(__file__).read_bytes())
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2), 'utf-8')
     print(json.dumps(dict(cases=len(result['cases']), consumer_calls=sum(c['complete_consumer_calls'] for c in result['cases']))))
