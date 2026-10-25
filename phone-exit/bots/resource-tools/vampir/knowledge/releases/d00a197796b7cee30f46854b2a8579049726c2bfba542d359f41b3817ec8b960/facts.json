@@ -7142,6 +7142,75 @@
       "question": "world-entry-bounded-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current map feed, ID305 movement/server result, full nested compatibility and durable interactive session."
+    },
+    {
+      "addresses": [
+        "0x1456c4740",
+        "0x1456c4890",
+        "0x1456c5180",
+        "0x1456c5230",
+        "0x1456c5390",
+        "0x1456c5550",
+        "0x1456c5630",
+        "0x1456d38b0"
+      ],
+      "checks": [],
+      "conclusion": "Получены восемь явных current внешних Ghidra exports Sight/NPC/stat/move; runtime семантика HP/MP, visibility и movement ещё не доказана.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-LIVE-STATE-11316.md",
+          "sha256": "dc2a5ff852cd70cea6359926dd7bdc180baacf2752cf05b3bf8ac82b8151e72d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-f4d4115c1822\\details.json",
+          "sha256": "351b23e89787415525d3fea68dd505089c9e6b22d53cf1d32c5c9b85a594225e"
+        }
+      ],
+      "id": "0483cdf06cfab8e976a739faf5d22a3d54f2bdb63c32263aecf8d1639f9667a9",
+      "limits": [
+        "Статический просмотр явных exports; не native replay, не полная игровая сессия.",
+        "Имена пакетов и форма archive вызовов не подтверждают смысл HP/MP или тип сущности."
+      ],
+      "method": "static",
+      "next_check": "Source-bound reader replay и handler → UI для текущего SHA; live после нового телефона.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Семантика и единицы vitals, полные visibility records, handler/application, исходящий move producer."
+    },
+    {
+      "addresses": [
+        "0x144aaced0",
+        "0x144aad280",
+        "0x1456c6690",
+        "0x145788180",
+        "0x14579e350",
+        "0x14579e590",
+        "0x14579e690",
+        "0x14579e6f0",
+        "0x1457a8030"
+      ],
+      "checks": [],
+      "conclusion": "Получены девять вложенных current Ghidra exports. StatChange reader вызывает slots +58/+50/+50 для полей +8/+10/+18; значение и единицы двух stat values не установлены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-LIVE-STATE-11316.md",
+          "sha256": "dc2a5ff852cd70cea6359926dd7bdc180baacf2752cf05b3bf8ac82b8151e72d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-fa0e43376ec9\\details.json",
+          "sha256": "3500e3b849cc519c3117b3e31122febc377a9cb95e11931563946c5189c3efa9"
+        }
+      ],
+      "id": "1bd4c1f95568ca63036efb9777484300dc3ec51c835d0fc6fc5086097dfae71d",
+      "limits": [
+        "Статический просмотр явных exports; не native replay, не полная игровая сессия.",
+        "Имена пакетов и форма archive вызовов не подтверждают смысл HP/MP или тип сущности."
+      ],
+      "method": "static",
+      "next_check": "Source-bound reader replay и handler → UI для текущего SHA; live после нового телефона.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Семантика и единицы vitals, полные visibility records, handler/application, исходящий move producer."
     }
   ],
   "schema": 1,

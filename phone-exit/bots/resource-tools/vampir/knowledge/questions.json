@@ -2,6 +2,31 @@
   "source_sha256": "c7552efd2125e7981945d3443cc1d70a41ac0a8a4cb42e7c77e0d40b4713dfc8",
   "questions": [
     {
+      "id": "live-world-state-11316",
+      "status": "open",
+      "question": "Как получать общую живую модель персонажа, vitals, уровня и ближайших NPC/игроков из текущей сессии для карты и существующего UI?",
+      "known": "Current Login/Select/world и 120 секунд heartbeat прошли. Найдены named table/getter candidates ID301/302 sight, ID324/325 NPC, ID321 level, ID322 stats и ID305/306/307 movement. UI HP/MP пока демонстрационные. Получены 8 внешних и 9 вложенных current Ghidra exports; семантика vitals/visibility не подтверждена. Реализованы registry, owner Stop и nullable UI adapter; две fixture-сессии изолированы. Живая попытка постоянной сессии: Login 58 BlockedIp, до мира не дошла.",
+      "unknown": "Тела событий, ключи/типы сущностей, единицы vitals/level, lifecycle visibility и источник исходящего движения. Имена пакетов не доказывают поля.",
+      "next_action": "Проверить current stat reader на native fixtures и проследить handler → значение / единицы → UI. После сообщения пользователя о новом телефоне повторить постоянную live-сессию; тот же BlockedIp не повторять. Затем visibility и исходящее движение.",
+      "decision_rule": "Не считать неизвестный field HP/MP/level по величине. Новые поля требуют current reader и семантическую связь; raw packets по умолчанию не сохранять.",
+      "do_not_repeat": "Не перестраивать UI или массовый EXE export ради state adapter. Использовать существующие extracts и explicit roots.",
+      "addresses": [
+        "0x1456c5390",
+        "0x1456c5550",
+        "0x1456c5180",
+        "0x1456c5230",
+        "0x1456c4740",
+        "0x1456c5630",
+        "0x1456d38b0",
+        "0x1456c4890"
+      ],
+      "evidence": [
+        "evidence/characters/HEADLESS-WORLD-ENTRY-11316.md",
+        "evidence/network/HEADLESS-CHARACTER-MOVE-EVENTS.md",
+        "evidence/characters/HEADLESS-LIVE-STATE-11316.md"
+      ]
+    },
+    {
       "id": "world-entry-bounded-11316",
       "status": "bounded_answer",
       "question": "Проходит ли existing-character headless world entry и 120 секунд heartbeat на 1.13.16 без объявления полного переноса nested readers?",

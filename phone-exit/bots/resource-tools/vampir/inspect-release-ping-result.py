@@ -10,7 +10,9 @@ HERE=Path(__file__).resolve().parent
 SHA='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 
 
-def run(packet='PktPingResult'):
+def run(packet='PktPingResult', *, source_sha=SHA):
+    if source_sha not in (SHA,'d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'):
+        raise ValueError('Explicit reviewed source snapshot required')
     if packet not in ('PktPingResult','PktCharacterPosition','PktCharacterMove','PktCharacterMoveResult','PktCharacterMoveNotify',
             'PktLoginResult','PktCharacterCreate','PktCharacterCreateResult',
             'PktQuestListRead','PktQuestListReadResult','PktQuestPanelSelect','PktQuestPanelSelectResult',
@@ -21,15 +23,18 @@ def run(packet='PktPingResult'):
             'PktQuestActCutSceneWorldEnter','PktQuestActCutSceneWorldEnterResult',
             'PktQuestComplete','PktQuestCompleteResult','PktQuestSelect','PktQuestSelectResult',
             'PktQuestDialogTeleport','PktQuestDialogTeleportResult','PktQuestTeleport','PktQuestTeleportResult',
-            'PktTutorialUpdate','PktTutorialUpdateResult','PktTutorialUpdateNotify'):
+            'PktTutorialUpdate','PktTutorialUpdateResult','PktTutorialUpdateNotify',
+            'PktSightEnterNotify','PktSightLeaveNotify','PktNpcCreateNotify',
+            'PktNpc','PktNpcCreateData','PktNpcParam','PktNpcMoveNotify','PktCharacterOther',
+            'PktCharacterLevelUpNotify','PktStat','PktStatChangeNotify','PktCharacterStopNotify'):
         raise ValueError('Explicit supported packet name required')
     spec=importlib.util.spec_from_file_location('ping_result_native',HERE/'build-native-entry-code.py')
     native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
     spec=importlib.util.spec_from_file_location('ping_result_audit',HERE/'audit-client-release.py')
     audit=importlib.util.module_from_spec(spec);spec.loader.exec_module(audit)
-    path=native.ROOT/'client-code-snapshots'/SHA/'ProjectRED-Win64-Shipping.exe'
+    path=native.ROOT/'client-code-snapshots'/source_sha/'ProjectRED-Win64-Shipping.exe'
     raw=path.read_bytes()
-    if hashlib.sha256(raw).hexdigest()!=SHA:raise ValueError('Current source differs')
+    if hashlib.sha256(raw).hexdigest()!=source_sha:raise ValueError('Current source differs')
     image=native.Image(raw)
     literals=[]
     for section in image.pe.sections:
@@ -81,7 +86,7 @@ def run(packet='PktPingResult'):
     packet_id=struct.unpack_from('<I',id_bytes,1)[0]
     if packet_id>65535 or (packet=='PktPingResult' and packet_id!=17):raise ValueError('Unexpected packet ID')
     ctors,ctor_fragments=references(table)
-    report=dict(source_sha256=SHA,tool_sha256=audit.sha256(Path(__file__)),
+    report=dict(source_sha256=source_sha,tool_sha256=audit.sha256(Path(__file__)),
         packet=packet,packet_id=packet_id,literal=hex(literals[0]),literal_bytes=literal_bytes.hex(),name_references=names,
         candidate_table=hex(table),table_bytes=raw[locations[0]-0x38:locations[0]+8].hex(),
         slots=[hex(a) for a in slots],id_getter_bytes=id_bytes.hex(),constructor_candidates=ctors,
@@ -97,5 +102,7 @@ def run(packet='PktPingResult'):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--packet',default='PktPingResult')
-    path,r=run(parser.parse_args().packet);print(json.dumps(dict(report=str(path),packet_id=r['packet_id'],table=r['candidate_table'],
+    parser.add_argument('--source-sha',default=SHA)
+    args=parser.parse_args()
+    path,r=run(args.packet,source_sha=args.source_sha);print(json.dumps(dict(report=str(path),packet_id=r['packet_id'],table=r['candidate_table'],
         slots=r['slots'],constructors=[v['owner'] for v in r['constructor_candidates']])))

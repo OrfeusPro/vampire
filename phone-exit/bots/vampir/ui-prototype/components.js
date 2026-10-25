@@ -39,12 +39,26 @@
       node.dataset.portraitMode = 'static-source-deferred-resources';
       for (const id of ['hp', 'mp']) view.elements[id].dataset.vital = id;
       function update(next, person) {
+        node.dataset.stateSource = 'demo';
+        for (const id of ['hp', 'mp']) delete view.elements[id].dataset.liveValueKnown;
         avatar.setAttribute('aria-label', 'Открыть персонажа ' + (person?.name || 'Демо')); avatar.title = person?.name || 'Персонаж';
         const values = {};
         for (const value of vitals(next)) { values[value.id] = { value: value.value, max: value.max }; values[value.id + '_text'] = String(value.value) + '/' + String(value.max); }
         view.update(values);
       }
-      update(state, character); return { node, update, dispose() { portraitView.dispose(); view.dispose(); } };
+      function updateLive(snapshot) {
+        if (!root.VampirLiveState) throw Error('Не загружен адаптер живого состояния.');
+        const live = root.VampirLiveState.playerStatus(snapshot), values = {};
+        node.dataset.stateSource = 'live';
+        avatar.setAttribute('aria-label', live.name || 'Персонаж'); avatar.title = live.name || 'Персонаж';
+        for (const vital of live.vitals) {
+          values[vital.id] = { value: vital.known ? vital.value : 0, max: vital.known ? vital.max : 1 };
+          values[vital.id + '_text'] = vital.known ? String(vital.value) + '/' + String(vital.max) : '—';
+          view.elements[vital.id].dataset.liveValueKnown = String(vital.known);
+        }
+        view.update(values);
+      }
+      update(state, character); return { node, update, updateLive, dispose() { portraitView.dispose(); view.dispose(); } };
     }
     function currency(key, value) {
       const node = el('span', undefined, 'currency'); node.setAttribute('aria-label', (key === 'gold' ? 'Золото: ' : 'Алмазы: ') + fmt(value));
@@ -59,7 +73,7 @@
       append(tools, heading, menu, close); append(node, status.node, balance, tools);
       let balanceKey;
       function update(next, person) { status.update(next, person); const key = next.gold + ':' + next.diamonds; if (key !== balanceKey) { balance.replaceChildren(wallets(next)); balanceKey = key; } }
-      update(state, character); return { node, update, dispose: status.dispose };
+      update(state, character); return { node, update, updateLive: status.updateLive, dispose: status.dispose };
     }
     function mainMenu({ onSelect }) {
       const definition = definitions.modules.main_menu;

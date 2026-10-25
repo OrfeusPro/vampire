@@ -15,7 +15,7 @@ from test_vampir_world_entry_flow import reserve_body, finish_body
 
 
 class GameLoginProbeTests(unittest.TestCase):
-    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=(), tutorial_observer=None, before_finish_packets=(), ack_initial_tutorial=False, expected_tutorial_ack=False, tutorial_ack_response=None, read_quest_list=False, quest_response=None, quest_observer=None, quest_wire_observer=None, expose_character_labels=False, expected_character_key=None):
+    def attempt(self, *, version_body=RESULT, login_body=None, wait_for_login=True, read_character_list=False, character_body=None, ping_clock=None, character_index=None, wait_for_select=False, select_body=None, select_fields=None, other_packets=(), read_world_start=False, world_reserve_body=None, world_start_body=None, read_world_finish=False, world_finish_body=None, observe_world_seconds=0, advance_clock=False, world_observer=None, after_finish_packets=(), tutorial_observer=None, before_finish_packets=(), ack_initial_tutorial=False, expected_tutorial_ack=False, tutorial_ack_response=None, read_quest_list=False, quest_response=None, quest_observer=None, quest_wire_observer=None, expose_character_labels=False, expected_character_key=None, session_control=None):
         client, server = socket.socketpair()
         server.settimeout(2)
         captures, errors = [], []
@@ -91,7 +91,7 @@ class GameLoginProbeTests(unittest.TestCase):
         with patch('vampir_core.game_login_probe.time.time_ns', side_effect=lambda:1792600142863000000+(6001000000 if clock_advanced[0] else 0)):
             result = exchange_game_login(client, VERSION, LOGIN, timeout=1,
                 read_character_list=read_character_list, expose_character_labels=expose_character_labels, expected_character_key=expected_character_key, ping_clock=ping_clock, character_index=character_index,
-                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, tutorial_observer=tutorial_observer, ack_initial_tutorial=ack_initial_tutorial, read_quest_list=read_quest_list, quest_observer=quest_observer, quest_wire_observer=quest_wire_observer, source_sha256=SOURCE_SHA256 if read_world_start else None)
+                read_world_start=read_world_start, read_world_finish=read_world_finish, observe_world_seconds=observe_world_seconds, world_observer=world_observer, tutorial_observer=tutorial_observer, ack_initial_tutorial=ack_initial_tutorial, read_quest_list=read_quest_list, quest_observer=quest_observer, quest_wire_observer=quest_wire_observer, source_sha256=SOURCE_SHA256 if read_world_start else None, session_control=session_control)
         worker.join(3)
         self.assertFalse(worker.is_alive())
         self.assertEqual(errors, [])
@@ -107,6 +107,37 @@ class GameLoginProbeTests(unittest.TestCase):
             read_character_list=True,character_body=list_body(),character_index=0,
             wait_for_select=True,select_body=bytes.fromhex(SELECTION_FIXTURE['select_result_hex']),
             read_world_start=True,**kwargs)
+
+    def test_persistent_session_keeps_pumping_until_explicit_stop(self):
+        import time
+        from vampir_core.live_session import LiveSession
+        session=LiveSession(bot_id='isolated-bot')
+        observed=[]
+        def stop_when_connected():
+            end=time.monotonic()+2
+            while time.monotonic()<end:
+                state=session.snapshot()
+                if state['state']=='connected':
+                    observed.append(state)
+                    session.request_stop()
+                    return
+                time.sleep(.01)
+            session.request_stop()
+        worker=threading.Thread(target=stop_when_connected)
+        worker.start()
+        try:
+            result,captures=self.world_attempt(world_reserve_body=reserve_body(),
+                world_start_body=struct.pack('<IIIIIBBQ',0,1,2,3,4,0,0,77),
+                read_world_finish=True,world_finish_body=finish_body(),
+                observe_world_seconds=300,ping_clock=LobbyPingClock(540),session_control=session)
+        finally:worker.join(3)
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(result['status'],'session_stopped')
+        self.assertEqual(len(observed),1)
+        self.assertIsNone(observed[0]['character']['hp'])
+        self.assertGreaterEqual(observed[0]['heartbeat']['received'],1)
+        self.assertEqual(session.snapshot()['state'],'disconnected')
+        self.assertIsNone(session.snapshot()['character'])
 
     def test_world_start_after_coalesced_selection_and_reserve_uses_same_sequence(self):
         result,captures=self.world_attempt(world_reserve_body=reserve_body(),

@@ -18,7 +18,11 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         observe_world_seconds=0,world_observer=None,tutorial_observer=None,
                         ack_initial_tutorial=False, read_quest_list=False, quest_observer=None,
                         quest_wire_observer=None, expose_character_labels=False, expected_character_key=None,
-                        creation_payload=None, creation_factory=None):
+                        creation_payload=None, creation_factory=None, session_control=None):
+    if session_control is not None:
+        from .live_session import LiveSession
+        if not isinstance(session_control,LiveSession) or not read_world_finish or observe_world_seconds!=300:
+            raise ValueError('Persistent session requires explicit world finish, heartbeat and session owner')
     creation_enabled = creation_payload is not None or creation_factory is not None
     if creation_factory is not None and (not callable(creation_factory) or creation_payload is not None):
         raise ValueError('Creation factory must be explicit and exclusive with payload')
@@ -66,6 +70,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     packet_counts = {}
     other_packet_count = 0
     packet_budget_exceeded = False
+    packet_window=time.monotonic()
+    packet_window_count=0
     target_tracker = None
     notified_revision = 0
     tutorial_pending=[]
@@ -79,10 +85,15 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     source_sha256=source_sha256)
         return target_tracker
     def observe(packet):
-        nonlocal other_packet_count, packet_budget_exceeded, tutorial_notifications
+        nonlocal other_packet_count, packet_budget_exceeded, tutorial_notifications, packet_window, packet_window_count
+        if session_control is not None:
+            now=time.monotonic()
+            if now-packet_window>=60:packet_window,packet_window_count=now,0
+            packet_window_count+=1
+            session_control.packet(packet.packet_id,packet.body)
         other_packet_count += 1
         if len(unknown) < 32: unknown.append(packet.packet_id)
-        if other_packet_count > 4096 or (packet.packet_id not in packet_counts and len(packet_counts) >= 128):
+        if (packet_window_count if session_control is not None else other_packet_count) > 4096 or (packet.packet_id not in packet_counts and len(packet_counts) >= 128):
             packet_budget_exceeded = True
             raise RuntimeError('Other packet budget exceeded')
         packet_counts[packet.packet_id] = packet_counts.get(packet.packet_id, 0) + 1
@@ -238,7 +249,10 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         flow = owner.login
         deadline = started + 2 * timeout
         budget = PumpBudget(32, 8, 8, 16384, 8)
+        byte_window=time.monotonic()
+        window_received=0
         while owner.active and time.monotonic() < deadline:
+            if session_control is not None and session_control.stop_requested:return result('session_stopped')
             try:
                 progress = owner.pump(now=time.monotonic(), budget=budget)
             except RuntimeError:
@@ -246,7 +260,11 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                 return result('other_packet_budget_exceeded' if packet_budget_exceeded else 'connection_processing_failed')
             sent += progress.bytes_sent
             received += progress.bytes_received
-            if received > 4194304: return result('receive_budget_exceeded')
+            if session_control is not None:
+                now=time.monotonic()
+                if now-byte_window>=60:byte_window,window_received=now,0
+                window_received+=progress.bytes_received
+            if (window_received if session_control is not None else received) > 4194304: return result('receive_budget_exceeded')
             if flow.state == 'login_response':
                 if not read_character_list: return result('login_result')
                 if not list_requested:
@@ -295,6 +313,9 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     world.tick(time.monotonic())
                     if world.state=='start_response':return result('world_start_result')
                     if world.state=='finish_response':
+                        if session_control is not None:
+                            session_control.publish(owner)
+                            deadline=math.inf
                         while tutorial_pending:
                             tutorial_observer(tutorial_pending.pop(0))
                         tracker=ensure_target_tracker()
@@ -302,7 +323,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                             world_observer(tracker.position)
                             notified_revision=tracker.revision
                         if not observe_world_seconds:return result('world_finish_result')
-                        if observation_until is None:
+                        if observation_until is None and session_control is None:
                             observation_until=time.monotonic()+observe_world_seconds
                             deadline=observation_until
                         if ack_initial_tutorial:
@@ -336,6 +357,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
         return result('connection_closed' if not owner.active else
             'world_observation_complete' if observation_until is not None and time.monotonic()>=observation_until else 'timeout')
     finally:
+        if session_control is not None:session_control.close(owner.error)
         owner.close()
         if target_tracker is not None:target_tracker.close()
         tutorial_pending.clear()
