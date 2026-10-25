@@ -299,3 +299,33 @@ verifier прошёл, все четыре стадии анализа повт�
 ScrollBoxSlot 8, UniformGridSlot 8, NamedSlot 44). Это не успешный полный source
 audit. Согласование 44 NamedSlot с дополнительным слоем IR — UI-27.09.02.04.03;
 остальные кандидаты и inherited properties остаются в UI-27.03.
+
+### Согласование учёта контейнеров
+
+Source audit теперь отдельно учитывает `classified_source_containers` и статус
+`container_candidate_classified`. Переклассификация требует воспроизведённой IR,
+исходного export, SHA, импортированного класса и соответствующего узла. Исходный
+каталог не переписывается. Несколько provenance одного export учитываются один
+раз; неподтверждённый NamedSlot остаётся unaccounted.
+
+В полном проходе 2376 вариантов классифицированы 44 NamedSlot. Остались 920
+неучтённых кандидатов: PanelSlot 432, GridSlot 472, ScrollBoxSlot 8,
+UniformGridSlot 8. Ошибок воспроизведения нет; 2222 варианта прошли source checks,
+154 сохраняют неполный slot coverage. Это не полный успешный аудит каталога.
+Поля `inherited_properties_decoded`, `geometry_verified` и
+`implementation_verified` классифицированных контейнеров остаются false;
+unknowns содержат отдельную проверку inherited properties / geometry.
+
+71 Python test включает отказ на несовпадающий сырой export, отсутствие / чужого
+владельца доказательства, сохранение других пропущенных слотов и подсчёт
+одинаковых provenance без дублирования. Восстановление NamedSlot geometry
+остаётся в UI-27.09.02.04.02.
+
+Build-ready и verifier прошли для snapshot
+`bfdfa52ea31173e18b95c4e6c8836d23c9670cbf295d94488f6202dd7db0b774`.
+Все 2376 layout schemas побайтно совпадают с прежним набором. Полный проход
+занял 263,412 с; повтор audit-only — 18,606 с, все четыре стадии reused=true.
+Readiness одинаков: `05e68051cba366daed8f350dc5f34db36853b3fe92e576fc2caa9b90c5d3096c`.
+Отчёты pipeline: `run-1792950120995650100.json` и `run-1792950190208325600.json`.
+Сравнение baseline не нашло изменений ресурсов / правил, очередь UI-W пуста;
+прежние незакрытые критерии этим не закрываются. Исходный каталог сохранён.

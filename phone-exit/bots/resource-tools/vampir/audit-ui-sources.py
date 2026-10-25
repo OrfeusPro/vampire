@@ -70,7 +70,6 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
         p = slot['provenance']
         if p['file'] not in {variant['file'],source_file}:
             raise ValueError('Slot provenance differs from package bytes')
-    unaccounted = [row['export'] for row in accounting if row['status']=='unaccounted']
     schema = ui_layout_schema.compile_schema(record, variant)
     if source_roots is not None:
         schema = ui_source_roots.compile_schema(record, variant, source_roots)
@@ -79,6 +78,22 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
                 raise ValueError('Source container differs from raw exports')
     if schema != published_schema:
         raise ValueError('Local schema reproduction differs')
+    # The original catalog remains unchanged. Count separately only containers
+    # whose source import / owner / payload were reproduced in the published IR.
+    classified = {}
+    for row in schema.get('source_container_candidates', []):
+        entry = row['export']
+        node = schema['nodes'].get(str(entry['index']))
+        if (entry['type'] != 'NamedSlot' or row['imported_class'] != '/Script/UMG.NamedSlot'
+                or node is None or node['kind'] != 'NamedSlot' or node['source']['sha256'] != entry['sha256']):
+            raise ValueError('Container classification differs from projected IR')
+        classified[entry['index']] = dict(export=entry['index'], kind=entry['type'], sha256=entry['sha256'],
+            status='container_candidate_classified', inherited_properties_decoded=False,
+            geometry_verified=False, implementation_verified=False)
+    for row in accounting:
+        if row['status'] == 'unaccounted' and row['export'] in classified:
+            row['status'] = 'container_candidate_classified'
+    unaccounted = [row['export'] for row in accounting if row['status']=='unaccounted']
     expected = []
     for c in variant['controls']:
         if (c['type'] or '').endswith('_C'):
@@ -96,6 +111,8 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
         unknowns.append('excluded_slots_require_decoder_or_inheritance_review')
     if unaccounted:
         unknowns.append('unaccounted_slot_candidates')
+    if classified:
+        unknowns.append('classified_containers_require_inherited_property_and_geometry_review')
     if schema['issues']:
         unknowns.append('local_schema_issues')
     if any(not edge['candidates'] for edge in expected):
@@ -111,7 +128,9 @@ def audit_variant(root, record, variant, published_schema, classes, dependencies
         implementation_verified=False, runtime_root=None, root_candidates=schema['root_candidates'],
         export_scope='whole_package_not_selected_runtime_root',package_blueprint_roots=roots,
         counts=dict(controls=len(variant['controls']), decoded_slots=len(variant['slots']),
-            excluded_slots=len(variant['excluded_slots']), unaccounted_slots=len(unaccounted)),
+            excluded_slots=len(variant['excluded_slots']), unaccounted_slots=len(unaccounted),
+            classified_source_containers=len(classified)),
+        classified_source_containers=list(classified.values()),
         unaccounted_slot_exports=unaccounted,
         unaccounted_slot_candidates=[{k: exports[i][k] for k in ('index', 'name', 'type', 'sha256', 'offset', 'size') if k in exports[i]} for i in unaccounted],
         schema_issues=schema['issues'],
