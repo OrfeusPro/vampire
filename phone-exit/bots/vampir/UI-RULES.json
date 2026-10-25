@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "rules": [
+    {
+      "id": "source-outer-ownership",
+      "version": 1,
+      "provider": "ui_outer_scope.py",
+      "scope": "analysis",
+      "properties": ["source_root", "Outer", "quarantine"],
+      "dependencies": [],
+      "checks": ["source_hashes_and_exports", "source_outer_ownership"],
+      "renderer_allowed": false
+    },
+    {
+      "id": "static-component-consumers",
+      "version": 1,
+      "provider": "ui_component_consumers.py",
+      "scope": "analysis",
+      "properties": ["class_candidates", "reverse_consumers"],
+      "dependencies": ["source-outer-ownership"],
+      "checks": ["source_hashes_and_exports", "source_outer_ownership", "static_consumer_indices"],
+      "renderer_allowed": false
+    }
+  ],
+  "limits": ["Подтверждение структуры не разрешает автоматически применять runtime геометрию, оформление или игровые события."]
+}

@@ -163,7 +163,37 @@ def component_sources(root, definitions, records, bindings):
     return evidence
 
 
-def generation_policy(gate, preview_during_audit=False):
+def generation_policy(gate, preview_during_audit=False, ready_report=None, root=None):
+    if ready_report is not None:
+        if gate.get('phase') != 'incremental_verified_rules' or gate.get('incremental_allowed') is not True:
+            raise ValueError('Поэтапная генерация не разрешена')
+        import importlib.util
+        registry = read(SOURCE.parent / 'UI-RULES.json')
+        ready = read(ready_report)
+        if ready.get('schema') != 1 or ready.get('renderer_rules') != []:
+            raise ValueError('Неподдержанный допуск renderer rules')
+        if ready['rule_registry_sha256'] != sha(SOURCE.parent / 'UI-RULES.json'):
+            raise ValueError('Изменился реестр правил')
+        expected = [{**r, 'checks_passed': True} for r in registry['rules']]
+        if ready['rules'] != expected or any(r['renderer_allowed'] for r in registry['rules']):
+            raise ValueError('Нет проверенного применения правила renderer')
+        for rule in registry['rules']:
+            if ready['providers'].get(rule['provider']) != sha(HERE / rule['provider']):
+                raise ValueError('Изменился provider правила')
+        spec = importlib.util.spec_from_file_location('ready_consumer_verification', HERE / 'scan-ui-component-consumers.py')
+        verifier = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(verifier)
+        layer = Path(ready['component_layer'])
+        if sha(layer / 'index.json') != ready['component_index_sha256']:
+            raise ValueError('Изменился индекс потребителей')
+        result = verifier.build(root, Path(ready['source_scopes']), layer.parent)
+        if result['dataset_id'] != ready['component_dataset'] or Path(result['output']).resolve() != layer.resolve():
+            raise ValueError('Изменился проверенный набор компонентов')
+        return dict(mode='incremental_verified_rules', phase=gate['phase'],
+                    gate_generation_allowed=False, readiness_sha256=sha(ready_report),
+                    confirmed_analysis_rules=[r['id'] for r in registry['rules']],
+                    applied_renderer_rules=[], legacy_demo_preserved=True,
+                    limits=ready['unknowns'])
     blocked = gate.get('generation_allowed') is not True or gate.get('phase') != 'generation'
     if blocked and not preview_during_audit:
         raise ValueError('Генерация внешнего вида отложена до аудита характеристик UI-23. Сначала запустите scan-ui-properties.py; опубликованный snapshot сохранён.')
@@ -171,8 +201,8 @@ def generation_policy(gate, preview_during_audit=False):
                 phase=gate.get('phase'), gate_generation_allowed=gate.get('generation_allowed') is True)
 
 
-def build(root, baseline=None, *, preview_during_audit=False):
-    policy = generation_policy(read(SOURCE.parent / 'UI-GENERATION-GATE.json'), preview_during_audit)
+def build(root, baseline=None, *, preview_during_audit=False, ready_report=None):
+    policy = generation_policy(read(SOURCE.parent / 'UI-GENERATION-GATE.json'), preview_during_audit, ready_report, root)
     index_path = root / 'ui-catalog/index.json'
     index = read(index_path)
     image_path = root / 'archive-image-latest.json'
@@ -461,7 +491,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(os.environ.get('PHONEEXIT_VAMPIR_RESOURCES', 'F:/PhoneExit Resources/Vampir')))
     parser.add_argument('--baseline', type=Path)
+    parser.add_argument('--ready-report', type=Path, help='Проверенный отчёт поэтапного допуска единого конвейера.')
     parser.add_argument('--preview-during-audit', action='store_true',
                         help='Явная пересборка текущего демоварианта по запросу пользователя; фазу аудита не меняет.')
     args = parser.parse_args()
-    build(args.root, args.baseline, preview_during_audit=args.preview_during_audit)
+    build(args.root, args.baseline, preview_during_audit=args.preview_during_audit, ready_report=args.ready_report)

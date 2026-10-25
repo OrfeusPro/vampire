@@ -752,6 +752,17 @@
     let query = '', kind = 'Все', scope = 'all';
     const dialog = modal('Каталог проверки', body => {
       append(body, el('p', manifest.registry_count + ' записей каталога: ' + manifest.named_resource_count + ' ресурсных путей и ' + manifest.unresolved_root_count + ' классов без установленного пути; ' + manifest.variant_count + ' вариантов. Структура не подтверждает игровую логику.'), button('Версии и обновления', openVersions), button('Общие элементы', openSharedElements));
+      if (manifest.generation_policy?.mode === 'incremental_verified_rules') {
+        const policy = manifest.generation_policy;
+        body.append(el('p', 'Поэтапная сборка. Подтверждено правил анализа: ' + policy.confirmed_analysis_rules.length + '; новых правил отображения применено: ' + policy.applied_renderer_rules.length + '.'));
+        const descriptions = {
+          'Active resource variants and runtime roots': 'активные варианты ресурсов и корни видимых окон',
+          'Inherited defaults and dynamic bindings': 'наследуемые значения и динамические привязки',
+          'Brush/style/state contracts and event handlers': 'оформление, состояния и обработчики событий',
+          'Per-consumer runtime layout and DPI': 'размещение каждого подключения и DPI'
+        };
+        (policy.limits || []).forEach(text => body.append(el('p', 'Остаётся проверить: ' + (descriptions[text] || text))));
+      }
       const search = input('search', 'Имя окна или путь'); search.value = query; search.setAttribute('aria-label', 'Поиск ресурса');
       const list = el('div', undefined, 'registry-list'), count = el('p');
       const filter = select(['Все', 'Попапы', 'Компоненты и окна'], kind, v => { kind = v; fill(); });
