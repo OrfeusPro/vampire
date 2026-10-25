@@ -6625,6 +6625,47 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "UGridSlot class metadata association, superclass field order, constructor defaults, Nudge struct and current cooked compatibility remain open."
+    },
+    {
+      "addresses": [
+        "0x143579900",
+        "0x14357b7a0",
+        "0x1435b51e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "da3124d47c576c1b55c39f1525ffc23d330fe5a01d4b376ab4e9c45dee64fb86",
+          "id": "ui-nktileview-refresh-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af\\manifest.json",
+          "sha256": "f8a7506f61f36178419367fa3b8cbb8e3cdf788a9ab59dd233d69d48a25127af",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a560f7ee3aca8405af01708a4808e632114666cdc03f09c5c0c0d96fbfc91ee1",
+          "id": "ui-installed-config-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432\\manifest.json",
+          "sha256": "7161316beddeb1af3fa588bb92131263f8b3c02501ecd744cde5a005dffa3432",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Static GridSlot getter literal, metadata block and nine-property array associated; leaf pointer reaches named PanelSlot getter. Decoder optionally enforces this current-SHA proof; 472 historical candidates read without residue. Defaults and cooked compatibility remain unknown.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-GRID-CLASS-LINKS-11316.md",
+          "sha256": "dfe0d547c22d864661be3427c8df2978008688c267acf78aada5a0deed1150cd"
+        }
+      ],
+      "id": "80b84037f49b35bb38161e37d071e813eac2d51efe97d715f6da60295d2ef714",
+      "limits": [
+        "Static metadata block ties exact GridSlot getter to descriptor array; helper not executed.",
+        "PanelSlot thunk pointer passed by getter; generic registration helper argument semantics not independently proven.",
+        "Constructor defaults, CDO/archetype copying, Nudge type and cooked compatibility remain unresolved."
+      ],
+      "method": "static",
+      "next_check": "Confirm primary initialization and PanelSlot field/default provenance before applying omitted properties in renderer.",
+      "question": "ui-nktileview-property-schema",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Registration helper semantics, complete superclass and construction/CDO defaults, Nudge struct, historical cooked compatibility and runtime geometry."
     }
   ],
   "schema": 1,

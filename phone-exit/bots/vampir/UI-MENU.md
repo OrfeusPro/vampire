@@ -92,3 +92,14 @@ UI-25.07 закрывает отдельный candidate parse, а UI-25.06 / UI
 в процессе до metadata / defaults / importer / renderer. Шесть локальных тестов
 двух новых инструментов прошли; workflow finish сохранил static факт
 8d2194a9e0ad47784dcd161caed907c5089f34506892fe40bf9b126890f50316.
+
+
+## Статическая привязка класса
+
+[Проверена цепочка getter / metadata / property array](../resource-tools/vampir/knowledge/evidence/interface/UI-GRID-CLASS-LINKS-11316.md)
+в текущем EXE. У отдельного декодера --class-request связывает извлечённую
+таблицу с этим подтверждением по полному SHA; новый проход — 472 слота без
+ошибок, прежние отчёты сохранены. Есть pointer chain к getter PanelSlot.
+Это закрывает UI-25.09, но не весь UI-25.08: семантика helper, CDO / archetype
+и значения пропущенных Row / Column / Span остаются неизвестны. Внешний вид
+меню в этом проходе не менялся, UI-M-04 остаётся в процессе.

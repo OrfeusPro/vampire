@@ -48,10 +48,18 @@ def decode(raw):
                 omitted_properties=[name for name in fields if name not in result])
 
 
-def run(root,exe):
+def run(root,exe,class_request=None):
     data=exe.read_bytes()
     if sha(data)!=SOURCE_SHA:raise ValueError('Unreviewed executable SHA')
     schema=props.extract(data,FIELDS,FLAGS,anchor_index=4)
+    class_links=None
+    if class_request is not None:
+        checker=load('grid_class_links','inspect-grid-class-links.py')
+        request=json.loads(class_request.read_bytes())
+        if request['source_sha256']!=sha(data):raise ValueError('Class proof belongs to another EXE SHA')
+        class_links=checker.inspect(request)
+        if class_links['metadata']['property_array']!=hex(props.native.PE(data).address(schema['array_offset'])):
+            raise ValueError('Class metadata points to a different property array')
     pe=props.native.PE(data)
     if pe.address(schema['array_offset'])!=0x148fdbbf0:raise ValueError('Descriptor array moved; review required')
     records=[];failed=[];cache={}
@@ -79,8 +87,9 @@ def run(root,exe):
     return dict(schema=1,kind='grid_slot_candidate_decode',native_source=dict(path=str(exe),sha256=SOURCE_SHA),
                 descriptor_schema=schema,array_address='0x148fdbbf0',catalog_index_sha256=sha(index_bytes),
                 tools={p:sha((HERE/p).read_bytes()) for p in ['decode-grid-slots.py','extract-ui-properties.py','decode-canvas-slots.py','inspect-ui.py']},
-                records=records,failures=failed,
-                limits=['Descriptor names/types/order verified in current EXE; UGridSlot class association and superclass schema not independently proven.',
+                records=records,failures=failed,class_links=class_links,
+                limits=[('Static GridSlot metadata association checked; superclass schema/defaults unresolved.' if class_links else
+                         'Descriptor names/types/order verified in current EXE; UGridSlot class association and superclass schema not independently proven.'),
                         'Cooked packages are historical; compatibility with current EXE is not established.',
                         'Parent/Content indices 9/10 are observed candidates checked against exact local exports, not proven inheritance metadata.',
                         'Omissions remain unknown, not Row=0 or Span=1. No row/column/runtime geometry applied.'])
@@ -91,6 +100,7 @@ if __name__=='__main__':
     parser.add_argument('--root',type=Path,default=Path('F:/PhoneExit Resources/Vampir'))
     parser.add_argument('--exe',type=Path,default=Path('C:/Program Files/Netmarble/Netmarble Game/VAMPIR/ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe'))
     parser.add_argument('--output',type=Path,required=True)
-    args=parser.parse_args();result=run(args.root,args.exe)
+    parser.add_argument('--class-request',type=Path,help='Explicit current request for the checked class getter/metadata roots')
+    args=parser.parse_args();result=run(args.root,args.exe,args.class_request)
     with args.output.open('x',encoding='utf8') as f:json.dump(result,f,ensure_ascii=False,indent=2)
     print(json.dumps(dict(output=str(args.output),decoded=len(result['records']),failures=len(result['failures']))))
