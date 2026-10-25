@@ -44,6 +44,19 @@ Builder повторно воспроизводит проверку исход�
 
 ## Следующий проход
 
+Подготовлен отдельный [source root provider](../resource-tools/vampir/knowledge/evidence/interface/UI-WIDGET-ROOTS-IMAGE-11316.md):
+2375 explicit local WidgetTree roots / 1 omission, current WidgetTree / Image metadata.
+Он пока вызывается отдельно, не повышает runtime flags и не разрешает новые renderer rules.
+Подключение к IR и конвейеру — UI-27.09.02.02.
+
+Повтор отдельного прохода на проверенном наборе:
+
+```powershell
+$pipelineRun = Get-Content -LiteralPath 'F:/PhoneExit Resources/Vampir/ui-property-scans/pipeline/run-1792941988933988600.json' -Raw | ConvertFrom-Json
+$sourceScopes = (Get-Content -LiteralPath $pipelineRun.readiness -Raw | ConvertFrom-Json).source_scopes
+python -X utf8 phone-exit/bots/resource-tools/vampir/scan-ui-widget-roots.py --scopes $sourceScopes --request 'F:/PhoneExit Resources/Vampir/knowledge/requests/7dc3d7b0a03afafed6f82c362776d8ecda440e1eeaf3e564a8303bd49299ba47/manifest.json'
+```
+
 Подтвердить renderer правила приоритетных компонентов и их зависимости,
 добавить применение и проверку всех подключений; связать изменения правил
 с очередью UI-W. После визуальных проверок записать скорость прохождения

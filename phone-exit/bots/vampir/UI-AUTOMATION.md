@@ -7,6 +7,9 @@
 Конвейер поддерживает [очередь изменений по baseline](UI-PIPELINE.md#очередь-изменений-по-baseline):
 версии / provider SHA правил, зависимые правила и прежние / новые потребители;
 очередь критериев не заменяет статусы завершения UI-W.
+Дополнительный [сканер source WidgetTree roots](../resource-tools/vampir/knowledge/evidence/interface/UI-WIDGET-ROOTS-IMAGE-11316.md)
+повторно читает все пакеты и проверяет current metadata WidgetTree / Image.
+Результат — исходные root ссылки и объявления Image; runtime visibility и Brush payload ещё открыты.
 
 Повторяемый разбор переносится в скрипты: извлечение → проверка источников →
 свойства / связи → применение подтверждённых правил → сборка → проверки.

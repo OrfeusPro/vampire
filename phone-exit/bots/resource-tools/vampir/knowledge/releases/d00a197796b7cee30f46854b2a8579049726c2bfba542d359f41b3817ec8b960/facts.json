@@ -6897,6 +6897,31 @@
       "question": "ui-nktileview-property-schema",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Defaults/archetypes/inheritance, NamedSlot inherited payload, multi-root branch selection and runtime geometry/behavior."
+    },
+    {
+      "addresses": [
+        "0x14357fc60",
+        "0x1435f6360"
+      ],
+      "checks": [],
+      "conclusion": "Текущие getter literals Image / WidgetTree и /Script/UMG связаны с metadata и точными property arrays; RootWidget index0 прочитан в 2376 source WidgetTree: 2375 explicit local root candidates, один omission. Image Brush descriptor подтверждён, структура Brush не декодирована.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-WIDGET-ROOTS-IMAGE-11316.md",
+          "sha256": "39291c533f3fe2a5ac2d1c52884d72df887cd320bf7812db3e74e907be64809e"
+        }
+      ],
+      "id": "0c6f258c3d0597c4bc9d9efb8b3a53e48048ce2f3f73608f655fd6f90b56b2c6",
+      "limits": [
+        "Native не исполнялся; generic registration helper не проверен.",
+        "RootWidget source containment не доказывает runtime visibility или текущую cooked compatibility.",
+        "Ненулевые NamedSlotBindings и остальные WidgetTree fields не читаются этим provider."
+      ],
+      "method": "static",
+      "next_check": "Подтвердить Brush struct getter из descriptor и схему SlateBrush; отдельно подключить source roots к IR без выбора runtime ветки.",
+      "question": "ui-shared-shortcut-properties-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "SlateBrush struct schema, inherited defaults, runtime selection/visibility/DPI, font and dynamic Brush bindings."
     }
   ],
   "schema": 1,
