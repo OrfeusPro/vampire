@@ -1,10 +1,30 @@
 """Bounded candidate value reader. The caller supplies the source-bound ordinal schema."""
 import importlib.util
+import hashlib
 from pathlib import Path
 
 spec = importlib.util.spec_from_file_location('named_slot_header_reader', Path(__file__).with_name('decode-canvas-slots.py'))
 headers = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(headers)
+
+
+def panel_child_relation(raw, slot, owner, exports, decoded):
+    """Check both ends of an explicit source relation; never infer allocation."""
+    if slot['type'] != 'PanelSlot' or slot['outer'] != owner['index']:
+        raise ValueError('Child PanelSlot is outside NamedSlot owner')
+    if len(raw) != slot['size'] or hashlib.sha256(raw).hexdigest() != slot['sha256']:
+        raise ValueError('Child PanelSlot payload differs')
+    fields = decoded['explicit_properties']
+    if fields.get('Parent') != owner['index'] or 'Content' not in fields:
+        raise ValueError('Child PanelSlot Parent does not match NamedSlot')
+    content = exports.get(fields['Content'])
+    if (content is None or content['index'] == owner['index'] or content['type'].endswith('Slot')
+            or content['type'] in ('Function', 'WidgetTree', 'WidgetBlueprintGeneratedClass')
+            or content['outer'] != owner['outer']):
+        raise ValueError('Child content is outside NamedSlot WidgetTree')
+    return dict(parent_export=fields['Parent'], content_export=fields['Content'],
+        candidate_explicit_properties=fields.copy(), content=content.copy(),
+        geometry_verified=False, defaults_applied=False, inherited_serialization_verified=False)
 
 
 def decode(raw, schema):

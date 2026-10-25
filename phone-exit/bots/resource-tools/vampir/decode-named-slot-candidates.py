@@ -15,6 +15,9 @@ import ui_pipeline as cache
 spec = importlib.util.spec_from_file_location('named_native_basic', HERE / 'decode-basic-slot-candidates.py')
 basic = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(basic)
+spec = importlib.util.spec_from_file_location('named_slot_references', HERE / 'decode-package-references.py')
+references = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(references)
 
 SPECS = {
     'NamedSlot': (0x143579140, 0x148fd58e0, 0x143579140, 0, 0x14356aad0),
@@ -22,6 +25,7 @@ SPECS = {
     'PanelWidget': (0x1435b5290, 0x148fe4270, 0x14356ab10, 0x148fe4108, 0x14356ab30),
     'Widget': (0x1435b5340, 0x148ff1590, 0x14356ab30, 0x148ff0c00, 0x14357d570),
     'Visual': (0x14357d570, 0x148fed900, 0x14357d570, 0, 0x141621180),
+    'PanelSlot': (0x1435b51e0, 0x148fddad0, 0x14356ab00, 0x148fdd840, None),
 }
 
 
@@ -45,11 +49,11 @@ def native_schema(request):
         fragment = next(f for f in fragments if f['instructions'][0]['address'] == getter)
         instructions = fragment['instructions']
         refs = {r for i in instructions for r in i['rip_references']}
-        if parent not in refs or sum(i['direct_target'] == 0x1416ab8d0 for i in instructions) != 1:
+        if (parent is not None and parent not in refs) or sum(i['direct_target'] == 0x1416ab8d0 for i in instructions) != 1:
             raise ValueError('Registration / parent callback flow differs')
         if [i['bytes'] for i in instructions[:2]] != ['4c8bdc', '4883ec78']:
             raise ValueError('Getter stack frame differs')
-        if not any(parent in i['rip_references'] and any(j['bytes'] == '498943e8' for j in instructions[n+1:n+4])
+        if parent is not None and not any(parent in i['rip_references'] and any(j['bytes'] == '498943e8' for j in instructions[n+1:n+4])
                    for n, i in enumerate(instructions)):
             raise ValueError('Parent callback is not stored in argument 13')
         for literal in (name, '/Script/UMG'):
@@ -74,7 +78,7 @@ def native_schema(request):
             if code[:1] != b'\xe9' or class_pointer + 5 + struct.unpack_from('<i', code, 1)[0] != getter:
                 raise ValueError('Metadata getter thunk differs')
             thunk = dict(address=hex(class_pointer), bytes=code.hex(), target=hex(getter))
-        fields = [('Slots', 82), ('Slots', 22)] if name == 'PanelWidget' else (
+        fields = [('Parent', 82), ('Content', 82)] if name == 'PanelSlot' else [('Slots', 82), ('Slots', 22)] if name == 'PanelWidget' else (
             list(zip(basic.props.WIDGET_FIELDS, basic.props.WIDGET_FLAGS)) if name == 'Widget' else [])
         rows = []
         for index, (field_name, flag) in enumerate(fields):
@@ -85,7 +89,7 @@ def native_schema(request):
                 raise ValueError('Named property descriptor differs')
             rows.append(dict(name=field_name, flag=flag, descriptor=hex(pointer), bytes=raw[pos:pos + 64].hex()))
         proof[name] = dict(getter=hex(getter), metadata=hex(metadata), metadata_hex=block.hex(),
-            parent_callback=hex(parent), thunk=thunk, property_array=hex(array), descriptors=rows, fragment=fragment)
+            parent_callback=hex(parent) if parent is not None else None, thunk=thunk, property_array=hex(array), descriptors=rows, fragment=fragment)
     schema = [dict(name='Slots', reader='object_array', source='PanelWidget', descriptor_index=1)]
     nested = {9, 17, 19, 21, 26}
     for index, row in enumerate(proof['Widget']['descriptors']):
@@ -126,8 +130,9 @@ def build(root, roots_path, roots_sha, request, output):
                 raise ValueError('Source catalog differs')
             inputs[str(catalog_path)] = cache.sha(catalog_path)
             packages[source] = (asset, body, {e['index']: e for e in parsed['exports']},
-                {s['provenance']['slot_export']: s['decoded'] for s in catalog['decoded_slots']})
-        asset, body, exports, slots = packages[source]
+                {s['provenance']['slot_export']: s['decoded'] for s in catalog['decoded_slots']},
+                references.references(asset, parsed)['references'])
+        asset, body, exports, slots, refs = packages[source]
         entry = exports[candidate['export']['index']]
         if entry != candidate['export'] or entry['type'] != 'NamedSlot':
             raise ValueError('NamedSlot export differs')
@@ -148,10 +153,22 @@ def build(root, roots_path, roots_sha, request, output):
                     if item is None or not item['type'].endswith('Slot') or item['type'] == 'NamedSlot':
                         raise ValueError('Candidate reference is not a local slot export')
                     relation = slots.get(target)
+                    candidate_relation = None
+                    if relation is None and item['type'] == 'PanelSlot' and kind == 'Slots':
+                        if refs[refs[target]['class_index']]['path'] != '/Script/UMG.PanelSlot':
+                            raise ValueError('Child PanelSlot import differs')
+                        start = item['offset'] - len(asset)
+                        payload = body[start:start + item['size']]
+                        candidate_relation = ui_named_slot.panel_child_relation(payload, item, entry, exports,
+                            basic.decode(payload, 'PanelSlot'))
                     if relation is not None and relation['content_export' if kind == 'Slot' else 'parent_export'] != entry['index']:
                         raise ValueError('Candidate NamedSlot link contradicts decoded source relation')
                     links.append(dict(field=kind, target=item, decoded_source_relation=relation,
-                        status='source_decoded_relation' if relation is not None else 'source_slot_type_candidate_only'))
+                        candidate_source_relation=candidate_relation,
+                        status='source_decoded_relation' if relation is not None else
+                               'candidate_panel_slot_relation' if candidate_relation is not None else 'source_slot_type_candidate_only'))
+                    if candidate_relation is not None:
+                        totals.update(candidate_child_relations=1)
             row.update(status='candidate_parse_complete', decoded=value, candidate_links=links)
             totals.update(parsed=1, explicit_fields=len(properties), links=len(links))
         except (ValueError, KeyError) as error:
@@ -162,7 +179,7 @@ def build(root, roots_path, roots_sha, request, output):
         records=records, statistics=dict(totals, instances=len(records)), renderer_allowed=False,
         tools={p.name: cache.sha(p) for p in [Path(__file__), HERE / 'ui_named_slot.py', HERE / 'decode-basic-slot-candidates.py',
             HERE / 'decode-canvas-slots.py', HERE / 'extract-ui-properties.py', HERE / 'extract-native-enums.py',
-            HERE / 'build-native-entry-code.py', HERE / 'inspect-ui.py']})
+            HERE / 'build-native-entry-code.py', HERE / 'inspect-ui.py', HERE / 'decode-package-references.py']})
     identity = basic.sha(cache.encoded(result))
     folder = output / identity
     folder.mkdir(parents=True, exist_ok=True)

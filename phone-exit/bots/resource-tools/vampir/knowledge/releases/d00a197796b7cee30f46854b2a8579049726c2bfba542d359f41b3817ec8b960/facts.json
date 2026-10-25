@@ -7078,6 +7078,34 @@
       "question": "ui-named-slot-inheritance-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Inherited serializer order / CDO archetype defaults, пять child slot relations, active variant / runtime geometry."
+    },
+    {
+      "addresses": [
+        "0x143579140",
+        "0x14357d570",
+        "0x1435b5080",
+        "0x1435b51e0",
+        "0x1435b5290",
+        "0x1435b5340"
+      ],
+      "checks": [],
+      "conclusion": "Пять дочерних Slots ссылок NamedSlot согласованы с локальными PanelSlot Parent/Content: current own descriptors и импорт проверены, сырые export bytes/SHA/outer и обе стороны связи совпадают. Новые отношения сохранены как candidate_panel_slot_relation отдельно от 43 прежних source_decoded_relation.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\interface\\UI-NAMED-SLOT-CHILD-LINKS-11316.md",
+          "sha256": "39abdd35832aaf3709fcd330aad8218a1fce50946709bb6457d785ecdcc7d3d7"
+        }
+      ],
+      "id": "3fc0d2cdf118c9cc1c9ff29c81005f6ed3052074ba31e5f022efba45bdf72f6d",
+      "limits": [
+        "NamedSlot inherited ordinal order остаётся candidate; native serializer и property construction не исполнялись.",
+        "Defaults, desired sizes, CDO/archetype и renderer geometry не подтверждены; renderer_allowed=false."
+      ],
+      "method": "static",
+      "next_check": "Проверить native inherited property construction и serializer order перед допуском применения полей, затем CDO/archetype и renderer sizes.",
+      "question": "ui-named-slot-inheritance-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native inherited serializer/property construction order; CDO/archetype defaults, active variant and desired sizes."
     }
   ],
   "schema": 1,

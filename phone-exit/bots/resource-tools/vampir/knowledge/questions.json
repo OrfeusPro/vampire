@@ -5,13 +5,13 @@
       "id": "ui-named-slot-inheritance-11316",
       "status": "open",
       "question": "Какая исходная цепочка наследования NamedSlot позволяет читать его сериализованные поля без угадывания ordinal и defaults?",
-      "known": "Проверены static literals / metadata / parent callbacks NamedSlot → ContentWidget → PanelWidget → Widget → Visual; own arrays NamedSlot / ContentWidget / Visual пусты, PanelWidget Slots и 28 Widget descriptor rows сохранены. Кандидатная таблица читает 44 payload без остатка: 54 explicit значения / 48 local links, из них 43 совпали с decoded relations. Данные отделены от разрешённых renderer rules.",
-      "unknown": "Native inherited property construction / serializer order, пять child slot relations, CDO / archetype defaults, совместимость cooked / current и фактическое размещение.",
-      "next_action": "Проверить inherited property construction и порядок serializer, затем child slot relations / defaults. До подтверждения хранить candidate ordinal table и значения только в отдельном слое конвейера.",
+      "known": "Проверены static literals / metadata / parent callbacks NamedSlot → ContentWidget → PanelWidget → Widget → Visual; own arrays NamedSlot / ContentWidget / Visual пусты, PanelWidget Slots и 28 Widget descriptor rows сохранены. Кандидатная таблица читает 44 payload без остатка: 54 explicit значения / 48 local links. 43 совпали с legacy decoded relations; пять дочерних PanelSlot проверены по current own Parent/Content descriptors, source import/SHA и обратным ссылкам, сохранены candidate_source_relation. Данные отделены от renderer rules.",
+      "unknown": "Native inherited property construction / serializer order, CDO / archetype defaults, совместимость cooked / current и фактическое размещение.",
+      "next_action": "Проверить inherited property construction и порядок serializer, затем defaults / desired sizes. До подтверждения хранить candidate ordinal table и значения только в отдельном слое конвейера.",
       "decision_rule": "Class association, superclass contract, порядок сериализации, explicit instance values и defaults закрываются отдельно. Imported type и похожие значения не доказывают ordinal; геометрию не применять до отдельной проверки.",
       "do_not_repeat": "Полный экспорт EXE; повтор готовых функций без нового unknown; декодирование по имени виджета или по ожидаемому значению поля.",
-      "addresses": ["143579140", "1435b5080", "1435b5290", "1435b5340", "14357d570"],
-      "evidence": ["evidence/interface/UI-SCROLL-NAMED-SLOT-CANDIDATES-11316.md", "evidence/interface/UI-NAMED-SLOT-INHERITANCE-11316.md"]
+      "addresses": ["143579140", "1435b5080", "1435b5290", "1435b5340", "14357d570", "1435b51e0"],
+      "evidence": ["evidence/interface/UI-SCROLL-NAMED-SLOT-CANDIDATES-11316.md", "evidence/interface/UI-NAMED-SLOT-INHERITANCE-11316.md", "evidence/interface/UI-NAMED-SLOT-CHILD-LINKS-11316.md"]
     },
     {
       "id": "ui-shared-shortcut-properties-11316",

@@ -48,5 +48,34 @@ class NamedSlotValueTests(unittest.TestCase):
         with self.assertRaises(ValueError): named.decode(oversized, self.schema())
 
 
+class NamedSlotChildTests(unittest.TestCase):
+    def fixture(self):
+        raw = bytes.fromhex('0005290000002e00000000000000')
+        slot = dict(index=45, type='PanelSlot', outer=41, size=len(raw), sha256=named.hashlib.sha256(raw).hexdigest())
+        owner = dict(index=41, outer=50, type='NamedSlot')
+        child = dict(index=46, outer=50, type='CanvasPanel')
+        return raw, slot, owner, {46: child}, dict(explicit_properties=dict(Parent=41, Content=46))
+
+    def test_local_reciprocal_relation_preserves_unknown_geometry(self):
+        result = named.panel_child_relation(*self.fixture())
+        self.assertEqual((result['parent_export'], result['content_export']), (41, 46))
+        self.assertFalse(result['geometry_verified'])
+        self.assertFalse(result['defaults_applied'])
+
+    def test_payload_owner_content_and_missing_links_rejected(self):
+        for fault in ('hash', 'size', 'outer', 'parent', 'missing', 'outside', 'metadata', 'self'):
+            raw, slot, owner, exports, decoded = self.fixture()
+            if fault == 'hash': raw = raw[:-1] + b'\1'
+            if fault == 'size': slot['size'] += 1
+            if fault == 'outer': slot['outer'] = 42
+            if fault == 'parent': decoded['explicit_properties']['Parent'] = 42
+            if fault == 'missing': exports.clear()
+            if fault == 'outside': exports[46]['outer'] = 51
+            if fault == 'metadata': exports[46]['type'] = 'WidgetTree'
+            if fault == 'self': decoded['explicit_properties']['Content'] = 41; exports[41] = owner
+            with self.assertRaises(ValueError):
+                named.panel_child_relation(raw, slot, owner, exports, decoded)
+
+
 if __name__ == '__main__':
     unittest.main()

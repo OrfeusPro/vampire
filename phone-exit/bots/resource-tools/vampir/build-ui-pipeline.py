@@ -82,14 +82,14 @@ def run(root, snapshot, output, build_ready=False, baseline_readiness=None, base
             'scan-ui-outer-scopes.py', 'ui_outer_scope.py', 'ui_layout_schema.py')),
         lambda folder: load('scan-ui-widget-roots').build(root, Path(scopes['result']['output']), request_path, folder / 'layers'))
     root_index = Path(roots['result']['output']) / 'index.json'
-    named_request = Path(named_slot_request or root / 'knowledge/requests/b35f2ba11fc0482aecdccb64b590627763b7b72728c3589b05cb9dbd3785cd77/manifest.json').resolve()
+    named_request = Path(named_slot_request or root / 'knowledge/requests/48999392d4227b3a10e82869be197617c67dbce5b0757262a6b7449e97a41244/manifest.json').resolve()
     named_manifest = json.loads(named_request.read_bytes())
     if cache.sha(named_manifest['source']) != named_manifest['source_sha256']:
         raise ValueError('NamedSlot native source SHA differs')
     named = execute('named-slot-inheritance-candidates', dict(roots=roots['id'], roots_sha256=cache.sha(root_index),
         request=str(named_request), request_sha256=cache.sha(named_request), native_sha256=named_manifest['source_sha256'],
         tools=tools('decode-named-slot-candidates.py', 'ui_named_slot.py', 'decode-basic-slot-candidates.py',
-            'decode-canvas-slots.py', 'extract-ui-properties.py', 'extract-native-enums.py', 'build-native-entry-code.py', 'inspect-ui.py')),
+            'decode-canvas-slots.py', 'decode-package-references.py', 'extract-ui-properties.py', 'extract-native-enums.py', 'build-native-entry-code.py', 'inspect-ui.py')),
         lambda folder: load('decode-named-slot-candidates').build(root, root_index, cache.sha(root_index), named_request, folder / 'layers'))
     consumers = execute('component-consumers', dict(scopes=scopes['id'],
         tools=tools('scan-ui-component-consumers.py', 'ui_component_consumers.py', 'ui_composition_graph.py')),

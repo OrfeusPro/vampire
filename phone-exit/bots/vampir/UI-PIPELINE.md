@@ -191,13 +191,26 @@ Request по умолчанию закреплён на полном SHA тек�
 входят в ключ кеша. Родительские metadata / arrays перепроверяются provider.
 
 Получены 44 полных кандидатных чтения, 54 explicit значения и 48 local links;
-43 совпали с ранее decoded relations, пять требуют child slot schema.
+43 совпали с ранее decoded relations. В следующем проходе пять остальных
+согласованы с собственными Parent / Content полями PanelSlot и сохранены как
+`candidate_source_relation` отдельно от legacy `decoded_source_relation`.
+Проверяются импорт / SHA, Outer, Parent и принадлежность child тому же WidgetTree;
+неподдержанные отношения остаются ошибкой / unknown.
 76 тестов прошли. Подробности и следующий барьер:
 [NamedSlot inheritance](../resource-tools/vampir/knowledge/evidence/interface/UI-NAMED-SLOT-INHERITANCE-11316.md).
 Native serializer / defaults / совместимость и оформление остаются неизвестными.
+Текущий request `48999392d4227b3a10e82869be197617c67dbce5b0757262a6b7449e97a41244`
+дополняет исходный набор getter PanelSlot. Все exports уже имелись; 78 тестов
+прошли. [Полные источники и границы](../resource-tools/vampir/knowledge/evidence/interface/UI-NAMED-SLOT-CHILD-LINKS-11316.md).
 
 Audit-only `run-1792952123035071300.json` занял 235,951 с;
 повтор `run-1792953069399368500.json` — 29,872 с, все пять стадий reused=true,
 новая стадия — 0,002 с. Readiness совпал. Данные общие для 50 окон;
 native анализ и сканирование в браузер не перенесены. В этом проходе внешний
 вид не менялся и новая генерация не заявляется.
+
+Расширенный проход PanelSlot: `run-1792953617817643700.json`, 190,162 с;
+повтор `run-1792953656813806200.json`, 19,030 с, пять стадий reused=true.
+Readiness `c4e30917aa6050d66fdd958a4a88a6e4becf16f6e7ebd11b386bc06e0176f444`
+совпадает. Результат содержит 43 legacy relations и 5 новых candidate relations,
+не повышая `confirmed_checks` или renderer flags. Исходные snapshots сохранены.
