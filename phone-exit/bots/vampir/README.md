@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Настоящие QuestTask constructor / field-copy включены в map chain вместо
+constructor fixture: 210 создания с проверкой defaults, 420 inserts / 840 lookups.
+Empty-wide / allocator / hash fixtures остаются явными. Accepted CSV stores /
+whole loader / overrides ещё нужны; live order не допущен, сессия сохраняется.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RECORD-CHAIN-11316.md).
+
 Native CSV tokenizer прочитал 6 исходных строк «Зова крови» и 8 lexical cases;
 созданные пустые service-group cells прошли actual getter / Windows atoi / zero
 filter. IO/string/vector storage — явные fixtures. Whole loader / record creation /

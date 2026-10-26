@@ -12,8 +12,9 @@ def load(name):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 
-def run():
-    path=HERE/'knowledge/native-contexts/quest-map-chain-11316.json';context=json.loads(path.read_text('utf-8'))
+def run(context_path=None):
+    path=Path(context_path) if context_path else HERE/'knowledge/native-contexts/quest-map-chain-11316.json'
+    context=json.loads(path.read_text('utf-8'));native_record=context.get('native_record_constructor') is True
     h=load('native-request-harness-11316').make_harness(context['exports'],{int(a,16) for a in context['functions']},
         leaves={int(a,16):b for a,b in context['leaves'].items()})
     if h.sha!=context['source_sha256'] or any(f.get('block_coverage_complete') is not True for f in h.fragments):
@@ -49,14 +50,46 @@ def run():
     def construct(machine):
         node=reg('RDX');key=integer(integer(reg('RCX')))
         uc.mem_write(node,bytes(200));put(node,key);count('construct');h.finish(node)
+    def zero_record(machine):
+        at,size=reg('RCX'),reg('R8')
+        if reg('RDX')!=0 or size!=0xa0 or not base+0x36000<at<base+0x38000-size:
+            raise ValueError('Record temporary memset differs')
+        uc.mem_write(at,bytes(size));count('temporary_zero');h.finish(at)
+    def empty_wide(machine):
+        at=reg('RCX')
+        if reg('RDX')!=0x1489e46d8 or not base+0x36000<at<base+0x38000-16:
+            raise ValueError('Record empty wide initializer differs')
+        uc.mem_write(at,bytes(16));count('empty_wide');h.finish(at)
+    def empty_copy(machine):
+        at,source=reg('RCX'),reg('RDX')
+        nodes=integer(manager);count_nodes=integer(manager+8,4)
+        if not nodes<=at<nodes+count_nodes*200 or (at-nodes-8)%200 not in (0x30,0x78,0x90):
+            raise ValueError('Record wide-copy destination differs')
+        if not base+0x36000<source<base+0x38000-16 or bytes(uc.mem_read(source,16))!=bytes(16):
+            raise ValueError('Record wide-copy source is not the explicit empty fixture')
+        uc.mem_write(at,bytes(16));count('empty_copy');h.finish(at)
     def duplicate(machine):
         if reg('RCX')!=manager:raise ValueError('Duplicate map receiver differs')
         count('duplicate');h.finish(0)
     def hash_key(machine):
         if reg('RDX')!=8:raise ValueError('Hash input length differs')
         hashes.append(integer(reg('RCX')));h.finish(1)  # Deliberate collision chain for all keys.
-    for address,callback in ((0x1414923d0,resize),(0x141436bc0,bucket_allocate),(0x141436cc0,bucket_free),
-            (0x141429680,bit_append),(0x145b48860,construct),(0x145b74820,duplicate),(0x143b7f400,duplicate),(hashfn,hash_key)):
+    callbacks=[(0x1414923d0,resize),(0x141436bc0,bucket_allocate),(0x141436cc0,bucket_free),
+            (0x141429680,bit_append),(0x145b74820,duplicate),(0x143b7f400,duplicate),(hashfn,hash_key)]
+    if native_record:
+        if not {0x145b48860,0x145b4bd20}<={int(a,16) for a in context['functions']}:
+            raise ValueError('Native record roots missing')
+        off=h.image.offset(0x1489e46d8-h.image.pe.base)
+        if h.raw[off:off+2]!=b'\0\0':raise ValueError('Record empty wide literal differs')
+        off=h.image.offset(0x1487f5ac5-h.image.pe.base)
+        if h.raw[off:off+2]!=b'\xff\x25':raise ValueError('Record memset thunk differs')
+        slot=0x1487f5ac5+6+struct.unpack_from('<i',h.raw,off+2)[0]
+        imported=load('build-object-zero-init-code').import_at(h.raw,h.image,slot)
+        if (imported['dll'].lower(),imported['name'])!=('vcruntime140.dll','memset'):
+            raise ValueError('Record memset import differs')
+        callbacks.extend(((0x1487f5ac5,zero_record),(0x141426950,empty_wide),(0x1414266a0,empty_copy)))
+    else:callbacks.append((0x145b48860,construct))
+    for address,callback in callbacks:
         h.add_fixture(address,callback)
     put(0x14b0c2b00,hashfn);put(0x14b2f01c8,0)
     runs=[];orders=[list(range(70)),list(reversed(range(70))),[(i*37)%70 for i in range(70)]]
@@ -72,6 +105,13 @@ def run():
             key=110120000+number;value=find(key)
             if integer(manager+8,4)!=index+1 or integer(manager+0x34,4)!=0 or value!=integer(manager)+index*stride+8:
                 raise ValueError('FindOrAdd insertion/slot/count differs')
+            if native_record and primary:
+                if integer(value)!=0x1499f67f8 or integer(value+0x8c,1)!=0x1f or integer(value+0xa4,1)!=2:
+                    raise ValueError('Native record vtable/default enum differs')
+                if any(integer(value+offset) for offset in (0x40,0x48,0x50,0x60,0x70)) or any(
+                        bytes(uc.mem_read(value+offset,16))!=bytes(16) for offset in (0x30,0x78,0x90)):
+                    raise ValueError('Native record default scalar/string differs')
+                count('native_record_checked')
             payload=bytes((number+i*11)&255 for i in range(184 if primary else 16));uc.mem_write(value,payload);expected[key]=payload
             capacities.append(integer(manager+12,4));bucket_counts.append(integer(manager+0x48,4))
             counts_before=calls.copy();before=bytes(uc.mem_read(manager,128));nodes_before=bytes(uc.mem_read(integer(manager),(index+1)*stride))
@@ -103,7 +143,9 @@ def run():
             callbacks=calls.copy(),capacity_transitions=sorted(set(capacities)),bucket_transitions=sorted(set(bucket_counts))))
     audit=load('audit-client-release');report=dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),
         exports=h.evidence,runs=runs,network_used=False,order_admitted=False,limits=context['limits'])
-    target=audit.save_snapshot(h.root/'code-clues/quest-map-chain-11316',report);return target,report
+    if native_record:report['native_record_constructor']=True
+    target=audit.save_snapshot(h.root/('code-clues/quest-record-chain-11316' if native_record else 'code-clues/quest-map-chain-11316'),report)
+    return target,report
 
 
 if __name__=='__main__':

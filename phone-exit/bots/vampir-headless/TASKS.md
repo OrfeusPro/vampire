@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Native record constructor 145b48860 / field-copy 145b4bd20 прошли внутри map
+chain: 210 creation/default checks, 420 inserts / 840 lookups. Constructor
+fixture удалён из нового режима; empty-wide / allocator / hash fixtures явные.
+Далее actual accepted CSV stores / whole loader / overrides, без live admission.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RECORD-CHAIN-11316.md).
+
 CSV tokenizer 1445f6520 исполнил 6 исходных строк QuestInfoId 110120 и 8 lexical
 cases. Пустые service-group cells прошли native getter / actual Windows atoi /
 zero gate; EOF очищает cells. Storage/IO fixtures явные. Далее native record
