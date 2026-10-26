@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Очередь подключена к новому HTTP API /actions и /policy: 5 loopback тестов,
+50 synthetic sessions, точные owner offers, повтор без повторной отправки,
+owner-only результаты, policy / world fences. Launcher пока не устанавливает
+канал; game pump и message decoder ещё нужны. Живая сессия сохраняется на прежнем
+коде без перезапуска. [Контракт и проверки](ACTIONS.md).
+
 Пользователь уточнил ручные сообщения и два режима: default «Пропускать диалоги»
 включён; auto quest запускается кликом на задание, на manual NPC approach ждёт.
 Панель / модель / adapter contract готовы и проверены на fixture; настоящий

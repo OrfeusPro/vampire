@@ -60,9 +60,41 @@ claim / sent / resolve требуют private owner key и вызываются 
 
 ## Что ещё требуется
 
-Очередь пока не подключена к LiveSessionServer или game pump. В текущем уже
-онлайн-owner её нет; сохранённое соединение не перезапускается. Analysis остаётся
+Очередь подключена к новому LiveSessionServer через POST /actions и /policy,
+но ещё не к game pump. В текущем уже онлайн-owner её нет; сохранённое соединение
+не перезапускается. Analysis остаётся
 наблюдательным и не используется для обхода отсутствующего action channel.
+
+Новый owner явно вызывает install_actions с private key и source-bound contracts,
+затем offer_actions с точными kind / context / arguments. По умолчанию канал не
+создаётся; production launcher его пока не устанавливает. HTTP не может установить
+contract, опубликовать offer, claim / sent / resolve или подтвердить исполнение.
+Токен новых владельцев — 32 случайных байта в 64 hex-символах, совместимых с
+UI adapter. Прежний онлайн-процесс не меняет формат своего токена.
+
+POST /actions принимает request_id, kind, context, arguments, policy и origin;
+bot_id / session_id и session token обязательны. Policy содержит ровно два bool:
+skip_dialogues / auto_quests. Origin manual или auto_skip; последний допустим
+только для dialogue_skip при разрешённом пропуске. Существующий receipt возвращается
+после удаления offer без повторной постановки. Изменение намерения с прежним ID
+отклоняется. Новое намерение должно точно совпадать с текущим owner offer.
+
+Claim проверяет offer повторно, а также character / world и текущую policy.
+Смена мира удаляет offers; возвращение в прежний мир их не восстанавливает.
+Выключение пропуска отменяет queued auto_skip до отправки. Отдельное изменение
+policy не ставит квест в очередь. В намерении сохраняются исходные policy / origin;
+claim также передаёт current_policy владельцу. Перед отправкой handler обязан
+проверить новый игровой контекст и текущую policy; сама очередь ничего не посылает.
+Закрытие сессии завершает очередь, sent получает unknown.
+
+Проверка: 5 тестов test_vampir_action_api.py с настоящим loopback HTTP и 50
+synthetic sessions; 5 тестов очереди; 16 прежних live session / quest / diagnostics
+тестов. Проверены токены, чужие session / origin, точные offers, повтор / подмена,
+owner-only confirmation, отключение skip, смена мира и close после sent.
+После unknown только owner с новым предложенным context может разблокировать
+очередь; прежний receipt остаётся unknown. Проверен отдельный сценарий синхронизации.
+Игрового сокета в этих проверках нет. Snapshot публикует action_queue / action_policy только
+при установленном канале; interaction и source-bound message decoder ещё нужны.
 
 Current QuestUpdate codec и typed outgoing frame проверены отдельно:
 81 native тело / 29 коротких входов / 6 отказов записи, без игровых команд.

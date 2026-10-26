@@ -26,7 +26,7 @@ class LiveSessionServer:
                 return (self.headers.get('Host')=='127.0.0.1:'+str(self.server.server_port)
                     and self.headers.get('Origin') in (None,'http://127.0.0.1:17946'))
             def selected(self):
-                match=re.fullmatch('/bots/([a-zA-Z0-9_-]{1,48})/(state|control|stop|events|trace|samples|analysis)',urlsplit(self.path).path)
+                match=re.fullmatch('/bots/([a-zA-Z0-9_-]{1,48})/(state|control|stop|events|trace|samples|analysis|actions|policy)',urlsplit(self.path).path)
                 if match:return registry.get(match[1]),match[2]
                 # Legacy atlas endpoint is unambiguous only for one attached bot.
                 listed=registry.list()
@@ -59,7 +59,7 @@ class LiveSessionServer:
                     except (ValueError,UnicodeError):self.send_error(400);return
                     self.send_json(200,selected.snapshot(for_api=True,entity_page=page))
                 elif action=='control':
-                    token=tokens.setdefault(selected.session_id,secrets.token_urlsafe(32))
+                    token=tokens.setdefault(selected.session_id,secrets.token_hex(32))
                     self.send_json(200,dict(bot_id=selected.bot_id,session_id=selected.session_id,token=token,actions=['stop','trace','analysis']))
                 elif action in ('events','samples'):
                     try:
@@ -89,7 +89,7 @@ class LiveSessionServer:
                 token=tokens.get(selected.session_id) if selected else None
                 if not self.allowed() or token is None or not secrets.compare_digest(self.headers.get('X-Session-Token',''),token):
                     self.send_error(403);return
-                if action not in ('stop','trace','analysis'):self.send_error(404);return
+                if action not in ('stop','trace','analysis','actions','policy'):self.send_error(404);return
                 try:
                     size=int(self.headers.get('Content-Length','-1'))
                     if not 0<size<=(32768 if action=='analysis' else 1024):raise ValueError()
@@ -101,10 +101,15 @@ class LiveSessionServer:
                     elif action=='trace':
                         if set(value)!={'lease','packet_ids'}:raise ValueError()
                         result=selected.configure_trace(value['lease'],value['packet_ids'])
+                    elif action=='actions':result=selected.enqueue_action(value)
+                    elif action=='policy':
+                        if set(value)!={'policy'}:raise ValueError()
+                        result=selected.configure_policy(value['policy'])
                     else:
                         selected.analysis(value);result=dict(state='analysis_updated')
                 except (ValueError,UnicodeError,RecursionError):self.send_error(400);return
                 except RuntimeError:self.send_error(409);return
+                except BufferError:self.send_error(429);return
                 self.send_json(202,result)
         self.session=registry
         self.server=HTTPServer(('127.0.0.1',port),Handler)

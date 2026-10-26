@@ -56,7 +56,8 @@ Default skip_dialogues=true, auto_quests=false; прежний явный выб
 
 Будущие endpoints /actions и /policy используют тот же session control token.
 Adapter повторно проверяет scope / context после получения token и подтверждение
-bot / session / request ID в ответе. API сейчас ещё не реализует эти endpoints.
+bot / session / request ID в ответе. В новом коде API endpoints реализованы с
+явно устанавливаемой owner очередью; текущий онлайн-процесс их ещё не содержит.
 Возвращённое queued/sent означает ожидание, не выполнение игры. Request ID
 детерминирован по bot / session / action / context: два окна не создают разные
 намерения для одного пропуска. Backend должен сохранять идемпотентность этого ID.

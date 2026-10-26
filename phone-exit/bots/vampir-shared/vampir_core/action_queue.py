@@ -22,6 +22,16 @@ def digest(value):
     return value
 
 
+def validate_policy(value):
+    if type(value) is not dict or set(value)!={'skip_dialogues','auto_quests'} or any(type(v) is not bool for v in value.values()):
+        raise ValueError('Explicit boolean action policy required')
+    return value.copy()
+
+
+def intent_fingerprint(kind,context,arguments,policy,origin):
+    return hashlib.sha256(json.dumps([kind,context,arguments,policy,origin],sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+
+
 class SessionActionQueue:
     def __init__(self,*,bot_id,session_id,source_sha256,owner_key,contracts=None,clock=time.monotonic,
                  capacity=16,history=64,total_limit=4096):
@@ -61,7 +71,7 @@ class SessionActionQueue:
                     'expired_before_send' if row['status']=='queued' else 'outcome_unconfirmed')
         self._pending=deque(key for key in self._pending if self._records[key]['status']=='queued')
 
-    def enqueue(self,*,bot_id,session_id,request_id,kind,context,arguments):
+    def enqueue(self,*,bot_id,session_id,request_id,kind,context,arguments,policy=None,origin='manual'):
         if (bot_id,session_id)!=(self.bot_id,self.session_id):raise ValueError('Action session mismatch')
         if type(request_id) is not str or not re.fullmatch('[a-f0-9]{32}',request_id):raise ValueError('Explicit request ID required')
         if type(kind) is not str or kind not in SCHEMAS:raise ValueError('Unknown action kind')
@@ -70,7 +80,10 @@ class SessionActionQueue:
         if any(type(v) is not str or not re.fullmatch('(?:0|[1-9][0-9]{0,19})',v) or int(v)>0xffffffffffffffff for v in arguments.values()):
             raise ValueError('Bounded decimal action IDs required')
         arguments=arguments.copy()
-        fingerprint=hashlib.sha256(json.dumps([kind,context,arguments],sort_keys=True,separators=(',',':')).encode()).hexdigest()
+        policy=validate_policy(policy if policy is not None else dict(skip_dialogues=True,auto_quests=False))
+        if origin not in ('manual','auto_skip') or (origin=='auto_skip' and (kind!='dialogue_skip' or not policy['skip_dialogues'])):
+            raise ValueError('Invalid action origin')
+        fingerprint=intent_fingerprint(kind,context,arguments,policy,origin)
         with self._lock:
             self._refresh()
             prior=self._seen.get(request_id)
@@ -88,10 +101,20 @@ class SessionActionQueue:
                 if retired is None:raise BufferError('Action history full')
                 del self._records[retired]
             row=dict(request_id=request_id,kind=kind,context=context,arguments=arguments,status='queued',reason=None,
-                contract=self._contracts[kind],deadline=self._clock()+5)
+                contract=self._contracts[kind],policy=policy,origin=origin,deadline=self._clock()+5)
             self._seen[request_id]=dict(fingerprint=fingerprint,summary=self._summary(row))
             self._records[request_id]=row;self._pending.append(request_id)
             return self._summary(row)
+
+    def previous(self,*,request_id,kind,context,arguments,policy,origin):
+        """A retired offer may still have a known receipt; this never enqueues."""
+        if type(request_id) is not str or not re.fullmatch('[a-f0-9]{32}',request_id):raise ValueError('Explicit request ID required')
+        fingerprint=intent_fingerprint(kind,context,arguments,validate_policy(policy),origin)
+        with self._lock:
+            self._refresh();prior=self._seen.get(request_id)
+            if prior is None:return None
+            if prior['fingerprint']!=fingerprint:raise ValueError('Request ID reused with different intent')
+            return prior['summary'].copy()
 
     def claim(self,owner_key,*,context):
         self._owner(owner_key);digest(context)
@@ -105,7 +128,7 @@ class SessionActionQueue:
                 if row['context']!=context:
                     self._set(row,'failed','state_changed_before_send');continue
                 self._set(row,'executing');row['deadline']=self._clock()+10
-                return copy.deepcopy({key:row[key] for key in ('request_id','kind','context','arguments','contract')})
+                return copy.deepcopy({key:row[key] for key in ('request_id','kind','context','arguments','contract','policy','origin')})
             return None
 
     def sent(self,owner_key,request_id):

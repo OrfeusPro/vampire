@@ -12,6 +12,7 @@ from .environment import ObservedEnvironment,SOURCE_SHA256 as ENVIRONMENT_SOURCE
 from .tutorial_update import decode_tutorial_update
 from .quest_sync import decode_quest_sync
 from .world_move_start import CURRENT_PROBE_SOURCE
+from .action_queue import SessionActionQueue,SCHEMAS,digest,validate_policy
 import json
 
 STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
@@ -34,6 +35,11 @@ class LiveSession:
         self._lock=Lock()
         self._started=time.monotonic()
         self._closed=False
+        self._actions=None
+        self._action_owner=None
+        self._action_offers=[]
+        self._action_scope=None
+        self._policy=dict(skip_dialogues=True,auto_quests=False)
         self._source=None
         self._stats={}
         self._stats_key=None
@@ -224,6 +230,7 @@ class LiveSession:
                 self._stats_revision+=1
             character=self._snapshot['character']
             if character is None or character['world_id']!=position.world_id:
+                self._action_offers=[];self._action_scope=None
                 self._stats_applied=-1
                 self._diagnostics.event('world_ready',world_id=position.world_id)
                 character=dict(key=str(key),name=name,world_id=position.world_id,
@@ -239,6 +246,8 @@ class LiveSession:
         if error is not None and (not isinstance(error,str) or not re.fullmatch('[a-zA-Z0-9_]{1,96}',error)):
             error='session_failed'
         with self._lock:
+            if self._actions:self._actions.close(self._action_owner)
+            self._action_offers=[]
             if not self._closed:self._diagnostics.event('session_closed',error=error)
             self._closed=True
             self._diagnostics.close()
@@ -262,6 +271,9 @@ class LiveSession:
             value['journal_cursor']=self._diagnostics.sequence
             value['analysis']=copy.deepcopy(self._diagnostics.analysis)
             value['trace']=dict(packet_ids=list(self._diagnostics.ids),sample_bytes=self._diagnostics.sample_bytes)
+            if self._actions:
+                value['action_queue']=self._actions.snapshot()
+                value['action_policy']=self._policy.copy()
         value['uptime_seconds']=round(time.monotonic()-self._started,1)
         return value
 
@@ -298,6 +310,89 @@ class LiveSession:
 
     def status(self):
         with self._lock:return dict(bot_id=self.bot_id,session_id=self.session_id,state=self._snapshot['state'])
+
+    def install_actions(self,owner_key,*,contracts):
+        """Explicit owner admission; no contracts or handlers are inferred from UI."""
+        with self._lock:
+            if self._closed or self._source is None or self._actions is not None:raise RuntimeError('Action owner unavailable')
+            self._actions=SessionActionQueue(bot_id=self.bot_id,session_id=self.session_id,source_sha256=self._source,
+                owner_key=owner_key,contracts=contracts)
+            self._action_owner=owner_key
+
+    def _action_ready(self):
+        if self._closed or self._stop.is_set() or self._actions is None or self._snapshot['state']!='connected':
+            raise RuntimeError('Action channel unavailable')
+
+    def _scope(self):
+        person=self._snapshot['character']
+        return (person.get('key'),person.get('world_id')) if person else None
+
+    def offer_actions(self,owner_key,offers):
+        """Owner publishes exact intents from its decoder; not an HTTP operation."""
+        if type(offers) is not list or len(offers)>48:raise ValueError('Invalid action offers')
+        clean=[]
+        for offer in offers:
+            if type(offer) is not dict or set(offer)!={'kind','context','arguments'}:raise ValueError('Invalid action offer')
+            kind=offer['kind'];arguments=offer['arguments'];digest(offer['context'])
+            if type(kind) is not str or kind not in SCHEMAS or type(arguments) is not dict or set(arguments)!=SCHEMAS[kind]:
+                raise ValueError('Invalid offered arguments')
+            if any(type(v) is not str or not re.fullmatch('(?:0|[1-9][0-9]{0,19})',v) or int(v)>0xffffffffffffffff for v in arguments.values()):
+                raise ValueError('Invalid offered ID')
+            clean.append(copy.deepcopy(offer))
+        with self._lock:
+            self._action_ready()
+            if owner_key is not self._action_owner:raise RuntimeError('Socket owner required')
+            self._action_offers=clean;self._action_scope=self._scope()
+
+    def enqueue_action(self,value):
+        if type(value) is not dict or set(value)!={'request_id','kind','context','arguments','policy','origin'}:raise ValueError('Invalid intent')
+        with self._lock:
+            self._action_ready()
+            previous=self._actions.previous(**value)
+            if previous is not None:return dict(bot_id=self.bot_id,session_id=self.session_id,**previous)
+            # Compare exact owner offers, not merely a client supplied context SHA.
+            offer={k:value[k] for k in ('kind','context','arguments')}
+            if self._scope()!=self._action_scope or offer not in self._action_offers:raise RuntimeError('Action not currently offered')
+            validate_policy(value['policy'])
+            if value['origin']=='auto_skip' and not self._policy['skip_dialogues']:raise RuntimeError('Automatic skip disabled')
+            result=self._actions.enqueue(bot_id=self.bot_id,session_id=self.session_id,**value)
+            self._diagnostics.event('action_intent',request_id=result['request_id'],action_kind=result['kind'],status=result['status'])
+            return dict(bot_id=self.bot_id,session_id=self.session_id,**result)
+
+    def configure_policy(self,value):
+        policy=validate_policy(value)
+        with self._lock:
+            self._action_ready();self._policy=policy
+            self._diagnostics.event('action_policy_updated',**policy)
+            return dict(bot_id=self.bot_id,session_id=self.session_id,status='policy_updated',policy=policy.copy())
+
+    def claim_action(self,owner_key,*,context):
+        with self._lock:
+            self._action_ready()
+            if owner_key is not self._action_owner:raise RuntimeError('Socket owner required')
+            intent=self._actions.claim(owner_key,context=context)
+            if intent is None:return None
+            offered={k:intent[k] for k in ('kind','context','arguments')}
+            if self._scope()!=self._action_scope or offered not in self._action_offers or (intent['origin']=='auto_skip' and not self._policy['skip_dialogues']):
+                self._actions.resolve(owner_key,intent['request_id'],status='failed');return None
+            return dict(intent,current_policy=self._policy.copy())
+
+    def action_sent(self,owner_key,request_id):
+        with self._lock:
+            self._action_ready();self._actions.sent(owner_key,request_id)
+
+    def resume_actions_after_sync(self,owner_key,*,context):
+        with self._lock:
+            self._action_ready()
+            if owner_key is not self._action_owner:raise RuntimeError('Socket owner required')
+            if self._scope()!=self._action_scope or not any(o['context']==context for o in self._action_offers):
+                raise RuntimeError('New owner offer required')
+            self._actions.resume_after_sync(owner_key,context=context)
+
+    def resolve_action(self,owner_key,request_id,*,status):
+        with self._lock:
+            if self._actions is None:raise RuntimeError('Action channel unavailable')
+            self._actions.resolve(owner_key,request_id,status=status)
 
 
 class LiveSessions:
