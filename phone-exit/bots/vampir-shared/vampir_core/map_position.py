@@ -3,7 +3,9 @@ from dataclasses import dataclass
 import math
 
 from .world_entry_flow import ServerTargetPosition
-from .world_move_start import SOURCE_SHA256
+from .world_move_start import SOURCE_SHA256,CURRENT_PROBE_SOURCE
+
+PROJECTION_SOURCES=frozenset((SOURCE_SHA256,CURRENT_PROBE_SOURCE))
 
 
 @dataclass(frozen=True,slots=True)
@@ -22,8 +24,9 @@ class MapPosition:
 class MapProjection:
     """Explicit current audit input, never guesses a map from XY or nearest point."""
     def __init__(self,manifest,*,source_sha256):
-        if source_sha256!=SOURCE_SHA256 or manifest.get('source_sha256')!=source_sha256:
+        if source_sha256 not in PROJECTION_SOURCES or manifest.get('source_sha256')!=source_sha256:
             raise ValueError('Map projection source differs')
+        self.source_sha256=source_sha256
         self.worlds=dict(manifest['worlds'])
         if not self.worlds or any(not isinstance(k,str) or not k.isdecimal() or v not in ('10','11')
                 for k,v in self.worlds.items()):raise ValueError('Unsupported world/map mapping')

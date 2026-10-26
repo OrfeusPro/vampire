@@ -11,7 +11,7 @@
     for (const type of [...types]) if (type !== 'Area') types.delete(type);
     if (typeof update === 'function') update();
   }
-  let demo = { position: null, target: null, follow: false }, previousKey = '', timer, liveScaleReady = false;
+  let demo = { position: null, target: null, follow: false }, previousKey = '', timer, liveScaleReady = false, entryPositionKey = null, centeredEntryKey = null;
   const overlay = document.createElement('canvas'); overlay.id = 'demoOverlay'; document.body.append(overlay);
   overlay.dataset.stateSource = live ? 'live' : 'demo';
   const context = overlay.getContext('2d');
@@ -25,6 +25,8 @@
         const payload = event.data.payload, p = payload?.position;
         demo = {position:p && Number.isFinite(p.x) && Number.isFinite(p.y) ? {x:p.x,y:p.y} : null,
           target:null,follow:payload?.follow === true,labels:payload?.labels === true};
+        entryPositionKey = demo.position ? JSON.stringify([payload.world_id, payload.map_id]) : null;
+        if (!demo.position) centeredEntryKey = null;
       } else demo = event.data.payload;
       if (typeof $ === 'function') { $('labels').checked = demo.labels !== false; if (typeof schedule === 'function') schedule(); }
     }
@@ -48,10 +50,19 @@
     if (document.hidden) return;
     timer = setTimeout(draw, 100);
     if (typeof view === 'undefined' || typeof scene === 'undefined' || !scene) return;
+    // Atlas enables world selection after its asynchronous data setup and fit.
+    if (live && typeof $ === 'function' && $('worlds')?.disabled) return;
     const width = innerWidth, height = innerHeight;
     if (live && !liveScaleReady) { view.s = Math.max(width, height) / 615000; liveScaleReady = true; schedule(); }
     if (overlay.width !== width || overlay.height !== height) { overlay.width = width; overlay.height = height; }
     if (!demo.position) { context.clearRect(0, 0, width, height); previousKey = ''; if (!live) notify('position', { x: view.x, y: view.y }); return; }
+    // Center/zoom once on entry to each confirmed world, then preserve manual
+    // navigation. Regular state polls and object selection must not move it.
+    if (live && centeredEntryKey !== entryPositionKey) {
+      view.x = demo.position.x; view.y = demo.position.y;
+      view.s = Math.max(view.s, Math.min(width, height) / 65000);
+      centeredEntryKey = entryPositionKey; schedule();
+    }
     if (demo.follow && !demo.target && (view.x !== demo.position.x || view.y !== demo.position.y)) { view.x = demo.position.x; view.y = demo.position.y; schedule(); }
     const key = JSON.stringify([view, width, height, demo]);
     if (key === previousKey) return;

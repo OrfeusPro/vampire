@@ -9,6 +9,11 @@
 Проверка браузера выполнена на явно помеченном fixture; при разрыве строки очищаются.
 [Источник полей и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-INITIAL-ENVIRONMENT-11316.md).
 
+Проекция Map10/11 перепроверена для 1.13.16. Первая подтверждённая позиция
+центрирует и приближает карту после загрузки атласа; polls / выбор объекта
+не меняют ручной вид. Постоянное слежение — отдельная выключенная по умолчанию
+настройка окна. [Источник и проверки](../resource-tools/vampir/knowledge/evidence/maps/HEADLESS-MAP-POSITION-11316.md).
+
 ## Данные и действия
 
 `prototype-live.js` создаёт один `VampirLiveState` с точными bot/session IDs.

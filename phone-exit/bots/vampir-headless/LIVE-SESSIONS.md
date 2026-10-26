@@ -1,5 +1,11 @@
 # Изолированные живые сессии
 
+Оба launcher поддерживают явный `--projection <manifest>` для проверенной
+проекции той же версии. В 1.13.16 сохранена Map10/11, включая мир 10012.
+Manifest проверяется по content SHA и установленному PAK; разные source SHA
+проекции и сессии отклоняются. Параметры проекции общие, данные владельцев
+изолированы. [Источники / проверка](../resource-tools/vampir/knowledge/evidence/maps/HEADLESS-MAP-POSITION-11316.md).
+
 [Наблюдаемое окружение](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-INITIAL-ENVIRONMENT-11316.md):
 ID 301 добавляет / обновляет NPC и других игроков, ID 324 — NPC, ID 302 удаляет
 actor keys. `coverage.entities=partial` не означает полный или актуальный список рядом.

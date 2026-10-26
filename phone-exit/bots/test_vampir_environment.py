@@ -95,7 +95,7 @@ class EnvironmentTests(unittest.TestCase):
         keys=set()
         with LiveSessionServer(s,port=0) as server:
             base='http://127.0.0.1:'+str(server.server.server_port)+'/bots/fixture/state'
-            for page in (0,1):
+            for page in (0,1)*3:
                 with urlopen(base+'?entity_page='+str(page)) as response:body=response.read()
                 self.assertLess(len(body),262144);value=json.loads(body)
                 self.assertEqual(value['environment']['known_count'],512)

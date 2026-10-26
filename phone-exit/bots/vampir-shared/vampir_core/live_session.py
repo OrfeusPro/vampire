@@ -23,6 +23,9 @@ class LiveSession:
         self.session_id=session_id or secrets.token_hex(16)
         if not isinstance(self.session_id,str) or not re.fullmatch('[a-zA-Z0-9_-]{1,48}',self.session_id):
             raise ValueError('Invalid session identity')
+        if projection is not None:
+            from .map_position import MapProjection
+            if not isinstance(projection,MapProjection):raise TypeError('Verified map projection required')
         self.projection=projection
         self._stop=Event()
         self._lock=Lock()
@@ -54,6 +57,7 @@ class LiveSession:
     def bind_source(self,source_sha256):
         if not isinstance(source_sha256,str) or not re.fullmatch('[a-f0-9]{64}',source_sha256):raise ValueError('Explicit source SHA required')
         if source_sha256==STAT_SOURCE_SHA256 and STAT_NAMES_SOURCE!=STAT_SOURCE_SHA256:raise ValueError('Stat names source differs')
+        if self.projection is not None and self.projection.source_sha256!=source_sha256:raise ValueError('Projection and session sources differ')
         with self._lock:
             if self._closed or self._source not in (None,source_sha256):raise ValueError('Session source cannot change')
             if self._source is None:self._diagnostics.event('source_bound',source_sha256=source_sha256)

@@ -17,6 +17,8 @@ class LiveSessionServer:
         if not isinstance(registry,LiveSessions):raise TypeError('Expected isolated session registry')
         tokens={}
         class Handler(BaseHTTPRequestHandler):
+            # Unbuffered HTTP headers/body must not wait for a coalesced TCP tail.
+            disable_nagle_algorithm=True
             def log_message(self,*args):pass
             def setup(self):
                 self.request.settimeout(2);super().setup()
@@ -40,7 +42,10 @@ class LiveSessionServer:
                 self.send_header('X-Content-Type-Options','nosniff')
                 origin=self.headers.get('Origin')
                 if origin:self.send_header('Access-Control-Allow-Origin',origin)
-                self.send_header('Vary','Origin');self.end_headers();self.wfile.write(body)
+                self.send_header('Vary','Origin');self.end_headers()
+                # Bound each unbuffered write; a large single write intermittently
+                # lost its tail on the checked Windows loopback connection.
+                for start in range(0,len(body),16384):self.wfile.write(body[start:start+16384])
             def do_GET(self):
                 if not self.allowed():self.send_error(403);return
                 if self.path=='/sessions':self.send_json(200,dict(sessions=registry.list()));return

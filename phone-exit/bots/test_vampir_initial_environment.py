@@ -101,7 +101,8 @@ class InitialEnvironmentTests(unittest.TestCase):
                 s.packet(322,struct.pack('<QH',42,len(values))+b''.join(struct.pack('<iQQ',*v) for v in values)+bytes(3),character_key=42,world_id=0xffffffff)
             keys=set()
             with LiveSessionServer(s,port=0) as server:
-                for page in (0,1):
+                # Exercise separate connections repeatedly, including each tail.
+                for page in (0,1)*3:
                     connection=HTTPConnection('127.0.0.1',server.server.server_port,timeout=3)
                     try:
                         connection.request('GET','/bots/sight-max-fixture/state?entity_page='+str(page))

@@ -33,7 +33,7 @@ def validate_accounts(value):
     return value
 
 
-def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947,sign_in_parallelism=2):
+def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947,sign_in_parallelism=2,projection=None):
     accounts=validate_accounts(accounts)
     if type(sign_in_parallelism) is not int or not 1<=sign_in_parallelism<=8:raise ValueError('Параллельных входов должно быть 1–8')
     sign_in_slots=BoundedSemaphore(sign_in_parallelism)
@@ -43,7 +43,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
         spec=importlib.util.spec_from_file_location('live_selected_probe',HERE/'probe-selected-game-login.py')
         probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
     registry=LiveSessions(capacity=len(accounts))
-    sessions={row['bot_id']:LiveSession(bot_id=row['bot_id']) for row in accounts}
+    sessions={row['bot_id']:LiveSession(bot_id=row['bot_id'],projection=projection) for row in accounts}
     for session in sessions.values():registry.attach(session)
     def emit(value):print(json.dumps(value,ensure_ascii=False),flush=True)
     def worker(row):
@@ -100,13 +100,19 @@ if __name__=='__main__':
     parser.add_argument('--accounts',type=Path,required=True)
     parser.add_argument('--manifest',type=Path,required=True)
     parser.add_argument('--client-version',type=int,required=True)
+    parser.add_argument('--projection',type=Path,help='Проверенный manifest проекции для текущей версии клиента')
     parser.add_argument('--sign-in-parallelism',type=int,default=2,help='Одновременные SDK-входы; все вошедшие боты остаются активны')
     args=parser.parse_args()
     try:
         if args.accounts.stat().st_size>65536:raise ValueError('Слишком большой список аккаунтов')
         accounts=validate_accounts(json.loads(args.accounts.read_text(encoding='utf-8')))
+        projection=None
+        if args.projection is not None:
+            from vampir_core.map_projection_input import load_projection
+            from vampir_core.world_move_start import CURRENT_PROBE_SOURCE
+            projection=load_projection(args.projection,source_sha256=CURRENT_PROBE_SOURCE)
         passwords={row['bot_id']:getpass.getpass('Пароль '+row['bot_id']+': ') for row in accounts}
-        run_accounts(accounts,passwords,manifest=args.manifest,client_version=args.client_version,sign_in_parallelism=args.sign_in_parallelism)
+        run_accounts(accounts,passwords,manifest=args.manifest,client_version=args.client_version,sign_in_parallelism=args.sign_in_parallelism,projection=projection)
     except KeyboardInterrupt:
         print('Сессии остановлены.')
     except (OSError,ValueError) as error:

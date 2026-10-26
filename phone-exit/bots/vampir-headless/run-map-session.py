@@ -1,7 +1,6 @@
 """Explicit bounded headless session with a read-only atlas feed on loopback."""
 import argparse
 import getpass
-import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -9,7 +8,6 @@ import sys
 
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE.parent/'vampir-shared'))
-from vampir_core.map_position import MapProjection
 from vampir_core.map_session import MapSession,MapSessionServer
 from vampir_core.world_move_start import SOURCE_SHA256
 
@@ -18,17 +16,10 @@ def run(args,password,*,tutorial_observer=None):
     persistent=getattr(args,'persistent',False)
     projection=None
     if args.projection is not None:
-        if getattr(args,'profile','recovered-release')!='recovered-release':
-            raise ValueError('Current map projection is not verified')
-        raw=args.projection.read_bytes()
-        if len(raw)>1048576 or hashlib.sha256(raw).hexdigest()!=args.projection.parent.name:
-            raise ValueError('Immutable projection audit required')
-        manifest=json.loads(raw)
-        projection=MapProjection(manifest,source_sha256=SOURCE_SHA256)
-        archive=manifest['installed_archive']
-        with Path(archive['path']).open('rb') as stream:
-            if hashlib.file_digest(stream,'sha256').hexdigest()!=archive['sha256']:
-                raise ValueError('Map resource changed since audit')
+        from vampir_core.map_projection_input import load_projection
+        from vampir_core.world_move_start import CURRENT_PROBE_SOURCE
+        selected_source=CURRENT_PROBE_SOURCE if getattr(args,'profile','recovered-release')=='candidate-11316' else SOURCE_SHA256
+        projection=load_projection(args.projection,source_sha256=selected_source)
     if not persistent and projection is None:
         raise ValueError('Bounded atlas feed requires a verified projection')
     if persistent:
@@ -61,7 +52,7 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--email',required=True)
     parser.add_argument('--manifest',required=True,type=Path)
-    parser.add_argument('--projection',type=Path,help='Verified historical atlas projection; omit for current live state')
+    parser.add_argument('--projection',type=Path,help='Explicit source-matching immutable atlas projection audit')
     parser.add_argument('--socks-port',required=True,type=int)
     parser.add_argument('--client-version',required=True,type=int)
     parser.add_argument('--server-id',required=True,type=int)

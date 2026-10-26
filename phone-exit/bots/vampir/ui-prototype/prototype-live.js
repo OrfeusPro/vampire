@@ -6,7 +6,7 @@
     const validId = value => typeof value === 'string' && /^[a-zA-Z0-9_-]{1,48}$/.test(value);
     const model = root.VampirPrototypeLiveModel;
     let snapshot = null, value = model.project(null), adapter, statusView, disposed = false, dialog, refreshDialog;
-    let follow = true, logPaused = false, cursor = 0, gap = false;
+    let follow = false, logPaused = false, cursor = 0, gap = false;
     const rows = [];
     document.getElementById('inspector').hidden = true;
     if (!validId(profile) || !validId(sessionId)) {
@@ -45,7 +45,7 @@
     append(screen, mapHolder, hud, reference); app.replaceChildren(screen);
     function sendMap(type = 'state') {
       map.contentWindow?.postMessage({source:'vampir-live-prototype', bot_id:profile, session_id:sessionId, type,
-        payload:{position:value.position, follow, labels:true}}, location.origin);
+        payload:{position:value.position, world_id:value.person?.world_id ?? null, map_id:snapshot?.position?.map_id ?? null, follow, labels:true}}, location.origin);
     }
     function mapReady(event) {
       if (event.origin === location.origin && event.source === map.contentWindow
