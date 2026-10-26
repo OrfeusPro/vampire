@@ -177,6 +177,21 @@ class GameConnection:
         if not self.active: raise RuntimeError('Connection is inactive')
         self._outbound.queue_ping(payload)
 
+    def queue_quest_update(self, payload, *, source_sha256):
+        """Owner-only typed enqueue, not permission to execute a selected quest.
+
+        Requires accepted world completion from this source. The caller still
+        establishes task/context/admission before enqueue. No HTTP action route
+        calls this method automatically; return means queued, not acknowledged.
+        """
+        world=self._world_entry
+        if (not self.active or world is None or not world.complete_world
+                or world.state!='finish_response' or world.finish_result_code!=0):
+            raise RuntimeError('Quest update requires accepted world completion')
+        if source_sha256!=world.source_sha256:
+            raise ValueError('Quest update source differs from this world connection')
+        return self._outbound.queue_quest_update(payload,source_sha256=source_sha256)
+
     def enable_initial_tutorial_ack(self, *, source_sha256, timeout=10, snapshot_max_age=10):
         """Track this connection's snapshots; enabling sends no game command."""
         if not self.active or self._tutorial_ack is not None:

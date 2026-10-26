@@ -109,3 +109,26 @@ Current QuestUpdate codec и typed outgoing frame проверены отдел�
 
 [Текущая связь массива задач и прогресса](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TASK-LOOKUP-11316.md)
 ещё не доказывает порядок QuestTask / selected state / выполнение маршрута.
+
+## Переход из владельца сокета в typed outbound
+
+`GameConnection.queue_quest_update` теперь ставит typed QuestUpdate в ту же
+ограниченную очередь, которой пользуются heartbeat и смена ключа. Требует
+accepted WorldMoveFinish (complete_world, finish_response, code 0) и точного
+совпадения source SHA с этим world flow. Сырые packet bodies не принимаются.
+Перед вызовом owner обязан отдельно подтвердить задачу, контекст и допустимость
+действия; метод не выбирает квест и не устанавливает action contract.
+
+`test_vampir_quest_connection.py`: 4 теста на настоящих локальных сокетах.
+Вход в мир проходит synthetic wire цепочку 102/110/202/204/206. Проверены
+отказ до 206, world refusal, закрытое соединение, чужой SHA, malformed payload,
+key rotation перед QuestUpdate, последовательность пакетов, backpressure без
+расхода sequence и два независимых владельца. Пакет 1810 декодирован на другой
+стороне локального сокета и сверен с typed body. Это проверяет транспортный
+переход, не серверное выполнение квеста.
+
+Метод вызывается только явным кодом owner; production launcher/API/game pump
+его пока не вызывают. Очередь намерений и этот typed переход ещё предстоит
+соединить через подтверждённый selected-state handler и decoder результата.
+Возврат метода означает постановку в outbound, не принятие сервером.
+Текущий уже онлайн-owner не перезапускался и игровых команд не получал.

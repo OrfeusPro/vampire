@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Добавлен typed переход GameConnection → QuestUpdate outbound после accepted
+world completion и проверки source SHA. Четыре локальных socket-теста покрывают
+world gates, key rotation, sequence/backpressure и двух владельцев. API/queue
+ещё не соединены с selected-state handler; живых quest-команд не было.
+[Граница и следующий шаг](../vampir-headless/ACTIONS.md#переход-из-владельца-сокета-в-typed-outbound).
+
 Совместная native цепочка identity/key/region lookup/numeric reader/setter
 прошла 1008 случаев: found empty/JP → 0 без primary fallback, missing →
 legacy/cache; одновременно существующие profile keys дают разные числа.
