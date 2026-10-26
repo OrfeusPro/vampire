@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+В live-прототип добавлены сообщения / ответы / «Пропустить», default skip=true,
+отдельное автовыполнение по клику на квест и ожидание ручного подхода к NPC.
+Node и браузерный fixture прошли. На Infinix те же флажки видны с настоящими
+HP/MP, сессия сохранена; message decoder / owner API ещё не подключены.
+[Паспорт и границы](UI-LIVE-MESSAGES.md).
+
 Current QuestUpdate codec прошёл 81 native тело, 29 коротких входов и 6 отказов
 записи с настоящими constructors / archive IO. Добавлен typed outbound frame;
 selected task / action API / pump ещё открыты, живые команды не отправлялись.

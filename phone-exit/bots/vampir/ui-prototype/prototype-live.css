@@ -17,6 +17,12 @@
 .live-quests p{font-size:.75rem;line-height:1.5;margin:.5em 0}
 .live-quests small{font-size:.6rem;color:#a8ada1;display:block;margin-top:14px}
 .live-quest{display:block;width:100%;text-align:left;font-size:.8rem;padding:.7em;background:#1b2d24}
+.live-policies{display:grid;gap:8px;margin-bottom:12px;font-size:.7rem}
+.live-policies input{accent-color:#bca776;width:15px;height:15px;flex-shrink:0}
+.live-messages{font-size:.75rem}.live-messages p{white-space:pre-wrap;overflow-wrap:anywhere}
+.live-quests .live-messages+h3,.live-quests>h3:not(:first-child){margin-top:18px}
+.live-message{border-top:1px solid #87906b66;padding:10px 0}
+.live-message-choice,.live-message-skip{display:block;width:100%;text-align:left;margin-top:6px;font-size:.75rem}
 .live-map-info{position:absolute;bottom:22px;left:22px;display:flex;flex-direction:column;align-items:flex-start;gap:6px;font-size:.66rem;background:#07130fd9;padding:14px 18px;border-left:2px solid #6f7b64;max-width:calc(100vw - 44px)}
 .live-map-info a{color:#d6c79f}.live-map-button{font-size:inherit;margin-top:5px}
 .live-reference{position:absolute;bottom:20px;right:22px;max-width:38vw;font-size:.6rem;color:#9aa89c;pointer-events:none;text-align:right}

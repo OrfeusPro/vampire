@@ -1,4 +1,4 @@
-/* Explicit live adapter for one bot/window. No demo storage or game commands. */
+/* One bot/window adapter. Actions require an explicit observed-prompt capability. */
 (function(root){
   'use strict';
   const id=value=>typeof value==='string'&&/^[a-zA-Z0-9_-]{1,48}$/.test(value);
@@ -46,9 +46,51 @@
     }
     function visibility(){epoch++;clearTimeout(timer);request?.abort();
       if(documentImpl?.hidden)clear();else poll(epoch);}
+    async function action({action_id,request_id,policy,origin}) {
+      const ui=root.VampirLiveInteraction;
+      const current=()=>ui?.project(snapshot,botId,sessionId);
+      const initial=current(),descriptor=initial?.actions.find(a=>a.id===action_id&&a.enabled);
+      if(closed||!initial?.ready||!descriptor||!/^[a-f0-9]{32}$/.test(request_id)
+        ||!policy||Object.keys(policy).sort().join()!=='auto_quests,skip_dialogues'
+        ||typeof policy.auto_quests!=='boolean'||typeof policy.skip_dialogues!=='boolean'
+        ||!['manual','auto_skip'].includes(origin))throw Error('Действие недоступно для текущего состояния.');
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),3000);
+      const read=async response=>{if(!response.ok)throw Error('Управление недоступно.');const text=await response.text();
+        if(text.length>16384)throw Error('Превышен лимит ответа.');return JSON.parse(text);};
+      try {
+        const control=await read(await fetchImpl(base+'/control',{cache:'no-store',signal:controller.signal}));
+        if(control.bot_id!==botId||control.session_id!==sessionId||typeof control.token!=='string'||!/^[a-f0-9]{64}$/.test(control.token))
+          throw Error('Сессия изменилась.');
+        if(closed||!current()?.actions.some(a=>a.id===descriptor.id&&a.context===descriptor.context&&a.enabled))throw Error('Состояние изменилось.');
+        const result=await read(await fetchImpl(base+'/actions',{method:'POST',signal:controller.signal,
+          headers:{'Content-Type':'application/json','X-Session-Token':control.token},
+          body:JSON.stringify({bot_id:botId,session_id:sessionId,request_id,kind:descriptor.kind,context:descriptor.context,
+            arguments:descriptor.arguments,policy,origin})}));
+        if(result.bot_id!==botId||result.session_id!==sessionId||result.request_id!==request_id)throw Error('Ответ другой сессии');
+        return result;
+      }finally{clearTimeout(timeout);}
+    }
+    async function policy(value) {
+      const ui=root.VampirLiveInteraction,view=ui?.project(snapshot,botId,sessionId);
+      if(closed||!view?.ready||!value||Object.keys(value).sort().join()!=='auto_quests,skip_dialogues'
+        ||typeof value.auto_quests!=='boolean'||typeof value.skip_dialogues!=='boolean')throw Error('Настройки управления недоступны.');
+      const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),3000);
+      const read=async response=>{if(!response.ok)throw Error('Настройка не подтверждена');const raw=await response.text();
+        if(raw.length>16384)throw Error('Превышен лимит ответа');return JSON.parse(raw);};
+      try{
+        const control=await read(await fetchImpl(base+'/control',{cache:'no-store',signal:controller.signal}));
+        if(closed||control.bot_id!==botId||control.session_id!==sessionId||!/^[a-f0-9]{64}$/.test(control.token))throw Error('Сессия изменилась');
+        const result=await read(await fetchImpl(base+'/policy',{method:'POST',signal:controller.signal,
+          headers:{'Content-Type':'application/json','X-Session-Token':control.token},
+          body:JSON.stringify({bot_id:botId,session_id:sessionId,policy:value})}));
+        if(result.status!=='policy_updated'||result.bot_id!==botId||result.session_id!==sessionId
+          ||result.policy?.skip_dialogues!==value.skip_dialogues||result.policy?.auto_quests!==value.auto_quests)
+          throw Error('Настройка не подтверждена');return result;
+      }finally{clearTimeout(timeout);}
+    }
     documentImpl?.addEventListener('visibilitychange',visibility);
     poll(epoch);
-    return {get state(){return snapshot&&JSON.parse(JSON.stringify(snapshot));},
+    return {get state(){return snapshot&&JSON.parse(JSON.stringify(snapshot));},action,policy,
       setEntityPage(page){if(![0,1].includes(page)||closed)throw Error('Неверная страница окружения.');
         if(page===entityPage)return;entityPage=page;visibility();},
       dispose(){if(closed)return;closed=true;epoch++;clearTimeout(timer);request?.abort();

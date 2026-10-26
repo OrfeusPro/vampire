@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Пользователь уточнил ручные сообщения и два режима: default «Пропускать диалоги»
+включён; auto quest запускается кликом на задание, на manual NPC approach ждёт.
+Панель / модель / adapter contract готовы и проверены на fixture; настоящий
+онлайн-owner ещё не публикует interaction и не принимает /actions /policy.
+Далее source-bound decoder сообщений и owner-side control API / handlers.
+Не выдавать fixture-клик за игровое действие. [Проверка](../vampir/UI-LIVE-MESSAGES.md).
+
 Current QuestUpdate serializer / mirror / настоящий archive IO проверены:
 81 тело, 29 short prefixes, 6 отказов записи. Portable codec допускает current
 SHA, typed outbound frame сохраняет sequence / key / backpressure владельца.
