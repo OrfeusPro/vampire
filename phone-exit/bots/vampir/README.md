@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+120 native rehash cases подтвердили сохранение nodes/payload и slot iteration;
+16 growth cases — расчёт ёмкости / замену pointer с явным realloc fixture.
+CSV fresh load / whole insertion chain / overrides ещё открыты; order не допущен.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-MAP-GROWTH-11316.md).
+
 CSV cell / SSO getter и настоящий Windows atoi прошли 14 случаев; 8 zero cases
 прошли через native service-group gate без skip, 3 column bounds — без CRT.
 Row creation / fresh load / growth ещё открыты, active step не допущен.

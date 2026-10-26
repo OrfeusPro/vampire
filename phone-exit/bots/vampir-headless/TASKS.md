@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Rehash прошёл 120 native layouts, growth — 16 helper cases с явным allocator
+fixture. Nodes сохраняются, iterator идёт по occupied slots; далее whole
+insertion/growth chain и CSV row creation/fresh load/overrides, без live admission.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-MAP-GROWTH-11316.md).
+
 Exact CSV cell / SSO leaves + local CRT atoi подтвердили zero conversion и
 нулевой service gate: 14 conversions / 8 integrated gate / 3 bounds. Далее
 row creation, sparse growth/rehash и fresh loading; active step не допущен.

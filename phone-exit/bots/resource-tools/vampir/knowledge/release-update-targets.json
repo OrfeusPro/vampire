@@ -3331,7 +3331,8 @@
         "replay-quest-progress-11316.py",
         "replay-quest-update-wire-11316.py",
         "replay-quest-csv-projection-11316.py",
-        "replay-quest-empty-group-11316.py"
+        "replay-quest-empty-group-11316.py",
+        "replay-quest-map-growth-11316.py"
       ],
       "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом.",
       "automation": {
@@ -3489,6 +3490,48 @@
                 "required_checks": [
                   "native-quest-empty-group-11316"
                 ]
+              },
+              {
+                "address": "0x145b73290",
+                "scope": "Native rehash/growth/iterator with bounded allocator/hash fixtures; no CSV order/live admission.",
+                "required_checks": [
+                  "native-quest-map-growth-11316"
+                ]
+              },
+              {
+                "address": "0x145b72e70",
+                "scope": "Native rehash/growth/iterator with bounded allocator/hash fixtures; no CSV order/live admission.",
+                "required_checks": [
+                  "native-quest-map-growth-11316"
+                ]
+              },
+              {
+                "address": "0x1416166c0",
+                "scope": "Native rehash/growth/iterator with bounded allocator/hash fixtures; no CSV order/live admission.",
+                "required_checks": [
+                  "native-quest-map-growth-11316"
+                ]
+              },
+              {
+                "address": "0x141437520",
+                "scope": "Native rehash/growth/iterator with bounded allocator/hash fixtures; no CSV order/live admission.",
+                "required_checks": [
+                  "native-quest-map-growth-11316"
+                ]
+              },
+              {
+                "address": "0x141436d10",
+                "scope": "Native rehash/growth/iterator with bounded allocator/hash fixtures; no CSV order/live admission.",
+                "required_checks": [
+                  "native-quest-map-growth-11316"
+                ]
+              },
+              {
+                "address": "0x14142e6f0",
+                "scope": "Native rehash/growth/iterator with bounded allocator/hash fixtures; no CSV order/live admission.",
+                "required_checks": [
+                  "native-quest-map-growth-11316"
+                ]
               }
             ],
             "evidence": [
@@ -3498,7 +3541,8 @@
               "evidence/scenarios/HEADLESS-QUEST-TASK-LOOKUP-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-CSV-PROJECTION-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-EMPTY-GROUP-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-EMPTY-GROUP-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-MAP-GROWTH-11316.md"
             ]
           }
         ]

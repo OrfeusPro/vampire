@@ -1,0 +1,24 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-ba88307b3fbf": "63d036898b1a83e98a471b57c499f0dc45bf9c425fef288eb46be311a57c9e1a",
+    "run-774fa227622a": "7cb4617867839a921143b9c7e8a0d81b402478c1b171768d5db1e2e7ece3af99",
+    "run-4f4fd948c8b9": "3a7080a4d4728be20c99f27811067fe662643a94e98bb389a40ba2bf9691bdf6"
+  },
+  "functions": [
+    "0x145b73290",
+    "0x145b72e70",
+    "0x1416166c0",
+    "0x141437520",
+    "0x141436d10",
+    "0x14142e6f0"
+  ],
+  "leaves": {
+    "0x141491da0": "448bc2488bd1488b0d1be4e5094885c97504488bc2c3488b0148ff6060"
+  },
+  "limits": [
+    "Hash, bucket allocate/free and realloc are bounded fixtures; actual native allocator implementation not executed.",
+    "Growth uses null allocator-size provider and success-only realloc fixture; no allocation failures or nonnull rounding provider.",
+    "No full CSV load, row creation, service policy or overrides; live order remains unadmitted."
+  ]
+}
