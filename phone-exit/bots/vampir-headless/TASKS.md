@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current QuestUpdate serializer / mirror / настоящий archive IO проверены:
+81 тело, 29 short prefixes, 6 отказов записи. Portable codec допускает current
+SHA, typed outbound frame сохраняет sequence / key / backpressure владельца.
+Это не выполнение квеста: selected state / action API / pump ещё не подключены,
+живых команд нет. [Wire proof](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE-11316.md).
+
 Подготовлена session-bound очередь намерений quest / dialogue / skip / equip:
 5 тестов, 50 synthetic accounts, дедупликация, stale context, expiry и unknown
 без слепого повтора. Это основа, не работающие игровые действия: API / pump /

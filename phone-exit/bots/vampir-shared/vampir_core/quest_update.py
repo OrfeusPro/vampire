@@ -1,9 +1,9 @@
-"""Current ID 1810 wire shape only; field meaning and sending are not inferred."""
+"""Verified ID1810 wire for historical/current source; action permission is separate."""
 from dataclasses import dataclass
 import math
 import struct
 
-from .world_move_start import SOURCE_SHA256
+from .world_move_start import SOURCE_SHA256,CURRENT_PROBE_SOURCE
 
 _WIRE = struct.Struct('<fffQQB')
 
@@ -20,7 +20,7 @@ class QuestUpdate:
 
 
 def encode_quest_update(value, *, source_sha256):
-    if source_sha256 != SOURCE_SHA256:
+    if source_sha256 not in (SOURCE_SHA256,CURRENT_PROBE_SOURCE):
         raise ValueError('Unsupported quest update source')
     if not isinstance(value, QuestUpdate):
         raise TypeError('Expected QuestUpdate')
@@ -43,7 +43,7 @@ def encode_quest_update(value, *, source_sha256):
 
 
 def decode_quest_update(body, *, source_sha256):
-    if source_sha256 != SOURCE_SHA256:
+    if source_sha256 not in (SOURCE_SHA256,CURRENT_PROBE_SOURCE):
         raise ValueError('Unsupported quest update source')
     if type(body) is not bytes or len(body) != _WIRE.size:
         raise ValueError('Expected 29-byte quest update body')

@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Current QuestUpdate codec прошёл 81 native тело, 29 коротких входов и 6 отказов
+записи с настоящими constructors / archive IO. Добавлен typed outbound frame;
+selected task / action API / pump ещё открыты, живые команды не отправлялись.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE-11316.md).
+
 Основа очереди действий прошла 5 тестов с 50 synthetic accounts: намерения
 quest / dialogue / skip / equip изолированы, неизвестный исход блокирует повтор.
 Игровые handlers / API / UI ещё не подключены; текущую сессию не перезапускали.
