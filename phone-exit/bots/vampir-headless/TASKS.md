@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+CSV tokenizer 1445f6520 исполнил 6 исходных строк QuestInfoId 110120 и 8 lexical
+cases. Пустые service-group cells прошли native getter / actual Windows atoi /
+zero gate; EOF очищает cells. Storage/IO fixtures явные. Далее native record
+creation/copy и accepted stores вместе с map chain, fresh load/overrides;
+live order admission false, сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-CSV-ROW-11316.md).
+
 Whole fresh-map chain прошёл 420 inserts / 840 existing lookups в 6 sequences;
 actual FindOrAdd / insert / growth / rehash сохраняют slot order с явными внешними
 fixtures. Далее accepted CSV row creation / load / overrides перед live admission.

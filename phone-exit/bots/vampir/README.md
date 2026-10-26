@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Native CSV tokenizer прочитал 6 исходных строк «Зова крови» и 8 lexical cases;
+созданные пустые service-group cells прошли actual getter / Windows atoi / zero
+filter. IO/string/vector storage — явные fixtures. Whole loader / record creation /
+overrides ещё нужны перед live order admission; действующая сессия сохраняется.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-CSV-ROW-11316.md).
+
 FindOrAdd→insert→growth→rehash проверены совместно: 6 fresh-map sequences,
 420 inserts / 840 existing lookups. Порядок slots/payload сохраняется с явными
 allocator/hash/bit-append fixtures. Далее CSV accepted-row creation/loading;
