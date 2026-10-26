@@ -15,6 +15,8 @@ Whole CharacterOther прошёл 1797 native сценариев; добавле
 Portable composition полного SightEnter добавлена с общим бюджетом; mixed fixtures
 и static outer contract проверены. Whole native callbacks / copy / cleanup и live
 подключение ещё впереди. [Композиция и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-COMPOSITION-11316.md).
+Outer copy / cleanup выгружены: вложения требуют отдельных owners, shallow copy
+недостаточен. [Владение и следующий native-тест](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-COPY-11316.md).
 [Вложенные записи и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-EFFECTS-11316.md).
 [Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
 
