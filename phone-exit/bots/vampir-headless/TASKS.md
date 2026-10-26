@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current existing-record helper проверен в 384 native сценариях;
+целое повторное применение ID 9905 и drain ещё открыты.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-POPULATED-11316.md).
+OnePlus-сессия завершилась по TTL; повтор до мира получил BlockedIp.
+Пользователь создаёт новый телефон; до сообщения о готовности вход не повторять.
+[Живые итоги](../resource-tools/vampir/knowledge/evidence/maps/HEADLESS-LIVE-MAP-CLOSE-11316.md).
+
 Fresh tutorial application / bootstrap перенесён на current SHA: 192 native
 сценария с guards прошли. Далее populated maps / drain и происхождение policy
 row+0x50 / timer row+0x60; launch остаётся fixture.

@@ -1,0 +1,9 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-9d8a01b69502": "68593ed82aaf1329046a188471760bda8700f0919c1cc33b5864a2a22c9ab249"
+  },
+  "functions": {
+    "apply": "0x1464d01a0"
+  }
+}

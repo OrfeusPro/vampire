@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Обновление существующих tutorial server/local records проверено в 384 native
+сценариях; gate / insertion / launch остаются fixtures.
+[Границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-POPULATED-11316.md).
+Часовая живая сессия завершилась по TTL: 701 Ping / 702 ответа, один пустой
+ID 302 без ошибок. Повтор получил BlockedIp; ожидается новый телефон.
+[Итоги](../resource-tools/vampir/knowledge/evidence/maps/HEADLESS-LIVE-MAP-CLOSE-11316.md).
+
 Current fresh-startup application / bootstrap проверен в 192 native сценариях:
 серверная запись отделена от локального selector. Table / storage / launch —
 явные fixtures; действия и populated state ещё не перенесены.

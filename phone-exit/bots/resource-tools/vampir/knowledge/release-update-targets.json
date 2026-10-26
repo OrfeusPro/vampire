@@ -3044,7 +3044,8 @@
       "tools": [
         "replay-tutorial-update-11316.py",
         "replay-tutorial-dispatch-11316.py",
-        "replay-tutorial-startup-11316.py"
+        "replay-tutorial-startup-11316.py",
+        "replay-tutorial-populated-11316.py"
       ],
       "rule": "При новом SHA искать кандидата ID 9905 по имени / vtable и проверять whole readers / callbacks / bindings. Совпадение формата не разрешает tutorial ack, применение локальной задачи или квестовое действие.",
       "automation": {
@@ -3174,17 +3175,26 @@
                 "required_checks": [
                   "native-tutorial-startup-11316"
                 ]
+              },
+              {
+                "address": "0x1464d01a0",
+                "scope": "Whole current existing-record lookup / collision walk and writes; absent insertion, gate and launch fixtures. Not whole ID9905 reapplication or queue consumer.",
+                "required_checks": [
+                  "native-tutorial-populated-11316"
+                ]
               }
             ],
             "tools": [
               "replay-tutorial-update-11316.py",
               "replay-tutorial-dispatch-11316.py",
-              "replay-tutorial-startup-11316.py"
+              "replay-tutorial-startup-11316.py",
+              "replay-tutorial-populated-11316.py"
             ],
             "evidence": [
               "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md",
               "evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md",
-              "evidence/scenarios/HEADLESS-TUTORIAL-STARTUP-11316.md"
+              "evidence/scenarios/HEADLESS-TUTORIAL-STARTUP-11316.md",
+              "evidence/scenarios/HEADLESS-TUTORIAL-POPULATED-11316.md"
             ]
           }
         ]

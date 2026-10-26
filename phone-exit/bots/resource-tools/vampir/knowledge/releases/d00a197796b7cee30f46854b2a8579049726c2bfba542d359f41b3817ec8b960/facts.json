@@ -10219,6 +10219,63 @@
       "question": "live-tutorial-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current populated map application / drain, completion gate, происхождение row fields и callbacks, связь готовности с headless lifecycle и новое реальное сообщение обучения."
+    },
+    {
+      "addresses": [
+        "0x1464d01a0"
+      ],
+      "checks": [
+        {
+          "cache_key": "45c3c95fb7f68d7cd8bb2d8e7d980fcc6acc6e4b602121401d4002c4572fc4c0",
+          "id": "native-tutorial-populated-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f252d9ca8dc27461b49be61178926e6e38d3d35badb6738e12b8feea0876db31\\manifest.json",
+          "sha256": "f252d9ca8dc27461b49be61178926e6e38d3d35badb6738e12b8feea0876db31",
+          "state": "passed"
+        },
+        {
+          "cache_key": "27221d44ffe927e8f6f6833fad52ffbeb4ba7c9a5301aa90a8c16daeb71b7a5a",
+          "id": "native-tutorial-startup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\42c8606284597624a5992c5db6e66fe84668c0b15e42a3c70355e601d56f0f80\\manifest.json",
+          "sha256": "42c8606284597624a5992c5db6e66fe84668c0b15e42a3c70355e601d56f0f80",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5b2bb69b5a09a5339de5a65cb7be9d3fdaa44d15535c563e0f98a876f59459bd",
+          "id": "native-tutorial-dispatch-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6b5b39e933671a1c3d03776d1daa3a0b94f4a0a6182145fdeed33230fb820e4e\\manifest.json",
+          "sha256": "6b5b39e933671a1c3d03776d1daa3a0b94f4a0a6182145fdeed33230fb820e4e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ecfc9714e55d430713382eeac7f8f805fbe2cbac76033c76558c03188b665d87",
+          "id": "live-tutorial-state-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6\\manifest.json",
+          "sha256": "d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current helper 1464d01a0 проверен в 384 native комбинациях. Lookup и collision walks существующих server/local maps, копирование полей и локальное продвижение исполняются native. Server получает все четыре поля; local сохраняет raw10, обновляет остальные поля и при gate AL=0 продвигается согласно keep с uint32 overflow. Проверены inline/external buckets, наличие/отсутствие записей, states 0/1/2/3, selector 0/2/0xffffffff, оба keep и gate; посторонние записи и guards сохранены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-POPULATED-11316.md",
+          "sha256": "fc36d15320fbf28ae980172647171b0953c80b2028b915f461e32aba6c00ccac"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-9d8a01b69502\\details.json",
+          "sha256": "68593ed82aaf1329046a188471760bda8700f0919c1cc33b5864a2a22c9ab249"
+        }
+      ],
+      "id": "fcf02463d0b168c888ac1294362540ec70db371a2db1bd357fccf1848c15f6a3",
+      "limits": [
+        "Absent-server insertion, gate outcome и task launch являются fixtures.",
+        "Нет whole повторного применения ID9905 / map replacement, rehash, native allocation, completion gate, queue consumer и live readiness proof.",
+        "Игровые команды не добавлялись; runtime остаётся last_received_message."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить current queue consumer и loader/callbacks, после готовности нового телефона получить live ID9905 без слепого ack.",
+      "question": "live-tutorial-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current queue consumer, missing-key pruning / replacement, происхождение policy/timer fields и live tutorial state."
     }
   ],
   "schema": 1,
