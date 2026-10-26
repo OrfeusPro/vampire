@@ -22,6 +22,30 @@ def owner(key=42,stats=()):
 
 
 class LiveSessionTests(unittest.TestCase):
+    def test_readiness_precedes_workers_and_lifetime_stops_owner(self):
+        import time
+        from urllib.request import urlopen
+        path=Path(__file__).parent/'vampir-headless/run-live-sessions.py'
+        spec=importlib.util.spec_from_file_location('test_live_lifetime',path)
+        launcher=importlib.util.module_from_spec(spec);spec.loader.exec_module(launcher)
+        accounts=[dict(bot_id='limited',email='fixture@example.com',socks_port=1087,region='JP',server_id=256,character_index=0)]
+        notices=[]
+        def ready(value):
+            with urlopen('http://127.0.0.1:'+str(value['port'])+'/sessions',timeout=2) as response:
+                notices.append(json.load(response))
+        def run(email,**kwargs):
+            self.assertEqual(len(notices),1)
+            session=kwargs['session_control'];deadline=time.monotonic()+3
+            while not session.stop_requested and time.monotonic()<deadline:time.sleep(.01)
+            self.assertTrue(session.stop_requested)
+            return dict(status='fixture',game=dict(status='session_stopped'))
+        passwords={'limited':'synthetic'}
+        with redirect_stdout(io.StringIO()):
+            result=launcher.run_accounts(accounts,passwords,manifest=Path('fixture'),client_version=1,
+                probe=N(run=run),port=0,max_runtime_seconds=1,ready_callback=ready)
+        self.assertFalse(passwords);self.assertEqual(result[0]['game_status'],'session_stopped')
+        self.assertEqual(notices[0]['sessions'][0]['state'],'connecting')
+
     def test_fifty_fixture_worlds_keep_individual_stats_with_bounded_sign_in(self):
         import time
         from vampir_core.stat_change import SOURCE_SHA256

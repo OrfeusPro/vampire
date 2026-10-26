@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Windows --detached owner пережил выход dispatcher в тесте; новый Redmi / HK
+вошёл в мир и получил реальный список с 110120. Сессию сохранять; квестовое
+действие и перезапуск самого Codex с онлайн-персонажем ещё не проверены.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-DETACHED-OWNER-11316.md).
+
 Current sender 145d85360 с native hash lookup / state getter / position wrapper
 прошёл 640 сценариев; 160 send — fixture. Далее связать incoming Quest с model
 key / task field, callback панели и local route executor. Кнопку не выдавать

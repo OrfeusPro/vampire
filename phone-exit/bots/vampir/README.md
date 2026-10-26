@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Добавлен явный Windows --detached запуск владельца сессий вне job Codex:
+anonymous pipe для пароля, readiness API и срок 24 часа. Проверены выход
+dispatcher / Stop и 50 synthetic sessions. Новый Redmi / HK вошёл в мир:
+получен живой ID 1854 / Quest 110120; heartbeat 232 / 232 после выхода launcher.
+Сессию сохраняем. Перезапуск самого Codex с онлайн-персонажем ещё не проверен.
+[Режим и реальные границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-DETACHED-OWNER-11316.md).
+
 Current QuestUpdate sender / lookup коллизий / state getter / position wrapper
 проверены целиком в 640 native сценариях, 160 дошли до send fixture.
 Engine / сеть / destructor — fixtures; маршрут и выполнение квеста не проверены.

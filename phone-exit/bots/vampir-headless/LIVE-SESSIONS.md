@@ -1,5 +1,29 @@
 # Изолированные живые сессии
 
+## Отдельный запуск Windows
+
+`run-live-sessions.py --detached` запускает owner вне job вызывающего приложения.
+После readiness можно закрыть запускающую консоль. Пароль вводится скрыто в
+parent и передаётся child через anonymous pipe; в accounts JSON его нет.
+API ready ещё не означает вход в мир. По умолчанию отдельный запуск ограничен
+24 часами, Stop работает через обычный локальный API. Phone Exit / телефон
+должны продолжать работу отдельно. Пример дополнительных флагов к обычной команде:
+
+```powershell
+--detached --result "F:/PhoneExit Resources/Vampir/live-checks/my-run/result.json"
+```
+
+Каталог результата должен существовать, файл должен быть новым. Без --result
+терминальный статус на диск не записывается. В файле только итоговые коды,
+без паролей, email и содержимого трафика. Отказ Windows разрешить breakaway
+завершает запуск ошибкой; менее независимый режим скрытно не включается.
+Проверены child после выхода dispatcher и lifetime stop. Itel получил BlockedIp,
+новый Redmi вошёл в мир и сохранил сессию после выхода launcher; перезапуск
+самого Codex с онлайн-персонажем ещё открыт.
+[Проверки и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-DETACHED-OWNER-11316.md).
+
+## Данные
+
 Текущий ID 9905 передаёт в snapshot / HTTP `tutorial`: последнее полученное
 сообщение с flag, raw08 / raw0c / raw10 / state, максимум 64 записи / 835 байт.
 `semantics=last_received_message`, `applied_to_local_task=false`; это не активный
