@@ -121,6 +121,9 @@ public class InspectVampirSdkProfile extends GhidraScript {
                 }
             }
             row.add("tail_call_models", tailModels);
+            if (source.has("requested_tail_scans") && source.getAsJsonObject("requested_tail_scans").has(ownerKey)) {
+                row.add("linear_tail_scan", source.getAsJsonObject("requested_tail_scans").get(ownerKey).deepCopy());
+            }
             // The result-code mapper reached from a selected popup is about 42 KiB.
             // Keep a finite budget for these explicitly referenced functions.
             if (owner.getBody().getNumAddresses() > (args.length >= 4 ? 65536 : 20000)) {

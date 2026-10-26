@@ -27,6 +27,20 @@ def reviewed_tail_calls(rows, explicit_roots):
             and len(bytes.fromhex(row['bytes'])) == 5 and row['bytes'].startswith('e9')]
 
 
+def scan_tail_calls(native,image,root,explicit_roots):
+    """Linear scan is optional navigation; Ghidra block coverage remains mandatory.
+
+    A PE unwind range can also contain switch data. Never model tails from its
+    partially decoded prefix, and never suppress malformed-PE/budget errors.
+    """
+    try:
+        rows=[row for part in native.decode_ranges(image,{root}) for row in part['instructions']]
+    except ValueError as error:
+        if str(error)!='Fragment not fully decoded':raise
+        return [],dict(state='deferred_to_ghidra',reason='linear_fragment_not_fully_decoded',tail_models_applied=False)
+    return reviewed_tail_calls(rows,explicit_roots),dict(state='complete')
+
+
 def collect(index, args, request, addresses):
     workflow = index.extension('research-workflow')
     sha = request['source_sha256']
@@ -39,7 +53,7 @@ def collect(index, args, request, addresses):
         raise ValueError('Only explicit request addresses may be exported')
     native = index.extension('build-native-entry-code')
     image = native.Image(source.read_bytes())
-    function_ranges, tail_calls = {}, {}
+    function_ranges, tail_calls, tail_scans = {}, {}, {}
     explicit_roots = set()
     for item in request['functions']:
         at = int(item['address'], 16)
@@ -56,8 +70,7 @@ def collect(index, args, request, addresses):
             raise ValueError('Requested unwind range budget exceeded')
         function_ranges[address] = [dict(begin=hex(image.pe.base+begin),end=hex(image.pe.base+end))
                                     for begin,end,_ in ranges]
-        rows = [row for part in native.decode_ranges(image, {image.roots[fragment]}) for row in part['instructions']]
-        tail_calls[address] = reviewed_tail_calls(rows, explicit_roots)
+        tail_calls[address],tail_scans[address]=scan_tail_calls(native,image,image.roots[fragment],explicit_roots)
     lock_path = index.HERE / 'ghidra-tools.lock.json'
     lock = index.read_json(lock_path)
     tools = args.root / 'tools/ghidra'
@@ -82,7 +95,7 @@ def collect(index, args, request, addresses):
     out.mkdir(parents=True)
     context, references = out / 'source.json', out / 'references.json'
     context.write_bytes(workflow.canonical(dict(new_source_sha256=sha, requested_unwind_ranges=function_ranges,
-                                              requested_tail_calls=tail_calls)))
+                                              requested_tail_calls=tail_calls,requested_tail_scans=tail_scans)))
     references.write_bytes(workflow.canonical(dict(source_sha256=sha,
         references=[dict(function=at, reason='Explicit request/unwind root; no role assigned') for at in addresses])))
     command = command_for(launcher=tools / lock['ghidra']['directory'] / 'support/analyzeHeadless.bat',

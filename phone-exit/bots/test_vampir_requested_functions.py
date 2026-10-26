@@ -106,6 +106,21 @@ class RequestedFunctionTests(unittest.TestCase):
                 self.tool.collect(self.index.api(),self.args,self.request,[self.at])
         self.assertFalse(list((self.root/'ghidra/request-exports').glob('*/*/provenance.json')))
 
+    def test_deferred_linear_scan_still_requires_ghidra_block_coverage(self):
+        scan=dict(state='deferred_to_ghidra',reason='linear_fragment_not_fully_decoded',tail_models_applied=False)
+        def partial(command, **kwargs):
+            context=json.loads(Path(command[command.index('-postScript')+2]).read_text('utf-8'))
+            self.assertEqual(context['requested_tail_scans'][self.at],scan)
+            self.assertEqual(context['requested_tail_calls'][self.at],[])
+            result=self.fake_jvm(command,**kwargs)
+            path=Path(command[command.index('-postScript')+3])/'details.json'
+            data=json.loads(path.read_text('utf-8'));data['functions'][0]['block_coverage_complete']=False
+            path.write_text(json.dumps(data),'utf-8');return result
+        with patch.object(self.tool,'scan_tail_calls',return_value=([],scan)),patch.object(self.tool.subprocess,'run',side_effect=partial):
+            with self.assertRaisesRegex(ValueError,'block coverage is incomplete'):
+                self.tool.collect(self.index.api(),self.args,self.request,[self.at])
+        self.assertFalse(list((self.root/'ghidra/request-exports').glob('*/*/provenance.json')))
+
     def test_real_exports_match_snapshots_and_instruction_shapes(self):
         native=self.index.extension('build-native-entry-code')
         old_sha='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'

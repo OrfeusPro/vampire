@@ -1,4 +1,6 @@
 import unittest
+from types import SimpleNamespace
+from unittest.mock import Mock
 from test_vampir_update_contracts import load
 
 
@@ -19,6 +21,21 @@ class RequestedTailCallsTests(unittest.TestCase):
     def test_local_branch_is_not_reclassified(self):
         tool = load('collect-requested-functions')
         self.assertEqual(tool.reviewed_tail_calls([self.row(), self.row(address=0x200)], {0x200}), [])
+
+    def test_partial_linear_fragment_never_supplies_tail_models(self):
+        tool=load('collect-requested-functions')
+        native=SimpleNamespace(decode_ranges=Mock(side_effect=ValueError('Fragment not fully decoded')))
+        tails,scan=tool.scan_tail_calls(native,object(),(1,2,3),{0x200})
+        self.assertEqual(tails,[]);self.assertEqual(scan['state'],'deferred_to_ghidra')
+        self.assertFalse(scan['tail_models_applied'])
+        native.decode_ranges=Mock(side_effect=ValueError('Invalid unwind chain'))
+        with self.assertRaisesRegex(ValueError,'Invalid unwind chain'):tool.scan_tail_calls(native,object(),(1,2,3),{0x200})
+
+    def test_complete_scan_preserves_only_reviewed_explicit_tails(self):
+        tool=load('collect-requested-functions')
+        native=SimpleNamespace(decode_ranges=lambda image,roots:[dict(instructions=[self.row()])])
+        tails,scan=tool.scan_tail_calls(native,object(),(1,2,3),{0x200})
+        self.assertEqual(len(tails),1);self.assertEqual(scan,dict(state='complete'))
 
 
 if __name__ == '__main__':

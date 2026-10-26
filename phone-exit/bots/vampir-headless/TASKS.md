@@ -1,9 +1,9 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
-Static source-bound проверка связала model global / constructor / virtual +0x48
-с применением progress в task object и state byte record+0x28. Подтверждены 6 roots;
-factory / task virtual copy и lifecycle ещё не проверены native replay.
-[Новый путь исследования](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-MODEL-BINDING-11316.md).
+324 native сценария существующего matching task подтвердили progress copy,
+state ordering и sender index getter. Factory / case 6 constructor / 23 task
+tables связаны статически; whole replacement / lifecycle и table order ещё нужны.
+[Результат и следующий шаг](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-STATE-APPLICATION-11316.md).
 
 Очередь подключена к новому HTTP API /actions и /policy: 5 loopback тестов,
 50 synthetic sessions, точные owner offers, повтор без повторной отправки,
