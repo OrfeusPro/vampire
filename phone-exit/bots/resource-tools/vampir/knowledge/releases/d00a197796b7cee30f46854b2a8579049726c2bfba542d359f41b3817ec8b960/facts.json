@@ -10405,6 +10405,36 @@
       "question": "live-tutorial-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Активный локальный шаг, current callbacks и действие квеста."
+    },
+    {
+      "addresses": [
+        "0x1456b70d0",
+        "0x1457a66b0",
+        "0x145828a10"
+      ],
+      "checks": [],
+      "conclusion": "Входящий ID 1854, посчитанный живой Itel-сессией, связан с PktQuestSyncNotify. Фактический constructor выбирает nested table 149948c10 / reader 1457a66b0 для packet+0x10; descriptor коллекции 149949cf8 и trailing uint64 проверены статически по текущему SHA. Правая панель уже принимает данные адаптера, но действующий owner не публикует декодированный список.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-SYNC-ENTRY-11316.md",
+          "sha256": "6d543ce51e7a648add61c73a65a1bfbe4d7dbd73bad474f83e1f78964f59e295"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b6b0576b96ef\\details.json",
+          "sha256": "5aafa2a15deb93e9b38935b5d4ae3d87e0fe688da3d43d18ce0686c2416cbba6"
+        }
+      ],
+      "id": "330193971d2fb52f7776bb6162f497d0b89b3cf8ccd7953a1ca2c91ed143c1bb",
+      "limits": [
+        "Metadata и имя не доказывают wire decoder или семантику активного задания.",
+        "Тела начальных пакетов не сохранялись; счётчики не восстанавливают список.",
+        "Старые quest checks требуют порта на текущий SHA; native replay и запросы квестов в этой проверке не выполнялись."
+      ],
+      "method": "static",
+      "next_check": "Целый current ID 1854 constructor / reader replay, затем bounded decoder / per-owner модель и правая панель через адаптер; сохранить подключённого персонажа.",
+      "question": "live-quest-sync-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Целый текущий codec callback / групп / Quest / Progress, применение handler, активная задача и названия; получение новых данных действующим owner без перезапуска."
     }
   ],
   "schema": 1,

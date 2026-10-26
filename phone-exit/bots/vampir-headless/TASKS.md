@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Правую панель заданий заполнять через общий адаптер из подтверждённого входящего
+состояния. В живой Itel-сессии посчитан ID 1854; current binding доказал
+PktQuestSyncNotify → nested reader 1457a66b0. Далее whole decoder / модель,
+без повторного ID 1801 и без разрыва персонажа.
+[Текущий источник и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SYNC-ENTRY-11316.md).
+
 Новый Itel дал реальный ID 9905 текущему decoder: 16 records, 1001 / raw0c 2 /
 raw10 1 / state 2. Не повторять прежний initial ack; проверить действие этого
 состояния через loader / callbacks. [Live](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-TUTORIAL-11316.md).
