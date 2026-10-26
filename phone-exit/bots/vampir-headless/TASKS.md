@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Exact CSV cell / SSO leaves + local CRT atoi подтвердили zero conversion и
+нулевой service gate: 14 conversions / 8 integrated gate / 3 bounds. Далее
+row creation, sparse growth/rehash и fresh loading; active step не допущен.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-EMPTY-GROUP-11316.md).
+
 Проверены native insert без rehash: 96 случаев append/free slot; 4 ветви group
 filter с missing/parsed-zero. Далее CSV empty parser, growth/rehash и fresh load
 iteration; order / active step не допущены. Сессию сохранять.

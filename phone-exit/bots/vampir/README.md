@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+CSV cell / SSO getter и настоящий Windows atoi прошли 14 случаев; 8 zero cases
+прошли через native service-group gate без skip, 3 column bounds — без CRT.
+Row creation / fresh load / growth ещё открыты, active step не допущен.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-EMPTY-GROUP-11316.md).
+
 96 native preallocated insert cases подтвердили append/free-slot и hash linking;
 4 missing/parsed-zero service-group ветви возвращают «не пропускать». Parser пустой
 ячейки, growth/rehash и полный порядок загрузки ещё открыты; active step не допущен.
