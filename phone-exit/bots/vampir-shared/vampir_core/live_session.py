@@ -12,7 +12,7 @@ from .environment import ObservedEnvironment,SOURCE_SHA256 as ENVIRONMENT_SOURCE
 from .tutorial_update import decode_tutorial_update
 from .quest_sync import decode_quest_sync
 from .world_move_start import CURRENT_PROBE_SOURCE
-from .action_queue import SessionActionQueue,SCHEMAS,digest,validate_policy
+from .action_queue import ActionNotQueued,SessionActionQueue,SCHEMAS,digest,validate_policy
 import json
 
 STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
@@ -37,6 +37,7 @@ class LiveSession:
         self._closed=False
         self._actions=None
         self._action_owner=None
+        self._action_connection=None
         self._action_offers=[]
         self._action_scope=None
         self._policy=dict(skip_dialogues=True,auto_quests=False)
@@ -247,6 +248,7 @@ class LiveSession:
             error='session_failed'
         with self._lock:
             if self._actions:self._actions.close(self._action_owner)
+            self._action_connection=None
             self._action_offers=[]
             if not self._closed:self._diagnostics.event('session_closed',error=error)
             self._closed=True
@@ -311,13 +313,18 @@ class LiveSession:
     def status(self):
         with self._lock:return dict(bot_id=self.bot_id,session_id=self.session_id,state=self._snapshot['state'])
 
-    def install_actions(self,owner_key,*,contracts):
+    def install_actions(self,owner_key,*,contracts,connection=None):
         """Explicit owner admission; no contracts or handlers are inferred from UI."""
         with self._lock:
             if self._closed or self._source is None or self._actions is not None:raise RuntimeError('Action owner unavailable')
+            if connection is not None:
+                from .game_connection import GameConnection
+                if type(connection) is not GameConnection or connection.world_entry is None or connection.world_entry.source_sha256!=self._source:
+                    raise ValueError('Explicit source-bound game connection required')
             self._actions=SessionActionQueue(bot_id=self.bot_id,session_id=self.session_id,source_sha256=self._source,
                 owner_key=owner_key,contracts=contracts)
             self._action_owner=owner_key
+            self._action_connection=connection
 
     def _action_ready(self):
         if self._closed or self._stop.is_set() or self._actions is None or self._snapshot['state']!='connected':
@@ -376,6 +383,34 @@ class LiveSession:
             if self._scope()!=self._action_scope or offered not in self._action_offers or (intent['origin']=='auto_skip' and not self._policy['skip_dialogues']):
                 self._actions.resolve(owner_key,intent['request_id'],status='failed');return None
             return dict(intent,current_policy=self._policy.copy())
+
+    def dispatch_quest_action(self,owner_key,request_id,*,context,payload):
+        """Owner supplies a source-verified selected-task payload, never HTTP.
+
+        This joins an already claimed intent to its bound connection. It does
+        not derive task index/target/vector or infer a server confirmation.
+        """
+        from .quest_update import QuestUpdate
+        with self._lock:
+            self._action_ready()
+            if owner_key is not self._action_owner:raise RuntimeError('Socket owner required')
+            def enqueue(intent):
+                offer={k:intent[k] for k in ('kind','context','arguments')}
+                if (self._action_connection is None or self._scope()!=self._action_scope
+                        or offer not in self._action_offers or intent['kind']!='quest_follow'
+                        or intent['origin']!='manual' or type(payload) is not QuestUpdate
+                        or payload.raw30!=int(intent['arguments']['quest_id'])):
+                    raise ActionNotQueued()
+                connection=self._action_connection
+                world=connection.world_entry
+                if (not connection.active or world is None or world.target_position is None
+                        or self._scope()!=(str(connection.selection.response.player.at(8)),world.target_position.world_id)):
+                    raise ActionNotQueued()
+                try:self._action_connection.queue_quest_update(payload,source_sha256=self._source)
+                except (ValueError,TypeError,BufferError,RuntimeError):raise ActionNotQueued() from None
+            result=self._actions.queue_claimed(owner_key,request_id,context=context,enqueue=enqueue)
+            self._diagnostics.event('action_dispatch',request_id=result['request_id'],action_kind=result['kind'],status=result['status'])
+            return dict(bot_id=self.bot_id,session_id=self.session_id,**result)
 
     def action_sent(self,owner_key,request_id):
         with self._lock:

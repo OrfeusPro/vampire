@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Очередь намерений соединена с typed QuestUpdate через owner dispatch и
+явно привязанный GameConnection. Пять локальных HTTP/socket-тестов проверяют
+повтор, scope/context, backpressure/unknown и изоляцию двух владельцев.
+Selected-state contracts в тестах synthetic; production loop и серверное
+подтверждение ещё не подключены. Живая сессия не перезапускалась.
+[Контракт и границы](../vampir-headless/ACTIONS.md#получение-намерения-и-постановка-questupdate-владельцем).
+
 Добавлен typed переход GameConnection → QuestUpdate outbound после accepted
 world completion и проверки source SHA. Четыре локальных socket-теста покрывают
 world gates, key rotation, sequence/backpressure и двух владельцев. API/queue

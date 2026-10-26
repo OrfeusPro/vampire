@@ -32,6 +32,10 @@ def intent_fingerprint(kind,context,arguments,policy,origin):
     return hashlib.sha256(json.dumps([kind,context,arguments,policy,origin],sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
 
 
+class ActionNotQueued(Exception):
+    """Trusted adapter proved that no outbound frame was accepted."""
+
+
 class SessionActionQueue:
     def __init__(self,*,bot_id,session_id,source_sha256,owner_key,contracts=None,clock=time.monotonic,
                  capacity=16,history=64,total_limit=4096):
@@ -130,6 +134,29 @@ class SessionActionQueue:
                 self._set(row,'executing');row['deadline']=self._clock()+10
                 return copy.deepcopy({key:row[key] for key in ('request_id','kind','context','arguments','contract','policy','origin')})
             return None
+
+    def queue_claimed(self,owner_key,request_id,*,context,enqueue):
+        """Bounded owner enqueue under the execution fence; never socket IO.
+
+        The callback must only append to the owner's nonblocking outbound queue.
+        ActionNotQueued proves a pre-enqueue refusal; any other exception has
+        unknown outcome and fences further actions. Repeated calls never enqueue.
+        """
+        self._owner(owner_key);digest(context)
+        if not callable(enqueue):raise TypeError('Owner enqueue callback required')
+        with self._lock:
+            self._refresh();row=self._records[request_id]
+            if row['status'] in TERMINAL or row['status']=='sent':return self._summary(row)
+            if row['status']!='executing':raise RuntimeError('Claim action before dispatch')
+            if row['context']!=context:
+                self._set(row,'failed','state_changed_before_send');return self._summary(row)
+            intent=copy.deepcopy({key:row[key] for key in ('request_id','kind','context','arguments','contract','policy','origin')})
+            try:enqueue(intent)
+            except ActionNotQueued:self._set(row,'failed','not_queued')
+            except Exception:self._set(row,'unknown','outcome_unconfirmed')
+            else:
+                self._set(row,'sent');row['deadline']=self._clock()+10
+            return self._summary(row)
 
     def sent(self,owner_key,request_id):
         self._owner(owner_key)

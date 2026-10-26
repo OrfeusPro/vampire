@@ -132,3 +132,43 @@ key rotation перед QuestUpdate, последовательность пак
 соединить через подтверждённый selected-state handler и decoder результата.
 Возврат метода означает постановку в outbound, не принятие сервером.
 Текущий уже онлайн-owner не перезапускался и игровых команд не получал.
+
+## Получение намерения и постановка QuestUpdate владельцем
+
+`install_actions(..., connection=game_connection)` дополнительно привязывает
+очередь к одному явному GameConnection той же source SHA. По умолчанию привязки
+нет, старые read-only / API тесты не устанавливают игровой sender. После claim
+owner может вызвать `dispatch_quest_action(key, request_id, context=..., payload=...)`.
+Payload — typed QuestUpdate, полученный от будущего подтверждённого обработчика
+выбранного шага; raw30 обязан совпасть с quest_id намерения. Индекс задачи,
+цель и вектор этот метод не вычисляет и не допускает автоматически.
+
+Под lock сессии повторно проверяются private owner key, connected/Stop,
+точный offer, context, character/world scope, bound connection identity/world,
+kind quest_follow, origin manual и payload. Выполняется только неблокирующий
+append в outbound этого connection; socket.send здесь не вызывается.
+HTTP не получает возможности передать payload/connection/contract или вызвать
+этот метод. Auto quest continuation и остальные kinds через него не выполняются.
+
+Очередь `queue_claimed` сохраняет execution fence во время append. Повтор
+sent/terminal receipt возвращается без append. Известный отказ до append
+(в том числе malformed payload и backpressure) — failed/not_queued. Неизвестная
+ошибка — unknown и блокировка последующих действий. Текст исключения не попадает
+в snapshot. Sent здесь означает принятие локальной outbound-очередью;
+серверное подтверждение по-прежнему требует отдельного owner resolve.
+Истечение executing до dispatch и close не разрешают позднюю постановку.
+При close сессия освобождает ссылку на bound connection; жизненным циклом
+самого сокета продолжает управлять его владелец.
+
+`test_vampir_quest_dispatch.py`: 5 интеграционных тестов с реальными loopback
+HTTP и локальными socketpair. Вход в synthetic мир проходит wire цепочку.
+Проверены end-to-end body/sequence, повтор HTTP/dispatch без нового пакета,
+отсутствие авто-confirm после локального приёма, чужой owner, stale context,
+смена world/offer, рассогласование bound world, закрытое соединение,
+неверный quest ID/NaN, backpressure, uncertain outcome после append,
+expiry/close и два независимых owner/connection. Contracts и выбранный шаг
+в этих тестах синтетические; сервер игры не вызывается.
+
+Production launcher/loop пока не устанавливает привязку и не вызывает dispatch.
+Нужны source-bound selected-state handler/offer builder и decoder результата.
+Текущий онлайн-процесс остаётся на прежнем коде без перезапуска.
