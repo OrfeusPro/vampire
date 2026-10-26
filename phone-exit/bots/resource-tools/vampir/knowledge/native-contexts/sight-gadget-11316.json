@@ -1,0 +1,109 @@
+{
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "function_budget": 26,
+  "budget_scope": "sight-gadget-record",
+  "functions": {
+    "input_constructor": "0x144aacb40",
+    "input_buffer_constructor": "0x144aac130",
+    "input_u16": "0x144aac250",
+    "input_u32": "0x144aac2a0",
+    "input_u64": "0x144aac4a0",
+    "input_bool": "0x144aac4f0",
+    "input_raw": "0x144aac5c0",
+    "input_string": "0x144aacfd0",
+    "input_std_string": "0x144aac390",
+    "input_utf8_length": "0x14144c440",
+    "input_utf8_convert": "0x1414466a0",
+    "input_utf8_core": "0x14143bd30",
+    "input_utf8_scalar": "0x14143b9a0",
+    "input_float": "0x144aac2f0",
+    "xyz": "0x144aacf40",
+    "yaw": "0x1458220f0",
+    "yaw_to_vector": "0x14150d330",
+    "vector_to_yaw": "0x14150b060",
+    "trig_sse2": "0x1487ea130",
+    "vector": "0x144aac530",
+    "keys_callback": "0x1456c6960",
+    "keys_wrapper": "0x1456bb710",
+    "optional_wrapper": "0x1456b7060",
+    "owner_reader": "0x145786290",
+    "constructor": "0x14578fe30",
+    "reader": "0x1457938b0"
+  },
+  "exports": {
+    "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+    "run-81d1e191e8c5": "0e221782b32811ff26ed05661b0a539e2781693a4c4c26357a77a39d3503e2e5",
+    "run-2fe73e379c6f": "f11b8a560a8a05ee7bffdd64cf18fb3c7cb87daa945758b3d98c74ce38b9b226",
+    "run-6a3c2fd0e46f": "311e436526b3750d8133625eaef6253be0711f4cba67dcc7464c362f6429cb19",
+    "run-8d16d199923d": "99d6eca0dde4045323344fb65e56e6d67e4ae64ce7eacb52cbed2e200d319fe9",
+    "run-0fccb70d7ac4": "d89778a74df16a8e5e1a7ca1eb1dc6c46930a3073b277610de4aac1cd477eabd",
+    "run-1c32ee68f2e9": "b0415da7ea786831a6e85648004851ef3557c0b122fc37a14d5cee446292a948",
+    "run-369ce78f3f4b": "e4c913b3121fe4a524465e109be56c23e62f5ddb36e50aa79f14da64225a3ea6",
+    "run-4ef2b735941d": "81d790be1d457535a6cf9ab5a70d56ea4208dc83c79783c0b64ef1ba75bc3a8e",
+    "run-529edd8cc6b1": "e5afea845d4188d050edb1ab981fde64866191832eab68037357a05aef752199",
+    "run-7500aee7895b": "529801f710fc98d0e74ae2f854935b9b72b9ed78d1b3a92a37deff656c4c743d",
+    "run-80386d1eb460": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1",
+    "run-afdc450ddbc3": "e193896000575bcbaba7b9dd3f592dbe8ccbde14f2c89ea4f4215b05d6954a8d",
+    "run-bbd19f52e20c": "531e4e96e2f8c5f5b32ab4f6a803bd21787698c55aedaad0dd3b5e24a8cc14b8",
+    "run-cfe2c30f67c4": "2af217923ac069c98bdcddec06073bc4d7b0a085df3a5dd931fcda9de4e1ee55",
+    "run-e6ab6fd97914": "9828dfd4a26853235433aa7b702150ceec552d05796a8bea82ce915332284454"
+  },
+  "leaves": {
+    "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+    "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad1a0": "895110c3",
+    "0x144aac240": "488b0141b80100000048ffa090000000",
+    "0x145820000": "488d0579181004c6410800488901488bc1c3",
+    "0x14144a800": "0f28d10f5415569a5907660f2f15cec65a0777040f57c0c3e980b33a07",
+    "0x141445800": "0f28d00f57c0660f2ec87506660f2ed074080f28c2e97d033b07c3",
+    "0x1487e9660": "833de980a802020f8d43110000e9be0a0000",
+    "0x1487e9680": "f20f10d0660fdb1504120b02660f2f152c120b027216660fefc9f20f10caf20f580d2a120b02660f14c1ebb4660f59d2660f5915f8110b02f20f100de0110b02660f5cca660f14c1c3",
+    "0x145782c10": "488d0529ec1904c641080048890133c048894110488941184889412048894128488bc1c3",
+    "0x1456d2030": "488bc2410fb7d0c740080000000039500c7408488bc8e915abd4fbc3"
+  },
+  "crt_imports": [
+    {
+      "address": "0x1487f5b97",
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "name": "atan2",
+      "descriptor_offset": 185288112,
+      "descriptor_bytes": "d8790b0b0000000000000000feeb0b0b20bd9908",
+      "thunk_offset": 185296168,
+      "thunk_bytes": "14e10b0b00000000",
+      "iat_address": 5513002608,
+      "dll_offset": 185325054,
+      "dll_bytes": "6170692d6d732d77696e2d6372742d6d6174682d6c312d312d302e646c6c00",
+      "name_offset": 185322262,
+      "name_bytes": "6174616e3200"
+    },
+    {
+      "address": "0x1487f5b9d",
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "name": "fmod",
+      "descriptor_offset": 185288112,
+      "descriptor_bytes": "d8790b0b0000000000000000feeb0b0b20bd9908",
+      "thunk_offset": 185296160,
+      "thunk_bytes": "1ce10b0b00000000",
+      "iat_address": 5513002600,
+      "dll_offset": 185325054,
+      "dll_bytes": "6170692d6d732d77696e2d6372742d6d6174682d6c312d312d302e646c6c00",
+      "name_offset": 185322270,
+      "name_bytes": "666d6f6400"
+    }
+  ],
+  "string_storage": {
+    "string_fixtures": {
+      "growth": "0x1421e7340",
+      "utf16_allocate": "0x141436cc0",
+      "assign": "0x1414277b0",
+      "free": "0x141483080",
+      "cpp_free": "0x141431f80",
+      "security": "0x1487e8ce0"
+    },
+    "cookie": "0x14b271780"
+  }
+}

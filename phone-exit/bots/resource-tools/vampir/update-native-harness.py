@@ -142,7 +142,20 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                         input_time='0x144aac470',guild_constructor='0x145799940',guild_reader='0x14579c6b0',
                         emblem_reader='0x145794bc0',time_constructor='0x1457a3500',time_reader='0x1457fdce0',
                         party_reader='0x1457a5770',option_reader='0x1457a5520'))
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (20 if npc_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8)))):
+    gadget_scope = (budget == 26 and context.get('budget_scope') == 'sight-gadget-record'
+                    and len(functions) == 26 and set(functions) == {int(v,16) for v in context.get('functions',{}).values()}
+                    and context.get('functions') == dict(
+                        input_constructor='0x144aacb40',input_buffer_constructor='0x144aac130',
+                        input_u16='0x144aac250',input_u32='0x144aac2a0',input_u64='0x144aac4a0',
+                        input_bool='0x144aac4f0',input_raw='0x144aac5c0',input_string='0x144aacfd0',
+                        input_std_string='0x144aac390',input_utf8_length='0x14144c440',
+                        input_utf8_convert='0x1414466a0',input_utf8_core='0x14143bd30',input_utf8_scalar='0x14143b9a0',
+                        input_float='0x144aac2f0',xyz='0x144aacf40',yaw='0x1458220f0',
+                        yaw_to_vector='0x14150d330',vector_to_yaw='0x14150b060',trig_sse2='0x1487ea130',
+                        vector='0x144aac530',keys_callback='0x1456c6960',keys_wrapper='0x1456bb710',
+                        optional_wrapper='0x1456b7060',owner_reader='0x145786290',
+                        constructor='0x14578fe30',reader='0x1457938b0'))
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope and not gadget_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (20 if npc_scope else (16 if gadget_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8))))):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

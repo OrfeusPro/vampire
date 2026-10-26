@@ -7,7 +7,9 @@ packet+50 прошёл 1734 whole native сценария; portable сохран
 повторы. [Массив и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-PROJECTILES-11316.md).
 GuildTinyInfo / PartyTag прошли 9590 native сценариев; portable записи добавлены.
 [Строки, emblem / time / options и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-SOCIAL-11316.md).
-Полные CharacterOther / Gadget / SightEnter и live подключение ещё впереди.
+Whole Gadget прошёл 1891 native сценарий, portable decoder добавлен.
+[Массив, optional owner и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-GADGET-11316.md).
+Полные CharacterOther / SightEnter и live подключение ещё впереди.
 [Вложенные записи и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-EFFECTS-11316.md).
 [Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
 
