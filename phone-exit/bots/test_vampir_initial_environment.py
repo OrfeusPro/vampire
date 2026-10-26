@@ -100,6 +100,7 @@ class InitialEnvironmentTests(unittest.TestCase):
                 values=[(j,0,2**63-1) for j in range(i*207,(i+1)*207)]
                 s.packet(322,struct.pack('<QH',42,len(values))+b''.join(struct.pack('<iQQ',*v) for v in values)+bytes(3),character_key=42,world_id=0xffffffff)
             keys=set()
+            s.packet(9905,struct.pack('<BH',1,64)+struct.pack('<IIIB',0xffffffff,0xffffffff,0xffffffff,255)*64)
             with LiveSessionServer(s,port=0) as server:
                 # Exercise separate connections repeatedly, including each tail.
                 for page in (0,1)*3:

@@ -2,6 +2,63 @@
   "schema": 1,
   "checks": [
     {
+      "id": "live-tutorial-state-11316",
+      "questions": [
+        "live-tutorial-state-11316",
+        "live-world-state-11316"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": false,
+      "test_pattern": "test_vampir_tutorial_update_11316.py",
+      "timeout_seconds": 120,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_environment.py",
+        "phone-exit/bots/vampir-shared/vampir_core/environment.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_session_server.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_diagnostics.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_names.py",
+        "phone-exit/bots/vampir-shared/vampir_core/npc_create_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_leave_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/npc_move_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-world-registrations-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-entry-window-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_enter_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/test_vampir_tutorial_update_11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-tutorial-update-11316.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/tutorial-update-11316.json"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e6ab6fd97914/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-80386d1eb460/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-edd5235c81bf/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-a096b2a0bf20/details.json"
+      ]
+    },
+    {
       "id": "live-map-projection-11316",
       "questions": [
         "live-world-state-11316"
@@ -44,7 +101,8 @@
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
         "phone-exit/bots/vampir-shared/vampir_core/stat_names.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-5e7bbc8a0f43/details.json",
@@ -88,7 +146,9 @@
         "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
         "phone-exit/bots/test_vampir_initial_environment.py",
         "phone-exit/bots/resource-tools/vampir/inspect-sight-bindings-11316.py",
-        "phone-exit/bots/vampir-shared/vampir_core/map_position.py"
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
       ],
       "runtime_distributions": [
         "capstone"
@@ -643,7 +703,9 @@
         "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/sight_enter_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
-        "phone-exit/bots/vampir-shared/vampir_core/map_position.py"
+        "phone-exit/bots/vampir-shared/vampir_core/map_position.py",
+        "phone-exit/bots/vampir-shared/vampir_core/tutorial_update.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py"
       ],
       "runtime_distributions": [
         "capstone"

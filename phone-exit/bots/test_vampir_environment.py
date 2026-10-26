@@ -93,6 +93,7 @@ class EnvironmentTests(unittest.TestCase):
             s.packet(322,body,character_key=42,world_id=0xffffffff)
         self.assertEqual(len(s.snapshot()['entities']),512)
         keys=set()
+        s.packet(9905,struct.pack('<BH',1,64)+struct.pack('<IIIB',0xffffffff,0xffffffff,0xffffffff,255)*64)
         with LiveSessionServer(s,port=0) as server:
             base='http://127.0.0.1:'+str(server.server.server_port)+'/bots/fixture/state'
             for page in (0,1)*3:

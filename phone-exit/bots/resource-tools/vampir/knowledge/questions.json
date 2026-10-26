@@ -5,9 +5,9 @@
       "id": "live-world-state-11316",
       "status": "open",
       "question": "Как получать общую живую модель персонажа, vitals, уровня и ближайших NPC/игроков из текущей сессии для карты и существующего UI?",
-      "known": "Owner 1.13.16 прошёл Login/Select/world и около 484 секунд через OPPO/HK: 96 periodic Ping / 97 ответов, 207 stats, HP 2700/2700, MP 2000/2000, уровень 1, decoder errors = 0; Stop закрыл сессию/транспорт. UI/журнал и смена локального обработчика с SyntaxError/восстановлением проверены без нового входа. Source-bound portable decoders и whole native replay проверяют stats, NPC create/move/leave и полный mixed SightEnter с nested appearance/stats/effects/actions/Guild/Party/Gadget/projectiles, copies и cleanup: whole SightEnter 1170 cases и 6 trailing checks. Current ID301 registration/handler, NPC initializer и CharacterOther initializer → typed NnCharacterPC подтверждены статически. ID301/324/302 подключены к изолированной частичной модели: NPC/player раздельно, own key исключён; начальные имя/уровень/HP/MP/XYZ, лимит 512, HTTP страницы по 256. 50 synthetic owners, максимальный HTTP payload и браузерный fixture с очисткой при потере API проверены. Это не новый live proof окружения и не реальная проверка нескольких аккаунтов. Live attempt 26 октября: OPPO/HK HTTPS TCP и свежая CDN конфигурация получены; SDK/лобби успешны, JP256 ответил 58 BlockedIp до world. Событий окружения 0, свой транспорт закрыт и listeners 1087/17947 отсутствуют. Новый realme / HK прошёл code 0 до мира 10012 и около 90 секунд: HP 2700/2700, MP 2000/2000, уровень 1, 207 stats, 18 periodic Ping / 19 replies, ошибок stats 0. Событий 301 / 302 / 324 не получено. Существующая MapProjection перепроверена по трём текущим функциям и точным World / Map: 36 миров, 10012 → Map10. Подключены явная проекция той же версии и первое центрирование / увеличение без постоянного follow; 14 тестов и браузерный fixture прошли. Этот live вход был без проекции; повторные входы с ней дали сначала nid_browser login_failed, затем game 58 BlockedIp. Новый OnePlus / HK с другим IP также прошёл SDK / лобби, но получил game 58 до мира. Собственные транспорты закрыты. На больших HTTP страницах воспроизведён неполный ответ; одного TCP_NODELAY оказалось недостаточно; после ограничения write до 16 КиБ полное чтение обеих страниц проверено в отдельной диагностике на 12 соединениях. Полные проверки NPC и игроков читают каждую страницу на трёх отдельных соединениях.",
-      "unknown": "Живой маркер с текущей проекцией, текущие stats/movement окружения и actor effects, NPC names, стартовый quest state / действия и несколько реальных аккаунтов. Начального SightEnter в успешном realme входе не было; порядок относительно finish не установлен.",
-      "next_action": "Приоритет пользователя: восстановить стартовый сценарий уровня 1 по прежнему описанию, подтвердить текущие серверные quest/tutorial bindings и состояние. Затем при доступном входе проверить живой маркер/окружение и реальные одновременные аккаунты; не повторять вход через текущий BlockedIp.",
+      "known": "Owner 1.13.16 прошёл Login/Select/world и около 484 секунд через OPPO/HK: 96 periodic Ping / 97 ответов, 207 stats, HP 2700/2700, MP 2000/2000, уровень 1, decoder errors = 0; Stop закрыл сессию/транспорт. UI/журнал и смена локального обработчика с SyntaxError/восстановлением проверены без нового входа. Source-bound portable decoders и whole native replay проверяют stats, NPC create/move/leave и полный mixed SightEnter с nested appearance/stats/effects/actions/Guild/Party/Gadget/projectiles, copies и cleanup: whole SightEnter 1170 cases и 6 trailing checks. Current ID301 registration/handler, NPC initializer и CharacterOther initializer → typed NnCharacterPC подтверждены статически. ID301/324/302 подключены к изолированной частичной модели: NPC/player раздельно, own key исключён; начальные имя/уровень/HP/MP/XYZ, лимит 512, HTTP страницы по 256. 50 synthetic owners, максимальный HTTP payload и браузерный fixture с очисткой при потере API проверены. Это не новый live proof окружения и не реальная проверка нескольких аккаунтов. Live attempt 26 октября: OPPO/HK HTTPS TCP и свежая CDN конфигурация получены; SDK/лобби успешны, JP256 ответил 58 BlockedIp до world. Событий окружения 0, свой транспорт закрыт и listeners 1087/17947 отсутствуют. Новый realme / HK прошёл code 0 до мира 10012 и около 90 секунд: HP 2700/2700, MP 2000/2000, уровень 1, 207 stats, 18 periodic Ping / 19 replies, ошибок stats 0. Событий 301 / 302 / 324 не получено. Существующая MapProjection перепроверена по трём текущим функциям и точным World / Map: 36 миров, 10012 → Map10. Подключены явная проекция той же версии и первое центрирование / увеличение без постоянного follow; 14 тестов и браузерный fixture прошли. Этот live вход был без проекции; повторные входы с ней дали сначала nid_browser login_failed, затем game 58 BlockedIp. Новый OnePlus / HK с другим IP также прошёл SDK / лобби, но получил game 58 до мира. Собственные транспорты закрыты. На больших HTTP страницах воспроизведён неполный ответ; одного TCP_NODELAY оказалось недостаточно; после ограничения write до 16 КиБ полное чтение обеих страниц проверено в отдельной диагностике на 12 соединениях. Полные проверки NPC и игроков читают каждую страницу на трёх отдельных соединениях. Новый OnePlus PGP110 / HK с другим выходом успешно вошёл на JP 256: мир 10012, проекция Map10, реальные HP/MP, 207 stats. В браузере проверены живой маркер в центре увеличенной карты, сохранение ручного drag после polls и журнал. В сохранённом снимке heartbeat 35 / 35, uptime 219,9 секунды с авторизацией. Сессия оставлена работать с пределом транспорта 1 час. Новый decoder ID 9905 подключён к будущим владельцам как последнее наблюдаемое сообщение, 50 synthetic owners проверены; действующий owner не перезагружался.",
+      "unknown": "Живой поток окружения, текущие stats / движение NPC и игроков, actor effects, NPC names, применение tutorial / quest состояния, исходящие действия и несколько реальных аккаунтов одновременно. Маркер подтверждает серверную цель входа до engine correction.",
+      "next_action": "Продолжить current tutorial / quest handler и серверное состояние уровня 1, сохраняя действующее соединение. Проверить живое окружение / движение и реальные одновременные аккаунты после подтверждения необходимых bindings.",
       "decision_rule": "Не считать неизвестный field HP/MP/level по величине. Новые поля требуют current reader и семантическую связь; raw packets по умолчанию не сохранять.",
       "do_not_repeat": "Не перестраивать UI или массовый EXE export ради state adapter. Использовать существующие extracts и explicit roots.",
       "addresses": [
@@ -46,7 +46,31 @@
         "evidence/characters/HEADLESS-SIGHT-ENTER-WHOLE-11316.md",
         "evidence/characters/HEADLESS-INITIAL-ENVIRONMENT-11316.md",
         "evidence/characters/HEADLESS-INITIAL-ENVIRONMENT-LIVE-ATTEMPT-11316.md",
-        "evidence/maps/HEADLESS-MAP-POSITION-11316.md"
+        "evidence/maps/HEADLESS-MAP-POSITION-11316.md",
+        "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md",
+        "evidence/maps/HEADLESS-LIVE-MAP-11316.md"
+      ]
+    },
+    {
+      "id": "live-tutorial-state-11316",
+      "status": "open",
+      "question": "Как читать актуальное серверное состояние обучения 1.13.16 и передавать его изолированному владельцу без исходящих игровых действий?",
+      "known": "Текущие ID 9905 constructor / getter / readers / descriptor callback проверены whole native replay: 73 целых тела, 835 коротких префиксов, guards и cursor. Portable decoder повторно использован с явным source SHA. LiveSession хранит ограниченное последнее сообщение tutorial с raw fields и семантикой last_received_message, без применения к локальной задаче. 50 synthetic owners, close / error / unknown source / HTTP проверены. Живая OnePlus PGP110 сессия началась до подключения decoder: один ID 9905 посчитан, тело не сохранялось.",
+      "unknown": "Текущий application handler, отложенная очередь, семантика flag / raw fields и фактическое tutorial состояние при живом подключении нового decoder. Старые outgoing tutorial / quest actions остаются requires_port.",
+      "next_action": "Проверить current registration → handler / consumer, затем получить реальное сообщение новым владельцем при разрешённом входе. Сохранять действующее соединение; старые ack / reset не повторять.",
+      "decision_rule": "Не расширять список source SHA portable decoder по сходству адресов / имён. Наличие raw записи не означает готовность tutorial ack или известное действие квеста.",
+      "do_not_repeat": "Не отправлять старые tutorial ack / quest reset команды и не повторять вход через BlockedIp.",
+      "addresses": [
+        "0x1456b70d0",
+        "0x14584bda0",
+        "0x1457fdf10",
+        "0x1457fdfa0",
+        "0x1457fde80"
+      ],
+      "evidence": [
+        "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-READER.md",
+        "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md",
+        "evidence/maps/HEADLESS-LIVE-MAP-11316.md"
       ]
     },
     {

@@ -3037,6 +3037,68 @@
           }
         ]
       }
+    },
+    {
+      "id": "tutorial-observation-current",
+      "baseline_functions": [],
+      "tools": [
+        "replay-tutorial-update-11316.py"
+      ],
+      "rule": "При новом SHA искать кандидата ID 9905 по имени / vtable и проверять whole readers / callbacks / bindings. Совпадение формата не разрешает tutorial ack, применение локальной задачи или квестовое действие.",
+      "automation": {
+        "discovery": "named_packet_candidate_then_explicit_vtable_and_unwind_review",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x14584bda0",
+                "scope": "Whole current tutorial wire reader / constructor / callback; fresh array storage fixtures, no application handler or outgoing action.",
+                "required_checks": [
+                  "live-tutorial-state-11316"
+                ]
+              },
+              {
+                "address": "0x1456b70d0",
+                "scope": "Whole current tutorial wire reader / constructor / callback; fresh array storage fixtures, no application handler or outgoing action.",
+                "required_checks": [
+                  "live-tutorial-state-11316"
+                ]
+              },
+              {
+                "address": "0x1457fdf10",
+                "scope": "Whole current tutorial wire reader / constructor / callback; fresh array storage fixtures, no application handler or outgoing action.",
+                "required_checks": [
+                  "live-tutorial-state-11316"
+                ]
+              },
+              {
+                "address": "0x1457fde80",
+                "scope": "Whole current tutorial wire reader / constructor / callback; fresh array storage fixtures, no application handler or outgoing action.",
+                "required_checks": [
+                  "live-tutorial-state-11316"
+                ]
+              },
+              {
+                "address": "0x1457fdfa0",
+                "scope": "Whole current tutorial wire reader / constructor / callback; fresh array storage fixtures, no application handler or outgoing action.",
+                "required_checks": [
+                  "live-tutorial-state-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-tutorial-update-11316.py"
+            ],
+            "evidence": [
+              "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

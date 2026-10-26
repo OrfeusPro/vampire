@@ -9,6 +9,8 @@ from .stat_change import SOURCE_SHA256 as STAT_SOURCE_SHA256,decode_stat_change,
 from .stat_names import STAT_NAMES,SOURCE_SHA256 as STAT_NAMES_SOURCE
 from .live_diagnostics import LiveDiagnostics
 from .environment import ObservedEnvironment,SOURCE_SHA256 as ENVIRONMENT_SOURCE
+from .tutorial_update import decode_tutorial_update
+from .world_move_start import CURRENT_PROBE_SOURCE
 import json
 
 STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
@@ -43,8 +45,8 @@ class LiveSession:
         self._environment=ObservedEnvironment()
         self._environment_applied=-1
         self._snapshot=dict(schema=2,mode='live',bot_id=bot_id,session_id=self.session_id,state='connecting',position=None,
-            character=None,entities=[],updated_at_ms=None,heartbeat=dict(sent=0,received=0),
-            coverage=dict(vitals='not_verified',level='not_verified',entities='not_verified',movement='not_verified'),
+            character=None,entities=[],tutorial=None,tutorial_decode_errors=0,updated_at_ms=None,heartbeat=dict(sent=0,received=0),
+            coverage=dict(vitals='not_verified',level='not_verified',entities='not_verified',movement='not_verified',tutorial='not_verified'),
             packets={},error=None)
 
     def request_stop(self):
@@ -62,6 +64,8 @@ class LiveSession:
             if self._closed or self._source not in (None,source_sha256):raise ValueError('Session source cannot change')
             if self._source is None:self._diagnostics.event('source_bound',source_sha256=source_sha256)
             self._source=source_sha256
+            if source_sha256==CURRENT_PROBE_SOURCE and self._snapshot['coverage']['tutorial']=='not_verified':
+                self._snapshot['coverage']['tutorial']='not_received'
             self._environment_applied=-1
 
     def _apply_stats(self):
@@ -95,6 +99,24 @@ class LiveSession:
             counts=self._snapshot['packets']
             key=str(packet_id)
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
+            if packet_id==9905 and self._source==CURRENT_PROBE_SOURCE:
+                try:
+                    update=decode_tutorial_update(body,source_sha256=self._source,max_records=64,max_payload_size=835)
+                except (ValueError,BufferError):
+                    self._snapshot['tutorial']=None
+                    self._snapshot['coverage']['tutorial']='decode_error'
+                    self._snapshot['tutorial_decode_errors']=min(self._snapshot['tutorial_decode_errors']+1,2**53-1)
+                    self._diagnostics.event('tutorial_decode_error',packet_id=packet_id)
+                else:
+                    # This is an observation of one message, not the client's
+                    # applied tutorial map or permission to advance a task.
+                    self._snapshot['tutorial']=dict(semantics='last_received_message',applied_to_local_task=False,
+                        flag=update.flag,records=[dict(raw08=r.raw08,raw0c=r.raw0c,raw10=r.raw10,state=r.state) for r in update.records],
+                        character_key=str(character_key) if type(character_key) is int and 0<=character_key<2**64 else None,
+                        world_id=world_id if type(world_id) is int and 0<=world_id<2**32 else None,
+                        received_at_ms=time.time_ns()//1000000)
+                    self._snapshot['coverage']['tutorial']='last_received_message'
+                    self._diagnostics.event('tutorial_received',packet_id=packet_id,records=len(update.records))
             if packet_id in (301,302,324) and self._source==ENVIRONMENT_SOURCE:
                 event=self._environment.receive(packet_id,body,source_sha256=self._source,world_id=world_id,character_key=character_key)
                 if event:self._diagnostics.event(event,packet_id=packet_id)
@@ -184,8 +206,9 @@ class LiveSession:
             self._diagnostics.close()
             self._stats.clear();self._stats_key=None
             self._environment.world(None);self._apply_environment()
-            self._snapshot.update(state='disconnected',position=None,character=None,entities=[],
+            self._snapshot.update(state='disconnected',position=None,character=None,entities=[],tutorial=None,
                 updated_at_ms=time.time_ns()//1000000,error=error or self._snapshot['error'])
+            self._snapshot['coverage']['tutorial']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
 
     def snapshot(self,*,for_api=False,entity_page=0):
         if type(entity_page) is not int or entity_page not in (0,1):raise ValueError('Invalid entity page')

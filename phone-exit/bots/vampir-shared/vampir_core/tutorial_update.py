@@ -1,8 +1,10 @@
-"""Bounded current ID9905 wire data; field meaning requires handler evidence."""
+"""Bounded source-bound ID9905 data; field meaning requires handler evidence."""
 from dataclasses import dataclass, field
 import struct
 
-from .world_move_start import SOURCE_SHA256
+from .world_move_start import SOURCE_SHA256,CURRENT_PROBE_SOURCE
+
+TUTORIAL_SOURCES=frozenset((SOURCE_SHA256,CURRENT_PROBE_SOURCE))
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,7 +22,7 @@ class TutorialUpdate:
 
 
 def decode_tutorial_update(body, *, source_sha256, max_records, max_payload_size):
-    if source_sha256 != SOURCE_SHA256:raise ValueError('Unsupported tutorial source')
+    if source_sha256 not in TUTORIAL_SOURCES:raise ValueError('Unsupported tutorial source')
     if type(max_records) is not int or not 0<=max_records<=65535:
         raise ValueError('Explicit tutorial record budget required')
     if type(max_payload_size) is not int or not 3<=max_payload_size<=0xffffff:

@@ -1,5 +1,12 @@
 # Изолированные живые сессии
 
+Текущий ID 9905 передаёт в snapshot / HTTP `tutorial`: последнее полученное
+сообщение с flag, raw08 / raw0c / raw10 / state, максимум 64 записи / 835 байт.
+`semantics=last_received_message`, `applied_to_local_task=false`; это не активный
+шаг и не разрешение квестового действия. Unknown контекст остаётся null,
+ошибка / close очищают сообщение. Журнал содержит ID / число записей.
+[Проверки, live-граница и следующий шаг](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md).
+
 Оба launcher поддерживают явный `--projection <manifest>` для проверенной
 проекции той же версии. В 1.13.16 сохранена Map10/11, включая мир 10012.
 Manifest проверяется по content SHA и установленному PAK; разные source SHA

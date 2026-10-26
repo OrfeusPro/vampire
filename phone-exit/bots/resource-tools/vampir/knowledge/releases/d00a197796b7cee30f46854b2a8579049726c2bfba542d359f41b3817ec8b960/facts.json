@@ -9867,6 +9867,239 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Живой маркер с проекцией; engine correction; живой SightEnter; текущий стартовый квест уровня 1 и несколько настоящих аккаунтов."
+    },
+    {
+      "addresses": [
+        "0x1456b70d0",
+        "0x1457fde80",
+        "0x1457fdf10",
+        "0x1457fdfa0",
+        "0x14584bda0"
+      ],
+      "checks": [
+        {
+          "cache_key": "ecfc9714e55d430713382eeac7f8f805fbe2cbac76033c76558c03188b665d87",
+          "id": "live-tutorial-state-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6\\manifest.json",
+          "sha256": "d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "698ca692d6d2a4e114f64d221fbde402f48efab55865f1573564a393e9e689d8",
+          "id": "live-map-projection-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7c287cb42cf3374bfbf3bab68f7346b624189f8e046147c742e7c3eae3f2845b\\manifest.json",
+          "sha256": "7c287cb42cf3374bfbf3bab68f7346b624189f8e046147c742e7c3eae3f2845b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4c88ea6fe37369a8e4748cb28717ccc00651bded3b33b48ac844a9c74275a194",
+          "id": "live-initial-environment-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a3da03c52929bad313f66a7a9b4493ddb94f2b1a2c9a3439abc19237fcb45356\\manifest.json",
+          "sha256": "a3da03c52929bad313f66a7a9b4493ddb94f2b1a2c9a3439abc19237fcb45356",
+          "state": "passed"
+        },
+        {
+          "cache_key": "06bc6f8f6e01c27d12678f6ab9fd1f835fd281d31d94519dd9f18c0a098f0e56",
+          "id": "live-sight-enter-whole-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2abd6c7a798597b6022f6215366bc87f9aca66ca5f73ad0276b827a06e0c20e0\\manifest.json",
+          "sha256": "2abd6c7a798597b6022f6215366bc87f9aca66ca5f73ad0276b827a06e0c20e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bd5b347996fe442549d9702e39feff7dade11990ec2093f571a0dfa1f0f16293",
+          "id": "live-sight-character-lifecycle-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3c0373b6e359c41f8ca52e00812f03fb5d410988b0a1990a2e8904d28ba434c8\\manifest.json",
+          "sha256": "3c0373b6e359c41f8ca52e00812f03fb5d410988b0a1990a2e8904d28ba434c8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ae9cf82441874882921a91262a31283c8ccf70c75f8c9f77632c85fb5dfa00b2",
+          "id": "live-sight-nested-copy-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6bf66eecbb99b801e7ae297b52d9e6273f75eabff612c304532cf0245e01d365\\manifest.json",
+          "sha256": "6bf66eecbb99b801e7ae297b52d9e6273f75eabff612c304532cf0245e01d365",
+          "state": "passed"
+        },
+        {
+          "cache_key": "115956aea5d287348bd6aee61ffe26387ea634f84cfebbf98b8f8ba54e798f1a",
+          "id": "live-sight-enter-composition-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b237345bdae0a3ee4787027341ce10d90bb0b75d608f10e491aee4125b563cf8\\manifest.json",
+          "sha256": "b237345bdae0a3ee4787027341ce10d90bb0b75d608f10e491aee4125b563cf8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b99e32a84496702637c1538e991dcb0478d0d2e35704474aea2736c2b46c62c8",
+          "id": "live-sight-character-other-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6e6fcb456c6ef9cef41855839a90b44efe3e4de3c370880ec98d1fd39c1e71ea\\manifest.json",
+          "sha256": "6e6fcb456c6ef9cef41855839a90b44efe3e4de3c370880ec98d1fd39c1e71ea",
+          "state": "passed"
+        },
+        {
+          "cache_key": "87d7defd8e11e254dce929d62627f09d12729eb4a865bbc7c3002c05ecbb42f3",
+          "id": "live-sight-gadget-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7b1f26005d09d1b2ffb1c80c99347e4316fe0a62004a71a357735d95694afa5c\\manifest.json",
+          "sha256": "7b1f26005d09d1b2ffb1c80c99347e4316fe0a62004a71a357735d95694afa5c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4bbacc29fd638b71477dc7c80289234ef1c1db57dcca9cc7d19b0ad0f4bd7f68",
+          "id": "live-sight-social-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\23dcb4c77d19c04150ca59c5e69a1fc0a1183cda087bef565252c63b183124b5\\manifest.json",
+          "sha256": "23dcb4c77d19c04150ca59c5e69a1fc0a1183cda087bef565252c63b183124b5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a49b3471132d8385d274142a70996407154cd268d5dff5ceea5b2a48ff31af0",
+          "id": "live-sight-projectiles-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e139e5fb52fca80dc29637d56affa86d16cc5ae93a2ef1d6347bd0a80775c212\\manifest.json",
+          "sha256": "e139e5fb52fca80dc29637d56affa86d16cc5ae93a2ef1d6347bd0a80775c212",
+          "state": "passed"
+        },
+        {
+          "cache_key": "266ca512ed1d644610c33123e08a725b7993fa39f74e0fecd03c5d93e6a3d711",
+          "id": "live-sight-effects-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1\\manifest.json",
+          "sha256": "2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a71f64f548a986d3b86ae4ea8b2fc7eefff724ae544eeec9c44910031cccd8dd",
+          "id": "live-sight-leave-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885\\manifest.json",
+          "sha256": "eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885",
+          "state": "passed"
+        },
+        {
+          "cache_key": "26ca4d602c8e710e294f28dc965f2b70942acfcf1abcb7b99c3cca2c239bbd79",
+          "id": "live-environment-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a228ec2ea6cce17edb42b581a3485469b3c23d87df76db0ec89bb22feeab9a74\\manifest.json",
+          "sha256": "a228ec2ea6cce17edb42b581a3485469b3c23d87df76db0ec89bb22feeab9a74",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3fa8fee3ce9d7c61ad1ce0f09d3dc996b71e98be67e010fb92e831ec0c74c8da",
+          "id": "live-npc-create-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\496417d5e9be810d9cfda377aa576384aeba74ce339aa20e152d1267c5eea0b0\\manifest.json",
+          "sha256": "496417d5e9be810d9cfda377aa576384aeba74ce339aa20e152d1267c5eea0b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a191607ff175c4de6fc80514862e17084b29132bca51184fb0537e70661f8e1f",
+          "id": "live-npc-effect-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac\\manifest.json",
+          "sha256": "88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a41fe3a8d9f56db6053baf8b559ddc3f5d4e7bb6520ee0f0c072f27513055b7",
+          "id": "live-npc-move-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4\\manifest.json",
+          "sha256": "98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий ID 9905 проверен исполнением целых constructors / getter / readers / native array loop / callback: 73 полных тела и 835 коротких префиксов, поля совпадают с source-bound portable decoder. LiveSession хранит до 64 записей / 835 байт как последнее полученное сообщение с raw полями и неизвестным применением к локальной задаче. Проверены 50 synthetic owners, deep copy, unknown source, errors / close и HTTP с максимальным окружением. Успешный OnePlus PGP110 вход отдельно подтвердил реальные HP/MP, 207 stats и живой серверный маркер на Map10, первое центрирование / zoom, сохранение ручного вида и журнал без перезапуска owner.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-UPDATE-11316.md",
+          "sha256": "e2b9688bb3cc57109560a1cc787c136c8ae3d328f0143b64e384ad845fb99785"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\maps\\HEADLESS-LIVE-MAP-11316.md",
+          "sha256": "c36ca6a3cf21ac8809071d2dd9ad8216050aa529260c789217d78dd92dec204a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-edd5235c81bf\\details.json",
+          "sha256": "d979c8625c0656b7c372148645fe384899a8a9f587054cdb88bbcb856d0d7601"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-a096b2a0bf20\\details.json",
+          "sha256": "ca659aa014494d7205feb1b80e7ada9dbcea526ed26b7be277bbfa05238e39c7"
+        }
+      ],
+      "id": "51d5578c998e1ffacee7b0e43b97410ed6d0b02449d87e283f56704dc9e6ba4b",
+      "limits": [
+        "Fresh native array reserve и empty cleanup являются fixtures; reuse / growth / populated cleanup и application handler не исполнены.",
+        "Полученное сообщение не доказывает активный локальный tutorial шаг; flag / raw поля не используются для действий. Исторические исходящие команды остаются requires_port.",
+        "Действующая живая сессия получила ID 9905 до загрузки нового decoder, тело не сохранялось; runtime owner не перезагружался, новый tutorial observation проверен synthetic.",
+        "Живой маркер — серверная цель входа до engine correction. Окружение не получено; несколько настоящих аккаунтов одновременно не проверены.",
+        "Тестовый транспорт имеет лимит 1 час; длительная стабильность и WAN UDP этим live proof не подтверждены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Разобрать current ID 9905 registration → handler / consumer, сохраняя действующее соединение; не повторять старые tutorial ack / quest reset по raw state.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Текущий tutorial application handler / queue / tables semantics, реальное сообщение новым владельцем, живое окружение и несколько одновременных аккаунтов."
+    },
+    {
+      "addresses": [
+        "0x1456b70d0",
+        "0x1457fde80",
+        "0x1457fdf10",
+        "0x1457fdfa0",
+        "0x14584bda0"
+      ],
+      "checks": [
+        {
+          "cache_key": "ecfc9714e55d430713382eeac7f8f805fbe2cbac76033c76558c03188b665d87",
+          "id": "live-tutorial-state-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6\\manifest.json",
+          "sha256": "d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий ID 9905 проверен исполнением целых constructors / getter / readers / native array loop / callback: 73 полных тела и 835 коротких префиксов, поля совпадают с source-bound portable decoder. LiveSession хранит до 64 записей / 835 байт как последнее полученное сообщение с raw полями и неизвестным применением к локальной задаче. Проверены 50 synthetic owners, deep copy, unknown source, errors / close и HTTP с максимальным окружением. Успешный OnePlus PGP110 вход отдельно подтвердил реальные HP/MP, 207 stats и живой серверный маркер на Map10, первое центрирование / zoom, сохранение ручного вида и журнал без перезапуска owner.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-UPDATE-11316.md",
+          "sha256": "e2b9688bb3cc57109560a1cc787c136c8ae3d328f0143b64e384ad845fb99785"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\maps\\HEADLESS-LIVE-MAP-11316.md",
+          "sha256": "c36ca6a3cf21ac8809071d2dd9ad8216050aa529260c789217d78dd92dec204a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-edd5235c81bf\\details.json",
+          "sha256": "d979c8625c0656b7c372148645fe384899a8a9f587054cdb88bbcb856d0d7601"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-a096b2a0bf20\\details.json",
+          "sha256": "ca659aa014494d7205feb1b80e7ada9dbcea526ed26b7be277bbfa05238e39c7"
+        }
+      ],
+      "id": "dadef4241e524a726644f744387b17235f007c6cdba783150709feed7f5b9fa3",
+      "limits": [
+        "Fresh native array reserve и empty cleanup являются fixtures; reuse / growth / populated cleanup и application handler не исполнены.",
+        "Полученное сообщение не доказывает активный локальный tutorial шаг; flag / raw поля не используются для действий. Исторические исходящие команды остаются requires_port.",
+        "Действующая живая сессия получила ID 9905 до загрузки нового decoder, тело не сохранялось; runtime owner не перезагружался, новый tutorial observation проверен synthetic.",
+        "Живой маркер — серверная цель входа до engine correction. Окружение не получено; несколько настоящих аккаунтов одновременно не проверены.",
+        "Тестовый транспорт имеет лимит 1 час; длительная стабильность и WAN UDP этим live proof не подтверждены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Разобрать current ID 9905 registration → handler / consumer, сохраняя действующее соединение; не повторять старые tutorial ack / quest reset по raw state.",
+      "question": "live-tutorial-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Текущий tutorial application handler / queue / tables semantics, реальное сообщение новым владельцем, живое окружение и несколько одновременных аккаунтов."
     }
   ],
   "schema": 1,

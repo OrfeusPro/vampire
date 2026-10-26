@@ -1,0 +1,70 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-e6ab6fd97914": "9828dfd4a26853235433aa7b702150ceec552d05796a8bea82ce915332284454",
+    "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+    "run-80386d1eb460": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1",
+    "run-edd5235c81bf": "d979c8625c0656b7c372148645fe384899a8a9f587054cdb88bbcb856d0d7601",
+    "run-a096b2a0bf20": "ca659aa014494d7205feb1b80e7ada9dbcea526ed26b7be277bbfa05238e39c7"
+  },
+  "functions": {
+    "vector": "0x144aac530",
+    "input_constructor": "0x144aacb40",
+    "input_buffer_constructor": "0x144aac130",
+    "input_u16": "0x144aac250",
+    "input_u32": "0x144aac2a0",
+    "input_u64": "0x144aac4a0",
+    "input_bool": "0x144aac4f0",
+    "input_raw": "0x144aac5c0",
+    "packet_constructor": "0x14584bda0",
+    "reader": "0x1456b70d0",
+    "nested_reader": "0x1457fdf10",
+    "item_reader": "0x1457fde80",
+    "callback": "0x1457fdfa0"
+  },
+  "leaves": {
+    "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+    "0x144aac240": "488b0141b80100000048ffa090000000",
+    "0x1457fdba0": "488d0539b51204c641080048890133c04889411048894118488bc1c3",
+    "0x145855ec0": "b8b1260000c3",
+    "0x144aad1a0": "895110c3"
+  },
+  "bindings": [
+    [
+      "0x149969ad8",
+      "0x20",
+      "0x1456b70d0"
+    ],
+    [
+      "0x149969ad8",
+      "0x28",
+      "0x145855ec0"
+    ],
+    [
+      "0x1499290e0",
+      "0x20",
+      "0x1457fdf10"
+    ],
+    [
+      "0x1499290a0",
+      "0x20",
+      "0x1457fde80"
+    ],
+    [
+      "0x14995ffd0",
+      "0x8",
+      "0x1456ba3a0"
+    ],
+    [
+      "0x14995ffd0",
+      "0x10",
+      "0x1457fdfa0"
+    ],
+    [
+      "0x149670880",
+      "0x78",
+      "0x144aac240"
+    ]
+  ]
+}
