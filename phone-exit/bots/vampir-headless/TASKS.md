@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Совместная native цепочка identity/key/region lookup/numeric reader/setter
+прошла 1008 случаев: found empty/JP → 0 без primary fallback, missing →
+legacy/cache; одновременно существующие profile keys дают разные числа.
+Lower storage/string/platform/write fixtures явные; actual region/изоляция
+реальных аккаунтов ещё не доказаны. Сессию сохранять.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-NUMBER-11316.md).
+
 Числовое чтение RegionSelect прошло 56 native сценариев: found flag отделён
 от значения, запятые удаляются, найденные empty/JP дают 0 и true; missing
 сохраняет output. Storage/string fixtures явные, active region неизвестен.

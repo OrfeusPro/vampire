@@ -1,4 +1,5 @@
 """Native service environment setter: lookup/fallback and change flags."""
+import ctypes
 import importlib.util
 import json
 from pathlib import Path
@@ -19,9 +20,11 @@ def run(context_path=None):
     native_lookup=context.get('native_lookup') is True
     native_key=context.get('native_key') is True
     native_identity=context.get('native_identity') is True
+    native_number=context.get('native_number') is True
     functions={0x145c21f20,0x14556b8b0} if native_lookup else {0x145c21f20}
     if native_key: functions.add(0x14556b740)
     if native_identity: functions.add(0x14560b900)
+    if native_number: functions.update((0x1445ceaa0,0x141435110))
     h=load('native-request-harness-11316').make_harness(context['exports'],
         functions,
         leaves={int(a,0):b for a,b in context.get('leaves',{}).items()})
@@ -91,7 +94,8 @@ def run(context_path=None):
                 raise ValueError('Config string free/guards differ')
             h.finish()
         put(0x14b5e4788,provider,8)
-        callbacks=[(0x141426b30,wide_init),(0x1445ceaa0,read_config),(0x1445d7220,write_config),(0x141483080,free)]
+        callbacks=[(0x141426b30,wide_init),(0x1445d7220,write_config),(0x141483080,free)]
+        if not native_number: callbacks.append((0x1445ceaa0,read_config))
         if native_key:
             def engine(machine): h.finish(base+0x4000 if current['profile']!='absent' else 0)
             def identity(machine): h.finish(base+0x5000)
@@ -125,10 +129,54 @@ def run(context_path=None):
             h.add_fixture(at,callback)
     else:
         h.add_fixture(0x14556ae90,getter); h.add_fixture(0x14556b8b0,lookup)
+    if native_number:
+        directory=ctypes.create_unicode_buffer(32768)
+        if not 0<ctypes.WinDLL('kernel32',use_last_error=True).GetSystemDirectoryW(directory,len(directory))<len(directory):
+            raise ValueError('System CRT directory unavailable')
+        crt_path=Path(directory.value)/'ucrtbase.dll'; crt_sha=audit.sha256(crt_path); crt=ctypes.CDLL(str(crt_path))
+        crt._wtoi.argtypes,crt._wtoi.restype=[ctypes.c_wchar_p],ctypes.c_int
+        crt.setlocale.argtypes,crt.setlocale.restype=[ctypes.c_int,ctypes.c_char_p],ctypes.c_char_p
+        crt_locale=crt.setlocale(0,None)
+        imported=load('build-object-zero-init-code').import_at(h.raw,h.image,0x14899bbb0)
+        if (imported['dll'].lower(),imported['name'])!=('api-ms-win-crt-convert-l1-1-0.dll','_wtoi'):
+            raise ValueError('Region CRT import differs')
+        def storage(machine):
+            name=descriptor(reg('RCX'))
+            expected=current['primary_key'] if not current['read_count'] else 'RegionSelect'
+            if name!=expected or descriptor(reg('R8'))!='' or current['read_count']>=2:
+                raise ValueError('Lower region storage scope differs')
+            current['read_count']+=1; calls.append('read:'+name)
+            found=name in current['storage']
+            if found: assign(reg('RDX'),current['storage'][name])
+            h.finish(int(found))
+        def copy_string(machine): assign(reg('RCX'),descriptor(reg('RDX'))); h.finish(reg('RCX'))
+        def append(machine):
+            at,ptr,n=reg('RCX'),reg('RDX'),reg('R8')
+            if n>128: raise ValueError('Region append exceeds budget')
+            value=descriptor(at)+bytes(uc.mem_read(ptr,n*2)).decode('utf-16le'); old=get(at,8)
+            if old:
+                size=blocks.pop(old,None)
+                if size is None or bytes(uc.mem_read(old-16,16))!=b'L'*16 or bytes(uc.mem_read(old+size,16))!=b'R'*16:
+                    raise ValueError('Region append ownership/guards differ')
+            assign(at,value); h.finish(at)
+        def compare_empty(machine):
+            if reg('R8')!=0: raise ValueError('Only zero-length comma suffix comparison admitted')
+            h.finish(0)
+        def number(machine):
+            ptr=reg('RCX')
+            if ptr not in blocks and ptr!=0x1489e1b34: raise ValueError('Region numeric pointer outside owned strings')
+            value=wide(ptr); current['converted'].append(value); h.finish(crt._wtoi(value)&0xffffffff)
+        for at,callback in ((0x1445ceca0,storage),(0x1414266a0,copy_string),(0x141429e10,append),(0x14145f4a0,compare_empty),(base+0x9000,number)):
+            h.add_fixture(at,callback)
+        put(0x14899bbb0,base+0x9000,8)
+    profiles=('absent','account-a','account-b','empty','failed-subsystem','new-subsystem')
+    variants=('primary-profile','primary-empty','primary-junk','primary-comma','legacy-seven','legacy-junk','missing')
+    scenarios=[(0,v,p) for p in profiles for v in variants] if native_number else [
+        (r,None,None) for r in ((0,4,7,8,9,10) if native_identity else (0,4,7,8) if native_key else (0,4,7))]
     cases=[]
-    for region in ((0,4,7,8,9,10) if native_identity else (0,4,7,8) if native_key else (0,4,7)):
+    for region,number_scenario,number_profile in scenarios:
      for server in (0,256,0xffffffff):
-      for lookup_path in (('primary','legacy','missing') if native_lookup else ('missing','primary')):
+      for lookup_path in ((('missing' if number_scenario=='missing' else 'legacy' if number_scenario.startswith('legacy') else 'primary'),) if native_number else ('primary','legacy','missing') if native_lookup else ('missing','primary')):
        for dirty in (0,1):
         for same_region in (False,True):
          for same_server in (False,True):
@@ -136,7 +184,7 @@ def run(context_path=None):
             current.update(region=region,found=found,lookup_path=lookup_path,read_count=0,write_count=0); calls.clear()
             blocks.clear(); cursor[0]=base+0x10000
             if native_key:
-                profile={0:'absent',4:'account-a',7:'account-b',8:'empty',9:'failed-subsystem',10:'new-subsystem'}[region]
+                profile=number_profile if native_number else {0:'absent',4:'account-a',7:'account-b',8:'empty',9:'failed-subsystem',10:'new-subsystem'}[region]
                 text={'absent':'','empty':'','failed-subsystem':'cached-c','new-subsystem':'account-d'}.get(profile,profile)
                 current.update(profile=profile,identity=text,primary_key='RegionSelect_'+text if text else 'RegionSelect_PreLogin')
                 uc.mem_write(base+0x4000,bytes(0x80)); put(base+0x4038,base+0x6000,8)
@@ -148,8 +196,18 @@ def run(context_path=None):
                     uc.mem_write(base+0x5ff0,b'C'*16+bytes(0x80)+b'D'*16); uc.mem_write(base+0x7000,bytes(0x120))
                     put(base+0x7110,0 if profile in ('failed-subsystem','new-subsystem') else base+0x8000,8)
                     assign(base+0x6048,'cached-c' if profile=='failed-subsystem' else 'previous-cache')
+            if native_number:
+                numeric={'absent':1,'empty':1,'account-a':4,'account-b':7,'failed-subsystem':0,'new-subsystem':1000}[profile]
+                texts={'primary-profile':str(numeric),'primary-empty':'','primary-junk':'JP','primary-comma':'1,000','legacy-seven':'7','legacy-junk':'JP'}
+                region={'primary-profile':numeric,'primary-empty':0,'primary-junk':0,'primary-comma':1000,'legacy-seven':7,'legacy-junk':0,'missing':55}[number_scenario]
+                # All account keys coexist: returning the wrong key would select another value.
+                stored={'RegionSelect_account-a':'4','RegionSelect_account-b':'7','RegionSelect_cached-c':'0','RegionSelect_account-d':'1000','RegionSelect_PreLogin':'1'}
+                stored.pop(current['primary_key'],None)
+                if lookup_path=='primary': stored[current['primary_key']]=texts[number_scenario]
+                if lookup_path=='legacy': stored['RegionSelect']=texts[number_scenario]
+                current.update(region=region,storage=stored,converted=[])
             uc.mem_write(manager-16,b'A'*16+bytes(0x90)+b'B'*16)
-            uc.mem_write(provider,b'P'*0xb0); put(provider+0xa8,region)
+            uc.mem_write(provider,b'P'*0xb0); put(provider+0xa8,55 if native_number else region)
             put(manager+0x78,region if same_region else region+100)
             put(manager+0x7c,server if same_server else server^0x55)
             put(manager+0x80,dirty,1); put(manager+0x81,0,1)
@@ -185,6 +243,7 @@ def run(context_path=None):
             cases.append(dict(region=region,server=server,lookup_found=found,initial_dirty=dirty,
                 same_region=same_region,same_server=same_server,dirty=expected_dirty,calls=calls.copy()))
             if native_lookup: cases[-1]['lookup_path']=lookup_path
+            if native_number: cases[-1].update(number_scenario=number_scenario,converted=current['converted'].copy())
             if native_key: cases[-1].update(profile=current['profile'],primary_key=current['primary_key'])
     report=dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),exports=h.evidence,
         caller=dict(path=str(caller_path),sha256=context['caller_sha256']),cases=cases,native_execution=True,
@@ -192,7 +251,10 @@ def run(context_path=None):
     if native_lookup: report['native_lookup']=True
     if native_key: report['native_key']=True
     if native_identity: report['native_identity']=True
-    target=audit.save_snapshot(h.root/('code-clues/quest-service-identity-11316' if native_identity else
+    if native_number:
+        if audit.sha256(crt_path)!=crt_sha or crt.setlocale(0,None)!=crt_locale: raise ValueError('Region CRT changed')
+        report.update(native_number=True,system_runtime=dict(path=str(crt_path),sha256=crt_sha,locale=crt_locale.decode()),imported=imported)
+    target=audit.save_snapshot(h.root/('code-clues/quest-service-number-11316' if native_number else 'code-clues/quest-service-identity-11316' if native_identity else
         'code-clues/quest-service-key-11316' if native_key else
         'code-clues/quest-service-region-11316' if native_lookup else 'code-clues/quest-service-setup-11316'),report)
     return target,report
