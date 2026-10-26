@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Проверены native insert без rehash: 96 случаев append/free slot; 4 ветви group
+filter с missing/parsed-zero. Далее CSV empty parser, growth/rehash и fresh load
+iteration; order / active step не допущены. Сессию сохранять.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SPARSE-INSERT-11316.md).
+
 5944 current CSV rows / 1353 groups прошли native lookup/progress/Type getter.
 Id / QuestInfoId / Type stores и group append связаны с CSV loader. Порядок
 каталога и active step пока не допущены; далее sparse insertion, service-group

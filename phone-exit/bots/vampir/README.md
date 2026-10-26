@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+96 native preallocated insert cases подтвердили append/free-slot и hash linking;
+4 missing/parsed-zero service-group ветви возвращают «не пропускать». Parser пустой
+ячейки, growth/rehash и полный порядок загрузки ещё открыты; active step не допущен.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SPARSE-INSERT-11316.md).
+
 Current QuestTask CSV связан с native stores Id / QuestInfoId / Type. 5944 записи
 и 1353 группы прошли lookup / progress с настоящим Type getter; каталог сохранён
 вне Git. CSV order / active step не допущены: нужны sparse insertion / row filter
