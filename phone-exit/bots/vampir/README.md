@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Whole base + ru override loaders и localization transform выполнены совместно:
+6 original rows × 2 orders, 6 TaskName stores; исходный Param / все поля / group
+order сохранены. No-op override fixture заменён native root; file/header/string /
+settings/storage fixtures остаются. Missing/duplicates/full catalog ещё нужны,
+live admission false, сессия сохраняется.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LOADER-OVERRIDE-11316.md).
+
 Native localization transform прошёл 336 сценариев на русских названиях и
 lexical strings: explicit flags / Untranslated / fallback / ### prefix.
 String/settings services — bounded fixtures; active flags и whole override

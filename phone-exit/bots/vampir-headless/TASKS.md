@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Native base loader → ru override → localization transform проверены совместно
+на 6 main/ru source rows × 2 orders. TaskName применён, absent Param пропущен,
+original fields/group order сохранены; no-op override удалён из нового режима.
+File/header/string/settings/storage fixtures явные. Далее missing/duplicate IDs,
+whole catalog/current policy; live admission false, сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LOADER-OVERRIDE-11316.md).
+
 Whole localization transform 14585e070 прошёл 336 случаев: current Russian
 labels/lexical strings, flags +1E4/+1E5, Untranslated, fallback, SSO layouts.
 Native branch/ownership flow проверен со string/settings fixtures; active flags

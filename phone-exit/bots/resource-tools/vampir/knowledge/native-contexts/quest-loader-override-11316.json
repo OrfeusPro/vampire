@@ -1,0 +1,71 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-ba88307b3fbf": "63d036898b1a83e98a471b57c499f0dc45bf9c425fef288eb46be311a57c9e1a",
+    "run-774fa227622a": "7cb4617867839a921143b9c7e8a0d81b402478c1b171768d5db1e2e7ece3af99",
+    "run-4f4fd948c8b9": "3a7080a4d4728be20c99f27811067fe662643a94e98bb389a40ba2bf9691bdf6",
+    "run-ad5876ba33cb": "b269cb2cbd38d2b4f56d20de65759281e1386379cf567ebd4005f44fca45a2aa",
+    "run-1fa2db2b2606": "3c534ef1eb6999d86aac4132181f4a0336af56043f94e7decc8d15a27bcef2a7",
+    "run-c5e27e535de5": "eddd741edacd5750d9e017d24494ef404f210f051cac819831ace94d029c0f1d",
+    "run-3135f232de2c": "a452665c119392c9bddf3a74e9e086a8f4de9ba42418356a8f2b8225009ed718",
+    "run-bc83e3fb45a2": "9b45aee958178e4bb551632a6dc60db2867ba88168d0e177345cee75e200e3dd",
+    "run-1f1d981208d1": "894a46395bb20e624271f898bbdb085fe4c997230de2c5ec468d4462795b1691",
+    "run-b89911c14f11": "cf4ca1a14258dfa7d85b14a8bbe376fae7a57010b7c2d5bf895c2e855f0c1316"
+  },
+  "functions": [
+    "0x145b73290",
+    "0x145b72e70",
+    "0x1416166c0",
+    "0x141437520",
+    "0x141436d10",
+    "0x14142e6f0",
+    "0x145b4ab90",
+    "0x145b4ad00",
+    "0x145b4a420",
+    "0x145b48b50",
+    "0x145b48860",
+    "0x145b4bd20",
+    "0x145b5f270",
+    "0x1445f6520",
+    "0x145a4d2f0",
+    "0x1445f5e60",
+    "0x1445f14f0",
+    "0x145b69ca0",
+    "0x14585e070"
+  ],
+  "leaves": {
+    "0x141491da0": "448bc2488bd1488b0d1be4e5094885c97504488bc2c3488b0148ff6060",
+    "0x141403b70": "c20000",
+    "0x140bb4a10": "b001c3",
+    "0x1445f5ed0": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e9c2b5ffff",
+    "0x1445f6040": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e912bbffff",
+    "0x1445f5f10": "8b41204c8bc1ffc83bd076040f57c0c38bca48c1e10549034828e9c1b5ffff",
+    "0x1445f14b0": "488379180f7603488b0948ff25b7a63a04",
+    "0x1445f1b70": "488379180f7603488b094533c033d248ff2512a03a04",
+    "0x1445f5eb0": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e902b6ffff",
+    "0x1445f14d0": "488379180f7603488b0948ff2517a73a04",
+    "0x1445e4c30": "33c083c1d083f9090f96c0c3",
+    "0x1487f5c03": "ff25f7611a00"
+  },
+  "limits": [
+    "Whole native base and Russian override loaders/tokenizer/record/maps/scalars/localization transform on six original rows each in forward/reverse order. Active settings are explicit zero fixtures, locale descriptor empty fixture; file fixture selects Russian bytes.",
+    "File/header setup, Untranslated named read, string/UTF8/storage/assignment/prefix/compare/cleanup, allocation/map clear/bit/hash/duplicate check remain bounded fixtures. No Param column: override writes restricted to TaskName field; native Param preserved.",
+    "Six existing unique IDs only; missing/duplicate localization IDs, actual settings/locale/file lookup/current nonzero service policy/full catalog not admitted. No gameplay/live order admission."
+  ],
+  "record_index": "release-snapshots/c44b60d512a5b6a07a3ca7f6242eb23a385d36c87c67a7490fb2bad3c150b4db/record-indexes/faad77301f66215958cca4d9a083ca61f09f8f54650307dab1580470dc47f913/manifest.json",
+  "pak_sha256": "15cf4f880170e87fc5fdea661cf9ba3d54a4f66c607844f5ab1047ed87f1e6a4",
+  "csv_entry": 2983,
+  "csv_sha256": "6f2eec83a42c722caca8b6d4e7d7ff0768b2873fcf40cbd476fd843ce4689a2a",
+  "task_ids": [
+    "110120005",
+    "110120010",
+    "110120020",
+    "110120030",
+    "110120040",
+    "110120070"
+  ],
+  "native_scalars": true,
+  "native_override": true,
+  "override_entry": 2359,
+  "override_sha256": "88efc2a29c7a52a4148ef916689b77044b25b4c028ad4feea96d0b4782ee57b7"
+}
