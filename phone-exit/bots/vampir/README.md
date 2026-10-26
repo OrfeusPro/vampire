@@ -1,18 +1,25 @@
 # Vampir — главный указатель разработки
 
+SightEnter ID 301 подключён к изолированной модели окружения: NPC и другие
+игроки, имя игрока, уровень, начальные HP/MP и XYZ. Собственный персонаж исключается
+по подтверждённому ключу; его vitals не смешиваются с окружением. Проверены
+50 synthetic owners, две HTTP-страницы с 512 игроками и таблица в браузере.
+Живой поток окружения, текущие изменения / движение и проекция карты ещё не проверены.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-INITIAL-ENVIRONMENT-11316.md).
+
 SightEnter: полный portable wire decoder проверен с native outer reader, всеми
 callbacks, временными stack records, copies и cleanup CharacterOther / NPC /
 Gadget / ground / tether / projectiles. 1170 cases и 6 trailing checks прошли;
 final поля сверены после cleanup временных записей, все tracked buffers освобождены.
 Storage / map reset / final-array iteration остаются bounded fixtures.
 [Проверки и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-WHOLE-11316.md).
-Следом — current registration / handler → actor / world и initial entities.
-Runtime ID 301 пока не включён; живой поток и multi-account integration впереди.
+Current registration / handler → model / typed actor проверены статически;
+ID 301 подключён к частичной модели выше. Живой поток и engine/listener ещё не проверены.
 
 Частичное окружение подключено к сессиям и основному UI: NPC create / sight leave,
 начальные HP / MaxHP и XYZ, очистка по миру / close и отдельная кнопка просмотра.
 Проверены 50 изолированных synthetic owners и браузер через loopback API;
-это не новый live proof. Начальный SightEnter / players, изменение NPC stats /
+это не новый live proof. Начальный SightEnter / players подключены выше; изменение NPC stats /
 движение и карта остаются открытыми. [Контракт и доказательства](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OBSERVED-ENVIRONMENT-11316.md).
 
 Полный NPC create ID 324 проверен offline: 323 native/portable сценария,

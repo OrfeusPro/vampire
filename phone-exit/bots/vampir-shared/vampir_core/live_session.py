@@ -91,8 +91,8 @@ class LiveSession:
             counts=self._snapshot['packets']
             key=str(packet_id)
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
-            if packet_id in (302,324) and self._source==ENVIRONMENT_SOURCE:
-                event=self._environment.receive(packet_id,body,source_sha256=self._source,world_id=world_id)
+            if packet_id in (301,302,324) and self._source==ENVIRONMENT_SOURCE:
+                event=self._environment.receive(packet_id,body,source_sha256=self._source,world_id=world_id,character_key=character_key)
                 if event:self._diagnostics.event(event,packet_id=packet_id)
                 self._apply_environment()
             if packet_id not in (321,322) or self._source!=STAT_SOURCE_SHA256 or character_key is None:return

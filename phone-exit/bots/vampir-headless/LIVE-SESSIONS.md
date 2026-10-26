@@ -1,15 +1,18 @@
 # Изолированные живые сессии
 
-[Наблюдаемый NPC subset](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-OBSERVED-ENVIRONMENT-11316.md):
-ID 324 добавляет / обновляет NPC, ID 302 убирает actor keys. `coverage.entities=partial`
-не означает полный список рядом; начальный SightEnter и players ещё не подключены.
-HP и XYZ — при появлении, с явными `stats_current=false` / `position_current=false`.
-Максимум 512 NPC на сессию; world / close и decoder errors очищают subset.
-HTTP `/bots/<bot>/state?entity_page=0|1` отдаёт по 256 NPC, без параметра —
-первую страницу. `environment` содержит `known_count`, `entity_page`,
-`page_size`, `shown_count`; страницы отражают изменяемое состояние, а не архив.
-Состояние нескольких аккаунтов не разделяется. Это проверено на fixtures,
-игровая live проверка этого слоя ещё не выполнена.
+[Наблюдаемое окружение](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-INITIAL-ENVIRONMENT-11316.md):
+ID 301 добавляет / обновляет NPC и других игроков, ID 324 — NPC, ID 302 удаляет
+actor keys. `coverage.entities=partial` не означает полный или актуальный список рядом.
+У игроков доступны имя (до 32 символов), уровень, HP/MP и XYZ при получении;
+собственный key исключается. При неизвестном собственном key записи игроков пропускаются.
+`stats_current=false` / `position_current=false` отличают начальные наблюдения
+от текущего состояния. NPC и player с одинаковым числовым key хранятся раздельно.
+Максимум 512 объектов на сессию; world / close и decoder errors очищают subset.
+HTTP `/bots/<bot>/state?entity_page=0|1` отдаёт по 256 объектов, без параметра —
+первую страницу. `environment` содержит `known_count`, `entity_page`, `page_size`,
+`shown_count`, признаки полученного SightEnter / players и числа неподключённых
+записей других типов. Страницы отражают изменяемое состояние, а не архив.
+Изоляция 50 владельцев проверена на fixtures; живой поток окружения ещё не проверен.
 
 [Онлайн-журнал и изменяемый локальный обработчик](LIVE-DIAGNOSTICS.md):
 API / браузер проверены на fixture и реальном персонаже через OPPO / HK;

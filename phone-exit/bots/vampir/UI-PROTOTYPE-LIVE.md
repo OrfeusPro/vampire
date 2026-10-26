@@ -4,6 +4,11 @@
 Сборка остаётся результатом общего `build-ui-prototype.py --preview-during-audit`;
 новой отдельной сборки или обхода UI gate нет. Без live-параметров остаётся демо.
 
+«Окружение» показывает NPC и других игроков через тот же адаптер: тип / ключ,
+имя игрока / код NPC, уровень, HP/MP и начальную XYZ. Неизвестные поля — «—».
+Проверка браузера выполнена на явно помеченном fixture; при разрыве строки очищаются.
+[Источник полей и ограничения](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-INITIAL-ENVIRONMENT-11316.md).
+
 ## Данные и действия
 
 `prototype-live.js` создаёт один `VampirLiveState` с точными bot/session IDs.

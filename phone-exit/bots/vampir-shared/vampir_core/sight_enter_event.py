@@ -1,7 +1,7 @@
-"""Composed SightEnter wire reader; not enabled in a live session yet.
+"""Source-bound composed SightEnter wire reader.
 
-Outer order is source-bound; whole mixed-array native callbacks and handler/world
-association must be verified before assigning semantics or enabling runtime ID301.
+Whole mixed-array native callbacks/copies/cleanup are checked separately. Session
+semantics use static handler/typed actor bindings; engine side effects stay unknown.
 """
 from .current_record_reader import CurrentRecordReader,SOURCE_SHA256
 

@@ -140,20 +140,21 @@
       filter.oninput = () => refreshDialog?.(); refreshDialog();
     }
     function openEnvironment() {
-      const body = open('Наблюдаемые NPC'); let previous;
+      const body = open('Наблюдаемые объекты'); let previous;
       refreshDialog = () => {
           const key = JSON.stringify([value.entitiesKnown, value.entities, value.entityPage, value.entityRows]); if (key === previous) return; previous = key;
         if (!value.entitiesKnown) { body.replaceChildren(el('p', 'Текущие данные окружения недоступны')); return; }
         const table = el('table', undefined, 'live-stats'), rows = el('tbody');
-        table.append(append(el('thead'), append(el('tr'), el('th', 'Ключ'), el('th', 'Код записи'), el('th', 'HP / MaxHP при появлении'), el('th', 'Начальная XYZ'))));
-        for (const entity of value.entityRows) rows.append(append(el('tr'), el('td', entity.key), el('td', entity.wire_id ?? '—'),
-          el('td', (entity.hp ?? '—') + ' / ' + (entity.max_hp ?? '—')),
+        table.append(append(el('thead'), append(el('tr'), el('th', 'Тип / ключ'), el('th', 'Имя / код NPC'), el('th', 'Уровень'), el('th', 'HP / MaxHP · MP / MaxMP'), el('th', 'XYZ при получении'))));
+        for (const entity of value.entityRows) rows.append(append(el('tr'), el('td', (entity.kind === 'player' ? 'Игрок' : 'NPC') + ' · ' + entity.key),
+          el('td', entity.kind === 'player' ? (entity.name || '—') + (entity.name_truncated ? '…' : '') : entity.wire_id ?? '—'), el('td', entity.level ?? '—'),
+          append(el('td'), el('div', 'HP ' + (entity.hp ?? '—') + ' / ' + (entity.max_hp ?? '—')), el('div', 'MP ' + (entity.mp ?? '—') + ' / ' + (entity.max_mp ?? '—'))),
           el('td', entity.position && ['x','y','z'].every(k => Number.isFinite(entity.position[k])) ? ['x','y','z'].map(k => entity.position[k].toFixed(1)).join(' / ') : '—')));
           const pages = el('div', undefined, 'live-pagination');
           append(pages, button('Назад', () => adapter.setEntityPage(0), 'live-map-button', value.entityPage === 0),
             el('span', 'Показано ' + value.entityRows.length + ' из ' + value.entities + ' · страница ' + (value.entityPage + 1)),
             button('Далее', () => adapter.setEntityPage(1), 'live-map-button', value.entityPage !== 0 || value.entities <= 256));
-          table.append(rows); body.replaceChildren(el('p', (snapshot?.mode === 'fixture' ? 'Тестовые данные · без игрового соединения. ' : '') + 'Неполные данные из NPC create и sight leave. Начальный SightEnter и другие игроки ещё не разобраны. Код записи пока не связан с названием монстра. HP и координаты получены при появлении; изменения характеристик и движение ещё не подключены.'), pages, table);
+          table.append(rows); body.replaceChildren(el('p', (snapshot?.mode === 'fixture' ? 'Тестовые данные · без игрового соединения. ' : '') + 'Неполные данные из SightEnter, NPC create и sight leave. NPC и игроки разделены; собственный персонаж исключается по ключу. Код NPC пока не связан с названием монстра. Характеристики и XYZ записаны при получении сведений; последующие изменения и движение ещё не подключены.'), pages, table);
       }; refreshDialog();
     }
     let questKey;
@@ -167,7 +168,7 @@
       world.textContent = 'Мир ' + (value.person?.world_id ?? '—');
       coords.textContent = value.xyz ? 'Серверная цель XYZ: ' + ['x','y','z'].map(k => value.xyz[k].toFixed(1)).join(' / ') : 'Серверная цель XYZ: —';
       projection.textContent = value.position ? 'Маркер: серверная цель до коррекции клиента' : 'Позиция на карте: проекция ещё не подтверждена';
-      nearby.textContent = value.entitiesPartial ? 'Наблюдалось NPC: ' + value.entities + ' · данные неполные' : 'Объекты рядом: ' + (value.entitiesKnown ? value.entities : '—');
+      nearby.textContent = value.entitiesPartial ? 'Наблюдалось объектов: ' + value.entities + ' · данные неполные' : 'Объекты рядом: ' + (value.entitiesKnown ? value.entities : '—');
       environmentButton.disabled = !value.entitiesKnown; center.disabled = !value.position;
       const nextQuestKey = JSON.stringify([value.questsKnown, value.quests]);
       if (nextQuestKey !== questKey) { questKey = nextQuestKey; questList.replaceChildren(...questNodes()); }
