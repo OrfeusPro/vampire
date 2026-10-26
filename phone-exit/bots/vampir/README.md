@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Текущая модель квестов связана от singleton constructor / vtable до применения
+progress и state byte. Проверены инструкции шести roots и таблица virtual +0x48;
+это static proof, не native replay и не выполнение квеста. Далее factory task
+и её virtual copy: пока нельзя считать raw index выбранным этапом.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-MODEL-BINDING-11316.md).
+
 В новом коде владелец может явно подключить очередь к /actions и /policy:
 проверены loopback HTTP для 50 synthetic sessions, токены, точные offers,
 дедупликация, смена мира и отключение auto skip. Production game pump / decoder

@@ -10833,6 +10833,297 @@
       "question": "quest-click-action-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current selected task/order and lifecycle, engine-corrected position, quest route/action, dialogue/skip/equip protocols."
+    },
+    {
+      "addresses": [
+        "0x145d81aa0"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Incoming receiver passes projected progress and state to model virtual +0x48; the newly source-bound constructor/vtable resolves this call to 1455b4d40.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-MODEL-BINDING-11316.md",
+          "sha256": "1bbd3ccfb7b553c3f0fbae7fd05c75c120e3fbe9340654e9344094602eab90a6"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d4f609a9b8e8\\details.json",
+          "sha256": "d39105c99d42ade86b363f9699b11fac79acba947a000927466a91ef1ef8754a"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-55e835912cda\\details.json",
+          "sha256": "d70526ef240655effe4cd29e73354c15946d018844e214e557ba0b45ec207c0d"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d9e2c6d1988d\\details.json",
+          "sha256": "a68eef63a8e14ed24b471e8ef772ed4d41f701b51fc072931bfa8695b0a011c1"
+        }
+      ],
+      "id": "08f9b24f7836d5cb6d19b11a8f647fa2de5ca3bd720ebd644f1d8c81bfe14a97",
+      "limits": [
+        "Static full-source/export instruction binding only; no native function execution or game operations.",
+        "Factory and virtual task copy, ordering, lifecycle callbacks and gameplay result remain unverified."
+      ],
+      "method": "static",
+      "next_check": "Inspect explicit factory 1455b8ff0 and concrete task virtual +0x10, then bounded replay state application.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Task factory types, virtual copy of progress index, task ordering, HUD route and dialogue/skip/equip contracts."
+    },
+    {
+      "addresses": [
+        "0x1455ab3c0",
+        "0x1455ac490",
+        "0x1455b2ce0"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Three verified RIP-relative MOV stores bind model global 14b5e4d60 to constructor and two cleanup roots. Constructor final vtable 149903de8 has virtual +0x48 = 1455b4d40.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-MODEL-BINDING-11316.md",
+          "sha256": "1bbd3ccfb7b553c3f0fbae7fd05c75c120e3fbe9340654e9344094602eab90a6"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-55e835912cda\\details.json",
+          "sha256": "d70526ef240655effe4cd29e73354c15946d018844e214e557ba0b45ec207c0d"
+        }
+      ],
+      "id": "20aed4b313e8660f7cd6e949ba1792330f986ff5dcd3b7b9bb5b29486e18f249",
+      "limits": [
+        "Static full-source/export instruction binding only; no native function execution or game operations.",
+        "Factory and virtual task copy, ordering, lifecycle callbacks and gameplay result remain unverified."
+      ],
+      "method": "static",
+      "next_check": "Inspect explicit factory 1455b8ff0 and concrete task virtual +0x10, then bounded replay state application.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Task factory types, virtual copy of progress index, task ordering, HUD route and dialogue/skip/equip contracts."
+    },
+    {
+      "addresses": [
+        "0x1455b4d40"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Concrete model virtual +0x48 updates model map using record key +0x20 and invokes 1455f4a80(record,state,progress); its record+0x30 task pointer differs from model+0x30 map.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-MODEL-BINDING-11316.md",
+          "sha256": "1bbd3ccfb7b553c3f0fbae7fd05c75c120e3fbe9340654e9344094602eab90a6"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-d9e2c6d1988d\\details.json",
+          "sha256": "a68eef63a8e14ed24b471e8ef772ed4d41f701b51fc072931bfa8695b0a011c1"
+        }
+      ],
+      "id": "4c411b2589222b1cf0f0023f3087dc28a5f4006694f12ceaeaa8b042df5677b9",
+      "limits": [
+        "Static full-source/export instruction binding only; no native function execution or game operations.",
+        "Factory and virtual task copy, ordering, lifecycle callbacks and gameplay result remain unverified."
+      ],
+      "method": "static",
+      "next_check": "Inspect explicit factory 1455b8ff0 and concrete task virtual +0x10, then bounded replay state application.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Task factory types, virtual copy of progress index, task ordering, HUD route and dialogue/skip/equip contracts."
+    },
+    {
+      "addresses": [
+        "0x1455f4a80",
+        "0x1455fd350"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "State application invokes task progress application before storing record state at +0x28. Task application at record+0x30 updates matching task via virtual +0x10 or replaces it through factory 1455b8ff0 and shared ownership operations.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-MODEL-BINDING-11316.md",
+          "sha256": "1bbd3ccfb7b553c3f0fbae7fd05c75c120e3fbe9340654e9344094602eab90a6"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dee1f2864d6e\\details.json",
+          "sha256": "b1a0e4ce2409a44bce98c3f63cda68aea57e1b239e0fe71cbca8516148ceff1d"
+        }
+      ],
+      "id": "3fa86d52cc20b80c68a7bb52a350d7047924088e6b1eee1a00c396cd8a6045c3",
+      "limits": [
+        "Static full-source/export instruction binding only; no native function execution or game operations.",
+        "Factory and virtual task copy, ordering, lifecycle callbacks and gameplay result remain unverified."
+      ],
+      "method": "static",
+      "next_check": "Inspect explicit factory 1455b8ff0 and concrete task virtual +0x10, then bounded replay state application.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Task factory types, virtual copy of progress index, task ordering, HUD route and dialogue/skip/equip contracts."
     }
   ],
   "schema": 1,
