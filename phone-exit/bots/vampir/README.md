@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Основа очереди действий прошла 5 тестов с 50 synthetic accounts: намерения
+quest / dialogue / skip / equip изолированы, неизвестный исход блокирует повтор.
+Игровые handlers / API / UI ещё не подключены; текущую сессию не перезапускали.
+[Состояние реализации](../vampir-headless/ACTIONS.md).
+
 Current task lookup и progress projection проверены вместе в 324 native
 сценариях с настоящим обходом коллизий; manager / hash callback — fixtures.
 Порядок задач и применение к selected state ещё открыты. Для выполнения по
