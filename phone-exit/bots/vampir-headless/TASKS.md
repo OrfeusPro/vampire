@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Fresh tutorial application / bootstrap перенесён на current SHA: 192 native
+сценария с guards прошли. Далее populated maps / drain и происхождение policy
+row+0x50 / timer row+0x60; launch остаётся fixture.
+[Границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STARTUP-11316.md).
+
 ID 9905: current handler / receiver / независимая queued copy проверены native.
 Далее application helpers и consumer очереди; native gate 6 не заменять
 фактом ID 206. [192 сценария и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md).

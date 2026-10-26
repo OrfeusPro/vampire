@@ -3043,7 +3043,8 @@
       "baseline_functions": [],
       "tools": [
         "replay-tutorial-update-11316.py",
-        "replay-tutorial-dispatch-11316.py"
+        "replay-tutorial-dispatch-11316.py",
+        "replay-tutorial-startup-11316.py"
       ],
       "rule": "При новом SHA искать кандидата ID 9905 по имени / vtable и проверять whole readers / callbacks / bindings. Совпадение формата не разрешает tutorial ack, применение локальной задачи или квестовое действие.",
       "automation": {
@@ -3117,15 +3118,73 @@
                 "required_checks": [
                   "native-tutorial-dispatch-11316"
                 ]
+              },
+              {
+                "address": "0x1464c35d0",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
+              },
+              {
+                "address": "0x14649fe90",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
+              },
+              {
+                "address": "0x1464c5210",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
+              },
+              {
+                "address": "0x1464ce8e0",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
+              },
+              {
+                "address": "0x1464cef40",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
+              },
+              {
+                "address": "0x1464cc120",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
+              },
+              {
+                "address": "0x1464c41a0",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
+              },
+              {
+                "address": "0x14142e6f0",
+                "scope": "Whole current fresh-startup application / native copy and hash linking / no-removal pruning / bootstrap / early advance. Table/storage/launch fixtures; populated maps and completion gate not covered.",
+                "required_checks": [
+                  "native-tutorial-startup-11316"
+                ]
               }
             ],
             "tools": [
               "replay-tutorial-update-11316.py",
-              "replay-tutorial-dispatch-11316.py"
+              "replay-tutorial-dispatch-11316.py",
+              "replay-tutorial-startup-11316.py"
             ],
             "evidence": [
               "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md",
-              "evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md"
+              "evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md",
+              "evidence/scenarios/HEADLESS-TUTORIAL-STARTUP-11316.md"
             ]
           }
         ]

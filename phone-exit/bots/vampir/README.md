@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Current fresh-startup application / bootstrap проверен в 192 native сценариях:
+серверная запись отделена от локального selector. Table / storage / launch —
+явные fixtures; действия и populated state ещё не перенесены.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-STARTUP-11316.md).
+
 Native ID 9905 handler / gate / deferred deep copy проверены в 192 сценариях.
 Связь gate с headless lifecycle и application maps ещё открыта;
 исходящих команд не добавлено. [Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md).
