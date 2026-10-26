@@ -11298,6 +11298,312 @@
       "question": "quest-click-action-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Whole factory/replacement, shared ownership, lifecycle effects, current table loading/order, real route/dialogue/skip/equip and gameplay result."
+    },
+    {
+      "addresses": [
+        "0x1455b8ff0",
+        "0x1455f4a80",
+        "0x1455fd350"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c19cc0dc44cfee6689c4bc0917929f2abe63c4ceea590bc367c4e482f52b6376",
+          "id": "native-quest-state-application-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7\\manifest.json",
+          "sha256": "04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dcc9222ecfab8ddee5a352609b764713ab4ac646cc4a9b0e8d4862b00499859d",
+          "id": "native-quest-task-replacement-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585\\manifest.json",
+          "sha256": "5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "378 сценариев исполняют целые state/progress/factory case 6 с actual constructor и shared-control helpers: 189 success и 189 primary-allocation failure fallback. Проверены 32 байта progress, sender index getter, final strong/weak 1/1, порядок callbacks и guards. Эффекты внешних callbacks остаются fixtures.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-TASK-REPLACEMENT-11316.md",
+          "sha256": "847eca57aa021c197fca9291b8fd47255551deeb3fe80faa3caacff4d502e6f4"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\quest-task-replacement-11316.json",
+          "sha256": "5407fd358ae7cfadb3320a9984d23be7ea6a5d59307c26f6d10531474fb1ea9b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-2c32a5472a00\\details.json",
+          "sha256": "1d85524bab236769f8f2bdb0f684e933c202992646d31c3058246ebf2bad0e75"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-4511094667cb\\details.json",
+          "sha256": "a79feab1e53183f056a894db36009a24d3570bc5505d39c099aefd060f84ab9c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-f6b719e56790\\details.json",
+          "sha256": "3ab4938fcb07b35d8fd01a1157b8a9c1d060c3b95cf30458ed0d85f042cc4cc0"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dee1f2864d6e\\details.json",
+          "sha256": "b1a0e4ce2409a44bce98c3f63cda68aea57e1b239e0fe71cbca8516148ceff1d"
+        }
+      ],
+      "id": "c64c0fb997c468d13c882c826fda824d541323277e6c8878776a01d19269aca6",
+      "limits": [
+        "Factory исполняется только для kind 6 и fallback после отказа первого object allocation.",
+        "Allocation, вложенные init, data lookup, callbacks, destructor/free — явные fixtures; parent weak control null, optional cache отключён.",
+        "Реальные lifecycle эффекты, другие factory kinds, table loading/order и игровые действия не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать task map loading/order с текущими CSV и live progress; затем допускать конкретное owner action без подмены наблюдаемого состояния.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Загрузка/порядок task map относительно current CSV; non-null parent weak ownership, другие factory kinds и реальные route/dialogue/skip/equip handlers."
+    },
+    {
+      "addresses": [
+        "0x1414734e0",
+        "0x1455a9340"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c19cc0dc44cfee6689c4bc0917929f2abe63c4ceea590bc367c4e482f52b6376",
+          "id": "native-quest-state-application-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7\\manifest.json",
+          "sha256": "04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dcc9222ecfab8ddee5a352609b764713ab4ac646cc4a9b0e8d4862b00499859d",
+          "id": "native-quest-task-replacement-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585\\manifest.json",
+          "sha256": "5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native shared-control constructor и move/release исполняются внутри 378 creation/replacement сценариев. Реальные LOCK XADD меняют strong/weak; old strong 2 сохраняет control без destructor, strong 1 выбирает destructor/free по weak. Destructor/free effects подставлены явно.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-TASK-REPLACEMENT-11316.md",
+          "sha256": "847eca57aa021c197fca9291b8fd47255551deeb3fe80faa3caacff4d502e6f4"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\quest-task-replacement-11316.json",
+          "sha256": "5407fd358ae7cfadb3320a9984d23be7ea6a5d59307c26f6d10531474fb1ea9b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-2c32a5472a00\\details.json",
+          "sha256": "1d85524bab236769f8f2bdb0f684e933c202992646d31c3058246ebf2bad0e75"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-4511094667cb\\details.json",
+          "sha256": "a79feab1e53183f056a894db36009a24d3570bc5505d39c099aefd060f84ab9c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-f6b719e56790\\details.json",
+          "sha256": "3ab4938fcb07b35d8fd01a1157b8a9c1d060c3b95cf30458ed0d85f042cc4cc0"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dee1f2864d6e\\details.json",
+          "sha256": "b1a0e4ce2409a44bce98c3f63cda68aea57e1b239e0fe71cbca8516148ceff1d"
+        }
+      ],
+      "id": "377f3403cbeb05135b674785cb74a7504171c3bb9da7d8fb86c299cb53e6ce1f",
+      "limits": [
+        "Factory исполняется только для kind 6 и fallback после отказа первого object allocation.",
+        "Allocation, вложенные init, data lookup, callbacks, destructor/free — явные fixtures; parent weak control null, optional cache отключён.",
+        "Реальные lifecycle эффекты, другие factory kinds, table loading/order и игровые действия не проверены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать task map loading/order с текущими CSV и live progress; затем допускать конкретное owner action без подмены наблюдаемого состояния.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Загрузка/порядок task map относительно current CSV; non-null parent weak ownership, другие factory kinds и реальные route/dialogue/skip/equip handlers."
+    },
+    {
+      "addresses": [
+        "0x1455b8ff0"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c19cc0dc44cfee6689c4bc0917929f2abe63c4ceea590bc367c4e482f52b6376",
+          "id": "native-quest-state-application-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7\\manifest.json",
+          "sha256": "04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dcc9222ecfab8ddee5a352609b764713ab4ac646cc4a9b0e8d4862b00499859d",
+          "id": "native-quest-task-replacement-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585\\manifest.json",
+          "sha256": "5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native replay выявил отсутствующий fallthrough 1455ba01a после Jcc в старом export, несмотря на decompiler block coverage. Индекс отклоняет такие неполные варианты; bounded native-flow обход Ghidra дал corrected factory export: 1078 инструкций / 5147 байт, без расширения unwind roots.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-TASK-REPLACEMENT-11316.md",
+          "sha256": "847eca57aa021c197fca9291b8fd47255551deeb3fe80faa3caacff4d502e6f4"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\quest-task-replacement-11316.json",
+          "sha256": "5407fd358ae7cfadb3320a9984d23be7ea6a5d59307c26f6d10531474fb1ea9b"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-2c32a5472a00\\details.json",
+          "sha256": "1d85524bab236769f8f2bdb0f684e933c202992646d31c3058246ebf2bad0e75"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-4511094667cb\\details.json",
+          "sha256": "a79feab1e53183f056a894db36009a24d3570bc5505d39c099aefd060f84ab9c"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-f6b719e56790\\details.json",
+          "sha256": "3ab4938fcb07b35d8fd01a1157b8a9c1d060c3b95cf30458ed0d85f042cc4cc0"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-dee1f2864d6e\\details.json",
+          "sha256": "b1a0e4ce2409a44bce98c3f63cda68aea57e1b239e0fe71cbca8516148ceff1d"
+        }
+      ],
+      "id": "c3ad230a187771ca7972e2afd940a4bdbcb8d66c169840fd2cdb01dc795e9491",
+      "limits": [
+        "Factory исполняется только для kind 6 и fallback после отказа первого object allocation.",
+        "Allocation, вложенные init, data lookup, callbacks, destructor/free — явные fixtures; parent weak control null, optional cache отключён.",
+        "Реальные lifecycle эффекты, другие factory kinds, table loading/order и игровые действия не проверены."
+      ],
+      "method": "static",
+      "next_check": "Связать task map loading/order с текущими CSV и live progress; затем допускать конкретное owner action без подмены наблюдаемого состояния.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Загрузка/порядок task map относительно current CSV; non-null parent weak ownership, другие factory kinds и реальные route/dialogue/skip/equip handlers."
     }
   ],
   "schema": 1,

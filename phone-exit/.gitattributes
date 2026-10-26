@@ -1,1 +1,4 @@
 bots/vampir/ui-prototype/quest-names-ru.js text eol=lf
+# Контексты закреплены полными byte SHA: сохранить текущие окончания строк.
+bots/resource-tools/vampir/knowledge/native-contexts/quest-state-application-11316.json text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/quest-task-replacement-11316.json text eol=crlf

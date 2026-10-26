@@ -167,9 +167,35 @@ public class InspectVampirSdkProfile extends GhidraScript {
                         body.add(begin, last.getMaxAddress());
                         starts.add("0x" + begin);
                     }
+                    // Decompiler blocks can omit native conditional fallthroughs.
+                    // Follow only native flow within explicit PE ranges.
+                    ArrayDeque<Address> pending = new ArrayDeque<>();
+                    Set<Address> visited = new HashSet<>();
+                    pending.add(owner.getEntryPoint());
+                    for (var block : blocks) pending.add(block.getStart());
+                    while (!pending.isEmpty()) {
+                        Address at = pending.removeFirst();
+                        if (!permitted.contains(at) || !visited.add(at)) continue;
+                        if (visited.size() > 65536) throw new IllegalStateException("Native flow instruction budget");
+                        Instruction ins = currentProgram.getListing().getInstructionAt(at);
+                        if (ins == null) {
+                            DisassembleCommand command = new DisassembleCommand(at, permitted, true);
+                            command.enableCodeAnalysis(false); command.applyTo(currentProgram, monitor);
+                            ins = currentProgram.getListing().getInstructionAt(at);
+                        }
+                        if (ins == null || !permitted.contains(at, ins.getMaxAddress()))
+                            throw new IllegalStateException("Native flow instruction missing/outside ranges");
+                        body.add(at, ins.getMaxAddress());
+                        Address fall = ins.getFallThrough();
+                        if (fall != null && permitted.contains(fall)) pending.add(fall);
+                        if (ins.getFlowType().isJump())
+                            for (Address target : ins.getFlows()) if (permitted.contains(target)) pending.add(target);
+                    }
                     owner.setBody(body);
                     row.add("decompiler_block_starts", starts);
                     row.addProperty("block_coverage_complete", true);
+                    row.addProperty("direct_flow_coverage_complete", true);
+                    row.addProperty("direct_flow_instruction_count", visited.size());
                 } else if (source.has("requested_unwind_ranges")) {
                     row.addProperty("block_coverage_complete", false);
                 }

@@ -9,6 +9,13 @@ from unittest.mock import patch
 
 
 class KnowledgeIndexTests(unittest.TestCase):
+    def test_conditional_native_fallthrough_is_required_beyond_decompiler_blocks(self):
+        branch=dict(address='0x100',bytes='7508')
+        target=dict(address='0x10a',bytes='c3')
+        self.assertEqual(self.tool.missing_conditional_fallthroughs([branch,target]),['0x100'])
+        self.assertEqual(self.tool.missing_conditional_fallthroughs([branch,dict(address='0x102',bytes='c3'),target]),[])
+        self.assertEqual(self.tool.missing_conditional_fallthroughs([dict(address='0x100',bytes='e905000000'),target]),[])
+
     @classmethod
     def setUpClass(cls):
         path = Path(__file__).parent / 'resource-tools/vampir/knowledge-index.py'

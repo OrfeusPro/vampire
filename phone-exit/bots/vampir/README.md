@@ -1,10 +1,11 @@
 # Vampir — главный указатель разработки
 
-Применение progress к существующему matching task прошло 324 native сценария:
-actual virtual copy, порядок state / callback и sender index getter. Factory
-и 23 task tables проверены статически; whole creation / replacement, table order
-и реальные действия ещё открыты. Collector исправлен для switch data, 13 тестов.
-[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-STATE-APPLICATION-11316.md).
+Factory case 6 / создание / replacement прошли 378 native сценариев с настоящими
+constructor / shared move / refcounts и явными внешними fixtures. Исправлен
+обнаруженный native replay пропуск Jcc fallthrough в export: 14 index / 14 collector /
+14 workflow tests прошли. Далее task table order / current CSV и конкретный owner
+action; игровые команды ещё не включены.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TASK-REPLACEMENT-11316.md).
 
 В новом коде владелец может явно подключить очередь к /actions и /policy:
 проверены loopback HTTP для 50 synthetic sessions, токены, точные offers,

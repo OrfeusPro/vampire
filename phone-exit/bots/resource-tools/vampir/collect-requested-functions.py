@@ -128,6 +128,8 @@ def collect(index, args, request, addresses):
             raise ValueError('Requested export body/instruction coverage is incomplete')
         if function.get('block_coverage_complete') is not True:
             raise ValueError('Requested export decompiler block coverage is incomplete')
+        if function.get('direct_flow_coverage_complete') is not True or index.missing_conditional_fallthroughs(function.get('instructions', [])):
+            raise ValueError('Requested export native direct-flow coverage is incomplete')
     saved = re.search(r'Save succeeded for(?: processed file)?:', (out / 'headless.log').read_text('utf-8'))
     if not project_file.is_file() or not saved:
         raise ValueError('Requested Ghidra project save not confirmed')

@@ -1,9 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
-324 native сценария существующего matching task подтвердили progress copy,
-state ordering и sender index getter. Factory / case 6 constructor / 23 task
-tables связаны статически; whole replacement / lifecycle и table order ещё нужны.
-[Результат и следующий шаг](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-STATE-APPLICATION-11316.md).
+378 native сценариев покрыли factory case 6, replacement / fallback, refcounts
+и sender getter. Allocation / data / lifecycle остаются явными fixtures;
+table loading / order и конкретный owner action ещё нужны. Exporter дополнен
+проверкой native direct flow после обнаруженного пропуска Jcc fallthrough.
+[Результат и следующий шаг](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TASK-REPLACEMENT-11316.md).
 
 Очередь подключена к новому HTTP API /actions и /policy: 5 loopback тестов,
 50 synthetic sessions, точные owner offers, повтор без повторной отправки,

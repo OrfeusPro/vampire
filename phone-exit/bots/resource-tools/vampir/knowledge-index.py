@@ -155,6 +155,18 @@ def add_literal(db, artifact, sha, at, text):
         db.execute('INSERT INTO search VALUES(?,?,?,?,?,?)', (sha, at, identifier, text, artifact, 'literal'))
 
 
+def missing_conditional_fallthroughs(instructions):
+    """A listed x64 Jcc also requires its native fallthrough instruction."""
+    covered={int(row['address'],16) for row in instructions}
+    missing=[]
+    for row in instructions:
+        raw=bytes.fromhex(row['bytes'])
+        conditional=(len(raw)==2 and 0x70<=raw[0]<=0x7f) or (len(raw)==6 and raw[0]==0x0f and 0x80<=raw[1]<=0x8f)
+        if conditional and int(row['address'],16)+len(raw) not in covered:
+            missing.append(row['address'])
+    return missing
+
+
 def import_report(db, sources, report):
     receipt_path = receipt_for(report)
     if not receipt_path.is_file():
@@ -210,6 +222,9 @@ def import_report(db, sources, report):
         if row.get('block_coverage_complete') is False or not starts <= covered:
             completed = False
             message += ' Decompiler basic blocks missing from instruction export.'
+        if row.get('block_coverage_complete') is True and missing_conditional_fallthroughs(instructions):
+            completed = False
+            message += ' Native conditional fallthrough instructions missing from export.'
         if ('switch' in pseudo_text and not starts and any(
                 re.fullmatch(r'JMP\s+[A-Z][A-Z0-9]*', ins.get('text', '')) and not ins.get('references')
                 for ins in instructions)):
