@@ -1,0 +1,44 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "record_index": "release-snapshots/c44b60d512a5b6a07a3ca7f6242eb23a385d36c87c67a7490fb2bad3c150b4db/record-indexes/faad77301f66215958cca4d9a083ca61f09f8f54650307dab1580470dc47f913/manifest.json",
+  "pak_sha256": "15cf4f880170e87fc5fdea661cf9ba3d54a4f66c607844f5ab1047ed87f1e6a4",
+  "csv_entry": 2983,
+  "csv_sha256": "6f2eec83a42c722caca8b6d4e7d7ff0768b2873fcf40cbd476fd843ce4689a2a",
+  "exports": {
+    "run-1f1d981208d1": "894a46395bb20e624271f898bbdb085fe4c997230de2c5ec468d4462795b1691"
+  },
+  "leaves": {
+    "0x1445f5ed0": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e9c2b5ffff",
+    "0x1445f6040": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e912bbffff",
+    "0x1445f5f10": "8b41204c8bc1ffc83bd076040f57c0c38bca48c1e10549034828e9c1b5ffff",
+    "0x1445f14b0": "488379180f7603488b0948ff25b7a63a04",
+    "0x1445f1b70": "488379180f7603488b094533c033d248ff2512a03a04",
+    "0x1445f5eb0": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e902b6ffff",
+    "0x1445f14d0": "488379180f7603488b0948ff2517a73a04",
+    "0x1445e4c30": "33c083c1d083f9090f96c0c3",
+    "0x1487f5c03": "ff25f7611a00"
+  },
+  "columns": {
+    "Id": "u64",
+    "QuestInfoId": "u64",
+    "TargetSpotInfoId": "i32",
+    "AreaInfoId": "i32",
+    "MapIconGroupId": "i32",
+    "ServerServiceGroupId": "i32",
+    "AutoQuest": "boolean",
+    "RunInInstance": "boolean",
+    "RemainInstanceWorldEndTask": "boolean",
+    "ShowInstanceEffect": "boolean",
+    "Type": "byte",
+    "TaskProgressType": "byte",
+    "QuestActionPosX": "f32",
+    "QuestActionPosY": "f32",
+    "QuestActionPosZ": "f32",
+    "QuestActionRadius": "f32"
+  },
+  "limits": [
+    "Synthetic cells seeded from all current CSV numeric values; actual row/loader/map/override chain not executed here.",
+    "Exact cell/SSO wrappers, native boolean/decimal/digit functions; actual local Windows CRT atoi/_atoi64/strtoul/pow are called through bounded import bridges. CRT SHA/locale recorded.",
+    "Inline strings <=15 bytes and external strings <=128 bytes, with guards and nonempty-row column bounds. No live order or gameplay admission."
+  ]
+}

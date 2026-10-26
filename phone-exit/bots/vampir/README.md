@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Actual numeric getters / native decimal parser / Windows CRT прошли 26 906
+случаев из всех 5944 CSV rows без расхождений. Native scalars заменили fixtures
+в whole loader на 6 rows × 2 orders; fields и group order совпали. Edge inputs
+отличаются от generic int/float; override / file/header / full load остаются
+открыты, live admission false. Сессия сохраняется.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SCALARS-11316.md).
+
 Whole QuestTask loader выполнен с native tokenizer / constructor / maps:
 6 исходных строк «Зова крови» в прямом и обратном порядке, все 16 data fields
 сверены; group array сохраняет insertion-slot order. File/header/scalar/string /

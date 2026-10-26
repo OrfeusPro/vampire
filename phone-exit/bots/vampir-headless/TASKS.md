@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Actual scalar wrappers/native decimal/Windows CRT прошли 26 906 cases из
+95 104 numeric values всех 5944 CSV rows; 28 lexical / 15 bounds cases.
+Native getters подключены к whole loader на 6 rows × 2 orders вместо scalar
+fixtures. Далее override 145b69ca0, actual file/header/current service policy и
+whole catalog до live admission. Сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SCALARS-11316.md).
+
 Whole loader 145b5f270 объединил native tokenizer, record и map chain на 6
 исходных строках 110120 × 2 orders: data fields и group pointer order проверены.
 Scalar/file/header/string/storage/override fixtures явные; live order false.

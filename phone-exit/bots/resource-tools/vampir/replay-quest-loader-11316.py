@@ -17,10 +17,11 @@ def load(name, path=None):
     return module
 
 
-def run():
+def run(context_path=None):
     audit = load('audit-client-release')
-    path = HERE/'knowledge/native-contexts/quest-loader-11316.json'
+    path = Path(context_path) if context_path else HERE/'knowledge/native-contexts/quest-loader-11316.json'
     context = json.loads(path.read_text('utf-8'))
+    native_scalars = context.get('native_scalars') is True
     h = load('native-request-harness-11316').make_harness(context['exports'],
             {int(a, 16) for a in context['functions']}, leaves={int(a, 16):b for a, b in context['leaves'].items()})
     if h.sha != context['source_sha256'] or not all(f.get('block_coverage_complete') for f in h.fragments):
@@ -336,6 +337,18 @@ def run():
         0x146908950:lambda machine:h.finish(allocate(reg('RCX'))),
         0x1487e8ce0:lambda machine:h.finish(reg('RAX')),
     }
+    runtime = None
+    if native_scalars:
+        for address in (0x1445f5ed0,0x1445f5eb0,0x1445f5e60,0x1445f6040,0x1445f5f10):
+            callbacks.pop(address)
+        def numeric_input():
+            ptr = reg('RCX')
+            if not cells<=ptr<cells+17*32 and ptr not in blocks:
+                raise ValueError('Loader CRT pointer outside current cells/allocations')
+            data = raw_string(ptr)
+            if len(data)>128: raise ValueError('Loader numeric input budget')
+            return data
+        runtime = load('replay-quest-scalars-11316').install_runtime(h,numeric_input,base+0x7000)
     for address, callback in callbacks.items(): h.add_fixture(address,callback)
     put(0x14b0c2b00,hash_callback); put(0x14b2f01c8,0)
     runs = []
@@ -343,6 +356,7 @@ def run():
         uc.mem_write(base+0x1000,bytes(0x32000)); blocks.clear(); counts.clear(); cursor[0]=base+0x8000
         ordered = list(reversed(rows)) if reverse else rows
         state.clear(); state.update(raw=b''.join(r[1] for r in ordered),position=0)
+        if runtime: runtime['calls'].clear()
         put(manager,0x1499f6948); put(manager+8,0x1499f69e8)
         put(primary+0x48,2,4); put(group+0x48,2,4)
         put(stream_object,stream_table); put(stream_table+0x20,read_callback)
@@ -375,13 +389,18 @@ def run():
                 raise ValueError('Final heap guards differ')
         runs.append(dict(reverse=reverse,task_ids=[r[0][0] for r in ordered],records=6,group_count=1,
                          bytes_read=state['position'],callbacks=counts.copy(),group_order_matches_records=True))
+        if runtime:
+            runs[-1]['scalar_import_calls']={name:runtime['calls'].count(name) for name in ('atoi','_atoi64','strtoul','pow')}
     after = archive.stat()
     if (before.st_size,before.st_mtime_ns)!=(after.st_size,after.st_mtime_ns) or audit.sha256(archive)!=context['pak_sha256']:
         raise ValueError('PAK changed during replay')
     report = dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),
                   exports=h.evidence,csv_sha256=context['csv_sha256'],memset_import=imported,runs=runs,
                   network_used=False,order_admitted=False,limits=context['limits'])
-    target = audit.save_snapshot(h.root/'code-clues/quest-loader-11316',report)
+    if runtime:
+        runtime['verify'](); report['native_scalars']=True; report['system_runtime']=runtime['system_runtime']
+        report['scalar_imports']=runtime['imported']
+    target = audit.save_snapshot(h.root/('code-clues/quest-loader-scalars-11316' if runtime else 'code-clues/quest-loader-11316'),report)
     return target,report
 
 
