@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Native dynamic RegionSelect key / lookup / setter прошли 288 случаев:
+две synthetic identity дают разные keys, absent/empty identity — PreLogin.
+Engine/identity/string/config services остаются fixtures, actual identity /
+active region и storage не подтверждены. Настройки и сессия сохраняются.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-KEY-11316.md).
+
 Native provider getter / region lookup / service setter прошли совместно
 216 случаев: primary/legacy/missing config paths, fallback+A8 и две legacy
 write intentions только в памяти fixture. Dynamic key/config IO/string fixtures

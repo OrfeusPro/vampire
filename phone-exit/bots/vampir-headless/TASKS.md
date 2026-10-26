@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Dynamic key 14556b740 подключён native к region lookup/setter: 288 случаев,
+identity A/B → разные RegionSelect_%s, absent/empty → RegionSelect_PreLogin.
+Engine/identity/string/config fixtures явные. Далее actual config reader/storage
+и identity/cache+A8, active region/phase/current policy/catalog; сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-KEY-11316.md).
+
 Region getter/lookup 14556b8b0/service setter прошли 216 native cases:
 primary / RegionSelect fallback / missing→cache+A8. Legacy success вызывает
 две config writes в памяти fixture, без изменения user settings. Далее dynamic

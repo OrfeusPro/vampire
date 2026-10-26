@@ -1,0 +1,20 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-9fb0bec39db3": "cfa5468fc2d359930922367c5bc279ac766693fcef83808a0b1a7ca82e01ff53",
+    "run-f7f3737dd318": "062c124a787b27dc6af3a7a6982905887b4b989d0279b6ae89b9769e39672b06",
+    "run-79f96d7ea490": "06a0ba8744ea7ea26f06ab5b201641434370d422e5066ece1a21130674dcc3e8"
+  },
+  "caller_run": "run-83255b6c29bc",
+  "caller_sha256": "d811a7f48b0c5c91ca936e30f91437057dfe597da31081dcebbb7a876035b4ec",
+  "limits": [
+    "Whole native dynamic key/region lookup/provider getter/service setter with absent engine, empty identity and two synthetic identity strings; real string formatting/copy/engine identity services remain bounded fixtures.",
+    "Config IO remains an in-memory fixture, including legacy read/write intentions. No real settings changed. Actual identity origin/current active region not proved.",
+    "Region8 is explicit synthetic test data for empty-identity branch, not a claim of a supported current RegionType. No live order/gameplay admission."
+  ],
+  "native_lookup": true,
+  "leaves": {
+    "0x14556ae90": "488b05f1980706c3"
+  },
+  "native_key": true
+}
