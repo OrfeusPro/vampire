@@ -3327,7 +3327,8 @@
       "baseline_functions": [],
       "tools": [
         "inspect-quest-update-producer-11316.py",
-        "replay-quest-sender-11316.py"
+        "replay-quest-sender-11316.py",
+        "replay-quest-progress-11316.py"
       ],
       "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом.",
       "automation": {
@@ -3394,11 +3395,19 @@
                 "required_checks": [
                   "native-quest-sender-11316"
                 ]
+              },
+              {
+                "address": "0x145de4610",
+                "scope": "Whole progress projection and pointer getter; synthetic array lookup, virtual task kind and diagnostic lifecycle fixtures. No active task or action proof.",
+                "required_checks": [
+                  "native-quest-progress-11316"
+                ]
               }
             ],
             "evidence": [
               "evidence/scenarios/HEADLESS-QUEST-UPDATE-PRODUCER-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md"
             ]
           }
         ]

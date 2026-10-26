@@ -10648,6 +10648,59 @@
       "question": "quest-click-action-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Active task, HUD action binding and quest execution remain unknown."
+    },
+    {
+      "addresses": [
+        "0x145de4610"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3bb239dc36caf2207af86a7381381da1fa204e8828f0d6fec079a8a03fb9642b",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\88119d5a2dcecd039f3b4562d694d9a763aadab1453422d460c1b857f12aeff7\\manifest.json",
+          "sha256": "88119d5a2dcecd039f3b4562d694d9a763aadab1453422d460c1b857f12aeff7",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current progress-to-task projection executes in 324 bounded native cases: signed-byte task array indexing, task pointer/kind result, low32 counters, fallback and diagnostic cleanup paths.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-PROGRESS-11316.md",
+          "sha256": "c9ae12bc09da9d176202415cdc28ea56db2eb4b1580bd198ad30f804235bcd40"
+        }
+      ],
+      "id": "a0efb5163d5bd38f113cf082692a74929b8c049a4cbb15de259413a6ec353d90",
+      "limits": [
+        "Synthetic lookup, task kind and diagnostic helpers; actual pointer getter and whole target execute.",
+        "Negative index slots explicitly allocated in synthetic memory; no runtime acceptance or live command.",
+        "Not whole QuestSync application or proof of active task."
+      ],
+      "method": "bounded_native",
+      "next_check": "Inspect current lookup 145b4be70 and progress projection application before enabling task action.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Origin of task array, application to model state, HUD binding, route execution and server result."
     }
   ],
   "schema": 1,

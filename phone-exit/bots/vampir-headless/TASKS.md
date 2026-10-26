@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current progress projection `145de4610` проверена целиком в 324 native сценариях:
+signed byte индекса, task pointer / kind, low32 счётчиков, fallback и диагностика.
+Lookup и task kind — fixtures. Далее источник массива `145b4be70` и применение
+результата к state модели; без этого не запускать задачу по одному raw08.
+Redmi / HK остаётся online; русское имя 110120 — «Зов крови» проверено в UI.
+[Проекция и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md).
+
 Windows --detached owner пережил выход dispatcher в тесте; новый Redmi / HK
 вошёл в мир и получил реальный список с 110120. Сессию сохранять; квестовое
 действие и перезапуск самого Codex с онлайн-персонажем ещё не проверены.
