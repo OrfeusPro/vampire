@@ -1,0 +1,12 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-79f96d7ea490": "06a0ba8744ea7ea26f06ab5b201641434370d422e5066ece1a21130674dcc3e8",
+    "run-43e25a15d0c1": "4250ababa64369bcd106f90e121b5137a0820e088d23f14563add80f07be7b2e"
+  },
+  "limits": [
+    "Whole native numeric config reader and comma replacement; actual local Windows _wtoi with pinned CRT SHA/locale.",
+    "Lower storage read, FString copy/append/free and zero-length suffix comparison are bounded fixtures; only comma pattern/empty replacement. Found/missing text explicit, empty descriptor count0/1 tested.",
+    "No actual config file/storage/current region, full lookup/catalog/gameplay admission."
+  ]
+}

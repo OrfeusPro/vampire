@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Числовое чтение RegionSelect прошло 56 native сценариев: found flag отделён
+от значения, запятые удаляются, найденные empty/JP дают 0 и true; missing
+сохраняет output. Storage/string fixtures явные, active region неизвестен.
+Далее совместный lookup/reader и lower storage; сессию сохранять.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REGION-NUMBER-11316.md).
+
+
 Identity getter 14560b900 выполнен native в общей цепочке: 432 случая,
 receiver+48 refresh/retain/empty и освобождение старого cache. Platform+110 /
 init/fetch fixtures; реальная identity/account mapping неизвестна. Далее actual

@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Числовое чтение RegionSelect прошло 56 native сценариев: found flag отделён
+от значения, запятые удаляются, найденные empty/JP дают 0 и true; missing
+сохраняет output. Storage/string fixtures явные, active region неизвестен.
+Далее совместный lookup/reader и lower storage; сессию сохранять.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-REGION-NUMBER-11316.md).
+
+
 Native identity getter добавлен к key/region lookup/setter: 432 случая,
 refresh/empty/failed-init cached fallback/successful-init и ownership проверены.
 Platform/subsystem/string/config fixtures остаются; identity semantics и active
