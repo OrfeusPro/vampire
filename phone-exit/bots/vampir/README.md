@@ -1,9 +1,17 @@
 # Vampir — главный указатель разработки
 
+После перезапуска Codex прежние Redmi game owner / transport / API отсутствуют:
+сессия офлайн, причина завершения не установлена. --detached переведён на
+одноразовую задачу текущего пользователя вне дерева Codex. Два Windows-теста
+подтвердили сохранение synthetic worker после taskkill /T и очистку при timeout;
+новая игровая проверка вместе с транспортом ещё требуется.
+[Новый запуск и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SCHEDULED-OWNER-11316.md).
+
 Current progress helper проверен целиком в 324 native сценариях; установлены
 индекс задачи, читаемый со знаком, формирование результата и fallback.
 Происхождение task array / применение к модели остаются открытыми;
-следование по клику пока не включено. Сохранённая Redmi-сессия работает.
+следование по клику пока не включено. Во время исследования Redmi была онлайн;
+после перезапуска Codex её владелец завершился, как указано выше.
 [Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md).
 
 В живой панели задания выводятся на русском из текущего PAK: 1 341 название
@@ -12,12 +20,11 @@ Current progress helper проверен целиком в 324 native сцена
 выполнение задания по клику ещё не подключено.
 [Источники и проверка](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-NAMES-RU-11316.md).
 
-Добавлен явный Windows --detached запуск владельца сессий вне job Codex:
-anonymous pipe для пароля, readiness API и срок 24 часа. Проверены выход
-dispatcher / Stop и 50 synthetic sessions. Новый Redmi / HK вошёл в мир:
-получен живой ID 1854 / Quest 110120; heartbeat 232 / 232 после выхода launcher.
-Сессию сохраняем. Перезапуск самого Codex с онлайн-персонажем ещё не проверен.
-[Режим и реальные границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-DETACHED-OWNER-11316.md).
+Прежний breakaway запуск проверил выход dispatcher / Stop и 50 synthetic
+sessions. Redmi / HK тогда вошёл в мир, получил ID 1854 / Quest 110120;
+heartbeat 232 / 232 после выхода launcher. Позднейший перезапуск Codex
+не пережит; актуальный способ и ограничения описаны выше.
+[Предыдущая проверка](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-DETACHED-OWNER-11316.md).
 
 Current QuestUpdate sender / lookup коллизий / state getter / position wrapper
 проверены целиком в 640 native сценариях, 160 дошли до send fixture.

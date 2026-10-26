@@ -1,15 +1,22 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Прежняя Redmi-сессия офлайн после перезапуска Codex. Новый --detached использует
+Task Scheduler текущего пользователя вне дерева Codex; synthetic HTTP worker
+пережил taskkill /T dispatcher. Далее запуск транспорта тем же независимым
+способом, новый игровой вход и проверка перезапуска Codex; не считать тест
+dispatcher доказательством реального игрового reconnect / длительной работы.
+[Запуск и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SCHEDULED-OWNER-11316.md).
+
 Current progress projection `145de4610` проверена целиком в 324 native сценариях:
 signed byte индекса, task pointer / kind, low32 счётчиков, fallback и диагностика.
 Lookup и task kind — fixtures. Далее источник массива `145b4be70` и применение
 результата к state модели; без этого не запускать задачу по одному raw08.
-Redmi / HK остаётся online; русское имя 110120 — «Зов крови» проверено в UI.
+Русское имя 110120 — «Зов крови» проверено в UI на прежней Redmi / HK сессии.
 [Проекция и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md).
 
-Windows --detached owner пережил выход dispatcher в тесте; новый Redmi / HK
-вошёл в мир и получил реальный список с 110120. Сессию сохранять; квестовое
-действие и перезапуск самого Codex с онлайн-персонажем ещё не проверены.
+Прежний Windows breakaway owner пережил выход dispatcher в тесте; Redmi / HK
+вошёл в мир и получил реальный список с 110120. После перезапуска Codex owner
+исчез; актуальное исправление описано выше, квестовое действие ещё не проверено.
 [Результат и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-DETACHED-OWNER-11316.md).
 
 Current sender 145d85360 с native hash lookup / state getter / position wrapper

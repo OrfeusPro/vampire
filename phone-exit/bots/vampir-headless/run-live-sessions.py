@@ -145,7 +145,7 @@ def main():
     parser.add_argument('--port',type=int,default=17947)
     parser.add_argument('--result',type=Path,help='Новый файл итоговых кодов после завершения, без паролей и содержимого трафика')
     modes=parser.add_mutually_exclusive_group()
-    modes.add_argument('--detached',action='store_true',help='Windows: отдельный процесс вне job вызывающего приложения; пароли только через anonymous pipe')
+    modes.add_argument('--detached',action='store_true',help='Windows: одноразовая задача текущего пользователя вне дерева Codex; пароли только через anonymous pipe')
     modes.add_argument('--detached-worker',action='store_true',help=argparse.SUPPRESS)
     args=parser.parse_args()
     passwords={};startup=None;announced=False
@@ -171,8 +171,8 @@ def main():
             result_path=str(args.result.resolve()) if args.result else None)
         passwords={row['bot_id']:getpass.getpass('Пароль '+row['bot_id']+': ') for row in accounts}
         if args.detached:
-            from vampir_core.detached_worker import launch_detached
-            notice=launch_detached([sys.executable,'-X','utf8',str(Path(__file__).resolve()),'--detached-worker'],
+            from vampir_core.scheduled_worker import launch_scheduled
+            notice=launch_scheduled([sys.executable,'-X','utf8',str(Path(__file__).resolve()),'--detached-worker'],
                 dict(options=options,passwords=passwords),cwd=str(HERE.parents[2]))
             print(json.dumps(notice,ensure_ascii=False),flush=True)
         else:launch_options(options,passwords)
