@@ -1,0 +1,12 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-b89911c14f11": "cf4ca1a14258dfa7d85b14a8bbe376fae7a57010b7c2d5bf895c2e855f0c1316"
+  },
+  "russian_csv_sha256": "88efc2a29c7a52a4148ef916689b77044b25b4c028ad4feea96d0b4782ee57b7",
+  "limits": [
+    "Whole native localization transform; UTF8/wide conversion and storage/substring/compare/fallback/free/security cookie are bounded fixtures. Language settings getter returns explicit synthetic flags, not active game state.",
+    "Six source Russian labels plus eight lexical strings; inline/external SSO layouts when byte length permits. All allocations succeed; no whole override loader or duplicate/missing key handling.",
+    "Empty string storage is fixture descriptor count0. No runtime language flags/current locale, live task order or gameplay admission."
+  ]
+}

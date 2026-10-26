@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Native localization transform прошёл 336 сценариев на русских названиях и
+lexical strings: explicit flags / Untranslated / fallback / ### prefix.
+String/settings services — bounded fixtures; active flags и whole override
+ещё не допущены. Далее ru override loader с missing/duplicate rows.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LOCALIZATION-11316.md).
+
 Для названий этапов выбран русский current QuestTask_Name CSV: 5943 base IDs
 найдены, 1 missing и 48 duplicate IDs сохранены без выбора победителя. Все 16
 locale schemas не имеют Param; native optional branch связан с record+90.

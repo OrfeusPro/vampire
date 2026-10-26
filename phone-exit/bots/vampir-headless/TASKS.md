@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Whole localization transform 14585e070 прошёл 336 случаев: current Russian
+labels/lexical strings, flags +1E4/+1E5, Untranslated, fallback, SSO layouts.
+Native branch/ownership flow проверен со string/settings fixtures; active flags
+не подтверждены. Далее ru override loader с этим transform и missing/duplicates,
+затем whole catalog/current service policy. Сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LOCALIZATION-11316.md).
+
 Пользователь выбрал русский presentation locale. Current ru QuestTask_Name
 связан с PAK: 5943 matched base IDs, 1 missing, 48 duplicate groups; candidate
 catalog вне Git не выбирает победителя. Во всех 16 locale CSV отсутствует Param,
