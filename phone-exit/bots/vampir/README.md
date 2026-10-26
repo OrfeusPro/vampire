@@ -1,26 +1,13 @@
 # Vampir — главный указатель разработки
 
-SightEnter: подтверждены пять отдельных массивов — CharacterOther, NPC create,
-ground effects, gadget и tether effects. Ground / tether records прошли 2580
-whole native сценариев, portable декодеры добавлены. Optional projectile array
-packet+50 прошёл 1734 whole native сценария; portable сохраняет absent / empty и
-повторы. [Массив и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-PROJECTILES-11316.md).
-GuildTinyInfo / PartyTag прошли 9590 native сценариев; portable записи добавлены.
-[Строки, emblem / time / options и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-SOCIAL-11316.md).
-Whole Gadget прошёл 1891 native сценарий, portable decoder добавлен.
-[Массив, optional owner и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-GADGET-11316.md).
-Whole CharacterOther прошёл 1797 native сценариев; добавлены portable decoder
-и общий cursor / budget с NPC create. +f8 уточнён как ActorAction, не ground effects.
-[Полная запись и исправление классификации](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-OTHER-11316.md).
-Portable composition полного SightEnter добавлена с общим бюджетом; mixed fixtures
-и static outer contract проверены. Whole native callbacks / copy / cleanup и live
-подключение ещё впереди. [Композиция и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-COMPOSITION-11316.md).
-CharacterOther read → copy → native source / final destructor проверены:
-2077 чтений, 560 копий, 2637 destructors; все tracked buffers освобождены,
-копия сверена после source free poisoning. Map clear остаётся storage fixture.
-[Lifecycle и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-LIFECYCLE-11316.md).
-[Вложенные записи и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-EFFECTS-11316.md).
-[Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
+SightEnter: полный portable wire decoder проверен с native outer reader, всеми
+callbacks, временными stack records, copies и cleanup CharacterOther / NPC /
+Gadget / ground / tether / projectiles. 1170 cases и 6 trailing checks прошли;
+final поля сверены после cleanup временных записей, все tracked buffers освобождены.
+Storage / map reset / final-array iteration остаются bounded fixtures.
+[Проверки и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-WHOLE-11316.md).
+Следом — current registration / handler → actor / world и initial entities.
+Runtime ID 301 пока не включён; живой поток и multi-account integration впереди.
 
 Частичное окружение подключено к сессиям и основному UI: NPC create / sight leave,
 начальные HP / MaxHP и XYZ, очистка по миру / close и отдельная кнопка просмотра.

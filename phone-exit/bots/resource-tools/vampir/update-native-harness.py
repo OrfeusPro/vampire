@@ -176,7 +176,18 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                        and context.get('functions',{}).get('reader') == '0x145788180'
                        and context.get('functions',{}).get('copy') == '0x1456bedd0'
                        and context.get('functions',{}).get('destroy') == '0x145785200')
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope and not gadget_scope and not other_scope and not lifecycle_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (31 if lifecycle_scope else (25 if other_scope else (20 if npc_scope else (16 if gadget_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8))))))):
+    sight_roots = lifecycle_roots | {int(at,16) for at in (
+        '144aac190 1456bb710 1456bf7a0 1456bfe20 1456c2f60 1456c5390 1456c5e60 '
+        '1456c6270 1456c62f0 1456c6400 1456c64b0 1456c67a0 1456c68d0 1456c6960 '
+        '1456d1d30 1456d1eb0 1456d1ef0 1456d1f30 1456d1f70 1456d1ff0 1457846a0 '
+        '145784e20 145786290 14578fe30 14578fef0 1457911d0 145791230 1457938b0 '
+        '145793a90 14579a5a0 14579b720 14579b810 14579e350 14579e590 14579e690 '
+        '14579e6f0 1457a2590 1457a3480 1457a38a0 1457a44c0 1457a5c80 1457a5cd0 '
+        '1457a6850 1457a83c0 145821cb0').split()}
+    sight_scope = (budget == 117 and context.get('budget_scope') == 'sight-enter-whole'
+                   and set(functions) == sight_roots == {int(v,16) for v in context.get('functions',{}).values()}
+                   and context.get('functions',{}).get('reader') == '0x1456c5390')
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope and not gadget_scope and not other_scope and not lifecycle_scope and not sight_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (39 if sight_scope else (31 if lifecycle_scope else (25 if other_scope else (20 if npc_scope else (16 if gadget_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8)))))))):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'
