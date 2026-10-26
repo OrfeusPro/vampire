@@ -155,7 +155,20 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                         vector='0x144aac530',keys_callback='0x1456c6960',keys_wrapper='0x1456bb710',
                         optional_wrapper='0x1456b7060',owner_reader='0x145786290',
                         constructor='0x14578fe30',reader='0x1457938b0'))
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope and not gadget_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (20 if npc_scope else (16 if gadget_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8))))):
+    other_roots = {int(at,16) for at in (
+        '14143b9a0 14143bd30 1414466a0 14144c440 14150b060 14150d330 144aac130 144aac250 '
+        '144aac2a0 144aac2f0 144aac390 144aac470 144aac4a0 144aac4f0 144aac530 144aac5c0 '
+        '144aacb40 144aacf40 144aacfd0 1456b7060 1456ba460 1456bbbd0 1456bd7a0 1456c3000 '
+        '1456c6e70 1456d2260 145734dd0 14573b9c0 14573d240 145781ac0 145783670 1457841c0 '
+        '145786190 145786390 145787a30 145788180 1457893b0 145789c10 14578a310 14578aff0 '
+        '14578f6b0 1457909e0 145792250 145794bc0 145799940 14579c6b0 1457a2530 1457a3500 '
+        '1457a3830 1457a5520 1457a5770 1457a5b60 1457a7f70 1457fdce0 145821d00 1458220f0 '
+        '1487ea130').split()}
+    other_scope = (budget == 57 and context.get('budget_scope') == 'sight-character-other'
+                   and set(functions) == other_roots == {int(v,16) for v in context.get('functions',{}).values()}
+                   and context.get('functions',{}).get('constructor') == '0x145783670'
+                   and context.get('functions',{}).get('reader') == '0x145788180')
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope and not gadget_scope and not other_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (25 if other_scope else (20 if npc_scope else (16 if gadget_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8)))))):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

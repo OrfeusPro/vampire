@@ -9,7 +9,10 @@ GuildTinyInfo / PartyTag прошли 9590 native сценариев; portable �
 [Строки, emblem / time / options и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-SOCIAL-11316.md).
 Whole Gadget прошёл 1891 native сценарий, portable decoder добавлен.
 [Массив, optional owner и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-GADGET-11316.md).
-Полные CharacterOther / SightEnter и live подключение ещё впереди.
+Whole CharacterOther прошёл 1797 native сценариев; добавлены portable decoder
+и общий cursor / budget с NPC create. +f8 уточнён как ActorAction, не ground effects.
+[Полная запись и исправление классификации](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-OTHER-11316.md).
+Полный внешний SightEnter и live подключение ещё впереди.
 [Вложенные записи и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-EFFECTS-11316.md).
 [Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
 
