@@ -3332,7 +3332,8 @@
         "replay-quest-update-wire-11316.py",
         "replay-quest-csv-projection-11316.py",
         "replay-quest-empty-group-11316.py",
-        "replay-quest-map-growth-11316.py"
+        "replay-quest-map-growth-11316.py",
+        "replay-quest-map-chain-11316.py"
       ],
       "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом.",
       "automation": {
@@ -3532,6 +3533,34 @@
                 "required_checks": [
                   "native-quest-map-growth-11316"
                 ]
+              },
+              {
+                "address": "0x145b4ab90",
+                "scope": "Whole fresh-map FindOrAdd/insert/growth/rehash chain; explicit alloc/hash/bit/ctor/duplicate fixtures, no CSV/live order admission.",
+                "required_checks": [
+                  "native-quest-map-chain-11316"
+                ]
+              },
+              {
+                "address": "0x145b4ad00",
+                "scope": "Whole fresh-map FindOrAdd/insert/growth/rehash chain; explicit alloc/hash/bit/ctor/duplicate fixtures, no CSV/live order admission.",
+                "required_checks": [
+                  "native-quest-map-chain-11316"
+                ]
+              },
+              {
+                "address": "0x145b4a420",
+                "scope": "Whole fresh-map FindOrAdd/insert/growth/rehash chain; explicit alloc/hash/bit/ctor/duplicate fixtures, no CSV/live order admission.",
+                "required_checks": [
+                  "native-quest-map-chain-11316"
+                ]
+              },
+              {
+                "address": "0x145b48b50",
+                "scope": "Whole fresh-map FindOrAdd/insert/growth/rehash chain; explicit alloc/hash/bit/ctor/duplicate fixtures, no CSV/live order admission.",
+                "required_checks": [
+                  "native-quest-map-chain-11316"
+                ]
               }
             ],
             "evidence": [
@@ -3542,7 +3571,8 @@
               "evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-CSV-PROJECTION-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-EMPTY-GROUP-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-MAP-GROWTH-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-MAP-GROWTH-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-MAP-CHAIN-11316.md"
             ]
           }
         ]

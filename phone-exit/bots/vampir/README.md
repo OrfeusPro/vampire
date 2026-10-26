@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+FindOrAdd→insert→growth→rehash проверены совместно: 6 fresh-map sequences,
+420 inserts / 840 existing lookups. Порядок slots/payload сохраняется с явными
+allocator/hash/bit-append fixtures. Далее CSV accepted-row creation/loading;
+live order admission пока false.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-MAP-CHAIN-11316.md).
+
 120 native rehash cases подтвердили сохранение nodes/payload и slot iteration;
 16 growth cases — расчёт ёмкости / замену pointer с явным realloc fixture.
 CSV fresh load / whole insertion chain / overrides ещё открыты; order не допущен.

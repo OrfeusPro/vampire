@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Whole fresh-map chain прошёл 420 inserts / 840 existing lookups в 6 sequences;
+actual FindOrAdd / insert / growth / rehash сохраняют slot order с явными внешними
+fixtures. Далее accepted CSV row creation / load / overrides перед live admission.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-MAP-CHAIN-11316.md).
+
 Rehash прошёл 120 native layouts, growth — 16 helper cases с явным allocator
 fixture. Nodes сохраняются, iterator идёт по occupied slots; далее whole
 insertion/growth chain и CSV row creation/fresh load/overrides, без live admission.
