@@ -12,8 +12,8 @@ def load(name):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 
-def run():
-    path=HERE/'knowledge/native-contexts/quest-progress-11316.json'
+def run(*,native_lookup=False):
+    path=HERE/'knowledge/native-contexts'/('quest-task-lookup-11316.json' if native_lookup else 'quest-progress-11316.json')
     context=json.loads(path.read_text('utf-8'))
     h=load('native-request-harness-11316').make_harness(context['exports'],
         {int(v,16) for v in context['functions'].values()},
@@ -21,6 +21,7 @@ def run():
     uc,x,base=h.uc,h.x,h.scratch
     result,progress,wrapper,slots,task,vtable,kind_get,logobject,logtable,logfree=[base+n for n in
         (0x1000,0x2000,0x3000,0x5000,0x6000,0x7000,0x8000,0x9000,0xa000,0xb000)]
+    manager,nodes,buckets,hash_get=[base+n for n in (0xc000,0xd000,0xe000,0xf000)]
     selected={};calls=[]
 
     def reg(name):return uc.reg_read(getattr(x,'UC_X86_REG_'+name))
@@ -33,6 +34,11 @@ def run():
     def kind(machine):
         if reg('RCX')!=task:raise ValueError('Task virtual receiver changed')
         calls.append('kind');h.finish(selected['kind'])
+    def manager_get(machine):calls.append('manager');h.finish(manager)
+    def hash_key(machine):
+        if integer(reg('RCX'))!=selected['key'] or reg('RDX')!=8 or reg('R8')!=0:
+            raise ValueError('Native task lookup hash inputs changed')
+        calls.append('hash');h.finish(1)
     def log_format(machine):
         if reg('R8')!=selected['key']:raise ValueError('Diagnostic quest key changed')
         put(reg('RCX'),logobject if selected['log_heap'] else 0)
@@ -49,9 +55,13 @@ def run():
     def log_destroy(machine):
         if reg('RCX')!=logobject:raise ValueError('Diagnostic destroy receiver changed')
         calls.append('destroy');h.finish()
-    for at,callback in ((0x145b4be70,lookup),(kind_get,kind),(0x141433340,log_format),
+    for at,callback in ((kind_get,kind),(0x141433340,log_format),
             (0x1414c3070,log_wrap),(0x141584120,log_emit),(logfree,log_release),(0x141483080,log_destroy)):
         h.add_fixture(at,callback)
+    if native_lookup:
+        h.add_fixture(0x145b547a0,manager_get);h.add_fixture(hash_get,hash_key)
+        put(0x14b0c2b00,hash_get)
+    else:h.add_fixture(0x145b4be70,lookup)
     put(vtable+0x30,kind_get);put(logobject,logtable);put(logtable+0x10,logfree)
     cases=[]
     # Native uses MOVSX for the incoming byte and only an upper count bound.
@@ -76,6 +86,23 @@ def run():
                         put(task,vtable);put(task+0x40,0xfedcba9876543210)
                         immutable=[(at,bytes(uc.mem_read(at,size))) for at,size in
                             ((progress-16,64),(wrapper,16),(slots-128*8,2048),(task,80))]
+                        if native_lookup:
+                            for at,size in ((manager,256),(nodes,64),(buckets,8)):
+                                uc.mem_write(at-16,b'\xc1'*16+bytes(size)+b'\xc2'*16)
+                            empty=lookup_case=='missing' and count==0
+                            put(manager+0x68,nodes);put(manager+0x70,2 if not empty or heap else 0,4)
+                            put(manager+0x9c,2 if empty and heap else 0,4)
+                            put(manager+0xa8,buckets if heap else 0);put(manager+0xb0,2,4)
+                            bucket_base=buckets if heap else manager+0xa0
+                            put(bucket_base,-1,4);put(bucket_base+4,0,4)
+                            put(nodes,key^2);put(nodes+0x18,1,4)
+                            put(nodes+32,key^4 if lookup_case=='missing' else key)
+                            # Value is the TArray header *inside* the second
+                            # native map node, not an independent wrapper fixture.
+                            put(nodes+40,slots);put(nodes+48,count,4);put(nodes+52,count,4)
+                            put(nodes+56,-1,4)
+                            immutable.extend((at-16,bytes(uc.mem_read(at-16,size+32)))
+                                for at,size in ((manager,256),(nodes,64),(buckets,8)))
                         uc.reg_write(x.UC_X86_REG_RDX,key);uc.reg_write(x.UC_X86_REG_R8,progress)
                         returned=h.call(0x145de4610,result)
                         found=lookup_case=='found' and signed_index<count
@@ -91,21 +118,24 @@ def run():
                             raise ValueError('Native progress projection differs')
                         if bytes(uc.mem_read(result-16,16))!=b'\xa1'*16 or bytes(uc.mem_read(result+32,16))!=b'\xa2'*16:
                             raise ValueError('Projection output guard changed')
-                        expected_calls=['lookup','kind'] if found else ['lookup','format','wrap','emit']+(['release','destroy'] if heap else [])
+                        expected_calls=(['manager','hash'] if native_lookup else ['lookup'])+(
+                            ['kind'] if found else ['format','wrap','emit']+(['release','destroy'] if heap else []))
                         if calls!=expected_calls:raise ValueError('Projection lookup/diagnostic lifecycle differs')
                         for at,expected_bytes in immutable:
                             if bytes(uc.mem_read(at,len(expected_bytes)))!=expected_bytes:raise ValueError('Input or guard mutated')
                         cases.append(dict(key=key,index=index,signed_index=signed_index,count=count,
-                            lookup=lookup_case,log_heap=heap,found=found))
+                            lookup=lookup_case,log_heap=heap,found=found,
+                            lookup_storage=('external' if heap else 'inline') if native_lookup else 'fixture'))
     audit=load('audit-client-release')
     report=dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),
-        native_execution=True,network_used=False,exports=h.evidence,cases=cases,
-        limits=['Whole 145de4610 and pointer getter execute; table lookup, task kind and diagnostic helpers are fixtures.',
+        native_execution=True,native_lookup=native_lookup,network_used=False,exports=h.evidence,cases=cases,
+        limits=[('Whole 145de4610 / 145b4be70 and pointer getter execute; manager getter, hash dispatch, task kind and diagnostics are fixtures.' if native_lookup else
+            'Whole 145de4610 and pointer getter execute; table lookup, task kind and diagnostic helpers are fixtures.'),
             'Synthetic task array, including explicitly allocated negative slots; no runtime acceptance of negative indexes.',
             'Successful output: task+0x40, virtual kind, original index byte, low32 of progress+0x10/+0x18, zero+0x18.',
             'Failure output: zero key, kind1F/indexFF, zero counters and tail; padding remains untouched.',
             'Not a whole QuestSync application, selected task proof, HUD callback, movement or server acceptance.'])
-    return audit.save_snapshot(h.root/'code-clues/quest-progress-11316',report),report
+    return audit.save_snapshot(h.root/'code-clues'/('quest-task-lookup-11316' if native_lookup else 'quest-progress-11316'),report),report
 
 
 if __name__=='__main__':

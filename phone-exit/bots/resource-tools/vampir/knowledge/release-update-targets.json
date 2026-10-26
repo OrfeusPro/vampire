@@ -3402,12 +3402,20 @@
                 "required_checks": [
                   "native-quest-progress-11316"
                 ]
+              },
+              {
+                "address": "0x145b4be70",
+                "scope": "Whole native collision-chain lookup with progress projection on synthetic manager; manager getter/hash/task kind/diagnostics fixtures; no active task/action proof.",
+                "required_checks": [
+                  "native-quest-task-lookup-11316"
+                ]
               }
             ],
             "evidence": [
               "evidence/scenarios/HEADLESS-QUEST-UPDATE-PRODUCER-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-TASK-LOOKUP-11316.md"
             ]
           }
         ]

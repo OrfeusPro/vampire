@@ -1,0 +1,10 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-b865a737d979": "e62dea7abd45aa48ce27bcf3ee8c1290fe9ca8991bf5e95792049c8da4c62452",
+    "run-6978cfe0cd9d": "604ae3be1bba4bc7c87a9183f94017bdade41ebae0fbd632ebc5244944cc3cbe"
+  },
+  "functions": {"progress_to_task": "0x145de4610", "task_lookup": "0x145b4be70"},
+  "leaves": {"0x141500410": "488b01c3"},
+  "fixtures": ["0x145b547a0", "hash dispatch at 0x14b0c2b00", "task virtual kind", "diagnostic lifecycle"]
+}

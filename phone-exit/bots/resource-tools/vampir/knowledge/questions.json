@@ -809,9 +809,9 @@
       "id": "quest-click-action-11316",
       "status": "open",
       "question": "Как клик по полученному квесту запускает движение и выполнение в текущем клиенте, и как воспроизвести это через адаптер выбранной сессии?",
-      "known": "Current ID 1810 связан с PktQuestUpdate: table 149965670, constructor entry 145828b00, writer 145837030, reader 14582bc60. Найдены два проверенных E8 constructor callers: 145d85360 и 145d6f9b0. Ghidra export run-22845de261d6 содержит оба sender roots и writer/reader. Producer 145d85360 копирует вектор от 145517d40, второй аргумент в packet+0x30 и результат 1455e7510 в byte+0x38; lookup 1455bbcb0 должен быть успешным. Игровой клик / смысл аргументов / action contract ещё не доказаны. Static source-bound inspector закрепил property keys QuestInfoId / QuestTaskIndex / TargetId и соответствующие stores в packet+0x30 / +0x38 / +0x28. Sender 145d85360 требует успешный model lookup и получает byte TaskIndex через model+0x30→pointer+0x29 либо FF; произвольный индекс не задан. Его qword pointer найден в 149a3cee8, прямых E8 callers не найдено. Test source binding прошёл; native execution и клик HUD не проверены. Whole current sender / native hash collision lookup / state getter / packet constructor / position wrapper проверены в 640 сценариях. 160 found cases формируют один packet и cleanup через fixtures; empty/missing/null value не отправляют. State pointer null даёт FF, не разрешённый runtime параметр. Engine/model singleton/weak reference/network/send/destruction — fixtures; models/actors/guards неизменны. Источник координат проверен как native object fields/global fallbacks, не актуальная позиция headless actor. Current incoming key binding проверен через общий lookup; по актуальному PAK подключены 1341 русское название. Сохранённая Redmi/HK сессия получила 110120 — Зов крови. Whole progress helper 145de4610 прошёл 324 native сценария: signed byte progress+8 индексирует массив, task+40 и virtual kind формируют результат; counters читаются как low32. Lookup/task kind/diagnostics — fixtures.",
-      "unknown": "Полная сборка модели QuestSync, происхождение массива задач, связь выбранного этапа с state pointer sender, callback HUD, local route и server acknowledgement. После перезапуска Codex Redmi/HK owner отсутствует; новый --detached через Task Scheduler проверен на synthetic worker, новый игровой вход ещё не выполнялся. Игровые действия не отправлялись.",
-      "next_action": "Проверить lookup 145b4be70 и применение результата progress helper к модели; затем HUD callback / class table149a3cee8 и local route executor. Current serializer и action adapter требуют живого подтверждения движения.",
+      "known": "Current ID 1810 связан с PktQuestUpdate: table 149965670, constructor entry 145828b00, writer 145837030, reader 14582bc60. Найдены два проверенных E8 constructor callers: 145d85360 и 145d6f9b0. Ghidra export run-22845de261d6 содержит оба sender roots и writer/reader. Producer 145d85360 копирует вектор от 145517d40, второй аргумент в packet+0x30 и результат 1455e7510 в byte+0x38; lookup 1455bbcb0 должен быть успешным. Игровой клик / смысл аргументов / action contract ещё не доказаны. Static source-bound inspector закрепил property keys QuestInfoId / QuestTaskIndex / TargetId и соответствующие stores в packet+0x30 / +0x38 / +0x28. Sender 145d85360 требует успешный model lookup и получает byte TaskIndex через model+0x30→pointer+0x29 либо FF; произвольный индекс не задан. Его qword pointer найден в 149a3cee8, прямых E8 callers не найдено. Test source binding прошёл; native execution и клик HUD не проверены. Whole current sender / native hash collision lookup / state getter / packet constructor / position wrapper проверены в 640 сценариях. 160 found cases формируют один packet и cleanup через fixtures; empty/missing/null value не отправляют. State pointer null даёт FF, не разрешённый runtime параметр. Engine/model singleton/weak reference/network/send/destruction — fixtures; models/actors/guards неизменны. Источник координат проверен как native object fields/global fallbacks, не актуальная позиция headless actor. Current incoming key binding проверен через общий lookup; по актуальному PAK подключены 1341 русское название. Сохранённая Redmi/HK сессия получила 110120 — Зов крови. Whole progress helper 145de4610 прошёл 324 native сценария: signed byte progress+8 индексирует массив, task+40 и virtual kind формируют результат; counters читаются как low32. Lookup/task kind/diagnostics — fixtures. Whole task lookup 145b4be70 вместе с progress прошёл 324 native сценария: inline/external buckets, collision chain, empty/missing и TArray value по адресу node+8. Manager getter/hash dispatch — fixtures.",
+      "unknown": "Происхождение и порядок массива задач, его связь с current QuestTask CSV, selected state, HUD click, dialogue choice/skip и обучение/экипировка. В текущем онлайн-owner нет action queue; observational analysis не отправляет команды. Infinix session сохраняется, новый login/Stop не выполнялись.",
+      "next_action": "Проверить manager 145b547a0 и применение результата к selected state; затем current serializer и отдельный owner-side action adapter. Проверить contracts реплик, пропуска и inventory/equip для стартового обучения.",
       "decision_rule": "Имя AutoStart или QuestUpdate не доказывает универсальную команду прохождения. Успех transport send не равен началу движения или выполнению квеста.",
       "do_not_repeat": "Не подбирать quest IDs / raw flags и не повторять начальный tutorial ack; не подставлять исторические адреса в current runtime.",
       "addresses": [
@@ -822,7 +822,8 @@
         "0x1455bbcb0",
         "0x1455e7510",
         "0x145517d40",
-        "0x145de4610"
+        "0x145de4610",
+        "0x145b4be70"
       ],
       "evidence": [
         "evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE.md",
@@ -831,7 +832,8 @@
         "evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md",
         "evidence/scenarios/HEADLESS-QUEST-NAMES-RU-11316.md",
         "evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md",
-        "evidence/characters/HEADLESS-SCHEDULED-OWNER-11316.md"
+        "evidence/characters/HEADLESS-SCHEDULED-OWNER-11316.md",
+        "evidence/scenarios/HEADLESS-QUEST-TASK-LOOKUP-11316.md"
       ]
     }
   ]

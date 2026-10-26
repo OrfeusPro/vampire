@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Current task lookup и progress projection проверены вместе в 324 native
+сценариях с настоящим обходом коллизий; manager / hash callback — fixtures.
+Порядок задач и применение к selected state ещё открыты. Для выполнения по
+клику / диалогов / пропуска / экипировки нужен отдельный action adapter;
+текущая Infinix-сессия сохраняется, analysis остаётся только наблюдением.
+[Проверка и следующий шаг](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TASK-LOOKUP-11316.md).
+
 Новый Infinix X650 / HK вошёл в мир независимым запуском: Okly, уровень 1,
 HP 2700/2700, MP 2000/2000, «Зов крови». Игра, транспорт и сервер карты
 теперь имеют отдельных владельцев Task Scheduler. На uptime 239 секунд heartbeat
