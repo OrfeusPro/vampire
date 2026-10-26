@@ -12,7 +12,9 @@ Whole Gadget прошёл 1891 native сценарий, portable decoder доб�
 Whole CharacterOther прошёл 1797 native сценариев; добавлены portable decoder
 и общий cursor / budget с NPC create. +f8 уточнён как ActorAction, не ground effects.
 [Полная запись и исправление классификации](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-CHARACTER-OTHER-11316.md).
-Полный внешний SightEnter и live подключение ещё впереди.
+Portable composition полного SightEnter добавлена с общим бюджетом; mixed fixtures
+и static outer contract проверены. Whole native callbacks / copy / cleanup и live
+подключение ещё впереди. [Композиция и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-COMPOSITION-11316.md).
 [Вложенные записи и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-EFFECTS-11316.md).
 [Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
 

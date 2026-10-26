@@ -2,6 +2,39 @@
   "schema": 1,
   "checks": [
     {
+      "id": "live-sight-enter-composition-11316",
+      "questions": [
+        "live-world-state-11316"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": false,
+      "test_pattern": "test_vampir_sight_enter_11316.py",
+      "timeout_seconds": 90,
+      "runtime_distributions": [
+        "capstone"
+      ],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_sight_enter_11316.py",
+        "phone-exit/bots/test_vampir_sight_character_other_11316.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-sight-enter-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_enter_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_character_other.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/npc_move_event.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+      ]
+    },
+    {
       "id": "live-sight-character-other-11316",
       "questions": [
         "live-world-state-11316"
@@ -35,7 +68,10 @@
         "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
         "phone-exit/bots/vampir-shared/vampir_core/npc_move_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-96408f02c1d2/details.json",
@@ -310,7 +346,10 @@
         "phone-exit/bots/resource-tools/vampir/build-entry-window-code.py",
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
         "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
-        "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py"
+        "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py"
       ],
       "runtime_distributions": [
         "capstone"
@@ -349,7 +388,10 @@
         "phone-exit/bots/vampir-shared/vampir_core/npc_move_event.py",
         "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py"
+        "phone-exit/bots/vampir-shared/vampir_core/current_record_reader.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_effect_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_gadget_record.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_projectile_records.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-0b2ae7adfcf9/details.json",

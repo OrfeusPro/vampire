@@ -107,3 +107,31 @@ class CurrentRecordReader:
             (0xf8,self.array(self.actor_action)),(0x108,self.guild()),(0x168,self.optional(self.party)),
             (0x1c8,self.optional(self.small_map)),(0x228,self.flag()),(0x229,min(self.byte(),3)),
             (0x22a,self.flag()),(0x22b,min(self.byte(),3))))
+
+    def ground_effect(self):
+        from .sight_effect_records import decode_ground_effect_data
+        return decode_ground_effect_data(self.take(50),source_sha256=SOURCE_SHA256)
+
+    def tether_effect(self):
+        from .sight_effect_records import decode_tether_effect_data
+        return decode_tether_effect_data(self.take(66),source_sha256=SOURCE_SHA256)
+
+    def projectile_circle(self):
+        from .sight_projectile_records import decode_projectile_circle_data
+        return decode_projectile_circle_data(self.take(65),source_sha256=SOURCE_SHA256)
+
+    def gadget(self):
+        # Read the source-verified boundary, charge keys to this cursor's budget,
+        # and let the existing whole-record decoder interpret every field.
+        from .sight_gadget_record import decode_gadget
+        start=self.position;self.take(48);count=self.count();self.take(count*8)
+        if self.flag():
+            self.take(9);self.take(self.u16());self.take(8)
+        self.take(1)
+        return decode_gadget(self.body[start:self.position],source_sha256=SOURCE_SHA256,max_collection_items=count)
+
+    def sight_enter(self):
+        return self.record(((0x10,self.array(self.character_other)),(0x20,self.array(self.npc_create_data)),
+            (0x30,self.array(self.ground_effect)),(0x40,self.array(self.gadget)),
+            (0x50,self.optional(lambda:self.array(self.projectile_circle))),
+            (0x70,self.array(self.tether_effect)),(0x80,min(self.byte(),32))))

@@ -8654,6 +8654,138 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Whole mixed-array SightEnter, outer callbacks и handler/actor/world связь, затем живой поток initial entities."
+    },
+    {
+      "addresses": [
+        "0x1456c5390",
+        "0x1456c5e60",
+        "0x1456c6270",
+        "0x1456c62f0",
+        "0x1456c6400",
+        "0x1456c67a0",
+        "0x1456d1d30",
+        "0x1456d1eb0",
+        "0x1456d1ef0",
+        "0x1456d1f30",
+        "0x1456d1ff0"
+      ],
+      "checks": [
+        {
+          "cache_key": "663cae3a57dfec3b5fa6889694b208dfe75f8f1f4f4d303f0c3f7b6a24486cd2",
+          "id": "live-sight-enter-composition-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f1c44fd7907a5d4b4a255689a0e6418db15cd89e92a4a25cc00d9dc5c6db0d2d\\manifest.json",
+          "sha256": "f1c44fd7907a5d4b4a255689a0e6418db15cd89e92a4a25cc00d9dc5c6db0d2d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d045030a9c670b7e087e7a2655db843e131e2c8edcc653b99be5630cab4e2ae9",
+          "id": "live-sight-character-other-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\feb713ab994bd9962edfc66960106876b45a2cede41bb4ca6ff353cf7ccd034d\\manifest.json",
+          "sha256": "feb713ab994bd9962edfc66960106876b45a2cede41bb4ca6ff353cf7ccd034d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e72b2a4bad06cae1967a375a2a2cb47ed08b6670819d308dd4878ff0ee231df0",
+          "id": "live-sight-gadget-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e398ac914eb221b40cfd53bdf8e451adb8e0403f91b4a4e8837ec2dce82ecf1d\\manifest.json",
+          "sha256": "e398ac914eb221b40cfd53bdf8e451adb8e0403f91b4a4e8837ec2dce82ecf1d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0c1ee1760587d1e5cbbe29be320dde7d97ccfbe5b50519cd3ac4eb7f80f0cf49",
+          "id": "live-sight-social-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\44d7dab877871eaec20dfbcd78969bc5eb54fa519239625c6bd4325c0a352930\\manifest.json",
+          "sha256": "44d7dab877871eaec20dfbcd78969bc5eb54fa519239625c6bd4325c0a352930",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9021cd906129b65dfdb2675d2526bbf7778a72830b1a0a33b402bbf2142ca710",
+          "id": "live-sight-projectiles-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\77d06bef7808c7661ac23fa13abebf0cb5c707faa18d3d5bea5034ddcd65182b\\manifest.json",
+          "sha256": "77d06bef7808c7661ac23fa13abebf0cb5c707faa18d3d5bea5034ddcd65182b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "266ca512ed1d644610c33123e08a725b7993fa39f74e0fecd03c5d93e6a3d711",
+          "id": "live-sight-effects-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1\\manifest.json",
+          "sha256": "2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a71f64f548a986d3b86ae4ea8b2fc7eefff724ae544eeec9c44910031cccd8dd",
+          "id": "live-sight-leave-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885\\manifest.json",
+          "sha256": "eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0d68b58e5c945ccf3fca594ee907d7afc015654191088b9653d6069c1a8b5334",
+          "id": "live-environment-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ca881bffd80f2b242a87984db26fac8837999f88aa2b3bd96e6e273262dabe52\\manifest.json",
+          "sha256": "ca881bffd80f2b242a87984db26fac8837999f88aa2b3bd96e6e273262dabe52",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8aae82eb2dbfff860671765ef6416dc7daae7c7cd5f7ce47c88ce1e9ec7c40b7",
+          "id": "live-npc-create-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8dd6f03ee9e73eab6b390637f87ce356aa8b9a673a18dc65b32c262e146cc079\\manifest.json",
+          "sha256": "8dd6f03ee9e73eab6b390637f87ce356aa8b9a673a18dc65b32c262e146cc079",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a191607ff175c4de6fc80514862e17084b29132bca51184fb0537e70661f8e1f",
+          "id": "live-npc-effect-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac\\manifest.json",
+          "sha256": "88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a41fe3a8d9f56db6053baf8b559ddc3f5d4e7bb6520ee0f0c072f27513055b7",
+          "id": "live-npc-move-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4\\manifest.json",
+          "sha256": "98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Добавлена portable composition SightEnter: пять основных массивов и optional projectile circles, один cursor/budget всех внешних и вложенных wire entries. Четыре теста проверяют static source order/descriptor contract, mixed packet, каждый обрезанный префикс, tail clamp, absent/empty, guards и общий бюджет. Runtime ID301 не включён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-SIGHT-ENTER-COMPOSITION-11316.md",
+          "sha256": "64e534db6771e1bcf91f2e0964a78c6a57da6a5f560d6c07c4202c97559e18a5"
+        }
+      ],
+      "id": "32057088f1e60592cb5d0a612939a8314316806ce5b05ed04cb5b1ab55360938",
+      "limits": [
+        "Это composition/static proof. Whole native outer reader/callbacks/copy/cleanup и engine ownership ещё не исполнены. Component native regression не доказывает полный пакет.",
+        "Synthetic immutable fixtures; результаты с разными keys независимы, но это не live multi-account proof. Source-bound wire fields не получают actor/world/player семантику."
+      ],
+      "method": "static",
+      "next_check": "Получить explicit source copy/cleanup callbacks, исполнить весь mixed-array SightEnter и затем подключить initial entities после handler/world проверки.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Native outer temporary records/copy/cleanup, handler/actor/world association и живой initial SightEnter."
     }
   ],
   "schema": 1,
