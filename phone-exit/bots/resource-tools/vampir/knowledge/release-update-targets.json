@@ -3326,7 +3326,8 @@
       "id": "quest-click-producer-current",
       "baseline_functions": [],
       "tools": [
-        "inspect-quest-update-producer-11316.py"
+        "inspect-quest-update-producer-11316.py",
+        "replay-quest-sender-11316.py"
       ],
       "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом.",
       "automation": {
@@ -3358,10 +3359,46 @@
                 "required_checks": [
                   "quest-producer-static-11316"
                 ]
+              },
+              {
+                "address": "0x145d85360",
+                "scope": "Whole native sender/lookup/state/position on synthetic model. Model/engine resolution/network/destruction fixtures; no UI route or live action.",
+                "required_checks": [
+                  "native-quest-sender-11316"
+                ]
+              },
+              {
+                "address": "0x145517d40",
+                "scope": "Whole native sender/lookup/state/position on synthetic model. Model/engine resolution/network/destruction fixtures; no UI route or live action.",
+                "required_checks": [
+                  "native-quest-sender-11316"
+                ]
+              },
+              {
+                "address": "0x1455bbcb0",
+                "scope": "Whole native sender/lookup/state/position on synthetic model. Model/engine resolution/network/destruction fixtures; no UI route or live action.",
+                "required_checks": [
+                  "native-quest-sender-11316"
+                ]
+              },
+              {
+                "address": "0x1455e7510",
+                "scope": "Whole native sender/lookup/state/position on synthetic model. Model/engine resolution/network/destruction fixtures; no UI route or live action.",
+                "required_checks": [
+                  "native-quest-sender-11316"
+                ]
+              },
+              {
+                "address": "0x145828b00",
+                "scope": "Whole native sender/lookup/state/position on synthetic model. Model/engine resolution/network/destruction fixtures; no UI route or live action.",
+                "required_checks": [
+                  "native-quest-sender-11316"
+                ]
               }
             ],
             "evidence": [
-              "evidence/scenarios/HEADLESS-QUEST-UPDATE-PRODUCER-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-UPDATE-PRODUCER-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md"
             ]
           }
         ]

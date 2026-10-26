@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current sender 145d85360 с native hash lookup / state getter / position wrapper
+прошёл 640 сценариев; 160 send — fixture. Далее связать incoming Quest с model
+key / task field, callback панели и local route executor. Кнопку не выдавать
+за рабочее движение до live результата.
+[Проверка и ограничения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md).
+
 Клик по квесту должен запускать выполнение, а не только карточку. Current
 QuestUpdate producer связывает поля с QuestInfoId / TargetId / QuestTaskIndex;
 UI delegate / маршрут / подтверждение ещё не установлены. Следующий шаг —

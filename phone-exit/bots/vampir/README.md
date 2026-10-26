@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Current QuestUpdate sender / lookup коллизий / state getter / position wrapper
+проверены целиком в 640 native сценариях, 160 дошли до send fixture.
+Engine / сеть / destructor — fixtures; маршрут и выполнение квеста не проверены.
+[Матрица и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md).
+
 Для запуска по клику уточнены current QuestUpdate input fields:
 QuestInfoId / TargetId / QuestTaskIndex. Найден sender по текущей модели;
 клик HUD, маршрут и выполнение ещё не доказаны, команды не отправлялись.

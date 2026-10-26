@@ -10559,6 +10559,47 @@
       "question": "quest-click-action-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current model key и task stage, HUD delegate/table boundary, local route executor и action adapter выбранной сессии."
+    },
+    {
+      "addresses": [
+        "0x145517d40",
+        "0x145d85360"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current QuestUpdate sender с native collision lookup / state getter / packet constructor / position wrapper прошёл 640 synthetic сценариев. 160 found cases дали один temporary packet и cleanup, поля совпали; empty/missing/null value не отправляли. Model/actor данные и guards сохранены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-SENDER-11316.md",
+          "sha256": "2771b9891155e34ec46ec7346334c5de43c037d2c97190c633c1cfae3074be21"
+        }
+      ],
+      "id": "34fc1a7fce62f7f4f88c0ab413164a66b12a092fa64422cc164e3fb6071bfbe4",
+      "limits": [
+        "Singleton/engine manager/weak-reference/network/send/destruction — явные bounded fixtures.",
+        "Не выполнялись wire serialization, UI callback, маршрут/движение и server acknowledgement.",
+        "FF при null task storage — наблюдение native ветви, не разрешение runtime команды.",
+        "Не доказана связь incoming Quest с model key/task state; реального owner после перезапуска Codex нет."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать incoming Quest с model/task и callback/local route, затем current serializer и session action с живым движением.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current incoming key→model / task field, HUD callback/class table и local route; serializer/action adapter/live result."
     }
   ],
   "schema": 1,
