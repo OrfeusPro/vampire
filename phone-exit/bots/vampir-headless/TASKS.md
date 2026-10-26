@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Пользователь выбрал русский presentation locale. Current ru QuestTask_Name
+связан с PAK: 5943 matched base IDs, 1 missing, 48 duplicate groups; candidate
+catalog вне Git не выбирает победителя. Во всех 16 locale CSV отсутствует Param,
+native optional branch/source stores проверены статически. Далее actual override
+на ru rows с flags/missing/duplicates; live admission false, сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-OVERRIDE-DATA-11316.md).
+
 Actual scalar wrappers/native decimal/Windows CRT прошли 26 906 cases из
 95 104 numeric values всех 5944 CSV rows; 28 lexical / 15 bounds cases.
 Native getters подключены к whole loader на 6 rows × 2 orders вместо scalar

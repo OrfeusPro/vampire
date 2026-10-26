@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Для названий этапов выбран русский current QuestTask_Name CSV: 5943 base IDs
+найдены, 1 missing и 48 duplicate IDs сохранены без выбора победителя. Все 16
+locale schemas не имеют Param; native optional branch связан с record+90.
+Native override/active flags ещё не исполнены, live admission false.
+[Русские строки и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-OVERRIDE-DATA-11316.md).
+
 Actual numeric getters / native decimal parser / Windows CRT прошли 26 906
 случаев из всех 5944 CSV rows без расхождений. Native scalars заменили fixtures
 в whole loader на 6 rows × 2 orders; fields и group order совпали. Edge inputs

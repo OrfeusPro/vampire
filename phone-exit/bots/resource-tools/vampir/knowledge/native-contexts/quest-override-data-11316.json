@@ -1,0 +1,43 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "pak_sha256": "15cf4f880170e87fc5fdea661cf9ba3d54a4f66c607844f5ab1047ed87f1e6a4",
+  "record_index": "release-snapshots/c44b60d512a5b6a07a3ca7f6242eb23a385d36c87c67a7490fb2bad3c150b4db/record-indexes/faad77301f66215958cca4d9a083ca61f09f8f54650307dab1580470dc47f913/manifest.json",
+  "task_ids": [
+    "110120005",
+    "110120010",
+    "110120020",
+    "110120030",
+    "110120040",
+    "110120070"
+  ],
+  "base_csv_sha256": "6f2eec83a42c722caca8b6d4e7d7ff0768b2873fcf40cbd476fd843ce4689a2a",
+  "directory_manifest": "resource-config-snapshots/d2691f91f8d88d15329639bc8457bced595cef0d5ee6b4bfff3b17e98c97f523/manifest.json",
+  "exports": {
+    "run-bc83e3fb45a2": "9b45aee958178e4bb551632a6dc60db2867ba88168d0e177345cee75e200e3dd",
+    "run-b89911c14f11": "cf4ca1a14258dfa7d85b14a8bbe376fae7a57010b7c2d5bf895c2e855f0c1316"
+  },
+  "locales": [
+    "cn",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "id",
+    "it",
+    "jp",
+    "ko",
+    "ms",
+    "nl",
+    "pt",
+    "ru",
+    "th",
+    "tr",
+    "tw"
+  ],
+  "limits": [
+    "Static native field/optional-column bindings and current named PAK data only; no native override execution.",
+    "All 16 installed locale schemas lack Param; active locale/global flags and actual file/header lookup are not verified. Extra localization IDs need native missing-key behavior, not insertion.",
+    "Case-folded native basename is joined to authoritative directory offsets and record payload hashes; external/loose-file precedence is not proved. No live order admission."
+  ],
+  "presentation_locale": "ru"
+}
