@@ -1,0 +1,89 @@
+{
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "function_budget": 21,
+  "budget_scope": "sight-projectile-array",
+  "functions": {
+    "input_constructor": "0x144aacb40",
+    "input_buffer_constructor": "0x144aac130",
+    "input_u64": "0x144aac4a0",
+    "input_u32": "0x144aac2a0",
+    "input_float": "0x144aac2f0",
+    "input_bool": "0x144aac4f0",
+    "input_raw": "0x144aac5c0",
+    "xyz": "0x144aacf40",
+    "yaw": "0x1458220f0",
+    "yaw_to_vector": "0x14150d330",
+    "vector_to_yaw": "0x14150b060",
+    "trig_sse2": "0x1487ea130",
+    "input_u16": "0x144aac250",
+    "vector": "0x144aac530",
+    "reader": "0x1456c2f60",
+    "resize": "0x1456d1f70",
+    "callback": "0x1456c64b0",
+    "constructor": "0x1457a2590",
+    "circle_reader": "0x1457a5c80",
+    "record_reader": "0x1457a5cd0",
+    "cleanup": "0x1457a38a0"
+  },
+  "exports": {
+    "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+    "run-329d82a6707a": "bd0b0a53cec59754d2c7f454879fbc7d53ddd369fb5158e7a308f5fa1f8979fa",
+    "run-733995919a16": "202e0cbd6be0f91a82662c6c844c2ea49b5dbfcaa54e46424dd1d9250ae36c48",
+    "run-8d16d199923d": "99d6eca0dde4045323344fb65e56e6d67e4ae64ce7eacb52cbed2e200d319fe9",
+    "run-0fccb70d7ac4": "d89778a74df16a8e5e1a7ca1eb1dc6c46930a3073b277610de4aac1cd477eabd",
+    "run-529edd8cc6b1": "e5afea845d4188d050edb1ab981fde64866191832eab68037357a05aef752199",
+    "run-7500aee7895b": "529801f710fc98d0e74ae2f854935b9b72b9ed78d1b3a92a37deff656c4c743d",
+    "run-80386d1eb460": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1",
+    "run-afdc450ddbc3": "e193896000575bcbaba7b9dd3f592dbe8ccbde14f2c89ea4f4215b05d6954a8d",
+    "run-bbd19f52e20c": "531e4e96e2f8c5f5b32ab4f6a803bd21787698c55aedaad0dd3b5e24a8cc14b8",
+    "run-bd28cc6bca2c": "a87299f16e018ec74d205f90493df8f3e4e0480d06ed407ab54d245ca0c421f4",
+    "run-e6ab6fd97914": "9828dfd4a26853235433aa7b702150ceec552d05796a8bea82ce915332284454"
+  },
+  "leaves": {
+    "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+    "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad1a0": "895110c3",
+    "0x144aac240": "488b0141b80100000048ffa090000000",
+    "0x145820000": "488d0579181004c6410800488901488bc1c3",
+    "0x14144a800": "0f28d10f5415569a5907660f2f15cec65a0777040f57c0c3e980b33a07",
+    "0x141445800": "0f28d00f57c0660f2ec87506660f2ed074080f28c2e97d033b07c3",
+    "0x1487e9660": "833de980a802020f8d43110000e9be0a0000",
+    "0x1487e9680": "f20f10d0660fdb1504120b02660f2f152c120b027216660fefc9f20f10caf20f580d2a120b02660f14c1ebb4660f59d2660f5915f8110b02f20f100de0110b02660f5cca660f14c1c3",
+    "0x1456b66c0": "488d0579872604488901c3",
+    "0x1456c0300": "33d2488d0587212604488901488d055521260448894150488bc1488951104889511848895120488951284889513048895138488951404889514888515848895160488951684889517048895178889180000000c3"
+  },
+  "crt_imports": [
+    {
+      "address": "0x1487f5b97",
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "name": "atan2",
+      "descriptor_offset": 185288112,
+      "descriptor_bytes": "d8790b0b0000000000000000feeb0b0b20bd9908",
+      "thunk_offset": 185296168,
+      "thunk_bytes": "14e10b0b00000000",
+      "iat_address": 5513002608,
+      "dll_offset": 185325054,
+      "dll_bytes": "6170692d6d732d77696e2d6372742d6d6174682d6c312d312d302e646c6c00",
+      "name_offset": 185322262,
+      "name_bytes": "6174616e3200"
+    },
+    {
+      "address": "0x1487f5b9d",
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "name": "fmod",
+      "descriptor_offset": 185288112,
+      "descriptor_bytes": "d8790b0b0000000000000000feeb0b0b20bd9908",
+      "thunk_offset": 185296160,
+      "thunk_bytes": "1ce10b0b00000000",
+      "iat_address": 5513002600,
+      "dll_offset": 185325054,
+      "dll_bytes": "6170692d6d732d77696e2d6372742d6d6174682d6c312d312d302e646c6c00",
+      "name_offset": 185322270,
+      "name_bytes": "666d6f6400"
+    }
+  ]
+}

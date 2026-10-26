@@ -2,8 +2,10 @@
 
 SightEnter: подтверждены пять отдельных массивов — CharacterOther, NPC create,
 ground effects, gadget и tether effects. Ground / tether records прошли 2580
-whole native сценариев, portable декодеры добавлены. Packet+50 — optional array;
-полный SightEnter / CharacterOther и live подключение ещё впереди.
+whole native сценариев, portable декодеры добавлены. Optional projectile array
+packet+50 прошёл 1734 whole native сценария; portable сохраняет absent / empty и
+повторы. [Массив и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-PROJECTILES-11316.md).
+Полный SightEnter / CharacterOther и live подключение ещё впереди.
 [Вложенные записи и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-EFFECTS-11316.md).
 [Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
 

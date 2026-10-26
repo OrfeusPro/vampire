@@ -120,7 +120,18 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                      optional_insert='0x1456bd7a0', appearance_callback='0x14573b9c0',
                      input_constructor='0x144aacb40', input_buffer_constructor='0x144aac130',
                      trig_sse2='0x1487ea130').items()))
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (20 if npc_scope else (10 if list_scope else (9 if handler_scope or record_scope else 8))):
+    projectile_scope = (budget == 21 and context.get('budget_scope') == 'sight-projectile-array'
+                        and len(functions) == 21 and set(functions) == {int(v,16) for v in context.get('functions',{}).values()}
+                        and context.get('functions') == dict(
+                            input_constructor='0x144aacb40',input_buffer_constructor='0x144aac130',
+                            input_u64='0x144aac4a0',input_u32='0x144aac2a0',input_float='0x144aac2f0',
+                            input_bool='0x144aac4f0',input_raw='0x144aac5c0',input_u16='0x144aac250',
+                            xyz='0x144aacf40',yaw='0x1458220f0',yaw_to_vector='0x14150d330',
+                            vector_to_yaw='0x14150b060',trig_sse2='0x1487ea130',vector='0x144aac530',
+                            reader='0x1456c2f60',resize='0x1456d1f70',callback='0x1456c64b0',
+                            constructor='0x1457a2590',circle_reader='0x1457a5c80',record_reader='0x1457a5cd0',
+                            cleanup='0x1457a38a0'))
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (20 if npc_scope else (12 if projectile_scope else (10 if list_scope else (9 if handler_scope or record_scope else 8)))):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

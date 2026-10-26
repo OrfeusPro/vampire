@@ -8189,6 +8189,114 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Элементы optional array SightEnter+50, GuildTinyInfo/PartyTag/Gadget nested data, whole SightEnter portable/native и handler/actor/world/live поток."
+    },
+    {
+      "addresses": [
+        "0x1456c2f60",
+        "0x1456c64b0",
+        "0x1456d1f70",
+        "0x14579c6b0",
+        "0x1457a2590",
+        "0x1457a38a0",
+        "0x1457a5520",
+        "0x1457a5770",
+        "0x1457a5c80",
+        "0x1457a5cd0"
+      ],
+      "checks": [
+        {
+          "cache_key": "2e8412cb196203d1f78502aa0d8548000b8d098c988ce8129b52ce5052781409",
+          "id": "live-sight-projectiles-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\22b868edf6101f4436b3e862b8deacc6b2fd46e621f700dbaac75201cdfe92f0\\manifest.json",
+          "sha256": "22b868edf6101f4436b3e862b8deacc6b2fd46e621f700dbaac75201cdfe92f0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "266ca512ed1d644610c33123e08a725b7993fa39f74e0fecd03c5d93e6a3d711",
+          "id": "live-sight-effects-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1\\manifest.json",
+          "sha256": "2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a71f64f548a986d3b86ae4ea8b2fc7eefff724ae544eeec9c44910031cccd8dd",
+          "id": "live-sight-leave-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885\\manifest.json",
+          "sha256": "eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1372b8092555b652cea2ce6c354010d8038976c3d860bb1f13d45077dce7a6bb",
+          "id": "live-environment-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8a4e42c6327fa4b00925c7e30aa2f458f88c4965050ba07c136d2a1480d36aa9\\manifest.json",
+          "sha256": "8a4e42c6327fa4b00925c7e30aa2f458f88c4965050ba07c136d2a1480d36aa9",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f19812b703a5f4ba2b859bb40230b293bc02f9380d0cd60a03cb82d7802b2321",
+          "id": "live-npc-create-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\56bbac318542dee64a4472e578c70044130c293395c89669fd7f8b405404a6da\\manifest.json",
+          "sha256": "56bbac318542dee64a4472e578c70044130c293395c89669fd7f8b405404a6da",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a191607ff175c4de6fc80514862e17084b29132bca51184fb0537e70661f8e1f",
+          "id": "live-npc-effect-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac\\manifest.json",
+          "sha256": "88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a41fe3a8d9f56db6053baf8b559ddc3f5d4e7bb6520ee0f0c072f27513055b7",
+          "id": "live-npc-move-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4\\manifest.json",
+          "sha256": "98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Optional projectile array SightEnter packet+50 целиком прошёл 1734 native сценария: wrapper, generic vector, resize/callback, circle/projectile constructors/readers/cleanup, input и XYZ/yaw math. Source-bound portable decoder сохраняет absent/empty, повторы и raw uint64/float/heading; circle wire65, optional bool/count. Добавлен точный scoped harness21 с отдельной проверкой отказа при подмене функции. Guild/Party readers получены для оставшегося CharacterOther.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-SIGHT-PROJECTILES-11316.md",
+          "sha256": "972b0ed6b7a7a6bb01085076d1600290abcf8780307e4ac99ea774526eb145da"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\sight-projectiles-11316.json",
+          "sha256": "348f9dbb8c1e93b1b5587d5d257986dd047ad0f363621f5357dea3bf9e58192c"
+        }
+      ],
+      "id": "20fdb68e7268cd9dd27c8ca0924be78dd5d2891906300b00fe6069031b89c9e0",
+      "limits": [
+        "Fixtures ограничены пустым прежним storage и preallocated массивом до 64 записей; growth/reuse/allocator не доказаны.",
+        "SSE2 yaw и реальные UCRT atan2/fmod imports проверены; AVX и outer SightEnter/другие массивы/actor/world effects не проверены. Portable exact-size policy строже native.",
+        "GuildTinyInfo/PartyTag/PartyOptionData только выгружены и статически просмотрены. Нет нового игрового входа или live initial visibility proof; runtime ID301 не подключён."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить оставшиеся строковые records, затем full CharacterOther/Gadget/SightEnter и handler/world перед подключением initial entities.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Whole GuildTinyInfo/PartyTag, CharacterOther/Gadget, полный mixed-array SightEnter, handler/world semantics и live initial entities."
     }
   ],
   "schema": 1,
