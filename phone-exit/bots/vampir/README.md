@@ -17,6 +17,8 @@ Portable composition полного SightEnter добавлена с общим 
 подключение ещё впереди. [Композиция и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-COMPOSITION-11316.md).
 Outer copy / cleanup выгружены: вложения требуют отдельных owners, shallow copy
 недостаточен. [Владение и следующий native-тест](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-COPY-11316.md).
+Nested string / appearance / Guild / action / map copy прошли 62 native сценария
+с отдельным storage и source poisoning. [Проверки и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-NESTED-COPY-11316.md).
 [Вложенные записи и проверки](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-EFFECTS-11316.md).
 [Контракт и следующий шаг](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SIGHT-ENTER-CONTRACT-11316.md).
 

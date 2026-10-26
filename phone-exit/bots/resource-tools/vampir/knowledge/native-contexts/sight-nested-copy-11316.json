@@ -1,0 +1,26 @@
+{
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "function_budget": 16,
+  "functions": {
+    "string": "0x1414266a0",
+    "appearance": "0x1456beaa0",
+    "guild": "0x1456bfad0",
+    "actions": "0x1456bbc50",
+    "map": "0x1456c08d0",
+    "bitmap": "0x14143b910",
+    "map_reset": "0x1456c7280"
+  },
+  "exports": {
+    "run-1740fcc91625": "f2cdd2d5e37669d223dbbf74217780bed1c64090827b75d3b62c78d99f7dce38",
+    "run-cf2ead9edc66": "ea01815605d6684b52107b757bbfda996edf7f8f65e410d02fa4e8767119bec6",
+    "run-96408f02c1d2": "8a7978466120131aafae77dba1ec9361e39c95b63c15efb346e62efb99fcb16f",
+    "run-b4bb65aa6eaa": "2ccd20934b715805ec9444292e63ffcd3d8d733ec85c05a77203ecd5c43787bd"
+  },
+  "leaves": {
+    "0x1456b5280": "4c8bd14585c07443488d420c4c2bd2488d15b2ad26044c8d490c660f1f44000049895402f44d8d49108b48fc488d4010418949ec0fb648f0418849f00fb748f266418949f24183e80175d5c3"
+  }
+}
