@@ -1,5 +1,16 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Клик по квесту должен запускать выполнение, а не только карточку. Current
+QuestUpdate producer связывает поля с QuestInfoId / TargetId / QuestTaskIndex;
+UI delegate / маршрут / подтверждение ещё не установлены. Следующий шаг —
+current модель ключа и этапа, затем action adapter и живое выполнение.
+[Текущие параметры и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-PRODUCER-11316.md).
+
+ID 1854 уже подключён к изолированной модели / API / правой панели: 50 synthetic
+owners и браузер прошли. Itel-сессия завершилась при перезапуске Codex;
+нового игрового входа и живого списка после изменения ещё не было.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-QUEST-MODEL-11316.md).
+
 Правую панель заданий заполнять через общий адаптер из подтверждённого входящего
 состояния. Полный current ID 1854 decoder проверен: 96 native тел / 172 коротких
 префикса, настоящие constructors / callbacks / typed copy. Далее изолированная

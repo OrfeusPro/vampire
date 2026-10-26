@@ -1,5 +1,10 @@
 # Vampir — главный указатель разработки
 
+Для запуска по клику уточнены current QuestUpdate input fields:
+QuestInfoId / TargetId / QuestTaskIndex. Найден sender по текущей модели;
+клик HUD, маршрут и выполнение ещё не доказаны, команды не отправлялись.
+[Producer и ограничения](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-PRODUCER-11316.md).
+
 Входящий ID 1854 подключён к отдельной quest-модели и правой панели через
 общий адаптер: полученные записи / raw progress, без игровых команд.
 Проверены 50 synthetic owners, HTTP и браузер; настоящего нового списка пока нет.

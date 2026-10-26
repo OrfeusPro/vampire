@@ -10525,6 +10525,40 @@
       "question": "live-quest-sync-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current key→Quest.Id/имя, новый live список и независимый постоянный owner."
+    },
+    {
+      "addresses": [
+        "0x145837030",
+        "0x145d6f9b0",
+        "0x145d85360"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий ID1810 producer связывает именованные QuestInfoId / QuestTaskIndex / TargetId с native packet+0x30 / +0x38 / +0x28. Отдельный sender требует успешный model lookup и копирует byte от state getter, не угадывает task index. Точные source bytes, законченные экспорты, literals, stores, packet binding и state leaf проверены воспроизводимым инспектором.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-UPDATE-PRODUCER-11316.md",
+          "sha256": "bb5db2fc3ca4849293ad2b091fc3a717f55df7d02bc62ced3ba9c4865a52fd89"
+        }
+      ],
+      "id": "68a48a75c8f80d115f0b7c9ac07565d0c0a1e63f3d6b7a0656b56894ffbe3a7e",
+      "limits": [
+        "Static proof: native producer/writer execution, position semantics и server acknowledgement не проверены.",
+        "Не доказаны raw08 входящего Quest→QuestInfoId, UI callback, маршрут/движение или универсальное автопрохождение.",
+        "Нет живого game owner после перезапуска Codex; игровые команды/вход не выполнялись."
+      ],
+      "method": "static",
+      "next_check": "Связать current received Quest с model lookup и таблицей; проверить virtual delegate вокруг149a3cee8, затем whole native producer/codec и живой action adapter.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current model key и task stage, HUD delegate/table boundary, local route executor и action adapter выбранной сессии."
     }
   ],
   "schema": 1,

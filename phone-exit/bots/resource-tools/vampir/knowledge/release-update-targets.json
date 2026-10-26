@@ -3321,6 +3321,51 @@
           }
         ]
       }
+    },
+    {
+      "id": "quest-click-producer-current",
+      "baseline_functions": [],
+      "tools": [
+        "inspect-quest-update-producer-11316.py"
+      ],
+      "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом.",
+      "automation": {
+        "discovery": "named_packet_then_explicit_constructor_callers_and_property_literals",
+        "validation": "static_full_source_and_registered_binding_check_only",
+        "next_release": "requires_current_export_candidate_review_and_action_route_validation",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x145d85360",
+                "scope": "Static current QuestUpdate writer/producer property stores; не native execution, UI callback или игровой результат.",
+                "required_checks": [
+                  "quest-producer-static-11316"
+                ]
+              },
+              {
+                "address": "0x145d6f9b0",
+                "scope": "Static current QuestUpdate writer/producer property stores; не native execution, UI callback или игровой результат.",
+                "required_checks": [
+                  "quest-producer-static-11316"
+                ]
+              },
+              {
+                "address": "0x145837030",
+                "scope": "Static current QuestUpdate writer/producer property stores; не native execution, UI callback или игровой результат.",
+                "required_checks": [
+                  "quest-producer-static-11316"
+                ]
+              }
+            ],
+            "evidence": [
+              "evidence/scenarios/HEADLESS-QUEST-UPDATE-PRODUCER-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [
