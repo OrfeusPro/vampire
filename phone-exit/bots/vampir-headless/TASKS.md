@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current service CSV / native loader fields связаны: RegionType, ServicePhase
+bounds, Exclude/IncludeServerId. Термин version из прежнего replay уточнён как
+ServicePhase; numeric tests действуют. Id 256 source phase=10000, active region
+не подтверждён. Далее active RegionType/ServerId setup и native phase layout,
+затем whole catalog/file-header; live admission false, сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-DATA-11316.md).
+
 Whole nonzero service gate 145a4d2f0 / getter 145bfe3d0 / policy 145c022b0
 прошли 30 cases с actual atoi, initialized TLS и synthetic manager inputs.
 Missing/empty/list/version ветви проверены; active config/current fields не

@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Current ServerServiceGroup связан с native loader fields: RegionType и
+Min/MaxServicePhase (не client version). ServerGroup.Id 256 задаёт phase 10000;
+group 10000 candidate policy различает regions 0–4 / 5–7. Active RegionType /
+numeric setup ещё не доказаны, вывод не переносится в live. Сессия сохраняется.
+[Source bindings и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-DATA-11316.md).
+
 Native nonzero service gate / environment getter / policy прошли 30 случаев:
 inline/external buckets, missing/empty group, deny/allow lists и inclusive version
 bounds. TLS/manager/config inputs и string/version services — явные fixtures;

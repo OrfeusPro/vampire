@@ -1,0 +1,33 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "pak_sha256": "15cf4f880170e87fc5fdea661cf9ba3d54a4f66c607844f5ab1047ed87f1e6a4",
+  "directory_manifest": "resource-config-snapshots/d2691f91f8d88d15329639bc8457bced595cef0d5ee6b4bfff3b17e98c97f523/manifest.json",
+  "record_index": "release-snapshots/c44b60d512a5b6a07a3ca7f6242eb23a385d36c87c67a7490fb2bad3c150b4db/record-indexes/faad77301f66215958cca4d9a083ca61f09f8f54650307dab1580470dc47f913/manifest.json",
+  "export_run": "run-bf6dd46e601c",
+  "export_sha256": "11457b9b0e5f0af80212b44e746eb69d97e95b45b343ddfc6bf0dbfac0f1756f",
+  "columns": {
+    "0x149518db8": "GroupId",
+    "0x149a020d8": "RegionType",
+    "0x149a11b68": "MinServicePhase",
+    "0x1499d8be0": "MaxServicePhase",
+    "0x149a11b78": "ExcludeServerId",
+    "0x149a11b88": "IncludeServerId"
+  },
+  "stores": {
+    "0x145c06a05": "894608",
+    "0x145c06a21": "89460c",
+    "0x145c06a3d": "894610",
+    "0x145c06a59": "894614",
+    "0x145c06b40": "488d5e18",
+    "0x145c06c82": "488d5e28"
+  },
+  "tables": {
+    "CSV/ServerServiceGroup.csv": "aaafd94076deb83d50bf38f384e8700977954b493fa2bc06d0ed5fe68275dd77",
+    "CSV/ServerGroup.csv": "ac87365805a7d44caf8a6fd8ed9bf5682bacaaff28cba4ade8aae37f27e6d399"
+  },
+  "limits": [
+    "Static native service loader field/literal bindings and current named PAK data; no whole loader/native active policy execution.",
+    "Group10000 candidate decisions use explicit ServerGroup.Id256 ServicePhase10000, not a verified active RegionType/current singleton state. Region/server setup and ServerGroup phase field layout remain to be bound.",
+    "Named data alone does not prove file precedence, current service initialization or live task order; no runtime/gameplay admission."
+  ]
+}
