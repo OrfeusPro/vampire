@@ -10276,6 +10276,75 @@
       "question": "live-tutorial-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current queue consumer, missing-key pruning / replacement, происхождение policy/timer fields и live tutorial state."
+    },
+    {
+      "addresses": [
+        "0x1464cbf80"
+      ],
+      "checks": [
+        {
+          "cache_key": "2a5b91556e9f2ffb50dda13906333cd260f5b4d3055be86daa2988a1e3184757",
+          "id": "native-tutorial-drain-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1f0e8b020494c46651773d069910f7257e91d61c7a068fb68cd654c7a4972017\\manifest.json",
+          "sha256": "1f0e8b020494c46651773d069910f7257e91d61c7a068fb68cd654c7a4972017",
+          "state": "passed"
+        },
+        {
+          "cache_key": "45c3c95fb7f68d7cd8bb2d8e7d980fcc6acc6e4b602121401d4002c4572fc4c0",
+          "id": "native-tutorial-populated-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f252d9ca8dc27461b49be61178926e6e38d3d35badb6738e12b8feea0876db31\\manifest.json",
+          "sha256": "f252d9ca8dc27461b49be61178926e6e38d3d35badb6738e12b8feea0876db31",
+          "state": "passed"
+        },
+        {
+          "cache_key": "27221d44ffe927e8f6f6833fad52ffbeb4ba7c9a5301aa90a8c16daeb71b7a5a",
+          "id": "native-tutorial-startup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\42c8606284597624a5992c5db6e66fe84668c0b15e42a3c70355e601d56f0f80\\manifest.json",
+          "sha256": "42c8606284597624a5992c5db6e66fe84668c0b15e42a3c70355e601d56f0f80",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5b2bb69b5a09a5339de5a65cb7be9d3fdaa44d15535c563e0f98a876f59459bd",
+          "id": "native-tutorial-dispatch-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6b5b39e933671a1c3d03776d1daa3a0b94f4a0a6182145fdeed33230fb820e4e\\manifest.json",
+          "sha256": "6b5b39e933671a1c3d03776d1daa3a0b94f4a0a6182145fdeed33230fb820e4e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ecfc9714e55d430713382eeac7f8f805fbe2cbac76033c76558c03188b665d87",
+          "id": "live-tutorial-state-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6\\manifest.json",
+          "sha256": "d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole current chained-unwind consumer 1464cbf80 проверен для ID9905 в 160 native сценариях: ранняя очередь сохраняется, после готовности packets передаются application и release строго в порядке; null пропускаются, count reset предшествует shrink, повтор пустой очереди не обрабатывает и не освобождает packets заново. Constructor/ID getter исполняются. Независимая живая Itel/HK сессия получила current decoder ID9905: flag false, 16 records, запись 1001 raw0c 2/raw10 1/state 2, errors 0. HP/MP и серверный маркер подтверждены в браузере через тот же adapter.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-DRAIN-11316.md",
+          "sha256": "d10b831afc158c39dcedf857bb09fc1dbd899b6a3426e4e8c38cd7abc3f50846"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-LIVE-TUTORIAL-11316.md",
+          "sha256": "b34a463a4ebc33e3445b059b215028fd34e1d0435c8db531a06a3fd35a11239e"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-647bb938de11\\details.json",
+          "sha256": "dbdd8479cf4d16ff0b6f2dd68c8a4ccce3432bbcd9c8f74808d3dad396f90f85"
+        }
+      ],
+      "id": "9d2cdbed2dbf5106fcf8a178701f453492a44eff99034c74f8e0440731d0ab92",
+      "limits": [
+        "Consumer state provider, application, deleting destructor и shrink/free являются fixtures; heap effects и applied maps внутри consumer не исполняются.",
+        "Нет other-ID branches / caller lifecycle / связи native phase6 с headless world finish; отдельные native проверки не заменяют live readiness.",
+        "Live tutorial — последнее сообщение с applied_to_local_task=false, не активный локальный шаг. Игровых tutorial/quest/movement команд не отправлено.",
+        "Один реальный аккаунт не доказывает simultaneous multiaccount работу; окружение не получено, NPC absence не доказано."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить current loader/callbacks и нужное действие для наблюдаемого состояния; сохранять Itel сессию и не повторять initial tutorial ack.",
+      "question": "live-tutorial-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Action contract для current записи 1001 state2/raw0c2, loader/callback policy/timer fields, replacement/pruning и применение/очередь в live lifecycle."
     }
   ],
   "schema": 1,

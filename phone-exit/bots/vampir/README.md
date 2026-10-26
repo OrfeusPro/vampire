@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Itel / HK вошёл в мир: current decoder получил 16 реальных tutorial records,
+запись 1001 имеет raw0c 2 / raw10 1 / state 2, ошибок 0.
+Соединение оставлено работать; активный локальный шаг ещё не установлен.
+[Живые данные](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-TUTORIAL-11316.md).
+Current consumer ID 9905 проверен в 160 native сценариях; application / free
+остаются fixtures. [Очередь](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-DRAIN-11316.md).
+
 Обновление существующих tutorial server/local records проверено в 384 native
 сценариях; gate / insertion / launch остаются fixtures.
 [Границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-POPULATED-11316.md).

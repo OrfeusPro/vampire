@@ -3045,7 +3045,8 @@
         "replay-tutorial-update-11316.py",
         "replay-tutorial-dispatch-11316.py",
         "replay-tutorial-startup-11316.py",
-        "replay-tutorial-populated-11316.py"
+        "replay-tutorial-populated-11316.py",
+        "replay-tutorial-drain-11316.py"
       ],
       "rule": "При новом SHA искать кандидата ID 9905 по имени / vtable и проверять whole readers / callbacks / bindings. Совпадение формата не разрешает tutorial ack, применение локальной задачи или квестовое действие.",
       "automation": {
@@ -3182,19 +3183,28 @@
                 "required_checks": [
                   "native-tutorial-populated-11316"
                 ]
+              },
+              {
+                "address": "0x1464cbf80",
+                "scope": "Whole chained-unwind queue consumer for ID9905, order/readiness/reset and no double dispatch. Application/destructor/shrink fixtures; caller lifecycle unknown.",
+                "required_checks": [
+                  "native-tutorial-drain-11316"
+                ]
               }
             ],
             "tools": [
               "replay-tutorial-update-11316.py",
               "replay-tutorial-dispatch-11316.py",
               "replay-tutorial-startup-11316.py",
-              "replay-tutorial-populated-11316.py"
+              "replay-tutorial-populated-11316.py",
+              "replay-tutorial-drain-11316.py"
             ],
             "evidence": [
               "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md",
               "evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md",
               "evidence/scenarios/HEADLESS-TUTORIAL-STARTUP-11316.md",
-              "evidence/scenarios/HEADLESS-TUTORIAL-POPULATED-11316.md"
+              "evidence/scenarios/HEADLESS-TUTORIAL-POPULATED-11316.md",
+              "evidence/scenarios/HEADLESS-TUTORIAL-DRAIN-11316.md"
             ]
           }
         ]

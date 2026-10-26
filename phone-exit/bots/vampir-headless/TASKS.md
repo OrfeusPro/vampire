@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Новый Itel дал реальный ID 9905 текущему decoder: 16 records, 1001 / raw0c 2 /
+raw10 1 / state 2. Не повторять прежний initial ack; проверить действие этого
+состояния через loader / callbacks. [Live](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-TUTORIAL-11316.md).
+Current queue consumer прошёл 160 native сценариев; lifecycle / application / free
+вместе ещё не проверены. [Границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-DRAIN-11316.md).
+
 Current existing-record helper проверен в 384 native сценариях;
 целое повторное применение ID 9905 и drain ещё открыты.
 [Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-POPULATED-11316.md).
