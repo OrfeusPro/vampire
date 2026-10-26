@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Current QuestTask CSV связан с native stores Id / QuestInfoId / Type. 5944 записи
+и 1353 группы прошли lookup / progress с настоящим Type getter; каталог сохранён
+вне Git. CSV order / active step не допущены: нужны sparse insertion / row filter
+и override proof перед привязкой к живому индексу.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-CSV-PROJECTION-11316.md).
+
 Factory case 6 / создание / replacement прошли 378 native сценариев с настоящими
 constructor / shared move / refcounts и явными внешними fixtures. Исправлен
 обнаруженный native replay пропуск Jcc fallthrough в export: 14 index / 14 collector /

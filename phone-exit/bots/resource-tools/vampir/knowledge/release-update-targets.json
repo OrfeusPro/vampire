@@ -3329,7 +3329,8 @@
         "inspect-quest-update-producer-11316.py",
         "replay-quest-sender-11316.py",
         "replay-quest-progress-11316.py",
-        "replay-quest-update-wire-11316.py"
+        "replay-quest-update-wire-11316.py",
+        "replay-quest-csv-projection-11316.py"
       ],
       "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом.",
       "automation": {
@@ -3445,6 +3446,27 @@
                 "required_checks": [
                   "native-quest-update-wire-11316"
                 ]
+              },
+              {
+                "address": "0x145b55aa0",
+                "scope": "Exact 8-byte Type getter +0x8c executed with CSV-seeded records; no live manager/order admission.",
+                "required_checks": [
+                  "native-quest-csv-projection-11316"
+                ]
+              },
+              {
+                "address": "0x145b5f270",
+                "scope": "Static Id/QuestInfoId/Type stores and group append, current CSV full SHA; loader/filter/insertion not executed.",
+                "required_checks": [
+                  "native-quest-csv-projection-11316"
+                ]
+              },
+              {
+                "address": "0x145b4ad00",
+                "scope": "Static quest-key group FindOrAdd / vector header return; insertion allocator remains a boundary.",
+                "required_checks": [
+                  "native-quest-csv-projection-11316"
+                ]
               }
             ],
             "evidence": [
@@ -3452,7 +3474,8 @@
               "evidence/scenarios/HEADLESS-QUEST-SENDER-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-PROGRESS-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-TASK-LOOKUP-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-UPDATE-WIRE-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-CSV-PROJECTION-11316.md"
             ]
           }
         ]

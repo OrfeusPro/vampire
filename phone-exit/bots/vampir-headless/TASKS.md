@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+5944 current CSV rows / 1353 groups прошли native lookup/progress/Type getter.
+Id / QuestInfoId / Type stores и group append связаны с CSV loader. Порядок
+каталога и active step пока не допущены; далее sparse insertion, service-group
+row filter 145a4d2f0 и overrides. Текущую сессию сохранять.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-CSV-PROJECTION-11316.md).
+
 378 native сценариев покрыли factory case 6, replacement / fallback, refcounts
 и sender getter. Allocation / data / lifecycle остаются явными fixtures;
 table loading / order и конкретный owner action ещё нужны. Exporter дополнен
