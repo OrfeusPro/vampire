@@ -1,0 +1,27 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "record_index": "release-snapshots/c44b60d512a5b6a07a3ca7f6242eb23a385d36c87c67a7490fb2bad3c150b4db/record-indexes/faad77301f66215958cca4d9a083ca61f09f8f54650307dab1580470dc47f913/manifest.json",
+  "pak_sha256": "15cf4f880170e87fc5fdea661cf9ba3d54a4f66c607844f5ab1047ed87f1e6a4",
+  "csv_entry": 2983,
+  "csv_sha256": "6f2eec83a42c722caca8b6d4e7d7ff0768b2873fcf40cbd476fd843ce4689a2a",
+  "exports": {
+    "run-6ba3bac90477": "555fac0e82d64426df3762c5075a6853ca467f5f41eccf8cde21b548ababb0cd",
+    "run-3cf3cb9c01a4": "80c3b3e8bd0821a5f529b7f5f2fefc2a7b7288d23e5e805c9ce80c33be9345cd",
+    "run-7260328169ab": "16fd80f57da81e1919f064b280ac6352d788ba184682c9139b3e04fb44218a40"
+  },
+  "functions": [
+    "0x1455b0050",
+    "0x1455c3eb0",
+    "0x1455cd9e0",
+    "0x14549a800",
+    "0x1455ca200"
+  ],
+  "leaves": {
+    "0x1455e7510": "488b41304885c07503b0ffc30fb64029c3"
+  },
+  "limits": [
+    "Whole native Time parameter callback/start/tick/timer/completion request builder on two source-bound Time CSV rows. JSON field getters/string allocation, task model/data/engine/gate/broadcast/named-property storage services are bounded fixtures.",
+    "Init/post/string parser exports are static navigation only, not executed. JSON unescaping uses explicit Python fixture; actual engine text reader and conditions are not proven. Other task/animation timers forced ready, phase6 and quest gates explicit.",
+    "Final1455ca010 request sink fixture captures only QuestInfoId/QuestTaskIndex, no sender/socket/server. Repeated completion without record state advance is observed, not permission to replay commands. No live gameplay admission."
+  ]
+}

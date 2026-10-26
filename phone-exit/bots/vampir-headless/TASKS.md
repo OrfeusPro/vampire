@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Native Time callback/start/tick/timer/completion прошли 24 сценария на
+source 110120005 (0.1) / 110120070 (1). Порог сначала ставит FFFFFFFF;
+следующий tick вызывает named request. Без смены owner state цикл повторяется,
+с изменением state повтор прекращается. JSON/engine/gates/request sink fixtures
+явные, live admission false; далее route 1455ca010 и условия selected task.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TIME-11316.md).
+
 Native lookup/progress теперь выполнены непосредственно на массиве шести
 задач 110120 после native main/ru загрузки: 36 проекций, original index 0 →
 110120005, reverse index 0 → 110120070. У всех шести source service group
