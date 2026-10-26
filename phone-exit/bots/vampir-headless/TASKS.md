@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Whole nonzero service gate 145a4d2f0 / getter 145bfe3d0 / policy 145c022b0
+прошли 30 cases с actual atoi, initialized TLS и synthetic manager inputs.
+Missing/empty/list/version ветви проверены; active config/current fields не
+допущены. Далее service table/current numeric environment и whole catalog;
+file/header/live admission открыты, сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-POLICY-11316.md).
+
 Whole native loaders проверили duplicate/unmatched/missing translation:
 8 main / 9 ru original rows × 2 orders, last-row-wins при explicit flags,
 8 records/3 groups неизменны. String/split/settings/date-read/diagnostics fixtures

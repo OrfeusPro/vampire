@@ -1,0 +1,16 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-ad5876ba33cb": "b269cb2cbd38d2b4f56d20de65759281e1386379cf567ebd4005f44fca45a2aa",
+    "run-c9ac9c288a06": "c7b122492bc128e6ff2f359120bcb62c9c447b02d6ba31aa7cd6d87443a5b9bd"
+  },
+  "leaves": {
+    "0x1445f5eb0": "8b41204c8bc1ffc83bd0760333c0c38bca48c1e10549034828e902b6ffff",
+    "0x1445f14d0": "488379180f7603488b0948ff2517a73a04"
+  },
+  "limits": [
+    "Whole native nonzero CSV gate, environment getter and policy under already-initialized synthetic TLS/manager state. Actual Windows atoi bridge; source group10000 is explicit cell data.",
+    "Synthetic manager records/current numeric fields/lists/version. String/ID conversion/split/copy/compare/cleanup/version lookup remain bounded fixtures, allocations succeed. Cold init and actual active configuration not proved.",
+    "Inline/external hash bucket cases, no live table/service policy/order admission or gameplay."
+  ]
+}

@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Native nonzero service gate / environment getter / policy прошли 30 случаев:
+inline/external buckets, missing/empty group, deny/allow lists и inclusive version
+bounds. TLS/manager/config inputs и string/version services — явные fixtures;
+actual current policy ещё не доказана. Далее source-bound service table / numeric
+environment перед whole catalog admission. Сессию сохранять.
+[Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-POLICY-11316.md).
+
 Native ru override edge cases прошли на 8 main / 9 ru source rows × 2 orders:
 duplicate 50000090011 last-row-wins при explicit flags; unmatched ID не создаёт
 record, missing translation остаётся empty. Param/fields/groups сохранены.
