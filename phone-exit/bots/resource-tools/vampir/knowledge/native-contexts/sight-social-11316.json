@@ -1,0 +1,64 @@
+{
+  "source": "F:/PhoneExit Resources/Vampir/client-code-snapshots/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "helpers": {
+    "memcpy": "0x1487f5ab9"
+  },
+  "function_budget": 21,
+  "budget_scope": "sight-social-records",
+  "functions": {
+    "input_constructor": "0x144aacb40",
+    "input_buffer_constructor": "0x144aac130",
+    "input_u16": "0x144aac250",
+    "input_u32": "0x144aac2a0",
+    "input_u64": "0x144aac4a0",
+    "input_bool": "0x144aac4f0",
+    "input_raw": "0x144aac5c0",
+    "input_string": "0x144aacfd0",
+    "input_std_string": "0x144aac390",
+    "input_utf8_length": "0x14144c440",
+    "input_utf8_convert": "0x1414466a0",
+    "input_utf8_core": "0x14143bd30",
+    "input_utf8_scalar": "0x14143b9a0",
+    "input_time": "0x144aac470",
+    "guild_constructor": "0x145799940",
+    "guild_reader": "0x14579c6b0",
+    "emblem_reader": "0x145794bc0",
+    "time_constructor": "0x1457a3500",
+    "time_reader": "0x1457fdce0",
+    "party_reader": "0x1457a5770",
+    "option_reader": "0x1457a5520"
+  },
+  "exports": {
+    "run-6c5bd9da86eb": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+    "run-81d1e191e8c5": "0e221782b32811ff26ed05661b0a539e2781693a4c4c26357a77a39d3503e2e5",
+    "run-2fe73e379c6f": "f11b8a560a8a05ee7bffdd64cf18fb3c7cb87daa945758b3d98c74ce38b9b226",
+    "run-329d82a6707a": "bd0b0a53cec59754d2c7f454879fbc7d53ddd369fb5158e7a308f5fa1f8979fa",
+    "run-cfe450e70430": "08ceca13a1eef50edbb9e38ac4d3f63b1d0880e4dd5455f3b0257cfff49c93a6",
+    "run-4ef2b735941d": "81d790be1d457535a6cf9ab5a70d56ea4208dc83c79783c0b64ef1ba75bc3a8e",
+    "run-5f5962528f71": "eb61261ff01b2107b0b8a341a7419114c7e40f3b852e37f31ab470416090b632",
+    "run-733995919a16": "202e0cbd6be0f91a82662c6c844c2ea49b5dbfcaa54e46424dd1d9250ae36c48",
+    "run-80386d1eb460": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1",
+    "run-bbd19f52e20c": "531e4e96e2f8c5f5b32ab4f6a803bd21787698c55aedaad0dd3b5e24a8cc14b8"
+  },
+  "leaves": {
+    "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+    "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad1a0": "895110c3",
+    "0x144aac240": "488b0141b80100000048ffa090000000",
+    "0x1457fdaf0": "488d05c118120448c7410800000000488901488bc1c3",
+    "0x1457904d0": "488d057900190448890133c048894108488bc1c3",
+    "0x1457a2350": "33d266c741400101488d0581f8170448895108488901488d052bf8170448894120488bc148895110488951186689512888512a48895130488951386689514889514cc3"
+  },
+  "string_storage": {
+    "string_fixtures": {
+      "growth": "0x1421e7340",
+      "utf16_allocate": "0x141436cc0",
+      "assign": "0x1414277b0",
+      "free": "0x141483080",
+      "cpp_free": "0x141431f80",
+      "security": "0x1487e8ce0"
+    },
+    "cookie": "0x14b271780"
+  }
+}

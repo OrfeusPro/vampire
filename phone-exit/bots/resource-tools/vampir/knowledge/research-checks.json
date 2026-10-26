@@ -2,6 +2,48 @@
   "schema": 1,
   "checks": [
     {
+      "id": "live-sight-social-11316",
+      "questions": [
+        "live-world-state-11316"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+      ],
+      "offline_reviewed": true,
+      "on_update": false,
+      "test_pattern": "test_vampir_sight_social_11316.py",
+      "timeout_seconds": 180,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_sight_social_11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sight-social-11316.py",
+        "phone-exit/bots/resource-tools/vampir/login-result-string-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sight-social-11316.json",
+        "phone-exit/bots/vampir-shared/vampir_core/sight_social_records.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-81d1e191e8c5/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2fe73e379c6f/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-329d82a6707a/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-4ef2b735941d/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-5f5962528f71/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-733995919a16/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-80386d1eb460/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-bbd19f52e20c/details.json"
+      ]
+    },
+    {
       "id": "live-sight-projectiles-11316",
       "questions": [
         "live-world-state-11316"
