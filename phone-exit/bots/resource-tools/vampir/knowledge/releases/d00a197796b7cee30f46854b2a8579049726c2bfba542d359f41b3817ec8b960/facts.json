@@ -12770,6 +12770,145 @@
       "question": "quest-click-action-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Whole accepted CSV row stores/load/overrides and active step/HUD click/gameplay remain unproven."
+    },
+    {
+      "addresses": [
+        "0x1445f6520",
+        "0x145b48860",
+        "0x145b4bd20",
+        "0x145b5f270"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "96747e8d14d50a95530ee669d562c50c34b229556cccba4b99cc79cfae3f363e",
+          "id": "native-quest-progress-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa\\manifest.json",
+          "sha256": "9c95b7c1a6d7ee4501fdbd4e23f737e784e85c12536e10b449698c103f4d82fa",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c40c28462227e860f9d60dea7353d4d386b5dc202abb7d9d05b400820c558d6f",
+          "id": "native-quest-task-lookup-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068\\manifest.json",
+          "sha256": "b98a21162a0052f76c0f2951dbd0e824c28365ac2ffa4b5a0336b340170fc068",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2fc0ca18043bd089239878a1ef4237185c44b5f1f428f5e376a8cc11bdae5daa",
+          "id": "native-quest-update-wire-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae\\manifest.json",
+          "sha256": "2e737c6ef528b4b430aa3ce5616ee117353da11bd663ed7356c53409e669fdae",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c19cc0dc44cfee6689c4bc0917929f2abe63c4ceea590bc367c4e482f52b6376",
+          "id": "native-quest-state-application-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7\\manifest.json",
+          "sha256": "04dfcb9892f4872e99ff5b9816a3f28bd075815a3570ffa600be4a8c84183ec7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dcc9222ecfab8ddee5a352609b764713ab4ac646cc4a9b0e8d4862b00499859d",
+          "id": "native-quest-task-replacement-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585\\manifest.json",
+          "sha256": "5dda04d6321fe7db75b50e06d144a333e3154e2dc22cc68b3efbff683ac08585",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a1d5979a165f5637c31a2ca13fa177e633324713ef8078515cc845c88d70bece",
+          "id": "native-quest-csv-projection-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\44a71b2720a0a43b3df2b2cd08f8978f6b1bb533edab4267160581f803c2a413\\manifest.json",
+          "sha256": "44a71b2720a0a43b3df2b2cd08f8978f6b1bb533edab4267160581f803c2a413",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dae9fc72f8ef864b2d8d2021249ecf86b2b38fa2643c45cc295fda277a0ea044",
+          "id": "native-quest-sparse-insert-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\155d8b73590d4b00f3c974a6cabce301501665581e083431128d1ba43aebe748\\manifest.json",
+          "sha256": "155d8b73590d4b00f3c974a6cabce301501665581e083431128d1ba43aebe748",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b604d37483230ed5eab91c9051333be67d2df66bdfd33691b2df956975a6d946",
+          "id": "native-quest-empty-group-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a4dd494bc3f160ccc80a93db931645f30465aff53bb974eae2299d86102b70a0\\manifest.json",
+          "sha256": "a4dd494bc3f160ccc80a93db931645f30465aff53bb974eae2299d86102b70a0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "febb8da11a1f7ebbbbcf17313f41fede2b0ee20ce37ff5a27711fb01828764f7",
+          "id": "native-quest-map-growth-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8f55a8ad68c6ad834872f617cc4252076ad7f287e65d6ef9a41dd0d73c67e96a\\manifest.json",
+          "sha256": "8f55a8ad68c6ad834872f617cc4252076ad7f287e65d6ef9a41dd0d73c67e96a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "67f48c358864d1c15a3907ea0fa2a61ea6ea30248e3a88f5f81b128521a21ffd",
+          "id": "native-quest-map-chain-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e7d985e9cd375a8dc636e62b93379e495b6bc8636e69c63262b0366a9493a502\\manifest.json",
+          "sha256": "e7d985e9cd375a8dc636e62b93379e495b6bc8636e69c63262b0366a9493a502",
+          "state": "passed"
+        },
+        {
+          "cache_key": "278798ba8cf25c221986736b80c1f0f62c0c333c90aa18e760af1f017e698413",
+          "id": "native-quest-csv-row-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3b3ab4eed2fce2e330b34676a0ec68a3f70f869f12e10dc7775436d8afef93ca\\manifest.json",
+          "sha256": "3b3ab4eed2fce2e330b34676a0ec68a3f70f869f12e10dc7775436d8afef93ca",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d3eefbf130309e1a2d81b3f6c5d72eaf26af9d971e0324f4cf3e793538b319ff",
+          "id": "native-quest-record-chain-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1c83694d8dfdae7debd2f1eb5bf3af894df4d3af8006a3260b405036cf32ad2d\\manifest.json",
+          "sha256": "1c83694d8dfdae7debd2f1eb5bf3af894df4d3af8006a3260b405036cf32ad2d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5044431dc383bda3a72c5bbfec6b6ff5b809ab7187822b711a4dcf37e59d9c67",
+          "id": "native-quest-loader-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7759ab80ab6541fcfdc528485346d9827edeacb6f49684cab77a8a3160474b9b\\manifest.json",
+          "sha256": "7759ab80ab6541fcfdc528485346d9827edeacb6f49684cab77a8a3160474b9b",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole loader executed with native tokenizer, record constructor/copy, primary/group FindOrAdd/insert/growth/rehash and occupied iterator on six original quest 110120 rows in forward/reverse order. All sixteen data fields and exact group pointer order match; each run reads 1220 bytes. Native setter/post-load return leaves source-bound.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-LOADER-11316.md",
+          "sha256": "32bc0de25a44847b54e84a6afa99912a0be1bd573390f56ef8f6902b4a2ddc78"
+        }
+      ],
+      "id": "e2801c7b37b01967bef9e0718b432fa86ac4aaf37e66a784348b7b9232bd9f37",
+      "limits": [
+        "File/header setup, scalar conversions, strings/UTF8/FString/TArray storage, allocation/free, empty map clear, bit append/hash/duplicate checks are explicit bounded fixtures.",
+        "Override getter/application use null/no-op fixtures. Six original rows only, not full catalog/current service policy. No live order admission or gameplay."
+      ],
+      "method": "bounded_native",
+      "next_check": "Verify actual scalar getters and override function, then full catalog/current service policy before live adapter admission.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Actual scalar getters/conversions, override 145b69ca0, whole catalog and current nonzero service policy; live progress-index admission and gameplay remain unproven."
     }
   ],
   "schema": 1,

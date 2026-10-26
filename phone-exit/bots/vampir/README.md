@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Whole QuestTask loader выполнен с native tokenizer / constructor / maps:
+6 исходных строк «Зова крови» в прямом и обратном порядке, все 16 data fields
+сверены; group array сохраняет insertion-slot order. File/header/scalar/string /
+storage и overrides остаются fixtures. Actual getters / override / whole catalog
+нужны до live admission; соединение сохраняется.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LOADER-11316.md).
+
 Настоящие QuestTask constructor / field-copy включены в map chain вместо
 constructor fixture: 210 создания с проверкой defaults, 420 inserts / 840 lookups.
 Empty-wide / allocator / hash fixtures остаются явными. Accepted CSV stores /

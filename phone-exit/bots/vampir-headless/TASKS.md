@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Whole loader 145b5f270 объединил native tokenizer, record и map chain на 6
+исходных строках 110120 × 2 orders: data fields и group pointer order проверены.
+Scalar/file/header/string/storage/override fixtures явные; live order false.
+Далее actual scalar getters и override 145b69ca0, затем whole catalog/current
+service policy. Сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LOADER-11316.md).
+
 Native record constructor 145b48860 / field-copy 145b4bd20 прошли внутри map
 chain: 210 creation/default checks, 420 inserts / 840 lookups. Constructor
 fixture удалён из нового режима; empty-wide / allocator / hash fixtures явные.
