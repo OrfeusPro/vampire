@@ -9549,6 +9549,159 @@
       "question": "live-world-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Real initial environment stream, world-finish ordering, current NPC/player stats/movement, monster names, current map projection, engine effects, real simultaneous accounts."
+    },
+    {
+      "addresses": [
+        "0x1456c5390",
+        "0x14679c530"
+      ],
+      "checks": [
+        {
+          "cache_key": "87856d71ea9faae7662605ba4eaf932259ada225595d4403fd153811b360e590",
+          "id": "live-initial-environment-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\282336783b3612b64c86ef481f2d8e74f6c18ee9bb73c821699216b21569bac4\\manifest.json",
+          "sha256": "282336783b3612b64c86ef481f2d8e74f6c18ee9bb73c821699216b21569bac4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "06bc6f8f6e01c27d12678f6ab9fd1f835fd281d31d94519dd9f18c0a098f0e56",
+          "id": "live-sight-enter-whole-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2abd6c7a798597b6022f6215366bc87f9aca66ca5f73ad0276b827a06e0c20e0\\manifest.json",
+          "sha256": "2abd6c7a798597b6022f6215366bc87f9aca66ca5f73ad0276b827a06e0c20e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bd5b347996fe442549d9702e39feff7dade11990ec2093f571a0dfa1f0f16293",
+          "id": "live-sight-character-lifecycle-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3c0373b6e359c41f8ca52e00812f03fb5d410988b0a1990a2e8904d28ba434c8\\manifest.json",
+          "sha256": "3c0373b6e359c41f8ca52e00812f03fb5d410988b0a1990a2e8904d28ba434c8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ae9cf82441874882921a91262a31283c8ccf70c75f8c9f77632c85fb5dfa00b2",
+          "id": "live-sight-nested-copy-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6bf66eecbb99b801e7ae297b52d9e6273f75eabff612c304532cf0245e01d365\\manifest.json",
+          "sha256": "6bf66eecbb99b801e7ae297b52d9e6273f75eabff612c304532cf0245e01d365",
+          "state": "passed"
+        },
+        {
+          "cache_key": "115956aea5d287348bd6aee61ffe26387ea634f84cfebbf98b8f8ba54e798f1a",
+          "id": "live-sight-enter-composition-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b237345bdae0a3ee4787027341ce10d90bb0b75d608f10e491aee4125b563cf8\\manifest.json",
+          "sha256": "b237345bdae0a3ee4787027341ce10d90bb0b75d608f10e491aee4125b563cf8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b99e32a84496702637c1538e991dcb0478d0d2e35704474aea2736c2b46c62c8",
+          "id": "live-sight-character-other-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6e6fcb456c6ef9cef41855839a90b44efe3e4de3c370880ec98d1fd39c1e71ea\\manifest.json",
+          "sha256": "6e6fcb456c6ef9cef41855839a90b44efe3e4de3c370880ec98d1fd39c1e71ea",
+          "state": "passed"
+        },
+        {
+          "cache_key": "87d7defd8e11e254dce929d62627f09d12729eb4a865bbc7c3002c05ecbb42f3",
+          "id": "live-sight-gadget-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7b1f26005d09d1b2ffb1c80c99347e4316fe0a62004a71a357735d95694afa5c\\manifest.json",
+          "sha256": "7b1f26005d09d1b2ffb1c80c99347e4316fe0a62004a71a357735d95694afa5c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4bbacc29fd638b71477dc7c80289234ef1c1db57dcca9cc7d19b0ad0f4bd7f68",
+          "id": "live-sight-social-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\23dcb4c77d19c04150ca59c5e69a1fc0a1183cda087bef565252c63b183124b5\\manifest.json",
+          "sha256": "23dcb4c77d19c04150ca59c5e69a1fc0a1183cda087bef565252c63b183124b5",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9a49b3471132d8385d274142a70996407154cd268d5dff5ceea5b2a48ff31af0",
+          "id": "live-sight-projectiles-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e139e5fb52fca80dc29637d56affa86d16cc5ae93a2ef1d6347bd0a80775c212\\manifest.json",
+          "sha256": "e139e5fb52fca80dc29637d56affa86d16cc5ae93a2ef1d6347bd0a80775c212",
+          "state": "passed"
+        },
+        {
+          "cache_key": "266ca512ed1d644610c33123e08a725b7993fa39f74e0fecd03c5d93e6a3d711",
+          "id": "live-sight-effects-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1\\manifest.json",
+          "sha256": "2fa89f00f00c3bfcde2824a4e9201c76571bce501c4127094484cab8e9714ea1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a71f64f548a986d3b86ae4ea8b2fc7eefff724ae544eeec9c44910031cccd8dd",
+          "id": "live-sight-leave-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885\\manifest.json",
+          "sha256": "eec5ad0bf2d3d5d9e3d8c5088599132c015a4eaad0132ca34f34012112e9d885",
+          "state": "passed"
+        },
+        {
+          "cache_key": "cdf019c531bf928957796b4017974e7524689c0bad0df782ac6a888fc82e70e4",
+          "id": "live-environment-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\62af61127612c74d13753f94483d6b5fb29b2afb0610e9584049ad48cd629a17\\manifest.json",
+          "sha256": "62af61127612c74d13753f94483d6b5fb29b2afb0610e9584049ad48cd629a17",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3fa8fee3ce9d7c61ad1ce0f09d3dc996b71e98be67e010fb92e831ec0c74c8da",
+          "id": "live-npc-create-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\496417d5e9be810d9cfda377aa576384aeba74ce339aa20e152d1267c5eea0b0\\manifest.json",
+          "sha256": "496417d5e9be810d9cfda377aa576384aeba74ce339aa20e152d1267c5eea0b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a191607ff175c4de6fc80514862e17084b29132bca51184fb0537e70661f8e1f",
+          "id": "live-npc-effect-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac\\manifest.json",
+          "sha256": "88646cd23c57c5da8ad107e72e8f913a6e0d73485ff95601a2f71be95f516fac",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4a41fe3a8d9f56db6053baf8b559ddc3f5d4e7bb6520ee0f0c072f27513055b7",
+          "id": "live-npc-move-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4\\manifest.json",
+          "sha256": "98f4e78aef3bec6e9dcd72d9fc9fca18a8d1a05c218b494eaee623e3eca51ab4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a904d8b4a7e4c1bdec4780c635176a7df86027a53abe85a5f505015e1401ec77",
+          "id": "live-stat-notify-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a\\manifest.json",
+          "sha256": "db4cad5a56546bf42c596f7d9302878d2bdc10b48f8efb945a9f5fb6e86faf7a",
+          "state": "passed"
+        },
+        {
+          "cache_key": "082a8f4088e24e58e6f74b2fd4f410602dfc0c8ccc0c073524a26aa1e7623756",
+          "id": "live-stat-initial-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500\\manifest.json",
+          "sha256": "57a438dd36fbd3c2daf072c98ccc8922b6055d38e23e34a22b5223f130095500",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d90af7a2d87e830ff0347b199a082df8c45e39bde24ed5aa440d4be9272a5cca",
+          "id": "live-stat-values-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3\\manifest.json",
+          "sha256": "5700f58fdb7307462ac317479b3811669b5f28aaefdfd5202057fda42a6d13d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Live initial environment attempt via available OPPO/HK passed HTTPS TCP, fresh matching-route CDN fetch and official SDK/lobby sign-in. JP256 game Login returned code58 mapped BlockedIp before world; no environment packets. First preauth route-manifest mismatch was rejected, not bypassed. Owned transport/API closed and listener absence checked.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-INITIAL-ENVIRONMENT-LIVE-ATTEMPT-11316.md",
+          "sha256": "0370d4984e7220ee9c53dbbd467397172209f91f5aca5d7959e7d6781fc6f35b"
+        }
+      ],
+      "id": "29ba94b4b6aa42fb172b3b63b285b7801f608a6133713c22d5fe96ef4b26f7c2",
+      "limits": [
+        "No new SightEnter or actor/HP/MP/map/multi-account live proof.",
+        "Code58 identifies returned error, not its underlying IP policy cause.",
+        "No login retry on rejected exit; password hidden stdin, no raw packet/auth capture stored.",
+        "Current transport verified with HTTPS TCP only; no new UDP or Windows VPN proof."
+      ],
+      "method": "static",
+      "next_check": "Await a different available phone exit for live proof; meanwhile verify current stat/move handlers against existing actor keys offline.",
+      "question": "live-world-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Live initial world/SightEnter ordering and environment, current stats/movement/map, actual simultaneous accounts remain unverified."
     }
   ],
   "schema": 1,
