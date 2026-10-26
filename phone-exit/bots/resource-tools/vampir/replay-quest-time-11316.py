@@ -15,9 +15,10 @@ def load(name,path=None):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 
-def run():
-    audit=load('audit-client-release');path=HERE/'knowledge/native-contexts/quest-time-11316.json'
+def run(context_path=None):
+    audit=load('audit-client-release');path=Path(context_path) if context_path else HERE/'knowledge/native-contexts/quest-time-11316.json'
     context=json.loads(path.read_text('utf-8'))
+    native_pending=context.get('native_pending') is True
     h=load('native-request-harness-11316').make_harness(context['exports'],{int(v,16) for v in context['functions']},
         leaves={int(a,16):b for a,b in context['leaves'].items()})
     if h.sha!=context['source_sha256'] or not all(f.get('block_coverage_complete') and f.get('direct_flow_coverage_complete') for f in h.fragments):
@@ -58,7 +59,8 @@ def run():
     if [(r['id'],r['seconds']) for r in source]!=[('110120005',0.1),('110120070',1)]:raise ValueError('Time source rows changed')
     uc,x,base=h.uc,h.x,h.scratch
     task,closure,json_ref,json_object,record,control,data,model,environment=[base+n for n in (0x1000,0x2000,0x2100,0x2200,0x3000,0x4000,0x5000,0x6000,0x7000)]
-    current={};blocks={};cursor=[base+0x10000];calls=[];properties={};variants={}
+    current={};blocks={};cursor=[base+0x10000];calls=[];properties={};variants={};bags={}
+    pending=base+0x8000;variant_result=base+0x9000;scope=base+0xa000
     def reg(name):return uc.reg_read(getattr(x,'UC_X86_REG_'+name))
     def put(at,n,size=8):uc.mem_write(at,(int(n)%(1<<(size*8))).to_bytes(size,'little'))
     def get(at,size=8):return int.from_bytes(uc.mem_read(at,size),'little')
@@ -113,13 +115,13 @@ def run():
         if reg('RCX')!=model or reg('RDX')!=110120:raise ValueError('Time completion lookup')
         calls.append('lookup');h.finish(0 if current['mode']=='missing-model' else record)
     def bag_init(machine):
-        properties.clear();uc.mem_write(reg('RCX'),bytes(0x48));h.finish(reg('RCX'))
+        properties.clear();bags[reg('RCX')]={};uc.mem_write(reg('RCX'),bytes(0x48));h.finish(reg('RCX'))
     def scalar(machine):
         variants[reg('RCX')]=reg('RDX');uc.mem_write(reg('RCX'),bytes(32));h.finish(reg('RCX'))
     def set_property(machine):
         name=wide(reg('RDX'))
         if name not in ('QuestInfoId','QuestTaskIndex') or reg('R8') not in variants:raise ValueError('Time named request property')
-        properties[name]=variants[reg('R8')];h.finish()
+        properties[name]=variants[reg('R8')];bags[reg('RCX')][name]=variants[reg('R8')];h.finish()
     def completion_request(machine):
         if reg('RCX')!=model or properties!={'QuestInfoId':110120,'QuestTaskIndex':current['index']}:raise ValueError('Time completion request differs')
         calls.append('request');h.finish()
@@ -130,6 +132,30 @@ def run():
         0x141c827e0:bag_init,0x1445c5890:scalar,0x1445c5800:scalar,0x1445d6930:set_property,
         0x1455ca010:completion_request,0x141c4f630:lambda machine:h.finish(),
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
+    if native_pending:
+        callbacks.pop(0x1455ca010)
+        def copy_bag(machine):
+            target,source=reg('RCX'),reg('RDX')
+            if source not in bags:raise ValueError('Native pending copy source unknown')
+            bags[target]=bags[source].copy();uc.mem_write(target,bytes(0x48));h.finish(target)
+        def get_property(machine):
+            if wide(reg('RDX'))!='QuestInfoId' or reg('RCX') not in bags:raise ValueError('Native pending property lookup')
+            variants[variant_result]=bags[reg('RCX')]['QuestInfoId'];h.finish(variant_result)
+        def integer_value(machine):
+            if reg('RCX') not in variants:raise ValueError('Native pending scalar scope')
+            h.finish(variants[reg('RCX')])
+        def guard(machine):
+            if reg('RCX')!=scope or reg('RDX')&65535!=7 or reg('R8')!=110120:raise ValueError('Native pending guard scope')
+            calls.append('pending-guard');h.finish(int(current['mode']=='pending-guard'))
+        def resize(machine):
+            old=reg('RDX')
+            if reg('RCX')!=model+0x80 or get(model+0x88,4)!=old+1 or not 0<=old<8:raise ValueError('Native pending growth scope')
+            put(model+0x80,pending);put(model+0x8c,8,4);calls.append('pending-grow');h.finish()
+        callbacks.update({0x1445c65d0:copy_bag,0x1445cbc90:get_property,0x1445c7500:integer_value,
+            0x144aae520:lambda machine:h.finish(scope),0x144aae5a0:guard,0x1415397a0:resize})
+        # Observation only: execute the real wrapper, never replace it with a hook result.
+        import unicorn
+        uc.hook_add(unicorn.UC_HOOK_CODE,lambda machine,address,size,user:calls.append('request'),begin=0x1455ca010,end=0x1455ca010)
     # Data virtual +20 fallback is deliberately closed when the active gate is false.
     data_page=0x1499f6000
     if not any(start<=data_page and end>=data_page+4095 for start,end,_ in uc.mem_regions()):
@@ -138,15 +164,29 @@ def run():
     callbacks[source_qword(0x1499f67f8+0x20)]=lambda machine:h.finish(0)
     for at,callback in callbacks.items():h.add_fixture(at,callback)
     modes=('open','start-noowner','start-nocontrol','start-dead','start-nodata','disabled','record-state','phase','gate-one','gate-two','missing-model','record-advances')
+    if native_pending:modes+=('pending-same','pending-other-index','pending-other-type','pending-other-key','pending-guard')
     cases=[]
     for row in source:
       for mode in modes:
-        current.clear();current.update(row,mode=mode);calls.clear();blocks.clear();variants.clear();properties.clear();cursor[0]=base+0x10000
+        current.clear();current.update(row,mode=mode);calls.clear();blocks.clear();variants.clear();properties.clear();bags.clear();cursor[0]=base+0x10000
         uc.mem_write(task-16,b'A'*16+bytes(0x2b0)+b'B'*16)
         uc.mem_write(record,bytes(0x60));uc.mem_write(control,bytes(0x20));uc.mem_write(data,bytes(0xc0));uc.mem_write(environment,bytes(0x40))
         put(task,0x149905340);put(task+0x10,record);put(task+0x18,control);put(task+0x20,int(row['id']));put(task+0x28,6,1);put(task+0x29,row['index'],1);put(task+0x40,data)
         put(record+0x20,110120);put(record+0x28,2,1);put(record+0x30,task);put(control+8,1,4);put(control+12,1,4);put(data,0x1499f67f8)
         put(closure,task);put(json_ref,json_object);put(0x14b5e4d60,model);put(environment+0x30,6,1)
+        if native_pending:
+            uc.mem_write(model,bytes(0x100));put(model+0xe6,7,2)
+            uc.mem_write(pending-16,b'P'*16+bytes(0x58*8)+b'Q'*16)
+            seeded=mode in ('pending-same','pending-other-index','pending-other-type','pending-other-key')
+            if seeded:
+                put(model+0x80,pending);put(model+0x88,1,4);put(model+0x8c,1,4)
+                put(pending,2 if mode=='pending-other-type' else 1,1)
+                bags[pending+8]={'QuestInfoId':110121 if mode=='pending-other-key' else 110120,
+                    'QuestTaskIndex':(row['index']+1)%6 if mode=='pending-other-index' else row['index']}
+            pending_before=bytes(uc.mem_read(pending,0x58)) if seeded else None
+            seed_values=bags[pending+8].copy() if seeded else None
+            pending_counts=[]
+
         uc.reg_write(x.UC_X86_REG_RDX,json_ref);h.call(0x1455b0050,closure)
         if get(task+0x118,1)!=0 or bytes(uc.mem_read(task+0x11c,4))!=struct.pack('<f',row['seconds']) or blocks:
             raise ValueError('Time callback fields/cleanup differ')
@@ -172,8 +212,9 @@ def run():
             except Exception as error:raise ValueError('Time replay '+repr((mode,delta,hex(reg('RIP')),hex(reg('RCX')),hex(reg('RDX'))))) from error
             elapsed.append(struct.unpack('<f',bytes(uc.mem_read(task+0x1a0,4)))[0]);states.append(get(task+0x1a8,4));requests.append(calls.count('request'))
             if mode=='record-advances' and calls.count('request'):put(record+0x28,0,1)
-        allowed=mode in ('open','missing-model','record-advances')
-        expected_requests=([0,0,1,1,2] if mode=='open' else [0,0,1,1,1] if mode=='record-advances' else [0]*5)
+            if native_pending:pending_counts.append(get(model+0x88,4))
+        allowed=mode in ('open','missing-model','record-advances') or mode.startswith('pending-')
+        expected_requests=([0,0,1,1,2] if mode=='open' or mode.startswith('pending-') else [0,0,1,1,1] if mode=='record-advances' else [0]*5)
         if requests!=expected_requests:raise ValueError('Time completion count differs '+repr((mode,requests,states,elapsed)))
         if allowed and states[:3]!=[1,0xffffffff,1]:raise ValueError('Time threshold requires next tick')
         if not allowed and (states!=[int(started)]*5 or any(elapsed)):raise ValueError('Blocked Time tick changed timer')
@@ -183,10 +224,21 @@ def run():
         if bytes(uc.mem_read(task-16,16))!=b'A'*16 or bytes(uc.mem_read(task+0x2b0,16))!=b'B'*16 or blocks:
             raise ValueError('Time final guards/allocations differ')
         cases.append(dict(task_id=row['id'],index=row['index'],seconds=row['seconds'],mode=mode,states=states,elapsed=elapsed,requests=requests,calls=calls.copy()))
+        if native_pending:
+            added=int(mode in ('open','record-advances','pending-other-type','pending-other-key'))
+            expected_counts=[int(seeded)]*2+[int(seeded)+added]*3
+            if pending_counts!=expected_counts:raise ValueError('Native pending count differs '+repr((mode,pending_counts,expected_counts)))
+            if seeded and (bytes(uc.mem_read(pending,0x58))!=pending_before or bags[pending+8]!=seed_values):raise ValueError('Existing pending row changed')
+            entries=[dict(kind=get(pending+i*0x58,1),properties=bags[pending+i*0x58+8].copy()) for i in range(pending_counts[-1])]
+            if added and entries[-1]!={'kind':1,'properties':{'QuestInfoId':110120,'QuestTaskIndex':row['index']}}:raise ValueError('Native pending fields differ')
+            if bytes(uc.mem_read(pending-16,16))!=b'P'*16 or bytes(uc.mem_read(pending+0x58*8,16))!=b'Q'*16:raise ValueError('Native pending guards changed')
+            cases[-1].update(pending_counts=pending_counts,pending_entries=entries)
+
     if audit.sha256(archive)!=context['pak_sha256']:raise ValueError('Time PAK changed during run')
     report=dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),exports=h.evidence,
         source_rows=source,cases=cases,native_execution=True,network_used=False,action_admitted=False,limits=context['limits'])
-    target=audit.save_snapshot(h.root/'code-clues/quest-time-11316',report);return target,report
+    if native_pending:report['native_pending']=True
+    target=audit.save_snapshot(h.root/('code-clues/quest-pending-time-11316' if native_pending else 'code-clues/quest-time-11316'),report);return target,report
 
 
 if __name__=='__main__':

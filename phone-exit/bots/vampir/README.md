@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Time completion теперь проверен вместе с native pending wrapper: 34 случая.
+1455ca010 не отправляет пакет сразу: добавляет kind1 в model+80 и подавляет
+same QuestInfoId даже при другом index. Другой kind/key сохраняется; внешний
+guard может запретить append. Далее consumer pending → producer/result;
+live admission false, сессия сохранена.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-PENDING-TIME-11316.md).
+
 Native Time callback/start/tick/timer/completion прошли 24 сценария на
 source 110120005 (0.1) / 110120070 (1). Порог сначала ставит FFFFFFFF;
 следующий tick вызывает named request. Без смены owner state цикл повторяется,
