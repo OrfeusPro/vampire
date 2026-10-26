@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Setter 145c21f20 прошёл 144 native cases: lookup/fallback+A8 → current+78,
+server → +7C, dirty+80/ready+81. Caller 14679aec0 selected field+30C связан
+статически. Provider 14556ae90 / lookup 14556b8b0 fixtures; далее проверить их и
+active region mapping, phase layout/current policy/full catalog. Сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-SETUP-11316.md).
+
 Current service CSV / native loader fields связаны: RegionType, ServicePhase
 bounds, Exclude/IncludeServerId. Термин version из прежнего replay уточнён как
 ServicePhase; numeric tests действуют. Id 256 source phase=10000, active region

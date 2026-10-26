@@ -1,0 +1,13 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-9fb0bec39db3": "cfa5468fc2d359930922367c5bc279ac766693fcef83808a0b1a7ca82e01ff53"
+  },
+  "caller_run": "run-83255b6c29bc",
+  "caller_sha256": "d811a7f48b0c5c91ca936e30f91437057dfe597da31081dcebbb7a876035b4ec",
+  "limits": [
+    "Whole native setter with synthetic manager/provider and explicit lookup success/failure; provider getter and region lookup are bounded fixtures.",
+    "Caller source binding only: handler passes field+30c as server argument; whole login handler not executed. Region provider lookup/cache mapping and active state remain unknown.",
+    "Selected test values 0/4/7 and server 0/256/ffffffff do not prove current configuration. No live task-order/gameplay admission."
+  ]
+}

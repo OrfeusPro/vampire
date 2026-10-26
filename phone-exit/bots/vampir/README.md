@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Native service setter прошёл 144 случая: lookup/fallback региона, запись
+RegionType/ServerId, dirty/ready flags и сохранность остальных данных.
+Handler source binding передаёт selected state+30C. Region provider/lookup
+fixtures пока явные, active numeric region не подтверждён; сессия сохраняется.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-SETUP-11316.md).
+
 Current ServerServiceGroup связан с native loader fields: RegionType и
 Min/MaxServicePhase (не client version). ServerGroup.Id 256 задаёт phase 10000;
 group 10000 candidate policy различает regions 0–4 / 5–7. Active RegionType /
