@@ -2,6 +2,12 @@
 
 ## Отдельный запуск Windows
 
+Для независимого сервера карты: `python -X utf8 phone-exit/bots/resource-tools/vampir/serve-ui-prototype.py --detached`.
+Он слушает loopback и имеет собственный timer до 24 часов; readiness сообщает
+PID для явной остановки только этого сервера. Игра и транспорт не закрываются
+при обновлении / остановке UI-сервера.
+[Настоящий Infinix-вход и baseline](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-SCHEDULED-11316.md).
+
 `run-live-sessions.py --detached` запускает owner через одноразовую задачу Windows
 под текущим вошедшим пользователем, вне дерева процессов вызывающего приложения.
 Повышение прав, пароль Windows и триггеры автозапуска не используются.

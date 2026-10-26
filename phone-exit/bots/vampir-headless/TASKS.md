@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Infinix X650 / HK вошёл в мир через новых владельцев Task Scheduler.
+Игра / транспорт / карта работают отдельно; сохранён baseline той же сессии
+для проверки перезапуска Codex. Не переподключать и не посылать Stop.
+Далее проверить непрерывность session / uptime / heartbeat после перезапуска;
+квестовое действие и несколько реальных аккаунтов остаются открытыми.
+[Текущий baseline](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-LIVE-SCHEDULED-11316.md).
+
 Прежняя Redmi-сессия офлайн после перезапуска Codex. Новый --detached использует
 Task Scheduler текущего пользователя вне дерева Codex; synthetic HTTP worker
 пережил taskkill /T dispatcher. Настоящий transport и game owner запущены тем
