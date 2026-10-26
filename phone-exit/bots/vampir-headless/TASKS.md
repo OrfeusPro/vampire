@@ -2,9 +2,11 @@
 
 Прежняя Redmi-сессия офлайн после перезапуска Codex. Новый --detached использует
 Task Scheduler текущего пользователя вне дерева Codex; synthetic HTTP worker
-пережил taskkill /T dispatcher. Далее запуск транспорта тем же независимым
-способом, новый игровой вход и проверка перезапуска Codex; не считать тест
-dispatcher доказательством реального игрового reconnect / длительной работы.
+пережил taskkill /T dispatcher. Настоящий transport и game owner запущены тем
+же способом, но Redmi / HK 122.10.196.228 получил 58 / BlockedIp. Оба owner
+штатно закрылись, повтор не запускался; запрошен новый выход. Далее успешный
+игровой вход и проверка перезапуска Codex; тест dispatcher не доказывает
+реальное игровое reconnect / длительную работу.
 [Запуск и границы](../resource-tools/vampir/knowledge/evidence/characters/HEADLESS-SCHEDULED-OWNER-11316.md).
 
 Current progress projection `145de4610` проверена целиком в 324 native сценариях:
