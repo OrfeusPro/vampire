@@ -12,10 +12,18 @@
     const questsKnown = !!person && snapshot.coverage?.quests === 'received' && Array.isArray(snapshot.quests);
     const quests = questsKnown && Array.isArray(snapshot.quests) ? snapshot.quests.slice(0,128).filter(q => q
       && typeof q.id === 'string' && /^\d{1,20}$/.test(q.id) && typeof q.title === 'string' && q.title.length <= 256) : [];
+    const receivedTutorial = snapshot?.tutorial;
+    const u32 = n => Number.isInteger(n) && n >= 0 && n <= 0xffffffff;
+    const tutorial = person && snapshot.coverage?.tutorial === 'last_received_message'
+      && receivedTutorial?.semantics === 'last_received_message' && receivedTutorial.applied_to_local_task === false
+      && typeof receivedTutorial.flag === 'boolean' && Array.isArray(receivedTutorial.records) && receivedTutorial.records.length <= 64
+      && (receivedTutorial.character_key === null || receivedTutorial.character_key === person.key)
+      && receivedTutorial.records.every(r => r && [r.raw08,r.raw0c,r.raw10].every(u32) && Number.isInteger(r.state) && r.state >= 0 && r.state <= 3)
+      ? {flag:receivedTutorial.flag, records:receivedTutorial.records.map(r => ({raw08:r.raw08,raw0c:r.raw0c,raw10:r.raw10,state:r.state}))} : null;
     let power = null;
     const entityRows = person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities) ? snapshot.entities : [];
     if (person?.stats_semantics === 'wire_stat_i64' && /^-?\d{1,20}$/.test(raw(134) ?? '')) power = String(BigInt(raw(134)) / 100n);
-    return { person, stats, experience:raw(1), power, quests, questsKnown,
+    return { person, stats, experience:raw(1), power, quests, questsKnown, tutorial,
       position:verifiedPosition ? { x:position.x,y:position.y } : null,
       xyz:person?.position && ['x','y','z'].every(k => Number.isFinite(person.position[k])) ? person.position : null,
       entitiesKnown:!!person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities),

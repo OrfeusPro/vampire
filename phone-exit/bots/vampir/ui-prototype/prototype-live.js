@@ -125,7 +125,11 @@
       });
       const filter = el('input'); filter.type = 'search'; filter.placeholder = 'ID пакета'; filter.setAttribute('aria-label', 'Фильтр журнала по ID пакета');
       const output = el('pre', undefined, 'live-log'), note = el('small'), analysis = el('pre', undefined, 'live-analysis');
-      append(body, append(el('div', undefined, 'live-log-tools'), pause, filter), note, output, el('h3', 'Локальный обработчик'), analysis);
+      const tutorial = el('pre', undefined, 'live-analysis'); tutorial.setAttribute('aria-label', 'Полученное сообщение обучения');
+      append(body, append(el('div', undefined, 'live-log-tools'), pause, filter), note, output,
+        el('h3', 'Полученное сообщение обучения'),
+        el('p', 'Последнее сообщение сервера, до 64 записей. Это не активный локальный шаг; значения raw-полей ещё проверяются.'), tutorial,
+        el('h3', 'Локальный обработчик'), analysis);
       refreshDialog = () => {
         if (logPaused) return;
         const followLog = output.scrollHeight - output.clientHeight - output.scrollTop < 30;
@@ -135,6 +139,10 @@
         }).join('\n') || 'Событий пока нет';
         note.textContent = (gap ? 'Ранние события пропущены. ' : '') + 'До 256 событий в памяти окна. Пауза меняет только отображение.';
         analysis.textContent = snapshot?.analysis ? JSON.stringify(snapshot.analysis, null, 2) : 'Обработчик не подключён';
+        tutorial.textContent = value.tutorial ? 'ID 9905 · записей ' + value.tutorial.records.length
+          + ' · flag ' + String(value.tutorial.flag) + '\nraw08 | raw0c | raw10 | state\n'
+          + value.tutorial.records.map(r => [r.raw08,r.raw0c,r.raw10,r.state].join(' | ')).join('\n')
+          : 'Данные обучения ещё не получены или недоступны';
         if (followLog) output.scrollTop = output.scrollHeight;
       };
       filter.oninput = () => refreshDialog?.(); refreshDialog();

@@ -31,4 +31,19 @@ assert.equal(partial.entitiesKnown,true);assert.equal(partial.entitiesPartial,tr
 const paged = model.project({...snapshot,coverage:{entities:'partial'},entities:Array(256).fill({key:'42'}),environment:{known_count:512,entity_page:1}});
 assert.equal(paged.entities,512);assert.equal(paged.entityRows.length,256);assert.equal(paged.entityPage,1);
 assert.equal(model.project({...snapshot,state:'disconnected',coverage:{entities:'partial'}}).entitiesKnown,false);
+const tutorialMessage = {semantics:'last_received_message',applied_to_local_task:false,flag:false,character_key:'42',
+  records:[{raw08:1001,raw0c:2,raw10:1,state:2}]};
+const tutorialSnapshot = {...snapshot,character:{...snapshot.character,key:'42'},coverage:{tutorial:'last_received_message'},tutorial:tutorialMessage};
+const tutorialView = model.project(tutorialSnapshot);
+assert.deepEqual(tutorialView.tutorial,{flag:false,records:[{raw08:1001,raw0c:2,raw10:1,state:2}]});
+assert.equal(tutorialView.questsKnown,false);assert.equal(model.availability('ButtonQuest',tutorialView).enabled,false);
+tutorialView.tutorial.records[0].raw0c=3;assert.equal(tutorialMessage.records[0].raw0c,2);
+for (const message of [{...tutorialMessage,character_key:'another'},{...tutorialMessage,applied_to_local_task:true},
+  {...tutorialMessage,records:Array(65).fill(tutorialMessage.records[0])}, {...tutorialMessage,records:[{...tutorialMessage.records[0],raw10:2**32}]},
+  {...tutorialMessage,records:[{...tutorialMessage.records[0],state:4}]}]) {
+  assert.equal(model.project({...tutorialSnapshot,tutorial:message}).tutorial,null);
+}
+assert.equal(model.project({...tutorialSnapshot,state:'disconnected'}).tutorial,null);
+assert.equal(model.project({...tutorialSnapshot,coverage:{tutorial:'decode_error'}}).tutorial,null);
+assert.deepEqual(model.project({...tutorialSnapshot,tutorial:{...tutorialMessage,records:[]}}).tutorial,{flag:false,records:[]});
 console.log('Main live projection: precision, unknowns, disconnect, map and menu gates passed');
