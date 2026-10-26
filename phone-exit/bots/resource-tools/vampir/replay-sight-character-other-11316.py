@@ -16,8 +16,8 @@ def load(name):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 
-def verify():
-    context_path=HERE/'knowledge/native-contexts/sight-character-other-11316.json'
+def verify(*,lifecycle=None):
+    context_path=HERE/'knowledge/native-contexts'/('sight-character-other-lifecycle-11316.json' if lifecycle else 'sight-character-other-11316.json')
     context=json.loads(context_path.read_text('utf-8'));f={k:int(v,16) for k,v in context['functions'].items()}
     h=load('update-native-harness').make_harness(context,context['exports'],set(f.values()),
         leaves={int(k,16):v for k,v in context['leaves'].items()})
@@ -60,7 +60,8 @@ def verify():
     load('character-list-storage-fixtures').install(h,context,state,allocate)
     def clear(machine):
         require(reg('RDX')==0,'Only empty previous CharacterOther arrays supported');h.finish()
-    for at in (0x1456bcc10,0x1456b5990,0x1456b59c0,0x1456bc920):h.add_fixture(at,clear)
+    for at in (0x1456bcc10,0x1456b5990,0x1456b59c0,0x1456bc920):
+        if at not in f.values():h.add_fixture(at,clear)
     def reserve(machine,target,stride):
         require(reg('RDX')==target and reg('R8')<=8,'CharacterOther reserve receiver/count differs')
         count=reg('R8');put(target,'QII',allocate(count*stride) if count else 0,0,count);h.finish()
@@ -112,13 +113,14 @@ def verify():
                 require(bool(number(at+offset+8,1))==(item is not None),'CharacterOther map presence differs')
                 if item is not None:
                     base=at+offset+0x10;pointer,count=number(base,8),number(base+8,4)
-                    require(count==len(item) and pointer in state['allocations'],'CharacterOther map owner/count differs')
+                    require(count==len(item) and (pointer in state['allocations'] or (count==0 and pointer==0)),'CharacterOther map owner/count differs')
                     actual=sorted((number(pointer+i*0x38,1),tuple(number(pointer+i*0x38+8+k,width) for k,width in [(8,1),(12,4),(16,4),(20,4),(0x20,8)])) for i in range(count))
                     require(actual==[(k,tuple(v.at(n) for n in (8,12,16,20,0x20))) for k,v in item],'CharacterOther map entries differ')
             elif isinstance(item,WireVector3):
                 expected=struct.unpack('<fff',struct.pack('<III',*item.bits));actual=struct.unpack('<ddd',bytes(uc.mem_read(at+offset,24)))
                 for a,b in zip(actual,expected):require(math.isnan(a) if math.isnan(b) else struct.pack('<d',a)==struct.pack('<d',b),'CharacterOther XYZ differs')
             elif not isinstance(item,WireHeading):require(number(at+offset,shapes[kind][offset])==item,'CharacterOther scalar differs')
+    operation=lifecycle.install(h,context,packet,state,compare) if lifecycle else None
     def attempt(body):
         state.clear();state.update(packet=packet,record=packet+0xb8,body=body,heap=h.scratch+0x10000,allocations={},generation=1,map_storage={},insertions=[],rehashes=[])
         uc.mem_write(packet-16,b'\xa1'*16+bytes(0x230)+b'\xa2'*16)
@@ -137,6 +139,7 @@ def verify():
         require(bytes(uc.mem_read(buffer-16,len(body)+32))==b'\xa7'*16+body+b'\xa8'*16,'CharacterOther input changed')
         for at,size in state['allocations'].items():require(bytes(uc.mem_read(at-16,16))==b'\xa5'*16 and bytes(uc.mem_read(at+size,16))==b'\xa6'*16,'CharacterOther heap guard differs')
         if accepted:compare(decode_character_other(body[:consumed],source_sha256=h.sha),packet,'root')
+        if operation:operation(accepted,body[:consumed])
         return accepted,consumed
     def encoded(label):
         data=label.encode('utf-8');return struct.pack('<H',len(data))+data
@@ -177,7 +180,11 @@ def verify():
         limits=['Whole CharacterOther including nonempty appearance/stats/effects/ActorAction/Guild/Party/map and actual input/UTF8/XYZ/yaw.',
             'Fresh owners with bounded allocation/storage fixtures, at most 8 array/map entries; reuse/growth/allocator/engine effects not proved.',
             'CharacterOther+f8 uses ActorAction/optional PositionData, not SightEnter GroundEffectData. No outer SightEnter/actor/world/live claim.'])
-    path=load('audit-client-release').save_snapshot(h.root/'code-clues/sight-character-other-11316',report)
+    if lifecycle:
+        report['lifecycle_tool_sha256']=hashlib.sha256(Path(lifecycle.__file__).read_bytes()).hexdigest()
+        report['limits']=lifecycle.LIMITS
+        report['lifecycle_summary']=operation.summary
+    path=load('audit-client-release').save_snapshot(h.root/'code-clues'/('sight-character-other-lifecycle-11316' if lifecycle else 'sight-character-other-11316'),report)
     return dict(report=str(path),cases=len(cases))
 
 
