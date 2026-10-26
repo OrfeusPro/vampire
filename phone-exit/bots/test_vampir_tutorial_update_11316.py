@@ -42,7 +42,9 @@ class Tutorial11316Tests(unittest.TestCase):
                 value=s.snapshot();row=value['tutorial']
                 self.assertEqual(row['records'][0]['raw0c'],i);self.assertIsNone(row['world_id']);self.assertIsNone(row['character_key'])
                 self.assertFalse(row['applied_to_local_task']);self.assertEqual(row['semantics'],'last_received_message')
-                self.assertEqual(value['character']['hp'],2700);self.assertNotIn('quests',value)
+                self.assertEqual(value['character']['hp'],2700)
+                self.assertEqual(value['quests'],[]);self.assertIsNone(value['quest_snapshot'])
+                self.assertEqual(value['coverage']['quests'],'not_received')
                 row['records'][0]['raw0c']=-1;self.assertEqual(s.snapshot()['tutorial']['records'][0]['raw0c'],i)
             sessions[0].packet(9905,body(count=0));self.assertEqual(sessions[0].snapshot()['tutorial']['records'],[])
             self.assertEqual(len(sessions[1].snapshot()['tutorial']['records']),1)

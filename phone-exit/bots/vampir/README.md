@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Входящий ID 1854 подключён к отдельной quest-модели и правой панели через
+общий адаптер: полученные записи / raw progress, без игровых команд.
+Проверены 50 synthetic owners, HTTP и браузер; настоящего нового списка пока нет.
+Itel-сессия завершилась при перезапуске Codex. Названия по каталогу требуют
+current key binding. [Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-LIVE-QUEST-MODEL-11316.md).
+
 Для правой панели заданий найден входящий ID 1854 / QuestSyncNotify,
 который уже посчитан живой Itel-сессией. Его полный current decoder прошёл
 96 native тел / 172 коротких префикса с настоящими constructors / callbacks /

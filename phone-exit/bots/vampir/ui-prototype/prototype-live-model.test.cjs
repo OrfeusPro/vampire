@@ -47,3 +47,17 @@ assert.equal(model.project({...tutorialSnapshot,state:'disconnected'}).tutorial,
 assert.equal(model.project({...tutorialSnapshot,coverage:{tutorial:'decode_error'}}).tutorial,null);
 assert.deepEqual(model.project({...tutorialSnapshot,tutorial:{...tutorialMessage,records:[]}}).tutorial,{flag:false,records:[]});
 console.log('Main live projection: precision, unknowns, disconnect, map and menu gates passed');
+const questObserved = {...snapshot,character:{...snapshot.character,key:'42'},coverage:{quests:'last_received_message'},
+  quest_snapshot:{semantics:'last_received_message',applied_to_local_task:false,character_key:'42',world_id:'10012'},
+  quests:[{id:'18446744073709551615',title:null,group:1,state:2,progress:{raw08:3,raw10:'9223372036854775808',raw18:'0'}}]};
+const questView = model.project(questObserved);
+assert.equal(questView.questsObserved,true);assert.equal(questView.quests[0].title,'Квест 18446744073709551615');
+assert.equal(model.availability('ButtonQuest',questView).enabled,true);
+questView.quests[0].progress.raw18='changed';assert.equal(questObserved.quests[0].progress.raw18,'0');
+for (const context of [{...questObserved.quest_snapshot,character_key:'43'},
+  {...questObserved.quest_snapshot,world_id:'10013'},{...questObserved.quest_snapshot,applied_to_local_task:true}]) {
+  assert.equal(model.project({...questObserved,quest_snapshot:context}).questsKnown,false);
+}
+assert.equal(model.project({...questObserved,state:'disconnected'}).questsKnown,false);
+assert.equal(model.project({...questObserved,quests:Array(129).fill(questObserved.quests[0])}).questsKnown,false);
+assert.equal(model.project({...questObserved,quests:[]}).questsObserved,true);

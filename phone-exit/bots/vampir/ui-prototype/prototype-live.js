@@ -111,13 +111,16 @@
     }
     function questNodes() {
       if (!value.questsKnown) return [el('p', 'Данные заданий ещё не получены')];
-      if (!value.quests.length) return [el('p', 'Сервер передал пустой список заданий')];
-      return value.quests.map(quest => {
+      if (!value.quests.length) return [el('p', value.questsObserved ? 'Полученное сообщение не содержит записей квестов' : 'Сервер передал пустой список заданий')];
+      const nodes = value.quests.map(quest => {
         const node = button(quest.title, () => {
           const body = open('Задание');
           append(body, el('p', quest.title), button('Следовать по заданию', null, '', true), el('p', 'Действие ещё не подключено к адаптеру.'));
+          if (value.questsObserved) append(body, el('p', 'Последнее сообщение сервера; активный шаг ещё не установлен.'),
+            el('pre', JSON.stringify({group:quest.group,state:quest.state,progress:quest.progress},null,2), 'live-analysis'));
         }, 'live-quest'); node.dataset.questId = quest.id; return node;
       });
+      return value.questsObserved ? [el('small', 'Полученные записи. Названия и активный шаг ещё не определены.'), ...nodes] : nodes;
     }
     function openLog() {
       const body = open('Онлайн-журнал', 'live-log-dialog'), pause = button(logPaused ? 'Продолжить' : 'Пауза', () => {
@@ -178,7 +181,7 @@
       projection.textContent = value.position ? 'Маркер: серверная цель до коррекции клиента' : 'Позиция на карте: проекция ещё не подтверждена';
       nearby.textContent = value.entitiesPartial ? 'Наблюдалось объектов: ' + value.entities + ' · данные неполные' : 'Объекты рядом: ' + (value.entitiesKnown ? value.entities : '—');
       environmentButton.disabled = !value.entitiesKnown; center.disabled = !value.position;
-      const nextQuestKey = JSON.stringify([value.questsKnown, value.quests]);
+      const nextQuestKey = JSON.stringify([value.questsKnown, value.questsObserved, value.quests]);
       if (nextQuestKey !== questKey) { questKey = nextQuestKey; questList.replaceChildren(...questNodes()); }
       if (Array.isArray(next?.journal)) {
         const fresh = next.journal.filter(row => Number.isSafeInteger(row.seq) && row.seq > cursor);

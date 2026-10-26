@@ -10485,6 +10485,46 @@
       "question": "live-quest-sync-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Изолированная модель/API/правая панель; получение нового сообщения текущим owner без разрыва; handler semantics и актуальные задания."
+    },
+    {
+      "addresses": [
+        "0x1457a66b0",
+        "0x145828a10"
+      ],
+      "checks": [
+        {
+          "cache_key": "ab3afbdbdbe402613569755b8a51d637795cbb591181db5496438d90deeb3c2b",
+          "id": "native-quest-sync-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e47df0de5b6c6721ed8b1164ac12144cc1aa2f0d584d42e7559c94d9b629ddff\\manifest.json",
+          "sha256": "e47df0de5b6c6721ed8b1164ac12144cc1aa2f0d584d42e7559c94d9b629ddff",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ca04de84f46188379c64283e068503521a8e8dd21147d2b385b3726c7cbcb739",
+          "id": "live-quest-model-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\26cb8cc9a2f65022ba851271ee9bbeea35adc1d5cedc0e970b586a92b3882c3f\\manifest.json",
+          "sha256": "26cb8cc9a2f65022ba851271ee9bbeea35adc1d5cedc0e970b586a92b3882c3f",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "ID 1854 подключён к изолированной модели последнего сообщения, bounded API и правой панели через общий адаптер. Проверены 50 synthetic owners, precision/copy/error/world/close, 127 записей через настоящий HTTP и браузерный fixture с disabled follow.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-LIVE-QUEST-MODEL-11316.md",
+          "sha256": "10db174a3dc98c7354ff7bc39ef15b62e04f8dafe360de7cf89a81c94fbcb1df"
+        }
+      ],
+      "id": "d19a19c7a8456189fea350705d4b0bbe9d4ba6713826154dc9fc06e61aaf0fdf",
+      "limits": [
+        "Не установлен активный локальный шаг или связь raw08 с Quest.Id; title неизвестен.",
+        "Искусственные данные не доказывают новый живой список или несколько реальных аккаунтов.",
+        "Прежняя сессия завершилась при перезапуске Codex; новые команды или авторизация не выполнялись."
+      ],
+      "method": "static",
+      "next_check": "Проверить current key binding и каталог названий, затем входящий список настоящего аккаунта с владельцем процесса вне Codex.",
+      "question": "live-quest-sync-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Current key→Quest.Id/имя, новый live список и независимый постоянный owner."
     }
   ],
   "schema": 1,
