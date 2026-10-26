@@ -68,9 +68,9 @@ def make_harness(exports, functions, leaves=None, root=None):
 
     # Whole nested quest input needs 18 explicit roots, including shared archive
     # primitives. Keep a fixed budget; this does not follow arbitrary callees.
-    # QuestTask loader + scalars + localization span ten individually pinned exports.
+    # QuestTask loader + scalars + localization + progress span twelve pinned exports.
     # Keep explicit roots and a finite receipt budget; no recursive discovery.
-    if not 1 <= len(functions) <= 24 or not 1 <= len(exports) <= 10:
+    if not 1 <= len(functions) <= 24 or not 1 <= len(exports) <= 12:
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Native lookup/progress теперь выполнены непосредственно на массиве шести
+задач 110120 после native main/ru загрузки: 36 проекций, original index 0 →
+110120005, reverse index 0 → 110120070. У всех шести source service group
+пустая; текущий регион не нужен этому gate. Active lifecycle/handler/position
+ещё не допущены; далее kind 6 Time 0.1 и применение task state. Сессию сохранять.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-LOADER-PROJECTION-11316.md).
+
 Очередь намерений соединена с typed QuestUpdate через owner dispatch и
 явно привязанный GameConnection. Пять локальных HTTP/socket-тестов проверяют
 повтор, scope/context, backpressure/unknown и изоляцию двух владельцев.

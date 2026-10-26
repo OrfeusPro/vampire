@@ -24,6 +24,7 @@ def run(context_path=None):
     native_scalars = context.get('native_scalars') is True
     native_override = context.get('native_override') is True
     override_edges = context.get('override_edges') is True
+    native_projection = context.get('native_projection') is True
     h = load('native-request-harness-11316').make_harness(context['exports'],
             {int(a, 16) for a in context['functions']}, leaves={int(a, 16):b for a, b in context['leaves'].items()})
     if h.sha != context['source_sha256'] or not all(f.get('block_coverage_complete') for f in h.fragments):
@@ -74,6 +75,8 @@ def run(context_path=None):
         previous = end
     if [r[0][0] for r in rows] != context['task_ids'] or len(columns) != 17:
         raise ValueError('Selected source rows/schema changed')
+    if native_projection and any(row[16] for row,_ in rows):
+        raise ValueError('Subset projection requires empty source service groups')
     override_rows = []
     if native_override:
         override_entry = next(e for e in index['entries'] if e['entry']==context['override_entry'])
@@ -471,6 +474,8 @@ def run(context_path=None):
             if len(data)>128: raise ValueError('Loader numeric input budget')
             return data
         runtime = load('replay-quest-scalars-11316').install_runtime(h,numeric_input,base+0x7000)
+    if native_projection:
+        callbacks[0x145b547a0] = lambda machine:h.finish(manager)
     for address, callback in callbacks.items(): h.add_fixture(address,callback)
     put(0x14b0c2b00,hash_callback); put(0x14b2f01c8,0)
     runs = []
@@ -531,6 +536,30 @@ def run(context_path=None):
             if override_edges:
                 runs[-1]['override_ids']=[r[0] for r,_ in ordered_override]
                 runs[-1]['missing_translation_ids']=[r[0][0] for r in ordered if r[0][0] not in override_names]
+        if native_projection:
+            projections=[]; result,progress=base+0x6000,base+0x6100
+            immutable=[(manager,bytes(uc.mem_read(manager,256)))]+[(at,bytes(uc.mem_read(at,size))) for at,size in blocks.items()]
+            if source_qword(0x1499f67f8+0x30)!=0x145b55aa0:
+                raise ValueError('Loaded record Type getter changed')
+            for i,(row,raw) in enumerate(ordered):
+                for first,second in ((0,0),(1,2),(0x1234567800000001,0x8765432100000002)):
+                    uc.mem_write(result-16,b'A'*16+b'\xcc'*32+b'B'*16)
+                    uc.mem_write(progress-16,b'C'*16+bytes(32)+b'D'*16)
+                    put(progress+8,i,1);put(progress+0x10,first);put(progress+0x18,second)
+                    progress_before=bytes(uc.mem_read(progress-16,64))
+                    uc.reg_write(x.UC_X86_REG_RDX,int(row[1]));uc.reg_write(x.UC_X86_REG_R8,progress)
+                    if h.call(0x145de4610,result)!=result:raise ValueError('Loaded projection result differs')
+                    expected=bytearray(b'\xcc'*32);struct.pack_into('<QBB',expected,0,int(row[0]),int(row[8]),i)
+                    struct.pack_into('<II',expected,12,first&0xffffffff,second&0xffffffff);struct.pack_into('<Q',expected,24,0)
+                    if bytes(uc.mem_read(result,32))!=expected:raise ValueError('Native loaded task projection differs')
+                    if bytes(uc.mem_read(result-16,16))!=b'A'*16 or bytes(uc.mem_read(result+32,16))!=b'B'*16:
+                        raise ValueError('Loaded projection output guard changed')
+                    if bytes(uc.mem_read(progress-16,64))!=progress_before:raise ValueError('Loaded projection input changed')
+                    if any(bytes(uc.mem_read(at,len(value)))!=value for at,value in immutable):
+                        raise ValueError('Projection changed native loaded manager/records/allocations')
+                    projections.append(dict(index=i,quest_id=row[1],task_id=row[0],kind=int(row[8]),
+                        first=first,second=second,progress_hex=bytes(uc.mem_read(result,32)).hex()))
+            runs[-1]['native_projections']=projections
         if runtime:
             runs[-1]['scalar_import_calls']={name:runtime['calls'].count(name) for name in ('atoi','_atoi64','strtoul','pow')}
     after = archive.stat()
@@ -542,9 +571,10 @@ def run(context_path=None):
     if runtime:
         runtime['verify'](); report['native_scalars']=True; report['system_runtime']=runtime['system_runtime']
         report['scalar_imports']=runtime['imported']
+    if native_projection:report['native_projection']=True
     if native_override:
         report['native_override']=True; report['override_sha256']=context['override_sha256']
-    target = audit.save_snapshot(h.root/('code-clues/quest-override-edges-11316' if override_edges else
+    target = audit.save_snapshot(h.root/('code-clues/quest-loader-projection-11316' if native_projection else 'code-clues/quest-override-edges-11316' if override_edges else
             'code-clues/quest-loader-override-11316' if native_override else
             'code-clues/quest-loader-scalars-11316' if runtime else 'code-clues/quest-loader-11316'),report)
     return target,report
