@@ -12,10 +12,14 @@ def load(name):
     return module
 
 
-def run():
-    audit=load('audit-client-release'); path=HERE/'knowledge/native-contexts/quest-service-setup-11316.json'
+def run(context_path=None):
+    audit=load('audit-client-release')
+    path=Path(context_path) if context_path else HERE/'knowledge/native-contexts/quest-service-setup-11316.json'
     context=json.loads(path.read_text('utf-8'))
-    h=load('native-request-harness-11316').make_harness(context['exports'],{0x145c21f20})
+    native_lookup=context.get('native_lookup') is True
+    h=load('native-request-harness-11316').make_harness(context['exports'],
+        {0x145c21f20,0x14556b8b0} if native_lookup else {0x145c21f20},
+        leaves={int(a,0):b for a,b in context.get('leaves',{}).items()})
     if not all(f.get('block_coverage_complete') and f.get('direct_flow_coverage_complete') for f in h.fragments):
         raise ValueError('Service setter coverage incomplete')
     caller_path=h.root/'ghidra/request-exports'/h.sha/context['caller_run']/'details.json'
@@ -29,6 +33,7 @@ def run():
     uc,x,base=h.uc,h.x,h.scratch
     manager,provider=base+0x1000,base+0x2000
     current={}; calls=[]
+    blocks={}; cursor=[base+0x10000]
     def reg(name): return uc.reg_read(getattr(x,'UC_X86_REG_'+name))
     def put(at,value,size=4): uc.mem_write(at,(int(value)%(1 << (size*8))).to_bytes(size,'little'))
     def get(at,size=4): return int.from_bytes(uc.mem_read(at,size),'little')
@@ -39,15 +44,63 @@ def run():
         calls.append('lookup')
         if current['found']: put(reg('RDX'),current['region'])
         h.finish(int(current['found']))
-    h.add_fixture(0x14556ae90,getter); h.add_fixture(0x14556b8b0,lookup)
+    if native_lookup:
+        def wide(ptr):
+            data=bytearray()
+            for i in range(128):
+                raw=bytes(uc.mem_read(ptr+i*2,2))
+                if raw==b'\0\0': return data.decode('utf-16le')
+                data+=raw
+            raise ValueError('Config key string budget')
+        def descriptor(at): return wide(get(at,8)) if get(at+8,4) else ''
+        def assign(at,text):
+            uc.mem_write(at,bytes(16))
+            if text:
+                raw=text.encode('utf-16le')+b'\0\0'; ptr=cursor[0]+16; cursor[0]=ptr+((len(raw)+15)&~15)+16
+                if cursor[0]>=base+0x30000: raise ValueError('Config key allocation budget')
+                uc.mem_write(ptr-16,b'L'*16+raw+b'R'*16); blocks[ptr]=len(raw)
+                put(at,ptr,8); put(at+8,len(raw)//2); put(at+12,len(raw)//2)
+        def wide_init(machine):
+            assign(reg('RCX'),wide(reg('RDX'))); h.finish(reg('RCX'))
+        def key(machine):
+            if reg('RCX')!=provider: raise ValueError('Dynamic config key scope')
+            calls.append('key'); assign(reg('RDX'),'SyntheticRegionKey'); h.finish(reg('RDX'))
+        def read_config(machine):
+            name=descriptor(reg('RCX'))
+            expected='SyntheticRegionKey' if not current['read_count'] else 'RegionSelect'
+            if name!=expected or descriptor(reg('R8'))!='' or current['read_count']>=2:
+                raise ValueError('Region config read contract differs')
+            current['read_count']+=1; calls.append('read:'+name)
+            success=current['lookup_path']=='primary' or name=='RegionSelect' and current['lookup_path']=='legacy'
+            if success: put(reg('RDX'),current['region'])
+            h.finish(int(success))
+        def write_config(machine):
+            name=descriptor(reg('RCX'))
+            expected='SyntheticRegionKey' if not current['write_count'] else 'RegionSelect_PreLogin'
+            if name!=expected or reg('RDX')!=current['region'] or descriptor(reg('R8'))!='' or current['write_count']>=2:
+                raise ValueError('Region config write contract differs')
+            current['write_count']+=1; calls.append('write:'+name); h.finish()
+        def free(machine):
+            ptr=reg('RCX'); size=blocks.pop(ptr,None)
+            if size is None or bytes(uc.mem_read(ptr-16,16))!=b'L'*16 or bytes(uc.mem_read(ptr+size,16))!=b'R'*16:
+                raise ValueError('Config string free/guards differ')
+            h.finish()
+        put(0x14b5e4788,provider,8)
+        for at,callback in ((0x141426b30,wide_init),(0x14556b740,key),(0x1445ceaa0,read_config),
+                (0x1445d7220,write_config),(0x141483080,free)):
+            h.add_fixture(at,callback)
+    else:
+        h.add_fixture(0x14556ae90,getter); h.add_fixture(0x14556b8b0,lookup)
     cases=[]
     for region in (0,4,7):
      for server in (0,256,0xffffffff):
-      for found in (False,True):
+      for lookup_path in (('primary','legacy','missing') if native_lookup else ('missing','primary')):
        for dirty in (0,1):
         for same_region in (False,True):
          for same_server in (False,True):
-            current.update(region=region,found=found); calls.clear()
+            found=lookup_path!='missing'
+            current.update(region=region,found=found,lookup_path=lookup_path,read_count=0,write_count=0); calls.clear()
+            blocks.clear(); cursor[0]=base+0x10000
             uc.mem_write(manager-16,b'A'*16+bytes(0x90)+b'B'*16)
             uc.mem_write(provider,b'P'*0xb0); put(provider+0xa8,region)
             put(manager+0x78,region if same_region else region+100)
@@ -58,7 +111,12 @@ def run():
             expected_dirty=int(bool(dirty or not same_region or not same_server))
             if (get(manager+0x78),get(manager+0x7c),get(manager+0x80,1),get(manager+0x81,1))!=(region,server,expected_dirty,1):
                 raise ValueError('Service setter fields/flags differ')
-            if calls!=(['provider','lookup'] if found else ['provider','lookup','provider']):
+            if native_lookup:
+                expected_calls=['key','read:SyntheticRegionKey']
+                if lookup_path!='primary': expected_calls+=['read:RegionSelect']
+                if lookup_path=='legacy': expected_calls+=['key','write:SyntheticRegionKey','write:RegionSelect_PreLogin']
+                if calls!=expected_calls or blocks: raise ValueError('Native config path/cleanup differs')
+            elif calls!=(['provider','lookup'] if found else ['provider','lookup','provider']):
                 raise ValueError('Service lookup/fallback path differs')
             for offset,size in ((0x78,4),(0x7c,4),(0x80,2)):
                 before[16+offset:16+offset+size]=uc.mem_read(manager+offset,size)
@@ -66,10 +124,12 @@ def run():
                 raise ValueError('Service setter changed other fields/guards/provider')
             cases.append(dict(region=region,server=server,lookup_found=found,initial_dirty=dirty,
                 same_region=same_region,same_server=same_server,dirty=expected_dirty,calls=calls.copy()))
+            if native_lookup: cases[-1]['lookup_path']=lookup_path
     report=dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),exports=h.evidence,
         caller=dict(path=str(caller_path),sha256=context['caller_sha256']),cases=cases,native_execution=True,
         network_used=False,active_region_verified=False,order_admitted=False,limits=context['limits'])
-    target=audit.save_snapshot(h.root/'code-clues/quest-service-setup-11316',report)
+    if native_lookup: report['native_lookup']=True
+    target=audit.save_snapshot(h.root/('code-clues/quest-service-region-11316' if native_lookup else 'code-clues/quest-service-setup-11316'),report)
     return target,report
 
 

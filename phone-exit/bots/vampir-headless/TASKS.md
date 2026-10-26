@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Region getter/lookup 14556b8b0/service setter прошли 216 native cases:
+primary / RegionSelect fallback / missing→cache+A8. Legacy success вызывает
+две config writes в памяти fixture, без изменения user settings. Далее dynamic
+key 14556b740 / config readers-writers 1445ceaa0/1445d7220 и active cache/region;
+phase/current policy/catalog остаются открыты, сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-REGION-11316.md).
+
 Setter 145c21f20 прошёл 144 native cases: lookup/fallback+A8 → current+78,
 server → +7C, dirty+80/ready+81. Caller 14679aec0 selected field+30C связан
 статически. Provider 14556ae90 / lookup 14556b8b0 fixtures; далее проверить их и

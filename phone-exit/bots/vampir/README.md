@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Native provider getter / region lookup / service setter прошли совместно
+216 случаев: primary/legacy/missing config paths, fallback+A8 и две legacy
+write intentions только в памяти fixture. Dynamic key/config IO/string fixtures
+остаются; actual region не подтверждён, реальные настройки не менялись.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-REGION-11316.md).
+
 Native service setter прошёл 144 случая: lookup/fallback региона, запись
 RegionType/ServerId, dirty/ready flags и сохранность остальных данных.
 Handler source binding передаёт selected state+30C. Region provider/lookup
