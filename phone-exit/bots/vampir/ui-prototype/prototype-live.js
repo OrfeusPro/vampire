@@ -116,11 +116,12 @@
         const node = button(quest.title, () => {
           const body = open('Задание');
           append(body, el('p', quest.title), button('Следовать по заданию', null, '', true), el('p', 'Действие ещё не подключено к адаптеру.'));
+          if (quest.objective) append(body,el('p',quest.objective));
           if (value.questsObserved) append(body, el('p', 'Последнее сообщение сервера; активный шаг ещё не установлен.'),
             el('pre', JSON.stringify({group:quest.group,state:quest.state,progress:quest.progress},null,2), 'live-analysis'));
         }, 'live-quest'); node.dataset.questId = quest.id; return node;
       });
-      return value.questsObserved ? [el('small', 'Полученные записи. Названия и активный шаг ещё не определены.'), ...nodes] : nodes;
+      return value.questsObserved ? [el('small', 'Полученные задания. Активный этап ещё уточняется.'), ...nodes] : nodes;
     }
     function openLog() {
       const body = open('Онлайн-журнал', 'live-log-dialog'), pause = button(logPaused ? 'Продолжить' : 'Пауза', () => {

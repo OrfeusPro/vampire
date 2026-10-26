@@ -10600,6 +10600,54 @@
       "question": "quest-click-action-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Current incoming key→model / task field, HUD callback/class table и local route; serializer/action adapter/live result."
+    },
+    {
+      "addresses": [
+        "0x145d6f9b0",
+        "0x145d81aa0",
+        "0x145de3790"
+      ],
+      "checks": [
+        {
+          "cache_key": "64c73d19bd10ce7489d483d8d5aca605f5be7e13b41b4f6c30d03db320f04d2c",
+          "id": "quest-producer-static-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b\\manifest.json",
+          "sha256": "1128ca4d89b1482f1babfffcf1748569effe4474b934ca65694b87b97f99b75b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "50a83ce54e3e2eca14420fc772d28aaf7279177aec10ae66cbe5f02e13f7c69f",
+          "id": "native-quest-sender-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411\\manifest.json",
+          "sha256": "1ef5545fc00a5338d11237ae74ed9c1814150fb0470f3c88fea0d160de5d7411",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7114dc798fa732923c107129469a39bccddec3e7a97b2ec70f7da3722455c7f7",
+          "id": "quest-names-ru-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e\\manifest.json",
+          "sha256": "4d59f3a8ef912d5ea1c74623253763777a051f9e45202344698d39e60d171d0e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Incoming quest key and named QuestInfoId use the same current lookup; exact current PAK tables provide 1341 Russian quest names. Real Quest 110120 displays Зов крови through the shared adapter.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-NAMES-RU-11316.md",
+          "sha256": "574c1b17e1f6b1212a76512ff367c71477ce3ad09c76be6a5ac6f1ae9e84a6c4"
+        }
+      ],
+      "id": "6c454a552e0d44d86b48b8ef9fabfa3925ec550636f2a9b4aef1f82e592d777a",
+      "limits": [
+        "Only checked constructor prefix, not complete chained function.",
+        "No game command or active task inference.",
+        "UI visual verification is not original game geometry verification."
+      ],
+      "method": "static",
+      "next_check": "Prove active task and HUD-to-command binding before enabling quest following.",
+      "question": "quest-click-action-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Active task, HUD action binding and quest execution remain unknown."
     }
   ],
   "schema": 1,

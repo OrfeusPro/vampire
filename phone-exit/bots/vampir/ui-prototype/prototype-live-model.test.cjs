@@ -61,3 +61,12 @@ for (const context of [{...questObserved.quest_snapshot,character_key:'43'},
 assert.equal(model.project({...questObserved,state:'disconnected'}).questsKnown,false);
 assert.equal(model.project({...questObserved,quests:Array(129).fill(questObserved.quests[0])}).questsKnown,false);
 assert.equal(model.project({...questObserved,quests:[]}).questsObserved,true);
+const russianNames = require('./quest-names-ru.js');
+const russianView = model.project({...questObserved,quests:[{...questObserved.quests[0],id:'110120'}]});
+assert.equal(russianView.quests[0].title,'Зов крови');
+assert.equal(russianView.quests[0].objective,'Покиньте кровавые воспоминания и осмотритесь');
+assert.ok(russianNames.count > 1300);assert.ok(Object.isFrozen(russianNames.get('110120')));
+assert.equal(russianNames.get('110120','old'),null);
+assert.equal(russianNames.get('constructor'),null);
+assert.equal(model.project({...questObserved,quest_snapshot:{...questObserved.quest_snapshot,source_sha256:'old'},
+  quests:[{...questObserved.quests[0],id:'110120'}]}).quests[0].title,'Квест 110120');

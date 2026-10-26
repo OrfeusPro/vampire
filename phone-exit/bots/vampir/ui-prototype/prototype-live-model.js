@@ -17,7 +17,11 @@
       && snapshot.quests.every(q => q && typeof q.id === 'string' && /^\d{1,20}$/.test(q.id)
         && Number.isInteger(q.group) && q.group >= 0 && q.group <= 12 && Number.isInteger(q.state) && q.state >= 0 && q.state <= 6);
     const questsKnown = questsObserved || (!!person && snapshot.coverage?.quests === 'received' && Array.isArray(snapshot.quests));
-    const quests = questsObserved ? snapshot.quests.map(q => ({...q,title:'Квест ' + q.id,progress:q.progress && {...q.progress}}))
+    const quests = questsObserved ? snapshot.quests.map(q => {
+      const label = root.VampirQuestNamesRu?.get(q.id,questContext.source_sha256);
+      return {...q,title:label?.title || 'Квест ' + q.id,objective:label?.objective || null,
+        progress:q.progress && {...q.progress}};
+    })
       : questsKnown ? snapshot.quests.slice(0,128).filter(q => q
       && typeof q.id === 'string' && /^\d{1,20}$/.test(q.id) && typeof q.title === 'string' && q.title.length <= 256) : [];
     const receivedTutorial = snapshot?.tutorial;
