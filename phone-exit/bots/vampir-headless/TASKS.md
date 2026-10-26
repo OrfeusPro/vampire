@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Whole native loaders проверили duplicate/unmatched/missing translation:
+8 main / 9 ru original rows × 2 orders, last-row-wins при explicit flags,
+8 records/3 groups неизменны. String/split/settings/date-read/diagnostics fixtures
+явные. Далее whole catalog/current service policy/actual file-header/active
+language settings; live admission false, сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-OVERRIDE-EDGES-11316.md).
+
 Native base loader → ru override → localization transform проверены совместно
 на 6 main/ru source rows × 2 orders. TaskName применён, absent Param пропущен,
 original fields/group order сохранены; no-op override удалён из нового режима.

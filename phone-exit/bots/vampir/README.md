@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Native ru override edge cases прошли на 8 main / 9 ru source rows × 2 orders:
+duplicate 50000090011 last-row-wins при explicit flags; unmatched ID не создаёт
+record, missing translation остаётся empty. Param/fields/groups сохранены.
+Whole catalog/current policy/active flags ещё нужны, live admission false.
+[Границы и доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-OVERRIDE-EDGES-11316.md).
+
 Whole base + ru override loaders и localization transform выполнены совместно:
 6 original rows × 2 orders, 6 TaskName stores; исходный Param / все поля / group
 order сохранены. No-op override fixture заменён native root; file/header/string /

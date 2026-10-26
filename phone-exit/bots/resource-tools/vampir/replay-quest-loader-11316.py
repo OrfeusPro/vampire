@@ -23,6 +23,7 @@ def run(context_path=None):
     context = json.loads(path.read_text('utf-8'))
     native_scalars = context.get('native_scalars') is True
     native_override = context.get('native_override') is True
+    override_edges = context.get('override_edges') is True
     h = load('native-request-harness-11316').make_harness(context['exports'],
             {int(a, 16) for a in context['functions']}, leaves={int(a, 16):b for a, b in context['leaves'].items()})
     if h.sha != context['source_sha256'] or not all(f.get('block_coverage_complete') for f in h.fragments):
@@ -68,7 +69,7 @@ def run(context_path=None):
     rows = []
     for row in parsed:
         end = parsed.line_num
-        if row[1] == '110120':
+        if row[0] in context['task_ids']:
             rows.append((row, b''.join(lines[previous:end])))
         previous = end
     if [r[0][0] for r in rows] != context['task_ids'] or len(columns) != 17:
@@ -89,10 +90,10 @@ def run(context_path=None):
             raise ValueError('Russian override schema differs')
         for row in parsed_override:
             end_line = parsed_override.line_num
-            if row[0] in context['task_ids']:
+            if row[0] in context['task_ids'] or override_edges and not override_rows and row[0] not in context['task_ids']:
                 override_rows.append((row,b''.join(physical[previous_line:end_line])))
             previous_line = end_line
-        if len(override_rows)!=6: raise ValueError('Russian selected rows ambiguous')
+        if len(override_rows)!=context.get('override_row_count',6): raise ValueError('Russian selected rows differ')
         override_names = {r[0]:r[1] for r,_ in override_rows}
     uc, x, base = h.uc, h.x, h.scratch
     manager, primary, group, cells = base+0x1000, base+0x1018, base+0x1068, base+0x3000
@@ -247,6 +248,7 @@ def run(context_path=None):
         count('column'); h.finish(names.index(name) if name in names else 0xffffffff)
 
     def wide_read(ptr):
+        if not ptr: return b''
         data = bytearray()
         for i in range(2048):
             value = bytes(uc.mem_read(ptr+i*2,2))
@@ -359,12 +361,19 @@ def run(context_path=None):
         if reg('RCX')!=state['parser'] or not state.get('override_active'):
             raise ValueError('Untranslated read scope')
         value = string(cells+4*32)
-        if value: raise ValueError('Selected source Untranslated unexpectedly nonempty')
-        uc.mem_write(reg('RDX'),bytes(16)); count('untranslated'); h.finish(reg('RDX'))
+        if value and not override_edges: raise ValueError('Selected source Untranslated unexpectedly nonempty')
+        text=value.decode('utf-8').encode('utf-16le')
+        uc.mem_write(reg('RDX'),bytes(16))
+        if text:
+            ptr=allocate(len(text)+2); uc.mem_write(ptr,text+b'\0\0')
+            put(reg('RDX'),ptr); put(reg('RDX')+8,len(text)//2+1,4); put(reg('RDX')+12,len(text)//2+1,4)
+        count('untranslated'); h.finish(reg('RDX'))
 
     def settings_get(machine):
         # Explicit flags: localized text enabled by Untranslated=0, no debug bypass.
-        uc.mem_write(base+0x2600,bytes(512)); h.finish(base+0x2600)
+        uc.mem_write(base+0x2600,bytes(512))
+        if override_edges: put(base+0x2600+0x1e4,1,1); put(base+0x2600+0x1e5,1,1)
+        h.finish(base+0x2600)
 
     def prefix_extract(machine):
         if reg('R8')!=3: raise ValueError('Override prefix length')
@@ -374,8 +383,32 @@ def run(context_path=None):
         h.finish(reg('RCX'))
 
     def compare_prefix(machine):
-        if reg('RDX')!=0x14996c9c0: raise ValueError('Unexpected override string comparison')
-        h.finish(0 if wide_read(reg('RCX'))=='###'.encode('utf-16le') else 1)
+        if reg('RDX')!=0x14996c9c0 and not override_edges: raise ValueError('Unexpected override string comparison')
+        h.finish(0 if wide_read(reg('RCX'))==wide_read(reg('RDX')) else 1)
+
+    def split_untranslated(machine):
+        if reg('R9')!=1: raise ValueError('Split fixture flag differs')
+        text=wide_read(get(reg('RCX'))).decode('utf-16le')
+        if text!='TaskName': raise ValueError('Unexpected source Untranslated value')
+        destination=reg('RDX'); ptr=allocate(16); uc.mem_write(ptr,bytes(16))
+        data=text.encode('utf-16le')+b'\0\0'; string_ptr=allocate(len(data)); uc.mem_write(string_ptr,data)
+        put(ptr,string_ptr); put(ptr+8,len(data)//2,4); put(ptr+12,len(data)//2,4)
+        put(destination,ptr); put(destination+8,1,4); put(destination+12,1,4)
+        count('split_untranslated'); h.finish(destination)
+
+    def destroy_split(machine):
+        at,n=reg('RCX'),reg('RDX')
+        for index in range(n):
+            ptr=get(at+index*16)
+            if ptr: free(ptr)
+        h.finish()
+
+    def empty_fallback_cell(machine):
+        if string(reg('RDX'))!=b'L10NRegistrationDate': raise ValueError('Unexpected fallback column')
+        assign(base+0x5800,b''); h.finish(base+0x5800)
+
+    def diagnostic(machine):
+        count('missing_id_diagnostic'); h.finish()
 
     def assign_override(machine):
         at,source = reg('RCX'),reg('RDX')
@@ -424,6 +457,9 @@ def run(context_path=None):
         callbacks.update({0x1415c0820:utf_wrapper,0x1445f6060:named_untranslated,0x14563dd10:settings_get,
             0x14142c4b0:prefix_extract,0x14145f1e0:compare_prefix,0x141441d60:assign_override,
             0x141404ac0:lambda machine:h.finish()})
+        if override_edges:
+            callbacks.update({0x141432310:split_untranslated,0x141404ac0:destroy_split,
+                0x1445f5f30:empty_fallback_cell,0x1414277b0:wide_init,0x1445e0bb0:diagnostic})
     if native_scalars:
         for address in (0x1445f5ed0,0x1445f5eb0,0x1445f5e60,0x1445f6040,0x1445f5f10):
             callbacks.pop(address)
@@ -443,13 +479,16 @@ def run(context_path=None):
         ordered = list(reversed(rows)) if reverse else rows
         state.clear(); state.update(raw=b''.join(r[1] for r in ordered),position=0)
         if native_override:
-            state['override_raw'] = b''.join(r[1] for r in (list(reversed(override_rows)) if reverse else override_rows))
+            ordered_override=list(reversed(override_rows)) if reverse else override_rows
+            state['override_raw'] = b''.join(r[1] for r in ordered_override)
+            override_names={r[0]:r[1] for r,_ in ordered_override}
         if runtime: runtime['calls'].clear()
         put(manager,0x1499f6948); put(manager+8,0x1499f69e8)
         put(primary+0x48,2,4); put(group+0x48,2,4)
         put(stream_object,stream_table); put(stream_table+0x20,read_callback)
         h.call(0x145b5f270,manager+8,budget=1000000)
-        if state['position'] != len(state['raw']) or get(primary+8,4)!=6 or get(group+8,4)!=1:
+        group_ids=list(dict.fromkeys(r[0][1] for r in ordered))
+        if state['position'] != len(state['raw']) or get(primary+8,4)!=len(rows) or get(group+8,4)!=len(group_ids):
             raise ValueError('Loader stream/record/group counts differ')
         records = []
         for slot,(row,raw) in enumerate(ordered):
@@ -459,7 +498,7 @@ def run(context_path=None):
             for col,offset,size in ((2,0x58,4),(3,0x68,4),(4,0x88,1),(5,0x89,1),(6,0x8a,1),(7,0x8b,1),
                                     (8,0x8c,1),(10,0xa0,4),(11,0xa4,1)):
                 if get(at+offset,size)!=int(row[col] or '0'): raise ValueError('Loaded scalar differs')
-            if native_override and wide_read(get(at+0x78)).decode('utf-16le')!=override_names[row[0]]:
+            if native_override and wide_read(get(at+0x78)).decode('utf-16le')!=override_names.get(row[0],''):
                 raise ValueError('Russian TaskName differs')
             if wide_read(get(at+0x90)).decode('utf-16le') != row[9].replace('\r',''):
                 raise ValueError('Loaded Param differs')
@@ -467,25 +506,31 @@ def run(context_path=None):
                 if bytes(uc.mem_read(at+offset,4))!=struct.pack('<f',float(row[col] or '0')):
                     raise ValueError('Loaded coordinate/radius differs')
             records.append(at)
-        node = get(group)
-        if get(node)!=110120 or get(node+16,4)!=6:
-            raise ValueError('Loaded group key/count differs')
-        actual = [get(get(node+8)+i*8) for i in range(6)]
-        if actual != records: raise ValueError('Group pointer order differs')
+        for group_slot,group_id in enumerate(group_ids):
+            node = get(group)+group_slot*32
+            expected_records=[at for at,(r,_) in zip(records,ordered) if r[1]==group_id]
+            if get(node)!=int(group_id) or get(node+16,4)!=len(expected_records):
+                raise ValueError('Loaded group key/count differs')
+            actual = [get(get(node+8)+i*8) for i in range(len(expected_records))]
+            if actual != expected_records: raise ValueError('Group pointer order differs')
         if counts.get('column')!=(19 if native_override else 16) or counts.get('node_resize',0)<3:
             raise ValueError('Loader path coverage differs')
         if native_override:
-            if counts.get('override_file')!=1 or counts.get('task_name_store')!=6 or counts.get('untranslated')!=6:
+            applied=sum(r[0] in context['task_ids'] for r,_ in override_rows)
+            if counts.get('override_file')!=1 or counts.get('task_name_store')!=applied or counts.get('untranslated')!=applied:
                 raise ValueError('Native override coverage differs')
         elif counts.get('override_fixture')!=1: raise ValueError('Override fixture coverage differs')
         for at,size in blocks.items():
             if bytes(uc.mem_read(at-16,16))!=b'L'*16 or bytes(uc.mem_read(at+size,16))!=b'R'*16:
                 raise ValueError('Final heap guards differ')
-        runs.append(dict(reverse=reverse,task_ids=[r[0][0] for r in ordered],records=6,group_count=1,
+        runs.append(dict(reverse=reverse,task_ids=[r[0][0] for r in ordered],records=len(rows),group_count=len(group_ids),
                          bytes_read=state.get('main_bytes_read',state['position']),callbacks=counts.copy(),group_order_matches_records=True))
         if native_override:
             runs[-1]['override_bytes_read']=state['position']
-            runs[-1]['russian_task_names']=[override_names[r[0][0]] for r in ordered]
+            runs[-1]['russian_task_names']=[override_names.get(r[0][0],'') for r in ordered]
+            if override_edges:
+                runs[-1]['override_ids']=[r[0] for r,_ in ordered_override]
+                runs[-1]['missing_translation_ids']=[r[0][0] for r in ordered if r[0][0] not in override_names]
         if runtime:
             runs[-1]['scalar_import_calls']={name:runtime['calls'].count(name) for name in ('atoi','_atoi64','strtoul','pow')}
     after = archive.stat()
@@ -499,7 +544,8 @@ def run(context_path=None):
         report['scalar_imports']=runtime['imported']
     if native_override:
         report['native_override']=True; report['override_sha256']=context['override_sha256']
-    target = audit.save_snapshot(h.root/('code-clues/quest-loader-override-11316' if native_override else
+    target = audit.save_snapshot(h.root/('code-clues/quest-override-edges-11316' if override_edges else
+            'code-clues/quest-loader-override-11316' if native_override else
             'code-clues/quest-loader-scalars-11316' if runtime else 'code-clues/quest-loader-11316'),report)
     return target,report
 
