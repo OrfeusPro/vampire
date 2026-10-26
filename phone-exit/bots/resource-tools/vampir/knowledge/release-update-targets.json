@@ -3209,6 +3209,118 @@
           }
         ]
       }
+    },
+    {
+      "id": "quest-sync-current",
+      "baseline_functions": [],
+      "tools": [
+        "inspect-initial-quest-notifications-11316.py",
+        "replay-quest-sync-11316.py"
+      ],
+      "rule": "При новом SHA заново проверить ID 1854 / packet vptr / фактический nested constructor, typed reader tables, descriptors и whole input. Не подставлять прежний suffix ID 1802. Wire records не доказывают активное задание или игровое действие.",
+      "automation": {
+        "discovery": "explicit_packet_id_and_name_then_constructor_nested_vptr_and_descriptor_review",
+        "validation": "source_bound_registered_native_replay",
+        "next_release": "requires_candidate_review_context_regeneration_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+            "functions": [
+              {
+                "address": "0x145828a10",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1456b70d0",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a66b0",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a67b0",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a64f0",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a6750",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a8b00",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a89f0",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a9aa0",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a9a60",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x145781e90",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              },
+              {
+                "address": "0x1457a2a70",
+                "scope": "Целый current ID 1854 input с настоящими constructors / callbacks / typed copy; allocation / cleanup / free / memcpy — fixtures, без handler / активного задания.",
+                "required_checks": [
+                  "native-quest-sync-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-quest-sync-11316.py"
+            ],
+            "evidence": [
+              "evidence/scenarios/HEADLESS-QUEST-SYNC-READER-11316.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

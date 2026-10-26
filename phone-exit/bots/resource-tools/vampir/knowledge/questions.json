@@ -786,9 +786,9 @@
       "id": "live-quest-sync-11316",
       "status": "open",
       "question": "Как читать входящий ID 1854 текущего клиента и передавать список заданий изолированной сессии и правой панели без переподключения?",
-      "known": "Текущие metadata связывают ID 1854 с PktQuestSyncNotify; фактический constructor 145828a10 вызывает вложенный constructor 1457a2a70 для packet+0x10. Вложенная table 149948c10 / reader 1457a66b0, descriptor коллекции 149949cf8 / resize 1457a9aa0 / callback 1457a8b00. Текущие Ghidra constructor / reader экспортированы. Живой Itel посчитал один ID 1854, но тело не сохранялось; coverage.quests не публикуется. Правая панель уже принимает список через общий адаптер.",
-      "unknown": "Целые текущие readers групп / Quest / Progress, callbacks / copies / cleanup, wire decoder, применение handler и активные задания; получение новых данных действующим owner без перезапуска.",
-      "next_action": "Проверить целый ID 1854 с фактическим constructor и bounded native replay, затем portable decoder и изолированную модель. Передать подтверждённые records правой панели через адаптер. Существующую сессию сохранять.",
+      "known": "Текущие metadata связывают ID 1854 с PktQuestSyncNotify; фактический constructor 145828a10 вызывает вложенный constructor 1457a2a70 для packet+0x10. Вложенная table 149948c10 / reader 1457a66b0, descriptor коллекции 149949cf8 / resize 1457a9aa0 / callback 1457a8b00. Текущие Ghidra constructor / reader экспортированы. Живой Itel посчитал один ID 1854, но тело не сохранялось; coverage.quests не публикуется. Правая панель уже принимает список через общий адаптер. Целый current ID 1854 с настоящими packet/nested constructors, readers групп/Quest/Progress, callbacks, reserve wrappers и typed copy проверен на 96 native телах и 172 коротких префиксах. Final records сравниваются после отравления освобождённых temporary buffers; guards и cursor сохранены. Allocation / cleanup / free / raw memcpy — fixtures. Portable decoder требует явные budgets; старый Quest reader повторно использован с current SHA. 4 новых теста, 3 прежних Quest теста и current tutorial replay 73 / 835 прошли. Runtime / панель ещё не подключены.",
+      "unknown": "Применение handler, смысл состояний / активные задания и названия, повторное использование непустого storage; изолированная модель / API / UI и получение новых данных действующим owner без перезапуска.",
+      "next_action": "Подключить подтверждённый bounded decoder к изолированной модели полученного сообщения; ограничить API и отображать записи справа через общий адаптер. Проверить 50 synthetic owners / границы и UI, сохраняя работающую Itel-сессию. Не выдавать старый capture за текущие задания.",
       "decision_rule": "Статические имена / таблицы не разрешают wire decoder или игровые действия. Прежние проверки ID 1802 другого SHA не закрывают ID 1854. Пустой список отличается от отсутствия данных.",
       "do_not_repeat": "Не повторять reset-field ID 1801 или начальный tutorial ack; не разрывать персонажа ради начального списка.",
       "addresses": [
@@ -800,7 +800,8 @@
         "0x1457a67b0"
       ],
       "evidence": [
-        "evidence/scenarios/HEADLESS-QUEST-SYNC-ENTRY-11316.md"
+        "evidence/scenarios/HEADLESS-QUEST-SYNC-ENTRY-11316.md",
+        "evidence/scenarios/HEADLESS-QUEST-SYNC-READER-11316.md"
       ]
     }
   ]

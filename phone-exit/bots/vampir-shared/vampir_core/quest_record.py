@@ -4,6 +4,8 @@ import struct
 
 from .world_move_start import SOURCE_SHA256
 
+CURRENT_SOURCE_SHA256 = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
+
 
 @dataclass(frozen=True, slots=True)
 class QuestProgress:
@@ -24,7 +26,7 @@ class QuestRecord:
 
 
 def decode_quest_record(body, *, source_sha256):
-    if source_sha256 != SOURCE_SHA256:
+    if source_sha256 not in (SOURCE_SHA256, CURRENT_SOURCE_SHA256):
         raise ValueError('Unsupported quest record source')
     if type(body) is not bytes or len(body) != 39:
         raise ValueError('Invalid quest record body')

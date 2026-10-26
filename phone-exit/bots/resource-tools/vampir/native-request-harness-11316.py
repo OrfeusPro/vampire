@@ -66,7 +66,9 @@ def make_harness(exports, functions, leaves=None, root=None):
                 map_page(target)
                 map_page(target+511)
 
-    if not 1 <= len(functions) <= 16 or not 1 <= len(exports) <= 8:
+    # Whole nested quest input needs 18 explicit roots, including shared archive
+    # primitives. Keep a fixed budget; this does not follow arbitrary callees.
+    if not 1 <= len(functions) <= 24 or not 1 <= len(exports) <= 8:
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'

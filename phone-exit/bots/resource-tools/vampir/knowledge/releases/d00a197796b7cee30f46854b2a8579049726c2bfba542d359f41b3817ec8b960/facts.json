@@ -10435,6 +10435,56 @@
       "question": "live-quest-sync-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Целый текущий codec callback / групп / Quest / Progress, применение handler, активная задача и названия; получение новых данных действующим owner без перезапуска."
+    },
+    {
+      "addresses": [
+        "0x144aac130",
+        "0x144aac250",
+        "0x144aac2a0",
+        "0x144aac4a0",
+        "0x144aac4f0",
+        "0x144aac530",
+        "0x144aac5c0",
+        "0x144aacb40",
+        "0x1456b70d0",
+        "0x1457a64f0",
+        "0x1457a66b0",
+        "0x1457a6750",
+        "0x1457a67b0",
+        "0x1457a89f0",
+        "0x1457a8b00",
+        "0x1457a9a60",
+        "0x1457a9aa0",
+        "0x145828a10"
+      ],
+      "checks": [
+        {
+          "cache_key": "828e576889340e3f4f8886637be6ae6b539d589d655002bc8eaed509cc329baa",
+          "id": "native-quest-sync-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\35c1079c77c4aed6b8ad14fe8a2ab0c83bda8fd9fdea8d7483cc2d768454e6a9\\manifest.json",
+          "sha256": "35c1079c77c4aed6b8ad14fe8a2ab0c83bda8fd9fdea8d7483cc2d768454e6a9",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый current ID 1854 с фактическими packet/nested constructors, readers групп/Quest/Progress, callbacks/reserve wrappers и native typed copy совпал с bounded portable decoder на 96 телах. Все 172 коротких префикса составного тела отклонены, cursor/guards сохранены; final records сверены после отравления освобождённых temporary buffers. Существующий Quest decoder повторно использован с current SHA.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-QUEST-SYNC-READER-11316.md",
+          "sha256": "f3ad15bfbc2fc51c69d050d4e92ab341ea58c3e5e463bc9ba47c7d0de4521da9"
+        }
+      ],
+      "id": "0aba757016ef0ab7a6977deeefa36bbfa3cc4f1f2300d8f19d4e3fb3ee3e8cc9",
+      "limits": [
+        "Allocation/cleanup/free/raw memcpy — bounded fixtures, максимум восемь элементов коллекции.",
+        "Повторное использование непустого storage, growth и application handler не проверены.",
+        "Начальный packet текущей живой сессии не сохранялся, новый decoder не загружен в работающий owner; перезапуск не выполнялся.",
+        "Не установлены активный квест, названия, команда следования или исходящие игровые действия."
+      ],
+      "method": "bounded_native",
+      "next_check": "Подключить bounded decoder к per-owner модели и API, затем правой панели через адаптер; проверить изоляцию 50 synthetic owners, границы и UI, сохраняя игровую сессию.",
+      "question": "live-quest-sync-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Изолированная модель/API/правая панель; получение нового сообщения текущим owner без разрыва; handler semantics и актуальные задания."
     }
   ],
   "schema": 1,

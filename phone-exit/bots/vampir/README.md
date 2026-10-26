@@ -1,9 +1,10 @@
 # Vampir — главный указатель разработки
 
-Для правой панели заданий найден входящий current ID 1854 / QuestSyncNotify,
-который уже посчитан живой Itel-сессией. Constructor / nested reader связаны с
-текущим SHA; whole decoder и изолированная quest-модель ещё не подключены.
-Персонаж не перезапускался. [Источник списка](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SYNC-ENTRY-11316.md).
+Для правой панели заданий найден входящий ID 1854 / QuestSyncNotify,
+который уже посчитан живой Itel-сессией. Его полный current decoder прошёл
+96 native тел / 172 коротких префикса с настоящими constructors / callbacks /
+typed copy. Модель и UI ещё не подключены; персонаж не перезапускался.
+[Формат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SYNC-READER-11316.md).
 
 В журнал основного прототипа подключено последнее сообщение обучения через
 адаптер. Проверены 16 живых записей и сохранение той же Itel-сессии после
