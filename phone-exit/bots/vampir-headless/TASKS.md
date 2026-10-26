@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Identity getter 14560b900 выполнен native в общей цепочке: 432 случая,
+receiver+48 refresh/retain/empty и освобождение старого cache. Platform+110 /
+init/fetch fixtures; реальная identity/account mapping неизвестна. Далее actual
+config reader/storage и platform/subsystem origin перед active region/catalog.
+Сессию сохранять.
+[Результат](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-IDENTITY-11316.md).
+
 Dynamic key 14556b740 подключён native к region lookup/setter: 288 случаев,
 identity A/B → разные RegionSelect_%s, absent/empty → RegionSelect_PreLogin.
 Engine/identity/string/config fixtures явные. Далее actual config reader/storage

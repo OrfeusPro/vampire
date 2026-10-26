@@ -1,5 +1,11 @@
 # Vampir — главный указатель разработки
 
+Native identity getter добавлен к key/region lookup/setter: 432 случая,
+refresh/empty/failed-init cached fallback/successful-init и ownership проверены.
+Platform/subsystem/string/config fixtures остаются; identity semantics и active
+region не подтверждены. Реальные профили/настройки/сессия не менялись.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-SERVICE-IDENTITY-11316.md).
+
 Native dynamic RegionSelect key / lookup / setter прошли 288 случаев:
 две synthetic identity дают разные keys, absent/empty identity — PreLogin.
 Engine/identity/string/config services остаются fixtures, actual identity /

@@ -18,8 +18,10 @@ def run(context_path=None):
     context=json.loads(path.read_text('utf-8'))
     native_lookup=context.get('native_lookup') is True
     native_key=context.get('native_key') is True
+    native_identity=context.get('native_identity') is True
     functions={0x145c21f20,0x14556b8b0} if native_lookup else {0x145c21f20}
     if native_key: functions.add(0x14556b740)
+    if native_identity: functions.add(0x14560b900)
     h=load('native-request-harness-11316').make_harness(context['exports'],
         functions,
         leaves={int(a,0):b for a,b in context.get('leaves',{}).items()})
@@ -105,14 +107,26 @@ def run(context_path=None):
                 value=wide(reg('R8'))
                 if value!=current['identity']: raise ValueError('Native identity input differs')
                 assign(reg('RCX'),'RegionSelect_'+value); h.finish(reg('RCX'))
-            callbacks += [(0x14560ad80,engine),(0x14560b900,identity),(0x141436ed0,resize),(0x141433340,format_key)]
+            callbacks += [(0x14560ad80,engine),(0x141436ed0,resize),(0x141433340,format_key)]
+            if native_identity:
+                def platform(machine): h.finish(base+0x7000)
+                def initialize(machine):
+                    if reg('RCX')!=base+0x7000: raise ValueError('Identity initialization receiver differs')
+                    calls.append('identity-init')
+                    if current['profile']=='new-subsystem': put(base+0x7110,base+0x8000,8)
+                    h.finish()
+                def fetch_identity(machine):
+                    if reg('RCX')!=base+0x8000: raise ValueError('Identity subsystem receiver differs')
+                    calls.append('identity-fetch'); assign(reg('RDX'),current['identity']); h.finish(reg('RDX'))
+                callbacks += [(0x1444b1550,platform),(0x1416b0660,initialize),(0x14452b620,fetch_identity)]
+            else: callbacks.append((0x14560b900,identity))
         else: callbacks.append((0x14556b740,key))
         for at,callback in callbacks:
             h.add_fixture(at,callback)
     else:
         h.add_fixture(0x14556ae90,getter); h.add_fixture(0x14556b8b0,lookup)
     cases=[]
-    for region in ((0,4,7,8) if native_key else (0,4,7)):
+    for region in ((0,4,7,8,9,10) if native_identity else (0,4,7,8) if native_key else (0,4,7)):
      for server in (0,256,0xffffffff):
       for lookup_path in (('primary','legacy','missing') if native_lookup else ('missing','primary')):
        for dirty in (0,1):
@@ -122,14 +136,18 @@ def run(context_path=None):
             current.update(region=region,found=found,lookup_path=lookup_path,read_count=0,write_count=0); calls.clear()
             blocks.clear(); cursor[0]=base+0x10000
             if native_key:
-                profile={0:'absent',4:'account-a',7:'account-b',8:'empty'}[region]
-                text='' if profile in ('absent','empty') else profile
+                profile={0:'absent',4:'account-a',7:'account-b',8:'empty',9:'failed-subsystem',10:'new-subsystem'}[region]
+                text={'absent':'','empty':'','failed-subsystem':'cached-c','new-subsystem':'account-d'}.get(profile,profile)
                 current.update(profile=profile,identity=text,primary_key='RegionSelect_'+text if text else 'RegionSelect_PreLogin')
                 uc.mem_write(base+0x4000,bytes(0x80)); put(base+0x4038,base+0x6000,8)
                 uc.mem_write(base+0x5000,bytes(16))
                 if text:
                     raw=text.encode('utf-16le')+b'\0\0'; uc.mem_write(base+0x5100,raw)
                     put(base+0x5000,base+0x5100,8); put(base+0x5008,len(raw)//2); put(base+0x500c,len(raw)//2)
+                if native_identity:
+                    uc.mem_write(base+0x5ff0,b'C'*16+bytes(0x80)+b'D'*16); uc.mem_write(base+0x7000,bytes(0x120))
+                    put(base+0x7110,0 if profile in ('failed-subsystem','new-subsystem') else base+0x8000,8)
+                    assign(base+0x6048,'cached-c' if profile=='failed-subsystem' else 'previous-cache')
             uc.mem_write(manager-16,b'A'*16+bytes(0x90)+b'B'*16)
             uc.mem_write(provider,b'P'*0xb0); put(provider+0xa8,region)
             put(manager+0x78,region if same_region else region+100)
@@ -145,7 +163,19 @@ def run(context_path=None):
                 expected_calls=([] if native_key else ['key'])+['read:'+primary_key]
                 if lookup_path!='primary': expected_calls+=['read:RegionSelect']
                 if lookup_path=='legacy': expected_calls+=([] if native_key else ['key'])+['write:'+primary_key,'write:RegionSelect_PreLogin']
-                if calls!=expected_calls or blocks: raise ValueError('Native config path/cleanup differs')
+                actual_calls=[value for value in calls if not value.startswith('identity-')]
+                if actual_calls!=expected_calls: raise ValueError('Native config path differs')
+                if native_identity:
+                    expected_cache='previous-cache' if current['profile']=='absent' else current['identity']
+                    if descriptor(base+0x6048)!=expected_cache: raise ValueError('Identity cache result differs')
+                    cached_object=bytearray(uc.mem_read(base+0x6000,0x80)); cached_object[0x48:0x58]=bytes(16)
+                    if any(cached_object) or bytes(uc.mem_read(base+0x5ff0,16))!=b'C'*16 or bytes(uc.mem_read(base+0x6080,16))!=b'D'*16:
+                        raise ValueError('Identity getter changed other fields/guards')
+                    if get(base+0x6048,8):
+                        ptr=get(base+0x6048,8); size=blocks.pop(ptr,None)
+                        if size is None or bytes(uc.mem_read(ptr-16,16))!=b'L'*16 or bytes(uc.mem_read(ptr+size,16))!=b'R'*16:
+                            raise ValueError('Owned identity cache guard differs')
+                if blocks: raise ValueError('Native config path leaked temporary strings')
             elif calls!=(['provider','lookup'] if found else ['provider','lookup','provider']):
                 raise ValueError('Service lookup/fallback path differs')
             for offset,size in ((0x78,4),(0x7c,4),(0x80,2)):
@@ -161,7 +191,9 @@ def run(context_path=None):
         network_used=False,active_region_verified=False,order_admitted=False,limits=context['limits'])
     if native_lookup: report['native_lookup']=True
     if native_key: report['native_key']=True
-    target=audit.save_snapshot(h.root/('code-clues/quest-service-key-11316' if native_key else
+    if native_identity: report['native_identity']=True
+    target=audit.save_snapshot(h.root/('code-clues/quest-service-identity-11316' if native_identity else
+        'code-clues/quest-service-key-11316' if native_key else
         'code-clues/quest-service-region-11316' if native_lookup else 'code-clues/quest-service-setup-11316'),report)
     return target,report
 
