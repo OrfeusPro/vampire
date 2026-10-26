@@ -1,5 +1,9 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+ID 9905: current handler / receiver / независимая queued copy проверены native.
+Далее application helpers и consumer очереди; native gate 6 не заменять
+фактом ID 206. [192 сценария и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md).
+
 OnePlus PGP110 / HK вошёл на JP 256: живые HP/MP, проекция и ручной вид карты
 проверены; сессия оставлена работать. [Живой результат](../resource-tools/vampir/knowledge/evidence/maps/HEADLESS-LIVE-MAP-11316.md).
 Текущий ID 9905: whole wire replay и 50 synthetic owners проверены,

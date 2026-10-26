@@ -10100,6 +10100,59 @@
       "question": "live-tutorial-state-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Текущий tutorial application handler / queue / tables semantics, реальное сообщение новым владельцем, живое окружение и несколько одновременных аккаунтов."
+    },
+    {
+      "addresses": [
+        "0x14584bda0",
+        "0x1464a78c0",
+        "0x1464bf0b0",
+        "0x1464c35d0",
+        "0x1464c38d0",
+        "0x1467c9500"
+      ],
+      "checks": [
+        {
+          "cache_key": "5b2bb69b5a09a5339de5a65cb7be9d3fdaa44d15535c563e0f98a876f59459bd",
+          "id": "native-tutorial-dispatch-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6b5b39e933671a1c3d03776d1daa3a0b94f4a0a6182145fdeed33230fb820e4e\\manifest.json",
+          "sha256": "6b5b39e933671a1c3d03776d1daa3a0b94f4a0a6182145fdeed33230fb820e4e",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ecfc9714e55d430713382eeac7f8f805fbe2cbac76033c76558c03188b665d87",
+          "id": "live-tutorial-state-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6\\manifest.json",
+          "sha256": "d530adc74b82f309f44c861bf36084d7e5b3f167ddc265f1f8347844a8d42ae6",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущая регистрация ID 9905 source-bound связана с handler 1467c9500 и receiver 1464bf0b0. Native handler получает context через точный getter leaf и передаёт нулевой force. При force 0 / native state byte ниже 6 пакет направляется в deferred clone; иначе application получает context и packet+0x10. Целые handler / receiver / ID9905 defer / constructors / copy helpers исполнены в 192 сценариях: 64 deferred, 128 immediate routes. Native queued copy содержит собственные records и metadata; изменение исходных полей / массива после копирования не влияет на queued packet. Текущая application функция экспортирована и прочитана статически, её полный эффект не объявлен проверенным.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\scenarios\\HEADLESS-TUTORIAL-DISPATCH-11316.md",
+          "sha256": "f2a37e5e1b1fef28d30998cfd935c5238d0c52fa8dfc83175c256acb8be274fd"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-c3a2887c3d9b\\details.json",
+          "sha256": "95895167e4383aff705eb22da60c5295d54f4165b937db720b4a275def182d40"
+        },
+        {
+          "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-529d4f47d8b6\\details.json",
+          "sha256": "47423aae82b4b847783fc912bd7a3a1465c965a79d54a4332fc9cf2c44909e33"
+        }
+      ],
+      "id": "b4b5ca27e49cb0505dbc8ac2f8f008121c0eef8bbbfa5224bcc25d88fbbb5734",
+      "limits": [
+        "State provider, успешное выделение памяти, fresh reserve / empty cleanup и немедленная application цель — fixtures.",
+        "Полные native server/local maps, bootstrap, task launch и queue drain не исполнялись. Native gate 6 не приравнивается к headless world finish.",
+        "Другие packet IDs общей defer function, allocation failure, рост очереди и populated cleanup не проверены.",
+        "Игровых запросов, новых входов и runtime команд не добавлено; текущая игровая сессия не перезапускалась."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить current callees 145c24be0 / 14649fe90 / 1464c1b40 / 1464c5210 / 1464ce8e0 и native queue consumer до исходящих tutorial / quest действий.",
+      "question": "live-tutorial-state-11316",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Текущее применение server/local map, bootstrap / consumer, семантика таблиц и связь готовности с headless lifecycle, реальный tutorial state в owner с новым decoder."
     }
   ],
   "schema": 1,

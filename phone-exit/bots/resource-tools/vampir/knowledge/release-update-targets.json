@@ -3042,7 +3042,8 @@
       "id": "tutorial-observation-current",
       "baseline_functions": [],
       "tools": [
-        "replay-tutorial-update-11316.py"
+        "replay-tutorial-update-11316.py",
+        "replay-tutorial-dispatch-11316.py"
       ],
       "rule": "При новом SHA искать кандидата ID 9905 по имени / vtable и проверять whole readers / callbacks / bindings. Совпадение формата не разрешает tutorial ack, применение локальной задачи или квестовое действие.",
       "automation": {
@@ -3088,13 +3089,43 @@
                 "required_checks": [
                   "live-tutorial-state-11316"
                 ]
+              },
+              {
+                "address": "0x1467c9500",
+                "scope": "Whole current tutorial handler / gate / ID9905 deferred deep copy. State and fresh allocation fixtures; immediate application / queue drain / task launch not executed.",
+                "required_checks": [
+                  "native-tutorial-dispatch-11316"
+                ]
+              },
+              {
+                "address": "0x1464bf0b0",
+                "scope": "Whole current tutorial handler / gate / ID9905 deferred deep copy. State and fresh allocation fixtures; immediate application / queue drain / task launch not executed.",
+                "required_checks": [
+                  "native-tutorial-dispatch-11316"
+                ]
+              },
+              {
+                "address": "0x1464c38d0",
+                "scope": "Whole current tutorial handler / gate / ID9905 deferred deep copy. State and fresh allocation fixtures; immediate application / queue drain / task launch not executed.",
+                "required_checks": [
+                  "native-tutorial-dispatch-11316"
+                ]
+              },
+              {
+                "address": "0x1464a78c0",
+                "scope": "Whole current tutorial handler / gate / ID9905 deferred deep copy. State and fresh allocation fixtures; immediate application / queue drain / task launch not executed.",
+                "required_checks": [
+                  "native-tutorial-dispatch-11316"
+                ]
               }
             ],
             "tools": [
-              "replay-tutorial-update-11316.py"
+              "replay-tutorial-update-11316.py",
+              "replay-tutorial-dispatch-11316.py"
             ],
             "evidence": [
-              "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md"
+              "evidence/scenarios/HEADLESS-TUTORIAL-UPDATE-11316.md",
+              "evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md"
             ]
           }
         ]

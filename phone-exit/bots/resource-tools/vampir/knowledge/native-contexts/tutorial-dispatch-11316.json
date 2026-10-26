@@ -1,0 +1,33 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-edd5235c81bf": "d979c8625c0656b7c372148645fe384899a8a9f587054cdb88bbcb856d0d7601",
+    "run-c3a2887c3d9b": "95895167e4383aff705eb22da60c5295d54f4165b937db720b4a275def182d40",
+    "run-529d4f47d8b6": "47423aae82b4b847783fc912bd7a3a1465c965a79d54a4332fc9cf2c44909e33"
+  },
+  "functions": {
+    "packet_constructor": "0x14584bda0",
+    "handler": "0x1467c9500",
+    "receiver": "0x1464bf0b0",
+    "defer": "0x1464c38d0",
+    "copy": "0x1464a78c0"
+  },
+  "leaves": {
+    "0x1457fdba0": "488d0539b51204c641080048890133c04889411048894118488bc1c3",
+    "0x145855ec0": "b8b1260000c3",
+    "0x1464af340": "488b0581f01405c3",
+    "0x1456ea170": "4c8bd14585c07448488d420c4c2bd2488d151aef23044c8d490c660f1f44000049895402f44d8d49188b48fc488d4018418949e48b48e8418949e88b48ec418949ec0fb648f0418849f04183e80175d0c3"
+  },
+  "registration_anchors": {
+    "0x1467c0bea": "488d05a7466003",
+    "0x1467c0bf1": "488907",
+    "0x1467c0bf9": "b930000000",
+    "0x1467c0c0b": "e890b108ff",
+    "0x1467c0c15": "4c8bc7",
+    "0x1467c0c18": "488bd0",
+    "0x1467c0c1b": "488bce",
+    "0x1467c0c1e": "e89daa0000"
+  },
+  "handler_table": "0x149dc5298",
+  "handler_global": "0x14b5fe3c8"
+}

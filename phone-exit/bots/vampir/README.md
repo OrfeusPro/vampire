@@ -1,5 +1,9 @@
 # Vampir — главный указатель разработки
 
+Native ID 9905 handler / gate / deferred deep copy проверены в 192 сценариях.
+Связь gate с headless lifecycle и application maps ещё открыта;
+исходящих команд не добавлено. [Доказательства](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-TUTORIAL-DISPATCH-11316.md).
+
 OnePlus PGP110 / HK вошёл на JP 256: живые HP/MP и маркер мира 10012
 проверены в основном прототипе, ручной сдвиг сохраняется после polls.
 [Живая карта и границы](../resource-tools/vampir/knowledge/evidence/maps/HEADLESS-LIVE-MAP-11316.md).
