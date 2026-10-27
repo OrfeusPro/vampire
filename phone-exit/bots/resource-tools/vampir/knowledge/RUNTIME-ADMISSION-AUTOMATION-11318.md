@@ -1,5 +1,12 @@
 # Runtime candidate-11318: результат интеграции
 
+Дополнение: после исправления точной CDN пары выполнен ограниченный живой
+вход, Game Login 0, world_observation_complete, 13 PingResult за 60 секунд.
+Общий runtime check расширен до 31 теста. Остаток 36 строк; current quests /
+tutorial ещё не допущены. [Фактический результат и границы](evidence/updates/HEADLESS-LIVE-WORLD-11318.md).
+
+Ниже — результат предыдущего offline этапа до живого прогона.
+
 Подключены отдельные loader / CDN / probe / owner source guards.
 [Доказательства, сценарии и ограничения](evidence/updates/HEADLESS-RUNTIME-ADMISSION-11318.md).
 26 новых тестов прошли одним зарегистрированным `on_update` check; также

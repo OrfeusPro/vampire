@@ -1905,6 +1905,69 @@
       "question": "runtime-admission-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Реальная авторизация через выбранный телефон и bounded world observation; длительная сессия, восстановление и текущий read-only слой."
+    },
+    {
+      "addresses": [
+        "0x14679c920"
+      ],
+      "checks": [
+        {
+          "cache_key": "f7eb8a29b60eaae7e97ecc715dd5df5fb153dacf10862d2f59febea0adae9a39",
+          "id": "runtime-admission-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b597a78cc1c36c3453be6f942fef750773743ca29f21ac2464aa2ce931addb92\\manifest.json",
+          "sha256": "b597a78cc1c36c3453be6f942fef750773743ca29f21ac2464aa2ce931addb92",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Первый живой запуск остановился локально до авторизации: selected_endpoint не содержит точной пары config SHA/URL 1.13.18. Личный HK WebRTC и HTTPS CDN через SOCKS проверены; серверный Game Login не начат.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LIVE-PREFLIGHT-11318.md",
+          "sha256": "1720130f2fbd7a3134ec0aa5052ee5d37f8f36dc66f0e42c567f7020b990456f"
+        }
+      ],
+      "id": "96ac9647db0ab6aad3eb527f47023e9db146007bf25ffef083ffca5386fa2eff",
+      "limits": [
+        "Runtime terminal summary не сохраняет внутренний текст исключения. Причина установлена по точному source guard и входному CDN manifest.",
+        "Персонаж онлайн, server acceptance, quests/tutorial не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "Добавить точный текущий CDN scope и тест сохранённого manifest, затем повторить один bounded вход.",
+      "question": "runtime-admission-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Результат входа после подключения текущей пары config SHA/URL."
+    },
+    {
+      "addresses": [
+        "0x14679c920"
+      ],
+      "checks": [
+        {
+          "cache_key": "716ed9d09a158c64ce37dc525f14a1d93153f10e86062881658b4c634eaffa72",
+          "id": "runtime-admission-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\927bcfc32d141aaa0aa77cd8004ddd41df93d20fe9fe24e82d39b5cdd0b7a213\\manifest.json",
+          "sha256": "927bcfc32d141aaa0aa77cd8004ddd41df93d20fe9fe24e82d39b5cdd0b7a213",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Точная current CDN пара подключена к lobby resolver, общий on_update набор расширен до 31 теста. Через личный HK native WebRTC фактически пройдены SDK launcher, lobby JP256, Game Login с кодом 0 и вход в мир; 60 секунд наблюдения завершены штатно, получено 13 PingResult.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LIVE-WORLD-11318.md",
+          "sha256": "294f293f143f7426c3e7bd33e979a9125c9302b271c14421fa73647775566463"
+        }
+      ],
+      "id": "29777fb564f4d189a25de1c10dcd7675aaf3fe516ac6d8952a21fb8bf363eebe",
+      "limits": [
+        "Native checks не повторялись без изменения входов. Новые tests проверяют runtime wiring, SDK boundary в offline synthetic.",
+        "Живой прогон ограничен одним персонажем и 60 секундами; persistent owner/UI, reconnect, HP/MP/position projections и quests/tutorial не подтверждены.",
+        "Game profile capabilities и activation не расширены."
+      ],
+      "method": "static",
+      "next_check": "Перенести read-only world/position общим пакетом, затем quests/tutorial; не повторять неизменённые проверки входа.",
+      "question": "runtime-admission-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Текущие read-only проекции world/position и связные current quest/tutorial контракты."
     }
   ],
   "schema": 1,

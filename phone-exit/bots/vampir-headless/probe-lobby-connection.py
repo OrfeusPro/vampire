@@ -39,6 +39,8 @@ def selected_endpoint(manifest_path, *, route, expected_config_snapshot_sha256=N
             'https://red.gcdn.netmarble.com/red/config/window/real/1_13_14/config.json',
         '12abc7a1cda6b050250662acab29155092484da595d50c0e93c2ffff42bfb145':
             'https://red.gcdn.netmarble.com/red/config/window/real/1_13_16/config.json',
+        'f93042b23066af7a5a6dfedaa554f12dc88302e4a9f260da4ced0538db7f5251':
+            'https://red.gcdn.netmarble.com/red/config/window/real/1_13_18/config.json',
     }
     if manifest['profile']['config_snapshot_sha256'] not in urls:
         raise ValueError('Probe requires an explicit verified recovered profile')

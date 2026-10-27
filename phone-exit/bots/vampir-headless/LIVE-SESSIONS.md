@@ -1,5 +1,10 @@
 # Изолированные живые сессии
 
+27 октября 2026 candidate-11318 прошёл реальный bounded probe через личный
+HK WebRTC: Game Login 0, вход в мир, 60 секунд, 13 PingResult, error=null.
+Постоянный owner / UI и длительный режим этим прогоном не проверены.
+[Полный результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LIVE-WORLD-11318.md).
+
 ## Явный ограниченный профиль 1.13.18
 
 Для новой установленной версии выбирать профиль явно:

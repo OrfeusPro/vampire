@@ -1,5 +1,14 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Живой вход 1.13.18 подтверждён: личный HK WebRTC → SDK launcher → JP 256 →
+Game Login 0 → мир, 60 секунд наблюдения, 13 PingResult, error=null.
+CDN resolver исправлен, общий on_update набор — 31 тест passed.
+Остаток сверки 1.13.18 — **36 строк**. По уточнению пользователя квесты
+сначала доделываем на базе 1.13.16, перенос откладываем. Следующий общий блок:
+source records → активная задача → environment / Time → конкретный owner offer.
+Постоянный owner / UI и длительная сессия этим прогоном не проверены.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LIVE-WORLD-11318.md).
+
 Runtime candidate-11318 подключён отдельно: loader / CDN / probe / owner guards,
 26 новых тестов passed, source preflight установленной игры успешен без сети.
 Current owner ограничен 300 секундами; quests / tutorial / старые map projections
