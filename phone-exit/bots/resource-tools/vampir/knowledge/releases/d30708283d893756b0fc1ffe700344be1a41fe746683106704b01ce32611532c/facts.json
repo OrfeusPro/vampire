@@ -30,6 +30,52 @@
       "question": "launcher-contract-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Request keys/body/headers, callback and transport implementations plus active SDK/GMC2 context11318."
+    },
+    {
+      "addresses": [
+        "0x1411b0170",
+        "0x1411b0260",
+        "0x1411b0290",
+        "0x1411b02f0",
+        "0x1411b03e0",
+        "0x1411b04a0",
+        "0x1411b04d0",
+        "0x1411b0500",
+        "0x1444eecd0",
+        "0x144503e10"
+      ],
+      "checks": [
+        {
+          "cache_key": "1a4a0f246848a53f871726997ed19151fd576370f76bc9e28fb385a212aa588b",
+          "id": "launcher-shape-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291\\manifest.json",
+          "sha256": "14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0045655e20ceff8f34cefa518d25b0db60c7083304eaf469e7c05e4aa7045f76",
+          "id": "launcher-references-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\beab8338873fcc9c80b09007c78c9dccc12eb8a2b9abfae87c682d268e01beef\\manifest.json",
+          "sha256": "beab8338873fcc9c80b09007c78c9dccc12eb8a2b9abfae87c682d268e01beef",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Eight source key initializers verified literal/global LEA args to141426b30; actual request references, callback E9 and transport direct targets pinned. Static only; no serialization, response behavior or live auth proof.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-REFERENCES-11318.md",
+          "sha256": "bf0843018433aef051715f97a583f002ebe267ab42e25d3ead6b4340cb11074f"
+        }
+      ],
+      "id": "40e565f7e6843c915d13180abd81e79f64ca9a6a026c16a6d7424b4c1cd5d498",
+      "limits": [
+        "Whole instruction ranges source checked; references and callback five bytes only. Values, JSON, callback/transport implementations and SDK context unverified. No network/profile activation."
+      ],
+      "method": "static",
+      "next_check": "Export whole1444CC4B0/1444D3A30 and confirm response getters/dispatch before porting launcher contract.",
+      "question": "launcher-contract-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Whole callback/JSON/dispatch/transport and active SDK/GMC2 state11318."
     }
   ],
   "schema": 1,

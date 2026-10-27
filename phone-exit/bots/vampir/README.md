@@ -1,3 +1,8 @@
+Для launcher 1.13.18 проверены восемь key initializers и ссылки request globals,
+оба callback E9 и transport call sites. Статические тесты прошли; JSON/значения,
+callback targets/transport и живой вход ещё не проверены, профиль не активирован.
+[Связи и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-REFERENCES-11318.md).
+
 Для launcher token/sign-in 1.13.18 проверены полные формы инструкций и
 локальные переходы: 652/679 инструкций совпали с 1.13.16, routes подтверждены.
 Внешние calls/data остаются unresolved; совместимость авторизации и новый
