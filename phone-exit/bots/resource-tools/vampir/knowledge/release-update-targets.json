@@ -3337,9 +3337,10 @@
         "replay-quest-environment-update-11316.py",
         "quest-world-handler-binding-11316.py",
         "replay-quest-derived-environment-11316.py",
-        "replay-quest-world-record-11316.py"
+        "replay-quest-world-record-11316.py",
+        "replay-quest-environment-completion-11316.py"
       ],
-      "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом. Для world/environment искать явные E9 callers подтверждённого receiver, проверять packet ctor/ID getter и registration window; active derived vtable и phase completion перепроверять вручную. После base constructor искать caller с primary vptr overwrite; derived B8 не считать базовым world getter. Источники record fields и lifecycle проверять отдельно. Handle/provider и leaf hash lookup перепроверять по полному SHA; нельзя переносить layout строк или field+0C по названию/порядку CSV.",
+      "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом. Для world/environment искать явные E9 callers подтверждённого receiver, проверять packet ctor/ID getter и registration window; active derived vtable и phase completion перепроверять вручную. После base constructor искать caller с primary vptr overwrite; derived B8 не считать базовым world getter. Источники record fields и lifecycle проверять отдельно. Handle/provider и leaf hash lookup перепроверять по полному SHA; нельзя переносить layout строк или field+0C по названию/порядку CSV. Completion искать через callers phase setter и source virtual+78 base/derived; actual ID206 receiver binding и специальные ветви проверять отдельно.",
       "automation": {
         "discovery": "named_packet_then_explicit_constructor_callers_and_property_literals",
         "validation": "static_full_source_and_registered_binding_check_only",
@@ -3636,6 +3637,27 @@
                 "required_checks": [
                   "native-quest-world-record-11316"
                 ]
+              },
+              {
+                "address": "0x145da88d0",
+                "scope": "Whole completion base/derived и actual phase6 setter: 28 native empty-engine случаев. Поиск: callers setter, decoded E8 и source virtual+78. Providers/UI/engine — fixtures; ID206 binding, special branches и live readiness требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-environment-completion-11316"
+                ]
+              },
+              {
+                "address": "0x145612a90",
+                "scope": "Whole completion base/derived и actual phase6 setter: 28 native empty-engine случаев. Поиск: callers setter, decoded E8 и source virtual+78. Providers/UI/engine — fixtures; ID206 binding, special branches и live readiness требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-environment-completion-11316"
+                ]
+              },
+              {
+                "address": "0x145618b30",
+                "scope": "Whole completion base/derived и actual phase6 setter: 28 native empty-engine случаев. Поиск: callers setter, decoded E8 и source virtual+78. Providers/UI/engine — fixtures; ID206 binding, special branches и live readiness требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-environment-completion-11316"
+                ]
               }
             ],
             "evidence": [
@@ -3650,7 +3672,8 @@
               "evidence/scenarios/HEADLESS-QUEST-MAP-CHAIN-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-WORLD-HANDLER-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-DERIVED-ENVIRONMENT-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-WORLD-RECORD-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-WORLD-RECORD-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-COMPLETION-11316.md"
             ]
           }
         ]

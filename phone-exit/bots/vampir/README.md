@@ -1,3 +1,8 @@
+Completion окружения 1.13.16 связан с virtual +78 base/derived и actual phase6
+setter: 28 native случаев прошли с явными engine fixtures. Запись предшествует
+уведомлению; actual ID206 receiver binding и полный Time lifecycle ещё нужны.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-COMPLETION-11316.md).
+
 Lookup окружения 1.13.16 теперь исполнен native до record pointer и B8:
 28 inline/heap/collision/missing случаев. Производный initializer прошёл четыре
 случая и оставляет phase7. Записи пока synthetic; loader реальных данных и
