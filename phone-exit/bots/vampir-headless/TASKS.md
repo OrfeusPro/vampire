@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+VersionResult 1.13.18 связан actual reader→handler/gate: 16 routes, 72 input
+constructions, 227 switch dispatch cases; 6 тестов passed, on_update/cache.
+Остаток 96 строк. Далее Version prepare→wire coverage и Login/SDK dependencies.
+[Текущие границы](../resource-tools/vampir/knowledge/VERSION-HANDLER-AUTOMATION-11318.md).
+
 VersionResult reader 1.13.18 и общий input archive перенесены: 127 случаев,
 5 тестов, on_update/cache. Остаток 98 строк. Далее gate switch с сохранёнными
 227-byte index/four-RVA tables, registration/handler composition, Login/SDK.

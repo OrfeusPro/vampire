@@ -18,10 +18,28 @@ def load(name):
 
 def verify(context, root):
     functions = {name: int(at, 16) for name, at in context['functions'].items()}
-    h = load('update-native-harness').make_harness(context, context['exports'], set(functions.values()),
-        leaves={int(at, 16): code for at, code in context['leaves'].items()}, root=root)
+    result_context=context.get('native_result')
+    roots=set(functions.values());exports=dict(context['exports'])
+    leaves={int(at,16):code for at,code in context['leaves'].items()}
+    if result_context:
+        if result_context['source_sha256']!=context['source_sha256']:raise ValueError('Result pipeline source differs')
+        roots.add(int(result_context['reader'],16))
+        roots.update(int(at,16) for at in result_context['native_input']['functions'].values())
+        exports.update(result_context['exports']);exports.update(result_context['native_input']['exports'])
+        for source in (result_context,result_context['native_input']):
+            leaves.update({int(at,16):item['bytes'] for at,item in source['leaves'].items()})
+    h = load('update-native-harness').make_harness(context, exports, roots,leaves=leaves, root=root)
     native, bindings = load('build-native-entry-code'), load('update-bindings')
-    rows = {name: bindings.rows(native, h.image, at) for name, at in functions.items()}
+    switch=None
+    if context.get('switch_gate'):
+        if context['switch_gate']!='version-gate-11318':raise ValueError('Unreviewed gate switch')
+        module=load('version-gate-switch-11318');switch=module.validate(native,h)
+        # All other roots retain the ordinary whole-unwind validator.
+        shapes=load('audit-launcher-shape-11318')
+        for f in h.fragments:
+            if int(f['address'],16)!=functions['gate']:shapes.normalize_function(native,h.image,f)
+    rows = {name: (module.rows(native,h.image,h.sha) if switch and name=='gate' else bindings.rows(native, h.image, at))
+            for name, at in functions.items()}
     calls = {name: {hex(r['address']): hex(r['direct_target']) if r['direct_target'] is not None else r['operands']
                    for r in items if r['call']} for name, items in rows.items()}
     if calls != context['call_sites']:
@@ -69,6 +87,11 @@ def verify(context, root):
     uc, x = h.uc, h.x
     packet, state, peer = [h.scratch + n for n in (0x1000, 0x2000, 0x3000)]
     current, events = {}, []
+    input_state={};input_report=[]
+    if result_context:
+        order=load('verify-version-result-context').ORDER
+        seed,position,_,input_check,input_construction=load('login-result-input-fixtures').install(
+            load,h,result_context['native_input'],input_state,packet,h.scratch+0x8000,order)
 
     def reg(name):
         return uc.reg_read(getattr(x, 'UC_X86_REG_' + name))
@@ -116,30 +139,64 @@ def verify(context, root):
             events.append('gate')
     uc.hook_add(unicorn.UC_HOOK_CODE, entered)
     cases = []
-    for code in (0, 1, 42, 58, 708, 1304, 0xffffffff):
+    tested_codes=(0,1,42,58,708,1304,0xffffffff)+( (0x1197,) if switch else ())
+    for code in tested_codes:
         for flag in (0, 1):
             current.update(code=code); events.clear()
             uc.mem_write(packet - 16, b'\xa5' * 16 + bytes(0x28) + b'\xa6' * 16)
             h.call(constructor, packet)
-            put(packet + 0x10, 'I', code); put(state + 8, 'B', flag)
+            if result_context:
+                body=struct.pack('<IIBII',code,0x80000000,flag,0xffffffff,0x12345678)
+                input_state.clear();input_state.update(body=body,operations=[],written=[],fail_at=None)
+                seed(body,0x55);uc.reg_write(x.UC_X86_REG_RDX,h.scratch+0x8000)
+                require(h.call(int(result_context['reader'],16),packet)&255==1,'Pipeline native reader failed')
+                input_check();require(position()==17,'Pipeline native reader consumption differs')
+                require(int.from_bytes(uc.mem_read(packet+0x10,4),'little')==code,'Pipeline code projection differs')
+                input_report.append(dict(code=code,flag=flag,consumed=position(),operations=input_state['operations'].copy()))
+            else:put(packet + 0x10, 'I', code)
+            put(state + 8, 'B', flag)
             before = bytes(uc.mem_read(packet - 16, 0x48))
             abi = {name: 0x1234567800000000 + i for i, name in enumerate(('RBX', 'RBP', 'RSI', 'RDI', 'R12', 'R13', 'R14', 'R15'))}
             for name, value in abi.items():
                 uc.reg_write(getattr(x, 'UC_X86_REG_' + name), value)
             uc.reg_write(x.UC_X86_REG_R8, packet)
             h.call(functions['handler'], h.scratch + 0x4000)
-            expected = ['gate', 'peer', 'login_prepare'] if code == 0 else (
-                ['gate', 'error'] if flag == 0 and code != 42 else ['gate'])
+            allowed=code==0 or (switch and code==0x1197 and flag==0)
+            expected=['gate']+(['error'] if code!=0 and flag==0 and code!=42 else [])
+            if allowed:expected+=['peer','login_prepare']
             require(events == expected, 'VersionResult handler success/error route differs')
             require(bytes(uc.mem_read(packet - 16, 0x48)) == before, 'VersionResult handler changed packet')
             require(all(reg(name) == value for name, value in abi.items())
                     and reg('RSP') == h.scratch + 0x38008, 'VersionResult handler ABI differs')
             cases.append(dict(code=code, state_flag=flag, events=events.copy()))
+    switch_cases=[]
+    if switch:
+        # Stop at the selected native branch target before its external services.
+        # Every index is read by actual gate instructions, not a Python dispatcher.
+        selected={};targets={int(v,16) for v in switch['targets']}
+        def branch_selected(machine,at,size,unused):
+            if at in targets and selected.get('enabled'):
+                selected['target']=at;uc.emu_stop()
+        uc.hook_add(unicorn.UC_HOOK_CODE,branch_selected)
+        index=bytes.fromhex(switch['index_hex'])
+        for number,slot in enumerate(index):
+            code=switch['input_first']+number;current['code']=code;events.clear()
+            put(state+8,'B',0);uc.mem_write(h.scratch+0x6000,bytes(24))
+            for name,value in dict(RSP=h.scratch+0x38000,RCX=code,RDX=2,R8=h.scratch+0x6000,R9=0).items():
+                uc.reg_write(getattr(x,'UC_X86_REG_'+name),value)
+            put(h.scratch+0x38000,'Q',h.scratch+0x3f000)
+            selected.clear();selected['enabled']=True
+            uc.emu_start(functions['gate'],0,count=2000)
+            require(selected.get('target')==int(switch['targets'][slot],16),'Native switch selected wrong target')
+            switch_cases.append(dict(code=code,index=slot,target=hex(selected['target'])))
+        selected['enabled']=False
     return dict(schema=1, source_sha256=context['source_sha256'], method='bounded_native', cases=cases,
+                switch=switch,switch_cases=switch_cases,
+                input_cases=input_report,input_construction_cases=input_construction if result_context else [],
                 evidence=h.evidence, network_used=False, profile_activated=False,
                 limits=['Synthetic packet, gate-state getter, strings/log/error services and peer are fixtures.',
                         'Registration is a static bounded window; dispatcher is not executed.',
-                        'Native handler/gate execute for declared codes; Login prepare is captured at entry.',
+                        'Native handler/gate execute for declared codes; Login prepare is captured at entry. Native reader/input execute only when input_cases is nonempty.',
                         'No live Login, character request/creation, profile promotion or active baseline change.'])
 
 

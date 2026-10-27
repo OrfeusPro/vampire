@@ -1074,6 +1074,55 @@
       "question": "version-result-reader-batch-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Current gate switch targets, handler registration и reader→handler composition, Login/SDK зависимости."
+    },
+    {
+      "addresses": [
+        "0x14143b9a0",
+        "0x14143bd30",
+        "0x1414466a0",
+        "0x14144c440",
+        "0x144aac430",
+        "0x144aac550",
+        "0x144aac5a0",
+        "0x144aac690",
+        "0x144aac770",
+        "0x144aac7a0",
+        "0x144aac7f0",
+        "0x144aac8c0",
+        "0x144aace40",
+        "0x144aad2d0",
+        "0x1456dc9c0",
+        "0x14679d680",
+        "0x1467cdc80",
+        "0x1467ce500"
+      ],
+      "checks": [
+        {
+          "cache_key": "2a2afd164b630c094d8bb1aac1e5e7542e45a6788e8cfd7165fbebfaaced56ae",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\24aa5817c8ccc6b0aa8d3e056555c7e10f56a7b6579968dcd40f040ad7dbebfa\\manifest.json",
+          "sha256": "24aa5817c8ccc6b0aa8d3e056555c7e10f56a7b6579968dcd40f040ad7dbebfa",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "VersionResult 1.13.18 actual input reader→handler→gate pipeline прошёл 16 routes,72 buffer constructions,227 native switch selections. Ghidra code/data separation, pinned switch tables и bounded static registration сверены. 1197 normal state показывает error и продолжает к Login entry, не подтверждая success.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-RESULT-HANDLER-11318.md",
+          "sha256": "a6abd9fe2cf2558deef229cb0ec33e0e2967c99facaa3edefd0b0f0827612c71"
+        }
+      ],
+      "id": "fd15c734ffc13d3a58b1fdf8d692fe7f8a1ff4cbbd307c48b3915d40720892cb",
+      "limits": [
+        "Registration — static window, dispatcher не исполняется.",
+        "Gate-state/string/log/error/peer/input storage/copy/free/security и Login entry — fixtures.",
+        "227 switch cases останавливаются на выбранном target до complex branch services. Нет полной Login/SDK/network/server acceptance/profile activation."
+      ],
+      "method": "bounded_native",
+      "next_check": "Продолжать Login/SDK зависимости; отдельно замкнуть prepare→wire для текущего Version contract перед profile admission.",
+      "question": "version-result-handler-batch-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Actual engine delivery, complex switch branch services, full Login/SDK и prepare→wire composition."
     }
   ],
   "schema": 1,

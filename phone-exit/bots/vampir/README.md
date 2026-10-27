@@ -1,3 +1,9 @@
+Осталось 96 строк из исходных 150: actual VersionResult reader→handler/gate
+и switch проверены вместе, 315 случаев / 6 тестов. Code/data separation
+и обе switch tables закреплены; check подключён к on_update/cache. Код 1197
+в normal state может показать ошибку и продолжить Login; это не success.
+[Результат и границы](../resource-tools/vampir/knowledge/VERSION-HANDLER-AUTOMATION-11318.md).
+
 Осталось 98 строк из исходных 150: reader VersionResult и общий input archive
 прошли 127 native случаев и 5 тестов, закрыты две строки. Проверка включена
 в автообновление с source-specific context/cache. Gate содержит inline switch

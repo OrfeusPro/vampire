@@ -342,7 +342,8 @@
           "combiner-copy": "0x1414266a0",
           "combiner-append": "0x141429e10",
           "combiner-grow": "0x141438050",
-          "result-reader": "0x1456dc9c0"
+          "result-reader": "0x1456dc9c0",
+          "result-handler": "0x14679d680"
         }
       },
       "resources": [

@@ -3001,7 +3001,8 @@
       "tools": [
         "verify-version-result-context.py",
         "verify-version-result-handler-context.py",
-        "align-version-result-11318.py"
+        "align-version-result-11318.py",
+        "version-gate-switch-11318.py"
       ],
       "rule": "Найти constructor/table/ID2/reader и проверить archive callees и порядок чтения; literal и нормализованное тело сами по себе не подтверждают роль.",
       "automation": {
@@ -3046,6 +3047,20 @@
                 "required_checks": [
                   "native-version-result-context"
                 ]
+              },
+              {
+                "address": "0x14679d680",
+                "scope": "Whole handler/gate with actual VersionResult reader/input; 16 routes,72 constructions,227 switch target selections. Registration static; Login entry captured. 1197 normal state emits error and continues; not server success.",
+                "required_checks": [
+                  "native-version-result-handler-context"
+                ]
+              },
+              {
+                "address": "0x1467cdc80",
+                "scope": "Whole handler/gate with actual VersionResult reader/input; 16 routes,72 constructions,227 switch target selections. Registration static; Login entry captured. 1197 normal state emits error and continues; not server success.",
+                "required_checks": [
+                  "native-version-result-handler-context"
+                ]
               }
             ],
             "tools": [
@@ -3053,7 +3068,8 @@
               "verify-version-result-handler-context.py"
             ],
             "evidence": [
-              "evidence/updates/HEADLESS-VERSION-RESULT-READER-11318.md"
+              "evidence/updates/HEADLESS-VERSION-RESULT-READER-11318.md",
+              "evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11318.md"
             ]
           }
         ]

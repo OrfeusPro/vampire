@@ -989,6 +989,20 @@
       "evidence": [
         "evidence/updates/HEADLESS-VERSION-RESULT-READER-11318.md"
       ]
+    },
+    {
+      "id": "version-result-handler-batch-11318",
+      "status": "bounded_answer",
+      "question": "Как reader/handler/gate VersionResult 1.13.18 связаны с регистрацией и Login handoff?",
+      "known": "Current handler14679D680 и gate1467CDC80 экспортированы, code/data separation сверена:251 native instructions и две pinned switch tables.16 actual reader→handler/gate cases,72 input constructions и227 switch selections прошли. При1197 normal state показывает error и передаёт Login; success не доказан.",
+      "unknown": "Реальное dispatcher delivery, callbacks/services сложных switch ветвей после выбранной цели, Login preparation/SDK и серверное принятие.",
+      "next_action": "Продолжать Login и SDK зависимости с готовым native input; отдельно замкнуть prepare→wire и Version coverage до профиля.",
+      "decision_rule": "Допуск gate не является успехом сервера; error1197 сохраняется отдельно. Не ослаблять parser policy и не активировать runtime.",
+      "do_not_repeat": "При неизменных inputs использовать on_update и hash cache, проверенные tables и source context.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11318.md"
+      ]
     }
   ]
 }
