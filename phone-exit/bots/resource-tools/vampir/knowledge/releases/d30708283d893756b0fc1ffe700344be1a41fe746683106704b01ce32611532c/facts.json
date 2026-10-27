@@ -720,6 +720,110 @@
       "question": "launcher-contract-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Actual JSON/getter composition с nonempty identity/token/credential и SDK state, engine serialization и callback delivery перед новым runtime profile."
+    },
+    {
+      "addresses": [
+        "0x1444c2010",
+        "0x1444d3a30",
+        "0x144552560"
+      ],
+      "checks": [
+        {
+          "cache_key": "07af8387ee459e6eb48adda23f11e0f41381e27fe9e4de580ef1c2a27779e635",
+          "id": "launcher-shape-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\54b3027a5f95c155dbec8941141b237af88e37ab345a3e0e937bf633b168cdc6\\manifest.json",
+          "sha256": "54b3027a5f95c155dbec8941141b237af88e37ab345a3e0e937bf633b168cdc6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "09b9b224a7f07270ae63d6fa4ae78c8b4f0ae1afab51b7c0b960a88c608507a2",
+          "id": "launcher-references-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6b1dd4de229be2183430939ffc62c45b588db8ca62f86dd0d2c89a73fbca4229\\manifest.json",
+          "sha256": "6b1dd4de229be2183430939ffc62c45b588db8ca62f86dd0d2c89a73fbca4229",
+          "state": "passed"
+        },
+        {
+          "cache_key": "405e2f3c0baef24a697c0a1c27dd00937dfedcd5a920ff7da54a9e3f2f3203e9",
+          "id": "launcher-responses-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\368529e79f38eccd547a04823bf3aa8ad1ad31fbcf6258659e98bb920fcdd4e6\\manifest.json",
+          "sha256": "368529e79f38eccd547a04823bf3aa8ad1ad31fbcf6258659e98bb920fcdd4e6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "db4753309a038d2d916551defa255e9b1f59b7faf12e3d057eea24fbc0486b6c",
+          "id": "launcher-transport-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\314037c30c422d8f0d177953e07da948000865a79044e438ff72669c405b59a3\\manifest.json",
+          "sha256": "314037c30c422d8f0d177953e07da948000865a79044e438ff72669c405b59a3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3a8b9a493b36df6b9ab7d3efe9678dc31c7ac770fd20c9d6f9f13e7bbdf5e415",
+          "id": "launcher-common-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f844496c8ac869a9fde3f7c8841fad705f907b36140f7184a474126b2cfabf38\\manifest.json",
+          "sha256": "f844496c8ac869a9fde3f7c8841fad705f907b36140f7184a474126b2cfabf38",
+          "state": "passed"
+        },
+        {
+          "cache_key": "2849aa51b1a9bded21c741d498168cdf6cfbaa39cd5dad4e56b828b363b7cde4",
+          "id": "launcher-json-gates-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\923e07b5f94468ad8fc4d927db03c0de8cd7b114cf7d4389421664ef36ce708f\\manifest.json",
+          "sha256": "923e07b5f94468ad8fc4d927db03c0de8cd7b114cf7d4389421664ef36ce708f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "cdcddfc722fca522e84412176ca396eec82905742bf9168fd7c792b2ad3ec74c",
+          "id": "launcher-caller-fields-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6b4d3c9cb9b7abcb5b6331ada40b03cf866ffb3977e3a23e79cd1953295a93e8\\manifest.json",
+          "sha256": "6b4d3c9cb9b7abcb5b6331ada40b03cf866ffb3977e3a23e79cd1953295a93e8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "93e8b441e9a65ce3ea43003a229713fbc3e7fa11e5b4ee8e2de965b446347617",
+          "id": "launcher-result-getters-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7e6e3d7b329e307db5aadf22556988b14725ab3e77716e1da05e03c731d83006\\manifest.json",
+          "sha256": "7e6e3d7b329e307db5aadf22556988b14725ab3e77716e1da05e03c731d83006",
+          "state": "passed"
+        },
+        {
+          "cache_key": "70f66c447f3816329477dec798045ce5b3085cae77481690a74239ff10d0065d",
+          "id": "launcher-dispatch-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c53a520a4138920967f1946249490d103f09dbc6228653c79fed9a8e91a40d35\\manifest.json",
+          "sha256": "c53a520a4138920967f1946249490d103f09dbc6228653c79fed9a8e91a40d35",
+          "state": "passed"
+        },
+        {
+          "cache_key": "611094d911f136e24d42256bc21d1c9a53a6556d59f6544d14bf350a8b9d0cfe",
+          "id": "launcher-response-callbacks-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\86fc9e69fb5fefdaa51b1f3f668165f595e9142ebd3e9f7d4ac7882ed8bcc83c\\manifest.json",
+          "sha256": "86fc9e69fb5fefdaa51b1f3f668165f595e9142ebd3e9f7d4ac7882ed8bcc83c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "16522196ed681463ab2817fa763f422fbd5f4896220b90b3d892dba6816398ea",
+          "id": "launcher-identity-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\db510f66ede1fdc6c0f5d1410f5a00f672e60e68c3e72f050c907ba4246d1c26\\manifest.json",
+          "sha256": "db510f66ede1fdc6c0f5d1410f5a00f672e60e68c3e72f050c907ba4246d1c26",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Целый callback sign-in с native SDK context getter и country setter прошёл 40 field-сценариев; token, player ID, country и region раздельны, missing и empty различаются, player setter/Save/Load вызываются по порядку.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-IDENTITY-11318.md",
+          "sha256": "749002bd8ff0037b53ec887ab9ff785b9e416db2adc92a532094be99485d674c"
+        }
+      ],
+      "id": "20f9a372ea6368d7c3c675c06d4cf23f0d04e297d06fc54bb282aecb407c8723",
+      "limits": [
+        "HTTP/JSON/global keys/FString и country storage helper заданы fixtures.",
+        "Player setter/Save/Load, singleton/initializer, status/post-sign-in events и dispatcher являются captures; нет real auth, persistence или fresh SDK session.",
+        "Native constructor leaf проверен буквально по bytes полного EXE SHA; Ghidra export leaf отсутствует. idpInfo не исполнен."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать global accessToken key с актуальным initializer, перенести SDK settings/GMC2/NID и собрать профиль без автоматической активации.",
+      "question": "launcher-contract-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Global accessToken initializer, real JSON/storage/persistence, SDK/GMC2/NID profile и live compatibility."
     }
   ],
   "schema": 1,

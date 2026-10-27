@@ -1,3 +1,9 @@
+Для 1.13.18 целый sign-in callback прошёл 40 сценариев полей игрока вместе с
+native constructor, SDK context getter и country setter. Token, ID, страна и
+регион передаются раздельно; missing/empty сохраняют разные значения.
+Проверка сразу включена в автообновление. JSON / persistence остаются fixtures,
+профиль ещё не готов. [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-IDENTITY-11318.md).
+
 Отделены fixture-проверки самого инструментария от проверок клиента: четыре
 набора `tooling` автоматически проходят независимо от SHA игры. Реальное
 переиспользование тех же reports между 1.13.16/1.13.18 проверено без запуска

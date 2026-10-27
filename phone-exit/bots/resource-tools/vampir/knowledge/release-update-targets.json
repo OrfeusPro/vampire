@@ -437,7 +437,8 @@
       "tools": [
         "audit-release-launcher-contract.py",
         "replay-launcher-dispatch-11318.py",
-        "launcher-response-cases-11318.py"
+        "launcher-response-cases-11318.py",
+        "replay-launcher-identity-11318.py"
       ],
       "required_checks": [
         "release-launcher-contract"
@@ -485,9 +486,10 @@
               },
               {
                 "address": "0x1444d3a30",
-                "scope": "Whole response→native dispatch/cleanup,74 synthetic cases. HTTP/JSON/getters/conversion/constructors/SDK state fixtures. Native lifecycle/status/error precedence/result handoff проверены; actual identity/token context и live auth требуют проверки.",
+                "scope": "Whole response→native dispatch/cleanup,74 synthetic cases. HTTP/JSON/getters/conversion/constructors/SDK state fixtures. Native lifecycle/status/error precedence/result handoff проверены; actual identity/token context и live auth требуют проверки. Дополнительно 40 identity field случаев с native constructor/context getter/country setter; JSON/FString/player persistence и post-sign-in события fixtures. Global accessToken key identity остаётся отдельной проверкой.",
                 "required_checks": [
-                  "launcher-response-callbacks-11318"
+                  "launcher-response-callbacks-11318",
+                  "launcher-identity-11318"
                 ]
               },
               {
@@ -507,6 +509,20 @@
                   "launcher-references-11318",
                   "launcher-caller-fields-11318"
                 ]
+              },
+              {
+                "address": "0x1444c2010",
+                "scope": "Whole SDK context getter / country setter в 40 identity field сценариях. Singleton/lazy initialization и country storage helper fixtures; не подтверждает fresh SDK session.",
+                "required_checks": [
+                  "launcher-identity-11318"
+                ]
+              },
+              {
+                "address": "0x144552560",
+                "scope": "Whole SDK context getter / country setter в 40 identity field сценариях. Singleton/lazy initialization и country storage helper fixtures; не подтверждает fresh SDK session.",
+                "required_checks": [
+                  "launcher-identity-11318"
+                ]
               }
             ],
             "evidence": [
@@ -514,7 +530,8 @@
               "evidence/updates/HEADLESS-LAUNCHER-RESPONSE-CALLBACKS-11318.md",
               "evidence/updates/HEADLESS-LAUNCHER-SHAPE-11318.md",
               "evidence/updates/HEADLESS-LAUNCHER-REFERENCES-11318.md",
-              "evidence/updates/HEADLESS-LAUNCHER-CALLER-FIELDS-11318.md"
+              "evidence/updates/HEADLESS-LAUNCHER-CALLER-FIELDS-11318.md",
+              "evidence/updates/HEADLESS-LAUNCHER-IDENTITY-11318.md"
             ]
           }
         ]
