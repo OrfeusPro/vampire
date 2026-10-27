@@ -215,3 +215,43 @@ action API/dispatch прошли отдельно. Игрового сервер
 owner не перезапускался и новые поля в нём не появились; observational analysis
 не используется для подмены сетевого обработчика. Далее корреляция receipt и
 выбранного шага, затем ограниченный игровой тест с сохранением условий сессии.
+
+## Полный кадр принят локальным сокетом
+
+Прежний status action queue `sent` сохраняет смысл: кадр принят outbound,
+серверного подтверждения нет. Дополнительно `GameConnection` предоставляет
+`queue_tracked_quest_update` с непрозрачным transport ticket. Его состояние:
+queued → socket_accepted, когда существующий drain_outbound сообщает завершение
+именно этого immutable frame. После частичного/blocked send состояние queued.
+Закрытие соединения переводит оставшийся queued в outcome_unknown и освобождает
+ссылку на frame; socket_accepted не переписывается как unknown.
+
+Это факт принятия всех байтов локальным socket.send, не peer receipt/server
+processing. Очередь и последовательность общие с heartbeat/key change.
+Ticket читается только через создавший его connection. Лимит 16 receipts;
+его превышение отклоняется до enqueue без расхода sequence. Terminal receipt
+можно явно release; queued release запрещён. Connection close освобождает
+содержимое кадров, сами небольшие receipts ограничены и живут до release /
+удаления connection. HTTP не получает ticket или raw frame.
+
+Owner dispatch использует tracked enqueue и хранит только последний ticket.
+Новый dispatch не заменяет ещё queued ticket. Завершённый прежний ticket
+освобождается при следующем допустимом dispatch. Snapshot публикует отдельный
+quest_transport: request_id, quest_id, task_index, character/world scope,
+status, semantics=local_transport_only, server_confirmed=false. При смене
+состояния journal получает quest_transport_updated; повторный snapshot не
+дублирует событие. После session close эта запись не публикуется; жизненный
+цикл сокета остаётся у connection owner. Lock receipts не вызывает callback
+сессии/сокета; snapshot только читает status.
+
+`test_vampir_quest_transport_receipt.py`: 4 теста с локальными socketpair,
+частичной передачей по одному байту и явной BlockingIOError. Проверены queued
+до последнего байта, socket_accepted, partial close→unknown, foreign ticket,
+release/лимит/sequence, session snapshot/journal/повтор без нового frame и
+отсутствие server confirmation. 23 регрессионных теста live results, owner
+ dispatch, HTTP API и connection прошли. Игрового сервера в проверках нет.
+
+Ни receipt timeout, ни исчезновение pending в native client, ни code0 сами
+по себе не разрешают повторять действие. Корреляция 1811 с transport/request
+и подтверждённым progress ещё впереди. Production owner channel/pump и
+текущий работающий процесс этим изменением не включаются и не перезапускаются.

@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Добавлена отдельная transport receipt для QuestUpdate: queued до последнего
+байта, socket_accepted после полного кадра, partial close → outcome_unknown.
+Owner snapshot/journal показывают receipt отдельно от server confirmation.
+4 локальных partial/blocked/close/budget/isolation теста и 23 регрессии прошли.
+Текущая сессия не перезапускалась; далее корреляция response/request/progress.
+[Контракт и ограничения](../vampir-headless/ACTIONS.md#полный-кадр-принят-локальным-сокетом).
+
 Добавлено наблюдение ID1811 в новом LiveSession: полный source-bound decoder,
 последний scoped ответ и ограниченный journal. 4 теста: native parity900,
 50 synthetic sessions/HTTP/uint64, scope/world/close/errors; результат не

@@ -6,6 +6,7 @@ Does not infer heartbeat timing, Login/Version fields or world readiness.
 from dataclasses import dataclass
 import math
 import time
+from threading import Lock
 
 from .key_change import KeyChangePayload, KEY_CHANGE_NOTIFY_ID
 from .outbound import OutboundFrames
@@ -72,6 +73,8 @@ class GameConnection:
         self._tutorial_ack = None
         self._quest_list = None
         self._creation = None
+        self._quest_send_lock = Lock()
+        self._quest_sends = {}
         try:
             sock.setblocking(False)
         except Exception:
@@ -114,6 +117,10 @@ class GameConnection:
     def close(self):
         if self._active:
             self._active = False
+            with self._quest_send_lock:
+                for row in self._quest_sends.values():
+                    if row['state']=='queued':row['state']='outcome_unknown'
+                    row['frame']=None
             self._receiver.close()
             self._selection.close()
             if self._world_entry is not None: self._world_entry.close()
@@ -192,6 +199,25 @@ class GameConnection:
             raise ValueError('Quest update source differs from this world connection')
         return self._outbound.queue_quest_update(payload,source_sha256=source_sha256)
 
+    def queue_tracked_quest_update(self,payload,*,source_sha256):
+        """Opaque bounded transport receipt, not a server action receipt."""
+        with self._quest_send_lock:
+            if len(self._quest_sends)>=16:raise BufferError('Quest transport receipt limit reached')
+            frame=self.queue_quest_update(payload,source_sha256=source_sha256)
+            ticket=object();self._quest_sends[ticket]=dict(frame=frame,state='queued')
+            return ticket
+
+    def quest_send_status(self,ticket):
+        with self._quest_send_lock:
+            if ticket not in self._quest_sends:raise ValueError('Unknown connection transport receipt')
+            return self._quest_sends[ticket]['state']
+
+    def release_quest_send(self,ticket):
+        with self._quest_send_lock:
+            if ticket not in self._quest_sends:raise ValueError('Unknown connection transport receipt')
+            if self._quest_sends[ticket]['state']=='queued':raise RuntimeError('Queued receipt still owns an outbound frame')
+            del self._quest_sends[ticket]
+
     def enable_initial_tutorial_ack(self, *, source_sha256, timeout=10, snapshot_max_age=10):
         """Track this connection's snapshots; enabling sends no game command."""
         if not self.active or self._tutorial_ack is not None:
@@ -229,6 +255,10 @@ class GameConnection:
         self._quest_list.queue(now=now)
 
     def _frame_sent(self, frame):
+        with self._quest_send_lock:
+            for row in self._quest_sends.values():
+                if row['frame'] is frame:
+                    row['state']='socket_accepted';row['frame']=None;break
         if self._tutorial_ack is not None: self._tutorial_ack.frame_sent(frame)
         if self._quest_list is not None: self._quest_list.frame_sent(frame)
         if self._creation is not None: self._creation.frame_sent(frame)

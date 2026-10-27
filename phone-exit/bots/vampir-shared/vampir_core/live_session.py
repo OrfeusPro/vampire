@@ -39,6 +39,7 @@ class LiveSession:
         self._actions=None
         self._action_owner=None
         self._action_connection=None
+        self._quest_transport=None
         self._action_offers=[]
         self._action_scope=None
         self._policy=dict(skip_dialogues=True,auto_quests=False)
@@ -157,6 +158,16 @@ class LiveSession:
                 else:self._stats_limit=True
             self._stats_revision+=1
             self._apply_stats()
+
+    def _sync_quest_transport(self):
+        # Connection callback never takes session lock, so HTTP snapshot can
+        # inspect a receipt without touching its socket or outbound queue.
+        receipt=self._quest_transport
+        if receipt is None or self._action_connection is None:return
+        state=self._action_connection.quest_send_status(receipt['ticket'])
+        if receipt['status']!=state:
+            receipt['status']=state
+            self._diagnostics.event('quest_transport_updated',request_id=receipt['request_id'],status=state)
 
     def _receive_quest_result(self,body,character_key,world_id):
         # Caller holds session lock. A complete response is an observation, not
@@ -279,6 +290,9 @@ class LiveSession:
             error='session_failed'
         with self._lock:
             if self._actions:self._actions.close(self._action_owner)
+            if self._quest_transport is not None:
+                # Session close does not assert whether its connection sent bytes.
+                self._quest_transport=None
             self._action_connection=None
             self._action_offers=[]
             if not self._closed:self._diagnostics.event('session_closed',error=error)
@@ -295,7 +309,10 @@ class LiveSession:
     def snapshot(self,*,for_api=False,entity_page=0):
         if type(entity_page) is not int or entity_page not in (0,1):raise ValueError('Invalid entity page')
         with self._lock:
+            self._sync_quest_transport()
             value=copy.deepcopy(self._snapshot)
+            if self._quest_transport is not None:
+                value['quest_transport']={k:v for k,v in self._quest_transport.items() if k!='ticket'}
             if for_api:
                 total=len(value['entities']);page=entity_page if total>256 else 0
                 value['entities']=value['entities'][page*256:(page+1)*256]
@@ -438,7 +455,16 @@ class LiveSession:
                 if (not connection.active or world is None or world.target_position is None
                         or self._scope()!=(str(connection.selection.response.player.at(8)),world.target_position.world_id)):
                     raise ActionNotQueued()
-                try:self._action_connection.queue_quest_update(payload,source_sha256=self._source)
+                self._sync_quest_transport()
+                previous=self._quest_transport
+                if previous is not None:
+                    if previous['status']=='queued':raise ActionNotQueued()
+                    connection.release_quest_send(previous['ticket']);self._quest_transport=None
+                try:
+                    ticket=connection.queue_tracked_quest_update(payload,source_sha256=self._source)
+                    self._quest_transport=dict(ticket=ticket,request_id=request_id,quest_id=str(payload.raw30),
+                        task_index=payload.raw38,character_key=self._scope()[0],world_id=self._scope()[1],
+                        status='queued',semantics='local_transport_only',server_confirmed=False)
                 except (ValueError,TypeError,BufferError,RuntimeError):raise ActionNotQueued() from None
             result=self._actions.queue_claimed(owner_key,request_id,context=context,enqueue=enqueue)
             self._diagnostics.event('action_dispatch',request_id=result['request_id'],action_kind=result['kind'],status=result['status'])
