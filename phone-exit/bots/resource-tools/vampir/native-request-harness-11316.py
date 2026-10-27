@@ -1,4 +1,4 @@
-"""Synthetic native harness for explicitly exported 1.13.16 request functions."""
+"""Synthetic native harness; defaults to 1.13.16, other releases require an explicit SHA."""
 import hashlib
 import importlib.util
 import json
@@ -18,7 +18,8 @@ def load(name, path):
     return module
 
 
-def make_harness(exports, functions, leaves=None, root=None):
+def make_harness(exports, functions, leaves=None, root=None, *, source_sha256=SHA,
+                 copy_thunk=0x1487f5ab9):
     native = load('request_native', HERE/'build-native-entry-code.py')
     sys.path.insert(0, str(HERE.parents[2]/'.tools/vampir-analysis'))
     import unicorn
@@ -26,16 +27,19 @@ def make_harness(exports, functions, leaves=None, root=None):
     if unicorn.__version__ != '2.1.4' or native.capstone.__version__ != '5.0.6':
         raise ValueError('Pinned request runtime required')
     root = Path(root) if root else native.ROOT
-    source = root/'client-code-snapshots'/SHA/'ProjectRED-Win64-Shipping.exe'
+    source_sha = source_sha256
+    if len(source_sha) != 64 or any(c not in '0123456789abcdef' for c in source_sha):
+        raise ValueError('Explicit source SHA required')
+    source = root/'client-code-snapshots'/source_sha/'ProjectRED-Win64-Shipping.exe'
     raw = source.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != SHA:
+    if hashlib.sha256(raw).hexdigest() != source_sha:
         raise ValueError('Request source SHA changed')
     image = native.Image(raw)
     uc = unicorn.Uc(unicorn.UC_ARCH_X86, unicorn.UC_MODE_64)
     decoder = native.capstone.Cs(native.capstone.CS_ARCH_X86, native.capstone.CS_MODE_64)
     decoder.detail = True
     pages, allowed, found, evidence = set(), set(), set(), []
-    h = SimpleNamespace(uc=uc, x=x, raw=raw, image=image, source=source, sha=SHA,
+    h = SimpleNamespace(uc=uc, x=x, raw=raw, image=image, source=source, sha=source_sha,
                         root=root, scratch=0x28000000, fixtures={}, fragments=[])
 
     def map_page(address):
@@ -73,12 +77,12 @@ def make_harness(exports, functions, leaves=None, root=None):
     if not 1 <= len(functions) <= 24 or not 1 <= len(exports) <= 12:
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
-        path = root/'ghidra/request-exports'/SHA/run/'details.json'
+        path = root/'ghidra/request-exports'/source_sha/run/'details.json'
         payload = path.read_bytes()
         if hashlib.sha256(payload).hexdigest() != expected:
             raise ValueError('Request export SHA changed')
         report = json.loads(payload)
-        if report['new_source_sha256'] != SHA:
+        if report['new_source_sha256'] != source_sha:
             raise ValueError('Request export source differs')
         evidence.append(dict(path=str(path), sha256=expected))
         for function in report['functions']:
@@ -100,15 +104,17 @@ def make_harness(exports, functions, leaves=None, root=None):
             raise ValueError('Request leaf has an instruction gap')
         for row in decoded:
             instruction(row.address,bytes(row.bytes))
-    copy = 0x1487f5ab9
-    off = image.offset(copy-image.pe.base)
-    if raw[off:off+2] != b'\xff\x25':
-        raise ValueError('Request copy import thunk differs')
-    imports = load('request_imports', HERE/'build-object-zero-init-code.py')
-    slot = copy+6+struct.unpack_from('<i',raw,off+2)[0]
-    h.copy_import = imports.import_at(raw,image,slot)
-    if (h.copy_import['dll'].lower(),h.copy_import['name']) != ('vcruntime140.dll','memcpy'):
-        raise ValueError('Request copy import identity differs')
+    copy = copy_thunk
+    h.copy_import = None
+    if copy is not None:
+        off = image.offset(copy-image.pe.base)
+        if raw[off:off+2] != b'\xff\x25':
+            raise ValueError('Request copy import thunk differs')
+        imports = load('request_imports', HERE/'build-object-zero-init-code.py')
+        slot = copy+6+struct.unpack_from('<i',raw,off+2)[0]
+        h.copy_import = imports.import_at(raw,image,slot)
+        if (h.copy_import['dll'].lower(),h.copy_import['name']) != ('vcruntime140.dll','memcpy'):
+            raise ValueError('Request copy import identity differs')
     uc.mem_map(h.scratch,0x40000)
     pages.update(range(h.scratch,h.scratch+0x40000,4096))
     stop = h.scratch+0x3f000
@@ -141,7 +147,8 @@ def make_harness(exports, functions, leaves=None, root=None):
         elif address not in allowed:
             raise ValueError('Unreviewed request target '+hex(address))
     uc.hook_add(unicorn.UC_HOOK_CODE,hook)
-    add_fixture(copy,copy_fixture)
+    if copy is not None:
+        add_fixture(copy,copy_fixture)
 
     def call(address, receiver=0, budget=30000):
         stack = h.scratch+0x38000

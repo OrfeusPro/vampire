@@ -1,3 +1,8 @@
+Launcher transport wrappers 1.13.18 прошли шесть native случаев: передача
+аргументов и владение callback. Общий transport/serialization — fixtures,
+сеть не использовалась, профиль не включён; онлайн-сессия сохранена.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-TRANSPORT-11318.md).
+
 Launcher response 1.13.18: проверены whole shapes token 551/sign-in 762 и
 identity импортированного _wtoi. Key/getter/dispatch ссылки закреплены; JSON,
 внешние реализации и живая авторизация ещё не проверены, профиль не включён.
