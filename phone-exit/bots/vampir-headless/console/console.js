@@ -42,6 +42,26 @@ function renderRoster(){
 }
 window.addEventListener('blur',()=>{shownPasswords.clear();renderRoster();});
 
+el('copy-roster').onclick=async()=>{
+ const button=el('copy-roster'),status=el('copy-roster-status');
+ const accounts=[...snapshot.accounts];
+ const rows=Array.from(el('roster').rows,row=>Array.from(row.cells,cell=>
+  (cell.querySelector('.password-cell span')||cell).textContent.replace(/[\t\r\n]+/g,' ')
+ ));
+ button.disabled=true;status.textContent='Подготовка таблицы с паролями…';
+ try{
+  for(const [index,account] of accounts.entries()){
+   for(const [column,kind,saved] of [[1,'mail',account.mail_password_saved],[2,'netmarble',account.password_saved]]){
+    if(saved){const result=await api('/api/reveal',{id:account.id,kind});rows[index+1][column]=result.password;}
+   }
+  }
+  const text=rows.map(row=>row.map(value=>/[\t\r\n"]/.test(value)?'"'+value.replace(/"/g,'""')+'"':value).join('\t')).join('\r\n');
+  await navigator.clipboard.writeText(text);
+  status.textContent='Таблица с паролями скопирована. Можно вставить в Excel или текстовый редактор.';
+ }catch(error){status.textContent='Не удалось скопировать таблицу с паролями. Проверьте связь с панелью и разрешение буфера обмена, затем повторите.';}
+ finally{button.disabled=false;}
+};
+
 function renderReadiness(){
  const box=el('readiness'),plan=snapshot.readiness?.[selected];box.replaceChildren();
  if(!plan){box.textContent='Сохраните аккаунт, чтобы увидеть этапы подготовки.';return;}

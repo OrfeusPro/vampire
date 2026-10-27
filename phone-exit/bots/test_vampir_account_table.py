@@ -37,6 +37,21 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  assert.equal(vm.runInContext('shownPasswords.size',context),0);
  vm.runInContext(`snapshot.accounts[0].mail_status='verified';snapshot.accounts[0].registration_status='registered';snapshot.jobs.fixture={operation:'register',running:false,status:'stopped'};renderRoster();`,context);
  assert.match(nodes.get('roster-body').children[0].children[6].textContent,/Netmarble зарегистрирован/);
+ let copied='',writes=0;
+ context.navigator={clipboard:{writeText:async text=>{copied=text;writes++;}}};
+ const cell=text=>({textContent:text,querySelector:()=>null});
+ document.getElementById('roster').rows=[{cells:['Почта','Пароль почты','Пароль Netmarble'].map(cell)},
+  {cells:['fixture@unit.invalid','••••••••','••••••••'].map(cell)}];
+ const before=calls.filter(c=>c.path==='/api/reveal').length;
+ await nodes.get('copy-roster').onclick();
+ assert.equal(copied,'Почта\tПароль почты\tПароль Netmarble\r\nfixture@unit.invalid\tfake-private-secret\tfake-private-secret');
+ assert.deepEqual(calls.filter(c=>c.path==='/api/reveal').slice(before).map(c=>JSON.parse(c.request.body).kind),['mail','netmarble']);
+ assert.equal(vm.runInContext('shownPasswords.size',context),0);
+ assert.equal(nodes.get('copy-roster').disabled,false);
+ context.fetch=async()=>({ok:false,json:async()=>({error:'fixture failure'})});
+ await nodes.get('copy-roster').onclick();
+ assert.equal(writes,1);assert.match(nodes.get('copy-roster-status').textContent,/Не удалось/);
+ assert.equal(nodes.get('copy-roster').disabled,false);
  process.stdout.write('passed');
 })().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
 '''
