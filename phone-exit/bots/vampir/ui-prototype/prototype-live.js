@@ -24,8 +24,8 @@
     connection.setAttribute('role', 'status');
     const statusHolder = el('div', undefined, 'live-status-holder');
     const summary = el('div', undefined, 'live-summary');
-    const level = el('span'), power = el('span'), experience = el('span');
-    append(summary, level, power, experience);
+    const level = el('span'), power = el('span'), experience = el('span'), statObservation = el('small');
+    append(summary, level, power, experience, statObservation);
     append(hud, append(el('header', undefined, 'live-player'), identity, statusHolder, summary, connection));
     const toolbar = el('nav', undefined, 'live-toolbar'); toolbar.setAttribute('aria-label', 'Меню персонажа');
     const diagnostic = el('a', 'Диагностика');
@@ -214,6 +214,7 @@
       interaction?.observe(next);
       identity.textContent = value.person?.name || profile;
       level.textContent = 'Уровень ' + (value.person?.level ?? '—');
+      statObservation.textContent = value.statsObservation ? 'Характеристики: наблюдение новых сообщений' : '';
       power.textContent = 'БМ ' + (value.power ?? '—'); experience.textContent = 'Опыт ' + (value.experience ?? '—');
       connection.textContent = next?.mode === 'fixture' ? 'Тестовые данные · без игрового соединения' : next?.state === 'connected'
         ? 'Онлайн · ' + profile : next?.state === 'connecting' ? 'Вход в игру…' : 'Нет текущих данных сессии';

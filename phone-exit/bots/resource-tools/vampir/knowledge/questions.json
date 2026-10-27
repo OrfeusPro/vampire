@@ -1080,14 +1080,16 @@
       "id": "live-world-state-11318",
       "status": "bounded_answer",
       "question": "Как подключить текущие read-only координаты, HP/MP и уровень к прототипу без разрыва активной сессии?",
-      "known": "Current owner connected, raw server XYZ/world/name доступны. HP/MP/level null из-за старых source guards; top-level position null без проекции. PAK карты совпадает полным SHA с прежним проверенным источником данных.",
-      "unknown": "Current stat readers/initial collection/application/EStat bindings; native widget projection math 1.13.18. Нет безопасного hot-reload Python owner; начальные stat bodies не сохранены.",
-      "next_action": "Отдельный source-bound локальный atlas projector через общий сборщик, затем общий native stat batch для текущего SHA; не выдавать local projection за current engine math.",
+      "known": "Локальный atlas projector подтверждён; stat native1322 cases, ID321/322 readers и208EStat подтверждены. Отдельный observational handler/UI ждёт свежие уведомления; owner не перезапускался.",
+      "unknown": "Свежие live HP/MP не получены, initial bodies API не сохранял. После1.13.20 прежняя сессия закрылась connection_closed, причина не установлена.",
+      "next_action": "Не повторять вход без запроса; сохранить доказательства11318 и автоматизировать сверку изменившихся функций.",
       "decision_rule": "Сохранять сокет; не подменять source SHA. Local atlas calculation явно отделять от engine position. Не считать unknown stats нулевыми и не включать quest actions.",
       "do_not_repeat": "Переиспользовать неизменённые архивы/таблицы и current archive primitives; не повторять авторизацию и готовые native checks.",
       "addresses": [],
       "evidence": [
-        "evidence/updates/HEADLESS-KEEP-ONLINE-11318.md"
+        "evidence/updates/HEADLESS-KEEP-ONLINE-11318.md",
+        "evidence/maps/HEADLESS-LOCAL-ATLAS-11318.md",
+        "evidence/characters/HEADLESS-STATS-11318.md"
       ]
     }
   ]

@@ -9690,6 +9690,115 @@
       "artifact_dependencies": [
         "release-snapshots/c44b60d512a5b6a07a3ca7f6242eb23a385d36c87c67a7490fb2bad3c150b4db/record-indexes/faad77301f66215958cca4d9a083ca61f09f8f54650307dab1580470dc47f913/manifest.json"
       ]
+    },
+    {
+      "id": "native-stat-batch-11318",
+      "questions": [
+        "live-world-state-11318"
+      ],
+      "source_sha256": [
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_stat_batch_11318.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-stat-contexts-11318.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-stat-bindings-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-records-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-initial-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-initial-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-notify-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-notify-11318.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-stat-initial-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-stat-notify-11318.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/stat-support-11318.py",
+        "phone-exit/bots/test_vampir_stat_batch_11318.py",
+        "phone-exit/bots/test_vampir_stat_batch_alignment_11318.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_change_11318.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-450b89173dc1/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-bd63520caaaf/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-c76e7785700f/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ceaa0e5d6498/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-d6af42842586/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ed5c8eee70bc/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ]
+    },
+    {
+      "id": "observed-stats-adapter-11318",
+      "questions": [
+        "live-world-state-11318"
+      ],
+      "source_sha256": [
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_stats_observation_11318.py",
+      "timeout_seconds": 90,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-stat-contexts-11318.py",
+        "phone-exit/bots/resource-tools/vampir/inspect-stat-bindings-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/character-list-records-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-initial-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-initial-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-notify-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/stat-notify-11318.json",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/replay-stat-initial-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-stat-notify-11318.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/stat-support-11318.py",
+        "phone-exit/bots/resource-tools/vampir/test-live-state.cjs",
+        "phone-exit/bots/test_vampir_live_stats_observer_11318.py",
+        "phone-exit/bots/test_vampir_observed_vitals_ui_11318.py",
+        "phone-exit/bots/test_vampir_stat_batch_11318.py",
+        "phone-exit/bots/test_vampir_stat_batch_alignment_11318.py",
+        "phone-exit/bots/test_vampir_stats_observation_11318.py",
+        "phone-exit/bots/vampir-headless/live-observer-worker.py",
+        "phone-exit/bots/vampir-headless/observe-stats-11318.py",
+        "phone-exit/bots/vampir-headless/watch-live-session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/character_select_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_change.py",
+        "phone-exit/bots/vampir-shared/vampir_core/stat_change_11318.py",
+        "phone-exit/bots/vampir/ui-prototype/live-state.js",
+        "phone-exit/bots/vampir/ui-prototype/observed-vitals.test.cjs",
+        "phone-exit/bots/vampir/ui-prototype/prototype-live-model.js",
+        "phone-exit/bots/vampir/ui-prototype/prototype-live-model.test.cjs",
+        "phone-exit/bots/vampir/ui-prototype/prototype-live.js",
+        "phone-exit/bots/vampir/ui-prototype/quest-names-ru.js"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-450b89173dc1/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-bd63520caaaf/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-c76e7785700f/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ceaa0e5d6498/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-d6af42842586/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ed5c8eee70bc/details.json"
+      ]
     }
   ]
 }

@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "functions": {
+    "vector": "0x144aac830",
+    "input_constructor": "0x144aace40",
+    "input_buffer_constructor": "0x144aac430",
+    "input_u16": "0x144aac550",
+    "input_u32": "0x144aac5a0",
+    "input_u64": "0x144aac7a0",
+    "input_bool": "0x144aac7f0",
+    "input_raw": "0x144aac8c0",
+    "model_setter": "0x1455f0490",
+    "reader": "0x1457351b0",
+    "callback": "0x14573d620",
+    "record": "0x1457a8350",
+    "apply": "0x145d8bd70"
+  },
+  "exports": {
+    "run-bd63520caaaf": "372529e5774232cd2cf01e5d71dc33bbc618cb9d2fceccc5510d8b4bafa4e4d6",
+    "run-d6af42842586": "6aa57c52b86047cb0e0840116bb41bff3d806a80e0746fdfc903ae973c11abc8",
+    "run-ed5c8eee70bc": "8463fef01f722fccfca821d50b57824135019a75ef0794e192bdd3ab12d7ae3f",
+    "run-450b89173dc1": "c4a61844217b6edda4cf4ebc7fdd639b0178ad28460927ef690be9122f14da1c",
+    "run-b66ea903e973": "3afe56601081a2fb64a90f1196585a55415e56c37f05b4dc950d7e25a0116b95",
+    "run-c76e7785700f": "7e03ab78f03e74aa37a20f0126a83cc3d6ffb53df4e16705f38237da44081a50",
+    "run-ceaa0e5d6498": "b43e6ef036915cfca6c9ff27d399fe362c19fb5b650a22a46fc4ddbc866f6fd3"
+  },
+  "leaves": {
+    "0x144aad110": "488d050951bc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad490": "488b024c8bc2488bd1498bc848ff6020",
+    "0x144aad4a0": "895110c3",
+    "0x1457a36b0": "488d0569fd170448890133c089410848894110488bc1c3"
+  },
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "alignment": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\stat-batch-alignment-11318\\d6b4ec7817e28a30f19da1463337e989cd7cd7cfb1c430dfd9aab557db86ac81\\manifest.json",
+    "sha256": "d6b4ec7817e28a30f19da1463337e989cd7cd7cfb1c430dfd9aab557db86ac81"
+  },
+  "fixtures": {
+    "0x1456ba3e0": "0x1456ba7c0",
+    "0x1456b59f0": "0x1456b5dd0",
+    "0x1456b66c0": "0x1456b6aa0",
+    "0x1456ba3a0": "0x1456ba780",
+    "0x1456b5990": "0x1456b5d70",
+    "0x145594e00": "0x145595160",
+    "0x1455f10f0": "0x1455f1450"
+  },
+  "bindings": {
+    "0x14991f558": "0x149920d58",
+    "0x149921c20": "0x149923420"
+  },
+  "character_stat_link": [
+    {
+      "address": "0x145787bf2",
+      "text": "JZ 0x145787df8",
+      "bytes": "0f8400020000",
+      "references": [
+        "0x145787df8"
+      ]
+    },
+    {
+      "address": "0x145787bf8",
+      "text": "LEA RDX,[RDI + 0x1c8]",
+      "bytes": "488d97c8010000",
+      "references": []
+    },
+    {
+      "address": "0x145787bff",
+      "text": "MOV RCX,RBX",
+      "bytes": "488bcb",
+      "references": []
+    },
+    {
+      "address": "0x145787c02",
+      "text": "CALL 0x1457351b0",
+      "bytes": "e8a9d5faff",
+      "references": [
+        "0x1457351b0"
+      ]
+    }
+  ]
+}

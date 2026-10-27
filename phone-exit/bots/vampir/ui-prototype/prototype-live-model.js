@@ -2,6 +2,7 @@
 (function(root) {
   'use strict';
   function project(snapshot, localProjection = null) {
+    snapshot = root.VampirLiveState?.displaySnapshot(snapshot) ?? snapshot;
     const person = snapshot?.state === 'connected' ? snapshot.character : null;
     const stats = Array.isArray(person?.stats) ? person.stats : [];
     const raw = id => stats.find(row => row.id === id)?.value ?? null;
@@ -37,7 +38,7 @@
     let power = null;
     const entityRows = person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities) ? snapshot.entities : [];
     if (person?.stats_semantics === 'wire_stat_i64' && /^-?\d{1,20}$/.test(raw(134) ?? '')) power = String(BigInt(raw(134)) / 100n);
-    return { person, stats, experience:raw(1), power, quests, questsKnown, questsObserved, tutorial,
+    return { person, stats, statsObservation:snapshot?.stats_observation??null, experience:raw(1), power, quests, questsKnown, questsObserved, tutorial,
       position:verifiedPosition ? { x:position.x,y:position.y } : localPosition ? {x:localPosition.x,y:localPosition.y} : null,
       mapId:verifiedPosition ? position.map_id : localPosition?.map_id ?? null,
       positionOrigin:verifiedPosition ? 'owner_projection' : localPosition ? 'local_atlas' : null,

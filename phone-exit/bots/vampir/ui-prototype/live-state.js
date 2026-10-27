@@ -3,6 +3,61 @@
   'use strict';
   const id=value=>typeof value==='string'&&/^[a-zA-Z0-9_-]{1,48}$/.test(value);
   const number=value=>Number.isSafeInteger(value)&&value>=0;
+  const observedSource='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c';
+  const observedDecoder='70624e1a1225ddf14fddb6e215cf2d31de36285160db76296c42f7db6bcb9cd5';
+  const observedProofs={notify:'4b6d7da19c0a9af1f043608d84ea7d097679b421448a70326ad3dada99b9c2b8',
+    initial:'99fa2824cb6fd12065e41111dadff2233b0e115e315552adcd4072f801343bd8'};
+  const observedPackets={321:'c390d402da90e1b0a4aef9347c5b87d38aa0c4828264eeaeb1e5e5eae3675b3f',
+    322:'4dcd921f619e8883cabf5a231723b33e06a609abf1f93ca7007733536a08d93f'};
+  const observedEnum='a9a373cdc17c73008ae0bc804a335d0996749187f092b49d7c8afc71a53d98e5';
+  const observedFields={3:['level','Уровень'],4:['hp','HP'],5:['max_hp','Максимум HP'],9:['mp','MP'],10:['max_mp','Максимум MP']};
+  function displaySnapshot(snapshot,nowMs=Date.now()) {
+    const analysis=snapshot?.analysis, observed=analysis?.values?.readonly_stats, person=snapshot?.character;
+    if(snapshot?.schema!==2||snapshot.state!=='connected'||snapshot.error!==null||!person
+      ||!id(snapshot.bot_id)||!id(snapshot.session_id)||!analysis||analysis.error!==null
+      ||typeof analysis.revision!=='string'||!/^[a-f0-9]{64}$/.test(analysis.revision)
+      ||!observed||observed.schema!==1||observed.semantics!=='last_received_stat_notification'
+      ||observed.source_sha256!==observedSource||observed.status!=='observed_partial'||observed.reason!==null
+      ||observed.bot_id!==snapshot.bot_id||observed.session_id!==snapshot.session_id
+      ||observed.character_key!==person.key||observed.world_id!==String(person.world_id)
+      ||typeof person.key!=='string'||!/^\d{1,20}$/.test(person.key)||!/^\d{1,20}$/.test(observed.world_id)
+      ||BigInt(person.key)>2n**64n-1n||BigInt(observed.world_id)>2n**64n-1n
+      ||observed.owner_character_modified!==false||observed.sample_gap!==false||observed.event_gap!==false
+      ||observed.malformed_samples!==0||!number(observed.updated_at_ms)||!Number.isFinite(nowMs)
+      ||nowMs<observed.updated_at_ms||nowMs-observed.updated_at_ms>6000
+      ||observed.provenance?.decoder_sha256!==observedDecoder
+      ||Object.entries(observedProofs).some(([key,proof])=>observed.provenance?.native_proofs?.[key]!==proof)
+      ||Object.entries(observedPackets).some(([key,proof])=>observed.provenance?.packet_bindings?.[key]!==proof)
+      ||observed.provenance?.enum_sha256!==observedEnum
+      ||!number(observed.sample_cursor)||!number(observed.last_sample?.seq)||observed.last_sample.seq<1
+      ||observed.last_sample.seq>observed.sample_cursor||![321,322].includes(observed.last_sample.packet_id)
+      ||!Array.isArray(observed.stats)||!observed.stats.length||observed.stats.length>256
+      ||!observed.vitals||typeof observed.vitals!=='object')return snapshot;
+    const values=new Map();
+    for(const row of observed.stats) {
+      if(!row||!Number.isInteger(row.id)||row.id<-(2**31)||row.id>=2**31||values.has(row.id)
+        ||typeof row.value!=='string'||!/^\-?\d{1,20}$/.test(row.value))return snapshot;
+      const value=BigInt(row.value);
+      if(value<-(2n**63n)||value>=2n**63n)return snapshot;
+      values.set(row.id,{text:row.value,number:value>=0n&&value<=BigInt(Number.MAX_SAFE_INTEGER)?Number(value):null});
+    }
+    for(const [stat,[field]] of Object.entries(observedFields)) {
+      if(observed.vitals[field]!== (values.get(Number(stat))?.number??null))return snapshot;
+    }
+    const display={...person},stats=Array.isArray(person.stats)?person.stats.map(row=>({...row})):[],fields=[];
+    for(const [stat,[field,name]] of Object.entries(observedFields)) {
+      const value=values.get(Number(stat));
+      if(person[field]!==null||value?.number==null)continue;
+      const native=stats.find(row=>row.id===Number(stat));
+      if(native&&native.value!==value.text)continue;
+      display[field]=value.number;fields.push(field);
+      if(!native)stats.push({id:Number(stat),name,value:value.text});
+    }
+    if(!fields.length)return snapshot;
+    display.stats=stats;
+    return {...snapshot,character:display,stats_observation:{semantics:observed.semantics,
+      fields,updated_at_ms:observed.updated_at_ms,source_sha256:observedSource}};
+  }
   function validate(value,botId,sessionId){
     if(!value||value.schema!==2||value.bot_id!==botId||value.session_id!==sessionId
       ||!['connecting','connected','disconnected'].includes(value.state))throw Error('Данные другой сессии или неверный формат.');
@@ -17,6 +72,7 @@
     return copy;
   }
   function playerStatus(snapshot){
+    snapshot=displaySnapshot(snapshot);
     const p=snapshot?.state==='connected'?snapshot.character:null;
     const vital=(key,max)=>({id:key,value:p?.[key]??null,max:p?.[max]??null,
       known:number(p?.[key])&&number(p?.[max])&&p[max]>0&&p[key]<=p[max]});
@@ -96,6 +152,6 @@
       dispose(){if(closed)return;closed=true;epoch++;clearTimeout(timer);request?.abort();
         documentImpl?.removeEventListener('visibilitychange',visibility);clear();}};
   }
-  const api={validate,playerStatus,create};root.VampirLiveState=api;
+  const api={validate,playerStatus,displaySnapshot,create};root.VampirLiveState=api;
   if(typeof module!=='undefined')module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

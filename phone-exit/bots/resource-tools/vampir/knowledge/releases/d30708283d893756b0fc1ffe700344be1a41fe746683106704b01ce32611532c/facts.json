@@ -2032,6 +2032,63 @@
       "question": "live-world-state-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Current stat native reader/application и безопасное подключение новых данных без разрыва owner."
+    },
+    {
+      "addresses": [
+        "0x1455f0490",
+        "0x1455f1450",
+        "0x1456c4b20",
+        "0x1456c5a10",
+        "0x1456c6a70",
+        "0x1457351b0",
+        "0x14573d620",
+        "0x145787a20",
+        "0x1457a8350",
+        "0x1457a8410",
+        "0x145d8bcd0",
+        "0x145d8bd70"
+      ],
+      "checks": [
+        {
+          "cache_key": "53f15c928b69f2fb8691359b1121166d90ccf31d58c321b5b718d8a79464a8f1",
+          "id": "local-atlas-projection-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9dff4d94067122e38c3acc5d13f4e973834be726d2bcc70d0f1ab7ccf51f7c1c\\manifest.json",
+          "sha256": "9dff4d94067122e38c3acc5d13f4e973834be726d2bcc70d0f1ab7ccf51f7c1c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fbdc91f2b1a5cb32afe834810efcc4f5bf3de1afda3feabc82c1b641a77339af",
+          "id": "native-stat-batch-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\47069a634e722415679192d7a8bd49a689eacddbee03047177f695e6738ae868\\manifest.json",
+          "sha256": "47069a634e722415679192d7a8bd49a689eacddbee03047177f695e6738ae868",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ef9d00b6849d3c3a98b4c84b3e0ab097bad1477c61848ae6b671e6bb1319c61a",
+          "id": "observed-stats-adapter-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\82b1e2ca72991c2ccce73ac82206eda07e4bfa6bd384171e2373e9899b1d5851\\manifest.json",
+          "sha256": "82b1e2ca72991c2ccce73ac82206eda07e4bfa6bd384171e2373e9899b1d5851",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Общий current stat batch прошёл 1322 whole native сценария и 14 тестов; numeric ID 321/322, constructors/reader slots и 208 EStat проверены по EXE. Отдельный codec и observational handler/UI подключены без перезапуска owner; 12 наблюдательных тестов passed. Реальный observer работает, но новых уведомлений характеристик пока нет.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\characters\\HEADLESS-STATS-11318.md",
+          "sha256": "82b1621d4310f1387738c1b5d6f93c32ed24a106c8d086e7bd2ad2e4c5a7cf89"
+        }
+      ],
+      "id": "a65eece85fde1f8b75db203773185f620c7fc4695f7cef0e8343df31af28588b",
+      "limits": [
+        "Storage/allocation/ownership/service boundaries synthetic; полный PktCharacter не исполнен, только +1C8 static binding.",
+        "Numeric UI overlay проверен fixtures; живые HP/MP не получены, initial bodies текущий owner не сохранял.",
+        "Quests/tutorial/entities/movement capabilities не расширены, runtime owner не hot-reloaded, очередь 36 не закрыта."
+      ],
+      "method": "bounded_native",
+      "next_check": "Сохранять сессию и ждать новое matching notification; квестовую логику продолжать отдельно на базе 1.13.16 без переноса.",
+      "question": "live-world-state-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Свежие live 321/322 для текущего персонажа и initial stats интеграция нового owner при отдельном повторном входе."
     }
   ],
   "schema": 1,
