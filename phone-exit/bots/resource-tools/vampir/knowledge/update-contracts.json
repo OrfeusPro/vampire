@@ -624,7 +624,9 @@
           "writer": "0x1456e8750",
           "string-writer": "0x144aad610",
           "prepare": "0x1467ce500",
-          "constructor": "0x1456d7950"
+          "constructor": "0x1456d7950",
+          "result-constructor": "0x1456d7a70",
+          "result-reader": "0x1456dc520"
         }
       },
       "resources": [],
@@ -633,7 +635,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Reset continuation и WaitingEndNotify -> ID 101 подтверждены отдельно. Проверить текущий ответ списка, зависимости профиля и Ping clock; post-state/continuation ещё captures в общем handler, реальные services/dispatch открыты.",
+      "next_check": "Login 1.13.18: 13 контекстов перенесены пакетно; подготовка с SDK/metadata и actual buffer reader→handler проверяются автоматически. Общая prepare→wire composition, реальные SDK/backend/dispatch, SDK/GMC2/NID dependencies и current CharacterList/clock/profile до живого входа ещё открыты.",
       "context_checks": [
         "version-login-tag",
         "packet-writer-projection"

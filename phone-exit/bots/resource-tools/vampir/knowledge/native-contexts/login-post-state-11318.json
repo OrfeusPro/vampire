@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "functions": {
+    "wrapper": "0x146755a10",
+    "target": "0x144a2dbc0"
+  },
+  "exports": {
+    "run-b66ea903e973": "3afe56601081a2fb64a90f1196585a55415e56c37f05b4dc950d7e25a0116b95"
+  },
+  "leaves": {
+    "0x144a28000": "488b0541acb606c3"
+  },
+  "service_getter": "0x144a28000",
+  "globals": {
+    "service": "0x14b592c48",
+    "count": "0x14b3e0c44",
+    "chunks": "0x14b3e0c30"
+  },
+  "fixtures": {
+    "class": "0x146718c90",
+    "lookup": "0x144a26f40",
+    "occupied": "0x1422cb940",
+    "assign": "0x1417f4140",
+    "mode": "0x144a7ae90",
+    "predicate": "0x1435b93e0",
+    "fallback": "0x1435b5060",
+    "hide": "0x144a775a0",
+    "list_match": "0x144a54d10",
+    "settle": "0x144a32b40",
+    "eligible": "0x1417db1b0",
+    "mark": "0x1416cce30"
+  },
+  "call_sites": {
+    "wrapper": {
+      "0x146755a16": "0x144a28000",
+      "0x146755a1e": "0x146718c90",
+      "0x146755a29": "0x144a26f40",
+      "0x146755a36": "0x146718c90",
+      "0x146755a56": "0x144a28000"
+    },
+    "target": {
+      "0x144a2dc0b": "0x1422cb940",
+      "0x144a2dc1e": "0x1417f4140",
+      "0x144a2dc26": "0x144a7ae90",
+      "0x144a2dc32": "0x1435b93e0",
+      "0x144a2dc3e": "0x1435b5060",
+      "0x144a2dc5a": "0x144a775a0",
+      "0x144a2dc6e": "0x144a54d10",
+      "0x144a2dc7d": "qword ptr [rax + 0x2e8]",
+      "0x144a2dc89": "qword ptr [rax + 0x540]",
+      "0x144a2dca8": "0x144a32b40",
+      "0x144a2dcb0": "0x1417db1b0",
+      "0x144a2dcc1": "qword ptr [rax + 0x4c8]",
+      "0x144a2dccd": "qword ptr [rax + 0x540]",
+      "0x144a2dcd9": "qword ptr [rax + 0x2e8]",
+      "0x144a2dd0b": "0x1416cce30",
+      "0x144a2dd1f": "0x1416cce30"
+    }
+  },
+  "tail_calls": [
+    {
+      "address": "0x146755a69",
+      "target": "0x144a2dbc0",
+      "bytes": "e952812dfe"
+    }
+  ],
+  "verify_whole_exports": true
+}

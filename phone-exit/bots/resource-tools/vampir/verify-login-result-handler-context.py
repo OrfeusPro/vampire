@@ -24,8 +24,19 @@ def verify(context, root, shared=None):
     if h.sha != context['source_sha256']:
         raise ValueError('Handler shared source differs')
     native, bindings = load('build-native-entry-code'), load('update-bindings')
+    switch = context.get('switch_gate')
+    if switch:
+        if switch != 'version-gate-11318':
+            raise ValueError('Unreviewed Login gate switch')
+        gate_module = load('version-gate-switch-11318')
+        gate_module.validate(native, h)
+        shapes = load('audit-launcher-shape-11318')
+        for function in h.fragments:
+            if int(function['address'], 16) != roots['gate']:
+                shapes.normalize_function(native, h.image, function)
     calls = {name: {hex(r['address']): hex(r['direct_target']) if r['direct_target'] is not None else r['operands']
-                   for r in bindings.rows(native, h.image, at) if r['call']} for name, at in roots.items()}
+                   for r in (gate_module.rows(native, h.image, h.sha) if switch and name == 'gate'
+                             else bindings.rows(native, h.image, at)) if r['call']} for name, at in roots.items()}
     if calls != context['call_sites']:
         raise ValueError('Handler/gate call sites differ')
     labels = {int(at, 16): name for name, at in context['fixtures'].items()}
@@ -233,6 +244,8 @@ def verify(context, root, shared=None):
     cases += [run(code=code, optional_object=False, message='error') for code in (1, 9818, 9819, 90021)]
     cases += [run(code=1, gate_state=1), run(field48=1, optional_object=False), run(flag138=0)]
     cases += [run(raw16=value) for value in (0, 1, 65535)]
+    if switch:
+        cases += [run(code=0x1197, gate_state=flag) for flag in (0, 1)]
     if shared:
         cases += [run(**settings) for settings in shared.get('additional_settings', [])]
     rejected = [run(**settings) for settings in shared['rejected_settings']] if shared else []
@@ -241,7 +254,7 @@ def verify(context, root, shared=None):
                 same_packet_reader_used=bool(shared),
                 limits=['Synthetic packet only without shared reader; services/getters/storage and UI/SDK/clock/persistence/disconnect/post-state fixtures in both modes.',
                         'Handler and covered result-gate instructions execute; reader integration only when same_packet_reader_used. No dispatch/session proof.',
-                        'Post-state export rejected an out-of-unwind decompiler block; preserved in manual queue.'])
+                        'Post-state and continuation remain fixture captures here; their separate checks do not prove real backend delivery.'])
 
 
 if __name__ == '__main__':

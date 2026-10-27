@@ -5473,15 +5473,17 @@
     {
       "id": "native-login-prepare-context",
       "questions": [
-        "release-login-prepare"
+        "release-login-prepare",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_prepare_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5495,24 +5497,30 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-login-sdk-context",
       "questions": [
-        "release-login-prepare"
+        "release-login-prepare",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_sdk_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5528,26 +5536,33 @@
         "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11316.json",
         "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2c9766b1ab08/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-9dc981740f54/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-9dc981740f54/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-login-metadata-context",
       "questions": [
-        "release-login-metadata"
+        "release-login-metadata",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_metadata_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5561,26 +5576,32 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2c9766b1ab08/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-8ce3965fd27d/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-44e5a260bb97/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-44e5a260bb97/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json"
       ]
     },
     {
       "id": "native-login-prepare-metadata-context",
       "questions": [
-        "release-login-metadata"
+        "release-login-metadata",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_prepare_metadata_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5598,61 +5619,35 @@
         "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11316.json",
         "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2c9766b1ab08/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-44e5a260bb97/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-8ce3965fd27d/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-9dc981740f54/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-9dc981740f54/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-login-result-context",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_result_context.py",
-      "timeout_seconds": 60,
-      "runtime_distributions": [
-        "capstone",
-        "unicorn"
-      ],
-      "dependencies": [
-        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
-        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
-        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
-        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
-        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
-        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
-        "phone-exit/bots/test_vampir_update_contracts.py",
-        "phone-exit/bots/resource-tools/vampir/verify-login-result-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-11316.json",
-        "phone-exit/bots/vampir-shared/vampir_core/login_result.py"
-      ],
-      "artifact_dependencies": [
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3c0581002a58/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json"
-      ]
-    },
-    {
-      "id": "native-login-result-input-context",
-      "questions": [
-        "release-login-result-reader"
-      ],
-      "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
-      ],
-      "offline_reviewed": true,
-      "on_update": true,
-      "test_pattern": "test_vampir_login_result_input_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5668,27 +5663,30 @@
         "phone-exit/bots/resource-tools/vampir/verify-login-result-context.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-11316.json",
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
-        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-input-11316.json"
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3c0581002a58/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json"
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json"
       ]
     },
     {
-      "id": "native-login-result-string-context",
+      "id": "native-login-result-input-context",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
-      "test_pattern": "test_vampir_login_result_string_context.py",
-      "timeout_seconds": 90,
+      "test_pattern": "test_vampir_login_result_input_context.py",
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5706,30 +5704,32 @@
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
         "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-input-11316.json",
-        "phone-exit/bots/resource-tools/vampir/login-result-string-fixtures.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-string-11316.json"
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-input-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2fe73e379c6f/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3c0581002a58/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-4ef2b735941d/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-81d1e191e8c5/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json"
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ed5c8eee70bc/details.json"
       ]
     },
     {
-      "id": "native-login-result-buffer-context",
+      "id": "native-login-result-string-context",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
-      "test_pattern": "test_vampir_login_result_buffer_context.py",
-      "timeout_seconds": 90,
+      "test_pattern": "test_vampir_login_result_string_context.py",
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5749,7 +5749,9 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-input-11316.json",
         "phone-exit/bots/resource-tools/vampir/login-result-string-fixtures.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-string-11316.json",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-buffer-11316.json"
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-string-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2fe73e379c6f/details.json",
@@ -5758,21 +5760,74 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-81d1e191e8c5/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-80386d1eb460/details.json"
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ed5c8eee70bc/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json"
+      ]
+    },
+    {
+      "id": "native-login-result-buffer-context",
+      "questions": [
+        "release-login-result-reader",
+        "login-batch-11318"
+      ],
+      "source_sha256": [
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_login_result_buffer_context.py",
+      "timeout_seconds": 180,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-result-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-11316.json",
+        "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
+        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-input-11316.json",
+        "phone-exit/bots/resource-tools/vampir/login-result-string-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-string-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-buffer-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-buffer-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2fe73e379c6f/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3c0581002a58/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-4ef2b735941d/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6c5bd9da86eb/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-81d1e191e8c5/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json",
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-80386d1eb460/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ed5c8eee70bc/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json"
       ]
     },
     {
       "id": "login-result-registration",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_result_registration.py",
-      "timeout_seconds": 90,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5788,25 +5843,32 @@
         "phone-exit/bots/vampir-shared/vampir_core/login_result.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-result-registration.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-registration-11316.json",
-        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-registration-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3c0581002a58/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-83255b6c29bc/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-83255b6c29bc/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-896228001291/details.json"
       ]
     },
     {
       "id": "native-login-result-handler-context",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_result_handler_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5820,25 +5882,33 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-result-handler-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-handler-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-handler-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-handler-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-83255b6c29bc/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-eff5f37ca91c/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-eff5f37ca91c/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-450b89173dc1/details.json"
       ]
     },
     {
       "id": "native-login-result-body-handler-context",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_result_body_handler_context.py",
-      "timeout_seconds": 120,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5861,7 +5931,11 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-buffer-11316.json",
         "phone-exit/bots/resource-tools/vampir/verify-login-result-handler-context.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-handler-11316.json",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-body-handler-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-body-handler-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-result-body-handler-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2fe73e379c6f/details.json",
@@ -5872,21 +5946,26 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-cfe450e70430/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-80386d1eb460/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-83255b6c29bc/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-eff5f37ca91c/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-eff5f37ca91c/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-ed5c8eee70bc/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-450b89173dc1/details.json"
       ]
     },
     {
       "id": "native-login-post-state-context",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_post_state_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5900,25 +5979,31 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-post-state-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-post-state-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-post-state-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-post-state-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-41aca37e5552/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-c0c472fc6e1c/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-c0c472fc6e1c/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json"
       ]
     },
     {
       "id": "native-login-continuation-context",
       "questions": [
-        "release-login-result-reader"
+        "release-login-result-reader",
+        "login-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_login_continuation_context.py",
-      "timeout_seconds": 60,
+      "timeout_seconds": 180,
       "runtime_distributions": [
         "capstone",
         "unicorn"
@@ -5932,10 +6017,14 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-continuation-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-continuation-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-continuation-11316.json",
+        "phone-exit/bots/test_vampir_login_batch_support.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-continuation-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py"
       ],
       "artifact_dependencies": [
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-c288c83765a6/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-c288c83765a6/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json"
       ]
     },
     {

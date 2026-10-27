@@ -53,7 +53,7 @@ def verify(context, root):
     expected = [
         ('mov', 'ecx, 8'), ('call', hex(b['allocate'])), ('mov', 'rdi, rax'),
         ('test', 'rax, rax'), ('je', hex(at + 30)),
-        ('lea', 'rax, [rip + 0x36118cb]'), ('mov', 'qword ptr [rdi], rax'),
+        ('lea', 'rax, [rip + ' + hex(rows[5].operands[1].mem.disp) + ']'), ('mov', 'qword ptr [rdi], rax'),
         ('jmp', hex(at + 33)), ('mov', 'rdi, rbx'), ('mov', 'ecx, 0x140'),
         ('call', hex(b['allocate'])), ('test', 'rax, rax'), ('je', hex(at + 58)),
         ('mov', 'rcx, rax'), ('call', hex(b['packet_constructor'])),

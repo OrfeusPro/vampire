@@ -1003,6 +1003,20 @@
       "evidence": [
         "evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11318.md"
       ]
+    },
+    {
+      "id": "login-batch-11318",
+      "status": "bounded_answer",
+      "question": "Какие части Login 1.13.18 подтверждены и автоматизированы общим пакетом?",
+      "known": "13 source-specific контекстов: prepare/SDK/metadata, result/input/UTF-8/buffer, registration/handler, post-state и continuation. 6772 исполнения перекрывающихся сценариев и 52 теста. Actual reader→handler использует один packet; неполные ответы не доходят до handler. Gate1197 может продолжить после error и не означает успех сервера.",
+      "unknown": "Общая prepare→wire composition, настоящие SDK/backend/dispatcher/session, текущие SDK/GMC2/NID и CharacterList/clock/profile prerequisites.",
+      "next_action": "Переиспользовать 13 on_update checks и общий input/wire; завершить оставшиеся пакеты до source-bound профиля и онлайн.",
+      "decision_rule": "Matching не доказывает роль; native replay ограничен declared fixtures. Не ослаблять parser policy и не активировать runtime автоматически.",
+      "do_not_repeat": "При неизменных inputs использовать registered reports/hash cache. Работать целыми пакетами; не возвращаться к ручным проверкам отдельных helpers.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+      ]
     }
   ]
 }

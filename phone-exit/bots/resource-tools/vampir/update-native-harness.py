@@ -97,6 +97,18 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                      and context.get('native_input', {}).get('functions', {}).get('constructor') == '0x144aacb40'
                      and context.get('native_input', {}).get('functions', {}).get('buffer_constructor') == '0x144aac130'
                      and context.get('native_handler', {}).get('functions') == dict(handler='0x14679aec0', gate='0x1467cd7b0'))
+    login_11318_roots = {int(at, 16) for at in (
+        '14143b9a0 14143bd30 1414466a0 14144c440 144aac430 144aac550 '
+        '144aac5a0 144aac690 144aac770 144aac7a0 144aac7f0 144aac8c0 '
+        '144aace40 144aad2d0 1456d7a70 1456dc520 1457a2780 1457a38e0 '
+        '1457a5c00 1457fe0c0').split()}
+    if SHA == 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c':
+        buffer_scope = (budget == 20 and context.get('budget_scope') == 'login-result-buffer'
+                        and set(functions) == login_11318_roots)
+        handler_scope = (budget == 22 and context.get('budget_scope') == 'login-result-body-handler'
+                         and set(functions) == login_11318_roots | {0x14679b390, 0x1467cdc80}
+                         and context.get('native_handler', {}).get('functions') ==
+                         dict(handler='0x14679b390', gate='0x1467cdc80'))
     record_scope = (budget == 22 and context.get('budget_scope') == 'character-record'
                     and len(functions) == 22
                     and context.get('functions') == dict(constructor='0x145783840', reader='0x145788500',

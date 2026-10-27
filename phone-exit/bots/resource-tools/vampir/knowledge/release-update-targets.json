@@ -2222,6 +2222,32 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-PREPARE-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1467ce500",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-context"
+                ]
+              },
+              {
+                "address": "0x1456d7950",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-prepare-context.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2335,6 +2361,103 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-SDK-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1467ce500",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x1456d7950",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560b230",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560b3d0",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560a1b0",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560b0e0",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x145ccd7b0",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x144ffe760",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x144ab0f80",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14556b1f0",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x145cc6f20",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              },
+              {
+                "address": "0x14560b430",
+                "scope": "1.13.18: фиксированный native контекст native-login-sdk-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-sdk-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-prepare-context.py",
+              "login-sdk-fixtures.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2403,6 +2526,60 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-METADATA-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x14560b430",
+                "scope": "1.13.18: фиксированный native контекст native-login-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601ba0",
+                "scope": "1.13.18: фиксированный native контекст native-login-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560a9e0",
+                "scope": "1.13.18: фиксированный native контекст native-login-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x144557d00",
+                "scope": "1.13.18: фиксированный native контекст native-login-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x1456018f0",
+                "scope": "1.13.18: фиксированный native контекст native-login-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601060",
+                "scope": "1.13.18: фиксированный native контекст native-login-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-metadata-context.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
             ]
           }
         ]
@@ -2512,6 +2689,97 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-PREPARE-METADATA-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1467ce500",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x1456d7950",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560b230",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560b3d0",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560a1b0",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560b430",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601ba0",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560a9e0",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x144557d00",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x1456018f0",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601060",
+                "scope": "1.13.18: фиксированный native контекст native-login-prepare-metadata-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-prepare-context.py",
+              "verify-login-metadata-context.py",
+              "login-sdk-fixtures.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2580,6 +2848,60 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-RESULT-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456d7a70",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1456dc520",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457a38e0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457a2780",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457fe0c0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              },
+              {
+                "address": "0x1457a5c00",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
             ]
           }
         ]
@@ -2659,6 +2981,68 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-RESULT-INPUT-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x144aac490",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-input-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac550",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-input-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac5a0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-input-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac770",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-input-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac7a0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-input-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac7f0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-input-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              },
+              {
+                "address": "0x144aac8c0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-input-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-input-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "login-result-input-fixtures.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2732,6 +3116,62 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-RESULT-STRING-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x144aad2d0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-string-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x144aac690",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-string-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x14144c440",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-string-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x1414466a0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-string-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x14143bd30",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-string-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              },
+              {
+                "address": "0x14143b9a0",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-string-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-string-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "login-result-input-fixtures.py",
+              "login-result-string-fixtures.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2777,6 +3217,34 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-RESULT-BUFFER-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x144aace40",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-buffer-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-buffer-context"
+                ]
+              },
+              {
+                "address": "0x144aac430",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-buffer-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-buffer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "login-result-input-fixtures.py",
+              "login-result-string-fixtures.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2818,6 +3286,32 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-RESULT-REGISTRATION-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x14679b390",
+                "scope": "1.13.18: фиксированный native контекст login-result-registration-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "login-result-registration"
+                ]
+              },
+              {
+                "address": "0x1467cbb90",
+                "scope": "1.13.18: фиксированный native контекст login-result-registration-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "login-result-registration"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-registration.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2858,6 +3352,32 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-RESULT-HANDLER-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x14679b390",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-handler-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-handler-context"
+                ]
+              },
+              {
+                "address": "0x1467cdc80",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-handler-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-handler-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-handler-context.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
             ]
           }
         ]
@@ -2909,6 +3429,40 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-RESULT-BODY-HANDLER-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456dc520",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-body-handler-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-body-handler-context"
+                ]
+              },
+              {
+                "address": "0x14679b390",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-body-handler-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-body-handler-context"
+                ]
+              },
+              {
+                "address": "0x1467cdc80",
+                "scope": "1.13.18: фиксированный native контекст native-login-result-body-handler-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-result-body-handler-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-result-context.py",
+              "verify-login-result-handler-context.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2950,6 +3504,32 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-POST-STATE-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x146755a10",
+                "scope": "1.13.18: фиксированный native контекст native-login-post-state-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-post-state-context"
+                ]
+              },
+              {
+                "address": "0x144a2dbc0",
+                "scope": "1.13.18: фиксированный native контекст native-login-post-state-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-post-state-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-post-state-context.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -2990,6 +3570,32 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-CONTINUATION-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1464a6920",
+                "scope": "1.13.18: фиксированный native контекст native-login-continuation-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-continuation-context"
+                ]
+              },
+              {
+                "address": "0x1464acde0",
+                "scope": "1.13.18: фиксированный native контекст native-login-continuation-current; source/call/table links и declared fixtures проверены пакетно. Границы в HEADLESS-LOGIN-BATCH-11318.md; real SDK/dispatch/send/session не подтверждены.",
+                "required_checks": [
+                  "native-login-continuation-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-continuation-context.py",
+              "align-login-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
             ]
           }
         ]

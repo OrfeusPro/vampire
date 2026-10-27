@@ -60,5 +60,11 @@ class LoginResultInputContextTests(unittest.TestCase):
             tool.verify(context, ROOT)
 
 
+class CurrentLoginContextTests(unittest.TestCase):
+    def test_11318_whole_registered_context(self):
+        from test_vampir_login_batch_support import verify_current
+        verify_current(self, 'login-result-input', 'verify-login-result-context')
+
+
 if __name__ == '__main__':
     unittest.main()
