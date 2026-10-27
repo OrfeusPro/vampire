@@ -1,7 +1,7 @@
 /* View projection only. The shared live adapter owns network and identity. */
 (function(root) {
   'use strict';
-  function project(snapshot) {
+  function project(snapshot, localProjection = null) {
     const person = snapshot?.state === 'connected' ? snapshot.character : null;
     const stats = Array.isArray(person?.stats) ? person.stats : [];
     const raw = id => stats.find(row => row.id === id)?.value ?? null;
@@ -9,6 +9,8 @@
     const verifiedPosition = person && /^\d{1,20}$/.test(String(person.world_id)) && position && position.world_id === person.world_id && ['10','11'].includes(position.map_id)
       && [position.x,position.y,position.z,position.pixel_x,position.pixel_y].every(Number.isFinite)
       && ['server_target_before_engine_correction','server_target_xy_retained_z'].includes(position.semantics);
+    // A conflicting/invalid owner projection must not be hidden by a fallback.
+    const localPosition = position == null ? root.VampirLocalMapProjection?.project(snapshot,localProjection) : null;
     const questContext = snapshot?.quest_snapshot;
     const questsObserved = !!person && snapshot.coverage?.quests === 'last_received_message'
       && questContext?.semantics === 'last_received_message' && questContext.applied_to_local_task === false
@@ -36,7 +38,9 @@
     const entityRows = person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities) ? snapshot.entities : [];
     if (person?.stats_semantics === 'wire_stat_i64' && /^-?\d{1,20}$/.test(raw(134) ?? '')) power = String(BigInt(raw(134)) / 100n);
     return { person, stats, experience:raw(1), power, quests, questsKnown, questsObserved, tutorial,
-      position:verifiedPosition ? { x:position.x,y:position.y } : null,
+      position:verifiedPosition ? { x:position.x,y:position.y } : localPosition ? {x:localPosition.x,y:localPosition.y} : null,
+      mapId:verifiedPosition ? position.map_id : localPosition?.map_id ?? null,
+      positionOrigin:verifiedPosition ? 'owner_projection' : localPosition ? 'local_atlas' : null,
       xyz:person?.position && ['x','y','z'].every(k => Number.isFinite(person.position[k])) ? person.position : null,
       entitiesKnown:!!person && ['received','partial'].includes(snapshot.coverage?.entities) && Array.isArray(snapshot.entities),
       entitiesPartial:!!person && snapshot.coverage?.entities === 'partial',entityRows,

@@ -2000,6 +2000,38 @@
       "question": "runtime-admission-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Длительная стабильность соединения; завершение логики квестов на базе 1.13.16 отдельно от переноса."
+    },
+    {
+      "addresses": [
+        "0x1467cfb50"
+      ],
+      "checks": [
+        {
+          "cache_key": "bc0b11d5323d6674228cc2455e7fdf768e54a9c04e13d02468b0805378d117e5",
+          "id": "local-atlas-projection-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\514f2d11285ede76125704fac618602551961b1b3fa427de2f23c892a186c03c\\manifest.json",
+          "sha256": "514f2d11285ede76125704fac618602551961b1b3fa427de2f23c892a186c03c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Локальный atlas projector подключён через общий сборщик и компонент к существующей серверной цели входа; unchanged PAK проверен полным SHA. В браузере текущей сессии виден центрированный маркер, owner/API не менялись. Четыре теста passed, on_update/cache подключены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\maps\\HEADLESS-LOCAL-ATLAS-11318.md",
+          "sha256": "e290ce3fc7bba502d84d2e4fe943f37bfd69b11e6e7e22006ec3309ab4fb0d37"
+        }
+      ],
+      "id": "612a41452e6df707fa9b5a65b55a8978bf78bc2c814c3468e7b36909d36a6c97",
+      "limits": [
+        "Это локальная линейная проекция данных атласа, не current native widget math и не engine-corrected position.",
+        "HP/MP, movement, entities и quests/tutorial не подтверждены этим пакетом.",
+        "Старые native доказательства не перенесены на новый SHA; native queue не закрыта."
+      ],
+      "method": "static",
+      "next_check": "Завершить общий current stat native batch и observational decoder для будущих сообщений 321/322.",
+      "question": "live-world-state-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Current stat native reader/application и безопасное подключение новых данных без разрыва owner."
     }
   ],
   "schema": 1,

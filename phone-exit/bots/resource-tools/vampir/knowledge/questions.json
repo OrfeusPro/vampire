@@ -1064,14 +1064,30 @@
       "id": "runtime-admission-11318",
       "status": "bounded_answer",
       "question": "Как явно подключить проверенный candidate 1.13.18 к runtime без расширения неподтверждённых capabilities?",
-      "known": "Отдельные loader / CDN / probe / owner guards, source preflight до secrets, local socketpair world flow и bounded controlled deadline. Старый профиль и quest/tutorial identity сохранены.",
-      "unknown": "Настоящая авторизация и серверный bounded world прогон; текущие nested variants, streaming / длительная сессия / восстановление и map projection.",
-      "next_action": "Один явно ограниченный живой прогон с текущим профилем и выбранным выходом; без повторения неизвестных игровых действий.",
+      "known": "Current candidate прошёл реальный HK вход JP 256 и bounded world observation. По запросу пользователя добавлен явный keep-online и независимый Scheduler broker с проверенным python.exe; 42 теста и две настоящие Scheduler регрессии прошли. Активная сессия connected без таймера.",
+      "unknown": "Длительная стабильность / reconnect и current read-only проекции HP/MP / level / map / entities; quests/tutorial не перенесены.",
+      "next_action": "Сохранять активную сессию, подключать проверенные read-only данные. Квесты по уточнению пользователя сначала доделывать на базе 1.13.16 без переноса.",
       "decision_rule": "Source verified означает локальный допуск, не server acceptance; новый источник не включает quests/tutorial/map по старым constants.",
       "do_not_repeat": "Проверять изменившиеся зависимости штатно; использовать прежние native proofs без повторного исполнения при неизменных SHA.",
       "addresses": [],
       "evidence": [
-        "evidence/updates/HEADLESS-RUNTIME-ADMISSION-11318.md"
+        "evidence/updates/HEADLESS-RUNTIME-ADMISSION-11318.md",
+        "evidence/updates/HEADLESS-LIVE-WORLD-11318.md",
+        "evidence/updates/HEADLESS-KEEP-ONLINE-11318.md"
+      ]
+    },
+    {
+      "id": "live-world-state-11318",
+      "status": "bounded_answer",
+      "question": "Как подключить текущие read-only координаты, HP/MP и уровень к прототипу без разрыва активной сессии?",
+      "known": "Current owner connected, raw server XYZ/world/name доступны. HP/MP/level null из-за старых source guards; top-level position null без проекции. PAK карты совпадает полным SHA с прежним проверенным источником данных.",
+      "unknown": "Current stat readers/initial collection/application/EStat bindings; native widget projection math 1.13.18. Нет безопасного hot-reload Python owner; начальные stat bodies не сохранены.",
+      "next_action": "Отдельный source-bound локальный atlas projector через общий сборщик, затем общий native stat batch для текущего SHA; не выдавать local projection за current engine math.",
+      "decision_rule": "Сохранять сокет; не подменять source SHA. Local atlas calculation явно отделять от engine position. Не считать unknown stats нулевыми и не включать quest actions.",
+      "do_not_repeat": "Переиспользовать неизменённые архивы/таблицы и current archive primitives; не повторять авторизацию и готовые native checks.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-KEEP-ONLINE-11318.md"
       ]
     }
   ]

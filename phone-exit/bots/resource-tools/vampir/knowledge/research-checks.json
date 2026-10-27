@@ -9660,6 +9660,36 @@
       "system_runtime_files": [
         "ucrtbase.dll"
       ]
+    },
+    {
+      "id": "local-atlas-projection-11318",
+      "questions": [
+        "live-world-state-11318"
+      ],
+      "source_sha256": [
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_local_atlas_projection_11318.py",
+      "timeout_seconds": 90,
+      "dependencies": [
+        "phone-exit/bots/test_vampir_local_atlas_projection_11318.py",
+        "phone-exit/bots/resource-tools/vampir/ui_local_map_projection.py",
+        "phone-exit/bots/resource-tools/vampir/build-ui-prototype.py",
+        "phone-exit/bots/vampir/ui-prototype/index.html",
+        "phone-exit/bots/vampir/ui-prototype/local-map-projection.js",
+        "phone-exit/bots/vampir/ui-prototype/local-map-projection.test.cjs",
+        "phone-exit/bots/vampir/ui-prototype/prototype-live-model.js",
+        "phone-exit/bots/vampir/ui-prototype/prototype-live-model.test.cjs",
+        "phone-exit/bots/vampir/ui-prototype/prototype-live.js",
+        "phone-exit/bots/vampir/ui-prototype/map-bridge.js",
+        "phone-exit/bots/vampir/ui-prototype/map-bridge.test.cjs",
+        "phone-exit/bots/vampir/ui-prototype/quest-names-ru.js"
+      ],
+      "artifact_dependencies": [
+        "release-snapshots/c44b60d512a5b6a07a3ca7f6242eb23a385d36c87c67a7490fb2bad3c150b4db/record-indexes/faad77301f66215958cca4d9a083ca61f09f8f54650307dab1580470dc47f913/manifest.json"
+      ]
     }
   ]
 }

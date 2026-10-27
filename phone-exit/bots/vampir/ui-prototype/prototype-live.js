@@ -5,7 +5,7 @@
     const params = new URLSearchParams(location.search), sessionId = params.get('session');
     const validId = value => typeof value === 'string' && /^[a-zA-Z0-9_-]{1,48}$/.test(value);
     const model = root.VampirPrototypeLiveModel;
-    let snapshot = null, value = model.project(null), adapter, statusView, disposed = false, dialog, refreshDialog;
+    let snapshot = null, value = model.project(null), localProjection = null, adapter, statusView, disposed = false, dialog, refreshDialog;
     let follow = false, logPaused = false, cursor = 0, gap = false, interaction;
     const rows = [];
     document.getElementById('inspector').hidden = true;
@@ -45,13 +45,13 @@
     append(quests,el('h3','Задания'),policies,questList,questNotice,el('h3','Сообщения'),messageList,actionStatus);hud.append(quests);
     const mapInfo = el('footer', undefined, 'live-map-info'), world = el('span'), coords = el('span'), projection = el('span'), nearby = el('span');
     const center = button('К персонажу', () => sendMap('focus'), 'live-map-button', true);
-    center.title = 'Доступно после получения подтверждённой проекции позиции';
+    center.title = 'Центрировать серверную цель на справочном атласе';
     append(mapInfo, world, coords, projection, nearby, center, diagnostic); hud.append(mapInfo);
     const reference = el('span', 'Справочный атлас · совместимость с текущим миром проверяется', 'live-reference');
     append(screen, mapHolder, hud, reference); app.replaceChildren(screen);
     function sendMap(type = 'state') {
       map.contentWindow?.postMessage({source:'vampir-live-prototype', bot_id:profile, session_id:sessionId, type,
-        payload:{position:value.position, world_id:value.person?.world_id ?? null, map_id:snapshot?.position?.map_id ?? null, follow, labels:true}}, location.origin);
+        payload:{position:value.position, world_id:value.person?.world_id ?? null, map_id:value.mapId, follow, labels:true}}, location.origin);
     }
     function mapReady(event) {
       if (event.origin === location.origin && event.source === map.contentWindow
@@ -210,7 +210,7 @@
     }
     let questKey;
     function update(next) {
-      snapshot = next; value = model.project(next); statusView?.updateLive(next);
+      snapshot = next; value = model.project(next,localProjection); statusView?.updateLive(next);
       interaction?.observe(next);
       identity.textContent = value.person?.name || profile;
       level.textContent = 'Уровень ' + (value.person?.level ?? '—');
@@ -219,7 +219,8 @@
         ? 'Онлайн · ' + profile : next?.state === 'connecting' ? 'Вход в игру…' : 'Нет текущих данных сессии';
       world.textContent = 'Мир ' + (value.person?.world_id ?? '—');
       coords.textContent = value.xyz ? 'Серверная цель XYZ: ' + ['x','y','z'].map(k => value.xyz[k].toFixed(1)).join(' / ') : 'Серверная цель XYZ: —';
-      projection.textContent = value.position ? 'Маркер: серверная цель до коррекции клиента' : 'Позиция на карте: проекция ещё не подтверждена';
+      projection.textContent = value.positionOrigin === 'local_atlas' ? 'Маркер: серверная цель входа · локальная проекция атласа'
+        : value.position ? 'Маркер: серверная цель до коррекции клиента' : 'Позиция на карте: проекция ещё не подтверждена';
       nearby.textContent = value.entitiesPartial ? 'Наблюдалось объектов: ' + value.entities + ' · данные неполные' : 'Объекты рядом: ' + (value.entitiesKnown ? value.entities : '—');
       environmentButton.disabled = !value.entitiesKnown; center.disabled = !value.position;
       const nextQuestKey = JSON.stringify([value.questsKnown, value.questsObserved, value.quests]);
@@ -247,6 +248,9 @@
       adapter = root.VampirLiveState.create({botId:profile, sessionId, onChange:update});
     }
     connect();
+    root.VampirLocalMapProjection?.load().then(metadata => {
+      if (!disposed) { localProjection = metadata; update(snapshot); }
+    });
     return {dispose() {
       if (disposed) return; disposed = true; close(); interaction?.dispose(); adapter?.dispose(); statusView?.dispose();
       removeEventListener('resize', resize); removeEventListener('message', mapReady);

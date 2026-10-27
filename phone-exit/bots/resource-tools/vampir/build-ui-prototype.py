@@ -19,6 +19,7 @@ import ui_layout_schema
 import ui_display_settings
 import ui_status_skin
 import ui_source_roots
+import ui_local_map_projection
 
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parents[1] / 'vampir' / 'ui-prototype'
@@ -235,6 +236,7 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
             known_shared.add(row['asset_path'])
     skill_evidence, skill_images, skill_inputs = skill_sources(root)
     collection_catalog = ui_collection_catalog.prepare(root)
+    local_map_projection, local_map_inputs = ui_local_map_projection.prepare(root)
     # All texture membership is recorded as historical extraction, not active brushes.
     selected = {status_texture['asset_path']: status_texture}
     for portrait_texture in status_skin['portrait_textures']:
@@ -313,6 +315,7 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
     inputs.update(skin_inputs)
     inputs.update(status_inputs)
     inputs.update(collection_catalog['inputs'])
+    inputs.update(local_map_inputs)
     for profile in read(SOURCE / 'window-layouts.json')['profiles'].values():
         reference = profile.get('reference_resource')
         if reference:
@@ -349,6 +352,7 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
                               'ui_display_settings.py': sha(HERE / 'ui_display_settings.py'),
                               'ui_status_skin.py': sha(HERE / 'ui_status_skin.py'),
                               'ui_source_roots.py': sha(HERE / 'ui_source_roots.py')})
+    fingerprint['tools']['ui_local_map_projection.py'] = sha(HERE / 'ui_local_map_projection.py')
     identity = hashlib.sha256(json.dumps(fingerprint, sort_keys=True).encode()).hexdigest()
     out = root / 'maps/ui-prototype'
     snapshots = out / 'snapshots'
@@ -383,6 +387,7 @@ def build(root, baseline=None, *, preview_during_audit=False, ready_report=None)
                     'Цены, количества, персонажи, задания и действия — демонстрационные.',
                     'Каталог структуры не является реализацией всех игровых сценариев.'])
         write(temporary / 'manifest.json', manifest)
+        write(temporary / 'local-map-projection.json', local_map_projection)
         write(temporary / 'display-settings.json', display_settings)
         write(temporary / 'textures.json', texture_map)
         for row in shared['textures']:
