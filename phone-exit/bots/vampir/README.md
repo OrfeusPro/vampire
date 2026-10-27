@@ -1,3 +1,9 @@
+Lookup окружения 1.13.16 теперь исполнен native до record pointer и B8:
+28 inline/heap/collision/missing случаев. Производный initializer прошёл четыре
+случая и оставляет phase7. Записи пока synthetic; loader реальных данных и
+завершение phase3 после ID204 ещё нужны перед live offer.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-WORLD-RECORD-11316.md).
+
 Найдена source-фабрика производного окружения 1.13.16. Native A8 сравнивает
 результаты lookup имён, B8 возвращает record+0C, а не сам world ID. Фабрика и
 derived getters прошли 19 synthetic случаев. Источник записей, initialization
