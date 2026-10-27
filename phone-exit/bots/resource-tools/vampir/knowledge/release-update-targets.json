@@ -3000,7 +3000,8 @@
       "baseline_functions": [],
       "tools": [
         "verify-version-result-context.py",
-        "verify-version-result-handler-context.py"
+        "verify-version-result-handler-context.py",
+        "align-version-result-11318.py"
       ],
       "rule": "Найти constructor/table/ID2/reader и проверить archive callees и порядок чтения; literal и нормализованное тело сами по себе не подтверждают роль.",
       "automation": {
@@ -3034,6 +3035,25 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-RESULT-11316.md",
               "evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456dc9c0",
+                "scope": "Whole VersionResult reader + native input archive: 32 complete/17 short/5 operation failures/1 trailing-body and 72 buffer construction cases. Handler/gate/registration/live unknown.",
+                "required_checks": [
+                  "native-version-result-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-result-context.py",
+              "verify-version-result-handler-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-RESULT-READER-11318.md"
             ]
           }
         ]

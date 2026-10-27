@@ -118,7 +118,11 @@ def install(load, h, context, state, packet, archive, order):
     construction_cases = []
     if context.get('buffer_construction'):
         spec = context['buffer_construction']
-        require(spec == dict(base_table='0x1496706e8', reading_mode=1, reading_endian=0),
+        base_tables={
+            'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960':'0x1496706e8',
+            'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c':'0x149671ee8'}
+        require(context['source_sha256'] in base_tables and spec == dict(
+                    base_table=base_tables[context['source_sha256']], reading_mode=1, reading_endian=0),
                 'Input buffer construction scope differs')
         for name, expected_table in (('constructor', table), ('buffer_constructor', int(spec['base_table'], 16))):
             for size in (0, 1, 4096):

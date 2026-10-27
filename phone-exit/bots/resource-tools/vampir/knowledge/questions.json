@@ -975,6 +975,20 @@
       "evidence": [
         "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
       ]
+    },
+    {
+      "id": "version-result-reader-batch-11318",
+      "status": "bounded_answer",
+      "question": "Как VersionResult reader 1.13.18 читает тело через актуальный input archive?",
+      "known": "Фиксированный пакет 15 roots и bounded leaves прошёл source-bound alignment и native replay: 32 полных, 17 коротких, 5 failures, 1 extra-body и 72 buffer constructor случая. Constructor table/ID 2/reader slot и field projection сверены.",
+      "unknown": "Актуальные handler/gate registration и композиция reader→handler. В gate candidate 1467CDC80 найден inline switch payload после RET, линейный декодер не подтверждает полный root.",
+      "next_action": "Проверить switch dispatch/code-data separation и регистрацию gate/handler; переиспользовать готовый native input archive для следующих result packets.",
+      "decision_rule": "Reader proof не доказывает обработчик, SDK, отправку или вход. Alignment сам по себе не даёт native semantics.",
+      "do_not_repeat": "Готовый пакет и checks использовать через on_update dependency cache при неизменных inputs.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-VERSION-RESULT-READER-11318.md"
+      ]
     }
   ]
 }

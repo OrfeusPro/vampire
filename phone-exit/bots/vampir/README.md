@@ -1,3 +1,8 @@
+Осталось 98 строк из исходных 150: reader VersionResult и общий input archive
+прошли 127 native случаев и 5 тестов, закрыты две строки. Проверка включена
+в автообновление с source-specific context/cache. Gate содержит inline switch
+table и остаётся открытым. [Результат и следующий unknown](../resource-tools/vampir/knowledge/VERSION-RESULT-AUTOMATION-11318.md).
+
 Осталось 100 строк из исходных 150: пакет whole Version prepare закрыл ещё 22.
 Десять contexts прошли 1072 native сценария; семь штатных наборов — 28 тестов.
 15 helper bindings и семь checks подключены к автообновлению. Реальные OS/SDK /

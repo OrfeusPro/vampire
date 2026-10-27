@@ -9,6 +9,23 @@ CONTEXT = HERE / 'knowledge/native-contexts/version-result-11316.json'
 
 
 class VersionResultContextTests(unittest.TestCase):
+    def test_11318_reader_input_construction_and_rejections(self):
+        context=json.loads((HERE/'knowledge/native-contexts/version-result-11318.json').read_text('utf-8'))
+        tool=load('verify-version-result-context');report=tool.verify(context,ROOT)
+        self.assertEqual((len(report['cases']),len(report['truncated']),len(report['failures'])),(32,17,5))
+        self.assertEqual(len(report['construction_cases']),72)
+        self.assertTrue(all(c['returned']==0 for c in report['truncated']+report['failures']))
+        self.assertEqual(report['extra']['consumed'],17)
+        self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+        context['native_input']['buffer_construction']['base_table']='0x1496706e8'
+        with self.assertRaisesRegex(ValueError,'construction scope'):tool.verify(context,ROOT)
+
+    def test_11318_alignment_keeps_fixed_root_set_and_requires_native_validation(self):
+        artifact,report=load('align-version-result-11318').run(ROOT)
+        self.assertTrue(artifact.is_file());self.assertEqual(len(report['roots']),15)
+        self.assertEqual(report['roots']['0x1456dc5e0'],'0x1456dc9c0')
+        self.assertFalse(report['semantic_verification']);self.assertFalse(report['network_used'])
+
     def context(self):
         return json.loads(CONTEXT.read_text('utf-8'))
 

@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+VersionResult reader 1.13.18 и общий input archive перенесены: 127 случаев,
+5 тестов, on_update/cache. Остаток 98 строк. Далее gate switch с сохранёнными
+227-byte index/four-RVA tables, registration/handler composition, Login/SDK.
+[Текущий результат](../resource-tools/vampir/knowledge/VERSION-RESULT-AUTOMATION-11318.md).
+
 Пакет подготовки Version для 1.13.18 закрыт в объявленных границах: whole
 prepare с native NM/system/combiners/platform, 1072 сценария, 28 тестов.
 Contexts переносятся воспроизводимым alignment tool, семь checks подключены
