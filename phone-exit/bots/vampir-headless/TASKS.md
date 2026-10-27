@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Текущий перенос входа на 1.13.18: общий wire слой Version/Login готов в
+объявленных fixtures; constructors, tag slices и field projection также
+проверены. Не повторять их вручную при неизменных inputs: checks включены
+в автообновление. Дальше полные preparation/result и SDK/GMC2/NID, затем
+профиль и онлайн. Работы по квестам 1.13.16 ниже сохраняются отдельно.
+[Текущая проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TAG-CONSTRUCTORS-11318.md).
+
 Два native readiness predicates подключены к Time lifecycle: 34 сценария.
 Первый сравнивает data+14/environment virtual+B8; второй mode3 выбранный quest
 либо flag против byte+5A. Missing model/data и несоответствие блокируют таймер.

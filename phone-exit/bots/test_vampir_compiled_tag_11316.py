@@ -7,6 +7,15 @@ HERE = Path(__file__).resolve().parent/'resource-tools/vampir'
 
 
 class CompiledTag11316Tests(unittest.TestCase):
+    def test_11318_tag_is_read_from_current_constructors_and_consumers(self):
+        from test_vampir_version_login_context import context, load, ROOT, SHA11318
+        reports=[load('verify-version-login-context').verify(context(name,SHA11318),ROOT)
+                 for name in ('game-version','game-login')]
+        self.assertEqual(reports[0]['binding']['tag'],reports[1]['binding']['tag'])
+        self.assertEqual(reports[0]['binding']['pointer'],'0x14b1bbe98')
+        self.assertEqual(reports[1]['binding']['literal'],'0x149961820')
+        self.assertTrue(all(len(r['cases'])==4 and not r['network_used'] for r in reports))
+
     def tool(self):
         spec = importlib.util.spec_from_file_location('compiled_tag_11316_test', HERE/'replay-compiled-tag-11316.py')
         module = importlib.util.module_from_spec(spec)

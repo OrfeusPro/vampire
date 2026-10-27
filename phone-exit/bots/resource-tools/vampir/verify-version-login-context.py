@@ -20,7 +20,7 @@ def verify(context, root):
     if not isinstance(sha,str) or not re.fullmatch('[0-9a-f]{64}',sha):raise ValueError('Full context SHA required')
     expected_source=root/'client-code-snapshots'/sha/'ProjectRED-Win64-Shipping.exe'
     if Path(context['source']).resolve()!=expected_source.resolve():raise ValueError('Context source outside snapshot library')
-    spec=context['contract']['tag_check']
+    spec=context['contract'].get('tag_check_by_source',{}).get(sha,context['contract']['tag_check'])
     bindings=context['bindings']['bindings']
     ctor,prepare=[int(bindings[k],16) for k in ('constructor','prepare')]
     exports={}
@@ -98,7 +98,8 @@ def verify(context, root):
         if len(found)!=1:raise ValueError('Wrapper constructor/table/Version slot differs')
         links['wrapper_table']=hex(found[0]);links['version_slot']=0x48
     allocator,copy=calls[1:]
-    harness_context=dict(context,helpers=dict(memcpy=hex(copy)))
+    harness_context=dict(context,helpers=dict(memcpy=hex(copy)),
+        verify_whole_exports=spec.get('verify_whole_exports',False))
     h=load('update-native-harness').make_harness(harness_context,exports,{ctor,prepare},
         leaves={getter:getter_bytes.hex()},root=root)
     obj,temp,storage,rbp,stack=[h.scratch+n for n in (0x1000,0x18000,0x19000,0x10000,0x8000)]

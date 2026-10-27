@@ -33,7 +33,7 @@ def verify(context, root):
     image = native.Image(raw)
     bindings = context['bindings']['bindings']
     writer, ctor, string = [int(bindings[k], 16) for k in ('writer', 'constructor', 'string-writer')]
-    spec = context['contract']['writer_check']
+    spec = context['contract'].get('writer_check_by_source', {}).get(sha, context['contract']['writer_check'])
     size, fields = spec['object_size'], spec['fields']
     widths = {'string': 16, 'u32': 4, 'u8': 1, 'u64': 8, 'bool': 1}
     if type(size) is not int or not 16 <= size <= 512 or not 1 <= len(fields) <= 32:
@@ -77,7 +77,8 @@ def verify(context, root):
                 raise ValueError('Writer export outside source library')
             exports[path.parent.name] = artifact['sha256']
     h = load('update-native-harness').make_harness(
-        dict(context, helpers={'memcpy': spec['memcpy']}), exports, {writer}, root=root)
+        dict(context, helpers={'memcpy': spec['memcpy']},
+             verify_whole_exports=spec.get('verify_whole_exports', False)), exports, {writer}, root=root)
     packet, archive, archive_table, text = [h.scratch+n for n in (0x1000, 0x2000, 0x3000, 0x4000)]
     fixture_base = h.scratch+0x5000
     slots = {'u32': 0xc8, 'u8': 0xe0, 'u64': 0xb8, 'bool': 0xf0}

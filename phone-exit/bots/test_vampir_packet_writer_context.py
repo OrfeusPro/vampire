@@ -1,7 +1,7 @@
 import hashlib
 import unittest
 
-from test_vampir_version_login_context import context, load, ROOT, SHA
+from test_vampir_version_login_context import context, load, ROOT, SHA, SHA11318
 
 
 def writer_context(name):
@@ -13,6 +13,17 @@ def writer_context(name):
 
 
 class PacketWriterContextTests(unittest.TestCase):
+    def test_11318_projection_success_and_every_failure_boundary(self):
+        tool=load('verify-packet-writer-context')
+        for name,fields in (('game-version',13),('game-login',25)):
+            report=tool.verify(context(name,SHA11318),ROOT)
+            self.assertEqual(len(report['cases']),4*(fields+1))
+            self.assertTrue(all(c['guards'] for c in report['cases']))
+            self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+        bad=context('game-version',SHA11318)
+        bad['contract']['writer_check_by_source'][SHA11318]['fields'][0][1]=17
+        with self.assertRaises(ValueError):tool.verify(bad,ROOT)
+
     def test_whole_writers_success_and_every_failure_boundary(self):
         tool = load('verify-packet-writer-context')
         for name, fields in (('game-version', 13), ('game-login', 25)):

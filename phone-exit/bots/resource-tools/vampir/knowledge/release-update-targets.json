@@ -952,6 +952,57 @@
             "evidence": [
               "evidence/updates/HEADLESS-COMPILED-TAG-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456d7fc0",
+                "scope": "Whole packet constructors and ID leaves plus four-poison tag assignment slices for both packets. Wrapper/table/prepare link static only; full preparation not verified. ASCII conversion/allocation/memcpy fixtures.",
+                "required_checks": [
+                  "compiled-tag-native-11316",
+                  "version-login-context"
+                ]
+              },
+              {
+                "address": "0x1456d7950",
+                "scope": "Whole packet constructors and ID leaves plus four-poison tag assignment slices for both packets. Wrapper/table/prepare link static only; full preparation not verified. ASCII conversion/allocation/memcpy fixtures.",
+                "required_checks": [
+                  "compiled-tag-native-11316",
+                  "version-login-context"
+                ]
+              },
+              {
+                "address": "0x1467ceb70",
+                "scope": "Whole packet constructors and ID leaves plus four-poison tag assignment slices for both packets. Wrapper/table/prepare link static only; full preparation not verified. ASCII conversion/allocation/memcpy fixtures.",
+                "required_checks": [
+                  "compiled-tag-native-11316",
+                  "version-login-context"
+                ]
+              },
+              {
+                "address": "0x1467ce500",
+                "scope": "Whole packet constructors and ID leaves plus four-poison tag assignment slices for both packets. Wrapper/table/prepare link static only; full preparation not verified. ASCII conversion/allocation/memcpy fixtures.",
+                "required_checks": [
+                  "compiled-tag-native-11316",
+                  "version-login-context"
+                ]
+              },
+              {
+                "address": "0x1467cc850",
+                "scope": "Whole packet constructors and ID leaves plus four-poison tag assignment slices for both packets. Wrapper/table/prepare link static only; full preparation not verified. ASCII conversion/allocation/memcpy fixtures.",
+                "required_checks": [
+                  "compiled-tag-native-11316",
+                  "version-login-context"
+                ]
+              }
+            ],
+            "tools": [
+              "replay-compiled-tag-11316.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-TAG-CONSTRUCTORS-11318.md"
+            ]
           }
         ]
       }
@@ -992,6 +1043,31 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-PACKET-WRITERS-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456e8c10",
+                "scope": "Whole writer projection: 56 Version and 104 Login success/every-field-failure cases; archive methods are fixtures, separate source-bound wire proof already exists.",
+                "required_checks": [
+                  "packet-writer-context"
+                ]
+              },
+              {
+                "address": "0x1456e8750",
+                "scope": "Whole writer projection: 56 Version and 104 Login success/every-field-failure cases; archive methods are fixtures, separate source-bound wire proof already exists.",
+                "required_checks": [
+                  "packet-writer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-packet-writer-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-TAG-CONSTRUCTORS-11318.md"
             ]
           }
         ]

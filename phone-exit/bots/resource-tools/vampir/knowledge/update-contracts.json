@@ -323,7 +323,10 @@
         },
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
           "writer": "0x1456e8c10",
-          "string-writer": "0x144aad610"
+          "string-writer": "0x144aad610",
+          "prepare": "0x1467ceb70",
+          "constructor": "0x1456d7fc0",
+          "wrapper-constructor": "0x1467cc850"
         }
       },
       "resources": [
@@ -365,6 +368,20 @@
           "packet-table": {
             "kind": "vtable",
             "address": "0x149926d08"
+          }
+        },
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "tag-pointer": {
+            "kind": "pointer",
+            "address": "0x14b1bbe98"
+          },
+          "tag-literal": {
+            "kind": "ascii",
+            "address": "0x149961820"
+          },
+          "packet-table": {
+            "kind": "vtable",
+            "address": "0x149928508"
           }
         }
       },
@@ -440,6 +457,80 @@
             192
           ]
         ]
+      },
+      "tag_check_by_source": {
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "packet_id": 1,
+          "packet_name": "PktVersion",
+          "tag_field": 176,
+          "object_size": 208,
+          "start_offset": 570,
+          "stop_offset": 657,
+          "destination_offset": 80,
+          "temporary_offset": 80,
+          "verify_whole_exports": true
+        }
+      },
+      "writer_check_by_source": {
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "object_size": 208,
+          "memcpy": "0x1487f60d9",
+          "fields": [
+            [
+              "string",
+              16
+            ],
+            [
+              "u32",
+              32
+            ],
+            [
+              "string",
+              40
+            ],
+            [
+              "string",
+              56
+            ],
+            [
+              "string",
+              72
+            ],
+            [
+              "string",
+              88
+            ],
+            [
+              "string",
+              104
+            ],
+            [
+              "string",
+              120
+            ],
+            [
+              "string",
+              136
+            ],
+            [
+              "u32",
+              152
+            ],
+            [
+              "string",
+              160
+            ],
+            [
+              "string",
+              176
+            ],
+            [
+              "u32",
+              192
+            ]
+          ],
+          "verify_whole_exports": true
+        }
       }
     },
     {
@@ -514,7 +605,9 @@
         },
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
           "writer": "0x1456e8750",
-          "string-writer": "0x144aad610"
+          "string-writer": "0x144aad610",
+          "prepare": "0x1467ce500",
+          "constructor": "0x1456d7950"
         }
       },
       "resources": [],
@@ -551,6 +644,20 @@
           "packet-table": {
             "kind": "vtable",
             "address": "0x1499263d0"
+          }
+        },
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "tag-pointer": {
+            "kind": "pointer",
+            "address": "0x14b1bbe98"
+          },
+          "tag-literal": {
+            "kind": "ascii",
+            "address": "0x149961820"
+          },
+          "packet-table": {
+            "kind": "vtable",
+            "address": "0x149927bd0"
           }
         }
       },
@@ -679,6 +786,128 @@
             305
           ]
         ]
+      },
+      "tag_check_by_source": {
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "packet_id": 3,
+          "packet_name": "PktLogin",
+          "tag_field": 272,
+          "object_size": 320,
+          "start_offset": 573,
+          "stop_offset": 678,
+          "destination_offset": 128,
+          "temporary_offset": 64,
+          "verify_whole_exports": true
+        }
+      },
+      "writer_check_by_source": {
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "object_size": 320,
+          "memcpy": "0x1487f60d9",
+          "fields": [
+            [
+              "string",
+              16
+            ],
+            [
+              "string",
+              32
+            ],
+            [
+              "string",
+              48
+            ],
+            [
+              "string",
+              64
+            ],
+            [
+              "u32",
+              80
+            ],
+            [
+              "string",
+              88
+            ],
+            [
+              "string",
+              104
+            ],
+            [
+              "string",
+              120
+            ],
+            [
+              "string",
+              136
+            ],
+            [
+              "u8",
+              152
+            ],
+            [
+              "u8",
+              153
+            ],
+            [
+              "string",
+              160
+            ],
+            [
+              "u32",
+              176
+            ],
+            [
+              "string",
+              184
+            ],
+            [
+              "string",
+              200
+            ],
+            [
+              "string",
+              216
+            ],
+            [
+              "string",
+              232
+            ],
+            [
+              "u32",
+              248
+            ],
+            [
+              "string",
+              256
+            ],
+            [
+              "string",
+              272
+            ],
+            [
+              "u32",
+              288
+            ],
+            [
+              "u8",
+              292
+            ],
+            [
+              "u64",
+              296
+            ],
+            [
+              "bool",
+              304
+            ],
+            [
+              "bool",
+              305
+            ]
+          ],
+          "verify_whole_exports": true
+        }
       }
     },
     {

@@ -1,3 +1,14 @@
+Осталось 122 строки из исходных 150: пакет constructors/tag закрыл ещё 12.
+Четыре context адаптера passed; общие offline checks переиспользованы из кэша.
+Новых Ghidra-запусков в завершающем проходе 0, переиспользовано 9 этапов.
+[Автоматизация и остаток](../resource-tools/vampir/knowledge/TAG-BATCH-AUTOMATION-11318.md).
+
+Для Version/Login 1.13.18 проверены оба constructors, ID/name и оба tag
+consumers: 8 native poison случаев, плюс 160 success/failure projection случаев.
+14 тестов прошли; три checks и пять bindings подключены к автообновлению.
+Полный prepare/result и живой вход ещё не подтверждены.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TAG-CONSTRUCTORS-11318.md).
+
 Осталось 134 строки сверки из исходных 150: общий wire пакет закрыл сразу 10.
 Штатный автопроход использовал одинаковые cached reports для Version и Login.
 Убрана повторная обработка общих зависимостей обновлятора; 15 регрессий прошли

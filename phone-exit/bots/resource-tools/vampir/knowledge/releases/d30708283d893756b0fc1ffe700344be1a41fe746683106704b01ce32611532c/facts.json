@@ -883,6 +883,58 @@
       "question": "release-utf8-codec",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Полные preparation/result Version/Login, SDK/GMC2/NID, framing и живой вход."
+    },
+    {
+      "addresses": [
+        "0x1456d7950",
+        "0x1456d7fc0",
+        "0x1456e8750",
+        "0x1456e8c10",
+        "0x1467cc850",
+        "0x1467ce500",
+        "0x1467ceb70"
+      ],
+      "checks": [
+        {
+          "cache_key": "57979b2324aca86c52e6de7d29c8c34e44d6b7482c4a778332cd9a213812c48c",
+          "id": "version-login-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8391f3ab0ec9bd9c711c48d2b9c1e7b99ba87389d980af92640a15d1e4e39fb9\\manifest.json",
+          "sha256": "8391f3ab0ec9bd9c711c48d2b9c1e7b99ba87389d980af92640a15d1e4e39fb9",
+          "state": "passed"
+        },
+        {
+          "cache_key": "be6854d7c59ad5f995034da8a4c57db0ba48cc0081a87dce30f4e6dfe87a50e4",
+          "id": "compiled-tag-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6836cf2f7877992b8c5be65cd8ea911649e4fe5c10df5c688f4b654e0be57eec\\manifest.json",
+          "sha256": "6836cf2f7877992b8c5be65cd8ea911649e4fe5c10df5c688f4b654e0be57eec",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ddb2f8583db2e607fa8b568c36536430b7bd971f4607233c9a911d549d31d85d",
+          "id": "packet-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\74a594379ced2687b1953ba5f5add006325362024bb76e4be166f97a7fcc0d51\\manifest.json",
+          "sha256": "74a594379ced2687b1953ba5f5add006325362024bb76e4be166f97a7fcc0d51",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Version/Login 1.13.18: оба whole packet constructors и ID leaves, два tag assignment slices прошли 8 poison случаев; whole writer projection — 56+104 success/failure случаев. Current tables/pointer/literal/name и scoped specs подтверждены, пять bindings внесены в граф.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-TAG-CONSTRUCTORS-11318.md",
+          "sha256": "7cc5c5a1248c17476e9b08bbe789f28ab4ee0ae85f44b0377290991a2a598385"
+        }
+      ],
+      "id": "8b9418e399daa874c92cc7947e705eb6b10383b56a2ac01c8f637d4bd7393bf3",
+      "limits": [
+        "ASCII conversion/allocation/memcpy точные bounded fixtures; полные preparation не исполняются.",
+        "Wrapper/table/prepare slot и Login constructor call — статические связи; wrapper constructor не исполняется.",
+        "Archive projection methods fixtures; реальные wire bytes доказаны отдельно. Нет framing/result/SDK/live auth/profile activation."
+      ],
+      "method": "bounded_native",
+      "next_check": "Продолжать полные preparation/result пакетами с уже готовыми wire/constructors/tag; runtime profile только после остальных обязательных зависимостей.",
+      "question": "release-game-login-code-1",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Полные preparation/result и SDK/GMC2/NID нового SHA, серверное принятие и онлайн."
     }
   ],
   "schema": 1,

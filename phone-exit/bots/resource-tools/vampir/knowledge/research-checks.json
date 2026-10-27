@@ -1273,10 +1273,12 @@
     {
       "id": "version-login-context",
       "questions": [
-        "release-update-target-discovery"
+        "release-update-target-discovery",
+        "release-game-login-code-1"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -1292,7 +1294,10 @@
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
-        "phone-exit/bots/test_vampir_update_contracts.py"
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/test_vampir_version_login_context.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "runtime_distributions": [
         "capstone",
@@ -1300,7 +1305,8 @@
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
@@ -4944,7 +4950,8 @@
         "release-game-login-code-1"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -4955,7 +4962,8 @@
       "test_pattern": "test_vampir_compiled_tag_11316.py",
       "timeout_seconds": 120,
       "artifact_dependencies": [
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ],
       "dependencies": [
         "phone-exit/bots/resource-tools/vampir/replay-compiled-tag-11316.py",
@@ -4963,7 +4971,16 @@
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
         "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
-        "phone-exit/bots/resource-tools/vampir/requirements-native.txt"
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/verify-version-login-context.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/test_vampir_version_login_context.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ]
     },
     {
@@ -4991,10 +5008,12 @@
     {
       "id": "packet-writer-context",
       "questions": [
-        "release-update-target-discovery"
+        "release-update-target-discovery",
+        "release-game-login-code-1"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5012,7 +5031,9 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-packet-writer-context.py",
-        "phone-exit/bots/test_vampir_version_login_context.py"
+        "phone-exit/bots/test_vampir_version_login_context.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "runtime_distributions": [
         "capstone",
@@ -5021,7 +5042,9 @@
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6f00cf979ea3/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6f00cf979ea3/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-c95a2683d479/details.json"
       ]
     },
     {
