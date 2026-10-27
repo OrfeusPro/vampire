@@ -7,7 +7,8 @@
     "run-529edd8cc6b1": "e5afea845d4188d050edb1ab981fde64866191832eab68037357a05aef752199",
     "run-d3cea0b3b866": "0ecc28053b0f0ad60f214ade4f03b7ccac454fff14ebe9f6546eb9e4eb2ff1e6",
     "run-e3795e7cbff3": "c927f025a32e802e56bba3a91c20550847a88d252178020bf81f8927bbc90510",
-    "run-f0f4b34f6f84": "72432e1e13ea214078b8ff58a470a2149ba8aa2c016b382e4167072f021ccb8b"
+    "run-f0f4b34f6f84": "72432e1e13ea214078b8ff58a470a2149ba8aa2c016b382e4167072f021ccb8b",
+    "run-b97aef41fa0c": "587d2aa942fb93a00ba724754dfce37ab93d3f1eabae7c5d127c71d26890a316"
   },
   "functions": [
     "0x1456001d0",
@@ -17,7 +18,8 @@
     "0x1445d2a20",
     "0x145618b30",
     "0x145606830",
-    "0x14432f950"
+    "0x14432f950",
+    "0x145dad170"
   ],
   "leaves": {
     "0x14560adc0": "488b05e1b0fd05c3",
@@ -33,7 +35,8 @@
   ],
   "limits": [
     "Whole constructor, exact initializer/getters, writer, retry caller and readiness predicate execute. Numeric values are stress inputs, not live enum/quest admission.",
-    "Model lookup, registration helper, object class/fallback/context resolver, virtual7B8/7F8 guards and virtual800 processing, empty formatting/string/diagnostic operations, notification context/sink, callback submission/scheduling and string assignment are fixtures. Actual getter, phase handler, callback145606830 and explicit tail14432f950 execute. Captured empty payload crosses an explicit handoff after writer return. Active engine/network and nonempty text/allocations remain unverified."
+    "Model lookup, registration helper, object class/fallback/context resolver, virtual7B8/7F8 guards and virtual800 processing, empty formatting/string/diagnostic operations, notification context/sink, callback submission/scheduling and string assignment are fixtures. Actual getter, phase handler, callback145606830 and explicit tail14432f950 execute. Captured empty payload crosses an explicit handoff after writer return. Active engine/network and nonempty text/allocations remain unverified.",
+    "Whole receiver145dad170 produces pending+44 from native input+14 before actual writer/retry/callback. Receiver virtual+A8=true, previous-context selection/notifications, settings and empty listeners/actor context are explicit fixtures. Actual derived vtable, ID204 handler/gate/reader wiring and other receiver branches are not admitted."
   ],
   "phase_values": [
     0,

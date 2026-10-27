@@ -1,6 +1,7 @@
 """Native environment field commit controls the actual quest readiness predicate."""
 import importlib.util
 from pathlib import Path
+import struct
 import unittest
 
 
@@ -62,6 +63,20 @@ class QuestEnvironmentUpdateTests(unittest.TestCase):
             self.assertEqual(c['copied'], copied)
             self.assertEqual(c['process_calls'], int(copied and c['present']))
             self.assertEqual(c['phase_after'], 7)
+        self.assertEqual(len(result['receiver_cases']), 48)
+        self.assertEqual({(c['old'], c['requested'], c['incoming_enum'], c['guard']) for c in result['receiver_cases']},
+            {(old, requested, enum, guard) for old in (0, 5) for requested in (0, 1, 10012, 0xffffffff)
+                for enum in (0, 3) for guard in ('missing', 'deny', 'allow')})
+        for c in result['receiver_cases']:
+            allowed = c['guard']=='allow'
+            self.assertEqual(c['pending_at_writer'], c['requested'])
+            self.assertEqual(c['pending'], 0 if allowed else c['requested'])
+            self.assertEqual(c['actual'], c['requested'] if allowed else c['old'])
+            self.assertEqual(c['previous'], c['old'])
+            self.assertEqual(c['vector_hex'], struct.pack('<ddd', -0.0, 12.5, -44.25).hex())
+            self.assertEqual(c['phase_after'], 3)
+            self.assertEqual(c['callback_al'], 1 if allowed else None)
+            self.assertEqual(c['ready_after'], allowed or c['old']==c['requested'])
 
 
 if __name__ == '__main__':

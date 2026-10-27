@@ -1,3 +1,9 @@
+Найден current producer pending+44: receiver 145DAD170 переносит native input+14
+и передаёт его actual writer. 48 новых случаев вместе с прежними дают 145;
+A8=true/derived vtable и внешние подсистемы — fixtures. Current ID204 handler
+с receiver и active state ещё не связаны для live offer.
+[Источник и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-PENDING-11316.md).
+
 Callback writer теперь исполняется native с явным tail: AL=1 может обходить
 копирование/processing, а environment phase остаётся 3. Перехваченный пустой
 capture проверен после writer return; 48+9+16+24=97 сценариев прошли. Scheduler,
