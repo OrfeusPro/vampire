@@ -1,0 +1,27 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-e9cf36d161f7": "7f3f0c1ad6bc2ff9912a604b7a89adebe9ac1b18b3b596692c645c51531c25e4",
+    "run-6f0a0e3fe661": "50cb400c0991cf46a9f98a6e84668fa90e17795cedb9457634e6105c95164132",
+    "run-22845de261d6": "6d9f884d134d8472ef621b1c674a6385c7016962511c7db2d37c396b6b6eda73"
+  },
+  "functions": [
+    "0x1455cd260",
+    "0x145d853f0",
+    "0x145d6f9b0"
+  ],
+  "leaves": {
+    "0x145828b00": "488d0569cb1304c6410a0148890133c04889412848894130884138488bc1c3",
+    "0x1455be4b0": "488b05a9680206c3",
+    "0x145834490": "b812070000c3",
+    "0x141403b70": "c20000"
+  },
+  "limits": [
+    "Whole native secondary model update/concrete pending consumer/named producer with actual packet constructor/model getter. Time pending entries are handed off from prior native replay as structured records, not shared memory.",
+    "Quest map intentionally empty during secondary update; model/JSON property conversion/provider/actor/reference/busy/send/cleanup/storage destruction/memmove are explicit bounded fixtures. Derived vtable compatibility is source-bound; active runtime subtype construction is not proven.",
+    "Kind1 packet object1810 and third send/busy argument1811 verified, but actual provider/response decoder/server result not executed. Missing actor/model can consume without send. Unknownkind255 used only for compaction, not admitted gameplay."
+  ],
+  "legacy_direct_flow": [
+    "0x145d6f9b0"
+  ]
+}

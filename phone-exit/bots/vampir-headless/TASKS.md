@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Native update → pending consumer → producer проверены в 24 сценариях:
+kind1 создаёт packet 1810; busy сохраняет запись, missing actor/model может
+удалить её без send. Captured fields прошли portable codec/local socket.
+Provider/actor/property/cleanup fixtures явные, live admission false. Далее
+reader/корреляция 1811 и ограниченный одноразовый Time тест; сессию сохранять.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-CONSUMER-11316.md).
+
 Time completion теперь проверен вместе с native pending wrapper: 34 случая.
 1455ca010 не отправляет пакет сразу: добавляет kind1 в model+80 и подавляет
 same QuestInfoId даже при другом index. Другой kind/key сохраняется; внешний
