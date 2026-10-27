@@ -72,6 +72,7 @@ TOOLING_CHECKS = {
     'update-binding-closure': 'test_vampir_update_bindings.py',
     'update-run-offline': 'test_vampir_update_run.py',
     'tooling-check-scope': 'test_vampir_tooling_check_scope.py',
+    'knowledge-index-incremental': 'test_vampir_knowledge_index.py',
 }
 
 

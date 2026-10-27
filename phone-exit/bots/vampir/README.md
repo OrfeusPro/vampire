@@ -1,3 +1,8 @@
+Очередь сверки 1.13.18 уменьшена до 144 строк из исходных 150: ещё один
+fixture-only тест индекса переведён в tooling. 14 тестов индекса и 4 scope
+теста прошли; штатное обновление подтвердило passed, кэш между двумя SHA
+проверен без нового запуска тестов. [Результаты и границы](../resource-tools/vampir/knowledge/UPDATE-INDEX-TOOLING.md).
+
 Для 1.13.18 целый sign-in callback прошёл 40 сценариев полей игрока вместе с
 native constructor, SDK context getter и country setter. Token, ID, страна и
 регион передаются раздельно; missing/empty сохраняют разные значения.
