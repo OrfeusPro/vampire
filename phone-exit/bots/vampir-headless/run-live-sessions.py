@@ -2,18 +2,36 @@
 import argparse
 from contextlib import ExitStack
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 import getpass
 import importlib.util
 import json
 import os
 from pathlib import Path
 import sys
+import time
 from threading import BoundedSemaphore, Timer
 
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE.parent/'vampir-shared'))
 from vampir_core.live_session import LiveSession,LiveSessions
 from vampir_core.live_session_server import LiveSessionServer
+
+# Only fixed local pump codes enter the durable summary. Never copy an
+# exception message or arbitrary diagnostic string from an authentication step.
+CONNECTION_ERRORS=frozenset(('login_inactive','login_timeout','selection_inactive','selection_timeout',
+    'world_entry_failed','initial_tutorial_ack_unknown','quest_list_unknown','character_creation_unknown',
+    'login_response_failed','selection_response_failed','world_entry_response_failed',
+    'ping_recovery_required','connection_processing_failed'))
+
+
+def terminal_connection_error(value):
+    if value is None:return None
+    return value if type(value) is str and value in CONNECTION_ERRORS else 'unclassified'
+
+
+def terminal_counter(value):
+    return value if type(value) is int and 0<=value<=0x7fffffff else None
 
 
 def validate_accounts(value):
@@ -52,7 +70,10 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
     def emit(value):print(json.dumps(value,ensure_ascii=False),flush=True)
     def worker(row):
         bot=row['bot_id'];session=sessions[bot]
-        password=None;permit=False
+        password=None;permit=False;started=time.monotonic()
+        def terminal(**values):
+            return dict(bot_id=bot,ended_at_utc=datetime.now(timezone.utc).isoformat(),
+                duration_seconds=round(max(0,time.monotonic()-started),3),**values)
         def release_sign_in():
             nonlocal permit
             if permit:permit=False;sign_in_slots.release()
@@ -64,7 +85,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
         try:
             while not session.stop_requested:
                 if sign_in_slots.acquire(timeout=.1):permit=True;break
-            if session.stop_requested:return dict(bot_id=bot,status='session_stopped')
+            if session.stop_requested:return terminal(status='session_stopped')
             password=passwords.pop(bot)
             result=probe.run(row['email'],password=password,selected_profile=profile,
                 manifest_path=manifest,socks_port=row['socks_port'],server_policy_byte=0,
@@ -75,11 +96,15 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
                 observe_world_seconds=300,session_control=session,
                 _progress=progress)
             game=result.get('game',{})
-            session.close(game.get('login_result_key') if game.get('login_result_code') not in (None,0) else game.get('error'))
-            return dict(bot_id=bot,status=result.get('status'),game_status=game.get('status'),
-                login_result_code=game.get('login_result_code'),login_result_key=game.get('login_result_key'))
+            connection_error=terminal_connection_error(game.get('error'))
+            session.close(game.get('login_result_key') if game.get('login_result_code') not in (None,0) else connection_error)
+            return terminal(status=result.get('status'),game_status=game.get('status'),
+                login_result_code=game.get('login_result_code'),login_result_key=game.get('login_result_key'),
+                connection_error=connection_error,
+                periodic_ping_queued=terminal_counter(game.get('periodic_ping_queued')),
+                ping_results_received=terminal_counter(game.get('ping_results_received')))
         except Exception as error:
-            return dict(bot_id=bot,status='failed',error_type=type(error).__name__)
+            return terminal(status='failed',error_type=type(error).__name__)
         finally:
             release_sign_in();password=None;session.close()
     summaries=[]
