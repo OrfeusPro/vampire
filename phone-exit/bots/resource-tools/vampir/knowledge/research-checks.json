@@ -1187,9 +1187,7 @@
       "questions": [
         "release-update-target-discovery"
       ],
-      "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
-      ],
+      "source_sha256": [],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_update_contracts.py",
@@ -1198,16 +1196,15 @@
         "phone-exit/bots/resource-tools/vampir/update-contracts.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json"
-      ]
+      ],
+      "source_scope": "tooling"
     },
     {
       "id": "update-binding-closure",
       "questions": [
         "release-update-target-discovery"
       ],
-      "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
-      ],
+      "source_sha256": [],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_update_bindings.py",
@@ -1222,7 +1219,8 @@
       ],
       "runtime_distributions": [
         "capstone"
-      ]
+      ],
+      "source_scope": "tooling"
     },
     {
       "id": "update-run-offline",
@@ -1233,9 +1231,7 @@
       "questions": [
         "release-update-target-discovery"
       ],
-      "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
-      ],
+      "source_sha256": [],
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_update_run.py",
@@ -1252,7 +1248,8 @@
         "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
         "phone-exit/bots/test_vampir_research_update.py",
         "phone-exit/bots/test_vampir_knowledge_index.py"
-      ]
+      ],
+      "source_scope": "tooling"
     },
     {
       "id": "update-profile-guards",
@@ -8140,6 +8137,25 @@
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-fcd0aa6ac1ac/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-d9172c33c6b8/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-e3abc26162e7/details.json"
+      ]
+    },
+    {
+      "id": "tooling-check-scope",
+      "questions": [
+        "release-update-target-discovery"
+      ],
+      "source_sha256": [],
+      "source_scope": "tooling",
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_tooling_check_scope.py",
+      "timeout_seconds": 120,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-context.py",
+        "phone-exit/bots/test_vampir_research_workflow.py",
+        "phone-exit/bots/test_vampir_knowledge_index.py"
       ]
     }
   ]

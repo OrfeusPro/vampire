@@ -65,6 +65,27 @@ def registry(index, knowledge):
     return index.read_json(path) if path.is_file() else dict(schema=1, checks=[])
 
 
+# Explicitly reviewed fixture-only infrastructure suites. New entries require
+# code review; a native check cannot obtain version independence by a JSON flag.
+TOOLING_CHECKS = {
+    'update-contract-registry': 'test_vampir_update_contracts.py',
+    'update-binding-closure': 'test_vampir_update_bindings.py',
+    'update-run-offline': 'test_vampir_update_run.py',
+    'tooling-check-scope': 'test_vampir_tooling_check_scope.py',
+}
+
+
+def source_scope(check):
+    scope = check.get('source_scope', 'client')
+    if scope not in ('client', 'tooling'):
+        raise ValueError('Unknown offline check source scope')
+    if scope == 'tooling' and (TOOLING_CHECKS.get(check['id']) != check.get('test_pattern')
+            or check.get('offline_reviewed') is not True or check.get('source_sha256') != []
+            or check.get('artifact_dependencies') or check.get('system_runtime_files')):
+        raise ValueError('Tooling scope requires a reviewed fixture-only infrastructure suite')
+    return scope
+
+
 def system_runtime_files(names):
     """Resolve only explicitly supported Windows CRT input, never arbitrary paths."""
     if not isinstance(names, list) or len(names) > 1 or any(n != 'ucrtbase.dll' for n in names):
@@ -157,7 +178,8 @@ def run_checks(index, args, sha, question, *, check_ids=None):
         if check_ids is not None:
             if check['id'] not in check_ids: continue
         elif question not in check['questions']: continue
-        if sha not in check['source_sha256']:
+        scope = source_scope(check)
+        if scope == 'client' and sha not in check['source_sha256']:
             results.append(dict(id=check['id'], state='requires_port', reason='No reviewed check for this source SHA'))
             continue
         # Registry holds reviewed offline unittest targets, never shell commands.
@@ -173,9 +195,11 @@ def run_checks(index, args, sha, question, *, check_ids=None):
         external = check_artifacts(index, args.root, check.get('artifact_dependencies', []))
         for path in system_runtime_files(check.get('system_runtime_files', [])):
             external[str(path)] = index.digest(path)
-        definition = dict(check=check, source_sha256=sha, inputs=inputs, artifacts=external,
+        definition = dict(check=check, source_sha256=None if scope == 'tooling' else sha, inputs=inputs, artifacts=external,
             python_version=platform.python_version(), executable=sys.executable,
             runner_sha256=index.digest(Path(__file__)))
+        if scope == 'tooling':
+            definition.update(source_scope='tooling', proves_client_compatibility=False)
         if check.get('system_runtime_files'):
             definition['system_runtime_locale'] = locale.setlocale(locale.LC_ALL)
         definition['runtime_metadata'] = {}
@@ -214,8 +238,11 @@ def run_checks(index, args, sha, question, *, check_ids=None):
                 output=output[:1024*1024].decode('utf-8', errors='replace'), truncated=len(output)>1024*1024)
             report_path = snapshot(args.root, 'check-results', report)
             atomic(cache, canonical(dict(report=str(report_path))))
-        results.append(dict(id=check['id'], state=report['state'], report=str(report_path),
-            sha256=index.digest(report_path), cache_key=key))
+        outcome = dict(id=check['id'], state=report['state'], report=str(report_path),
+            sha256=index.digest(report_path), cache_key=key)
+        if scope == 'tooling':
+            outcome.update(source_scope='tooling', proves_client_compatibility=False)
+        results.append(outcome)
     return results
 
 
@@ -377,9 +404,12 @@ def finish(index, args, database):
             evidence['path'] = str(path)
         checks = run_checks(index, args, request['source_sha256'], request['question'])
         if any(c['state'] != 'passed' for c in checks): raise ValueError('Required checks are not passed: ' + json.dumps(checks))
-        if result['method'] == 'bounded_native' and not checks: raise ValueError('Native claim needs a registered offline check')
+        client_checks = [c for c in checks if c.get('source_scope', 'client') == 'client']
+        if result['method'] == 'bounded_native' and not client_checks:
+            raise ValueError('Native claim needs a source-bound client check')
         fact = {field:result[field] for field in required}
-        fact['checks'] = checks
+        # Tooling tests can gate the workflow, but cannot prove client semantics.
+        fact['checks'] = client_checks
         fact['id'] = hashlib.sha256(canonical(fact)).hexdigest()
         index.extension('knowledge-context').validate_fact(index, fact, request['source_sha256'], {request['question']})
         target = args.knowledge / 'releases' / request['source_sha256'] / 'facts.json'
@@ -400,6 +430,8 @@ def finish(index, args, database):
 
 
 def consistency(index, knowledge):
+    for definition in registry(index, knowledge)['checks']:
+        source_scope(definition)
     questions = index.read_json(knowledge / 'questions.json')['questions']
     ids = [q['id'] for q in questions]
     if len(ids) != len(set(ids)): raise ValueError('Duplicate question IDs')

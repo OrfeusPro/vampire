@@ -13,6 +13,7 @@ def load(index, knowledge):
         raise ValueError('Unsupported update contracts')
     checks = index.read_json(knowledge/'research-checks.json')['checks']
     check_ids = [c['id'] for c in checks]
+    scopes = {c['id']: index.extension('research-workflow').source_scope(c) for c in checks}
     plans = [knowledge/'release-update-targets.json']
     primary = index.read_json(plans[0])
     for name in primary.get('additional_target_plans', []):
@@ -35,6 +36,8 @@ def load(index, knowledge):
             raise ValueError('Unknown contract dependency')
         if any(x not in check_ids for x in c['checks']):
             raise ValueError('Unknown contract check')
+        if any(scopes[x] == 'tooling' for x in c['checks']):
+            raise ValueError('Tooling check cannot establish a client contract')
         if any(t not in targets for t in c.get('targets',[])):
             raise ValueError('Unknown reviewed target reference')
         for recipe in c['recipes']:

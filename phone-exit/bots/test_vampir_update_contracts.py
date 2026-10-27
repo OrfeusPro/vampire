@@ -45,6 +45,14 @@ class UpdateContractsTests(unittest.TestCase):
         self.assertEqual(result['world-session']['state'], 'incomplete')
         self.assertFalse(result['launcher']['live_verified'])
 
+    def test_tooling_check_cannot_replace_client_contract(self):
+        original=self.index.read_json;data=copy.deepcopy(self.data)
+        data['contracts'][0]['checks']=['update-contract-registry']
+        api=self.index.api()
+        api.read_json=lambda path:data if path.name=='update-contracts.json' else original(path)
+        with self.assertRaisesRegex(ValueError,'Tooling check cannot establish'):
+            self.tool.load(api,HERE/'knowledge')
+
     def test_invalid_references_cycles_and_builder_are_rejected(self):
         original = self.index.read_json
         for mutation in ('cycle','check','recipe','builder','report-role','report-path','report-cases'):
