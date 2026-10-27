@@ -22,12 +22,13 @@
       return {...value};}};
   }
   function project(snapshot,bot,session) {
-    const unknown={known:false,ready:false,messages:[],actions:[],questActions:[],results:[],automation:null};
+    const unknown={known:false,messagesKnown:false,ready:false,messages:[],actions:[],questActions:[],results:[],automation:null};
     const data=snapshot?.interaction,person=snapshot?.character;
     if(snapshot?.state!=='connected'||snapshot.bot_id!==bot||snapshot.session_id!==session||!person
-      ||!data||data.semantics!=='observed_prompts'||data.source_sha256!==SOURCE
+      ||!data||!['observed_prompts','owner_action_offers'].includes(data.semantics)||data.source_sha256!==SOURCE
       ||data.character_key!==person.key||data.world_id!==person.world_id||!hash(data.revision)
       ||!Array.isArray(data.messages)||data.messages.length>16||!Array.isArray(data.actions)||data.actions.length>48)return unknown;
+    if(data.semantics==='owner_action_offers'&&(data.messages_known!==false||data.messages.length!==0))return unknown;
     const actions=[];const seen=new Set();
     for(const a of data.actions) {
       if(!a||!id(a.id)||seen.has(a.id)||!Object.hasOwn(fields,a.kind)||!hash(a.context)
@@ -56,7 +57,7 @@
     const auto=data.automation;
     const automation=auto&&['idle','running','waiting_npc','paused','unknown'].includes(auto.state)&&text(auto.npc_label??'',128)
       ? {state:auto.state,npc_label:auto.npc_label||''}:null;
-    return {known:true,ready:data.actions_ready===true,messages,actions,questActions,results,automation};
+    return {known:true,messagesKnown:data.semantics==='observed_prompts',ready:data.actions_ready===true,messages,actions,questActions,results,automation};
   }
   function create({botId,sessionId,dispatch,configurePolicy,onChange=()=>{},storage,cryptoImpl=root.crypto,now=Date.now}) {
     const prefs=preferences(botId,storage);let view=project(null,botId,sessionId),disposed=false,status='',busy=null;

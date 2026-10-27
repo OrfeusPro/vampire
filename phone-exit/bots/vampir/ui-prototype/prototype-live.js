@@ -146,9 +146,9 @@
       questNotice.textContent=automation?.state==='waiting_npc'?'Подойдите к NPC'+(automation.npc_label?': '+automation.npc_label:'')
         :automation?.state==='running'?'Выполняется выбранное задание':!view.ready?'Управление заданиями пока недоступно'
         :policy.auto_quests?'Нажмите на квест, чтобы начать автовыполнение':'Выберите задание для ручного продолжения';
-      const key=JSON.stringify([view.messages,view.actions.map(a=>[a.id,interaction.available(a.id)]),view.known]);
+      const key=JSON.stringify([view.messages,view.actions.map(a=>[a.id,interaction.available(a.id)]),view.known,view.messagesKnown]);
       if(key===interactionKey)return;interactionKey=key;
-      if(!view.messages.length){messageList.replaceChildren(el('p',view.known?'Нет новых сообщений':'Текстовые сообщения ещё не получены'));return;}
+      if(!view.messages.length){messageList.replaceChildren(el('p',view.messagesKnown?'Нет новых сообщений':'Текстовые сообщения ещё не получены'));return;}
       messageList.replaceChildren(...view.messages.map(message=>{
         const article=el('article',undefined,'live-message');
         if(message.speaker)article.append(el('strong',message.speaker));

@@ -348,6 +348,31 @@ class LiveSession:
             self._snapshot['coverage']['quests']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
             self._snapshot['coverage']['quest_result']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
 
+    def _interaction_view(self,queue):
+        """Publish only trusted owner offers; does not invent received prompts."""
+        person=self._snapshot['character']
+        if self._source!=CURRENT_PROBE_SOURCE or self._snapshot['state']!='connected' or person is None:return None
+        ready=self._action_connection is not None and not self._stop.is_set() and not queue['closed']
+        busy=queue['blocked'] or any(r['status'] in ('queued','executing','sent') for r in queue['records'])
+        actions=[];quests=[];step=self._quest_step
+        if step is not None:
+            context,_=self._quest_step_context(step['payload'])
+            offer=dict(kind='quest_follow',context=step['context'],arguments={'quest_id':str(step['payload'].raw30)})
+            valid=context==step['context'] and self._scope()==self._action_scope and offer in self._action_offers
+            supported='quest_follow' in queue['capabilities']
+            enabled=ready and valid and supported and not busy
+            reason=None if enabled else ('Ожидание результата предыдущего действия' if busy else
+                'Состояние задания изменилось' if not valid else 'Действие не подключено владельцем')
+            action_id='quest-'+str(step['payload'].raw30)+'-'+step['context'][:24]
+            actions.append(dict(id=action_id,**offer,enabled=enabled,reason=reason))
+            quests.append(dict(quest_id=str(step['payload'].raw30),action_id=action_id))
+        view=dict(semantics='owner_action_offers',source_sha256=self._source,character_key=person['key'],
+            world_id=person['world_id'],messages_known=False,messages=[],actions_ready=ready,
+            actions=actions,quest_actions=quests,action_results=copy.deepcopy(queue['records']),
+            automation=dict(state='unknown' if queue['blocked'] else 'idle'))
+        view['revision']=hashlib.sha256(json.dumps(view,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+        return view
+
     def snapshot(self,*,for_api=False,entity_page=0):
         if type(entity_page) is not int or entity_page not in (0,1):raise ValueError('Invalid entity page')
         with self._lock:
@@ -366,6 +391,8 @@ class LiveSession:
             value['trace']=dict(packet_ids=list(self._diagnostics.ids),sample_bytes=self._diagnostics.sample_bytes)
             if self._actions:
                 value['action_queue']=self._actions.snapshot()
+                interaction=self._interaction_view(value['action_queue'])
+                if interaction is not None:value['interaction']=interaction
                 value['action_policy']=self._policy.copy()
         value['uptime_seconds']=round(time.monotonic()-self._started,1)
         return value

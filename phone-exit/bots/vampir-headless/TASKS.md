@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Backend owner offers подключены к существующему JS quest adapter: enabled
+только для явного шага, stale/busy блокируются, после dispatch остаётся receipt.
+Missing prompts отображаются отдельно от готовности действий. 3 HTTP/JS/local
+socket bridge tests, 14 регрессий и Node suites прошли; requested preview собран.
+Production offer builder ещё не включён; живую сессию сохранять.
+[Контракт и preview](../vampir/UI-LIVE-MESSAGES.md#мост-явного-owner-offer-к-панели-заданий).
+
 Однократный quest pump подключён к новому owner loop после world publish.
 Только explicit trusted offer + HTTP намерение дают dispatch; default no-op,
 stale контекст отказывает, после попытки offer снимается без автопродолжения.

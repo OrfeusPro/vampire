@@ -84,3 +84,14 @@ async function settle(){for(let i=0;i<20;i++)await tick();}
   assert.equal(posts.length,2);live.dispose();
   console.log('Live prompts: default skip, isolated preferences, manual choice/quest, NPC wait, deduplication, unknown and API identity passed');
 })().catch(error=>{console.error(error);process.exitCode=1;});
+
+// Owner offers do not assert that a dialogue decoder observed an empty list.
+{
+  const owner=snapshot();owner.interaction.semantics='owner_action_offers';owner.interaction.messages_known=false;
+  owner.interaction.messages=[];owner.interaction.actions=owner.interaction.actions.filter(a=>a.kind==='quest_follow');
+  const view=ui.project(owner,owner.bot_id,owner.session_id);
+  assert.equal(view.known,true);assert.equal(view.messagesKnown,false);assert.equal(view.actions[0].enabled,true);
+  owner.interaction.messages_known=true;assert.equal(ui.project(owner,owner.bot_id,owner.session_id).known,false);
+  owner.interaction.messages_known=false;owner.interaction.messages=[{id:'invented'}];
+  assert.equal(ui.project(owner,owner.bot_id,owner.session_id).known,false);
+}

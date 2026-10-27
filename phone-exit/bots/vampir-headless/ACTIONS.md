@@ -345,3 +345,17 @@ world/Stop, foreign owner/connection, неверный индекс, default no-
 подготовленный запуск owner с каналом; внедрение/переподключение не выполнялось.
 Это завершает управляемый путь намерения в новом коде, но не подтверждает
 движение/серверное выполнение/автопродолжение/мультиаккаунтный live запуск.
+
+## Публикация предложения шага в существующий UI adapter
+
+Новый snapshot при установленном action channel публикует owner_action_offers
+interaction, связывающий offer_quest_step с существующим quest click adapter.
+Публичные actions не содержат payload/TargetId/vector/owner key. Контекст и
+arguments точно совпадают с внутренним offer, который повторно проверяет HTTP.
+Revision меняется по состоянию/receipt, а не heartbeat. Busy/stale/unsupported
+контракт блокирует кнопку; после dispatch действие снято, receipts сохраняются.
+MessagesKnown=false не объявляет, что диалоги отсутствуют.
+[Подробная схема, preview и проверки](../vampir/UI-LIVE-MESSAGES.md#мост-явного-owner-offer-к-панели-заданий).
+Production selected-step adapter ещё не публикует offers; активный owner не
+изменялся. Локальный тест HTTP→JS projector→action→pump→socket не является
+серверным выполнением квеста или восстановлением native UI геометрии.

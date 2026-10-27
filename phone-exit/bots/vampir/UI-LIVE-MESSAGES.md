@@ -101,3 +101,42 @@ Private HTML / bridge / manual-prompts.png / npc-wait.png / manual-skip.png:
 `live-checks/scheduled-infinix-x650-20261026/`. Реальные настройки не менялись,
 игровые действия не отправлялись. После UI-проверки та же session имела uptime
 4533,8 секунды и heartbeat 892 / 892. Fixture вкладка закрыта, живая оставлена.
+
+## Мост явного owner offer к панели заданий
+
+Новый backend публикует snapshot.interaction также с отдельной семантикой
+owner_action_offers. Она означает только явные доверенные owner offers;
+messages_known=false и messages=[] обязательны. UI projector теперь различает
+known (валиден контракт действий) и messagesKnown (декодированы prompts).
+Для этого вида данных он не пишет «Нет новых сообщений», а оставляет
+«Текстовые сообщения ещё не получены». Ранее observed_prompts сохраняет прежние
+проверки сообщений и messagesKnown=true. Source/scope/revision/bounds остаются
+строгими; malformed owner messages отклоняются. Geometry/style не менялись.
+
+Interaction появляется только при явно установленной action queue, подключённом
+персонаже и current SHA. Ready требует привязанный GameConnection и отсутствие
+Stop/close. Backend публикует максимум один owner-selected quest step: descriptor
+kind quest_follow с точными context/quest_id, enabled/reason и quest_actions.
+При stale context, busy/unknown queue или неподдержанном контракте действие
+не включается. Наличие явного шага не отправляет команду: нужно HTTP намерение.
+Snapshot ничего не ставит в очередь и не сохраняет настройки.
+
+Revision — SHA видимых данных, без времени опроса. После dispatch offer исчезает,
+но action_results публикует прежние receipts для обновления UI status. Автоматика
+не объявляется running по одному sent: pump однократный, состояния idle/unknown
+не обещают выполнение цепочки. Диалог/skip/equip decoder этим мостом не добавлен.
+
+`test_vampir_quest_ui_bridge.py`: 3 теста используют настоящий HTTP snapshot,
+существующий JavaScript projector через Node, намерение и owner pump с локальным
+socketpair. Проверены одна доступная кнопка, queued disable, one frame1810,
+results sent после снятия offer, missing prompts, stale/world/close, revision,
+scope и deep copy. Данные шага/contracts synthetic, игровой сервер не вызывается.
+Live-interaction, live-state и prototype-live-model Node тесты прошли, а также
+14 регрессий owner pump/dispatch/API. Нет браузерной проверки native геометрии.
+
+Штатный requested preview собран без смены фазы аудита: snapshot
+adb92b5a5a304ed762bcaa8b4a24d3ff725327e8e5604730e2e26e4b1ca97356,
+1970 resources / 1507 images. Immutable snapshot не подменяет прежний UI tab.
+Текущий онлайн-owner не содержит нового канала/offer builder и не перезапускался;
+его реальные квестовые кнопки от этой сборки активными не становятся. Следующий
+шаг — concrete source-bound selected-step adapter и подготовленный live owner.
