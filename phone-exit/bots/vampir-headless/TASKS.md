@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Quest receipt сопоставляет ответы1811/изменения1854 после socket acceptance
+по scope/quest и 10секундному окну, с baseline/duplicate checks и deep copies.
+Чужой world1854 теперь игнорируется. Это candidate observations, не causal
+transaction или confirmation. 4 новых теста и 21 регрессия прошли; live owner
+сохранён. Далее source-bound expected transition и одноразовый owner pump.
+[Контракт и ограничения](../vampir-headless/ACTIONS.md#наблюдения-после-передачи-кадра).
+
 Добавлена отдельная transport receipt для QuestUpdate: queued до последнего
 байта, socket_accepted после полного кадра, partial close → outcome_unknown.
 Owner snapshot/journal показывают receipt отдельно от server confirmation.

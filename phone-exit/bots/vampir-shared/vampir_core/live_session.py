@@ -109,6 +109,7 @@ class LiveSession:
         # Unknown traffic is counted, never retained or mistaken for decoded state.
         with self._lock:
             if self._closed:return
+            self._sync_quest_transport()
             self._diagnostics.packet(packet_id,body)
             counts=self._snapshot['packets']
             key=str(packet_id)
@@ -167,7 +168,23 @@ class LiveSession:
         state=self._action_connection.quest_send_status(receipt['ticket'])
         if receipt['status']!=state:
             receipt['status']=state
+            if state=='socket_accepted':
+                receipt['progress_baseline']=self._quest_progress_value(receipt['quest_id'])
             self._diagnostics.event('quest_transport_updated',request_id=receipt['request_id'],status=state)
+
+    def _quest_progress_value(self,quest_id):
+        rows=[r for r in self._snapshot['quests'] if r['id']==quest_id]
+        if len(rows)!=1:return None
+        row=rows[0]
+        return dict(state=row['state'],progress=copy.deepcopy(row['progress']))
+
+    def _quest_observation_receipt(self,character_key,world_id):
+        receipt=self._quest_transport
+        if (receipt is None or receipt['status']!='socket_accepted'
+                or time.monotonic()>receipt['_deadline']
+                or (receipt['character_key'],receipt['world_id'])!=(str(character_key),world_id)
+                or self._scope()!=(str(character_key),world_id)):return None
+        return receipt
 
     def _receive_quest_result(self,body,character_key,world_id):
         # Caller holds session lock. A complete response is an observation, not
@@ -189,6 +206,16 @@ class LiveSession:
             character_key=str(character_key),world_id=world_id,received_at_ms=time.time_ns()//1000000,
             semantics='last_received_message',applied_to_local_task=False,action_confirmed=False,
             correlation='not_established')
+        receipt=self._quest_observation_receipt(character_key,world_id)
+        if receipt is not None and receipt['quest_id']==str(result.quest_id):
+            observed=dict(result_code=result.result_code,state=result.state,
+                task_index=result.progress.raw08,index_matches_sent=result.progress.raw08==receipt['task_index'])
+            if receipt['observations']['reply']!=observed:
+                receipt['observations']['reply']=observed
+                self._diagnostics.event('quest_reply_candidate',request_id=receipt['request_id'],
+                    result_code=result.result_code,index_matches_sent=observed['index_matches_sent'])
+            self._snapshot['quest_update_result']['correlation']='same_scope_quest_after_socket_acceptance'
+            self._snapshot['quest_update_result']['candidate_request_id']=receipt['request_id']
         self._snapshot['coverage']['quest_result']='last_received_message'
         self._diagnostics.event('quest_update_result_received',packet_id=1811,result_code=result.result_code,
             quest_id=str(result.quest_id),state=result.state,task_index=result.progress.raw08)
@@ -197,7 +224,7 @@ class LiveSession:
         # Called under the owner lock. Keep only a complete bounded message;
         # neither record state nor raw08 is interpreted as an active task.
         character=self._snapshot['character']
-        if character and character['key']!=str(character_key):return
+        if character and (character['key'],character['world_id'])!=(str(character_key),world_id):return
         try:
             message=decode_quest_sync(body,source_sha256=self._source,
                 max_collection_items=128,max_total_items=128,max_payload_size=8192)
@@ -218,6 +245,18 @@ class LiveSession:
             applied_to_local_task=False,character_key=str(character_key),world_id=world_id,
             group_types=[g.raw08 for g in message.groups],raw18=str(message.raw18),
             received_at_ms=time.time_ns()//1000000))
+        receipt=self._quest_observation_receipt(character_key,world_id)
+        if receipt is not None:
+            matches=[r for r in rows if r['id']==receipt['quest_id']]
+            value=self._quest_progress_value(receipt['quest_id'])
+            baseline=receipt['progress_baseline']
+            observed=dict(matches=len(matches),baseline_known=baseline is not None,
+                changed=bool(baseline is not None and value is not None and value!=baseline),
+                current=value)
+            if receipt['observations']['progress']!=observed:
+                receipt['observations']['progress']=observed
+                self._diagnostics.event('quest_progress_candidate',request_id=receipt['request_id'],
+                    matches=len(matches),changed=observed['changed'])
         self._snapshot['coverage']['quests']='last_received_message'
         self._diagnostics.event('quests_received',packet_id=1854,records=len(rows),groups=len(message.groups))
 
@@ -312,7 +351,7 @@ class LiveSession:
             self._sync_quest_transport()
             value=copy.deepcopy(self._snapshot)
             if self._quest_transport is not None:
-                value['quest_transport']={k:v for k,v in self._quest_transport.items() if k!='ticket'}
+                value['quest_transport']=copy.deepcopy({k:v for k,v in self._quest_transport.items() if k!='ticket' and not k.startswith('_')})
             if for_api:
                 total=len(value['entities']);page=entity_page if total>256 else 0
                 value['entities']=value['entities'][page*256:(page+1)*256]
@@ -464,7 +503,9 @@ class LiveSession:
                     ticket=connection.queue_tracked_quest_update(payload,source_sha256=self._source)
                     self._quest_transport=dict(ticket=ticket,request_id=request_id,quest_id=str(payload.raw30),
                         task_index=payload.raw38,character_key=self._scope()[0],world_id=self._scope()[1],
-                        status='queued',semantics='local_transport_only',server_confirmed=False)
+                        status='queued',semantics='local_transport_only',server_confirmed=False,
+                        progress_baseline=None,observations=dict(reply=None,progress=None,causality='not_proven'),
+                        _deadline=time.monotonic()+10)
                 except (ValueError,TypeError,BufferError,RuntimeError):raise ActionNotQueued() from None
             result=self._actions.queue_claimed(owner_key,request_id,context=context,enqueue=enqueue)
             self._diagnostics.event('action_dispatch',request_id=result['request_id'],action_kind=result['kind'],status=result['status'])

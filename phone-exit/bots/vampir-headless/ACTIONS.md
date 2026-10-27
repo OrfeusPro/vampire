@@ -255,3 +255,49 @@ release/лимит/sequence, session snapshot/journal/повтор без нов
 по себе не разрешают повторять действие. Корреляция 1811 с transport/request
 и подтверждённым progress ещё впереди. Production owner channel/pump и
 текущий работающий процесс этим изменением не включаются и не перезапускаются.
+
+## Наблюдения после передачи кадра
+
+Quest transport receipt теперь содержит progress_baseline и observations:
+reply, progress, causality=not_proven. Baseline — единственная запись того же
+quest из последнего1854, скопированная при первом наблюдении socket_accepted,
+до применения следующего входящего сообщения. Это исключает изменения1854,
+которые успели прийти, пока кадр ещё стоял в outbound. Если baseline отсутствует
+или quest ID повторяется, changed не выставляется как подтверждённое отличие.
+
+Сопоставление допускается только для socket_accepted, того же character/world
+scope и не позднее10секунд от dispatch. Ни HTTP time, ни heartbeat не создают
+новый срок. Обработка packet сначала синхронизирует transport receipt, затем
+декодирует ответ. Ответ1811 того же quest сохраняет result_code/state/task_index
+и index_matches_sent в observations.reply. QuestUpdateResult получает
+candidate_request_id и correlation=same_scope_quest_after_socket_acceptance.
+Другой quest не связывается. Повтор тех же полей не дублирует candidate event.
+
+Полный1854 того же scope показывает observations.progress: число совпавших
+quest IDs, наличие baseline, current state/progress и changed. Отсутствие quest
+не означает завершение; несколько совпадений не выбираются произвольно.
+Валидное сообщение1854 с чужим world теперь игнорируется до изменения списка,
+как уже игнорировался чужой character. Старое сообщение не очищает текущие
+квесты и не обновляет receipt. Другой session использует собственный receipt.
+
+Это сопоставление по scope/quest/порядку/времени, **не** protocol transaction ID.
+Задержанный ответ на старое действие того же квеста может совпасть, поэтому
+causality остаётся not_proven, server_confirmed=false. Ни code0, ни changed,
+ни index_matches_sent не вызывают resolve_action. Разные returned indices и
+ошибки тоже показываются без объявления успеха. После истечения окна новые
+наблюдения больше не привязываются к receipt, но обычный last_received_message
+обновляется. Snapshot глубоко копирует вложенные observations и не выдаёт
+внутренний ticket/deadline. Journal события quest_reply_candidate и
+quest_progress_candidate остаются в существующем ограниченном журнале.
+
+`test_vampir_quest_observations.py`: 4 теста — исключение pre-send ответа,
+новый baseline после queued progress, отличие baseline/current, настоящий
+локальный receive stream1811, повтор без дубли события, разные error/index,
+foreign quest/world, duplicate IDs, expiry, две session и world transition.
+Проверено отсутствие confirmation и сохранение sent action. 21 регрессионный
+тест receipt/live quests/live results/dispatch/API прошёл. Все данные игрового
+сервера в этих проверках синтетические; живая сессия не менялась.
+
+Далее нужен source-bound ожидаемый переход выбранного шага и явный owner pump,
+который запускает одну команду и проверяет результат без автоматического retry.
+Уже работающий owner остаётся на прежнем коде; этот патч в него не внедряется.
