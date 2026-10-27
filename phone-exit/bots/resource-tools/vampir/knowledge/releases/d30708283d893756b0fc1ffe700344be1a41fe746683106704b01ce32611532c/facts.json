@@ -1,0 +1,37 @@
+{
+  "facts": [
+    {
+      "addresses": [
+        "0x1444eecd0",
+        "0x144503e10"
+      ],
+      "checks": [
+        {
+          "cache_key": "1a4a0f246848a53f871726997ed19151fd576370f76bc9e28fb385a212aa588b",
+          "id": "launcher-shape-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291\\manifest.json",
+          "sha256": "14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Full instruction/local-edge shapes of launcher token652/sign-in679 agree with pinned11316; exact UTF16 routes proven.70 external calls per function and22/20 RIP references preserved as unresolved pairs, no auth/profile admission.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-SHAPE-11318.md",
+          "sha256": "cec0196ab71a0fa956979b7b758a019f2e48ea87797fdba2624a20b66c418bea"
+        }
+      ],
+      "id": "f981eebf4985e24faba579f2c04086750481253214f0ae38cfa7d682c5cb4d64",
+      "limits": [
+        "Whole native ranges and source bytes verified, legacy baseline coverage flags absent but Jcc/full-range checked. No native execution, external callee/data equivalence, serialization, callbacks or live auth established."
+      ],
+      "method": "static",
+      "next_check": "Проверить key references/callback thunks/transport targets по current source, затем полный launcher contract.",
+      "question": "launcher-contract-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Request keys/body/headers, callback and transport implementations plus active SDK/GMC2 context11318."
+    }
+  ],
+  "schema": 1,
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+}
