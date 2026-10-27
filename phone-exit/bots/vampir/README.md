@@ -1,3 +1,9 @@
+Environment predicate связан с настоящим constructor/global/vtable: getter
+читает int окружения +40. Эти native функции заменили две прежние подстановки;
+34 Time сценария прошли. Registry callback и фактические значения полей ещё
+не установлены, поэтому live offer пока не включён.
+[Источник и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-BINDING-11316.md).
+
 Начальное QuestTask data+14 связано с конструктором: source constant 0,
 загруженные шесть шагов «Зова крови» сохраняют 0 в обоих порядках загрузки.
 Проверка включает 36 native проекций; поздние записи поля и environment kind

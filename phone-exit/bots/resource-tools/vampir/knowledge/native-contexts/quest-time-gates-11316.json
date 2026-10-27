@@ -8,7 +8,8 @@
     "run-6ba3bac90477": "555fac0e82d64426df3762c5075a6853ca467f5f41eccf8cde21b548ababb0cd",
     "run-3cf3cb9c01a4": "80c3b3e8bd0821a5f529b7f5f2fefc2a7b7288d23e5e805c9ce80c33be9345cd",
     "run-7260328169ab": "16fd80f57da81e1919f064b280ac6352d788ba184682c9139b3e04fb44218a40",
-    "run-b36956e19880": "5d1579b5f094b89be1dc17fd2918654b846e0dbe7df4585f78d5893150678576"
+    "run-b36956e19880": "5d1579b5f094b89be1dc17fd2918654b846e0dbe7df4585f78d5893150678576",
+    "run-430fed1bb906": "6e162d6a5056ba52dbfe8bf50bec54e02b66ab2271c8c4d489e5c2f54a68bd06"
   },
   "functions": [
     "0x1455b0050",
@@ -17,17 +18,20 @@
     "0x14549a800",
     "0x1455ca200",
     "0x14568cad0",
-    "0x14568ca20"
+    "0x14568ca20",
+    "0x1456001d0"
   ],
   "leaves": {
     "0x1455e7510": "488b41304885c07503b0ffc30fb64029c3",
     "0x1455be4b0": "488b05a9680206c3",
     "0x14144ec00": "488b4130c3",
-    "0x1433ae360": "0fb68189000000c3"
+    "0x1433ae360": "0fb68189000000c3",
+    "0x14560adc0": "488b05e1b0fd05c3",
+    "0x1418af880": "8b4140c3"
   },
   "limits": [
     "Whole Time parameter/start/tick/timer/completion with actual two readiness predicates and model getter; source two Time rows.",
-    "Model lookup/environment kind/JSON/string/other timers/property storage/final completion sink remain bounded fixtures. Record+30 task and Task+40 data are shared with the actual Time lifecycle. Data+14 and environment fields are synthetic; their live origins are not established.",
+    "Model lookup/environment state fields/registration base helper/JSON/string/other timers/property storage/final completion sink remain bounded fixtures. Native environment constructor binds actual global/vtable/getters. Record+30 task and Task+40 data are shared with Time. Live field values and later writes are not established.",
     "Exact source leaves read record+30 and QuestTask RunInInstance byte+89; original data vtable+20 is pinned. Both predicates execute with the same task/data as Time. No gameplay action admission."
   ],
   "native_gates": true

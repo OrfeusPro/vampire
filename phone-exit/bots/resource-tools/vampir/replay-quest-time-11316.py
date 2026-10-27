@@ -135,18 +135,19 @@ def run(context_path=None):
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
     if native_gates:
         callbacks.pop(0x14568cad0);callbacks.pop(0x14568ca20)
-        environment_table=base+0xf000
+        callbacks.pop(0x14560adc0)
+        if source_qword(0x149909370+0xb8)!=0x1418af880:raise ValueError('Environment kind getter slot changed')
         if source_qword(0x1499f67f8+0x20)!=0x1433ae360:raise ValueError('QuestTask RunInInstance slot changed')
-        def environment_kind(machine):
-            if reg('RCX')!=environment:raise ValueError('Time gate environment kind receiver')
-            calls.append('gate-environment-kind');h.finish(4 if current['mode']=='gate-one' else 3)
+        def environment_registration(machine):
+            if reg('RCX')!=environment+0x28:raise ValueError('Environment registration base receiver')
+            calls.append('environment-registration-fixture');h.finish(reg('RCX'))
+        callbacks[0x144286f50]=environment_registration
         def blocked_instance(machine):
             if reg('RCX')!=model or reg('RDX')!=110120 or reg('R8')&255!=1:raise ValueError('Blocked instance fallback scope')
             calls.append('blocked-instance');h.finish()
         callbacks[base+0xe120]=blocked_instance
-        callbacks[base+0xe110]=environment_kind
         import unicorn
-        for address,label in ((0x14144ec00,'gate-resolve'),(0x1433ae360,'gate-data-flag')):
+        for address,label in ((0x14144ec00,'gate-resolve'),(0x1433ae360,'gate-data-flag'),(0x1418af880,'gate-environment-kind')):
             uc.hook_add(unicorn.UC_HOOK_CODE,lambda machine,at,size,user,label=label:calls.append(label),begin=address,end=address)
     if native_pending:
         callbacks.pop(0x1455ca010)
@@ -192,7 +193,12 @@ def run(context_path=None):
         put(record+0x20,110120);put(record+0x28,2,1);put(record+0x30,task);put(control+8,1,4);put(control+12,1,4);put(data,0x1499f67f8)
         put(closure,task);put(json_ref,json_object);put(0x14b5e4d60,model);put(environment+0x30,6,1)
         if native_gates:
-            uc.mem_write(environment,bytes(0x80));put(environment,environment_table);put(environment_table+0xb8,base+0xe110)
+            uc.mem_write(environment,b'\xa5'*0x100)
+            if h.call(0x1456001d0,environment)!=environment or get(0x14b5e5ea8)!=environment or get(environment)!=0x149909370:
+                raise ValueError('Environment constructor/global/vtable binding differs')
+            if get(environment+0x40,4)!=0xa5a5a5a5:raise ValueError('Environment constructor kind footprint differs')
+            if h.call(0x14560adc0,0)!=environment:raise ValueError('Environment global getter differs')
+            put(environment+0x40,4 if mode=='gate-one' else 3,4)
             put(environment+0x30,6,1);put(environment+0x50,110120 if mode=='gate-mode3-match' else 110121)
             put(environment+0x58,3 if mode in ('gate-two','gate-mode3-match') else 0,1)
             put(environment+0x5a,0 if mode=='gate-flag-match' else 1,1)
@@ -265,7 +271,9 @@ def run(context_path=None):
     if audit.sha256(archive)!=context['pak_sha256']:raise ValueError('Time PAK changed during run')
     report=dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),exports=h.evidence,
         source_rows=source,cases=cases,native_execution=True,network_used=False,action_admitted=False,limits=context['limits'])
-    if native_gates:report['native_gates']=True
+    if native_gates:
+        report['native_gates']=True
+        report['environment_binding']=dict(constructor='0x1456001d0',global_pointer='0x14b5e5ea8',vtable='0x149909370',getter='0x1418af880',field_offset=0x40,kind_after_constructor_with_registration_fixture=0xa5a5a5a5)
     if native_pending:report['native_pending']=True
     target=audit.save_snapshot(h.root/('code-clues/quest-time-gates-11316' if native_gates else 'code-clues/quest-pending-time-11316' if native_pending else 'code-clues/quest-time-11316'),report);return target,report
 

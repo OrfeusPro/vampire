@@ -11,7 +11,10 @@ class QuestTimeGatesTests(unittest.TestCase):
         target,r=m.run(root/'knowledge/native-contexts/quest-time-gates-11316.json')
         self.assertTrue(target.is_file());self.assertTrue(r['native_gates']);self.assertFalse(r['network_used']);self.assertFalse(r['action_admitted'])
         self.assertEqual(len(r['cases']),34)
+        self.assertEqual(r['environment_binding']['field_offset'],0x40)
+        self.assertEqual(r['environment_binding']['kind_after_constructor_with_registration_fixture'],0xa5a5a5a5)
         for c in r['cases']:
+            self.assertEqual(c['calls'].count('environment-registration-fixture'),1)
             if c['mode'] in ('open','gate-mode3-match','gate-flag-match'):
                 self.assertEqual(c['requests'],[0,0,1,1,2]);self.assertEqual(c['states'],[1,0xffffffff,1,0xffffffff,1])
             elif c['mode']=='record-advances':self.assertEqual(c['requests'],[0,0,1,1,1])
