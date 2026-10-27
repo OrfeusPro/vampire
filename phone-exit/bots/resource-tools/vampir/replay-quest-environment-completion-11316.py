@@ -20,18 +20,27 @@ def load(name):
     return module
 
 
-def run(with_world_finish=False):
+def run(with_world_finish=False, with_handler=False):
+    if with_handler and not with_world_finish:
+        raise ValueError('Handler requires explicit world-finish composition')
     exports = dict(EXPORTS)
     functions = {0x145612a90, 0x145618b30, 0x145da88d0}
     leaves = {0x141403b70: 'c20000'}
     if with_world_finish:
         exports.update(load('quest-world-finish-binding-11316').EXPORTS)
         functions.add(0x145daca00)
+    if with_handler:
+        exports['run-eff5f37ca91c'] = '4e22414b4f8c1c431e4b3c417917f72aee1223df0049b08d50d121275619b43d'
+        functions.update({0x1467ca450, 0x1467cd7b0})
+        leaves.update({0x1467cdab2: '488b4d47', 0x145757ea0: 'b8ce000000c3',
+            0x14560adc0: '488b05e1b0fd05c3'})
     h = load('native-request-harness-11316').make_harness(
         exports, functions, leaves=leaves)
     index = load('knowledge-index')
     if h.sha != SHA or any(not f.get('block_coverage_complete')
-            or f.get('direct_flow_coverage_complete') is not True
+            or (f.get('direct_flow_coverage_complete') is not True
+                and not (with_handler and f['address'] == '0x1467cd7b0'
+                         and f.get('direct_flow_coverage_complete') is None))
             or index.missing_conditional_fallthroughs(f['instructions']) for f in h.fragments):
         raise ValueError('Completion source/coverage differs')
     uc, x, b = h.uc, h.x, h.scratch
@@ -154,7 +163,7 @@ def run(with_world_finish=False):
                     after=get(environment + 0x30, 1), phase_gate_passed=get(environment + 0x30, 1) > 5,
                     events=events.copy()))
     finish = load('quest-world-finish-binding-11316').run_cases(
-        h, environment, services, listeners, context, state, events) if with_world_finish else None
+        h, environment, services, listeners, context, state, events, with_handler=with_handler) if with_world_finish else None
     audit = load('audit-client-release')
     result = dict(source_sha256=SHA, tool_sha256=audit.sha256(Path(__file__)), exports=h.evidence,
         bindings=bindings, derived_call=dict(address='0x145da88f1', bytes='e89aa186ff', target='0x145612a90'),
@@ -162,10 +171,13 @@ def run(with_world_finish=False):
         limits=['Whole derived/base completion and phase setter execute in an explicitly empty engine mode.',
             'Diagnostics, world/actor lookup, UI/event reset and providers are fixtures; no listeners or saved delegate.',
             'Derived flag+1A8, special world10010, kind0x12 and configuration branches are not exercised.',
-            ('ID206 receiver-to-virtual78 executes; handler binding is static, whole handler/gate, real records, active task and full Time remain unproven.'
+            ('ID206 handler/common gate/receiver/virtual78 execute; reader, real records, active task and full Time remain unproven.'
+             if with_handler else 'ID206 receiver-to-virtual78 executes; handler binding is static, whole handler/gate, real records, active task and full Time remain unproven.'
              if with_world_finish else 'ID206 handler/receiver-to-virtual78 binding, real environment records, active task and full Time lifecycle remain unproven.'),
             'Source11316 only; no automatic installed11318 or live action admission.'])
     topic = 'quest-world-finish-completion-11316' if with_world_finish else 'quest-environment-completion-11316'
+    if with_handler:
+        topic = 'quest-world-finish-handler-11316'
     return audit.save_snapshot(h.root / 'code-clues' / topic, result), result
 
 
