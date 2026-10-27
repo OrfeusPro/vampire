@@ -1649,6 +1649,25 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1467d1b50",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-prepare-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
+            ]
           }
         ]
       }
@@ -1717,6 +1736,32 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1444ec9d0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-nm-context"
+                ]
+              },
+              {
+                "address": "0x1445cd020",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-nm-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
             ]
           }
         ]
@@ -1797,6 +1842,39 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1416dd990",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              },
+              {
+                "address": "0x1445c4cd0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              },
+              {
+                "address": "0x1445ce420",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
             ]
           }
         ]
@@ -2132,6 +2210,25 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1467d1b50",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
+            ]
           }
         ]
       }
@@ -2274,6 +2371,53 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x141426700",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x141429e70",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x14142bbc0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x14142bc90",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x1414380b0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
+            ]
           }
         ]
       }
@@ -2385,6 +2529,25 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1467d1b50",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-prepare-platform-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
+            ]
           }
         ]
       }
@@ -2451,6 +2614,25 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1467d14e0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-prepare-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
             ]
           }
         ]
@@ -2785,6 +2967,60 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x144557b40",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145600ca0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x145601530",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x1456017e0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560a620",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              },
+              {
+                "address": "0x14560b070",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-metadata-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
+            ]
           }
         ]
       }
@@ -2983,6 +3219,25 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1467d14e0",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-login-prepare-metadata-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
             ]
           }
         ]
@@ -3880,6 +4135,25 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-RESULT-READER-11318.md",
               "evidence/updates/HEADLESS-VERSION-RESULT-HANDLER-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1456dc620",
+                "scope": "Current whole preparation / VersionResult within declared SDK/OS/string/send fixtures; no live admission",
+                "required_checks": [
+                  "native-version-result-context"
+                ]
+              }
+            ],
+            "tools": [
+              "run-entry-batch-11320.py",
+              "generate-entry-contexts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
             ]
           }
         ]

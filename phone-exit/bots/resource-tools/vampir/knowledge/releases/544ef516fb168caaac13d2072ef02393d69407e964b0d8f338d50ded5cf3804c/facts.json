@@ -95,6 +95,64 @@
       "question": "release-function-reuse",
       "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
       "unknown": "Current preparation / readers / input-archive и полный runtime допуск 1.13.20, онлайн-совместимость и изоляция нескольких реальных аккаунтов."
+    },
+    {
+      "addresses": [
+        "0x1456dc620",
+        "0x1467a0610",
+        "0x1467d14e0",
+        "0x1467d1b50"
+      ],
+      "checks": [
+        {
+          "cache_key": "d06b1b5b78931296664f186ca98b1cd75349472c66e6a70f815bc3814a7e4d23",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\051c72cb4fa58c3ce10470c1ad9df409f01f137bb7c093240eeef286e71b83bd\\manifest.json",
+          "sha256": "051c72cb4fa58c3ce10470c1ad9df409f01f137bb7c093240eeef286e71b83bd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "59f0aede0c440f6b8778742f31312bee58fe2a22a0017cde47cb63e9683b6cae",
+          "id": "native-wire-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1e7757950ebe96e6ff4d18ac49d02a351f7b08727587235f023994333b9b1e4c\\manifest.json",
+          "sha256": "1e7757950ebe96e6ff4d18ac49d02a351f7b08727587235f023994333b9b1e4c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "54c28545924bdd6734c3a04ae8cbc917c956e8b6aabbcdcf7c61cdc1739fb1cf",
+          "id": "native-entry-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\33fa560bf11fd26a50531a59ea7c15fcc479325b7faf44e1472736301cde7a82\\manifest.json",
+          "sha256": "33fa560bf11fd26a50531a59ea7c15fcc479325b7faf44e1472736301cde7a82",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dfa3e875970e414b52c5f0b3ccf1692526bcefc03f8198bcb472b995b43c67bc",
+          "id": "native-result-gate-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\33145fe1d6fb5af757bb02ee2ae6a17dc30abb0b336d107ab687715dbb468923\\manifest.json",
+          "sha256": "33145fe1d6fb5af757bb02ee2ae6a17dc30abb0b336d107ab687715dbb468923",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Подготовка Version/Login и VersionResult перенесены на 1.13.20: общий cached пакет — 4622 native исполнения (Version 1072, Login 3424, VersionResult 126), отдельно 331 handler/switch. 13 штатных checks имеют текущие source variants и прошли run_checks. Полные SHA, exports, call links, tables, ABI, canaries и cleanup проверены; graph bindings подготовки и VersionResult добавлены. Сетевой вход и runtime не выполнялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-ENTRY-BATCH-11320.md",
+          "sha256": "a7ac8866aa79880ecd3a290e2dc9b1a7386a75418b73771eb758c2ed94123e6e"
+        }
+      ],
+      "id": "ca01d7cb7945c1e981c982a451dcf4d6af69920cf0dda5bb4c9e18a4255559f9",
+      "limits": [
+        "SDK / OS / storage / allocator / string / send effects являются явными bounded fixtures, а не реальным вводом аккаунта.",
+        "VersionResult handler проверен с current gate: 251 инструкция и 227 index cases. Старая структура LoginResult не применяется; новая ещё не подтверждена.",
+        "Compiled tag изменился; новому SHA требуются явные metadata. Старая константа разрешена только для 1.13.16 / 1.13.18.",
+        "Post-state 0x146758950: decompiler block outside unwind; исключён из независимой выгрузки 25 roots, неудачный export сохранён.",
+        "Кэш пакета 5d8d52caf23644079d5d3663cf167432ce6617a2208960df6207fa66a8fb8ad2 повторно использован. Очередь strict closed_shape не объявлена закрытой."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить PktLoginResult table 0x149929040 / candidate reader 0x1456dc140 и actual constructor / handler с новой структурой; готовую preparation / wire базу использовать из кэша.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Текущие LoginResult layout / constructor / reader / handler, границы post-state, registration / continuation full pipeline и runtime / live 1.13.20."
     }
   ],
   "schema": 1,

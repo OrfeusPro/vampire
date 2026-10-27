@@ -32,8 +32,12 @@ def verify(context, root):
     native, bindings = load('build-native-entry-code'), load('update-bindings')
     switch=None
     if context.get('switch_gate'):
-        if context['switch_gate']!='version-gate-11318':raise ValueError('Unreviewed gate switch')
-        module=load('version-gate-switch-11318');switch=module.validate(native,h)
+        gate_sources={
+            'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c':('version-gate-11318','version-gate-switch-11318'),
+            '544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c':('version-gate-11320','version-gate-switch-11320')}
+        selected=gate_sources.get(h.sha)
+        if selected is None or context['switch_gate']!=selected[0]:raise ValueError('Unreviewed gate switch')
+        module=load(selected[1]);switch=module.validate(native,h)
         # All other roots retain the ordinary whole-unwind validator.
         shapes=load('audit-launcher-shape-11318')
         for f in h.fragments:

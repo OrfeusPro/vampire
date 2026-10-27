@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "exports": {
+    "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+  },
+  "prepare": "0x1467d1b50",
+  "constructor": "0x1456d7bc0",
+  "packet_table": "0x149929818",
+  "wrapper_table": "0x149dcc118",
+  "globals": {
+    "text": "0x14b594f00",
+    "enum": "0x14b197560",
+    "tag_pointer": "0x14b1bce98"
+  },
+  "fixtures": {
+    "log": "0x141403bd0",
+    "selector": "0x1445ce420",
+    "context_store": "0x1445c4cd0",
+    "context_value": "0x1416dd990",
+    "suffix": "0x1415c96b0",
+    "first_text": "0x14144d200",
+    "ascii_string": "0x1414269b0",
+    "combine_first": "0x14142bc90",
+    "combine_second": "0x14142bbc0",
+    "free": "0x1414830e0",
+    "resize": "0x141436f30",
+    "provider": "0x1445cd020",
+    "copy_string": "0x141441dc0",
+    "wide_string": "0x141426b90",
+    "destructor": "0x1456d8440"
+  },
+  "call_sites": {
+    "0x1467d1b77": {
+      "target": "0x141403bd0"
+    },
+    "0x1467d1b86": {
+      "target": "0x1445ce420"
+    },
+    "0x1467d1b8e": {
+      "target": "0x1445c4cd0"
+    },
+    "0x1467d1baf": {
+      "target": "0x1416dd990"
+    },
+    "0x1467d1bb8": {
+      "target": "0x1415c96b0"
+    },
+    "0x1467d1bc1": {
+      "target": "0x14144d200"
+    },
+    "0x1467d1bd2": {
+      "target": "0x1414269b0"
+    },
+    "0x1467d1be6": {
+      "target": "0x14142bc90"
+    },
+    "0x1467d1bf8": {
+      "target": "0x14142bbc0"
+    },
+    "0x1467d1c07": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1c16": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1c40": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1c53": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1c5c": {
+      "target": "0x1456d7bc0"
+    },
+    "0x1467d1c8b": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1ca1": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1cca": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1ce0": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1cea": {
+      "target": "0x1445cd020"
+    },
+    "0x1467d1cf6": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d1d05": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1d2e": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1d44": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1d6f": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1d85": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1d96": {
+      "target": "0x1414269b0"
+    },
+    "0x1467d1dc1": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1dd7": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1de9": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1e17": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1e35": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1e44": {
+      "target": "qword ptr [rax + 0x38]"
+    },
+    "0x1467d1e53": {
+      "target": "0x141426b90"
+    },
+    "0x1467d1e8e": {
+      "target": "0x141403bd0"
+    },
+    "0x1467d1e9d": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1ea6": {
+      "target": "0x1456d8440"
+    },
+    "0x1467d1eb5": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1ec3": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1ed1": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1edf": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1eee": {
+      "target": "0x1414830e0"
+    },
+    "0x1456d7c43": {
+      "target": "0x1414269b0"
+    }
+  },
+  "send": "0x1467d2890",
+  "wrapper_table_sha256": "2c1423538567d99c87661b15aefafcad574d25da2fd13deff464cec42004aa25",
+  "verify_whole_exports": true,
+  "compiled_tag_source": {
+    "literal": "0x149962b30",
+    "value": "4138E0A8C7421BE4F7F7078FF635DAD5"
+  }
+}

@@ -1,5 +1,11 @@
 Осталось 36 строк из исходных 150: общий пакет Clock / Ping / world candidate снял ещё шесть.
 
+Подготовка Version/Login и VersionResult 1.13.20: 4622 native сценария
+общего пакета + 331 handler, 13 source variants подключены к on_update / кэшу.
+Новые bindings записаны; runtime не включён. Следующий конкретный пакет —
+изменившийся LoginResult и его layout; post-state имеет отдельный пробел границ.
+[Доказательства, автоматизация и остаток](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-ENTRY-BATCH-11320.md).
+
 Общий пакет 1.13.20: UTF-8 / string writer / архивы и тела Version/Login
 прошли 559 native сценариев. Три штатные проверки перенесены через source
 variants и общий кэш, повтор без нового native исполнения. Граф содержит

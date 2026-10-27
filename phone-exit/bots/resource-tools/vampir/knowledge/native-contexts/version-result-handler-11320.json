@@ -1,0 +1,399 @@
+{
+  "schema": 1,
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "packet_table": "0x149929878",
+  "id_getter": "0x14148a9a0",
+  "functions": {
+    "handler": "0x1467a0610",
+    "gate": "0x1467d0c60"
+  },
+  "packet_constructor": "0x1456d7c70",
+  "handler_table": "0x149dc94a0",
+  "login_prepare": "0x1467d14e0",
+  "exports": {
+    "run-cd7653218083": "4695369d140ac000c2c8b26e0a508710396c94710456688e169700b129e92e48",
+    "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+  },
+  "leaves": {
+    "0x1456d7c70": "488d05011c250448890133c0488941108841188b0547b5f90389411c8b05cef8ab05894120488bc1c3",
+    "0x14148a9a0": "b802000000c3"
+  },
+  "fixtures": {
+    "string_init": "0x141426b90",
+    "log": "0x141403bd0",
+    "free": "0x1414830e0",
+    "gate_state": "0x145594d50",
+    "gate_error": "0x145fd70a0",
+    "peer": "0x144ab0d00",
+    "login_prepare": "0x1467d14e0"
+  },
+  "registration_window": {
+    "address": "0x1467b801b",
+    "owner": "0x1467b7ff0",
+    "bytes": "8d4b08e89d3d1500488bf84885c0740c488d056e146103488907eb03488bfbb928000000e87c3d15004885c0740a488bc8e81ffcf1feeb03488bc34c8bc7488bd0488bcee80c6b0100",
+    "sha256": "131c96ab42a9f972ded149d49300d39cf262d9ac1f51ce4f48fda7bf151a0024",
+    "instructions": [
+      [
+        "0x1467b801b",
+        "lea",
+        "ecx, [rbx + 8]"
+      ],
+      [
+        "0x1467b801e",
+        "call",
+        "0x14690bdc0"
+      ],
+      [
+        "0x1467b8023",
+        "mov",
+        "rdi, rax"
+      ],
+      [
+        "0x1467b8026",
+        "test",
+        "rax, rax"
+      ],
+      [
+        "0x1467b8029",
+        "je",
+        "0x1467b8037"
+      ],
+      [
+        "0x1467b802b",
+        "lea",
+        "rax, [rip + 0x361146e]"
+      ],
+      [
+        "0x1467b8032",
+        "mov",
+        "qword ptr [rdi], rax"
+      ],
+      [
+        "0x1467b8035",
+        "jmp",
+        "0x1467b803a"
+      ],
+      [
+        "0x1467b8037",
+        "mov",
+        "rdi, rbx"
+      ],
+      [
+        "0x1467b803a",
+        "mov",
+        "ecx, 0x28"
+      ],
+      [
+        "0x1467b803f",
+        "call",
+        "0x14690bdc0"
+      ],
+      [
+        "0x1467b8044",
+        "test",
+        "rax, rax"
+      ],
+      [
+        "0x1467b8047",
+        "je",
+        "0x1467b8053"
+      ],
+      [
+        "0x1467b8049",
+        "mov",
+        "rcx, rax"
+      ],
+      [
+        "0x1467b804c",
+        "call",
+        "0x1456d7c70"
+      ],
+      [
+        "0x1467b8051",
+        "jmp",
+        "0x1467b8056"
+      ],
+      [
+        "0x1467b8053",
+        "mov",
+        "rax, rbx"
+      ],
+      [
+        "0x1467b8056",
+        "mov",
+        "r8, rdi"
+      ],
+      [
+        "0x1467b8059",
+        "mov",
+        "rdx, rax"
+      ],
+      [
+        "0x1467b805c",
+        "mov",
+        "rcx, rsi"
+      ],
+      [
+        "0x1467b805f",
+        "call",
+        "0x1467ceb70"
+      ]
+    ]
+  },
+  "call_sites": {
+    "handler": {
+      "0x1467a0625": "0x141426b90",
+      "0x1467a0660": "0x141403bd0",
+      "0x1467a066f": "0x1414830e0",
+      "0x1467a068a": "qword ptr [rax + 0x28]",
+      "0x1467a069b": "0x1467d0c60",
+      "0x1467a06a4": "0x144ab0d00"
+    },
+    "gate": {
+      "0x1467d0c84": "0x145594d50",
+      "0x1467d0cee": "0x1455be400",
+      "0x1467d0cf8": "0x145d87620",
+      "0x1467d0d0d": "0x1414269b0",
+      "0x1467d0d12": "0x1445cd4e0",
+      "0x1467d0d22": "0x1445cf040",
+      "0x1467d0d30": "0x145fd6e00",
+      "0x1467d0d3e": "0x1414830e0",
+      "0x1467d0d50": "0x1414830e0",
+      "0x1467d0d84": "0x1458138e0",
+      "0x1467d0da2": "0x141426b90",
+      "0x1467d0ddc": "0x141403bd0",
+      "0x1467d0dea": "0x1414830e0",
+      "0x1467d0dfc": "0x1414830e0",
+      "0x1467d0e11": "0x141426b90",
+      "0x1467d0e16": "0x1445cd4e0",
+      "0x1467d0e26": "0x1445cf040",
+      "0x1467d0e31": "0x145fd6e00",
+      "0x1467d0ea2": "0x145975410",
+      "0x1467d0eab": "0x1414884f0",
+      "0x1467d0ec3": "0x1414884f0",
+      "0x1467d0ecb": "0x145978910",
+      "0x1467d0ede": "0x141426b90",
+      "0x1467d0eee": "0x141426b90",
+      "0x1467d0ef3": "0x1445cd4e0",
+      "0x1467d0f03": "0x1445cf040",
+      "0x1467d0f36": "0x141435380",
+      "0x1467d0f44": "0x1414830e0",
+      "0x1467d0f4f": "0x144a51430",
+      "0x1467d0f5d": "0x1414830e0",
+      "0x1467d0f6b": "0x1414830e0",
+      "0x1467d0f7d": "0x1414830e0",
+      "0x1467d0fc8": "0x141426b90",
+      "0x1467d0fcd": "0x1445cd4e0",
+      "0x1467d0fdd": "0x1445cf040",
+      "0x1467d0fe8": "0x145fd6e00",
+      "0x1467d0ff6": "0x1414830e0",
+      "0x1467d1004": "0x1414830e0",
+      "0x1467d100b": "0x145ef42b0",
+      "0x1467d1018": "0x145eff630",
+      "0x1467d1021": "0x145fd70a0",
+      "0x1467d102f": "0x1414830e0",
+      "0x1467d1049": "0x145fd70a0",
+      "0x1467d1057": "0x1414830e0"
+    }
+  },
+  "switch_gate": "version-gate-11320",
+  "native_result": {
+    "schema": 1,
+    "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+    "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+    "helpers": {
+      "memcpy": "0x1487f8c59"
+    },
+    "reader": "0x1456dc620",
+    "constructor": "0x1456d7c70",
+    "packet_table": "0x149929878",
+    "id_getter": "0x14148a9a0",
+    "exports": {
+      "run-cd7653218083": "4695369d140ac000c2c8b26e0a508710396c94710456688e169700b129e92e48",
+      "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+    },
+    "leaves": {
+      "0x144aaced0": {
+        "bytes": "488d054966bc04c741140100000048890133c048894108894110488bc1c6411801c3",
+        "sha256": "86cdb8d423a18c49aa89fea05a6f71f62d827f84a569979e8ad0cca1ff1e6919"
+      },
+      "0x144aad260": {
+        "bytes": "895110c3",
+        "sha256": "3118e42787a6f4545e3111ffd4f059154e0a2d5899f7b46c609eb89fb299f2b4"
+      },
+      "0x144aac300": {
+        "bytes": "488b0141b80100000048ffa090000000",
+        "sha256": "f18be45431396ae7b48a88f58df8279b2ddf521f9671b9591d2182bd4946b1c7"
+      },
+      "0x1456d7c70": {
+        "bytes": "488d05011c250448890133c0488941108841188b0547b5f90389411c8b05cef8ab05894120488bc1c3",
+        "sha256": "142a2bee7000cb603ec65c326b4dee6e02354800d1169a68f3b25247f6949ebe"
+      },
+      "0x14148a9a0": {
+        "bytes": "b802000000c3",
+        "sha256": "7140f35dee6220b79b12aecc27acf5105bf3b77d1588e89fce345de7c16c72b7"
+      }
+    },
+    "tables": [
+      {
+        "address": "0x149929878",
+        "bytes": "606a6b4501000000103b404101000000108b6e4501000000103b40410100000020c66d4501000000a0a9484101000000103b404101000000f0666e450100000010466e450100000080e1444101000000",
+        "sha256": "3791bb37e8185ff0b509b3718d81cd78cc5c9291f736f9a90647eeca7f9e3341"
+      },
+      {
+        "address": "0x1499298c8",
+        "bytes": "506b7456657273696f6e526573756c7400",
+        "sha256": "f7ba853df03f09e60a8affc55fa93eaba977456f03a59e50cc65126f8e595531"
+      }
+    ],
+    "native_input": {
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "exports": {
+        "run-cd7653218083": "4695369d140ac000c2c8b26e0a508710396c94710456688e169700b129e92e48",
+        "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+      },
+      "functions": {
+        "constructor": "0x144aacc00",
+        "u16": "0x144aac310",
+        "u32": "0x144aac360",
+        "time": "0x144aac530",
+        "u64": "0x144aac560",
+        "bool": "0x144aac5b0",
+        "raw": "0x144aac680",
+        "string": "0x144aad090",
+        "std_string": "0x144aac450",
+        "utf8_length": "0x14144c4a0",
+        "utf8_convert": "0x141446700",
+        "utf8_core": "0x14143bd90",
+        "utf8_scalar": "0x14143ba00",
+        "buffer_constructor": "0x144aac1f0"
+      },
+      "leaves": {
+        "0x144aaced0": {
+          "bytes": "488d054966bc04c741140100000048890133c048894108894110488bc1c6411801c3",
+          "sha256": "86cdb8d423a18c49aa89fea05a6f71f62d827f84a569979e8ad0cca1ff1e6919"
+        },
+        "0x144aad260": {
+          "bytes": "895110c3",
+          "sha256": "3118e42787a6f4545e3111ffd4f059154e0a2d5899f7b46c609eb89fb299f2b4"
+        },
+        "0x144aac300": {
+          "bytes": "488b0141b80100000048ffa090000000",
+          "sha256": "f18be45431396ae7b48a88f58df8279b2ddf521f9671b9591d2182bd4946b1c7"
+        }
+      },
+      "table": "0x149673380",
+      "call_sites": {
+        "0x144aacc16": {
+          "target": "0x144aac1f0"
+        },
+        "0x144aac329": {
+          "target": "qword ptr [rax + 0x90]"
+        },
+        "0x144aac347": {
+          "target": "0x1445e0520"
+        },
+        "0x144aac379": {
+          "target": "qword ptr [rax + 0x90]"
+        },
+        "0x144aac396": {
+          "target": "0x1445e0530"
+        },
+        "0x144aac541": {
+          "target": "qword ptr [rax + 0x50]"
+        },
+        "0x144aac579": {
+          "target": "qword ptr [rax + 0x90]"
+        },
+        "0x144aac597": {
+          "target": "0x1445e0560"
+        },
+        "0x144aac5cc": {
+          "target": "qword ptr [rax + 0x90]"
+        },
+        "0x144aac6bb": {
+          "target": "0x1487f8c59"
+        },
+        "0x144aac6c9": {
+          "target": "0x144aad260"
+        },
+        "0x144aad0d9": {
+          "target": "qword ptr [rax + 0x30]"
+        },
+        "0x144aad132": {
+          "target": "0x14144c4a0"
+        },
+        "0x144aad16e": {
+          "target": "0x141436d20"
+        },
+        "0x144aad198": {
+          "target": "0x141446700"
+        },
+        "0x144aad1c1": {
+          "target": "0x141427810"
+        },
+        "0x144aad1db": {
+          "target": "0x1414830e0"
+        },
+        "0x144aad21e": {
+          "target": "qword ptr [rip + 0x3ef1df4]"
+        },
+        "0x144aad225": {
+          "target": "0x141431fe0"
+        },
+        "0x144aad238": {
+          "target": "0x1487ebe80"
+        },
+        "0x144aac482": {
+          "target": "qword ptr [rax + 0x68]"
+        },
+        "0x144aac4ab": {
+          "target": "qword ptr [rax + 0x78]"
+        },
+        "0x144aac4f6": {
+          "target": "0x1421e7630"
+        },
+        "0x14144c521": {
+          "target": "0x14143ba00"
+        },
+        "0x14144670e": {
+          "target": "0x14143bd90"
+        },
+        "0x14143bec7": {
+          "target": "0x14143ba00"
+        },
+        "0x144aac211": {
+          "target": "0x144aaced0"
+        }
+      },
+      "table_bytes": "50ccaa4401000000f0c6aa440100000060c7aa4401000000f0c5aa440100000030c5aa440100000030c5aa440100000050c4aa440100000000c4aa4401000000b0c3aa440100000060c5aa440100000060c5aa440100000060c3aa440100000060c3aa440100000010c3aa440100000010c3aa440100000000c3aa440100000000c3aa4401000000b0c5aa440100000080c6aa4401000000",
+      "string_fixtures": {
+        "growth": "0x1421e7630",
+        "utf16_allocate": "0x141436d20",
+        "assign": "0x141427810",
+        "free": "0x1414830e0",
+        "cpp_free": "0x141431fe0",
+        "security": "0x1487ebe80"
+      },
+      "cookie": "0x14b274600",
+      "buffer_construction": {
+        "base_table": "0x1496731e8",
+        "reading_mode": 1,
+        "reading_endian": 0
+      }
+    },
+    "call_sites": {
+      "0x1456dc63a": "qword ptr [rax + 0x58]",
+      "0x1456dc64b": "qword ptr [rax + 0x60]",
+      "0x1456dc65c": "qword ptr [rax + 0x88]",
+      "0x1456dc670": "qword ptr [rax + 0x60]",
+      "0x1456dc681": "qword ptr [rax + 0x60]"
+    },
+    "verify_whole_exports": true
+  },
+  "function_budget": 19
+}

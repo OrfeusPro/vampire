@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "exports": {
+    "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+  },
+  "vendor": "0x14b0cacb2",
+  "brand": "0x14b0cacbf",
+  "space_slot": "0x14899f1f8",
+  "functions": {
+    "formatter": "0x14144d200",
+    "first": "0x1415c71b0",
+    "second": "0x1415c7190",
+    "trim": "0x14143a020",
+    "trim_end": "0x141439e10",
+    "trim_start": "0x14143a090"
+  },
+  "fixtures": {
+    "ascii": "0x1414269b0",
+    "wide": "0x141426b90",
+    "free": "0x1414830e0",
+    "move": "0x1487f8c5f",
+    "shrink": "0x141437c90",
+    "format": "0x1414333a0",
+    "space": "0x28006000"
+  },
+  "call_sites": {
+    "0x14144d219": "0x1415c71b0",
+    "0x14144d225": "0x14143a020",
+    "0x14144d233": "0x1414830e0",
+    "0x14144d23c": "0x1415c7190",
+    "0x14144d248": "0x14143a020",
+    "0x14144d256": "0x1414830e0",
+    "0x14144d266": "0x141426b90",
+    "0x14144d273": "0x14143a020",
+    "0x14144d281": "0x1414830e0",
+    "0x14144d291": "0x141426b90",
+    "0x14144d2e7": "0x1414830e0",
+    "0x14144d319": "0x14142e080",
+    "0x14144d341": "0x141435170",
+    "0x14144d37d": "0x1414333a0",
+    "0x14144d38b": "0x1414830e0",
+    "0x14144d3c9": "0x1414333a0",
+    "0x14144d3f6": "0x1414333a0",
+    "0x14144d404": "0x1414830e0",
+    "0x14144d412": "0x1414830e0",
+    "0x14144d420": "0x1414830e0",
+    "0x1415c71c0": "0x1414269b0",
+    "0x1415c71a0": "0x1414269b0",
+    "0x14143a030": "0x141439e10",
+    "0x14143a038": "0x14143a090",
+    "0x141439e48": "qword ptr [rip + 0x75653aa]",
+    "0x141439e9d": "0x1487f8c5f",
+    "0x141439ea8": "0x141437c90",
+    "0x14143a0c6": "qword ptr [rip + 0x756512c]",
+    "0x14143a105": "0x1487f8c5f",
+    "0x14143a110": "0x141437c90"
+  },
+  "verify_whole_exports": true
+}

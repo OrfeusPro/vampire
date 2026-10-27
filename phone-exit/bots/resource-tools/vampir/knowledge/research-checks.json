@@ -5633,7 +5633,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5662,7 +5663,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_prepare_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-version-nm-context",
@@ -5672,7 +5733,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5705,7 +5767,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_nm_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-version-platform-context",
@@ -5715,7 +5837,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5743,7 +5866,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_platform_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-version-system-context",
@@ -5753,7 +5936,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5786,7 +5970,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_system_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-version-prepare-system-context",
@@ -5796,7 +6040,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5829,7 +6074,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_prepare_system_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-version-combiner-context",
@@ -5839,7 +6144,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5879,7 +6185,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1740fcc91625/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_combiner_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-version-prepare-platform-context",
@@ -5889,7 +6255,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5929,7 +6296,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1740fcc91625/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_prepare_platform_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-login-prepare-context",
@@ -5939,7 +6366,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5966,7 +6394,67 @@
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_login_prepare_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-login-sdk-context",
@@ -5976,7 +6464,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -6008,7 +6497,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-9dc981740f54/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_login_sdk_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-login-metadata-context",
@@ -6018,7 +6567,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -6047,7 +6597,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-8ce3965fd27d/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-44e5a260bb97/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_login_metadata_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-login-prepare-metadata-context",
@@ -6057,7 +6667,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -6093,7 +6704,67 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-9dc981740f54/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_login_prepare_metadata_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-login-result-context",
@@ -6496,7 +7167,8 @@
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -6526,17 +7198,79 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-81d1e191e8c5/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-2fe73e379c6f/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-80386d1eb460/details.json"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_result_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-version-result-handler-context",
       "questions": [
         "release-version-prepare",
-        "version-result-handler-batch-11318"
+        "version-result-handler-batch-11318",
+        "release-function-reuse"
       ],
       "source_sha256": [
         "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
-        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -6569,7 +7303,67 @@
       "runtime_distributions": [
         "capstone",
         "unicorn"
-      ]
+      ],
+      "source_variants": {
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "test_pattern": "test_vampir_entry_version_handler_11320.py",
+          "dependencies": [
+            "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+            "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+            "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+            "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+            "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+            "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+            "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+            "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+          ],
+          "timeout_seconds": 600
+        }
+      }
     },
     {
       "id": "native-waiting-end-context",
@@ -9947,6 +10741,148 @@
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-af05ed4ef63f/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ]
+    },
+    {
+      "id": "native-entry-batch-11320",
+      "questions": [
+        "release-function-reuse"
+      ],
+      "source_sha256": [
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_entry_batch_11320.py",
+      "timeout_seconds": 600,
+      "dependencies": [
+        "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+        "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+        "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+        "phone-exit/bots/test_vampir_update_contracts.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ]
+    },
+    {
+      "id": "native-result-gate-11320",
+      "questions": [
+        "release-function-reuse"
+      ],
+      "source_sha256": [
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_version_gate_11320.py",
+      "timeout_seconds": 600,
+      "dependencies": [
+        "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
+        "phone-exit/bots/resource-tools/vampir/align-login-batch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/align-stat-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/align-version-contexts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/generate-entry-contexts-11320.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-metadata-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-metadata-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-prepare-sdk-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-handler-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11320.json",
+        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/run-entry-batch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
+        "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
+        "phone-exit/bots/test_vampir_update_contracts.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json",
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-85faf6d508b5/details.json"
       ],
       "runtime_distributions": [
         "capstone",

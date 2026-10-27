@@ -1,0 +1,579 @@
+{
+  "schema": 1,
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "exports": {
+    "run-cd7653218083": "4695369d140ac000c2c8b26e0a508710396c94710456688e169700b129e92e48",
+    "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+  },
+  "prepare": "0x1467d14e0",
+  "constructor": "0x1456d7540",
+  "packet_table": "0x149928e80",
+  "tag_literal": "0x149962b30",
+  "send_argument_global": "0x1496731d8",
+  "format_literal": "0x149dcc220",
+  "event_literal": "0x148a013e0",
+  "globals": {
+    "text": "0x14b594f00",
+    "enum": "0x14b197560",
+    "tag_pointer": "0x14b1bce98",
+    "enabled": "0x14b594eb3",
+    "number": "0x14b594ea8"
+  },
+  "fixtures": {
+    "platform_text": "0x143c197e0",
+    "wide_string": "0x141426b90",
+    "wide_compare": "0x14145f240",
+    "free": "0x1414830e0",
+    "sdk_manager": "0x14560ad20",
+    "sdk_mode": "0x14560ae70",
+    "nm_provider": "0x1445cd020",
+    "copy_string": "0x141441dc0",
+    "selector": "0x1445ce420",
+    "owner_number": "0x144ab0d40",
+    "ascii_string": "0x1414269b0",
+    "resize": "0x141436f30",
+    "language": "0x14556ae30",
+    "sdk_aux_text": "0x14560b070",
+    "flags_manager": "0x145cc9ec0",
+    "sdk_flag": "0x145cd0730",
+    "sdk_extra_flag": "0x144ffe4e0",
+    "sdk_main_text": "0x14560b010",
+    "sdk_value": "0x145609df0",
+    "session": "0x144aae5e0",
+    "send": "0x144aae9c0",
+    "log": "0x141403bd0",
+    "post_receiver": "0x14563dcd0",
+    "format_number": "0x1414333a0",
+    "post_notify": "0x1456390a0",
+    "variant_number": "0x14156fae0",
+    "variant_reserve": "0x141437150",
+    "variant_copy": "0x1414e3610",
+    "event_object": "0x14157b440",
+    "sdk_event": "0x145618930",
+    "variant_destroy": "0x1414a5640",
+    "destructor": "0x1456d82c0"
+  },
+  "call_sites": {
+    "0x1467d150c": {
+      "target": "0x143c197e0"
+    },
+    "0x1467d151f": {
+      "target": "0x141426b90"
+    },
+    "0x1467d154b": {
+      "target": "0x14145f240"
+    },
+    "0x1467d1565": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1585": {
+      "target": "0x141426b90"
+    },
+    "0x1467d15b1": {
+      "target": "0x14145f240"
+    },
+    "0x1467d15cb": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d15e8": {
+      "target": "0x141426b90"
+    },
+    "0x1467d1614": {
+      "target": "0x14145f240"
+    },
+    "0x1467d162e": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1641": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d164b": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1656": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1660": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d166e": {
+      "target": "0x14560ae70"
+    },
+    "0x1467d1683": {
+      "target": "0x1456d7540"
+    },
+    "0x1467d168d": {
+      "target": "0x1445cd020"
+    },
+    "0x1467d1699": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d16a8": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d16bb": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d16cb": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d16d0": {
+      "target": "0x1445ce420"
+    },
+    "0x1467d1710": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d1718": {
+      "target": "0x144ab0d40"
+    },
+    "0x1467d172c": {
+      "target": "0x1414269b0"
+    },
+    "0x1467d1763": {
+      "target": "0x141436f30"
+    },
+    "0x1467d177c": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d178e": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d17cd": {
+      "target": "0x141436f30"
+    },
+    "0x1467d17e3": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d17e8": {
+      "target": "0x14556ae30"
+    },
+    "0x1467d1804": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1812": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1827": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1831": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1844": {
+      "target": "0x14560b070"
+    },
+    "0x1467d186f": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1885": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1897": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d189c": {
+      "target": "0x145cc9ec0"
+    },
+    "0x1467d18a4": {
+      "target": "0x145cd0730"
+    },
+    "0x1467d18af": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d18b9": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d18c4": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d18ce": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d18dc": {
+      "target": "0x144ffe4e0"
+    },
+    "0x1467d18e7": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d18f1": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d18fc": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1906": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1919": {
+      "target": "0x14560b010"
+    },
+    "0x1467d1925": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d1934": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1939": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1943": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1951": {
+      "target": "0x145609df0"
+    },
+    "0x1467d195d": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d1962": {
+      "target": "0x144aae5e0"
+    },
+    "0x1467d1985": {
+      "target": "0x144aae9c0"
+    },
+    "0x1467d1996": {
+      "target": "0x141426b90"
+    },
+    "0x1467d19d1": {
+      "target": "0x141403bd0"
+    },
+    "0x1467d19e0": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d19e5": {
+      "target": "0x14563dcd0"
+    },
+    "0x1467d19f0": {
+      "target": "0x144ab0d40"
+    },
+    "0x1467d1a04": {
+      "target": "0x1414333a0"
+    },
+    "0x1467d1a11": {
+      "target": "0x1456390a0"
+    },
+    "0x1467d1a20": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1a32": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1a40": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1a4f": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1a59": {
+      "target": "0x14560ad20"
+    },
+    "0x1467d1a6a": {
+      "target": "0x144ab0d40"
+    },
+    "0x1467d1a78": {
+      "target": "0x14156fae0"
+    },
+    "0x1467d1a96": {
+      "target": "0x141437150"
+    },
+    "0x1467d1aad": {
+      "target": "0x1414e3610"
+    },
+    "0x1467d1ac3": {
+      "target": "0x14157b440"
+    },
+    "0x1467d1ace": {
+      "target": "0x145618930"
+    },
+    "0x1467d1add": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1aeb": {
+      "target": "0x1414a5640"
+    },
+    "0x1467d1afa": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1b0c": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1b16": {
+      "target": "0x1456d82c0"
+    },
+    "0x1467d1b25": {
+      "target": "0x1414830e0"
+    },
+    "0x1456d761a": {
+      "target": "0x1414269b0"
+    }
+  },
+  "native_sdk": {
+    "exports": {
+      "run-cd7653218083": "4695369d140ac000c2c8b26e0a508710396c94710456688e169700b129e92e48",
+      "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+    },
+    "functions": {
+      "sdk_mode": "0x14560ae70",
+      "sdk_main_text": "0x14560b010",
+      "sdk_value": "0x145609df0"
+    },
+    "leaves": {
+      "0x14560ad20": {
+        "bytes": "488b0519e0fd05c3",
+        "sha256": "82fd985f4e65cd73c75026f3e6c8c04ecca3e57becc8a281da8718948a42e817"
+      },
+      "0x145cd0730": {
+        "bytes": "807908030f94c0c3",
+        "sha256": "61a74be830bd015d52972bb2640803ad55b2757981baffd717c3fc0ccec9a588"
+      },
+      "0x144ffe4e0": {
+        "bytes": "0fb64139c3",
+        "sha256": "08abbe356a9ee8386e2e8088aca4b51fda3cd0276aff092ab434dee5e0d78170"
+      },
+      "0x144ab0d40": {
+        "bytes": "488b41108b8070020000c3",
+        "sha256": "f857ed8a805c66e9b27f5227d0291e0e885aae42837f5038ae807c1b0ea88442"
+      },
+      "0x14556ae30": {
+        "bytes": "488b05d1c70706c3",
+        "sha256": "b1dc719c893ff17f5c4329c51f5af1fcc60afebb5e77fda347682ed8c9fc12e3"
+      },
+      "0x145cc9ec0": {
+        "bytes": "488b05f9a59205c3",
+        "sha256": "e162f94edce2d80a751543971d6a098c27b207b20b1b12eb677bfc47d7c4cb67"
+      }
+    },
+    "globals": {
+      "manager": "0x14b5e8d40",
+      "language": "0x14b5e7608",
+      "flags": "0x14b5f44c0"
+    },
+    "native_names": [
+      "sdk_mode",
+      "sdk_main_text",
+      "sdk_value",
+      "sdk_manager",
+      "sdk_flag",
+      "sdk_extra_flag",
+      "owner_number",
+      "language",
+      "flags_manager"
+    ],
+    "fixtures": {
+      "mode_text": "0x144529ea0",
+      "main_store": "0x1444b1690",
+      "value_store": "0x1444b1570",
+      "cache_resolve": "0x1416b0990",
+      "main_string": "0x14452b320",
+      "assign_counted": "0x14142a2b0"
+    },
+    "mode_literals": {
+      "0": "0x14952e1f8",
+      "1": "0x14952e240",
+      "2": "0x14952e298"
+    },
+    "call_sites": {
+      "0x14560ae7b": {
+        "target": "0x144529ea0"
+      },
+      "0x14560ae8c": {
+        "target": "0x141426b90"
+      },
+      "0x14560aeb6": {
+        "target": "0x14145f240"
+      },
+      "0x14560aece": {
+        "target": "0x1414830e0"
+      },
+      "0x14560aee7": {
+        "target": "0x141426b90"
+      },
+      "0x14560af11": {
+        "target": "0x14145f240"
+      },
+      "0x14560af29": {
+        "target": "0x1414830e0"
+      },
+      "0x14560af45": {
+        "target": "0x141426b90"
+      },
+      "0x14560af6f": {
+        "target": "0x14145f240"
+      },
+      "0x14560af87": {
+        "target": "0x1414830e0"
+      },
+      "0x14560afa3": {
+        "target": "0x1414830e0"
+      },
+      "0x14560b01d": {
+        "target": "0x1444b1690"
+      },
+      "0x14560b032": {
+        "target": "0x1416b0990"
+      },
+      "0x14560b046": {
+        "target": "0x14452b320"
+      },
+      "0x145609dfd": {
+        "target": "0x1444b1570"
+      },
+      "0x145609e12": {
+        "target": "0x1416b0990"
+      },
+      "0x145609e3d": {
+        "target": "0x14142a2b0"
+      }
+    },
+    "metadata": {
+      "collector": "0x14560b070",
+      "consumer": "0x1456017e0",
+      "fields": [
+        {
+          "key": "I_GameCode",
+          "literal": "0x1495444f8",
+          "call_site": "0x14560b18a"
+        },
+        {
+          "key": "I_GameVersion",
+          "literal": "0x14990dad8",
+          "call_site": "0x14560b1b9"
+        },
+        {
+          "key": "I_TID",
+          "literal": "0x14990daf8",
+          "call_site": "0x14560b1e8"
+        },
+        {
+          "key": "I_CountryCD",
+          "literal": "0x14990db08",
+          "call_site": "0x14560b217"
+        },
+        {
+          "key": "I_PID",
+          "literal": "0x14990db20",
+          "call_site": "0x14560b246"
+        },
+        {
+          "key": "I_ChannelType",
+          "literal": "0x14990db30",
+          "call_site": "0x14560b275"
+        },
+        {
+          "key": "I_SDKVersion",
+          "literal": "0x14990db50",
+          "call_site": "0x14560b2a4"
+        },
+        {
+          "key": "I_World",
+          "literal": "0x14990db70",
+          "call_site": "0x14560b2d3"
+        },
+        {
+          "key": "I_PlatformADID",
+          "literal": "0x14990db80",
+          "call_site": "0x14560b302"
+        },
+        {
+          "key": "I_ConnectIP",
+          "literal": "0x14990dba0",
+          "call_site": "0x14560b331"
+        },
+        {
+          "key": "I_UDID",
+          "literal": "0x14990dbb8",
+          "call_site": "0x14560b360"
+        },
+        {
+          "key": "I_JoinedCountryCode",
+          "literal": "0x14990dbc8",
+          "call_site": "0x14560b38f"
+        },
+        {
+          "key": "I_DeviceOSVersion",
+          "literal": "0x14990dbf0",
+          "call_site": "0x14560b3be"
+        },
+        {
+          "key": "I_DeviceModel",
+          "literal": "0x14990dc18",
+          "call_site": "0x14560b3ed"
+        },
+        {
+          "key": "I_OS",
+          "literal": "0x14990dc38",
+          "call_site": "0x14560b41c"
+        },
+        {
+          "key": "I_Region",
+          "literal": "0x14990dc48",
+          "call_site": "0x14560b44b"
+        },
+        {
+          "key": "I_TimeZone",
+          "literal": "0x14990dc60",
+          "call_site": "0x14560b47a"
+        },
+        {
+          "key": "I_LanguageCD",
+          "literal": "0x14990dc78",
+          "call_site": "0x14560b4a9"
+        },
+        {
+          "key": "I_NMDeviceKey",
+          "literal": "0x14990dc98",
+          "call_site": "0x14560b4d8"
+        },
+        {
+          "key": "I_NMIDFV",
+          "literal": "0x14990dcb8",
+          "call_site": "0x14560b507"
+        },
+        {
+          "key": "I_World",
+          "literal": "0x14990db70",
+          "call_site": "0x14560b536"
+        },
+        {
+          "key": "I_NMMarket",
+          "literal": "0x14990dcd0",
+          "call_site": "0x14560b565"
+        },
+        {
+          "key": "I_NMNID",
+          "literal": "0x14990dce8",
+          "call_site": "0x14560b594"
+        },
+        {
+          "key": "I_PCSeq",
+          "literal": "0x14990dcf8",
+          "call_site": "0x14560b5c3"
+        },
+        {
+          "key": "I_NMCPU",
+          "literal": "0x14990dd08",
+          "call_site": "0x14560b5f2"
+        },
+        {
+          "key": "I_NMRAM",
+          "literal": "0x14990dd18",
+          "call_site": "0x14560b621"
+        },
+        {
+          "key": "I_NMVGA",
+          "literal": "0x14990dd28",
+          "call_site": "0x14560b650"
+        }
+      ]
+    }
+  },
+  "verify_whole_exports": true,
+  "compiled_tag_source": {
+    "literal": "0x149962b30",
+    "value": "4138E0A8C7421BE4F7F7078FF635DAD5"
+  }
+}

@@ -265,7 +265,15 @@ def verify(context, root):
         off = h.image.offset(page - h.image.pe.base)
         h.uc.mem_write(page, h.raw[off:off + 4096])
     compiled_tag = literal(tag_pointer)
-    require(compiled_tag == '32283C4C6485307BCF524765A84409C3', 'Login compiled tag differs')
+    tag_source=context.get('compiled_tag_source')
+    if tag_source is None:
+        if context['source_sha256'] not in (
+                'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960',
+                'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'):
+            raise ValueError('New Login source requires explicit compiled tag metadata')
+        tag_source=dict(literal=context['tag_literal'],value='32283C4C6485307BCF524765A84409C3')
+    require(tag_source.get('literal')==context['tag_literal'] and compiled_tag==tag_source.get('value'),
+            'Login compiled tag differs')
     format_literal = literal(int(context['format_literal'], 16), True)
     event_literal = literal(int(context['event_literal'], 16), True)
     cases = []

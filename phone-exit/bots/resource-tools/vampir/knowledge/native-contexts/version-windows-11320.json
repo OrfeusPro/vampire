@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "exports": {
+    "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+  },
+  "function": "0x1415c96b0",
+  "guard": "0x14b341b00",
+  "cache": "0x14b341a00",
+  "tls_index": "0x14b6a7d00",
+  "cookie": "0x14b274600",
+  "fixtures": {
+    "acquire": "0x1487ec3ac",
+    "release": "0x1487ec340",
+    "memset": "0x1487f8c65",
+    "format": "0x14145e9c0",
+    "wide_string": "0x141426b90",
+    "cookie_check": "0x1487ebe80"
+  },
+  "call_sites": {
+    "0x1415c96fb": "0x141426b90",
+    "0x1415c970e": "0x1487ebe80",
+    "0x1415c9723": "0x1487ec340",
+    "0x1415c9731": "0x1487ec3ac",
+    "0x1415c9744": "qword ptr [rip + 0x73d4016]",
+    "0x1415c975a": "0x1487f8c65",
+    "0x1415c9772": "qword ptr [rip + 0x73d3fd8]",
+    "0x1415c97d1": "0x14145e9c0",
+    "0x1415c97dd": "0x1487ec340"
+  },
+  "imports": {
+    "GetNativeSystemInfo": {
+      "slot": "0x14899d760",
+      "dll": "KERNEL32.dll",
+      "fixture": "system_info"
+    },
+    "GetVersionExW": {
+      "slot": "0x14899d750",
+      "dll": "KERNEL32.dll",
+      "fixture": "version"
+    }
+  },
+  "verify_whole_exports": true
+}

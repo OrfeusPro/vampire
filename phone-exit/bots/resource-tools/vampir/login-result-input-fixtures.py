@@ -120,7 +120,8 @@ def install(load, h, context, state, packet, archive, order):
         spec = context['buffer_construction']
         base_tables={
             'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960':'0x1496706e8',
-            'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c':'0x149671ee8'}
+            'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c':'0x149671ee8',
+            '544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c':'0x1496731e8'}
         require(context['source_sha256'] in base_tables and spec == dict(
                     base_table=base_tables[context['source_sha256']], reading_mode=1, reading_endian=0),
                 'Input buffer construction scope differs')

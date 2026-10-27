@@ -1,0 +1,294 @@
+{
+  "schema": 1,
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "exports": {
+    "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+  },
+  "prepare": "0x1467d1b50",
+  "constructor": "0x1456d7bc0",
+  "packet_table": "0x149929818",
+  "wrapper_table": "0x149dcc118",
+  "globals": {
+    "text": "0x14b594f00",
+    "enum": "0x14b197560",
+    "tag_pointer": "0x14b1bce98"
+  },
+  "fixtures": {
+    "log": "0x141403bd0",
+    "selector": "0x1445ce420",
+    "context_store": "0x1445c4cd0",
+    "context_value": "0x1416dd990",
+    "suffix": "0x1415c96b0",
+    "first_text": "0x14144d200",
+    "ascii_string": "0x1414269b0",
+    "combine_first": "0x14142bc90",
+    "combine_second": "0x14142bbc0",
+    "free": "0x1414830e0",
+    "resize": "0x141436f30",
+    "provider": "0x1445cd020",
+    "copy_string": "0x141441dc0",
+    "wide_string": "0x141426b90",
+    "destructor": "0x1456d8440"
+  },
+  "call_sites": {
+    "0x1467d1b77": {
+      "target": "0x141403bd0"
+    },
+    "0x1467d1b86": {
+      "target": "0x1445ce420"
+    },
+    "0x1467d1b8e": {
+      "target": "0x1445c4cd0"
+    },
+    "0x1467d1baf": {
+      "target": "0x1416dd990"
+    },
+    "0x1467d1bb8": {
+      "target": "0x1415c96b0"
+    },
+    "0x1467d1bc1": {
+      "target": "0x14144d200"
+    },
+    "0x1467d1bd2": {
+      "target": "0x1414269b0"
+    },
+    "0x1467d1be6": {
+      "target": "0x14142bc90"
+    },
+    "0x1467d1bf8": {
+      "target": "0x14142bbc0"
+    },
+    "0x1467d1c07": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1c16": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1c40": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1c53": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1c5c": {
+      "target": "0x1456d7bc0"
+    },
+    "0x1467d1c8b": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1ca1": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1cca": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1ce0": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1cea": {
+      "target": "0x1445cd020"
+    },
+    "0x1467d1cf6": {
+      "target": "0x141441dc0"
+    },
+    "0x1467d1d05": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1d2e": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1d44": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1d6f": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1d85": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1d96": {
+      "target": "0x1414269b0"
+    },
+    "0x1467d1dc1": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1dd7": {
+      "target": "0x1487f8c59"
+    },
+    "0x1467d1de9": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1e17": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1e35": {
+      "target": "0x141436f30"
+    },
+    "0x1467d1e44": {
+      "target": "qword ptr [rax + 0x38]"
+    },
+    "0x1467d1e53": {
+      "target": "0x141426b90"
+    },
+    "0x1467d1e8e": {
+      "target": "0x141403bd0"
+    },
+    "0x1467d1e9d": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1ea6": {
+      "target": "0x1456d8440"
+    },
+    "0x1467d1eb5": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1ec3": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1ed1": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1edf": {
+      "target": "0x1414830e0"
+    },
+    "0x1467d1eee": {
+      "target": "0x1414830e0"
+    },
+    "0x1456d7c43": {
+      "target": "0x1414269b0"
+    }
+  },
+  "send": "0x1467d2890",
+  "wrapper_table_sha256": "2c1423538567d99c87661b15aefafcad574d25da2fd13deff464cec42004aa25",
+  "native_nm": {
+    "wrapper": "0x1445cd020",
+    "getter": "0x1444ec9d0",
+    "cache": "0x14b5654a0",
+    "log_level": "0x14b566160",
+    "log_enabled": "0x14b1890f4",
+    "exports": {
+      "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+    }
+  },
+  "native_system": {
+    "cpu": {
+      "schema": 1,
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+      "helpers": {
+        "memcpy": "0x1487f8c59"
+      },
+      "exports": {
+        "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+      },
+      "vendor": "0x14b0cacb2",
+      "brand": "0x14b0cacbf",
+      "space_slot": "0x14899f1f8",
+      "functions": {
+        "formatter": "0x14144d200",
+        "first": "0x1415c71b0",
+        "second": "0x1415c7190",
+        "trim": "0x14143a020",
+        "trim_end": "0x141439e10",
+        "trim_start": "0x14143a090"
+      },
+      "fixtures": {
+        "ascii": "0x1414269b0",
+        "wide": "0x141426b90",
+        "free": "0x1414830e0",
+        "move": "0x1487f8c5f",
+        "shrink": "0x141437c90",
+        "format": "0x1414333a0",
+        "space": "0x28006000"
+      },
+      "call_sites": {
+        "0x14144d219": "0x1415c71b0",
+        "0x14144d225": "0x14143a020",
+        "0x14144d233": "0x1414830e0",
+        "0x14144d23c": "0x1415c7190",
+        "0x14144d248": "0x14143a020",
+        "0x14144d256": "0x1414830e0",
+        "0x14144d266": "0x141426b90",
+        "0x14144d273": "0x14143a020",
+        "0x14144d281": "0x1414830e0",
+        "0x14144d291": "0x141426b90",
+        "0x14144d2e7": "0x1414830e0",
+        "0x14144d319": "0x14142e080",
+        "0x14144d341": "0x141435170",
+        "0x14144d37d": "0x1414333a0",
+        "0x14144d38b": "0x1414830e0",
+        "0x14144d3c9": "0x1414333a0",
+        "0x14144d3f6": "0x1414333a0",
+        "0x14144d404": "0x1414830e0",
+        "0x14144d412": "0x1414830e0",
+        "0x14144d420": "0x1414830e0",
+        "0x1415c71c0": "0x1414269b0",
+        "0x1415c71a0": "0x1414269b0",
+        "0x14143a030": "0x141439e10",
+        "0x14143a038": "0x14143a090",
+        "0x141439e48": "qword ptr [rip + 0x75653aa]",
+        "0x141439e9d": "0x1487f8c5f",
+        "0x141439ea8": "0x141437c90",
+        "0x14143a0c6": "qword ptr [rip + 0x756512c]",
+        "0x14143a105": "0x1487f8c5f",
+        "0x14143a110": "0x141437c90"
+      }
+    },
+    "windows": {
+      "schema": 1,
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+      "helpers": {
+        "memcpy": "0x1487f8c59"
+      },
+      "exports": {
+        "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+      },
+      "function": "0x1415c96b0",
+      "guard": "0x14b341b00",
+      "cache": "0x14b341a00",
+      "tls_index": "0x14b6a7d00",
+      "cookie": "0x14b274600",
+      "fixtures": {
+        "acquire": "0x1487ec3ac",
+        "release": "0x1487ec340",
+        "memset": "0x1487f8c65",
+        "format": "0x14145e9c0",
+        "wide_string": "0x141426b90",
+        "cookie_check": "0x1487ebe80"
+      },
+      "call_sites": {
+        "0x1415c96fb": "0x141426b90",
+        "0x1415c970e": "0x1487ebe80",
+        "0x1415c9723": "0x1487ec340",
+        "0x1415c9731": "0x1487ec3ac",
+        "0x1415c9744": "qword ptr [rip + 0x73d4016]",
+        "0x1415c975a": "0x1487f8c65",
+        "0x1415c9772": "qword ptr [rip + 0x73d3fd8]",
+        "0x1415c97d1": "0x14145e9c0",
+        "0x1415c97dd": "0x1487ec340"
+      },
+      "imports": {
+        "GetNativeSystemInfo": {
+          "slot": "0x14899d760",
+          "dll": "KERNEL32.dll",
+          "fixture": "system_info"
+        },
+        "GetVersionExW": {
+          "slot": "0x14899d750",
+          "dll": "KERNEL32.dll",
+          "fixture": "version"
+        }
+      }
+    }
+  },
+  "verify_whole_exports": true,
+  "compiled_tag_source": {
+    "literal": "0x149962b30",
+    "value": "4138E0A8C7421BE4F7F7078FF635DAD5"
+  }
+}
