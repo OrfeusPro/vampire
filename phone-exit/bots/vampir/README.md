@@ -1,3 +1,9 @@
+Result getters 1.13.18 прошли 120 lookup/type случаев и 12 conversions.
+Названия errorCode/resultData закреплены current initializers; объектный getter
+требует type6, строковый допускает числовое/boolean преобразование. Storage и
+conversion helpers — fixtures, HTTP/callback/SDK context ещё не проверены.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-RESULT-GETTERS-11318.md).
+
 Поля launcher caller 1.13.18 проверены целыми функциями в восьми случаях:
 credential только в token body, launcherToken отдельно в sign-in header.
 Native BuildCode прошёл 256 byte inputs; две допустимые сверки с planner совпали,
