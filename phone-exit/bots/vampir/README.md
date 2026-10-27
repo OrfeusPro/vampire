@@ -1,3 +1,9 @@
+Callback writer теперь исполняется native с явным tail: AL=1 может обходить
+копирование/processing, а environment phase остаётся 3. Перехваченный пустой
+capture проверен после writer return; 48+9+16+24=97 сценариев прошли. Scheduler,
+guards/engine processing остаются fixtures, live action не включён.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-CALLBACK-11316.md).
+
 Phase handler теперь исполняется native: writer реально ставит фазу 3 до
 guard; caller ставит 5 для выбранных состояний. 48 случаев, 9 getter ветвей
 и 16 phase переходов прошли с проверкой записи до notify. Совпадение +40

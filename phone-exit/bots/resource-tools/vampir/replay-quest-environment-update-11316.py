@@ -34,6 +34,7 @@ def run():
     environment, task, record, data, model, world, text = [base+n for n in
         (0x1000, 0x2000, 0x3000, 0x4000, 0x5000, 0x6000, 0x7000)]
     world_table, guard_entry = base+0xe000, base+0xf000
+    callback_payload, travel_context = base+0x1a000, base+0x1b000
     global_object, object_class, expected_class, parents, owner, token = [base+n for n in
         (0x10000, 0x14000, 0x15000, 0x16000, 0x17000, 0x18000)]
     current, calls = {}, []
@@ -131,8 +132,37 @@ def run():
     def callback_sink(machine):
         if get(reg('RCX')) != 0x145606830 or reg('XMM2') != 0 or reg('R9') != 0x14b5912e8:
             raise ValueError('Environment callback submission differs')
-        # Explicit moved-callback fixture; the callback itself is never executed.
+        payload = bytes(uc.mem_read(reg('RCX')+0x28, 16))
+        if payload != bytes(16) or current['queued_callback'] is not None:
+            raise ValueError('Environment callback capture/queue differs')
+        current['queued_callback'] = (get(reg('RCX')), payload)
+        # Explicit moved-callback fixture. Execution occurs after the writer returns.
         calls.append('callback'); put(reg('RCX'), 0); h.finish()
+
+    def callback_context(machine):
+        calls.append('callback-context'); h.finish(token)
+
+    def callback_guard(machine):
+        if reg('RCX') != world:
+            raise ValueError('Callback guard receiver')
+        calls.append('callback-guard'); h.finish(int(current['travel_can']))
+
+    def callback_engine(machine):
+        if reg('RCX') != get(0x14b559008) or reg('RDX') != owner:
+            raise ValueError('Callback engine context arguments')
+        calls.append('callback-engine'); h.finish(travel_context)
+
+    def callback_copy(machine):
+        if reg('RCX') != owner+0x738 or reg('RDX') != callback_payload or get(callback_payload):
+            raise ValueError('Callback string assignment arguments')
+        uc.mem_write(owner+0x738, bytes(16)); calls.append('callback-copy'); h.finish(reg('RCX'))
+
+    def callback_process(machine):
+        if reg('RCX') != world or reg('RDX') != callback_payload or reg('R8') & 255:
+            raise ValueError('Callback process forwarding differs')
+        if get(owner+0x731, 1) != 2:
+            raise ValueError('Callback dispatch before context state write')
+        calls.append('callback-process'); h.finish()
 
     def model_lookup(machine):
         if reg('RCX') != model or reg('RDX') != 110120:
@@ -149,6 +179,8 @@ def run():
         0x141426950:string_init, 0x14142b620:string_init, 0x141429e10:append_empty,
         0x14143ae20:diagnostic_object, 0x144403310:diagnostic_sink,
         0x14563dd30:lambda machine:h.finish(base+0x19000), 0x145639100:phase_notify,
+        0x145490870:callback_context, base+0xf100:callback_guard, base+0xf200:callback_process,
+        0x1442ba3a0:callback_engine, 0x141441d60:callback_copy,
         0x1455bbcb0:model_lookup, 0x141483080:unexpected_free,
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
     for at, callback in callbacks.items():
@@ -163,7 +195,7 @@ def run():
         current['lookup'] = mode
         uc.mem_write(global_object, bytes(0x1300))
         uc.mem_write(object_class, bytes(0x80)); uc.mem_write(expected_class, bytes(0x80))
-        uc.mem_write(parents, bytes(0x80)); uc.mem_write(owner, bytes(0x200))
+        uc.mem_write(parents, bytes(0x80)); uc.mem_write(owner, bytes(0x800))
         put(0x14b559008, 0 if mode in ('fallback', 'fallback-missing') else global_object)
         put(global_object+0x10, object_class); put(global_object+0x11f8, token)
         put(object_class+0x38, 1 if mode=='wrong-depth' else 2, 4)
@@ -173,7 +205,7 @@ def run():
 
     def setup(old, requested, flag, phase, guard_mode):
         current.clear(); current.update(requested=requested, guard=guard_mode, formatted=requested if flag else old)
-        current.update(phase_entries=[], phase_notifications=0)
+        current.update(phase_entries=[], phase_notifications=0, queued_callback=None, travel_can=True)
         calls.clear(); uc.mem_write(environment, bytes(0x200))
         if h.call(0x1456001d0, environment) != environment:
             raise ValueError('Environment constructor return')
@@ -181,7 +213,10 @@ def run():
         put(environment+0x40, old, 4); put(environment+0x44, requested, 4)
         put(environment+0xc1, flag, 1); put(environment+0x30, phase, 1)
         put(world, world_table); put(world_table+0x7b8, guard_entry)
+        put(world_table+0x7f8, base+0xf100); put(world_table+0x800, base+0xf200)
         setup_lookup('fallback-missing' if guard_mode=='missing' else 'global')
+        uc.mem_write(callback_payload, bytes(16)); uc.mem_write(travel_context, bytes(0x100))
+        put(owner+0x731, 0xa5, 1); put(owner+0x718, 0x12345678, 4)
         uc.mem_write(text, bytes(16)); put(0x14b5e4d60, model)
         uc.mem_write(record, bytes(0x60)); uc.mem_write(task, bytes(0x60))
         uc.mem_write(data, bytes(0x60))
@@ -215,12 +250,24 @@ def run():
                 raise ValueError('Environment writer phase submission differs')
             if get(environment+0x30, 1) != 3 or current['phase_notifications'] != 1:
                 raise ValueError('Native writer phase state/notification differs')
+            callback_al = None
+            if allowed:
+                callback_address, payload = current['queued_callback']
+                uc.mem_write(callback_payload, payload)
+                before_callback = bytes(uc.mem_read(environment, 0x200))
+                callback_al = h.call(callback_address, callback_payload) & 255
+                if callback_al != 1 or get(owner+0x731, 1) != 2 or calls.count('callback-process') != 1:
+                    raise ValueError('Captured native callback application differs')
+                if bytes(uc.mem_read(environment, 0x200)) != before_callback:
+                    raise ValueError('Callback unexpectedly advanced environment state')
+            elif current['queued_callback'] is not None:
+                raise ValueError('Refused environment writer queued a callback')
             if any(bytes(uc.mem_read(a, len(value))) != value for a, value in immutable):
                 raise ValueError('Environment writer changed task/model inputs')
             cases.append(dict(path=path_name, guard=guard_mode, old=old, requested=requested,
                 actual=get(environment+0x40, 4), pending=get(environment+0x44, 4), flag_c1=get(environment+0xc1,1),
                 ready_before=bool(before), ready_after=bool(after), phase_after=get(environment+0x30, 1),
-                phase_notifications=current['phase_notifications'], calls=calls.copy()))
+                phase_notifications=current['phase_notifications'], callback_al=callback_al, calls=calls.copy()))
     for old in (0, 5):
       for phase in (0, 2, 3, 4, 5, 7):
         setup(old, 1, 0, phase, 'allow')
@@ -264,10 +311,40 @@ def run():
             raise ValueError('Native phase diagnostic observation differs')
         phase_cases.append(dict(previous=previous, phase=phase, phase_after=get(environment+0x30, 1),
             notifications=current['phase_notifications']))
+    callback_cases = []
+    for present in (False, True):
+     for can in (False, True):
+      for count in (0, 1, 2):
+       for external_flag in (0, 1):
+        setup(0, 1, 0, 7, 'allow'); current['travel_can'] = can
+        put(owner+0x158, world if present else 0); put(travel_context+0x80, external_flag, 1)
+        put(owner+0x738, base+0x1c000 if count else 0); put(owner+0x740, count, 4)
+        put(owner+0x744, count, 4)
+        uc.mem_write(base+0x1c000, bytes(4) if count<2 else b'X\x00\x00\x00')
+        context_before = bytearray(uc.mem_read(owner, 0x800))
+        environment_before = bytes(uc.mem_read(environment, 0x200)); calls.clear()
+        result = h.call(0x145606830, callback_payload) & 255
+        accepted = not present or can
+        copied = accepted and count<2 and not external_flag
+        if accepted:context_before[0x731] = 2
+        if copied:
+            context_before[0x738:0x748] = bytes(16)
+            if not present:context_before[0x718:0x71c] = bytes(4)
+        if result != int(accepted) or bytes(uc.mem_read(owner, 0x800)) != context_before:
+            raise ValueError('Native callback result/context footprint differs')
+        expected_counts = {'callback-guard':int(present), 'callback-engine':int(accepted and count<2),
+            'callback-copy':int(copied), 'callback-process':int(copied and present)}
+        if any(calls.count(name)!=n for name,n in expected_counts.items()):
+            raise ValueError('Native callback gates/dispatch differ')
+        if bytes(uc.mem_read(environment, 0x200)) != environment_before:
+            raise ValueError('Native callback changed environment phase/kind')
+        callback_cases.append(dict(present=present, can=can, count=count, external_flag=external_flag,
+            result_al=result, copied=bool(copied), process_calls=calls.count('callback-process'),
+            phase_after=get(environment+0x30, 1), calls=calls.copy()))
     audit = load('audit-client-release')
     report = dict(source_sha256=h.sha, tool_sha256=audit.sha256(Path(__file__)),
         context_sha256=audit.sha256(path), exports=h.evidence, legacy_direct_flow_checked=legacy,
-        cases=cases, lookup_cases=lookup_cases, phase_cases=phase_cases,
+        cases=cases, lookup_cases=lookup_cases, phase_cases=phase_cases, callback_cases=callback_cases,
         native_execution=True, network_used=False, action_admitted=False, limits=context['limits'])
     target = audit.save_snapshot(h.root/'code-clues/quest-environment-update-11316', report)
     return target, report
@@ -275,4 +352,6 @@ def run():
 
 if __name__ == '__main__':
     target, result = run()
-    print(json.dumps(dict(artifact=str(target), cases=len(result['cases'])), ensure_ascii=False))
+    print(json.dumps(dict(artifact=str(target), cases=len(result['cases']),
+        lookup_cases=len(result['lookup_cases']), phase_cases=len(result['phase_cases']),
+        callback_cases=len(result['callback_cases'])), ensure_ascii=False))

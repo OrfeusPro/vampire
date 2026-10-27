@@ -27,6 +27,8 @@ class QuestEnvironmentUpdateTests(unittest.TestCase):
             self.assertEqual(c['calls'].count('callback'), int(accepted))
             self.assertEqual(c['phase_after'], 3)
             self.assertEqual(c['phase_notifications'], 1)
+            self.assertEqual(c['callback_al'], 1 if accepted else None)
+            self.assertEqual(c['calls'].count('callback-process'), int(accepted))
         for c in phases:
             selected = c['phase'] in (2, 3, 4)
             self.assertEqual(c['result'], int(selected))
@@ -49,6 +51,17 @@ class QuestEnvironmentUpdateTests(unittest.TestCase):
         for c in result['phase_cases']:
             self.assertEqual(c['phase_after'], c['phase'])
             self.assertEqual(c['notifications'], 1)
+        self.assertEqual(len(result['callback_cases']), 24)
+        self.assertEqual({(c['present'], c['can'], c['count'], c['external_flag']) for c in result['callback_cases']},
+            {(present, can, count, flag) for present in (False, True) for can in (False, True)
+                for count in (0, 1, 2) for flag in (0, 1)})
+        for c in result['callback_cases']:
+            accepted = not c['present'] or c['can']
+            copied = accepted and c['count']<2 and not c['external_flag']
+            self.assertEqual(c['result_al'], int(accepted))
+            self.assertEqual(c['copied'], copied)
+            self.assertEqual(c['process_calls'], int(copied and c['present']))
+            self.assertEqual(c['phase_after'], 7)
 
 
 if __name__ == '__main__':
