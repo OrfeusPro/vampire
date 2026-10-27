@@ -1,9 +1,17 @@
-Осталось 75 строк из исходных 150: пакет SDK/GMC2/NID закрыл шесть.
-34 source roots, 3667 native cases и 288 helper cases; 30 штатных тестов
-passed. Assembly/geo/batch используют один cached report, проверки версии
-выбираются по полному SHA. sdk-gmc2 passed; runtime launcher профиль ещё
-не подключён. Далее launcher/CharacterList, prepare→wire и clock/game profile
-до онлайн. [Результат и границы](../resource-tools/vampir/knowledge/SDK-BATCH-AUTOMATION-11318.md).
+Осталось 42 строки из исходных 150: общий пакет launcher / CharacterList сократил очередь на 33.
+
+Launcher runtime и CharacterList 1.13.18 перенесены общим пакетом:
+29 новых тестов прошли, 40 CharacterList roots / 25 bindings и общий native
+кэш подключены к on_update. Очередь **75 → 42 строки**, снято 108 из 150.
+Launcher — prepared_offline; профиль собран без активации и live verification.
+Далее один пакет: Clock / Lobby, полный keepalive, ограниченный world entry
+и current game candidate. Общие input / Time / gate повторно не переносить.
+[Итог, доказательства и оставшиеся группы](../resource-tools/vampir/knowledge/LAUNCHER-CHARACTER-LIST-AUTOMATION-11318.md).
+
+Предыдущий этап SDK/GMC2/NID: 34 source roots, 3667 native cases и 288 helper
+cases; 30 штатных тестов passed. Assembly/geo/batch используют один cached
+report, проверки выбираются по полному SHA. На этом этапе очередь была 75 строк,
+launcher runtime ещё требовал переноса. [Результат и границы](../resource-tools/vampir/knowledge/SDK-BATCH-AUTOMATION-11318.md).
 
 Осталось 98 строк из исходных 150: reader VersionResult и общий input archive
 прошли 127 native случаев и 5 тестов, закрыты две строки. Проверка включена

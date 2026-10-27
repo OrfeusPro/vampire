@@ -1031,6 +1031,20 @@
       "evidence": [
         "evidence/updates/HEADLESS-SDK-BATCH-11318.md"
       ]
+    },
+    {
+      "id": "character-list-batch-11318",
+      "status": "bounded_answer",
+      "question": "Как перенести CharacterList 1.13.18 одним source-bound пакетом с повторным использованием input / Time / gate и общим кэшем?",
+      "known": "40 semantic roots и две явные E9 зависимости; шесть native компонентов, 1554 строки объявленных сценариев; 25 reviewed bindings. Положительные тесты используют общий cached native report, отрицательные вызывают настоящие verifiers.",
+      "unknown": "Совместное reader-to-handler исполнение, selection / world entry / clock и текущий game profile; настоящий dispatcher, сервер и online session.",
+      "next_action": "Общий clock / keepalive пакет и current game candidate с отдельной живой проверкой.",
+      "decision_rule": "Whole shape / exports и fixtures не означают runtime / live admission. Coverage partial; версии выбираются только по полному SHA.",
+      "do_not_repeat": "Использовать cached CharacterList пакет при неизменных source / exports / contexts / code / runtime; не переносить общие helpers вручную повторно.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
+      ]
     }
   ]
 }

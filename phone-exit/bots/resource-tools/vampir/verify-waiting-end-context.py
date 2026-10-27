@@ -62,7 +62,9 @@ def verify(context, root):
                and r.operands[1].mem.base == native.X86_REG_RIP)
     require(lea.address + lea.size + lea.operands[1].mem.disp == b['handler_table']
             and [(r.mnemonic, r.op_str) for r in ins[-4:]] == [
-                ('mov', 'r8, rdi'), ('mov', 'rdx, rax'), ('mov', 'rcx, rsi'), ('call', '0x1467cb6c0')],
+                ('mov', 'r8, rdi'), ('mov', 'rdx, rax'), ('mov', 'rcx, rsi'),
+                ('call', '0x1467cbb90' if context['source_sha256'] ==
+                 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c' else '0x1467cb6c0')],
             'WaitingEnd registration handler/arguments differ')
     uc, x = h.uc, h.x
     packet, peer, inner, policy, metadata, lookup, selected = [h.scratch + n for n in (0x1000, 0x2000, 0x3000, 0x4000, 0x6000, 0x8000, 0x9000)]

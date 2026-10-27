@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 
 ROOT = Path('F:/PhoneExit Resources/Vampir')
-RELEASE_PROFILE_SHA = 'da0dd314a0955190b0cc368ded2c895499083188bf9a7104c546d404c2a17984'
-RELEASE_SOURCE_SHA = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
+RELEASE_PROFILE_SHA = '4c8057b367524bc26e226088f5f5ef790309f82b8c81af90ffd7e829acdcd4d2'
+RELEASE_SOURCE_SHA = 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
 
 
 def load_release_profile(kind, *, root=ROOT):
@@ -20,6 +20,11 @@ def load_release_profile(kind, *, root=ROOT):
     report = json.loads(payload)
     if report['name'] != 'recovered-release' or report['source_sha256'] != RELEASE_SOURCE_SHA:
         raise ValueError('Release SDK profile/source mismatch')
+    if (report.get('runtime_scope') != 'sdk-launcher-auth' or
+            report.get('supported_auth_flows') != ['launcher'] or
+            any(report.get(key) is not False for key in
+                ('network_ready', 'game_protocol_verified', 'direct_sdk_operations_verified'))):
+        raise ValueError('Release SDK runtime scope mismatch')
     with Path(report['source']).open('rb') as stream:
         if hashlib.file_digest(stream, 'sha256').hexdigest() != RELEASE_SOURCE_SHA:
             raise ValueError('Installed SDK source changed; refresh profile evidence')

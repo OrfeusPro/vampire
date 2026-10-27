@@ -124,6 +124,34 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                       constructor='0x145783840', reader='0x145788500', optional_insert='0x1456bd7a0',
                       appearance_callback='0x14573b9c0', input_constructor='0x144aacb40',
                       input_buffer_constructor='0x144aac130').items()))
+    if SHA == 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c':
+        # Fixed source-linked CharacterList package. These allowlists only bound
+        # the harness; exports, bytes, calls and native scenarios still verify it.
+        record_11318_roots = {int(at, 16) for at in (
+            '14143b9a0 14143bd30 1414466a0 14144c440 144aac430 144aac550 '
+            '144aac5a0 144aac690 144aac770 144aac7a0 144aac7f0 144aac830 '
+            '144aac8c0 144aace40 144aad2d0 1456c33e0 145783c20 145787e10 '
+            '1457888e0 145794fa0 1457a38e0 1457fe0c0').split()}
+        list_11318_roots = record_11318_roots | {int(at, 16) for at in (
+            '1456ba840 1456bbfb0 1456bdb80 1456c7250 1456d2640 1456dc010 '
+            '1456dd1a0 1456e6e00 14573bda0 1457845a0 145786770 145789790').split()}
+        record_scope = (budget == 22 and context.get('budget_scope') == 'character-record'
+                        and set(functions) == record_11318_roots
+                        and context.get('functions') == dict(
+                            constructor='0x145783c20', reader='0x1457888e0',
+                            time_constructor='0x1457a38e0', time_reader='0x1457fe0c0',
+                            appearance_reader='0x145787e10', optional_reader='0x1456c33e0',
+                            vector='0x144aac830', u16_quad_reader='0x145794fa0')
+                        and context.get('native_input', {}).get('functions', {}).get('constructor') == '0x144aace40'
+                        and context.get('native_input', {}).get('functions', {}).get('buffer_constructor') == '0x144aac430')
+        list_scope = (budget == 34 and context.get('budget_scope') == 'character-list-records'
+                      and set(functions) == list_11318_roots
+                      and set(functions) == {int(at, 16) for at in context.get('functions', {}).values()}
+                      and all(context.get('functions', {}).get(key) == value for key, value in dict(
+                          list_reader='0x1456dc010', list_resize='0x1456e6e00', list_record_thunk='0x1456dd1a0',
+                          constructor='0x145783c20', reader='0x1457888e0', optional_insert='0x1456bdb80',
+                          appearance_callback='0x14573bda0', input_constructor='0x144aace40',
+                          input_buffer_constructor='0x144aac430').items()))
     npc_scope = (budget == 54 and context.get('budget_scope') == 'npc-create-record'
                  and len(functions) == 54 and SHA == 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
                  and all(context.get('functions', {}).get(key) == value for key, value in dict(

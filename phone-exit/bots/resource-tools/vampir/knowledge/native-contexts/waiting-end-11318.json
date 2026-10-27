@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "functions": {
+    "handler": "0x14679d7a0",
+    "predicate": "0x145c9b230",
+    "request": "0x145dae0e0",
+    "quick_select": "0x145d5c5c0"
+  },
+  "bindings": {
+    "handler_table": "0x149dc8050",
+    "notify_table": "0x1499286c8",
+    "notify_id": "0x1456e50f0",
+    "notify_constructor": "0x1456d80e0",
+    "request_table": "0x14992a1e0",
+    "request_id": "0x1456e4fe0",
+    "peer_global": "0x14b594100",
+    "disabled": "0x14b2f214b",
+    "sentinel": "0x149671ed8",
+    "selection_argument": "0x149671ee0"
+  },
+  "leaves": {
+    "0x1456d80e0": "488d05e105250448c7411000000000488901488bc1c3",
+    "0x1456d75e0": "488d05f92b2504c6410a00488901488bc1c3",
+    "0x1456e50f0": "b81b000000c3",
+    "0x1456e4fe0": "b865000000c3",
+    "0x144ab1020": "488b41100fb680a6020000c3",
+    "0x144ab0f40": "488b05b931ae06c3",
+    "0x1456b6aa0": "488d05999b2604488901c3"
+  },
+  "blocks": [
+    {
+      "address": "0x149dc8050",
+      "bytes": "c096404101000000d0b9534101000000a0d7794601000000",
+      "sha256": "805a07a48f3592f096059c8f6bb4ccdffd07d0a0a03c9cb6728cb835dd189187"
+    },
+    {
+      "address": "0x1499286c8",
+      "bytes": "006c6b4501000000b03a404101000000d0ae6b4501000000b03a404101000000c07a6b4501000000f0506e4501000000b03a404101000000006a6e450100000090046e450100000020e1444101000000",
+      "sha256": "a63cff37fc56c1133838b6ac821600cff958e2c64f65172a1f245c9d06f3dde9"
+    },
+    {
+      "address": "0x14992a1e0",
+      "bytes": "606c6b4501000000b03a404101000000104abb4001000000b03a404101000000104abb4001000000e04f6e4501000000b03a40410100000090616e450100000020e144410100000020e1444101000000",
+      "sha256": "1ecfa90b4ccb908302955c4361921b1d429cb4bb7878109edda66c036d35c972"
+    },
+    {
+      "address": "0x149928718",
+      "bytes": "506b7457616974696e67456e644e6f7469667900",
+      "sha256": "8758b5469fda550ed38d761dac963ec2d47944072893af4598fd3d888191dd65"
+    }
+  ],
+  "call_sites": {
+    "handler": {
+      "0x14679d7b6": "0x145ca0be0",
+      "0x14679d7bb": "0x144a28000",
+      "0x14679d7c3": "0x146434630",
+      "0x14679d7ce": "0x144a26f40",
+      "0x14679d7db": "0x146434630",
+      "0x14679d809": "qword ptr [rax + 0x598]",
+      "0x14679d80f": "0x144ab0f40",
+      "0x14679d817": "0x144ab1020",
+      "0x14679d820": "0x145c9b230",
+      "0x14679d829": "0x14560b120",
+      "0x14679d840": "0x145c9b230",
+      "0x14679d849": "0x14560b120",
+      "0x14679d86d": "0x145c9b230",
+      "0x14679d876": "0x145d4d870",
+      "0x14679d888": "0x145d4d870",
+      "0x14679d89f": "0x14560b120",
+      "0x14679d8aa": "qword ptr [rdx + 0x40]"
+    },
+    "predicate": {
+      "0x145c9b241": "0x1445d2d20",
+      "0x145c9b24e": "0x1454fbe10"
+    },
+    "request": {
+      "0x145dae0e9": "0x1456d75e0",
+      "0x145dae0ee": "0x144ab0f40",
+      "0x145dae0fe": "qword ptr [r8 + 0x38]",
+      "0x145dae10e": "0x141426b30",
+      "0x145dae149": "0x141403b70",
+      "0x145dae158": "0x141483080",
+      "0x145dae162": "0x1456b6aa0"
+    },
+    "quick_select": {
+      "0x145d5c5c9": "0x14560b120"
+    }
+  },
+  "exports": {
+    "run-bd63520caaaf": "372529e5774232cd2cf01e5d71dc33bbc618cb9d2fceccc5510d8b4bafa4e4d6",
+    "run-d6af42842586": "6aa57c52b86047cb0e0840116bb41bff3d806a80e0746fdfc903ae973c11abc8",
+    "run-ed5c8eee70bc": "8463fef01f722fccfca821d50b57824135019a75ef0794e192bdd3ab12d7ae3f",
+    "run-450b89173dc1": "c4a61844217b6edda4cf4ebc7fdd639b0178ad28460927ef690be9122f14da1c",
+    "run-b66ea903e973": "3afe56601081a2fb64a90f1196585a55415e56c37f05b4dc950d7e25a0116b95"
+  },
+  "fixtures": {
+    "state_toggle": "0x145ca0be0",
+    "ui_service": "0x144a28000",
+    "ui_class": "0x146434630",
+    "ui_lookup": "0x144a26f40",
+    "exit_service": "0x14560b120",
+    "lookup": "0x1445d2d20",
+    "type": "0x1454fbe10",
+    "selected": "0x145d4d870",
+    "string_init": "0x141426b30",
+    "log": "0x141403b70",
+    "free": "0x141483080"
+  },
+  "registration": {
+    "address": "0x1467b5654",
+    "owner": "0x1467b5130",
+    "bytes": "b908000000e8f2371500488bf84885c0740c488d05e3296103488907eb03488bfbb918000000e8d13715004885c0740a488bc8e8542af2feeb03488bc34c8bc7488bd0488bcee8f1640100",
+    "instructions": [
+      [
+        "0x1467b5654",
+        "mov",
+        "ecx, 8"
+      ],
+      [
+        "0x1467b5659",
+        "call",
+        "0x146908e50"
+      ],
+      [
+        "0x1467b565e",
+        "mov",
+        "rdi, rax"
+      ],
+      [
+        "0x1467b5661",
+        "test",
+        "rax, rax"
+      ],
+      [
+        "0x1467b5664",
+        "je",
+        "0x1467b5672"
+      ],
+      [
+        "0x1467b5666",
+        "lea",
+        "rax, [rip + 0x36129e3]"
+      ],
+      [
+        "0x1467b566d",
+        "mov",
+        "qword ptr [rdi], rax"
+      ],
+      [
+        "0x1467b5670",
+        "jmp",
+        "0x1467b5675"
+      ],
+      [
+        "0x1467b5672",
+        "mov",
+        "rdi, rbx"
+      ],
+      [
+        "0x1467b5675",
+        "mov",
+        "ecx, 0x18"
+      ],
+      [
+        "0x1467b567a",
+        "call",
+        "0x146908e50"
+      ],
+      [
+        "0x1467b567f",
+        "test",
+        "rax, rax"
+      ],
+      [
+        "0x1467b5682",
+        "je",
+        "0x1467b568e"
+      ],
+      [
+        "0x1467b5684",
+        "mov",
+        "rcx, rax"
+      ],
+      [
+        "0x1467b5687",
+        "call",
+        "0x1456d80e0"
+      ],
+      [
+        "0x1467b568c",
+        "jmp",
+        "0x1467b5691"
+      ],
+      [
+        "0x1467b568e",
+        "mov",
+        "rax, rbx"
+      ],
+      [
+        "0x1467b5691",
+        "mov",
+        "r8, rdi"
+      ],
+      [
+        "0x1467b5694",
+        "mov",
+        "rdx, rax"
+      ],
+      [
+        "0x1467b5697",
+        "mov",
+        "rcx, rsi"
+      ],
+      [
+        "0x1467b569a",
+        "call",
+        "0x1467cbb90"
+      ]
+    ]
+  },
+  "verify_whole_exports": true
+}

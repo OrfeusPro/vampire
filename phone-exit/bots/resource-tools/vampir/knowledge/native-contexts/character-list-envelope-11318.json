@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "functions": {
+    "reader": "0x1456dc010",
+    "vector": "0x144aac830",
+    "resize": "0x1456e6e00",
+    "record_thunk": "0x1456dd1a0",
+    "archive_constructor": "0x144aace40",
+    "buffer_constructor": "0x144aac430",
+    "u16": "0x144aac550",
+    "u32": "0x144aac5a0",
+    "u64": "0x144aac7a0",
+    "raw": "0x144aac8c0"
+  },
+  "bindings": {
+    "packet_constructor": "0x1456d7600",
+    "packet_table": "0x14992a248",
+    "id_getter": "0x1456e4ff0",
+    "archive_table": "0x149672080",
+    "vector_table": "0x14992a6d0"
+  },
+  "leaves": {
+    "0x144aad110": "488d050951bc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad4a0": "895110c3",
+    "0x144aac540": "488b0141b80100000048ffa090000000",
+    "0x1456d7600": "488d05412c250448890133c0488941104889411848894120488941288941304889413848894140488bc1c3",
+    "0x1456e4ff0": "b866000000c3"
+  },
+  "blocks": [
+    {
+      "address": "0x14992a248",
+      "bytes": "e0a06d4501000000b03a404101000000a0846e4501000000b03a40410100000010c06d4501000000f04f6e4501000000b03a404101000000c0616e4501000000d01f6e450100000020e1444101000000",
+      "sha256": "7873f2cd40fc1b9330fb674df0c5c85cd3cc813703ff9b42e4bfaf24d0409594"
+    },
+    {
+      "address": "0x14992a298",
+      "bytes": "506b744368617261637465724c69737452656164526573756c74",
+      "sha256": "7bb4cd5bdc318bc530dc40c48097861bceaada20f748f812956600faaaa6e0df"
+    },
+    {
+      "address": "0x14992a6d0",
+      "bytes": "50aab04101000000006e6e4501000000a0d16d4501000000",
+      "sha256": "ad4d6d11296bd5e34e1e783708b4095c7a0f001d56c335e44ac5a0c6f2c66eb1"
+    },
+    {
+      "address": "0x149672080",
+      "bytes": "90ceaa440100000030c9aa4401000000a0c9aa440100000030c8aa440100000070c7aa440100000070c7aa440100000090c6aa440100000040c6aa4401000000f0c5aa4401000000a0c7aa4401000000a0c7aa4401000000a0c5aa4401000000a0c5aa440100000050c5aa440100000050c5aa440100000040c5aa440100000040c5aa4401000000f0c7aa4401000000c0c8aa4401000000",
+      "sha256": "d76b49c35bb9c467217f6a549806c89282f557e47d2c4499568211944bbaeeb6"
+    }
+  ],
+  "call_sites": {
+    "reader": {
+      "0x1456dc02a": "qword ptr [rax + 0x58]",
+      "0x1456dc03f": "qword ptr [rax + 0x60]",
+      "0x1456dc056": "0x1456d6080",
+      "0x1456dc06e": "0x1420e86d0",
+      "0x1456dc08e": "qword ptr [rax + 0x18]",
+      "0x1456dc0a4": "qword ptr [rax + 0x50]",
+      "0x1456dc0b5": "qword ptr [rax + 0x60]",
+      "0x1456dc0c6": "qword ptr [rax + 0x50]",
+      "0x1456dc0d7": "qword ptr [rax + 0x50]"
+    },
+    "vector": {
+      "0x144aac855": "qword ptr [rax + 0x68]",
+      "0x144aac86b": "qword ptr [rax + 8]",
+      "0x144aac894": "qword ptr [rax + 0x10]"
+    },
+    "resize": {
+      "0x1456e6e17": "0x1456d6080",
+      "0x1456e6e2d": "0x1420e86d0"
+    },
+    "record_thunk": {
+      "0x1456dd1ca": "0x145783c20",
+      "0x1456dd1d7": "0x144aad490",
+      "0x1456dd1f8": "0x141ef45b0",
+      "0x1456dd20c": "0x1456d76d0",
+      "0x1456dd218": "0x145785780",
+      "0x1456dd22b": "0x1487e9300"
+    },
+    "archive_constructor": {
+      "0x144aace56": "0x144aac430"
+    },
+    "buffer_constructor": {
+      "0x144aac451": "0x144aad110"
+    },
+    "u16": {
+      "0x144aac569": "qword ptr [rax + 0x90]",
+      "0x144aac587": "0x1445e06e0"
+    },
+    "u32": {
+      "0x144aac5b9": "qword ptr [rax + 0x90]",
+      "0x144aac5d6": "0x1445e06f0"
+    },
+    "u64": {
+      "0x144aac7b9": "qword ptr [rax + 0x90]",
+      "0x144aac7d7": "0x1445e0720"
+    },
+    "raw": {
+      "0x144aac8fb": "0x1487f60d9",
+      "0x144aac909": "0x144aad4a0"
+    }
+  },
+  "exports": {
+    "run-bd63520caaaf": "372529e5774232cd2cf01e5d71dc33bbc618cb9d2fceccc5510d8b4bafa4e4d6",
+    "run-d6af42842586": "6aa57c52b86047cb0e0840116bb41bff3d806a80e0746fdfc903ae973c11abc8",
+    "run-ed5c8eee70bc": "8463fef01f722fccfca821d50b57824135019a75ef0794e192bdd3ab12d7ae3f",
+    "run-450b89173dc1": "c4a61844217b6edda4cf4ebc7fdd639b0178ad28460927ef690be9122f14da1c",
+    "run-b66ea903e973": "3afe56601081a2fb64a90f1196585a55415e56c37f05b4dc950d7e25a0116b95"
+  },
+  "fixtures": {
+    "clear": "0x1456d6080",
+    "allocate": "0x1420e86d0",
+    "record_constructor": "0x145783c20"
+  },
+  "verify_whole_exports": true
+}

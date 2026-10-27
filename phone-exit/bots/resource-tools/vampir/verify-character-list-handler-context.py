@@ -22,8 +22,19 @@ def verify(context, root):
     h = load('update-native-harness').make_harness(context, context['exports'], set(f.values()),
         leaves={int(at, 16): code for at, code in context['leaves'].items()}, root=root)
     native, bindings = load('build-native-entry-code'), load('update-bindings')
+    switch = context.get('switch_gate')
+    if switch:
+        if switch != 'version-gate-11318':
+            raise ValueError('Unreviewed CharacterList gate switch')
+        gate_module = load('version-gate-switch-11318')
+        gate_module.validate(native, h)
+        shapes = load('audit-launcher-shape-11318')
+        for function in h.fragments:
+            if int(function['address'], 16) != f['gate']:
+                shapes.normalize_function(native, h.image, function)
     calls = {name: {hex(r['address']): hex(r['direct_target']) if r['direct_target'] is not None else r['operands']
-                   for r in bindings.rows(native, h.image, at) if r['call']} for name, at in f.items()}
+                   for r in (gate_module.rows(native, h.image, h.sha) if switch and name == 'gate'
+                             else bindings.rows(native, h.image, at)) if r['call']} for name, at in f.items()}
     if calls != context['call_sites']:
         raise ValueError('List handler/gate/policy call sites differ')
 
@@ -67,10 +78,12 @@ def verify(context, root):
     instructions = list(decoder.disasm(code, start))
     require([(hex(r.address), r.mnemonic, r.op_str) for r in instructions] == [tuple(r) for r in window['instructions']], 'List registration shape differs')
     lea = next(r for r in instructions if r.mnemonic == 'lea')
+    register = ('0x1467cbb90' if h.sha == 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+                else '0x1467cb6c0')
     require(lea.address + lea.size + lea.operands[1].mem.disp == b['handler_table']
             and any(r.mnemonic == 'call' and r.operands[0].imm == b['packet_constructor'] for r in instructions)
             and [(r.mnemonic, r.op_str) for r in instructions[-4:]] == [
-                ('mov', 'r8, rdi'), ('mov', 'rdx, rax'), ('mov', 'rcx, rsi'), ('call', '0x1467cb6c0')],
+                ('mov', 'r8, rdi'), ('mov', 'rdx, rax'), ('mov', 'rcx, rsi'), ('call', register)],
             'List registration constructor/arguments differ')
     packet, rows, state, controller, service, peer, inner, options, policy, metadata, lookup = [h.scratch + n for n in
         (0x1000, 0x4000, 0x8000, 0xa000, 0xb000, 0xc000, 0xc400, 0xd000, 0xe000, 0x13000, 0x14000)]

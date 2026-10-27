@@ -1,5 +1,13 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Launcher runtime и CharacterList 1.13.18 перенесены общим пакетом:
+29 новых тестов прошли, 40 CharacterList roots / 25 bindings и общий native
+кэш подключены к on_update. Очередь **75 → 42 строки**, снято 108 из 150.
+Launcher — prepared_offline; профиль собран без активации и live verification.
+Далее один пакет: Clock / Lobby, полный keepalive, ограниченный world entry
+и current game candidate. Общие input / Time / gate повторно не переносить.
+[Итог, доказательства и оставшиеся группы](../resource-tools/vampir/knowledge/LAUNCHER-CHARACTER-LIST-AUTOMATION-11318.md).
+
 Пакет SDK/GMC2/NID 1.13.18 завершён в объявленных offline границах:
 34 roots, 3667 native cases + 288 helper cases; 30 штатных тестов passed.
 on_update/cache и выбор тестов по полному SHA подключены. sdk-gmc2 passed;

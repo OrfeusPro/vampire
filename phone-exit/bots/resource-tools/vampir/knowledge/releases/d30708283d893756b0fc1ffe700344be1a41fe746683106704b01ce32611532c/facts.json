@@ -1516,6 +1516,299 @@
       "question": "sdk-batch-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Current launcher runtime profile/source guards, CharacterList/clock/game profile prerequisites и отдельная живая проверка. Старый SDK assembly report 1.13.16 отклоняется по изменившейся harness dependency и не засчитывается."
+    },
+    {
+      "addresses": [
+        "0x1444cc4b0",
+        "0x1444d3a30",
+        "0x1444eecd0",
+        "0x144503e10",
+        "0x1450e3fb0"
+      ],
+      "checks": [
+        {
+          "cache_key": "b1c67319e8bca32b8e45834652ca8943514a072bd16e44e75b18b73e29b4be5a",
+          "id": "sdk-profile-assembly-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d56b265863453555bdaa5e63e3c077102376c669068c395dd8dfb454fe5d2fb6\\manifest.json",
+          "sha256": "d56b265863453555bdaa5e63e3c077102376c669068c395dd8dfb454fe5d2fb6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "bace87531d71617755f3da5307070cd730bcfb6c2b4cca728d7835d91c528138",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ffdc017b4aa1196ad6aa2f82f3235aee786df3ec8be4f26ab7ef192ff365bc14\\manifest.json",
+          "sha256": "ffdc017b4aa1196ad6aa2f82f3235aee786df3ec8be4f26ab7ef192ff365bc14",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий launcher SDK profile перенесён целиком: 14 source roots, общий SDK report без повторного native replay, current runtime pin и 11 offline tests. Установленный EXE, manifest, компоненты, account/route/age и запрет прямых SDK операций проверяются; оба checks подключены к on_update по полному SHA.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-RUNTIME-11318.md",
+          "sha256": "f0e643fb59010ae80f772ea26b4b05b7d8fbefb2e3b2291d2d7870718b9966af"
+        }
+      ],
+      "id": "04267e09d0de68bafa062dc92b78fb61a36948923687606bc6b3224226acf0e7",
+      "limits": [
+        "HTTP/browser/server подставлены; успешная настоящая авторизация не доказана.",
+        "SDK profile ограничен launcher; network/game/active-settings/direct-operations flags false.",
+        "Игровой профиль и baseline не переключены; 14 roots проверены статически, исполнение покрывается отдельными зарегистрированными checks."
+      ],
+      "method": "bounded_native",
+      "next_check": "Закончить общий пакет CharacterList, затем оставшиеся prerequisites игрового профиля и отдельная живая проверка.",
+      "question": "sdk-profile-assembly",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "CharacterList и clock/prepare-to-wire, игровой профиль и живая сессия 1.13.18."
+    },
+    {
+      "addresses": [
+        "0x1444cc4b0",
+        "0x1444d3a30",
+        "0x1444eecd0",
+        "0x144503e10"
+      ],
+      "checks": [
+        {
+          "cache_key": "538cbf30fdfa47af6e7b63d44373a1b837383a18303f88098e7d0d4d127965fe",
+          "id": "release-launcher-contract",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ce58e137fa38cddaa2d0202d47a792f88332fdc43d7cd1f8fe15b6c07c8bfd58\\manifest.json",
+          "sha256": "ce58e137fa38cddaa2d0202d47a792f88332fdc43d7cd1f8fe15b6c07c8bfd58",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Текущий launcher SDK profile перенесён целиком: 14 source roots, общий SDK report без повторного native replay, current runtime pin и 11 offline tests. Установленный EXE, manifest, компоненты, account/route/age и запрет прямых SDK операций проверяются; оба checks подключены к on_update по полному SHA.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-RUNTIME-11318.md",
+          "sha256": "f0e643fb59010ae80f772ea26b4b05b7d8fbefb2e3b2291d2d7870718b9966af"
+        }
+      ],
+      "id": "9d278ab9504d8d46caefa874af91eb84c662dcef58985a3128792fbdf40708b2",
+      "limits": [
+        "HTTP/browser/server подставлены; успешная настоящая авторизация не доказана.",
+        "SDK profile ограничен launcher; network/game/active-settings/direct-operations flags false.",
+        "Игровой профиль и baseline не переключены; 14 roots проверены статически, исполнение покрывается отдельными зарегистрированными checks."
+      ],
+      "method": "static",
+      "next_check": "Закончить общий пакет CharacterList, затем оставшиеся prerequisites игрового профиля и отдельная живая проверка.",
+      "question": "launcher-wire-contract",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "CharacterList и clock/prepare-to-wire, игровой профиль и живая сессия 1.13.18."
+    },
+    {
+      "addresses": [
+        "0x14143b9a0",
+        "0x14143bd30",
+        "0x1414466a0",
+        "0x14144c440",
+        "0x144aac430",
+        "0x144aac550",
+        "0x144aac5a0",
+        "0x144aac690",
+        "0x144aac770",
+        "0x144aac7a0",
+        "0x144aac7f0",
+        "0x144aac830",
+        "0x144aac8c0",
+        "0x144aace40",
+        "0x144aad2d0",
+        "0x1456ba840",
+        "0x1456bbfb0",
+        "0x1456bdb80",
+        "0x1456c33e0",
+        "0x1456c7250",
+        "0x1456d2640",
+        "0x1456dc010",
+        "0x1456dd1a0",
+        "0x1456e6e00",
+        "0x14573bda0",
+        "0x145783c20",
+        "0x1457845a0",
+        "0x145786770",
+        "0x145787e10",
+        "0x1457888e0",
+        "0x145789790",
+        "0x145794fa0"
+      ],
+      "checks": [
+        {
+          "cache_key": "727b307de556b961b25da7ef6d8c97c3a18c44ca7406687df20b044242d43a31",
+          "id": "native-waiting-end-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fe70df7dc7e6e3456cca4effbb0ffaf7a6e94c0b67c2e030b70550c3f9fb9963\\manifest.json",
+          "sha256": "fe70df7dc7e6e3456cca4effbb0ffaf7a6e94c0b67c2e030b70550c3f9fb9963",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a79cc2cca4a3092f0a5a78b1aa480c71ebf34df9d384bdd8386119624298da0",
+          "id": "native-character-list-envelope-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dcd29fc93688263ecc9e597a9a8fe8db0bfbbb2ce4ce7fc1a2a5e736d731d825\\manifest.json",
+          "sha256": "dcd29fc93688263ecc9e597a9a8fe8db0bfbbb2ce4ce7fc1a2a5e736d731d825",
+          "state": "passed"
+        },
+        {
+          "cache_key": "74f9b4fcc202634a3b65c97fad4e3beb913cdebe5653f119f11c56c5212bb56e",
+          "id": "native-character-record-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\707bea2477a2755550baf7cff43cccf01ed19336f739e00f0634865f30fa2f71\\manifest.json",
+          "sha256": "707bea2477a2755550baf7cff43cccf01ed19336f739e00f0634865f30fa2f71",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8642df11bfeb528ee971678bab260164a04067c7fa4b7f9f906d59fa07dfbfd7",
+          "id": "native-character-extensions-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d9461b12331cf551674d1549687534cb095c6bc16fc1496d382f0cfaf7696f09\\manifest.json",
+          "sha256": "d9461b12331cf551674d1549687534cb095c6bc16fc1496d382f0cfaf7696f09",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ad0a957f542db51d358f46fe0bdecc2e0cadcdbaeaf51a665a31ab83b90b27e0",
+          "id": "native-character-list-records-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2f26f0ac6e09acea439e9b10010711bea1bf98647c2b05ee2e0394aca24c9906\\manifest.json",
+          "sha256": "2f26f0ac6e09acea439e9b10010711bea1bf98647c2b05ee2e0394aca24c9906",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3593d67ab486ea61ae41f395530709d096419b66b227da00b4825c78387b0d01",
+          "id": "native-character-list-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\856f05f1fd546dbbf7cba503f1753e87999920b897b0d64aa42a64712c35fa5d\\manifest.json",
+          "sha256": "856f05f1fd546dbbf7cba503f1753e87999920b897b0d64aa42a64712c35fa5d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "CharacterList 1.13.18 перенесён единым пакетом: 40 semantic roots и 2 явных E9 зависимости, шесть source-bound native компонентов, 1554 строки объявленных сценариев. Общие input / Time / gate используются повторно; whole list сохраняет разные records / collections, handler проверен отдельно. Шесть checks с current SHA / cache и 25 bindings подключены к штатному обновлению.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-CHARACTER-LIST-BATCH-11318.md",
+          "sha256": "cc6cffafebe4c106e1b5f7f36f5c41eb925299227babd3c0f2f5a860cf183fcc"
+        }
+      ],
+      "id": "0fd8c6bd19ece0746ff1b3b6baaca87e655ca47ad9a9357ebb716d6242d5da76",
+      "limits": [
+        "Storage / allocator / copy / rehash и engine services fixtures явные.",
+        "Reader и handler проверены отдельно; совместная композиция / dispatcher / сервер не подтверждены.",
+        "Gate 1197 может продолжать обработку после ошибки; runtime game profile / baseline не активированы."
+      ],
+      "method": "bounded_native",
+      "next_check": "Общий пакет clock / keepalive и ограниченный current game candidate с явными границами, затем отдельный онлайн-прогон.",
+      "question": "character-list-batch-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Current character selection / world entry, clock / Ping, prepare-to-wire и game profile; живая авторизация / сессия 1.13.18."
+    },
+    {
+      "addresses": [
+        "0x1457a38e0",
+        "0x1457fe0c0",
+        "0x145c9b230",
+        "0x145d5c5c0",
+        "0x145dae0e0",
+        "0x146796830",
+        "0x14679d7a0",
+        "0x1467cdc80"
+      ],
+      "checks": [
+        {
+          "cache_key": "727b307de556b961b25da7ef6d8c97c3a18c44ca7406687df20b044242d43a31",
+          "id": "native-waiting-end-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fe70df7dc7e6e3456cca4effbb0ffaf7a6e94c0b67c2e030b70550c3f9fb9963\\manifest.json",
+          "sha256": "fe70df7dc7e6e3456cca4effbb0ffaf7a6e94c0b67c2e030b70550c3f9fb9963",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a79cc2cca4a3092f0a5a78b1aa480c71ebf34df9d384bdd8386119624298da0",
+          "id": "native-character-list-envelope-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dcd29fc93688263ecc9e597a9a8fe8db0bfbbb2ce4ce7fc1a2a5e736d731d825\\manifest.json",
+          "sha256": "dcd29fc93688263ecc9e597a9a8fe8db0bfbbb2ce4ce7fc1a2a5e736d731d825",
+          "state": "passed"
+        },
+        {
+          "cache_key": "74f9b4fcc202634a3b65c97fad4e3beb913cdebe5653f119f11c56c5212bb56e",
+          "id": "native-character-record-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\707bea2477a2755550baf7cff43cccf01ed19336f739e00f0634865f30fa2f71\\manifest.json",
+          "sha256": "707bea2477a2755550baf7cff43cccf01ed19336f739e00f0634865f30fa2f71",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8642df11bfeb528ee971678bab260164a04067c7fa4b7f9f906d59fa07dfbfd7",
+          "id": "native-character-extensions-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d9461b12331cf551674d1549687534cb095c6bc16fc1496d382f0cfaf7696f09\\manifest.json",
+          "sha256": "d9461b12331cf551674d1549687534cb095c6bc16fc1496d382f0cfaf7696f09",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ad0a957f542db51d358f46fe0bdecc2e0cadcdbaeaf51a665a31ab83b90b27e0",
+          "id": "native-character-list-records-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2f26f0ac6e09acea439e9b10010711bea1bf98647c2b05ee2e0394aca24c9906\\manifest.json",
+          "sha256": "2f26f0ac6e09acea439e9b10010711bea1bf98647c2b05ee2e0394aca24c9906",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3593d67ab486ea61ae41f395530709d096419b66b227da00b4825c78387b0d01",
+          "id": "native-character-list-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\856f05f1fd546dbbf7cba503f1753e87999920b897b0d64aa42a64712c35fa5d\\manifest.json",
+          "sha256": "856f05f1fd546dbbf7cba503f1753e87999920b897b0d64aa42a64712c35fa5d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "CharacterList 1.13.18 перенесён единым пакетом: 40 semantic roots и 2 явных E9 зависимости, шесть source-bound native компонентов, 1554 строки объявленных сценариев. Общие input / Time / gate используются повторно; whole list сохраняет разные records / collections, handler проверен отдельно. Шесть checks с current SHA / cache и 25 bindings подключены к штатному обновлению.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-CHARACTER-LIST-BATCH-11318.md",
+          "sha256": "cc6cffafebe4c106e1b5f7f36f5c41eb925299227babd3c0f2f5a860cf183fcc"
+        }
+      ],
+      "id": "23225fe9429278e936f00e5f3e9b20b028b69b5e03d9691a7aa2ed30c4c41baf",
+      "limits": [
+        "Storage / allocator / copy / rehash и engine services fixtures явные.",
+        "Reader и handler проверены отдельно; совместная композиция / dispatcher / сервер не подтверждены.",
+        "Gate 1197 может продолжать обработку после ошибки; runtime game profile / baseline не активированы."
+      ],
+      "method": "bounded_native",
+      "next_check": "Общий пакет clock / keepalive и ограниченный current game candidate с явными границами, затем отдельный онлайн-прогон.",
+      "question": "character-list-batch-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Current character selection / world entry, clock / Ping, prepare-to-wire и game profile; живая авторизация / сессия 1.13.18."
+    },
+    {
+      "addresses": [
+        "0x1444cc4b0",
+        "0x1444d3a30",
+        "0x1444eecd0",
+        "0x144503e10",
+        "0x1450e3fb0"
+      ],
+      "checks": [
+        {
+          "cache_key": "c7fdde7fa50bb847dc0fb1fe2bb41ae71f7b094c10cfb2ba8179a13568cc5bf5",
+          "id": "sdk-profile-assembly-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\89c3e08d1bcc756b4a0a41f01f560d3827526aa592250b8babf32cf31f0818b3\\manifest.json",
+          "sha256": "89c3e08d1bcc756b4a0a41f01f560d3827526aa592250b8babf32cf31f0818b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "03de28f37e844e98943340f6a0e036fb494916bb377847b0fc4ea6781da01c20",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2f73052176f3c39bbf489d42e7bc9555382afeaff0a980f88e3dcb56fed64cae\\manifest.json",
+          "sha256": "2f73052176f3c39bbf489d42e7bc9555382afeaff0a980f88e3dcb56fed64cae",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Финальный launcher SDK profile 1.13.18 воспроизводится после обновления общего harness: pinned manifest 4c8057b367524bc26e226088f5f5ef790309f82b8c81af90ffd7e829acdcd4d2, общий SDK report и повторные семь integration tests. В runtime cache добавлены canonical / snapshot и bot device settings dependencies. Допуск только launcher; game / network / direct SDK flags false.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-RUNTIME-FINAL-11318.md",
+          "sha256": "3c4e86594e155740e6883678fc4afb69dfd1b96082646b4ea716d6a55226648c"
+        }
+      ],
+      "id": "baaba62ab3f647d5c28d25fffbb562bb6ba0357abab941aa812112bb15969996",
+      "limits": [
+        "HTTP/browser/server подставлены; успешная настоящая авторизация не доказана.",
+        "SDK profile ограничен launcher; network/game/active-settings/direct-operations flags false.",
+        "Игровой профиль и baseline не переключены; 14 roots проверены статически, исполнение покрывается отдельными зарегистрированными checks."
+      ],
+      "method": "bounded_native",
+      "next_check": "Закончить общий пакет CharacterList, затем оставшиеся prerequisites игрового профиля и отдельная живая проверка.",
+      "question": "sdk-profile-assembly",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "CharacterList и clock/prepare-to-wire, игровой профиль и живая сессия 1.13.18."
     }
   ],
   "schema": 1,

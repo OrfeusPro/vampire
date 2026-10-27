@@ -874,7 +874,9 @@
       "id": "sdk-runtime-launcher-current",
       "baseline_functions": [],
       "tools": [
-        "build-sdk-runtime-profile-11316.py"
+        "build-sdk-runtime-profile-11316.py",
+        "build-sdk-runtime-profile-11318.py",
+        "audit-launcher-contract-11318.py"
       ],
       "rule": "Reassemble only after SDK/NID/geo source checks and launcher contract audit; explicit loader promotion is limited to launcher. Direct SDK operations and game protocol require separate source ports.",
       "automation": {
@@ -917,6 +919,45 @@
             ],
             "evidence": [
               "evidence/auth/HEADLESS-SDK-RUNTIME-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1444c4510",
+                "scope": "Current source-bound SDK launcher plans with mocked HTTP/browser; no live/game claim",
+                "required_checks": [
+                  "sdk-profile-assembly-11316",
+                  "release-launcher-contract",
+                  "sdk-runtime-launcher-11316"
+                ]
+              },
+              {
+                "address": "0x1450e3fb0",
+                "scope": "Current source-bound SDK launcher plans with mocked HTTP/browser; no live/game claim",
+                "required_checks": [
+                  "sdk-profile-assembly-11316",
+                  "release-launcher-contract",
+                  "sdk-runtime-launcher-11316"
+                ]
+              },
+              {
+                "address": "0x1450f4170",
+                "scope": "Current source-bound SDK launcher plans with mocked HTTP/browser; no live/game claim",
+                "required_checks": [
+                  "sdk-profile-assembly-11316",
+                  "release-launcher-contract",
+                  "sdk-runtime-launcher-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "build-sdk-runtime-profile-11318.py",
+              "audit-launcher-contract-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LAUNCHER-RUNTIME-11318.md"
             ]
           }
         ]
@@ -3685,7 +3726,9 @@
       "id": "native-waiting-end-current",
       "baseline_functions": [],
       "tools": [
-        "verify-waiting-end-context.py"
+        "verify-waiting-end-context.py",
+        "run-character-list-batch-11318.py",
+        "generate-character-list-contexts-11318.py"
       ],
       "rule": "Искать notify literal/table/ID/constructor и registration, затем handler/predicate/request. Отсутствующая handler diagnostic не означает отсутствие пути; reset не является request initiator.",
       "automation": {
@@ -3732,6 +3775,47 @@
             "evidence": [
               "evidence/updates/HEADLESS-WAITING-END-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x14679d7a0",
+                "scope": "Current whole waiting-end source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              },
+              {
+                "address": "0x145c9b230",
+                "scope": "Current whole waiting-end source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              },
+              {
+                "address": "0x145dae0e0",
+                "scope": "Current whole waiting-end source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              },
+              {
+                "address": "0x145d5c5c0",
+                "scope": "Current whole waiting-end source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-waiting-end-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-waiting-end-context.py",
+              "run-character-list-batch-11318.py",
+              "generate-character-list-contexts-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -3740,7 +3824,9 @@
       "id": "native-character-list-envelope-current",
       "baseline_functions": [],
       "tools": [
-        "verify-character-list-envelope-context.py"
+        "verify-character-list-envelope-context.py",
+        "run-character-list-batch-11318.py",
+        "generate-character-list-contexts-11318.py"
       ],
       "rule": "Проверить ID102 constructor/table, outer reader/vector callbacks и archive callees. Empty body требует все 38 байт; nonempty нельзя заменять пустым списком. Records/handler проверять отдельно.",
       "automation": {
@@ -3787,6 +3873,47 @@
             "evidence": [
               "evidence/updates/HEADLESS-CHARACTER-LIST-ENVELOPE-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456dc010",
+                "scope": "Current whole character-list-envelope source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              },
+              {
+                "address": "0x144aac830",
+                "scope": "Current whole character-list-envelope source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              },
+              {
+                "address": "0x1456e6e00",
+                "scope": "Current whole character-list-envelope source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              },
+              {
+                "address": "0x1456dd1a0",
+                "scope": "Current whole character-list-envelope source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-envelope-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-list-envelope-context.py",
+              "run-character-list-batch-11318.py",
+              "generate-character-list-contexts-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -3795,7 +3922,9 @@
       "id": "native-character-record-current",
       "baseline_functions": [],
       "tools": [
-        "verify-character-record-context.py"
+        "verify-character-record-context.py",
+        "run-character-list-batch-11318.py",
+        "generate-character-list-contexts-11318.py"
       ],
       "rule": "Проверить record/nested table slots, constructor, scalar/string callees и clamps. Пустые extensions не подтверждают непустые коллекции. Scope 22 roots/9 exports только для явно проверенного набора, без автоматического расширения.",
       "automation": {
@@ -3849,6 +3978,54 @@
             "evidence": [
               "evidence/updates/HEADLESS-CHARACTER-RECORD-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x145783c20",
+                "scope": "Current whole character-record source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x1457888e0",
+                "scope": "Current whole character-record source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x145787e10",
+                "scope": "Current whole character-record source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x1456c33e0",
+                "scope": "Current whole character-record source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              },
+              {
+                "address": "0x145794fa0",
+                "scope": "Current whole character-record source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-record-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-record-context.py",
+              "run-character-list-batch-11318.py",
+              "generate-character-list-contexts-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -3857,7 +4034,9 @@
       "id": "native-character-extensions-current",
       "baseline_functions": [],
       "tools": [
-        "verify-character-extensions-context.py"
+        "verify-character-extensions-context.py",
+        "run-character-list-batch-11318.py",
+        "generate-character-list-contexts-11318.py"
       ],
       "rule": "Проверить callback/item/value tables, clamps и hash-chain lookup/overwrite. Rehash/storage fixtures не считать native container lifetime proof. E9 resize требует явных callee roots для CALL_RETURN модели.",
       "automation": {
@@ -3939,6 +4118,82 @@
             "evidence": [
               "evidence/updates/HEADLESS-CHARACTER-EXTENSIONS-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456ba840",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x14573bda0",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x145786770",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456d2640",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456c7250",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456bdb80",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1456bbfb0",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x1457845a0",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              },
+              {
+                "address": "0x145789790",
+                "scope": "Current whole character-extensions source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-extensions-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-extensions-context.py",
+              "run-character-list-batch-11318.py",
+              "generate-character-list-contexts-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -3947,7 +4202,9 @@
       "id": "native-character-list-records-current",
       "baseline_functions": [],
       "tools": [
-        "verify-character-list-records-context.py"
+        "verify-character-list-records-context.py",
+        "run-character-list-batch-11318.py",
+        "generate-character-list-contexts-11318.py"
       ],
       "rule": "После component checks объединить whole list на общей памяти, проверить distinct records и отклонение partial count. Scope 34 roots/10 exports только для явного проверенного набора текущего SHA; не расширять call tree.",
       "automation": {
@@ -3987,6 +4244,40 @@
             "evidence": [
               "evidence/updates/HEADLESS-CHARACTER-LIST-RECORDS-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1456dc010",
+                "scope": "Current whole character-list-records source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-records-context"
+                ]
+              },
+              {
+                "address": "0x1456dd1a0",
+                "scope": "Current whole character-list-records source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-records-context"
+                ]
+              },
+              {
+                "address": "0x1457888e0",
+                "scope": "Current whole character-list-records source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-records-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-list-records-context.py",
+              "run-character-list-batch-11318.py",
+              "generate-character-list-contexts-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -3995,7 +4286,9 @@
       "id": "native-character-list-handler-current",
       "baseline_functions": [],
       "tools": [
-        "verify-character-list-handler-context.py"
+        "verify-character-list-handler-context.py",
+        "run-character-list-batch-11318.py",
+        "generate-character-list-contexts-11318.py"
       ],
       "rule": "Проверить ID102 registration/handler/gate/policy, preferred scan/state stores, ID101 empty writer и peer reset. Empty native index 0 не означает персонажа; mode 6 не доказывает create request.",
       "automation": {
@@ -4034,6 +4327,40 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-CHARACTER-LIST-HANDLER-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x146796830",
+                "scope": "Current whole character-list-handler source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-handler-context"
+                ]
+              },
+              {
+                "address": "0x1467cdc80",
+                "scope": "Current whole character-list-handler source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-handler-context"
+                ]
+              },
+              {
+                "address": "0x145c9b230",
+                "scope": "Current whole character-list-handler source-bound native scenarios; explicit storage/services fixtures. Separate reader/handler; no live/profile promotion.",
+                "required_checks": [
+                  "native-character-list-handler-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-character-list-handler-context.py",
+              "run-character-list-batch-11318.py",
+              "generate-character-list-contexts-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
             ]
           }
         ]

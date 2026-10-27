@@ -88,7 +88,7 @@ class SdkInputs:
         return iter((self.binding, self.profile, self.constants))
 
     def check_auth_operation(self, *, auth_flow, create_sdk_player=False, fetch_player=False, first_sdk_login=False):
-        if self.source_sha256 == CURRENT_SOURCE_SHA256 and (
+        if self.source_sha256 in (CURRENT_SOURCE_SHA256, LATEST_SOURCE_SHA256) and (
                 auth_flow != 'launcher' or create_sdk_player or fetch_player or first_sdk_login):
             raise ValueError('This SDK source currently supports launcher sign-in only; direct SDK operations require source port')
 
