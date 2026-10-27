@@ -1096,7 +1096,7 @@
       "id": "release-function-reuse",
       "status": "bounded_answer",
       "question": "Какие функции можно автоматически сверять от последней проверенной базы без повторного ручного разбора при обновлении клиента?",
-      "known": "Общий cached пакет 1.13.16 / 1.13.18 → 1.13.20: 1159 ролей / 356 основных функций (10 подтверждены, 346 в очереди) и 30 достигнутых helpers (0 подтверждены). Подключены 27 dependency-only деклараций; frontier группирует 706 зависимостей по уникальным прямым потребителям. Новых подтверждений нет: у готовых exports и ограниченного shortlist остаются data / dispatch / boundary gaps. Для 1.13.20 перенесены три source-specific проверки UTF8/string/archive: 559 native сценариев и общий кэш; 14 полных roots и три bounded leaf spans, без runtime активации. Подготовка Version/Login и VersionResult 1.13.20: 4622 native исполнения общего cached пакета + 331 handler; 13 штатных source variants прошли, graph bindings подключены.",
+      "known": "Общий cached пакет 1.13.16 / 1.13.18 → 1.13.20: 1159 ролей / 356 основных функций (10 подтверждены, 346 в очереди) и 30 достигнутых helpers (0 подтверждены). Подключены 27 dependency-only деклараций; frontier группирует 706 зависимостей по уникальным прямым потребителям. Новых подтверждений нет: у готовых exports и ограниченного shortlist остаются data / dispatch / boundary gaps. Для 1.13.20 перенесены три source-specific проверки UTF8/string/archive: 559 native сценариев и общий кэш; 14 полных roots и три bounded leaf spans, без runtime активации. Подготовка Version/Login и VersionResult 1.13.20: 4622 native исполнения общего cached пакета + 331 handler; 13 штатных source variants прошли, graph bindings подключены. Автоматическое продолжение: 8 tag / 160 writer native сценариев, два source variants и 16 preparation bindings; continuation anchor 0x14679b6ff остался requires_review без генерации текущего context.",
       "unknown": "Изменившийся LoginResult: constructor / reader / handler и структура; post-state root 0x146758950 имеет decompiler block outside unwind. Полный runtime и онлайн новой версии не допущены.",
       "next_action": "Разобрать текущий PktLoginResult через таблицу 0x149929040 / reader 0x1456dc140, подтвердить структуру и обработку; сохранить unknown post-state и переиспользовать готовую preparation / wire базу.",
       "decision_rule": "Новейшая декларация роли имеет приоритет; полное закрытое доказательство функции не заменяет source-specific семантику или разрешение runtime.",
@@ -1106,7 +1106,8 @@
         "evidence/updates/HEADLESS-FUNCTION-REUSE-11320.md",
         "evidence/updates/HEADLESS-DEPENDENCY-FRONTIER-11320.md",
         "evidence/updates/HEADLESS-WIRE-BATCH-11320.md",
-        "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md"
+        "evidence/updates/HEADLESS-ENTRY-BATCH-11320.md",
+        "evidence/updates/HEADLESS-AUTOMATIC-FOLLOWUP-11320.md"
       ]
     }
   ]

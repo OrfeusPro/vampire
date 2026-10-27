@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Автоматическое продолжение: 168 tag / writer сценариев прошли, ещё две
+проверки и 16 preparation bindings подключены к обновлению. Continuation
+проверена автоматически, но anchor LoginResult остался неоднозначным;
+допуск не выдан. Новых Ghidra / игровых запусков не было.
+[Результат и оставшийся пробел](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTOMATIC-FOLLOWUP-11320.md).
+
 Подготовка Version/Login и VersionResult 1.13.20: 4622 native сценария
 общего пакета + 331 handler, 13 source variants подключены к on_update / кэшу.
 Новые bindings записаны; runtime не включён. Следующий конкретный пакет —

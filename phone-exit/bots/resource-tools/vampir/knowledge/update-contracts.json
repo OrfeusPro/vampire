@@ -369,7 +369,23 @@
           "prepare": "0x1467d1b50",
           "constructor": "0x1456d7bc0",
           "result-reader": "0x1456dc620",
-          "result-handler": "0x1467a0610"
+          "result-handler": "0x1467a0610",
+          "wrapper-constructor": "0x1467cf830",
+          "platform-selector": "0x1445ce420",
+          "context-store": "0x1445c4cd0",
+          "context-lookup": "0x1416dd990",
+          "windows-suffix": "0x1415c96b0",
+          "cpu-formatter": "0x14144d200",
+          "cpu-first": "0x1415c71b0",
+          "cpu-second": "0x1415c7190",
+          "cpu-trim": "0x14143a020",
+          "cpu-trim-end": "0x141439e10",
+          "cpu-trim-start": "0x14143a090",
+          "combine-first": "0x14142bc90",
+          "combine-second": "0x14142bbc0",
+          "combiner-copy": "0x141426700",
+          "combiner-append": "0x141429e70",
+          "combiner-grow": "0x1414380b0"
         }
       },
       "resources": [
@@ -425,6 +441,20 @@
           "packet-table": {
             "kind": "vtable",
             "address": "0x149928508"
+          }
+        },
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "tag-pointer": {
+            "kind": "pointer",
+            "address": "0x14b1bce98"
+          },
+          "tag-literal": {
+            "kind": "ascii",
+            "address": "0x149962b30"
+          },
+          "packet-table": {
+            "kind": "vtable",
+            "address": "0x149929818"
           }
         }
       },
@@ -512,12 +542,82 @@
           "destination_offset": 80,
           "temporary_offset": 80,
           "verify_whole_exports": true
+        },
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "packet_id": 1,
+          "packet_name": "PktVersion",
+          "tag_field": 176,
+          "object_size": 208,
+          "start_offset": 570,
+          "stop_offset": 657,
+          "destination_offset": 80,
+          "temporary_offset": 80,
+          "verify_whole_exports": true
         }
       },
       "writer_check_by_source": {
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
           "object_size": 208,
           "memcpy": "0x1487f60d9",
+          "fields": [
+            [
+              "string",
+              16
+            ],
+            [
+              "u32",
+              32
+            ],
+            [
+              "string",
+              40
+            ],
+            [
+              "string",
+              56
+            ],
+            [
+              "string",
+              72
+            ],
+            [
+              "string",
+              88
+            ],
+            [
+              "string",
+              104
+            ],
+            [
+              "string",
+              120
+            ],
+            [
+              "string",
+              136
+            ],
+            [
+              "u32",
+              152
+            ],
+            [
+              "string",
+              160
+            ],
+            [
+              "string",
+              176
+            ],
+            [
+              "u32",
+              192
+            ]
+          ],
+          "verify_whole_exports": true
+        },
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "object_size": 208,
+          "memcpy": "0x1487f8c59",
           "fields": [
             [
               "string",
@@ -710,6 +810,20 @@
             "kind": "vtable",
             "address": "0x149927bd0"
           }
+        },
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "tag-pointer": {
+            "kind": "pointer",
+            "address": "0x14b1bce98"
+          },
+          "tag-literal": {
+            "kind": "ascii",
+            "address": "0x149962b30"
+          },
+          "packet-table": {
+            "kind": "vtable",
+            "address": "0x149928e80"
+          }
         }
       },
       "targets": [
@@ -849,12 +963,130 @@
           "destination_offset": 128,
           "temporary_offset": 64,
           "verify_whole_exports": true
+        },
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "packet_id": 3,
+          "packet_name": "PktLogin",
+          "tag_field": 272,
+          "object_size": 320,
+          "start_offset": 573,
+          "stop_offset": 678,
+          "destination_offset": 128,
+          "temporary_offset": 64,
+          "verify_whole_exports": true
         }
       },
       "writer_check_by_source": {
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
           "object_size": 320,
           "memcpy": "0x1487f60d9",
+          "fields": [
+            [
+              "string",
+              16
+            ],
+            [
+              "string",
+              32
+            ],
+            [
+              "string",
+              48
+            ],
+            [
+              "string",
+              64
+            ],
+            [
+              "u32",
+              80
+            ],
+            [
+              "string",
+              88
+            ],
+            [
+              "string",
+              104
+            ],
+            [
+              "string",
+              120
+            ],
+            [
+              "string",
+              136
+            ],
+            [
+              "u8",
+              152
+            ],
+            [
+              "u8",
+              153
+            ],
+            [
+              "string",
+              160
+            ],
+            [
+              "u32",
+              176
+            ],
+            [
+              "string",
+              184
+            ],
+            [
+              "string",
+              200
+            ],
+            [
+              "string",
+              216
+            ],
+            [
+              "string",
+              232
+            ],
+            [
+              "u32",
+              248
+            ],
+            [
+              "string",
+              256
+            ],
+            [
+              "string",
+              272
+            ],
+            [
+              "u32",
+              288
+            ],
+            [
+              "u8",
+              292
+            ],
+            [
+              "u64",
+              296
+            ],
+            [
+              "bool",
+              304
+            ],
+            [
+              "bool",
+              305
+            ]
+          ],
+          "verify_whole_exports": true
+        },
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": {
+          "object_size": 320,
+          "memcpy": "0x1487f8c59",
           "fields": [
             [
               "string",

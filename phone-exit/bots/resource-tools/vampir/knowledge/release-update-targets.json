@@ -1044,6 +1044,45 @@
             "evidence": [
               "evidence/updates/HEADLESS-TAG-CONSTRUCTORS-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1456d7bc0",
+                "scope": "Bounded current tag or whole writer projection with declared fixtures; no runtime admission",
+                "required_checks": [
+                  "compiled-tag-native-11316"
+                ]
+              },
+              {
+                "address": "0x1467d1b50",
+                "scope": "Bounded current tag or whole writer projection with declared fixtures; no runtime admission",
+                "required_checks": [
+                  "compiled-tag-native-11316"
+                ]
+              },
+              {
+                "address": "0x1456d7540",
+                "scope": "Bounded current tag or whole writer projection with declared fixtures; no runtime admission",
+                "required_checks": [
+                  "compiled-tag-native-11316"
+                ]
+              },
+              {
+                "address": "0x1467d14e0",
+                "scope": "Bounded current tag or whole writer projection with declared fixtures; no runtime admission",
+                "required_checks": [
+                  "compiled-tag-native-11316"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-entry-contracts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-AUTOMATIC-FOLLOWUP-11320.md"
+            ]
           }
         ]
       }
@@ -1109,6 +1148,31 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-TAG-CONSTRUCTORS-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1456e89e0",
+                "scope": "Bounded current tag or whole writer projection with declared fixtures; no runtime admission",
+                "required_checks": [
+                  "packet-writer-context"
+                ]
+              },
+              {
+                "address": "0x1456e84d0",
+                "scope": "Bounded current tag or whole writer projection with declared fixtures; no runtime admission",
+                "required_checks": [
+                  "packet-writer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-entry-contracts-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-AUTOMATIC-FOLLOWUP-11320.md"
             ]
           }
         ]

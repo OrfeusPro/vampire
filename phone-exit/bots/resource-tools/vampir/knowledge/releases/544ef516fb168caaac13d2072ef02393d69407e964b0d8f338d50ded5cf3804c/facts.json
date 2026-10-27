@@ -153,6 +153,81 @@
       "question": "release-function-reuse",
       "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
       "unknown": "Текущие LoginResult layout / constructor / reader / handler, границы post-state, registration / continuation full pipeline и runtime / live 1.13.20."
+    },
+    {
+      "addresses": [
+        "0x1456d7540",
+        "0x1456d7bc0",
+        "0x1467d14e0",
+        "0x1467d1b50"
+      ],
+      "checks": [
+        {
+          "cache_key": "b5db02af9a588f02cdf43d91d3b7208ad20659c6875e6c1a5bb5466df1695bd9",
+          "id": "compiled-tag-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\057c4731c2bbfa3702a155f2079b08067233c3a7acecef86dc62eb416a187c0b\\manifest.json",
+          "sha256": "057c4731c2bbfa3702a155f2079b08067233c3a7acecef86dc62eb416a187c0b",
+          "state": "passed"
+        },
+        {
+          "cache_key": "459bb6ec8db874e507f6bf9a1d2cca4fb0f59b582baa308d69b0221f7f32274e",
+          "id": "packet-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\52dab724fe51418ccebd2298e4d667db9e0a880976f5241d2c1304600d3a5566\\manifest.json",
+          "sha256": "52dab724fe51418ccebd2298e4d667db9e0a880976f5241d2c1304600d3a5566",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d06b1b5b78931296664f186ca98b1cd75349472c66e6a70f815bc3814a7e4d23",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\051c72cb4fa58c3ce10470c1ad9df409f01f137bb7c093240eeef286e71b83bd\\manifest.json",
+          "sha256": "051c72cb4fa58c3ce10470c1ad9df409f01f137bb7c093240eeef286e71b83bd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "59f0aede0c440f6b8778742f31312bee58fe2a22a0017cde47cb63e9683b6cae",
+          "id": "native-wire-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1e7757950ebe96e6ff4d18ac49d02a351f7b08727587235f023994333b9b1e4c\\manifest.json",
+          "sha256": "1e7757950ebe96e6ff4d18ac49d02a351f7b08727587235f023994333b9b1e4c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "54c28545924bdd6734c3a04ae8cbc917c956e8b6aabbcdcf7c61cdc1739fb1cf",
+          "id": "native-entry-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\33fa560bf11fd26a50531a59ea7c15fcc479325b7faf44e1472736301cde7a82\\manifest.json",
+          "sha256": "33fa560bf11fd26a50531a59ea7c15fcc479325b7faf44e1472736301cde7a82",
+          "state": "passed"
+        },
+        {
+          "cache_key": "dfa3e875970e414b52c5f0b3ccf1692526bcefc03f8198bcb472b995b43c67bc",
+          "id": "native-result-gate-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\33145fe1d6fb5af757bb02ee2ae6a17dc30abb0b336d107ab687715dbb468923\\manifest.json",
+          "sha256": "33145fe1d6fb5af757bb02ee2ae6a17dc30abb0b336d107ab687715dbb468923",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ddce8637701aaf37480181f1efcdee4e0502dff2dce9ddbe904690fd5d879b12",
+          "id": "continuation-candidates-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b04d79d9fc0077733a2d5f562fd80437309441b29fe8b82623345c95fdfd0ccb\\manifest.json",
+          "sha256": "b04d79d9fc0077733a2d5f562fd80437309441b29fe8b82623345c95fdfd0ccb",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "168 новых native сценариев: 8 compiled tag и 160 whole writer; две source variants подключены к on_update, 16 preparation bindings добавлены по готовому cached proof. Continuation scan сохраняет requires_review без допуска.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTOMATIC-FOLLOWUP-11320.md",
+          "sha256": "a16fdb45eb15b406b2dec71a342b2ce787db4e55c1224ed5a533eb32d70cd735"
+        }
+      ],
+      "id": "71a9361a3816252c70b9c17ca7b775a2fa07380652c2a74f9b93e5632a3b0eef",
+      "limits": [
+        "Archive/string/allocation effects ограничены объявленными fixtures; строгий closed_shape, полный контракт и runtime не подтверждены. Новые Ghidra exports, игра, авторизация и сетевые команды не запускались."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать готовые scoped проверки и кэш; разбирать только изменившийся LoginResult/post-state и оставшийся continuation anchor.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Изменившийся LoginResult constructor/reader/handler и post-state требуют доказательств. Последний continuation anchor неоднозначен; текущий context не создан."
     }
   ],
   "schema": 1,
