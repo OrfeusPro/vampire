@@ -1,3 +1,9 @@
+Найден метод environment vtable+10: он задаёт +40 из той же нулевой
+константы, что QuestTask data+14. Метод включён в 34 native Time сценария;
+прежние synthetic 3/4 заменены начальным 0 и явным mismatch 1. Его вызов
+в живом lifecycle и поздние изменения полей ещё не подтверждены.
+[Источник и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-INIT-11316.md).
+
 Environment predicate связан с настоящим constructor/global/vtable: getter
 читает int окружения +40. Эти native функции заменили две прежние подстановки;
 34 Time сценария прошли. Registry callback и фактические значения полей ещё

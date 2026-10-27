@@ -27,11 +27,12 @@
     "0x14144ec00": "488b4130c3",
     "0x1433ae360": "0fb68189000000c3",
     "0x14560adc0": "488b05e1b0fd05c3",
-    "0x1418af880": "8b4140c3"
+    "0x1418af880": "8b4140c3",
+    "0x14560e670": "488b0561200604488941388b055f2006048941408b05562006048941448b054d20060489414833c0488981c8000000488981d0000000c641300766c7415a010166c741780001c3"
   },
   "limits": [
     "Whole Time parameter/start/tick/timer/completion with actual two readiness predicates and model getter; source two Time rows.",
-    "Model lookup/environment state fields/registration base helper/JSON/string/other timers/property storage/final completion sink remain bounded fixtures. Native environment constructor binds actual global/vtable/getters. Record+30 task and Task+40 data are shared with Time. Live field values and later writes are not established.",
+    "Model lookup/registration base helper/JSON/string/other timers/property storage/final completion sink remain bounded fixtures. Native environment constructor/global/vtable/getters and vtable+10 initializer execute. Initial data+14 uses source zero1496706e0; environment+40 starts with actual initializer zero, mismatch changes it to1. Active runtime fields/callback dispatch and later writes remain unknown.",
     "Exact source leaves read record+30 and QuestTask RunInInstance byte+89; original data vtable+20 is pinned. Both predicates execute with the same task/data as Time. No gameplay action admission."
   ],
   "native_gates": true

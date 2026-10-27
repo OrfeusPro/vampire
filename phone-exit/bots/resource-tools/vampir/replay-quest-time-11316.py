@@ -136,6 +136,7 @@ def run(context_path=None):
     if native_gates:
         callbacks.pop(0x14568cad0);callbacks.pop(0x14568ca20)
         callbacks.pop(0x14560adc0)
+        if source_qword(0x149909370+0x10)!=0x14560e670:raise ValueError('Environment initializer slot changed')
         if source_qword(0x149909370+0xb8)!=0x1418af880:raise ValueError('Environment kind getter slot changed')
         if source_qword(0x1499f67f8+0x20)!=0x1433ae360:raise ValueError('QuestTask RunInInstance slot changed')
         def environment_registration(machine):
@@ -198,12 +199,16 @@ def run(context_path=None):
                 raise ValueError('Environment constructor/global/vtable binding differs')
             if get(environment+0x40,4)!=0xa5a5a5a5:raise ValueError('Environment constructor kind footprint differs')
             if h.call(0x14560adc0,0)!=environment:raise ValueError('Environment global getter differs')
-            put(environment+0x40,4 if mode=='gate-one' else 3,4)
-            put(environment+0x30,6,1);put(environment+0x50,110120 if mode=='gate-mode3-match' else 110121)
+            h.call(source_qword(0x149909370+0x10),environment)
+            if get(environment+0x40,4)!=0 or get(environment+0x30,1)!=7 or get(environment+0x5a,2)!=0x101:
+                raise ValueError('Environment native initialized fields differ')
+            if get(0x1496706e0,4)!=0:raise ValueError('Shared constructor default changed')
+            if mode=='gate-one':put(environment+0x40,1,4)
+            put(environment+0x50,110120 if mode=='gate-mode3-match' else 110121)
             put(environment+0x58,3 if mode in ('gate-two','gate-mode3-match') else 0,1)
             put(environment+0x5a,0 if mode=='gate-flag-match' else 1,1)
             put(model,base+0xe000);put(base+0xe030,base+0xe120)
-            put(data+0x14,3,4)
+            put(data+0x14,get(0x1496706e0,4),4)
             put(data+0x89,int(mode in ('gate-flag-match','gate-flag-mismatch')),1)
         if native_pending:
             uc.mem_write(model,bytes(0x100));put(model+0xe6,7,2)
@@ -258,6 +263,7 @@ def run(context_path=None):
         if bytes(uc.mem_read(task-16,16))!=b'A'*16 or bytes(uc.mem_read(task+0x2b0,16))!=b'B'*16 or blocks:
             raise ValueError('Time final guards/allocations differ')
         cases.append(dict(task_id=row['id'],index=row['index'],seconds=row['seconds'],mode=mode,states=states,elapsed=elapsed,requests=requests,calls=calls.copy()))
+        if native_gates:cases[-1].update(data14=get(data+0x14,4),environment40=get(environment+0x40,4),environment30=get(environment+0x30,1))
         if native_pending:
             added=int(mode in ('open','record-advances','pending-other-type','pending-other-key'))
             expected_counts=[int(seeded)]*2+[int(seeded)+added]*3
@@ -273,7 +279,7 @@ def run(context_path=None):
         source_rows=source,cases=cases,native_execution=True,network_used=False,action_admitted=False,limits=context['limits'])
     if native_gates:
         report['native_gates']=True
-        report['environment_binding']=dict(constructor='0x1456001d0',global_pointer='0x14b5e5ea8',vtable='0x149909370',getter='0x1418af880',field_offset=0x40,kind_after_constructor_with_registration_fixture=0xa5a5a5a5)
+        report['environment_binding']=dict(constructor='0x1456001d0',global_pointer='0x14b5e5ea8',vtable='0x149909370',getter='0x1418af880',field_offset=0x40,kind_after_constructor_with_registration_fixture=0xa5a5a5a5,initializer='0x14560e670',initial_kind=0,initial_phase=7,initial_flag5a=0x101,shared_default='0x1496706e0')
     if native_pending:report['native_pending']=True
     target=audit.save_snapshot(h.root/('code-clues/quest-time-gates-11316' if native_gates else 'code-clues/quest-pending-time-11316' if native_pending else 'code-clues/quest-time-11316'),report);return target,report
 

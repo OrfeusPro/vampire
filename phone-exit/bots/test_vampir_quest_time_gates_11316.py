@@ -13,7 +13,13 @@ class QuestTimeGatesTests(unittest.TestCase):
         self.assertEqual(len(r['cases']),34)
         self.assertEqual(r['environment_binding']['field_offset'],0x40)
         self.assertEqual(r['environment_binding']['kind_after_constructor_with_registration_fixture'],0xa5a5a5a5)
+        self.assertEqual(r['environment_binding']['initial_kind'],0)
+        self.assertEqual(r['environment_binding']['initial_phase'],7)
+        self.assertEqual(r['environment_binding']['initial_flag5a'],0x101)
         for c in r['cases']:
+            self.assertEqual(c['data14'],0)
+            self.assertEqual(c['environment40'],1 if c['mode']=='gate-one' else 0)
+            self.assertEqual(c['environment30'],5 if c['mode']=='phase' else 7)
             self.assertEqual(c['calls'].count('environment-registration-fixture'),1)
             if c['mode'] in ('open','gate-mode3-match','gate-flag-match'):
                 self.assertEqual(c['requests'],[0,0,1,1,2]);self.assertEqual(c['states'],[1,0xffffffff,1,0xffffffff,1])
