@@ -1,3 +1,8 @@
+JSON gates 1.13.18 прошли 18 native сценариев и пять sparse maps: обход полей,
+тип объекта, выбор writer и очистка строки при отказе. Engine writers и значения
+полей остаются fixtures; actual JSON/live auth не подтверждены, сессия сохранена.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-JSON-GATES-11318.md).
+
 Общий launcher transport 1.13.18 исполнен в четырёх offline случаях: POST,
 Content-Type/Accept, gameCode/buildCode, условные accessToken/authToken и body.
 Шесть header initializers привязаны к exact literals. HTTP/SDK — fixtures;
