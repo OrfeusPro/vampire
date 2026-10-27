@@ -22,6 +22,11 @@ PROFILES = {
 CANDIDATE = 'candidate-11316'
 CURRENT_SHA = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
 PROFILES[CANDIDATE] = ('12abc7a1cda6b050250662acab29155092484da595d50c0e93c2ffff42bfb145', CURRENT_SHA)
+LATEST_CANDIDATE = 'candidate-11318'
+LATEST_SHA = 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+LATEST_CANDIDATE_MANIFEST = 'c8c3f905956ce66f2037f8f759b3e45b889ca4dce3032e4a24c04221d835a575'
+LATEST_CONFIG = 'f93042b23066af7a5a6dfedaa554f12dc88302e4a9f260da4ced0538db7f5251'
+PROFILES[LATEST_CANDIDATE] = (LATEST_CONFIG, LATEST_SHA)
 # Source-bound pointer/literal offsets; HEADLESS-RELEASE-WIRE-TAG.md.
 WIRE_TAGS = {
     SOURCE_SHA: (185899560, '30ec904901000000', 160487472, 'AC7F34E3AFA91ED417BE86CD45BF18C8'),
@@ -29,6 +34,7 @@ WIRE_TAGS = {
         (186362008, '401f964901000000', 160827200, '32283C4C6485307BCF524765A84409C3'),
 }
 WIRE_TAGS[CURRENT_SHA] = (186353816, '2000964901000000', 160819744, '32283C4C6485307BCF524765A84409C3')
+WIRE_TAGS[LATEST_SHA] = (186363544, '2018964901000000', 160827424, '32283C4C6485307BCF524765A84409C3')
 
 
 @dataclass(frozen=True, slots=True)
@@ -66,6 +72,8 @@ def load_profile(*, selected_profile, root=ROOT):
     snapshot, source_sha = PROFILES[selected_profile]
     if selected_profile == CANDIDATE:
         verify_candidate_evidence(root=root)
+    if selected_profile == LATEST_CANDIDATE:
+        verify_latest_candidate_evidence(root=root)
     path = Path(root) / 'resource-config-snapshots' / snapshot / 'manifest.json'
     if path.stat().st_size > 2097152: raise ValueError('Game profile manifest exceeds local budget')
     verify_file(path, snapshot)
@@ -91,8 +99,18 @@ def load_profile(*, selected_profile, root=ROOT):
     url = prepare_cdn_config_url_ascii(normal=values['CdnConfigUrl'], qa=values['CdnConfigUrlQA'],
         prefix=values['ConfigPrefix'], app_version=values['AppVersion'], platform_code=2)
     return BaseGameProfile(values['AppVersion'], values['ConfigPrefix'], 'https://' + url, snapshot,
-        compiled_tag=compiled_tag, source_exe_sha256=source_sha, live_probe_only=selected_profile == CANDIDATE,
-        bounded_world_probe=selected_profile == CANDIDATE)
+        compiled_tag=compiled_tag, source_exe_sha256=source_sha,
+        live_probe_only=selected_profile in (CANDIDATE, LATEST_CANDIDATE),
+        bounded_world_probe=selected_profile in (CANDIDATE, LATEST_CANDIDATE))
+
+
+def verify_latest_candidate_evidence(*, root=ROOT):
+    # This helper reads proof data with the standard library only. Native replay,
+    # decompilation and analysis modules never run on the login path.
+    sys.path.insert(0, str(HERE))
+    from game_candidate_evidence import verify_candidate
+    return verify_candidate(root=root, workspace=HERE.parents[2], source_sha=LATEST_SHA,
+        candidate_sha=LATEST_CANDIDATE_MANIFEST, config_sha=LATEST_CONFIG)
 
 
 def verify_candidate_evidence(*, root=ROOT):

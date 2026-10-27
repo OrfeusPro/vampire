@@ -6,8 +6,9 @@ from .character_select_result import CharacterSelectResultBody
 
 SOURCE_SHA256 = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 CURRENT_PROBE_SOURCE = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
+LATEST_PROBE_SOURCE = 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
 # Explicit bounded probe policy; strict historical nested decoders may refuse new bodies.
-WORLD_PROBE_SOURCES = frozenset((SOURCE_SHA256, CURRENT_PROBE_SOURCE))
+WORLD_PROBE_SOURCES = frozenset((SOURCE_SHA256, CURRENT_PROBE_SOURCE, LATEST_PROBE_SOURCE))
 
 
 @dataclass(frozen=True, slots=True)

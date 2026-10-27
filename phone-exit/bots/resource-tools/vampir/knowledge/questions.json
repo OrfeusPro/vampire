@@ -1059,6 +1059,20 @@
       "evidence": [
         "evidence/updates/HEADLESS-CLOCK-WORLD-BATCH-11318.md"
       ]
+    },
+    {
+      "id": "runtime-admission-11318",
+      "status": "bounded_answer",
+      "question": "Как явно подключить проверенный candidate 1.13.18 к runtime без расширения неподтверждённых capabilities?",
+      "known": "Отдельные loader / CDN / probe / owner guards, source preflight до secrets, local socketpair world flow и bounded controlled deadline. Старый профиль и quest/tutorial identity сохранены.",
+      "unknown": "Настоящая авторизация и серверный bounded world прогон; текущие nested variants, streaming / длительная сессия / восстановление и map projection.",
+      "next_action": "Один явно ограниченный живой прогон с текущим профилем и выбранным выходом; без повторения неизвестных игровых действий.",
+      "decision_rule": "Source verified означает локальный допуск, не server acceptance; новый источник не включает quests/tutorial/map по старым constants.",
+      "do_not_repeat": "Проверять изменившиеся зависимости штатно; использовать прежние native proofs без повторного исполнения при неизменных SHA.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-RUNTIME-ADMISSION-11318.md"
+      ]
     }
   ]
 }

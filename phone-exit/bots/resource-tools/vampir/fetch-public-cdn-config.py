@@ -24,6 +24,9 @@ PROFILE_ID = '393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db'
 PUBLIC_URL = 'https://red.gcdn.netmarble.com/red/config/window/real/1_12_14/config.json'
 RELEASE_URL = 'https://red.gcdn.netmarble.com/red/config/window/real/1_13_14/config.json'
 CANDIDATE_URL = 'https://red.gcdn.netmarble.com/red/config/window/real/1_13_16/config.json'
+CANDIDATE_11318_URL = 'https://red.gcdn.netmarble.com/red/config/window/real/1_13_18/config.json'
+CANDIDATE_11318_SOURCE = 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+CANDIDATE_11318_CONFIG = 'f93042b23066af7a5a6dfedaa554f12dc88302e4a9f260da4ced0538db7f5251'
 MAX_BODY = 2 * 1024 * 1024
 
 
@@ -32,17 +35,27 @@ def digest(data):
 
 
 def profile(selected_profile='recovered-base'):
-    if selected_profile in ('recovered-release', 'candidate-11316'):
+    if selected_profile in ('recovered-release', 'candidate-11316', 'candidate-11318'):
         path = HERE.parents[1] / 'vampir-headless/game-source-profile.py'
         spec = importlib.util.spec_from_file_location('cdn_release_source_profile', path)
         source = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(source)
         value = source.load_profile(selected_profile=selected_profile, root=ROOT)
-        expected_url = CANDIDATE_URL if selected_profile == 'candidate-11316' else RELEASE_URL
+        expected_url = {'recovered-release': RELEASE_URL, 'candidate-11316': CANDIDATE_URL,
+                        'candidate-11318': CANDIDATE_11318_URL}[selected_profile]
+        if selected_profile == 'candidate-11318' and (
+                value.source_exe_sha256 != CANDIDATE_11318_SOURCE
+                or value.source_snapshot_sha256 != CANDIDATE_11318_CONFIG
+                or value.active_game_cache_verified is not False
+                or value.live_probe_only is not True or value.bounded_world_probe is not True):
+            raise ValueError('Unexpected current candidate source or scope')
         if value.cdn_url != expected_url:
             raise ValueError('Unexpected verified release CDN URL')
         manifest_path = ROOT / 'resource-config-snapshots' / value.source_snapshot_sha256 / 'manifest.json'
-        report = json.loads(manifest_path.read_text('utf-8'))
+        payload = manifest_path.read_bytes()
+        if selected_profile == 'candidate-11318' and digest(payload) != CANDIDATE_11318_CONFIG:
+            raise ValueError('Current candidate CDN manifest changed')
+        report = json.loads(payload)
         config = next(c for c in report['configs'] if c['snapshot_file'] == 'DefaultGame.ini')
         return dict(config_snapshot_sha256=value.source_snapshot_sha256, archive_sha256=report['archive_sha256'],
             ini_sha256=config['payload_sha256'], source_values=config['values'], raw_url=value.cdn_url[8:],
@@ -73,7 +86,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def fetch(url, *, route=None):
-    if url not in (PUBLIC_URL, RELEASE_URL, CANDIDATE_URL):
+    if url not in (PUBLIC_URL, RELEASE_URL, CANDIDATE_URL, CANDIDATE_11318_URL):
         raise ValueError('Only the recovered public CDN URL is supported')
     if route is not None and not isinstance(route, SocksRoute): raise TypeError('Expected an explicit SOCKS route')
     context = ssl.create_default_context()
@@ -143,7 +156,7 @@ def save(report, body):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fetch', action='store_true', help='Perform one public HTTPS GET; no redirects or account credentials')
-    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release', 'candidate-11316'], default='recovered-base')
+    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release', 'candidate-11316', 'candidate-11318'], default='recovered-base')
     parser.add_argument('--snapshot', type=Path, help='Decode an existing snapshot offline')
     parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for the public fetch')
     args = parser.parse_args()

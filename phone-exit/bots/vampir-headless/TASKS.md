@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Runtime candidate-11318 подключён отдельно: loader / CDN / probe / owner guards,
+26 новых тестов passed, source preflight установленной игры успешен без сети.
+Current owner ограничен 300 секундами; quests / tutorial / старые map projections
+не допущены. Остаток **36 строк**. Следующий этап — ограниченный живой прогон
+через проверенный телефонный выход, не новый круг неизменённых native checks.
+[Результат и границы](../resource-tools/vampir/knowledge/RUNTIME-ADMISSION-AUTOMATION-11318.md).
+
 Clock / keepalive / bounded world 1.13.18 прошли общим пакетом:
 307 полных native сценариев и 12 short inputs, 20 новых тестов passed.
 Пять checks и heartbeat bindings подключены к on_update / общему кэшу.

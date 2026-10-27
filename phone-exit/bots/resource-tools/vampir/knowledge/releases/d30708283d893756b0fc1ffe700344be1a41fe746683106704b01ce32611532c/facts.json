@@ -1872,6 +1872,39 @@
       "question": "clock-world-batch-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Loader/runner/CDN integration нового candidate, server acceptance, длительная сессия/reconnect и игровой read-only слой."
+    },
+    {
+      "addresses": [
+        "0x14679c920",
+        "0x1467cfb50"
+      ],
+      "checks": [
+        {
+          "cache_key": "f7eb8a29b60eaae7e97ecc715dd5df5fb153dacf10862d2f59febea0adae9a39",
+          "id": "runtime-admission-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b597a78cc1c36c3453be6f942fef750773743ca29f21ac2464aa2ce931addb92\\manifest.json",
+          "sha256": "b597a78cc1c36c3453be6f942fef750773743ca29f21ac2464aa2ce931addb92",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Отдельный candidate-11318 подключён к stdlib runtime loader / CDN / probe / owner с проверкой immutable candidate и 16 source proofs. 26 offline тестов прошли, current controlled owner ограничен 300 секундами и закрывается после local socketpair world observation. Source preflight установленного EXE вернул source_verified без сети; прежние source identities сохранены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RUNTIME-ADMISSION-11318.md",
+          "sha256": "6254fa71cfb845c9d5e4afafc002248b7feabec58e2ce4f7f7efe8a10cfbd84f"
+        }
+      ],
+      "id": "8c8f81e20cd7b081284a765d3a69427d59957112432f2abc7d7076b0d471da2b",
+      "limits": [
+        "Immutable candidate flags и active cache остаются false; source preflight не означает server acceptance.",
+        "HTTP/auth boundary в тестах synthetic, socketpair только локальный; реальный телефон/сервер не проверены.",
+        "Quest/tutorial/map projection не допущены; bounded world не означает streaming или все current nested variants."
+      ],
+      "method": "static",
+      "next_check": "Выполнить один ограниченный живой прогон с current source и явным выходом; не повторять неизвестные действия и не включать quests/tutorial.",
+      "question": "runtime-admission-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Реальная авторизация через выбранный телефон и bounded world observation; длительная сессия, восстановление и текущий read-only слой."
     }
   ],
   "schema": 1,

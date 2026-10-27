@@ -8,7 +8,7 @@ from .receive_stream import ReceiveLimits
 from .selection_flow import SelectionLimits, SelectionState
 from .game_login_error import describe_game_login_error
 from .session_clock import LobbyPingClock
-from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256, WORLD_PROBE_SOURCES
+from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256, WORLD_PROBE_SOURCES, LATEST_PROBE_SOURCE
 from .character_target import CharacterTargetTracker
 from .tutorial_update import decode_tutorial_update
 
@@ -321,7 +321,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         if session_control is not None:
                             session_control.publish(owner)
                             session_control.pump_quest_actions(owner)
-                            deadline=math.inf
+                            if source_sha256!=LATEST_PROBE_SOURCE:deadline=math.inf
                         while tutorial_pending:
                             tutorial_observer(tutorial_pending.pop(0))
                         tracker=ensure_target_tracker()
@@ -329,7 +329,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                             world_observer(tracker.position)
                             notified_revision=tracker.revision
                         if not observe_world_seconds:return result('world_finish_result')
-                        if observation_until is None and session_control is None:
+                        if observation_until is None and (session_control is None or source_sha256==LATEST_PROBE_SOURCE):
                             observation_until=time.monotonic()+observe_world_seconds
                             deadline=observation_until
                         if ack_initial_tutorial:

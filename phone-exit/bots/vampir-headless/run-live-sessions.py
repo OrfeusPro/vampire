@@ -38,15 +38,15 @@ class SourceProfileNotVerified(ValueError):
     """Fixed public failure; never expose source exception text or private paths."""
 
 
-def verify_launch_source():
+def verify_launch_source(selected_profile='candidate-11316'):
     """Run the same source guard as the game probe before asking for secrets."""
     try:
         spec=importlib.util.spec_from_file_location('live_source_preflight',HERE/'game-source-profile.py')
         module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-        profile=module.load_profile(selected_profile='candidate-11316')
+        profile=module.load_profile(selected_profile=selected_profile)
     except (OSError,ValueError,KeyError,StopIteration,IndexError) as error:
         raise SourceProfileNotVerified() from error
-    return dict(status='source_verified',profile='candidate-11316',
+    return dict(status='source_verified',profile=selected_profile,
         source_sha256=profile.source_exe_sha256,app_version=profile.app_version,
         network_attempted=False,online_verified=False)
 
@@ -71,6 +71,12 @@ def validate_accounts(value):
 
 
 def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947,sign_in_parallelism=2,projection=None,ready_callback=None,max_runtime_seconds=None):
+    if profile=='candidate-11318':
+        if projection is not None:raise ValueError('Проекция карты 1.13.18 ещё не подтверждена')
+        verify_launch_source(profile)
+        if max_runtime_seconds is None:max_runtime_seconds=300
+        if type(max_runtime_seconds) is not int or not 1<=max_runtime_seconds<=300:
+            raise ValueError('Прогон 1.13.18 ограничен 300 секундами')
     accounts=validate_accounts(accounts)
     if max_runtime_seconds is not None and (type(max_runtime_seconds) is not int or not 1<=max_runtime_seconds<=86400):
         raise ValueError('Срок отдельного запуска должен быть 1–86400 секунд')
@@ -149,7 +155,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
 
 def launch_options(options,passwords,*,ready_callback=None):
     fields={'accounts','manifest','client_version','projection','sign_in_parallelism','port','max_runtime_seconds','result_path'}
-    if type(options) is not dict or set(options)!=fields:raise ValueError('Неверные параметры владельца')
+    if type(options) is not dict or set(options)-{'profile'}!=fields:raise ValueError('Неверные параметры владельца')
     if type(options['client_version']) is not int or not 0<=options['client_version']<=0xffffffff:
         raise ValueError('Неверная версия клиента')
     if type(options['port']) is not int or not 1024<=options['port']<=65535:raise ValueError('Неверный порт API')
@@ -159,14 +165,18 @@ def launch_options(options,passwords,*,ready_callback=None):
         if type(result_path) is not str:raise ValueError('Неверный путь результата')
         result_path=Path(result_path)
         if result_path.exists() or not result_path.parent.is_dir():raise ValueError('Нужен новый файл результата в существующем каталоге')
+    selected_profile=options.get('profile','candidate-11316')
+    if selected_profile not in ('candidate-11316','candidate-11318'):raise ValueError('Неверный профиль владельца')
+    if selected_profile=='candidate-11318':verify_launch_source(selected_profile)
     projection=None
     if options['projection'] is not None:
+        if selected_profile=='candidate-11318':raise ValueError('Проекция карты 1.13.18 ещё не подтверждена')
         if type(options['projection']) is not str:raise ValueError('Неверный manifest проекции')
         from vampir_core.map_projection_input import load_projection
         from vampir_core.world_move_start import CURRENT_PROBE_SOURCE
         projection=load_projection(Path(options['projection']),source_sha256=CURRENT_PROBE_SOURCE)
     result=run_accounts(options['accounts'],passwords,manifest=Path(options['manifest']),
-        client_version=options['client_version'],sign_in_parallelism=options['sign_in_parallelism'],
+        client_version=options['client_version'],profile=selected_profile,sign_in_parallelism=options['sign_in_parallelism'],
         projection=projection,port=options['port'],max_runtime_seconds=options['max_runtime_seconds'],ready_callback=ready_callback)
     if result_path is not None:
         # Explicit opt-in only: bounded terminal status, no credentials, packet
@@ -179,6 +189,7 @@ def launch_options(options,passwords,*,ready_callback=None):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--profile',choices=['candidate-11316','candidate-11318'],default='candidate-11316')
     parser.add_argument('--accounts',type=Path)
     parser.add_argument('--manifest',type=Path)
     parser.add_argument('--client-version',type=int)
@@ -194,7 +205,7 @@ def main():
     passwords={};startup=None;announced=False
     try:
         if args.check_source:
-            print(json.dumps(verify_launch_source(),ensure_ascii=False),flush=True)
+            print(json.dumps(verify_launch_source(args.profile),ensure_ascii=False),flush=True)
             return
         if args.detached_worker:
             from vampir_core.detached_worker import ready_channel,receive_handoff
@@ -209,12 +220,12 @@ def main():
             return
         if args.accounts is None or args.manifest is None or args.client_version is None:
             parser.error('Нужны --accounts, --manifest и --client-version')
-        verify_launch_source()
+        verify_launch_source(args.profile)
         if args.accounts.stat().st_size>65536:raise ValueError('Слишком большой список аккаунтов')
         accounts=validate_accounts(json.loads(args.accounts.read_text(encoding='utf-8')))
-        options=dict(accounts=accounts,manifest=str(args.manifest.resolve()),client_version=args.client_version,
+        options=dict(accounts=accounts,profile=args.profile,manifest=str(args.manifest.resolve()),client_version=args.client_version,
             projection=str(args.projection.resolve()) if args.projection else None,
-            sign_in_parallelism=args.sign_in_parallelism,port=args.port,max_runtime_seconds=86400 if args.detached else None,
+            sign_in_parallelism=args.sign_in_parallelism,port=args.port,max_runtime_seconds=(300 if args.profile=='candidate-11318' else 86400 if args.detached else None),
             result_path=str(args.result.resolve()) if args.result else None)
         passwords={row['bot_id']:getpass.getpass('Пароль '+row['bot_id']+': ') for row in accounts}
         if args.detached:
@@ -231,7 +242,7 @@ def main():
         notice=dict(status='launch_failed',error_type=type(error).__name__)
         if isinstance(error,SourceProfileNotVerified):
             notice.update(stage='source_validation',reason='source_profile_not_verified',
-                profile='candidate-11316',network_attempted=False)
+                profile=args.profile,network_attempted=False)
         print(json.dumps(notice),flush=True)
         sys.exit(2)
     finally:passwords.clear()

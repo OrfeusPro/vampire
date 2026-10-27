@@ -14,6 +14,12 @@ from vampir_core.world_move_start import SOURCE_SHA256
 
 def run(args,password,*,tutorial_observer=None):
     persistent=getattr(args,'persistent',False)
+    selected_profile=getattr(args,'profile','recovered-release')
+    if selected_profile=='candidate-11318':
+        spec=importlib.util.spec_from_file_location('map_source_preflight',HERE/'game-source-profile.py')
+        source=importlib.util.module_from_spec(spec);spec.loader.exec_module(source)
+        source.load_profile(selected_profile=selected_profile)
+        if args.projection is not None:raise ValueError('Проекция карты 1.13.18 ещё не подтверждена')
     projection=None
     if args.projection is not None:
         from vampir_core.map_projection_input import load_projection
@@ -61,11 +67,16 @@ if __name__=='__main__':
     parser.add_argument('--seconds',type=float,default=60)
     parser.add_argument('--bot-id',help='Opaque UI bot identity; credentials are never used as UI identity')
     parser.add_argument('--persistent',action='store_true',help='Keep this owned session until explicit Stop or transport loss; no reconnect')
-    parser.add_argument('--profile',choices=['recovered-release','candidate-11316'],default='recovered-release')
+    parser.add_argument('--profile',choices=['recovered-release','candidate-11316','candidate-11318'],default='recovered-release')
     args=parser.parse_args()
     try:
         if not 0<args.seconds<=300:raise ValueError('Bounded session duration required')
         if args.persistent and not args.bot_id:raise ValueError('Explicit --bot-id required for persistent session')
+        if args.profile=='candidate-11318':
+            spec=importlib.util.spec_from_file_location('map_cli_source',HERE/'game-source-profile.py')
+            source=importlib.util.module_from_spec(spec);spec.loader.exec_module(source)
+            source.load_profile(selected_profile=args.profile)
+            if args.projection is not None:raise ValueError('Проекция карты 1.13.18 ещё не подтверждена')
         password=getpass.getpass('Bot password: ')
         result=run(args,password);password=None
         print(json.dumps(result,ensure_ascii=False))

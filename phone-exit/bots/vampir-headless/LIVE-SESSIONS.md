@@ -1,5 +1,20 @@
 # Изолированные живые сессии
 
+## Явный ограниченный профиль 1.13.18
+
+Для новой установленной версии выбирать профиль явно:
+
+```powershell
+python -X utf8 phone-exit/bots/vampir-headless/run-live-sessions.py --check-source --profile candidate-11318
+```
+
+Локальный результат source_verified подтверждён; сеть и авторизация этим не
+проверяются. Добавить `--profile candidate-11318` также к обычной / detached
+команде запуска. Current owner ограничен 300 секундами, включая отдельный
+таймер владельца; indefinite mode не допущен. Quest / tutorial requests и
+старый manifest проекции отклоняются. Default candidate-11316 сохранён.
+[Проверки и ограничения](../resource-tools/vampir/knowledge/RUNTIME-ADMISSION-AUTOMATION-11318.md).
+
 ## Проверка перед повторным входом
 
 До запроса паролей обычный и `--detached` запуск проверяют исходные файлы
