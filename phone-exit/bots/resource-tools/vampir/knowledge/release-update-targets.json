@@ -435,12 +435,50 @@
         "0x1444d45a0"
       ],
       "tools": [
-        "audit-release-launcher-contract.py"
+        "audit-release-launcher-contract.py",
+        "replay-launcher-dispatch-11318.py"
       ],
       "required_checks": [
         "release-launcher-contract"
       ],
-      "rule": "Check initializers, body keys, launcherToken header, URL suffixes and both response gates."
+      "rule": "Check initializers, body keys, launcherToken header, URL suffixes and both response gates. Для dispatch проверять whole roots/capture offsets/callback pointers и native temporary cleanup; queued strong reference не считать доставленным callback. E9 cleanup требует явного free target в collect.",
+      "automation": {
+        "discovery": "explicit_response_direct_callees",
+        "validation": "bounded_native_for_reviewed_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1444e57f0",
+                "scope": "Whole dispatchers/native temporary cleanup,16 synthetic empty-delegate cases. Allocator/delegate-copy/queue fixtures; actual capture/refcounts verified. Engine callback delivery/nonempty delegates/response/SDK context требуют проверки.",
+                "required_checks": [
+                  "launcher-dispatch-11318"
+                ]
+              },
+              {
+                "address": "0x1444e6ac0",
+                "scope": "Whole dispatchers/native temporary cleanup,16 synthetic empty-delegate cases. Allocator/delegate-copy/queue fixtures; actual capture/refcounts verified. Engine callback delivery/nonempty delegates/response/SDK context требуют проверки.",
+                "required_checks": [
+                  "launcher-dispatch-11318"
+                ]
+              },
+              {
+                "address": "0x1444c59f0",
+                "scope": "Whole dispatchers/native temporary cleanup,16 synthetic empty-delegate cases. Allocator/delegate-copy/queue fixtures; actual capture/refcounts verified. Engine callback delivery/nonempty delegates/response/SDK context требуют проверки.",
+                "required_checks": [
+                  "launcher-dispatch-11318"
+                ]
+              }
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LAUNCHER-DISPATCH-11318.md"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "first-sdk-and-terms",
