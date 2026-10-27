@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Добавлено наблюдение ID1811 в новом LiveSession: полный source-bound decoder,
+последний scoped ответ и ограниченный journal. 4 теста: native parity900,
+50 synthetic sessions/HTTP/uint64, scope/world/close/errors; результат не
+подтверждает sent action и не меняет1854. Текущий owner сохранён на прежнем
+коде; далее корреляция результата/шага и один игровой тест.
+[Контракт](../vampir-headless/ACTIONS.md#наблюдение-questupdateresult-без-автоматического-подтверждения).
+
 Current handler 1811 связан с регистрацией и моделью: packet+18 quest key,
 +20 state, nested+28 progress, flag1. 192 native сценария gate/dispatch прошли;
 projection/model virtual lifecycle fixtures явные. True gate включает особый

@@ -11,6 +11,7 @@ from .live_diagnostics import LiveDiagnostics
 from .environment import ObservedEnvironment,SOURCE_SHA256 as ENVIRONMENT_SOURCE
 from .tutorial_update import decode_tutorial_update
 from .quest_sync import decode_quest_sync
+from .quest_update_result import decode_quest_update_result
 from .world_move_start import CURRENT_PROBE_SOURCE
 from .action_queue import ActionNotQueued,SessionActionQueue,SCHEMAS,digest,validate_policy
 import json
@@ -53,8 +54,8 @@ class LiveSession:
         self._environment=ObservedEnvironment()
         self._environment_applied=-1
         self._snapshot=dict(schema=2,mode='live',bot_id=bot_id,session_id=self.session_id,state='connecting',position=None,
-            character=None,entities=[],tutorial=None,tutorial_decode_errors=0,quests=[],quest_snapshot=None,quest_decode_errors=0,updated_at_ms=None,heartbeat=dict(sent=0,received=0),
-            coverage=dict(vitals='not_verified',level='not_verified',entities='not_verified',movement='not_verified',tutorial='not_verified',quests='not_verified'),
+            character=None,entities=[],quest_update_result=None,quest_result_decode_errors=0,tutorial=None,tutorial_decode_errors=0,quests=[],quest_snapshot=None,quest_decode_errors=0,updated_at_ms=None,heartbeat=dict(sent=0,received=0),
+            coverage=dict(vitals='not_verified',level='not_verified',entities='not_verified',movement='not_verified',tutorial='not_verified',quests='not_verified',quest_result='not_verified'),
             packets={},error=None)
 
     def request_stop(self):
@@ -76,6 +77,8 @@ class LiveSession:
                 self._snapshot['coverage']['tutorial']='not_received'
             if source_sha256==CURRENT_PROBE_SOURCE and self._snapshot['coverage']['quests']=='not_verified':
                 self._snapshot['coverage']['quests']='not_received'
+            if source_sha256==CURRENT_PROBE_SOURCE and self._snapshot['coverage']['quest_result']=='not_verified':
+                self._snapshot['coverage']['quest_result']='not_received'
             self._environment_applied=-1
 
     def _apply_stats(self):
@@ -109,6 +112,8 @@ class LiveSession:
             counts=self._snapshot['packets']
             key=str(packet_id)
             if key in counts or len(counts)<256:counts[key]=min(counts.get(key,0)+1,2**53-1)
+            if packet_id==1811 and self._source==CURRENT_PROBE_SOURCE:
+                self._receive_quest_result(body,character_key,world_id)
             if packet_id==1854 and self._source==CURRENT_PROBE_SOURCE:
                 if type(character_key) is int and 0<=character_key<2**64 and type(world_id) is int and 0<=world_id<2**32:
                     self._receive_quests(body,character_key,world_id)
@@ -152,6 +157,30 @@ class LiveSession:
                 else:self._stats_limit=True
             self._stats_revision+=1
             self._apply_stats()
+
+    def _receive_quest_result(self,body,character_key,world_id):
+        # Caller holds session lock. A complete response is an observation, not
+        # a receipt for an intent and not a replacement for the ID1854 snapshot.
+        character=self._snapshot['character']
+        if (character is None or type(character_key) is not int or type(world_id) is not int
+                or not 0<=character_key<2**64 or not 0<=world_id<2**32
+                or (str(character_key),world_id)!=(character['key'],character['world_id'])):return
+        try:result=decode_quest_update_result(body,source_sha256=self._source)
+        except ValueError:
+            self._snapshot['quest_update_result']=None
+            self._snapshot['quest_result_decode_errors']=min(self._snapshot['quest_result_decode_errors']+1,2**53-1)
+            self._snapshot['coverage']['quest_result']='decode_error'
+            self._diagnostics.event('quest_result_decode_error',packet_id=1811)
+            return
+        self._snapshot['quest_update_result']=dict(packet_id=1811,result_code=result.result_code,
+            quest_id=str(result.quest_id),state=result.state,
+            progress=dict(raw08=result.progress.raw08,raw10=str(result.progress.raw10),raw18=str(result.progress.raw18)),
+            character_key=str(character_key),world_id=world_id,received_at_ms=time.time_ns()//1000000,
+            semantics='last_received_message',applied_to_local_task=False,action_confirmed=False,
+            correlation='not_established')
+        self._snapshot['coverage']['quest_result']='last_received_message'
+        self._diagnostics.event('quest_update_result_received',packet_id=1811,result_code=result.result_code,
+            quest_id=str(result.quest_id),state=result.state,task_index=result.progress.raw08)
 
     def _receive_quests(self,body,character_key,world_id):
         # Called under the owner lock. Keep only a complete bounded message;
@@ -232,6 +261,8 @@ class LiveSession:
             character=self._snapshot['character']
             if character is None or character['world_id']!=position.world_id:
                 self._action_offers=[];self._action_scope=None
+                self._snapshot['quest_update_result']=None
+                self._snapshot['coverage']['quest_result']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
                 self._stats_applied=-1
                 self._diagnostics.event('world_ready',world_id=position.world_id)
                 character=dict(key=str(key),name=name,world_id=position.world_id,
@@ -255,10 +286,11 @@ class LiveSession:
             self._diagnostics.close()
             self._stats.clear();self._stats_key=None
             self._environment.world(None);self._apply_environment()
-            self._snapshot.update(state='disconnected',position=None,character=None,entities=[],tutorial=None,quests=[],quest_snapshot=None,
+            self._snapshot.update(state='disconnected',position=None,character=None,entities=[],quest_update_result=None,tutorial=None,quests=[],quest_snapshot=None,
                 updated_at_ms=time.time_ns()//1000000,error=error or self._snapshot['error'])
             self._snapshot['coverage']['tutorial']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
             self._snapshot['coverage']['quests']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
+            self._snapshot['coverage']['quest_result']='not_received' if self._source==CURRENT_PROBE_SOURCE else 'not_verified'
 
     def snapshot(self,*,for_api=False,entity_page=0):
         if type(entity_page) is not int or entity_page not in (0,1):raise ValueError('Invalid entity page')

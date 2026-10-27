@@ -172,3 +172,46 @@ expiry/close и два независимых owner/connection. Contracts и в�
 Production launcher/loop пока не устанавливает привязку и не вызывает dispatch.
 Нужны source-bound selected-state handler/offer builder и decoder результата.
 Текущий онлайн-процесс остаётся на прежнем коде без перезапуска.
+
+## Наблюдение QuestUpdateResult без автоматического подтверждения
+
+`vampir_core.quest_update_result.decode_quest_update_result` принимает только
+current source SHA и полное bytes-тело на 30 байт. Формат `<IQBBQQ` проверен
+по whole native readers/writers, handler связывает qword с quest key, первый
+byte со state, вложенный byte/counters с progress. State ограничивается до 6,
+вложенный byte сохраняется; mutable/trailing/short input отклоняется.
+[Wire proof](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-RESULT-11316.md),
+[receiver proof](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RESULT-APPLICATION-11316.md).
+
+Новый LiveSession наблюдает ID1811 только после публикации персонажа и при точном
+совпадении character/world со snapshot. `quest_update_result` содержит последний
+полный ответ: result_code, quest_id строкой uint64, state и progress raw08/raw10/
+raw18 (оба qword строками), context и received_at_ms. Явные поля:
+semantics=last_received_message, applied_to_local_task=false,
+action_confirmed=false, correlation=not_established. Coverage quest_result
+различает not_verified/not_received/last_received_message/decode_error.
+Данные относятся к своей session; без source/context не принимаются.
+
+Journal добавляет quest_update_result_received с code/quest/state/index либо
+quest_result_decode_error. Raw body, auth и другие данные в запись не добавляются.
+История ограничена существующими 256 событиями; последний ответ один. Ошибка
+декодирования очищает предыдущий ответ, счётчик ограничен 2^53-1. Смена мира и
+close очищают ответ. Устаревший context игнорируется, чужой результат не меняет
+последний относящийся к session ответ. GET state/journal используют прежний API.
+
+Ответ1811 не меняет список квестов из1854, не создаёт model/task/offer и не
+вызывает resolve_action даже при code0. Code1197, допускаемый native gate
+в одном режиме, также не объявляется успехом. Для confirmation нужны исходное
+sent intention, точная корреляция и подтверждённая смена прогресса; сейчас их нет.
+
+`test_vampir_live_quest_results.py`: 4 теста проверили portable decoder против
+900 результатов текущего native replay, короткие/лишние/неверные типы/source,
+50 synthetic sessions, точность uint64, независимость копий и HTTP state,
+scope/source/world/close, ошибку после валидного ответа, журнал и сохранение
+sent receipt/списка1854 без подтверждения. Регрессии прежних live quests,
+action API/dispatch прошли отдельно. Игрового сервера в этих тестах нет.
+
+Изменение доступно новым owner-процессам после обычного запуска. Уже работающий
+owner не перезапускался и новые поля в нём не появились; observational analysis
+не используется для подмены сетевого обработчика. Далее корреляция receipt и
+выбранного шага, затем ограниченный игровой тест с сохранением условий сессии.
