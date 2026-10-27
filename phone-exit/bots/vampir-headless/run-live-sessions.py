@@ -34,6 +34,23 @@ def terminal_counter(value):
     return value if type(value) is int and 0<=value<=0x7fffffff else None
 
 
+class SourceProfileNotVerified(ValueError):
+    """Fixed public failure; never expose source exception text or private paths."""
+
+
+def verify_launch_source():
+    """Run the same source guard as the game probe before asking for secrets."""
+    try:
+        spec=importlib.util.spec_from_file_location('live_source_preflight',HERE/'game-source-profile.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        profile=module.load_profile(selected_profile='candidate-11316')
+    except (OSError,ValueError,KeyError,StopIteration,IndexError) as error:
+        raise SourceProfileNotVerified() from error
+    return dict(status='source_verified',profile='candidate-11316',
+        source_sha256=profile.source_exe_sha256,app_version=profile.app_version,
+        network_attempted=False,online_verified=False)
+
+
 def validate_accounts(value):
     fields={'bot_id','email','socks_port','region','server_id','character_index'}
     if not isinstance(value,list) or not 1<=len(value)<=50:
@@ -172,9 +189,13 @@ def main():
     modes=parser.add_mutually_exclusive_group()
     modes.add_argument('--detached',action='store_true',help='Windows: одноразовая задача текущего пользователя вне дерева Codex; пароли только через anonymous pipe')
     modes.add_argument('--detached-worker',action='store_true',help=argparse.SUPPRESS)
+    modes.add_argument('--check-source',action='store_true',help='Проверить исходные файлы профиля без пароля, сети и запуска сессий')
     args=parser.parse_args()
     passwords={};startup=None;announced=False
     try:
+        if args.check_source:
+            print(json.dumps(verify_launch_source(),ensure_ascii=False),flush=True)
+            return
         if args.detached_worker:
             from vampir_core.detached_worker import ready_channel,receive_handoff
             startup=ready_channel()
@@ -188,6 +209,7 @@ def main():
             return
         if args.accounts is None or args.manifest is None or args.client_version is None:
             parser.error('Нужны --accounts, --manifest и --client-version')
+        verify_launch_source()
         if args.accounts.stat().st_size>65536:raise ValueError('Слишком большой список аккаунтов')
         accounts=validate_accounts(json.loads(args.accounts.read_text(encoding='utf-8')))
         options=dict(accounts=accounts,manifest=str(args.manifest.resolve()),client_version=args.client_version,
@@ -206,7 +228,11 @@ def main():
     except (OSError,ValueError,RuntimeError) as error:
         if startup is not None and not announced:
             startup(dict(status='launch_failed',pid=os.getpid(),error_type=type(error).__name__))
-        print(json.dumps(dict(status='launch_failed',error_type=type(error).__name__)),flush=True)
+        notice=dict(status='launch_failed',error_type=type(error).__name__)
+        if isinstance(error,SourceProfileNotVerified):
+            notice.update(stage='source_validation',reason='source_profile_not_verified',
+                profile='candidate-11316',network_attempted=False)
+        print(json.dumps(notice),flush=True)
         sys.exit(2)
     finally:passwords.clear()
 
