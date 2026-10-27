@@ -1096,15 +1096,16 @@
       "id": "release-function-reuse",
       "status": "bounded_answer",
       "question": "Какие функции можно автоматически сверять от последней проверенной базы без повторного ручного разбора при обновлении клиента?",
-      "known": "Общий cached пакет 1.13.16 / 1.13.18 → 1.13.20: 1159 ролей / 356 основных функций (10 подтверждены, 346 в очереди) и 30 достигнутых helpers (0 подтверждены). Подключены 27 dependency-only деклараций; frontier группирует 706 зависимостей по уникальным прямым потребителям. Новых подтверждений нет: у готовых exports и ограниченного shortlist остаются data / dispatch / boundary gaps.",
+      "known": "Общий cached пакет 1.13.16 / 1.13.18 → 1.13.20: 1159 ролей / 356 основных функций (10 подтверждены, 346 в очереди) и 30 достигнутых helpers (0 подтверждены). Подключены 27 dependency-only деклараций; frontier группирует 706 зависимостей по уникальным прямым потребителям. Новых подтверждений нет: у готовых exports и ограниченного shortlist остаются data / dispatch / boundary gaps. Для 1.13.20 перенесены три source-specific проверки UTF8/string/archive: 559 native сценариев и общий кэш; 14 полных roots и три bounded leaf spans, без runtime активации.",
       "unknown": "Границы и таблицы / dispatch выбранных общих зависимостей, семантические проверки 1.13.20 и runtime допуск.",
-      "next_action": "Выбрать общую группу из dependency_frontier и проверить source-bound таблицы / dispatch / границы вместе с семантическим пакетом; не повторять заведомо незамкнутые exports ради совпадения инструкций.",
+      "next_action": "Переиспользовать общий wire пакет 1.13.20; продолжить source-bound preparation/readers или input-archive, не повторяя подтверждённые UTF8/string/archive проверки.",
       "decision_rule": "Новейшая декларация роли имеет приоритет; полное закрытое доказательство функции не заменяет source-specific семантику или разрешение runtime.",
       "do_not_repeat": "Не повторять подтверждённые экспорты и неизменённые проверки; не переносить адреса по общему сдвигу.",
       "addresses": [],
       "evidence": [
         "evidence/updates/HEADLESS-FUNCTION-REUSE-11320.md",
-        "evidence/updates/HEADLESS-DEPENDENCY-FRONTIER-11320.md"
+        "evidence/updates/HEADLESS-DEPENDENCY-FRONTIER-11320.md",
+        "evidence/updates/HEADLESS-WIRE-BATCH-11320.md"
       ]
     }
   ]

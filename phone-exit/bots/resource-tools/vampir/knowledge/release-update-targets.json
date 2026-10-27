@@ -1190,6 +1190,39 @@
             "evidence": [
               "evidence/updates/HEADLESS-WIRE-BATCH-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x14144c5b0",
+                "scope": "222 native UTF-8 / scalar cases; explicit UTF-16 counts and capacity, bounded leaf317bytes; no whole dependency/OS/runtime admission",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x141446650",
+                "scope": "222 native UTF-8 / scalar cases; explicit UTF-16 counts and capacity, bounded leaf317bytes; no whole dependency/OS/runtime admission",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x14143f380",
+                "scope": "222 native UTF-8 / scalar cases; explicit UTF-16 counts and capacity, bounded leaf317bytes; no whole dependency/OS/runtime admission",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              }
+            ],
+            "tools": [
+              "align-wire-contexts-11320.py",
+              "run-wire-batch-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-WIRE-BATCH-11320.md"
+            ]
           }
         ]
       }
@@ -1241,6 +1274,25 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-WIRE-BATCH-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x144aad3d0",
+                "scope": "228 whole string writer cases with native UTF-8; allocator/free/security/archive effects are bounded fixtures",
+                "required_checks": [
+                  "native-string-writer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "align-wire-contexts-11320.py",
+              "run-wire-batch-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-WIRE-BATCH-11320.md"
             ]
           }
         ]
@@ -1419,6 +1471,117 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-WIRE-BATCH-11318.md"
+            ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x144aacc90",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aac770",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aac980",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aac9d0",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aaca00",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aaca30",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aacac0",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aacb80",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x144aacbb0",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x1456e89e0",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x1456e84d0",
+                "scope": "45 archive cases +64 whole Version/Login wire bodies; preallocated archive; growth rejected, allocator/free/memcpy/security fixtures; no preparation/result/network proof",
+                "required_checks": [
+                  "native-archive-wire-context",
+                  "native-string-writer-context",
+                  "native-utf8-context"
+                ]
+              }
+            ],
+            "tools": [
+              "align-wire-contexts-11320.py",
+              "run-wire-batch-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-WIRE-BATCH-11320.md"
             ]
           }
         ]

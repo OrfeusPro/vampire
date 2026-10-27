@@ -48,6 +48,53 @@
       "question": "release-function-reuse",
       "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
       "unknown": "Source-bound таблицы / dispatch / границы общих зависимостей и семантический допуск клиента 1.13.20."
+    },
+    {
+      "addresses": [
+        "0x141446650",
+        "0x14144c5b0",
+        "0x144aac770",
+        "0x144aac980",
+        "0x144aac9d0",
+        "0x144aaca00",
+        "0x144aaca30",
+        "0x144aacac0",
+        "0x144aacb80",
+        "0x144aacbb0",
+        "0x144aacc90",
+        "0x144aad3d0",
+        "0x1456e84d0",
+        "0x1456e89e0"
+      ],
+      "checks": [
+        {
+          "cache_key": "59f0aede0c440f6b8778742f31312bee58fe2a22a0017cde47cb63e9683b6cae",
+          "id": "native-wire-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1e7757950ebe96e6ff4d18ac49d02a351f7b08727587235f023994333b9b1e4c\\manifest.json",
+          "sha256": "1e7757950ebe96e6ff4d18ac49d02a351f7b08727587235f023994333b9b1e4c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Для 1.13.20 выполнен единый пакет 559 native сценариев UTF8/string/archive и целых тел Version/Login: 222 UTF8, 228 string writer, 45 archive и 64 wire cases. 14 полных roots получены через prepare/collect; три bounded leaf spans проверены отдельно. Три штатные проверки имеют текущие source variants, используют один content-addressed кэш и прошли обычный run_checks. Writer bindings нового SHA добавлены в граф двух контрактов; runtime не активирован.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-WIRE-BATCH-11320.md",
+          "sha256": "3bbe6c54370eea5e6849a50e0e78883b9441f28eda831e428fd458ffad311233"
+        }
+      ],
+      "id": "936fbf36d9693dcc5e12a0a67584445844b7483fedeeafc1072ed081c545fd49",
+      "limits": [
+        "Полный SHA EXE и explicit exports проверены; candidate alignment не выдаётся за semantic proof. Общий native отчёт c7d429d94d30290786fdb67a16f9853c218f9cbc2e50ba5ad8eda2609b3d2467; повтор вернул reused=true без нового native исполнения.",
+        "Preallocated archive16384; growth отвергается. Allocator/free/memcpy/security являются ограниченными fixtures; allocationfailure и OS/engine effects не исполнены.",
+        "Нет Version/Login preparation, framing, result reader, socket, авторизации или серверного приёма. Game contracts остаются неполными.",
+        "14 тестов общего набора включают четыре synthetic bookkeeping случая кэша; последние не доказывают native код.",
+        "Прежняя очередь346 основных/30helpers относится к более строгому closed_shape и искусственно не уменьшается bounded proof."
+      ],
+      "method": "bounded_native",
+      "next_check": "Переиспользовать wire/UTF8 пакет и продолжить следующую общую source-bound группу preparation/readers или input-archive; не повторять неизменённые проверки.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Current preparation / readers / input-archive и полный runtime допуск 1.13.20, онлайн-совместимость и изоляция нескольких реальных аккаунтов."
     }
   ],
   "schema": 1,

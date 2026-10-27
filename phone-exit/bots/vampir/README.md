@@ -1,5 +1,12 @@
 Осталось 36 строк из исходных 150: общий пакет Clock / Ping / world candidate снял ещё шесть.
 
+Общий пакет 1.13.20: UTF-8 / string writer / архивы и тела Version/Login
+прошли 559 native сценариев. Три штатные проверки перенесены через source
+variants и общий кэш, повтор без нового native исполнения. Граф содержит
+проверенные writer bindings; preparation / readers и runtime ещё не допущены.
+Полный closed_shape frontier этим bounded пакетом искусственно не закрывается.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-WIRE-BATCH-11320.md).
+
 Общие зависимости подключены отдельным dependency-only пакетом: основные
 356 функций (10 подтверждены, 346 в очереди) учитываются отдельно от 30 helpers.
 Новых подтверждений нет; frontier группирует 706 зависимостей по потребителям.
