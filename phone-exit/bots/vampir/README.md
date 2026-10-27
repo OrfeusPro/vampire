@@ -1,3 +1,9 @@
+Readiness predicates теперь используют тот же task/data, что и Time: exact
+record+30 leaf и оригинальный RunInInstance getter+89, 34 native сценария.
+Закрытая instance ветвь вызывает model virtual+30; её побочные эффекты ещё
+не установлены. Онлайн-сессия сохранена, игровые команды не отправлялись.
+[Проверка и оставшиеся условия](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TIME-TASK-BINDING-11316.md).
+
 # Vampir — главный указатель разработки
 
 Два native readiness predicates подключены к Time lifecycle: 34 сценария.

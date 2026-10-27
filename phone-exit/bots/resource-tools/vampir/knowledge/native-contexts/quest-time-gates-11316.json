@@ -21,12 +21,14 @@
   ],
   "leaves": {
     "0x1455e7510": "488b41304885c07503b0ffc30fb64029c3",
-    "0x1455be4b0": "488b05a9680206c3"
+    "0x1455be4b0": "488b05a9680206c3",
+    "0x14144ec00": "488b4130c3",
+    "0x1433ae360": "0fb68189000000c3"
   },
   "limits": [
     "Whole Time parameter/start/tick/timer/completion with actual two readiness predicates and model getter; source two Time rows.",
-    "Shared-record resolver/model lookup/quest-data flag/environment kind/JSON/string/other timers/property storage/final completion sink remain bounded fixtures. Conditions chosen explicitly, active runtime fields and data origin not established.",
-    "Predicates check data+14 equality to environment virtual+B8, and mode3 selected quest key or data flag versus environment+5A. Numeric mode3/group3 are synthetic test fields, not admitted live enum meanings. No gameplay action admission."
+    "Model lookup/environment kind/JSON/string/other timers/property storage/final completion sink remain bounded fixtures. Record+30 task and Task+40 data are shared with the actual Time lifecycle. Data+14 and environment fields are synthetic; their live origins are not established.",
+    "Exact source leaves read record+30 and QuestTask RunInInstance byte+89; original data vtable+20 is pinned. Both predicates execute with the same task/data as Time. No gameplay action admission."
   ],
   "native_gates": true
 }

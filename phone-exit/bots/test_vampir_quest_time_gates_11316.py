@@ -18,6 +18,7 @@ class QuestTimeGatesTests(unittest.TestCase):
             else:self.assertEqual(c['requests'],[0]*5)
             if c['mode'] in ('gate-one','gate-two','missing-model','gate-record-null','gate-data-null','gate-flag-mismatch'):
                 self.assertEqual(c['elapsed'],[0.]*5);self.assertEqual(c['states'],[1]*5)
+            self.assertEqual(c['calls'].count('blocked-instance'),5 if c['mode']=='gate-flag-mismatch' else 0)
             if c['mode']=='gate-mode3-match':self.assertNotIn('gate-data-flag',c['calls'])
             if c['mode']=='gate-one':self.assertNotIn('gate-data-flag',c['calls']);self.assertIn('gate-environment-kind',c['calls'])
 

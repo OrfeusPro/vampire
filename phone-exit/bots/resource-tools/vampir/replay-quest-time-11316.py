@@ -135,17 +135,19 @@ def run(context_path=None):
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
     if native_gates:
         callbacks.pop(0x14568cad0);callbacks.pop(0x14568ca20)
-        gate_record,gate_data,gate_table,environment_table=base+0xc000,base+0xd000,base+0xe000,base+0xf000
-        def resolve_record(machine):
-            if reg('RCX')!=record:raise ValueError('Time gate shared-record receiver')
-            calls.append('gate-resolve');h.finish(0 if current['mode']=='gate-record-null' else gate_record)
-        def gate_flag(machine):
-            if reg('RCX')!=gate_data:raise ValueError('Time gate data flag receiver')
-            calls.append('gate-data-flag');h.finish(int(current['mode'] in ('gate-flag-match','gate-flag-mismatch')))
+        environment_table=base+0xf000
+        if source_qword(0x1499f67f8+0x20)!=0x1433ae360:raise ValueError('QuestTask RunInInstance slot changed')
         def environment_kind(machine):
             if reg('RCX')!=environment:raise ValueError('Time gate environment kind receiver')
             calls.append('gate-environment-kind');h.finish(4 if current['mode']=='gate-one' else 3)
-        callbacks.update({0x14144ec00:resolve_record,base+0xe100:gate_flag,base+0xe110:environment_kind})
+        def blocked_instance(machine):
+            if reg('RCX')!=model or reg('RDX')!=110120 or reg('R8')&255!=1:raise ValueError('Blocked instance fallback scope')
+            calls.append('blocked-instance');h.finish()
+        callbacks[base+0xe120]=blocked_instance
+        callbacks[base+0xe110]=environment_kind
+        import unicorn
+        for address,label in ((0x14144ec00,'gate-resolve'),(0x1433ae360,'gate-data-flag')):
+            uc.hook_add(unicorn.UC_HOOK_CODE,lambda machine,at,size,user,label=label:calls.append(label),begin=address,end=address)
     if native_pending:
         callbacks.pop(0x1455ca010)
         def copy_bag(machine):
@@ -175,7 +177,7 @@ def run(context_path=None):
     if not any(start<=data_page and end>=data_page+4095 for start,end,_ in uc.mem_regions()):
         uc.mem_map(data_page,4096)
         offset=h.image.offset(data_page-h.image.pe.base);uc.mem_write(data_page,h.raw[offset:offset+4096])
-    callbacks[source_qword(0x1499f67f8+0x20)]=lambda machine:h.finish(0)
+    if not native_gates:callbacks[source_qword(0x1499f67f8+0x20)]=lambda machine:h.finish(0)
     for at,callback in callbacks.items():h.add_fixture(at,callback)
     modes=('open','start-noowner','start-nocontrol','start-dead','start-nodata','disabled','record-state','phase','gate-one','gate-two','missing-model','record-advances')
     if native_gates:modes+=('gate-mode3-match','gate-record-null','gate-data-null','gate-flag-match','gate-flag-mismatch')
@@ -194,8 +196,9 @@ def run(context_path=None):
             put(environment+0x30,6,1);put(environment+0x50,110120 if mode=='gate-mode3-match' else 110121)
             put(environment+0x58,3 if mode in ('gate-two','gate-mode3-match') else 0,1)
             put(environment+0x5a,0 if mode=='gate-flag-match' else 1,1)
-            uc.mem_write(gate_record,bytes(0x60));put(gate_record+0x40,0 if mode=='gate-data-null' else gate_data)
-            uc.mem_write(gate_data,bytes(0x40));put(gate_data,gate_table);put(gate_data+0x14,3,4);put(gate_table+0x20,base+0xe100)
+            put(model,base+0xe000);put(base+0xe030,base+0xe120)
+            put(data+0x14,3,4)
+            put(data+0x89,int(mode in ('gate-flag-match','gate-flag-mismatch')),1)
         if native_pending:
             uc.mem_write(model,bytes(0x100));put(model+0xe6,7,2)
             uc.mem_write(pending-16,b'P'*16+bytes(0x58*8)+b'Q'*16)
@@ -224,6 +227,9 @@ def run(context_path=None):
         if mode=='disabled':put(task+0xa0,0,1)
         if mode=='record-state':put(record+0x28,0,1)
         if mode=='phase':put(environment+0x30,5,1)
+        if native_gates:
+            if mode=='gate-record-null':put(record+0x30,0)
+            if mode=='gate-data-null':put(task+0x40,0)
         expected_data=bytes(uc.mem_read(data,0xc0))
         expected_control=bytes(uc.mem_read(control,0x20))
         expected_record=bytearray(uc.mem_read(record,0x60))
