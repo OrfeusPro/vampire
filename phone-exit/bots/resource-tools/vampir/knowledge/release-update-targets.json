@@ -3338,9 +3338,10 @@
         "quest-world-handler-binding-11316.py",
         "replay-quest-derived-environment-11316.py",
         "replay-quest-world-record-11316.py",
-        "replay-quest-environment-completion-11316.py"
+        "replay-quest-environment-completion-11316.py",
+        "quest-world-finish-binding-11316.py"
       ],
-      "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом. Для world/environment искать явные E9 callers подтверждённого receiver, проверять packet ctor/ID getter и registration window; active derived vtable и phase completion перепроверять вручную. После base constructor искать caller с primary vptr overwrite; derived B8 не считать базовым world getter. Источники record fields и lifecycle проверять отдельно. Handle/provider и leaf hash lookup перепроверять по полному SHA; нельзя переносить layout строк или field+0C по названию/порядку CSV. Completion искать через callers phase setter и source virtual+78 base/derived; actual ID206 receiver binding и специальные ветви проверять отдельно.",
+      "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом. Для world/environment искать явные E9 callers подтверждённого receiver, проверять packet ctor/ID getter и registration window; active derived vtable и phase completion перепроверять вручную. После base constructor искать caller с primary vptr overwrite; derived B8 не считать базовым world getter. Источники record fields и lifecycle проверять отдельно. Handle/provider и leaf hash lookup перепроверять по полному SHA; нельзя переносить layout строк или field+0C по названию/порядку CSV. Completion искать через callers phase setter и source virtual+78 base/derived; actual ID206 receiver binding и специальные ветви проверять отдельно. Для ID206 искать literal handler и проверять registration/constructor vptr/getter, receiver E8 и virtual+78; phase6 не означает created actor.",
       "automation": {
         "discovery": "named_packet_then_explicit_constructor_callers_and_property_literals",
         "validation": "static_full_source_and_registered_binding_check_only",
@@ -3658,6 +3659,20 @@
                 "required_checks": [
                   "native-quest-environment-completion-11316"
                 ]
+              },
+              {
+                "address": "0x1467ca450",
+                "scope": "ID206 registration/handler/ctor/getter static binding; whole receiver→actual completion phase6 в24 missing-actor synthetic случаях. Lookup/providers/actor/arrays/+A0 — fixtures; whole handler/gate composition и live readiness требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-world-finish-completion-11316"
+                ]
+              },
+              {
+                "address": "0x145daca00",
+                "scope": "ID206 registration/handler/ctor/getter static binding; whole receiver→actual completion phase6 в24 missing-actor synthetic случаях. Lookup/providers/actor/arrays/+A0 — fixtures; whole handler/gate composition и live readiness требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-world-finish-completion-11316"
+                ]
               }
             ],
             "evidence": [
@@ -3673,7 +3688,8 @@
               "evidence/scenarios/HEADLESS-QUEST-WORLD-HANDLER-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-DERIVED-ENVIRONMENT-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-WORLD-RECORD-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-COMPLETION-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-COMPLETION-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-WORLD-FINISH-COMPLETION-11316.md"
             ]
           }
         ]

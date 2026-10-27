@@ -1,3 +1,9 @@
+ID206 receiver 1.13.16 теперь выполнен вместе с actual completion virtual +78:
+24 native случая переносят world fields, очищают pending и оставляют phase6;
+refcount восстанавливается. Handler binding статический, actor отсутствует по
+fixture; whole handler/gate и full Time readiness ещё нужны.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-WORLD-FINISH-COMPLETION-11316.md).
+
 Completion окружения 1.13.16 связан с virtual +78 base/derived и actual phase6
 setter: 28 native случаев прошли с явными engine fixtures. Запись предшествует
 уведомлению; actual ID206 receiver binding и полный Time lifecycle ещё нужны.

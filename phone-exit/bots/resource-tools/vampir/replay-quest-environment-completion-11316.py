@@ -20,9 +20,15 @@ def load(name):
     return module
 
 
-def run():
+def run(with_world_finish=False):
+    exports = dict(EXPORTS)
+    functions = {0x145612a90, 0x145618b30, 0x145da88d0}
+    leaves = {0x141403b70: 'c20000'}
+    if with_world_finish:
+        exports.update(load('quest-world-finish-binding-11316').EXPORTS)
+        functions.add(0x145daca00)
     h = load('native-request-harness-11316').make_harness(
-        EXPORTS, {0x145612a90, 0x145618b30, 0x145da88d0}, leaves={0x141403b70: 'c20000'})
+        exports, functions, leaves=leaves)
     index = load('knowledge-index')
     if h.sha != SHA or any(not f.get('block_coverage_complete')
             or f.get('direct_flow_coverage_complete') is not True
@@ -147,16 +153,20 @@ def run():
                 cases.append(dict(derived=derived, before=before, flag79=flag79,
                     after=get(environment + 0x30, 1), phase_gate_passed=get(environment + 0x30, 1) > 5,
                     events=events.copy()))
+    finish = load('quest-world-finish-binding-11316').run_cases(
+        h, environment, services, listeners, context, state, events) if with_world_finish else None
     audit = load('audit-client-release')
     result = dict(source_sha256=SHA, tool_sha256=audit.sha256(Path(__file__)), exports=h.evidence,
         bindings=bindings, derived_call=dict(address='0x145da88f1', bytes='e89aa186ff', target='0x145612a90'),
-        cases=cases, native_execution=True, network_used=False, action_admitted=False,
+        cases=cases, world_finish=finish, native_execution=True, network_used=False, action_admitted=False,
         limits=['Whole derived/base completion and phase setter execute in an explicitly empty engine mode.',
             'Diagnostics, world/actor lookup, UI/event reset and providers are fixtures; no listeners or saved delegate.',
             'Derived flag+1A8, special world10010, kind0x12 and configuration branches are not exercised.',
-            'ID206 handler/receiver-to-virtual78 binding, real environment records, active task and full Time lifecycle remain unproven.',
+            ('ID206 receiver-to-virtual78 executes; handler binding is static, whole handler/gate, real records, active task and full Time remain unproven.'
+             if with_world_finish else 'ID206 handler/receiver-to-virtual78 binding, real environment records, active task and full Time lifecycle remain unproven.'),
             'Source11316 only; no automatic installed11318 or live action admission.'])
-    return audit.save_snapshot(h.root / 'code-clues/quest-environment-completion-11316', result), result
+    topic = 'quest-world-finish-completion-11316' if with_world_finish else 'quest-environment-completion-11316'
+    return audit.save_snapshot(h.root / 'code-clues' / topic, result), result
 
 
 if __name__ == '__main__':
