@@ -489,11 +489,32 @@
                 "required_checks": [
                   "launcher-response-callbacks-11318"
                 ]
+              },
+              {
+                "address": "0x1444eecd0",
+                "scope": "Whole request caller shape/keys/callback/transport references and eight bounded caller-field cases reviewed. Explicit update graph binding only; SDK context, engine writer and live compatibility remain unverified.",
+                "required_checks": [
+                  "launcher-shape-11318",
+                  "launcher-references-11318",
+                  "launcher-caller-fields-11318"
+                ]
+              },
+              {
+                "address": "0x144503e10",
+                "scope": "Whole request caller shape/keys/callback/transport references and eight bounded caller-field cases reviewed. Explicit update graph binding only; SDK context, engine writer and live compatibility remain unverified.",
+                "required_checks": [
+                  "launcher-shape-11318",
+                  "launcher-references-11318",
+                  "launcher-caller-fields-11318"
+                ]
               }
             ],
             "evidence": [
               "evidence/updates/HEADLESS-LAUNCHER-DISPATCH-11318.md",
-              "evidence/updates/HEADLESS-LAUNCHER-RESPONSE-CALLBACKS-11318.md"
+              "evidence/updates/HEADLESS-LAUNCHER-RESPONSE-CALLBACKS-11318.md",
+              "evidence/updates/HEADLESS-LAUNCHER-SHAPE-11318.md",
+              "evidence/updates/HEADLESS-LAUNCHER-REFERENCES-11318.md",
+              "evidence/updates/HEADLESS-LAUNCHER-CALLER-FIELDS-11318.md"
             ]
           }
         ]

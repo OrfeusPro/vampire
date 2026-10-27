@@ -7623,7 +7623,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_shape_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -7651,7 +7651,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_references_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -7683,7 +7683,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_responses_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -7714,7 +7714,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_transport_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -7743,7 +7743,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_common_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -7774,7 +7774,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_json_gates_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -7805,7 +7805,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_caller_fields_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -7848,7 +7848,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_result_getters_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -8086,7 +8086,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_dispatch_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [
@@ -8117,7 +8117,7 @@
         "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
-      "on_update": false,
+      "on_update": true,
       "test_pattern": "test_vampir_launcher_response_callbacks_11318.py",
       "timeout_seconds": 90,
       "runtime_distributions": [

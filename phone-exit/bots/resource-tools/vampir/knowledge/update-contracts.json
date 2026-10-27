@@ -124,6 +124,12 @@
           "sign-in": "0x144504980",
           "anchor-launcher-token": "0x1444ef840",
           "anchor-launcher-sign-in": "0x144504980"
+        },
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "token": "0x1444eecd0",
+          "sign-in": "0x144503e10",
+          "anchor-launcher-token": "0x1444eecd0",
+          "anchor-launcher-sign-in": "0x144503e10"
         }
       },
       "resources": [],

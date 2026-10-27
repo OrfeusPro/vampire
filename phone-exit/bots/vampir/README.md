@@ -1,3 +1,9 @@
+Готовые результаты 1.13.18 подключены к штатному обновлению: десять launcher
+checks и проверенные token/sign-in bindings. `update --resume` получил десять
+passed, переиспользовал 9 этапов без нового Ghidra; очередь 148 строк вместо 150.
+Профиль ещё не подготовлен: обязательные SDK/runtime/игровые зависимости остаются.
+[Подключение и границы](../resource-tools/vampir/knowledge/UPDATE-REVIEW-INTEGRATION-11318.md).
+
 Для 1.13.18 response callbacks теперь проверены вместе с передачей результата
 и очисткой: 74 сценария HTTP/errorCode/resultData/lifecycle прошли. Поля JSON
 и SDK context пока заданы тестом; успешный callback ещё не доказывает вход.
