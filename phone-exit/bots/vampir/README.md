@@ -1,3 +1,8 @@
+Установлен клиент 1.13.18 (EXE SHA d3070828…), обнаружен изменённый основной PAK.
+Штатный plan-only аудит сохранил отдельный план: 165 архивов проверены полными
+SHA, 164 совпали. Профиль не активирован; прежняя сессия hk-test сохраняется.
+[Аудит, SHA и продолжение](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RELEASE-AUDIT-11318.md).
+
 Найден current producer pending+44: receiver 145DAD170 переносит native input+14
 и передаёт его actual writer. 48 новых случаев вместе с прежними дают 145;
 A8=true/derived vtable и внешние подсистемы — fixtures. Current ID204 handler
