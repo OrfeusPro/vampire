@@ -29,6 +29,16 @@ class QuestEnvironmentUpdateTests(unittest.TestCase):
             selected = c['phase'] in (2, 3, 4)
             self.assertEqual(c['result'], int(selected))
             self.assertEqual(c['calls'], ['format', 'phase:5'] if selected else [])
+        lookups = {c['mode']:c for c in result['lookup_cases']}
+        self.assertEqual(set(lookups), {'global', 'fallback', 'wrong-depth', 'wrong-parent',
+            'fallback-missing', 'resolve-missing', 'owner-empty', 'explicit-owner', 'explicit-empty'})
+        for mode, c in lookups.items():
+            self.assertEqual(c['found'], mode not in
+                ('fallback-missing', 'resolve-missing', 'owner-empty', 'explicit-empty'))
+        self.assertEqual(lookups['global']['calls'], ['world', 'object-class', 'resolve'])
+        self.assertEqual(lookups['fallback']['calls'], ['world', 'fallback', 'resolve'])
+        self.assertEqual(lookups['wrong-parent']['calls'], ['world', 'object-class', 'fallback', 'resolve'])
+        self.assertEqual(lookups['explicit-owner']['calls'], ['world'])
 
 
 if __name__ == '__main__':

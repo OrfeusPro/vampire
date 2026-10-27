@@ -1,3 +1,9 @@
+Getter объекта guard теперь исполняется native: global/typecheck/fallback/resolve
+и context+158 заменили прежнюю подстановку. 48 writer/readiness случаев и
+9 getter ветвей прошли. Virtual+7B8, источник pending+44 и активное состояние
+ещё неизвестны; live action не включён.
+[Источник и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-GUARD-OBJECT-11316.md).
+
 Подтверждён writer environment+40: при true внешнем guard пишет аргумент и
 сбрасывает pending+44; при отказе сохраняет прежнее и ставит C1. Source retry
 caller и readiness проверены вместе в 48 native случаях; callback/guard engine

@@ -34,6 +34,8 @@ def run():
     environment, task, record, data, model, world, text = [base+n for n in
         (0x1000, 0x2000, 0x3000, 0x4000, 0x5000, 0x6000, 0x7000)]
     world_table, guard_entry = base+0xe000, base+0xf000
+    global_object, object_class, expected_class, parents, owner, token = [base+n for n in
+        (0x10000, 0x14000, 0x15000, 0x16000, 0x17000, 0x18000)]
     current, calls = {}, []
 
     def reg(name):
@@ -75,10 +77,18 @@ def run():
     def convert_text(machine):
         uc.mem_write(reg('RCX'), bytes(32)); calls.append('convert'); h.finish(reg('RCX'))
 
-    def world_get(machine):
-        if reg('RCX') != 0:
-            raise ValueError('Environment world lookup scope')
-        calls.append('world'); h.finish(0 if current['guard']=='missing' else world)
+    def class_get(machine):
+        calls.append('object-class'); h.finish(expected_class)
+
+    def fallback_get(machine):
+        calls.append('fallback')
+        h.finish(0 if current['lookup']=='fallback-missing' else token)
+
+    def resolve_context(machine):
+        if reg('RCX') != token:
+            raise ValueError('Environment context resolution input')
+        calls.append('resolve')
+        h.finish(0 if current['lookup']=='resolve-missing' else owner)
 
     def guard(machine):
         if reg('RCX') != world:
@@ -103,12 +113,28 @@ def run():
         raise ValueError('Empty-string fixture unexpectedly freed memory')
 
     callbacks = {0x144286f50:registration, 0x141433340:format_text,
-        0x145618b30:phase_request, 0x14566d560:convert_text, 0x1445d2a20:world_get,
+        0x145618b30:phase_request, 0x14566d560:convert_text,
+        0x143befc30:class_get, 0x1445c32b0:fallback_get, 0x143c1bac0:resolve_context,
         guard_entry:guard, 0x141426b30:string_init, 0x144a78160:callback_sink,
         0x1455bbcb0:model_lookup, 0x141483080:unexpected_free,
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
     for at, callback in callbacks.items():
         h.add_fixture(at, callback)
+    import unicorn
+    uc.hook_add(unicorn.UC_HOOK_CODE, lambda machine, at, size, user:calls.append('world'),
+        begin=0x1445d2a20, end=0x1445d2a20)
+
+    def setup_lookup(mode):
+        current['lookup'] = mode
+        uc.mem_write(global_object, bytes(0x1300))
+        uc.mem_write(object_class, bytes(0x80)); uc.mem_write(expected_class, bytes(0x80))
+        uc.mem_write(parents, bytes(0x80)); uc.mem_write(owner, bytes(0x200))
+        put(0x14b559008, 0 if mode in ('fallback', 'fallback-missing') else global_object)
+        put(global_object+0x10, object_class); put(global_object+0x11f8, token)
+        put(object_class+0x38, 1 if mode=='wrong-depth' else 2, 4)
+        put(expected_class+0x38, 2, 4); put(object_class+0x30, parents)
+        put(parents+16, 0 if mode=='wrong-parent' else expected_class+0x30)
+        put(owner+0x158, 0 if mode=='owner-empty' else world)
 
     def setup(old, requested, flag, phase, guard_mode):
         current.clear(); current.update(requested=requested, guard=guard_mode, formatted=requested if flag else old)
@@ -119,6 +145,7 @@ def run():
         put(environment+0x40, old, 4); put(environment+0x44, requested, 4)
         put(environment+0xc1, flag, 1); put(environment+0x30, phase, 1)
         put(world, world_table); put(world_table+0x7b8, guard_entry)
+        setup_lookup('fallback-missing' if guard_mode=='missing' else 'global')
         uc.mem_write(text, bytes(16)); put(0x14b5e4d60, model)
         uc.mem_write(record, bytes(0x60)); uc.mem_write(task, bytes(0x60))
         uc.mem_write(data, bytes(0x60))
@@ -165,10 +192,25 @@ def run():
         if calls != (['format', 'phase:5'] if selected else []):
             raise ValueError('Environment non-retry performed unexpected work')
         cases.append(dict(path='phase', old=old, phase=phase, result=result, calls=calls.copy()))
+    lookup_cases = []
+    for mode in ('global', 'fallback', 'wrong-depth', 'wrong-parent', 'fallback-missing',
+                 'resolve-missing', 'owner-empty', 'explicit-owner', 'explicit-empty'):
+        setup(0, 1, 0, 7, 'allow'); setup_lookup('owner-empty' if mode=='explicit-empty' else mode)
+        calls.clear()
+        actual = h.call(0x1445d2a20, owner if mode.startswith('explicit-') else 0)
+        expected = 0 if mode in ('fallback-missing', 'resolve-missing', 'owner-empty', 'explicit-empty') else world
+        expected_calls = ['world']
+        if not mode.startswith('explicit-'):
+            if mode not in ('fallback', 'fallback-missing'):expected_calls.append('object-class')
+            if mode in ('fallback', 'fallback-missing', 'wrong-depth', 'wrong-parent'):expected_calls.append('fallback')
+            if mode!='fallback-missing':expected_calls.append('resolve')
+        if actual!=expected or calls!=expected_calls:
+            raise ValueError('Native environment object lookup differs: '+repr((mode, actual, calls)))
+        lookup_cases.append(dict(mode=mode, found=bool(actual), calls=calls.copy()))
     audit = load('audit-client-release')
     report = dict(source_sha256=h.sha, tool_sha256=audit.sha256(Path(__file__)),
         context_sha256=audit.sha256(path), exports=h.evidence, legacy_direct_flow_checked=legacy,
-        cases=cases, native_execution=True, network_used=False, action_admitted=False, limits=context['limits'])
+        cases=cases, lookup_cases=lookup_cases, native_execution=True, network_used=False, action_admitted=False, limits=context['limits'])
     target = audit.save_snapshot(h.root/'code-clues/quest-environment-update-11316', report)
     return target, report
 
