@@ -19,6 +19,7 @@ def run(context_path=None):
     audit=load('audit-client-release');path=Path(context_path) if context_path else HERE/'knowledge/native-contexts/quest-time-11316.json'
     context=json.loads(path.read_text('utf-8'))
     native_pending=context.get('native_pending') is True
+    native_gates=context.get('native_gates') is True
     h=load('native-request-harness-11316').make_harness(context['exports'],{int(v,16) for v in context['functions']},
         leaves={int(a,16):b for a,b in context['leaves'].items()})
     if h.sha!=context['source_sha256'] or not all(f.get('block_coverage_complete') and f.get('direct_flow_coverage_complete') for f in h.fragments):
@@ -132,6 +133,19 @@ def run(context_path=None):
         0x141c827e0:bag_init,0x1445c5890:scalar,0x1445c5800:scalar,0x1445d6930:set_property,
         0x1455ca010:completion_request,0x141c4f630:lambda machine:h.finish(),
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
+    if native_gates:
+        callbacks.pop(0x14568cad0);callbacks.pop(0x14568ca20)
+        gate_record,gate_data,gate_table,environment_table=base+0xc000,base+0xd000,base+0xe000,base+0xf000
+        def resolve_record(machine):
+            if reg('RCX')!=record:raise ValueError('Time gate shared-record receiver')
+            calls.append('gate-resolve');h.finish(0 if current['mode']=='gate-record-null' else gate_record)
+        def gate_flag(machine):
+            if reg('RCX')!=gate_data:raise ValueError('Time gate data flag receiver')
+            calls.append('gate-data-flag');h.finish(int(current['mode'] in ('gate-flag-match','gate-flag-mismatch')))
+        def environment_kind(machine):
+            if reg('RCX')!=environment:raise ValueError('Time gate environment kind receiver')
+            calls.append('gate-environment-kind');h.finish(4 if current['mode']=='gate-one' else 3)
+        callbacks.update({0x14144ec00:resolve_record,base+0xe100:gate_flag,base+0xe110:environment_kind})
     if native_pending:
         callbacks.pop(0x1455ca010)
         def copy_bag(machine):
@@ -164,6 +178,7 @@ def run(context_path=None):
     callbacks[source_qword(0x1499f67f8+0x20)]=lambda machine:h.finish(0)
     for at,callback in callbacks.items():h.add_fixture(at,callback)
     modes=('open','start-noowner','start-nocontrol','start-dead','start-nodata','disabled','record-state','phase','gate-one','gate-two','missing-model','record-advances')
+    if native_gates:modes+=('gate-mode3-match','gate-record-null','gate-data-null','gate-flag-match','gate-flag-mismatch')
     if native_pending:modes+=('pending-same','pending-other-index','pending-other-type','pending-other-key','pending-guard')
     cases=[]
     for row in source:
@@ -174,6 +189,13 @@ def run(context_path=None):
         put(task,0x149905340);put(task+0x10,record);put(task+0x18,control);put(task+0x20,int(row['id']));put(task+0x28,6,1);put(task+0x29,row['index'],1);put(task+0x40,data)
         put(record+0x20,110120);put(record+0x28,2,1);put(record+0x30,task);put(control+8,1,4);put(control+12,1,4);put(data,0x1499f67f8)
         put(closure,task);put(json_ref,json_object);put(0x14b5e4d60,model);put(environment+0x30,6,1)
+        if native_gates:
+            uc.mem_write(environment,bytes(0x80));put(environment,environment_table);put(environment_table+0xb8,base+0xe110)
+            put(environment+0x30,6,1);put(environment+0x50,110120 if mode=='gate-mode3-match' else 110121)
+            put(environment+0x58,3 if mode in ('gate-two','gate-mode3-match') else 0,1)
+            put(environment+0x5a,0 if mode=='gate-flag-match' else 1,1)
+            uc.mem_write(gate_record,bytes(0x60));put(gate_record+0x40,0 if mode=='gate-data-null' else gate_data)
+            uc.mem_write(gate_data,bytes(0x40));put(gate_data,gate_table);put(gate_data+0x14,3,4);put(gate_table+0x20,base+0xe100)
         if native_pending:
             uc.mem_write(model,bytes(0x100));put(model+0xe6,7,2)
             uc.mem_write(pending-16,b'P'*16+bytes(0x58*8)+b'Q'*16)
@@ -213,8 +235,8 @@ def run(context_path=None):
             elapsed.append(struct.unpack('<f',bytes(uc.mem_read(task+0x1a0,4)))[0]);states.append(get(task+0x1a8,4));requests.append(calls.count('request'))
             if mode=='record-advances' and calls.count('request'):put(record+0x28,0,1)
             if native_pending:pending_counts.append(get(model+0x88,4))
-        allowed=mode in ('open','missing-model','record-advances') or mode.startswith('pending-')
-        expected_requests=([0,0,1,1,2] if mode=='open' or mode.startswith('pending-') else [0,0,1,1,1] if mode=='record-advances' else [0]*5)
+        allowed=(mode in ('open','record-advances','gate-mode3-match','gate-flag-match') if native_gates else mode in ('open','missing-model','record-advances')) or mode.startswith('pending-')
+        expected_requests=([0,0,1,1,2] if mode=='open' or mode in ('gate-mode3-match','gate-flag-match') or mode.startswith('pending-') else [0,0,1,1,1] if mode=='record-advances' else [0]*5)
         if requests!=expected_requests:raise ValueError('Time completion count differs '+repr((mode,requests,states,elapsed)))
         if allowed and states[:3]!=[1,0xffffffff,1]:raise ValueError('Time threshold requires next tick')
         if not allowed and (states!=[int(started)]*5 or any(elapsed)):raise ValueError('Blocked Time tick changed timer')
@@ -237,8 +259,9 @@ def run(context_path=None):
     if audit.sha256(archive)!=context['pak_sha256']:raise ValueError('Time PAK changed during run')
     report=dict(source_sha256=h.sha,tool_sha256=audit.sha256(Path(__file__)),context_sha256=audit.sha256(path),exports=h.evidence,
         source_rows=source,cases=cases,native_execution=True,network_used=False,action_admitted=False,limits=context['limits'])
+    if native_gates:report['native_gates']=True
     if native_pending:report['native_pending']=True
-    target=audit.save_snapshot(h.root/('code-clues/quest-pending-time-11316' if native_pending else 'code-clues/quest-time-11316'),report);return target,report
+    target=audit.save_snapshot(h.root/('code-clues/quest-time-gates-11316' if native_gates else 'code-clues/quest-pending-time-11316' if native_pending else 'code-clues/quest-time-11316'),report);return target,report
 
 
 if __name__=='__main__':

@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Два native readiness predicates подключены к Time lifecycle: 34 сценария.
+Первый сравнивает data+14/environment virtual+B8; второй mode3 выбранный quest
+либо flag против byte+5A. Missing model/data и несоответствие блокируют таймер.
+Role data/environment ещё unknown, их значения synthetic; далее QuestInfo
+source/selected environment и concrete offer builder. Сессию сохранять.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TIME-GATES-11316.md).
+
 Backend owner offers подключены к существующему JS quest adapter: enabled
 только для явного шага, stale/busy блокируются, после dispatch остаётся receipt.
 Missing prompts отображаются отдельно от готовности действий. 3 HTTP/JS/local
