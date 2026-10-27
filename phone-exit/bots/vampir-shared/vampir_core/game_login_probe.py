@@ -320,6 +320,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                     if world.state=='finish_response':
                         if session_control is not None:
                             session_control.publish(owner)
+                            session_control.pump_quest_actions(owner)
                             deadline=math.inf
                         while tutorial_pending:
                             tutorial_observer(tutorial_pending.pop(0))

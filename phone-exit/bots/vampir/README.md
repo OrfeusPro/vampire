@@ -1,5 +1,12 @@
 # Vampir — главный указатель разработки
 
+Однократный quest pump подключён к новому owner loop после world publish.
+Только explicit trusted offer + HTTP намерение дают dispatch; default no-op,
+stale контекст отказывает, после попытки offer снимается без автопродолжения.
+4 новых теста / 22 регрессии / 42 login tests прошли. Source-bound offer builder
+ещё не включён в launcher; текущая сессия сохраняется на прежнем коде.
+[Контракт и границы](../vampir-headless/ACTIONS.md#однократный-owner-pump-выбранного-шага).
+
 Quest receipt сопоставляет ответы1811/изменения1854 после socket acceptance
 по scope/quest и 10секундному окну, с baseline/duplicate checks и deep copies.
 Чужой world1854 теперь игнорируется. Это candidate observations, не causal

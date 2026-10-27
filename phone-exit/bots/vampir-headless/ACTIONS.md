@@ -301,3 +301,47 @@ foreign quest/world, duplicate IDs, expiry, две session и world transition.
 Далее нужен source-bound ожидаемый переход выбранного шага и явный owner pump,
 который запускает одну команду и проверяет результат без автоматического retry.
 Уже работающий owner остаётся на прежнем коде; этот патч в него не внедряется.
+
+## Однократный owner pump выбранного шага
+
+В новом `exchange_game_login` после успешного world finish и publish выполняется
+`session_control.pump_quest_actions(owner)`. По умолчанию это no-op: launcher
+не устанавливает action contracts/connection и не публикует выбранный шаг.
+Ни вход в мир, ни политика auto_quests не создают команду автоматически.
+
+Trusted socket owner после своего source-bound допуска может вызвать
+`offer_quest_step(key, payload=QuestUpdate(...))`. Это API Python владельца,
+не HTTP endpoint. Метод требует установленный канал с bound connection,
+единственную наблюдаемую запись этого quest в1854, state2 и совпавший index;
+проверяет typed codec. Он не вычисляет порядок текущего каталога, native gates,
+engine-corrected vector/TargetId или следующий этап. Эти условия остаются
+ответственностью подтверждённого owner adapter; совпадение raw index не заменяет
+его допуска. Ни один production adapter пока не вызывает offer_quest_step.
+
+Контекст SHA строится из source, character/world scope, полной записи квеста
+и immutable payload. Полученные timestamps/heartbeat исключены. Owner получает
+точный offer kind quest_follow с quest_id/context для публикации в интерфейс.
+HTTP намерение по-прежнему содержит только нейтральные ID и должно точно
+совпасть с offer; payload/contract/vector из HTTP не принимаются.
+
+Pump пересчитывает контекст, выполняет claim и dispatch через ранее привязанный
+connection. Изменение записи квеста/индекса/мира делает старое намерение stale;
+предложение снимается, queued intent получает отказ до enqueue. После взятого
+намерения выбранный шаг/предложение снимаются даже при отказе отправки; повтор
+pump не создаёт второй frame. Новый шаг требует нового явного owner offer и
+отдельного намерения. Уже sent receipt продолжает наблюдать transport/ответы,
+автоматического resolve или следующего квеста нет.
+
+`test_vampir_quest_owner_pump.py`: 4 теста с настоящим loopback HTTP и локальными
+socketpair. Explicit synthetic owner step → HTTP click → pump → packet1810;
+без click отправки нет. Повтор pump/HTTP request не отправляет снова, новый
+request на снятое предложение отклонён. Проверены stale progress/duplicate IDs,
+world/Stop, foreign owner/connection, неверный индекс, default no-op и новый
+явный offer после смены индекса. Payload и contracts в тестах synthetic.
+22 регрессии dispatch/observations/API/live session и42 login probe tests прошли.
+
+Текущий уже работающий процесс не перезапускался, новый pump в нём не загружен.
+Для реального теста ещё нужны source-bound offer builder/readiness/position и
+подготовленный запуск owner с каналом; внедрение/переподключение не выполнялось.
+Это завершает управляемый путь намерения в новом коде, но не подтверждает
+движение/серверное выполнение/автопродолжение/мультиаккаунтный live запуск.

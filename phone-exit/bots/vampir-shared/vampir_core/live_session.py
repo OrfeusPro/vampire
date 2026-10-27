@@ -1,5 +1,6 @@
 """Single-owner live state, bounded in memory; no raw packet persistence."""
 import copy
+import hashlib
 import secrets
 import re
 import struct
@@ -40,6 +41,7 @@ class LiveSession:
         self._action_owner=None
         self._action_connection=None
         self._quest_transport=None
+        self._quest_step=None
         self._action_offers=[]
         self._action_scope=None
         self._policy=dict(skip_dialogues=True,auto_quests=False)
@@ -333,6 +335,7 @@ class LiveSession:
                 # Session close does not assert whether its connection sent bytes.
                 self._quest_transport=None
             self._action_connection=None
+            self._quest_step=None
             self._action_offers=[]
             if not self._closed:self._diagnostics.event('session_closed',error=error)
             self._closed=True
@@ -437,7 +440,57 @@ class LiveSession:
         with self._lock:
             self._action_ready()
             if owner_key is not self._action_owner:raise RuntimeError('Socket owner required')
-            self._action_offers=clean;self._action_scope=self._scope()
+            self._action_offers=clean;self._action_scope=self._scope();self._quest_step=None
+
+    def _quest_step_context(self,payload):
+        rows=[r for r in self._snapshot['quests'] if r['id']==str(payload.raw30)]
+        row=rows[0] if len(rows)==1 else None
+        context=dict(source=self._source,scope=self._scope(),quest=row,
+            vector=payload.vector,target=payload.raw28,index=payload.raw38)
+        # Reception time/heartbeat are deliberately excluded. Current wire row
+        # and actor/world scope must remain identical until the owner dispatch.
+        return hashlib.sha256(json.dumps(context,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest(),row
+
+    def offer_quest_step(self,owner_key,*,payload):
+        """Trusted owner binds one already-admitted selected-step payload.
+
+        Does not infer task data, corrected actor position or next step. Caller
+        must establish those source-bound conditions before publishing the offer.
+        """
+        from .quest_update import QuestUpdate,encode_quest_update
+        if type(payload) is not QuestUpdate:raise TypeError('Typed selected quest step required')
+        encode_quest_update(payload,source_sha256=self._source)
+        with self._lock:
+            self._action_ready()
+            if owner_key is not self._action_owner or self._action_connection is None:raise RuntimeError('Bound socket owner required')
+            context,row=self._quest_step_context(payload)
+            if (row is None or row['state']!=2 or row['progress']['raw08']!=payload.raw38
+                    or self._snapshot['coverage']['quests']!='last_received_message'):
+                raise ValueError('Selected quest does not match observed owner state')
+            offer=dict(kind='quest_follow',context=context,arguments={'quest_id':str(payload.raw30)})
+            self._action_offers=[offer];self._action_scope=self._scope()
+            self._quest_step=dict(context=context,payload=payload)
+            self._diagnostics.event('quest_step_offered',quest_id=str(payload.raw30),task_index=payload.raw38)
+            return copy.deepcopy(offer)
+
+    def pump_quest_actions(self,connection):
+        """One owner-loop tick; HTTP never calls this or builds payloads."""
+        with self._lock:
+            if self._closed or self._stop.is_set() or self._quest_step is None:return None
+            if connection is not self._action_connection:raise RuntimeError('Quest pump connection differs')
+            step=self._quest_step;key=self._action_owner
+            context,_=self._quest_step_context(step['payload'])
+            if context!=step['context']:
+                self._quest_step=None;self._action_offers=[]
+        # Claim checks queued context/scope/policy again. Stale context fails
+        # before enqueue; a successfully taken step is consumed even on failure.
+        intent=self.claim_action(key,context=context)
+        if intent is None:return None
+        try:return self.dispatch_quest_action(key,intent['request_id'],context=context,payload=step['payload'])
+        finally:
+            with self._lock:
+                if self._quest_step is step:
+                    self._quest_step=None;self._action_offers=[]
 
     def enqueue_action(self,value):
         if type(value) is not dict or set(value)!={'request_id','kind','context','arguments','policy','origin'}:raise ValueError('Invalid intent')
