@@ -326,7 +326,22 @@
           "string-writer": "0x144aad610",
           "prepare": "0x1467ceb70",
           "constructor": "0x1456d7fc0",
-          "wrapper-constructor": "0x1467cc850"
+          "wrapper-constructor": "0x1467cc850",
+          "platform-selector": "0x1445ce5e0",
+          "context-store": "0x1445c4e90",
+          "context-lookup": "0x1416dd660",
+          "windows-suffix": "0x1415c9380",
+          "cpu-formatter": "0x14144d1a0",
+          "cpu-first": "0x1415c6e80",
+          "cpu-second": "0x1415c6e60",
+          "cpu-trim": "0x141439fc0",
+          "cpu-trim-end": "0x141439db0",
+          "cpu-trim-start": "0x14143a030",
+          "combine-first": "0x14142bc30",
+          "combine-second": "0x14142bb60",
+          "combiner-copy": "0x1414266a0",
+          "combiner-append": "0x141429e10",
+          "combiner-grow": "0x141438050"
         }
       },
       "resources": [

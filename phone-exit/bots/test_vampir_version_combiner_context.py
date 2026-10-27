@@ -7,6 +7,16 @@ ROOT = Path('F:/PhoneExit Resources/Vampir')
 
 
 class VersionCombinerContextTests(unittest.TestCase):
+    def test_11318_source_contexts(self):
+        context=json.loads((HERE/'knowledge/native-contexts/version-combiner-11318.json').read_text('utf-8'))
+        report=load('verify-version-combiner-context').verify(context,ROOT)
+        self.assertEqual(len(report['cases']),256)
+        self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+        context=json.loads((HERE/'knowledge/native-contexts/version-prepare-combiner-11318.json').read_text('utf-8'))
+        report=load('verify-version-prepare-context').verify(context,ROOT)
+        self.assertEqual(len(report['cases']),64)
+        self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+
     def context(self, name='version-combiner-11316.json'):
         return json.loads((HERE/'knowledge/native-contexts'/name).read_text('utf-8'))
 

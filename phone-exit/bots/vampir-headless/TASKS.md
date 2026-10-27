@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Пакет подготовки Version для 1.13.18 закрыт в объявленных границах: whole
+prepare с native NM/system/combiners/platform, 1072 сценария, 28 тестов.
+Contexts переносятся воспроизводимым alignment tool, семь checks подключены
+к автообновлению. Остаток сверки 100 строк из 150; далее VersionResult,
+Login preparation и SDK/GMC2/NID до профиля и живого входа.
+[Результат и ограничения](../resource-tools/vampir/knowledge/VERSION-BATCH-AUTOMATION-11318.md).
+
 Текущий перенос входа на 1.13.18: общий wire слой Version/Login готов в
 объявленных fixtures; constructors, tag slices и field projection также
 проверены. Не повторять их вручную при неизменных inputs: checks включены

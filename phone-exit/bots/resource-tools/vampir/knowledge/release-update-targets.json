@@ -1420,6 +1420,31 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-PREPARE-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1467ceb70",
+                "scope": "Whole Version prepare/constructor projection with explicit context/text/string/send fixtures, not actual OS/SDK values Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-context"
+                ]
+              },
+              {
+                "address": "0x1456d7fc0",
+                "scope": "Whole Version prepare/constructor projection with explicit context/text/string/send fixtures, not actual OS/SDK values Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-prepare-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -1462,6 +1487,32 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-NM-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1445cd1e0",
+                "scope": "Native provider and NM getter branches; Version integration with initialized synthetic cache. Storage/GUID/string fixtures remain. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-nm-context"
+                ]
+              },
+              {
+                "address": "0x1444ecb90",
+                "scope": "Native provider and NM getter branches; Version integration with initialized synthetic cache. Storage/GUID/string fixtures remain. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-nm-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-nm-device-context.py",
+              "verify-version-prepare-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
           }
         ]
@@ -1510,6 +1561,38 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-PLATFORM-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1445ce5e0",
+                "scope": "Whole selector/store/lookup with explicit platform, FName, resolver and value fixtures; no whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              },
+              {
+                "address": "0x1445c4e90",
+                "scope": "Whole selector/store/lookup with explicit platform, FName, resolver and value fixtures; no whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              },
+              {
+                "address": "0x1416dd660",
+                "scope": "Whole selector/store/lookup with explicit platform, FName, resolver and value fixtures; no whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-platform-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-platform-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
           }
         ]
@@ -1588,6 +1671,67 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-SYSTEM-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1415c9380",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x14144d1a0",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e80",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e60",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x141439fc0",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x141439db0",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              },
+              {
+                "address": "0x14143a030",
+                "scope": "Whole Windows helper and CPU formatter/getters/trim; explicit TLS, WinAPI, CRT and initialized CPU cache fixtures. No whole prepare integration. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-system-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-windows-context.py",
+              "verify-version-cpu-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
           }
         ]
@@ -1695,6 +1839,95 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-PREPARE-SYSTEM-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1467ceb70",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1456d7fc0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1445cd1e0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1444ecb90",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c9380",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x14144d1a0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e80",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x1415c6e60",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x141439fc0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x141439db0",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              },
+              {
+                "address": "0x14143a030",
+                "scope": "Whole Version prepare integrates current Windows/CPU/NM functions with explicit OS/CRT/cache and context/combiner fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-system-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-prepare-context.py",
+              "version-system-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -1775,6 +2008,68 @@
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-COMBINERS-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1467ceb70",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x1456d7fc0",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x14142bc30",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x14142bb60",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x1414266a0",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x141429e10",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              },
+              {
+                "address": "0x141438050",
+                "scope": "Whole current combiners/copy/append/grow and their integration into Version prepare; bounded allocation/internal-copy fixtures. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-combiner-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-combiner-context.py",
+              "verify-version-prepare-context.py",
+              "version-combiner-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -1838,6 +2133,53 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-VERSION-PREPARE-PLATFORM-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1467ceb70",
+                "scope": "Whole Version integrates native selector/store/lookup with system/NM/combiners; explicit FName/resolver/value-at and environment boundaries. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-platform-context"
+                ]
+              },
+              {
+                "address": "0x1456d7fc0",
+                "scope": "Whole Version integrates native selector/store/lookup with system/NM/combiners; explicit FName/resolver/value-at and environment boundaries. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-platform-context"
+                ]
+              },
+              {
+                "address": "0x1445ce5e0",
+                "scope": "Whole Version integrates native selector/store/lookup with system/NM/combiners; explicit FName/resolver/value-at and environment boundaries. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-platform-context"
+                ]
+              },
+              {
+                "address": "0x1445c4e90",
+                "scope": "Whole Version integrates native selector/store/lookup with system/NM/combiners; explicit FName/resolver/value-at and environment boundaries. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-platform-context"
+                ]
+              },
+              {
+                "address": "0x1416dd660",
+                "scope": "Whole Version integrates native selector/store/lookup with system/NM/combiners; explicit FName/resolver/value-at and environment boundaries. Перенос 1.13.18 проверен в общем пакете 1072 сценариев; реальные environment/OS/SDK/send boundaries fixtures.",
+                "required_checks": [
+                  "native-version-prepare-platform-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-version-prepare-context.py",
+              "version-platform-fixtures.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
             ]
           }
         ]

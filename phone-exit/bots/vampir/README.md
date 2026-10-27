@@ -1,3 +1,9 @@
+Осталось 100 строк из исходных 150: пакет whole Version prepare закрыл ещё 22.
+Десять contexts прошли 1072 native сценария; семь штатных наборов — 28 тестов.
+15 helper bindings и семь checks подключены к автообновлению. Реальные OS/SDK /
+send boundaries остаются fixtures; профиль ещё не готов.
+[Автоматизация и остаток](../resource-tools/vampir/knowledge/VERSION-BATCH-AUTOMATION-11318.md).
+
 Осталось 122 строки из исходных 150: пакет constructors/tag закрыл ещё 12.
 Четыре context адаптера passed; общие offline checks переиспользованы из кэша.
 Новых Ghidra-запусков в завершающем проходе 0, переиспользовано 9 этапов.

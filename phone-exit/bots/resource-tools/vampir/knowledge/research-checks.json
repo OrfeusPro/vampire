@@ -5167,10 +5167,12 @@
     {
       "id": "native-version-prepare-context",
       "questions": [
-        "release-version-prepare"
+        "release-version-prepare",
+        "version-prepare-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5189,20 +5191,27 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11316.json",
         "phone-exit/bots/test_vampir_update_contracts.py",
-        "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py"
+        "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-version-nm-context",
       "questions": [
-        "release-version-prepare"
+        "release-version-prepare",
+        "version-prepare-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5223,21 +5232,29 @@
         "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
         "phone-exit/bots/resource-tools/vampir/verify-version-nm-device-context.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11316.json",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-nm-device-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-nm-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-version-platform-context",
       "questions": [
-        "release-version-prepare"
+        "release-version-prepare",
+        "version-prepare-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5256,19 +5273,26 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-platform-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-version-system-context",
       "questions": [
-        "release-version-prepare"
+        "release-version-prepare",
+        "version-prepare-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5289,21 +5313,29 @@
         "phone-exit/bots/resource-tools/vampir/verify-version-windows-context.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11316.json",
         "phone-exit/bots/resource-tools/vampir/verify-version-cpu-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-cpu-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-windows-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3f96bbd3d272/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-version-prepare-system-context",
       "questions": [
-        "release-version-prepare"
+        "release-version-prepare",
+        "version-prepare-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5323,23 +5355,30 @@
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
         "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-system-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-7c5a462e9d0c/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-09b30ec921d8/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-3f96bbd3d272/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-version-combiner-context",
       "questions": [
-        "release-version-prepare"
+        "release-version-prepare",
+        "version-prepare-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5362,7 +5401,11 @@
         "phone-exit/bots/resource-tools/vampir/verify-version-combiner-context.py",
         "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11316.json",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11318.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-combiner-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
@@ -5372,16 +5415,20 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-ba23b5dcaf08/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6b15c7b74a42/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1740fcc91625/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1740fcc91625/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {
       "id": "native-version-prepare-platform-context",
       "questions": [
-        "release-version-prepare"
+        "release-version-prepare",
+        "version-prepare-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5405,7 +5452,10 @@
         "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-combiner-11316.json",
         "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11316.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11316.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-prepare-platform-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-571e3ba7330a/details.json",
@@ -5415,7 +5465,9 @@
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-222e27fb93bc/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-ba23b5dcaf08/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6b15c7b74a42/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1740fcc91625/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1740fcc91625/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b92399af7eb5/details.json"
       ]
     },
     {

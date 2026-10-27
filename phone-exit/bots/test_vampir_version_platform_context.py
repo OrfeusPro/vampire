@@ -7,6 +7,12 @@ ROOT = Path('F:/PhoneExit Resources/Vampir')
 
 
 class VersionPlatformContextTests(unittest.TestCase):
+    def test_11318_source_contexts(self):
+        context=json.loads((HERE/'knowledge/native-contexts/version-platform-11318.json').read_text('utf-8'))
+        report=load('verify-version-platform-context').verify(context,ROOT)
+        self.assertEqual(len(report['cases']),116)
+        self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+
     def context(self):
         return json.loads((HERE / 'knowledge/native-contexts/version-platform-11316.json').read_text('utf-8'))
 

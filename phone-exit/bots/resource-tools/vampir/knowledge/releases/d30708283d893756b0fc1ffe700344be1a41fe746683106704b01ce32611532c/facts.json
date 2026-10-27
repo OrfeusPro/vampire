@@ -935,6 +935,99 @@
       "question": "release-game-login-code-1",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Полные preparation/result и SDK/GMC2/NID нового SHA, серверное принятие и онлайн."
+    },
+    {
+      "addresses": [
+        "0x1414266a0",
+        "0x141429e10",
+        "0x14142bb60",
+        "0x14142bc30",
+        "0x141438050",
+        "0x141439db0",
+        "0x141439fc0",
+        "0x14143a030",
+        "0x14144d1a0",
+        "0x1415c6e60",
+        "0x1415c6e80",
+        "0x1415c9380",
+        "0x1416dd660",
+        "0x1444ecb90",
+        "0x1445c4e90",
+        "0x1445cd1e0",
+        "0x1445ce5e0",
+        "0x1456d7fc0",
+        "0x1467cc850",
+        "0x1467ceb70"
+      ],
+      "checks": [
+        {
+          "cache_key": "5e81f34ca4f422dfd1994a13b8abb8da23916af2028a81b2cac49b7c0c67eef4",
+          "id": "native-version-prepare-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d45c6af7d14516270e41b0fab708889a7b43edd67288a3fee9909b97327ab308\\manifest.json",
+          "sha256": "d45c6af7d14516270e41b0fab708889a7b43edd67288a3fee9909b97327ab308",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0abba2675c28514f2f527881668979d98d993d6a727b1c9c234bb94fc682828c",
+          "id": "native-version-nm-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6b9d66d8de920e4beda45de4ae8b766d0c4096c56c43b14a72965c6b232129cd\\manifest.json",
+          "sha256": "6b9d66d8de920e4beda45de4ae8b766d0c4096c56c43b14a72965c6b232129cd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6e5e00385438ba3968df686499524a51eac18bda9fd64be9935d95fa90cdcb30",
+          "id": "native-version-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4181af5744d0bd10501824d9ab74f4a8fb4feb21e92df000e12f02321250275d\\manifest.json",
+          "sha256": "4181af5744d0bd10501824d9ab74f4a8fb4feb21e92df000e12f02321250275d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "18176ca9825cf95c2d9c7505431cc60cb01fd44d6a70bad625d1a6db06f70cf3",
+          "id": "native-version-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\528c4015f4ea741d5b28e029c6446dec75bcc9ec924703013555c6e1f0c1b280\\manifest.json",
+          "sha256": "528c4015f4ea741d5b28e029c6446dec75bcc9ec924703013555c6e1f0c1b280",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3358a0f599e7070202235de3358b53f3124ce3b6a4e4621f005604ad71a733e8",
+          "id": "native-version-prepare-system-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b01b139f1425bb69aa0bab13f6f88310193740a89c93da97ec56a97a80ea8eff\\manifest.json",
+          "sha256": "b01b139f1425bb69aa0bab13f6f88310193740a89c93da97ec56a97a80ea8eff",
+          "state": "passed"
+        },
+        {
+          "cache_key": "f846453783f73b83b0f96de767d359b4ea39d508ca774670ec453ace8f8de3d4",
+          "id": "native-version-combiner-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bf3c3cea52a8e2f1e7c6c4e602a2dd0e03c0397f89e0e51aee5783c78a377414\\manifest.json",
+          "sha256": "bf3c3cea52a8e2f1e7c6c4e602a2dd0e03c0397f89e0e51aee5783c78a377414",
+          "state": "passed"
+        },
+        {
+          "cache_key": "5044a5ac9d81f2dc516202248cad0359ead00ad6d44a05aa7f73d5d323b02e37",
+          "id": "native-version-prepare-platform-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a256fbfc1b137be9769aa3af36256b8ac1fa35cc4df8e5375b0d9d2ef0a92f7c\\manifest.json",
+          "sha256": "a256fbfc1b137be9769aa3af36256b8ac1fa35cc4df8e5375b0d9d2ef0a92f7c",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole Version prepare 1.13.18 и общие NM/system/combiners/platform helpers прошли 1072 native сценария в десяти contexts; семь on_update наборов и 28 тестов passed. Перенос contexts воспроизводим по фиксированным roots и реальным call/RIP bindings.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-VERSION-BATCH-11318.md",
+          "sha256": "211d4d152b9191a9b4099a481170ae459a6ec2d53fcc1bb3054d635f007c8bd0"
+        }
+      ],
+      "id": "6ee0b5c4403fe5b6a1abce748ef1b688b35dc686a5fa886668663744ab8958c7",
+      "limits": [
+        "OS/CRT/TLS/CPU initialization/storage/GUID/FName/type/resolver/value-at и allocation/copy/free/destructor/log/send fixtures.",
+        "В композиции NM использует synthetic initialized cache; реальные identity values не читаются.",
+        "Alignment не доказывает семантику; whole replay проверяет только объявленные границы. Нет wire/send composition, VersionResult/Login preparation/live/profile activation."
+      ],
+      "method": "bounded_native",
+      "next_check": "Перенести VersionResult и Login preparation пакетами, переиспользуя готовые wire/helpers/contexts, затем подготовить профиль.",
+      "question": "version-prepare-batch-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Остальные VersionResult/Login и SDK/GMC2/NID зависимости, серверное принятие и онлайн-сессия."
     }
   ],
   "schema": 1,

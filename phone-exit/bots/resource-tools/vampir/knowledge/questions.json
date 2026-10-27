@@ -961,6 +961,20 @@
         "evidence/updates/HEADLESS-LAUNCHER-DISPATCH-11318.md",
         "evidence/updates/HEADLESS-LAUNCHER-RESPONSE-CALLBACKS-11318.md"
       ]
+    },
+    {
+      "id": "version-prepare-batch-11318",
+      "status": "bounded_answer",
+      "question": "Какие части whole Version prepare и общих helpers подтверждены вместе для 1.13.18?",
+      "known": "Десять contexts для whole prepare/NM/Windows/CPU/combiners/platform и их композиции прошли 1072 native сценария. Контексты перенесены по фиксированному набору20 roots, полным instruction/control shapes и актуальным RIP/call связям. Новые значения не угадываются по delta. Итоговый send — fixture.",
+      "unknown": "Реальные OS/SDK/FName/resolver/storage/allocator значения, wire/send composition, result handler и Login preparation.",
+      "next_action": "Перенести VersionResult и Login preparation вместе с оставшимися SDK зависимостями до профиля и онлайн.",
+      "decision_rule": "Сопоставление функций — кандидат; whole replay подтверждает только явно объявленные fixtures. Новый SHA не активируется автоматически.",
+      "do_not_repeat": "При неизменных inputs использовать source-bound on_update checks и reports, не повторять ручной перенос для каждого потребителя.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-VERSION-BATCH-11318.md"
+      ]
     }
   ]
 }

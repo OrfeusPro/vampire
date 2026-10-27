@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "exports": {
+    "run-f808531f96e5": "b0c641b4af6e227ca2fece365d842fac58c069fe3b333652be397c4477151478",
+    "run-b92399af7eb5": "960ac4e0d502d7290284acfe31c3e733d0e843231ba04c05ba12976a18fb102b"
+  },
+  "wrapper": "0x1445cd1e0",
+  "getter": "0x1444ecb90",
+  "cache": "0x14b564620",
+  "log_level": "0x14b5652e0",
+  "log_enabled": "0x14b1880f4",
+  "storage_arguments": [
+    "0x14b5642b0",
+    "0x14b5642c0",
+    "0x14b5642f0"
+  ],
+  "fixtures": {
+    "resize": "0x141436ed0",
+    "free": "0x141483080",
+    "assign_span": "0x14142a250",
+    "stored_read": "0x1415cb3e0",
+    "parse": "0x141560610",
+    "new_guid": "0x14155ff70",
+    "format_guid": "0x14154ea40",
+    "stored_write": "0x1415d73b0"
+  },
+  "call_sites": {
+    "0x1445cd1e9": "0x1444ecb90",
+    "0x1444ecbba": "0x1444f3340",
+    "0x1444ecbeb": "0x1444be810",
+    "0x1444ecbf9": "0x141483080",
+    "0x1444ecc43": "0x141436ed0",
+    "0x1444ecc54": "0x1487f60d9",
+    "0x1444ecc7f": "0x1415cb3e0",
+    "0x1444ecc8c": "0x141560610",
+    "0x1444eccba": "0x14155ff70",
+    "0x1444eccd1": "0x14154ea40",
+    "0x1444ecce2": "0x141483080",
+    "0x1444ecd20": "0x1415d73b0",
+    "0x1444ecd40": "0x14142a250",
+    "0x1444ecd6a": "0x141436ed0",
+    "0x1444ecd7b": "0x1487f60d9",
+    "0x1444ecd89": "0x141483080"
+  },
+  "verify_whole_exports": true
+}

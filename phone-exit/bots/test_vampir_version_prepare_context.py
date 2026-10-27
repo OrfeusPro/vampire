@@ -9,6 +9,20 @@ CONTEXT=HERE/'knowledge/native-contexts/version-prepare-11316.json'
 
 
 class VersionPrepareContextTests(unittest.TestCase):
+    def test_11318_explicit_tag_metadata_is_required_and_checked(self):
+        tool=load('verify-version-prepare-context')
+        context=json.loads((HERE/'knowledge/native-contexts/version-prepare-11318.json').read_text('utf-8'))
+        context['compiled_tag_source']['literal']='0x149961821'
+        with self.assertRaisesRegex(ValueError,'tag source pointer'):tool.verify(context,ROOT)
+        del context['compiled_tag_source']
+        with self.assertRaisesRegex(ValueError,'explicit compiled tag metadata'):tool.verify(context,ROOT)
+
+    def test_11318_source_contexts(self):
+        context=json.loads((HERE/'knowledge/native-contexts/version-prepare-11318.json').read_text('utf-8'))
+        report=load('verify-version-prepare-context').verify(context,ROOT)
+        self.assertEqual(len(report['cases']),64)
+        self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+
     def context(self):
         return json.loads(CONTEXT.read_text('utf-8'))
 

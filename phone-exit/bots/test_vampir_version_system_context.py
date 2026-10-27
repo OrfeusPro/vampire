@@ -7,6 +7,16 @@ ROOT = Path('F:/PhoneExit Resources/Vampir')
 
 
 class VersionSystemContextTests(unittest.TestCase):
+    def test_11318_source_contexts(self):
+        context=json.loads((HERE/'knowledge/native-contexts/version-cpu-11318.json').read_text('utf-8'))
+        report=load('verify-version-cpu-context').verify(context,ROOT)
+        self.assertEqual(len(report['cases']),72)
+        self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+        context=json.loads((HERE/'knowledge/native-contexts/version-windows-11318.json').read_text('utf-8'))
+        report=load('verify-version-windows-context').verify(context,ROOT)
+        self.assertEqual(len(report['cases']),48)
+        self.assertFalse(report['network_used']);self.assertFalse(report['profile_activated'])
+
     def context(self, name):
         return json.loads((HERE / 'knowledge/native-contexts' / ('version-' + name + '-11316.json')).read_text('utf-8'))
 

@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "exports": {
+    "run-f808531f96e5": "b0c641b4af6e227ca2fece365d842fac58c069fe3b333652be397c4477151478",
+    "run-b92399af7eb5": "960ac4e0d502d7290284acfe31c3e733d0e843231ba04c05ba12976a18fb102b"
+  },
+  "selector": "0x1445ce5e0",
+  "store": "0x1445c4e90",
+  "lookup": "0x1416dd660",
+  "cache": "0x14b566798",
+  "factory": "0x1445d9060",
+  "descriptor": "0x149555c60",
+  "fixtures": {
+    "platform_text": "0x143c19920",
+    "name_ctor": "0x1415ae8a0",
+    "free": "0x141483080",
+    "equals": "0x1415b3ec0",
+    "store_type": "0x1445c1530",
+    "store_resolve": "0x1417d85b0",
+    "value_at": "0x1416dd580"
+  },
+  "call_sites": {
+    "0x1445ce5e9": "0x143c19920",
+    "0x1445ce60b": "0x1415ae8a0",
+    "0x1445ce61a": "0x141483080",
+    "0x1445ce62b": "0x1415b3ec0",
+    "0x1445ce647": "0x1415b3ec0",
+    "0x1445ce663": "0x1415b3ec0",
+    "0x1445c4ea0": "0x1445c1530",
+    "0x1445c4eb6": "0x1417d85b0",
+    "0x1416dd69f": "0x1416dd580"
+  },
+  "verify_whole_exports": true
+}

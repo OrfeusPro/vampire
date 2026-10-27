@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "exports": {
+    "run-f808531f96e5": "b0c641b4af6e227ca2fece365d842fac58c069fe3b333652be397c4477151478",
+    "run-b92399af7eb5": "960ac4e0d502d7290284acfe31c3e733d0e843231ba04c05ba12976a18fb102b"
+  },
+  "prepare": "0x1467ceb70",
+  "constructor": "0x1456d7fc0",
+  "packet_table": "0x149928508",
+  "wrapper_table": "0x149dcacb0",
+  "globals": {
+    "text": "0x14b594080",
+    "enum": "0x14b196560",
+    "tag_pointer": "0x14b1bbe98"
+  },
+  "fixtures": {
+    "log": "0x141403b70",
+    "selector": "0x1445ce5e0",
+    "context_store": "0x1445c4e90",
+    "context_value": "0x1416dd660",
+    "suffix": "0x1415c9380",
+    "first_text": "0x14144d1a0",
+    "ascii_string": "0x141426950",
+    "combine_first": "0x14142bc30",
+    "combine_second": "0x14142bb60",
+    "free": "0x141483080",
+    "resize": "0x141436ed0",
+    "provider": "0x1445cd1e0",
+    "copy_string": "0x141441d60",
+    "wide_string": "0x141426b30",
+    "destructor": "0x1456d8840"
+  },
+  "call_sites": {
+    "0x1467ceb97": {
+      "target": "0x141403b70"
+    },
+    "0x1467ceba6": {
+      "target": "0x1445ce5e0"
+    },
+    "0x1467cebae": {
+      "target": "0x1445c4e90"
+    },
+    "0x1467cebcf": {
+      "target": "0x1416dd660"
+    },
+    "0x1467cebd8": {
+      "target": "0x1415c9380"
+    },
+    "0x1467cebe1": {
+      "target": "0x14144d1a0"
+    },
+    "0x1467cebf2": {
+      "target": "0x141426950"
+    },
+    "0x1467cec06": {
+      "target": "0x14142bc30"
+    },
+    "0x1467cec18": {
+      "target": "0x14142bb60"
+    },
+    "0x1467cec27": {
+      "target": "0x141483080"
+    },
+    "0x1467cec36": {
+      "target": "0x141483080"
+    },
+    "0x1467cec60": {
+      "target": "0x141436ed0"
+    },
+    "0x1467cec73": {
+      "target": "0x1487f60d9"
+    },
+    "0x1467cec7c": {
+      "target": "0x1456d7fc0"
+    },
+    "0x1467cecab": {
+      "target": "0x141436ed0"
+    },
+    "0x1467cecc1": {
+      "target": "0x1487f60d9"
+    },
+    "0x1467cecea": {
+      "target": "0x141436ed0"
+    },
+    "0x1467ced00": {
+      "target": "0x1487f60d9"
+    },
+    "0x1467ced0a": {
+      "target": "0x1445cd1e0"
+    },
+    "0x1467ced16": {
+      "target": "0x141441d60"
+    },
+    "0x1467ced25": {
+      "target": "0x141483080"
+    },
+    "0x1467ced4e": {
+      "target": "0x141436ed0"
+    },
+    "0x1467ced64": {
+      "target": "0x1487f60d9"
+    },
+    "0x1467ced8f": {
+      "target": "0x141436ed0"
+    },
+    "0x1467ceda5": {
+      "target": "0x1487f60d9"
+    },
+    "0x1467cedb6": {
+      "target": "0x141426950"
+    },
+    "0x1467cede1": {
+      "target": "0x141436ed0"
+    },
+    "0x1467cedf7": {
+      "target": "0x1487f60d9"
+    },
+    "0x1467cee09": {
+      "target": "0x141483080"
+    },
+    "0x1467cee37": {
+      "target": "0x141436ed0"
+    },
+    "0x1467cee55": {
+      "target": "0x141436ed0"
+    },
+    "0x1467cee64": {
+      "target": "qword ptr [rax + 0x38]"
+    },
+    "0x1467cee73": {
+      "target": "0x141426b30"
+    },
+    "0x1467ceeae": {
+      "target": "0x141403b70"
+    },
+    "0x1467ceebd": {
+      "target": "0x141483080"
+    },
+    "0x1467ceec6": {
+      "target": "0x1456d8840"
+    },
+    "0x1467ceed5": {
+      "target": "0x141483080"
+    },
+    "0x1467ceee3": {
+      "target": "0x141483080"
+    },
+    "0x1467ceef1": {
+      "target": "0x141483080"
+    },
+    "0x1467ceeff": {
+      "target": "0x141483080"
+    },
+    "0x1467cef0e": {
+      "target": "0x141483080"
+    },
+    "0x1456d8043": {
+      "target": "0x141426950"
+    }
+  },
+  "send": "0x1467cf8b0",
+  "wrapper_table_sha256": "0070b75cda2c4e25964c101cf85fb2bf3737097715aee7c23673c3866926630a",
+  "verify_whole_exports": true,
+  "compiled_tag_source": {
+    "literal": "0x149961820",
+    "value": "32283C4C6485307BCF524765A84409C3"
+  }
+}

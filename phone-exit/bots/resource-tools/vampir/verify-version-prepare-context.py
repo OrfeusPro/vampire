@@ -203,10 +203,15 @@ def verify(context,root):
 
     h.add_fixture(send,capture_send)
     tag_pointer=int.from_bytes(h.uc.mem_read(globals_['tag_pointer'],8),'little')
-    if tag_pointer!=0x149960020:raise ValueError('Version tag source pointer differs')
+    tag_source=context.get('compiled_tag_source')
+    if tag_source is None:
+        if context['source_sha256']!='d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960':
+            raise ValueError('New source requires explicit compiled tag metadata')
+        tag_source=dict(literal='0x149960020',value='32283C4C6485307BCF524765A84409C3')
+    if tag_pointer!=int(tag_source['literal'],16):raise ValueError('Version tag source pointer differs')
     map_data(tag_pointer)
     compiled_tag=literal(tag_pointer)
-    if compiled_tag!='32283C4C6485307BCF524765A84409C3':
+    if compiled_tag!=tag_source['value']:
         raise ValueError('Version compiled tag differs')
     cases=[]
     abi={name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R14','R15'))}
