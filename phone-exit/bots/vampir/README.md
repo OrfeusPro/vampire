@@ -1,3 +1,9 @@
+Phase handler теперь исполняется native: writer реально ставит фазу 3 до
+guard; caller ставит 5 для выбранных состояний. 48 случаев, 9 getter ветвей
+и 16 phase переходов прошли с проверкой записи до notify. Совпадение +40
+не означает готовность Time: фаза должна быть выше 5. Live action не включён.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-PHASE-11316.md).
+
 Getter объекта guard теперь исполняется native: global/typecheck/fallback/resolve
 и context+158 заменили прежнюю подстановку. 48 writer/readiness случаев и
 9 getter ветвей прошли. Virtual+7B8, источник pending+44 и активное состояние

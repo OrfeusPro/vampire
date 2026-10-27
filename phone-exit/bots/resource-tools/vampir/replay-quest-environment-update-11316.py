@@ -62,17 +62,47 @@ def run():
         h.finish(reg('RCX'))
 
     def format_text(machine):
-        if reg('R8') & 0xffffffff != current['formatted']:
-            raise ValueError('Environment formatting argument')
+        template = reg('RDX')
+        if template in (0x1499099f0, 0x149909e30):
+            if reg('R8') & 0xffffffff != current['formatted']:
+                raise ValueError('Environment formatting argument')
+            calls.append('format')
+        elif template == 0x149909ae0:
+            before, after = current['phase_entries'][-1]
+            if reg('R8') & 255 != before or reg('R9') & 255 != after:
+                raise ValueError('Native phase diagnostic arguments')
+        elif template not in (0x1489f18ac, 0x1496455f0):
+            raise ValueError('Unexpected phase diagnostic template')
         uc.mem_write(reg('RCX'), bytes(16))
-        calls.append('format'); h.finish(reg('RCX'))
+        h.finish(reg('RCX'))
 
     def phase_request(machine):
-        if reg('RCX') != environment or reg('RDX') & 255 not in (3, 5):
+        if reg('RCX') != environment or reg('RDX') & 255 not in context['phase_values']:
             raise ValueError('Environment phase request scope')
         if get(reg('R8')) != 0:
             raise ValueError('Environment phase diagnostic fixture')
-        calls.append('phase:'+str(reg('RDX') & 255)); h.finish()
+        current['phase_entries'].append((get(environment+0x30, 1), reg('RDX') & 255))
+        calls.append('phase:'+str(reg('RDX') & 255))
+
+    def append_empty(machine):
+        if reg('R8') & 0xffffffff or get(reg('RCX')):
+            raise ValueError('Phase empty diagnostic append')
+        h.finish(reg('RCX'))
+
+    def diagnostic_object(machine):
+        uc.mem_write(reg('RCX'), bytes(0x90)); h.finish(reg('RCX'))
+
+    def diagnostic_sink(machine):
+        if reg('RCX') != 3 or reg('RDX') != 0:
+            raise ValueError('Phase diagnostic sink arguments')
+        h.finish()
+
+    def phase_notify(machine):
+        if reg('RCX') != base+0x19000 or get(reg('RDX')):
+            raise ValueError('Phase notify arguments')
+        if get(environment+0x30, 1) != current['phase_entries'][-1][1]:
+            raise ValueError('Phase notification occurred before actual state write')
+        current['phase_notifications'] += 1; h.finish()
 
     def convert_text(machine):
         uc.mem_write(reg('RCX'), bytes(32)); calls.append('convert'); h.finish(reg('RCX'))
@@ -113,9 +143,12 @@ def run():
         raise ValueError('Empty-string fixture unexpectedly freed memory')
 
     callbacks = {0x144286f50:registration, 0x141433340:format_text,
-        0x145618b30:phase_request, 0x14566d560:convert_text,
+        0x14566d560:convert_text,
         0x143befc30:class_get, 0x1445c32b0:fallback_get, 0x143c1bac0:resolve_context,
         guard_entry:guard, 0x141426b30:string_init, 0x144a78160:callback_sink,
+        0x141426950:string_init, 0x14142b620:string_init, 0x141429e10:append_empty,
+        0x14143ae20:diagnostic_object, 0x144403310:diagnostic_sink,
+        0x14563dd30:lambda machine:h.finish(base+0x19000), 0x145639100:phase_notify,
         0x1455bbcb0:model_lookup, 0x141483080:unexpected_free,
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
     for at, callback in callbacks.items():
@@ -123,6 +156,8 @@ def run():
     import unicorn
     uc.hook_add(unicorn.UC_HOOK_CODE, lambda machine, at, size, user:calls.append('world'),
         begin=0x1445d2a20, end=0x1445d2a20)
+    uc.hook_add(unicorn.UC_HOOK_CODE, lambda machine, at, size, user:phase_request(machine),
+        begin=0x145618b30, end=0x145618b30)
 
     def setup_lookup(mode):
         current['lookup'] = mode
@@ -138,6 +173,7 @@ def run():
 
     def setup(old, requested, flag, phase, guard_mode):
         current.clear(); current.update(requested=requested, guard=guard_mode, formatted=requested if flag else old)
+        current.update(phase_entries=[], phase_notifications=0)
         calls.clear(); uc.mem_write(environment, bytes(0x200))
         if h.call(0x1456001d0, environment) != environment:
             raise ValueError('Environment constructor return')
@@ -177,11 +213,14 @@ def run():
                 raise ValueError('Environment deferred flag/callback differs')
             if calls.count('phase:3') != 1 or calls.count('phase:5'):
                 raise ValueError('Environment writer phase submission differs')
+            if get(environment+0x30, 1) != 3 or current['phase_notifications'] != 1:
+                raise ValueError('Native writer phase state/notification differs')
             if any(bytes(uc.mem_read(a, len(value))) != value for a, value in immutable):
                 raise ValueError('Environment writer changed task/model inputs')
             cases.append(dict(path=path_name, guard=guard_mode, old=old, requested=requested,
                 actual=get(environment+0x40, 4), pending=get(environment+0x44, 4), flag_c1=get(environment+0xc1,1),
-                ready_before=bool(before), ready_after=bool(after), calls=calls.copy()))
+                ready_before=bool(before), ready_after=bool(after), phase_after=get(environment+0x30, 1),
+                phase_notifications=current['phase_notifications'], calls=calls.copy()))
     for old in (0, 5):
       for phase in (0, 2, 3, 4, 5, 7):
         setup(old, 1, 0, phase, 'allow')
@@ -191,7 +230,10 @@ def run():
             raise ValueError('Environment non-retry phase branch differs')
         if calls != (['format', 'phase:5'] if selected else []):
             raise ValueError('Environment non-retry performed unexpected work')
-        cases.append(dict(path='phase', old=old, phase=phase, result=result, calls=calls.copy()))
+        if get(environment+0x30, 1) != (5 if selected else phase) or current['phase_notifications'] != int(selected):
+            raise ValueError('Native non-retry phase state/notification differs')
+        cases.append(dict(path='phase', old=old, phase=phase, result=result,
+            phase_after=get(environment+0x30, 1), phase_notifications=current['phase_notifications'], calls=calls.copy()))
     lookup_cases = []
     for mode in ('global', 'fallback', 'wrong-depth', 'wrong-parent', 'fallback-missing',
                  'resolve-missing', 'owner-empty', 'explicit-owner', 'explicit-empty'):
@@ -207,10 +249,26 @@ def run():
         if actual!=expected or calls!=expected_calls:
             raise ValueError('Native environment object lookup differs: '+repr((mode, actual, calls)))
         lookup_cases.append(dict(mode=mode, found=bool(actual), calls=calls.copy()))
+    phase_cases = []
+    for previous in (0, 7):
+      for phase in context['phase_values']:
+        setup(0, 1, 0, previous, 'allow'); calls.clear()
+        expected = bytearray(uc.mem_read(environment, 0x200)); expected[0x30] = phase
+        # Deliberately dirty upper bits: the native interface uses DL only.
+        uc.reg_write(x.UC_X86_REG_RDX, 0x12340000 | phase)
+        uc.reg_write(x.UC_X86_REG_R8, text)
+        h.call(0x145618b30, environment)
+        if bytes(uc.mem_read(environment, 0x200)) != expected or current['phase_notifications'] != 1:
+            raise ValueError('Native phase handler write footprint/notification differs')
+        if current['phase_entries'] != [(previous, phase)] or calls != ['phase:'+str(phase)]:
+            raise ValueError('Native phase diagnostic observation differs')
+        phase_cases.append(dict(previous=previous, phase=phase, phase_after=get(environment+0x30, 1),
+            notifications=current['phase_notifications']))
     audit = load('audit-client-release')
     report = dict(source_sha256=h.sha, tool_sha256=audit.sha256(Path(__file__)),
         context_sha256=audit.sha256(path), exports=h.evidence, legacy_direct_flow_checked=legacy,
-        cases=cases, lookup_cases=lookup_cases, native_execution=True, network_used=False, action_admitted=False, limits=context['limits'])
+        cases=cases, lookup_cases=lookup_cases, phase_cases=phase_cases,
+        native_execution=True, network_used=False, action_admitted=False, limits=context['limits'])
     target = audit.save_snapshot(h.root/'code-clues/quest-environment-update-11316', report)
     return target, report
 

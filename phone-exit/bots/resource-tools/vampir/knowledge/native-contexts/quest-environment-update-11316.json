@@ -5,14 +5,16 @@
     "run-b36956e19880": "5d1579b5f094b89be1dc17fd2918654b846e0dbe7df4585f78d5893150678576",
     "run-8dd22ce0a6d2": "b6316d5d0a7fb27537445be1134f0f8eab59fa2ce31023a38ae141b16fde7938",
     "run-529edd8cc6b1": "e5afea845d4188d050edb1ab981fde64866191832eab68037357a05aef752199",
-    "run-d3cea0b3b866": "0ecc28053b0f0ad60f214ade4f03b7ccac454fff14ebe9f6546eb9e4eb2ff1e6"
+    "run-d3cea0b3b866": "0ecc28053b0f0ad60f214ade4f03b7ccac454fff14ebe9f6546eb9e4eb2ff1e6",
+    "run-e3795e7cbff3": "c927f025a32e802e56bba3a91c20550847a88d252178020bf81f8927bbc90510"
   },
   "functions": [
     "0x1456001d0",
     "0x14568cad0",
     "0x14560f9e0",
     "0x14561bca0",
-    "0x1445d2a20"
+    "0x1445d2a20",
+    "0x145618b30"
   ],
   "leaves": {
     "0x14560adc0": "488b05e1b0fd05c3",
@@ -28,6 +30,16 @@
   ],
   "limits": [
     "Whole constructor, exact initializer/getters, writer, retry caller and readiness predicate execute. Numeric values are stress inputs, not live enum/quest admission.",
-    "Model lookup, registration helper, object class/fallback/context resolver and virtual7B8 guard, formatting/empty strings/conversion, phase request and moved-callback submission are fixtures. Actual getter1445d2a20 executes global/typecheck/fallback path and context+158 load. Phase function/callback145606830, nonempty text/allocations and active engine/network are not executed."
+    "Model lookup, registration helper, object class/fallback/context resolver and virtual7B8 guard, empty formatting/string/diagnostic operations, notification context/sink and moved-callback submission are fixtures. Actual getter1445d2a20 and phase handler145618b30 execute; notification fixture observes already changed byte+30. Callback145606830, nonempty text/allocations and active engine/network are not executed."
+  ],
+  "phase_values": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    255
   ]
 }

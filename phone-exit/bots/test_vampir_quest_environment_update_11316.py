@@ -25,10 +25,14 @@ class QuestEnvironmentUpdateTests(unittest.TestCase):
             self.assertEqual(c['ready_before'], c['old']==c['requested'])
             self.assertEqual(c['ready_after'], accepted or c['old']==c['requested'])
             self.assertEqual(c['calls'].count('callback'), int(accepted))
+            self.assertEqual(c['phase_after'], 3)
+            self.assertEqual(c['phase_notifications'], 1)
         for c in phases:
             selected = c['phase'] in (2, 3, 4)
             self.assertEqual(c['result'], int(selected))
             self.assertEqual(c['calls'], ['format', 'phase:5'] if selected else [])
+            self.assertEqual(c['phase_after'], 5 if selected else c['phase'])
+            self.assertEqual(c['phase_notifications'], int(selected))
         lookups = {c['mode']:c for c in result['lookup_cases']}
         self.assertEqual(set(lookups), {'global', 'fallback', 'wrong-depth', 'wrong-parent',
             'fallback-missing', 'resolve-missing', 'owner-empty', 'explicit-owner', 'explicit-empty'})
@@ -39,6 +43,12 @@ class QuestEnvironmentUpdateTests(unittest.TestCase):
         self.assertEqual(lookups['fallback']['calls'], ['world', 'fallback', 'resolve'])
         self.assertEqual(lookups['wrong-parent']['calls'], ['world', 'object-class', 'fallback', 'resolve'])
         self.assertEqual(lookups['explicit-owner']['calls'], ['world'])
+        self.assertEqual(len(result['phase_cases']), 16)
+        self.assertEqual({(c['previous'], c['phase']) for c in result['phase_cases']},
+            {(before, after) for before in (0, 7) for after in (0, 1, 2, 3, 5, 6, 7, 255)})
+        for c in result['phase_cases']:
+            self.assertEqual(c['phase_after'], c['phase'])
+            self.assertEqual(c['notifications'], 1)
 
 
 if __name__ == '__main__':
