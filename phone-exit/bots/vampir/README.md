@@ -1,5 +1,12 @@
 Осталось 36 строк из исходных 150: общий пакет Clock / Ping / world candidate снял ещё шесть.
 
+По запросу пользователя включён явный keep-online без таймера. Игра и транспорт
+запущены независимо через Windows Scheduler; launcher завершился, API connected,
+персонаж присутствует, PingResult поступают. Общий runtime набор — 42 теста,
+две настоящие Scheduler регрессии прошли. Сессию сохранять. Квесты сначала
+доделывать на базе 1.13.16, перенос отложен.
+[Запуск, проверки и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-KEEP-ONLINE-11318.md).
+
 Живой вход 1.13.18 подтверждён: личный HK WebRTC → SDK launcher → JP 256 →
 Game Login 0 → мир, 60 секунд наблюдения, 13 PingResult, error=null.
 CDN resolver исправлен, общий on_update набор — 31 тест passed.

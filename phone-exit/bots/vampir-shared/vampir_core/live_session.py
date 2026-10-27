@@ -22,7 +22,9 @@ STAT_FIELDS={3:'level',4:'hp',5:'max_hp',9:'mp',10:'max_mp'}
 
 class LiveSession:
     """The socket thread publishes; HTTP readers never operate the connection."""
-    def __init__(self, *, bot_id, session_id=None, projection=None):
+    def __init__(self, *, bot_id, session_id=None, projection=None, keep_online=False):
+        if type(keep_online) is not bool:raise ValueError('Explicit keep-online policy required')
+        self._keep_online=keep_online
         if not isinstance(bot_id,str) or not re.fullmatch('[a-zA-Z0-9_-]{1,48}',bot_id):
             raise ValueError('Explicit bot identity required')
         self.bot_id=bot_id
@@ -60,6 +62,11 @@ class LiveSession:
             character=None,entities=[],quest_update_result=None,quest_result_decode_errors=0,tutorial=None,tutorial_decode_errors=0,quests=[],quest_snapshot=None,quest_decode_errors=0,updated_at_ms=None,heartbeat=dict(sent=0,received=0),
             coverage=dict(vitals='not_verified',level='not_verified',entities='not_verified',movement='not_verified',tutorial='not_verified',quests='not_verified',quest_result='not_verified'),
             packets={},error=None)
+
+    @property
+    def keep_online(self):
+        """Local owner lifetime policy; remote snapshots cannot change it."""
+        return self._keep_online
 
     def request_stop(self):
         with self._lock:

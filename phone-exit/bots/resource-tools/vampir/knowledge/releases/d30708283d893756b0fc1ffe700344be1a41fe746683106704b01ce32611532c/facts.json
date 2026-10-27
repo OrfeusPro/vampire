@@ -1968,6 +1968,38 @@
       "question": "runtime-admission-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Текущие read-only проекции world/position и связные current quest/tutorial контракты."
+    },
+    {
+      "addresses": [
+        "0x14679c920"
+      ],
+      "checks": [
+        {
+          "cache_key": "e75554bbdae674818608c6c2d8f3cb070c853e23960de128d7cee729c09d2b1e",
+          "id": "runtime-admission-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\77f7b6d506d6685ffeacf17fd949262a7ffce9b751e64df4b0457c7e980b9859\\manifest.json",
+          "sha256": "77f7b6d506d6685ffeacf17fd949262a7ffce9b751e64df4b0457c7e980b9859",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "По прямому запросу пользователя добавлен explicit keep-online без таймера; Scheduler broker сохраняет проверенный python.exe и ждёт child. 42 offline tests и 2 настоящие Scheduler регрессии passed. Реальные независимые game/transport запущены, launcher завершён, API connected с персонажем и поступающими PingResult; соединение оставлено работать.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-KEEP-ONLINE-11318.md",
+          "sha256": "8c8f48119bc25381f04f5fcb74c965a1fbf2b30ce10c57299878ae85a4154860"
+        }
+      ],
+      "id": "9b82b85f0ba714a7a6ff7cf16888585ef7af551111042cfb088ac2a672c63057",
+      "limits": [
+        "Source/quest/tutorial/map guards сохранены. Default current runner ограничен 300 секундами; unlimited действует только явно.",
+        "Настоящий Codex принудительно не закрывался; separate ancestry fixture и завершившийся launcher проверены.",
+        "Бессрочная стабильность сети/сервера, reconnect и current quest/tutorial не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "Сохранять активную сессию; продолжить существующую quest selected-step цепочку 1.13.16 без переноса.",
+      "question": "runtime-admission-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Длительная стабильность соединения; завершение логики квестов на базе 1.13.16 отдельно от переноса."
     }
   ],
   "schema": 1,

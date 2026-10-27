@@ -34,6 +34,7 @@ class ScheduledWorkerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);worker=root/'worker.py';dispatcher=root/'dispatcher.py';notice_path=root/'ready.json'
             worker.write_text('''import sys,os,threading
+assert os.path.basename(sys.executable).lower()=='python.exe'
 sys.path.insert(0,sys.argv[1])
 from vampir_core.detached_worker import receive_handoff,ready_channel
 from http.server import HTTPServer,BaseHTTPRequestHandler

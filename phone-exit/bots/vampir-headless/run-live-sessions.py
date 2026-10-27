@@ -70,12 +70,15 @@ def validate_accounts(value):
     return value
 
 
-def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947,sign_in_parallelism=2,projection=None,ready_callback=None,max_runtime_seconds=None):
+def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947,sign_in_parallelism=2,projection=None,ready_callback=None,max_runtime_seconds=None,keep_online=False):
+    if type(keep_online) is not bool:raise ValueError('Режим постоянного соединения должен быть bool')
+    if keep_online and max_runtime_seconds is not None:
+        raise ValueError('Постоянное соединение несовместимо с таймером остановки')
     if profile=='candidate-11318':
         if projection is not None:raise ValueError('Проекция карты 1.13.18 ещё не подтверждена')
         verify_launch_source(profile)
-        if max_runtime_seconds is None:max_runtime_seconds=300
-        if type(max_runtime_seconds) is not int or not 1<=max_runtime_seconds<=300:
+        if max_runtime_seconds is None and not keep_online:max_runtime_seconds=300
+        if not keep_online and (type(max_runtime_seconds) is not int or not 1<=max_runtime_seconds<=300):
             raise ValueError('Прогон 1.13.18 ограничен 300 секундами')
     accounts=validate_accounts(accounts)
     if max_runtime_seconds is not None and (type(max_runtime_seconds) is not int or not 1<=max_runtime_seconds<=86400):
@@ -88,7 +91,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
         spec=importlib.util.spec_from_file_location('live_selected_probe',HERE/'probe-selected-game-login.py')
         probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
     registry=LiveSessions(capacity=len(accounts))
-    sessions={row['bot_id']:LiveSession(bot_id=row['bot_id'],projection=projection) for row in accounts}
+    sessions={row['bot_id']:LiveSession(bot_id=row['bot_id'],projection=projection,**({'keep_online':True} if keep_online else {})) for row in accounts}
     for session in sessions.values():registry.attach(session)
     def emit(value):print(json.dumps(value,ensure_ascii=False),flush=True)
     def worker(row):
@@ -138,6 +141,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
             lifetime=Timer(max_runtime_seconds,registry.close);lifetime.daemon=True
             resources.callback(lifetime.cancel);lifetime.start()
         ready=dict(event='live_api_ready',port=server.server.server_port,sessions=registry.list(),
+            keep_online=keep_online,max_runtime_seconds=max_runtime_seconds,
             ui_urls=[dict(bot_id=session.bot_id,url='http://127.0.0.1:17946/maps/ui-prototype/index.html?mode=live&bot='+session.bot_id+'&session='+session.session_id)
                 for session in sessions.values()])
         if ready_callback is not None:ready_callback(ready)
@@ -155,7 +159,7 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
 
 def launch_options(options,passwords,*,ready_callback=None):
     fields={'accounts','manifest','client_version','projection','sign_in_parallelism','port','max_runtime_seconds','result_path'}
-    if type(options) is not dict or set(options)-{'profile'}!=fields:raise ValueError('Неверные параметры владельца')
+    if type(options) is not dict or set(options)-{'profile','keep_online'}!=fields:raise ValueError('Неверные параметры владельца')
     if type(options['client_version']) is not int or not 0<=options['client_version']<=0xffffffff:
         raise ValueError('Неверная версия клиента')
     if type(options['port']) is not int or not 1024<=options['port']<=65535:raise ValueError('Неверный порт API')
@@ -165,6 +169,10 @@ def launch_options(options,passwords,*,ready_callback=None):
         if type(result_path) is not str:raise ValueError('Неверный путь результата')
         result_path=Path(result_path)
         if result_path.exists() or not result_path.parent.is_dir():raise ValueError('Нужен новый файл результата в существующем каталоге')
+    keep_online=options.get('keep_online',False)
+    if type(keep_online) is not bool:raise ValueError('Режим постоянного соединения должен быть bool')
+    if keep_online and options['max_runtime_seconds'] is not None:
+        raise ValueError('Постоянное соединение несовместимо с таймером остановки')
     selected_profile=options.get('profile','candidate-11316')
     if selected_profile not in ('candidate-11316','candidate-11318'):raise ValueError('Неверный профиль владельца')
     if selected_profile=='candidate-11318':verify_launch_source(selected_profile)
@@ -177,7 +185,7 @@ def launch_options(options,passwords,*,ready_callback=None):
         projection=load_projection(Path(options['projection']),source_sha256=CURRENT_PROBE_SOURCE)
     result=run_accounts(options['accounts'],passwords,manifest=Path(options['manifest']),
         client_version=options['client_version'],profile=selected_profile,sign_in_parallelism=options['sign_in_parallelism'],
-        projection=projection,port=options['port'],max_runtime_seconds=options['max_runtime_seconds'],ready_callback=ready_callback)
+        projection=projection,port=options['port'],max_runtime_seconds=options['max_runtime_seconds'],ready_callback=ready_callback,keep_online=keep_online)
     if result_path is not None:
         # Explicit opt-in only: bounded terminal status, no credentials, packet
         # bodies, account email or traffic content. Never replace an older file.
@@ -196,6 +204,7 @@ def main():
     parser.add_argument('--projection',type=Path,help='Проверенный manifest проекции для текущей версии клиента')
     parser.add_argument('--sign-in-parallelism',type=int,default=2,help='Одновременные SDK-входы; все вошедшие боты остаются активны')
     parser.add_argument('--port',type=int,default=17947)
+    parser.add_argument('--keep-online',action='store_true',help='Сохранять соединение без таймера до Stop или потери связи; не включает квестовые действия')
     parser.add_argument('--result',type=Path,help='Новый файл итоговых кодов после завершения, без паролей и содержимого трафика')
     modes=parser.add_mutually_exclusive_group()
     modes.add_argument('--detached',action='store_true',help='Windows: одноразовая задача текущего пользователя вне дерева Codex; пароли только через anonymous pipe')
@@ -225,13 +234,14 @@ def main():
         accounts=validate_accounts(json.loads(args.accounts.read_text(encoding='utf-8')))
         options=dict(accounts=accounts,profile=args.profile,manifest=str(args.manifest.resolve()),client_version=args.client_version,
             projection=str(args.projection.resolve()) if args.projection else None,
-            sign_in_parallelism=args.sign_in_parallelism,port=args.port,max_runtime_seconds=(300 if args.profile=='candidate-11318' else 86400 if args.detached else None),
+            sign_in_parallelism=args.sign_in_parallelism,port=args.port,keep_online=args.keep_online,
+            max_runtime_seconds=(None if args.keep_online else 300 if args.profile=='candidate-11318' else 86400 if args.detached else None),
             result_path=str(args.result.resolve()) if args.result else None)
         passwords={row['bot_id']:getpass.getpass('Пароль '+row['bot_id']+': ') for row in accounts}
         if args.detached:
             from vampir_core.scheduled_worker import launch_scheduled
             notice=launch_scheduled([sys.executable,'-X','utf8',str(Path(__file__).resolve()),'--detached-worker'],
-                dict(options=options,passwords=passwords),cwd=str(HERE.parents[2]))
+                dict(options=options,passwords=passwords),cwd=str(HERE.parents[2]),**({'unlimited':True} if args.keep_online else {}))
             print(json.dumps(notice,ensure_ascii=False),flush=True)
         else:launch_options(options,passwords)
     except KeyboardInterrupt:

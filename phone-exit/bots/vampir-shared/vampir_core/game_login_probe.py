@@ -321,7 +321,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         if session_control is not None:
                             session_control.publish(owner)
                             session_control.pump_quest_actions(owner)
-                            if source_sha256!=LATEST_PROBE_SOURCE:deadline=math.inf
+                            if source_sha256!=LATEST_PROBE_SOURCE or session_control.keep_online:deadline=math.inf
                         while tutorial_pending:
                             tutorial_observer(tutorial_pending.pop(0))
                         tracker=ensure_target_tracker()
@@ -329,7 +329,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                             world_observer(tracker.position)
                             notified_revision=tracker.revision
                         if not observe_world_seconds:return result('world_finish_result')
-                        if observation_until is None and (session_control is None or source_sha256==LATEST_PROBE_SOURCE):
+                        if observation_until is None and (session_control is None or
+                                (source_sha256==LATEST_PROBE_SOURCE and not session_control.keep_online)):
                             observation_until=time.monotonic()+observe_world_seconds
                             deadline=observation_until
                         if ack_initial_tutorial:

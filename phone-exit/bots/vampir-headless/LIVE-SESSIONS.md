@@ -1,5 +1,15 @@
 # Изолированные живые сессии
 
+## Соединение без таймера
+
+По явному запросу использовать вместе `--detached --keep-online`.
+Игра не создаёт timer остановки, Windows task получает PT0S; отдельный транспорт
+также должен запускаться без lifetime timer и наблюдать PID game owner.
+Readiness сообщает keep_online=true и max_runtime_seconds=null.
+Без флага current candidate сохраняет 300 секунд. Stop и потеря связи остаются
+основаниями закрытия; автоматический повтор неизвестного действия не включается.
+[Проверенный запуск и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-KEEP-ONLINE-11318.md).
+
 27 октября 2026 candidate-11318 прошёл реальный bounded probe через личный
 HK WebRTC: Game Login 0, вход в мир, 60 секунд, 13 PingResult, error=null.
 Постоянный owner / UI и длительный режим этим прогоном не проверены.

@@ -3,11 +3,9 @@ import argparse
 import ctypes
 from ctypes import wintypes
 import json
-import io
 import os
 from pathlib import Path
 import subprocess
-import runpy
 import sys
 import uuid
 
@@ -35,7 +33,7 @@ if ($spec.mode -eq 'cleanup') {
   $task.Principal.RunLevel=0
   $task.Settings.Enabled=$true
   $task.Settings.Hidden=$true
-  $task.Settings.ExecutionTimeLimit='PT24H'
+  $task.Settings.ExecutionTimeLimit=$spec.executionTimeLimit
   $task.Settings.DisallowStartIfOnBatteries=$false
   $task.Settings.StopIfGoingOnBatteries=$false
   $action=$task.Actions.Create(0)
@@ -89,22 +87,38 @@ def duplicate_handoffs(parent,request,response):
 
 def broker(parent,request,response):
     read_fd,write_fd=duplicate_handoffs(parent,request,response)
-    with os.fdopen(read_fd,'rb') as incoming:
-        value=receive_handoff(incoming)
-    if set(value)!={'command','payload','cwd'}:raise ValueError('Invalid scheduled handoff')
-    command=value['command']
-    validate_command(command)
-    # Run in the scheduler process itself: Scheduler may forbid BREAKAWAY.
-    # Spawning a child and exiting the task would retain task-job lifetime risk.
-    sys.argv=command[3:]
-    sys.path.insert(0,str(Path(sys.argv[0]).parent))
-    if value['cwd']:os.chdir(value['cwd'])
-    os.dup2(write_fd,1);os.close(write_fd)
-    sys.stdout=open(1,'w',encoding='utf-8',closefd=False)
-    sys.stderr=open(os.devnull,'w',encoding='utf-8')
-    sys.stdin=io.TextIOWrapper(io.BytesIO(json.dumps(value['payload'],ensure_ascii=False).encode('utf-8')),encoding='utf-8')
-    value=None
-    runpy.run_path(sys.argv[0],run_name='__main__')
+    child=None;frame=None;value=None
+    try:
+        with os.fdopen(read_fd,'rb') as incoming:
+            value=receive_handoff(incoming)
+        # Closing the broker's response handle does not close the worker's
+        # inherited handle. Readiness still comes directly from the owner.
+        with os.fdopen(write_fd,'wb',buffering=0) as readiness:
+            write_fd=None
+            if set(value)!={'command','payload','cwd'}:raise ValueError('Invalid scheduled handoff')
+            command=value['command']
+            validate_command(command)
+            frame=json.dumps(value['payload'],ensure_ascii=False,allow_nan=False).encode('utf-8')
+            if len(frame)>MAX_INPUT:raise ValueError('Scheduled worker input limit exceeded')
+            # Preserve the verified python.exe identity. The scheduler starts
+            # this broker under pythonw.exe; runpy would change sys.executable.
+            child=subprocess.Popen(command,cwd=value['cwd'],stdin=subprocess.PIPE,
+                stdout=readiness,stderr=subprocess.DEVNULL,creationflags=subprocess.CREATE_NO_WINDOW)
+        child.stdin.write(frame)
+        child.stdin.close()
+        frame=None;value=None
+        # Keep the scheduler task alive for the whole owner lifetime: exiting
+        # just after readiness could terminate its child through the task job.
+        child.wait()
+    finally:
+        frame=None;value=None
+        if write_fd is not None:os.close(write_fd)
+        if child is not None:
+            if child.stdin is not None and not child.stdin.closed:child.stdin.close()
+            if child.poll() is None:
+                child.terminate()
+                try:child.wait(timeout=5)
+                except subprocess.TimeoutExpired:child.kill();child.wait(timeout=5)
 
 
 def validate_command(command):
@@ -115,13 +129,15 @@ def validate_command(command):
     if not Path(command[3]).is_absolute() or not Path(command[3]).is_file():raise ValueError('Existing absolute script required')
 
 
-def launch_scheduled(command,payload,*,cwd=None,timeout=30):
+def launch_scheduled(command,payload,*,cwd=None,timeout=30,unlimited=False):
     """Task owns the worker ancestry; definition is deleted after handoff.
 
     No trigger, elevation, stored user password, credential file or auto-retry.
-    The worker runs in the Scheduler process, outside the dispatcher ancestry.
+    The broker waits for its child under the requested Python executable,
+    outside the dispatcher ancestry.
     """
     if os.name!='nt':raise OSError('Windows interactive task required')
+    if type(unlimited) is not bool:raise ValueError('Explicit scheduled lifetime policy required')
     if type(payload) is not dict:raise ValueError('Explicit worker payload required')
     if not isinstance(timeout,(int,float)) or not 0<timeout<=60:raise ValueError('Bounded handoff timeout required')
     validate_command(command)
@@ -154,7 +170,8 @@ def launch_scheduled(command,payload,*,cwd=None,timeout=30):
     attempted=False;started=False;ready_ok=False
     try:
         attempted=True
-        task_call(dict(mode='create',name=name,program=str(pythonw),arguments=arguments))
+        task_call(dict(mode='create',name=name,program=str(pythonw),arguments=arguments,
+            executionTimeLimit='PT0S' if unlimited else 'PT24H'))
         thread.start();started=True;thread.join(timeout)
         if thread.is_alive():raise TimeoutError('Scheduled handoff timed out')
         ready=result.get_nowait()
