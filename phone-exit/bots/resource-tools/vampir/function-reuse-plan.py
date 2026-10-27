@@ -54,6 +54,8 @@ def inventory(root,knowledge):
     if len(paths)>MAX_CONTEXTS:raise ValueError('Function context budget exceeded')
     for path in paths:
         context_raw=path.read_bytes();context=json.loads(context_raw.decode('utf-8'));roles=declarations(context)
+        dependency_only=context.get('dependency_only',False)
+        if type(dependency_only) is not bool:raise ValueError('Dependency-only declaration must be boolean')
         if not roles:continue
         version=path.stem.rsplit('-',1)[1];expected=SOURCES[version];actual=context.get('source_sha256')
         if actual!=expected:
@@ -80,7 +82,7 @@ def inventory(root,knowledge):
             elif exports[str(export)]['sha256']!=sha:raise ValueError('Conflicting context export digest')
             material.append(str(export))
         contexts.append(dict(path=str(path),sha256=hashlib.sha256(context_raw).hexdigest(),family=path.stem.rsplit('-',1)[0],
-            version=version,source_sha256=expected,roles=roles,exports=material))
+            version=version,source_sha256=expected,roles=roles,exports=material,dependency_only=dependency_only))
     if sum(len(c['roles']) for c in contexts)>MAX_ROLES:raise ValueError('Function role budget exceeded')
     return contexts,exports,sources,queue
 
@@ -111,6 +113,7 @@ def choose(contexts):
             record=all_records.setdefault((item['source_sha256'],address),dict(source_sha256=item['source_sha256'],address=address,aliases=[],exports=set()))
             record['aliases'].append({k:item[k] for k in ('context','context_sha256','family','role','version')})
             record['exports'].update(context['exports'])
+            if context.get('dependency_only',False):continue
             identity=(context['family'],role)
             if identity not in latest or int(item['version'])>int(latest[identity]['version']):latest[identity]=item
     selected={(item['source_sha256'],item['address']) for item in latest.values()}
@@ -154,6 +157,7 @@ def build(root,knowledge,target_sha,*,execute=True):
         raise ValueError('Function inventory changed during planning')
     target=bindings.source(None,root,target_sha)
     records,selected,latest=choose(contexts)
+    primary=set(selected)
     identity['target_sha256']=target_sha
     identity['approved_data_sha256']=digest(knowledge/'update-contracts.json') if (knowledge/'update-contracts.json').is_file() else None
     images={};decoded={};data_specs=approved_data(knowledge)
@@ -263,11 +267,30 @@ def build(root,knowledge,target_sha,*,execute=True):
     for sha,path in sources.items():
         if digest(path)!=sha:raise ValueError('Function baseline changed during planning')
     if hashlib.sha256(bindings.source(None,root,target_sha)).hexdigest()!=target_sha:raise ValueError('Function target changed')
-    summary=dict(contexts=len(contexts),roles=sum(len(c['roles']) for c in contexts),functions=len(selected),
+    verified_keys={(v['baseline_sha256'],proof['baseline_address']) for v in verifications
+        for proof in v['verification'].values() if proof['state'] in ('unchanged','moved_verified')}
+    # Group actual call edges once so shared blockers can be researched in
+    # bounded batches. Consumer counts overlap; they are not predicted closures.
+    frontier={}
+    for key in sorted(selected-verified_keys):
+        recipe,deps,reasons=inspect(key)
+        missing={(key[0],reason[len('undeclared_callee_'):]) for reason in reasons if reason.startswith('undeclared_callee_')}
+        for dependency in (set(deps)|missing)-verified_keys:
+            frontier.setdefault(dependency,set()).add(key)
+    frontier=[dict(source_sha256=sha,address=address,declared=(sha,address) in records,
+        direct_consumers=len(consumers),consumers=[dict(source_sha256=s,address=a) for s,a in sorted(consumers)],
+        reasons=rejected.get((sha,address),['target_shape_not_verified'] if (sha,address) in records else ['dependency_not_declared']))
+        for (sha,address),consumers in sorted(frontier.items(),key=lambda item:(-len(item[1]),item[0]))]
+    summary=dict(contexts=len(contexts),roles=sum(len(c['roles']) for c in contexts if not c['dependency_only']),functions=len(selected),
+        dependency_declarations=sum(len(c['roles']) for c in contexts if c['dependency_only']),
+        primary_functions=len(primary),primary_verified=len(primary&verified_keys),
+        primary_requires_review=len(primary-verified_keys),dependency_functions=len(selected-primary),
+        dependency_verified=len((selected-primary)&verified_keys),
         baseline_counts={sha:sum(key[0]==sha for key in selected) for sha in sorted(sources)},
         planned=planned,verified=verified,requires_review=len(selected)-verified,executed=execute)
     report=dict(schema=1,identity=identity,target_sha256=target_sha,summary=summary,
         inventory=[records[key] for key in sorted(selected)],contracts=contracts,verification=verifications,queue=queue,
+        dependency_frontier=frontier,
         scope='function_only',runtime_activated=False,profile_activated=False,
         limits=['Newest explicit context role selected per family; baseline 1.13.16 is used directly when no 1.13.18 declaration exists.',
             'Unwind roots and explicit export instructions are verified. Undeclared data/callees, leaves and indirect/tail branches remain queued.',

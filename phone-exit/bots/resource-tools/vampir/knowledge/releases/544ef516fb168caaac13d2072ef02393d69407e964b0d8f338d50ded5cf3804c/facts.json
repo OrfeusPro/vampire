@@ -23,6 +23,31 @@
       "question": "release-function-reuse",
       "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
       "unknown": "Не закрыты оставшиеся границы / callees / данные, semantic checks 1.13.20 и онлайн-допуск игровых действий."
+    },
+    {
+      "addresses": [
+        "0x14144c5b0"
+      ],
+      "checks": [],
+      "conclusion": "В штатный cached пакет подключены 27 явно экспортированных dependency-only helpers и общий frontier. Реальная сверка: 356 основных функций, 10 подтверждены / 346 требуют проверки; 30 достигнутых helpers, подтверждений 0. Frontier содержит 706 групп фактических прямых зависимостей. Новых подтверждений исходного набора нет; количество ролей осталось 1159. Общий tooling набор расширен до 42 тестов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-DEPENDENCY-FRONTIER-11320.md",
+          "sha256": "278e612bf56c1d6a9cef9369cdb98141e6b39209dd3d1580f12a46c8f5f79de3"
+        }
+      ],
+      "id": "3b6aa7129c3ce77c157cb3337742c3d9d47ba6ec19fffdba0d7b54c9ee3fd90f",
+      "limits": [
+        "Декларации helpers не создают новые основные роли; выбранные dependencies расширяются только по прямой ссылке и остаются ограничены бюджетом.",
+        "Число потребителей frontier не является числом гарантированных закрытий. Общий отчёт SHA 1419f6d8e3bd90503883bd548cb5d956e85853ddfee5ff572f4d7b8b7e102e63.",
+        "32 дополнительных прямых helpers проверены ограниченным read-only shortlist без рекурсии: 23 имеют внешние/косвенные переходы, 9 не explicit unwind roots; самостоятельно замкнутых нет.",
+        "Новые Ghidra exports, авторизация и runtime / profile activation не выполнялись."
+      ],
+      "method": "static",
+      "next_check": "Проверить выбранную общую группу из frontier единым семантическим пакетом; не повторять готовые exports без новых входов.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Source-bound таблицы / dispatch / границы общих зависимостей и семантический допуск клиента 1.13.20."
     }
   ],
   "schema": 1,

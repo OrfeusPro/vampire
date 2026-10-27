@@ -96,6 +96,32 @@ class FunctionReusePlanTests(unittest.TestCase):
         self.assertIn('covering_export',value['inventory'][0])
         self.assertEqual(value['summary']['verified'],1)
 
+    def dependency_context(self,module,knowledge,source,functions):
+        path,export=self.context(module,knowledge,source,'dependencies','11316',functions)
+        value=json.loads(path.read_text());value['dependency_only']=True
+        path.write_text(json.dumps(value),encoding='utf-8');return path
+
+    def test_dependency_only_is_reached_by_call_without_becoming_a_primary_role(self):
+        module,knowledge,old,new=self.setup_catalog()
+        self.context(module,knowledge,old,'packet','11316',dict(main='0x140001000'))
+        self.dependency_context(module,knowledge,old,dict(helper='0x140001040'))
+        value=module.build(self.root,knowledge,new);summary=value['summary']
+        self.assertEqual(summary['roles'],1);self.assertEqual(summary['primary_functions'],1)
+        self.assertEqual(summary['primary_verified'],1);self.assertEqual(summary['dependency_declarations'],1)
+        self.assertEqual(summary['dependency_functions'],1);self.assertEqual(summary['dependency_verified'],1)
+        self.assertEqual(summary['verified'],2)
+        helper=next(r for r in value['inventory'] if r['address']=='0x140001040')
+        self.assertTrue(helper['dependency_added'])
+
+    def test_unused_dependency_is_not_analysed_or_counted_as_a_role(self):
+        module,knowledge,old,new=self.setup_catalog()
+        path=self.dependency_context(module,knowledge,old,dict(helper='0x140001040'))
+        value=module.build(self.root,knowledge,new)
+        self.assertEqual(value['summary']['functions'],0);self.assertEqual(value['summary']['roles'],0)
+        self.assertEqual(value['contracts'],[]);self.assertEqual(value['inventory'],[])
+        data=json.loads(path.read_text());data['dependency_only']='true';path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError,'must be boolean'):module.build(self.root,knowledge,new)
+
     def test_undeclared_callee_stays_queued_without_partial_equivalence_admission(self):
         module,knowledge,old,new=self.setup_catalog()
         self.context(module,knowledge,old,'packet','11316',dict(main='0x140001000'))
@@ -103,6 +129,21 @@ class FunctionReusePlanTests(unittest.TestCase):
         self.assertEqual(value['summary']['verified'],0)
         self.assertEqual(value['contracts'],[])
         self.assertTrue(any('undeclared_callee' in reason for q in value['queue'] for reason in q.get('reasons',[])))
+        frontier=value['dependency_frontier']
+        self.assertEqual(len(frontier),1);self.assertFalse(frontier[0]['declared'])
+        self.assertEqual(frontier[0]['address'],'0x140001040');self.assertEqual(frontier[0]['direct_consumers'],1)
+        self.assertEqual(frontier[0]['reasons'],['dependency_not_declared'])
+
+    def test_frontier_counts_functions_once_and_distinguishes_unverified_target(self):
+        module,knowledge,old,new=self.setup_catalog();changed=self.image(0x1020,callee_value=8)
+        self.context(module,knowledge,old,'one','11316',dict(main='0x140001000'))
+        self.context(module,knowledge,old,'two','11316',dict(main='0x140001000'))
+        self.dependency_context(module,knowledge,old,dict(helper='0x140001040'))
+        value=module.build(self.root,knowledge,changed)
+        frontier=value['dependency_frontier'];self.assertEqual(len(frontier),1)
+        self.assertEqual(frontier[0]['direct_consumers'],1);self.assertTrue(frontier[0]['declared'])
+        self.assertEqual(frontier[0]['reasons'],['target_shape_not_verified'])
+        self.assertEqual(value['summary']['primary_requires_review'],1)
 
     def test_missing_unwind_root_is_a_named_queue_not_guessed_leaf(self):
         module,knowledge,old,new=self.setup_catalog()

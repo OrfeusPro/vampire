@@ -1264,7 +1264,8 @@
         "phone-exit/bots/resource-tools/vampir/research-workflow.py",
         "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
         "phone-exit/bots/test_vampir_research_update.py",
-        "phone-exit/bots/test_vampir_knowledge_index.py"
+        "phone-exit/bots/test_vampir_knowledge_index.py",
+        "phone-exit/bots/resource-tools/vampir/function-reuse-plan.py"
       ],
       "source_scope": "tooling"
     },

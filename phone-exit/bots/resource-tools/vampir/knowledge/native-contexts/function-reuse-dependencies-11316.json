@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "purpose": "Явные уже экспортированные callees из очереди сверки; подключать только по прямой ссылке потребителя, без переноса роли или семантики.",
+  "functions": {
+    "dependency-141425d60": "0x141425d60",
+    "dependency-141426b30": "0x141426b30",
+    "dependency-1414277b0": "0x1414277b0",
+    "dependency-1414734e0": "0x1414734e0",
+    "dependency-144286f50": "0x144286f50",
+    "dependency-1445ce2e0": "0x1445ce2e0",
+    "dependency-1456d19c0": "0x1456d19c0",
+    "dependency-145a6e600": "0x145a6e600",
+    "dependency-145b547a0": "0x145b547a0",
+    "dependency-145bfe3d0": "0x145bfe3d0",
+    "dependency-145c24be0": "0x145c24be0",
+    "dependency-1464c1b40": "0x1464c1b40"
+  },
+  "exports": {
+    "run-3318f40a35c0": "e2277c705fd0418674879b0914a2a60683044098879fcb6c93e68713a2262253",
+    "run-d8dc7f6c51b7": "3d657d6fb0d305a0e8bddaffdad7e79042c4b259e9a1e647f062e00c2261d12f",
+    "run-4511094667cb": "a79feab1e53183f056a894db36009a24d3570bc5505d39c099aefd060f84ab9c",
+    "run-484b66614e30": "3fcf1c70b84c49edcc16a5e162680b7f844b13973f7e8aed0973b3e35a360c60",
+    "run-09b30ec921d8": "05567661bee229c7038ea1e621e08dd3a1c4c3d7685e9551554c222dab33c4da",
+    "run-96408f02c1d2": "8a7978466120131aafae77dba1ec9361e39c95b63c15efb346e62efb99fcb16f",
+    "run-c5e27e535de5": "eddd741edacd5750d9e017d24494ef404f210f051cac819831ace94d029c0f1d",
+    "run-276b0e467d36": "7584d06ac5fdc7a4a07ac2a1ae28881699ec5a6d69c65dcbbf397d570c7ed83e",
+    "run-c9ac9c288a06": "c7b122492bc128e6ff2f359120bcb62c9c447b02d6ba31aa7cd6d87443a5b9bd",
+    "run-b0302e52cb24": "2f1388b8ab8bebdc4c0747c977c86fe125172cfc626a9df0da41714df7039fd8"
+  },
+  "dependency_only": true,
+  "limits": [
+    "Полный SHA источника и exports проверяет общий планировщик.",
+    "Само наличие экспорта не подтверждает closed_shape, семантику или runtime."
+  ]
+}
