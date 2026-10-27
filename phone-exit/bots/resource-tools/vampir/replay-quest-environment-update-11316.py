@@ -14,8 +14,10 @@ def load(name):
     return module
 
 
-def run():
-    path = HERE / 'knowledge/native-contexts/quest-environment-update-11316.json'
+def run(context_name='quest-environment-update-11316.json'):
+    if context_name not in ('quest-environment-update-11316.json','quest-environment-world-handler-11316.json'):
+        raise ValueError('Explicit environment context required')
+    path = HERE / 'knowledge/native-contexts' / context_name
     context = json.loads(path.read_text('utf-8'))
     h = load('native-request-harness-11316').make_harness(
         context['exports'], {int(v, 16) for v in context['functions']},
@@ -212,6 +214,7 @@ def run():
         0x1487e8ce0:lambda machine:h.finish(reg('RAX'))}
     for at, callback in callbacks.items():
         h.add_fixture(at, callback)
+    binding = load('quest-world-handler-binding-11316').install(h) if context.get('handler_binding') else None
     import unicorn
     uc.hook_add(unicorn.UC_HOOK_CODE, lambda machine, at, size, user:calls.append('world'),
         begin=0x1445d2a20, end=0x1445d2a20)
@@ -388,9 +391,13 @@ def run():
         put(environment+0x44, 0xaabbccdd, 4); put(environment+0x58, 2, 1)
         uc.mem_write(input_packet, bytes(0x50)); put(input_packet+0x14, requested, 4)
         uc.mem_write(input_packet+0x18, vector); put(input_packet+0x30, incoming_enum, 1)
+        if binding:binding.prepare(input_packet)
         packet_before = bytes(uc.mem_read(input_packet, 0x50))
         ready_before = h.call(0x14568cad0, 110120) & 255
-        uc.reg_write(x.UC_X86_REG_RDX, input_packet); h.call(0x145dad170, environment)
+        if binding:
+            binding.dispatch(input_packet,0,False)
+        else:
+            uc.reg_write(x.UC_X86_REG_RDX, input_packet); h.call(0x145dad170, environment)
         allowed = guard_mode=='allow'
         if current['pending_at_writer'] != requested or current['selected_pending'] != [requested]:
             raise ValueError('Receiver did not produce the pending value consumed by writer')
@@ -425,13 +432,15 @@ def run():
             vector_hex=bytes(uc.mem_read(environment+0x60, 24)).hex(), phase_after=get(environment+0x30, 1),
             callback_al=callback_al, ready_before=bool(ready_before), ready_after=bool(ready_after),
             branch_fixture='virtual_a8_true'))
+    binding_report = binding.verify_rejections(input_packet,environment) if binding else None
     audit = load('audit-client-release')
     report = dict(source_sha256=h.sha, tool_sha256=audit.sha256(Path(__file__)),
         context_sha256=audit.sha256(path), exports=h.evidence, legacy_direct_flow_checked=legacy,
         cases=cases, lookup_cases=lookup_cases, phase_cases=phase_cases, callback_cases=callback_cases,
-        receiver_cases=receiver_cases,
+        receiver_cases=receiver_cases, handler_binding=binding_report,
         native_execution=True, network_used=False, action_admitted=False, limits=context['limits'])
-    target = audit.save_snapshot(h.root/'code-clues/quest-environment-update-11316', report)
+    target = audit.save_snapshot(h.root/('code-clues/quest-environment-world-handler-11316' if binding else
+        'code-clues/quest-environment-update-11316'), report)
     return target, report
 
 

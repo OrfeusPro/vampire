@@ -1,3 +1,16 @@
+27 октября 2026: сессия hk-test завершена со статусом `connection_closed`.
+Итоговый отчёт записан в 10:46:47 +02:00; owner и транспорт завершились,
+API 17947 недоступен. До этого проверено более 15 часов соединения.
+Причина закрытия не установлена; повторный вход не запускался.
+Приватный `scheduled-infinix-x650-20261026/game-result.json`, SHA256
+`fb0a0056301a5a04b36840c617cd78e100ec43aac8fbe094019ad9fedd79ca6e`.
+
+Для версии прежней онлайн-сессии 1.13.16 связан ID204 handler с actual receiver,
+writer/callback и quest equality в одном эмуляторе: 48 принятых случаев и пять
+отказов, всего 150 с прежними сценариями. Active derived vtable/phase completion
+ещё неизвестны; live offer не включён. На 1.13.18 не перенесено.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-WORLD-HANDLER-11316.md).
+
 Result getters 1.13.18 прошли 120 lookup/type случаев и 12 conversions.
 Названия errorCode/resultData закреплены current initializers; объектный getter
 требует type6, строковый допускает числовое/boolean преобразование. Storage и

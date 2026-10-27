@@ -3333,9 +3333,11 @@
         "replay-quest-csv-projection-11316.py",
         "replay-quest-empty-group-11316.py",
         "replay-quest-map-growth-11316.py",
-        "replay-quest-map-chain-11316.py"
+        "replay-quest-map-chain-11316.py",
+        "replay-quest-environment-update-11316.py",
+        "quest-world-handler-binding-11316.py"
       ],
-      "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом.",
+      "rule": "Проверять named request literals / register stores / actual packet vptr / state model на новом SHA; не смешивать wire send с HUD click и локальным маршрутом. Для world/environment искать явные E9 callers подтверждённого receiver, проверять packet ctor/ID getter и registration window; active derived vtable и phase completion перепроверять вручную.",
       "automation": {
         "discovery": "named_packet_then_explicit_constructor_callers_and_property_literals",
         "validation": "static_full_source_and_registered_binding_check_only",
@@ -3561,6 +3563,27 @@
                 "required_checks": [
                   "native-quest-map-chain-11316"
                 ]
+              },
+              {
+                "address": "0x1467ca790",
+                "scope": "ID204 handler/common gate → actual environment receiver/writer/readiness: 48 принятых synthetic случаев и 5 отказов. Поиск: явный E9 caller, ctor/ID getter и registration window. Gate code prefix дополнен pinned block; diagnostics/setting/rejection/A8 — fixtures. Active derived vtable, phase completion и live admission требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-world-handler-11316"
+                ]
+              },
+              {
+                "address": "0x1467cd7b0",
+                "scope": "ID204 handler/common gate → actual environment receiver/writer/readiness: 48 принятых synthetic случаев и 5 отказов. Поиск: явный E9 caller, ctor/ID getter и registration window. Gate code prefix дополнен pinned block; diagnostics/setting/rejection/A8 — fixtures. Active derived vtable, phase completion и live admission требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-world-handler-11316"
+                ]
+              },
+              {
+                "address": "0x145dad170",
+                "scope": "ID204 handler/common gate → actual environment receiver/writer/readiness: 48 принятых synthetic случаев и 5 отказов. Поиск: явный E9 caller, ctor/ID getter и registration window. Gate code prefix дополнен pinned block; diagnostics/setting/rejection/A8 — fixtures. Active derived vtable, phase completion и live admission требуют ручной проверки.",
+                "required_checks": [
+                  "native-quest-world-handler-11316"
+                ]
               }
             ],
             "evidence": [
@@ -3572,7 +3595,8 @@
               "evidence/scenarios/HEADLESS-QUEST-CSV-PROJECTION-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-EMPTY-GROUP-11316.md",
               "evidence/scenarios/HEADLESS-QUEST-MAP-GROWTH-11316.md",
-              "evidence/scenarios/HEADLESS-QUEST-MAP-CHAIN-11316.md"
+              "evidence/scenarios/HEADLESS-QUEST-MAP-CHAIN-11316.md",
+              "evidence/scenarios/HEADLESS-QUEST-WORLD-HANDLER-11316.md"
             ]
           }
         ]
