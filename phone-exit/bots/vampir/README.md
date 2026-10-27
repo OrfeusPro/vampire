@@ -1,3 +1,10 @@
+Поля launcher caller 1.13.18 проверены целыми функциями в восьми случаях:
+credential только в token body, launcherToken отдельно в sign-in header.
+Native BuildCode прошёл 256 byte inputs; две допустимые сверки с planner совпали,
+шесть строгих отказов сохранены. Engine writer/SDK context остаются fixtures;
+live auth не подтверждён, онлайн-сессия сохранена.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-CALLER-FIELDS-11318.md).
+
 JSON gates 1.13.18 прошли 18 native сценариев и пять sparse maps: обход полей,
 тип объекта, выбор writer и очистка строки при отказе. Engine writers и значения
 полей остаются fixtures; actual JSON/live auth не подтверждены, сессия сохранена.

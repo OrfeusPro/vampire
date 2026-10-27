@@ -7795,6 +7795,49 @@
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b50b7708aaa7/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-e1fd1a429120/details.json"
       ]
+    },
+    {
+      "id": "launcher-caller-fields-11318",
+      "questions": [
+        "launcher-contract-11318"
+      ],
+      "source_sha256": [
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+      ],
+      "offline_reviewed": true,
+      "on_update": false,
+      "test_pattern": "test_vampir_launcher_caller_fields_11318.py",
+      "timeout_seconds": 90,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_launcher_caller_fields_11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-launcher-caller-fields-11318.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-references-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/vampir-shared/vampir_core/__init__.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_launcher_auth.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_sdk_credential.py",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_result.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_sign_in_response.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_percent.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-5e88e50e265d/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-652644c53992/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-934cf393e845/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-1a7e48a82067/details.json"
+      ]
     }
   ]
 }
