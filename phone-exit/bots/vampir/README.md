@@ -1,3 +1,9 @@
+Начальное QuestTask data+14 связано с конструктором: source constant 0,
+загруженные шесть шагов «Зова крови» сохраняют 0 в обоих порядках загрузки.
+Проверка включает 36 native проекций; поздние записи поля и environment kind
+ещё не установлены, реальный action offer не включён.
+[Источник и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-TASK-BASE-DEFAULT-11316.md).
+
 Readiness predicates теперь используют тот же task/data, что и Time: exact
 record+30 leaf и оригинальный RunInInstance getter+89, 34 native сценария.
 Закрытая instance ветвь вызывает model virtual+30; её побочные эффекты ещё

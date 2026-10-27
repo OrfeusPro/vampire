@@ -537,6 +537,15 @@ def run(context_path=None):
                 runs[-1]['override_ids']=[r[0] for r,_ in ordered_override]
                 runs[-1]['missing_translation_ids']=[r[0][0] for r in ordered if r[0][0] not in override_names]
         if native_projection:
+            default_at=0x1496706e0
+            default_offset=h.image.offset(default_at-h.image.pe.base)
+            default_bytes=h.raw[default_offset:default_offset+4]
+            if default_bytes!=bytes(4):raise ValueError('QuestTask constructor default changed')
+            headers=[dict(task_id=row[0],base08=get(at+8),base10=get(at+0x10,4),base14=get(at+0x14,4)) for at,(row,_) in zip(records,ordered)]
+            if any(any(header[field]!=0 for field in ('base08','base10','base14')) for header in headers):
+                raise ValueError('Loaded QuestTask base constructor fields differ')
+            runs[-1]['native_base_headers']=headers
+            runs[-1]['base_default_source']=dict(address=hex(default_at),bytes=default_bytes.hex(),value=0)
             projections=[]; result,progress=base+0x6000,base+0x6100
             immutable=[(manager,bytes(uc.mem_read(manager,256)))]+[(at,bytes(uc.mem_read(at,size))) for at,size in blocks.items()]
             if source_qword(0x1499f67f8+0x30)!=0x145b55aa0:

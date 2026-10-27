@@ -18,6 +18,8 @@ class QuestLoaderProjectionTests(unittest.TestCase):
             ids=list(reversed(original)) if run['reverse'] else original
             self.assertEqual(run['task_ids'],ids);self.assertEqual(run['records'],6);self.assertEqual(run['group_count'],1)
             self.assertEqual(len(run['native_projections']),18)
+            self.assertEqual(run['base_default_source'],dict(address='0x1496706e0',bytes='00000000',value=0))
+            self.assertEqual(run['native_base_headers'],[dict(task_id=task_id,base08=0,base10=0,base14=0) for task_id in ids])
             for p in run['native_projections']:
                 self.assertEqual(p['quest_id'],'110120');self.assertEqual(p['task_id'],ids[p['index']])
                 raw=bytes.fromhex(p['progress_hex'])
