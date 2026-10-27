@@ -620,6 +620,106 @@
       "question": "launcher-contract-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Доставка callable, nonempty delegate lifecycle и связь whole response/errorCode gates/getters/dispatch с actual SDK context/engine writers."
+    },
+    {
+      "addresses": [
+        "0x1444c59f0",
+        "0x1444cc4b0",
+        "0x1444d3a30",
+        "0x1444e57f0",
+        "0x1444e6ac0"
+      ],
+      "checks": [
+        {
+          "cache_key": "1a4a0f246848a53f871726997ed19151fd576370f76bc9e28fb385a212aa588b",
+          "id": "launcher-shape-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291\\manifest.json",
+          "sha256": "14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0045655e20ceff8f34cefa518d25b0db60c7083304eaf469e7c05e4aa7045f76",
+          "id": "launcher-references-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\beab8338873fcc9c80b09007c78c9dccc12eb8a2b9abfae87c682d268e01beef\\manifest.json",
+          "sha256": "beab8338873fcc9c80b09007c78c9dccc12eb8a2b9abfae87c682d268e01beef",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0694ae1d77a35f1f522ae4880f2509065186089d3db632e5111a42aeaba430e3",
+          "id": "launcher-responses-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8f5fa8a5c73adf62cd7f7fb5b3485c0328ef3ff50a98b04a89925ea30bed496d\\manifest.json",
+          "sha256": "8f5fa8a5c73adf62cd7f7fb5b3485c0328ef3ff50a98b04a89925ea30bed496d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fe7decfdfe84c3811a36cf6738e1232e7aeefd92f4a8965f7c19e7fefe436e5a",
+          "id": "launcher-transport-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\42f4ec6caab9aa256ec04485c3bd0c355278a6904a7ec8a58a21cdb7f1fff416\\manifest.json",
+          "sha256": "42f4ec6caab9aa256ec04485c3bd0c355278a6904a7ec8a58a21cdb7f1fff416",
+          "state": "passed"
+        },
+        {
+          "cache_key": "921d025bebe5588bbce7ccbe2ded4a8ea23f3b3ed97d40089b8b45d9aa0435f5",
+          "id": "launcher-common-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\37609f22b430072d35fb73ab9afdbd1665895b5a13730ae8e053c04153e17349\\manifest.json",
+          "sha256": "37609f22b430072d35fb73ab9afdbd1665895b5a13730ae8e053c04153e17349",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0a7dbd66f602e8fa08a85d23eec9152c72a53304b77ba6820ee24e6714bef103",
+          "id": "launcher-json-gates-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\80556286a2b4915fcd5471ab15c48cfe64c9b24b69a4055836717936369a76ea\\manifest.json",
+          "sha256": "80556286a2b4915fcd5471ab15c48cfe64c9b24b69a4055836717936369a76ea",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0079a7b0533fee3f76809396ef18cbf45cc8be959d6a42e0d60a37bf2a15fb5d",
+          "id": "launcher-caller-fields-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\46411e42c0ad1ecc41d968315efb84779af8fe7ba9171af049414129436958b0\\manifest.json",
+          "sha256": "46411e42c0ad1ecc41d968315efb84779af8fe7ba9171af049414129436958b0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "40f0aedf4be042a8ac83b66ae93a349678bb2f80155efae28439a4e39acfd9d4",
+          "id": "launcher-result-getters-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3f8118b4688b679528c77c35cb99554ffd531381eedece56d467f233d99796f7\\manifest.json",
+          "sha256": "3f8118b4688b679528c77c35cb99554ffd531381eedece56d467f233d99796f7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d3032f7eb95e29a083b95ef35e521ab05733092d72adb1fdbac9cc86520bf3cf",
+          "id": "launcher-dispatch-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\29d780fbe9acde3082e92bd072448be94881cf973688d0207e1ce1f306b8ec49\\manifest.json",
+          "sha256": "29d780fbe9acde3082e92bd072448be94881cf973688d0207e1ce1f306b8ec49",
+          "state": "passed"
+        },
+        {
+          "cache_key": "4beb618940ee3e5400d260fdef7f914f6fca3394215249ad47166428b3e604d4",
+          "id": "launcher-response-callbacks-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c020f4eb438b12e866af43cdffa296e4d0b1be71be87da1a7821e5ceeaf0ee9e\\manifest.json",
+          "sha256": "c020f4eb438b12e866af43cdffa296e4d0b1be71be87da1a7821e5ceeaf0ee9e",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole token/sign-in response callbacks→actual dispatch/temporary cleanup прошли74 synthetic cases плюс16 dispatcher cases. Native lifecycle/HTTP200..206/errorCode precedence/resultData branching и constructor category/stage/code проверены; new result сохраняет queued refcount1. Sign-in success передаёт original response даже без resultData; token callback может передать empty FString. Строгая portable parser policy не ослаблена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-RESPONSE-CALLBACKS-11318.md",
+          "sha256": "7df93ee8a6dadef3b6472804db0cf0b19482f16d92c20de58e6176e2f7ca2ada"
+        }
+      ],
+      "id": "2e51f4331522c7a241eb48a4d590590c4268aabfa5d5e979bf063460820803a5",
+      "limits": [
+        "HTTP predicates/body/status, JSON parse/has/getters, numeric conversion, result constructors и SDK mutations — fixtures.",
+        "_wtoi import identity проверен по PE, actual CRT не исполняется; conversion inputs0/7 synthetic.",
+        "Token string empty; sign-in nested object без identity fields. HTTP input shared control=null, delegates empty, allocator successful, diagnostics disabled.",
+        "Queue consumer/destructors/actual SDK identity/token freshness/engine writers не выполнены; network_used=false, profile_activation=false, compatibility=not_established."
+      ],
+      "method": "bounded_native",
+      "next_check": "Связать checked native getters/storage с callbacks и настоящими полями SDK context; затем engine writer и bounded profile1.13.18.",
+      "question": "launcher-contract-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Actual JSON/getter composition с nonempty identity/token/credential и SDK state, engine serialization и callback delivery перед новым runtime profile."
     }
   ],
   "schema": 1,

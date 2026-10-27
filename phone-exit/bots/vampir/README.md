@@ -1,3 +1,9 @@
+Для 1.13.18 response callbacks теперь проверены вместе с передачей результата
+и очисткой: 74 сценария HTTP/errorCode/resultData/lifecycle прошли. Поля JSON
+и SDK context пока заданы тестом; успешный callback ещё не доказывает вход.
+Профиль не включён, строгая проверка непустого токена сохранена.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-RESPONSE-CALLBACKS-11318.md).
+
 Для launcher 1.13.18 проверена передача результата в очередь и очистка
 временной ссылки: 16 native сценариев сохраняют одну ссылку очереди после
 возврата dispatcher. Реальная доставка callback и разбор ответа ещё не проверены;

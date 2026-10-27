@@ -436,12 +436,13 @@
       ],
       "tools": [
         "audit-release-launcher-contract.py",
-        "replay-launcher-dispatch-11318.py"
+        "replay-launcher-dispatch-11318.py",
+        "launcher-response-cases-11318.py"
       ],
       "required_checks": [
         "release-launcher-contract"
       ],
-      "rule": "Check initializers, body keys, launcherToken header, URL suffixes and both response gates. Для dispatch проверять whole roots/capture offsets/callback pointers и native temporary cleanup; queued strong reference не считать доставленным callback. E9 cleanup требует явного free target в collect.",
+      "rule": "Check initializers, body keys, launcherToken header, URL suffixes and both response gates. Для dispatch проверять whole roots/capture offsets/callback pointers и native temporary cleanup; queued strong reference не считать доставленным callback. E9 cleanup требует явного free target в collect. Для whole response проверить lifecycle, HTTP границы200/206, errorCode precedence и original sign-in response; empty token/resultData не считать успешной авторизацией.",
       "automation": {
         "discovery": "explicit_response_direct_callees",
         "validation": "bounded_native_for_reviewed_source",
@@ -455,26 +456,44 @@
                 "address": "0x1444e57f0",
                 "scope": "Whole dispatchers/native temporary cleanup,16 synthetic empty-delegate cases. Allocator/delegate-copy/queue fixtures; actual capture/refcounts verified. Engine callback delivery/nonempty delegates/response/SDK context требуют проверки.",
                 "required_checks": [
-                  "launcher-dispatch-11318"
+                  "launcher-dispatch-11318",
+                  "launcher-response-callbacks-11318"
                 ]
               },
               {
                 "address": "0x1444e6ac0",
                 "scope": "Whole dispatchers/native temporary cleanup,16 synthetic empty-delegate cases. Allocator/delegate-copy/queue fixtures; actual capture/refcounts verified. Engine callback delivery/nonempty delegates/response/SDK context требуют проверки.",
                 "required_checks": [
-                  "launcher-dispatch-11318"
+                  "launcher-dispatch-11318",
+                  "launcher-response-callbacks-11318"
                 ]
               },
               {
                 "address": "0x1444c59f0",
                 "scope": "Whole dispatchers/native temporary cleanup,16 synthetic empty-delegate cases. Allocator/delegate-copy/queue fixtures; actual capture/refcounts verified. Engine callback delivery/nonempty delegates/response/SDK context требуют проверки.",
                 "required_checks": [
-                  "launcher-dispatch-11318"
+                  "launcher-dispatch-11318",
+                  "launcher-response-callbacks-11318"
+                ]
+              },
+              {
+                "address": "0x1444cc4b0",
+                "scope": "Whole response→native dispatch/cleanup,74 synthetic cases. HTTP/JSON/getters/conversion/constructors/SDK state fixtures. Native lifecycle/status/error precedence/result handoff проверены; actual identity/token context и live auth требуют проверки.",
+                "required_checks": [
+                  "launcher-response-callbacks-11318"
+                ]
+              },
+              {
+                "address": "0x1444d3a30",
+                "scope": "Whole response→native dispatch/cleanup,74 synthetic cases. HTTP/JSON/getters/conversion/constructors/SDK state fixtures. Native lifecycle/status/error precedence/result handoff проверены; actual identity/token context и live auth требуют проверки.",
+                "required_checks": [
+                  "launcher-response-callbacks-11318"
                 ]
               }
             ],
             "evidence": [
-              "evidence/updates/HEADLESS-LAUNCHER-DISPATCH-11318.md"
+              "evidence/updates/HEADLESS-LAUNCHER-DISPATCH-11318.md",
+              "evidence/updates/HEADLESS-LAUNCHER-RESPONSE-CALLBACKS-11318.md"
             ]
           }
         ]

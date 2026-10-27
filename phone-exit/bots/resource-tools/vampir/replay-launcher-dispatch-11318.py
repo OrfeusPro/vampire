@@ -12,11 +12,15 @@ def load(name):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 
-def run():
+def run(with_responses=False):
+    exports={'run-fcd0aa6ac1ac':'b84631a01e8c4b0cd4a961bd943315d763096114daba4582eca82e4c96426fa3',
+             'run-d9172c33c6b8':'ac9cff086151c3c3025feb7b738d02dd6aabb5c47feea45a1744bc7b913a4cfe'}
+    functions={0x1444e57f0,0x1444e6ac0,0x1444c59f0}
+    if with_responses:
+        exports['run-e3abc26162e7']='0c9394ae43e34f37e6bf092b6788883dee745525de939b4f67c2544703c24d42'
+        functions.update({0x1444cc4b0,0x1444d3a30})
     h=load('native-request-harness-11316').make_harness(
-        {'run-fcd0aa6ac1ac':'b84631a01e8c4b0cd4a961bd943315d763096114daba4582eca82e4c96426fa3',
-         'run-d9172c33c6b8':'ac9cff086151c3c3025feb7b738d02dd6aabb5c47feea45a1744bc7b913a4cfe'},
-        {0x1444e57f0,0x1444e6ac0,0x1444c59f0},source_sha256=SHA,copy_thunk=None)
+        exports,functions,source_sha256=SHA,copy_thunk=None)
     native=load('build-native-entry-code');shapes=load('audit-launcher-shape-11318')
     coverage={f['address']:len(shapes.normalize_function(native,h.image,f)['shape']) for f in h.fragments}
     uc,x,b=h.uc,h.x,h.scratch
@@ -83,15 +87,19 @@ def run():
                 if refs:put(control+8,queued_refs-1,4)
                 cases.append(dict(route=route,has_result=has_result,initial_refs=refs,
                     queued_refs=queued_refs,released_refs=get(control+8,4),events=events.copy()))
+    responses=load('launcher-response-cases-11318').run_cases(
+        h,owner,result,control,payload,state,events) if with_responses else None
     audit=load('audit-client-release')
     report=dict(source_sha256=SHA,tool_sha256=audit.sha256(Path(__file__)),exports=h.evidence,
-        coverage=coverage,cases=cases,native_execution=True,network_used=False,profile_activation=False,
+        coverage=coverage,cases=cases,responses=responses,native_execution=True,network_used=False,profile_activation=False,
         compatibility='not_established',limits=[
             'Whole dispatcher roots, temporary cleanup and native reference increments/decrement execute; saved delegates are empty and diagnostics disabled.',
             'Delegate copy, allocator and queue ownership transfer are explicit fixtures.',
-            'Queue callback/consumer, nonempty delegates, destruction, response callbacks, JSON/HTTP and active SDK context are not executed.',
+            ('Whole response callbacks execute with synthetic HTTP/JSON/getter/result/SDK boundaries; queue consumer/nonempty delegate/real SDK remain unverified.' if with_responses
+             else 'Queue callback/consumer, nonempty delegates, destruction, response callbacks, JSON/HTTP and active SDK context are not executed.'),
             'Fixture queue release is test-owned, not proof of engine callback delivery or lifetime completion.'])
-    return audit.save_snapshot(h.root/'code-clues/launcher-dispatch-11318',report),report
+    topic='launcher-response-callbacks-11318' if with_responses else 'launcher-dispatch-11318'
+    return audit.save_snapshot(h.root/'code-clues'/topic,report),report
 
 
 if __name__=='__main__':
