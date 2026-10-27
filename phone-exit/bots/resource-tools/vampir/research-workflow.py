@@ -69,7 +69,7 @@ def registry(index, knowledge):
 # code review; a native check cannot obtain version independence by a JSON flag.
 TOOLING_CHECKS = {
     'update-contract-registry': 'test_vampir_update_contracts.py',
-    'update-binding-closure': 'test_vampir_update_bindings.py',
+    'update-binding-closure': 'test_vampir_function_reuse.py',
     'update-run-offline': 'test_vampir_update_run.py',
     'tooling-check-scope': 'test_vampir_tooling_check_scope.py',
     'knowledge-index-incremental': 'test_vampir_knowledge_index.py',

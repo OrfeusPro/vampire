@@ -1185,7 +1185,8 @@
     {
       "id": "update-contract-registry",
       "questions": [
-        "release-update-target-discovery"
+        "release-update-target-discovery",
+        "release-function-reuse"
       ],
       "source_sha256": [],
       "offline_reviewed": true,
@@ -1202,20 +1203,35 @@
     {
       "id": "update-binding-closure",
       "questions": [
-        "release-update-target-discovery"
+        "release-update-target-discovery",
+        "release-function-reuse"
       ],
       "source_sha256": [],
       "offline_reviewed": true,
       "on_update": true,
-      "test_pattern": "test_vampir_update_bindings.py",
-      "timeout_seconds": 180,
+      "test_pattern": "test_vampir_function_reuse.py",
+      "timeout_seconds": 240,
       "dependencies": [
-        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
         "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/update-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-function-reuse.py",
+        "phone-exit/bots/test_vampir_function_reuse.py",
+        "phone-exit/bots/test_vampir_update_bindings.py",
+        "phone-exit/bots/test_vampir_update_closed_shape.py",
         "phone-exit/bots/test_vampir_update_contracts.py",
-        "phone-exit/bots/test_vampir_update_targets.py"
+        "phone-exit/bots/test_vampir_update_targets.py",
+        "phone-exit/bots/resource-tools/vampir/function-reuse-plan.py",
+        "phone-exit/bots/resource-tools/vampir/update-run.py",
+        "phone-exit/bots/resource-tools/vampir/update-profile.py",
+        "phone-exit/bots/test_vampir_function_reuse_plan.py",
+        "phone-exit/bots/test_vampir_update_function_reuse_exports.py",
+        "phone-exit/bots/test_vampir_update_run.py",
+        "phone-exit/bots/test_vampir_research_update.py",
+        "phone-exit/bots/test_vampir_knowledge_index.py"
       ],
       "runtime_distributions": [
         "capstone"
@@ -1229,7 +1245,8 @@
         "unicorn"
       ],
       "questions": [
-        "release-update-target-discovery"
+        "release-update-target-discovery",
+        "release-function-reuse"
       ],
       "source_sha256": [],
       "offline_reviewed": true,
@@ -9332,7 +9349,8 @@
     {
       "id": "tooling-check-scope",
       "questions": [
-        "release-update-target-discovery"
+        "release-update-target-discovery",
+        "release-function-reuse"
       ],
       "source_sha256": [],
       "source_scope": "tooling",

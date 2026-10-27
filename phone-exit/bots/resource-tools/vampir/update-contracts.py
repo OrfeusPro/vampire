@@ -4,7 +4,7 @@ import re
 
 SHA = re.compile(r'[0-9a-f]{64}')
 ID = re.compile(r'[a-z][a-z0-9_-]*')
-METHODS = {'anchor', 'prefix', 'direct_call', 'vtable', 'reviewed'}
+METHODS = {'anchor', 'prefix', 'direct_call', 'vtable', 'reviewed', 'closed_shape'}
 
 
 def load(index, knowledge):
@@ -43,10 +43,31 @@ def load(index, knowledge):
         for recipe in c['recipes']:
             if recipe.get('method') not in METHODS or not ID.fullmatch(recipe.get('key', '')):
                 raise ValueError('Unknown binding recipe')
+            if recipe['method'] == 'closed_shape':
+                if (not isinstance(recipe.get('baseline_sha256'),str) or not SHA.fullmatch(recipe['baseline_sha256'])
+                        or index.address(recipe.get('baseline_address'))!=recipe['baseline_address']
+                        or type(recipe.get('search_window')) is not int or not 0<=recipe['search_window']<=0x100000):
+                    raise ValueError('Invalid closed-shape baseline or search budget')
+                if c['bindings'].get(recipe['baseline_sha256'],{}).get(recipe['key'])!=recipe['baseline_address']:
+                    raise ValueError('Closed-shape baseline needs an explicit reviewed binding')
+                calls,data_refs=recipe.get('calls',{}),recipe.get('data',{})
+                if (type(calls) is not dict or type(data_refs) is not dict or len(calls)>1024 or len(data_refs)>1024
+                        or any(not isinstance(offset,str) or not offset.isascii() or not offset.isdecimal()
+                               or str(int(offset))!=offset or int(offset)>65535 for offset in (*calls,*data_refs))
+                        or any(not isinstance(key,str) or not ID.fullmatch(key) for key in calls.values())):
+                    raise ValueError('Invalid closed-shape dependency declarations')
+                for spec in data_refs.values():
+                    if (type(spec) is not dict or set(spec)!={'size','sha256'} or type(spec['size']) is not int
+                            or not 1<=spec['size']<=4096 or not isinstance(spec['sha256'],str)
+                            or not SHA.fullmatch(spec['sha256'])):
+                        raise ValueError('Invalid closed-shape data dependency')
             if recipe['method'] == 'anchor' and recipe.get('anchor') not in anchors:
                 raise ValueError('Unknown anchor reference')
         keys = [r['key'] for r in c['recipes']]
         if len(keys) != len(set(keys)): raise ValueError('Duplicate binding key')
+        for recipe in c['recipes']:
+            if recipe['method']=='closed_shape' and set(recipe.get('calls',{}).values())-set(keys):
+                raise ValueError('Unknown closed-shape callee binding')
         for sha, bindings in c['bindings'].items():
             if not SHA.fullmatch(sha): raise ValueError('Contract needs full source SHA')
             if any(k not in keys or index.address(v) != v for k, v in bindings.items()):

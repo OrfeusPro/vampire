@@ -301,6 +301,15 @@
         {
           "key": "result-handler",
           "method": "reviewed"
+        },
+        {
+          "key": "utf8-length",
+          "method": "closed_shape",
+          "baseline_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+          "baseline_address": "0x14144c550",
+          "search_window": 65536,
+          "calls": {},
+          "data": {}
         }
       ],
       "bindings": {
@@ -350,7 +359,8 @@
           "combiner-append": "0x141429e10",
           "combiner-grow": "0x141438050",
           "result-reader": "0x1456dc9c0",
-          "result-handler": "0x14679d680"
+          "result-handler": "0x14679d680",
+          "utf8-length": "0x14144c550"
         }
       },
       "resources": [

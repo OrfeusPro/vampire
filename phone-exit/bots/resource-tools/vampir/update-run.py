@@ -1,5 +1,6 @@
 """Resumable offline update journal. No login, active-profile or baseline writes."""
 import hashlib
+import copy
 import ast
 import fnmatch
 import importlib.metadata
@@ -46,7 +47,7 @@ def execution_inputs(index):
     groups={name:{**common,**group(seeds)} for name,seeds in {
         'resources':['recover-release-game-config.py','index-release-archives.py','compare-release-assets.py','extract-release-tables.py'],
         'discovery':['locate-release-update-targets.py'],
-        'bindings':['update-bindings.py','update-contracts.py'],
+        'bindings':['update-bindings.py','update-contracts.py','function-reuse-plan.py'],
         'contracts':['update-contracts.py'],
         'context':['verify-version-login-context.py','verify-packet-writer-context.py','update-native-harness.py'],
         'profile':['update-profile.py']}.items()}
@@ -329,10 +330,24 @@ def run_locked(index, args, database, *, audited=None):
                 dict(source=sha, plan_sha256=index.digest(plan), tools=tools['discovery']),
                 lambda plan=plan:update.execute_adapter(index,args,'locate-release-update-targets.py',
                     ['--root',args.root,'--source-sha256',sha,'--targets',plan])))
+        # Function-only reuse is independent of whole-contract readiness. It
+        # never adds a source SHA to semantic checks or activates a profile.
+        function_reuse=dict(state='skipped',reason='No declared native contexts',
+            summary=dict(verified=0,requires_review=0),runtime_activated=False,profile_activated=False)
+        if (args.knowledge/'native-contexts').is_dir():
+            reuse_tool=index.extension('function-reuse-plan')
+            reuse_inputs=reuse_tool.inputs(args.root,args.knowledge)
+            if reuse_inputs.get('present'):
+                function_reuse=journal.stage('function-reuse',
+                    dict(source=sha,catalog=reuse_inputs,tools=tools['bindings']),
+                    lambda:reuse_tool.run(index,args,sha))
+        record['function_reuse']=function_reuse
+        save(workflow,path,record)
         binding_tool = index.extension('update-bindings')
         contexts = journal.stage('bindings', dict(source=sha, contracts=contracts, discoveries=discoveries,
             tools=tools['bindings']),
             lambda:binding_tool.resolve(index, args, contracts, sha, discoveries))
+        contexts=apply_function_reuse(index,args.root,contracts,contexts,sha,function_reuse)
         started=time.perf_counter()
         indexed=index.build(args.root,database,knowledge=args.knowledge)
         record['stages']['index-before-exports']=dict(state='completed',inputs=dict(source=sha),
@@ -395,7 +410,8 @@ def run_locked(index, args, database, *, audited=None):
             missing = [d for d in c['depends_on'] if outcomes[d]['state'] != 'passed']
             reasons = contexts['contracts'][name]['queue'][:]
             for export in exports:
-                if export.get('address') in context['bindings']['bindings'].values() and export['state'] != 'ready':
+                if (export.get('address') in context['bindings']['bindings'].values()
+                        and not export_satisfies(index,args.root,sha,name,context['bindings'],export)):
                     reasons.append('Export is not ready: '+export['address'])
             if missing: reasons.append('Dependencies incomplete: '+', '.join(missing))
             if c['coverage'] != 'source_checks': reasons.append('Contract coverage is partial')
@@ -447,7 +463,8 @@ def run_locked(index, args, database, *, audited=None):
         save(workflow,path,record)
         return dict(run=str(path), state=record['state'], source_sha256=sha, queue=len(queue),
             capabilities=capabilities, profiles=profiles, reused_stages=journal.reused,
-            baseline_promoted=False, profile_activation=False)
+            baseline_promoted=False, profile_activation=False,
+            function_reuse=function_reuse.get('summary',{}))
     except BaseException as error:
         if path is not None and path.is_file():
             try:
@@ -458,12 +475,153 @@ def run_locked(index, args, database, *, audited=None):
         raise
 
 
+def function_equivalences(contexts, sha):
+    """Only every occurrence of an address may authorize skipping its export.
+
+    The binding resolver owns instruction/data/callee verification. This adapter
+    requires its complete, source-bound result rather than a candidate address.
+    """
+    occurrences = {}
+    if contexts.get('source_sha256',sha) != sha:
+        raise ValueError('Function equivalence source differs')
+    for contract, context in contexts['contracts'].items():
+        for key, address in context['bindings'].items():
+            proof = context.get('verification',{}).get(key,{})
+            if not isinstance(proof,dict):proof={}
+            shape = context.get('closed_shapes',{}).get(key)
+            verified = (proof.get('state') in ('unchanged','moved_verified')
+                and proof.get('address') == address
+                and isinstance(shape,str) and re.fullmatch('[0-9a-f]{64}',shape)
+                and proof.get('closed_shape_sha256') == shape
+                and proof.get('scope') == 'declared_instruction_callee_data_closure'
+                and proof.get('runtime_activated') is False
+                and isinstance(proof.get('baseline_sha256'),str)
+                and re.fullmatch('[0-9a-f]{64}',proof['baseline_sha256'])
+                and isinstance(proof.get('baseline_address'),str)
+                and re.fullmatch('0x[0-9a-f]+',proof['baseline_address'])
+                and isinstance(address,str) and re.fullmatch('0x[0-9a-f]+',address)
+                and (proof['state']=='unchanged') == (address==proof.get('baseline_address')))
+            occurrences.setdefault(address,[]).append(dict(contract=contract,key=key,
+                proof=proof if verified else None))
+    return {address:rows for address,rows in occurrences.items()
+        if rows and all(row['proof'] is not None for row in rows)}
+
+
+def apply_function_reuse(index, root, model, contexts, sha, result):
+    """Attach exact baseline-address proofs to missing reviewed bindings only."""
+    if result.get('state')=='skipped' or not result.get('report'):return contexts
+    path=Path(result['report']).resolve()
+    if (not path.is_relative_to((root/'knowledge/function-reuse-catalog').resolve()) or path.name!='manifest.json'
+            or index.digest(path)!=result.get('sha256') or path.parent.name!=result['sha256']):
+        raise ValueError('Function catalog receipt changed')
+    report=index.read_json(path)
+    if (report.get('target_sha256')!=sha or report.get('identity',{}).get('target_sha256')!=sha
+            or report.get('scope')!='function_only'
+            or report.get('runtime_activated') is not False or report.get('profile_activated') is not False):
+        raise ValueError('Function catalog source or scope changed')
+    tools=report['identity'].get('tools',{})
+    required={'function-reuse-plan.py','update-bindings.py','build-native-entry-code.py',
+        'extract-native-enums.py','research-workflow.py','update-contracts.py'}
+    if set(tools)!=required or any(index.digest(index.HERE/name)!=tools[name] for name in required):
+        raise ValueError('Function catalog tools changed')
+    sources=report['identity'].get('sources',{})
+    if any(identity!=actual or not re.fullmatch('[0-9a-f]{64}',identity) for identity,actual in sources.items()):
+        raise ValueError('Function catalog source identities changed')
+    declared={item['id']:item for item in report['contracts']}
+    candidates={}
+    for batch in report['verification']:
+        batch_id=batch['id']
+        if batch_id not in declared:raise ValueError('Function catalog batch not declared')
+        valid=function_equivalences(dict(source_sha256=sha,contracts={batch_id:batch}),sha)
+        for address,rows in valid.items():
+            for row in rows:
+                proof=row['proof'];baseline=proof['baseline_sha256'];before=proof['baseline_address']
+                if (baseline not in sources
+                        or declared[batch_id].get('bindings',{}).get(baseline,{}).get(row['key'])!=before):
+                    raise ValueError('Function catalog baseline binding changed')
+                candidates.setdefault((baseline,before),[]).append(proof)
+    revised=copy.deepcopy(contexts)
+    versions=index.extension('function-reuse-plan').SOURCES
+    ordered=[source for version,source in sorted(versions.items(),key=lambda item:int(item[0]),reverse=True)]
+    for contract in model['contracts']:
+        selected=revised['contracts'][contract['id']]
+        for recipe in contract['recipes']:
+            key=recipe['key']
+            if recipe['method']!='reviewed' or key in selected['bindings']:continue
+            matches=[]
+            applicable=[source for source in ordered if key in contract['bindings'].get(source,{})]
+            # A newer declaration blocks an older role even when its proof is
+            # still missing. Unknown multi-baseline histories stay unresolved.
+            baselines=applicable[:1] if applicable else (list(contract['bindings']) if len(contract['bindings'])==1 else [])
+            for baseline in baselines:
+                bindings=contract['bindings'][baseline]
+                before=bindings.get(key)
+                matches.extend(candidates.get((baseline,before),[]))
+            if not matches:continue
+            addresses={proof['address'] for proof in matches}
+            if len(addresses)!=1:continue
+            # Same baseline proof can be shared by several aliases; selection is
+            # by source/address, never by analytical role name or closest offset.
+            proof=copy.deepcopy(sorted(matches,key=lambda item:(item['baseline_sha256'],item['baseline_address']))[0])
+            proof['function_reuse_receipt']=dict(path=str(path),sha256=result['sha256'])
+            selected['bindings'][key]=proof['address']
+            selected.setdefault('closed_shapes',{})[key]=proof['closed_shape_sha256']
+            selected.setdefault('verification',{})[key]=proof
+            selected['queue']=[reason for reason in selected['queue']
+                if reason!=key+': missing or ambiguous reviewed candidate']
+    return revised
+
+
+def export_satisfies(index, root, sha, contract, context, export):
+    """Code equivalence is usable evidence, never a native export or semantic check."""
+    if export.get('state') == 'ready':return True
+    if export.get('state') != 'equivalent':return False
+    try:
+        path=Path(export['report']).resolve()
+        if (not path.is_relative_to((root/'knowledge/function-equivalence-results').resolve())
+                or path.name!='manifest.json' or index.digest(path)!=export['sha256']
+                or path.parent.name!=export['sha256']):return False
+        receipt=index.read_json(path)
+        expected=function_equivalences(dict(source_sha256=sha,contracts={contract:context}),sha)
+        address=export['address']
+        wanted=expected.get(address,[])
+        actual=[row for row in receipt['bindings'] if row.get('contract')==contract]
+        return (receipt.get('source_sha256')==sha and receipt.get('address')==address
+            and receipt.get('scope')=='function_only' and receipt.get('runtime_activated') is False
+            and receipt.get('semantic_checks_bypassed') is False and bool(wanted) and actual==wanted
+            and {sha}|{row['proof']['baseline_sha256'] for row in wanted} <= set(receipt['source_identities'])
+            and receipt.get('tools')=={name:index.digest(index.HERE/name) for name in
+                ('update-bindings.py','build-native-entry-code.py','extract-native-enums.py')})
+    except (KeyError,ValueError,OSError,TypeError):return False
+
+
 def collect_batches(index, workflow, journal, args, database, contexts, sha):
     addresses = sorted({at for c in contexts['contracts'].values() for at in c['bindings'].values()}, key=lambda a:int(a,16))
     source = args.root/'client-code-snapshots'/sha/'ProjectRED-Win64-Shipping.exe'
     results = []
+    equivalent=function_equivalences(contexts,sha)
+    receipts={}
+    if equivalent:
+        tools={name:index.digest(index.HERE/name) for name in
+            ('update-bindings.py','build-native-entry-code.py','extract-native-enums.py')}
+        # Both snapshots are checked in full; a receipt never trusts file metadata.
+        identities={sha}|{row['proof']['baseline_sha256'] for rows in equivalent.values() for row in rows}
+        for identity in identities:
+            selected=args.root/'client-code-snapshots'/identity/'ProjectRED-Win64-Shipping.exe'
+            if index.digest(selected)!=identity:raise ValueError('Function equivalence snapshot changed')
+        for address,proofs in equivalent.items():
+            binding_stage=getattr(journal,'run',{}).get('stages',{}).get('bindings',{})
+            receipt=dict(schema=1,source_sha256=sha,address=address,bindings=proofs,tools=tools,
+                binding_stage_key=binding_stage.get('key'),
+                resolver_inputs_sha256=fingerprint(workflow,binding_stage['inputs']) if binding_stage.get('inputs') else None,
+                resolver_tools=binding_stage.get('inputs',{}).get('tools'),
+                source_identities=sorted(identities),scope='function_only',runtime_activated=False,
+                semantic_checks_bypassed=False,
+                limits=['Declared instruction/callee/data closure only; source semantic checks remain required.'])
+            path=workflow.snapshot(args.root,'function-equivalence-results',receipt)
+            receipts[address]=dict(report=str(path),sha256=index.digest(path))
     db = index.open_index(database)
-    try: missing = [a for a in addresses if workflow.function_state(index,db,sha,a)['state'] != 'ready']
+    try: missing = [a for a in addresses if a not in equivalent and workflow.function_state(index,db,sha,a)['state'] != 'ready']
     finally: db.close()
     for start in range(0,len(missing),32):
         batch = missing[start:start+32]
@@ -482,6 +640,9 @@ def collect_batches(index, workflow, journal, args, database, contexts, sha):
     db = index.open_index(database)
     try:
         for at in addresses:
+            if at in receipts:
+                results.append(dict(address=at,state='equivalent',artifacts=[],**receipts[at]))
+                continue
             f = workflow.function_state(index,db,sha,at)
             results.append(dict(address=at,state=f['state'],artifacts=[dict(path=v['artifact'],sha256=index.digest(v['artifact']))
                 for v in f['variants'] if v['completed']]))
