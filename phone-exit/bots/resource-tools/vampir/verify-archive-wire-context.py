@@ -33,6 +33,7 @@ def verify(context, root):
     h = load('update-native-harness').make_harness(context, context['exports'], functions,
         leaves={int(k,16):v['bytes'] for k,v in leaves.items()}, root=root)
     native = load('build-native-entry-code')
+    writer_metadata = load('verify-string-writer-context').writer_metadata(context, h)
     rows = load('update-bindings').rows
     table_offset = h.image.offset(archive['table']-h.image.pe.base)
     table_bytes = h.raw[table_offset:table_offset+0xf8]
@@ -48,7 +49,13 @@ def verify(context, root):
     if [r['direct_target'] for r in ctor_rows if r['call']] != [archive['base-constructor']]:
         raise ValueError('Archive constructor callee differs')
     # All archive calls must remain in the reviewed slot/direct set. Overflow growth is rejected at execution.
-    allowed_calls = {'base-constructor':[0x144aad1b0], 'raw':[archive['growth'],int(context['helpers']['memcpy'],16),0x1445f11f0]}
+    helpers = context.get('archive_helpers')
+    if helpers is None:
+        if context['source_sha256'] != 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960':
+            raise ValueError('New source requires explicit archive helpers')
+        helpers = dict(base_leaf='0x144aad1b0', set_count_leaf='0x1445f11f0')
+    allowed_calls = {'base-constructor':[int(helpers['base_leaf'],16)],
+        'raw':[archive['growth'],int(context['helpers']['memcpy'],16),int(helpers['set_count_leaf'],16)]}
     for name in ('base-constructor','raw','string','u8','u16','u32','u64','bool'):
         calls = [r for r in rows(native,h.image,archive[name]) if r['call']]
         if [r['direct_target'] for r in calls if r['direct_target'] is not None] != allowed_calls.get(name,[]):
@@ -112,7 +119,7 @@ def verify(context, root):
         h.finish()
 
     def security(machine):
-        off=h.image.offset(0x14b271780-h.image.pe.base)
+        off=h.image.offset(writer_metadata['cookie']-h.image.pe.base)
         if reg('RCX')!=int.from_bytes(h.raw[off:off+8],'little'):
             raise ValueError('Wire security cookie differs')
         h.finish(reg('RAX'))

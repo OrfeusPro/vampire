@@ -1041,6 +1041,38 @@
             "evidence": [
               "evidence/updates/HEADLESS-UTF8-11316.md"
             ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x14144c550",
+                "scope": "222 UTF-8/count/capacity/scalar cases; encoder explicit bounded leaf; no network.",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x1414465f0",
+                "scope": "222 UTF-8/count/capacity/scalar cases; encoder explicit bounded leaf; no network.",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              },
+              {
+                "address": "0x14143f320",
+                "scope": "222 UTF-8/count/capacity/scalar cases; encoder explicit bounded leaf; no network.",
+                "required_checks": [
+                  "native-utf8-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-utf8-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-WIRE-BATCH-11318.md"
+            ]
           }
         ]
       }
@@ -1074,6 +1106,24 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-STRING-WRITER-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x144aad610",
+                "scope": "228 whole string writer cases with native UTF-8; allocator/free/security/archive fixtures.",
+                "required_checks": [
+                  "native-string-writer-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-string-writer-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-WIRE-BATCH-11318.md"
             ]
           }
         ]
@@ -1164,6 +1214,94 @@
             ],
             "evidence": [
               "evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x144aac9b0",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacbc0",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacc10",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacc40",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacc70",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacd00",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacdc0",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aacdf0",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x144aaced0",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x1456e8750",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              },
+              {
+                "address": "0x1456e8c10",
+                "scope": "45 scalar/archive and 64 whole Version/Login wire cases; preallocated 16384-byte buffer, growth rejected; preparation/framing/result/live not verified.",
+                "required_checks": [
+                  "native-archive-wire-context"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-archive-wire-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-WIRE-BATCH-11318.md"
             ]
           }
         ]

@@ -9,6 +9,13 @@ CONTEXT = HERE/'knowledge/native-contexts/utf8-11316.json'
 
 
 class Utf8ContextTests(unittest.TestCase):
+    def test_current_11318_context(self):
+        context = json.loads((HERE/'knowledge/native-contexts/utf8-11318.json').read_text('utf-8'))
+        report = load('verify-utf8-context').verify(context, ROOT)
+        self.assertEqual((len(report['cases']), len(report['scalar_cases'])), (142, 80))
+        self.assertTrue(all(c['guards'] for c in report['cases']+report['scalar_cases']))
+        self.assertFalse(report['network_used']); self.assertFalse(report['profile_activated'])
+
     def context(self):
         return json.loads(CONTEXT.read_text('utf-8'))
 

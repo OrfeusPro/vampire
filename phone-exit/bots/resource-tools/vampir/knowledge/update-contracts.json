@@ -320,6 +320,10 @@
           "combiner-grow": "0x141438050",
           "result-reader": "0x1456dc5e0",
           "result-handler": "0x14679d1b0"
+        },
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "writer": "0x1456e8c10",
+          "string-writer": "0x144aad610"
         }
       },
       "resources": [
@@ -507,6 +511,10 @@
           "string-writer": "0x144aad310",
           "result-constructor": "0x1456d7690",
           "result-reader": "0x1456dc140"
+        },
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "writer": "0x1456e8750",
+          "string-writer": "0x144aad610"
         }
       },
       "resources": [],

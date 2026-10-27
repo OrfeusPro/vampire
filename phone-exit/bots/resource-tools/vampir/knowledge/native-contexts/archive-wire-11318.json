@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f60d9"
+  },
+  "bindings": {
+    "length": "0x14144c550",
+    "convert": "0x1414465f0",
+    "encoder": "0x14143f320",
+    "string-writer": "0x144aad610"
+  },
+  "exports": {
+    "run-c95a2683d479": "2f85577e334153842614e86fb10d9de508459a072da2d507ffb5af9c32e63b41"
+  },
+  "encoder_leaf": {
+    "bytes": "448bc9418b0885c90f842c0100004181f9000011000f830a010000418d810200ffff83f8010f86fa000000418bc12500f8ffff3d00d800000f84e70000004181f9800000000f82e00000004181f900080000733283f9020f8cdd000000488b02418bc9c1e9064180e13f80c9c04180c980880848ff02488b02448808b00148ff02418300fec34181f900000100734483f9030f8ca2000000488b02418bc9c1e90c80c9e08808418bc148ff024180e13f488b0a4180c980c1e806243f0c80880148ff02488b02448808b00148ff02418300fdc383f9047c62488b02418bc9c1e91280c9f08808418bc148ff02488b0ac1e80c243f0c808801418bc148ff024180e13f488b0a4180c980c1e806243f0c80880148ff02488b02448808b00148ff02418300fcc341b93f000000488b02448808b00148ff0241ff08c332c0c3",
+    "sha256": "c2065e2ae7fdfa62eb40e8bddd54e549d155a4a8e59ba2473b5cce9dcbe5e403",
+    "size": 317
+  },
+  "fixtures": {
+    "utf8_allocate": "0x141436cc0",
+    "utf8_free": "0x141483080",
+    "cpp_allocate": "0x146908e50",
+    "cpp_free": "0x141431f80",
+    "security_check": "0x1487e9300",
+    "archive_slot": 40
+  },
+  "archive": {
+    "table": "0x149672120",
+    "constructor": "0x144aaced0",
+    "base-constructor": "0x144aac9b0",
+    "string": "0x144aacbc0",
+    "u8": "0x144aacc10",
+    "u16": "0x144aacc40",
+    "u32": "0x144aacc70",
+    "u64": "0x144aacdc0",
+    "bool": "0x144aacdf0",
+    "raw": "0x144aacd00",
+    "growth": "0x1445e4ea0"
+  },
+  "archive_leaves": {
+    "0x144aad4b0": {
+      "bytes": "488d05094ebc04c7410800000000488901488bc1c7410c01000000c6411001c3",
+      "sha256": "cbc0ebfc43096b1ae806d2017eef285e1bea2c88b53033b607163b50e10ab43d",
+      "size": 32
+    },
+    "0x1445f14f0": {
+      "bytes": "895108c3",
+      "sha256": "7aaa8d9f5fd794be56f764d70b58d2fc7484b4b030dcabff56897cadd4b76a21",
+      "size": 4
+    }
+  },
+  "archive_table_sha256": "9431c3758fe5aaac4ba624d80b68e47792ea7bf804374b2f1ef551629883ccaa",
+  "packets": {
+    "game-version": {
+      "writer": "0x1456e8c10",
+      "table": "0x149928508",
+      "fields": [
+        [
+          "string",
+          16
+        ],
+        [
+          "u32",
+          32
+        ],
+        [
+          "string",
+          40
+        ],
+        [
+          "string",
+          56
+        ],
+        [
+          "string",
+          72
+        ],
+        [
+          "string",
+          88
+        ],
+        [
+          "string",
+          104
+        ],
+        [
+          "string",
+          120
+        ],
+        [
+          "string",
+          136
+        ],
+        [
+          "u32",
+          152
+        ],
+        [
+          "string",
+          160
+        ],
+        [
+          "string",
+          176
+        ],
+        [
+          "u32",
+          192
+        ]
+      ],
+      "object_size": 208
+    },
+    "game-login": {
+      "writer": "0x1456e8750",
+      "table": "0x149927bd0",
+      "fields": [
+        [
+          "string",
+          16
+        ],
+        [
+          "string",
+          32
+        ],
+        [
+          "string",
+          48
+        ],
+        [
+          "string",
+          64
+        ],
+        [
+          "u32",
+          80
+        ],
+        [
+          "string",
+          88
+        ],
+        [
+          "string",
+          104
+        ],
+        [
+          "string",
+          120
+        ],
+        [
+          "string",
+          136
+        ],
+        [
+          "u8",
+          152
+        ],
+        [
+          "u8",
+          153
+        ],
+        [
+          "string",
+          160
+        ],
+        [
+          "u32",
+          176
+        ],
+        [
+          "string",
+          184
+        ],
+        [
+          "string",
+          200
+        ],
+        [
+          "string",
+          216
+        ],
+        [
+          "string",
+          232
+        ],
+        [
+          "u32",
+          248
+        ],
+        [
+          "string",
+          256
+        ],
+        [
+          "string",
+          272
+        ],
+        [
+          "u32",
+          288
+        ],
+        [
+          "u8",
+          292
+        ],
+        [
+          "u64",
+          296
+        ],
+        [
+          "bool",
+          304
+        ],
+        [
+          "bool",
+          305
+        ]
+      ],
+      "object_size": 320
+    }
+  },
+  "writer_metadata": {
+    "cookie": "0x14b273780",
+    "invalid_parameter_iat": "0x14899c018",
+    "exception_calls": [
+      "0x1421fb5e0",
+      "0x1418cbe20"
+    ],
+    "indirect": [
+      "qword ptr [rip + 0x3eee877]",
+      "qword ptr [rax + 0x28]",
+      "qword ptr [rip + 0x3eee7eb]"
+    ]
+  },
+  "archive_helpers": {
+    "base_leaf": "0x144aad4b0",
+    "set_count_leaf": "0x1445f14f0"
+  },
+  "verify_whole_exports": true
+}

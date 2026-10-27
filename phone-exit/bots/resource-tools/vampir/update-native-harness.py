@@ -210,6 +210,10 @@ def make_harness(context, exports, functions, leaves=None, root=None):
             h.fragments.append(function)
     if found != set(functions):
         raise ValueError('Requested function absent from supplied exports')
+    if context.get('verify_whole_exports'):
+        shapes = load('wire_source_shapes', HERE/'audit-launcher-shape-11318.py')
+        for function in h.fragments:
+            shapes.normalize_function(native, image, function)
     for address, expected in (leaves or {}).items():
         data = bytes.fromhex(expected)
         decoded = list(decoder.disasm(data,address))

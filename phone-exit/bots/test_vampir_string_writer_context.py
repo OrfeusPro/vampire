@@ -9,6 +9,20 @@ CONTEXT = HERE/'knowledge/native-contexts/string-writer-11316.json'
 
 
 class StringWriterContextTests(unittest.TestCase):
+    def test_current_11318_context_and_metadata(self):
+        context = json.loads((HERE/'knowledge/native-contexts/string-writer-11318.json').read_text('utf-8'))
+        tool = load('verify-string-writer-context')
+        report = tool.verify(context, ROOT)
+        self.assertEqual(len(report['cases']), 228)
+        self.assertTrue(all(c['guards'] for c in report['cases']))
+        self.assertFalse(report['network_used']); self.assertFalse(report['profile_activated'])
+        context['writer_metadata']['cookie'] = '0x14b273781'
+        with self.assertRaisesRegex(ValueError, 'cookie source link'):
+            tool.verify(context, ROOT)
+        del context['writer_metadata']
+        with self.assertRaisesRegex(ValueError, 'explicit writer metadata'):
+            tool.verify(context, ROOT)
+
     def context(self):
         return json.loads(CONTEXT.read_text('utf-8'))
 

@@ -13,14 +13,14 @@ from types import SimpleNamespace
 
 def execution_inputs(index):
     """Hash local tool dependencies without importing/executing their code."""
-    def group(seeds):
-        pending=[(index.HERE/name).resolve() for name in seeds]; found={}
-        while pending:
-            path=pending.pop()
-            if str(path) in found:continue
-            if len(found)>=256:raise ValueError('Tool dependency budget exceeded')
-            found[str(path)]=index.digest(path) if path.is_file() else None
-            if path.suffix!='.py' or not path.is_file():continue
+    # Shared dependencies belong to several groups. Parse each file once in
+    # this snapshot; the next execution_inputs call always reads fresh inputs.
+    scanned={}
+    def scan(path):
+        if path in scanned:return scanned[path]
+        digest=index.digest(path) if path.is_file() else None
+        children=[]
+        if path.suffix=='.py' and path.is_file():
             for node in ast.walk(ast.parse(path.read_text('utf-8-sig'))):
                 if not isinstance(node,ast.Constant) or not isinstance(node.value,str):continue
                 if len(node.value)>128 or not re.fullmatch(r'[A-Za-z0-9_./-]+',node.value):continue
@@ -28,7 +28,18 @@ def execution_inputs(index):
                     if not name.endswith('.py') or '\n' in name:continue
                     for parent in (index.HERE,index.HERE.parent):
                         child=(parent/name).resolve()
-                        if child.is_relative_to(index.HERE.parent.resolve()) and child.is_file():pending.append(child)
+                        if child.is_relative_to(index.HERE.parent.resolve()) and child.is_file():children.append(child)
+        scanned[path]=(digest,children)
+        return scanned[path]
+    def group(seeds):
+        pending=[(index.HERE/name).resolve() for name in seeds]; found={}
+        while pending:
+            path=pending.pop()
+            if str(path) in found:continue
+            if len(found)>=256:raise ValueError('Tool dependency budget exceeded')
+            digest,children=scan(path)
+            found[str(path)]=digest
+            pending.extend(children)
         return found
     common={str(index.HERE/name):index.digest(index.HERE/name) for name in
         ('update-run.py','research-update.py','research-workflow.py','knowledge-index.py','knowledge-context.py')}

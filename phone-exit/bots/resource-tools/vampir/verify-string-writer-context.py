@@ -10,6 +10,28 @@ from importlib.util import spec_from_file_location, module_from_spec
 HERE = Path(__file__).resolve().parent
 
 
+def writer_metadata(context, h):
+    metadata = context.get('writer_metadata')
+    if metadata is None:
+        if context['source_sha256'] != 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960':
+            raise ValueError('New source requires explicit writer metadata')
+        return dict(cookie=0x14b271780, exception_calls=[0x1421fb5e0, 0x1418cbe20],
+            indirect=['qword ptr [rip + 0x3eeeb77]', 'qword ptr [rax + 0x28]', 'qword ptr [rip + 0x3eeeaeb]'])
+    native = load('build-native-entry-code')
+    rows = load('update-bindings').rows(native, h.image, int(context['bindings']['string-writer'], 16))
+    cookie = int(metadata['cookie'], 16)
+    if cookie not in [ref for row in rows if not row['call'] for ref in row['rip_references']]:
+        raise ValueError('Writer cookie source link differs')
+    slots = [row['rip_references'][0] for row in rows if row['call'] and row['rip_references']]
+    if slots != [int(metadata['invalid_parameter_iat'], 16)]*2:
+        raise ValueError('Writer indirect import slots differ')
+    identity = load('build-object-zero-init-code').import_at(h.raw, h.image, slots[0])
+    if (identity['dll'].lower(), identity['name']) != ('api-ms-win-crt-runtime-l1-1-0.dll', '_invalid_parameter_noinfo_noreturn'):
+        raise ValueError('Writer indirect import identity differs')
+    return dict(cookie=cookie, exception_calls=[int(v, 16) for v in metadata['exception_calls']],
+        indirect=metadata['indirect'])
+
+
 def load(name):
     spec = spec_from_file_location(name.replace('-', '_'), HERE/(name+'.py'))
     module = module_from_spec(spec)
@@ -33,16 +55,17 @@ def verify(context, root):
     if fixture['archive_slot'] != 0x28:
         raise ValueError('Unreviewed archive slot')
     addresses = {k: int(v, 16) for k, v in fixture.items() if k != 'archive_slot'}
+    metadata = writer_metadata(context, h)
     calls = [r for r in rows(native, h.image, writer) if r['call']]
     direct = [r['direct_target'] for r in calls if r['direct_target'] is not None]
     expected = [length, addresses['utf8_allocate'], convert, int(context['helpers']['memcpy'], 16),
                 addresses['cpp_allocate'], addresses['cpp_allocate'], int(context['helpers']['memcpy'], 16),
                 addresses['utf8_free'], addresses['cpp_free'], addresses['security_check'],
-                0x1421fb5e0, 0x1418cbe20]
+                *metadata['exception_calls']]
     if direct != expected:
         raise ValueError('String writer direct calls differ')
     indirect = [r['operands'] for r in calls if r['direct_target'] is None]
-    if indirect != ['qword ptr [rip + 0x3eeeb77]', 'qword ptr [rax + 0x28]', 'qword ptr [rip + 0x3eeeaeb]']:
+    if indirect != metadata['indirect']:
         raise ValueError('String writer indirect calls differ')
     if [r['direct_target'] for r in rows(native, h.image, convert) if r['call']] != [encoder, encoder]:
         raise ValueError('Native UTF-8 converter link differs')
@@ -105,7 +128,7 @@ def verify(context, root):
         h.finish()
 
     def security(machine):
-        cookie_offset = h.image.offset(0x14b271780-h.image.pe.base)
+        cookie_offset = h.image.offset(metadata['cookie']-h.image.pe.base)
         cookie = int.from_bytes(h.raw[cookie_offset:cookie_offset+8], 'little')
         if registers('RCX')[0] != cookie:
             raise ValueError('Security cookie differs')

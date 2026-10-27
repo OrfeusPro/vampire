@@ -9,6 +9,29 @@ import test_vampir_research_update as fixture
 
 
 class UpdateRunTests(fixture.ResearchUpdateTests):
+    def test_shared_tool_dependencies_are_parsed_once_per_snapshot_and_revalidated(self):
+        folder=self.root/'tools';folder.mkdir()
+        seeds=('recover-release-game-config.py','index-release-archives.py','compare-release-assets.py',
+            'extract-release-tables.py','locate-release-update-targets.py','update-bindings.py',
+            'update-contracts.py','verify-version-login-context.py','verify-packet-writer-context.py',
+            'update-native-harness.py','update-profile.py')
+        common=('update-run.py','research-update.py','research-workflow.py','knowledge-index.py','knowledge-context.py')
+        for name in set(seeds+common):(folder/name).write_text("'shared-helper'",encoding='utf-8')
+        shared=folder/'shared-helper.py';shared.write_text("'unique_shared_marker'",encoding='utf-8')
+        api=SimpleNamespace(HERE=folder,digest=self.index.digest,
+            extension=lambda name:SimpleNamespace(runtime_inputs=lambda:{}))
+        original=self.engine.ast.parse
+        with patch.dict(self.engine.os.environ,{'PHONEEXIT_RF_RESOURCES':str(self.root/'rf')}), \
+             patch.object(self.engine.ast,'parse',wraps=original) as parser:
+            first=self.engine.execution_inputs(api)
+            self.assertEqual(sum(c.args[0]=="'unique_shared_marker'" for c in parser.call_args_list),1)
+            shared.write_text("'changed_shared_marker'",encoding='utf-8')
+            second=self.engine.execution_inputs(api)
+            self.assertEqual(sum(c.args[0]=="'changed_shared_marker'" for c in parser.call_args_list),1)
+        self.assertEqual(set(first),set(second))
+        for name in first:
+            self.assertNotEqual(first[name][str(shared.resolve())],second[name][str(shared.resolve())])
+
     # Reuse the synthetic installation factory, not its inherited test methods.
     def setUp(self):
         super().setUp()

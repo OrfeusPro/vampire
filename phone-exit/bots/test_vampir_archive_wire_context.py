@@ -13,6 +13,20 @@ CONTEXT=HERE/'knowledge/native-contexts/archive-wire-11316.json'
 
 
 class ArchiveWireContextTests(unittest.TestCase):
+    def test_current_11318_archive_and_packet_wires(self):
+        context = json.loads((HERE/'knowledge/native-contexts/archive-wire-11318.json').read_text('utf-8'))
+        tool = load('verify-archive-wire-context'); report = tool.verify(context, ROOT)
+        self.assertEqual((len(report['cases']), len(report['wire_cases'])), (45, 64))
+        self.assertFalse(report['network_used']); self.assertFalse(report['profile_activated'])
+        for case in report['wire_cases']:
+            self.assertTrue(case['guards'])
+            if case['packet'] == 'game-login':
+                body = bytes.fromhex(case['payload_hex'])
+                self.assertEqual(decode_login_payload(body, max_payload_size=16384).encode(max_payload_size=16384), body)
+        context['archive_helpers']['set_count_leaf'] = '0x1445f14f1'
+        with self.assertRaisesRegex(ValueError, 'direct call set'):
+            tool.verify(context, ROOT)
+
     def context(self):
         return json.loads(CONTEXT.read_text('utf-8'))
 

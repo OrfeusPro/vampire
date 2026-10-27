@@ -5030,7 +5030,8 @@
         "release-utf8-codec"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5049,11 +5050,15 @@
         "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/utf8-11316.json",
-        "phone-exit/bots/test_vampir_update_contracts.py"
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/utf8-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1a6b28373a53/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-dc93ae3f92b7/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-dc93ae3f92b7/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-c95a2683d479/details.json"
       ]
     },
     {
@@ -5062,7 +5067,8 @@
         "release-utf8-codec"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5082,11 +5088,15 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/string-writer-11316.json",
         "phone-exit/bots/test_vampir_update_contracts.py",
-        "phone-exit/bots/resource-tools/vampir/verify-string-writer-context.py"
+        "phone-exit/bots/resource-tools/vampir/verify-string-writer-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/string-writer-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1a6b28373a53/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-dc93ae3f92b7/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-dc93ae3f92b7/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-c95a2683d479/details.json"
       ]
     },
     {
@@ -5095,7 +5105,8 @@
         "release-utf8-codec"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "on_update": true,
@@ -5115,14 +5126,19 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/archive-wire-11316.json",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/verify-archive-wire-context.py",
-        "phone-exit/bots/vampir-shared/vampir_core/login_packet.py"
+        "phone-exit/bots/vampir-shared/vampir_core/login_packet.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/archive-wire-11318.json",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/verify-string-writer-context.py"
       ],
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-1a6b28373a53/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-dc93ae3f92b7/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-fab5fb09dcf1/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-0cc591b779fd/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6f00cf979ea3/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-6f00cf979ea3/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-c95a2683d479/details.json"
       ]
     },
     {

@@ -686,14 +686,15 @@
       "id": "release-utf8-codec",
       "status": "bounded_answer",
       "question": "Какие текущие native helpers преобразуют UTF-16 в UTF-8 и как обрабатывают повреждённые units и недостаточную ёмкость?",
-      "known": "На SHA d00a1977 целиком исполнены length 14144c550, converter 1414465f0 и bounded encoder leaf 14143f320..14143f45c. 142 строковых и 80 scalar случаев проверили UTF-8, replacement ?, ёмкость, указатели и canaries. Общий string writer 144aad310 статически вызывает length/converter; его export повторно использован. Полный string writer 144aad310 исполнен с native UTF-8 в 228 сценариях: inline/heap/aligned branches, первый NUL, count gate, archive return byte и cleanup. Allocator/free/security/archive остаются явными fixtures. Native archive constructors/string/u16/u32/u64/u8/bool/raw проверены в 45 случаях; 64 полных Version/Login тела исполнены с реальными packet/string/UTF-8/archive methods и совпали с независимым ожиданием. Выделенный buffer 16384 байта, growth запрещён; native bool input сохраняет raw byte.",
+      "known": "На SHA d00a1977 целиком исполнены length 14144c550, converter 1414465f0 и bounded encoder leaf 14143f320..14143f45c. 142 строковых и 80 scalar случаев проверили UTF-8, replacement ?, ёмкость, указатели и canaries. Общий string writer 144aad310 статически вызывает length/converter; его export повторно использован. Полный string writer 144aad310 исполнен с native UTF-8 в 228 сценариях: inline/heap/aligned branches, первый NUL, count gate, archive return byte и cleanup. Allocator/free/security/archive остаются явными fixtures. Native archive constructors/string/u16/u32/u64/u8/bool/raw проверены в 45 случаях; 64 полных Version/Login тела исполнены с реальными packet/string/UTF-8/archive methods и совпали с независимым ожиданием. Выделенный buffer 16384 байта, growth запрещён; native bool input сохраняет raw byte. Для SHA d3070828 (1.13.18) общий пакет перенесён вместе: 559 native сценариев (142+80 UTF-8, 228 string writer, 45 archive/scalar, 64 whole Version/Login wire). 12 тестов прошли; 14 roots экспортированы одним успешным collect после исключения неисполняемого growth body. Три checks включены в on_update для обоих контрактов, четыре writer/string-writer bindings внесены в граф. Metadata cookie/IAT/helpers и whole export coverage проверяются явно.",
       "unknown": "Полные preparation/result Version/Login, framing и последующая игровая сессия; реальный allocator/growth/failure и строки 65535 байт вне текущих fixtures.",
       "next_action": "Перенести полные preparation/result Version/Login, используя готовые packet/string/UTF-8/archive exports. Архивные тела без изменения входов не повторять.",
       "decision_rule": "Успех UTF-8 helpers не подтверждает archive encoding, игровой вход или новый SHA. Leaf не объявлять unwind root; проверять явные байты и замкнутые переходы.",
       "evidence": [
         "evidence/updates/HEADLESS-UTF8-11316.md",
         "evidence/updates/HEADLESS-STRING-WRITER-11316.md",
-        "evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md"
+        "evidence/updates/HEADLESS-ARCHIVE-WIRE-11316.md",
+        "evidence/updates/HEADLESS-WIRE-BATCH-11318.md"
       ],
       "do_not_repeat": "Не извлекать заново готовые exports string writer/length/converter для d00a1977 и не подменять доказанный UTF-8 результат повтором фиктивного helper. Новый анализ нужен для archive IO или изменившихся SHA/входов. Native archive exports и полные тела d00a1977 также уже проверены в явном preallocated scope.",
       "addresses": []

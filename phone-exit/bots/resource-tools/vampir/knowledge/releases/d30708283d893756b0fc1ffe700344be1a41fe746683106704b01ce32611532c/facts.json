@@ -824,6 +824,65 @@
       "question": "launcher-contract-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Global accessToken initializer, real JSON/storage/persistence, SDK/GMC2/NID profile и live compatibility."
+    },
+    {
+      "addresses": [
+        "0x1414465f0",
+        "0x14144c550",
+        "0x144aac9b0",
+        "0x144aacbc0",
+        "0x144aacc10",
+        "0x144aacc40",
+        "0x144aacc70",
+        "0x144aacd00",
+        "0x144aacdc0",
+        "0x144aacdf0",
+        "0x144aaced0",
+        "0x144aad610",
+        "0x1456e8750",
+        "0x1456e8c10"
+      ],
+      "checks": [
+        {
+          "cache_key": "bd17cd88643c051adea7b73cbfa65e8b698fc89a7c1bb61fd8ed9181860209c0",
+          "id": "native-utf8-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3feba064f9fbaf78b5ef89b4253e469a0ce1e338cb4ffb1e6b8c8a2aea78bd50\\manifest.json",
+          "sha256": "3feba064f9fbaf78b5ef89b4253e469a0ce1e338cb4ffb1e6b8c8a2aea78bd50",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6ee9387679c81b52b66ee1b3b6a3a822262cff37df4ac422f6b0720538f897f2",
+          "id": "native-string-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\32b83b64101a901b182103e171771e6dff33a612ea9fa199eb272e6336159cdd\\manifest.json",
+          "sha256": "32b83b64101a901b182103e171771e6dff33a612ea9fa199eb272e6336159cdd",
+          "state": "passed"
+        },
+        {
+          "cache_key": "eebdb0b82f7998de330099ea5ef75f66dfeeb103575be5d2482b217bbaccd3c9",
+          "id": "native-archive-wire-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25cb50e1680aa47bfd115800806cbcf26dacfc24591e1831e53cd7d3db6d2727\\manifest.json",
+          "sha256": "25cb50e1680aa47bfd115800806cbcf26dacfc24591e1831e53cd7d3db6d2727",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Общий wire пакет Version/Login 1.13.18 прошёл 559 native сценариев UTF-8/string/archive/whole packet bodies. Реальные calls, vtable slots и source metadata сверены; проверки подключены к обоим контрактам.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-WIRE-BATCH-11318.md",
+          "sha256": "794c69a50cf905833f5e630bbf729f87a07b6cbb19bb131e6049d1a98f7c89b2"
+        }
+      ],
+      "id": "c3e3e6363a125f5f48c28fb38bcfdfe06615794645b82f9dc63b330d3e0b668d",
+      "limits": [
+        "Preallocated 16384-byte buffer; growth rejected. Allocator/free/memcpy/security fixtures, без allocation failure.",
+        "Encoder и два archive leaf сверены по bytes/SHA с замкнутыми переходами; не считаются unwind roots.",
+        "Нет preparation/framing/result/SDK/auth/network/profile activation."
+      ],
+      "method": "bounded_native",
+      "next_check": "Продолжить пакет preparation/result с общим проверенным wire слоем; подготовить профиль только после его обязательных зависимостей.",
+      "question": "release-utf8-codec",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Полные preparation/result Version/Login, SDK/GMC2/NID, framing и живой вход."
     }
   ],
   "schema": 1,
