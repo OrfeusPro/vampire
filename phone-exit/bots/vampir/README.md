@@ -1,3 +1,9 @@
+Общий launcher transport 1.13.18 исполнен в четырёх offline случаях: POST,
+Content-Type/Accept, gameCode/buildCode, условные accessToken/authToken и body.
+Шесть header initializers привязаны к exact literals. HTTP/SDK — fixtures;
+JSON, ответы и live auth ещё не проверены, онлайн-сессия сохранена.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-COMMON-11318.md).
+
 Launcher transport wrappers 1.13.18 прошли шесть native случаев: передача
 аргументов и владение callback. Общий transport/serialization — fixtures,
 сеть не использовалась, профиль не включён; онлайн-сессия сохранена.

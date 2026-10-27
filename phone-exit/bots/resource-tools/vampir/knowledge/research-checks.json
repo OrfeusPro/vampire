@@ -7733,6 +7733,37 @@
       "artifact_dependencies": [
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-236277aa9d0b/details.json"
       ]
+    },
+    {
+      "id": "launcher-common-11318",
+      "questions": [
+        "launcher-contract-11318"
+      ],
+      "source_sha256": [
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+      ],
+      "offline_reviewed": true,
+      "on_update": false,
+      "test_pattern": "test_vampir_launcher_common_11318.py",
+      "timeout_seconds": 90,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_launcher_common_11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-launcher-common-11318.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-client-release.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-cea84c0140a4/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-89bc7497bac0/details.json"
+      ]
     }
   ]
 }
