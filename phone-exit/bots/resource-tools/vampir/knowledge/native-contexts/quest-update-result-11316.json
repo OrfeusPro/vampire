@@ -1,0 +1,25 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-ff6fe83514c3": "ea854198dbd979b08289f3e14d3a9e348524faf45f4e7f6bc06251144574a249",
+    "run-4c6885815290": "8c0b8a63f609eb9a88b38ec056833ed9bf2fde44619b1a1c0fd3b3a3606142c7",
+    "run-47f1d0c509ca": "637ed2b63b6e81eec72bb246c2cfb5e5a7e9ed4b5a88c632000f905798b542bf"
+  },
+  "functions": [
+    "0x145828b50",
+    "0x14582bce0",
+    "0x1458370b0",
+    "0x1457ab0a0",
+    "0x1457a6750"
+  ],
+  "leaves": {
+    "0x1457a2a90": "488d05a9601a04c641080048890133c04889411048894118488bc1c3",
+    "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+    "0x144aad570": "488b024c8bc2488bd1498bc848ff6010",
+    "0x1458344b0": "b813070000c3"
+  },
+  "limits": [
+    "Whole current outer/nested reader/writer and constructors with exact nested dispatch wrappers; primitive archive operations are explicit bounded fixtures, not real archive IO.",
+    "Wire structure only: u32 result, qword raw18, state byte clamped6, nested raw byte unchanged plus two qwords. Field meaning/correlation/receiver/server outcome not admitted. No network or live mutation."
+  ]
+}

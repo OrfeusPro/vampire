@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current PktQuestUpdateResult 1811 проверен целыми outer/nested readers/writers:
+30 байт <IQBBQQ>, outer byte clamp6, nested byte без clamp. 900 полных
+вариантов / 30 коротких / 12 primitive failures прошли с archive fixtures.
+Смысл raw key/progress и подтверждение действия ещё требуют receiver; далее
+registration/handler 1811. Сессию сохранять.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-UPDATE-RESULT-11316.md).
+
 Native update → pending consumer → producer проверены в 24 сценариях:
 kind1 создаёт packet 1810; busy сохраняет запись, missing actor/model может
 удалить её без send. Captured fields прошли portable codec/local socket.
