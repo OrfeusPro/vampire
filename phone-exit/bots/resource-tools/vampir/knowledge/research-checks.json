@@ -4527,10 +4527,12 @@
     {
       "id": "sdk-profile-assembly-11316",
       "questions": [
-        "sdk-profile-assembly"
+        "sdk-profile-assembly",
+        "sdk-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "runtime_distributions": [
@@ -4558,6 +4560,55 @@
         "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
         "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
         "phone-exit/bots/vampir-shared/vampir_core/gmc2_request.py"
+      ],
+      "on_update": true,
+      "source_variants": {
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "test_pattern": "test_vampir_sdk_profile_11318.py",
+          "dependencies": [
+            "phone-exit/bots/resource-tools/vampir/run-sdk-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/verify-sdk-batch-11318.py",
+            "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+            "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+            "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+            "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+            "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+            "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+            "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+            "phone-exit/bots/resource-tools/vampir/build-sdk-profile-11316.py",
+            "phone-exit/bots/resource-tools/vampir/build-sdk-profile-11318.py",
+            "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+            "phone-exit/bots/resource-tools/vampir/replay-sdk-defaults-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-sdk-overrides-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-sdk-platform-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-gmc2-base-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-gmc2-url-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-gmc2-headers-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-gmc2-geo-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-nid-context-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-nid-result-11318.py",
+            "phone-exit/bots/resource-tools/vampir/audit-nid-result-11318.py",
+            "phone-exit/bots/resource-tools/vampir/nid-primitives-11318.py",
+            "phone-exit/bots/resource-tools/vampir/replay-nid-primitives-11318.py",
+            "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-batch-11318.json",
+            "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+            "phone-exit/bots/vampir-shared/vampir_core/gmc2_request.py",
+            "phone-exit/bots/test_vampir_update_contracts.py"
+          ],
+          "artifact_dependencies": [
+            "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-9e79cd7f7832/details.json",
+            "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-1a7e48a82067/details.json",
+            "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-8b262adbaa98/details.json",
+            "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-934cf393e845/details.json",
+            "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+            "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json"
+          ],
+          "timeout_seconds": 180
+        }
+      },
+      "system_runtime_files": [
+        "ucrtbase.dll"
       ]
     },
     {
@@ -4828,10 +4879,12 @@
     {
       "id": "gmc2-geo-native-11316",
       "questions": [
-        "nid-context-current"
+        "nid-context-current",
+        "sdk-batch-11318"
       ],
       "source_sha256": [
-        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"
+        "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
       ],
       "offline_reviewed": true,
       "runtime_distributions": [
@@ -4839,14 +4892,20 @@
         "unicorn"
       ],
       "test_pattern": "test_vampir_gmc2_geo_11316.py",
-      "timeout_seconds": 120,
+      "timeout_seconds": 180,
       "artifact_dependencies": [
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-0cdca2f717ea/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-777fc0535ec7/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-e780fb3fe6db/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-22a80de53437/details.json",
         "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-c7fac48d96a1/details.json",
-        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-aa8c16b9c37f/details.json"
+        "ghidra/request-exports/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/run-aa8c16b9c37f/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-9e79cd7f7832/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-1a7e48a82067/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-8b262adbaa98/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-934cf393e845/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json"
       ],
       "dependencies": [
         "phone-exit/bots/resource-tools/vampir/replay-gmc2-geo-11316.py",
@@ -4859,9 +4918,36 @@
         "phone-exit/bots/vampir-shared/vampir_core/cdn_config.py",
         "phone-exit/bots/vampir-shared/vampir_core/gmc2_decode.py",
         "phone-exit/bots/vampir-shared/vampir_core/nid_metadata.py",
-        "phone-exit/bots/vampir-shared/vampir_core/socks_route.py"
+        "phone-exit/bots/vampir-shared/vampir_core/socks_route.py",
+        "phone-exit/bots/resource-tools/vampir/run-sdk-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/verify-sdk-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-profile-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-profile-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-defaults-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-overrides-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-platform-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-base-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-url-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-headers-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-geo-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-context-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/audit-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-batch-11318.json",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_request.py",
+        "phone-exit/bots/test_vampir_update_contracts.py"
       ],
-      "on_update": true
+      "on_update": true,
+      "system_runtime_files": [
+        "ucrtbase.dll"
+      ]
     },
     {
       "id": "sdk-runtime-launcher-11316",
@@ -8412,6 +8498,86 @@
       "artifact_dependencies": [
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-e3abc26162e7/details.json",
         "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-7ecda68a9805/details.json"
+      ]
+    },
+    {
+      "id": "sdk-native-batch-11318",
+      "questions": [
+        "sdk-batch-11318"
+      ],
+      "source_sha256": [
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_sdk_batch_11318.py",
+      "timeout_seconds": 240,
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ],
+      "system_runtime_files": [
+        "ucrtbase.dll"
+      ],
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/run-sdk-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/verify-sdk-batch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/native-request-harness-11316.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-profile-11316.py",
+        "phone-exit/bots/resource-tools/vampir/build-sdk-profile-11318.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-defaults-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-overrides-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-sdk-platform-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-base-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-url-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-headers-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-gmc2-geo-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-context-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/audit-nid-result-11318.py",
+        "phone-exit/bots/resource-tools/vampir/nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/replay-nid-primitives-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-batch-11318.json",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_request.py",
+        "phone-exit/bots/test_vampir_update_contracts.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-9e79cd7f7832/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-1a7e48a82067/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-8b262adbaa98/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-934cf393e845/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-b66ea903e973/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-f808531f96e5/details.json"
+      ]
+    },
+    {
+      "id": "check-source-variants",
+      "questions": [
+        "sdk-batch-11318"
+      ],
+      "source_scope": "tooling",
+      "source_sha256": [],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_check_source_variants.py",
+      "timeout_seconds": 90,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/research-workflow.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/test_vampir_research_workflow.py",
+        "phone-exit/bots/test_vampir_update_targets.py"
+      ],
+      "runtime_distributions": [
+        "capstone"
       ]
     }
   ]

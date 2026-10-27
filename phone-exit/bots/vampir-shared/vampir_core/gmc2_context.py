@@ -14,7 +14,8 @@ from .nid_metadata import _metadata_text
 
 SOURCE_SHA256 = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 CURRENT_SOURCE_SHA256 = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
-VERIFIED_SOURCE_SHA256 = frozenset((SOURCE_SHA256, CURRENT_SOURCE_SHA256))
+LATEST_SOURCE_SHA256 = 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+VERIFIED_SOURCE_SHA256 = frozenset((SOURCE_SHA256, CURRENT_SOURCE_SHA256, LATEST_SOURCE_SHA256))
 MAX_CONTEXT_AGE = 300  # Local policy; not a recovered SDK timeout.
 
 
@@ -31,7 +32,7 @@ class Gmc2Geo:
         _metadata_text(previous_country)
         if type(self.source_sha256) is not str or self.source_sha256 not in VERIFIED_SOURCE_SHA256:
             raise ValueError('GMC2 geo policy is not verified for this source')
-        sentinel = self.country in ('A1', 'a1') if self.source_sha256 == CURRENT_SOURCE_SHA256 else self.country == 'A1'
+        sentinel = self.country in ('A1', 'a1') if self.source_sha256 in (CURRENT_SOURCE_SHA256, LATEST_SOURCE_SHA256) else self.country == 'A1'
         country = previous_country if sentinel and previous_country else self.country
         return dict(I_ConnectIP=self.client_ip, I_CountryCD=country)
 

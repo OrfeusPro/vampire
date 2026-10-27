@@ -67,4 +67,27 @@ class Gmc2Geo11316Tests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'export SHA changed'):self.tool().replay()
 
 
+class Gmc2Geo11318Tests(unittest.TestCase):
+    def test_current_native_geo_and_isolated_source_policy(self):
+        from test_vampir_update_contracts import load
+        from vampir_core.gmc2_context import LATEST_SOURCE_SHA256
+        _,batch,_=load('run-sdk-batch-11318').run(Path('F:/PhoneExit Resources/Vampir'))
+        report=batch['reports']['replay-gmc2-geo-11318']
+        self.assertEqual(len(report['cases']),672)
+        self.assertEqual(report['source_sha256'],LATEST_SOURCE_SHA256)
+        for case in report['cases']:
+            self.assertTrue(case['canaries_unchanged'])
+            if not case['incoming_country']:continue
+            body=Gmc2Geo11316Tests().body(geoLocation=case['incoming_country'])
+            geo=decode_gmc2_geo(body,source_sha256=LATEST_SOURCE_SHA256)
+            self.assertEqual(geo.metadata(previous_country=case['old_country'] or '')['I_CountryCD'],case['country'])
+        one=decode_gmc2_geo(Gmc2Geo11316Tests().body(geoLocation='a1'),source_sha256=LATEST_SOURCE_SHA256)
+        two=decode_gmc2_geo(Gmc2Geo11316Tests().body(geoLocation='JP'),source_sha256=LATEST_SOURCE_SHA256)
+        self.assertEqual(one.metadata(previous_country='HK')['I_CountryCD'],'HK')
+        self.assertEqual(two.metadata(previous_country='')['I_CountryCD'],'JP')
+        inputs=SdkInputs('one@example.invalid',None,{}, {},'recovered-release',None,LATEST_SOURCE_SHA256,one,100)
+        with self.assertRaisesRegex(ValueError,'differs'):
+            inputs.check_usage(email='two@example.invalid',selected_profile='recovered-release',route=None,now=100)
+
+
 if __name__=='__main__':unittest.main()

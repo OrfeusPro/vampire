@@ -34,6 +34,41 @@ public class InspectVampirSdkProfile extends GhidraScript {
         JsonArray literals = new JsonArray(), functions = new JsonArray();
         Map<Address, Function> owners = new TreeMap<>();
         JsonArray nativeReferences = new JsonArray();
+        // Fixed source-checked leaf tails are supplied by the collector. They
+        // are not exported roots or discovered callees; only native E9 callers
+        // use their CALL_RETURN model. Keep exact bytes and bounded bodies.
+        if (source.has("requested_leaf_tail_targets")) {
+            JsonObject leaves = source.getAsJsonObject("requested_leaf_tail_targets");
+            if (leaves.size() > 4) throw new IllegalStateException("Leaf tail count budget");
+            for (var entry : leaves.entrySet()) {
+                Address at = currentProgram.getAddressFactory().getAddress(entry.getKey());
+                byte[] expected = HexFormat.of().parseHex(entry.getValue().getAsString());
+                if (expected.length < 1 || expected.length > 16 || expected[expected.length - 1] != (byte)0xc3)
+                    throw new IllegalStateException("Leaf tail byte/return budget");
+                byte[] actual = new byte[expected.length];
+                currentProgram.getMemory().getBytes(at, actual);
+                if (!Arrays.equals(expected, actual)) throw new IllegalStateException("Leaf tail source mismatch");
+                AddressSet body = new AddressSet(at, at.add(expected.length - 1));
+                DisassembleCommand command = new DisassembleCommand(at, body, true);
+                command.enableCodeAnalysis(false);
+                if (!command.applyTo(currentProgram, monitor)) throw new IllegalStateException("Leaf tail disassembly failed");
+                var iterator = currentProgram.getListing().getInstructions(body, true);
+                int bytes = 0;
+                while (iterator.hasNext()) {
+                    Instruction ins = iterator.next(); bytes += ins.getLength();
+                    boolean last = ins.getMaxAddress().equals(body.getMaxAddress());
+                    if (!body.contains(ins.getAddress(), ins.getMaxAddress())
+                        || (last ? !ins.getMnemonicString().equalsIgnoreCase("RET")
+                                 : !ins.getMnemonicString().equalsIgnoreCase("MOV")))
+                        throw new IllegalStateException("Leaf tail control flow mismatch");
+                }
+                if (bytes != expected.length) throw new IllegalStateException("Leaf tail instruction gap");
+                Function leaf = currentProgram.getFunctionManager().getFunctionAt(at);
+                if (leaf == null) leaf = createFunction(at, null);
+                if (leaf == null) throw new IllegalStateException("Leaf tail function creation failed");
+                leaf.setBody(body);
+            }
+        }
         if (args.length >= 4) {
             JsonObject supplied = JsonParser.parseString(Files.readString(Path.of(args[2]))).getAsJsonObject();
             if (!supplied.get("source_sha256").getAsString().equalsIgnoreCase(currentProgram.getExecutableSHA256()))

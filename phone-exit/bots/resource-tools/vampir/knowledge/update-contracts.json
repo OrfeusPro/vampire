@@ -44,7 +44,8 @@
       "depends_on": [],
       "checks": [
         "sdk-profile-assembly-11316",
-        "gmc2-geo-native-11316"
+        "gmc2-geo-native-11316",
+        "sdk-native-batch-11318"
       ],
       "recipes": [
         {
@@ -65,6 +66,11 @@
           "constructor": "0x1444c4210",
           "nid-context": "0x1450e3c80",
           "nid-result": "0x1450f3e40"
+        },
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "constructor": "0x1444c4510",
+          "nid-context": "0x1450e3fb0",
+          "nid-result": "0x1450f4170"
         }
       },
       "resources": [],
@@ -73,13 +79,14 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Сверить SDK defaults / overrides, GMC2 URL / headers / geo и NID input chain по текущему SHA; перенести отсутствующие checks.",
+      "next_check": "SDK/GMC2/NID 1.13.18: общий native пакет и offline candidate проверены; новый runtime launcher профиль/source guards, актуальные CharacterList/clock/game profile и отдельная живая сессия ещё требуются.",
       "targets": [
         "sdk-defaults-gmc2",
         "sdk-game-overrides",
         "gmc2-request-layout",
         "sdk-platform-current",
-        "nid-context-current"
+        "nid-context-current",
+        "sdk-gmc2-nid-batch-11318"
       ]
     },
     {

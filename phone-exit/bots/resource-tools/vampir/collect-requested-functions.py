@@ -9,6 +9,32 @@ import re
 import subprocess
 import uuid
 
+# Reviewed SDK setter leaf: no unwind entry of its own. This is an explicit
+# source-specific analysis model, never permission to discover arbitrary callees.
+REVIEWED_LEAF_TAILS = {
+    'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c': {
+        0x144552540: '890d9a5bc306c3',
+    },
+}
+
+
+def checked_leaf_tails(native, image, sha):
+    result = {}
+    decoder = native.capstone.Cs(native.capstone.CS_ARCH_X86, native.capstone.CS_MODE_64)
+    for at, encoded in REVIEWED_LEAF_TAILS.get(sha, {}).items():
+        raw = bytes.fromhex(encoded)
+        if not 1 <= len(raw) <= 16:
+            raise ValueError('Reviewed tail leaf budget')
+        off = image.offset(at - image.pe.base)
+        if image.data[off:off + len(raw)] != raw:
+            raise ValueError('Reviewed tail leaf source differs')
+        rows = list(decoder.disasm(raw, at))
+        if (sum(row.size for row in rows) != len(raw) or rows[-1].mnemonic != 'ret'
+                or any(row.mnemonic.startswith(('j', 'call', 'ret')) for row in rows[:-1])):
+            raise ValueError('Reviewed tail leaf control flow differs')
+        result[at] = encoded
+    return result
+
 
 def command_for(*, launcher, projects, source, script_path, context, output, references, addresses, reuse):
     return [str(launcher), str(projects), 'RequestedRelease',
@@ -54,6 +80,7 @@ def collect(index, args, request, addresses):
     native = index.extension('build-native-entry-code')
     image = native.Image(source.read_bytes())
     function_ranges, tail_calls, tail_scans = {}, {}, {}
+    leaf_targets = checked_leaf_tails(native, image, sha)
     explicit_roots = set()
     for item in request['functions']:
         at = int(item['address'], 16)
@@ -70,7 +97,7 @@ def collect(index, args, request, addresses):
             raise ValueError('Requested unwind range budget exceeded')
         function_ranges[address] = [dict(begin=hex(image.pe.base+begin),end=hex(image.pe.base+end))
                                     for begin,end,_ in ranges]
-        tail_calls[address],tail_scans[address]=scan_tail_calls(native,image,image.roots[fragment],explicit_roots)
+        tail_calls[address],tail_scans[address]=scan_tail_calls(native,image,image.roots[fragment],explicit_roots | set(leaf_targets))
     lock_path = index.HERE / 'ghidra-tools.lock.json'
     lock = index.read_json(lock_path)
     tools = args.root / 'tools/ghidra'
@@ -94,8 +121,11 @@ def collect(index, args, request, addresses):
     out = args.root / 'ghidra/request-exports' / sha / ('run-' + uuid.uuid4().hex[:12])
     out.mkdir(parents=True)
     context, references = out / 'source.json', out / 'references.json'
+    used_leaves = {tail['target']: leaf_targets[int(tail['target'], 16)]
+                   for tails in tail_calls.values() for tail in tails if int(tail['target'], 16) in leaf_targets}
     context.write_bytes(workflow.canonical(dict(new_source_sha256=sha, requested_unwind_ranges=function_ranges,
-                                              requested_tail_calls=tail_calls,requested_tail_scans=tail_scans)))
+                                              requested_tail_calls=tail_calls,requested_tail_scans=tail_scans,
+                                              requested_leaf_tail_targets=used_leaves)))
     references.write_bytes(workflow.canonical(dict(source_sha256=sha,
         references=[dict(function=at, reason='Explicit request/unwind root; no role assigned') for at in addresses])))
     command = command_for(launcher=tools / lock['ghidra']['directory'] / 'support/analyzeHeadless.bat',

@@ -4991,6 +4991,275 @@
           }
         ]
       }
+    },
+    {
+      "id": "sdk-gmc2-nid-batch-11318",
+      "baseline_functions": [],
+      "tools": [
+        "align-sdk-batch-11318.py",
+        "generate-sdk-replays-11318.py",
+        "run-sdk-batch-11318.py"
+      ],
+      "rule": "Проверять фиксированный пакет SDK/GMC2/NID целиком; повторно использовать общие reports/cache, не активировать профиль по matching.",
+      "automation": {
+        "discovery": "fixed_roots_complete_control_shapes_caller_global_binding_and_explicit_switch_tables",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_source_specific_checks",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1411b05c0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1411b3260",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1411b3290",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1411b32c0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1411b5c10",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14125b710",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14125b740",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14125b770",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14125b7d0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1414266a0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1415e4460",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1417619b0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14447d210",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14447d460",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444b22e0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444b3590",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444c4510",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444cf800",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444df100",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444f8e10",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444fa480",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1444fbec0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x144508510",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14452a060",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14452af30",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x144531c00",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1445323c0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x144532710",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1445518c0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1450e3fb0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1450f2fb0",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x1450f4170",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x14560b230",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              },
+              {
+                "address": "0x145657d40",
+                "scope": "Ограниченный пакет SDK/GMC2/NID: defaults/overrides/PC, base/URL/headers/geo, NID base pairs и OnResult/helpers. Storage/JSON/SDK/backend/HTTP — явные fixtures; extensions/browser/session не доказаны.",
+                "required_checks": [
+                  "sdk-native-batch-11318"
+                ]
+              }
+            ],
+            "tools": [
+              "align-sdk-batch-11318.py",
+              "generate-sdk-replays-11318.py",
+              "run-sdk-batch-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-SDK-BATCH-11318.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

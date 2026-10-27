@@ -1,11 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
-Пакет Login 1.13.18 перенесён целиком в объявленных offline границах:
-13 contexts/checks, 6772 исполнения сценариев и 52 теста. on_update/cache
-подключены сразу; очередь 96 → 81 строка. Работать следующими общими пакетами
-SDK/GMC2/NID и CharacterList; общие input/wire использовать повторно.
-Prepare→wire coverage, реальные services/dispatch, clock/profile и онлайн
-ещё открыты. [Результат и границы](../resource-tools/vampir/knowledge/LOGIN-BATCH-AUTOMATION-11318.md).
+Пакет SDK/GMC2/NID 1.13.18 завершён в объявленных offline границах:
+34 roots, 3667 native cases + 288 helper cases; 30 штатных тестов passed.
+on_update/cache и выбор тестов по полному SHA подключены. sdk-gmc2 passed;
+очередь 81 → 75 строк. Далее current launcher runtime/source guards и
+CharacterList целыми пакетами; общие input/wire и готовые reports использовать
+повторно. Prepare→wire, clock/game profile и онлайн ещё открыты.
+[Результат и границы](../resource-tools/vampir/knowledge/SDK-BATCH-AUTOMATION-11318.md).
 
 VersionResult reader 1.13.18 и общий input archive перенесены: 127 случаев,
 5 тестов, on_update/cache. Остаток 98 строк. Далее gate switch с сохранёнными

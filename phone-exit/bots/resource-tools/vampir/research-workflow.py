@@ -73,6 +73,7 @@ TOOLING_CHECKS = {
     'update-run-offline': 'test_vampir_update_run.py',
     'tooling-check-scope': 'test_vampir_tooling_check_scope.py',
     'knowledge-index-incremental': 'test_vampir_knowledge_index.py',
+    'check-source-variants': 'test_vampir_check_source_variants.py',
 }
 
 
@@ -80,11 +81,30 @@ def source_scope(check):
     scope = check.get('source_scope', 'client')
     if scope not in ('client', 'tooling'):
         raise ValueError('Unknown offline check source scope')
+    variants=check.get('source_variants',{})
+    if not isinstance(variants,dict) or (variants and scope!='client'):
+        raise ValueError('Source variants require client scope')
+    for sha,variant in variants.items():
+        if (not isinstance(sha,str) or not re.fullmatch('[0-9a-f]{64}',sha)
+                or sha not in check.get('source_sha256',[]) or not isinstance(variant,dict)
+                or not variant or set(variant)-{'test_pattern','dependencies','artifact_dependencies','timeout_seconds'}):
+            raise ValueError('Invalid reviewed source variant')
     if scope == 'tooling' and (TOOLING_CHECKS.get(check['id']) != check.get('test_pattern')
             or check.get('offline_reviewed') is not True or check.get('source_sha256') != []
             or check.get('artifact_dependencies') or check.get('system_runtime_files')):
         raise ValueError('Tooling scope requires a reviewed fixture-only infrastructure suite')
     return scope
+
+
+def source_definition(check,sha):
+    """An explicit SHA may select its reviewed suite; it cannot alter permissions."""
+    source_scope(check)
+    variant=check.get('source_variants',{}).get(sha)
+    if variant is None:return check
+    effective={key:value for key,value in check.items() if key!='source_variants'}
+    effective.update(variant)
+    effective['selected_source_variant']=sha
+    return effective
 
 
 def system_runtime_files(names):
@@ -183,6 +203,7 @@ def run_checks(index, args, sha, question, *, check_ids=None):
         if scope == 'client' and sha not in check['source_sha256']:
             results.append(dict(id=check['id'], state='requires_port', reason='No reviewed check for this source SHA'))
             continue
+        check=source_definition(check,sha)
         # Registry holds reviewed offline unittest targets, never shell commands.
         pattern = check['test_pattern']
         if not pattern.startswith('test_vampir_') or not pattern.endswith('.py') or any(c in pattern for c in '/\\*?'):

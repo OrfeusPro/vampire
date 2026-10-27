@@ -1,9 +1,9 @@
-Осталась 81 строка из исходных 150: общий пакет Login 1.13.18 закрыл 15.
-13 contexts/checks включены в on_update: 6772 исполнения сценариев,
-52 теста passed; prepare/SDK/metadata, result/input/buffer/handler,
-registration, post-state и continuation. Итоговый прогон переиспользовал
-Login reports. Далее SDK/GMC2/NID, CharacterList, prepare→wire и clock/profile
-до онлайн. [Результат и границы](../resource-tools/vampir/knowledge/LOGIN-BATCH-AUTOMATION-11318.md).
+Осталось 75 строк из исходных 150: пакет SDK/GMC2/NID закрыл шесть.
+34 source roots, 3667 native cases и 288 helper cases; 30 штатных тестов
+passed. Assembly/geo/batch используют один cached report, проверки версии
+выбираются по полному SHA. sdk-gmc2 passed; runtime launcher профиль ещё
+не подключён. Далее launcher/CharacterList, prepare→wire и clock/game profile
+до онлайн. [Результат и границы](../resource-tools/vampir/knowledge/SDK-BATCH-AUTOMATION-11318.md).
 
 Осталось 98 строк из исходных 150: reader VersionResult и общий input archive
 прошли 127 native случаев и 5 тестов, закрыты две строки. Проверка включена

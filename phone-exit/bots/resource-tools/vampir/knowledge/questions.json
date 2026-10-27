@@ -1017,6 +1017,20 @@
       "evidence": [
         "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
       ]
+    },
+    {
+      "id": "sdk-batch-11318",
+      "status": "bounded_answer",
+      "question": "Как перенести SDK/GMC2/NID 1.13.18 целым кэшируемым пакетом без повторного ручного переноса общих helpers?",
+      "known": "34 source roots, отдельные code/data proofs platform/NID и 21 switch target. 3667 native cases плюс 112 numeric/176 channel helper cases; один cached batch report для assembly/geo/source checks, offline candidate без runtime activation. Неразрешённый/изменённый источник отклоняется.",
+      "unknown": "Новый runtime launcher profile/source guards, актуальные CharacterList/clock/game profile, настоящие SDK/browser/backend и server acceptance. Старый SDK assembly 1.13.16 report отклонён из-за изменившегося harness dependency; не считать его passed.",
+      "next_action": "Подключить current SDK runtime профиль на проверенных inputs, далее общие CharacterList/clock/game profile prerequisites до живого входа.",
+      "decision_rule": "Matching и offline candidate не активируют runtime. Выбор source variant возможен только для полного reviewed SHA; shared cached native report не переносится на другой SHA.",
+      "do_not_repeat": "При неизменных inputs использовать общий SDK batch report и on_update cache; не повторять native replay для каждого потребителя. Работать пакетами.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-SDK-BATCH-11318.md"
+      ]
     }
   ]
 }

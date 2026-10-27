@@ -1,10 +1,25 @@
 import unittest
 from types import SimpleNamespace
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from test_vampir_update_contracts import load
 
 
 class RequestedTailCallsTests(unittest.TestCase):
+    def test_reviewed_sdk_leaf_requires_exact_source_and_bounded_return(self):
+        tool=load('collect-requested-functions');native=load('build-native-entry-code')
+        sha='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+        at=0x144552540;raw=bytes.fromhex('890d9a5bc306c3')
+        image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
+        self.assertEqual(tool.checked_leaf_tails(native,image,sha),{at:raw.hex()})
+        self.assertEqual(tool.checked_leaf_tails(native,image,'0'*64),{})
+        image.data=b'\x90'+raw[1:]
+        with self.assertRaisesRegex(ValueError,'source differs'):tool.checked_leaf_tails(native,image,sha)
+        for encoded in ('e900000000c3','9090','c3c3','90'*17):
+            image.data=bytes.fromhex(encoded)
+            with patch.dict(tool.REVIEWED_LEAF_TAILS,{sha:{at:encoded}},clear=True):
+                with self.assertRaisesRegex(ValueError,'budget|control flow'):
+                    tool.checked_leaf_tails(native,image,sha)
+
     def row(self, **updates):
         result = dict(address=0x100, mnemonic='jmp', branch=True, call=False, direct_target=0x200, bytes='e9fb000000')
         result.update(updates)
