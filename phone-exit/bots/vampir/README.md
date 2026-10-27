@@ -1,3 +1,9 @@
+Найдена source-фабрика производного окружения 1.13.16. Native A8 сравнивает
+результаты lookup имён, B8 возвращает record+0C, а не сам world ID. Фабрика и
+derived getters прошли 19 synthetic случаев. Источник записей, initialization
+и phase completion ещё нужны; прежняя base+40 проверка не допускает live offer.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-DERIVED-ENVIRONMENT-11316.md).
+
 Терминальный отчёт владельца теперь сохраняет fixed connection error, UTC,
 длительность worker и bounded Ping counters по ботам; неизвестные диагностические
 строки редактируются. Проверены локальные файл/изоляция/исключение; реальный
