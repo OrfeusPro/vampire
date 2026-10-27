@@ -888,19 +888,22 @@
       "id": "launcher-contract-11318",
       "status": "open",
       "question": "Какие части launcher token/sign-in подтверждены для EXE1.13.18 и какие зависимости ещё нужны перед подготовкой профиля?",
-      "known": "Полные source-bound instruction/local-edge shapes token1444EECD0 (652) и sign-in144503E10 (679) совпали с проверенным11316. UTF16 routes подтверждены; 70 внешних calls каждой функции и22/20 RIP refs сохранены unresolved. Ни runtime, ни auth compatibility не установлены. Eight current key initializers link literals/globals to request references; callback E9 and transport direct targets pinned statically. Values/serialization and external target behavior unknown.",
+      "known": "Полные source-bound instruction/local-edge shapes token1444EECD0 (652) и sign-in144503E10 (679) совпали с проверенным11316. UTF16 routes подтверждены; 70 внешних calls каждой функции и22/20 RIP refs сохранены unresolved. Ни runtime, ни auth compatibility не установлены. Eight current key initializers link literals/globals to request references; callback E9 and transport direct targets pinned statically. Values/serialization and external target behavior unknown. Whole response shapes token551/signin762 agree with baseline after verifying indirectCRT _wtoi identity; key/getter/dispatcher references pinned but execution unknown.",
       "unknown": "Source-bound тела запросов, headers, actual callees, callbacks и SDK/GMC2 context новой сборки.",
-      "next_action": "Проверить whole callback targets1444CC4B0/1444D3A30 и JSON/dispatch/transport, затем active SDK/GMC2 context; не активировать профиль по static references.",
+      "next_action": "Проверить errorCode/resultData initializers, getters/dispatch и transport; затем bounded native response и SDK/GMC2 context без profile activation.",
       "decision_rule": "Совпадение masked instruction shape не доказывает внешние callees, данные, serialization или live auth; не включать профиль по одному сравнению.",
       "do_not_repeat": "Не переносить старые адреса/поддержку checks на новый SHA без source review. Не повторять login и не разрывать онлайн-сессию для offline проверки.",
       "addresses": [
         "0x1444eecd0",
-        "0x144503e10"
+        "0x144503e10",
+        "0x1444cc4b0",
+        "0x1444d3a30"
       ],
       "evidence": [
         "evidence/updates/HEADLESS-RELEASE-AUDIT-11318.md",
         "evidence/updates/HEADLESS-LAUNCHER-SHAPE-11318.md",
-        "evidence/updates/HEADLESS-LAUNCHER-REFERENCES-11318.md"
+        "evidence/updates/HEADLESS-LAUNCHER-REFERENCES-11318.md",
+        "evidence/updates/HEADLESS-LAUNCHER-RESPONSES-11318.md"
       ]
     }
   ]

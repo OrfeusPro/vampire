@@ -76,6 +76,51 @@
       "question": "launcher-contract-11318",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "Whole callback/JSON/dispatch/transport and active SDK/GMC2 state11318."
+    },
+    {
+      "addresses": [
+        "0x1444cc4b0",
+        "0x1444d3a30"
+      ],
+      "checks": [
+        {
+          "cache_key": "1a4a0f246848a53f871726997ed19151fd576370f76bc9e28fb385a212aa588b",
+          "id": "launcher-shape-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291\\manifest.json",
+          "sha256": "14833e2b3fb865fa9dfe26d99ee8bc617481306d50c237be9ec109069dcf2291",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0045655e20ceff8f34cefa518d25b0db60c7083304eaf469e7c05e4aa7045f76",
+          "id": "launcher-references-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\beab8338873fcc9c80b09007c78c9dccc12eb8a2b9abfae87c682d268e01beef\\manifest.json",
+          "sha256": "beab8338873fcc9c80b09007c78c9dccc12eb8a2b9abfae87c682d268e01beef",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0694ae1d77a35f1f522ae4880f2509065186089d3db632e5111a42aeaba430e3",
+          "id": "launcher-responses-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8f5fa8a5c73adf62cd7f7fb5b3485c0328ef3ff50a98b04a89925ea30bed496d\\manifest.json",
+          "sha256": "8f5fa8a5c73adf62cd7f7fb5b3485c0328ef3ff50a98b04a89925ea30bed496d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Whole response shapes551/762 match pinned11316 with exact PE import identity _wtoi for one indirect call per function. Numeric key globals/getter/dispatcher references pinned, implementations and actual response execution unverified.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LAUNCHER-RESPONSES-11318.md",
+          "sha256": "11a562ee3e77369166bb3dc68feca2f5eae8202d0e99a866a29163f21361167d"
+        }
+      ],
+      "id": "541bce4fb5ca88bc45dfa270dbe0779d361f65c4d1488b2a4ee93e74670b8320",
+      "limits": [
+        "Full source ranges/local edges validated; RIP/external targets retained unresolved. No native execution, JSON acceptance, external implementation equivalence or live auth."
+      ],
+      "method": "static",
+      "next_check": "Verify response key initialization/getters/dispatch and transport before bounded native response/profile preparation.",
+      "question": "launcher-contract-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Current errorCode/resultData initialization, getters/dispatch/transport implementations and active SDK/GMC2 context."
     }
   ],
   "schema": 1,

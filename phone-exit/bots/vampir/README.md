@@ -1,3 +1,8 @@
+Launcher response 1.13.18: проверены whole shapes token 551/sign-in 762 и
+identity импортированного _wtoi. Key/getter/dispatch ссылки закреплены; JSON,
+внешние реализации и живая авторизация ещё не проверены, профиль не включён.
+[Проверка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LAUNCHER-RESPONSES-11318.md).
+
 Для launcher 1.13.18 проверены восемь key initializers и ссылки request globals,
 оба callback E9 и transport call sites. Статические тесты прошли; JSON/значения,
 callback targets/transport и живой вход ещё не проверены, профиль не активирован.
