@@ -1,3 +1,9 @@
+Подтверждён writer environment+40: при true внешнем guard пишет аргумент и
+сбрасывает pending+44; при отказе сохраняет прежнее и ставит C1. Source retry
+caller и readiness проверены вместе в 48 native случаях; callback/guard engine
+остаются fixtures. Источник pending и активное состояние ещё нужны для live offer.
+[Доказательства и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-ENVIRONMENT-UPDATE-11316.md).
+
 Найден метод environment vtable+10: он задаёт +40 из той же нулевой
 константы, что QuestTask data+14. Метод включён в 34 native Time сценария;
 прежние synthetic 3/4 заменены начальным 0 и явным mismatch 1. Его вызов

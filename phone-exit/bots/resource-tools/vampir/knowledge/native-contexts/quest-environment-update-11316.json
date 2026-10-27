@@ -1,0 +1,31 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-430fed1bb906": "6e162d6a5056ba52dbfe8bf50bec54e02b66ab2271c8c4d489e5c2f54a68bd06",
+    "run-b36956e19880": "5d1579b5f094b89be1dc17fd2918654b846e0dbe7df4585f78d5893150678576",
+    "run-8dd22ce0a6d2": "b6316d5d0a7fb27537445be1134f0f8eab59fa2ce31023a38ae141b16fde7938",
+    "run-529edd8cc6b1": "e5afea845d4188d050edb1ab981fde64866191832eab68037357a05aef752199"
+  },
+  "functions": [
+    "0x1456001d0",
+    "0x14568cad0",
+    "0x14560f9e0",
+    "0x14561bca0"
+  ],
+  "leaves": {
+    "0x14560adc0": "488b05e1b0fd05c3",
+    "0x1455be4b0": "488b05a9680206c3",
+    "0x14144ec00": "488b4130c3",
+    "0x1418af880": "8b4140c3",
+    "0x14560e670": "488b0561200604488941388b055f2006048941408b05562006048941448b054d20060489414833c0488981c8000000488981d0000000c641300766c7415a010166c741780001c3",
+    "0x14144e120": "33c048890248894208488bc2c3",
+    "0x141403b70": "c20000"
+  },
+  "legacy_direct_flow": [
+    "0x14561bca0"
+  ],
+  "limits": [
+    "Whole constructor, exact initializer/getters, writer, retry caller and readiness predicate execute. Numeric values are stress inputs, not live enum/quest admission.",
+    "Model lookup, registration helper, world lookup/virtual7B8 guard, formatting/empty strings/conversion, phase request and moved-callback submission are fixtures. Phase function/callback145606830, nonempty text/allocations and active engine/network are not executed."
+  ]
+}
