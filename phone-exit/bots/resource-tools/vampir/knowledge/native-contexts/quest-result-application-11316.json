@@ -1,0 +1,23 @@
+{
+  "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "exports": {
+    "run-a2c85605edb8": "9f3455d67b28e02261da44172e88a70faa1b7cbbdec7dd37e2568d0927f8903e",
+    "run-73ea3887aad5": "27a2538b2728f79ab78f297d061a6a5e08aedf3ced2ea760f63a566cbd913aa8",
+    "run-eff5f37ca91c": "4e22414b4f8c1c431e4b3c417917f72aee1223df0049b08d50d121275619b43d"
+  },
+  "functions": [
+    "0x1467b27a0",
+    "0x145d81c10",
+    "0x145d92510",
+    "0x1467cd7b0"
+  ],
+  "leaves": {
+    "0x1455be4b0": "488b05a9680206c3",
+    "0x1458344b0": "b813070000c3"
+  },
+  "limits": [
+    "Whole registered1811 handler/common result gate/model wrapper/application dispatch. Native progress projection and map lookup are bounded fixtures here, previous separate proofs remain dependencies.",
+    "Gate setting/error presentation/projection/new-record wrapper/model virtual callbacks are explicit fixtures, no actual local task mutation/callback lifecycle. Result0/10/FFFFFFFF/1197 under two gate settings tested, not all error branches.",
+    "Registration code window exact source bytes decoded, huge whole registration root exceeded existing budget; active dispatcher binding/server correlation not established. No network/live action confirmation admission."
+  ]
+}

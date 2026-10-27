@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Current handler 1811 связан с регистрацией и моделью: packet+18 quest key,
++20 state, nested+28 progress, flag1. 192 native сценария gate/dispatch прошли;
+projection/model virtual lifecycle fixtures явные. True gate включает особый
+1197 в одном режиме, поэтому confirmation не равен допуску gate. Далее
+наблюдательный decoder/receipt и корреляция; сессию сохранять.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/scenarios/HEADLESS-QUEST-RESULT-APPLICATION-11316.md).
+
 Current PktQuestUpdateResult 1811 проверен целыми outer/nested readers/writers:
 30 байт <IQBBQQ>, outer byte clamp6, nested byte без clamp. 900 полных
 вариантов / 30 коротких / 12 primitive failures прошли с archive fixtures.
