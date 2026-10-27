@@ -4407,7 +4407,10 @@
       "baseline_functions": [],
       "tools": [
         "replay-login-clock-11316.py",
-        "replay-login-ping-11316.py"
+        "replay-login-ping-11316.py",
+        "run-clock-world-batch-11318.py",
+        "replay-login-clock-11318.py",
+        "replay-login-ping-11318.py"
       ],
       "rule": "При новом SHA искать только кандидатов по historical masked prefix; проверять полный source, explicit unwind/callees/data и native сценарии. Geo metadata должна использовать свежий SdkInputs текущего SHA независимо от TID guard. Initial Ping не разрешает world/periodic heartbeat.",
       "automation": {
@@ -4447,6 +4450,40 @@
             ],
             "evidence": [
               "evidence/network/HEADLESS-LOGIN-GEO-FIX-11316.md"
+            ]
+          },
+          {
+            "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+            "functions": [
+              {
+                "address": "0x1445da1d0",
+                "scope": "Current native Clock/Lobby/Ping with explicit OS/engine/send/recovery fixtures; shared cached package, no live/runtime claim.",
+                "required_checks": [
+                  "native-login-clock-ping-current"
+                ]
+              },
+              {
+                "address": "0x1467abc70",
+                "scope": "Current native Clock/Lobby/Ping with explicit OS/engine/send/recovery fixtures; shared cached package, no live/runtime claim.",
+                "required_checks": [
+                  "native-login-clock-ping-current"
+                ]
+              },
+              {
+                "address": "0x1467cfb50",
+                "scope": "Current native Clock/Lobby/Ping with explicit OS/engine/send/recovery fixtures; shared cached package, no live/runtime claim.",
+                "required_checks": [
+                  "native-login-clock-ping-current"
+                ]
+              }
+            ],
+            "tools": [
+              "run-clock-world-batch-11318.py",
+              "replay-login-clock-11318.py",
+              "replay-login-ping-11318.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CLOCK-WORLD-BATCH-11318.md"
             ]
           }
         ]

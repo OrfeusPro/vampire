@@ -9,11 +9,12 @@ import re
 import subprocess
 import uuid
 
-# Reviewed SDK setter leaf: no unwind entry of its own. This is an explicit
+# Reviewed source-specific leaves: no unwind entry of their own. This is an explicit
 # source-specific analysis model, never permission to discover arbitrary callees.
 REVIEWED_LEAF_TAILS = {
     'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c': {
         0x144552540: '890d9a5bc306c3',
+        0x144ab13f0: '488b491033d2e9c51b0000',
     },
 }
 
@@ -21,7 +22,14 @@ REVIEWED_LEAF_TAILS = {
 def checked_leaf_tails(native, image, sha):
     result = {}
     decoder = native.capstone.Cs(native.capstone.CS_ARCH_X86, native.capstone.CS_MODE_64)
-    for at, encoded in REVIEWED_LEAF_TAILS.get(sha, {}).items():
+    decoder.detail = True
+    leaves = REVIEWED_LEAF_TAILS.get(sha, {})
+    if len(leaves) > 4:raise ValueError('Reviewed tail leaf count budget')
+    for at, encoded in leaves.items():
+        reviewed_source = sha == 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+        setter_leaf = reviewed_source and at == 0x144552540 and encoded == '890d9a5bc306c3'
+        terminal_jump = reviewed_source and at == 0x144ab13f0 and encoded == '488b491033d2e9c51b0000'
+        if not setter_leaf and not terminal_jump:raise ValueError('Unreviewed tail leaf model')
         raw = bytes.fromhex(encoded)
         if not 1 <= len(raw) <= 16:
             raise ValueError('Reviewed tail leaf budget')
@@ -29,8 +37,17 @@ def checked_leaf_tails(native, image, sha):
         if image.data[off:off + len(raw)] != raw:
             raise ValueError('Reviewed tail leaf source differs')
         rows = list(decoder.disasm(raw, at))
-        if (sum(row.size for row in rows) != len(raw) or rows[-1].mnemonic != 'ret'
-                or any(row.mnemonic.startswith(('j', 'call', 'ret')) for row in rows[:-1])):
+        if terminal_jump:
+            # Exact finite model only. Its terminal target is observed, never
+            # added as an inferred function or followed recursively.
+            valid = ([(r.mnemonic, r.op_str) for r in rows] ==
+                     [('mov', 'rcx, qword ptr [rcx + 0x10]'), ('xor', 'edx, edx'), ('jmp', '0x144ab2fc0')]
+                     and rows[-1].address == at + 6 and rows[-1].size == 5
+                     and rows[-1].operands[0].imm == 0x144ab2fc0)
+        else:
+            valid = (rows and rows[-1].mnemonic == 'ret'
+                     and not any(row.mnemonic.startswith(('j', 'call', 'ret')) for row in rows[:-1]))
+        if sum(row.size for row in rows) != len(raw) or not valid:
             raise ValueError('Reviewed tail leaf control flow differs')
         result[at] = encoded
     return result

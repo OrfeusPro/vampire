@@ -1193,15 +1193,54 @@
         "release-ping-producer",
         "release-ping-result"
       ],
-      "recipes": [],
-      "bindings": {},
+      "recipes": [
+        {
+          "key": "producer",
+          "method": "reviewed"
+        },
+        {
+          "key": "readiness",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-handler",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-receiver",
+          "method": "reviewed"
+        },
+        {
+          "key": "clock-refresh",
+          "method": "reviewed"
+        },
+        {
+          "key": "lobby-handler",
+          "method": "reviewed"
+        }
+      ],
+      "bindings": {
+        "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": {
+          "producer": "0x1467cfb50",
+          "readiness": "0x144ab2580",
+          "result-reader": "0x1456db7f0",
+          "result-handler": "0x14679c920",
+          "result-receiver": "0x1467cf7f0",
+          "clock-refresh": "0x1445da1d0",
+          "lobby-handler": "0x1467abc70"
+        }
+      },
       "resources": [],
       "builder": null,
       "coverage": "partial",
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "Перенести source checks Ping producer / result, clock и gates; отдельно проверить разрыв и восстановление."
+      "next_check": "Проверенные Clock/Ping с OS/send/recovery fixtures; отдельно допустить текущий игровой кандидат и проверить транспорт / потерю / восстановление без слепого replay."
     },
     {
       "id": "map-data",

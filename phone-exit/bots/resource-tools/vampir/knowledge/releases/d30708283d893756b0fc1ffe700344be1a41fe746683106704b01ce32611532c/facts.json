@@ -1809,6 +1809,69 @@
       "question": "sdk-profile-assembly",
       "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
       "unknown": "CharacterList и clock/prepare-to-wire, игровой профиль и живая сессия 1.13.18."
+    },
+    {
+      "addresses": [
+        "0x1445da1d0",
+        "0x14679c920",
+        "0x1467abc70",
+        "0x1467cfb50"
+      ],
+      "checks": [
+        {
+          "cache_key": "658b8c57fa1378cb900014278e48b4df22e9a1557a31a8d4d76e6ef0619e9b87",
+          "id": "release-ping-result",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8eb7809ea1251ec37417eea86e02b5d31d535514767d8d91de05047364906222\\manifest.json",
+          "sha256": "8eb7809ea1251ec37417eea86e02b5d31d535514767d8d91de05047364906222",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d99086c9c9ff084b4582adbcea5e962276d4ac1d06e8437d95c95fb0c27cff1b",
+          "id": "release-ping-producer",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\12e4ab71e5a528213466e8a1cd14c67f59898fe11813584470598104a31b39a4\\manifest.json",
+          "sha256": "12e4ab71e5a528213466e8a1cd14c67f59898fe11813584470598104a31b39a4",
+          "state": "passed"
+        },
+        {
+          "cache_key": "ccd605857a283baf0524ad74dcbf0ce783f6511b86fb67ab4aea50a84425e88f",
+          "id": "periodic-ping-policy",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3bedbcf63b716bc3ad485c4e595c49d665c3e815f1f66aae4b3ba9c2d32c3caf\\manifest.json",
+          "sha256": "3bedbcf63b716bc3ad485c4e595c49d665c3e815f1f66aae4b3ba9c2d32c3caf",
+          "state": "passed"
+        },
+        {
+          "cache_key": "78b4342530c97d3265107f3bbc45e468b3b74f6e786908aa13ea95619d1511a5",
+          "id": "native-login-clock-ping-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4a03e3fc2b4a2154eb659974d8880936d22ea7fa6aa45ce5e762be200128f08f\\manifest.json",
+          "sha256": "4a03e3fc2b4a2154eb659974d8880936d22ea7fa6aa45ce5e762be200128f08f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "6166b503bbd65ae1ee8e8197cbc5db85e7bfc29dfb1dce6dbd6be40aa06adb2c",
+          "id": "native-world-entry-probe-current",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6fa5ce97162e75b3a107730b76bfe1d795ad1abd110ffbaa13d5308529d2fedc\\manifest.json",
+          "sha256": "6fa5ce97162e75b3a107730b76bfe1d795ad1abd110ffbaa13d5308529d2fedc",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Clock/Lobby/producer/world IO и whole Ping reader-handler-receiver 1.13.18 прошли общим cached native пакетом: 307 полных сценариев и 12 short inputs. Пять source-specific checks включены в on_update, heartbeat bindings заданы явно. Отключённый game candidate построен отдельно из 16 актуальных source check reports; runtime admission не выполнен.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-CLOCK-WORLD-BATCH-11318.md",
+          "sha256": "2e805389e1db77d31e94697c3a5fd470863e24285b9d743b4cf022d05c11acc9"
+        }
+      ],
+      "id": "705cd04cc8e2c0ced1fbdfa38fc2e5059934759b596922001e86af79aef6d271",
+      "limits": [
+        "OS / engine / send / recovery internals — явные fixtures.",
+        "World replay ограничен IO slices; nested historical ID110/206 и streaming не подтверждены.",
+        "Collector leaf model привязан к единственным SHA/address/11bytes; не даёт рекурсивный обход или live claim."
+      ],
+      "method": "bounded_native",
+      "next_check": "Интегрировать отдельный current game candidate с source guards, затем провести ограниченную живую проверку без автоматического допуска quests/tutorial.",
+      "question": "clock-world-batch-11318",
+      "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "unknown": "Loader/runner/CDN integration нового candidate, server acceptance, длительная сессия/reconnect и игровой read-only слой."
     }
   ],
   "schema": 1,

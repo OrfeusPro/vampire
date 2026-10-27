@@ -1,5 +1,12 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Clock / keepalive / bounded world 1.13.18 прошли общим пакетом:
+307 полных native сценариев и 12 short inputs, 20 новых тестов passed.
+Пять checks и heartbeat bindings подключены к on_update / общему кэшу.
+Отключённый game candidate собран из 16 current proof reports; runtime / live
+ещё не включены. Далее loader / runner / CDN source guards и ограниченный
+живой тест. [Итог и границы](../resource-tools/vampir/knowledge/CLOCK-WORLD-AUTOMATION-11318.md).
+
 Launcher runtime и CharacterList 1.13.18 перенесены общим пакетом:
 29 новых тестов прошли, 40 CharacterList roots / 25 bindings и общий native
 кэш подключены к on_update. Очередь **75 → 42 строки**, снято 108 из 150.

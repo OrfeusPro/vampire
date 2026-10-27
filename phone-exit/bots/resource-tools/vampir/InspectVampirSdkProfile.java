@@ -43,7 +43,13 @@ public class InspectVampirSdkProfile extends GhidraScript {
             for (var entry : leaves.entrySet()) {
                 Address at = currentProgram.getAddressFactory().getAddress(entry.getKey());
                 byte[] expected = HexFormat.of().parseHex(entry.getValue().getAsString());
-                if (expected.length < 1 || expected.length > 16 || expected[expected.length - 1] != (byte)0xc3)
+                boolean reviewedSource = source.get("new_source_sha256").getAsString().equals(
+                    "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c");
+                boolean setterLeaf = reviewedSource && at.getOffset() == 0x144552540L
+                    && entry.getValue().getAsString().equals("890d9a5bc306c3");
+                boolean jumpLeaf = reviewedSource && at.getOffset() == 0x144ab13f0L
+                    && entry.getValue().getAsString().equals("488b491033d2e9c51b0000");
+                if ((!setterLeaf && !jumpLeaf) || expected.length < 1 || expected.length > 16)
                     throw new IllegalStateException("Leaf tail byte/return budget");
                 byte[] actual = new byte[expected.length];
                 currentProgram.getMemory().getBytes(at, actual);
@@ -53,20 +59,39 @@ public class InspectVampirSdkProfile extends GhidraScript {
                 command.enableCodeAnalysis(false);
                 if (!command.applyTo(currentProgram, monitor)) throw new IllegalStateException("Leaf tail disassembly failed");
                 var iterator = currentProgram.getListing().getInstructions(body, true);
-                int bytes = 0;
+                int bytes = 0, count = 0;
+                String[] jumpMnemonics = {"MOV", "XOR", "JMP"};
+                int[] jumpLengths = {4, 2, 5};
                 while (iterator.hasNext()) {
                     Instruction ins = iterator.next(); bytes += ins.getLength();
                     boolean last = ins.getMaxAddress().equals(body.getMaxAddress());
+                    boolean flowMatches;
+                    if (jumpLeaf) {
+                        flowMatches = count < 3 && ins.getMnemonicString().equalsIgnoreCase(jumpMnemonics[count])
+                            && ins.getLength() == jumpLengths[count];
+                        if (last) {
+                            Address[] flows = ins.getFlows();
+                            int displacement = java.nio.ByteBuffer.wrap(expected, 7, 4)
+                                .order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+                            flowMatches &= count == 2 && ins.getAddress().equals(at.add(6))
+                                && at.add(11L + displacement).getOffset() == 0x144ab2fc0L
+                                && flows.length == 1 && flows[0].getOffset() == 0x144ab2fc0L;
+                        }
+                    } else {
+                        flowMatches = last ? ins.getMnemonicString().equalsIgnoreCase("RET")
+                                           : ins.getMnemonicString().equalsIgnoreCase("MOV");
+                    }
                     if (!body.contains(ins.getAddress(), ins.getMaxAddress())
-                        || (last ? !ins.getMnemonicString().equalsIgnoreCase("RET")
-                                 : !ins.getMnemonicString().equalsIgnoreCase("MOV")))
+                        || !flowMatches)
                         throw new IllegalStateException("Leaf tail control flow mismatch");
+                    count++;
                 }
-                if (bytes != expected.length) throw new IllegalStateException("Leaf tail instruction gap");
+                if (bytes != expected.length || (jumpLeaf && count != 3)) throw new IllegalStateException("Leaf tail instruction gap");
                 Function leaf = currentProgram.getFunctionManager().getFunctionAt(at);
                 if (leaf == null) leaf = createFunction(at, null);
                 if (leaf == null) throw new IllegalStateException("Leaf tail function creation failed");
                 leaf.setBody(body);
+                leaf.setInline(false);
             }
         }
         if (args.length >= 4) {

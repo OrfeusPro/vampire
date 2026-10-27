@@ -1,0 +1,66 @@
+{
+  "compiled-tag-native-11316": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\f74120f80af15d90b38f97b3e855e93803d8bc9d10ee624e78e102b4bf88d65f\\manifest.json",
+    "sha256": "f74120f80af15d90b38f97b3e855e93803d8bc9d10ee624e78e102b4bf88d65f"
+  },
+  "native-archive-wire-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2af964b6c11684fa7cfdc6b45457c35e8b5f3fd1252354294a074785061c2a39\\manifest.json",
+    "sha256": "2af964b6c11684fa7cfdc6b45457c35e8b5f3fd1252354294a074785061c2a39"
+  },
+  "native-character-list-handler-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\856f05f1fd546dbbf7cba503f1753e87999920b897b0d64aa42a64712c35fa5d\\manifest.json",
+    "sha256": "856f05f1fd546dbbf7cba503f1753e87999920b897b0d64aa42a64712c35fa5d"
+  },
+  "native-character-list-records-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2f26f0ac6e09acea439e9b10010711bea1bf98647c2b05ee2e0394aca24c9906\\manifest.json",
+    "sha256": "2f26f0ac6e09acea439e9b10010711bea1bf98647c2b05ee2e0394aca24c9906"
+  },
+  "native-login-prepare-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d7a1cf8389c0e37e442736c9787f6f6936ec0a096384731db918cf3069b92366\\manifest.json",
+    "sha256": "d7a1cf8389c0e37e442736c9787f6f6936ec0a096384731db918cf3069b92366"
+  },
+  "native-login-result-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0e291e21edf49ea9ad5abe3c3db0d36a38c18e2efc26d765d945aa9892f03087\\manifest.json",
+    "sha256": "0e291e21edf49ea9ad5abe3c3db0d36a38c18e2efc26d765d945aa9892f03087"
+  },
+  "native-version-prepare-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b194e988b51331fec8e6264f7cee077bc3540725a142e32ab9443312f109318f\\manifest.json",
+    "sha256": "b194e988b51331fec8e6264f7cee077bc3540725a142e32ab9443312f109318f"
+  },
+  "native-version-result-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\40a99f4d351c056647c938d93d2949a5cb6f2c87a786b4e4d411dba6a3bdd20b\\manifest.json",
+    "sha256": "40a99f4d351c056647c938d93d2949a5cb6f2c87a786b4e4d411dba6a3bdd20b"
+  },
+  "native-version-result-handler-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bf9cfc556ecde5edfec7925efcfb991cd010197fc124641df5472b895d45c4b9\\manifest.json",
+    "sha256": "bf9cfc556ecde5edfec7925efcfb991cd010197fc124641df5472b895d45c4b9"
+  },
+  "native-waiting-end-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fe70df7dc7e6e3456cca4effbb0ffaf7a6e94c0b67c2e030b70550c3f9fb9963\\manifest.json",
+    "sha256": "fe70df7dc7e6e3456cca4effbb0ffaf7a6e94c0b67c2e030b70550c3f9fb9963"
+  },
+  "version-login-context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d041d7a84faea3830cedeb3e7840c8f4409dd1395030dc5c60b302c9327d5618\\manifest.json",
+    "sha256": "d041d7a84faea3830cedeb3e7840c8f4409dd1395030dc5c60b302c9327d5618"
+  },
+  "release-ping-result": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8eb7809ea1251ec37417eea86e02b5d31d535514767d8d91de05047364906222\\manifest.json",
+    "sha256": "8eb7809ea1251ec37417eea86e02b5d31d535514767d8d91de05047364906222"
+  },
+  "release-ping-producer": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\12e4ab71e5a528213466e8a1cd14c67f59898fe11813584470598104a31b39a4\\manifest.json",
+    "sha256": "12e4ab71e5a528213466e8a1cd14c67f59898fe11813584470598104a31b39a4"
+  },
+  "periodic-ping-policy": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3bedbcf63b716bc3ad485c4e595c49d665c3e815f1f66aae4b3ba9c2d32c3caf\\manifest.json",
+    "sha256": "3bedbcf63b716bc3ad485c4e595c49d665c3e815f1f66aae4b3ba9c2d32c3caf"
+  },
+  "native-login-clock-ping-current": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4a03e3fc2b4a2154eb659974d8880936d22ea7fa6aa45ce5e762be200128f08f\\manifest.json",
+    "sha256": "4a03e3fc2b4a2154eb659974d8880936d22ea7fa6aa45ce5e762be200128f08f"
+  },
+  "native-world-entry-probe-current": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6fa5ce97162e75b3a107730b76bfe1d795ad1abd110ffbaa13d5308529d2fedc\\manifest.json",
+    "sha256": "6fa5ce97162e75b3a107730b76bfe1d795ad1abd110ffbaa13d5308529d2fedc"
+  }
+}

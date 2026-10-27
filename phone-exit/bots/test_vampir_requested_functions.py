@@ -132,6 +132,58 @@ class RequestedFunctionTests(unittest.TestCase):
                 self.tool.collect(self.index.api(),self.args,self.request,[self.at])
         self.assertFalse(list((self.root/'ghidra/request-exports').glob('*/*/provenance.json')))
 
+    def leaf_image(self):
+        leaves={0x144552540:'890d9a5bc306c3',0x144ab13f0:'488b491033d2e9c51b0000'}
+        offsets={at:i*32 for i,at in enumerate(leaves)}
+        data=bytearray(64)
+        for at,encoded in leaves.items():data[offsets[at]:offsets[at]+len(bytes.fromhex(encoded))]=bytes.fromhex(encoded)
+        return SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=bytes(data),
+                               offset=lambda rva:offsets[rva+0x140000000])
+
+    def test_exact_ping_tail_leaf_is_finite_and_sdk_setter_remains_supported(self):
+        sha='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+        native=self.index.extension('build-native-entry-code');image=self.leaf_image()
+        leaves=self.tool.checked_leaf_tails(native,image,sha)
+        self.assertEqual(leaves,{0x144552540:'890d9a5bc306c3',0x144ab13f0:'488b491033d2e9c51b0000'})
+        self.assertNotIn(0x144ab2fc0,leaves) # No recursive recovery-target discovery.
+        rows=[dict(address=0x14679c923,mnemonic='jmp',branch=True,call=False,
+                   direct_target=0x144ab13f0,bytes='e9c84a31fe')]
+        self.assertEqual(self.tool.reviewed_tail_calls(rows,set(leaves))[0]['target'],'0x144ab13f0')
+
+    def test_changed_ping_leaf_bytes_are_rejected_before_jvm(self):
+        sha='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+        image=self.leaf_image();image.data=image.data[:39]+b'\xc6'+image.data[40:]
+        with patch.object(self.tool.subprocess,'run') as run:
+            with self.assertRaisesRegex(ValueError,'leaf source differs'):
+                self.tool.checked_leaf_tails(self.index.extension('build-native-entry-code'),image,sha)
+            run.assert_not_called()
+
+    def test_unknown_address_source_and_changed_terminal_target_are_not_models(self):
+        sha='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+        native=self.index.extension('build-native-entry-code')
+        for source,address,encoded in ((sha,0x144ab13f1,'488b491033d2e9c51b0000'),
+                ('0'*64,0x144ab13f0,'488b491033d2e9c51b0000'),
+                (sha,0x144ab13f0,'488b491033d2e9c61b0000')):
+            with self.subTest(source=source,address=hex(address),encoded=encoded), \
+                    patch.object(self.tool,'REVIEWED_LEAF_TAILS',{source:{address:encoded}}):
+                with self.assertRaisesRegex(ValueError,'Unreviewed tail leaf model'):
+                    self.tool.checked_leaf_tails(native,self.leaf_image(),source)
+
+    def test_ping_tail_disassembly_target_guard_rejects_changed_decoder_flow(self):
+        sha='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
+        native=self.index.extension('build-native-entry-code');real=native.capstone.Cs
+        def changed(*args):
+            decoder=real(*args)
+            def disasm(raw,at):
+                rows=list(decoder.disasm(raw,at))
+                if at!=0x144ab13f0:return rows
+                return [SimpleNamespace(mnemonic=r.mnemonic,op_str=r.op_str,address=r.address,size=r.size,
+                    operands=[SimpleNamespace(imm=0x144ab2fc1)]) for r in rows]
+            return SimpleNamespace(disasm=disasm,detail=False)
+        with patch.object(native.capstone,'Cs',side_effect=changed):
+            with self.assertRaisesRegex(ValueError,'control flow differs'):
+                self.tool.checked_leaf_tails(native,self.leaf_image(),sha)
+
     def test_real_exports_match_snapshots_and_instruction_shapes(self):
         native=self.index.extension('build-native-entry-code')
         old_sha='98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'

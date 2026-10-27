@@ -1045,6 +1045,20 @@
       "evidence": [
         "evidence/updates/HEADLESS-CHARACTER-LIST-BATCH-11318.md"
       ]
+    },
+    {
+      "id": "clock-world-batch-11318",
+      "status": "bounded_answer",
+      "question": "Как перенести Clock/Lobby, keepalive и ограниченные world IO slices 1.13.18 единым кэшируемым пакетом?",
+      "known": "24 Clock, 10 Lobby, 36 producer, 201 world IO и 36 whole Ping reader/handler/receiver сценариев; 12 short inputs. Явные OS/engine/send/recovery fixtures. Два неиспользуемых похожих helper-а не допущены.",
+      "unknown": "Настоящая синхронизация, transport/server acceptance, recovery internals и reader/engine world composition. Текущий игровой кандидат требует полного набора доказательств и отдельного runtime допуска.",
+      "next_action": "Собрать отключённый current game candidate из всех обязательных current check reports; отдельно интегрировать source guards до живой проверки.",
+      "decision_rule": "Whole source proof и native fixtures не равны live admission; исторический профиль не переименовывать и не открывать quests/tutorial.",
+      "do_not_repeat": "Использовать общий hash cache при неизменных EXE/exports/code/contexts/runtime; не повторять shared native package для каждого потребителя.",
+      "addresses": [],
+      "evidence": [
+        "evidence/updates/HEADLESS-CLOCK-WORLD-BATCH-11318.md"
+      ]
     }
   ]
 }

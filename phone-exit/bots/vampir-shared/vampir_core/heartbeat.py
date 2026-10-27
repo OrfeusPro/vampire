@@ -1,10 +1,10 @@
 """Current Ping producer policy; single-owner queue, no reconnect or game IO."""
 from .ping import PingPayload, PingResultPayload
-from .session_clock import LobbyPingClock, SOURCE_SHA256, INITIAL_PING_SOURCE_SHA256
+from .session_clock import LobbyPingClock, SOURCE_SHA256, INITIAL_PING_SOURCE_SHA256, LATEST_PING_SOURCE_SHA256
 
 # Reviewed producer and receiver, plus bounded live observation. Initial Ping
 # support alone must not expand this set on a future client update.
-HEARTBEAT_SOURCES=frozenset((SOURCE_SHA256,INITIAL_PING_SOURCE_SHA256))
+HEARTBEAT_SOURCES=frozenset((SOURCE_SHA256,INITIAL_PING_SOURCE_SHA256,LATEST_PING_SOURCE_SHA256))
 
 
 class PingRecoveryRequired(TimeoutError):
