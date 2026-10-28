@@ -1,5 +1,11 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Автоматический пакет LoginResult: 96 whole reader flow сценариев прошли;
+211 handler candidates сведены к одному по двум связям. Получены три полных
+exports; проверка подключена к on_update / кэшу, reader binding добавлена.
+Nested layout / handler semantics и runtime ещё открыты.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-READER-FLOW-11320.md).
+
 Автоматическое продолжение: 168 tag / writer сценариев прошли, ещё две
 проверки и 16 preparation bindings подключены к обновлению. Continuation
 проверена автоматически, но anchor LoginResult остался неоднозначным;

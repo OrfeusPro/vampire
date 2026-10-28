@@ -228,6 +228,88 @@
       "question": "release-function-reuse",
       "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
       "unknown": "Изменившийся LoginResult constructor/reader/handler и post-state требуют доказательств. Последний continuation anchor неоднозначен; текущий context не создан."
+    },
+    {
+      "addresses": [
+        "0x1456d7660",
+        "0x1456dc140",
+        "0x14679e2d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "8f6f925e03aea414317c202cf8838e11b26504156c8e5bf86e3bcc4e497b9cf3",
+          "id": "compiled-tag-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9c76eef336d0e8311c6cb671f98ad0ce305e25394293f04e907f045299ba2632\\manifest.json",
+          "sha256": "9c76eef336d0e8311c6cb671f98ad0ce305e25394293f04e907f045299ba2632",
+          "state": "passed"
+        },
+        {
+          "cache_key": "edd94d270219bed13aff0c6ac0faafcd31a95ec0972eba9a6de7329d224652bc",
+          "id": "packet-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ebb6437e3e0c314fee0854bfbd074d327ef93b9ca89c1990851f5fe6ce1a9079\\manifest.json",
+          "sha256": "ebb6437e3e0c314fee0854bfbd074d327ef93b9ca89c1990851f5fe6ce1a9079",
+          "state": "passed"
+        },
+        {
+          "cache_key": "038e58666c36c830176e492bd783aed54c6c836657533da981c07b4089a75f67",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3ddd07efd61138d7bf8bba5c202faa6de08991698f28c61446d0f2484b836060\\manifest.json",
+          "sha256": "3ddd07efd61138d7bf8bba5c202faa6de08991698f28c61446d0f2484b836060",
+          "state": "passed"
+        },
+        {
+          "cache_key": "feb17bea3bd3ca7b88855ad0038b625cc179fb063659fd94636e5a3136854a74",
+          "id": "native-wire-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cb5affa1fbf867f66889a886655d78e3b30aa917a7a2279d8eb2ee6fbd3135b6\\manifest.json",
+          "sha256": "cb5affa1fbf867f66889a886655d78e3b30aa917a7a2279d8eb2ee6fbd3135b6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9d725d903e6ac843a8b70626162aca1e96c908b3f5b74b6cca86898bc103376e",
+          "id": "native-entry-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2503dc54c154fe0b63d7551978ba16b329cf3cbd0ff4dc9fd510cf916e3d69e3\\manifest.json",
+          "sha256": "2503dc54c154fe0b63d7551978ba16b329cf3cbd0ff4dc9fd510cf916e3d69e3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e39874b71af4c9c275133e3ae6b1d0d6edddb1932ad82273b03e11a7552f51b2",
+          "id": "native-result-gate-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eba04a064816505da02da65159c2532824a9ce3b3e4176dd4eea0aea9a345c5d\\manifest.json",
+          "sha256": "eba04a064816505da02da65159c2532824a9ce3b3e4176dd4eea0aea9a345c5d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "cc4176ca0a59f89b112dced262f1749b5204c7ab3fe06b38303e2e8a6b74d86b",
+          "id": "continuation-candidates-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\efb234eb01f3252ff6084f3728327a4f8795c28452e74b49d2ec3985dc01ea94\\manifest.json",
+          "sha256": "efb234eb01f3252ff6084f3728327a4f8795c28452e74b49d2ec3985dc01ea94",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1049fbd1b423007599d7e3981aaea8bd5c865773eb5d2dc768ed3b22e41e803f",
+          "id": "native-login-reader-flow-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\61cdc6c1e4622b90cc6bfeb64bb59544ee47de0e8099461b5d68a5170f376431\\manifest.json",
+          "sha256": "61cdc6c1e4622b90cc6bfeb64bb59544ee47de0e8099461b5d68a5170f376431",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Автоматически выделены constructor candidate и единственный gate+post-state handler candidate из 211; три полных exports collected. Whole reader 23 operations прошёл 96 flow сценариев; source-bound reader binding и on_update/cache подключены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-READER-FLOW-11320.md",
+          "sha256": "22aaad99994f05db27b598141a19a16f0647aafb62ae139fb27ef8e85dd65479"
+        }
+      ],
+      "id": "a7218f549a83cedc3420e7b83d040ce82482e92bcf9277dec334e31a5140445c",
+      "limits": [
+        "Opaque archive/string/nested dispatch fixtures записывают по одному sentinel byte; конструктор и handler в native flow не исполнялись.",
+        "Новые nested layout/primitive wire decoding, полный контракт, closed_shape и runtime не подтверждены; сеть и игра не запускались."
+      ],
+      "method": "bounded_native",
+      "next_check": "По готовым exports и единственному handler candidate проверять nested readers и handler paths; переиспользовать preparation и 96 reader flow сценариев из кэша.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Constructor/nested layout/primitive decode и handler semantics; registration owner не найден в ограниченном поиске; post-state boundary и continuation anchor не закрыты."
     }
   ],
   "schema": 1,

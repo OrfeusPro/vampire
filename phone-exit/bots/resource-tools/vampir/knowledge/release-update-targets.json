@@ -6125,6 +6125,41 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-reader-flow-current",
+      "baseline_functions": [],
+      "tools": [
+        "discover-login-result-11320.py",
+        "verify-login-reader-flow-11320.py"
+      ],
+      "rule": "Whole reader flow с opaque archive fixtures; constructor, nested layout, handler semantics и runtime отдельно.",
+      "automation": {
+        "discovery": "bounded_table_and_gate_post_state_links",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1456dc140",
+                "scope": "Whole reader flow: destinations/order, early failure, ABI/canaries; opaque one-byte archive fixtures, no nested layout or runtime.",
+                "required_checks": [
+                  "native-login-reader-flow-11320"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-reader-flow-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-READER-FLOW-11320.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

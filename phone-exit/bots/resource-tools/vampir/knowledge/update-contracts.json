@@ -758,7 +758,8 @@
           "writer": "0x1456e84d0",
           "string-writer": "0x144aad3d0",
           "prepare": "0x1467d14e0",
-          "constructor": "0x1456d7540"
+          "constructor": "0x1456d7540",
+          "result-reader": "0x1456dc140"
         }
       },
       "resources": [],

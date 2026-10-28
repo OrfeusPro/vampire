@@ -132,6 +132,21 @@ def check_artifacts(index, root, names):
             external[str(path)] = index.digest(path)
             continue
         parts = path.relative_to(root.resolve()).parts
+        if (len(parts) == 3 and parts[0] == 'client-code-snapshots'
+                and index.SHA.fullmatch(parts[1]) and parts[2] == 'ProjectRED-Win64-Shipping.exe'):
+            actual = index.digest(path)
+            if actual != parts[1]:
+                raise ValueError('Check client snapshot hash changed')
+            external[str(path)] = actual
+            continue
+        if (len(parts) == 4 and parts[0] == 'knowledge'
+                and parts[1] in ('login-result-discovery-11320', 'login-batch-alignment-11320')
+                and index.SHA.fullmatch(parts[2]) and parts[3] == 'manifest.json'):
+            data = checked_manifest(index, path)
+            if not index.SHA.fullmatch(data.get('source_sha256', '')):
+                raise ValueError('Check public research source missing')
+            external[str(path)] = index.digest(path)
+            continue
         if (len(parts) == 3 and parts[0] == 'resource-config-snapshots'
                 and index.SHA.fullmatch(parts[1]) and path.name == 'manifest.json'):
             data = checked_manifest(index, path)

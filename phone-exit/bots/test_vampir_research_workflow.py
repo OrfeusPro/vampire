@@ -10,6 +10,41 @@ import test_vampir_knowledge_index as fixture_module
 
 
 class ResearchWorkflowTests(unittest.TestCase):
+    def test_public_link_reports_and_client_sources_are_cache_inputs(self):
+        import hashlib
+        body = b'public source fixture'
+        sha = hashlib.sha256(body).hexdigest()
+        source = self.root / 'client-code-snapshots' / sha / 'ProjectRED-Win64-Shipping.exe'
+        source.parent.mkdir(parents=True)
+        source.write_bytes(body)
+        raw = json.dumps(dict(source_sha256=sha)).encode()
+        report_sha = hashlib.sha256(raw).hexdigest()
+        report = self.root / 'knowledge/login-result-discovery-11320' / report_sha / 'manifest.json'
+        report.parent.mkdir(parents=True)
+        report.write_bytes(raw)
+        names = [p.relative_to(self.root).as_posix() for p in (source, report)]
+        result = self.workflow.check_artifacts(self.index.api(), self.root, names)
+        self.assertEqual(result[str(source.resolve())], sha)
+        self.assertEqual(result[str(report.resolve())], report_sha)
+        report.write_bytes(raw + b' ')
+        with self.assertRaises(ValueError):
+            self.workflow.check_artifacts(self.index.api(), self.root, names)
+
+    def test_private_reports_and_changed_client_sources_are_rejected(self):
+        import hashlib
+        body = b'public source fixture'
+        sha = hashlib.sha256(body).hexdigest()
+        source = self.root / 'client-code-snapshots' / sha / 'ProjectRED-Win64-Shipping.exe'
+        source.parent.mkdir(parents=True)
+        source.write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'snapshot hash changed'):
+            self.workflow.check_artifacts(self.index.api(), self.root, [source.relative_to(self.root).as_posix()])
+        private = self.root / 'knowledge/private-captures/example.json'
+        private.parent.mkdir(parents=True)
+        private.write_text('{}')
+        with self.assertRaises(ValueError):
+            self.workflow.check_artifacts(self.index.api(), self.root, [private.relative_to(self.root).as_posix()])
+
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)

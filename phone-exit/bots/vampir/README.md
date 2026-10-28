@@ -1,3 +1,9 @@
+Автоматический пакет LoginResult: 96 whole reader flow сценариев прошли;
+211 handler candidates сведены к одному по двум связям. Получены три полных
+exports; проверка подключена к on_update / кэшу, reader binding добавлена.
+Nested layout / handler semantics и runtime ещё открыты.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-READER-FLOW-11320.md).
+
 Осталось 36 строк из исходных 150: общий пакет Clock / Ping / world candidate снял ещё шесть.
 
 Автоматическое продолжение: 168 tag / writer сценариев прошли, ещё две
