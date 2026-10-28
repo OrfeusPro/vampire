@@ -30,6 +30,10 @@ offline пакет.
 добавил 109 native сценариев. Preparation, framing, ответы и полный вход
 продолжают требовать своих проверок.
 
+[Version 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-11322.md)
+получил generic prepare и VersionResult / input buffer adapters, 191 новый native
+случай. OS / SDK / helper values, response handlers и целый вход этим не допущены.
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

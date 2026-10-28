@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "version_result": {
+    "acceptance": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-result-acceptance\\3e9aec7d318a0ad641022bb990bc03baecf502852f7503184bff0451331fdfc5\\manifest.json",
+      "sha256": "3e9aec7d318a0ad641022bb990bc03baecf502852f7503184bff0451331fdfc5"
+    },
+    "context": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\6fad7861f8d4b4c6890236ba4b06775c78d5b420d53d86e16b3a0f0259d43a09\\manifest.json",
+      "sha256": "6fad7861f8d4b4c6890236ba4b06775c78d5b420d53d86e16b3a0f0259d43a09"
+    },
+    "proof": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-result-proofs\\b6a987d21398ef6cbc28f5706427eac8ffae80ed7604c6944bb6fde53a138112\\manifest.json",
+      "sha256": "b6a987d21398ef6cbc28f5706427eac8ffae80ed7604c6944bb6fde53a138112"
+    },
+    "native_check": {
+      "id": "native-auto-version-result",
+      "profile_activated": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\091cea3f8e398f57c4a5818db59ca6e1ce43d0c1d279da5ced2bb1e570a0f97a\\manifest.json",
+      "runtime_activated": false,
+      "scope": "bounded_native_version_result_input",
+      "sha256": "091cea3f8e398f57c4a5818db59ca6e1ce43d0c1d279da5ced2bb1e570a0f97a",
+      "state": "passed"
+    },
+    "counts": {
+      "cases": 32,
+      "truncated": 17,
+      "failures": 5,
+      "construction_cases": 72
+    },
+    "extra": {
+      "consumed": 17,
+      "operations": [
+        [
+          "u32",
+          "0x10"
+        ],
+        [
+          "u32",
+          "0x14"
+        ],
+        [
+          "bool",
+          "0x18"
+        ],
+        [
+          "u32",
+          "0x1c"
+        ],
+        [
+          "u32",
+          "0x20"
+        ]
+      ],
+      "returned": 1,
+      "values": [
+        0,
+        123,
+        1,
+        456,
+        789
+      ]
+    },
+    "runtime": {
+      "capstone": {
+        "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+        "version": "5.0.6"
+      },
+      "unicorn": {
+        "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+        "version": "2.1.4"
+      }
+    },
+    "passes": [
+      {
+        "pass_number": 1,
+        "wall_seconds": 56.303613,
+        "reused": 0,
+        "executed": [
+          "native-plan-version-result",
+          "native-context-version-result",
+          "native-check-native-auto-version-result"
+        ],
+        "native_replays": 1,
+        "new_jvm": 0
+      },
+      {
+        "pass_number": 2,
+        "wall_seconds": 28.386555,
+        "reused": 1,
+        "executed": [
+          "native-plan-version-result",
+          "native-context-version-result"
+        ],
+        "native_replays": 0,
+        "new_jvm": 0
+      },
+      {
+        "pass_number": 3,
+        "wall_seconds": 20.510015,
+        "reused": 3,
+        "executed": [],
+        "native_replays": 0,
+        "new_jvm": 0
+      }
+    ]
+  },
+  "version_prepare": {
+    "acceptance": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-prepare-acceptance\\bc4ead94c241341bdf362f3edbd7c36ce56e1e8cafdbabaed79fe5134dd34988\\manifest.json",
+      "sha256": "bc4ead94c241341bdf362f3edbd7c36ce56e1e8cafdbabaed79fe5134dd34988"
+    },
+    "context": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\58a2b125dfa9ff815b7ecd03773e200edb16d0652140bcbf6506f90e309f172a\\manifest.json",
+      "sha256": "58a2b125dfa9ff815b7ecd03773e200edb16d0652140bcbf6506f90e309f172a"
+    },
+    "proof": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-prepare-proofs\\3cfb602c68ee46b791fb7304adbcf56d83caa101007c03169345ed2ad14abce0\\manifest.json",
+      "sha256": "3cfb602c68ee46b791fb7304adbcf56d83caa101007c03169345ed2ad14abce0"
+    },
+    "native_check": {
+      "id": "native-auto-version-prepare",
+      "profile_activated": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\5a0880e20a70206857ad28405bd3bac2b225b47fd8f9e2c37b91bac8f7ed5d72\\manifest.json",
+      "runtime_activated": false,
+      "scope": "bounded_native_version_prepare",
+      "sha256": "5a0880e20a70206857ad28405bd3bac2b225b47fd8f9e2c37b91bac8f7ed5d72",
+      "state": "passed"
+    },
+    "counts": {
+      "cases": 64
+    },
+    "extra": null,
+    "runtime": {
+      "capstone": {
+        "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+        "version": "5.0.6"
+      },
+      "unicorn": {
+        "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+        "version": "2.1.4"
+      }
+    },
+    "passes": [
+      {
+        "pass_number": 1,
+        "wall_seconds": 41.83841,
+        "reused": 0,
+        "executed": [
+          "native-plan-version-prepare",
+          "native-context-version-prepare",
+          "native-check-native-auto-version-prepare"
+        ],
+        "native_replays": 1,
+        "new_jvm": 0
+      },
+      {
+        "pass_number": 2,
+        "wall_seconds": 34.912985,
+        "reused": 2,
+        "executed": [
+          "native-plan-version-prepare"
+        ],
+        "native_replays": 0,
+        "new_jvm": 0
+      },
+      {
+        "pass_number": 3,
+        "wall_seconds": 31.726342,
+        "reused": 3,
+        "executed": [],
+        "native_replays": 0,
+        "new_jvm": 0
+      }
+    ]
+  },
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-combined-acceptance\\12d24f67c48a5640c993b590c5af7d331feda1eed229bab29bae17b72944bba9\\manifest.json",
+    "sha256": "12d24f67c48a5640c993b590c5af7d331feda1eed229bab29bae17b72944bba9"
+  },
+  "combined_metrics": {
+    "executed": [],
+    "native_replays": 0,
+    "new_jvm": 0,
+    "reused": 12,
+    "wall_seconds": 47.083613
+  },
+  "new_native_cases": 191,
+  "previous_wire_cases_replayed": 0,
+  "tooling_tests": 118,
+  "reader_tests": 14,
+  "prepare_tests": 10,
+  "driver_tests": 4,
+  "collections": [
+    {
+      "request": "e82c0577ea49c80fcdba8c2c9b187ef952b84ff184d2690d03bb354710973eb2",
+      "receipt": "feb1e61854e639431b52804c44ea28d426ebbc3f24b655867b04cff84da3fe47",
+      "roots": 15,
+      "missing": 11,
+      "reused": 4,
+      "export": "run-7047b821ac37"
+    },
+    {
+      "request": "3c6dd626290885fd625882cfc8a9a8367c56a7bee479e4071401748a7688f770",
+      "receipt": "b79e2d13af0aaba8a2c268160329df5c3b6d8531cb9cbab4ef6fc9ee4b061d3d",
+      "roots": 2,
+      "missing": 2,
+      "export": "run-8eb39d51b84a"
+    }
+  ],
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "ID2 scalar/raw/buffer constructors only; input strings, big-endian reader paths, dispatch and handlers excluded.",
+    "Preparation only 2 roots, synthetic helper/OS/SDK/cache/string/send boundaries; no native helper integration or provenance of real inputs.",
+    "Selected adapter timings and combined cache check exclude the earlier collections and full installation audit. No live admission or authentication."
+  ]
+}

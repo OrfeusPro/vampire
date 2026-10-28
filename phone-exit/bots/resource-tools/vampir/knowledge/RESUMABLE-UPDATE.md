@@ -97,8 +97,12 @@ SHA и PE-разбор переиспользуются внутри одног�
 подключением можно выполнить `run-live-sessions.py --profile prepared-next --check-source`.
 Явные исторические профили сохраняют свои ограничения и не переключаются скрытно.
 Сейчас общие semantic adapters реализованы для UTF-8, полного string writer
-и archive IO / Version / Login wire. Для writer требуются подтверждённый target
+и archive IO / Version / Login wire, VersionResult с input buffer и базовой
+подготовки Version. Для writer требуются подтверждённый target
 UTF-8 и настоящие exports; archive driver использует опубликованный writer того же SHA.
+Preparation пока использует явные OS / SDK / helper fixtures. VersionResult
+подтверждает только ID 2 / scalar input и конструкторы; другие ответы и strings
+требуют своих проверок. [Точные области](evidence/updates/HEADLESS-AUTO-VERSION-11322.md).
 Отсутствие адаптера другого
 семейства — отдельный блокер, а не доказанное изменение его кода в новой игре.
 
@@ -109,8 +113,9 @@ UTF-8 и настоящие exports; archive driver использует опу�
 `next-profiles`. Данные наблюдателя находятся в
 `%LOCALAPPDATA%/PhoneExit/Vampir/update-watch/<установка>/`.
 Базы generic семейств публикуются отдельно в `generated-native/index.json`
-(UTF-8), `generated-string-writers/index.json` и `generated-archive-wire/index.json`;
-они не являются next-profile. Последний указатель читается archive adapter отдельно
+(UTF-8), `generated-string-writers/index.json` и `generated-archive-wire/index.json`,
+а также `generated-version-results/index.json` и `generated-version-prepare/index.json`;
+они не являются next-profile. Указатели читаются соответствующими adapters отдельно
 от исторических function catalog projections.
 
 Сводка различает проверенные функции, semantic результаты, возможности,
@@ -134,3 +139,5 @@ UTF-8 и настоящие exports; archive driver использует опу�
 [автоматический string writer 20 → 22](evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md).
 Архивные методы и целые тела пакетов:
 [автоматический archive-wire 20 → 22](evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md).
+Подготовка и чтение ответа:
+[автоматический Version 20 → 22](evidence/updates/HEADLESS-AUTO-VERSION-11322.md).

@@ -27,6 +27,9 @@ UTF-8 и полный string-writer уже подключены; [writer 20 → 
 [Archive IO и Version / Login wire](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md)
 тоже подключены: 45 + 64 native случая. Далее preparation / SDK / metadata,
 response readers / handlers, clock / heartbeat и world; целый вход остаётся недопущенным.
+[VersionResult / native input buffer и базовый Version prepare](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-11322.md)
+подключены: 127 + 64 native случая, повторы без replay. Далее helper integration
+подготовки Version, SDK / metadata / Login prepare, handlers / registration и world.
 
 ## Сохранённые записи прежних этапов
 

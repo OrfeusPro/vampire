@@ -2,8 +2,11 @@
 from pathlib import Path
 
 SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='string-writer-v1'),
-       dict(id='native-auto-archive-wire',family='archive-wire',adapter='archive-wire-v1'))
-MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire'}
+       dict(id='native-auto-archive-wire',family='archive-wire',adapter='archive-wire-v1'),
+       dict(id='native-auto-version-result',family='version-result',adapter='version-result-v1'),
+       dict(id='native-auto-version-prepare',family='version-prepare',adapter='version-prepare-v1'))
+MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire',
+         'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare'}
 
 
 def registry(index,knowledge):
@@ -19,9 +22,14 @@ def registry(index,knowledge):
     return selected
 
 
-def run(index,args,sha,journal,database):
+def run(index,args,sha,journal,database,*,families=None):
+    selection=set(families) if families is not None else None
+    registered=registry(index,args.knowledge)
+    if selection is not None and (not selection or selection-{spec['family'] for spec in registered}):
+        raise ValueError('Selected native family is not registered')
     declarations=[];checks=[];queue=[];families=[]
-    for spec in registry(index,args.knowledge):
+    for spec in registered:
+        if selection is not None and spec['family'] not in selection:continue
         family=spec['family'];families.append(family)
         tool=index.extension(MODULES[spec['adapter']])
         try:

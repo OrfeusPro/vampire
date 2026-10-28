@@ -8,6 +8,23 @@ from test_vampir_update_contracts import load
 
 
 class AdapterDriverTests(unittest.TestCase):
+    def test_selected_driver_never_loads_other_family_tools_and_rejects_unregistered_selection(self):
+        driver=load('update-native-drivers')
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);(root/'native-check-adapters.json').write_text('{}')
+            selected=next(spec for spec in driver.SPECS if spec['family']=='version-result')
+            tool=SimpleNamespace(plan_inputs=lambda *args:{},discover=lambda *args:dict(state='planned',exports=[]),
+                tools=lambda:{},materialize=lambda *args:dict(checks=[],queue=[]))
+            allowed={driver.MODULES[selected['adapter']]:tool,'research-workflow':object(),
+                'update-run':SimpleNamespace(collect_batches=lambda *args:[])}
+            index=SimpleNamespace(read_json=lambda _:dict(schema=1,adapters=list(driver.SPECS)),
+                extension=lambda name:allowed[name])
+            journal=SimpleNamespace(stage=lambda name,inputs,action:action());args=SimpleNamespace(root=root,knowledge=root)
+            result=driver.run(index,args,'a'*64,journal,root/'unused',families=['version-result'])
+            self.assertEqual(result['families'],['version-result'])
+            with self.assertRaisesRegex(ValueError,'not registered'):
+                driver.run(index,args,'a'*64,journal,root/'unused',families=['unknown'])
+
     def test_registered_families_have_a_fixed_order_and_no_duplicate_or_arbitrary_modules(self):
         driver=load('update-native-drivers')
         with tempfile.TemporaryDirectory() as folder:
@@ -46,13 +63,13 @@ class AdapterDriverTests(unittest.TestCase):
             def run():
                 journal=engine.Journal(index,workflow,args,record,path)
                 result=driver.run(index,args,'a'*64,journal,root/'unused.sqlite3')
-                self.assertFalse(result['queue']);self.assertEqual(len(result['checks']),2)
+                self.assertFalse(result['queue']);self.assertEqual(len(result['checks']),len(driver.SPECS))
                 return journal
-            run();self.assertEqual(executions,{'string-writer':1,'archive-wire':1})
-            warm=run();self.assertEqual(warm.reused,6);self.assertFalse(warm.executed)
+            run();self.assertEqual(executions,{spec['family']:1 for spec in driver.SPECS})
+            warm=run();self.assertEqual(warm.reused,3*len(driver.SPECS));self.assertFalse(warm.executed)
             versions['archive-wire']=2;selective=run()
-            self.assertEqual(executions,{'string-writer':1,'archive-wire':2})
-            self.assertEqual(selective.reused,3)
+            self.assertEqual(executions,{spec['family']:(2 if spec['family']=='archive-wire' else 1) for spec in driver.SPECS})
+            self.assertEqual(selective.reused,3*(len(driver.SPECS)-1))
 
     def test_merge_preserves_base_cache_value_when_caller_passes_a_copy(self):
         import copy

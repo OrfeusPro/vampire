@@ -214,7 +214,8 @@ def verify(context,root):
     if compiled_tag!=tag_source['value']:
         raise ValueError('Version compiled tag differs')
     cases=[]
-    abi={name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R14','R15'))}
+    abi={name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R13','R14','R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     platform_cases=platform_module.SCENARIOS if platform else (dict(present=False),dict(present=True))
     for poison in (0,0x55,0xaa,0xff):
         for platform_case in platform_cases:

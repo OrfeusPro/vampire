@@ -127,6 +127,65 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Preparation/SDK/metadata, ответы и dispatch, clock/heartbeat/world и полный игровой вход 1.13.22 остаются неполными."
+    },
+    {
+      "addresses": [
+        "0x144aac220",
+        "0x144aacc30",
+        "0x1456dc670"
+      ],
+      "checks": [],
+      "conclusion": "Версия ответа и input buffer: generic adapter реализован и подключён к update/Journal/cache. Реальные source-bound native квитанции содержат 127 случаев reader/input и 64 preparation; неизменный запуск четырёх drivers переиспользовал 12 этапов без JVM/native. Contexts становятся последними базами своих семейств, runtime профиль не меняется.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-VERSION-11322.md",
+          "sha256": "5e44afbef37770ee2df4b331a6de283573d907b547680d58a31aa2411a86a50f"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-VERSION-11322.json",
+          "sha256": "60de7e3d90f157a1d04cc4b7aafe5ae14b60fc6f98610b61666b03d403b427ec"
+        }
+      ],
+      "id": "eec34dda0af14a7ab7fe163153a5bac511fe8425b2744311dc9ca20ea8ea8f69",
+      "limits": [
+        "Fact фиксирует правило и интеграцию; bounded native scopes — в отдельных source-bound квитанциях evidence.",
+        "ID2: только scalar/raw/buffer constructors; strings/endian-swap/handlers исключены. Prepare: только 2 roots, OS/SDK/helper/send остаются fixtures.",
+        "Selected drivers и общий кэш; полный аудит установки и 559 готовых wire cases не повторялись. Авторизации и игровых команд нет."
+      ],
+      "method": "static",
+      "next_check": "Следующий общий блок helper integration Version или Login response/input adapter; готовые пять семейств использовать по валидному кэшу.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Helper integration Version подготовки, SDK/metadata/Login prepare, response handlers/registration/composition, clock/heartbeat/world и полный вход 1.13.22 остаются незакрытыми. ID2 proof не подтверждает string input или остальные ответы."
+    },
+    {
+      "addresses": [
+        "0x1456d7c10",
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Базовая подготовка Version: generic adapter реализован и подключён к update/Journal/cache. Реальные source-bound native квитанции содержат 127 случаев reader/input и 64 preparation; неизменный запуск четырёх drivers переиспользовал 12 этапов без JVM/native. Contexts становятся последними базами своих семейств, runtime профиль не меняется.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-VERSION-11322.md",
+          "sha256": "5e44afbef37770ee2df4b331a6de283573d907b547680d58a31aa2411a86a50f"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-VERSION-11322.json",
+          "sha256": "60de7e3d90f157a1d04cc4b7aafe5ae14b60fc6f98610b61666b03d403b427ec"
+        }
+      ],
+      "id": "b3a0841a4b0a47a2c8e2575b0e4122e932e3500e96bcc4c13edfb846ae2c9f06",
+      "limits": [
+        "Fact фиксирует правило и интеграцию; bounded native scopes — в отдельных source-bound квитанциях evidence.",
+        "ID2: только scalar/raw/buffer constructors; strings/endian-swap/handlers исключены. Prepare: только 2 roots, OS/SDK/helper/send остаются fixtures.",
+        "Selected drivers и общий кэш; полный аудит установки и 559 готовых wire cases не повторялись. Авторизации и игровых команд нет."
+      ],
+      "method": "static",
+      "next_check": "Следующий общий блок helper integration Version или Login response/input adapter; готовые пять семейств использовать по валидному кэшу.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Helper integration Version подготовки, SDK/metadata/Login prepare, response handlers/registration/composition, clock/heartbeat/world и полный вход 1.13.22 остаются незакрытыми. ID2 proof не подтверждает string input или остальные ответы."
     }
   ],
   "schema": 1,

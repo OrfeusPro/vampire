@@ -89,6 +89,7 @@ def install(load, h, context, state, packet, archive, order):
     def construct(address, expected_table, size, mode, endian, poison):
         h.uc.mem_write(archive - 16, b'\xa5' * 16 + bytes([poison]) * 0x40 + b'\xa6' * 16)
         abi = {name: 0x1122334400000000 + i for i, name in enumerate(('RBX', 'RBP', 'RSI', 'RDI', 'R12', 'R13', 'R14', 'R15'))}
+        abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
         for name, value in abi.items():
             h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + name), value)
         h.uc.reg_write(h.x.UC_X86_REG_RDX, buffer)
@@ -122,9 +123,13 @@ def install(load, h, context, state, packet, archive, order):
             'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960':'0x1496706e8',
             'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c':'0x149671ee8',
             '544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c':'0x1496731e8'}
-        require(context['source_sha256'] in base_tables and spec == dict(
-                    base_table=base_tables[context['source_sha256']], reading_mode=1, reading_endian=0),
-                'Input buffer construction scope differs')
+        if context.get('portable_buffer_proof'):
+            require(load('update-native-version-result').admit_input_buffer(h,context) is True,
+                    'Input buffer portable construction proof differs')
+        else:
+            require(context['source_sha256'] in base_tables and spec == dict(
+                        base_table=base_tables[context['source_sha256']], reading_mode=1, reading_endian=0),
+                    'Input buffer construction scope differs')
         for name, expected_table in (('constructor', table), ('buffer_constructor', int(spec['base_table'], 16))):
             for size in (0, 1, 4096):
                 for mode in (0, 1, 0xffffffff):

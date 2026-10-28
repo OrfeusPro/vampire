@@ -67,6 +67,7 @@ def verify(context, root):
         before = bytes(h.uc.mem_read(packet, 0x28))
         seed(body, poison)
         abi = {name: 0x1234567800000000 + i for i, name in enumerate(('RBX', 'RBP', 'RSI', 'RDI', 'R12', 'R13', 'R14', 'R15'))}
+        abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
         for name, value in abi.items():
             h.uc.reg_write(getattr(h.x, 'UC_X86_REG_' + name), value)
         h.uc.reg_write(h.x.UC_X86_REG_RDX, archive)
