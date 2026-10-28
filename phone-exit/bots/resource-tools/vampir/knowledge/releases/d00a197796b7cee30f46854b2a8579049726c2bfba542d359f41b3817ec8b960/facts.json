@@ -1510,7 +1510,7 @@
       "conclusion": "Реализованы update --plan-only, --resume и update-status, граф контрактов, сохранение этапов и проверка их входов/выходов, явные пакеты до 32 unwind roots, контексты по SHA и отдельная подготовка профиля из проверенных reports. Проверки контроллера покрывают прерывание, повреждение, смену зависимостей, неполные проверки и восстановление после отказа сборщика; авторизация и активация отсутствуют.",
       "evidence": [
         {
-          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\RESUMABLE-UPDATE.md",
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\RESUMABLE-UPDATE-11316.md",
           "sha256": "ca6223261b50f6b6c70b949575c7cd02434739c65ac509b3e18f3d86becad403"
         }
       ],

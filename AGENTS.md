@@ -14,7 +14,9 @@
   [bots/AGENTS.md](phone-exit/bots/AGENTS.md). Применять эти правила также при
   изменениях игрового интерфейса в `pc/`.
 - Vampir: сначала [главный README](phone-exit/bots/vampir/README.md), затем
-  [TASKS](phone-exit/bots/vampir-headless/TASKS.md) и связанные доказательства.
+  [инструкцию обновления](phone-exit/bots/resource-tools/vampir/knowledge/RESUMABLE-UPDATE.md).
+  Для разработки — [TASKS](phone-exit/bots/vampir-headless/TASKS.md), открытый вопрос
+  и связанные доказательства. Команды и состояние версий не дублировать в AGENTS.md.
 - Полный прежний AGENTS.md и результаты старых этапов:
   [архив истории](phone-exit/docs/history/README.md). Это история, не текущие инструкции.
 

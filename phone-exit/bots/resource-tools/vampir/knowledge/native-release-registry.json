@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "releases": [
+    {"id": "11316", "order": 11316, "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960"},
+    {"id": "11318", "order": 11318, "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"},
+    {"id": "11320", "order": 11320, "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"},
+    {"id": "11322", "order": 11322, "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"}
+  ],
+  "family_aliases": {
+    "11320": {"login-nested": "login-result", "login-input": "login-result-input", "login-strings-buffer": "login-result-buffer"}
+  },
+  "projections": [
+    {"adapter": "contract-functions-v1", "contract": "game-version", "release": "11320", "keys": ["writer"], "exports": {"run-af05ed4ef63f": "1530670c3ee5bad03be53a613465c8ac5d1f5825c3d9975217bc9505726041d0"}},
+    {"adapter": "contract-functions-v1", "contract": "game-version", "release": "11320", "keys": ["wrapper-constructor", "platform-selector", "context-store", "context-lookup", "windows-suffix"], "exports": {"run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"}},
+    {"adapter": "contract-functions-v1", "contract": "game-login", "release": "11320", "keys": ["writer"], "exports": {"run-af05ed4ef63f": "1530670c3ee5bad03be53a613465c8ac5d1f5825c3d9975217bc9505726041d0"}},
+    {"adapter": "contract-functions-v1", "contract": "game-login", "release": "11320", "keys": ["result-handler-early"], "exports": {"run-cc90e4f503ac": "2573e9f84adce9d0123cc47079b60ea1c48d476da4cb5142430a12e296acdc04"}}
+  ],
+  "suite_adapters": [
+    {"id": "native-utf8-context", "family": "utf8", "adapter": "utf8-v1"},
+    {"id": "native-entry", "family": "entry", "adapter": "unsupported", "reason": "Нет проверенного общего адаптера подготовки входа, OS effects и layouts."},
+    {"id": "native-login-result", "family": "login-result", "adapter": "unsupported", "reason": "Нужен адаптер полного layout ответа, input readers и fixture boundaries."},
+    {"id": "native-character-list", "family": "character-list", "adapter": "unsupported", "reason": "Нет общего адаптера record/array layouts и source-bound callbacks."},
+    {"id": "native-world", "family": "world", "adapter": "unsupported", "reason": "Нет общего адаптера object/array layouts и engine effects."},
+    {"id": "native-clock", "family": "clock", "adapter": "unsupported", "reason": "Нет общего адаптера globals, clock effects и session continuation."},
+    {"id": "native-tutorial", "family": "tutorial", "adapter": "unsupported", "reason": "Нет общего адаптера tutorial/action state и исходных callbacks."}
+  ]
+}

@@ -28,16 +28,19 @@ from vampir_core.sdk_sign_in_http import (execute_sdk_sign_in, execute_sdk_sign_
     execute_launcher_token, execute_launcher_sign_in, execute_sdk_fetch)
 from vampir_core.socks_route import SocksRoute
 from vampir_core.windows_version import observe_windows_version
+from vampir_core.runtime_admission import prepared_entrypoint,is_prepared
 
 PROFILE_SHA = '1d98be691d899b6c9d6280c86d6f42ceeab8ce01cac9685d5e0b8495793cc7ad'
 
 
+@prepared_entrypoint(root=ROOT,workspace=HERE.parents[2])
 def load_inputs(email, *, device_settings=None, route=None, selected_profile='recovered-base'):
-    if selected_profile == 'recovered-release':
+    if selected_profile == 'recovered-release' or is_prepared(selected_profile):
         spec = importlib.util.spec_from_file_location('nid_release_source', HERE / 'sdk-source-profile.py')
         loader = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(loader)
-        source = loader.load_release_profile('nid', root=ROOT)
+        source = (loader.load_prepared_profile('nid',selected_profile=selected_profile,root=ROOT)
+            if is_prepared(selected_profile) else loader.load_release_profile('nid', root=ROOT))
     elif selected_profile == 'recovered-base':
         path = ROOT / 'code-clues/nid-windows-initial-profile.json'
         if hashlib.sha256(path.read_bytes()).hexdigest() != PROFILE_SHA: raise ValueError('NID source profile changed')
@@ -59,8 +62,9 @@ def load_inputs(email, *, device_settings=None, route=None, selected_profile='re
     settings = validate(device_settings)
     binding = apply_binding(binding, settings)
     geo = None
-    if selected_profile == 'recovered-release':
-        public = loader.load_release_profile('public_gmc2', root=ROOT)
+    if selected_profile == 'recovered-release' or is_prepared(selected_profile):
+        public = (loader.load_prepared_profile('public_gmc2',selected_profile=selected_profile,root=ROOT)
+            if is_prepared(selected_profile) else loader.load_release_profile('public_gmc2', root=ROOT))
         if (public['source_sha256'], public['profile_sha256']) != (source['source_sha256'], source['profile_sha256']):
             raise ValueError('SDK public request and NID source profiles differ')
         fetched_at = time.monotonic()
@@ -102,11 +106,14 @@ def load_inputs(email, *, device_settings=None, route=None, selected_profile='re
     return binding, profile, dict(config.constants)
 
 
+@prepared_entrypoint(root=ROOT,workspace=HERE.parents[2])
 def run(email, *, timeout=300, password='', create_sdk_player=False, fetch_player=False, first_sdk_login=False,
         terms_country=None, terms_locale=None, basic_filtered=None, socks_port=None, auth_flow='nid', selected_profile='recovered-base',
         _capture=None, _execute=None, _execute_token=None, _progress=None, _prepared_inputs=None, device_settings=None):
     from vampir_core.bot_device_settings import validate
     device_settings = validate(device_settings)
+    if is_prepared(selected_profile) and (auth_flow!='launcher' or create_sdk_player or fetch_player or first_sdk_login):
+        raise ValueError('Prepared SDK supports launcher sign-in only')
     if type(create_sdk_player) is not bool: raise ValueError('Explicit SDK operation required')
     if type(first_sdk_login) is not bool or (first_sdk_login and (
             create_sdk_player or fetch_player or auth_flow != 'nid' or selected_profile != 'recovered-release')):
@@ -191,7 +198,7 @@ if __name__ == '__main__':
     parser.add_argument('--basic-terms-mode', choices=['all', 'filtered-unique'], help='Явный выбор ветви BasicTerms')
     parser.add_argument('--socks-port', type=int, help='Explicit loopback SOCKS5 route for both browser and SDK HTTPS')
     parser.add_argument('--auth-flow', choices=['nid', 'launcher'], default='nid', help='Explicit SDK flow, no automatic fallback')
-    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], default='recovered-base')
+    parser.add_argument('--profile', default='recovered-base', help='Проверенный профиль либо prepared-next / prepared:<SHA>')
     args = parser.parse_args()
     try:
         password = sys.stdin.readline(258).rstrip('\r\n') if args.password_stdin else ''

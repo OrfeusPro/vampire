@@ -17,6 +17,8 @@ from vampir_core.game_server_target import SERVER_REGION_CODES, is_game_server_s
 from vampir_core.patch_revision import parse_patch_client_revision
 from vampir_core.session_clock import LobbyPingClock, SOURCE_SHA256 as PING_CLOCK_SOURCE_SHA256, INITIAL_PING_SOURCES
 from vampir_core.world_move_start import LATEST_PROBE_SOURCE
+from vampir_core.runtime_admission import prepared_entrypoint,is_prepared,permits
+ROOT=Path('F:/PhoneExit Resources/Vampir')
 
 
 @dataclass(frozen=True)
@@ -34,6 +36,7 @@ def module(name, filename):
     return value
 
 
+@prepared_entrypoint(root=ROOT,workspace=HERE.parents[2])
 def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byte,
         extra_number, context, region, server_id=None, selection=None, password='', server_list_only=False, auth_flow='nid', language_code=None,
         lobby_context='sdk-without-nid-info', read_character_list=False, character_index=None, read_world_start=False, read_world_finish=False, observe_world_seconds=0, world_observer=None, tutorial_observer=None, ack_initial_tutorial=False, read_quest_list=False, quest_observer=None, quest_wire_observer=None, _progress=None, _server_list_observer=None, creation_factory=None, device_settings=None, session_control=None):
@@ -64,7 +67,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, server_policy_byt
             raise ValueError('Explicit persistent world session required')
     if type(read_world_finish) is not bool or (read_world_finish and not read_world_start):
         raise ValueError('World finish requires explicit world start')
-    if type(read_world_start) is not bool or (read_world_start and (character_index is None or selected_profile not in ('recovered-release','candidate-11316','candidate-11318'))):
+    if type(read_world_start) is not bool or (read_world_start and (character_index is None or
+            (selected_profile not in ('recovered-release','candidate-11316','candidate-11318') and not is_prepared(selected_profile)))):
         raise ValueError('World start requires explicit selection and release profile')
     if type(ack_initial_tutorial) is not bool or (ack_initial_tutorial and not observe_world_seconds):
         raise ValueError('Initial tutorial ack requires bounded world observation')
@@ -126,7 +130,12 @@ def _run(email, *, selected_profile, manifest_path, socks_port, server_policy_by
          read_character_list, character_index, read_world_start, read_world_finish, observe_world_seconds, world_observer, tutorial_observer, ack_initial_tutorial, read_quest_list, quest_observer, quest_wire_observer, state, phase, server_list_observer, creation_factory=None, device_settings=None, session_control=None):
     phase('source_validation')
     source = module('game_login_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
-    if selected_profile == 'candidate-11318' or getattr(source, 'source_exe_sha256', '') == LATEST_PROBE_SOURCE:
+    if is_prepared(selected_profile):
+        if (not permits(source.source_exe_sha256,'game-login-world-v1') or auth_flow!='launcher'
+                or creation_factory is not None or ack_initial_tutorial or read_quest_list
+                or tutorial_observer is not None or quest_observer is not None or quest_wire_observer is not None):
+            raise ValueError('Prepared world adapter does not admit creation, quests, tutorial or direct SDK operations')
+    elif selected_profile == 'candidate-11318' or getattr(source, 'source_exe_sha256', '') == LATEST_PROBE_SOURCE:
         if (selected_profile != 'candidate-11318' or getattr(source, 'source_exe_sha256', '') != LATEST_PROBE_SOURCE
                 or not getattr(source, 'live_probe_only', False) or not getattr(source, 'bounded_world_probe', False)):
             raise ValueError('Current candidate requires its exact verified bounded source profile')
@@ -211,7 +220,8 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
         if len(groups) == 1: state['reference_server_101_region_code'] = groups[0].raw_20
     phase('game_system_inputs')
     ping_clock = None
-    if getattr(source, 'source_exe_sha256', '') in INITIAL_PING_SOURCES:
+    if (getattr(source, 'source_exe_sha256', '') in INITIAL_PING_SOURCES
+            or permits(getattr(source,'source_exe_sha256',''),'lobby-ping-clock-v1')):
         ping_clock = LobbyPingClock.from_version_result(lobby.version_response,
             source_sha256=source.source_exe_sha256)
     cpu, windows = module('game_login_system', 'windows-system-inputs.py').observe_inputs()
@@ -249,7 +259,7 @@ def _after_lobby(lobby, *, auth, selection_proof, source, socks_port, extra_numb
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release', 'candidate-11316', 'candidate-11318'], required=True)
+    parser.add_argument('--profile', required=True, help='Проверенный профиль либо prepared-next / prepared:<SHA>')
     parser.add_argument('--manifest', type=Path, required=True)
     route_choice = parser.add_mutually_exclusive_group(required=True)
     route_choice.add_argument('--socks-port', type=int)

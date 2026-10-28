@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "initial_cold": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\automatic-update-pass-results\\782c713d828e26a8e4a88e9f5349e50bceab0b28d96d18287312c57a7e7da842\\manifest.json",
+    "sha256": "782c713d828e26a8e4a88e9f5349e50bceab0b28d96d18287312c57a7e7da842",
+    "wall_seconds": 1702.776516,
+    "jvm": 1,
+    "native_replays": 1
+  },
+  "passes": [
+    {
+      "context_replays": 4,
+      "index_reused": false,
+      "jvm": 0,
+      "kind": "final_after_integration",
+      "native_replays": 1,
+      "reused_stages": 117,
+      "root_blockers": 957,
+      "run": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-runs\\5ea58f1947a4ccbf101052459ac9bd346b7439e10f92b8e5aee0a45cf553918a\\run.json",
+      "sha256": "31af6a3a9450c60324bf66a62ecdbe5c73b4eae536e462f3469ed67562f49ff3",
+      "snapshot": "F:\\PhoneExit Resources\\Vampir\\knowledge\\automatic-update-pass-results\\31af6a3a9450c60324bf66a62ecdbe5c73b4eae536e462f3469ed67562f49ff3\\manifest.json",
+      "state": "needs_review",
+      "tooling_failures": [],
+      "wall_seconds": 646.922355
+    },
+    {
+      "context_replays": 0,
+      "index_reused": true,
+      "jvm": 0,
+      "kind": "warm_unchanged",
+      "native_replays": 0,
+      "reused_stages": 132,
+      "root_blockers": 957,
+      "run": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-runs\\5ea58f1947a4ccbf101052459ac9bd346b7439e10f92b8e5aee0a45cf553918a\\run.json",
+      "sha256": "1dc004046f4b9dc9bb9a331c66e70b71f31a487b53042e4419cd6c6035de5daf",
+      "snapshot": "F:\\PhoneExit Resources\\Vampir\\knowledge\\automatic-update-pass-results\\1dc004046f4b9dc9bb9a331c66e70b71f31a487b53042e4419cd6c6035de5daf\\manifest.json",
+      "state": "needs_review",
+      "tooling_failures": [],
+      "wall_seconds": 436.074807
+    }
+  ],
+  "watcher": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\automatic-update-watch-acceptance\\087edc1d4105f4d38dc0dbf235732523720107e076b54c8819d278306e85bbed\\manifest.json",
+    "sha256": "087edc1d4105f4d38dc0dbf235732523720107e076b54c8819d278306e85bbed"
+  },
+  "native_utf8": {
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\84a4736cb4a8ee8d1dd9dfb502efadc98a74a05d4c03184565edd00a4495dd5e\\manifest.json",
+    "sha256": "84a4736cb4a8ee8d1dd9dfb502efadc98a74a05d4c03184565edd00a4495dd5e",
+    "cases": 142,
+    "scalar_cases": 80,
+    "network_used": false
+  },
+  "checks": [
+    {
+      "id": "update-contract-registry",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\731a7e65b609a2cf1515c6d39a9383d74308379cd1cc897f70a5b8b9b7b8ac23\\manifest.json",
+      "sha256": "731a7e65b609a2cf1515c6d39a9383d74308379cd1cc897f70a5b8b9b7b8ac23",
+      "test_executions": 6
+    },
+    {
+      "id": "update-binding-closure",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4e247ebe7a672eb82f506d4ed09b368e3e1934cb021641c034f416734fd35c76\\manifest.json",
+      "sha256": "4e247ebe7a672eb82f506d4ed09b368e3e1934cb021641c034f416734fd35c76",
+      "test_executions": 48
+    },
+    {
+      "id": "update-run-offline",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d4c4c975bd1585d1372ba4e4b40b360a481e903c98da84a1a48802586c829b3a\\manifest.json",
+      "sha256": "d4c4c975bd1585d1372ba4e4b40b360a481e903c98da84a1a48802586c829b3a",
+      "test_executions": 30
+    },
+    {
+      "id": "knowledge-index-incremental",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "test_executions": 14
+    },
+    {
+      "id": "tooling-check-scope",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "test_executions": 4
+    },
+    {
+      "id": "check-source-variants",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "test_executions": 19
+    },
+    {
+      "id": "automatic-update-tooling",
+      "state": "passed",
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\bdb10a5aadfebe4bd312283eb0c109115f90af82ce1622fab928d773324c28eb\\manifest.json",
+      "sha256": "bdb10a5aadfebe4bd312283eb0c109115f90af82ce1622fab928d773324c28eb",
+      "test_executions": 42
+    }
+  ],
+  "role_projections": 8,
+  "function_only_summary": {
+    "baseline_counts": {
+      "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": 8,
+      "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c": 60,
+      "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960": 233,
+      "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c": 118
+    },
+    "contexts": 137,
+    "dependency_declarations": 27,
+    "dependency_functions": 24,
+    "dependency_verified": 1,
+    "executed": true,
+    "functions": 419,
+    "planned": 20,
+    "primary_functions": 395,
+    "primary_requires_review": 376,
+    "primary_verified": 19,
+    "requires_review": 399,
+    "roles": 1432,
+    "verified": 20
+  },
+  "capabilities": {
+    "game-ui": {
+      "live_verified": false,
+      "missing": [
+        "game-ui"
+      ],
+      "state": "incomplete"
+    },
+    "launcher": {
+      "live_verified": false,
+      "missing": [
+        "sdk-gmc2",
+        "launcher"
+      ],
+      "state": "incomplete"
+    },
+    "map": {
+      "live_verified": false,
+      "missing": [
+        "position",
+        "map-data"
+      ],
+      "state": "incomplete"
+    },
+    "quests": {
+      "live_verified": false,
+      "missing": [
+        "quests"
+      ],
+      "state": "incomplete"
+    },
+    "world-session": {
+      "live_verified": false,
+      "missing": [
+        "sdk-gmc2",
+        "launcher",
+        "game-version",
+        "game-login",
+        "character-list",
+        "character-select",
+        "world-entry",
+        "position",
+        "heartbeat"
+      ],
+      "state": "incomplete"
+    }
+  },
+  "live_verified": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Generic semantic transfer currently supports UTF-8 helpers; remaining families retain explicit adapter/dependency blockers.",
+    "Cold and warm timings include full input/artifact hashing and refer only to this installed pair/library.",
+    "No authentication, live game actions or new world-session compatibility were verified."
+  ]
+}

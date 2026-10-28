@@ -74,6 +74,7 @@ TOOLING_CHECKS = {
     'tooling-check-scope': 'test_vampir_tooling_check_scope.py',
     'knowledge-index-incremental': 'test_vampir_knowledge_index.py',
     'check-source-variants': 'test_vampir_check_source_variants.py',
+    'automatic-update-tooling': 'test_vampir_update_automation.py',
 }
 
 

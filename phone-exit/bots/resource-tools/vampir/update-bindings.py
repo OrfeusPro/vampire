@@ -3,6 +3,77 @@ import hashlib
 from pathlib import Path
 import struct
 import re
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+
+class SourceStore:
+    """One frozen invocation's verified snapshots and parsed PE images.
+
+    Cached bytes are never shared between invocations. Every file first enters
+    through its full SHA and validate() rereads all consumed files before a
+    result may be published. The parallel workers only read immutable inputs.
+    """
+    def __init__(self, index, root, *, workers=2):
+        self.index, self.root = index, Path(root).resolve()
+        self.workers = max(2, min(4, int(workers)))
+        self._sources, self._images, self._artifacts = {}, {}, {}
+        self.metrics = dict(source_reads=0, source_cache_hits=0, image_builds=0,
+            image_cache_hits=0, validation_reads=0, validation_seconds=0,
+            read_workers=self.workers, artifact_reads=0, artifact_cache_hits=0)
+
+    def digest(self, path):
+        """Cache only content-addressed library artifacts inside this run."""
+        path = Path(path).resolve()
+        relative = path.relative_to(self.root) if path.is_relative_to(self.root) else None
+        if (relative is not None and len(relative.parts) == 3
+                and relative.parts[0] == 'client-code-snapshots'
+                and relative.name == 'ProjectRED-Win64-Shipping.exe'
+                and re.fullmatch('[0-9a-f]{64}', relative.parts[1])):
+            self.source(relative.parts[1])
+            return relative.parts[1]
+        immutable = relative is not None and any(re.fullmatch('[0-9a-f]{64}', p) for p in relative.parts[:-1])
+        if not immutable:
+            return self.index.digest(path)
+        if path not in self._artifacts:
+            self._artifacts[path] = self.index.digest(path)
+            self.metrics['artifact_reads'] += 1
+        else:
+            self.metrics['artifact_cache_hits'] += 1
+        return self._artifacts[path]
+
+    def source(self, sha):
+        if not isinstance(sha, str) or not re.fullmatch('[0-9a-f]{64}', sha):
+            raise ValueError('Full binding source SHA required')
+        if sha in self._sources:
+            self.metrics['source_cache_hits'] += 1
+            return self._sources[sha]
+        raw = source(self.index, self.root, sha)
+        self._sources[sha] = raw
+        self.metrics['source_reads'] += 1
+        return raw
+
+    def image(self, native, sha):
+        if sha not in self._images:
+            self._images[sha] = native.Image(self.source(sha))
+            self.metrics['image_builds'] += 1
+        else:
+            self.metrics['image_cache_hits'] += 1
+        return self._images[sha]
+
+    def validate(self):
+        started = time.perf_counter()
+        def verify_source(sha):
+            if source(self.index, self.root, sha) != self._sources[sha]:
+                raise ValueError('Frozen binding source changed')
+        with ThreadPoolExecutor(max_workers=self.workers, thread_name_prefix='vampir-input') as pool:
+            list(pool.map(verify_source, sorted(self._sources)))
+            checked = list(pool.map(self.index.digest, sorted(self._artifacts)))
+        if checked != [self._artifacts[path] for path in sorted(self._artifacts)]:
+            raise ValueError('Frozen artifact changed during update')
+        self.metrics['validation_reads'] += len(self._sources)+len(self._artifacts)
+        self.metrics['validation_seconds'] += round(time.perf_counter()-started, 6)
+        return dict(self.metrics)
 
 
 def source(index, root, sha):
@@ -15,13 +86,19 @@ def source(index, root, sha):
 
 
 def rows(native, image, at):
+    cached = getattr(image, '_binding_rows', None)
+    if cached is None:
+        cached = image._binding_rows = {}
+    if at in cached:
+        return cached[at]
     part = image.containing(at)
     if part is None or image.roots[part][0]+image.pe.base != at:
         raise ValueError('Binding is not an explicit unwind root')
     fragments = native.decode_ranges(image,{image.roots[part]})
     if sum(len(bytes.fromhex(r['bytes'])) for f in fragments for r in f['instructions']) > 65536:
         raise ValueError('Binding function budget exceeded')
-    return [r for f in fragments for r in f['instructions']]
+    cached[at] = [r for f in fragments for r in f['instructions']]
+    return cached[at]
 
 
 def closed_shape(native, image, address, bindings, recipe):
@@ -112,10 +189,13 @@ def prune_candidates(native,image,candidates,known,recipes):
 
 def resolve(index, args, model, sha, discoveries):
     native = index.extension('build-native-entry-code')
-    raw = source(index,args.root,sha); image = native.Image(raw)
+    store = getattr(args, 'source_store', None)
+    raw = store.source(sha) if store is not None else source(index,args.root,sha)
+    image = store.image(native,sha) if store is not None else native.Image(raw)
     old_images = {}
     def baseline(identity):
-        if identity not in old_images:old_images[identity]=native.Image(source(index,args.root,identity))
+        if identity not in old_images:
+            old_images[identity] = store.image(native,identity) if store is not None else native.Image(source(index,args.root,identity))
         return old_images[identity]
     anchors = {}
     for discovery in discoveries:
@@ -234,7 +314,8 @@ def resolve(index, args, model, sha, discoveries):
             else:verification[key]=dict(state='requires_review',runtime_activated=False)
         outcomes[c['id']] = dict(bindings=known,queue=gaps,closed_shapes=shapes,
             verification=verification,search_candidates=searched)
-    if source(index,args.root,sha) != raw: raise ValueError('Binding source changed during resolution')
-    for identity,old_image in old_images.items():
-        if source(index,args.root,identity)!=old_image.data:raise ValueError('Baseline binding source changed during resolution')
+    if store is None:
+        if source(index,args.root,sha) != raw: raise ValueError('Binding source changed during resolution')
+        for identity,old_image in old_images.items():
+            if source(index,args.root,identity)!=old_image.data:raise ValueError('Baseline binding source changed during resolution')
     return dict(source_sha256=sha,contracts=outcomes)

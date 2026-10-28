@@ -42,15 +42,27 @@ def execution_inputs(index):
             found[str(path)]=digest
             pending.extend(children)
         return found
-    common={str(index.HERE/name):index.digest(index.HERE/name) for name in
-        ('update-run.py','research-update.py','research-workflow.py','knowledge-index.py','knowledge-context.py')}
+    # Journal/CLI changes create a new run identity, not a blanket cache miss.
+    # Bump this format only when interpretation of stored stage results changes.
+    common={'stage_format':2}
     groups={name:{**common,**group(seeds)} for name,seeds in {
         'resources':['recover-release-game-config.py','index-release-archives.py','compare-release-assets.py','extract-release-tables.py'],
         'discovery':['locate-release-update-targets.py'],
-        'bindings':['update-bindings.py','update-contracts.py','function-reuse-plan.py'],
+        'bindings':['update-bindings.py','update-contracts.py','function-reuse-plan.py','binary-diff-candidates.py'],
         'contracts':['update-contracts.py'],
-        'context':['verify-version-login-context.py','verify-packet-writer-context.py','update-native-harness.py'],
-        'profile':['update-profile.py']}.items()}
+        'context':['verify-version-login-context.py','verify-packet-writer-context.py','update-native-harness.py',
+            'update-native-contexts.py','verify-utf8-context.py','native-release-registry.py'],
+        'profile':['update-profile.py','update-bundle.py']}.items()}
+    shared=index.HERE.parents[1]/'vampir-shared/vampir_core'
+    for name in ('release_bundle.py','runtime_admission.py','sdk_config.py'):
+        path=shared/name
+        groups['profile'][str(path)]=index.digest(path) if path.is_file() else None
+    if (shared/'runtime_admission.py').is_file():
+        import sys
+        sys.path.insert(0,str(shared.parent))
+        from vampir_core.runtime_admission import CONSUMERS
+        workspace=index.HERE.parents[3]
+        groups['profile']['runtime_consumers']={name:index.digest(workspace/name) for name in CONSUMERS}
     runtime=index.extension('update-native-harness').runtime_inputs()
     for name in ('resources','discovery','bindings','context'):groups[name]['native_runtime']=runtime
     try:
@@ -68,6 +80,220 @@ def resource_inputs(contract, rows):
                  logical_path_pattern=dep['path'],logical_paths_verified=False)
         for dep in contract.get('resources',[]) for r in rows
         if fnmatch.fnmatchcase(r['path'].replace('\\','/'),dep['archive'])]
+
+
+def definition_inputs(index, args, update):
+    """All executable declarations, including reviewed check implementations."""
+    paths = {args.knowledge/'update-contracts.json', args.knowledge/'research-checks.json',
+        *update.target_plans(index,args.knowledge)}
+    paths.update(index.HERE/name for name in ('update-run.py','research-update.py',
+        'research-workflow.py','knowledge-index.py','knowledge-context.py') if (index.HERE/name).is_file())
+    paths.update((args.knowledge/'native-contexts').glob('*.json'))
+    paths.update(p for p in (args.knowledge/'native-release-registry.json',
+        args.knowledge/'native-check-adapters.json') if p.is_file())
+    workspace = index.HERE.parents[3]
+    for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
+        variants = [check, *check.get('source_variants',{}).values()]
+        for item in variants:
+            pattern = item.get('test_pattern')
+            if pattern:
+                paths.add(index.child(workspace,'phone-exit/bots/'+pattern))
+            paths.update(index.child(workspace,name) for name in item.get('dependencies',[]))
+    return {str(p.resolve()):index.digest(p) for p in sorted(paths)}
+
+
+def resource_stage_inputs(index, args, row, tools, *, source_sha=None, audit_sha=None):
+    """Selected archive material only; another archive's audit is irrelevant."""
+    def material(value):
+        if value is None:return None
+        return {key:value.get(key) for key in ('sha256','size','pak_version')}
+    historical = [args.root/'pak-extracted'/Path(row['path']).stem/'entries.json']
+    cached = row.get('cached_index') or {}
+    if cached.get('path'):historical.append(Path(cached['path']))
+    entries=historical[0]
+    if entries.is_file():
+        for item in index.read_json(entries):
+            if item.get('saved'):
+                path=Path(item['saved']).resolve()
+                if not path.is_relative_to(entries.parent.resolve()):raise ValueError('Historical blob outside extraction directory')
+                historical.append(path)
+    tables=table_baseline(index,args,row)
+    for item in tables['tables']:historical.append(Path(item['file']))
+    if Path(row['path']).name in ('ProjectRED-Windows.pak','pakchunk0-Windows.pak'):
+        core=index.extension('recover-pak-game-config')
+        historical.extend([args.root/'resource-config-snapshots/393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db/manifest.json',
+            args.root/'client-code-snapshots'/core.EXE_SHA256/'ProjectRED-Win64-Shipping.exe'])
+    result=dict(archive=str(Path(row['path']).resolve()),current=material(row.get('current')),
+        baseline=material(row.get('baseline')),cached_index=cached,
+        table_baseline=tables,
+        historical={str(p.resolve()):index.digest(p) if p.is_file() else None for p in historical},tools=tools)
+    if Path(row['path']).name in ('ProjectRED-Windows.pak','pakchunk0-Windows.pak'):
+        result['config_source_sha256']=source_sha
+    if any(value is not None and not re.fullmatch('[0-9a-f]{64}',str(value.get('sha256','')))
+            for value in (row.get('current'),row.get('baseline'))):
+        # Incomplete historical identities cannot authorize a narrower cache.
+        result['incomplete_material_audit_sha256']=audit_sha
+    return result
+
+
+def table_baseline(index,args,row):
+    """Only this archive's table identities and files affect its comparison."""
+    path=args.root/'table-study/index.json'
+    if not path.is_file():return dict(path=str(path),state='missing',tables=[])
+    value=index.read_json(path)
+    rows=value.get('tables',[])
+    matching=[dict(item) for item in rows if Path(item.get('source',{}).get('path','')).resolve()==Path(row['path']).resolve()]
+    for item in matching:
+        file=(path.parent/item['file']).resolve()
+        if not file.is_relative_to(path.parent.resolve()):raise ValueError('Historical CSV outside table directory')
+        item['file']=str(file)
+    return dict(path=str(path),state='foreign_only' if rows and not matching else 'selected',tables=matching)
+
+
+def resource_work(index,args,report,contracts,changed,tools=None):
+    """An inventory baseline is not an extraction-completion receipt."""
+    selected={r['path']:r for r in changed}
+    wanted=[r for r in report['files'] if r.get('current') and r['current'].get('pak_version')==11 and
+        any(fnmatch.fnmatchcase(r['path'].replace('\\','/'),dep['archive'])
+            for c in contracts['contracts'] for dep in c.get('resources',[]))]
+    if not wanted:return list(selected.values())
+    workflow=index.extension('research-workflow')
+    for row in wanted:
+        ready=False
+        if tools is not None:
+            inputs=resource_stage_inputs(index,args,row,tools,source_sha=report['exe']['sha256'],
+                audit_sha=report.get('baseline_sha256'))
+            name='resource-'+hashlib.sha256(row['path'].encode()).hexdigest()[:16]
+            key=fingerprint(workflow,dict(stage=name,inputs=inputs))
+            cache=args.root/'knowledge/update-stage-cache'/(key+'.json')
+            if cache.is_file():
+                path=Path(index.read_json(cache)['report']).resolve()
+                if not path.is_relative_to((args.root/'knowledge/update-stages').resolve()):raise ValueError('Resource completion receipt outside stages')
+                saved=workflow.checked_manifest(index,path)
+                ready=(saved.get('key')==key and saved.get('inputs')==inputs and saved.get('state')=='completed'
+                    and saved.get('result',{}).get('state')=='passed' and bool(saved.get('outputs')))
+                if ready and any(index.digest(p)!=sha for p,sha in saved['outputs'].items()):
+                    raise ValueError('Completed resource output changed')
+        if not ready:selected[row['path']]=row
+    return list(selected.values())
+
+
+def affected_plan(model, contracts, checks, *, exe_changed, changes, previous, definitions, tools):
+    """Impact includes check/tool/recipe changes and all reverse consumers."""
+    dirty = set(model.affected(contracts,exe_changed=exe_changed,changes=changes))
+    old = (previous or {}).get('plan',{})
+    prior_contracts = {c['id']:c for c in old.get('contracts',{}).get('contracts',[])}
+    prior_definitions = old.get('definition_sha256',{})
+    changed_paths = {p for p in set(prior_definitions)|set(definitions)
+        if prior_definitions.get(p)!=definitions.get(p)} if old else set()
+    reasons = {name:['release_material_changed'] for name in dirty}
+    registry = {c['id']:c for c in checks}
+    previous_checks=old.get('checks',{})
+    for contract in contracts['contracts']:
+        causes=[]; name=contract['id']
+        if old and prior_contracts.get(name)!=contract:causes.append('contract_definition_changed')
+        for check_id in contract['checks']:
+            check=registry.get(check_id,{})
+            if exe_changed and check.get('source_scope','client')=='client':causes.append('client_check_source_changed')
+            if old:
+                inputs=[check,*check.get('source_variants',{}).values()]
+                names={Path(p).name for item in inputs for p in item.get('dependencies',[])}
+                names.update(item['test_pattern'] for item in inputs if item.get('test_pattern'))
+                registry_changed=(previous_checks.get(check_id)!=check if previous_checks else
+                    any(Path(p).name=='research-checks.json' for p in changed_paths))
+                if registry_changed or any(Path(p).name in names for p in changed_paths):
+                    causes.append('check_inputs_changed:'+check_id)
+        old_tools=old.get('tools',{})
+        for group,used in (('bindings',bool(contract['recipes'])),('context',bool(contract.get('context_checks'))),
+                ('profile',bool(contract.get('builder')))):
+            if old and used and old_tools.get(group)!=tools[group]:causes.append(group+'_tools_changed')
+        if causes:dirty.add(name);reasons.setdefault(name,[]).extend(causes)
+    for name in contracts['order']:
+        contract=next(c for c in contracts['contracts'] if c['id']==name)
+        deps=[d for d in contract['depends_on'] if d in dirty]
+        if deps:dirty.add(name);reasons.setdefault(name,[]).extend('dependency_changed:'+d for d in deps)
+    return dict(affected=[name for name in contracts['order'] if name in dirty],
+        reasons={name:sorted(set(values)) for name,values in reasons.items()})
+
+
+def root_blockers(contracts, outcomes, queue, native_queue=()):
+    """Group shared causes; legacy queue entries are observations, not tasks."""
+    groups={}
+    def consumers(name):
+        found={name} if name else set()
+        for candidate in contracts['order']:
+            c=next(c for c in contracts['contracts'] if c['id']==candidate)
+            if any(dep in found for dep in c['depends_on']):found.add(candidate)
+        return found
+    for item in [*queue,*native_queue]:
+        reason=item.get('reason','Unspecified blocker')
+        if reason.startswith('Dependencies incomplete:'):continue
+        contract=item.get('contract')
+        resource_contracts=set()
+        if item.get('capability')=='resources' and item.get('archive'):
+            archive=item['archive'].replace('\\','/')
+            resource_contracts={c['id'] for c in contracts['contracts'] if any(
+                fnmatch.fnmatchcase(archive,dep['archive']) for dep in c.get('resources',[]))}
+            problems=[s.get('tool','adapter')+': '+s.get('reason',s.get('state','unknown'))
+                for s in (item.get('evidence') or {}).get('steps',[]) if s.get('state')!='passed']
+            if problems:reason='; '.join(sorted(set(problems)))
+        check=(item.get('evidence') or {}).get('id') if isinstance(item.get('evidence'),dict) else None
+        entity=check or item.get('address') or item.get('source_sha256') or item.get('family')
+        if reason in ('Contract coverage is partial','No registered semantic check'):entity=contract
+        key=(reason,entity)
+        entry=groups.setdefault(key,dict(reason=reason,details=item.get('details'),entity=entity,
+            contracts=set(),capabilities=set(),resources=set(),observations=0))
+        entry['contracts'].update(consumers(contract));entry['observations']+=1
+        for name in resource_contracts:entry['contracts'].update(consumers(name))
+        if item.get('archive'):entry['resources'].add(item['archive'])
+        for name,capability in contracts['capabilities'].items():
+            if any(required in entry['contracts'] for required in capability['requires']):entry['capabilities'].add(name)
+    result=[]
+    for number,entry in enumerate(sorted(groups.values(),key=lambda e:(-len(e['contracts']),e['reason']))):
+        result.append(dict(id='blocker-'+str(number+1),**{k:sorted(v) if isinstance(v,set) else v for k,v in entry.items()}))
+    return result
+
+
+def function_blockers(index, reuse, contracts):
+    """Expose intrinsic shared dependency gaps, without counting their callers twice."""
+    if not reuse.get('report'):return []
+    report=index.read_json(reuse['report'])
+    result=[]
+    for item in report.get('dependency_frontier',[]):
+        reasons=item.get('reasons',[])
+        if reasons and all(reason.startswith('callee_not_closed:') for reason in reasons):continue
+        names={c['id'] for c in contracts['contracts'] if item['address'] in
+            c['bindings'].get(item['source_sha256'],{}).values()}
+        result.append(dict(id='function-'+item['source_sha256'][:12]+'-'+item['address'][2:],
+            category='native_function',reason='; '.join(reasons),source_sha256=item['source_sha256'],
+            address=item['address'],declared=item.get('declared',False),contracts=sorted(names),
+            function_consumers=item.get('consumers',[]),direct_function_consumers=item.get('direct_consumers',0),
+            scope='function_dependency_frontier',runtime_activated=False))
+    return result
+
+
+def ensure_index(index, args, database):
+    """Verify current material without invoking a writer for an unchanged index."""
+    if Path(database).is_file():
+        db=index.open_index(database)
+        try:
+            stored=db.execute("SELECT value FROM metadata WHERE key='tool_inputs'").fetchone()
+            reports={str(p) for p in index.discover(args.root)}
+            rows=list(db.execute('SELECT path,sha,receipt,receipt_sha FROM artifacts'))
+            contexts=index.extension('knowledge-context').inventory(index,args.root,args.knowledge)
+            old_context={r['path']:r['sha'] for r in db.execute('SELECT * FROM context_inputs')}
+            same=(stored and json.loads(stored['value'])==index.tool_inputs() and
+                reports=={r['path'] for r in rows} and contexts==old_context and
+                not any(not r['receipt'] and index.receipt_for(Path(r['path'])).is_file() for r in rows))
+            if same:
+                same=all(index.digest(r['path'])==r['sha'] and
+                    (not r['receipt'] or index.digest(r['receipt'])==r['receipt_sha']) for r in rows)
+                same=same and all(index.digest(r['pseudocode'])==r['pseudocode_sha'] for r in db.execute(
+                    'SELECT DISTINCT o.pseudocode,v.pseudocode_sha FROM observations o JOIN variants v ON o.variant=v.id WHERE o.pseudocode IS NOT NULL'))
+                same=same and db.execute('PRAGMA integrity_check').fetchone()[0]=='ok'
+            if same:return dict(database=str(database),counts=index.index_counts(db),reused=True,writer_started=False)
+        finally:db.close()
+    return index.build(args.root,database,knowledge=args.knowledge)
 
 
 def fingerprint(workflow, value):
@@ -135,11 +361,16 @@ class Journal:
             self.reused += 1
             self.run['stages'][name]=old
             self.validation_seconds[name]=round(time.perf_counter()-started,6)
-            save(self.workflow,self.path,self.run)
+            # This completed result already has its durable stage-cache receipt.
+            # A crash can rediscover it; rewriting the growing full run for
+            # every cache hit adds gigabytes of redundant writes. The next real
+            # stage or the final checkpoint persists the in-memory inventory.
+            print(json.dumps(dict(event='update_stage',stage=name,state='cached')),flush=True)
             return old['result']
         entry = dict(key=key, inputs=inputs, state='running', owner_pid=os.getpid(), started_at=time.time())
         self.run['stages'][name] = entry
         save(self.workflow, self.path, self.run)
+        print(json.dumps(dict(event='update_stage',stage=name,state='running')),flush=True)
         start = time.perf_counter()
         self.executed.append(name)
         try:
@@ -177,9 +408,8 @@ def definition_status(index, args, run):
     knowledge = getattr(args, 'knowledge', index.HERE / 'knowledge')
     update = index.extension('research-update')
     try:
-        paths = [knowledge / 'update-contracts.json', knowledge / 'research-checks.json',
-                 *update.target_plans(index, knowledge)]
-        current = {str(path): index.digest(path) for path in paths}
+        selected=SimpleNamespace(**vars(args));selected.knowledge=knowledge
+        current = definition_inputs(index,selected,update)
     except (OSError, ValueError) as error:
         return dict(current=False, changed=[], reason='Cannot inspect update definitions: ' + str(error))
     changed = sorted(path for path in set(current) | set(saved) if current.get(path) != saved.get(path))
@@ -201,6 +431,7 @@ def status(index, args):
         reason=run.get('reason'),
         stages={k:{x:v[x] for x in ('state','seconds','reason','owner_pid') if x in v} for k,v in run['stages'].items()},
         queue=run.get('queue', []), capabilities=run.get('capabilities', {}),
+        root_blockers=run.get('root_blockers',[]),prepared_bundles=run.get('prepared_bundles',{}),
         results_current=False if run['state'] in ('running','failed','interrupted') else None,
         installed_inputs_checked=False,
         definitions=definition_status(index, args, run),
@@ -245,16 +476,53 @@ def resource_step(index, update, workflow, args, manifest, row):
                                ('extract-release-tables.py', args.root/'table-study/index.json')):
             if previous.is_file():
                 if tool == 'extract-release-tables.py':
-                    old_tables=index.read_json(previous).get('tables',[])
-                    if any(Path(t['source']['path']).resolve()!=Path(row['path']).resolve() for t in old_tables):
+                    baseline=table_baseline(index,args,row)
+                    if baseline['state']=='foreign_only':
                         steps.append(dict(tool=tool,state='requires_review',reason='Historical table index belongs to another archive'))
                         continue
+                    previous=workflow.snapshot(args.root,'resource-table-baselines',dict(tables=baseline['tables']))
                 steps.append(update.execute_adapter(index, args, tool, [record, previous]))
             else:
                 steps.append(dict(tool=tool,state='requires_review',reason='No matching historical input'))
-    return dict(state='passed' if all(s['state'] == 'passed' for s in steps) else 'requires_review',
+    result=dict(state='passed' if all(s['state'] == 'passed' for s in steps) else 'requires_review',
         reason='Resource extraction is not semantic compatibility; logical paths may remain unknown', steps=steps,
         manifest=str(summaries[0]))
+    result['artifacts']=resource_artifacts(index,args.root,result)
+    return result
+
+
+def resource_artifacts(index, root, result):
+    """Pin extracted CSV/config bytes as well as their immutable reports."""
+    pinned=outputs(index,result,root)
+    pending=list(pinned)
+    seen=set()
+    def pin(filename,expected):
+        path=Path(filename).resolve()
+        if not path.is_relative_to(root.resolve()):raise ValueError('Extracted resource outside public library')
+        if index.digest(path)!=expected:raise ValueError('Extracted resource digest changed')
+        pinned[str(path)]=expected
+    while pending:
+        filename=pending.pop()
+        if filename in seen:continue
+        seen.add(filename)
+        if len(seen)>4096:raise ValueError('Resource artifact budget exceeded')
+        path=Path(filename)
+        if path.name!='manifest.json':continue
+        # Index manifests may exceed the bounded JSON reader; their complete
+        # bytes are already pinned and they do not create extracted files.
+        if path.stat().st_size>32*1024*1024:continue
+        value=index.read_json(path)
+        for item in value.get('tables',[]):
+            if item.get('file') and item.get('sha256'):pin(item['file'],item['sha256'])
+        for item in value.get('configs',[]):
+            if item.get('snapshot_file') and item.get('payload_sha256'):
+                pin(path.parent/item['snapshot_file'],item['payload_sha256'])
+        for key,name in (('directory_paths_file_sha256','directory.json'),('encoded_entries_file_sha256','encoded-entries.bin')):
+            if value.get(key):pin(path.parent/name,value[key])
+        for item in value.get('archives',[]):
+            if item.get('report') and item.get('sha256'):
+                pin(item['report'],item['sha256']);pending.append(str(Path(item['report']).resolve()))
+    return [dict(path=path,sha256=sha) for path,sha in sorted(pinned.items())]
 
 
 def run(index, args, database, *, audited=None):
@@ -270,9 +538,12 @@ def run_locked(index, args, database, *, audited=None):
     path=None
     try:
         contracts = model.load(index, args.knowledge)
-        definitions={str(p):index.digest(p) for p in [args.knowledge/'update-contracts.json',
-            args.knowledge/'research-checks.json',*update.target_plans(index,args.knowledge)]}
+        definitions=definition_inputs(index,args,update)
         tools=execution_inputs(index)
+        original_index=index
+        store=index.extension('update-bindings').SourceStore(index,args.root,workers=getattr(args,'workers',2))
+        args.source_store=store
+        index=SimpleNamespace(**vars(index));index.digest=store.digest
         previous = None
         if getattr(args, 'resume', None):
             previous = read(index, workflow, args.resume, args.root)
@@ -287,10 +558,13 @@ def run_locked(index, args, database, *, audited=None):
         else:
             baseline, report, manifest = audited if audited is not None else update.audit_install(index, workflow, args)
         sha = report['exe']['sha256']
+        if (args.knowledge/'native-release-registry.json').is_file():
+            contracts=index.extension('update-native-contexts').operational_model(index,args,contracts)
         roots={Path(r['path']).parent for r in report['files']}
         installed_stamps=update.signatures(args.install,roots)
         identity = dict(baseline_sha256=index.digest(args.baseline), install=str(args.install.resolve()),
-            source_sha256=sha, audit_sha256=index.digest(manifest))
+            source_sha256=sha, audit_sha256=index.digest(manifest),
+            definitions_sha256=fingerprint(workflow,definitions),tools_sha256=fingerprint(workflow,tools))
         run_id = fingerprint(workflow, identity)
         path = args.root/'knowledge/update-runs'/run_id/'run.json'
         if path.exists(): record = read(index, workflow, path, args.root)
@@ -302,13 +576,21 @@ def run_locked(index, args, database, *, audited=None):
             result=dict(manifest=str(manifest)),outputs={str(manifest):index.digest(manifest)},
             seconds=round(time.perf_counter()-audit_started,6), reused=previous is not None and manifest==Path(previous['audit_manifest']))
         save(workflow, path, record)
+        if callable(getattr(args,'journal_created',None)):args.journal_created(path,record)
         normalized = dict(baseline, files=[dict(r,path=str(Path(r['path']).resolve())) for r in baseline['files']])
         comparison = index.extension('compare-release-snapshots').compare(normalized, report)
         changed = [r for r in report['files'] if not r['current'] or
             r['current'].get('sha256') != (r.get('baseline') or {}).get('sha256')]
+        pending_resources=resource_work(index,args,report,contracts,changed,tools['resources'])
         changes = [dict(archive=r['path'], paths=None) for r in changed]
-        dirty = model.affected(contracts, exe_changed=not comparison['exe']['full_hash_equal'], changes=changes)
-        record['plan'] = dict(affected=dirty, contracts=contracts, tools=tools, definition_sha256=definitions)
+        changes.extend(dict(archive=r['path'],paths=None) for r in pending_resources if r not in changed)
+        check_registry=workflow.registry(index,args.knowledge)['checks']
+        impact=affected_plan(model,contracts,check_registry,exe_changed=not comparison['exe']['full_hash_equal'],
+            changes=changes,previous=previous,definitions=definitions,tools=tools)
+        dirty=impact['affected']
+        record['plan'] = dict(affected=dirty, impact_reasons=impact['reasons'],contracts=contracts,
+            checks={c['id']:c for c in check_registry},tools=tools, definition_sha256=definitions,
+            resource_work=[r['path'] for r in pending_resources])
         if getattr(args, 'plan_only', False) or getattr(args, 'audit_only', False):
             record['state'] = 'planned'; record['queue'] = []
             save(workflow, path, record)
@@ -318,12 +600,13 @@ def run_locked(index, args, database, *, audited=None):
         record.pop('reason',None)
         save(workflow,path,record)
         queue = []
-        for row in changed:
+        for row in pending_resources:
             result = journal.stage('resource-'+hashlib.sha256(row['path'].encode()).hexdigest()[:16],
-                dict(archive=row, tools=tools['resources'], manifest=index.digest(manifest)),
+                resource_stage_inputs(index,args,row,tools['resources'],source_sha=sha,audit_sha=index.digest(manifest)),
                 lambda row=row:resource_step(index,update,workflow,args,manifest,row))
             if result['state'] != 'passed': queue.append(dict(contract=None, capability='resources',
-                reason=result['reason'], evidence=result, next_check='Inspect the named resource adapter or add a matching baseline'))
+                archive=row['path'],reason=result['reason'], evidence=result,
+                next_check='Inspect the named resource adapter or add a matching baseline'))
         discoveries = []
         for plan in update.target_plans(index, args.knowledge):
             discoveries.append(journal.stage('discovery-'+plan.name,
@@ -336,26 +619,70 @@ def run_locked(index, args, database, *, audited=None):
             summary=dict(verified=0,requires_review=0),runtime_activated=False,profile_activated=False)
         if (args.knowledge/'native-contexts').is_dir():
             reuse_tool=index.extension('function-reuse-plan')
-            reuse_inputs=reuse_tool.inputs(args.root,args.knowledge)
+            reuse_inputs=reuse_tool.inputs(args.root,args.knowledge,source_store=store)
             if reuse_inputs.get('present'):
                 function_reuse=journal.stage('function-reuse',
-                    dict(source=sha,catalog=reuse_inputs,tools=tools['bindings']),
+                    dict(source=sha,catalog=reuse_inputs),
                     lambda:reuse_tool.run(index,args,sha))
         record['function_reuse']=function_reuse
         save(workflow,path,record)
         binding_tool = index.extension('update-bindings')
+        candidate_tool=index.extension('binary-diff-candidates') if (index.HERE/'binary-diff-candidates.py').is_file() else None
+        try:diff_receipts=candidate_tool.inputs(index,args.root,sha) if candidate_tool else []
+        except (ValueError,OSError,KeyError) as error:
+            diff_receipts=[]
+            queue.append(dict(contract=None,capability='candidate-providers',reason='BinDiff inventory rejected: '+str(error),
+                next_check='Repair the named ready comparison; no new BinExport is launched'))
+        def resolve_one(contract):
+            selected=dict(contracts=[contract])
+            if diff_receipts:return candidate_tool.resolve(index,args,selected,sha,discoveries,diff_receipts)
+            return binding_tool.resolve(index,args,selected,sha,discoveries)
+        def resolve_contracts():
+            results={}
+            for contract in contracts['contracts']:
+                binding_input={key:contract[key] for key in ('id','recipes','bindings')}
+                result=journal.stage('bindings-'+contract['id'],dict(source=sha,contract=binding_input,
+                    discoveries=discoveries,ready_binary_comparisons=diff_receipts,tools=tools['bindings']),
+                    lambda contract=contract:resolve_one(contract))
+                results.update(result['contracts'])
+            return dict(source_sha256=sha,contracts=results)
         contexts = journal.stage('bindings', dict(source=sha, contracts=contracts, discoveries=discoveries,
-            tools=tools['bindings']),
-            lambda:binding_tool.resolve(index, args, contracts, sha, discoveries))
+            ready_binary_comparisons=diff_receipts,tools=tools['bindings']),
+            resolve_contracts)
         contexts=apply_function_reuse(index,args.root,contracts,contexts,sha,function_reuse)
         started=time.perf_counter()
-        indexed=index.build(args.root,database,knowledge=args.knowledge)
+        indexed=ensure_index(index,args,database)
         record['stages']['index-before-exports']=dict(state='completed',inputs=dict(source=sha),
             result=indexed,seconds=round(time.perf_counter()-started,6),outputs={})
         save(workflow,path,record)
         exports = collect_batches(index, workflow, journal, args, database, contexts, sha)
+        native_contexts=dict(checks=[],queue=[],state='skipped')
+        native_checks=[]
+        if (args.knowledge/'native-release-registry.json').is_file():
+            native_tool=index.extension('update-native-contexts')
+            generated=args.root/'knowledge/generated-native/index.json'
+            def materialize_native():
+                result=native_tool.materialize(index,args,sha,contexts,function_reuse)
+                # The generated index is an atomic mutable pointer. Only the
+                # immutable contexts and proof receipts are cached as outputs.
+                result.pop('generated_index',None)
+                return result
+            native_contexts=journal.stage('native-materialize',dict(source=sha,contexts=contexts,
+                reuse=function_reuse,definitions=definitions,tools=tools['context'],
+                generated_index_sha256=index.digest(generated) if generated.is_file() else None),materialize_native)
+            for declaration in native_contexts['checks']:
+                try:
+                    checked=journal.stage('native-check-'+declaration['id'],dict(source=sha,
+                        declaration=declaration,suite_runtime=index.extension('update-native-harness').runtime_inputs()),
+                        lambda declaration=declaration:native_tool.execute(index,args,sha,declaration))
+                    if checked['state']=='passed' and hasattr(native_tool,'publish'):
+                        native_tool.publish(index,args,sha,declaration,checked)
+                except (ValueError,OSError,KeyError,StopIteration) as error:
+                    checked=dict(id=declaration['id'],state='requires_review',reason=str(error))
+                native_checks.append(checked)
+            record['native_contexts']=native_contexts
+            record['native_checks']=native_checks
         outcomes = {}
-        check_registry = workflow.registry(index,args.knowledge)['checks']
         checked_this_run={}
         def check_once(check_id):
             if check_id in checked_this_run:return checked_this_run[check_id]
@@ -393,7 +720,12 @@ def run_locked(index, args, database, *, audited=None):
                     module={'version-login-tag':'verify-version-login-context',
                             'packet-writer-projection':'verify-packet-writer-context'}.get(adapter)
                     if module is None:raise ValueError('Unreviewed context adapter')
-                    proof=index.extension(module).verify(context,args.root)
+                    try:proof=index.extension(module).verify(context,args.root)
+                    except (ValueError,OSError,KeyError,StopIteration) as error:
+                        # Offline rejection is reproducible for these exact
+                        # source/context/tool inputs. Do not redisassemble it
+                        # on every unchanged resume.
+                        return dict(id=adapter,state='requires_review',reason=str(error))
                     proof['context_sha256']=index.digest(cp)
                     target=workflow.snapshot(args.root,'update-context-checks',proof)
                     return dict(id=adapter,state='passed',report=str(target),sha256=index.digest(target))
@@ -423,7 +755,7 @@ def run_locked(index, args, database, *, audited=None):
             for reason in reasons: queue.append(dict(contract=name, capability=[k for k,v in contracts['capabilities'].items() if name in v['requires']],
                 reason=reason, evidence=dict(context=str(cp),checks=checks), next_check=c['next_check']))
         capabilities = model.readiness(contracts, outcomes)
-        if any(index.digest(p)!=digest for p,digest in definitions.items()) or execution_inputs(index)!=tools:
+        if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index)!=tools:
             raise ValueError('Update definitions or tools changed during execution; resume with current inputs')
         profiles = []
         profile_validation_seconds=0
@@ -441,28 +773,47 @@ def run_locked(index, args, database, *, audited=None):
                     queue.append(dict(contract=c['id'],capability='launcher',reason='Profile build rejected: '+str(error),
                         evidence=outcomes[c['id']],next_check=c['next_check']))
         capabilities = model.readiness(contracts,outcomes)
-        if any(index.digest(p)!=digest for p,digest in definitions.items()) or execution_inputs(index)!=tools:
+        if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index)!=tools:
             raise ValueError('Update definitions changed during profile preparation')
+        source_metrics=store.validate()
+        bundle=index.extension('update-bundle').prepare(index,args,contracts,outcomes,capabilities,profiles,contexts,report)
+        # Preparation may read further immutable artifacts; validate them before
+        # publishing the final journal and next-use pointers.
+        source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:
             raise ValueError('Installation inventory changed during update; resume after download completes')
+        publisher=index.extension('update-bundle')
+        if hasattr(publisher,'publish'):
+            bundle=publisher.publish(index,args,bundle,
+                tooling_checks=[c for c in extra_checks if c.get('source_scope')=='tooling'])
+        queue.extend(bundle.get('queue',[]))
         record.update(state='needs_review' if queue else 'prepared_offline', queue=queue,
             capabilities=capabilities, profiles=profiles, reused_stages=journal.reused,
             update_checks=extra_checks,
+            prepared_bundles=bundle,
             baseline_promoted=False, profile_activation=False, live_verified=False)
+        native_blockers=[*native_contexts['queue'],*[dict(reason=c['id']+': '+c['state'],details=c.get('reason'))
+            for c in native_checks if c['state']!='passed']]
+        record['root_blockers']=root_blockers(contracts,outcomes,queue,native_blockers)+function_blockers(index,function_reuse,contracts)
         record['metrics']=dict(reused_stages=journal.reused,manual_tasks=len(queue),
             wall_seconds=round(time.perf_counter()-run_started,6),executed_stages=journal.executed,
             cached_stage_validation_seconds=journal.validation_seconds,
+            source_store=source_metrics,unique_checks=len(checked_this_run)+len(native_checks),
+            check_consumers=sum(len(c['checks']) for c in contracts['contracts'])+len(extra_checks),
+            root_blockers=len(record['root_blockers']),legacy_queue_observations=len(queue),
             profile_validation_seconds=round(profile_validation_seconds,6),
             ready_exports=sum(e.get('state')=='ready' for e in exports),
             ghidra_batches=sum(k.startswith('exports-') for k in record['stages']),
             completed_ghidra_launches_this_run=sum(k.startswith('exports-') and
                 record['stages'][k].get('result',{}).get('state')=='collected' for k in journal.executed),
             context_replays_this_run=sum(k.startswith('context-check-') for k in journal.executed),
+            native_replays_this_run=sum(k.startswith('native-check-') for k in journal.executed),
             reused_phase_times_are_original=True,
             phase_seconds={k:v.get('seconds',0) for k,v in record['stages'].items()})
         save(workflow,path,record)
         return dict(run=str(path), state=record['state'], source_sha256=sha, queue=len(queue),
             capabilities=capabilities, profiles=profiles, reused_stages=journal.reused,
+            prepared_bundles=bundle,root_blockers=len(record['root_blockers']),metrics=record['metrics'],
             baseline_promoted=False, profile_activation=False,
             function_reuse=function_reuse.get('summary',{}))
     except BaseException as error:
@@ -521,7 +872,8 @@ def apply_function_reuse(index, root, model, contexts, sha, result):
         raise ValueError('Function catalog source or scope changed')
     tools=report['identity'].get('tools',{})
     required={'function-reuse-plan.py','update-bindings.py','build-native-entry-code.py',
-        'extract-native-enums.py','research-workflow.py','update-contracts.py'}
+        'extract-native-enums.py','research-workflow.py','update-contracts.py','native-release-registry.py',
+        'update-native-contexts.py','verify-utf8-context.py','update-native-harness.py'}
     if set(tools)!=required or any(index.digest(index.HERE/name)!=tools[name] for name in required):
         raise ValueError('Function catalog tools changed')
     sources=report['identity'].get('sources',{})
@@ -541,8 +893,11 @@ def apply_function_reuse(index, root, model, contexts, sha, result):
                     raise ValueError('Function catalog baseline binding changed')
                 candidates.setdefault((baseline,before),[]).append(proof)
     revised=copy.deepcopy(contexts)
-    versions=index.extension('function-reuse-plan').SOURCES
-    ordered=[source for version,source in sorted(versions.items(),key=lambda item:int(item[0]),reverse=True)]
+    planner=index.extension('function-reuse-plan')
+    if hasattr(planner,'ordered_sources'):
+        ordered=planner.ordered_sources(index.HERE/'knowledge',root)
+    else:
+        ordered=[source for version,source in sorted(planner.SOURCES.items(),key=lambda item:int(item[0]),reverse=True)]
     for contract in model['contracts']:
         selected=revised['contracts'][contract['id']]
         for recipe in contract['recipes']:

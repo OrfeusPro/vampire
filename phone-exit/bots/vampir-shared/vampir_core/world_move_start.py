@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 import struct
 
 from .character_select_result import CharacterSelectResultBody
+from .runtime_admission import permits
 
 SOURCE_SHA256 = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 CURRENT_PROBE_SOURCE = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
@@ -21,7 +22,7 @@ class WorldMoveStartPayload:
 
     @classmethod
     def from_selection(cls, selection, *, source_sha256):
-        if source_sha256 not in WORLD_PROBE_SOURCES:
+        if source_sha256 not in WORLD_PROBE_SOURCES and not permits(source_sha256,'world-selection-move-v1'):
             raise ValueError('WorldMoveStart source policy is not verified')
         if not isinstance(selection,CharacterSelectResultBody) or selection.result_code != 0:
             raise ValueError('WorldMoveStart requires an accepted current selection')

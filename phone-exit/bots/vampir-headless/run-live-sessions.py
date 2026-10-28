@@ -16,6 +16,8 @@ HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE.parent/'vampir-shared'))
 from vampir_core.live_session import LiveSession,LiveSessions
 from vampir_core.live_session_server import LiveSessionServer
+from vampir_core.runtime_admission import prepared_entrypoint,is_prepared,profile_scope,bind_worker
+ROOT=Path('F:/PhoneExit Resources/Vampir')
 
 # Only fixed local pump codes enter the durable summary. Never copy an
 # exception message or arbitrary diagnostic string from an authentication step.
@@ -41,9 +43,10 @@ class SourceProfileNotVerified(ValueError):
 def verify_launch_source(selected_profile='candidate-11316'):
     """Run the same source guard as the game probe before asking for secrets."""
     try:
-        spec=importlib.util.spec_from_file_location('live_source_preflight',HERE/'game-source-profile.py')
-        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-        profile=module.load_profile(selected_profile=selected_profile)
+        with profile_scope(selected_profile,root=ROOT,workspace=HERE.parents[2]) as selected_profile:
+            spec=importlib.util.spec_from_file_location('live_source_preflight',HERE/'game-source-profile.py')
+            module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+            profile=module.load_profile(selected_profile=selected_profile)
     except (OSError,ValueError,KeyError,StopIteration,IndexError) as error:
         raise SourceProfileNotVerified() from error
     return dict(status='source_verified',profile=selected_profile,
@@ -70,11 +73,12 @@ def validate_accounts(value):
     return value
 
 
+@prepared_entrypoint(root=ROOT,workspace=HERE.parents[2],keyword='profile')
 def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate-11316',probe=None,port=17947,sign_in_parallelism=2,projection=None,ready_callback=None,max_runtime_seconds=None,keep_online=False):
     if type(keep_online) is not bool:raise ValueError('Режим постоянного соединения должен быть bool')
     if keep_online and max_runtime_seconds is not None:
         raise ValueError('Постоянное соединение несовместимо с таймером остановки')
-    if profile=='candidate-11318':
+    if profile=='candidate-11318' or is_prepared(profile):
         if projection is not None:raise ValueError('Проекция карты 1.13.18 ещё не подтверждена')
         verify_launch_source(profile)
         if max_runtime_seconds is None and not keep_online:max_runtime_seconds=300
@@ -149,7 +153,8 @@ def run_accounts(accounts,passwords,*,manifest,client_version,profile='candidate
         with ThreadPoolExecutor(max_workers=len(accounts),thread_name_prefix='vampir-live') as pool:
             futures=[]
             try:
-                for row in accounts:futures.append(pool.submit(worker,row))
+                admitted_worker=bind_worker(worker)
+                for row in accounts:futures.append(pool.submit(admitted_worker,row))
                 for future in as_completed(futures):
                     summary=future.result();summaries.append(summary);emit(summary)
             finally:
@@ -174,11 +179,11 @@ def launch_options(options,passwords,*,ready_callback=None):
     if keep_online and options['max_runtime_seconds'] is not None:
         raise ValueError('Постоянное соединение несовместимо с таймером остановки')
     selected_profile=options.get('profile','candidate-11316')
-    if selected_profile not in ('candidate-11316','candidate-11318'):raise ValueError('Неверный профиль владельца')
+    if selected_profile not in ('candidate-11316','candidate-11318') and not is_prepared(selected_profile):raise ValueError('Неверный профиль владельца')
     if selected_profile=='candidate-11318':verify_launch_source(selected_profile)
     projection=None
     if options['projection'] is not None:
-        if selected_profile=='candidate-11318':raise ValueError('Проекция карты 1.13.18 ещё не подтверждена')
+        if selected_profile=='candidate-11318' or is_prepared(selected_profile):raise ValueError('Проекция карты нового профиля ещё не подтверждена')
         if type(options['projection']) is not str:raise ValueError('Неверный manifest проекции')
         from vampir_core.map_projection_input import load_projection
         from vampir_core.world_move_start import CURRENT_PROBE_SOURCE
@@ -197,7 +202,7 @@ def launch_options(options,passwords,*,ready_callback=None):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile',choices=['candidate-11316','candidate-11318'],default='candidate-11316')
+    parser.add_argument('--profile',default='candidate-11316',help='Проверенный профиль либо prepared-next / prepared:<SHA>')
     parser.add_argument('--accounts',type=Path)
     parser.add_argument('--manifest',type=Path)
     parser.add_argument('--client-version',type=int)
@@ -229,13 +234,14 @@ def main():
             return
         if args.accounts is None or args.manifest is None or args.client_version is None:
             parser.error('Нужны --accounts, --manifest и --client-version')
-        verify_launch_source(args.profile)
+        preflight=verify_launch_source(args.profile)
+        if is_prepared(args.profile):args.profile=preflight['profile']
         if args.accounts.stat().st_size>65536:raise ValueError('Слишком большой список аккаунтов')
         accounts=validate_accounts(json.loads(args.accounts.read_text(encoding='utf-8')))
         options=dict(accounts=accounts,profile=args.profile,manifest=str(args.manifest.resolve()),client_version=args.client_version,
             projection=str(args.projection.resolve()) if args.projection else None,
             sign_in_parallelism=args.sign_in_parallelism,port=args.port,keep_online=args.keep_online,
-            max_runtime_seconds=(None if args.keep_online else 300 if args.profile=='candidate-11318' else 86400 if args.detached else None),
+            max_runtime_seconds=(None if args.keep_online else 300 if args.profile=='candidate-11318' or is_prepared(args.profile) else 86400 if args.detached else None),
             result_path=str(args.result.resolve()) if args.result else None)
         passwords={row['bot_id']:getpass.getpass('Пароль '+row['bot_id']+': ') for row in accounts}
         if args.detached:

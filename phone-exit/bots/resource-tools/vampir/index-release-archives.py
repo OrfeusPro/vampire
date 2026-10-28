@@ -16,6 +16,16 @@ DECODE_LIMIT = 2 * 1024 * 1024
 NEEDLES = ('NMSDKSettings', 'SDKZone=', 'NetmarbleClientId=', 'NMSDKMarket-')
 
 
+def selected_archive(item, requested):
+    """An explicit full digest may complete a sample-equal inventory entry."""
+    if requested is not None and not re.fullmatch('[0-9a-f]{64}',requested):
+        raise ValueError('Explicit archive selection requires a full SHA256')
+    source=item.get('current')
+    if not source or source.get('pak_version')!=11:return False
+    if requested is not None:return source.get('sha256')==requested
+    return item['status']!='sample_matches_unverified'
+
+
 def load(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
     module = importlib.util.module_from_spec(spec)
@@ -111,6 +121,8 @@ def main():
     parser.add_argument('manifest', type=Path)
     parser.add_argument('--archive-sha256', help='Index only this exact archive digest from the release manifest')
     args = parser.parse_args()
+    if args.archive_sha256 is not None and not re.fullmatch('[0-9a-f]{64}',args.archive_sha256):
+        raise ValueError('Explicit archive selection requires a full SHA256')
     audit = load('vampir_audit_for_index', HERE / 'audit-client-release.py')
     manifest = json.loads(args.manifest.read_text('utf-8'))
     if audit.sha256(args.manifest) != args.manifest.parent.name:
@@ -128,9 +140,7 @@ def main():
     outputs = []
     for item in manifest['files']:
         source = item['current']
-        if args.archive_sha256 and (source or {}).get('sha256') != args.archive_sha256:
-            continue
-        if not source or source.get('pak_version') != 11 or item['status'] == 'sample_matches_unverified':
+        if not selected_archive(item,args.archive_sha256):
             continue
         path = Path(item['path'])
         before = path.stat()

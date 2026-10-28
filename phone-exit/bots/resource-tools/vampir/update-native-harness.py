@@ -236,7 +236,13 @@ def make_harness(context, exports, functions, leaves=None, root=None):
     sight_scope = (budget == 117 and context.get('budget_scope') == 'sight-enter-whole'
                    and set(functions) == sight_roots == {int(v,16) for v in context.get('functions',{}).values()}
                    and context.get('functions',{}).get('reader') == '0x1456c5390')
-    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope and not gadget_scope and not other_scope and not lifecycle_scope and not sight_scope) or not 1 <= len(functions) <= budget or not 1 <= len(exports) <= (39 if sight_scope else (31 if lifecycle_scope else (25 if other_scope else (20 if npc_scope else (16 if gadget_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8)))))))):
+    admitted=None
+    if context.get('native_admission'):
+        admitted=load('reviewed_native_adapters',HERE/'update-native-contexts.py').admitted_instructions(
+            context,root,set(functions),leaves or {})
+        if exports or budget!=16:raise ValueError('Generated native adapter export/budget scope differs')
+        evidence.extend(admitted['evidence'])
+    if type(budget) is not int or (budget not in (16, 19) and not buffer_scope and not handler_scope and not record_scope and not list_scope and not npc_scope and not projectile_scope and not social_scope and not gadget_scope and not other_scope and not lifecycle_scope and not sight_scope) or not 1 <= len(functions) <= budget or (admitted is None and not 1 <= len(exports) <= (39 if sight_scope else (31 if lifecycle_scope else (25 if other_scope else (20 if npc_scope else (16 if gadget_scope else (12 if projectile_scope else (10 if list_scope or social_scope else (9 if handler_scope or record_scope else 8))))))))):
         raise ValueError('Request function/export budget exceeded')
     for run, expected in exports.items():
         path = root/'ghidra/request-exports'/SHA/run/'details.json'
@@ -257,6 +263,11 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                 instruction(int(row['address'],16), bytes.fromhex(row['bytes']))
             found.add(address)
             h.fragments.append(function)
+    for function in (admitted or {}).get('functions',[]):
+        address=int(function['address'],16)
+        if address not in functions:raise ValueError('Generated native adapter root differs')
+        for row in function['instructions']:instruction(int(row['address'],16),bytes.fromhex(row['bytes']))
+        found.add(address);h.fragments.append(function)
     if found != set(functions):
         raise ValueError('Requested function absent from supplied exports')
     if context.get('verify_whole_exports'):

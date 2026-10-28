@@ -7,6 +7,7 @@ from dataclasses import dataclass
 
 from .lobby_packets import LobbyVersionResultBody
 from .ping import PingPayload
+from .runtime_admission import permits
 
 SOURCE_SHA256 = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 INITIAL_PING_SOURCE_SHA256 = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
@@ -25,7 +26,7 @@ class LobbyPingClock:
 
     @classmethod
     def from_version_result(cls, response, *, source_sha256):
-        if source_sha256 not in INITIAL_PING_SOURCES:
+        if source_sha256 not in INITIAL_PING_SOURCES and not permits(source_sha256,'lobby-ping-clock-v1'):
             raise ValueError('Ping clock is not verified for this client source')
         if not isinstance(response, LobbyVersionResultBody):
             raise TypeError('Expected current lobby VersionResult')

@@ -1265,7 +1265,17 @@
         "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
         "phone-exit/bots/test_vampir_research_update.py",
         "phone-exit/bots/test_vampir_knowledge_index.py",
-        "phone-exit/bots/resource-tools/vampir/function-reuse-plan.py"
+        "phone-exit/bots/resource-tools/vampir/function-reuse-plan.py",
+        "phone-exit/bots/test_vampir_update_source_store.py",
+        "phone-exit/bots/test_vampir_update_bindings.py",
+        "phone-exit/bots/test_vampir_update_targets.py",
+        "phone-exit/bots/resource-tools/vampir/index-release-archives.py",
+        "phone-exit/bots/resource-tools/vampir/update-bundle.py",
+        "phone-exit/bots/resource-tools/vampir/native-release-registry.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-contexts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-utf8-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-release-registry.json",
+        "phone-exit/bots/test_vampir_update_archive_selection.py"
       ],
       "source_scope": "tooling"
     },
@@ -11312,6 +11322,59 @@
       "runtime_distributions": [
         "capstone"
       ]
+    },
+    {
+      "id": "automatic-update-tooling",
+      "questions": [
+        "release-automatic-update"
+      ],
+      "source_scope": "tooling",
+      "source_sha256": [],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_update_automation.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/test_vampir_update_auto_watch.py",
+        "phone-exit/bots/test_vampir_prepared_bundle.py",
+        "phone-exit/bots/test_vampir_prepared_runtime.py",
+        "phone-exit/bots/vampir-shared/vampir_core/release_bundle.py",
+        "phone-exit/bots/vampir-shared/vampir_core/runtime_admission.py",
+        "phone-exit/bots/vampir-shared/vampir_core/scheduled_worker.py",
+        "phone-exit/bots/vampir-shared/vampir_core/detached_worker.py",
+        "phone-exit/bots/resource-tools/vampir/update-auto.py",
+        "phone-exit/bots/resource-tools/vampir/update-watch.py",
+        "phone-exit/bots/resource-tools/vampir/update-bundle.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/research-update.py",
+        "phone-exit/bots/resource-tools/vampir/update-run.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/vampir-headless/game-source-profile.py",
+        "phone-exit/bots/vampir-headless/probe-lobby-sdk-login.py",
+        "phone-exit/bots/vampir-headless/probe-selected-game-login.py",
+        "phone-exit/bots/vampir-headless/run-live-sessions.py",
+        "phone-exit/bots/vampir-headless/run-nid-sdk-sign-in.py",
+        "phone-exit/bots/vampir-headless/sdk-source-profile.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_connection.py",
+        "phone-exit/bots/vampir-shared/vampir_core/game_login_probe.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_context.py",
+        "phone-exit/bots/vampir-shared/vampir_core/gmc2_decode.py",
+        "phone-exit/bots/vampir-shared/vampir_core/heartbeat.py",
+        "phone-exit/bots/vampir-shared/vampir_core/live_session.py",
+        "phone-exit/bots/vampir-shared/vampir_core/lobby_packets.py",
+        "phone-exit/bots/vampir-shared/vampir_core/sdk_config.py",
+        "phone-exit/bots/vampir-shared/vampir_core/session_clock.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_entry_flow.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/test_vampir_update_bindiff_candidates.py",
+        "phone-exit/bots/test_vampir_update_bindings.py",
+        "phone-exit/bots/test_vampir_update_targets.py",
+        "phone-exit/bots/test_vampir_update_contracts.py",
+        "phone-exit/bots/resource-tools/vampir/binary-diff-candidates.py",
+        "phone-exit/bots/resource-tools/vampir/binary-diff.py"
+      ],
+      "artifact_dependencies": []
     }
   ]
 }

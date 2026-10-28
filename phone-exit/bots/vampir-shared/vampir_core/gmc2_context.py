@@ -11,6 +11,7 @@ import time
 from .cdn_config import _load_object
 from .gmc2_decode import MAX_XOR_BYTES
 from .nid_metadata import _metadata_text
+from .runtime_admission import permits
 
 SOURCE_SHA256 = '98802d550890354da73cfef101bc49c1691f104beccb8b6d878594ba8952807e'
 CURRENT_SOURCE_SHA256 = 'd00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960'
@@ -30,9 +31,11 @@ class Gmc2Geo:
     def metadata(self, *, previous_country):
         # The caller owns this state; never borrow the official game's cache.
         _metadata_text(previous_country)
-        if type(self.source_sha256) is not str or self.source_sha256 not in VERIFIED_SOURCE_SHA256:
+        if type(self.source_sha256) is not str or (self.source_sha256 not in VERIFIED_SOURCE_SHA256
+                and not permits(self.source_sha256,'sdk-launcher-gmc2-geo-v2')):
             raise ValueError('GMC2 geo policy is not verified for this source')
-        sentinel = self.country in ('A1', 'a1') if self.source_sha256 in (CURRENT_SOURCE_SHA256, LATEST_SOURCE_SHA256) else self.country == 'A1'
+        sentinel = self.country in ('A1', 'a1') if (self.source_sha256 in (CURRENT_SOURCE_SHA256, LATEST_SOURCE_SHA256)
+            or permits(self.source_sha256,'sdk-launcher-gmc2-geo-v2')) else self.country == 'A1'
         country = previous_country if sentinel and previous_country else self.country
         return dict(I_ConnectIP=self.client_ip, I_CountryCD=country)
 
@@ -44,7 +47,8 @@ def decode_gmc2_geo(body, *, source_sha256):
     fields are ignored; missing, empty, non-string or escaped metadata values
     are rejected locally rather than coerced like native numeric/bool branches.
     """
-    if type(source_sha256) is not str or source_sha256 not in VERIFIED_SOURCE_SHA256:
+    if type(source_sha256) is not str or (source_sha256 not in VERIFIED_SOURCE_SHA256
+            and not permits(source_sha256,'sdk-launcher-gmc2-geo-v2')):
         raise ValueError('GMC2 geo policy is not verified for this source')
     try:
         if type(body) is not bytes or len(body) > MAX_XOR_BYTES:
@@ -88,14 +92,16 @@ class SdkInputs:
         return iter((self.binding, self.profile, self.constants))
 
     def check_auth_operation(self, *, auth_flow, create_sdk_player=False, fetch_player=False, first_sdk_login=False):
-        if self.source_sha256 in (CURRENT_SOURCE_SHA256, LATEST_SOURCE_SHA256) and (
+        if (self.source_sha256 in (CURRENT_SOURCE_SHA256, LATEST_SOURCE_SHA256)
+                or permits(self.source_sha256,'sdk-launcher-gmc2-geo-v2')) and (
                 auth_flow != 'launcher' or create_sdk_player or fetch_player or first_sdk_login):
             raise ValueError('This SDK source currently supports launcher sign-in only; direct SDK operations require source port')
 
     def check_usage(self, *, email, selected_profile, route, now=None):
         age = (time.monotonic() if now is None else now) - self.fetched_at
         if (email != self.email or selected_profile != self.selected_profile
-                or type(self.source_sha256) is not str or self.source_sha256 not in VERIFIED_SOURCE_SHA256
+                or type(self.source_sha256) is not str or (self.source_sha256 not in VERIFIED_SOURCE_SHA256
+                    and not permits(self.source_sha256,'sdk-launcher-gmc2-geo-v2'))
                 or not isinstance(self.geo, Gmc2Geo) or self.geo.source_sha256 != self.source_sha256
                 or (route.port if route else None) != self.route_port):
             raise ValueError('SDK context source, account or route differs')

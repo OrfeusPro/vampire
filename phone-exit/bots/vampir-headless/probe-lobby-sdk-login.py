@@ -17,6 +17,8 @@ from vampir_core.windows_version import observe_windows_version
 from vampir_core.nid_metadata import encode_nid_metadata_with_device_key
 from vampir_core.metadata_tid import resolve_metadata_tid, SOURCE_SHA256 as METADATA_TID_SOURCE_SHA256
 from vampir_core.gmc2_context import SdkInputs, VERIFIED_SOURCE_SHA256 as GEO_SOURCES
+from vampir_core.runtime_admission import prepared_entrypoint,is_prepared,permits
+ROOT=Path('F:/PhoneExit Resources/Vampir')
 
 
 def module(name, filename):
@@ -26,6 +28,7 @@ def module(name, filename):
     return value
 
 
+@prepared_entrypoint(root=ROOT,workspace=HERE.parents[2])
 def run(email, *, selected_profile, manifest_path, socks_port, context, password='', read_server_list=False, server_policy_byte=None,
         auth_flow='nid', lobby_region=None, auth_timeout=180, _progress=None, _consume_auth=None, _select_server=None, _use_session=None, device_settings=None):
     if type(auth_timeout) is not int or not 1 <= auth_timeout <= 900:
@@ -45,14 +48,16 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
     from vampir_core.bot_device_settings import validate, apply_system, metadata_values
     device_settings = validate(device_settings)
     source = module('lobby_sdk_source', 'game-source-profile.py').load_profile(selected_profile=selected_profile)
-    sdk_profile_name = 'recovered-release' if getattr(source, 'live_probe_only', False) else selected_profile
+    sdk_profile_name = (selected_profile if is_prepared(selected_profile) else
+        'recovered-release' if getattr(source, 'live_probe_only', False) else selected_profile)
+    if is_prepared(selected_profile) and auth_flow!='launcher':raise ValueError('Prepared SDK supports launcher sign-in only')
     route = SocksRoute(socks_port) if socks_port is not None else None
     endpoint = module('lobby_sdk_endpoint', 'probe-lobby-connection.py').selected_endpoint(manifest_path,
         route=route, expected_config_snapshot_sha256=source.source_snapshot_sha256, lobby_region=lobby_region)
     sdk = module('lobby_sdk_signin', 'run-nid-sdk-sign-in.py')
     prepared = sdk.load_inputs(email, route=route, selected_profile=sdk_profile_name, **({'device_settings': device_settings} if device_settings else {}))
     binding, sdk_profile, _ = prepared
-    if sdk_profile_name == 'recovered-release' and not isinstance(prepared, SdkInputs):
+    if (sdk_profile_name == 'recovered-release' or is_prepared(sdk_profile_name)) and not isinstance(prepared, SdkInputs):
         raise ValueError('Current SDK profile requires a fresh GMC2 context')
     browser = module('lobby_sdk_browser', 'nid-browser.py')
     captured = {}
@@ -80,7 +85,8 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
         # TID is persistent bot-owned state under the verified generation policy.
         values = dict(I_GameCode=sdk_profile['game_code'],I_GameVersion=source.app_version,
             I_PID=data.player_id,I_JoinedCountryCode=country,I_NMDeviceKey=binding.nm_device_key)
-        if getattr(source, 'source_exe_sha256', '') in GEO_SOURCES:
+        if (getattr(source, 'source_exe_sha256', '') in GEO_SOURCES
+                or permits(getattr(source,'source_exe_sha256',''),'sdk-launcher-gmc2-geo-v2')):
             if not isinstance(prepared, SdkInputs) or prepared.source_sha256 != source.source_exe_sha256:
                 raise ValueError('Current metadata requires matching fresh GMC2 source')
             prepared.check_usage(email=email, selected_profile=sdk_profile_name, route=route)
@@ -139,7 +145,7 @@ def run(email, *, selected_profile, manifest_path, socks_port, context, password
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--email', required=True)
-    parser.add_argument('--profile', choices=['recovered-base', 'recovered-release'], required=True)
+    parser.add_argument('--profile', required=True, help='Проверенный профиль либо prepared-next / prepared:<SHA>')
     parser.add_argument('--context', choices=['sdk-without-nid-info','sdk-with-joined-country','sdk-with-partial-metadata'], required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     route_choice = parser.add_mutually_exclusive_group(required=True)

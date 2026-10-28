@@ -34,6 +34,38 @@
       "question": "release-function-reuse-11322",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Восемь catalog projection gaps20, остальные source22 functions/data/callees, native semantic suites, handlers/registration/post-state; runtime не допущен."
+    },
+    {
+      "addresses": [
+        "0x14143ba00",
+        "0x14143bd90",
+        "0x141446700",
+        "0x14144c4a0",
+        "0x14144c5b0"
+      ],
+      "checks": [],
+      "conclusion": "Общий автомат обновления реализован и проверен на установленной 1.13.22: auto/resume, source registry/projections, SourceStore, stage/check cache, guarded next-launch bundles и независимый watcher с ручным ярлыком. Неизменный повтор использовал 132 этапа без новых JVM, native suites и context checks. Историческая инструкция сохранена побайтно; действующие правила отделены от истории.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTOMATIC-UPDATE.md",
+          "sha256": "24be79ed2d7e1459db4b1d4b5c47517780a33ba0eb312d56bef35fe32520f4e0"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTOMATIC-UPDATE-ACCEPTANCE.json",
+          "sha256": "4f145166dd8552bc238916520a0e27cc04d24d4c38dfc92705b8af31da34a602"
+        }
+      ],
+      "id": "f9b273b0d74c70dc12f9bc70feb2a53153c8da4c4bce46337e8d0e307f8cd2db",
+      "limits": [
+        "Адреса задания — готовый current пример helper exports; вывод относится к инфраструктуре обновления, а не полному игровому входу.",
+        "Native UTF-8 proof (222 случая) — отдельная машинная квитанция bounded семейства; остальные semantic adapters/data/callees остаются блокерами.",
+        "Нет авторизации, игровых действий, runtime activation или доказательства длительной живой сессии. Тайминги относятся к этой паре/библиотеке и включают полные SHA."
+      ],
+      "method": "static",
+      "next_check": "Продолжить по общим blocker nodes итогового machine run; новое подтверждённое правило сразу подключать к adapters/on_update/cache, готовое вручную не повторять.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Остальные semantic families и SDK / Version / Login / world контракты 1.13.22 не допущены. Полное автоматическое восстановление новой логики не заявлено."
     }
   ],
   "schema": 1,

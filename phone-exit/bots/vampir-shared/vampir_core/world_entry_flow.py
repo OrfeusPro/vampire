@@ -11,6 +11,7 @@ from .world_reserve_context import decode_world_reserve_context
 from .world_move_start_result import decode_world_move_start_result
 from .world_move_finish_result import decode_world_move_finish_result, SOURCE_SHA256 as FINISH_SOURCE
 from .character_select_result import WireVector3
+from .runtime_admission import permits
 
 
 @dataclass(frozen=True,slots=True)
@@ -24,12 +25,13 @@ class ServerTargetPosition:
 class WorldEntryFlow:
     def __init__(self, selection, outbound, *, source_sha256, timeout, max_payload_size,
                  complete_world=False, max_collection_items=4096):
-        if source_sha256 not in WORLD_PROBE_SOURCES: raise ValueError('Unsupported world entry source')
+        admitted=permits(source_sha256,'world-selection-move-v1')
+        if source_sha256 not in WORLD_PROBE_SOURCES and not admitted: raise ValueError('Unsupported world entry source')
         if type(timeout) not in (float,int) or not math.isfinite(timeout) or timeout<=0:
             raise ValueError('Invalid world entry timeout')
         if type(max_payload_size) is not int or not 30 <= max_payload_size <= 0xffffff:
             raise ValueError('Invalid world entry byte budget')
-        if type(complete_world) is not bool or (complete_world and (source_sha256 not in WORLD_PROBE_SOURCES or max_payload_size<81)):
+        if type(complete_world) is not bool or (complete_world and ((source_sha256 not in WORLD_PROBE_SOURCES and not admitted) or max_payload_size<81)):
             raise ValueError('Invalid headless world completion policy')
         if type(max_collection_items) is not int or not 0<=max_collection_items<=65535:
             raise ValueError('Invalid world collection budget')

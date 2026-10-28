@@ -11,6 +11,7 @@ from .session_clock import LobbyPingClock
 from .world_move_start import SOURCE_SHA256 as WORLD_SOURCE_SHA256, WORLD_PROBE_SOURCES, LATEST_PROBE_SOURCE
 from .character_target import CharacterTargetTracker
 from .tutorial_update import decode_tutorial_update
+from .runtime_admission import permits
 
 
 def exchange_game_login(sock, version, login, *, timeout=10, read_character_list=False, ping_clock=None,
@@ -49,7 +50,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
     if ping_clock is not None and not isinstance(ping_clock, LobbyPingClock):
         raise TypeError('Expected verified lobby Ping clock')
     if type(read_world_start) is not bool or (read_world_start and
-            (character_index is None or source_sha256 not in WORLD_PROBE_SOURCES)):
+            (character_index is None or (source_sha256 not in WORLD_PROBE_SOURCES
+                and not permits(source_sha256,'game-login-world-v1')))):
         raise ValueError('World start requires explicit character selection and current source')
     if type(read_world_finish) is not bool or (read_world_finish and not read_world_start):
         raise ValueError('World finish requires explicit world start')
@@ -321,7 +323,8 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                         if session_control is not None:
                             session_control.publish(owner)
                             session_control.pump_quest_actions(owner)
-                            if source_sha256!=LATEST_PROBE_SOURCE or session_control.keep_online:deadline=math.inf
+                            bounded=(source_sha256==LATEST_PROBE_SOURCE or permits(source_sha256,'game-login-world-v1'))
+                            if not bounded or session_control.keep_online:deadline=math.inf
                         while tutorial_pending:
                             tutorial_observer(tutorial_pending.pop(0))
                         tracker=ensure_target_tracker()
@@ -330,7 +333,7 @@ def exchange_game_login(sock, version, login, *, timeout=10, read_character_list
                             notified_revision=tracker.revision
                         if not observe_world_seconds:return result('world_finish_result')
                         if observation_until is None and (session_control is None or
-                                (source_sha256==LATEST_PROBE_SOURCE and not session_control.keep_online)):
+                                ((source_sha256==LATEST_PROBE_SOURCE or permits(source_sha256,'game-login-world-v1')) and not session_control.keep_online)):
                             observation_until=time.monotonic()+observe_world_seconds
                             deadline=observation_until
                         if ack_initial_tutorial:

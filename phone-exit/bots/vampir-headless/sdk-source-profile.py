@@ -8,6 +8,21 @@ RELEASE_PROFILE_SHA = '4c8057b367524bc26e226088f5f5ef790309f82b8c81af90ffd7e829a
 RELEASE_SOURCE_SHA = 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
 
 
+def load_prepared_profile(kind, *, selected_profile, root=ROOT):
+    if kind not in ('public_gmc2', 'nid'):
+        raise ValueError('Unsupported SDK profile section')
+    from vampir_core.release_bundle import validate
+    from vampir_core.runtime_admission import current_bundle
+    workspace = Path(__file__).resolve().parents[3]
+    bundle = current_bundle(selected_profile)
+    if bundle is None:
+        bundle = validate(root=root, workspace=workspace, selected=selected_profile)
+    report = bundle['sdk_profile']
+    return dict(report[kind], source=bundle['source'], source_sha256=bundle['source_sha256'],
+        sha256=bundle['source_sha256'], profile_sha256=bundle['bundle_sha256'],
+        active_runtime_settings_verified=False)
+
+
 def load_release_profile(kind, *, root=ROOT):
     if kind not in ('public_gmc2', 'nid'):
         raise ValueError('Unsupported SDK profile section')

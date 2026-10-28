@@ -466,11 +466,15 @@ def main():
     source = p.add_mutually_exclusive_group(required=True)
     source.add_argument('--baseline', type=Path)
     source.add_argument('--resume', type=Path)
+    source.add_argument('--auto', action='store_true', help='Выбрать inventory baseline и продолжить подходящий запуск автоматически')
     p.add_argument('--install', type=Path, default=INSTALL.parents[3])
     p.add_argument('--audit-only', action='store_true')
     p.add_argument('--plan-only', action='store_true')
     p = sub.add_parser('update-status')
     p.add_argument('--run', required=True, type=Path)
+    p = sub.add_parser('update-watch', help='Независимый наблюдатель обновлений; без входа в игру')
+    p.add_argument('action', choices=['start','status','stop','retry'])
+    p.add_argument('--install', type=Path, default=INSTALL.parents[3])
     for operation in ('search', 'function', 'callers'):
         p = sub.add_parser(operation)
         p.add_argument('value')
@@ -479,7 +483,12 @@ def main():
     args = parser.parse_args()
     database = args.database or args.root / 'knowledge/search.sqlite3'
     if args.operation == 'update':
-        print(json.dumps(extension('research-update').update(api(), args, database), ensure_ascii=False))
+        module='update-auto' if args.auto else 'research-update'
+        operation='execute' if args.auto else 'update'
+        print(json.dumps(getattr(extension(module),operation)(api(), args, database), ensure_ascii=False))
+        return
+    if args.operation == 'update-watch':
+        print(json.dumps(extension('update-watch').control(api(),args),ensure_ascii=False))
         return
     if args.operation == 'update-status':
         print(json.dumps(extension('update-run').status(api(), args), ensure_ascii=False))

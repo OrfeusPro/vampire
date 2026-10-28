@@ -11,16 +11,6 @@ import re
 from types import SimpleNamespace
 
 HERE=Path(__file__).resolve().parent
-SOURCES={'11316':'d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960',
-         '11318':'d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c',
-         '11320':'544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c',
-         '11322':'03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'}
-# These are explicit scope-preserving renames, not guessed analytical matches.
-# The combined string/buffer context must not replace login-result-string:
-# its nested constructor is a concrete buffer reader, not the base archive.
-FAMILY_ALIASES={'11320':{'login-nested':'login-result',
-                         'login-input':'login-result-input',
-                         'login-strings-buffer':'login-result-buffer'}}
 ADDRESS=re.compile(r'0x[0-9a-f]+')
 SHA=re.compile(r'[0-9a-f]{64}')
 WINDOW=65536
@@ -32,6 +22,44 @@ MAX_ROLES=4096
 def load(name):
     spec=importlib.util.spec_from_file_location(name.replace('-','_'),HERE/(name+'.py'))
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+
+
+# Compatibility API for existing callers/tests. Operational selection reads the
+# validated registry supplied with the run, rather than a Python release list.
+_DEFAULT_REGISTRY=load('native-release-registry').read(HERE/'knowledge')
+SOURCES={row['id']:row['source_sha256'] for row in _DEFAULT_REGISTRY['releases']}
+FAMILY_ALIASES=_DEFAULT_REGISTRY['family_aliases']
+
+
+def registry_data(knowledge,root=None):
+    value=load('native-release-registry').read(knowledge,fallback=SOURCES)
+    if not (Path(knowledge)/'native-release-registry.json').is_file():
+        value['family_aliases']={version:aliases for version,aliases in FAMILY_ALIASES.items() if version in SOURCES}
+    if root is not None:
+        api=load('native-release-registry');known={row['source_sha256'] for row in value['releases']}
+        for _,context,rank in api.generated_contexts(root,value):
+            sha=context['source_sha256']
+            if sha not in known:
+                value['releases'].append(dict(id='auto-'+sha,order=rank,source_sha256=sha));known.add(sha)
+        api.validate(value)
+    return value
+
+
+def sources(knowledge=None,root=None):
+    value=registry_data(knowledge or HERE/'knowledge',root)
+    return {row['id']:row['source_sha256'] for row in sorted(value['releases'],key=lambda x:x['order'])}
+
+
+def ordered_sources(knowledge=None,root=None):
+    return [row['source_sha256'] for row in sorted(registry_data(knowledge or HERE/'knowledge',root)['releases'],key=lambda x:x['order'],reverse=True)]
+
+
+def context_files(knowledge,registry=None,root=None):
+    registry=registry or registry_data(knowledge,root);api=load('native-release-registry')
+    result=[path for path in sorted((Path(knowledge)/'native-contexts').glob('*.json'))
+        if api.context_identity(path,json.loads(path.read_text('utf-8')),registry) is not None]
+    if root is not None:result.extend(path for path,_,_ in api.generated_contexts(root,registry))
+    return sorted(set(result))
 
 
 def digest(path):
@@ -77,25 +105,41 @@ def declarations(context):
     return result
 
 
-def inventory(root,knowledge):
+def inventory(root,knowledge,*,source_store=None):
     root,knowledge=Path(root),Path(knowledge)
     contexts=[];exports={};sources={};queue=[]
-    folder=knowledge/'native-contexts'
-    paths=sorted(p for p in folder.glob('*.json') if any(p.stem.endswith('-'+v) for v in SOURCES))
+    registry=registry_data(knowledge,root);api=load('native-release-registry')
+    releases={row['id']:row for row in registry['releases']}
+    paths=context_files(knowledge,registry,root)
     if len(paths)>MAX_CONTEXTS:raise ValueError('Function context budget exceeded')
-    for path in paths:
-        context_raw=path.read_bytes();context=json.loads(context_raw.decode('utf-8'));roles=declarations(context)
+    declarations_to_read=[(str(path),json.loads(path.read_text('utf-8')),digest(path)) for path in paths]
+    declarations_to_read.extend(api.projected_contexts(knowledge,registry))
+    for name,context,context_digest in declarations_to_read:
+        path=Path(name);roles=declarations(context)
         dependency_only=context.get('dependency_only',False)
         if type(dependency_only) is not bool:raise ValueError('Dependency-only declaration must be boolean')
         if not roles:continue
-        version=path.stem.rsplit('-',1)[1];expected=SOURCES[version];actual=context.get('source_sha256')
+        version,declared_family=api.context_identity(path,context,registry)
+        expected=releases[version]['source_sha256'];actual=context.get('source_sha256')
         if actual!=expected:
             queue.append(dict(context=str(path),reason='context_source_not_verified',source_sha256=actual));continue
         if expected not in sources:
             source=root/'client-code-snapshots'/expected/'ProjectRED-Win64-Shipping.exe'
-            if digest(source)!=expected:raise ValueError('Context baseline source changed')
+            if source_store is not None:source_store.source(expected)
+            elif digest(source)!=expected:raise ValueError('Context baseline source changed')
             sources[expected]=str(source)
         declared=context.get('exports')
+        if context.get('native_admission'):
+            adapter=load('update-native-contexts')
+            admitted=adapter.admitted_instructions(context,root,
+                {int(context['bindings'][key],16) for key in ('length','convert')},
+                {int(context['bindings']['encoder'],16):context['encoder_leaf']['bytes']},source_store=source_store)
+            proof=context['native_admission'];export=proof['path']
+            exports[export]=dict(sha256=proof['sha256'],report=dict(source_sha256=expected,functions=admitted['functions']),source_sha256=expected)
+            family=registry['family_aliases'].get(version,{}).get(declared_family,declared_family)
+            contexts.append(dict(path=str(path),sha256=context_digest,family=family,declared_family=declared_family,
+                version=version,order=releases[version]['order'],source_sha256=expected,roles=roles,exports=[export],dependency_only=dependency_only))
+            continue
         if not isinstance(declared,dict) or not declared:
             queue.append(dict(context=str(path),reason='context_exports_not_declared',source_sha256=expected));continue
         declared=dict(declared)
@@ -117,27 +161,29 @@ def inventory(root,knowledge):
                 exports[str(export)]=dict(sha256=sha,report=report,source_sha256=expected)
             elif exports[str(export)]['sha256']!=sha:raise ValueError('Conflicting context export digest')
             material.append(str(export))
-        declared_family=path.stem.rsplit('-',1)[0]
-        family=FAMILY_ALIASES.get(version,{}).get(declared_family,declared_family)
-        contexts.append(dict(path=str(path),sha256=hashlib.sha256(context_raw).hexdigest(),family=family,declared_family=declared_family,
-            version=version,source_sha256=expected,roles=roles,exports=material,dependency_only=dependency_only))
+        family=registry['family_aliases'].get(version,{}).get(declared_family,declared_family)
+        contexts.append(dict(path=str(path),sha256=context_digest,family=family,declared_family=declared_family,
+            version=version,order=releases[version]['order'],source_sha256=expected,roles=roles,exports=material,dependency_only=dependency_only))
     if sum(len(c['roles']) for c in contexts)>MAX_ROLES:raise ValueError('Function role budget exceeded')
     return contexts,exports,sources,queue
 
 
-def inputs(root,knowledge):
-    contexts,exports,sources,queue=inventory(root,knowledge)
+def inputs(root,knowledge,*,source_store=None):
+    contexts,exports,sources,queue=inventory(root,knowledge,**({'source_store':source_store} if source_store is not None else {}))
     # Include all eligible context files, even rejected declarations, so correcting
     # an unknown source/export declaration invalidates the cached stage.
-    files=sorted(p for p in (Path(knowledge)/'native-contexts').glob('*.json') if any(p.stem.endswith('-'+v) for v in SOURCES))
-    tools=('function-reuse-plan.py','update-bindings.py','build-native-entry-code.py','extract-native-enums.py','research-workflow.py','update-contracts.py')
+    files=context_files(knowledge,root=root)
+    registry=Path(knowledge)/'native-release-registry.json'
+    tools=('function-reuse-plan.py','native-release-registry.py','update-native-contexts.py','verify-utf8-context.py','update-native-harness.py','update-bindings.py','build-native-entry-code.py','extract-native-enums.py','research-workflow.py','update-contracts.py')
     runtime=load('build-native-entry-code').capstone
     import importlib.metadata
     distribution=importlib.metadata.distribution('capstone')
     record=distribution.read_text('RECORD')
     if runtime.__version__!='5.0.6' or distribution.version!='5.0.6' or not record:raise ValueError('Pinned function catalog runtime required')
     return dict(present=bool(files),approved_data_sha256=digest(Path(knowledge)/'update-contracts.json') if (Path(knowledge)/'update-contracts.json').is_file() else None,capstone_version=runtime.__version__,capstone_record_sha256=hashlib.sha256(record.encode()).hexdigest(),contexts={str(p):digest(p) for p in files},
-        exports={p:v['sha256'] for p,v in exports.items()},sources={p:digest(path) for p,path in sources.items()},
+        registry_sha256=digest(registry) if registry.is_file() else None,
+        generated_index_sha256=digest(Path(root)/'knowledge/generated-native/index.json') if (Path(root)/'knowledge/generated-native/index.json').is_file() else None,
+        exports={p:v['sha256'] for p,v in exports.items()},sources={sha:sha for sha in sources},
         tools={name:digest(HERE/name) for name in tools},queue=queue)
 
 
@@ -147,13 +193,13 @@ def choose(contexts):
     for context in contexts:
         for role,address in context['roles'].items():
             item=dict(context=context['path'],context_sha256=context['sha256'],family=context['family'],role=role,
-                declared_family=context.get('declared_family',context['family']),version=context['version'],source_sha256=context['source_sha256'],address=address,exports=context['exports'])
+                declared_family=context.get('declared_family',context['family']),version=context['version'],order=context['order'] if 'order' in context else int(context['version']),source_sha256=context['source_sha256'],address=address,exports=context['exports'])
             record=all_records.setdefault((item['source_sha256'],address),dict(source_sha256=item['source_sha256'],address=address,aliases=[],exports=set()))
             record['aliases'].append({k:item[k] for k in ('context','context_sha256','family','declared_family','role','version')})
             record['exports'].update(context['exports'])
             if context.get('dependency_only',False):continue
             identity=(context['family'],role)
-            if identity not in latest or int(item['version'])>int(latest[identity]['version']):latest[identity]=item
+            if identity not in latest or item['order']>latest[identity]['order']:latest[identity]=item
     selected={(item['source_sha256'],item['address']) for item in latest.values()}
     return all_records,selected,latest
 
@@ -185,22 +231,22 @@ def approved_data(knowledge):
     return result
 
 
-def build(root,knowledge,target_sha,*,execute=True):
+def build(root,knowledge,target_sha,*,execute=True,source_store=None):
     root,knowledge=Path(root),Path(knowledge)
     bindings,native=load('update-bindings'),load('build-native-entry-code')
-    identity=inputs(root,knowledge)
-    contexts,exports,sources,queue=inventory(root,knowledge)
-    if (any(identity['contexts'].get(c['path'])!=c['sha256'] for c in contexts)
+    identity=inputs(root,knowledge,source_store=source_store)
+    contexts,exports,sources,queue=inventory(root,knowledge,**({'source_store':source_store} if source_store is not None else {}))
+    if (any(identity['contexts'].get(c['path'],c['sha256'])!=c['sha256'] for c in contexts)
             or identity['exports']!={p:v['sha256'] for p,v in exports.items()}):
         raise ValueError('Function inventory changed during planning')
-    target=bindings.source(None,root,target_sha)
+    target=source_store.source(target_sha) if source_store is not None else bindings.source(None,root,target_sha)
     records,selected,latest=choose(contexts)
     primary=set(selected)
     identity['target_sha256']=target_sha
     identity['approved_data_sha256']=digest(knowledge/'update-contracts.json') if (knowledge/'update-contracts.json').is_file() else None
     images={};decoded={};data_specs=approved_data(knowledge)
     def image(sha):
-        if sha not in images:images[sha]=native.Image(Path(sources[sha]).read_bytes())
+        if sha not in images:images[sha]=source_store.image(native,sha) if source_store is not None else native.Image(Path(sources[sha]).read_bytes())
         return images[sha]
     def inspect(key):
         if key in decoded:return decoded[key]
@@ -279,7 +325,7 @@ def build(root,knowledge,target_sha,*,execute=True):
         contract=dict(id='function-batch-'+str(number),bindings={baseline:{r['key']:r['baseline_address'] for r in recipes}},recipes=recipes)
         contracts.append(contract)
         if execute:
-            outcome=bindings.resolve(index,SimpleNamespace(root=root),dict(contracts=[contract]),target_sha,[])['contracts'][contract['id']]
+            outcome=bindings.resolve(index,SimpleNamespace(root=root,source_store=source_store),dict(contracts=[contract]),target_sha,[])['contracts'][contract['id']]
             verifications.append(dict(id=contract['id'],baseline_sha256=baseline,**outcome))
     for key in sorted(rejected):
         sha,address=key;queue.append(dict(source_sha256=sha,address=address,aliases=records[key]['aliases'],reasons=rejected[key]))
@@ -298,13 +344,20 @@ def build(root,knowledge,target_sha,*,execute=True):
         raise ValueError('Function planner runtime changed during planning')
     for name in identity['contexts']:
         if digest(name)!=identity['contexts'][name]:raise ValueError('Function contexts changed during planning')
-    current_files={str(p) for p in (knowledge/'native-contexts').glob('*.json') if any(p.stem.endswith('-'+v) for v in SOURCES)}
+    current_files={str(p) for p in context_files(knowledge,root=root)}
     if current_files!=set(identity['contexts']):raise ValueError('Function context inventory changed during planning')
+    registry_path=knowledge/'native-release-registry.json'
+    if (digest(registry_path) if registry_path.is_file() else None)!=identity['registry_sha256']:
+        raise ValueError('Native release registry changed during planning')
+    generated_index=root/'knowledge/generated-native/index.json'
+    if (digest(generated_index) if generated_index.is_file() else None)!=identity['generated_index_sha256']:
+        raise ValueError('Generated native context index changed during planning')
     for name,sha in identity['exports'].items():
         if digest(name)!=sha:raise ValueError('Function exports changed during planning')
-    for sha,path in sources.items():
-        if digest(path)!=sha:raise ValueError('Function baseline changed during planning')
-    if hashlib.sha256(bindings.source(None,root,target_sha)).hexdigest()!=target_sha:raise ValueError('Function target changed')
+    if source_store is None:
+        for sha,path in sources.items():
+            if digest(path)!=sha:raise ValueError('Function baseline changed during planning')
+        if hashlib.sha256(bindings.source(None,root,target_sha)).hexdigest()!=target_sha:raise ValueError('Function target changed')
     verified_keys={(v['baseline_sha256'],proof['baseline_address']) for v in verifications
         for proof in v['verification'].values() if proof['state'] in ('unchanged','moved_verified')}
     # Group actual call edges once so shared blockers can be researched in
@@ -331,7 +384,7 @@ def build(root,knowledge,target_sha,*,execute=True):
         dependency_frontier=frontier,
         scope='function_only',runtime_activated=False,profile_activated=False,
         limits=['Newest explicit context role selected from reviewed 1.13.16/1.13.18/1.13.20/1.13.22 declarations per normalized family/role; older declarations apply only where a newer role is absent. Release presence does not establish complete role coverage.',
-            'Only the explicit three 1.13.20 family renames and executable input/native_input groups are normalized; other unmodeled top-level executable fields remain outside this catalog.',
+            'Only reviewed registry projections, explicit family aliases and executable input/native_input groups are normalized; arbitrary address fields remain excluded.',
             'Unwind roots and explicit export instructions are verified. Undeclared data/callees, leaves and indirect/tail branches remain queued.',
             'Only bounded declared instruction/callee/data equivalence is verified; native semantic suites and runtime admission remain separate.'])
     return report
@@ -340,7 +393,7 @@ def build(root,knowledge,target_sha,*,execute=True):
 def run(index,args,sha):
     if not (Path(args.knowledge)/'native-contexts').is_dir():
         return dict(state='skipped',reason='No native context catalog',runtime_activated=False)
-    report=build(args.root,args.knowledge,sha,execute=True)
+    report=build(args.root,args.knowledge,sha,execute=True,source_store=getattr(args,'source_store',None))
     path=load('research-workflow').snapshot(Path(args.root),'function-reuse-catalog',report)
     return dict(report=str(path),sha256=digest(path),summary=report['summary'],runtime_activated=False,profile_activated=False)
 

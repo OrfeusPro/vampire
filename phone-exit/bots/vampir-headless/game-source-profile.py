@@ -48,6 +48,7 @@ class BaseGameProfile:
     source_exe_sha256: str = ''
     live_probe_only: bool = False
     bounded_world_probe: bool = False
+    bundle_sha256: str = ''
 
 
 def verify_file(path, expected):
@@ -68,6 +69,17 @@ def verify_compiled_tag(path, source_sha):
 
 
 def load_profile(*, selected_profile, root=ROOT):
+    if selected_profile == 'prepared-next' or selected_profile.startswith('prepared:'):
+        from vampir_core.release_bundle import validate
+        from vampir_core.runtime_admission import current_bundle
+        bundle = current_bundle(selected_profile)
+        if bundle is None:
+            bundle = validate(root=root, workspace=HERE.parents[2], selected=selected_profile)
+        game = bundle['game_profile']
+        return BaseGameProfile(game['app_version'], game['config_prefix'], game['cdn_url'],
+            game['config_snapshot_sha256'], compiled_tag=game['compiled_tag'],
+            source_exe_sha256=bundle['source_sha256'], live_probe_only=True,
+            bounded_world_probe=True, bundle_sha256=bundle['bundle_sha256'])
     if selected_profile not in PROFILES: raise ValueError('Select a verified recovered profile explicitly')
     snapshot, source_sha = PROFILES[selected_profile]
     if selected_profile == CANDIDATE:
@@ -145,7 +157,7 @@ def bind_profile(version, login, *, selected_profile, root=ROOT):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--profile', choices=list(PROFILES), required=True)
+    parser.add_argument('--profile', required=True, help='Проверенный профиль или prepared-next / prepared:<SHA>')
     parser.add_argument('--check', action='store_true', required=True)
     args = parser.parse_args()
     try:
