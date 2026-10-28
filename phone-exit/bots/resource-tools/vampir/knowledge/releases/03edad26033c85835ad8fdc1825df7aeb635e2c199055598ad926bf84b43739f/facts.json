@@ -1,0 +1,41 @@
+{
+  "facts": [
+    {
+      "addresses": [
+        "0x14143ba00",
+        "0x14143bd90",
+        "0x141446700",
+        "0x14144c4a0",
+        "0x14144c5b0"
+      ],
+      "checks": [
+        {
+          "cache_key": "cd41fc0c0cb3c5e91570e4ac7fa7d1829cd264f0597e109c85f14a763c4128ca",
+          "id": "function-closure-11322",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5f1e31c7553a4d50d0e5443ec60fcaa65fb7160dd5902802e93dc77178d203bb\\manifest.json",
+          "sha256": "5f1e31c7553a4d50d0e5443ec60fcaa65fb7160dd5902802e93dc77178d203bb",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Пять function-only closures20→22 confirmed with full exports of both sources;5 reviewed bindings22, latest baseline22 length recipe, on_update/cache check. Audit and first catalog saved; fixed source selection20/22 and no older fallback when latest proof missing.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-UPDATE-11322.md",
+          "sha256": "5b1bc425b1f34cafb5c00f9c46b4228d593a81481c4b7e2fe9e892aa82478ccd"
+        }
+      ],
+      "id": "f9718f7bcbf01fa594ee460eea279eebecae176410dc7ecba73712c90166ad66",
+      "limits": [
+        "Instruction/callee/data equivalence only; no native game semantic execution, full contract compatibility or runtime activation.",
+        "Archive audit35changes is against last full baseline16, not a claimed20→22 resource diff. First catalog15proofs maps6unique target addresses; counts scope expanded."
+      ],
+      "method": "static",
+      "next_check": "Разбирать только concrete projection and changed native dependencies для входа22; current5 exports/function check reuse through cache.",
+      "question": "release-function-reuse-11322",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Восемь catalog projection gaps20, остальные source22 functions/data/callees, native semantic suites, handlers/registration/post-state; runtime не допущен."
+    }
+  ],
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+}

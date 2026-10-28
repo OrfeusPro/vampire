@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Установлена 1.13.22 (SHA 03edad26…): offline audit и первый автоматический
+каталог готовы. В графе пять function-only bindings22; поддержка игрового входа
+не объявлена. Каталог использует последние reviewed базы20/22 без отката.
+[Перенос, счётчики и ограничения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-11322.md).
+
 LoginResult 1.13.20: native string decoder и buffer construction прошли
 506 сценариев. Восемь scoped bindings и on_update check подключены. Storage
 effects остаются fixtures; следующий пакет — остальные handler paths.

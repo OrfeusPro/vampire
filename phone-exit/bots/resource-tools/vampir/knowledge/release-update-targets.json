@@ -6449,6 +6449,68 @@
           }
         ]
       }
+    },
+    {
+      "id": "function-closures-11322",
+      "baseline_functions": [],
+      "tools": [
+        "verify-function-closure-11322.py"
+      ],
+      "rule": "Five function-only closed instruction/callee/data proofs from source20 with full exports of source22; not a semantic/runtime port.",
+      "automation": {
+        "discovery": "latest_explicit_reviewed_context_role_and_bounded_shape",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_source_specific_checks",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+            "functions": [
+              {
+                "address": "0x14143ba00",
+                "scope": "Full function-only instruction/callee/data equivalence; native semantic suites and runtime remain separate.",
+                "required_checks": [
+                  "function-closure-11322"
+                ]
+              },
+              {
+                "address": "0x14143bd90",
+                "scope": "Full function-only instruction/callee/data equivalence; native semantic suites and runtime remain separate.",
+                "required_checks": [
+                  "function-closure-11322"
+                ]
+              },
+              {
+                "address": "0x141446700",
+                "scope": "Full function-only instruction/callee/data equivalence; native semantic suites and runtime remain separate.",
+                "required_checks": [
+                  "function-closure-11322"
+                ]
+              },
+              {
+                "address": "0x14144c4a0",
+                "scope": "Full function-only instruction/callee/data equivalence; native semantic suites and runtime remain separate.",
+                "required_checks": [
+                  "function-closure-11322"
+                ]
+              },
+              {
+                "address": "0x14144c5b0",
+                "scope": "Full function-only instruction/callee/data equivalence; native semantic suites and runtime remain separate.",
+                "required_checks": [
+                  "function-closure-11322"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-function-closure-11322.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-UPDATE-11322.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

@@ -178,6 +178,94 @@ class FunctionReusePlanTests(unittest.TestCase):
         self.assertEqual(value['summary']['functions'],0)
         self.assertTrue(any(q.get('reason')=='context_source_not_verified' for q in value['queue']))
 
+    def test_latest_11320_alias_replaces_18_and_16_role(self):
+        module,knowledge,old,middle=self.setup_catalog();new=self.image(0x1060)
+        module.SOURCES['11320']=new
+        self.context(module,knowledge,old,'login-result','11316',dict(reader='0x140001000',helper='0x140001040'))
+        self.context(module,knowledge,middle,'login-result','11318',dict(reader='0x140001020',helper='0x140001040'))
+        self.context(module,knowledge,new,'login-nested','11320',dict(reader='0x140001060',helper='0x140001040'))
+        value=module.build(self.root,knowledge,new)
+        self.assertEqual(value['summary']['baseline_counts'],{old:0,middle:0,new:2})
+        self.assertEqual(value['summary']['primary_verified'],2)
+        aliases=[a for row in value['inventory'] for a in row['aliases'] if a['version']=='11320']
+        self.assertTrue(all(a['family']=='login-result' and a['declared_family']=='login-nested' for a in aliases))
+
+    def test_input_and_native_input_roles_share_explicit_latest_identity(self):
+        module,knowledge,old,middle=self.setup_catalog();new=self.image(0x1060)
+        module.SOURCES['11320']=new
+        for source,family,version,group in ((middle,'login-result-input','11318','native_input'),(new,'login-input','11320','input')):
+            path,_=self.context(module,knowledge,source,family,version,dict(scalar='0x140001040'))
+            data=json.loads(path.read_text());data['functions']={}
+            data[group]=dict(functions=dict(scalar='0x140001040'))
+            if version=='11318':data[group]['source_sha256']=source
+            path.write_text(json.dumps(data))
+        value=module.build(self.root,knowledge,new)
+        self.assertEqual(value['summary']['primary_functions'],1)
+        self.assertEqual(value['inventory'][0]['source_sha256'],new)
+        self.assertTrue(any(a['role']=='input:functions:scalar' for a in value['inventory'][0]['aliases']))
+        self.assertNotIn('login-strings-buffer',module.FAMILY_ALIASES.get('11318',{}))
+        self.assertNotEqual(module.FAMILY_ALIASES['11320']['login-strings-buffer'],'login-result-string')
+
+    def test_nested_source_and_invalid_export_are_rejected(self):
+        module,knowledge,old,new=self.setup_catalog()
+        path,_=self.context(module,knowledge,old,'packet','11316',dict(helper='0x140001040'))
+        data=json.loads(path.read_text())
+        data['native_input']=dict(source_sha256='f'*64,functions=dict(helper='0x140001040'))
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError,'Nested input source differs'):module.inventory(self.root,knowledge)
+        data['native_input']['source_sha256']=old
+        data['native_input']['exports']={'run-unknown':'not-a-sha'}
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError,'Invalid explicit context export'):module.inventory(self.root,knowledge)
+        data['native_input']['exports']={next(iter(data['exports'])):'e'*64}
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError,'Conflicting nested input export'):module.inventory(self.root,knowledge)
+
+    def test_nested_exports_cover_roots_and_dependency_only_stays_non_primary(self):
+        module,knowledge,old,new=self.setup_catalog()
+        path,_=self.context(module,knowledge,old,'packet','11316',dict(main='0x140001000'))
+        material,_=self.context(module,knowledge,old,'nested-material','11316',dict(helper='0x140001040'))
+        helper=json.loads(material.read_text());material.unlink()
+        value=json.loads(path.read_text());value['native_input']=dict(source_sha256=old,
+            functions=dict(helper='0x140001040'),exports=helper['exports']);value['dependency_only']=True
+        path.write_text(json.dumps(value))
+        report=module.build(self.root,knowledge,new)
+        self.assertEqual(report['summary']['roles'],0)
+        self.assertEqual(report['summary']['dependency_declarations'],2)
+        self.assertEqual(report['summary']['primary_functions'],0)
+        contexts,exports,_,_=module.inventory(self.root,knowledge)
+        self.assertEqual(len(contexts[0]['exports']),2)
+        self.assertEqual(len(exports),2)
+
+    def test_conflicting_nested_aliases_cannot_silently_replace_a_role(self):
+        module,knowledge,old,new=self.setup_catalog()
+        path,_=self.context(module,knowledge,old,'packet','11316',dict(helper='0x140001040'))
+        data=json.loads(path.read_text());data['input']=dict(functions=dict(scalar='0x140001000'))
+        data['native_input']=dict(functions=dict(scalar='0x140001040'))
+        path.write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError,'Conflicting normalized nested input role'):module.inventory(self.root,knowledge)
+
+    def test_reviewed_11322_role_blocks_20_fallback_without_22_proof(self):
+        module,knowledge,_,_=self.setup_catalog()
+        self.assertIn('11322',load('function-reuse-plan').SOURCES)
+        twenty=self.image(0x1060);twentytwo=self.image(0x1080);target=self.image(0x10a0)
+        module.SOURCES={'11320':twenty,'11322':twentytwo}
+        self.context(module,knowledge,twenty,'packet','11320',dict(helper='0x140001040'))
+        report=module.build(self.root,knowledge,target)
+        self.assertEqual(report['summary']['verified'],1)
+        index=load('knowledge-index').api();engine=load('update-run');workflow=load('research-workflow')
+        path=workflow.snapshot(self.root,'function-reuse-catalog',report)
+        result=dict(report=str(path),sha256=index.digest(path))
+        model=dict(contracts=[dict(id='fixture',recipes=[dict(key='helper',method='reviewed')],
+            bindings={twenty:dict(helper='0x140001040'),twentytwo:dict(helper='0x140001040')})])
+        contexts=dict(contracts={'fixture':dict(bindings={},queue=['helper: missing or ambiguous reviewed candidate'])})
+        with patch.object(index,'extension',return_value=module):
+            self.assertEqual(engine.apply_function_reuse(index,self.root,model,contexts,target,result),contexts)
+            # The old proof exists and is usable only when no newer role is declared.
+            del model['contracts'][0]['bindings'][twentytwo]
+            revised=engine.apply_function_reuse(index,self.root,model,contexts,target,result)
+            self.assertEqual(revised['contracts']['fixture']['bindings'],dict(helper='0x140001040'))
+
 def load_tests(loader,tests,pattern):
     return loader.loadTestsFromTestCase(FunctionReusePlanTests)
 

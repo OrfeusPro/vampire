@@ -12,7 +12,15 @@ from types import SimpleNamespace
 
 HERE=Path(__file__).resolve().parent
 SOURCES={'11316':'d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960',
-         '11318':'d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'}
+         '11318':'d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c',
+         '11320':'544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c',
+         '11322':'03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'}
+# These are explicit scope-preserving renames, not guessed analytical matches.
+# The combined string/buffer context must not replace login-result-string:
+# its nested constructor is a concrete buffer reader, not the base archive.
+FAMILY_ALIASES={'11320':{'login-nested':'login-result',
+                         'login-input':'login-result-input',
+                         'login-strings-buffer':'login-result-buffer'}}
 ADDRESS=re.compile(r'0x[0-9a-f]+')
 SHA=re.compile(r'[0-9a-f]{64}')
 WINDOW=65536
@@ -30,6 +38,23 @@ def digest(path):
     with Path(path).open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
 
 
+def nested_inputs(context):
+    groups=[]
+    for name in ('input','native_input'):
+        value=context.get(name)
+        if not isinstance(value,dict) or 'functions' not in value:continue
+        if value.get('source_sha256',context.get('source_sha256'))!=context.get('source_sha256'):
+            raise ValueError('Nested input source differs from context')
+        if (not isinstance(value['functions'],dict)
+                or any(not isinstance(role,str) or not isinstance(at,str) or not ADDRESS.fullmatch(at)
+                       for role,at in value['functions'].items())):
+            raise ValueError('Invalid nested executable function declarations')
+        if not isinstance(value.get('exports',{}),dict):
+            raise ValueError('Invalid nested input exports')
+        groups.append(value)
+    return groups
+
+
 def declarations(context):
     result={}
     for group in ('functions','bindings'):
@@ -43,6 +68,12 @@ def declarations(context):
     for role in ('prepare','constructor','reader','handler','producer'):
         address=context.get(role)
         if isinstance(address,str) and ADDRESS.fullmatch(address):result[role]=address
+    for group in nested_inputs(context):
+        for role,address in group['functions'].items():
+            key='input:functions:'+role
+            if key in result and result[key]!=address:
+                raise ValueError('Conflicting normalized nested input role')
+            result[key]=address
     return result
 
 
@@ -67,6 +98,11 @@ def inventory(root,knowledge):
         declared=context.get('exports')
         if not isinstance(declared,dict) or not declared:
             queue.append(dict(context=str(path),reason='context_exports_not_declared',source_sha256=expected));continue
+        declared=dict(declared)
+        for group in nested_inputs(context):
+            for run,sha in group.get('exports',{}).items():
+                if run in declared and declared[run]!=sha:raise ValueError('Conflicting nested input export digest')
+                declared[run]=sha
         material=[]
         for run,sha in sorted(declared.items()):
             if not isinstance(run,str) or Path(run).name!=run or not run.startswith('run-') or not isinstance(sha,str) or not SHA.fullmatch(sha):
@@ -81,7 +117,9 @@ def inventory(root,knowledge):
                 exports[str(export)]=dict(sha256=sha,report=report,source_sha256=expected)
             elif exports[str(export)]['sha256']!=sha:raise ValueError('Conflicting context export digest')
             material.append(str(export))
-        contexts.append(dict(path=str(path),sha256=hashlib.sha256(context_raw).hexdigest(),family=path.stem.rsplit('-',1)[0],
+        declared_family=path.stem.rsplit('-',1)[0]
+        family=FAMILY_ALIASES.get(version,{}).get(declared_family,declared_family)
+        contexts.append(dict(path=str(path),sha256=hashlib.sha256(context_raw).hexdigest(),family=family,declared_family=declared_family,
             version=version,source_sha256=expected,roles=roles,exports=material,dependency_only=dependency_only))
     if sum(len(c['roles']) for c in contexts)>MAX_ROLES:raise ValueError('Function role budget exceeded')
     return contexts,exports,sources,queue
@@ -109,9 +147,9 @@ def choose(contexts):
     for context in contexts:
         for role,address in context['roles'].items():
             item=dict(context=context['path'],context_sha256=context['sha256'],family=context['family'],role=role,
-                version=context['version'],source_sha256=context['source_sha256'],address=address,exports=context['exports'])
+                declared_family=context.get('declared_family',context['family']),version=context['version'],source_sha256=context['source_sha256'],address=address,exports=context['exports'])
             record=all_records.setdefault((item['source_sha256'],address),dict(source_sha256=item['source_sha256'],address=address,aliases=[],exports=set()))
-            record['aliases'].append({k:item[k] for k in ('context','context_sha256','family','role','version')})
+            record['aliases'].append({k:item[k] for k in ('context','context_sha256','family','declared_family','role','version')})
             record['exports'].update(context['exports'])
             if context.get('dependency_only',False):continue
             identity=(context['family'],role)
@@ -292,7 +330,8 @@ def build(root,knowledge,target_sha,*,execute=True):
         inventory=[records[key] for key in sorted(selected)],contracts=contracts,verification=verifications,queue=queue,
         dependency_frontier=frontier,
         scope='function_only',runtime_activated=False,profile_activated=False,
-        limits=['Newest explicit context role selected per family; baseline 1.13.16 is used directly when no 1.13.18 declaration exists.',
+        limits=['Newest explicit context role selected from reviewed 1.13.16/1.13.18/1.13.20/1.13.22 declarations per normalized family/role; older declarations apply only where a newer role is absent. Release presence does not establish complete role coverage.',
+            'Only the explicit three 1.13.20 family renames and executable input/native_input groups are normalized; other unmodeled top-level executable fields remain outside this catalog.',
             'Unwind roots and explicit export instructions are verified. Undeclared data/callees, leaves and indirect/tail branches remain queued.',
             'Only bounded declared instruction/callee/data equivalence is verified; native semantic suites and runtime admission remain separate.'])
     return report

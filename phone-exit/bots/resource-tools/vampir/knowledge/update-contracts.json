@@ -305,8 +305,8 @@
         {
           "key": "utf8-length",
           "method": "closed_shape",
-          "baseline_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
-          "baseline_address": "0x14144c550",
+          "baseline_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+          "baseline_address": "0x14144c5b0",
           "search_window": 65536,
           "calls": {},
           "data": {}
@@ -386,6 +386,9 @@
           "combiner-copy": "0x141426700",
           "combiner-append": "0x141429e70",
           "combiner-grow": "0x1414380b0"
+        },
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": {
+          "utf8-length": "0x14144c5b0"
         }
       },
       "resources": [
@@ -867,6 +870,12 @@
           "result-input-buffer-constructor": "0x144aac1f0",
           "result-input-string": "0x144aad090",
           "result-input-std-string": "0x144aac450",
+          "result-input-utf8-length": "0x14144c4a0",
+          "result-input-utf8-convert": "0x141446700",
+          "result-input-utf8-core": "0x14143bd90",
+          "result-input-utf8-scalar": "0x14143ba00"
+        },
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": {
           "result-input-utf8-length": "0x14144c4a0",
           "result-input-utf8-convert": "0x141446700",
           "result-input-utf8-core": "0x14143bd90",

@@ -1114,6 +1114,18 @@
         "evidence/updates/HEADLESS-LOGIN-INPUT-11320.md",
         "evidence/updates/HEADLESS-LOGIN-STRINGS-BUFFER-11320.md"
       ]
+    },
+    {
+      "id": "release-function-reuse-11322",
+      "status": "bounded_answer",
+      "question": "Какие функции последней проверенной базы автоматически подтверждены на полном SHA 1.13.22 и как сохранить точные границы?",
+      "known": "Offline audit22:165 archives,35 changed against last full archive baseline16. First function catalog:15 baseline/address matches ->6 unique target addresses;5 helper bindings source20→22 confirmed by full exports and on_update function-only check. Latest reviewed22 blocks older proof fallback.",
+      "unknown": "Остальные функции/данные/callees, восемь top-level catalog projections, игровые handlers/registration/post-state и native semantic suites22.",
+      "next_action": "Продолжить source-bound вход/handlers22 и explicit projection gaps; переиспользовать точные current exports пяти функций и function-only check. Native semantic/runtime допуск отдельно.",
+      "do_not_repeat": "Переиспользовать ready exports и source-specific caches; latest reviewed role blocks older fallback.",
+      "evidence": [
+        "evidence/updates/HEADLESS-UPDATE-11322.md"
+      ]
     }
   ]
 }
