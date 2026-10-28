@@ -763,6 +763,34 @@
         {
           "key": "result-handler-early",
           "method": "reviewed"
+        },
+        {
+          "key": "result-input-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-u16",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-u32",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-time",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-u64",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-bool",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-raw",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -795,7 +823,14 @@
           "result-period-constructor": "0x1457a2710",
           "result-time-reader": "0x1457fe090",
           "result-period-reader": "0x1457a5b90",
-          "result-handler-early": "0x14679e2d0"
+          "result-handler-early": "0x14679e2d0",
+          "result-input-constructor": "0x144aac250",
+          "result-input-u16": "0x144aac310",
+          "result-input-u32": "0x144aac360",
+          "result-input-time": "0x144aac530",
+          "result-input-u64": "0x144aac560",
+          "result-input-bool": "0x144aac5b0",
+          "result-input-raw": "0x144aac680"
         }
       },
       "resources": [],

@@ -11179,6 +11179,42 @@
         "capstone",
         "unicorn"
       ]
+    },
+    {
+      "id": "native-login-input-11320",
+      "questions": [
+        "release-function-reuse"
+      ],
+      "source_sha256": [
+        "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_login_input_11320.py",
+      "timeout_seconds": 180,
+      "dependencies": [
+        "phone-exit/bots/resource-tools/vampir/verify-login-input-11320.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-nested-11320.py",
+        "phone-exit/bots/resource-tools/vampir/discover-login-result-11320.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-harness.py",
+        "phone-exit/bots/resource-tools/vampir/update-bindings.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/requirements-native.txt",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-input-11320.json",
+        "phone-exit/bots/test_vampir_update_contracts.py"
+      ],
+      "artifact_dependencies": [
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cc90e4f503ac/details.json",
+        "ghidra/request-exports/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/run-cd7653218083/details.json"
+      ],
+      "runtime_distributions": [
+        "capstone",
+        "unicorn"
+      ]
     }
   ]
 }

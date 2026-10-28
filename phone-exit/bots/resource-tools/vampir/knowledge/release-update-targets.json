@@ -6289,6 +6289,82 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-input-scalars-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-input-11320.py"
+      ],
+      "rule": "Native input constructor/scalar readers integrated with whole LoginResult; strings/buffer setup/copy remain explicit fixtures, no runtime.",
+      "automation": {
+        "discovery": "source_bound_input_table_slots_and_existing_exports",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x144aac250",
+                "scope": "Native input scalar decoding with actual buffer/cursor and whole packet; string/buffer construction/copy fixture limits separate.",
+                "required_checks": [
+                  "native-login-input-11320"
+                ]
+              },
+              {
+                "address": "0x144aac310",
+                "scope": "Native input scalar decoding with actual buffer/cursor and whole packet; string/buffer construction/copy fixture limits separate.",
+                "required_checks": [
+                  "native-login-input-11320"
+                ]
+              },
+              {
+                "address": "0x144aac360",
+                "scope": "Native input scalar decoding with actual buffer/cursor and whole packet; string/buffer construction/copy fixture limits separate.",
+                "required_checks": [
+                  "native-login-input-11320"
+                ]
+              },
+              {
+                "address": "0x144aac530",
+                "scope": "Native input scalar decoding with actual buffer/cursor and whole packet; string/buffer construction/copy fixture limits separate.",
+                "required_checks": [
+                  "native-login-input-11320"
+                ]
+              },
+              {
+                "address": "0x144aac560",
+                "scope": "Native input scalar decoding with actual buffer/cursor and whole packet; string/buffer construction/copy fixture limits separate.",
+                "required_checks": [
+                  "native-login-input-11320"
+                ]
+              },
+              {
+                "address": "0x144aac5b0",
+                "scope": "Native input scalar decoding with actual buffer/cursor and whole packet; string/buffer construction/copy fixture limits separate.",
+                "required_checks": [
+                  "native-login-input-11320"
+                ]
+              },
+              {
+                "address": "0x144aac680",
+                "scope": "Native input scalar decoding with actual buffer/cursor and whole packet; string/buffer construction/copy fixture limits separate.",
+                "required_checks": [
+                  "native-login-input-11320"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-input-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-INPUT-11320.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

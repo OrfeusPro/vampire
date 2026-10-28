@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+LoginResult 1.13.20: input scalar readers читают buffer native — 496 сценариев
+прошли, включая 367 усечений и bool normalization. Семь scoped bindings и
+on_update check подключены. String decoder и buffer construction ещё открыты.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-INPUT-11320.md).
+
 LoginResult 1.13.20: 232 native nested constructor/reader сценария и 14 ранних
 handler сценариев прошли. Два on_update checks и шесть scoped bindings добавлены.
 Остались actual primitive/string decode, остальные handler paths и post-state.
