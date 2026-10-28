@@ -96,8 +96,9 @@ SHA и PE-разбор переиспользуются внутри одног�
 Для следующего запуска владельца выбирать `--profile prepared-next`; перед
 подключением можно выполнить `run-live-sessions.py --profile prepared-next --check-source`.
 Явные исторические профили сохраняют свои ограничения и не переключаются скрытно.
-Сейчас общие semantic adapters реализованы для UTF-8 и полного string writer;
-для writer требуются подтверждённый target UTF-8 и настоящие exports.
+Сейчас общие semantic adapters реализованы для UTF-8, полного string writer
+и archive IO / Version / Login wire. Для writer требуются подтверждённый target
+UTF-8 и настоящие exports; archive driver использует опубликованный writer того же SHA.
 Отсутствие адаптера другого
 семейства — отдельный блокер, а не доказанное изменение его кода в новой игре.
 
@@ -108,7 +109,9 @@ SHA и PE-разбор переиспользуются внутри одног�
 `next-profiles`. Данные наблюдателя находятся в
 `%LOCALAPPDATA%/PhoneExit/Vampir/update-watch/<установка>/`.
 Базы generic семейств публикуются отдельно в `generated-native/index.json`
-(UTF-8) и `generated-string-writers/index.json`; они не являются next-profile.
+(UTF-8), `generated-string-writers/index.json` и `generated-archive-wire/index.json`;
+они не являются next-profile. Последний указатель читается archive adapter отдельно
+от исторических function catalog projections.
 
 Сводка различает проверенные функции, semantic результаты, возможности,
 корневые блокеры и зависимых потребителей. Число строк прежней queue не равно
@@ -129,3 +132,5 @@ SHA и PE-разбор переиспользуются внутри одног�
 [HEADLESS-AUTOMATIC-UPDATE](evidence/updates/HEADLESS-AUTOMATIC-UPDATE.md).
 Следующий подтверждённый пакет:
 [автоматический string writer 20 → 22](evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md).
+Архивные методы и целые тела пакетов:
+[автоматический archive-wire 20 → 22](evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md).

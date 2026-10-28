@@ -1132,15 +1132,16 @@
       "id": "release-automatic-update",
       "status": "bounded_answer",
       "question": "Как автоматически обновлять адаптер без повторного ручного разбора неизменных функций и без переключения работающей сессии?",
-      "known": "Auto/resume, реестр sources/projections, SourceStore, общий кэш, generic UTF-8 adapter, guarded bundles и независимый watcher реализованы. Реальный EXE 1.13.22: 222 native сценария; warm повтор: 132 reused stages, 0 JVM/native/context replay. Все штатные tooling checks passed. Подключён generic string-writer-v1: реальный 20→22 writer прошёл 228 native случаев; два повтора без JVM/replay, последний 3/3 stages cached. Generated context импортируется как последняя база семейства.",
+      "known": "Auto/resume, реестр sources/projections, SourceStore, общий кэш, generic UTF-8 adapter, guarded bundles и независимый watcher реализованы. Реальный EXE 1.13.22: 222 native сценария; warm повтор: 132 reused stages, 0 JVM/native/context replay. Все штатные tooling checks passed. Подключён generic string-writer-v1: реальный 20→22 writer прошёл 228 native случаев; два повтора без JVM/replay, последний 3/3 stages cached. Generated context импортируется как последняя база семейства. Archive-wire-v1 подключён: 45 IO + 64 whole Version/Login wire сценария на 1.13.22; неизменный повтор двух drivers использовал 6 этапов без JVM/native. UTF-8/writer suites не повторялись.",
       "unknown": "Прочие semantic adapters, layouts/data/callees и игровые контракты 1.13.22 остаются незакрыты; живой вход и действия не выполнялись.",
-      "next_action": "Следующий общий пакет — archive IO и whole Version/Login wire adapter, затем preparation/response/session; неизменные готовые сценарии не повторять.",
+      "next_action": "Продолжить общие preparation/SDK/metadata и response reader/handler adapters, затем clock/heartbeat/world; готовые три wire семейства брать по кэшу.",
       "decision_rule": "Не ослаблять полный SHA, closure, semantic и runtime admission ради автоматизации; неизвестный результат не повышает готовность.",
       "do_not_repeat": "Готовые неизменные exports/scenarios использовать по валидному кэшу; одно общее правило для всех потребителей.",
       "evidence": [
         "RESUMABLE-UPDATE.md",
         "evidence/updates/HEADLESS-AUTOMATIC-UPDATE.md",
-        "evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md"
+        "evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md",
+        "evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md"
       ]
     }
   ]

@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "adapter": "archive-wire-v1",
+  "scope": "bounded_native_archive_wire",
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-archive-wire-acceptance\\8bc500a569d759136984a55081946e9e009d0d13ee8faf34aeccbd0dab804f2f\\manifest.json",
+    "sha256": "8bc500a569d759136984a55081946e9e009d0d13ee8faf34aeccbd0dab804f2f"
+  },
+  "context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd\\manifest.json",
+    "sha256": "5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-archive-wire-proofs\\bc76fea3f2040dad7e0daa879eb0c7487a332dca435b57ada44743517086019b\\manifest.json",
+    "sha256": "bc76fea3f2040dad7e0daa879eb0c7487a332dca435b57ada44743517086019b"
+  },
+  "native_check": {
+    "id": "native-auto-archive-wire",
+    "profile_activated": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af\\manifest.json",
+    "runtime_activated": false,
+    "scope": "bounded_native_archive_wire",
+    "sha256": "e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af",
+    "state": "passed"
+  },
+  "cases": 45,
+  "wire_cases": 64,
+  "passed_family_scenarios": {
+    "utf8": 222,
+    "string_writer": 228,
+    "archive_wire": 109
+  },
+  "passes": [
+    {
+      "pass_number": 1,
+      "wall_seconds": 61.089641,
+      "reused": 3,
+      "executed": [
+        "native-plan-archive-wire",
+        "native-context-archive-wire",
+        "native-check-native-auto-archive-wire"
+      ],
+      "native_replays": 1,
+      "new_jvm": 0
+    },
+    {
+      "pass_number": 2,
+      "wall_seconds": 51.289613,
+      "reused": 5,
+      "executed": [
+        "native-plan-archive-wire"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0
+    },
+    {
+      "pass_number": 3,
+      "wall_seconds": 35.328103,
+      "reused": 6,
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0
+    }
+  ],
+  "collection": {
+    "request": "38d599e1568c63cf7c0fd003d969f0d5d364d4c450431582905a50f0500dfac3",
+    "receipt": "dadde88e92b8370256eb14f21d7143d12f0073eace314363fd6078b97d3d4ecc",
+    "export": "run-841159b0b6c4",
+    "missing_roots": 11,
+    "reused_roots": 3,
+    "reused_project": true
+  },
+  "tooling_tests": 93,
+  "archive_adapter_tests": 23,
+  "driver_tests": 3,
+  "runtime": {
+    "capstone": {
+      "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+      "version": "5.0.6"
+    },
+    "unicorn": {
+      "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+      "version": "2.1.4"
+    }
+  },
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Selected 7 archive slots, 14 full roots and 3 explicit leaves only; remaining 24 table slots excluded from semantic scope.",
+    "Preallocated archive; growth rejected, allocators/free/memcpy/security remain fixtures.",
+    "Measured selected drivers, not a full installation audit. Framing, preparation/responses, SDK/world session and live server acceptance remain unverified."
+  ]
+}

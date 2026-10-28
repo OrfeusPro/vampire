@@ -1,6 +1,7 @@
 {
   "schema": 1,
   "adapters": [
-    {"id": "native-auto-string-writer", "family": "string-writer", "adapter": "string-writer-v1"}
+    {"id": "native-auto-string-writer", "family": "string-writer", "adapter": "string-writer-v1"},
+    {"id": "native-auto-archive-wire", "family": "archive-wire", "adapter": "archive-wire-v1"}
   ]
 }

@@ -20,7 +20,12 @@ run: версия в этом абзаце не заменяет проверк�
 [Автоматический string writer 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md)
 прошёл 228 native сценариев. Правило подключено к обновлению и кэшу; два повтора
 не запустили Ghidra / native suite. Подтверждённый context становится базой следующего
-патча. Далее — archive IO / Version / Login wire и оставшиеся semantic families.
+патча.
+
+[Archive IO / Version / Login wire 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md)
+также подключены к автомату: 45 IO и 64 полных packet сценария прошли.
+Далее — preparation / SDK, ответы входа, clock / heartbeat и world contracts.
+Работающий игровой профиль этим результатом не заменяется.
 
 ## Сохранённые записи прежних этапов
 

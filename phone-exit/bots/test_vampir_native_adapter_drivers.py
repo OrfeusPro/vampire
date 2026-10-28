@@ -1,0 +1,69 @@
+"""Selective native-family orchestration and shared cache; all code execution is mocked."""
+from pathlib import Path
+from types import SimpleNamespace
+import tempfile
+import unittest
+
+from test_vampir_update_contracts import load
+
+
+class AdapterDriverTests(unittest.TestCase):
+    def test_registered_families_have_a_fixed_order_and_no_duplicate_or_arbitrary_modules(self):
+        driver=load('update-native-drivers')
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder);(path/'native-check-adapters.json').write_text('{}')
+            for selected in ([driver.SPECS[0]],[driver.SPECS[1]],list(driver.SPECS)):
+                index=SimpleNamespace(read_json=lambda _,selected=selected:dict(schema=1,adapters=selected))
+                self.assertEqual(driver.registry(index,path),selected)
+            for selected in (list(reversed(driver.SPECS)),[driver.SPECS[0],driver.SPECS[0]],
+                    [dict(driver.SPECS[1],adapter='arbitrary.py')],[]):
+                index=SimpleNamespace(read_json=lambda _,selected=selected:dict(schema=1,adapters=selected))
+                with self.subTest(selected=selected),self.assertRaises(ValueError):driver.registry(index,path)
+
+    def test_one_family_change_replays_only_that_family_with_real_journal_cache(self):
+        driver,engine=load('update-native-drivers'),load('update-run')
+        index=load('knowledge-index').api();workflow=load('research-workflow')
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);knowledge=root/'definitions';knowledge.mkdir()
+            (knowledge/'native-check-adapters.json').write_bytes(workflow.canonical(dict(schema=1,adapters=list(driver.SPECS))))
+            args=SimpleNamespace(root=root,knowledge=knowledge)
+            versions={spec['family']:1 for spec in driver.SPECS};executions={name:0 for name in versions}
+            def tool(spec):
+                family=spec['family']
+                def execute(index,args,sha,declaration):
+                    executions[family]+=1
+                    return dict(id=spec['id'],state='passed')
+                return SimpleNamespace(plan_inputs=lambda *args:dict(revision=versions[family]),
+                    discover=lambda *args:dict(state='planned',exports=[],revision=versions[family]),
+                    tools=lambda:dict(revision=versions[family]),
+                    materialize=lambda *args:dict(checks=[dict(id=spec['id'],revision=versions[family])],queue=[]),
+                    execute=execute,publish=lambda *args:None)
+            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS}
+            modules.update({'research-workflow':workflow,'update-run':SimpleNamespace(collect_batches=lambda *args:[]),
+                'update-native-harness':SimpleNamespace(runtime_inputs=lambda:{})})
+            original=index.extension;index.extension=lambda name:modules.get(name) or original(name)
+            record=dict(state='running',stages={});path=root/'journal.json'
+            def run():
+                journal=engine.Journal(index,workflow,args,record,path)
+                result=driver.run(index,args,'a'*64,journal,root/'unused.sqlite3')
+                self.assertFalse(result['queue']);self.assertEqual(len(result['checks']),2)
+                return journal
+            run();self.assertEqual(executions,{'string-writer':1,'archive-wire':1})
+            warm=run();self.assertEqual(warm.reused,6);self.assertFalse(warm.executed)
+            versions['archive-wire']=2;selective=run()
+            self.assertEqual(executions,{'string-writer':1,'archive-wire':2})
+            self.assertEqual(selective.reused,3)
+
+    def test_merge_preserves_base_cache_value_when_caller_passes_a_copy(self):
+        import copy
+        driver=load('update-native-drivers')
+        base=dict(checks=[],queue=[dict(reason='unregistered_native_suite_families',families=['archive-wire','unknown'])],
+            family_coverage=[dict(family='archive-wire',adapter='unsupported')])
+        revised=copy.deepcopy(base);checks=[]
+        driver.merge(revised,checks,dict(families=['archive-wire'],queue=[],declarations=[dict(id='archive')],checks=[dict(state='passed')]))
+        self.assertEqual(base['checks'],[]);self.assertEqual(base['queue'][0]['families'],['archive-wire','unknown'])
+        self.assertEqual(revised['queue'][0]['families'],['unknown'])
+        self.assertEqual(revised['family_coverage'][0]['adapter'],'archive-wire-v1')
+
+
+if __name__=='__main__':unittest.main()

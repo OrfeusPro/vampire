@@ -25,7 +25,10 @@
 
 [Общий string writer 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md)
 прошёл 228 native сценариев и подключён к обновлению / кэшу. Это отдельный
-offline контракт; archive wire и полный вход продолжают требовать своих проверок.
+offline пакет.
+[Archive wire](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md)
+добавил 109 native сценариев. Preparation, framing, ответы и полный вход
+продолжают требовать своих проверок.
 
 ## Сохранённые записи прежних этапов
 

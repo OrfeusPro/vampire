@@ -133,7 +133,8 @@ def verify(context, root):
     h.add_fixture(fixture['cpp_free'],lambda machine:free(machine,'cpp'))
     h.add_fixture(fixture['security_check'],security)
     h.add_fixture(archive['growth'],reject_growth)
-    nonvolatile = {name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R14','R15'))}
+    nonvolatile = {name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R13','R14','R15'))}
+    nonvolatile.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
 
     def call(address,receiver=obj,b=0,c=0):
         for name,value in nonvolatile.items():

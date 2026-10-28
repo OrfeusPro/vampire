@@ -11377,7 +11377,12 @@
         "phone-exit/bots/resource-tools/vampir/update-native-string-writer.py",
         "phone-exit/bots/resource-tools/vampir/update-native-drivers.py",
         "phone-exit/bots/resource-tools/vampir/verify-string-writer-context.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-check-adapters.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-check-adapters.json",
+        "phone-exit/bots/test_vampir_native_adapter_drivers.py",
+        "phone-exit/bots/test_vampir_native_archive_adapter.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-archive-wire.py",
+        "phone-exit/bots/resource-tools/vampir/verify-archive-wire-context.py",
+        "phone-exit/bots/resource-tools/vampir/align-wire-contexts-11320.py"
       ],
       "artifact_dependencies": []
     }

@@ -23,8 +23,10 @@ exports и проверки вручную не повторять. Счётчи
 Далее расширять semantic adapters и закрывать реальные data / callee gaps;
 не повторять готовый общий проход вручную для каждой роли.
 UTF-8 и полный string-writer уже подключены; [writer 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md)
-прошёл 228 native случаев и два повтора без replay. Следующий пакет — archive IO
-и целые Version / Login wire writers; остальной вход остаётся недопущенным.
+прошёл 228 native случаев и два повтора без replay.
+[Archive IO и Version / Login wire](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md)
+тоже подключены: 45 + 64 native случая. Далее preparation / SDK / metadata,
+response readers / handlers, clock / heartbeat и world; целый вход остаётся недопущенным.
 
 ## Сохранённые записи прежних этапов
 

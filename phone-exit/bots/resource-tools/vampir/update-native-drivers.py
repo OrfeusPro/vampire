@@ -1,22 +1,29 @@
 """Extensible native families without invalidating the frozen UTF-8 proof engine."""
 from pathlib import Path
 
+SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='string-writer-v1'),
+       dict(id='native-auto-archive-wire',family='archive-wire',adapter='archive-wire-v1'))
+MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire'}
+
 
 def registry(index,knowledge):
     path=Path(knowledge)/'native-check-adapters.json'
     if not path.is_file():return []
     value=index.read_json(path)
-    allowed=[dict(id='native-auto-string-writer',family='string-writer',adapter='string-writer-v1')]
-    if value.get('schema')!=1 or value.get('adapters')!=allowed:
+    selected=value.get('adapters')
+    if (value.get('schema')!=1 or not isinstance(selected,list) or not selected
+            or any(spec not in SPECS for spec in selected)
+            or len({spec['id'] for spec in selected})!=len(selected)
+            or selected!=[spec for spec in SPECS if spec in selected]):
         raise ValueError('Unreviewed native adapter driver registry')
-    return value['adapters']
+    return selected
 
 
 def run(index,args,sha,journal,database):
     declarations=[];checks=[];queue=[];families=[]
     for spec in registry(index,args.knowledge):
         family=spec['family'];families.append(family)
-        tool=index.extension('update-native-string-writer')
+        tool=index.extension(MODULES[spec['adapter']])
         try:
             inputs=tool.plan_inputs(index,args,sha)
             def plan_writer():
@@ -64,4 +71,5 @@ def merge(native,checks,extra):
     native['queue']=queue+extra['queue']
     native['checks'].extend(extra['declarations']);checks.extend(extra['checks'])
     for row in native.get('family_coverage',[]):
-        if row['family'] in covered:row.update(adapter='string-writer-v1',reason='')
+        if row['family'] in covered:
+            row.update(adapter=next(spec['adapter'] for spec in SPECS if spec['family']==row['family']),reason='')

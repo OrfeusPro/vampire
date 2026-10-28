@@ -96,6 +96,37 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Archive IO/Version/Login wire и остальные semantic families, подготовка и ответы входа, текущие SDK/world/session контракты остаются неполными."
+    },
+    {
+      "addresses": [
+        "0x144aacaf0",
+        "0x144aaccc0",
+        "0x1456e8520",
+        "0x1456e8a30"
+      ],
+      "checks": [],
+      "conclusion": "Generic archive-wire-v1 реализован и подключён к штатному update/Journal/cache поверх опубликованного writer. Native квитанция 1.13.22 содержит 45 IO и 64 whole Version/Login wire случая. Два повтора не запускали JVM/native, последний 6/6 этапов из кэша. Generated archive context становится следующей базой семейства; рабочая сессия и runtime profile не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-ARCHIVE-WIRE-11322.md",
+          "sha256": "c3e6a676f710a00022a7808c576861fa256539c2f236d332871843cd7b2aa10a"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-ARCHIVE-WIRE-11322.json",
+          "sha256": "d61696a5fd1472ea68666cd4372f74ebe57136b01387c4a6568fa0dfde28e249"
+        }
+      ],
+      "id": "e79543797317d37ae3e07251152bd8092ab5c74952bf5f493a2fec8e5cf4bdf0",
+      "limits": [
+        "Fact фиксирует правило и интеграцию; bounded native scope находится в отдельной машинной квитанции evidence.",
+        "Selected driver acceptance не является повтором полного audit установки; готовые самостоятельные UTF-8/string suites не выполнялись.",
+        "14 roots/3 leaves, 7 used slots. Остальные 24 slots исключены. Growth reject и allocator/free/memcpy/security fixtures не доказывают их настоящие эффекты."
+      ],
+      "method": "static",
+      "next_check": "Следующий общий блок preparation или response family; не повторять готовые UTF-8, string writer и archive-wire при неизменных входах.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Preparation/SDK/metadata, ответы и dispatch, clock/heartbeat/world и полный игровой вход 1.13.22 остаются неполными."
     }
   ],
   "schema": 1,
