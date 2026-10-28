@@ -11389,7 +11389,13 @@
         "phone-exit/bots/resource-tools/vampir/update-native-version-prepare.py",
         "phone-exit/bots/resource-tools/vampir/verify-version-result-context.py",
         "phone-exit/bots/resource-tools/vampir/verify-version-prepare-context.py",
-        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py"
+        "phone-exit/bots/resource-tools/vampir/login-result-input-fixtures.py",
+        "phone-exit/bots/test_vampir_native_login_prepare_adapter.py",
+        "phone-exit/bots/test_vampir_native_login_sdk_adapter.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-prepare.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-sdk.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-prepare-context.py",
+        "phone-exit/bots/resource-tools/vampir/login-sdk-fixtures.py"
       ],
       "artifact_dependencies": []
     }

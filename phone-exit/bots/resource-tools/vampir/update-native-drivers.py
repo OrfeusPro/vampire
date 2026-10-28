@@ -4,9 +4,12 @@ from pathlib import Path
 SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='string-writer-v1'),
        dict(id='native-auto-archive-wire',family='archive-wire',adapter='archive-wire-v1'),
        dict(id='native-auto-version-result',family='version-result',adapter='version-result-v1'),
-       dict(id='native-auto-version-prepare',family='version-prepare',adapter='version-prepare-v1'))
+       dict(id='native-auto-version-prepare',family='version-prepare',adapter='version-prepare-v1'),
+       dict(id='native-auto-login-prepare',family='login-prepare',adapter='login-prepare-v1'),
+       dict(id='native-auto-login-sdk',family='login-prepare-sdk',adapter='login-sdk-v1'))
 MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire',
-         'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare'}
+         'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare',
+         'login-prepare-v1':'update-native-login-prepare','login-sdk-v1':'update-native-login-sdk'}
 
 
 def registry(index,knowledge):

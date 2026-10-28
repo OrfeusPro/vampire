@@ -29,7 +29,11 @@ UTF-8 и полный string-writer уже подключены; [writer 20 → 
 response readers / handlers, clock / heartbeat и world; целый вход остаётся недопущенным.
 [VersionResult / native input buffer и базовый Version prepare](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-11322.md)
 подключены: 127 + 64 native случая, повторы без replay. Далее helper integration
-подготовки Version, SDK / metadata / Login prepare, handlers / registration и world.
+подготовки Version, SDK backend / metadata, handlers / registration и world.
+[Базовый Login prepare и SDK-getters](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-PREPARE-11322.md)
+подключены: 672 + 2016 случая, точные матрицы и кэш. Шесть drivers вместе
+переиспользовали 18 этапов без replay. Следующий общий пакет — helper integration
+Version; metadata и LoginResult input / handlers остаются отдельными блокерами.
 
 ## Сохранённые записи прежних этапов
 

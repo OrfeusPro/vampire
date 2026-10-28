@@ -278,6 +278,7 @@ def verify(context, root):
     event_literal = literal(int(context['event_literal'], 16), True)
     cases = []
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     cache_cases = ('warm',) if metadata else ('warm', 'resolve', 'absent') if sdk else ('fixture',)
     metadata_cases = (('none', 'full', False), ('invalid', 'full', True), ('ready', 'full', False),
                       ('ready', 'empty', True), ('ready', 'omit-gates', True), ('shared', 'unicode-quote', True),

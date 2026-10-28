@@ -1,0 +1,194 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "login_prepare": {
+    "acceptance": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-prepare-acceptance\\64d1bca48371659709a6ec48255fa69feddacdd9d06844cdab5c0b92a6426948\\manifest.json",
+      "sha256": "64d1bca48371659709a6ec48255fa69feddacdd9d06844cdab5c0b92a6426948"
+    },
+    "context": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\cd5c4979ad11947195b8362637e5c95d171a32e1f81798a38a8820fe2a41e4ce\\manifest.json",
+      "sha256": "cd5c4979ad11947195b8362637e5c95d171a32e1f81798a38a8820fe2a41e4ce"
+    },
+    "proof": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-prepare-proofs\\babc9d0cc0cf69e3f2b5faa97493bda85b0b7497489f488765856ea8a41da234\\manifest.json",
+      "sha256": "babc9d0cc0cf69e3f2b5faa97493bda85b0b7497489f488765856ea8a41da234"
+    },
+    "native_check": {
+      "id": "native-auto-login-prepare",
+      "profile_activated": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\e06a57ba37954adb3172d6ef2a15f6cc823ab23a4d4234391cc4373dd906d0d7\\manifest.json",
+      "runtime_activated": false,
+      "scope": "bounded_native_login_prepare",
+      "sha256": "e06a57ba37954adb3172d6ef2a15f6cc823ab23a4d4234391cc4373dd906d0d7",
+      "state": "passed"
+    },
+    "cases": 672,
+    "runtime": {
+      "capstone": {
+        "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+        "version": "5.0.6"
+      },
+      "unicorn": {
+        "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+        "version": "2.1.4"
+      }
+    },
+    "native_sdk_used": false,
+    "native_metadata_used": false,
+    "passes": [
+      {
+        "executed": [
+          "native-plan-login-prepare"
+        ],
+        "native_replays": 0,
+        "new_jvm": 0,
+        "pass_number": 1,
+        "reused": 2,
+        "wall_seconds": 41.579323
+      },
+      {
+        "executed": [],
+        "native_replays": 0,
+        "new_jvm": 0,
+        "pass_number": 2,
+        "reused": 3,
+        "wall_seconds": 37.455717
+      },
+      {
+        "executed": [],
+        "native_replays": 0,
+        "new_jvm": 0,
+        "pass_number": 3,
+        "reused": 3,
+        "wall_seconds": 45.364144
+      }
+    ],
+    "recovery": {
+      "prior_journal": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-recovered-journals\\a44c9bd6dc697cb02eccc5c2bc327af1a11d4c9ed9bea380d22be5a1be805761\\manifest.json",
+        "sha256": "a44c9bd6dc697cb02eccc5c2bc327af1a11d4c9ed9bea380d22be5a1be805761"
+      },
+      "interrupted_stage": "native-plan-login-prepare",
+      "prior_native_stage_seconds": 14.964637,
+      "reused_native_report": true,
+      "previous_owner_pid": 30972,
+      "owner_and_children_absent_verified": true
+    }
+  },
+  "login_sdk": {
+    "acceptance": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-sdk-acceptance\\11844e933e12582b00f701b1ac90f83704683b6a225cbc2e66f45bbfa6440ee8\\manifest.json",
+      "sha256": "11844e933e12582b00f701b1ac90f83704683b6a225cbc2e66f45bbfa6440ee8"
+    },
+    "context": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\7d8e84b0af297e84aacf937509c37beb11dce97bd524f382e5b7e9567cbefcf5\\manifest.json",
+      "sha256": "7d8e84b0af297e84aacf937509c37beb11dce97bd524f382e5b7e9567cbefcf5"
+    },
+    "proof": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-sdk-proofs\\5fbade5537312c053ba9d143446da851dc0bf80aaef5b2def9fad2a693cc037b\\manifest.json",
+      "sha256": "5fbade5537312c053ba9d143446da851dc0bf80aaef5b2def9fad2a693cc037b"
+    },
+    "native_check": {
+      "id": "native-auto-login-sdk",
+      "profile_activated": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\35a8ce2c8c8c7f0bf9f5f7615e91daa35e31097a19d3c259a760d8b97f1a4896\\manifest.json",
+      "runtime_activated": false,
+      "scope": "bounded_native_login_sdk_prepare",
+      "sha256": "35a8ce2c8c8c7f0bf9f5f7615e91daa35e31097a19d3c259a760d8b97f1a4896",
+      "state": "passed"
+    },
+    "cases": 2016,
+    "runtime": {
+      "capstone": {
+        "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+        "version": "5.0.6"
+      },
+      "unicorn": {
+        "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+        "version": "2.1.4"
+      }
+    },
+    "native_sdk_used": true,
+    "native_metadata_used": false,
+    "passes": [
+      {
+        "executed": [
+          "native-plan-login-prepare-sdk",
+          "native-context-login-prepare-sdk",
+          "native-check-native-auto-login-sdk"
+        ],
+        "native_replays": 1,
+        "new_jvm": 0,
+        "pass_number": 1,
+        "reused": 0,
+        "wall_seconds": 85.731512
+      },
+      {
+        "executed": [
+          "native-plan-login-prepare-sdk",
+          "native-context-login-prepare-sdk"
+        ],
+        "native_replays": 0,
+        "new_jvm": 0,
+        "pass_number": 2,
+        "reused": 1,
+        "wall_seconds": 54.300148
+      },
+      {
+        "executed": [],
+        "native_replays": 0,
+        "new_jvm": 0,
+        "pass_number": 3,
+        "reused": 3,
+        "wall_seconds": 40.481206
+      }
+    ],
+    "recovery": null
+  },
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-combined-acceptance\\869e0c2cdd107659a51b0cd2b7b599ee59b93a999b3ac9a80d6e3a46faa02071\\manifest.json",
+    "sha256": "869e0c2cdd107659a51b0cd2b7b599ee59b93a999b3ac9a80d6e3a46faa02071"
+  },
+  "combined_metrics": {
+    "wall_seconds": 67.73524,
+    "reused": 18,
+    "executed": [],
+    "native_replays": 0,
+    "new_jvm": 0
+  },
+  "collections": [
+    {
+      "request": "1d00f66e8aed4e46c160c32d99d7815d031e5c8c0ab7d3e6a2c7b9747a9016cc",
+      "receipt": "93488085cedaac4f922698ffa5e85465f47b9ea102d65215d8ef791223721383",
+      "roots": 5,
+      "missing": 5,
+      "export": "run-e73ad608b83e",
+      "reused_project": true
+    }
+  ],
+  "tooling_check": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0ff72ab527ae4b82eb6d54748347c37f8c044bbd53e35220ecfa12115ff0c0ab\\manifest.json",
+    "sha256": "0ff72ab527ae4b82eb6d54748347c37f8c044bbd53e35220ecfa12115ff0c0ab",
+    "cache_key": "76b58b02accea83bbbf0d1eb60aaf5dbeccd81e6440eeccb659e2ab056dfab77",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "tooling_tests": 156,
+  "base_tests": 15,
+  "sdk_tests": 23,
+  "new_native_cases": 2688,
+  "previous_completed_suites_replayed": 0,
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Base two roots use 32 named fixtures. SDK five roots and six native return leaves use synthetic provider/cache data.",
+    "The 672 base and 2016 SDK scenarios overlap preparation execution; these are separate bounded scopes, not 2688 independent functions.",
+    "Metadata 27 field keys and consumer links are static only. Metadata collector/backend/cache/string/OS/send effects remain fixtures.",
+    "Selected driver timings exclude initial collection/full installation audit. No live admission or authentication."
+  ]
+}

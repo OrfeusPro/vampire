@@ -186,6 +186,38 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Helper integration Version подготовки, SDK/metadata/Login prepare, response handlers/registration/composition, clock/heartbeat/world и полный вход 1.13.22 остаются незакрытыми. ID2 proof не подтверждает string input или остальные ответы."
+    },
+    {
+      "addresses": [
+        "0x145609e40",
+        "0x14560aec0",
+        "0x14560b060",
+        "0x1456d7590",
+        "0x1467d1530"
+      ],
+      "checks": [],
+      "conclusion": "Generic Login prepare и SDK-getter adapters подключены к update/Journal/cache. Source-bound квитанции содержат 672 и 2016 native случаев; общий повтор шести drivers переиспользовал 18 этапов без JVM/native. Обрыв восстановлен без повторного исполнения сохранённого proof. Contexts публикуются как базы своих семейств, runtime профиль не меняется.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-PREPARE-11322.md",
+          "sha256": "56e17ea22ae2adcc1593c9f50a48607596783bde58f16269fbc7bd516e6d5652"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-PREPARE-11322.json",
+          "sha256": "33229339c4acf62a36553b19234f1fab82a13988a3cfe2a149b65e1dce1d4409"
+        }
+      ],
+      "id": "ec6afa22472e1bb818c3b5cad631cb2e9247ba1e02c607752b27f0afceb05f90",
+      "limits": [
+        "Fact фиксирует правило и интеграцию; bounded native scopes находятся в отдельных квитанциях evidence.",
+        "Base two roots и SDK five roots/six leaves используют synthetic provider/cache/backend/string/OS/send границы; metadata не исполняется.",
+        "Selected drivers без полного audit; прежние готовые suites не повторялись. Авторизации и игровых команд нет."
+      ],
+      "method": "static",
+      "next_check": "Общий пакет Version helper integration; готовые семь семейств использовать по валидному кэшу.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Version helper integration, Login metadata и настоящий SDK backend, остальные ответы/handlers, clock/heartbeat/world и целый вход 1.13.22 остаются открытыми."
     }
   ],
   "schema": 1,
