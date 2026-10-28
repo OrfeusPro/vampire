@@ -80,7 +80,7 @@ class FunctionReuseExportTests(unittest.TestCase):
  def catalog_receipt(self,batches):
   tools={name:self.index.digest(self.index.HERE/name) for name in ('function-reuse-plan.py','update-bindings.py',
    'build-native-entry-code.py','extract-native-enums.py','research-workflow.py','update-contracts.py',
-   'native-release-registry.py','update-native-contexts.py','verify-utf8-context.py','update-native-harness.py')}
+   'native-release-registry.py','update-native-contexts.py','update-native-string-writer.py','verify-utf8-context.py','update-native-harness.py')}
   declared=[dict(id=batch['id'],bindings={self.sha:{key:proof['baseline_address'] for key,proof in batch['verification'].items()}})
    for batch in batches]
   return self.workflow.snapshot(self.root,'function-reuse-catalog',dict(target_sha256=self.sha,

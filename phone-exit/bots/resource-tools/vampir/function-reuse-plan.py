@@ -37,7 +37,9 @@ def registry_data(knowledge,root=None):
         value['family_aliases']={version:aliases for version,aliases in FAMILY_ALIASES.items() if version in SOURCES}
     if root is not None:
         api=load('native-release-registry');known={row['source_sha256'] for row in value['releases']}
-        for _,context,rank in api.generated_contexts(root,value):
+        generated=api.generated_contexts(root,value)
+        generated.extend(load('update-native-string-writer').published_contexts(root,value))
+        for _,context,rank in generated:
             sha=context['source_sha256']
             if sha not in known:
                 value['releases'].append(dict(id='auto-'+sha,order=rank,source_sha256=sha));known.add(sha)
@@ -58,7 +60,9 @@ def context_files(knowledge,registry=None,root=None):
     registry=registry or registry_data(knowledge,root);api=load('native-release-registry')
     result=[path for path in sorted((Path(knowledge)/'native-contexts').glob('*.json'))
         if api.context_identity(path,json.loads(path.read_text('utf-8')),registry) is not None]
-    if root is not None:result.extend(path for path,_,_ in api.generated_contexts(root,registry))
+    if root is not None:
+        result.extend(path for path,_,_ in api.generated_contexts(root,registry))
+        result.extend(path for path,_,_ in load('update-native-string-writer').published_contexts(root,registry))
     return sorted(set(result))
 
 
@@ -174,7 +178,7 @@ def inputs(root,knowledge,*,source_store=None):
     # an unknown source/export declaration invalidates the cached stage.
     files=context_files(knowledge,root=root)
     registry=Path(knowledge)/'native-release-registry.json'
-    tools=('function-reuse-plan.py','native-release-registry.py','update-native-contexts.py','verify-utf8-context.py','update-native-harness.py','update-bindings.py','build-native-entry-code.py','extract-native-enums.py','research-workflow.py','update-contracts.py')
+    tools=('function-reuse-plan.py','native-release-registry.py','update-native-contexts.py','update-native-string-writer.py','verify-utf8-context.py','update-native-harness.py','update-bindings.py','build-native-entry-code.py','extract-native-enums.py','research-workflow.py','update-contracts.py')
     runtime=load('build-native-entry-code').capstone
     import importlib.metadata
     distribution=importlib.metadata.distribution('capstone')

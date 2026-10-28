@@ -34,3 +34,25 @@ bots/resource-tools/vampir/knowledge/native-contexts/quest-time-gates-11316.json
 bots/resource-tools/vampir/knowledge/native-contexts/quest-environment-update-11316.json text eol=lf
 bots/resource-tools/vampir/knowledge/native-contexts/quest-environment-world-handler-11316.json text eol=lf
 bots/resource-tools/vampir/knowledge/native-contexts/launcher-references-11318.json text eol=lf
+# Update proofs pin exact tool/evidence bytes, including line endings.
+bots/resource-tools/vampir/audit-launcher-shape-11318.py text eol=lf
+bots/resource-tools/vampir/build-native-entry-code.py text eol=lf
+bots/resource-tools/vampir/build-object-zero-init-code.py text eol=lf
+bots/resource-tools/vampir/extract-native-enums.py text eol=lf
+bots/resource-tools/vampir/native-release-registry.py text eol=lf
+bots/resource-tools/vampir/update-native-contexts.py text eol=lf
+bots/resource-tools/vampir/verify-utf8-context.py text eol=lf
+bots/resource-tools/vampir/update-native-string-writer.py text eol=lf
+bots/resource-tools/vampir/update-native-drivers.py text eol=lf
+bots/resource-tools/vampir/knowledge/native-check-adapters.json text eol=lf
+bots/resource-tools/vampir/knowledge/releases/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/facts.json text eol=lf
+bots/resource-tools/vampir/verify-string-writer-context.py text eol=lf
+bots/resource-tools/vampir/function-reuse-plan.py text eol=crlf
+bots/resource-tools/vampir/update-run.py text eol=crlf
+bots/test_vampir_native_string_writer.py text eol=lf
+bots/test_vampir_update_automation.py text eol=lf
+bots/test_vampir_update_function_reuse_exports.py text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-STRING-WRITER-11322.json text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTOMATIC-UPDATE.md text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTOMATIC-UPDATE-ACCEPTANCE.json text eol=crlf

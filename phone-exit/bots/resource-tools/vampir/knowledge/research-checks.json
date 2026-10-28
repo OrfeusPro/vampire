@@ -11372,7 +11372,12 @@
         "phone-exit/bots/test_vampir_update_targets.py",
         "phone-exit/bots/test_vampir_update_contracts.py",
         "phone-exit/bots/resource-tools/vampir/binary-diff-candidates.py",
-        "phone-exit/bots/resource-tools/vampir/binary-diff.py"
+        "phone-exit/bots/resource-tools/vampir/binary-diff.py",
+        "phone-exit/bots/test_vampir_native_string_writer.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-string-writer.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-drivers.py",
+        "phone-exit/bots/resource-tools/vampir/verify-string-writer-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-check-adapters.json"
       ],
       "artifact_dependencies": []
     }

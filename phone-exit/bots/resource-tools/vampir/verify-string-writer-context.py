@@ -160,7 +160,8 @@ def verify(context, root):
     vectors = load('verify-utf8-context').vectors()
     vectors += [(('a'*n).encode('utf-16le'), [b'a']*n) for n in (14, 17, 126, 129, 255, 4095)]
     cases = []
-    abi = {name: 0x123456789abcdef0+i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R14', 'R15'))}
+    abi = {name: 0x123456789abcdef0+i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     for number, (raw, parts) in enumerate(vectors):
         expected = b''.join(parts).split(b'\0', 1)[0]
         raw += b'\0\0'

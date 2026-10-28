@@ -51,7 +51,7 @@ def execution_inputs(index):
         'bindings':['update-bindings.py','update-contracts.py','function-reuse-plan.py','binary-diff-candidates.py'],
         'contracts':['update-contracts.py'],
         'context':['verify-version-login-context.py','verify-packet-writer-context.py','update-native-harness.py',
-            'update-native-contexts.py','verify-utf8-context.py','native-release-registry.py'],
+            'update-native-contexts.py','verify-utf8-context.py','native-release-registry.py','update-native-drivers.py'],
         'profile':['update-profile.py','update-bundle.py']}.items()}
     shared=index.HERE.parents[1]/'vampir-shared/vampir_core'
     for name in ('release_bundle.py','runtime_admission.py','sdk_config.py'):
@@ -670,6 +670,8 @@ def run_locked(index, args, database, *, audited=None):
             native_contexts=journal.stage('native-materialize',dict(source=sha,contexts=contexts,
                 reuse=function_reuse,definitions=definitions,tools=tools['context'],
                 generated_index_sha256=index.digest(generated) if generated.is_file() else None),materialize_native)
+            # Extensions must not mutate the cached base adapter's stage value.
+            native_contexts=copy.deepcopy(native_contexts)
             for declaration in native_contexts['checks']:
                 try:
                     checked=journal.stage('native-check-'+declaration['id'],dict(source=sha,
@@ -680,6 +682,10 @@ def run_locked(index, args, database, *, audited=None):
                 except (ValueError,OSError,KeyError,StopIteration) as error:
                     checked=dict(id=declaration['id'],state='requires_review',reason=str(error))
                 native_checks.append(checked)
+            if (args.knowledge/'native-check-adapters.json').is_file():
+                driver=index.extension('update-native-drivers')
+                extra=driver.run(index,args,sha,journal,database)
+                driver.merge(native_contexts,native_checks,extra)
             record['native_contexts']=native_contexts
             record['native_checks']=native_checks
         outcomes = {}
@@ -873,7 +879,7 @@ def apply_function_reuse(index, root, model, contexts, sha, result):
     tools=report['identity'].get('tools',{})
     required={'function-reuse-plan.py','update-bindings.py','build-native-entry-code.py',
         'extract-native-enums.py','research-workflow.py','update-contracts.py','native-release-registry.py',
-        'update-native-contexts.py','verify-utf8-context.py','update-native-harness.py'}
+        'update-native-contexts.py','update-native-string-writer.py','verify-utf8-context.py','update-native-harness.py'}
     if set(tools)!=required or any(index.digest(index.HERE/name)!=tools[name] for name in required):
         raise ValueError('Function catalog tools changed')
     sources=report['identity'].get('sources',{})

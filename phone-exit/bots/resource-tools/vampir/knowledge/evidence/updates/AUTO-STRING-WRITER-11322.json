@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "adapter": "string-writer-v1",
+  "scope": "bounded_native_string_writer",
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-string-writer-acceptance\\a84819779f30e2e51f994b134b340de4cb9ad28cc5df21371e9d30fabd2acc11\\manifest.json",
+    "sha256": "a84819779f30e2e51f994b134b340de4cb9ad28cc5df21371e9d30fabd2acc11"
+  },
+  "context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\8571980e57951fa53eec489e7d81f55a393aba888149354352dcf49222897ef3\\manifest.json",
+    "sha256": "8571980e57951fa53eec489e7d81f55a393aba888149354352dcf49222897ef3"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-string-writer-proofs\\9f01811bc2e2859f0403a55e5a7e5ec0ab1c7aaa600cd07fba731ffe9a184401\\manifest.json",
+    "sha256": "9f01811bc2e2859f0403a55e5a7e5ec0ab1c7aaa600cd07fba731ffe9a184401"
+  },
+  "native_check": {
+    "id": "native-auto-string-writer",
+    "profile_activated": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\83a5b87ec454489a3fdce779a42643ed508a42a610cc5f8f45638767834a8134\\manifest.json",
+    "runtime_activated": false,
+    "scope": "bounded_native_string_writer",
+    "sha256": "83a5b87ec454489a3fdce779a42643ed508a42a610cc5f8f45638767834a8134",
+    "state": "passed"
+  },
+  "cases": 228,
+  "passes": [
+    {
+      "pass_number": 1,
+      "wall_seconds": 27.824012,
+      "reused": 0,
+      "executed": [
+        "native-plan-string-writer",
+        "native-context-string-writer",
+        "native-check-native-auto-string-writer"
+      ],
+      "native_replays": 1,
+      "new_jvm": 0
+    },
+    {
+      "pass_number": 2,
+      "wall_seconds": 12.238329,
+      "reused": 2,
+      "executed": [
+        "native-plan-string-writer"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0
+    },
+    {
+      "pass_number": 3,
+      "wall_seconds": 12.093204,
+      "reused": 3,
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0
+    }
+  ],
+  "collection": {
+    "request": "3dc035dda24500c8b50572516ba5ecd6ad99cd1afaa701eda7a3d822d9ef72c6",
+    "receipt": "246d62a1e41e52d35423e0f6f4b8c31016574e7de03507c0d9fceb2cd1e7672b",
+    "addresses": [
+      "0x141446650",
+      "0x144aad400"
+    ],
+    "reused_project": true
+  },
+  "tooling_tests": 67,
+  "negative_writer_tests": 25,
+  "function_catalog_tests": 18,
+  "export_adoption_tests": 10,
+  "orchestrator_tests": 30,
+  "runtime": {
+    "capstone": {
+      "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+      "version": "5.0.6"
+    },
+    "unicorn": {
+      "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+      "version": "2.1.4"
+    }
+  },
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Native string writer with explicit allocator/free/security/archive fixtures only.",
+    "Selective driver timings exclude the earlier missing-only Ghidra collection and full installation audit.",
+    "Archive encoding, error allocation paths, full Version/Login preparation/responses and live game entry remain unverified."
+  ]
+}

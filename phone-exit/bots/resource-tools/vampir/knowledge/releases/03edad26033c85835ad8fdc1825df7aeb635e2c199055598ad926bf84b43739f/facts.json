@@ -66,6 +66,36 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Остальные semantic families и SDK / Version / Login / world контракты 1.13.22 не допущены. Полное автоматическое восстановление новой логики не заявлено."
+    },
+    {
+      "addresses": [
+        "0x141446650",
+        "0x14144c5b0",
+        "0x144aad400"
+      ],
+      "checks": [],
+      "conclusion": "Общий driver string-writer-v1 реализован и подключён к штатному update/cache/catalog. Native receipt на 1.13.22 содержит 228 passed случаев; два повтора штатного выбранного driver не запускали native/Ghidra, последний 3/3 этапа взяты из кэша. Context зарегистрирован как последняя база семейства; новый runtime профиль не назначался.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-STRING-WRITER-11322.md",
+          "sha256": "31c4e4918a95b99028d4db80d0e57466f4b30b43f8f5032809e0e7a405fae5a1"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-STRING-WRITER-11322.json",
+          "sha256": "9c2c26228d87de2533f89d57317c57dbec7a912fde7dc1c5f8174313e29d55e5"
+        }
+      ],
+      "id": "f5e3f5b6ed78d80c4906fb58fa27f0cf1c09c0f7d248b4484f86cfa12e93e25e",
+      "limits": [
+        "Этот fact фиксирует правило переноса и интеграцию инфраструктуры; native scope доказан отдельной машинной квитанцией, указанной в evidence.",
+        "Выполнен выбранный штатный driver/Journal, а не повторный полный audit установки. UTF-8 engine и 222 готовых сценария не повторялись.",
+        "Allocator/free/security/archive остаются явными fixtures; archive encoding, подготовка/ответы Version/Login и живая сессия не подтверждены."
+      ],
+      "method": "static",
+      "next_check": "Следующий общий adapter archive-wire с готовым string writer; сохранённые exports и сценарии без изменения зависимостей повторно не исполнять.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Archive IO/Version/Login wire и остальные semantic families, подготовка и ответы входа, текущие SDK/world/session контракты остаются неполными."
     }
   ],
   "schema": 1,

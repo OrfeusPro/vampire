@@ -58,6 +58,9 @@ python -X utf8 phone-exit/bots/resource-tools/vampir/knowledge-index.py update-s
 в [update-contracts.json](update-contracts.json), проверки — в
 [research-checks.json](research-checks.json), ориентиры — в
 [release-update-targets.json](release-update-targets.json).
+Дополнительные проверенные semantic drivers описаны в
+[native-check-adapters.json](native-check-adapters.json); каждый имеет фиксированный
+кодовый адаптер, строгую область выполнения и свой кэш.
 
 Общие функции, checks и missing exports объединяются по полным источникам.
 Ghidra собирает только недостающие явные roots партиями до 32, последовательно.
@@ -93,7 +96,9 @@ SHA и PE-разбор переиспользуются внутри одног�
 Для следующего запуска владельца выбирать `--profile prepared-next`; перед
 подключением можно выполнить `run-live-sessions.py --profile prepared-next --check-source`.
 Явные исторические профили сохраняют свои ограничения и не переключаются скрытно.
-Сейчас общий semantic adapter реализован для UTF-8; отсутствие адаптера другого
+Сейчас общие semantic adapters реализованы для UTF-8 и полного string writer;
+для writer требуются подтверждённый target UTF-8 и настоящие exports.
+Отсутствие адаптера другого
 семейства — отдельный блокер, а не доказанное изменение его кода в новой игре.
 
 ## Журналы и дальнейшая работа
@@ -102,6 +107,8 @@ SHA и PE-разбор переиспользуются внутри одног�
 `update-contexts`, `check-results`, `prepared-profiles`, `prepared-bundles` и
 `next-profiles`. Данные наблюдателя находятся в
 `%LOCALAPPDATA%/PhoneExit/Vampir/update-watch/<установка>/`.
+Базы generic семейств публикуются отдельно в `generated-native/index.json`
+(UTF-8) и `generated-string-writers/index.json`; они не являются next-profile.
 
 Сводка различает проверенные функции, semantic результаты, возможности,
 корневые блокеры и зависимых потребителей. Число строк прежней queue не равно
@@ -120,3 +127,5 @@ SHA и PE-разбор переиспользуются внутри одног�
 Установленные инструменты и их ограничения: [ANALYSIS-TOOLS](../ANALYSIS-TOOLS.md).
 Проверка текущей автоматизации, замеры и оставшиеся границы:
 [HEADLESS-AUTOMATIC-UPDATE](evidence/updates/HEADLESS-AUTOMATIC-UPDATE.md).
+Следующий подтверждённый пакет:
+[автоматический string writer 20 → 22](evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md).
