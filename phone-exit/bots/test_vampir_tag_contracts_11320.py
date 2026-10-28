@@ -31,4 +31,10 @@ class TagContracts11320Tests(unittest.TestCase):
    self.assertFalse(proposal['runtime_activated'])
    contract['bindings'][tool.SOURCE]['wrapper-constructor']='0x140000001'
    with self.assertRaisesRegex(ValueError,'binding conflict'):tool.binding_proposals()
+ def test_shared_preparation_cold_dependency_timeout_is_available(self):
+  import json
+  registry=json.loads((self.tool.HERE/'knowledge/research-checks.json').read_bytes())['checks']
+  caller=next(c for c in registry if c['id']=='compiled-tag-native-11316')['source_variants'][self.tool.SOURCE]
+  dependency=next(c for c in registry if c['id']=='native-entry-batch-11320')
+  self.assertGreaterEqual(caller['timeout_seconds'],dependency['timeout_seconds'])
 if __name__=='__main__':unittest.main()

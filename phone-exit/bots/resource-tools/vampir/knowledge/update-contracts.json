@@ -791,6 +791,38 @@
         {
           "key": "result-input-raw",
           "method": "reviewed"
+        },
+        {
+          "key": "result-input-concrete-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-buffer-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-string",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-std-string",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-utf8-length",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-utf8-convert",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-utf8-core",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-input-utf8-scalar",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -830,7 +862,15 @@
           "result-input-time": "0x144aac530",
           "result-input-u64": "0x144aac560",
           "result-input-bool": "0x144aac5b0",
-          "result-input-raw": "0x144aac680"
+          "result-input-raw": "0x144aac680",
+          "result-input-concrete-constructor": "0x144aacc00",
+          "result-input-buffer-constructor": "0x144aac1f0",
+          "result-input-string": "0x144aad090",
+          "result-input-std-string": "0x144aac450",
+          "result-input-utf8-length": "0x14144c4a0",
+          "result-input-utf8-convert": "0x141446700",
+          "result-input-utf8-core": "0x14143bd90",
+          "result-input-utf8-scalar": "0x14143ba00"
         }
       },
       "resources": [],

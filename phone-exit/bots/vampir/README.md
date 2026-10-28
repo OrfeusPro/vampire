@@ -1,3 +1,8 @@
+LoginResult 1.13.20: native string decoder и buffer construction прошли
+506 сценариев. Восемь scoped bindings и on_update check подключены. Storage
+effects остаются fixtures; следующий пакет — остальные handler paths.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-STRINGS-BUFFER-11320.md).
+
 LoginResult 1.13.20: input scalar readers читают buffer native — 496 сценариев
 прошли, включая 367 усечений и bool normalization. Семь scoped bindings и
 on_update check подключены. String decoder и buffer construction ещё открыты.

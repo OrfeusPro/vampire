@@ -620,6 +620,252 @@
       "question": "release-function-reuse",
       "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
       "unknown": "Actual string decoder, native buffer construction, остальные handler paths, registration и post-state boundary. Строгие 346 основных и 30 helpers не закрыты."
+    },
+    {
+      "addresses": [
+        "0x14143ba00",
+        "0x14143bd90",
+        "0x141446700",
+        "0x14144c4a0",
+        "0x144aac1f0",
+        "0x144aac450",
+        "0x144aacc00",
+        "0x144aad090"
+      ],
+      "checks": [
+        {
+          "cache_key": "a676785ff46bc9a45666353e0b69709980077370ec6e95d11b1a76fc25de2ba3",
+          "id": "compiled-tag-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9fe4fa9cbcd24f7a5ac5472312ba957a38f8ccded378da075c12651641686606\\manifest.json",
+          "sha256": "9fe4fa9cbcd24f7a5ac5472312ba957a38f8ccded378da075c12651641686606",
+          "state": "passed"
+        },
+        {
+          "cache_key": "13cde719a0f073362abb9d2800b6887e809b24c85c13c616dc1bf7e5fe0d0284",
+          "id": "packet-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\06c301b1934f4bdd3605a88431b91fc937fada4fa0f5959dc0c372534eefc7e9\\manifest.json",
+          "sha256": "06c301b1934f4bdd3605a88431b91fc937fada4fa0f5959dc0c372534eefc7e9",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7cfc0b33375a5f48b70c655106194a3e044583894e7ed9c3566a1e219da260d7",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\41eda1b10cc9fddb5f19eb064461de8d0bbabd574e1911963146f2196495203d\\manifest.json",
+          "sha256": "41eda1b10cc9fddb5f19eb064461de8d0bbabd574e1911963146f2196495203d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fb014fc038e9b4d7814e4d17eeb9b5289785b8c0c04c1d9b6e1a94081a55a375",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e90fa845c518fcdd6476482febe37c1a53e32115193598b05cff16af69347843\\manifest.json",
+          "sha256": "e90fa845c518fcdd6476482febe37c1a53e32115193598b05cff16af69347843",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b8692597c868175ebc7876fc14f1d7e359478be47c1836763beb2438d1947d5f",
+          "id": "native-wire-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1768a3c3f160ea8318e7b96a09e9ba35e7b4a12603f5b12eb66e39850593be62\\manifest.json",
+          "sha256": "1768a3c3f160ea8318e7b96a09e9ba35e7b4a12603f5b12eb66e39850593be62",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53b7b74662c9bbdbfde1e490fb186081b1eed6e32cbce3462b4a2306bd672164",
+          "id": "native-entry-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d5fa5eddc55153f4d5c0185258dd611c369a579c8a52a49556d016d19c3c73b8\\manifest.json",
+          "sha256": "d5fa5eddc55153f4d5c0185258dd611c369a579c8a52a49556d016d19c3c73b8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8ae1b1f87efb39a2ea8b8cf55b9c6fc4f55b02672fb1c1cfc315a8a9f37932ac",
+          "id": "native-result-gate-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa0a1ebb35eed34b0c34adccc89a52f4ae6c6a80103b35fd5e1e3b6d02123f2d\\manifest.json",
+          "sha256": "fa0a1ebb35eed34b0c34adccc89a52f4ae6c6a80103b35fd5e1e3b6d02123f2d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1ea2395e5ee53d1cb6ff162a78f4cda23468adb3a0cca4412c57483c8399c884",
+          "id": "continuation-candidates-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1abc8cd69efb96d6f61a141ab29b946ef9c3845592032b6f3e46b6a78d559570\\manifest.json",
+          "sha256": "1abc8cd69efb96d6f61a141ab29b946ef9c3845592032b6f3e46b6a78d559570",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7b2d55d2ccba4920b1c06a42c8f8b38552bb2762cefa3f7d04ef98bc2d1bbdf3",
+          "id": "native-login-reader-flow-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9a89913f2b540d5431d030896cf4f3d13a6db5f7d53a3ebbac21271f12e05325\\manifest.json",
+          "sha256": "9a89913f2b540d5431d030896cf4f3d13a6db5f7d53a3ebbac21271f12e05325",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7760c33ac951f48872c19b8940cda70ef9e348af5dc830626156243053c47520",
+          "id": "native-login-nested-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2174a1eca7f929956dae48ed5fe271ff08597a1fca72217ecff90924205df2e0\\manifest.json",
+          "sha256": "2174a1eca7f929956dae48ed5fe271ff08597a1fca72217ecff90924205df2e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c9c085de5cc69f5e1d1f8d75c4df8c6565a1584d51321aef89225b06883c6a39",
+          "id": "native-login-handler-early-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\32e54db2d4d6c64201d000016ae8c0c31c7da760c6885ec89853058dea68b48f\\manifest.json",
+          "sha256": "32e54db2d4d6c64201d000016ae8c0c31c7da760c6885ec89853058dea68b48f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "36ae85478fc5736b65850de8f5ce55f6b69bd551174153c393a3dae6861f83f6",
+          "id": "native-login-input-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e530193c8838c38186b9e8d40aa08db65dbedef7881bdef5ed4b149f8769019c\\manifest.json",
+          "sha256": "e530193c8838c38186b9e8d40aa08db65dbedef7881bdef5ed4b149f8769019c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "796f31b5826903d79d973c6598a015a4053b1b2c05905681ac546a93cfb35684",
+          "id": "native-login-strings-buffer-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\148a50b10341d72be736877b60619e71dd6c77380b45e9a84cf67081e543f2f3\\manifest.json",
+          "sha256": "148a50b10341d72be736877b60619e71dd6c77380b45e9a84cf67081e543f2f3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native string/UTF8 decoder и concrete buffer construction current LoginResult: 506 scenarios passed; 8 scoped bindings, exact20-root harness scope и on_update/cache check подключены. Context generator воспроизводит однозначные source links.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-STRINGS-BUFFER-11320.md",
+          "sha256": "c6c033670f30f9e89c038aebc1b047137684c1ed2c91b258f5657f8ae73fc4df"
+        }
+      ],
+      "id": "18cf7fef719dcca4bb3fcb0c0314ff9388f5f3df9b8f3b33f171dd74e399e7b5",
+      "limits": [
+        "Строковые storage/allocation/growth/assign/free/security и bounded memcpy, empty trailing string constructor остаются fixtures; reading mode1/endian0 only.",
+        "Special UTF8/NUL outcomes записаны под объявленными storage fixtures; полный handler/вход/runtime и настоящие OS/server effects не доказаны. Сеть/игра/Ghidra не запускались.",
+        "Tag cold dependency timeout согласован600s с готовым общим entry package; native scope и instruction budgets не расширены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить остальные gate/success handler paths и registration по готовым current exports; string/buffer checks переиспользовать по кэшу.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Остальные handler paths, новые field actions, registration и post-state boundary; actual storage side effects и полный runtime."
+    },
+    {
+      "addresses": [
+        "0x14143ba00",
+        "0x14143bd90",
+        "0x141446700",
+        "0x14144c4a0",
+        "0x144aac1f0",
+        "0x144aac450",
+        "0x144aacc00",
+        "0x144aad090"
+      ],
+      "checks": [
+        {
+          "cache_key": "73f9958051095b46de0704491dfffe308be37b761207988ab727271bcea105a0",
+          "id": "compiled-tag-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ec1d6d5f56550c60a86e88c4c382374cc5c6c48bfba1265b587eae06aa7a4ece\\manifest.json",
+          "sha256": "ec1d6d5f56550c60a86e88c4c382374cc5c6c48bfba1265b587eae06aa7a4ece",
+          "state": "passed"
+        },
+        {
+          "cache_key": "13cde719a0f073362abb9d2800b6887e809b24c85c13c616dc1bf7e5fe0d0284",
+          "id": "packet-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\06c301b1934f4bdd3605a88431b91fc937fada4fa0f5959dc0c372534eefc7e9\\manifest.json",
+          "sha256": "06c301b1934f4bdd3605a88431b91fc937fada4fa0f5959dc0c372534eefc7e9",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7cfc0b33375a5f48b70c655106194a3e044583894e7ed9c3566a1e219da260d7",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\41eda1b10cc9fddb5f19eb064461de8d0bbabd574e1911963146f2196495203d\\manifest.json",
+          "sha256": "41eda1b10cc9fddb5f19eb064461de8d0bbabd574e1911963146f2196495203d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "fb014fc038e9b4d7814e4d17eeb9b5289785b8c0c04c1d9b6e1a94081a55a375",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e90fa845c518fcdd6476482febe37c1a53e32115193598b05cff16af69347843\\manifest.json",
+          "sha256": "e90fa845c518fcdd6476482febe37c1a53e32115193598b05cff16af69347843",
+          "state": "passed"
+        },
+        {
+          "cache_key": "b8692597c868175ebc7876fc14f1d7e359478be47c1836763beb2438d1947d5f",
+          "id": "native-wire-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1768a3c3f160ea8318e7b96a09e9ba35e7b4a12603f5b12eb66e39850593be62\\manifest.json",
+          "sha256": "1768a3c3f160ea8318e7b96a09e9ba35e7b4a12603f5b12eb66e39850593be62",
+          "state": "passed"
+        },
+        {
+          "cache_key": "53b7b74662c9bbdbfde1e490fb186081b1eed6e32cbce3462b4a2306bd672164",
+          "id": "native-entry-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d5fa5eddc55153f4d5c0185258dd611c369a579c8a52a49556d016d19c3c73b8\\manifest.json",
+          "sha256": "d5fa5eddc55153f4d5c0185258dd611c369a579c8a52a49556d016d19c3c73b8",
+          "state": "passed"
+        },
+        {
+          "cache_key": "8ae1b1f87efb39a2ea8b8cf55b9c6fc4f55b02672fb1c1cfc315a8a9f37932ac",
+          "id": "native-result-gate-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fa0a1ebb35eed34b0c34adccc89a52f4ae6c6a80103b35fd5e1e3b6d02123f2d\\manifest.json",
+          "sha256": "fa0a1ebb35eed34b0c34adccc89a52f4ae6c6a80103b35fd5e1e3b6d02123f2d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1ea2395e5ee53d1cb6ff162a78f4cda23468adb3a0cca4412c57483c8399c884",
+          "id": "continuation-candidates-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1abc8cd69efb96d6f61a141ab29b946ef9c3845592032b6f3e46b6a78d559570\\manifest.json",
+          "sha256": "1abc8cd69efb96d6f61a141ab29b946ef9c3845592032b6f3e46b6a78d559570",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7b2d55d2ccba4920b1c06a42c8f8b38552bb2762cefa3f7d04ef98bc2d1bbdf3",
+          "id": "native-login-reader-flow-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9a89913f2b540d5431d030896cf4f3d13a6db5f7d53a3ebbac21271f12e05325\\manifest.json",
+          "sha256": "9a89913f2b540d5431d030896cf4f3d13a6db5f7d53a3ebbac21271f12e05325",
+          "state": "passed"
+        },
+        {
+          "cache_key": "7760c33ac951f48872c19b8940cda70ef9e348af5dc830626156243053c47520",
+          "id": "native-login-nested-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2174a1eca7f929956dae48ed5fe271ff08597a1fca72217ecff90924205df2e0\\manifest.json",
+          "sha256": "2174a1eca7f929956dae48ed5fe271ff08597a1fca72217ecff90924205df2e0",
+          "state": "passed"
+        },
+        {
+          "cache_key": "c9c085de5cc69f5e1d1f8d75c4df8c6565a1584d51321aef89225b06883c6a39",
+          "id": "native-login-handler-early-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\32e54db2d4d6c64201d000016ae8c0c31c7da760c6885ec89853058dea68b48f\\manifest.json",
+          "sha256": "32e54db2d4d6c64201d000016ae8c0c31c7da760c6885ec89853058dea68b48f",
+          "state": "passed"
+        },
+        {
+          "cache_key": "36ae85478fc5736b65850de8f5ce55f6b69bd551174153c393a3dae6861f83f6",
+          "id": "native-login-input-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e530193c8838c38186b9e8d40aa08db65dbedef7881bdef5ed4b149f8769019c\\manifest.json",
+          "sha256": "e530193c8838c38186b9e8d40aa08db65dbedef7881bdef5ed4b149f8769019c",
+          "state": "passed"
+        },
+        {
+          "cache_key": "796f31b5826903d79d973c6598a015a4053b1b2c05905681ac546a93cfb35684",
+          "id": "native-login-strings-buffer-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\148a50b10341d72be736877b60619e71dd6c77380b45e9a84cf67081e543f2f3\\manifest.json",
+          "sha256": "148a50b10341d72be736877b60619e71dd6c77380b45e9a84cf67081e543f2f3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Native string/UTF8 decoder и concrete buffer construction current LoginResult: 506 scenarios passed; 8 scoped bindings, exact20-root harness scope и on_update/cache check подключены. Context generator воспроизводит однозначные source links.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-STRINGS-BUFFER-11320.md",
+          "sha256": "c6c033670f30f9e89c038aebc1b047137684c1ed2c91b258f5657f8ae73fc4df"
+        }
+      ],
+      "id": "688abe0c903714d0784d62b890cdb7fcab9e142733a3cd32bfc270d52633bbf5",
+      "limits": [
+        "Строковые storage/allocation/growth/assign/free/security и bounded memcpy, empty trailing string constructor остаются fixtures; reading mode1/endian0 only.",
+        "Special UTF8/NUL outcomes записаны под объявленными storage fixtures; полный handler/вход/runtime и настоящие OS/server effects не доказаны. Сеть/игра/Ghidra не запускались.",
+        "Tag cold dependency timeout согласован600s с готовым общим entry package; native scope и instruction budgets не расширены."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверить остальные gate/success handler paths и registration по готовым current exports; string/buffer checks переиспользовать по кэшу.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Остальные handler paths, новые field actions, registration и post-state boundary; actual storage side effects и полный runtime."
     }
   ],
   "schema": 1,

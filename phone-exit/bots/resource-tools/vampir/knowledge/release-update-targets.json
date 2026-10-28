@@ -6365,6 +6365,90 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-strings-buffer-current",
+      "baseline_functions": [],
+      "tools": [
+        "generate-login-strings-buffer-11320.py",
+        "verify-login-input-11320.py"
+      ],
+      "rule": "Native UTF8/string reading and concrete buffer construction in whole packet; explicit storage/copy/security fixture boundaries, no runtime.",
+      "automation": {
+        "discovery": "reviewed_latest_source_links_and_table_slots",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x144aacc00",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              },
+              {
+                "address": "0x144aac1f0",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              },
+              {
+                "address": "0x144aad090",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              },
+              {
+                "address": "0x144aac450",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              },
+              {
+                "address": "0x14144c4a0",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              },
+              {
+                "address": "0x141446700",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              },
+              {
+                "address": "0x14143bd90",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              },
+              {
+                "address": "0x14143ba00",
+                "scope": "Native packet/string/buffer integration; storage/growth/assign/free/security/copy fixtures remain, no complete session.",
+                "required_checks": [
+                  "native-login-strings-buffer-11320"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-input-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-STRINGS-BUFFER-11320.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [

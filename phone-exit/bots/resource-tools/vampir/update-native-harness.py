@@ -109,6 +109,15 @@ def make_harness(context, exports, functions, leaves=None, root=None):
                          and set(functions) == login_11318_roots | {0x14679b390, 0x1467cdc80}
                          and context.get('native_handler', {}).get('functions') ==
                          dict(handler='0x14679b390', gate='0x1467cdc80'))
+    if SHA == '544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c':
+        login_11320_roots = {int(at, 16) for at in (
+            '14143ba00 14143bd90 141446700 14144c4a0 144aac1f0 144aac310 '
+            '144aac360 144aac450 144aac530 144aac560 144aac5b0 144aac680 '
+            '144aacc00 144aad090 1456d7660 1456dc140 1457a2710 1457a3870 '
+            '1457a5b90 1457fe090').split()}
+        buffer_scope = (budget == 20 and context.get('budget_scope') == 'login-result-buffer'
+                        and set(functions) == login_11320_roots
+                        and context.get('native_strings') is True)
     record_scope = (budget == 22 and context.get('budget_scope') == 'character-record'
                     and len(functions) == 22
                     and context.get('functions') == dict(constructor='0x145783840', reader='0x145788500',
