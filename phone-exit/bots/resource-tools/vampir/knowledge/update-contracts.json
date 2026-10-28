@@ -743,6 +743,26 @@
         {
           "key": "continuation-reset",
           "method": "reviewed"
+        },
+        {
+          "key": "result-time-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-period-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-time-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-period-reader",
+          "method": "reviewed"
+        },
+        {
+          "key": "result-handler-early",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -769,7 +789,13 @@
           "constructor": "0x1456d7540",
           "result-reader": "0x1456dc140",
           "continuation-constructor": "0x1464a97b0",
-          "continuation-reset": "0x1464afc70"
+          "continuation-reset": "0x1464afc70",
+          "result-constructor": "0x1456d7660",
+          "result-time-constructor": "0x1457a3870",
+          "result-period-constructor": "0x1457a2710",
+          "result-time-reader": "0x1457fe090",
+          "result-period-reader": "0x1457a5b90",
+          "result-handler-early": "0x14679e2d0"
         }
       },
       "resources": [],

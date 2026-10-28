@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "functions": {
+    "constructor": "0x1456d7660",
+    "reader": "0x1456dc140",
+    "time_constructor": "0x1457a3870",
+    "period_constructor": "0x1457a2710",
+    "time_reader": "0x1457fe090",
+    "period_reader": "0x1457a5b90"
+  },
+  "exports": {
+    "run-cc90e4f503ac": "2573e9f84adce9d0123cc47079b60ea1c48d476da4cb5142430a12e296acdc04",
+    "run-cd7653218083": "4695369d140ac000c2c8b26e0a508710396c94710456688e169700b129e92e48"
+  },
+  "leaves": {
+    "0x1457fdea0": "488d05c13f120448c7410800000000488901488bc1c3",
+    "0x144aad250": "488b024c8bc2488bd1498bc848ff6020",
+    "0x141453ca0": "b804000000c3"
+  },
+  "packet_table": "0x149929040",
+  "time_table": "0x149921e68",
+  "period_table": "0x149928ff8",
+  "id_getter": "0x141453ca0",
+  "string_reader": "0x144aad090",
+  "string_constructor": "0x1414269b0",
+  "verify_whole_exports": true
+}

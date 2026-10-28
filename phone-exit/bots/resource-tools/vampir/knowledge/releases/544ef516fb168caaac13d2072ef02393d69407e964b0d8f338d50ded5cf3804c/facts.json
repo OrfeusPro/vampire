@@ -399,6 +399,113 @@
       "question": "release-function-reuse",
       "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
       "unknown": "Новый LoginResult nested layout/primitive decode, constructor и handler effects, registration; post-state root имеет boundary gap. Строгие 346 основных функций и 30 helpers не закрыты."
+    },
+    {
+      "addresses": [
+        "0x1456d7660",
+        "0x1456dc140",
+        "0x1457a2710",
+        "0x1457a3870",
+        "0x1457a5b90",
+        "0x1457fe090",
+        "0x14679e2d0"
+      ],
+      "checks": [
+        {
+          "cache_key": "9e95091e8c130b81354ed7f1f9f9fd3e9d89d616d8fa2fddc25608124044b764",
+          "id": "compiled-tag-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5286dcf907fd5a3060ac96bab85bba8e20fd590e913a54aa5b068ad0e6032cf7\\manifest.json",
+          "sha256": "5286dcf907fd5a3060ac96bab85bba8e20fd590e913a54aa5b068ad0e6032cf7",
+          "state": "passed"
+        },
+        {
+          "cache_key": "d5809f3dd1dd46c53ff42af580506eaf220ebebe6475e98a9ac5e356a56217e5",
+          "id": "packet-writer-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0d23411e67378c84c9e8600d92576ad9237216011d9347e48fabd1f6f785b831\\manifest.json",
+          "sha256": "0d23411e67378c84c9e8600d92576ad9237216011d9347e48fabd1f6f785b831",
+          "state": "passed"
+        },
+        {
+          "cache_key": "14c487053d483a64ab5d838034cc9dbb5843ac478ac9946182a0155831979a2d",
+          "id": "native-login-continuation-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9b9c372e5196d5e1f79143ba3ed916b08926b87fa5b72d4af0defbbfd671dca1\\manifest.json",
+          "sha256": "9b9c372e5196d5e1f79143ba3ed916b08926b87fa5b72d4af0defbbfd671dca1",
+          "state": "passed"
+        },
+        {
+          "cache_key": "038e58666c36c830176e492bd783aed54c6c836657533da981c07b4089a75f67",
+          "id": "native-version-result-handler-context",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3ddd07efd61138d7bf8bba5c202faa6de08991698f28c61446d0f2484b836060\\manifest.json",
+          "sha256": "3ddd07efd61138d7bf8bba5c202faa6de08991698f28c61446d0f2484b836060",
+          "state": "passed"
+        },
+        {
+          "cache_key": "feb17bea3bd3ca7b88855ad0038b625cc179fb063659fd94636e5a3136854a74",
+          "id": "native-wire-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cb5affa1fbf867f66889a886655d78e3b30aa917a7a2279d8eb2ee6fbd3135b6\\manifest.json",
+          "sha256": "cb5affa1fbf867f66889a886655d78e3b30aa917a7a2279d8eb2ee6fbd3135b6",
+          "state": "passed"
+        },
+        {
+          "cache_key": "9d725d903e6ac843a8b70626162aca1e96c908b3f5b74b6cca86898bc103376e",
+          "id": "native-entry-batch-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2503dc54c154fe0b63d7551978ba16b329cf3cbd0ff4dc9fd510cf916e3d69e3\\manifest.json",
+          "sha256": "2503dc54c154fe0b63d7551978ba16b329cf3cbd0ff4dc9fd510cf916e3d69e3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "e39874b71af4c9c275133e3ae6b1d0d6edddb1932ad82273b03e11a7552f51b2",
+          "id": "native-result-gate-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\eba04a064816505da02da65159c2532824a9ce3b3e4176dd4eea0aea9a345c5d\\manifest.json",
+          "sha256": "eba04a064816505da02da65159c2532824a9ce3b3e4176dd4eea0aea9a345c5d",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1ea2395e5ee53d1cb6ff162a78f4cda23468adb3a0cca4412c57483c8399c884",
+          "id": "continuation-candidates-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1abc8cd69efb96d6f61a141ab29b946ef9c3845592032b6f3e46b6a78d559570\\manifest.json",
+          "sha256": "1abc8cd69efb96d6f61a141ab29b946ef9c3845592032b6f3e46b6a78d559570",
+          "state": "passed"
+        },
+        {
+          "cache_key": "1049fbd1b423007599d7e3981aaea8bd5c865773eb5d2dc768ed3b22e41e803f",
+          "id": "native-login-reader-flow-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\61cdc6c1e4622b90cc6bfeb64bb59544ee47de0e8099461b5d68a5170f376431\\manifest.json",
+          "sha256": "61cdc6c1e4622b90cc6bfeb64bb59544ee47de0e8099461b5d68a5170f376431",
+          "state": "passed"
+        },
+        {
+          "cache_key": "0fa8ecf93cd55533628f6396925894fd15d9b250d80ab40dcb463daef600b0d8",
+          "id": "native-login-nested-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7e9e7b33364ceca2c350353b4dd214ab0d8739d671361043af9d3df4ce20f5b2\\manifest.json",
+          "sha256": "7e9e7b33364ceca2c350353b4dd214ab0d8739d671361043af9d3df4ce20f5b2",
+          "state": "passed"
+        },
+        {
+          "cache_key": "3364c06d95062e53a83d294f629dd16cb19278df828c07d294066790ddf356d6",
+          "id": "native-login-handler-early-11320",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3c0bd28c9651f122421b60eb08b1a3ee37429c95cc5894c45d49fcd83d493e3d\\manifest.json",
+          "sha256": "3c0bd28c9651f122421b60eb08b1a3ee37429c95cc5894c45d49fcd83d493e3d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "232 native nested constructor/reader scenarios и 14 early handler scenarios прошли; два checks подключены к on_update/cache, шесть scoped bindings добавлены; готовые exports reused.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-NESTED-EARLY-11320.md",
+          "sha256": "cc1fc21e97004d08f75089b3c3050fc0ce7588693abcacf847905c3e2ac5eab2"
+        }
+      ],
+      "id": "c3399bcb61b249f967c090d724e5e7eb573b14b673ef45811cbc3d691f63cb59",
+      "limits": [
+        "Archive primitives/string/empty trailing string constructor и handler service effects объявлены fixtures; actual wire/string decode и полный handler/runtime не доказаны.",
+        "Только четыре ранних handler кода 54,9818,9819,90021; gate/success paths не исполнялись; сеть/игра/Ghidra не запускались."
+      ],
+      "method": "bounded_native",
+      "next_check": "Проверять остальные gate/success handler paths по текущему export, затем actual primitive/string decode с текущими source-bound dependencies.",
+      "question": "release-function-reuse",
+      "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "unknown": "Actual primitive/string decode, bool policy, остальные handler paths/registration/post-state boundary; строгие 346 основных и 30 helpers не закрыты."
     }
   ],
   "schema": 1,

@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+LoginResult 1.13.20: 232 native nested constructor/reader сценария и 14 ранних
+handler сценариев прошли. Два on_update checks и шесть scoped bindings добавлены.
+Остались actual primitive/string decode, остальные handler paths и post-state.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-NESTED-EARLY-11320.md).
+
 Continuation 1.13.20: пропущенный relocation-фильтром anchor найден;
 8 native constructor/reset сценариев прошли, source variant и две bindings
 подключены. Полный handler/post-state и nested LoginResult остаются открытыми.

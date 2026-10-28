@@ -6186,6 +6186,109 @@
           }
         ]
       }
+    },
+    {
+      "id": "native-login-nested-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-nested-11320.py"
+      ],
+      "rule": "Whole constructor/reader/nested dispatch with explicit archive/string fixtures; no wire/runtime.",
+      "automation": {
+        "discovery": "source_bound_existing_exports_and_declared_calls",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1456d7660",
+                "scope": "Whole constructor/reader/nested dispatch with explicit archive/string fixtures; no wire/runtime.",
+                "required_checks": [
+                  "native-login-nested-11320"
+                ]
+              },
+              {
+                "address": "0x1456dc140",
+                "scope": "Whole constructor/reader/nested dispatch with explicit archive/string fixtures; no wire/runtime.",
+                "required_checks": [
+                  "native-login-nested-11320"
+                ]
+              },
+              {
+                "address": "0x1457a3870",
+                "scope": "Whole constructor/reader/nested dispatch with explicit archive/string fixtures; no wire/runtime.",
+                "required_checks": [
+                  "native-login-nested-11320"
+                ]
+              },
+              {
+                "address": "0x1457a2710",
+                "scope": "Whole constructor/reader/nested dispatch with explicit archive/string fixtures; no wire/runtime.",
+                "required_checks": [
+                  "native-login-nested-11320"
+                ]
+              },
+              {
+                "address": "0x1457fe090",
+                "scope": "Whole constructor/reader/nested dispatch with explicit archive/string fixtures; no wire/runtime.",
+                "required_checks": [
+                  "native-login-nested-11320"
+                ]
+              },
+              {
+                "address": "0x1457a5b90",
+                "scope": "Whole constructor/reader/nested dispatch with explicit archive/string fixtures; no wire/runtime.",
+                "required_checks": [
+                  "native-login-nested-11320"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-nested-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-NESTED-EARLY-11320.md"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "native-login-handler-early-current",
+      "baseline_functions": [],
+      "tools": [
+        "verify-login-handler-early-11320.py"
+      ],
+      "rule": "Whole handler only four early paths, declared external service fixtures; no gate/success/runtime.",
+      "automation": {
+        "discovery": "source_bound_existing_exports_and_declared_calls",
+        "validation": "automatic_for_registered_source",
+        "next_release": "requires_candidate_review_and_check_port",
+        "automatic_runtime_promotion": false,
+        "reviewed_releases": [
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x14679e2d0",
+                "scope": "Whole handler only four early paths, declared external service fixtures; no gate/success/runtime.",
+                "required_checks": [
+                  "native-login-handler-early-11320"
+                ]
+              }
+            ],
+            "tools": [
+              "verify-login-handler-early-11320.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-LOGIN-NESTED-EARLY-11320.md"
+            ]
+          }
+        ]
+      }
     }
   ],
   "additional_target_plans": [
