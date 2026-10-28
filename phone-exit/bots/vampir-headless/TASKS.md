@@ -1,5 +1,10 @@
 # Самостоятельный Vampir — актуальный порядок работ
 
+Continuation 1.13.20: пропущенный relocation-фильтром anchor найден;
+8 native constructor/reset сценариев прошли, source variant и две bindings
+подключены. Полный handler/post-state и nested LoginResult остаются открытыми.
+[Результат и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONTINUATION-11320.md).
+
 Автоматический пакет LoginResult: 96 whole reader flow сценариев прошли;
 211 handler candidates сведены к одному по двум связям. Получены три полных
 exports; проверка подключена к on_update / кэшу, reader binding добавлена.

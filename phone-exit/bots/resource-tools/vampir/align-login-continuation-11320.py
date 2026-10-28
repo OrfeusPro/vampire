@@ -69,7 +69,10 @@ def run(root):
   im=images[NEW];cursor=im.offset(begin);stop=im.offset(end)+len(raw);hits=[]
   expected=align.instruction_shape(before,cs)
   while cursor<stop:
-   cursor=im.data.find(raw[:3],cursor,stop)
+   # The first instruction may be CALL rel32: displacement bytes relocate.
+   # Use only its stable opcode here; full instruction shape and links below
+   # remain mandatory, so this prefilter cannot admit a candidate by itself.
+   cursor=im.data.find(raw[:1],cursor,stop)
    if cursor<0:break
    current=im.pe.base+target['rva']+cursor-target['raw'];cursor+=1
    try:after=rows(data(NEW,current,len(raw)),current)
@@ -93,11 +96,15 @@ def run(root):
    return load('research-workflow').snapshot(root,'continuation-alignment-11320',queued),queued
   link(before,rows(data(NEW,hits[0],len(raw)),hits[0]))
  for at,code in old['leaves'].items():link(rows(bytes.fromhex(code),int(at,16)),rows(data(NEW,int(mapped(at),16),len(bytes.fromhex(code))),int(mapped(at),16)))
- available={};exports={}
+ reviewed_path=HERE/'knowledge/native-contexts/login-prepare-11320.json'
+ reviewed=json.loads(reviewed_path.read_bytes())
+ if reviewed['source_sha256']!=NEW:raise ValueError('Continuation export declarations source differs')
+ pinned[str(reviewed_path)]=digest(reviewed_path)
+ exports={}
  wanted={mapped(a) for a in old['functions'].values()}
  for run in ('run-cd7653218083','run-85faf6d508b5'):
   path=root/'ghidra/request-exports'/NEW/run/'details.json';raw=path.read_bytes();value=json.loads(raw)
-  if value['new_source_sha256']!=NEW:raise ValueError('Continuation export source changed')
+  if value['new_source_sha256']!=NEW or hashlib.sha256(raw).hexdigest()!=reviewed['exports'].get(run):raise ValueError('Continuation reviewed export changed')
   found={f['address'] for f in value['functions'] if f.get('decompilation_completed')}
   if wanted&found:exports[run]=hashlib.sha256(raw).hexdigest();wanted-=found;pinned[str(path)]=exports[run]
  if wanted:raise ValueError('Continuation export missing')

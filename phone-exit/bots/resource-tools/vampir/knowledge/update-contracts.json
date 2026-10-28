@@ -735,6 +735,14 @@
           "from": "result-constructor",
           "rip_offset": 12,
           "slot": 32
+        },
+        {
+          "key": "continuation-constructor",
+          "method": "reviewed"
+        },
+        {
+          "key": "continuation-reset",
+          "method": "reviewed"
         }
       ],
       "bindings": {
@@ -759,7 +767,9 @@
           "string-writer": "0x144aad3d0",
           "prepare": "0x1467d14e0",
           "constructor": "0x1456d7540",
-          "result-reader": "0x1456dc140"
+          "result-reader": "0x1456dc140",
+          "continuation-constructor": "0x1464a97b0",
+          "continuation-reset": "0x1464afc70"
         }
       },
       "resources": [],

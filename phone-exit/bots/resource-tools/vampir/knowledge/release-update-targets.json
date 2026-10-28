@@ -4120,6 +4120,32 @@
             "evidence": [
               "evidence/updates/HEADLESS-LOGIN-BATCH-11318.md"
             ]
+          },
+          {
+            "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+            "functions": [
+              {
+                "address": "0x1464a97b0",
+                "scope": "Whole constructor/reset and getter/slot links with declared external helper fixtures; no full handler/post-state/runtime proof.",
+                "required_checks": [
+                  "native-login-continuation-context"
+                ]
+              },
+              {
+                "address": "0x1464afc70",
+                "scope": "Whole constructor/reset and getter/slot links with declared external helper fixtures; no full handler/post-state/runtime proof.",
+                "required_checks": [
+                  "native-login-continuation-context"
+                ]
+              }
+            ],
+            "tools": [
+              "align-login-continuation-11320.py",
+              "verify-login-continuation-context.py"
+            ],
+            "evidence": [
+              "evidence/updates/HEADLESS-CONTINUATION-11320.md"
+            ]
           }
         ]
       }
