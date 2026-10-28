@@ -46,6 +46,7 @@ def verify(context, root):
         return data[:-2].decode('utf-16le') if data else ''
     load('version-combiner-fixtures').install(load, h, context, state, allocate, release, reg)
     abi = {key: 0xfedcba9876543200 + index for index, key in enumerate(('RBX','RSI','RDI','RBP','R12','R13','R14','R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     cases = []
     pairs = [('', ''), ('', '_'), ('Windows', ''), ('Windows', '_'), ('Windows_', '10.0.26100.1.256.64bit'),
              ('контекст🙂', '_界'), ('a\0b', 'c\0d'), ('x' * 127, 'y' * 128)]

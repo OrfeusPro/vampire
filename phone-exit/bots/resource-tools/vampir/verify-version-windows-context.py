@@ -107,6 +107,7 @@ def verify(context, root):
                 dict(name='negative-equal', guard=-1, epoch=-1, acquired=-1, version_ok=1),
                 dict(name='negative-cold', guard=-1, epoch=-2, acquired=-1, version_ok=1)]
     abi = {key: 0x123456789abcdef0 + index for index, key in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     cases = []
     for poison in (0, 0x55, 0xaa, 0xff):
         for profile in profiles:

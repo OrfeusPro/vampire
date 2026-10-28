@@ -6,10 +6,14 @@ SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='strin
        dict(id='native-auto-version-result',family='version-result',adapter='version-result-v1'),
        dict(id='native-auto-version-prepare',family='version-prepare',adapter='version-prepare-v1'),
        dict(id='native-auto-login-prepare',family='login-prepare',adapter='login-prepare-v1'),
-       dict(id='native-auto-login-sdk',family='login-prepare-sdk',adapter='login-sdk-v1'))
+       dict(id='native-auto-login-sdk',family='login-prepare-sdk',adapter='login-sdk-v1'),
+       *[dict(id='native-auto-'+family,family=family,adapter='version-helper-v1') for family in
+         ('version-nm-device','version-cpu','version-windows','version-combiner','version-platform',
+          'version-prepare-nm','version-prepare-system','version-prepare-combiner','version-prepare-platform')])
 MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire',
          'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare',
-         'login-prepare-v1':'update-native-login-prepare','login-sdk-v1':'update-native-login-sdk'}
+         'login-prepare-v1':'update-native-login-prepare','login-sdk-v1':'update-native-login-sdk',
+         'version-helper-v1':'update-native-version-helpers'}
 
 
 def registry(index,knowledge):
@@ -35,6 +39,7 @@ def run(index,args,sha,journal,database,*,families=None):
         if selection is not None and spec['family'] not in selection:continue
         family=spec['family'];families.append(family)
         tool=index.extension(MODULES[spec['adapter']])
+        if spec['adapter']=='version-helper-v1':tool=tool.select(family)
         try:
             inputs=tool.plan_inputs(index,args,sha)
             def plan_writer():

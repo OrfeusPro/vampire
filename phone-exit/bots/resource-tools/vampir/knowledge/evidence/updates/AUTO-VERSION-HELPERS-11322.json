@@ -1,0 +1,458 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-acceptance\\5499727d58f668c8f0d7e48e2e493540768a6e2c905fb8ea32b7c731654bf3e2\\manifest.json",
+    "sha256": "5499727d58f668c8f0d7e48e2e493540768a6e2c905fb8ea32b7c731654bf3e2"
+  },
+  "families": {
+    "version-nm-device": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\1df37a5dce8224a607b0ad017b70629e9d2d66ca2bc919c0a03679381ee5b2e5\\manifest.json",
+        "sha256": "1df37a5dce8224a607b0ad017b70629e9d2d66ca2bc919c0a03679381ee5b2e5"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\6e29a5bb6c4688a8b00529ba053e60840165576bdb244f8b866b4911138feab7\\manifest.json",
+        "sha256": "6e29a5bb6c4688a8b00529ba053e60840165576bdb244f8b866b4911138feab7"
+      },
+      "native_check": {
+        "id": "native-auto-version-nm-device",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\a831f674bd83bfa4e2e8597ea48ee4986cd25de27f16452c149645a20c94a684\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_nm_device",
+        "sha256": "a831f674bd83bfa4e2e8597ea48ee4986cd25de27f16452c149645a20c94a684",
+        "state": "passed"
+      },
+      "cases": 36,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {}
+    },
+    "version-cpu": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\a92f43b99caf864cccad0c4a116516bac52bc5691f9d6cb2472e16e14ddb2d38\\manifest.json",
+        "sha256": "a92f43b99caf864cccad0c4a116516bac52bc5691f9d6cb2472e16e14ddb2d38"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\6c863b0dcb5bd22e52795d9188eae2a01c5c1872df35e59b36b05d5d58ed124c\\manifest.json",
+        "sha256": "6c863b0dcb5bd22e52795d9188eae2a01c5c1872df35e59b36b05d5d58ed124c"
+      },
+      "native_check": {
+        "id": "native-auto-version-cpu",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\147f04504cd29170e3c7c1e45cb6d4e99dee12bd0c5129d649b4856848cef04b\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_cpu",
+        "sha256": "147f04504cd29170e3c7c1e45cb6d4e99dee12bd0c5129d649b4856848cef04b",
+        "state": "passed"
+      },
+      "cases": 72,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {}
+    },
+    "version-windows": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\129404ce91391435f96e5724b78fd4dc2cbd71d85bd3fcd36d18ad7e91c54381\\manifest.json",
+        "sha256": "129404ce91391435f96e5724b78fd4dc2cbd71d85bd3fcd36d18ad7e91c54381"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\9717c1879561a088975ac5ee5c497a7368e5305b96738d09abfd8b7120a9a476\\manifest.json",
+        "sha256": "9717c1879561a088975ac5ee5c497a7368e5305b96738d09abfd8b7120a9a476"
+      },
+      "native_check": {
+        "id": "native-auto-version-windows",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\79c79fc0f7f1ec5db7bb82be2e8417dd2f26db23e1564d87266f45398645dee6\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_windows",
+        "sha256": "79c79fc0f7f1ec5db7bb82be2e8417dd2f26db23e1564d87266f45398645dee6",
+        "state": "passed"
+      },
+      "cases": 48,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {}
+    },
+    "version-combiner": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\a0e96b87c7efcba5f549778f7db6995030312b2b935419298692c6d38f88b2f2\\manifest.json",
+        "sha256": "a0e96b87c7efcba5f549778f7db6995030312b2b935419298692c6d38f88b2f2"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\a6c7694cb12466b867ef653852bde2be30b79253794ba2ad9d64343858b3dc5b\\manifest.json",
+        "sha256": "a6c7694cb12466b867ef653852bde2be30b79253794ba2ad9d64343858b3dc5b"
+      },
+      "native_check": {
+        "id": "native-auto-version-combiner",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\04251ddf79de245f8b4107a0cb4e4c0327a9fe294df8f207806788d28337597a\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_combiner",
+        "sha256": "04251ddf79de245f8b4107a0cb4e4c0327a9fe294df8f207806788d28337597a",
+        "state": "passed"
+      },
+      "cases": 256,
+      "overflow_cases": 2,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {}
+    },
+    "version-platform": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\54ed813f21eb8c7081bb0a8f1805d49cfb14ceaf5a854d027543bdd1e0ef8952\\manifest.json",
+        "sha256": "54ed813f21eb8c7081bb0a8f1805d49cfb14ceaf5a854d027543bdd1e0ef8952"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\686febec4b4723801c7a794c531aed011de32616432442e59e0042ef9791fa07\\manifest.json",
+        "sha256": "686febec4b4723801c7a794c531aed011de32616432442e59e0042ef9791fa07"
+      },
+      "native_check": {
+        "id": "native-auto-version-platform",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\f80ea9e3da42a07cc6f4d99409c363e32923937dd3bb2744fb48ee4b8dbd8526\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_platform",
+        "sha256": "f80ea9e3da42a07cc6f4d99409c363e32923937dd3bb2744fb48ee4b8dbd8526",
+        "state": "passed"
+      },
+      "cases": 116,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {}
+    },
+    "version-prepare-nm": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\ca2fb0c86e0e998be66a8d70d6d1521cb9570aa151debd978427addfa5ca87cd\\manifest.json",
+        "sha256": "ca2fb0c86e0e998be66a8d70d6d1521cb9570aa151debd978427addfa5ca87cd"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\8bd7042cfb8353d9939cd434c262c90276c295154625a2b556b9b40960f5589f\\manifest.json",
+        "sha256": "8bd7042cfb8353d9939cd434c262c90276c295154625a2b556b9b40960f5589f"
+      },
+      "native_check": {
+        "id": "native-auto-version-prepare-nm",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\dcaa2f8c77229c6df6dda0bb3f45b8b081b05d5302351e363bafce075342508a\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_prepare_nm",
+        "sha256": "dcaa2f8c77229c6df6dda0bb3f45b8b081b05d5302351e363bafce075342508a",
+        "state": "passed"
+      },
+      "cases": 64,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {
+        "native_nm_used": true,
+        "native_system_used": false,
+        "native_combiners_used": false,
+        "native_platform_used": false
+      }
+    },
+    "version-prepare-system": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\a0c71ab169267d74bd4c3c60d74a1eda42f5494e5a1411b2fb64a8c357943204\\manifest.json",
+        "sha256": "a0c71ab169267d74bd4c3c60d74a1eda42f5494e5a1411b2fb64a8c357943204"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\711ab35874bb89b47a8dde7b4b8ab28bf6955db8a434283b579e1cd7ec4c0ec0\\manifest.json",
+        "sha256": "711ab35874bb89b47a8dde7b4b8ab28bf6955db8a434283b579e1cd7ec4c0ec0"
+      },
+      "native_check": {
+        "id": "native-auto-version-prepare-system",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\afd980034c7197e263cbce1a3f794cf86aef85e644b22a51ca5714b38325b848\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_prepare_system",
+        "sha256": "afd980034c7197e263cbce1a3f794cf86aef85e644b22a51ca5714b38325b848",
+        "state": "passed"
+      },
+      "cases": 64,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {
+        "native_nm_used": true,
+        "native_system_used": true,
+        "native_combiners_used": false,
+        "native_platform_used": false
+      }
+    },
+    "version-prepare-combiner": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\500b0a9b456502359ec92fd314486ed316c101dc71a4da0d689b372464b19748\\manifest.json",
+        "sha256": "500b0a9b456502359ec92fd314486ed316c101dc71a4da0d689b372464b19748"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\096d1e52cdda3320fc7e0b931ffb30ae5f9cc97f751ee2f5aa645e1978a323c4\\manifest.json",
+        "sha256": "096d1e52cdda3320fc7e0b931ffb30ae5f9cc97f751ee2f5aa645e1978a323c4"
+      },
+      "native_check": {
+        "id": "native-auto-version-prepare-combiner",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\92bee35e5d5d96be85b4e7dbb165e283e9bad2375e676dbd8fa01e10fa4fc4ab\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_prepare_combiner",
+        "sha256": "92bee35e5d5d96be85b4e7dbb165e283e9bad2375e676dbd8fa01e10fa4fc4ab",
+        "state": "passed"
+      },
+      "cases": 64,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {
+        "native_nm_used": true,
+        "native_system_used": true,
+        "native_combiners_used": true,
+        "native_platform_used": false
+      }
+    },
+    "version-prepare-platform": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\38c47fd20dfa44b2d1e6d4338e44a65a988903b150a305487a563b40d420847c\\manifest.json",
+        "sha256": "38c47fd20dfa44b2d1e6d4338e44a65a988903b150a305487a563b40d420847c"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-proofs\\ca0cd36252c6bb3d7afc6d11cbbe068c9c645a15455f949c2c30c8db5b82831c\\manifest.json",
+        "sha256": "ca0cd36252c6bb3d7afc6d11cbbe068c9c645a15455f949c2c30c8db5b82831c"
+      },
+      "native_check": {
+        "id": "native-auto-version-prepare-platform",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\c8e1cc401f545b3ae4daad526a19ae791d29826048408b95bf60dd3c280bf355\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_version_prepare_platform",
+        "sha256": "c8e1cc401f545b3ae4daad526a19ae791d29826048408b95bf60dd3c280bf355",
+        "state": "passed"
+      },
+      "cases": 288,
+      "overflow_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "native_flags": {
+        "native_nm_used": true,
+        "native_system_used": true,
+        "native_combiners_used": true,
+        "native_platform_used": true
+      }
+    }
+  },
+  "passes": [
+    {
+      "counts": {
+        "native-auto-version-combiner": 256,
+        "native-auto-version-cpu": 72,
+        "native-auto-version-nm-device": 36,
+        "native-auto-version-platform": 116,
+        "native-auto-version-prepare-combiner": 64,
+        "native-auto-version-prepare-nm": 64,
+        "native-auto-version-prepare-platform": 288,
+        "native-auto-version-prepare-system": 64,
+        "native-auto-version-windows": 48
+      },
+      "executed": [
+        "native-plan-version-nm-device",
+        "native-context-version-nm-device",
+        "native-check-native-auto-version-nm-device",
+        "native-plan-version-cpu",
+        "native-context-version-cpu",
+        "native-check-native-auto-version-cpu",
+        "native-plan-version-windows",
+        "native-context-version-windows",
+        "native-check-native-auto-version-windows",
+        "native-plan-version-combiner",
+        "native-context-version-combiner",
+        "native-check-native-auto-version-combiner",
+        "native-plan-version-platform",
+        "native-context-version-platform",
+        "native-check-native-auto-version-platform",
+        "native-plan-version-prepare-nm",
+        "native-context-version-prepare-nm",
+        "native-check-native-auto-version-prepare-nm",
+        "native-plan-version-prepare-system",
+        "native-context-version-prepare-system",
+        "native-check-native-auto-version-prepare-system",
+        "native-plan-version-prepare-combiner",
+        "native-context-version-prepare-combiner",
+        "native-check-native-auto-version-prepare-combiner",
+        "native-plan-version-prepare-platform",
+        "native-context-version-prepare-platform",
+        "native-check-native-auto-version-prepare-platform"
+      ],
+      "native_replays": 9,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "reused": 0,
+      "wall_seconds": 118.209153
+    },
+    {
+      "counts": {
+        "native-auto-version-combiner": 256,
+        "native-auto-version-cpu": 72,
+        "native-auto-version-nm-device": 36,
+        "native-auto-version-platform": 116,
+        "native-auto-version-prepare-combiner": 64,
+        "native-auto-version-prepare-nm": 64,
+        "native-auto-version-prepare-platform": 288,
+        "native-auto-version-prepare-system": 64,
+        "native-auto-version-windows": 48
+      },
+      "executed": [
+        "native-plan-version-nm-device",
+        "native-plan-version-cpu",
+        "native-plan-version-windows",
+        "native-plan-version-combiner",
+        "native-plan-version-platform",
+        "native-plan-version-prepare-nm",
+        "native-plan-version-prepare-system",
+        "native-plan-version-prepare-combiner",
+        "native-plan-version-prepare-platform"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "reused": 18,
+      "wall_seconds": 51.7458
+    },
+    {
+      "counts": {
+        "native-auto-version-combiner": 256,
+        "native-auto-version-cpu": 72,
+        "native-auto-version-nm-device": 36,
+        "native-auto-version-platform": 116,
+        "native-auto-version-prepare-combiner": 64,
+        "native-auto-version-prepare-nm": 64,
+        "native-auto-version-prepare-platform": 288,
+        "native-auto-version-prepare-system": 64,
+        "native-auto-version-windows": 48
+      },
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "pass_number": 3,
+      "reused": 27,
+      "wall_seconds": 46.084545
+    }
+  ],
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-helper-combined-acceptance\\38d9fa2a1d1605adac5a69d603a71ddabcd98b087c27ea6a54f3890b88a17a9b\\manifest.json",
+    "sha256": "38d9fa2a1d1605adac5a69d603a71ddabcd98b087c27ea6a54f3890b88a17a9b"
+  },
+  "combined_metrics": {
+    "wall_seconds": 68.867111,
+    "reused": 45,
+    "executed": [],
+    "native_replays": 0,
+    "new_jvm": 0
+  },
+  "tooling_check": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1fceadfb28bb8692e4472a5ac6842ad5e7528cd137f6019d57a23346ee053d1c\\manifest.json",
+    "sha256": "1fceadfb28bb8692e4472a5ac6842ad5e7528cd137f6019d57a23346ee053d1c",
+    "cache_key": "8ebef4e1aa41b44b79ac1b29e242c44287cc212eaaa23d0a11010127b2c7dd67",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "tooling_tests": 215,
+  "native_cases": 1008,
+  "overflow_cases": 2,
+  "previous_completed_suites_replayed": 0,
+  "collection": {
+    "request": "ad01e313746c659c21e009affb6276d1d09bf1527d49bb1544b40aec0315117b",
+    "receipt": "0769007ea406845c656279f836a317fe541626fbe947fc0150a0385bb3ac315b",
+    "roots": 19,
+    "missing": 17,
+    "reused": 2,
+    "export": "run-c48d61557879",
+    "reused_project": true
+  },
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Nine bounded scopes overlap execution; counts are not unique functions or whole entry proofs.",
+    "NM storage/GUID, CPU caches, Windows/TLS/OS/CRT, FName/reflection, allocation/copy/quantization/send remain synthetic boundaries.",
+    "CPU compiled Unknown third input uses the two-value branch; diagnostic and alternate branches are excluded.",
+    "Selected driver timings exclude collection and full installation audit. No live admission or authentication."
+  ]
+}

@@ -93,6 +93,7 @@ def verify(context, root):
                 ('GenuineIntel', 'Unknown'), ('GenuineIntel', 'A|B|C'), ('GenuineIntel', 'A\0Hidden'),
                 ('GenuineIntel', 'X' * 63)]
     abi = {key: 0xfedcba9876543200 + i for i, key in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     cases = []
     for poison in (0, 0x55, 0xaa, 0xff):
         for first, second in profiles:

@@ -55,7 +55,9 @@ class AdapterDriverTests(unittest.TestCase):
                     tools=lambda:dict(revision=versions[family]),
                     materialize=lambda *args:dict(checks=[dict(id=spec['id'],revision=versions[family])],queue=[]),
                     execute=execute,publish=lambda *args:None)
-            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS}
+            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS if spec['adapter']!='version-helper-v1'}
+            modules['update-native-version-helpers']=SimpleNamespace(select=lambda family:tool(next(
+                spec for spec in driver.SPECS if spec['family']==family)))
             modules.update({'research-workflow':workflow,'update-run':SimpleNamespace(collect_batches=lambda *args:[]),
                 'update-native-harness':SimpleNamespace(runtime_inputs=lambda:{})})
             original=index.extension;index.extension=lambda name:modules.get(name) or original(name)

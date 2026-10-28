@@ -112,7 +112,8 @@ def verify(context,root):
               dict(name='write-failure',parse_ok=False,write_ok=False),
               dict(name='read-failure-value',stored='retained-fixture',read_ok=False),
               dict(name='read-failure-empty',read_ok=False,parse_ok=False)]
-    cases=[];abi={name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R14','R15'))}
+    cases=[];abi={name:0xfedcba9876543210+i for i,name in enumerate(('RBX','RSI','RDI','RBP','R12','R13','R14','R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     for poison in (0,0x55,0xaa,0xff):
         for profile in profiles:
             state.update(heap=h.scratch+0x10000,allocations={},freed=set(),profile=profile,events=[],written=None)

@@ -80,6 +80,7 @@ def verify(context, root):
     for key, address in fixtures.items(): h.add_fixture(address, handler(key))
     cases = []
     abi = {key: 0x123456789abcdef0 + index for index, key in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
 
     def call(at, argument=0):
         for key, value in abi.items(): write_reg(key, value)

@@ -110,6 +110,13 @@ Login SDK исполняет три getters и шесть returning leaves на�
 Отсутствие адаптера другого семейства — отдельный блокер, а не доказанное изменение
 его кода в новой игре.
 
+Version helpers (NM, CPU, Windows, combiners, platform) и четыре cumulative
+preparation уровня обслуживаются общим `version-helper-v1` с отдельными базами,
+checks и кэшем каждой из девяти ролей. Integration использует доказанные target
+helpers и сравнивает их с собственной базой. OS / SDK / storage / CRT effects
+сохраняют явные fixture границы.
+[Области и повтор](evidence/updates/HEADLESS-AUTO-VERSION-HELPERS-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,
@@ -120,6 +127,7 @@ Login SDK исполняет три getters и шесть returning leaves на�
 (UTF-8), `generated-string-writers/index.json` и `generated-archive-wire/index.json`,
 а также `generated-version-results/index.json`, `generated-version-prepare/index.json`,
 `generated-login-prepare/index.json` и `generated-login-sdk/index.json`;
+семейства Version helpers — в `generated-version-helpers/<family>/index.json`;
 они не являются next-profile. Указатели читаются соответствующими adapters отдельно
 от исторических function catalog projections.
 

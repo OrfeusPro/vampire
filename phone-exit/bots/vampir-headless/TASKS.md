@@ -25,15 +25,18 @@ exports и проверки вручную не повторять. Счётчи
 UTF-8 и полный string-writer уже подключены; [writer 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md)
 прошёл 228 native случаев и два повтора без replay.
 [Archive IO и Version / Login wire](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md)
-тоже подключены: 45 + 64 native случая. Далее preparation / SDK / metadata,
-response readers / handlers, clock / heartbeat и world; целый вход остаётся недопущенным.
+тоже подключены: 45 + 64 native случая. Response readers / handlers,
+clock / heartbeat и world остаются открытыми; целый вход ещё не допущен.
 [VersionResult / native input buffer и базовый Version prepare](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-11322.md)
-подключены: 127 + 64 native случая, повторы без replay. Далее helper integration
-подготовки Version, SDK backend / metadata, handlers / registration и world.
+подключены: 127 + 64 native случая, повторы без replay. Helper integration
+Version описана ниже; SDK backend / metadata, handlers / registration и world открыты.
 [Базовый Login prepare и SDK-getters](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-PREPARE-11322.md)
 подключены: 672 + 2016 случая, точные матрицы и кэш. Шесть drivers вместе
-переиспользовали 18 этапов без replay. Следующий общий пакет — helper integration
-Version; metadata и LoginResult input / handlers остаются отдельными блокерами.
+переиспользовали 18 этапов без replay. Helper integration Version завершён в bounded scope:
+[девять ролей helpers и integrations](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-HELPERS-11322.md)
+подключены к автомату, 1008 сценариев + 2 overflow, повтор всех 15 drivers — 45 этапов
+кэша без replay. Далее Login metadata и LoginResult input / handlers; настоящий
+SDK backend, OS / storage provider effects и полный вход остаются открытыми.
 
 ## Сохранённые записи прежних этапов
 

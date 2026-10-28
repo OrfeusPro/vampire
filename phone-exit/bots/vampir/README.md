@@ -24,18 +24,23 @@ run: версия в этом абзаце не заменяет проверк�
 
 [Archive IO / Version / Login wire 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md)
 также подключены к автомату: 45 IO и 64 полных packet сценария прошли.
-Далее — preparation / SDK, ответы входа, clock / heartbeat и world contracts.
-Работающий игровой профиль этим результатом не заменяется.
+Сериализация пакетов подтверждена отдельно от ответов входа, clock / heartbeat
+и world contracts. Работающий игровой профиль этим результатом не заменяется.
 
 [VersionResult / input buffer и базовая подготовка Version](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-11322.md)
 добавили 127 и 64 native случая. Оба правила подключены к автообновлению / кэшу.
-SDK / OS / дополнительные helpers подготовки, handlers и живой вход остаются
-отдельными проверками; текущая сессия не переключается.
+Native helper integration описана ниже; настоящие OS / SDK effects, handlers
+и живой вход сохраняют отдельные границы. Текущая сессия не переключается.
 
 [Подготовка Login и интеграция SDK-getters](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-PREPARE-11322.md)
 подключены к автообновлению: 672 базовых и 2016 интеграционных native случаев.
 Общий повтор шести drivers использовал 18 этапов кэша без JVM / native replay.
 Metadata, настоящий SDK backend и целый вход требуют следующих пакетов.
+
+[Helpers Version и их интеграция](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-HELPERS-11322.md)
+подключены как девять отдельных ролей: 1008 native сценариев и две проверки
+переполнения. Общий повтор 15 drivers использовал 45 этапов кэша без replay.
+Реальные OS / SDK / storage effects остаются за границами fixtures.
 
 ## Сохранённые записи прежних этапов
 

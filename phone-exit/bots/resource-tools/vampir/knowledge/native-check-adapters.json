@@ -1,11 +1,80 @@
 {
   "schema": 1,
   "adapters": [
-    {"id": "native-auto-string-writer", "family": "string-writer", "adapter": "string-writer-v1"},
-    {"id": "native-auto-archive-wire", "family": "archive-wire", "adapter": "archive-wire-v1"},
-    {"id": "native-auto-version-result", "family": "version-result", "adapter": "version-result-v1"},
-    {"id": "native-auto-version-prepare", "family": "version-prepare", "adapter": "version-prepare-v1"},
-    {"id": "native-auto-login-prepare", "family": "login-prepare", "adapter": "login-prepare-v1"},
-    {"id": "native-auto-login-sdk", "family": "login-prepare-sdk", "adapter": "login-sdk-v1"}
+    {
+      "id": "native-auto-string-writer",
+      "family": "string-writer",
+      "adapter": "string-writer-v1"
+    },
+    {
+      "id": "native-auto-archive-wire",
+      "family": "archive-wire",
+      "adapter": "archive-wire-v1"
+    },
+    {
+      "id": "native-auto-version-result",
+      "family": "version-result",
+      "adapter": "version-result-v1"
+    },
+    {
+      "id": "native-auto-version-prepare",
+      "family": "version-prepare",
+      "adapter": "version-prepare-v1"
+    },
+    {
+      "id": "native-auto-login-prepare",
+      "family": "login-prepare",
+      "adapter": "login-prepare-v1"
+    },
+    {
+      "id": "native-auto-login-sdk",
+      "family": "login-prepare-sdk",
+      "adapter": "login-sdk-v1"
+    },
+    {
+      "id": "native-auto-version-nm-device",
+      "family": "version-nm-device",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-cpu",
+      "family": "version-cpu",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-windows",
+      "family": "version-windows",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-combiner",
+      "family": "version-combiner",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-platform",
+      "family": "version-platform",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-prepare-nm",
+      "family": "version-prepare-nm",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-prepare-system",
+      "family": "version-prepare-system",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-prepare-combiner",
+      "family": "version-prepare-combiner",
+      "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-version-prepare-platform",
+      "family": "version-prepare-platform",
+      "adapter": "version-helper-v1"
+    }
   ]
 }

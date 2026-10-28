@@ -218,6 +218,52 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Version helper integration, Login metadata и настоящий SDK backend, остальные ответы/handlers, clock/heartbeat/world и целый вход 1.13.22 остаются открытыми."
+    },
+    {
+      "addresses": [
+        "0x141426700",
+        "0x141429e70",
+        "0x14142bbc0",
+        "0x14142bc90",
+        "0x1414380b0",
+        "0x141439e10",
+        "0x14143a020",
+        "0x14143a090",
+        "0x14144d200",
+        "0x1415c7190",
+        "0x1415c71b0",
+        "0x1415c96b0",
+        "0x1416dd990",
+        "0x1444ec9f0",
+        "0x1445c4cf0",
+        "0x1445cd040",
+        "0x1445ce440",
+        "0x1456d7c10",
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Version helper-v1 подключает девять независимых ролей и их cumulative integration к update/Journal/cache. Source-bound native квитанции содержат 1008 сценариев и 2 overflow. Последний повтор девяти ролей reused 27, всех 15 drivers — 45 этапов без JVM/native. Базы публикуются отдельно по ролям; runtime профиль не меняется.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-VERSION-HELPERS-11322.md",
+          "sha256": "80acaae80d26d0223ef12c9f0f2738e630509335a3fc60da90b6cc6d767098b0"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-VERSION-HELPERS-11322.json",
+          "sha256": "10a855baf7279bb36d67fa47fd044efc05a30c09bba3463eb145b7969eda4f95"
+        }
+      ],
+      "id": "66b4f59def52355f358a2208701ae5fd5a8edf035a39792a6f38fb5d676f1d72",
+      "limits": [
+        "Fact фиксирует правило и интеграцию; bounded native scopes находятся в отдельных квитанциях evidence.",
+        "OS/SDK/storage/CRT/FName/reflection/allocation/send effects остаются fixtures. Перекрывающиеся сценарии не означают уникальные функции или полный вход.",
+        "Selected drivers без полного audit; 17 missing roots собраны единым пакетом из 19, прежние native suites не повторялись. Авторизации и игровых команд нет."
+      ],
+      "method": "static",
+      "next_check": "Следующий общий пакет Login metadata, затем LoginResult input/handlers; готовые 16 семейств использовать по валидному кэшу.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Login metadata и настоящий SDK backend / provider effects, остальные response readers/handlers/registration/composition, clock/heartbeat/world и полный вход 1.13.22 остаются незакрытыми. OS/storage/CRT/FName effects helpers ограничены fixtures; перенос и bounded integration не доказывают их реальные значения."
     }
   ],
   "schema": 1,
