@@ -277,6 +277,7 @@ def session(context, h, bridge=None):
     h.uc.hook_add(unicorn.UC_HOOK_CODE, entered)
     order = context['collector_order']
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     def seed(backend_case, pattern, optional, marketing, poison):
         state.clear()
         state.update(heap=h.scratch + 0x10000, allocations={}, freed=set(), events=[], variants={}, variant_sources={},
@@ -387,6 +388,7 @@ def verify(context, root):
     seed, check, state = session(context, h)
     cases = []
     abi = {name: 0xfedcba9876543210 + i for i, name in enumerate(('RBX', 'RSI', 'RDI', 'RBP', 'R12', 'R13', 'R14', 'R15'))}
+    abi.update({'XMM'+str(i):0x123456789abcdef0fedcba9876543210+i for i in range(6,16)})
     for backend_case, pattern, optional, marketing, poison in itertools.product(BACKENDS, PATTERNS, (False, True), (False, True), (0x55, 0xaa)):
         seed(backend_case, pattern, optional, marketing, poison)
         for register, value in abi.items():

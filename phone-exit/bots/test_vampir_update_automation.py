@@ -11,7 +11,9 @@ def load_tests(loader, tests, pattern):
             'test_vampir_native_version_result_adapter','test_vampir_native_version_prepare_adapter',
             'test_vampir_native_login_prepare_adapter','test_vampir_native_login_sdk_adapter',
             'test_vampir_version_helper_case_contracts','test_vampir_version_system_transfer_rules',
-            'test_vampir_version_string_transfer_rules','test_vampir_native_version_helpers_adapter'):
+            'test_vampir_version_string_transfer_rules','test_vampir_native_version_helpers_adapter',
+            'test_vampir_login_metadata_transfer_rules','test_vampir_login_metadata_case_contracts',
+            'test_vampir_native_login_metadata_adapter'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

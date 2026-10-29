@@ -264,6 +264,39 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Login metadata и настоящий SDK backend / provider effects, остальные response readers/handlers/registration/composition, clock/heartbeat/world и полный вход 1.13.22 остаются незакрытыми. OS/storage/CRT/FName effects helpers ограничены fixtures; перенос и bounded integration не доказывают их реальные значения."
+    },
+    {
+      "addresses": [
+        "0x144557b60",
+        "0x145600cf0",
+        "0x145601580",
+        "0x145601830",
+        "0x14560a670",
+        "0x14560b0c0"
+      ],
+      "checks": [],
+      "conclusion": "Metadata и Login SDK integration подключены как две отдельные роли к update/Journal/cache. Source-bound native квитанции содержат 288 и 448 сценариев; два повтора без native/JVM, последний reused 6. Все 17 drivers вместе переиспользовали 51 этап без replay. Новая generic lifecycle фиксирует target proof/report/export dependencies; базы публикуются атомарно, runtime профиль не меняется.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-METADATA-11322.md",
+          "sha256": "bf69bc171e9ca7c7750b8f37baae9eada48f2c167f41c19c826657d0cb4ee2fa"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-METADATA-11322.json",
+          "sha256": "b9bfdf9f3a2ffc2b4fa571716531356d078bca884136615a4577d67ac92f5bca"
+        }
+      ],
+      "id": "2175340751a3b359fb66020d12e270361e505e7cdd1b9a4352e8e9163f9f2c45",
+      "limits": [
+        "Fact фиксирует правило и интеграцию; bounded native scopes находятся в отдельных квитанциях evidence.",
+        "SDK backend/provider/map/variant/string/escaping/cleanup effects остаются fixtures. Перекрывающиеся сценарии не означают уникальные функции или полный вход.",
+        "Selected drivers без полного audit; 6 missing roots собраны единым пакетом, прежние native suites не повторялись. Авторизации и игровых команд нет."
+      ],
+      "method": "static",
+      "next_check": "Следующий общий пакет LoginResult input и nested readers, затем handlers/registration/composition; готовые 18 семейств использовать по валидному кэшу.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Настоящий SDK backend / provider effects, остальные LoginResult input/nested readers/handlers/registration/composition, clock/heartbeat/world и полный вход 1.13.22 остаются незакрытыми. Metadata map/variant/string/escaping и provider values ограничены fixtures."
     }
   ],
   "schema": 1,

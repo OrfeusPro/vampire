@@ -105,7 +105,8 @@ OS / SDK / helper fixtures. VersionResult
 подтверждает только ID 2 / scalar input и конструкторы; другие ответы и strings
 требуют своих проверок. [Точные области](evidence/updates/HEADLESS-AUTO-VERSION-11322.md).
 Login SDK исполняет три getters и шесть returning leaves над синтетическими
-данными; настоящий backend и metadata collector остаются за границами.
+данными; настоящий backend остаётся за границами. Metadata pipeline подключён
+отдельным семейством с последующей интеграцией.
 [Точные области Login и проверка кэша](evidence/updates/HEADLESS-AUTO-LOGIN-PREPARE-11322.md).
 Отсутствие адаптера другого семейства — отдельный блокер, а не доказанное изменение
 его кода в новой игре.
@@ -116,6 +117,13 @@ checks и кэшем каждой из девяти ролей. Integration ис
 helpers и сравнивает их с собственной базой. OS / SDK / storage / CRT effects
 сохраняют явные fixture границы.
 [Области и повтор](evidence/updates/HEADLESS-AUTO-VERSION-HELPERS-11322.md).
+
+Login metadata использует общий lifecycle `portable-native-family.py`:
+неизменяемые contexts / proof / reports, точные inputs кэша и атомарный index.
+Standalone collector / selector / loader / writer / copy / move и интеграция
+с SDK проверяются как две отдельные роли. Fixtures map / variant / strings /
+backend сохраняют собственные границы; настоящий SDK результат не подразумевается.
+[Области, отчёты и повтор](evidence/updates/HEADLESS-AUTO-LOGIN-METADATA-11322.md).
 
 ## Журналы и дальнейшая работа
 
@@ -128,6 +136,7 @@ helpers и сравнивает их с собственной базой. OS / 
 а также `generated-version-results/index.json`, `generated-version-prepare/index.json`,
 `generated-login-prepare/index.json` и `generated-login-sdk/index.json`;
 семейства Version helpers — в `generated-version-helpers/<family>/index.json`;
+Login metadata — в `generated-login-metadata/<family>/index.json`;
 они не являются next-profile. Указатели читаются соответствующими adapters отдельно
 от исторических function catalog projections.
 

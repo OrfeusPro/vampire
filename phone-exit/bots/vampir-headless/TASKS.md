@@ -29,14 +29,18 @@ UTF-8 и полный string-writer уже подключены; [writer 20 → 
 clock / heartbeat и world остаются открытыми; целый вход ещё не допущен.
 [VersionResult / native input buffer и базовый Version prepare](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-11322.md)
 подключены: 127 + 64 native случая, повторы без replay. Helper integration
-Version описана ниже; SDK backend / metadata, handlers / registration и world открыты.
+Version описана ниже; SDK backend, handlers / registration и world открыты.
 [Базовый Login prepare и SDK-getters](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-PREPARE-11322.md)
 подключены: 672 + 2016 случая, точные матрицы и кэш. Шесть drivers вместе
 переиспользовали 18 этапов без replay. Helper integration Version завершён в bounded scope:
 [девять ролей helpers и integrations](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-HELPERS-11322.md)
 подключены к автомату, 1008 сценариев + 2 overflow, повтор всех 15 drivers — 45 этапов
-кэша без replay. Далее Login metadata и LoginResult input / handlers; настоящий
-SDK backend, OS / storage provider effects и полный вход остаются открытыми.
+кэша без replay.
+[Login metadata и интеграция](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-METADATA-11322.md)
+подключены: 288 + 448 native случаев; общий повтор 17 drivers — 51 этап кэша без replay.
+Далее LoginResult input / nested readers / handlers / registration и композиция
+ответов, clock / heartbeat и world. Настоящий SDK backend, OS / storage provider
+effects и полный вход остаются открытыми.
 
 ## Сохранённые записи прежних этапов
 

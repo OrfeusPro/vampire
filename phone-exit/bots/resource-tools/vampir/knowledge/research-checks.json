@@ -11411,7 +11411,15 @@
         "phone-exit/bots/resource-tools/vampir/verify-version-platform-context.py",
         "phone-exit/bots/resource-tools/vampir/version-system-fixtures.py",
         "phone-exit/bots/resource-tools/vampir/version-combiner-fixtures.py",
-        "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py"
+        "phone-exit/bots/resource-tools/vampir/version-platform-fixtures.py",
+        "phone-exit/bots/test_vampir_native_login_metadata_adapter.py",
+        "phone-exit/bots/test_vampir_login_metadata_case_contracts.py",
+        "phone-exit/bots/test_vampir_login_metadata_transfer_rules.py",
+        "phone-exit/bots/resource-tools/vampir/portable-native-family.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-metadata.py",
+        "phone-exit/bots/resource-tools/vampir/login-metadata-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-metadata-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py"
       ],
       "artifact_dependencies": []
     }

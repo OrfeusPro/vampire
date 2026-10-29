@@ -75,6 +75,16 @@
       "id": "native-auto-version-prepare-platform",
       "family": "version-prepare-platform",
       "adapter": "version-helper-v1"
+    },
+    {
+      "id": "native-auto-login-metadata",
+      "family": "login-metadata",
+      "adapter": "login-metadata-v1"
+    },
+    {
+      "id": "native-auto-login-prepare-metadata",
+      "family": "login-prepare-metadata",
+      "adapter": "login-metadata-v1"
     }
   ]
 }

@@ -35,12 +35,17 @@ Native helper integration описана ниже; настоящие OS / SDK e
 [Подготовка Login и интеграция SDK-getters](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-PREPARE-11322.md)
 подключены к автообновлению: 672 базовых и 2016 интеграционных native случаев.
 Общий повтор шести drivers использовал 18 этапов кэша без JVM / native replay.
-Metadata, настоящий SDK backend и целый вход требуют следующих пакетов.
+Metadata integration описана ниже; настоящий SDK backend и целый вход ещё открыты.
 
 [Helpers Version и их интеграция](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-HELPERS-11322.md)
 подключены как девять отдельных ролей: 1008 native сценариев и две проверки
 переполнения. Общий повтор 15 drivers использовал 45 этапов кэша без replay.
 Реальные OS / SDK / storage effects остаются за границами fixtures.
+
+[Login metadata и интеграция с подготовкой](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-METADATA-11322.md)
+подключены к автомату: 288 + 448 native сценариев. Общий повтор 17 drivers
+использовал 51 этап кэша без JVM / native replay. Далее — остальные LoginResult
+input / readers / handlers; настоящий SDK backend этим пакетом не подтверждается.
 
 ## Сохранённые записи прежних этапов
 
