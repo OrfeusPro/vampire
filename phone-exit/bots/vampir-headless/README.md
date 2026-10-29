@@ -34,6 +34,11 @@ offline пакет.
 получил generic prepare и VersionResult / input buffer adapters, 191 новый native
 случай. OS / SDK / helper values, response handlers и целый вход этим не допущены.
 
+[LoginResult nested и native string/buffer input](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-INPUT-11322.md)
+подключены к автообновлению: 232 + 506 native сценариев, точные матрицы и guards.
+Общий повтор 19 drivers переиспользовал 57 этапов без JVM / native replay.
+Handlers / registration / response composition и целый вход остаются открытыми.
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

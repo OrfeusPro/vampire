@@ -12,6 +12,9 @@ exports и проверки вручную не повторять. Счётчи
 - Квесты: закончить команды, диалоги и обучение по открытым вопросам; автоматизация
   квестов остаётся отдельной возможностью, а обновление не выполняет игровые команды.
 - Карта и UI: подключать только проверенные ресурсы, проекции и bindings.
+- Скорость индекса: сократить глобальную сверку около 37 тысяч исторических
+  pseudocode files в prepare / collect; сохранить полные SHA используемых evidence,
+  проверки повреждения и frozen proof engines. Измерить холодный и тёплый проход.
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный
@@ -38,9 +41,12 @@ Version описана ниже; SDK backend, handlers / registration и world �
 кэша без replay.
 [Login metadata и интеграция](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-METADATA-11322.md)
 подключены: 288 + 448 native случаев; общий повтор 17 drivers — 51 этап кэша без replay.
-Далее LoginResult input / nested readers / handlers / registration и композиция
-ответов, clock / heartbeat и world. Настоящий SDK backend, OS / storage provider
-effects и полный вход остаются открытыми.
+[LoginResult nested и native string/buffer input](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-INPUT-11322.md)
+подключены к автообновлению: 232 + 506 native сценариев, точные матрицы и guards.
+Общий повтор 19 drivers переиспользовал 57 этапов без JVM / native replay.
+
+Далее LoginResult handlers / registration и композиция ответов, clock / heartbeat
+и world. Настоящий SDK backend, OS / storage provider effects и полный вход открыты.
 
 ## Сохранённые записи прежних этапов
 

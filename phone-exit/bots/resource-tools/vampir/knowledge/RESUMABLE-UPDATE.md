@@ -125,6 +125,14 @@ Standalone collector / selector / loader / writer / copy / move и интегр�
 backend сохраняют собственные границы; настоящий SDK результат не подразумевается.
 [Области, отчёты и повтор](evidence/updates/HEADLESS-AUTO-LOGIN-METADATA-11322.md).
 
+LoginResult использует две роли `login-nested` / `login-strings-buffer`: первая
+проверяет whole nested layout с fixture primitives, вторая исполняет настоящий
+scalar / string / UTF-8 input и buffer construction. Shared VersionResult input
+служит проверенным seed, без расширения прежнего scalar report. Полный input
+зависит от собственного target nested proof и semantic report. Source-bound
+harness разрешает только 6 / 20 явных roots после проверки proof.
+[Точные области и повтор](evidence/updates/HEADLESS-AUTO-LOGIN-INPUT-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,
@@ -137,6 +145,7 @@ backend сохраняют собственные границы; настоящ
 `generated-login-prepare/index.json` и `generated-login-sdk/index.json`;
 семейства Version helpers — в `generated-version-helpers/<family>/index.json`;
 Login metadata — в `generated-login-metadata/<family>/index.json`;
+LoginResult — в `generated-login-input/<family>/index.json`;
 они не являются next-profile. Указатели читаются соответствующими adapters отдельно
 от исторических function catalog projections.
 

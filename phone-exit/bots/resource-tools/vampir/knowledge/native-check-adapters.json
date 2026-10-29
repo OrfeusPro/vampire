@@ -85,6 +85,16 @@
       "id": "native-auto-login-prepare-metadata",
       "family": "login-prepare-metadata",
       "adapter": "login-metadata-v1"
+    },
+    {
+      "id": "native-auto-login-nested",
+      "family": "login-nested",
+      "adapter": "login-input-v1"
+    },
+    {
+      "id": "native-auto-login-strings-buffer",
+      "family": "login-strings-buffer",
+      "adapter": "login-input-v1"
     }
   ]
 }

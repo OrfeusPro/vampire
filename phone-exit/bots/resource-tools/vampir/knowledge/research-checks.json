@@ -11419,7 +11419,19 @@
         "phone-exit/bots/resource-tools/vampir/update-native-login-metadata.py",
         "phone-exit/bots/resource-tools/vampir/login-metadata-case-contracts.py",
         "phone-exit/bots/resource-tools/vampir/login-metadata-transfer-rules.py",
-        "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py"
+        "phone-exit/bots/resource-tools/vampir/verify-login-metadata-context.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-input.py",
+        "phone-exit/bots/resource-tools/vampir/login-input-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-input-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-input-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-nested-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-input-context.py",
+        "phone-exit/bots/resource-tools/vampir/login-result-string-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-nested-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-strings-buffer-11320.json",
+        "phone-exit/bots/test_vampir_login_input_transfer_rules.py",
+        "phone-exit/bots/test_vampir_login_input_case_contracts.py",
+        "phone-exit/bots/test_vampir_native_login_input_adapter.py"
       ],
       "artifact_dependencies": []
     }

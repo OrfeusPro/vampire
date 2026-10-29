@@ -297,6 +297,40 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Настоящий SDK backend / provider effects, остальные LoginResult input/nested readers/handlers/registration/composition, clock/heartbeat/world и полный вход 1.13.22 остаются незакрытыми. Metadata map/variant/string/escaping и provider values ограничены fixtures."
+    },
+    {
+      "addresses": [
+        "0x1456d76b0",
+        "0x1456dc190",
+        "0x1457a2760",
+        "0x1457a38c0",
+        "0x1457a5be0",
+        "0x1457fe0e0"
+      ],
+      "checks": [],
+      "conclusion": "LoginResult nested и native scalar/string/UTF-8/buffer input подключены двумя ролями к update/Journal/cache. Source-bound native reports: 232 и 506 сценариев, два повтора без JVM/native, последний reused 6. Общий проход 19 drivers reused 57 без replay. Shared input и independent target nested proofs/reports входят в ключи; scoped harness проверяет proof до исполнения. Runtime профиль не меняется.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-INPUT-11322.md",
+          "sha256": "9608a50c0e0aebc5e71e58758e7b04a9edfa48c42d27e3fd222e277a34e46368"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-INPUT-11322.json",
+          "sha256": "b9c8ffc882d6f1eccb30b6b6f4a005d09f4510db4e53297faa8116d9c186ef09"
+        }
+      ],
+      "id": "58a2114a03b3a36dcbddf523109c84f4d4e70b5796d0a39e628fd04f006ca832",
+      "limits": [
+        "Scopes overlap packet/nested execution; 738 cases are not unique functions or a complete game entry proof.",
+        "Primitive/string operations in nested scope and storage/assignment/growth/free/security/empty construction/memcpy in full input remain fixtures.",
+        "Endian-swap/error branches, handler/registration/composition, real SDK backend and world contracts remain separate.",
+        "Selected driver timings exclude knowledge-index integrity/collection/full installation audit. No authentication or runtime admission."
+      ],
+      "method": "static",
+      "next_check": "Продолжить общий пакет LoginResult handlers/registration/composition, затем clock/world; готовые 20 bounded семейств использовать через валидный кэш. Отдельно ускорить integrity индекса без ослабления SHA проверок используемых доказательств и без переписывания frozen proof engines.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Настоящий SDK backend / provider effects, LoginResult handlers/registration/response composition, clock/heartbeat/world и полный вход 1.13.22. Storage/CRT/endian-swap/error effects сохраняют fixture границы. Глобальная integrity сверка около 37 тысяч pseudocode files замедляет prepare."
     }
   ],
   "schema": 1,

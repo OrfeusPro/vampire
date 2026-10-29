@@ -44,8 +44,13 @@ Metadata integration описана ниже; настоящий SDK backend и 
 
 [Login metadata и интеграция с подготовкой](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-METADATA-11322.md)
 подключены к автомату: 288 + 448 native сценариев. Общий повтор 17 drivers
-использовал 51 этап кэша без JVM / native replay. Далее — остальные LoginResult
-input / readers / handlers; настоящий SDK backend этим пакетом не подтверждается.
+использовал 51 этап кэша без JVM / native replay. Настоящий SDK backend этим
+пакетом не подтверждается.
+
+[LoginResult nested и native string/buffer input](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-INPUT-11322.md)
+подключены к автообновлению: 232 + 506 native сценариев, точные матрицы и guards.
+Общий повтор 19 drivers переиспользовал 57 этапов без JVM / native replay.
+Handlers / registration / response composition и целый вход остаются открытыми.
 
 ## Сохранённые записи прежних этапов
 

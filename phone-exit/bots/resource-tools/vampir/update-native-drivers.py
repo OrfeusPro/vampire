@@ -11,11 +11,14 @@ SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='strin
          ('version-nm-device','version-cpu','version-windows','version-combiner','version-platform',
           'version-prepare-nm','version-prepare-system','version-prepare-combiner','version-prepare-platform')],
        *[dict(id='native-auto-'+family,family=family,adapter='login-metadata-v1') for family in
-         ('login-metadata','login-prepare-metadata')])
+         ('login-metadata','login-prepare-metadata')],
+       *[dict(id='native-auto-'+family,family=family,adapter='login-input-v1') for family in
+         ('login-nested','login-strings-buffer')])
 MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire',
          'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare',
          'login-prepare-v1':'update-native-login-prepare','login-sdk-v1':'update-native-login-sdk',
-         'version-helper-v1':'update-native-version-helpers','login-metadata-v1':'update-native-login-metadata'}
+         'version-helper-v1':'update-native-version-helpers','login-metadata-v1':'update-native-login-metadata',
+         'login-input-v1':'update-native-login-input'}
 
 
 def registry(index,knowledge):
@@ -41,7 +44,7 @@ def run(index,args,sha,journal,database,*,families=None):
         if selection is not None and spec['family'] not in selection:continue
         family=spec['family'];families.append(family)
         tool=index.extension(MODULES[spec['adapter']])
-        if spec['adapter'] in ('version-helper-v1','login-metadata-v1'):tool=tool.select(family)
+        if spec['adapter'] in ('version-helper-v1','login-metadata-v1','login-input-v1'):tool=tool.select(family)
         try:
             inputs=tool.plan_inputs(index,args,sha)
             def plan_writer():
