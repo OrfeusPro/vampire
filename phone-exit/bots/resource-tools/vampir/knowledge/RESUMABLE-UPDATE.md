@@ -147,6 +147,19 @@ Driver каждый раз сверяет актуальные context / report 
 публикацией. Метрики `publication_cache` различают reused / validated и source
 reads / PE builds. [Области, отказы и замер](evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md).
 
+Общий result gate и post-state доступны как независимые `response-v1` роли.
+Для gate специальное правило отделяет 251 инструкцию от inline таблиц и
+проверяет две indexed displacements; 227 остановок перед выбранной веткой
+не подтверждают её внешние effects. Post-state использует свою последнюю
+проверенную базу 18, gate — базу 20. Новые публикации сохраняются в
+`generated-responses/<family>/index.json`.
+[Области и повтор](evidence/updates/HEADLESS-AUTO-RESPONSE-11322.md).
+
+Метрики публикаций из driver сохраняются также в
+`native_contexts.publication_cache` обычного update journal. Они включают reused /
+validated / receipts_written и source-store counters. Поле seconds — время
+всей сессии driver, включая его этапы; это не таймер одного publish.
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

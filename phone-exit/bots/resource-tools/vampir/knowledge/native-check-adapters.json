@@ -105,6 +105,16 @@
       "id": "native-auto-login-handler-early",
       "family": "login-handler-early",
       "adapter": "login-handler-v1"
+    },
+    {
+      "id": "native-auto-result-gate",
+      "family": "result-gate",
+      "adapter": "response-v1"
+    },
+    {
+      "id": "native-auto-login-post-state",
+      "family": "login-post-state",
+      "adapter": "response-v1"
     }
   ]
 }

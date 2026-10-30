@@ -55,7 +55,12 @@ Handlers / registration / response composition и целый вход остаю
 [Continuation, ранние ошибки LoginResult и повтор публикаций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md)
 подключены к автомату: 8 + 14 native сценариев. Общий повтор 21 drivers
 переиспользовал 63 semantic stages и 21 publication receipts без JVM / native /
-PE rebuild. Полный success handler, gate и post-state остаются отдельными проверками.
+PE rebuild. Полный success handler и композиция остаются отдельными проверками.
+
+[Общий result gate и post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESPONSE-11322.md)
+подключены к автомату: 16 полных gate + 227 indexed selections и 44 post-state
+сценария. Общий повтор 23 drivers использовал 69 этапов и 23 публикации из кэша,
+без JVM / native / PE rebuild. Полный Login success handler и композиция открыты.
 
 ## Сохранённые записи прежних этапов
 

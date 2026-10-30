@@ -11455,7 +11455,23 @@
         "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
         "phone-exit/bots/vampir-shared/vampir_core/version_result.py",
         "phone-exit/bots/resource-tools/vampir/verify-login-handler-early-11320.py",
-        "phone-exit/bots/resource-tools/vampir/verify-login-continuation-context.py"
+        "phone-exit/bots/resource-tools/vampir/verify-login-continuation-context.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-response.py",
+        "phone-exit/bots/resource-tools/vampir/result-gate-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/result-gate-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-result-gate-context.py",
+        "phone-exit/bots/resource-tools/vampir/post-state-transfer-rules.py",
+        "phone-exit/bots/resource-tools/vampir/post-state-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-post-state-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/result-gate-11320.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-post-state-11318.json",
+        "phone-exit/bots/test_vampir_result_gate_transfer_rules.py",
+        "phone-exit/bots/test_vampir_result_gate_case_contracts.py",
+        "phone-exit/bots/test_vampir_post_state_transfer_rules.py",
+        "phone-exit/bots/test_vampir_post_state_case_contracts.py",
+        "phone-exit/bots/test_vampir_native_response_adapter.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py"
       ],
       "artifact_dependencies": []
     }

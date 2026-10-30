@@ -28,6 +28,7 @@ INDEXES = {
     **{name: 'generated-login-metadata/' + name for name in ('login-metadata', 'login-prepare-metadata')},
     **{name: 'generated-login-input/' + name for name in ('login-nested', 'login-strings-buffer')},
     **{name: 'generated-login-handlers/' + name for name in ('login-continuation', 'login-handler-early')},
+    **{name: 'generated-responses/' + name for name in ('result-gate', 'login-post-state')},
 }
 MODULES = {
     'string-writer': 'update-native-string-writer', 'archive-wire': 'update-native-archive-wire',
@@ -37,8 +38,9 @@ MODULES = {
     **{name: 'update-native-login-metadata' for name in ('login-metadata', 'login-prepare-metadata')},
     **{name: 'update-native-login-input' for name in ('login-nested', 'login-strings-buffer')},
     **{name: 'update-native-login-handler' for name in ('login-continuation', 'login-handler-early')},
+    **{name: 'update-native-response' for name in ('result-gate', 'login-post-state')},
 }
-MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler'}
+MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response'}
 
 
 def canonical(value):

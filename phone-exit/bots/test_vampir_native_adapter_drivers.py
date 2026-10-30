@@ -63,12 +63,13 @@ class AdapterDriverTests(unittest.TestCase):
                     tools=lambda:dict(revision=versions[family]),
                     materialize=lambda *args:dict(checks=[dict(id=spec['id'],revision=versions[family])],queue=[]),
                     execute=execute,publish=lambda *args:None)
-            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS if spec['adapter'] not in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1')}
+            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS if spec['adapter'] not in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1','response-v1')}
             modules['update-native-version-helpers']=SimpleNamespace(select=lambda family:tool(next(
                 spec for spec in driver.SPECS if spec['family']==family)))
             modules['update-native-login-metadata']=modules['update-native-version-helpers']
             modules['update-native-login-input']=modules['update-native-version-helpers']
             modules['update-native-login-handler']=modules['update-native-version-helpers']
+            modules['update-native-response']=modules['update-native-version-helpers']
             modules.update({'research-workflow':workflow,'update-run':SimpleNamespace(collect_batches=lambda *args:[]),
                 'native-publication-cache':mocked_publication_cache(),
                 'update-native-harness':SimpleNamespace(runtime_inputs=lambda:{})})
@@ -91,10 +92,13 @@ class AdapterDriverTests(unittest.TestCase):
         base=dict(checks=[],queue=[dict(reason='unregistered_native_suite_families',families=['archive-wire','unknown'])],
             family_coverage=[dict(family='archive-wire',adapter='unsupported')])
         revised=copy.deepcopy(base);checks=[]
-        driver.merge(revised,checks,dict(families=['archive-wire'],queue=[],declarations=[dict(id='archive')],checks=[dict(state='passed')]))
+        metrics=dict(reused=1,validated=0,source_store=dict(image_builds=0))
+        driver.merge(revised,checks,dict(families=['archive-wire'],queue=[],declarations=[dict(id='archive')],checks=[dict(state='passed')],publication_cache=metrics))
         self.assertEqual(base['checks'],[]);self.assertEqual(base['queue'][0]['families'],['archive-wire','unknown'])
         self.assertEqual(revised['queue'][0]['families'],['unknown'])
         self.assertEqual(revised['family_coverage'][0]['adapter'],'archive-wire-v1')
+        self.assertEqual(revised['publication_cache'],metrics)
+        self.assertNotIn('publication_cache',base)
 
 
 if __name__=='__main__':unittest.main()

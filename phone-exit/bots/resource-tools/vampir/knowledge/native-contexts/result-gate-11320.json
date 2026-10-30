@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "function": "0x1467d0c60",
+  "helpers": {
+    "memcpy": "0x1487f8c59"
+  },
+  "fixtures": {
+    "gate_state": "0x145594d50",
+    "gate_error": "0x145fd70a0"
+  },
+  "exports": {
+    "run-cd7653218083": "4695369d140ac000c2c8b26e0a508710396c94710456688e169700b129e92e48",
+    "run-85faf6d508b5": "42cada14960ffa0ea785a83695541a706c8ccfe1cb46a8a8ba68e692b0976b45"
+  },
+  "call_sites": {
+    "0x1467d0c84": "0x145594d50",
+    "0x1467d0cee": "0x1455be400",
+    "0x1467d0cf8": "0x145d87620",
+    "0x1467d0d0d": "0x1414269b0",
+    "0x1467d0d12": "0x1445cd4e0",
+    "0x1467d0d22": "0x1445cf040",
+    "0x1467d0d30": "0x145fd6e00",
+    "0x1467d0d3e": "0x1414830e0",
+    "0x1467d0d50": "0x1414830e0",
+    "0x1467d0d84": "0x1458138e0",
+    "0x1467d0da2": "0x141426b90",
+    "0x1467d0ddc": "0x141403bd0",
+    "0x1467d0dea": "0x1414830e0",
+    "0x1467d0dfc": "0x1414830e0",
+    "0x1467d0e11": "0x141426b90",
+    "0x1467d0e16": "0x1445cd4e0",
+    "0x1467d0e26": "0x1445cf040",
+    "0x1467d0e31": "0x145fd6e00",
+    "0x1467d0ea2": "0x145975410",
+    "0x1467d0eab": "0x1414884f0",
+    "0x1467d0ec3": "0x1414884f0",
+    "0x1467d0ecb": "0x145978910",
+    "0x1467d0ede": "0x141426b90",
+    "0x1467d0eee": "0x141426b90",
+    "0x1467d0ef3": "0x1445cd4e0",
+    "0x1467d0f03": "0x1445cf040",
+    "0x1467d0f36": "0x141435380",
+    "0x1467d0f44": "0x1414830e0",
+    "0x1467d0f4f": "0x144a51430",
+    "0x1467d0f5d": "0x1414830e0",
+    "0x1467d0f6b": "0x1414830e0",
+    "0x1467d0f7d": "0x1414830e0",
+    "0x1467d0fc8": "0x141426b90",
+    "0x1467d0fcd": "0x1445cd4e0",
+    "0x1467d0fdd": "0x1445cf040",
+    "0x1467d0fe8": "0x145fd6e00",
+    "0x1467d0ff6": "0x1414830e0",
+    "0x1467d1004": "0x1414830e0",
+    "0x1467d100b": "0x145ef42b0",
+    "0x1467d1018": "0x145eff630",
+    "0x1467d1021": "0x145fd70a0",
+    "0x1467d102f": "0x1414830e0",
+    "0x1467d1049": "0x145fd70a0",
+    "0x1467d1057": "0x1414830e0"
+  },
+  "verify_whole_exports": true,
+  "switch": {
+    "code_end": "0x1467d1077",
+    "unwind_end": "0x1467d116b",
+    "table": "0x1467d1078",
+    "index": "0x1467d1088",
+    "dispatch_start": "0x1467d0e51",
+    "dispatch": "0x1467d0e7d",
+    "table_bytes": "45107d067f0e7d06870f7d0645107d06",
+    "index_bytes": "0000000303030303030301010303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030203030303030303030302",
+    "dispatch_bytes": "8d83e7faffff3de20000000f87e3010000488d1597f182f948980fb6840288107d068b8c8278107d064803caffe1",
+    "input_first": 1305,
+    "input_count": 227
+  },
+  "provenance": {
+    "tool_name": "version-gate-switch-11320.py",
+    "tool_sha256": "a1ac70bb520fdf54f524d4f16ccf808f75f0f57f44388a7936e6b900adf3e829",
+    "reviewed_report": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-version-result-handler-checks\\03ea1910d28b20615dfd14c90b5575655f599cae93584b3cfba4839c705b9003\\manifest.json",
+      "sha256": "03ea1910d28b20615dfd14c90b5575655f599cae93584b3cfba4839c705b9003"
+    },
+    "scope": "Shared gate code/data and indexed selections extracted from reviewed VersionResult20proof; no added native behavior"
+  }
+}

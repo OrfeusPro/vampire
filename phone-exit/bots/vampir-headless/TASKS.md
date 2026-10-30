@@ -48,12 +48,17 @@ Version описана ниже; SDK backend, handlers / registration и world �
 [Continuation, ранние ошибки LoginResult и повтор публикаций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md)
 подключены к автомату: 8 + 14 native сценариев. Общий повтор 21 drivers
 переиспользовал 63 semantic stages и 21 publication receipts без JVM / native /
-PE rebuild. Полный success handler, gate и post-state остаются отдельными проверками.
+PE rebuild. Полный success handler и композиция остаются отдельными проверками.
 
-Далее общий result gate, полный success handler / post-state, registration и
-композиция ответов; семь explicit roots уже собраны общим пакетом. Clock / heartbeat,
+[Общий result gate и post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESPONSE-11322.md)
+подключены к автомату: 16 полных gate + 227 indexed selections и 44 post-state
+сценария. Общий повтор 23 drivers использовал 69 этапов и 23 публикации из кэша,
+без JVM / native / PE rebuild. Полный Login success handler и композиция открыты.
+
+Далее полный success handler с новыми trailing fields / predicate / apply /
+temporary cleanup, reader→handler composition и регистрационный owner/window.
+Gate и post-state повторно использовать по целевому SHA. Clock / heartbeat,
 world, настоящий SDK backend и полный вход открыты.
-
 
 ## Сохранённые записи прежних этапов
 

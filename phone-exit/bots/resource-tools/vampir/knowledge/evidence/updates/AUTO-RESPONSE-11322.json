@@ -1,0 +1,350 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sources": {
+    "result-gate": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+    "login-post-state": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c"
+  },
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-response-acceptance\\d3a3c49f94525e3ad01c9d293847e502fa3871bc18f530575df9dc33b6565653\\manifest.json",
+    "sha256": "d3a3c49f94525e3ad01c9d293847e502fa3871bc18f530575df9dc33b6565653"
+  },
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-response-combined-acceptance\\bba5f8f2e49bad95d0a23547f717a4c92e23ab24cb6c5c2017904f27b6284a51\\manifest.json",
+    "sha256": "bba5f8f2e49bad95d0a23547f717a4c92e23ab24cb6c5c2017904f27b6284a51"
+  },
+  "families": {
+    "result-gate": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\d2fdda2e91c6adb2c230203b5a29400b2e6e1b827fd7e4baf0429d34db0d10a3\\manifest.json",
+        "sha256": "d2fdda2e91c6adb2c230203b5a29400b2e6e1b827fd7e4baf0429d34db0d10a3"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-response-proofs\\102be9803f1c7bc04ae4c8f63a6810bc16ee102c157213f7670029864c09c403\\manifest.json",
+        "sha256": "102be9803f1c7bc04ae4c8f63a6810bc16ee102c157213f7670029864c09c403"
+      },
+      "native_check": {
+        "id": "native-auto-result-gate",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\a25ddf46f31f1a9a778d96aa51e084fcf0bbba7849975c28f0703f07e80ce323\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_result_gate",
+        "sha256": "a25ddf46f31f1a9a778d96aa51e084fcf0bbba7849975c28f0703f07e80ce323",
+        "state": "passed"
+      },
+      "cases": 243,
+      "full_cases": 16,
+      "switch_cases": 227,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "roots": [
+        "0x1467d0cb0"
+      ],
+      "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+      "limits": [
+        "One native gate with two explicit state/error fixtures; only 16 declared full-return cases have ABI checks.",
+        "227 indexed cases stop before the selected branch instruction; branch services and return ABI are unproved.",
+        "No result handler, registration, Login handoff, real service effects or live session."
+      ]
+    },
+    "login-post-state": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\7717c1505df1aaf0e9f64833bb55f31d0fb7878fae7d2069a347a60096dc9b3a\\manifest.json",
+        "sha256": "7717c1505df1aaf0e9f64833bb55f31d0fb7878fae7d2069a347a60096dc9b3a"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-response-proofs\\ecd8023d8d226a73ce0b8b2eebed011a57f07e33d5fdca930028d1f7d4c89903\\manifest.json",
+        "sha256": "ecd8023d8d226a73ce0b8b2eebed011a57f07e33d5fdca930028d1f7d4c89903"
+      },
+      "native_check": {
+        "id": "native-auto-login-post-state",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\c3700b2df61166986ecab2d15f37c44b7b7464bb755d38306756efe732583e11\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_login_post_state",
+        "sha256": "c3700b2df61166986ecab2d15f37c44b7b7464bb755d38306756efe732583e11",
+        "state": "passed"
+      },
+      "cases": 44,
+      "full_cases": 44,
+      "switch_cases": 0,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "roots": [
+        "0x144a2d9b0",
+        "0x1467589a0"
+      ],
+      "baseline_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+      "limits": [
+        "Only explicit wrapper/tail callee and singleton getter execute; objects/class arrays and all backend/virtual methods are fixtures.",
+        "No handler integration, real services, CharacterListRead send or session proof; raw return values are not named success codes."
+      ]
+    }
+  },
+  "native_cases": 287,
+  "passes": [
+    {
+      "counts": {
+        "native-auto-login-post-state": 44,
+        "native-auto-result-gate": 243
+      },
+      "executed": [
+        "native-plan-result-gate",
+        "native-context-result-gate",
+        "native-check-native-auto-result-gate",
+        "native-plan-login-post-state"
+      ],
+      "native_replays": 1,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "publication_cache": {
+        "receipts_written": 1,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 72.941332,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 3,
+          "image_cache_hits": 16,
+          "read_workers": 2,
+          "source_cache_hits": 28,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.91846
+        },
+        "validated": 1
+      },
+      "reused": 2,
+      "wall_seconds": 72.968385
+    },
+    {
+      "counts": {
+        "native-auto-login-post-state": 44,
+        "native-auto-result-gate": 243
+      },
+      "executed": [
+        "native-plan-result-gate"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 2,
+        "runtime_activated": false,
+        "seconds": 16.408943,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 2,
+          "read_workers": 2,
+          "source_cache_hits": 21,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.885392
+        },
+        "validated": 0
+      },
+      "reused": 5,
+      "wall_seconds": 16.43115
+    },
+    {
+      "counts": {
+        "native-auto-login-post-state": 44,
+        "native-auto-result-gate": 243
+      },
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "pass_number": 3,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 2,
+        "runtime_activated": false,
+        "seconds": 4.092527,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 19,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.748118
+        },
+        "validated": 0
+      },
+      "reused": 6,
+      "wall_seconds": 4.114605
+    }
+  ],
+  "combined_passes": [
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 21,
+        "reused": 2,
+        "runtime_activated": false,
+        "seconds": 246.929434,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 182,
+          "read_workers": 2,
+          "source_cache_hits": 1215,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 1.502156
+        },
+        "validated": 21
+      },
+      "reused": 69,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 246.945226
+    },
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 23,
+        "runtime_activated": false,
+        "seconds": 60.846665,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 815,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.727526
+        },
+        "validated": 0
+      },
+      "reused": 69,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 60.92297
+    }
+  ],
+  "tooling_check": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3899e8ad19582f1f80a87fba7d517be715383ebdddc8ed7a2653e77ac73bf12d\\manifest.json",
+    "sha256": "3899e8ad19582f1f80a87fba7d517be715383ebdddc8ed7a2653e77ac73bf12d",
+    "cache_key": "46d8bd02061df3122243afb85f212ab19a380d59d4bc64751286d2f85ddb9bdb",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "tooling_tests": 472,
+  "case_contracts": {
+    "gate_tests": 16,
+    "gate_rule_tests": 23,
+    "post_state_tests": 24,
+    "adapter_tests": 10
+  },
+  "collection": {
+    "request": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\67ac7e70e8b4b1f89e54b5789320d038734f426897c7166223d05b393c6d3eed\\manifest.json",
+      "sha256": "67ac7e70e8b4b1f89e54b5789320d038734f426897c7166223d05b393c6d3eed"
+    },
+    "receipt": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\collections\\9aec0d0b8fedf891665a24c2ab2f0bbadc5d9a3adba1bd97fbe834ea33a3145a\\manifest.json",
+      "sha256": "9aec0d0b8fedf891665a24c2ab2f0bbadc5d9a3adba1bd97fbe834ea33a3145a"
+    },
+    "roots": 3,
+    "missing": 0,
+    "reused": 3,
+    "new_jvm": 0,
+    "export": "run-c9f35d32258c"
+  },
+  "checkout_byte_hashes_verified": 29,
+  "warm_source_metrics": {
+    "artifact_cache_hits": 0,
+    "artifact_reads": 0,
+    "image_builds": 0,
+    "image_cache_hits": 0,
+    "read_workers": 2,
+    "source_cache_hits": 815,
+    "source_reads": 3,
+    "validation_reads": 3,
+    "validation_seconds": 0.727526
+  },
+  "index_speed_plan": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\knowledge-index-speed-plan\\524b98b003ec2fa7c376aa1a7c3f55df6f9173a88371a5b27f5bce4c62c3d9c4\\manifest.json",
+    "sha256": "524b98b003ec2fa7c376aa1a7c3f55df6f9173a88371a5b27f5bce4c62c3d9c4"
+  },
+  "oracle_analysis": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\result-gate-oracle-analysis\\78c4b60a48c852a662e1a9c0a2edd5a9ddc09cd47547a4d332e8d2fed54f8a7e\\manifest.json",
+    "sha256": "78c4b60a48c852a662e1a9c0a2edd5a9ddc09cd47547a4d332e8d2fed54f8a7e"
+  },
+  "implementation_corrections": {
+    "gate_materialization_rejected_before_native": true,
+    "reason": "Indexed displacement receipt used integer keys/tuples that changed on JSON serialization; new gate rule emits string keys/lists, round-trip regression added.",
+    "post_state_native_result_reused": true
+  },
+  "prior_native_suites_replayed": 0,
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "source_tools": {
+    "update-native-response.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-native-response.py",
+      "sha256": "b68f4fb18b1393286d39cedbf872e181c85fdf3266a50ceee2cd278de522563a"
+    },
+    "result-gate-transfer-rules.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\result-gate-transfer-rules.py",
+      "sha256": "d44275b3adefeac09f2bba5dbfb14aee96e899e2a56c589bc89c8dff2e0eec80"
+    },
+    "post-state-transfer-rules.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\post-state-transfer-rules.py",
+      "sha256": "86c3a38fd0d18777904ea3ec15cc82ab1d81afa9714ec8d1254234f17c7bdd92"
+    },
+    "update-native-drivers.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-native-drivers.py",
+      "sha256": "48bba65679f2534156f51ca28a473e0cf200a57d3bf4dfe40341b669726ab8c7"
+    },
+    "native-publication-cache.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\native-publication-cache.py",
+      "sha256": "d1b45e435d13e89ec8df91a27c1ae6221c2ea208a5bee58cff6d356bf9e8da88"
+    }
+  },
+  "limits": [
+    "243 gate cases comprise 16 whole return/ABI checks and 227 stopped dispatch selections, not whole branch-effects proofs.",
+    "Post-state 44 cases use synthetic actor/class/object arrays and explicit backend/virtual fixtures. No real engine or handler integration.",
+    "Gate state/error services remain fixtures. Gate and post-state do not admit full successful Login, registration, runtime profile or online session.",
+    "Selected driver timings exclude prepare/collect/full installation audit. Global historical index integrity remains a separate speed task."
+  ]
+}
