@@ -125,6 +125,11 @@
       "id": "native-auto-login-response-composition",
       "family": "login-response-composition",
       "adapter": "login-composition-v1"
+    },
+    {
+      "id": "native-auto-login-registration",
+      "family": "login-registration",
+      "adapter": "registration-v1"
     }
   ]
 }

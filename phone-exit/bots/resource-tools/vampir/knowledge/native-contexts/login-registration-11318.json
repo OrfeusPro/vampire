@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "family": "login-registration",
+  "format": "legacy-reviewed-registration",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "bindings": {
+    "owner": "0x1467b5130",
+    "allocate": "0x146908e50",
+    "packet_constructor": "0x1456d7a70",
+    "packet_table": "0x149927d90",
+    "id_getter": "0x141453c40",
+    "handler_table": "0x149dc7f48",
+    "handler": "0x14679b390",
+    "register": "0x1467cbb90",
+    "insert": "0x1467b48d0",
+    "name_getter": "0x1456e64c0"
+  },
+  "window": {
+    "address": "0x1467b51a4",
+    "bytes": "b908000000e8a23c1500488bf84885c0740c488d058b2d6103488907eb03488bfbb940010000e8813c15004885c0740a488bc8e89428f2feeb03488bc34c8bc7488bd0488bcee8a1690100",
+    "sha256": "c23fcf3c27f913193f8c007ed1e59019400cb5ed508b9c1bb391c3b69269336e"
+  },
+  "functions": {
+    "register": "0x1467cbb90"
+  },
+  "leaves": {
+    "0x141453c40": "b804000000c3"
+  },
+  "fixtures": {
+    "insert": "0x1467b48d0",
+    "utf8_length": "0x14144c550",
+    "diagnostic_allocate": "0x141436cc0",
+    "utf8_convert": "0x1414465f0",
+    "log": "0x1445e0eb0",
+    "free": "0x141483080",
+    "security": "0x1487e9300",
+    "name_getter": "0x1456e64c0"
+  },
+  "fixture_boundaries": {
+    "insert": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48895c240848896c2410488974241848",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1467b48d0",
+        "end": "0x1467b4bc8"
+      }
+    },
+    "utf8_length": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48895c24084533d24c8bda41b9ffffff",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x14144c550",
+        "end": "0x14144c6cb"
+      }
+    },
+    "diagnostic_allocate": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "40534883ec20488bd9488b094885c975",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x141436cc0",
+        "end": "0x141436d10"
+      }
+    },
+    "utf8_convert": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48894c2408534883ec2089542438458b",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1414465f0",
+        "end": "0x14144669e"
+      }
+    },
+    "log": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "4c894424184c894c2420555356574154",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1445e0eb0",
+        "end": "0x1445e1169"
+      }
+    },
+    "free": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "4885c9742e534883ec20488bd9488b0d",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x141483080",
+        "end": "0x1414830b4"
+      }
+    },
+    "security": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "483b0d79a4a802751048c1c11066f7c1",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1487e9300",
+        "end": "0x1487e931e"
+      }
+    },
+    "name_getter": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "40534883ec20488bda488d1510192404",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1456e64c0",
+        "end": "0x1456e64e1"
+      }
+    }
+  },
+  "globals": {
+    "cookie": "0x14b273780"
+  },
+  "literals": {
+    "empty_utf16": {
+      "address": "0x1489e1b34",
+      "bytes": "0000"
+    },
+    "log_format": {
+      "address": "0x149dc75b0",
+      "bytes": "696e76616c6964207061636b657449642820256420292c207061636b65744e616d6528202573202900"
+    },
+    "log_owner": {
+      "address": "0x149dcab58",
+      "bytes": "5061636b6574446973706174636865723a3a5f4164645061636b657448616e646c657200"
+    }
+  },
+  "call_sites": {
+    "register": {
+      "0x1467cbbcb": "qword ptr [rax + 0x28]",
+      "0x1467cbbeb": "0x1467b48d0",
+      "0x1467cbc0e": "qword ptr [rax + 0x38]",
+      "0x1467cbc51": "0x14144c550",
+      "0x1467cbc81": "0x141436cc0",
+      "0x1467cbca3": "0x1414465f0",
+      "0x1467cbcb2": "qword ptr [rax + 0x28]",
+      "0x1467cbcd1": "0x1445e0eb0",
+      "0x1467cbce7": "0x141483080",
+      "0x1467cbcf6": "0x141483080",
+      "0x1467cbd02": "0x1487e9300"
+    }
+  },
+  "packet_bytes": 320,
+  "packet_allocation_bytes": 320,
+  "verify_whole_exports": true,
+  "exports": {
+    "run-b66ea903e973": "3afe56601081a2fb64a90f1196585a55415e56c37f05b4dc950d7e25a0116b95",
+    "run-896228001291": "482ea9fd5144673c814a2b3e4a5030508b7cc411b8c21853e57baac0eb53f7cc"
+  },
+  "provenance": {
+    "reviewed_context": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\login-result-registration-11318.json",
+      "sha256": "cc059a611f5a9af56d589078cfdd9cfc742d7bb2b77c932e44dca1a041a53759"
+    },
+    "scope": "Projection of legacy static ID4 registration links; no previous native registration/helper outcome claim."
+  }
+}

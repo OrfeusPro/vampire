@@ -166,7 +166,7 @@ validated / receipts_written и source-store counters. Поле seconds — вр
 обязателен новый target report. Дальнейший перенос использует весь проверенный
 current handler и независимые target dependencies. Указатель публикации —
 `generated-login-full/index.json`. Reader, post-state / continuation integration,
-registration и допуск онлайн отдельны.
+реальная регистрация в контейнере и допуск онлайн отдельны.
 [Правило и замеры](evidence/updates/HEADLESS-AUTO-LOGIN-FULL-11322.md).
 
 Same-packet композиция доступна как `login-composition-v1` /
@@ -176,6 +176,24 @@ handler / gate. 77 сценариев проверяют общий packet, sour
 native dispatch этим не подтверждается. Новая опубликованная роль заменяет
 начальный seed при выборе базы. Указатель — `generated-login-composition/index.json`.
 [Границы и повтор](evidence/updates/HEADLESS-AUTO-LOGIN-COMPOSITION-11322.md).
+
+Регистрационный `registration-v1` / `login-registration` переносит проверенную
+базу 18 на 22: полный helper (101 инструкция / 395 байт) и настоящий ID 4 leaf
+исполняются в native стенде; окно owner из 75 байт проверяется статически.
+Адреса конструктора и handler связываются с опубликованными target contexts
+`login-nested` и `login-full-handler` и их semantic reports. Запрос выделения
+в исходном окне составляет 344 байта; `packet_bytes=352` означает область хранения
+проверочного стенда. Эти величины сохраняются раздельно, прежние reports
+и их границы не переписываются. Конструктор, owner, container insert, name getter,
+UTF-8 conversion и внешние сервисы не исполняются этим пакетом. Name fixture
+возвращает отдельный descriptor и сохраняет outparam; cleanup текущего указателя
+не подтверждает реальное владение исходным packet. Native dispatch, integration
+post-state / continuation и онлайн требуют собственных доказательств.
+Указатель публикации — `generated-login-registration/index.json`; это не next-profile.
+34 новых native сценария и 602 tooling теста прошли. Общий повтор 26 drivers
+использовал 78 этапов и 26 публикаций из кэша без native / JVM / PE rebuild
+(77.785473 с); reports и кэш-метрики сохранены в отчёте.
+[Области и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-REGISTRATION-11322.md).
 
 ## Журналы и дальнейшая работа
 

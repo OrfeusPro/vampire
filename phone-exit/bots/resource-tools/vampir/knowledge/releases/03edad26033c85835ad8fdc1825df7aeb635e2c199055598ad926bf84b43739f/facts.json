@@ -478,6 +478,39 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Регистрационный owner/window и native dispatch текущего LoginResult. Native post-state/continuation имеют отдельные reports, но в composition suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Скорость глобального индекса и новая версия общего input seed с ordered baseline/target memo key остаются инфраструктурными задачами; новый composition adapter изолирует свой mapping memo."
+    },
+    {
+      "addresses": [
+        "0x1456d76b0",
+        "0x14679e320",
+        "0x1467cebc0"
+      ],
+      "checks": [],
+      "conclusion": "Целый registration helper и native ID 4 подключены к update/cache: 34 source-bound native случая, static 75-byte owner window, allocation 344 отдельно от 352-byte storage extent. Real insert/name ownership и dispatch открыты. Общий повтор 26 drivers reused 78 stages / 26 publications без JVM/native/PE rebuild (77.785473 с). Профиль и сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-REGISTRATION-11322.md",
+          "sha256": "c69156a2873de42971a2286965347ab66da45ed715a615215e99d833d3c2423c"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-REGISTRATION-11322.json",
+          "sha256": "db3b032ffed26c507c9524d70f35d3b0477a7ea8e5eb9913920530222aacdb54"
+        }
+      ],
+      "id": "443e7b2de10cc7248b4b91c197cefdc08df0a681b90d1691c596e42305aab7b6",
+      "limits": [
+        "One whole native registration helper and actual ID4 leaf execute; owner/window are static bindings only.",
+        "Insertion is a fixture with independently controlled output pointer/status; real container insertion and dispatch remain unproved.",
+        "Name fixture returns an external descriptor without changing RDX outparam. Free of the current-pair slot is not proof of original packet or real getter ownership.",
+        "UTF8 length/conversion, allocation/free, logger/security and name getter effects are bounded fixtures; no OOM or live/runtime claim.",
+        "The actual allocation request is 344 bytes; the 352-byte reference/harness extent is recorded separately. Historical reports are not rewritten.",
+        "Selected driver measurements exclude prepare/collect and the global historical index integrity audit."
+      ],
+      "method": "static",
+      "next_check": "Закрыть общий real insert/name ownership и native dispatch с готовой reader→handler композицией, затем post-state/continuation integration и clock/world. Готовые 27 bounded семейств (26 drivers и UTF-8) использовать через proofs/reports/cache без ручного пересчёта.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Real container insert и name getter/ownership, lookup/entry/wrapper и native dispatch текущего LoginResult. Native post-state/continuation имеют отдельные reports, но в composition suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Скорость холодной публикации с повторной проверкой child proofs, глобального индекса и новая версия input seed с ordered baseline/target memo key остаются инфраструктурными задачами."
     }
   ],
   "schema": 1,

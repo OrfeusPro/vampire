@@ -18,6 +18,10 @@ exports и проверки вручную не повторять. Счётчи
 - Скорость индекса: сократить глобальную сверку около 37 тысяч исторических
   pseudocode files в prepare / collect; сохранить полные SHA используемых evidence,
   проверки повреждения и frozen proof engines. Измерить холодный и тёплый проход.
+- Скорость холодной публикации: убрать повторную проверку одинаковых child proofs
+  внутри замороженного прохода через новый recipe / memo с полными зависимостями.
+  Сохранить проверку tools / lineage и конечный source barrier; прежние proof
+  engines не менять. Сравнить замеры до / после по отчёту registration.
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный
@@ -62,18 +66,33 @@ PE rebuild. Полный handler и композиция с reader описан�
 подключены к автомату: 48 сценариев над синтетическим пакетом 352 байта, включая
 новые trailing predicate / apply / cleanup. Общий повтор 24 drivers использовал
 72 этапа и 24 публикации из кэша без JVM / native / PE rebuild. Это standalone
-handler scope; композиция с reader описана ниже, registration и онлайн открыты.
+handler scope; композиция с reader и регистрационный helper описаны ниже,
+реальная регистрация в контейнере и онлайн открыты.
 
 [Композиция native reader → handler](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-COMPOSITION-11322.md)
 подключена к автомату: 77 сценариев над тем же packet 352 байта (48 полных,
 28 отказов чтения, 1 tail). Общий повтор 25 drivers использовал 75 этапов
 и 25 публикаций из кэша без native / JVM / PE rebuild. Прямой вызов handler
-управляется координатором; native dispatch / registration и онлайн открыты.
+управляется координатором; регистрационный helper описан ниже, native dispatch
+и онлайн открыты.
 
-Далее регистрационный owner/window и native dispatch с готовой reader→handler
-композицией. Недостающую integration post-state / continuation проверять отдельно;
-готовые reports переиспользовать по целевому SHA. Clock / heartbeat, world,
-настоящий SDK backend и полный вход открыты.
+[Регистрационный helper Login и окно привязки 18 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-REGISTRATION-11322.md)
+подключены к автомату как `registration-v1` / `login-registration`. Полный helper
+(101 инструкция, 395 байт) и настоящий ID 4 leaf исполняются отдельно от
+статически проверяемого окна owner (75 байт). Клиент запрашивает для пакета 344 байта;
+352 байта — размер области, зарезервированной прежними проверочными стендами,
+а не размер запроса клиента.
+34 native сценария и 602 теста прошли. Общий повтор 26 drivers использовал
+78 этапов и 26 публикаций из кэша без native / JVM / PE rebuild
+(77.785473 с). Реальные container insert, name getter / ownership,
+native dispatch и онлайн остаются открытыми.
+
+Далее реальный container insert и name getter / ownership, затем native dispatch
+с готовой reader → handler композицией. Статическое окно и отдельный helper
+не подтверждают native owner, конструктор пакета или доставку ответа.
+Недостающую integration post-state / continuation проверять отдельно; готовые
+reports переиспользовать по целевому SHA. Clock / heartbeat, world, настоящий
+SDK backend и полный вход открыты.
 
 ## Сохранённые записи прежних этапов
 
