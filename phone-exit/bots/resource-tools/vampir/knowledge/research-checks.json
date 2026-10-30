@@ -11480,7 +11480,17 @@
         "phone-exit/bots/test_vampir_login_full_handler_rules.py",
         "phone-exit/bots/test_vampir_login_full_handler_case_contracts.py",
         "phone-exit/bots/test_vampir_native_login_full_adapter.py",
-        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11318.py"
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11318.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-composition.py",
+        "phone-exit/bots/resource-tools/vampir/login-composition-rules.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-composition-harness.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-composition-context.py",
+        "phone-exit/bots/resource-tools/vampir/login-composition-handler-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-composition-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-response-composition-11322.json",
+        "phone-exit/bots/test_vampir_login_composition_rules.py",
+        "phone-exit/bots/test_vampir_login_composition_case_contracts.py",
+        "phone-exit/bots/test_vampir_native_login_composition_adapter.py"
       ],
       "artifact_dependencies": []
     }

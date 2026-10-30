@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "family": "login-response-composition",
+  "format": "login-response-composition-v1",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "packet_bytes": 352,
+  "functions": {
+    "packet.constructor": "0x1456d76b0",
+    "packet.period_constructor": "0x1457a2760",
+    "packet.period_reader": "0x1457a5be0",
+    "packet.reader": "0x1456dc190",
+    "packet.time_constructor": "0x1457a38c0",
+    "packet.time_reader": "0x1457fe0e0",
+    "input.bool": "0x144aac5e0",
+    "input.buffer_constructor": "0x144aac220",
+    "input.constructor": "0x144aacc30",
+    "input.raw": "0x144aac6b0",
+    "input.std_string": "0x144aac480",
+    "input.string": "0x144aad0c0",
+    "input.time": "0x144aac560",
+    "input.u16": "0x144aac340",
+    "input.u32": "0x144aac390",
+    "input.u64": "0x144aac590",
+    "input.utf8_convert": "0x141446700",
+    "input.utf8_core": "0x14143bd90",
+    "input.utf8_length": "0x14144c4a0",
+    "input.utf8_scalar": "0x14143ba00",
+    "handler.gate": "0x1467d0cb0",
+    "handler.handler": "0x14679e320"
+  },
+  "leaves": {
+    "0x141453ca0": "b804000000c3",
+    "0x144aac330": "488b0141b80100000048ffa090000000",
+    "0x144aacf00": "488d051966bc04c741140100000048890133c048894108894110488bc1c6411801c3",
+    "0x144aad280": "488b024c8bc2488bd1498bc848ff6020",
+    "0x144aad290": "895110c3",
+    "0x1457fdef0": "488d05813f120448c7410800000000488901488bc1c3"
+  },
+  "helpers": {
+    "memcpy": "0x1487f8c99"
+  },
+  "packet_table": "0x149929050",
+  "id_getter": "0x141453ca0",
+  "reader_context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\1b2c9976ec09ccabc8f84a4756d24673595cfc74ce1c89e6765a4df9798cd27d\\manifest.json",
+    "sha256": "1b2c9976ec09ccabc8f84a4756d24673595cfc74ce1c89e6765a4df9798cd27d"
+  },
+  "handler_context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\e4aa9b128280bb05b4508111fc056f34dd1dc99ce246ca571bd04229dfdec935\\manifest.json",
+    "sha256": "e4aa9b128280bb05b4508111fc056f34dd1dc99ce246ca571bd04229dfdec935"
+  },
+  "verify_whole_exports": true,
+  "exports": {
+    "run-4b16a82b156e": "fa2447cfa04365a62c2faa5451d247fc6411d04c9956a27b640085c9caeb5b02",
+    "run-7047b821ac37": "675242094e1f4a7356a5f6d5437d2056f0d018656950ac98f82e9db46e34f072",
+    "run-761b5bc2280d": "5cf4a5e10d092e31119fd4f0b9cff8d0ee6ab47b7bf2feefbeeb8ab8c32b174e",
+    "run-c9f35d32258c": "5e13729b560181f6112e6a25ca0e40a9e1bcabac42ca289722ad2dea2f0c2d0a"
+  },
+  "layout": {
+    "abi": "win64",
+    "executed_roots": 22,
+    "packet_bytes": 352,
+    "native_reader": true,
+    "native_handler": true,
+    "native_gate": true,
+    "native_dispatch": false,
+    "native_post_state": false,
+    "native_continuation": false,
+    "real_services": false,
+    "session_executed": false
+  },
+  "provenance": {
+    "reader_report": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\df3a4df319e2bab192c20fe3751e50a77f6f51b047291ec70d47a12eab8fb02f\\manifest.json",
+      "sha256": "df3a4df319e2bab192c20fe3751e50a77f6f51b047291ec70d47a12eab8fb02f"
+    },
+    "handler_report": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\aab17b91efd9716ba85f9dd48e65d83cb5b34a6ebd415e829f7ba971be94710e\\manifest.json",
+      "sha256": "aab17b91efd9716ba85f9dd48e65d83cb5b34a6ebd415e829f7ba971be94710e"
+    },
+    "scope": "Composition definition from independent target proofs; same-packet execution needs a new report."
+  }
+}

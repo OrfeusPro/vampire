@@ -55,18 +55,24 @@ Metadata integration описана ниже; настоящий SDK backend и 
 [Continuation, ранние ошибки LoginResult и повтор публикаций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md)
 подключены к автомату: 8 + 14 native сценариев. Общий повтор 21 drivers
 переиспользовал 63 semantic stages и 21 publication receipts без JVM / native /
-PE rebuild. Полный handler проверяется отдельным пакетом ниже; композиция открыта.
+PE rebuild. Полный handler и композиция с reader описаны отдельными пакетами ниже.
 
 [Общий result gate и post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESPONSE-11322.md)
 подключены к автомату: 16 полных gate + 227 indexed selections и 44 post-state
 сценария. Общий повтор 23 drivers использовал 69 этапов и 23 публикации из кэша,
-без JVM / native / PE rebuild. Это отдельный gate / post-state scope; композиция открыта.
+без JVM / native / PE rebuild. Это отдельный gate / post-state scope; integration post-state открыта.
 
 [Полный LoginResult handler и native gate](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-FULL-11322.md)
 подключены к автомату: 48 сценариев над синтетическим пакетом 352 байта, включая
 новые trailing predicate / apply / cleanup. Общий повтор 24 drivers использовал
-72 этапа и 24 публикации из кэша без JVM / native / PE rebuild. Reader→handler
-composition, registration и настоящий онлайн-вход остаются открытыми.
+72 этапа и 24 публикации из кэша без JVM / native / PE rebuild. Это standalone
+handler scope; композиция с reader описана ниже, registration и онлайн открыты.
+
+[Композиция native reader → handler](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-COMPOSITION-11322.md)
+подключена к автомату: 77 сценариев над тем же packet 352 байта (48 полных,
+28 отказов чтения, 1 tail). Общий повтор 25 drivers использовал 75 этапов
+и 25 публикаций из кэша без native / JVM / PE rebuild. Прямой вызов handler
+управляется координатором; native dispatch / registration и онлайн открыты.
 
 ## Сохранённые записи прежних этапов
 

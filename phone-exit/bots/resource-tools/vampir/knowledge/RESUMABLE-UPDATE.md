@@ -169,6 +169,14 @@ current handler и независимые target dependencies. Указател�
 registration и допуск онлайн отдельны.
 [Правило и замеры](evidence/updates/HEADLESS-AUTO-LOGIN-FULL-11322.md).
 
+Same-packet композиция доступна как `login-composition-v1` /
+`login-response-composition`: 22 roots объединяют native buffer / reader и
+handler / gate. 77 сценариев проверяют общий packet, source strings и cursor;
+при отказе reader handler не вызывается. Прямой вызов управляется координатором,
+native dispatch этим не подтверждается. Новая опубликованная роль заменяет
+начальный seed при выборе базы. Указатель — `generated-login-composition/index.json`.
+[Границы и повтор](evidence/updates/HEADLESS-AUTO-LOGIN-COMPOSITION-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

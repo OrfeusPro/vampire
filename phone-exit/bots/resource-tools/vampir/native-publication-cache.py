@@ -30,6 +30,7 @@ INDEXES = {
     **{name: 'generated-login-handlers/' + name for name in ('login-continuation', 'login-handler-early')},
     **{name: 'generated-responses/' + name for name in ('result-gate', 'login-post-state')},
     'login-full-handler': 'generated-login-full',
+    'login-response-composition': 'generated-login-composition',
 }
 MODULES = {
     'string-writer': 'update-native-string-writer', 'archive-wire': 'update-native-archive-wire',
@@ -41,8 +42,9 @@ MODULES = {
     **{name: 'update-native-login-handler' for name in ('login-continuation', 'login-handler-early')},
     **{name: 'update-native-response' for name in ('result-gate', 'login-post-state')},
     'login-full-handler': 'update-native-login-full',
+    'login-response-composition': 'update-native-login-composition',
 }
-MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full'}
+MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full', 'update-native-login-composition'}
 
 
 def canonical(value):

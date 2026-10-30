@@ -18,13 +18,15 @@ SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='strin
          ('login-continuation','login-handler-early')],
        *[dict(id='native-auto-'+family,family=family,adapter='response-v1') for family in
          ('result-gate','login-post-state')],
-       dict(id='native-auto-login-full-handler',family='login-full-handler',adapter='login-full-v1'))
+       dict(id='native-auto-login-full-handler',family='login-full-handler',adapter='login-full-v1'),
+       dict(id='native-auto-login-response-composition',family='login-response-composition',adapter='login-composition-v1'))
 MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire',
          'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare',
          'login-prepare-v1':'update-native-login-prepare','login-sdk-v1':'update-native-login-sdk',
          'version-helper-v1':'update-native-version-helpers','login-metadata-v1':'update-native-login-metadata',
          'login-input-v1':'update-native-login-input','login-handler-v1':'update-native-login-handler',
-         'response-v1':'update-native-response','login-full-v1':'update-native-login-full'}
+         'response-v1':'update-native-response','login-full-v1':'update-native-login-full',
+         'login-composition-v1':'update-native-login-composition'}
 
 
 def registry(index,knowledge):
@@ -51,7 +53,7 @@ def run(index,args,sha,journal,database,*,families=None):
         if selection is not None and spec['family'] not in selection:continue
         family=spec['family'];families.append(family)
         tool=index.extension(MODULES[spec['adapter']])
-        if spec['adapter'] in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1','response-v1','login-full-v1'):tool=tool.select(family)
+        if spec['adapter'] in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1','response-v1','login-full-v1','login-composition-v1'):tool=tool.select(family)
         try:
             inputs=tool.plan_inputs(index,args,sha)
             def plan_writer():

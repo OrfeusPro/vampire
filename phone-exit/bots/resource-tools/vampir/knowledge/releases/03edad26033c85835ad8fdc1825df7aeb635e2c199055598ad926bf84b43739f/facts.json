@@ -426,6 +426,58 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Reader→handler composition текущего LoginResult352/28 и регистрационный owner/window. Native post-state/continuation имеют отдельные reports, но в whole-handler suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Глобальная integrity сверка индекса остаётся отдельной задачей скорости."
+    },
+    {
+      "addresses": [
+        "0x14143ba00",
+        "0x14143bd90",
+        "0x141446700",
+        "0x14144c4a0",
+        "0x144aac220",
+        "0x144aac340",
+        "0x144aac390",
+        "0x144aac480",
+        "0x144aac560",
+        "0x144aac590",
+        "0x144aac5e0",
+        "0x144aac6b0",
+        "0x144aacc30",
+        "0x144aad0c0",
+        "0x1456d76b0",
+        "0x1456dc190",
+        "0x1457a2760",
+        "0x1457a38c0",
+        "0x1457a5be0",
+        "0x1457fe0e0",
+        "0x14679e320",
+        "0x1467d0cb0"
+      ],
+      "checks": [],
+      "conclusion": "Same-packet LoginResult reader / handler / gate подключены к штатному update/cache: 77 source-bound native случаев, 22 roots, native input читает пакет 352 байта и передаёт его без reseed обработчику. Python-координатор управляет вызовом после успешного чтения; native dispatch и online admission не заявлены. Общий повтор 25 drivers reused 75 stages / 25 publications без JVM/native/PE rebuild (162.331708 с). Профиль и сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-COMPOSITION-11322.md",
+          "sha256": "23ecd1f66ada309551a6f4381d211e410fe3058ee1e70971d1c6f85f8ea474d8"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-COMPOSITION-11322.json",
+          "sha256": "70678aa1e759bc40c51393b8c71c2c26c46d591e00a50e68a4a31d01e608ae8a"
+        }
+      ],
+      "id": "59e58794c68ca6be1fedaefe46353fb6c9b1a6c71431faa6dd3b69b1a5911763",
+      "limits": [
+        "One native reader and handler use the same packet and decoded allocations; coordinator gates the direct handler call after reader AL success.",
+        "No native dispatch, registration owner/window, real services, post-state/continuation integration or online session.",
+        "Storage/growth/assignment/free/security, SDK/UI/clock/persistence and handler services remain explicit bounded fixtures.",
+        "Same-source bootstrap imports existing checked child contexts, not an old composition report. A new target composition report is mandatory.",
+        "After publication the proved composition role replaces the bootstrap seed, including equal source/order and lexically larger seed paths.",
+        "Selected driver measurements exclude prepare/collect and the global historical index integrity audit."
+      ],
+      "method": "static",
+      "next_check": "Закрыть source-bound registration owner/window и native dispatch с готовой reader→handler композицией; затем оставшиеся post-state/continuation integration, clock/world. Готовые 26 bounded семейств (25 drivers и UTF-8) использовать через proofs/reports/cache без ручного пересчёта.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Регистрационный owner/window и native dispatch текущего LoginResult. Native post-state/continuation имеют отдельные reports, но в composition suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Скорость глобального индекса и новая версия общего input seed с ordered baseline/target memo key остаются инфраструктурными задачами; новый composition adapter изолирует свой mapping memo."
     }
   ],
   "schema": 1,
