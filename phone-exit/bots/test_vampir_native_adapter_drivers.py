@@ -7,6 +7,13 @@ import unittest
 from test_vampir_update_contracts import load
 
 
+def mocked_publication_cache():
+    # Orchestration tests intentionally use synthetic non-native declarations;
+    # production never bypasses source/proof admission when source_store is absent.
+    return SimpleNamespace(begin=lambda index,args,sha:SimpleNamespace(
+        publish=lambda spec,tool,declaration,result:tool.publish(index,args,sha,declaration,result), finish=lambda:{}))
+
+
 class AdapterDriverTests(unittest.TestCase):
     def test_selected_driver_never_loads_other_family_tools_and_rejects_unregistered_selection(self):
         driver=load('update-native-drivers')
@@ -16,6 +23,7 @@ class AdapterDriverTests(unittest.TestCase):
             tool=SimpleNamespace(plan_inputs=lambda *args:{},discover=lambda *args:dict(state='planned',exports=[]),
                 tools=lambda:{},materialize=lambda *args:dict(checks=[],queue=[]))
             allowed={driver.MODULES[selected['adapter']]:tool,'research-workflow':object(),
+                'native-publication-cache':mocked_publication_cache(),
                 'update-run':SimpleNamespace(collect_batches=lambda *args:[])}
             index=SimpleNamespace(read_json=lambda _:dict(schema=1,adapters=list(driver.SPECS)),
                 extension=lambda name:allowed[name])
@@ -55,12 +63,14 @@ class AdapterDriverTests(unittest.TestCase):
                     tools=lambda:dict(revision=versions[family]),
                     materialize=lambda *args:dict(checks=[dict(id=spec['id'],revision=versions[family])],queue=[]),
                     execute=execute,publish=lambda *args:None)
-            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS if spec['adapter'] not in ('version-helper-v1','login-metadata-v1','login-input-v1')}
+            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS if spec['adapter'] not in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1')}
             modules['update-native-version-helpers']=SimpleNamespace(select=lambda family:tool(next(
                 spec for spec in driver.SPECS if spec['family']==family)))
             modules['update-native-login-metadata']=modules['update-native-version-helpers']
             modules['update-native-login-input']=modules['update-native-version-helpers']
+            modules['update-native-login-handler']=modules['update-native-version-helpers']
             modules.update({'research-workflow':workflow,'update-run':SimpleNamespace(collect_batches=lambda *args:[]),
+                'native-publication-cache':mocked_publication_cache(),
                 'update-native-harness':SimpleNamespace(runtime_inputs=lambda:{})})
             original=index.extension;index.extension=lambda name:modules.get(name) or original(name)
             record=dict(state='running',stages={});path=root/'journal.json'

@@ -13,12 +13,14 @@ SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='strin
        *[dict(id='native-auto-'+family,family=family,adapter='login-metadata-v1') for family in
          ('login-metadata','login-prepare-metadata')],
        *[dict(id='native-auto-'+family,family=family,adapter='login-input-v1') for family in
-         ('login-nested','login-strings-buffer')])
+         ('login-nested','login-strings-buffer')],
+       *[dict(id='native-auto-'+family,family=family,adapter='login-handler-v1') for family in
+         ('login-continuation','login-handler-early')])
 MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire',
          'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare',
          'login-prepare-v1':'update-native-login-prepare','login-sdk-v1':'update-native-login-sdk',
          'version-helper-v1':'update-native-version-helpers','login-metadata-v1':'update-native-login-metadata',
-         'login-input-v1':'update-native-login-input'}
+         'login-input-v1':'update-native-login-input','login-handler-v1':'update-native-login-handler'}
 
 
 def registry(index,knowledge):
@@ -39,12 +41,13 @@ def run(index,args,sha,journal,database,*,families=None):
     registered=registry(index,args.knowledge)
     if selection is not None and (not selection or selection-{spec['family'] for spec in registered}):
         raise ValueError('Selected native family is not registered')
+    publication=index.extension('native-publication-cache').begin(index,args,sha)
     declarations=[];checks=[];queue=[];families=[]
     for spec in registered:
         if selection is not None and spec['family'] not in selection:continue
         family=spec['family'];families.append(family)
         tool=index.extension(MODULES[spec['adapter']])
-        if spec['adapter'] in ('version-helper-v1','login-metadata-v1','login-input-v1'):tool=tool.select(family)
+        if spec['adapter'] in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1'):tool=tool.select(family)
         try:
             inputs=tool.plan_inputs(index,args,sha)
             def plan_writer():
@@ -72,11 +75,14 @@ def run(index,args,sha,journal,database,*,families=None):
                 result=journal.stage('native-check-'+declaration['id'],dict(source=sha,declaration=declaration,
                     suite_runtime=index.extension('update-native-harness').runtime_inputs()),
                     execute)
-                if result['state']=='passed':tool.publish(index,args,sha,declaration,result)
+                if result['state']=='passed':publication.publish(spec,tool,declaration,result)
                 checks.append(result)
         except (ValueError,OSError,KeyError,StopIteration) as error:
             queue.append(dict(family=family,reason='native_adapter_requires_review',details=str(error)))
-    return dict(declarations=declarations,checks=checks,queue=queue,families=families)
+    # Cached native reports still require exact publication membership, complete
+    # evidence/tool lineage and a final full-source integrity barrier.
+    metrics=publication.finish()
+    return dict(declarations=declarations,checks=checks,queue=queue,families=families,publication_cache=metrics)
 
 
 def merge(native,checks,extra):

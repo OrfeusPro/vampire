@@ -52,6 +52,11 @@ Metadata integration описана ниже; настоящий SDK backend и 
 Общий повтор 19 drivers переиспользовал 57 этапов без JVM / native replay.
 Handlers / registration / response composition и целый вход остаются открытыми.
 
+[Continuation, ранние ошибки LoginResult и повтор публикаций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md)
+подключены к автомату: 8 + 14 native сценариев. Общий повтор 21 drivers
+переиспользовал 63 semantic stages и 21 publication receipts без JVM / native /
+PE rebuild. Полный success handler, gate и post-state остаются отдельными проверками.
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

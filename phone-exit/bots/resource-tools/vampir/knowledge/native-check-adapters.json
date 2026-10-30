@@ -95,6 +95,16 @@
       "id": "native-auto-login-strings-buffer",
       "family": "login-strings-buffer",
       "adapter": "login-input-v1"
+    },
+    {
+      "id": "native-auto-login-continuation",
+      "family": "login-continuation",
+      "adapter": "login-handler-v1"
+    },
+    {
+      "id": "native-auto-login-handler-early",
+      "family": "login-handler-early",
+      "adapter": "login-handler-v1"
     }
   ]
 }

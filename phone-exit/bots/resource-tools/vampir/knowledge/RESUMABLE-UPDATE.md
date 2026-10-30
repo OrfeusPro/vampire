@@ -133,6 +133,20 @@ scalar / string / UTF-8 input и buffer construction. Shared VersionResult input
 harness разрешает только 6 / 20 явных roots после проверки proof.
 [Точные области и повтор](evidence/updates/HEADLESS-AUTO-LOGIN-INPUT-11322.md).
 
+Continuation/reset и четыре ранние ошибки LoginResult доступны отдельными
+`login-handler-v1` ролями. Они проверяют только свои 8 / 14 сценариев, без
+исполнения общего gate и успешной ветки. Публикации хранятся в
+`generated-login-handlers/<family>/index.json`.
+
+Повтор публикации готовых native contexts использует отдельный
+`native-publication-validations` receipt после обычного полного adapter publish.
+Driver каждый раз сверяет актуальные context / report / selected index rows,
+транзитивные доказательства, tools / runtime и полные SHA исходников. Только
+после финального барьера квитанция разрешает пропустить повторный transfer;
+повреждение остаётся блокером, отсутствие строки восстанавливается полной
+публикацией. Метрики `publication_cache` различают reused / validated и source
+reads / PE builds. [Области, отказы и замер](evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

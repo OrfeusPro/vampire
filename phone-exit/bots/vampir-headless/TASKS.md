@@ -45,8 +45,15 @@ Version описана ниже; SDK backend, handlers / registration и world �
 подключены к автообновлению: 232 + 506 native сценариев, точные матрицы и guards.
 Общий повтор 19 drivers переиспользовал 57 этапов без JVM / native replay.
 
-Далее LoginResult handlers / registration и композиция ответов, clock / heartbeat
-и world. Настоящий SDK backend, OS / storage provider effects и полный вход открыты.
+[Continuation, ранние ошибки LoginResult и повтор публикаций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md)
+подключены к автомату: 8 + 14 native сценариев. Общий повтор 21 drivers
+переиспользовал 63 semantic stages и 21 publication receipts без JVM / native /
+PE rebuild. Полный success handler, gate и post-state остаются отдельными проверками.
+
+Далее общий result gate, полный success handler / post-state, registration и
+композиция ответов; семь explicit roots уже собраны общим пакетом. Clock / heartbeat,
+world, настоящий SDK backend и полный вход открыты.
+
 
 ## Сохранённые записи прежних этапов
 

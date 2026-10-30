@@ -1,0 +1,572 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-handler-acceptance\\dc13ae97a7b4424d1bcd3513f576b0d670cfbe6796d950219ce1fc47f2f713fc\\manifest.json",
+    "sha256": "dc13ae97a7b4424d1bcd3513f576b0d670cfbe6796d950219ce1fc47f2f713fc"
+  },
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-handler-combined-acceptance\\baa3b3a0553e339806c89779db03295493401f30f723217b51425334beb34685\\manifest.json",
+    "sha256": "baa3b3a0553e339806c89779db03295493401f30f723217b51425334beb34685"
+  },
+  "families": {
+    "login-continuation": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\856cdf627aed31faa28c342667eeeeedc300a94ba526971e9b577ee5f667a878\\manifest.json",
+        "sha256": "856cdf627aed31faa28c342667eeeeedc300a94ba526971e9b577ee5f667a878"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-handler-proofs\\de2223fbd586679e25ed11e05dba66fc2167dd02731f3e38f4fd0145560d2394\\manifest.json",
+        "sha256": "de2223fbd586679e25ed11e05dba66fc2167dd02731f3e38f4fd0145560d2394"
+      },
+      "native_check": {
+        "id": "native-auto-login-continuation",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\96c0371daa23442082ce480962e7daac570ebfc4b2a0dec5fa519337803fc325\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_login_continuation",
+        "sha256": "96c0371daa23442082ce480962e7daac570ebfc4b2a0dec5fa519337803fc325",
+        "state": "passed"
+      },
+      "cases": 8,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "roots": {
+        "constructor": "0x1464a9800",
+        "reset": "0x1464afcc0"
+      },
+      "excluded_gate": null,
+      "limits": [
+        "Constructor/getter/final virtual reset execute; container init/clear/shrink and cleanup helpers return fixture zero.",
+        "Factory is static export evidence only; no handler integration, real containers or CharacterListRead send proof.",
+        "Seeds cover historical 8 reset scenarios; nonempty destructor loops and helper side effects remain unproved."
+      ],
+      "scope_flags": {
+        "network_used": false,
+        "profile_activated": false,
+        "runtime_activated": false,
+        "gate_executed": false,
+        "successful_login_executed": false
+      }
+    },
+    "login-handler-early": {
+      "context": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\5f13596a0805f40a15cdad91e98e5a5309c6941bf3d9f251a905efa8e25b19e9\\manifest.json",
+        "sha256": "5f13596a0805f40a15cdad91e98e5a5309c6941bf3d9f251a905efa8e25b19e9"
+      },
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-handler-proofs\\216901e2241698018606370d865a73fa1beddb71947e16ac19a971d715ada38c\\manifest.json",
+        "sha256": "216901e2241698018606370d865a73fa1beddb71947e16ac19a971d715ada38c"
+      },
+      "native_check": {
+        "id": "native-auto-login-handler-early",
+        "profile_activated": false,
+        "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\ba367feb8642cb0385e6c529e27e616b67cc664e0da85d6c09c8e0fdbd130028\\manifest.json",
+        "runtime_activated": false,
+        "scope": "bounded_native_login_handler_early",
+        "sha256": "ba367feb8642cb0385e6c529e27e616b67cc664e0da85d6c09c8e0fdbd130028",
+        "state": "passed"
+      },
+      "cases": 14,
+      "runtime": {
+        "capstone": {
+          "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+          "version": "5.0.6"
+        },
+        "unicorn": {
+          "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+          "version": "2.1.4"
+        }
+      },
+      "roots": {
+        "handler": "0x14679e320"
+      },
+      "excluded_gate": "0x1467d0cb0",
+      "limits": [
+        "Whole handler executes only pre-gate error paths 54, 9818, 9819, 90021.",
+        "Empty string/localization, logging, popup, optional lookup/actions and finalization are explicit fixtures.",
+        "Popup callbacks, native result gate, successful-login branch, nested decoder and real services/session are not proven."
+      ],
+      "scope_flags": {
+        "network_used": false,
+        "profile_activated": false,
+        "runtime_activated": false,
+        "gate_executed": false,
+        "successful_login_executed": false
+      }
+    }
+  },
+  "native_cases": 22,
+  "passes": [
+    {
+      "counts": {
+        "native-auto-login-continuation": 8,
+        "native-auto-login-handler-early": 14
+      },
+      "executed": [
+        "native-plan-login-continuation",
+        "native-context-login-continuation",
+        "native-check-native-auto-login-continuation",
+        "native-plan-login-handler-early",
+        "native-context-login-handler-early",
+        "native-check-native-auto-login-handler-early"
+      ],
+      "native_replays": 2,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "publication_cache": {
+        "receipts_written": 2,
+        "reused": 0,
+        "runtime_activated": false,
+        "seconds": 130.555858,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 28,
+          "read_workers": 2,
+          "source_cache_hits": 33,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.416099
+        },
+        "validated": 2
+      },
+      "reused": 0,
+      "wall_seconds": 130.57117
+    },
+    {
+      "counts": {
+        "native-auto-login-continuation": 8,
+        "native-auto-login-handler-early": 14
+      },
+      "executed": [
+        "native-plan-login-continuation",
+        "native-plan-login-handler-early"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 2,
+        "runtime_activated": false,
+        "seconds": 29.395619,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 6,
+          "read_workers": 2,
+          "source_cache_hits": 22,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.396845
+        },
+        "validated": 0
+      },
+      "reused": 4,
+      "wall_seconds": 29.420898
+    },
+    {
+      "counts": {
+        "native-auto-login-continuation": 8,
+        "native-auto-login-handler-early": 14
+      },
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "pass_number": 3,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 2,
+        "runtime_activated": false,
+        "seconds": 3.71539,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 20,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.366696
+        },
+        "validated": 0
+      },
+      "reused": 6,
+      "wall_seconds": 3.736167
+    }
+  ],
+  "combined_passes": [
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 19,
+        "reused": 2,
+        "runtime_activated": false,
+        "seconds": 249.967827,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 174,
+          "read_workers": 2,
+          "source_cache_hits": 1183,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.420209
+        },
+        "validated": 19
+      },
+      "reused": 63,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 249.984057
+    },
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 21,
+        "runtime_activated": false,
+        "seconds": 45.955905,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 794,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.427006
+        },
+        "validated": 0
+      },
+      "reused": 63,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 45.973637
+    }
+  ],
+  "tooling_check": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2565eba11f1d96da3ab2aa4946950b4de9870acbf26b46528b27a6df5642cc73\\manifest.json",
+    "sha256": "2565eba11f1d96da3ab2aa4946950b4de9870acbf26b46528b27a6df5642cc73",
+    "cache_key": "57488e445fd95d0c9ee682ea1d4fd64d4d8053e3eb38e0248d71b6423ccf7ecf",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "tooling_tests": 399,
+  "pure_rule_tests": 25,
+  "case_contract_tests": 19,
+  "adapter_tests": 10,
+  "publication_cache_tests": 19,
+  "collection": {
+    "request": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\8f396711b8a0c15c1f918b46fadb0f87984fdcfaaca0c89dea3f7ab80299c701\\manifest.json",
+      "sha256": "8f396711b8a0c15c1f918b46fadb0f87984fdcfaaca0c89dea3f7ab80299c701"
+    },
+    "receipt": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\collections\\2e01db77d05c9a59480d1ddf66e71863c6e1534c3ed6880b8200d9b6db25c8cc\\manifest.json",
+      "sha256": "2e01db77d05c9a59480d1ddf66e71863c6e1534c3ed6880b8200d9b6db25c8cc"
+    },
+    "roots": 7,
+    "missing": 7,
+    "reused": 0,
+    "current_native_roots": 3,
+    "next_candidate_roots": 4,
+    "export": "run-c9f35d32258c",
+    "reused_project": true
+  },
+  "publication_validation_receipts": [
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\04006ed765ad75c4f4640f4e21696abfa7e456cce006dae0564e03a7923417b3.json",
+        "sha256": "4637834dc7fb08626521acb716651140027448eb65bb5c6a62ab6603b5d2718e"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\2319c3a14169b429187ac31fb96c5c491474c52662999963476cabc93a70bce3\\manifest.json",
+        "sha256": "2319c3a14169b429187ac31fb96c5c491474c52662999963476cabc93a70bce3"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\0b6c73c4b289602109b9c32f685bdbec254149759456bc57f1ae3dda23468e81.json",
+        "sha256": "19eb86920d394b56ce8a28d2225e2054925417ffd8f6f7ce4eb3a2477d469928"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\cb8e8b8e44a93cfd25155ddd296c55e445c9f02c0117527529c0b9a9d07918b1\\manifest.json",
+        "sha256": "cb8e8b8e44a93cfd25155ddd296c55e445c9f02c0117527529c0b9a9d07918b1"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\0d5c88ab4707f7c1998688f43adcbb3b7792fc89c0c6496e63faaf7bcb5d3afd.json",
+        "sha256": "d9c73ecd4551e31939366453073fe2044ed0cc290c78a1a77e064f469b7380d5"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\2410a67bc82dfb0a5d9de161bbba0bac7e18c9f3498bc3483822ae9d0cb1b4a8\\manifest.json",
+        "sha256": "2410a67bc82dfb0a5d9de161bbba0bac7e18c9f3498bc3483822ae9d0cb1b4a8"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\1a02e9da4092c075c112fefa32e16f1fbd642a97eb5f7b49936a7e2ab02e16f7.json",
+        "sha256": "47bde46bf2c1b5b824167112850fa9a63a2d0ba49651553865b5fa4aff4cd6a6"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\13bdfa9fe10fa20785df11580502d33cb4e9828e3866823e1fe4d09bba21b45a\\manifest.json",
+        "sha256": "13bdfa9fe10fa20785df11580502d33cb4e9828e3866823e1fe4d09bba21b45a"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\29a0e9a4c6a4c85a0091084ec1984b6f6da3dddd9b481413597ba60b50afbea3.json",
+        "sha256": "62fac2991c95bb397bc038f2f11d3d88843ca4ca50aff9af78c4cd06883f1cfd"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\889611350af8a1a11ddfdc8bdaa305d8b281f5b70a50ac3804eeceaee9802304\\manifest.json",
+        "sha256": "889611350af8a1a11ddfdc8bdaa305d8b281f5b70a50ac3804eeceaee9802304"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\2d922d2207130ba4bdc2d7347012ce60f63f98ad5c36bb8dd953e771a9c9a4c2.json",
+        "sha256": "9dd7601129f56d1b148d66bc9f5963fc91ea9f525ce1afb0dd6b384d10f9a26c"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\f12de20dea23e6dc789d744e7172bdf233a43ef3c186719858908060c69b1c2e\\manifest.json",
+        "sha256": "f12de20dea23e6dc789d744e7172bdf233a43ef3c186719858908060c69b1c2e"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\318cad75e89dcae6418222c51332f580672c3d27591b5fc046300c4b0e47333a.json",
+        "sha256": "f44fc2d2bf673d5b9f6a2940f27a44ab2621cb6b8333f473e61ed4bcf7a1255b"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\144713b54cc495fa20f8af4c03123a2d3423ffef946deecf95c73d66a982ee80\\manifest.json",
+        "sha256": "144713b54cc495fa20f8af4c03123a2d3423ffef946deecf95c73d66a982ee80"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\383cb4bf34708931e4689d4a5e1e45b93d7fc14ad6044d666e29bd13ef9d22a2.json",
+        "sha256": "7ca0a5972f5cbe65c64e613376d6f02480e707d50bd44fde0d0d40960e03fcf6"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\8bcc5cdcb9b7fc32c8917b470394a07fd561f290e92d44269c527c114dfe2ece\\manifest.json",
+        "sha256": "8bcc5cdcb9b7fc32c8917b470394a07fd561f290e92d44269c527c114dfe2ece"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\38c22e49593a0c616face5b69cb6d324428904b1416b80c8d7a2e2fccd7a689a.json",
+        "sha256": "8901d1da0d95b3c7bfef2cb14dee74033eadb0ac9a05a39cbcc744acae1d23db"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\18a0f9ddf730c7a6fb195c097356474f1772d349044bebad5dff3739a171c0b1\\manifest.json",
+        "sha256": "18a0f9ddf730c7a6fb195c097356474f1772d349044bebad5dff3739a171c0b1"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\58ca33fd8dc6720a84a87cf1b4f0f50da540be324e045f4ffa8526ddbb3f778f.json",
+        "sha256": "2b85077f05ff2672f58cfdf739572907b9c3be4866aab229af1d5a6e2f17bea9"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\2efc17385d630886d49a77db32d2008b7387fa8eb7830a2312858fc8246c6a23\\manifest.json",
+        "sha256": "2efc17385d630886d49a77db32d2008b7387fa8eb7830a2312858fc8246c6a23"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\6c98de2751e843441fe2caaf224faee12cb44b73eb540821ffda1190bf4ad68a.json",
+        "sha256": "b54792948550908e8511d43d0eb69735bf30dc47d55480d4cd4ebf378432ee6b"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\d8b0b9fbf22812b631c2cd753965b36b4da658215f7c46d9e480a809ddf5d27d\\manifest.json",
+        "sha256": "d8b0b9fbf22812b631c2cd753965b36b4da658215f7c46d9e480a809ddf5d27d"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\7adc672dde414bca86ba424d5b673bedad05c6b8588431655f6dbb6d28405190.json",
+        "sha256": "ccaab8187bef5482e968fd5a7ce93c4df1c691068e0ab202c6ef2f65b4b55af0"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\4816f3edc8819ba4cb2051455e3b4a1f0aa252e9c4a46d374ff27c496ed4b2c9\\manifest.json",
+        "sha256": "4816f3edc8819ba4cb2051455e3b4a1f0aa252e9c4a46d374ff27c496ed4b2c9"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\ae1d98e424def1813a55461dd3b346791a25ecf034bc78f5195090266eb450da.json",
+        "sha256": "886a906921a546974a223a6c04bd9853ba73f96cf70c35ae9dc766d01a1270c3"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\2a13363d9ff57d9d44b9825be5fd7abf9cc02c0dad77aa83d94079807fdbac06\\manifest.json",
+        "sha256": "2a13363d9ff57d9d44b9825be5fd7abf9cc02c0dad77aa83d94079807fdbac06"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\bdbc2b071b9de7f391df038781702281a3105d3b1aabcaef06063625052bef3f.json",
+        "sha256": "d40d5a166baa4aac1be06038d09fc2548dc1f53521048d63509aff8963e67659"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\e098ed28d0984c3b0b6c001202073ddbc5f8df90ca41ef93b34e973e7d0d3a3e\\manifest.json",
+        "sha256": "e098ed28d0984c3b0b6c001202073ddbc5f8df90ca41ef93b34e973e7d0d3a3e"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\bed26b66c384b75068f99a41349285af137ca63e7eb30032e93c8c265403a9c2.json",
+        "sha256": "95eab98f8230458c368f422b00b30e85426fe42e39f92eb6386436475aecd4c3"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\3c8f6ffefe90c061fa4ece0ece34a7a7c928f55e7ad6be21be83d28190a5966e\\manifest.json",
+        "sha256": "3c8f6ffefe90c061fa4ece0ece34a7a7c928f55e7ad6be21be83d28190a5966e"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\c783c4d2729f0bbc0974e80d7f70d05583f8fa66b1c24e59417300af7ac9a105.json",
+        "sha256": "2eed8fd9bafd5217f61b93230f9e1f9774f7bede093ee54b06b10cab31f5de47"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\23e38089dca52e287eefd157b3313796408e7af6d7c0f91ddbb26410ac653b79\\manifest.json",
+        "sha256": "23e38089dca52e287eefd157b3313796408e7af6d7c0f91ddbb26410ac653b79"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\c8dab9825ac394728940c8b678c56fa573957f358e56e03b9fb7808acdbbc17d.json",
+        "sha256": "eb5bece5139e827d54384a1d9e87d0e4b20cb288917a7445e60dfba48adc0009"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\b81e09347d5873351576e9e007dc92065813b7365d1e42fd5f96f923621a24dc\\manifest.json",
+        "sha256": "b81e09347d5873351576e9e007dc92065813b7365d1e42fd5f96f923621a24dc"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\ccb892021da72193c64753d3120a8aa921f0dc121f09408947ec4eb43efddfae.json",
+        "sha256": "16696e6a071557c9b9cb0e5fae0e0ea6ba9607f73d24c592b8f40a204e5768d3"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\2b49cf5896eafe3951a91800560ccd97aeca57d82c6ba7c8a0482df9a1829bc7\\manifest.json",
+        "sha256": "2b49cf5896eafe3951a91800560ccd97aeca57d82c6ba7c8a0482df9a1829bc7"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\e0c73dd1a308d395d5cfba2ff2db21dafe882883ec65412991edfbb7e831842d.json",
+        "sha256": "5d2738388f388e62ddd925e350ae4a75b35381cf3b74c2b11a44f774c114ff2d"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\f4f5c1fae76f77af50491f44b8f37b3964d13213808ccaecef2ed84ae51ce967\\manifest.json",
+        "sha256": "f4f5c1fae76f77af50491f44b8f37b3964d13213808ccaecef2ed84ae51ce967"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\e5cd987e8c4ff7785cd1f4aad1e7be7bce4f8e296f3d75a60e68d30b0f0b726b.json",
+        "sha256": "bb141e625c997ad254c2a847c84ca37bc86661051ff7b91793f6c8bde35fca43"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\f59779249faf95b6aaffb69d3b1963fdc27d03686781dde94e18720d6b7b3d54\\manifest.json",
+        "sha256": "f59779249faf95b6aaffb69d3b1963fdc27d03686781dde94e18720d6b7b3d54"
+      }
+    },
+    {
+      "lookup": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-cache\\fbf323d1148069a67b15beac9a70f60fc83394f6ff64fea418c8e0646b4dcf74.json",
+        "sha256": "84b88b670c289b3b279266860b841e403b3f038b3679e2b050e9bc3ccd460cd0"
+      },
+      "receipt": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-validations\\6be964d9359e608527d2a60c36b0eb897b406e7ab083732156d9b3a23939c2e8\\manifest.json",
+        "sha256": "6be964d9359e608527d2a60c36b0eb897b406e7ab083732156d9b3a23939c2e8"
+      }
+    }
+  ],
+  "warm_source_metrics": {
+    "artifact_cache_hits": 0,
+    "artifact_reads": 0,
+    "image_builds": 0,
+    "image_cache_hits": 0,
+    "read_workers": 2,
+    "source_cache_hits": 794,
+    "source_reads": 2,
+    "validation_reads": 2,
+    "validation_seconds": 0.427006
+  },
+  "relative_same21driver_speedup": 5.4376,
+  "diagnostics": {
+    "rejected_native_attempts": 2,
+    "explicit_diagnostic_native_runs": 2,
+    "correction": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-handler-oracle-corrections\\ed9f989be9bb5ec0e4ff81252e80ddb7e20157b4c906f534a6f6c181a60fdecd\\manifest.json",
+      "sha256": "ed9f989be9bb5ec0e4ff81252e80ddb7e20157b4c906f534a6f6c181a60fdecd"
+    },
+    "reason": "New oracle chose the first call to a shared helper rather than the path-specific call site; static baseline20 branch proof corrected the oracle.",
+    "reports": [
+      {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-handler-diagnostics\\cea45bc4db093b0c7568bda6721b93c8b407df930740a05459b3fcface777721\\manifest.json",
+        "sha256": "cea45bc4db093b0c7568bda6721b93c8b407df930740a05459b3fcface777721"
+      },
+      {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-handler-diagnostics\\11f1e9515feb5cd46ac92d413e10f82d84074ef72f38426451d7e2d0d0ef969d\\manifest.json",
+        "sha256": "11f1e9515feb5cd46ac92d413e10f82d84074ef72f38426451d7e2d0d0ef969d"
+      }
+    ]
+  },
+  "next_boundaries": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-response-next-boundaries\\6f9b3d3fdebf68be79740fd3113bc309c6d379577f3064ee9a14dad0289f5726\\manifest.json",
+    "sha256": "6f9b3d3fdebf68be79740fd3113bc309c6d379577f3064ee9a14dad0289f5726"
+  },
+  "source_tools": {
+    "native-publication-cache.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\native-publication-cache.py",
+      "sha256": "50958bd6cc2efff6c0e5985f98f1decbafab41b14ac36e71e54c5ebde9c5b493"
+    },
+    "update-native-drivers.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-native-drivers.py",
+      "sha256": "f7114419add5ecc45b5759a0e80d53f0f1a77237f360584468ed25790c1f7a23"
+    }
+  },
+  "prior_native_suites_replayed": 0,
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Eight continuation and fourteen pre-gate cases do not prove a successful Login handler or session.",
+    "Engine/container/string/localization/log/popup/lookup/actions/finalization/cleanup remain fixtures; stored callbacks are not called.",
+    "Gate/registration/post-state extra roots are collected candidates only, without semantic admission.",
+    "Publication validation cache skips repeated transfer only after full publish, exact report/lineage/source and final barriers.",
+    "Selected driver timings exclude prepare/collect/full installation audit; global historical index integrity remains a separate speed task."
+  ]
+}

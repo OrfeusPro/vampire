@@ -331,6 +331,38 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Настоящий SDK backend / provider effects, LoginResult handlers/registration/response composition, clock/heartbeat/world и полный вход 1.13.22. Storage/CRT/endian-swap/error effects сохраняют fixture границы. Глобальная integrity сверка около 37 тысяч pseudocode files замедляет prepare."
+    },
+    {
+      "addresses": [
+        "0x1464a9800",
+        "0x1464afcc0",
+        "0x14679e320"
+      ],
+      "checks": [],
+      "conclusion": "Continuation/reset и четыре ранние ветки LoginResult подключены к update/cache отдельными scopes: 8 и 14 source-bound native сценариев. Native publication cache проверяет транзитивную lineage, tools/runtime, current index rows и полный source barrier; общий повтор 21 drivers использовал 63 semantic stages / 21 publication receipts без native/JVM/PE rebuild. Та же группа с заполнением cache заняла 249.984057 с, тёплая — 45.973637 с. Профиль и сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-HANDLERS-11322.md",
+          "sha256": "0a1baff0ef736b606ee049df86637ba8a78803e38a422544865ffaa76a35bfc8"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-HANDLERS-11322.json",
+          "sha256": "ce67c1755fb02b743410b382c3506bc95a6ad53ba2d8afd8f16bdaa743a3aeb8"
+        }
+      ],
+      "id": "9d4dbfecc6b43ae72aaf724442709851f0bd8bdf56a42acf12180f9b0c627277",
+      "limits": [
+        "Eight continuation and fourteen pre-gate cases do not prove a successful Login handler or session.",
+        "Engine/container/string/localization/log/popup/lookup/actions/finalization/cleanup remain fixtures; stored callbacks are not called.",
+        "Gate/registration/post-state extra roots are collected candidates only, without semantic admission.",
+        "Publication validation cache skips repeated transfer only after full publish, exact report/lineage/source and final barriers.",
+        "Selected driver timings exclude prepare/collect/full installation audit; global historical index integrity remains a separate speed task."
+      ],
+      "method": "static",
+      "next_check": "Продолжить общий result gate и полный handler/post-state/registration пакет по уже собранным явным roots; wrapper и tail target анализировать вместе. Готовые 22 bounded семейства использовать по кэшу; повторные публикации — через валидную отдельную квитанцию. Отдельно оптимизировать глобальную integrity сверку индекса без ослабления целостности доказательств.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Полный LoginResult success handler, общий result gate, registration owner/window, post-state и композиция ответов. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Глобальная integrity сверка исторического индекса остаётся отдельным пробелом скорости."
     }
   ],
   "schema": 1,
