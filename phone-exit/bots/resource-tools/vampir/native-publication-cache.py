@@ -29,6 +29,7 @@ INDEXES = {
     **{name: 'generated-login-input/' + name for name in ('login-nested', 'login-strings-buffer')},
     **{name: 'generated-login-handlers/' + name for name in ('login-continuation', 'login-handler-early')},
     **{name: 'generated-responses/' + name for name in ('result-gate', 'login-post-state')},
+    'login-full-handler': 'generated-login-full',
 }
 MODULES = {
     'string-writer': 'update-native-string-writer', 'archive-wire': 'update-native-archive-wire',
@@ -39,8 +40,9 @@ MODULES = {
     **{name: 'update-native-login-input' for name in ('login-nested', 'login-strings-buffer')},
     **{name: 'update-native-login-handler' for name in ('login-continuation', 'login-handler-early')},
     **{name: 'update-native-response' for name in ('result-gate', 'login-post-state')},
+    'login-full-handler': 'update-native-login-full',
 }
-MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response'}
+MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full'}
 
 
 def canonical(value):
@@ -135,7 +137,12 @@ class Session:
                 sha = value.get('source_sha256', inherited)
                 if 'source_sha256' in value:
                     sources[sha] = self._source(sha, value.get('source'))
-                elif 'source' in value and isinstance(value['source'], str) and sha is not None:
+                # An inherited source hash also covers semantic event metadata
+                # such as source="packet". Only path-like inherited values are
+                # EXE references; an explicit source_sha256 always stays strict.
+                elif ('source' in value and isinstance(value['source'], str) and sha is not None
+                        and (Path(value['source']).is_absolute() or any(char in value['source'] for char in '/\\:')
+                             or value['source'].lower().endswith('.exe'))):
                     sources[sha] = self._source(sha, value['source'])
                 if 'path' in value and 'sha256' in value:
                     p, expected = self._pointer(value); pin(p, expected)

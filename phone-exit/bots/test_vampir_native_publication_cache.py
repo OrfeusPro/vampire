@@ -251,6 +251,27 @@ class PublicationReuseTests(unittest.TestCase):
             f = Fixture(directory);f.populate()
             self.assertEqual(f.publish_count, 1)
 
+    def test_semantic_event_sources_are_pinned_metadata_not_executable_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            f = Fixture(directory);session = f.session()
+            report = COMMON.receipt(f.root, 'native-adapter-checks', dict(source_sha256=f.sha,
+                cases=[dict(events=[dict(action='apply', source=label) for label in ('packet', 'empty_temporary')])],
+                input=dict(source=f.source_path(f.sha))))
+            files, _, sources = session._lineage([report], {})
+            self.assertEqual(files[report['path']], report['sha256'])
+            self.assertEqual(sources, {f.sha: f.source_path(f.sha)})
+            # A source owned by an explicit SHA is always a client path.
+            bad = COMMON.receipt(f.root, 'fixture-native-proofs', dict(source_sha256=f.sha, source='packet'))
+            with self.assertRaisesRegex(ValueError, 'source path'): session._lineage([bad], {})
+
+    def test_inherited_source_paths_still_reject_substitutions_and_relative_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            f = Fixture(directory);session = f.session()
+            for source in (f.source_path(f.old_sha), 'other.exe', 'relative/client', 'relative\\client', 'C:client', 'https:client'):
+                with self.subTest(source=source):
+                    bad = COMMON.receipt(f.root, 'fixture-native-proofs', dict(source_sha256=f.sha, input=dict(source=source)))
+                    with self.assertRaisesRegex(ValueError, 'source path'): session._lineage([bad], {})
+
     def test_corrupted_validation_cache_is_a_blocker_and_not_silently_replaced(self):
         with tempfile.TemporaryDirectory() as directory:
             f = Fixture(directory);f.populate();path = next((f.root / 'knowledge/native-publication-cache').glob('*.json'))

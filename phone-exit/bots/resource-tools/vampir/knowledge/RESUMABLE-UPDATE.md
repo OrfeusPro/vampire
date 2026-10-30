@@ -160,6 +160,15 @@ reads / PE builds. [Области, отказы и замер](evidence/updates
 validated / receipts_written и source-store counters. Поле seconds — время
 всей сессии driver, включая его этапы; это не таймер одного publish.
 
+Целый current LoginResult handler доступен как `login-full-v1` /
+`login-full-handler`: два native roots (handler и gate), synthetic packet 352 байта,
+48 точных сценариев. Разовый legacy import не означает неизменность handler;
+обязателен новый target report. Дальнейший перенос использует весь проверенный
+current handler и независимые target dependencies. Указатель публикации —
+`generated-login-full/index.json`. Reader, post-state / continuation integration,
+registration и допуск онлайн отдельны.
+[Правило и замеры](evidence/updates/HEADLESS-AUTO-LOGIN-FULL-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

@@ -394,6 +394,38 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Полный LoginResult success handler с новыми trailing полями 0x140/0x150/0x154, registration owner/window и reader→handler composition. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Глобальная integrity сверка индекса остаётся отдельным пробелом скорости."
+    },
+    {
+      "addresses": [
+        "0x14679e320",
+        "0x1467d0cb0"
+      ],
+      "checks": [],
+      "conclusion": "Whole LoginResult handler 22 и native gate подключены к штатному update/cache: 48 source-bound native случаев, synthetic 352-byte packet, strict event/write/ABI contracts. Изменённая trailing логика имеет новое правило; исходные роли взяты из reviewed 18, будущая база — доказанный current handler. Общий повтор 24 drivers reused 72 stages / 24 publications без JVM / native / PE rebuild (49.789689 с). Профиль и игровая сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-FULL-11322.md",
+          "sha256": "d463527638bfa5d3f1b83e76470e88128a407394660279ec5730dfb686d00649"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-FULL-11322.json",
+          "sha256": "1521cee8853af05d81060a976ddd0825c5963244589737303a23acb7026b630d"
+        }
+      ],
+      "id": "99c218fa023240726454b2807b203156f75e326fe9f732b1f828739551726e77",
+      "limits": [
+        "Synthetic current352-byte packet; two native roots and the native packet ID leaf execute.",
+        "Services, strings/storage, SDK/UI/clock/persistence/disconnect, trailing predicate/apply and post-state are bounded fixtures.",
+        "No same-packet reader, dispatch/session, real service effects or online-entry claim.",
+        "Legacy18 imports reviewed fixture roles into changed22 logic; it is not a claim of an unchanged handler. Current-source 48-case report is mandatory.",
+        "Future transfers compare the complete current handler, dependencies, code/data boundaries and typed inputs, then run or reuse the exact semantic contract.",
+        "Measured driver runs exclude prepare/collect and the global historical index audit."
+      ],
+      "method": "static",
+      "next_check": "Подключить reader→handler composition и registration по конкретным source-bound roots; готовые packet, whole handler, gate, post-state и continuation переиспользовать по текущим proofs. Готовые 25 bounded семейств (24 drivers и UTF-8) вручную не пересчитывать.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Reader→handler composition текущего LoginResult352/28 и регистрационный owner/window. Native post-state/continuation имеют отдельные reports, но в whole-handler suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Глобальная integrity сверка индекса остаётся отдельной задачей скорости."
     }
   ],
   "schema": 1,

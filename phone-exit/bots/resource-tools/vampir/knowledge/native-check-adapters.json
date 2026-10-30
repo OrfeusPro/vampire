@@ -115,6 +115,11 @@
       "id": "native-auto-login-post-state",
       "family": "login-post-state",
       "adapter": "response-v1"
+    },
+    {
+      "id": "native-auto-login-full-handler",
+      "family": "login-full-handler",
+      "adapter": "login-full-v1"
     }
   ]
 }

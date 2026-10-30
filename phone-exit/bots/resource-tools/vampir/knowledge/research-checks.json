@@ -11471,7 +11471,16 @@
         "phone-exit/bots/test_vampir_post_state_case_contracts.py",
         "phone-exit/bots/test_vampir_native_response_adapter.py",
         "phone-exit/bots/resource-tools/vampir/version-gate-switch-11320.py",
-        "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py"
+        "phone-exit/bots/resource-tools/vampir/verify-version-result-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-full.py",
+        "phone-exit/bots/resource-tools/vampir/login-full-handler-rules.py",
+        "phone-exit/bots/resource-tools/vampir/login-full-handler-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-full-handler-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-full-handler-11318.json",
+        "phone-exit/bots/test_vampir_login_full_handler_rules.py",
+        "phone-exit/bots/test_vampir_login_full_handler_case_contracts.py",
+        "phone-exit/bots/test_vampir_native_login_full_adapter.py",
+        "phone-exit/bots/resource-tools/vampir/version-gate-switch-11318.py"
       ],
       "artifact_dependencies": []
     }

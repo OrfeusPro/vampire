@@ -28,11 +28,11 @@ exports и проверки вручную не повторять. Счётчи
 UTF-8 и полный string-writer уже подключены; [writer 20 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STRING-WRITER-11322.md)
 прошёл 228 native случаев и два повтора без replay.
 [Archive IO и Version / Login wire](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ARCHIVE-WIRE-11322.md)
-тоже подключены: 45 + 64 native случая. Response readers / handlers,
+тоже подключены: 45 + 64 native случая. Остальные response readers / handlers,
 clock / heartbeat и world остаются открытыми; целый вход ещё не допущен.
 [VersionResult / native input buffer и базовый Version prepare](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-11322.md)
 подключены: 127 + 64 native случая, повторы без replay. Helper integration
-Version описана ниже; SDK backend, handlers / registration и world открыты.
+Version описана ниже; SDK backend, остальные handlers / registration и world открыты.
 [Базовый Login prepare и SDK-getters](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-PREPARE-11322.md)
 подключены: 672 + 2016 случая, точные матрицы и кэш. Шесть drivers вместе
 переиспользовали 18 этапов без replay. Helper integration Version завершён в bounded scope:
@@ -48,17 +48,23 @@ Version описана ниже; SDK backend, handlers / registration и world �
 [Continuation, ранние ошибки LoginResult и повтор публикаций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-HANDLERS-11322.md)
 подключены к автомату: 8 + 14 native сценариев. Общий повтор 21 drivers
 переиспользовал 63 semantic stages и 21 publication receipts без JVM / native /
-PE rebuild. Полный success handler и композиция остаются отдельными проверками.
+PE rebuild. Полный handler проверяется отдельным пакетом ниже; композиция открыта.
 
 [Общий result gate и post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESPONSE-11322.md)
 подключены к автомату: 16 полных gate + 227 indexed selections и 44 post-state
 сценария. Общий повтор 23 drivers использовал 69 этапов и 23 публикации из кэша,
-без JVM / native / PE rebuild. Полный Login success handler и композиция открыты.
+без JVM / native / PE rebuild. Это отдельный gate / post-state scope; композиция открыта.
 
-Далее полный success handler с новыми trailing fields / predicate / apply /
-temporary cleanup, reader→handler composition и регистрационный owner/window.
-Gate и post-state повторно использовать по целевому SHA. Clock / heartbeat,
-world, настоящий SDK backend и полный вход открыты.
+[Полный LoginResult handler и native gate](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-FULL-11322.md)
+подключены к автомату: 48 сценариев над синтетическим пакетом 352 байта, включая
+новые trailing predicate / apply / cleanup. Общий повтор 24 drivers использовал
+72 этапа и 24 публикации из кэша без JVM / native / PE rebuild. Reader→handler
+composition, registration и настоящий онлайн-вход остаются открытыми.
+
+Далее reader→handler composition над тем же текущим пакетом 352 / 28, затем
+регистрационный owner/window. Gate, post-state, continuation и whole handler
+повторно использовать по целевому SHA. Clock / heartbeat, world, настоящий SDK
+backend и полный вход открыты.
 
 ## Сохранённые записи прежних этапов
 
