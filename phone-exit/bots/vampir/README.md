@@ -66,15 +66,15 @@ PE rebuild. Полный handler и композиция с reader описан�
 подключены к автомату: 48 сценариев над синтетическим пакетом 352 байта, включая
 новые trailing predicate / apply / cleanup. Общий повтор 24 drivers использовал
 72 этапа и 24 публикации из кэша без JVM / native / PE rebuild. Это standalone
-handler scope; композиция с reader и регистрационный helper описаны ниже,
-реальная регистрация в контейнере и онлайн открыты.
+handler scope; композиция с reader, регистрационный helper и контейнер описаны
+ниже. Допуск онлайн требует собственного результата.
 
 [Композиция native reader → handler](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-COMPOSITION-11322.md)
 подключена к автомату: 77 сценариев над тем же packet 352 байта (48 полных,
 28 отказов чтения, 1 tail). Общий повтор 25 drivers использовал 75 этапов
 и 25 публикаций из кэша без native / JVM / PE rebuild. Прямой вызов handler
-управляется координатором; регистрационный helper описан ниже, native dispatch
-и онлайн открыты.
+управляется координатором. Это самостоятельная композиция; native dispatch
+проверяется отдельным интеграционным пакетом ниже.
 
 [Регистрационный helper Login и окно привязки 18 → 22](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-REGISTRATION-11322.md)
 подключены к автомату как `registration-v1` / `login-registration`. Полный helper
@@ -84,8 +84,8 @@ handler scope; композиция с reader и регистрационный 
 а не размер запроса клиента.
 34 native сценария и 602 теста прошли. Общий повтор 26 drivers использовал
 78 этапов и 26 публикаций из кэша без native / JVM / PE rebuild
-(77.785473 с). Реальные insert и name getter проверяются новым пакетом ниже;
-native dispatch и онлайн остаются открытыми.
+(77.785473 с). Реальные insert и name getter проверяются новым пакетом ниже.
+Связь с native dispatch рассматривается отдельным пакетом; допуск онлайн отдельный.
 
 
 [Реальная вставка, rehash и владение именем Login](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-CONTAINER-11322.md)
@@ -99,7 +99,26 @@ node / packet / handler. Storage reset / allocation / free / reserve, UTF-8,
 logger и security сохраняют явные fixture-границы.
 120 native сценариев и 655 тестов прошли. Общий повтор 27 drivers использовал
 81 этап и 27 публикаций из кэша без native / JVM / PE rebuild
-(93.517172 с). Dispatch, TLS / archive cleanup и онлайн остаются открытыми.
+(93.517172 с). Связь с dispatch, TLS / archive cleanup проверяется отдельным
+пакетом ниже; онлайн не подтверждён.
+
+[Native dispatch / lookup, TLS и archive cleanup LoginResult](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-DISPATCH-11322.md)
+добавлены как `dispatch-v1` / `login-dispatch`. Общая матрица — 107 native
+сценариев над 29 целыми функциями и 12 leaves. Пакет связывает native создание
+контейнера, lookup и dispatcher с reader → wrapper → handler / gate через
+реальные vtable calls; Python не решает, вызывать ли handler после reader.
+Исполняются TLS setter / reset и четыре cleanup leaf. Два paired reuse-сценария
+сохраняют тот же owner и packet после success → отказа reader → неизвестного ID.
+
+Для стенда заданы предусловия: frame не короче 5 байт, active packet и TLS
+изначально нулевые. Это условия вызывающего кода; native dispatch не проверяет
+короткий header. Owner занимает 80 байт с active packet slot. OS TLS provider,
+heap / storage и игровые сервисы остаются fixtures; input UTF-8 исполняется
+нативно, diagnostic UTF-8 сохраняет отдельную fixture-границу. Пакет не подтверждает
+транспортное framing / integrity, SEH, весь вход или онлайн-сессию.
+107 native сценариев и 701 тест прошли. Общий повтор 28 drivers использовал
+84 этапа и 28 публикаций из кэша без native / JVM / PE rebuild
+(81.942016 с).
 
 ## Сохранённые записи прежних этапов
 

@@ -547,6 +547,38 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Current-SHA lookup/entry/wrapper и native dispatch текущего LoginResult, связь реального container с reader→handler, TLS/archive cleanup. Native post-state/continuation имеют отдельные reports, но в composition suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Глобальный индекс, холодная публикация других frozen families и новая версия input seed с ordered baseline/target memo key остаются инфраструктурными задачами."
+    },
+    {
+      "addresses": [
+        "0x144aacc30",
+        "0x1467c8f00",
+        "0x1467c9240"
+      ],
+      "checks": [],
+      "conclusion": "Текущий source-bound native dispatch/lookup соединён с registry, reader, wrapper и handler/gate, TLS/reset и archive cleanup: 107 случаев, 29 whole roots / 12 leaves. Условия header>=5 / initial active TLS zero явные; OS provider/services fixtures, online не проверен. Общий повтор 28 drivers reused 84 stages / 28 publications без JVM/native/PE rebuild (81.942016 с). Профиль и сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-DISPATCH-11322.md",
+          "sha256": "69c938dce4002e290c2f95d1724476a246ee63b7e8c7ba2db12929bd76105a39"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-DISPATCH-11322.json",
+          "sha256": "1eeff3b98990b782743ce32fd79a0e5c9a0d7a16f5dddd49db67144e97559835"
+        }
+      ],
+      "id": "071dfb703e197be4c3fd9782783c0450d833895d093a6df376cc6102fe8fbf73",
+      "limits": [
+        "29 whole native roots and12 leaves execute over exact current-SHA sources; framing>=5 and initially null active/TLS are explicit caller preconditions.",
+        "Native registry construction, lookup, dispatcher, reader, wrapper, handler/gate, TLS setter/reset and archive cleanup run without coordinator-controlled handler gating.",
+        "OS TLS provider, allocation/free/vector reset/reserve, SDK/UI/clock/services and diagnostic UTF8 are declared fixtures. Real networking, whole session, OOM/SEH and malformed maps remain outside scope.",
+        "Selected driver measurements exclude prepare/collect and the global historical index integrity audit.",
+        "Separate child suites are not replayed; this report proves their native dispatch integration only for the stated caller preconditions."
+      ],
+      "method": "static",
+      "next_check": "Закрывать следующие общие контрактные блокеры prepare→wire, post-state/continuation, clock/world и current entry admission; доказанный native dispatch использовать по exact SHA/proof/report/cache без повторного ручного разбора. Готовые 29 bounded семейств (28 drivers и UTF-8) не повторять вручную.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Prepare→wire и post-state/continuation integration; остальные текущие SDK/clock/heartbeat/world contracts, transport/receive framing и integrity, реальный SDK backend и целый онлайн-вход открыты. Frame>=5 и initial active/TLS zero — предусловия вызывающего кода, не native recovery malformed state. Глобальный индекс, холодная публикация остальных frozen families и ordered-pair input seed остаются инфраструктурными задачами."
     }
   ],
   "schema": 1,

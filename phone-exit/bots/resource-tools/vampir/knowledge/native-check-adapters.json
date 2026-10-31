@@ -135,6 +135,11 @@
       "id": "native-auto-login-container",
       "family": "login-container",
       "adapter": "container-v1"
+    },
+    {
+      "id": "native-auto-login-dispatch",
+      "family": "login-dispatch",
+      "adapter": "dispatch-v1"
     }
   ]
 }

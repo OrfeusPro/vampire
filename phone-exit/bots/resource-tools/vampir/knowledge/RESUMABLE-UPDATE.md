@@ -211,6 +211,27 @@ Source barrier в конце прохода сохраняется; memo не п
 81 этап и 27 публикаций из кэша без native / JVM / PE rebuild (93.517172 с).
 [Области и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-CONTAINER-11322.md).
 
+`dispatch-v1` / `login-dispatch` связывает опубликованные container и
+reader / handler contexts с native lookup, dispatcher, wrapper, TLS setter / reset
+и четырьмя cleanup leaves. Объединённый scope — 29 whole roots и 12 leaves;
+указатель публикации — `generated-login-dispatch/index.json`, это не next-profile.
+Дочерняя роль выбирается среди доказанных публикаций точного SHA; reference seed
+не создаёт вторую кандидатуру и не заменяет native report.
+
+107 сценариев включают доставку к native handler через vtable и два paired reuse
+с теми же owner / packet. Python готовит предусловия и фиксирует наблюдения,
+но не подменяет native reader → handler gating. Размер owner — 80 байт:
+контейнер и active packet slot разделены. Frame size ≥ 5, initial active packet
+и TLS равны нулю — явные предусловия, а не native проверка короткого header.
+TLS provider / index 0 или 1 заданы fixtures; сам source-bound setter / reset
+исполняется. Input UTF-8 — native, diagnostic UTF-8 — отдельный fixture.
+Heap / storage, SDK / UI / clock services остаются fixtures. Transport framing /
+integrity, SEH и целая онлайн-сессия этим scope не подтверждаются.
+107 native сценариев и 701 тест прошли. Общий повтор 28 drivers использовал
+84 этапа и 28 публикаций из кэша без native / JVM / PE rebuild
+(81.942016 с). Итоговые reports и замеры сохранены
+в [отчёте пакета](evidence/updates/HEADLESS-AUTO-LOGIN-DISPATCH-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

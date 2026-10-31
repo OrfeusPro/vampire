@@ -25,7 +25,10 @@ def load_tests(loader, tests, pattern):
             'test_vampir_native_login_composition_adapter','test_vampir_login_registration_rules',
             'test_vampir_login_registration_case_contracts','test_vampir_native_login_registration_adapter',
             'test_vampir_login_container_rules','test_vampir_native_login_container_adapter',
-            'test_vampir_login_container_case_contracts','test_vampir_login_container_harness'):
+            'test_vampir_login_container_case_contracts','test_vampir_login_container_harness',
+            'test_vampir_login_dispatch_rules','test_vampir_native_login_dispatch_adapter',
+            'test_vampir_login_dispatch_case_contracts','test_vampir_login_dispatch_handler_fixtures',
+            'test_vampir_login_dispatch_harness'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

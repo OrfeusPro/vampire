@@ -11510,7 +11510,20 @@
         "phone-exit/bots/test_vampir_login_container_rules.py",
         "phone-exit/bots/test_vampir_native_login_container_adapter.py",
         "phone-exit/bots/test_vampir_login_container_case_contracts.py",
-        "phone-exit/bots/test_vampir_login_container_harness.py"
+        "phone-exit/bots/test_vampir_login_container_harness.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-rules.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-dispatch.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/login-dispatch-handler-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-dispatch-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-dispatch-harness.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-dispatch-11322.json",
+        "phone-exit/bots/test_vampir_login_dispatch_rules.py",
+        "phone-exit/bots/test_vampir_native_login_dispatch_adapter.py",
+        "phone-exit/bots/test_vampir_login_dispatch_case_contracts.py",
+        "phone-exit/bots/test_vampir_login_dispatch_handler_fixtures.py",
+        "phone-exit/bots/test_vampir_login_dispatch_harness.py"
       ],
       "artifact_dependencies": []
     }
