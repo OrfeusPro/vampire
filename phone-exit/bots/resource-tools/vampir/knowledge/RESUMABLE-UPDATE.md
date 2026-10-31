@@ -195,6 +195,22 @@ post-state / continuation и онлайн требуют собственных 
 (77.785473 с); reports и кэш-метрики сохранены в отчёте.
 [Области и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-REGISTRATION-11322.md).
 
+`container-v1` / `login-container` добавляет native insert, whole chained rehash,
+name getter и signed-byte ANSI → UTF-16 constructor к готовому registration helper.
+Пять roots проверяются целиком; ID 4 leaf исполняется, owner/window и dispatch —
+нет. Новый native report обязателен даже при bootstrap на том же SHA.
+После публикации proved роль заменяет reference seed; старый однофункциональный
+report не расширяет свой scope. Указатель — `generated-login-container/index.json`.
+
+Parent validation memo хранится только в текущем SourceStore: точные роли
+context / report, source, tools и полная lineage участвуют в ключе. При обращении
+снова сверяются SHA материалов; изменение или повреждение не даёт cache hit.
+Isolated namespace не наследует направленный memo frozen input recipe.
+Source barrier в конце прохода сохраняется; memo не переносится в другой проход.
+120 native сценариев и 655 тестов прошли. Общий повтор 27 drivers использовал
+81 этап и 27 публикаций из кэша без native / JVM / PE rebuild (93.517172 с).
+[Области и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-CONTAINER-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

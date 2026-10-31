@@ -32,6 +32,7 @@ INDEXES = {
     'login-full-handler': 'generated-login-full',
     'login-response-composition': 'generated-login-composition',
     'login-registration': 'generated-login-registration',
+    'login-container': 'generated-login-container',
 }
 MODULES = {
     'string-writer': 'update-native-string-writer', 'archive-wire': 'update-native-archive-wire',
@@ -45,8 +46,9 @@ MODULES = {
     'login-full-handler': 'update-native-login-full',
     'login-response-composition': 'update-native-login-composition',
     'login-registration': 'update-native-login-registration',
+    'login-container': 'update-native-login-container',
 }
-MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full', 'update-native-login-composition', 'update-native-login-registration'}
+MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full', 'update-native-login-composition', 'update-native-login-registration', 'update-native-login-container'}
 
 
 def canonical(value):

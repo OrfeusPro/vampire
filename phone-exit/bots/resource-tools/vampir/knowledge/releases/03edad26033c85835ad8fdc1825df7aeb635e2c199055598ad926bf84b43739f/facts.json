@@ -511,6 +511,42 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Real container insert и name getter/ownership, lookup/entry/wrapper и native dispatch текущего LoginResult. Native post-state/continuation имеют отдельные reports, но в composition suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Скорость холодной публикации с повторной проверкой child proofs, глобального индекса и новая версия input seed с ordered baseline/target memo key остаются инфраструктурными задачами."
+    },
+    {
+      "addresses": [
+        "0x1414269b0",
+        "0x1456e6290",
+        "0x1467b77e0",
+        "0x1467cebc0",
+        "0x1467ceeb0"
+      ],
+      "checks": [],
+      "conclusion": "Реальные native insert/rehash/name getter и signed-byte constructor с helper подключены к update/cache: 120 случаев, 5 whole roots / 556 instructions / 2087 bytes + ID 4. Native tuple before name replacement и cleanup имени проверены; storage/UTF8/services fixtures, dispatch/online открыты. Общий повтор 27 drivers reused 81 stages / 27 publications без JVM/native/PE rebuild (93.517172 с). Профиль и сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-CONTAINER-11322.md",
+          "sha256": "47b2a91fa3af7759499c19e09772fd265e43763500311a1c0c1e968765f810a5"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-CONTAINER-11322.json",
+          "sha256": "2d57c9aeecc2336f2c3ac9fd06cb087b5f006c54104666a2db64279dc42c9755"
+        }
+      ],
+      "id": "7b6efd58a09831eb656a576edb03ad6f4c10dff42ce6b6a01d65ae711511fddf",
+      "limits": [
+        "Five whole native roots and the actual ID4 leaf execute; owner/window, packet constructor, handler and dispatch do not.",
+        "Node allocation/sized free, vector storage reset and fresh FString reserve are explicit storage fixtures; native OS allocators are not executed.",
+        "The native name getter consumes the observed insertion outpair, constructs a fresh signed-ANSI UTF16 descriptor, and diagnostic cleanup frees that name allocation only.",
+        "FString grow/fatal/negative-length and OOM outcomes are not admitted by the bounded matrix. UTF8 conversion, logger and security effects remain fixtures.",
+        "Valid unique maps with initial size at most 8 and resulting size at most 9; malformed maps and concurrent mutations are outside this report.",
+        "The allocation request is 344 bytes; 352-byte reference storage, 72-byte owner and 40-byte node extents are distinct.",
+        "Selected driver measurements exclude prepare/collect and the global historical index integrity audit."
+      ],
+      "method": "static",
+      "next_check": "Проверить source-bound lookup/dispatch candidates 0x1467c9240/0x1467c8f00 текущего SHA и связать с готовыми container и reader→handler proofs; затем TLS/archive cleanup, post-state/continuation integration и clock/world. Готовые 28 bounded семейств (27 drivers и UTF-8) использовать через proofs/reports/cache.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Current-SHA lookup/entry/wrapper и native dispatch текущего LoginResult, связь реального container с reader→handler, TLS/archive cleanup. Native post-state/continuation имеют отдельные reports, но в composition suite остаются fixtures. Clock/heartbeat/world, настоящий SDK backend/providers и целый онлайн-вход 1.13.22 открыты. Глобальный индекс, холодная публикация других frozen families и новая версия input seed с ordered baseline/target memo key остаются инфраструктурными задачами."
     }
   ],
   "schema": 1,

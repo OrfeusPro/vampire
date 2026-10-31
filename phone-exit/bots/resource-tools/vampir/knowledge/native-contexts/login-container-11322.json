@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "family": "login-container",
+  "format": "reference-registration-container",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "functions": {
+    "register": "0x1467cebc0",
+    "insert": "0x1467b77e0",
+    "name_getter": "0x1456e6290",
+    "rehash": "0x1467ceeb0",
+    "string_constructor": "0x1414269b0"
+  },
+  "bindings": {
+    "allocate": "0x14690be10",
+    "handler": "0x14679e320",
+    "handler_table": "0x149dc93d8",
+    "id_getter": "0x141453ca0",
+    "insert": "0x1467b77e0",
+    "name_getter": "0x1456e6290",
+    "owner": "0x1467b8040",
+    "packet_constructor": "0x1456d76b0",
+    "packet_table": "0x149929050",
+    "register": "0x1467cebc0"
+  },
+  "leaves": {
+    "0x141453ca0": "b804000000c3"
+  },
+  "fixtures": {
+    "diagnostic_allocate": "0x141436d20",
+    "free": "0x1414830e0",
+    "log": "0x1445e0d10",
+    "security": "0x1487ebec0",
+    "utf8_convert": "0x141446650",
+    "utf8_length": "0x14144c5b0",
+    "node_allocate": "0x14690be10",
+    "node_free": "0x141431fe0",
+    "bucket_reset": "0x1458e9230",
+    "container_failure": "0x1487f7f66",
+    "name_reserve": "0x1414380b0",
+    "name_grow": "0x1414379d0",
+    "name_failure": "0x141431a70"
+  },
+  "fixture_boundaries": {
+    "diagnostic_allocate": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "40534883ec20488bd9488b094885c975",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x141436d20",
+        "end": "0x141436d70"
+      }
+    },
+    "free": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "4885c9742e534883ec20488bd9488b0d",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1414830e0",
+        "end": "0x141483114"
+      }
+    },
+    "log": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "4c894424184c894c2420555356574154",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1445e0d10",
+        "end": "0x1445e0fc9"
+      }
+    },
+    "security": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "483b0d3987a802751048c1c11066f7c1",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1487ebec0",
+        "end": "0x1487ebede"
+      }
+    },
+    "utf8_convert": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48894c2408534883ec2089542438458b",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x141446650",
+        "end": "0x1414466fe"
+      }
+    },
+    "utf8_length": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48895c24084533d24c8bda41b9ffffff",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x14144c5b0",
+        "end": "0x14144c72b"
+      }
+    },
+    "node_allocate": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "4885c9b801000000ba10000000480f45",
+      "section": ".text"
+    },
+    "node_free": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "e9fb100500cccccccccccccccccccccc",
+      "section": ".text"
+    },
+    "bucket_reset": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48895c24204c8944241841564883ec20",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1458e9230",
+        "end": "0x1458e926a"
+      }
+    },
+    "container_failure": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "ff25145f1a00ff25ee5e1a00cccc4053",
+      "section": ".text"
+    },
+    "name_reserve": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48895c2408574883ec304863da488bf9",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1414380b0",
+        "end": "0x141438112"
+      }
+    },
+    "name_grow": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "48895c24084889742410574883ec3048",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x1414379d0",
+        "end": "0x141437a60"
+      }
+    },
+    "name_failure": {
+      "kind": "unexecuted-code-entry-fixture",
+      "prefix_bytes": "4883ec284c8bc94c8d05c2635b07488d",
+      "section": ".text",
+      "unwind": {
+        "begin": "0x141431a70",
+        "end": "0x141431a92"
+      }
+    }
+  },
+  "globals": {
+    "cookie": "0x14b274600"
+  },
+  "literals": {
+    "empty_utf16": {
+      "address": "0x1489e4c34",
+      "bytes": "0000"
+    },
+    "log_format": {
+      "address": "0x149dc8a40",
+      "bytes": "696e76616c6964207061636b657449642820256420292c207061636b65744e616d6528202573202900"
+    },
+    "log_owner": {
+      "address": "0x149dcbfd0",
+      "bytes": "5061636b6574446973706174636865723a3a5f4164645061636b657448616e646c657200"
+    }
+  },
+  "extra_data": {
+    "insert_scale": {
+      "address": "0x148a54dc4",
+      "bytes": "0000005f"
+    },
+    "insert_failure": {
+      "address": "0x149986708",
+      "bytes": "756e6f7264657265645f6d61702f73657420746f6f206c6f6e6700"
+    },
+    "rehash_failure": {
+      "address": "0x149986728",
+      "bytes": "696e76616c69642068617368206275636b657420636f756e7400"
+    },
+    "packet_name": {
+      "address": "0x1499290a0",
+      "bytes": "506b744c6f67696e526573756c7400"
+    }
+  },
+  "call_sites": {
+    "register": {
+      "0x1467cebfb": "qword ptr [rax + 0x28]",
+      "0x1467cec1b": "0x1467b77e0",
+      "0x1467cec3e": "qword ptr [rax + 0x38]",
+      "0x1467cec81": "0x14144c5b0",
+      "0x1467cecb1": "0x141436d20",
+      "0x1467cecd3": "0x141446650",
+      "0x1467cece2": "qword ptr [rax + 0x28]",
+      "0x1467ced01": "0x1445e0d10",
+      "0x1467ced17": "0x1414830e0",
+      "0x1467ced26": "0x1414830e0",
+      "0x1467ced32": "0x1487ebec0"
+    },
+    "insert": {
+      "0x1467b780c": "0x14690be10",
+      "0x1467b78a4": "0x141431fe0",
+      "0x1467b79e2": "0x1467ceeb0",
+      "0x1467b7ad2": "0x1487f7f66"
+    },
+    "name_getter": {
+      "0x1456e62a3": "0x1414269b0"
+    },
+    "rehash": {
+      "0x1467cef07": "0x1458e9230",
+      "0x1467cf057": "0x1487f7f66"
+    },
+    "string_constructor": {
+      "0x141426a0a": "0x1414380b0",
+      "0x141426a27": "0x1414379d0",
+      "0x141426b80": "0x141431a70"
+    }
+  },
+  "registration_context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\ded1d170ce754edd0215fc6fb06d89717a7bdbec0b55e8feed906250cd89de3e\\manifest.json",
+    "sha256": "ded1d170ce754edd0215fc6fb06d89717a7bdbec0b55e8feed906250cd89de3e"
+  },
+  "packet_bytes": 352,
+  "packet_allocation_bytes": 344,
+  "owner_bytes": 72,
+  "node_bytes": 40,
+  "verify_whole_exports": true,
+  "exports": {
+    "run-c9f35d32258c": "5e13729b560181f6112e6a25ca0e40a9e1bcabac42ca289722ad2dea2f0c2d0a",
+    "run-a8254882183e": "ee95ca6fcfb0ad6b67c2ea7155cc432b9a8b7f6773d469fae5a7eeefeab686e9"
+  },
+  "provenance": {
+    "kind": "reference_only_no_native_proof",
+    "registration": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\ded1d170ce754edd0215fc6fb06d89717a7bdbec0b55e8feed906250cd89de3e\\manifest.json",
+      "sha256": "ded1d170ce754edd0215fc6fb06d89717a7bdbec0b55e8feed906250cd89de3e"
+    },
+    "registration_check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\40bd809a66a71d7c0b019461f09a349a38cb0726d593f1621e66b7502baa1001\\manifest.json",
+      "sha256": "40bd809a66a71d7c0b019461f09a349a38cb0726d593f1621e66b7502baa1001"
+    }
+  }
+}

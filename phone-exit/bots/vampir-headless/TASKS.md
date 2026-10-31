@@ -22,6 +22,8 @@ exports и проверки вручную не повторять. Счётчи
   внутри замороженного прохода через новый recipe / memo с полными зависимостями.
   Сохранить проверку tools / lineage и конечный source barrier; прежние proof
   engines не менять. Сравнить замеры до / после по отчёту registration.
+  Для нового container recipe проверка родителя уже имеет SourceStore-local memo;
+  остальные frozen families требуют отдельной новой версии, без переписывания proofs.
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный
@@ -84,12 +86,26 @@ handler scope; композиция с reader и регистрационный 
 а не размер запроса клиента.
 34 native сценария и 602 теста прошли. Общий повтор 26 drivers использовал
 78 этапов и 26 публикаций из кэша без native / JVM / PE rebuild
-(77.785473 с). Реальные container insert, name getter / ownership,
+(77.785473 с). Реальные insert и name getter проверяются новым пакетом ниже;
 native dispatch и онлайн остаются открытыми.
 
-Далее реальный container insert и name getter / ownership, затем native dispatch
-с готовой reader → handler композицией. Статическое окно и отдельный helper
-не подтверждают native owner, конструктор пакета или доставку ответа.
+[Реальная вставка, rehash и владение именем Login](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-CONTAINER-11322.md)
+подключены отдельным `container-v1` / `login-container`: пять целых функций,
+556 инструкций / 2087 байт и ID 4 leaf. Матрица содержит 120 сценариев:
+68 constructor, 4 getter, 24 insert, 12 rehash и 12 совместных проверок.
+Owner занимает 72 байта, контейнер — 64, node — 40; запрос packet 344 байта
+отделён от проверочной области 352 байта. Native name getter заменяет insert
+outpair строковым descriptor; cleanup освобождает новое имя, сохраняя
+node / packet / handler. Storage reset / allocation / free / reserve, UTF-8,
+logger и security сохраняют явные fixture-границы.
+120 native сценариев и 655 тестов прошли. Общий повтор 27 drivers использовал
+81 этап и 27 публикаций из кэша без native / JVM / PE rebuild
+(93.517172 с). Dispatch, TLS / archive cleanup и онлайн остаются открытыми.
+
+Далее source-bound lookup / entry / wrapper и native dispatch с готовыми
+контейнером и reader → handler композицией, затем TLS / archive cleanup.
+Статическое окно и bounded storage fixtures не подтверждают native owner,
+конструктор пакета или целую онлайн-сессию.
 Недостающую integration post-state / continuation проверять отдельно; готовые
 reports переиспользовать по целевому SHA. Clock / heartbeat, world, настоящий
 SDK backend и полный вход открыты.

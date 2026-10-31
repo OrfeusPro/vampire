@@ -130,6 +130,11 @@
       "id": "native-auto-login-registration",
       "family": "login-registration",
       "adapter": "registration-v1"
+    },
+    {
+      "id": "native-auto-login-container",
+      "family": "login-container",
+      "adapter": "container-v1"
     }
   ]
 }

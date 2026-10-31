@@ -11499,7 +11499,18 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-registration-11318.json",
         "phone-exit/bots/test_vampir_login_registration_rules.py",
         "phone-exit/bots/test_vampir_login_registration_case_contracts.py",
-        "phone-exit/bots/test_vampir_native_login_registration_adapter.py"
+        "phone-exit/bots/test_vampir_native_login_registration_adapter.py",
+        "phone-exit/bots/resource-tools/vampir/login-container-rules.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-container.py",
+        "phone-exit/bots/resource-tools/vampir/login-container-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-container-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-container-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-container-harness.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-container-11322.json",
+        "phone-exit/bots/test_vampir_login_container_rules.py",
+        "phone-exit/bots/test_vampir_native_login_container_adapter.py",
+        "phone-exit/bots/test_vampir_login_container_case_contracts.py",
+        "phone-exit/bots/test_vampir_login_container_harness.py"
       ],
       "artifact_dependencies": []
     }

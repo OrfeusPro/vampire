@@ -63,7 +63,7 @@ class AdapterDriverTests(unittest.TestCase):
                     tools=lambda:dict(revision=versions[family]),
                     materialize=lambda *args:dict(checks=[dict(id=spec['id'],revision=versions[family])],queue=[]),
                     execute=execute,publish=lambda *args:None)
-            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS if spec['adapter'] not in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1','response-v1','login-full-v1','login-composition-v1','registration-v1')}
+            modules={driver.MODULES[spec['adapter']]:tool(spec) for spec in driver.SPECS if spec['adapter'] not in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1','response-v1','login-full-v1','login-composition-v1','registration-v1','container-v1')}
             modules['update-native-version-helpers']=SimpleNamespace(select=lambda family:tool(next(
                 spec for spec in driver.SPECS if spec['family']==family)))
             modules['update-native-login-metadata']=modules['update-native-version-helpers']
@@ -73,6 +73,7 @@ class AdapterDriverTests(unittest.TestCase):
             modules['update-native-login-full']=modules['update-native-version-helpers']
             modules['update-native-login-composition']=modules['update-native-version-helpers']
             modules['update-native-login-registration']=modules['update-native-version-helpers']
+            modules['update-native-login-container']=modules['update-native-version-helpers']
             modules.update({'research-workflow':workflow,'update-run':SimpleNamespace(collect_batches=lambda *args:[]),
                 'native-publication-cache':mocked_publication_cache(),
                 'update-native-harness':SimpleNamespace(runtime_inputs=lambda:{})})
