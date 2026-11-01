@@ -165,8 +165,9 @@ validated / receipts_written и source-store counters. Поле seconds — вр
 48 точных сценариев. Разовый legacy import не означает неизменность handler;
 обязателен новый target report. Дальнейший перенос использует весь проверенный
 current handler и независимые target dependencies. Указатель публикации —
-`generated-login-full/index.json`. Reader, post-state / continuation integration,
-реальная регистрация в контейнере и допуск онлайн отдельны.
+`generated-login-full/index.json`. Интеграции reader / post-state / continuation
+и регистрация подтверждены отдельными пакетами ниже. Допуск онлайн остаётся
+отдельным результатом.
 [Правило и замеры](evidence/updates/HEADLESS-AUTO-LOGIN-FULL-11322.md).
 
 Same-packet композиция доступна как `login-composition-v1` /
@@ -187,8 +188,9 @@ native dispatch этим не подтверждается. Новая опуб�
 и их границы не переписываются. Конструктор, owner, container insert, name getter,
 UTF-8 conversion и внешние сервисы не исполняются этим пакетом. Name fixture
 возвращает отдельный descriptor и сохраняет outparam; cleanup текущего указателя
-не подтверждает реальное владение исходным packet. Native dispatch, integration
-post-state / continuation и онлайн требуют собственных доказательств.
+не подтверждает реальное владение исходным packet. Native dispatch и
+post-state / continuation подтверждены отдельными пакетами ниже; онлайн требует
+собственного доказательства.
 Указатель публикации — `generated-login-registration/index.json`; это не next-profile.
 34 новых native сценария и 602 tooling теста прошли. Общий повтор 26 drivers
 использовал 78 этапов и 26 публикаций из кэша без native / JVM / PE rebuild
@@ -231,6 +233,22 @@ integrity, SEH и целая онлайн-сессия этим scope не по�
 84 этапа и 28 публикаций из кэша без native / JVM / PE rebuild
 (81.942016 с). Итоговые reports и замеры сохранены
 в [отчёте пакета](evidence/updates/HEADLESS-AUTO-LOGIN-DISPATCH-11322.md).
+
+`state-flow-v1` / `login-state-flow` продолжает native dispatch / reader /
+handler через post-state wrapper / getter / target и continuation getter /
+source vtable `+0x28` / reset. Singleton публикует native constructor до доставки;
+providers задают только ambient условия. Packet, decoded strings и registry
+не reseed-ятся при входе в handler. Допуск — 33 whole roots / 14 leaves;
+standalone lookup повторно не исполняется и отмечен `native_lookup_used=false`.
+Пять zero-fill globals проверяются по PE virtual spans с отдельной шириной.
+
+Три доказанные parent roles выбираются отдельно по точному SHA и semantic report.
+Новый proof и native report обязательны; reference seed не выдаётся за результат.
+Index — `generated-login-state-flow/index.json`, без назначения next-profile.
+325 native сценариев и 773 теста прошли. Общий повтор 29 drivers использовал
+87 этапов и 29 публикаций из кэша без native / JVM / PE rebuild
+(150.653545 с). Пять готовых exports переиспользованы без JVM.
+[Матрица, providers, доказательства и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-STATE-FLOW-11322.md).
 
 ## Журналы и дальнейшая работа
 

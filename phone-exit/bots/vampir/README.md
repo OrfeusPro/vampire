@@ -60,7 +60,7 @@ PE rebuild. Полный handler и композиция с reader описан�
 [Общий result gate и post-state](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESPONSE-11322.md)
 подключены к автомату: 16 полных gate + 227 indexed selections и 44 post-state
 сценария. Общий повтор 23 drivers использовал 69 этапов и 23 публикации из кэша,
-без JVM / native / PE rebuild. Это отдельный gate / post-state scope; integration post-state открыта.
+без JVM / native / PE rebuild. Это отдельный gate / post-state scope; интеграция описана новым пакетом ниже.
 
 [Полный LoginResult handler и native gate](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-FULL-11322.md)
 подключены к автомату: 48 сценариев над синтетическим пакетом 352 байта, включая
@@ -119,6 +119,23 @@ heap / storage и игровые сервисы остаются fixtures; input
 107 native сценариев и 701 тест прошли. Общий повтор 28 drivers использовал
 84 этапа и 28 публикаций из кэша без native / JVM / PE rebuild
 (81.942016 с).
+
+[Post-state и continuation в native доставке LoginResult](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-STATE-FLOW-11322.md)
+подключены как `state-flow-v1` / `login-state-flow`: 325 сценариев связывают
+dispatch → reader → handler с исходными wrapper / getter / vtable reset.
+Continuation singleton публикует native constructor; providers готовятся до
+доставки, вход в handler их не перезаписывает. Допуск содержит 33 целые функции
+и 14 leaves; standalone lookup уже доказан дочерним пакетом и здесь не повторяется.
+Пять virtual-tail globals проверяются по PE span и ширине; backend / actor /
+container helper effects сохраняют явные fixture-границы.
+325 native сценариев и 773 теста прошли. Общий повтор 29 drivers использовал
+87 этапов и 29 публикаций из кэша без native / JVM / PE rebuild
+(150.653545 с). Все 5 экспортов исследования переиспользованы без JVM.
+
+Далее — Login prepare metadata → wire: 24 готовые whole roots / 9 leaves,
+один missing export sender. Реальные send / transport effects, Version sender,
+clock / heartbeat / world и current entry admission остаются открытыми.
+Профиль, соединение и игровые команды этим offline пакетом не изменяются.
 
 ## Сохранённые записи прежних этапов
 

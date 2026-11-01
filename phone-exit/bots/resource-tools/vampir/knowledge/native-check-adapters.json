@@ -140,6 +140,11 @@
       "id": "native-auto-login-dispatch",
       "family": "login-dispatch",
       "adapter": "dispatch-v1"
+    },
+    {
+      "id": "native-auto-login-state-flow",
+      "family": "login-state-flow",
+      "adapter": "state-flow-v1"
     }
   ]
 }

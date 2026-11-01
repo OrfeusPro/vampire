@@ -11523,7 +11523,23 @@
         "phone-exit/bots/test_vampir_native_login_dispatch_adapter.py",
         "phone-exit/bots/test_vampir_login_dispatch_case_contracts.py",
         "phone-exit/bots/test_vampir_login_dispatch_handler_fixtures.py",
-        "phone-exit/bots/test_vampir_login_dispatch_harness.py"
+        "phone-exit/bots/test_vampir_login_dispatch_harness.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-rules.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-state-flow.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-handler-fixtures.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-native-providers.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-state-flow-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-state-flow-harness.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-state-flow-11322.json",
+        "phone-exit/bots/test_vampir_login_state_flow_rules.py",
+        "phone-exit/bots/test_vampir_native_login_state_flow_adapter.py",
+        "phone-exit/bots/test_vampir_login_state_flow_case_contracts.py",
+        "phone-exit/bots/test_vampir_login_state_flow_handler_fixtures.py",
+        "phone-exit/bots/test_vampir_login_state_flow_harness.py",
+        "phone-exit/bots/resource-tools/vampir/login-state-flow-diagnostics.py",
+        "phone-exit/bots/test_vampir_login_state_flow_diagnostics.py"
       ],
       "artifact_dependencies": []
     }
