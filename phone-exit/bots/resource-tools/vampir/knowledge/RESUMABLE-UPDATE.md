@@ -250,6 +250,24 @@ Index — `generated-login-state-flow/index.json`, без назначения n
 (150.653545 с). Пять готовых exports переиспользованы без JVM.
 [Матрица, providers, доказательства и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-STATE-FLOW-11322.md).
 
+`send-handoff-v1` / `login-send-handoff` связывает native Login prepare /
+SDK / metadata с целым sender и source getter. 896 сценариев покрывают четыре
+pending состояния над 224 различными подготовленными входами; прежняя фиктивная
+ось `send_return=0/1` не повторяется. Source sender проверяет short ID, выбирает
+timeout из session при пятом float32 аргументе 0 и передаёт тот же packet сервису
+через virtual slot `+0x38`. При hit insert / delegate / getter / sink пропускаются.
+Доказательство ограничено 12 whole roots / 7 leaves, packet 320 и session 160 байт.
+
+Service vtable / sink синтетические, pending insert и delegate effects — fixtures.
+Исходного перехода к writer внутри этого sender нет; schema wire role остаётся
+отдельной доказанной зависимостью. Real service / queue ownership / serialization
+требуют следующего пакета. Новая роль публикуется в
+`generated-login-send-handoff/index.json`, без next-profile или допуска онлайн.
+Проверки: 896 native случаев и 815 тестов. Общий повтор 30 drivers использовал
+90 этапов и 30 публикаций из кэша без native / JVM / PE rebuild
+(140.784932 с).
+[Матрица, source boundaries и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-SEND-HANDOFF-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

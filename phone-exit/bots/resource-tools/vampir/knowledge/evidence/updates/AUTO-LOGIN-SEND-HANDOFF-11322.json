@@ -1,0 +1,441 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "family": "login-send-handoff",
+  "adapter": "send-handoff-v1",
+  "context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\4c34e0f60a81c6ddf78550c6d11aab235bf8a0204130e3aedf0d929a49005f8a\\manifest.json",
+    "sha256": "4c34e0f60a81c6ddf78550c6d11aab235bf8a0204130e3aedf0d929a49005f8a"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-send-handoff-proofs\\b50a6f9b52e07a910e8efe025d5d7aefa2b0168752ad4154d4ea4656a2cb0d3c\\manifest.json",
+    "sha256": "b50a6f9b52e07a910e8efe025d5d7aefa2b0168752ad4154d4ea4656a2cb0d3c"
+  },
+  "native_check": {
+    "id": "native-auto-login-send-handoff",
+    "profile_activated": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\b95486a4d70cf2d09edd34feb23d498df7a5938c1592afe0386f4e320314e8d1\\manifest.json",
+    "runtime_activated": false,
+    "scope": "bounded_native_login_send_handoff",
+    "sha256": "b95486a4d70cf2d09edd34feb23d498df7a5938c1592afe0386f4e320314e8d1",
+    "state": "passed"
+  },
+  "runtime": {
+    "capstone": {
+      "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+      "version": "5.0.6"
+    },
+    "unicorn": {
+      "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+      "version": "2.1.4"
+    }
+  },
+  "native_cases": 896,
+  "unique_prepared_inputs": 224,
+  "prior_prepare_rows": 448,
+  "case_groups": {
+    "forwarded": 672,
+    "pending_hit": 224
+  },
+  "pending_cases": [
+    "empty-count-equal",
+    "inline-bucket-miss",
+    "heap-chain-miss",
+    "heap-chain-hit"
+  ],
+  "admitted_roots": {
+    "constructor": "0x1456d7590",
+    "metadata.collector": "0x14560b0c0",
+    "metadata.copy": "0x145601580",
+    "metadata.loader": "0x14560a670",
+    "metadata.move": "0x145600cf0",
+    "metadata.selector": "0x145601830",
+    "metadata.writer": "0x144557b60",
+    "prepare": "0x1467d1530",
+    "sdk.sdk_main_text": "0x14560b060",
+    "sdk.sdk_mode": "0x14560aec0",
+    "sdk.sdk_value": "0x145609e40",
+    "sender": "0x144aae9f0"
+  },
+  "admitted_leaves": {
+    "0x144ab0d30": "488b054942ae06c3",
+    "0x144ab0d70": "488b41108b8070020000c3",
+    "0x144ffe510": "0fb64139c3",
+    "0x14556ae60": "488b05a1c70706c3",
+    "0x14560ad70": "488b05c9dffd05c3",
+    "0x145cc9f10": "488b05a9a59205c3",
+    "0x145cd0780": "807908030f94c0c3"
+  },
+  "admitted_root_count": 12,
+  "admitted_leaf_count": 7,
+  "sender_instructions": 64,
+  "sender_bytes": 250,
+  "observed_calls": {
+    "sender_calls": 896,
+    "sender_returns": 896,
+    "pending_insert_calls": 672,
+    "delegate_calls": 672,
+    "service_getter_calls": 672,
+    "sink_calls": 672,
+    "source_virtual_calls": 672
+  },
+  "packet_bytes": 320,
+  "session_bytes": 160,
+  "sender": {
+    "address": "0x144aae9f0",
+    "callsite": "0x1467d19d5",
+    "delegate_add": "0x144aae240",
+    "delegate_literal": "0x141428ac8",
+    "fifth_argument_bits": 0,
+    "pending_insert": "0x144aae010",
+    "service_getter": "0x144ab0d30",
+    "service_global": "0x14b594f80",
+    "virtual_callsite": "0x144aaead6",
+    "virtual_slot": 56
+  },
+  "source_inputs": {
+    "delegate_callback": {
+      "address": "0x141428ac8",
+      "bytes": "488b01ff6008cccc"
+    },
+    "send_argument": {
+      "address": "0x1496731d8",
+      "bytes": "0000000000000000"
+    },
+    "service_global": {
+      "address": "0x14b594f80",
+      "size_bytes": 8,
+      "span": {
+        "name": ".data",
+        "raw": 185338880,
+        "raw_size": 2010112,
+        "rva": 185344000,
+        "size": 6187164
+      }
+    }
+  },
+  "dependency_contexts": {
+    "prepare": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\b79a13a01ace511f77bde86a2dace924611add382c1929f01ad4220c26f9a918\\manifest.json",
+      "sha256": "b79a13a01ace511f77bde86a2dace924611add382c1929f01ad4220c26f9a918"
+    },
+    "wire": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd\\manifest.json",
+      "sha256": "5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd"
+    }
+  },
+  "dependency_checks": {
+    "prepare": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\7ea1655e26e26c52cff02a8b0acdf635ed307a619860b4c1269d5a42f54c661f\\manifest.json",
+      "sha256": "7ea1655e26e26c52cff02a8b0acdf635ed307a619860b4c1269d5a42f54c661f"
+    },
+    "wire": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af\\manifest.json",
+      "sha256": "e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af"
+    }
+  },
+  "installed_sha256_after_processing": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-send-handoff-acceptance\\ee24547bd88952c900e9b7d733ce3c1f2dfb54fa9045317f908e2dbe5206d115\\manifest.json",
+    "sha256": "ee24547bd88952c900e9b7d733ce3c1f2dfb54fa9045317f908e2dbe5206d115"
+  },
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-login-send-handoff-combined-acceptance\\41b0944485559b0631001cfa8722ad19034d9166cdbadae0309d9a73c1f79541\\manifest.json",
+    "sha256": "41b0944485559b0631001cfa8722ad19034d9166cdbadae0309d9a73c1f79541"
+  },
+  "acceptance_runner": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\run-login-send-handoff-acceptance.py",
+    "sha256": "8f25531bb5d0abb7bdfb2a65257709a8921ad93f3f27b66b5a36ac3bea5168e5"
+  },
+  "fresh_args_each_pass": true,
+  "passes": [
+    {
+      "counts": {
+        "native-auto-login-send-handoff": 896
+      },
+      "executed": [
+        "native-plan-login-send-handoff",
+        "native-context-login-send-handoff",
+        "native-check-native-auto-login-send-handoff"
+      ],
+      "native_replays": 1,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 3,
+        "validated": 1
+      },
+      "pass_number": 1,
+      "publication_cache": {
+        "receipts_written": 1,
+        "reused": 0,
+        "runtime_activated": false,
+        "seconds": 560.911648,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 39,
+          "read_workers": 2,
+          "source_cache_hits": 102,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.546998
+        },
+        "validated": 1
+      },
+      "reused": 0,
+      "wall_seconds": 560.943324
+    },
+    {
+      "counts": {
+        "native-auto-login-send-handoff": 896
+      },
+      "executed": [
+        "native-plan-login-send-handoff"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 0,
+        "validated": 1
+      },
+      "pass_number": 2,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 130.133445,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 28,
+          "read_workers": 2,
+          "source_cache_hits": 68,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.456566
+        },
+        "validated": 0
+      },
+      "reused": 2,
+      "wall_seconds": 130.16408
+    },
+    {
+      "counts": {
+        "native-auto-login-send-handoff": 896
+      },
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 0,
+        "validated": 0
+      },
+      "pass_number": 3,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 10.55674,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 66,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.499004
+        },
+        "validated": 0
+      },
+      "reused": 3,
+      "wall_seconds": 10.587279
+    }
+  ],
+  "combined_passes": [
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 29,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 940.137448,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 3,
+          "image_cache_hits": 341,
+          "read_workers": 2,
+          "source_cache_hits": 2072,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.850697
+        },
+        "validated": 29
+      },
+      "reused": 90,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 940.165715
+    },
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 30,
+        "runtime_activated": false,
+        "seconds": 140.766329,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 1401,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.822113
+        },
+        "validated": 0
+      },
+      "reused": 90,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 140.784932
+    }
+  ],
+  "tooling_check": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0279c5ffd806224a27eb51b0df5f177b006b63b5662e67397f28f611cde8b118\\manifest.json",
+    "sha256": "0279c5ffd806224a27eb51b0df5f177b006b63b5662e67397f28f611cde8b118",
+    "cache_key": "b5fb310bde65c41f69c66497d9077e7bce79be346ffd4636edb4c4cb9a10e55a",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "tooling_tests": 815,
+  "tests": {
+    "rule": 6,
+    "adapter": 6,
+    "case_contract": 17,
+    "harness": 13
+  },
+  "collection": {
+    "request": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\e6ed430758c86c633b668753b4fa63bdae7ad739f90b44e344d6c24108fdf863\\manifest.json",
+      "sha256": "e6ed430758c86c633b668753b4fa63bdae7ad739f90b44e344d6c24108fdf863"
+    },
+    "receipt": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\collections\\19655a9a885a0aa68ab4ac0c67a125fc3e730ebfcd7d332229dd2c0bfe70c1d9\\manifest.json",
+      "sha256": "19655a9a885a0aa68ab4ac0c67a125fc3e730ebfcd7d332229dd2c0bfe70c1d9"
+    },
+    "roots": 1,
+    "reused": 0,
+    "missing": 1,
+    "new_jvm": 1
+  },
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-send-handoff-input-freezes\\5a189cce8c8337afe1c9b02b4918a3ae38a2d73f18ba50188f7462456e12e2ad\\manifest.json",
+    "sha256": "5a189cce8c8337afe1c9b02b4918a3ae38a2d73f18ba50188f7462456e12e2ad"
+  },
+  "checkout_byte_hashes_verified": 38,
+  "next_package": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-plans\\a3e3052f6f903ee87f07b6152256988280c47365eb0571ea8a3004127f981fb0\\manifest.json",
+    "sha256": "a3e3052f6f903ee87f07b6152256988280c47365eb0571ea8a3004127f981fb0"
+  },
+  "tool_closure_correction": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-send-handoff-corrections\\9f5ace19562908f855bea9f8f43394047869425e0a9b797327105c81c5cba54e\\manifest.json",
+    "sha256": "9f5ace19562908f855bea9f8f43394047869425e0a9b797327105c81c5cba54e"
+  },
+  "warm_source_metrics": {
+    "artifact_cache_hits": 0,
+    "artifact_reads": 0,
+    "image_builds": 0,
+    "image_cache_hits": 0,
+    "read_workers": 2,
+    "source_cache_hits": 1401,
+    "source_reads": 3,
+    "validation_reads": 3,
+    "validation_seconds": 0.822113
+  },
+  "prior_native_suites_replayed": 0,
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "source_tools": {
+    "update-native-login-send-handoff.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-native-login-send-handoff.py",
+      "sha256": "dd8a89cde1a8388d6708f3621461784db862296dfe19a678bf592b7ea0df4e81"
+    },
+    "login-send-handoff-rules.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\login-send-handoff-rules.py",
+      "sha256": "8f35e7677af4cc1e135e44f4e2f8fc9879bcabadfa7276d46514b77d99593084"
+    },
+    "login-send-handoff-case-contracts.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\login-send-handoff-case-contracts.py",
+      "sha256": "ace2a35d01970caf8a69ef249e9e14b8eca56bb5b3d9b3fa1e893a135d437a76"
+    },
+    "login-send-handoff-oracle.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\login-send-handoff-oracle.py",
+      "sha256": "e828092cff3740e0ac818d40b43d5fdfcfdcafdbe5d61ee5490aab1b7f2aeabd"
+    },
+    "login-send-handoff-runtime.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\login-send-handoff-runtime.py",
+      "sha256": "9e0a52a853122505c9de07c825b07f893944b578fb4e2a16e32629d9eae16a40"
+    },
+    "verify-login-send-handoff-context.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\verify-login-send-handoff-context.py",
+      "sha256": "6cd3845b96f29d7665241acbbd5152e182044efbb788e9ab5850d8f044f5dd5f"
+    },
+    "verify-login-send-handoff-harness.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\verify-login-send-handoff-harness.py",
+      "sha256": "d34712007ddef39d41ef928841ccf1f67a5a283c640a7a731698ee238ee885f5"
+    },
+    "update-native-drivers.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-native-drivers.py",
+      "sha256": "4ea7571baad1c6e908b668aedd43b0c7f833feb6b5f117fd9d0c3243d4cf8ffe"
+    },
+    "native-publication-cache.py": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\native-publication-cache.py",
+      "sha256": "91d845f30d702c3c0f2ff1927fc69cbb8829fd873aa143f731b78d030f70c93f"
+    }
+  },
+  "limits": [
+    "Whole preparation/constructor, three SDK getters, six metadata roots and sender execute native source instructions; seven returning leaves include the service getter.",
+    "The sender duplicate gate, default-timeout fallback and virtual service call execute natively over synthetic pending state.",
+    "Pending insert, delegate/add and the synthetic service vtable sink are explicit fixtures. The service vtable is not claimed to come from native source.",
+    "The sink observes the same prepared packet and UTF-16 strings; it serializes or emits no bytes. Parent wire evidence is a separate schema/reference dependency.",
+    "SDK/backend/provider, map/variant/string-storage, allocation/destructor, notifications and import/security effects remain bounded fixtures.",
+    "No native wire, framing/integrity, transport, server acceptance, Version send, responses, clock/heartbeat/world, authorization, profile activation or online session proof.",
+    "Driver timings exclude prepare/collect and the global historical index integrity audit.",
+    "The old send_return fixture dimension is removed; this whole sender does not prove a success/failure return contract."
+  ],
+  "native_prepare_used": true,
+  "native_sdk_used": true,
+  "native_metadata_used": true,
+  "native_sender_used": true,
+  "native_service_getter_used": true,
+  "synthetic_service_vtable": true,
+  "native_wire_used": false,
+  "native_writer_used": false,
+  "native_pending_insert_used": false,
+  "native_delegate_used": false,
+  "native_service_backend_used": false,
+  "native_os_effects_used": false,
+  "runtime_activated": false,
+  "session_executed": false
+}

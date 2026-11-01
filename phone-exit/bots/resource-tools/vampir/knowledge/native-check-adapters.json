@@ -145,6 +145,11 @@
       "id": "native-auto-login-state-flow",
       "family": "login-state-flow",
       "adapter": "state-flow-v1"
+    },
+    {
+      "id": "native-auto-login-send-handoff",
+      "family": "login-send-handoff",
+      "adapter": "send-handoff-v1"
     }
   ]
 }

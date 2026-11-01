@@ -31,7 +31,9 @@ def load_tests(loader, tests, pattern):
             'test_vampir_login_dispatch_harness',
             'test_vampir_login_state_flow_rules','test_vampir_native_login_state_flow_adapter',
             'test_vampir_login_state_flow_case_contracts','test_vampir_login_state_flow_handler_fixtures',
-            'test_vampir_login_state_flow_harness','test_vampir_login_state_flow_diagnostics'):
+            'test_vampir_login_state_flow_harness','test_vampir_login_state_flow_diagnostics',
+            'test_vampir_login_send_handoff_rules','test_vampir_native_login_send_handoff_adapter',
+            'test_vampir_login_send_handoff_case_contracts','test_vampir_login_send_handoff_harness'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

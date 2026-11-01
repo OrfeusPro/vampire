@@ -23,7 +23,8 @@ SPECS=(dict(id='native-auto-string-writer',family='string-writer',adapter='strin
        dict(id='native-auto-login-registration',family='login-registration',adapter='registration-v1'),
        dict(id='native-auto-login-container',family='login-container',adapter='container-v1'),
        dict(id='native-auto-login-dispatch',family='login-dispatch',adapter='dispatch-v1'),
-       dict(id='native-auto-login-state-flow',family='login-state-flow',adapter='state-flow-v1'))
+       dict(id='native-auto-login-state-flow',family='login-state-flow',adapter='state-flow-v1'),
+       dict(id='native-auto-login-send-handoff',family='login-send-handoff',adapter='send-handoff-v1'))
 MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'update-native-archive-wire',
          'version-result-v1':'update-native-version-result','version-prepare-v1':'update-native-version-prepare',
          'login-prepare-v1':'update-native-login-prepare','login-sdk-v1':'update-native-login-sdk',
@@ -31,7 +32,7 @@ MODULES={'string-writer-v1':'update-native-string-writer','archive-wire-v1':'upd
          'login-input-v1':'update-native-login-input','login-handler-v1':'update-native-login-handler',
          'response-v1':'update-native-response','login-full-v1':'update-native-login-full',
          'login-composition-v1':'update-native-login-composition','registration-v1':'update-native-login-registration',
-         'container-v1':'update-native-login-container','dispatch-v1':'update-native-login-dispatch','state-flow-v1':'update-native-login-state-flow'}
+         'container-v1':'update-native-login-container','dispatch-v1':'update-native-login-dispatch','state-flow-v1':'update-native-login-state-flow','send-handoff-v1':'update-native-login-send-handoff'}
 
 
 def registry(index,knowledge):
@@ -58,7 +59,7 @@ def run(index,args,sha,journal,database,*,families=None):
         if selection is not None and spec['family'] not in selection:continue
         family=spec['family'];families.append(family)
         tool=index.extension(MODULES[spec['adapter']])
-        if spec['adapter'] in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1','response-v1','login-full-v1','login-composition-v1','registration-v1','container-v1','dispatch-v1','state-flow-v1'):tool=tool.select(family)
+        if spec['adapter'] in ('version-helper-v1','login-metadata-v1','login-input-v1','login-handler-v1','response-v1','login-full-v1','login-composition-v1','registration-v1','container-v1','dispatch-v1','state-flow-v1','send-handoff-v1'):tool=tool.select(family)
         try:
             inputs=tool.plan_inputs(index,args,sha)
             def plan_writer():

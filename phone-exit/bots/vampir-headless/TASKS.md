@@ -4,9 +4,11 @@
 Продолжать по сгруппированным корневым блокерам его отчёта; неизменные готовые
 exports и проверки вручную не повторять. Счётчики прежних выпусков не складывать.
 
-- Следующий пакет: Login prepare metadata → wire; 24 готовые roots / 9 leaves,
-  один missing sender export `0x144aae9f0`. Готовые parent suites не повторять;
-  проверить настоящий source переход к writer без вызова из координатора.
+- Следующий пакет: настоящий service singleton / vtable `+0x38` → writer /
+  transport и ownership до prepare destructor. Native sender / getter уже
+  подтверждены; pending insert / delegate и service sink остаются fixtures.
+  Готовые parent suites не повторять; вызов writer из координатора не заменяет
+  исходную связь сервиса с writer.
 - Вход и ответы: закрыть недостающие SDK / Version / Login / Character / heartbeat
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
@@ -144,10 +146,28 @@ container helper effects сохраняют явные fixture-границы.
 87 этапов и 29 публикаций из кэша без native / JVM / PE rebuild
 (150.653545 с). Все 5 экспортов исследования переиспользованы без JVM.
 
-Далее — Login prepare metadata → wire: 24 готовые whole roots / 9 leaves,
-один missing export sender. Реальные send / transport effects, Version sender,
+Native sender рассмотрен отдельным пакетом ниже; связь настоящего service
+с writer / transport остаётся открытой. Version sender,
 clock / heartbeat / world и current entry admission остаются открытыми.
 Профиль, соединение и игровые команды этим offline пакетом не изменяются.
+
+[Native sender и handoff подготовленного Login](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-SEND-HANDOFF-11322.md)
+подключены как `send-handoff-v1` / `login-send-handoff`: 896 сценариев,
+12 целых функций / 7 leaves. 224 различных prepared inputs объединены с четырьмя
+pending states: 672 передачи синтетическому service sink и 224 подавления при hit.
+Нативно исполняются lookup, timeout fallback и service getter; packet и UTF-16
+строки сохраняют тот же указатель и содержимое. Пятый stack argument, точные
+helper aliases и Win64 ABI проверены. Pending insert / delegate / service sink
+остаются fixtures; source service vtable и сериализация этим не подтверждаются.
+
+Проверки: 896 native случаев и 815 тестов. Общий повтор 30 drivers использовал
+90 этапов и 30 публикаций из кэша без native / JVM / PE rebuild
+(140.784932 с). Один missing sender export собран одной JVM
+в готовом проекте; независимые parent suites не повторялись.
+
+Следующий пакет — настоящий service singleton / vtable `+0x38` → writer /
+transport с подтверждённым ownership до prepare destructor. Для подготовки
+Login → wire этот переход остаётся открытым; полный онлайн-вход не допущен.
 
 ## Сохранённые записи прежних этапов
 

@@ -11539,7 +11539,19 @@
         "phone-exit/bots/test_vampir_login_state_flow_handler_fixtures.py",
         "phone-exit/bots/test_vampir_login_state_flow_harness.py",
         "phone-exit/bots/resource-tools/vampir/login-state-flow-diagnostics.py",
-        "phone-exit/bots/test_vampir_login_state_flow_diagnostics.py"
+        "phone-exit/bots/test_vampir_login_state_flow_diagnostics.py",
+        "phone-exit/bots/resource-tools/vampir/login-send-handoff-rules.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-send-handoff.py",
+        "phone-exit/bots/resource-tools/vampir/login-send-handoff-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-send-handoff-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/login-send-handoff-runtime.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-send-handoff-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-send-handoff-harness.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-send-handoff-11322.json",
+        "phone-exit/bots/test_vampir_login_send_handoff_rules.py",
+        "phone-exit/bots/test_vampir_native_login_send_handoff_adapter.py",
+        "phone-exit/bots/test_vampir_login_send_handoff_case_contracts.py",
+        "phone-exit/bots/test_vampir_login_send_handoff_harness.py"
       ],
       "artifact_dependencies": []
     }

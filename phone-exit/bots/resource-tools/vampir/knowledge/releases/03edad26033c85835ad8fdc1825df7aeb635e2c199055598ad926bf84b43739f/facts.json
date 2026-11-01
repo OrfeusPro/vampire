@@ -613,6 +613,39 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Prepare→wire и реальные send/transport effects, Version sender, текущие SDK/clock/heartbeat/world contracts и current entry admission остаются открытыми. Post-state backend/actor и continuation container helpers остаются fixtures; nonempty destructor loops, OOM/SEH и целый онлайн-вход не доказаны. Frame>=5 и initial active/TLS zero — предусловия. Глобальный индекс, холодная публикация frozen families и ordered-pair input seed остаются инфраструктурными задачами."
+    },
+    {
+      "addresses": [
+        "0x144aae9f0"
+      ],
+      "checks": [],
+      "conclusion": "Native Login prepare связан с целым sender и getter/service handoff: 896 сценариев, 672 forwarding / 224 pending-hit, 12 whole roots / 7 leaves. Пятый stack argument, timeout fallback, lookup и same-packet lifecycle проверены; pending helpers/service sink fixtures, native wire не заявлен. 815 tooling tests прошли. Общий повтор 30 drivers reused 90 stages / 30 publications без JVM/native/PE rebuild (140.784932 с); профиль/сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-SEND-HANDOFF-11322.md",
+          "sha256": "f2bf534f1632d96707e630205cf7782b2aa2c04c5cc906f874c82512e4994b74"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-SEND-HANDOFF-11322.json",
+          "sha256": "649a46490bbaf9863915e46a12dd7da573b964679550ecb38b2adb2a39226cbc"
+        }
+      ],
+      "id": "7ca7585bc679b7806889f5f2c0738b022b61ff261115ea941b8632897a326cfc",
+      "limits": [
+        "Whole preparation/constructor, three SDK getters, six metadata roots and sender execute native source instructions; seven returning leaves include the service getter.",
+        "The sender duplicate gate, default-timeout fallback and virtual service call execute natively over synthetic pending state.",
+        "Pending insert, delegate/add and the synthetic service vtable sink are explicit fixtures. The service vtable is not claimed to come from native source.",
+        "The sink observes the same prepared packet and UTF-16 strings; it serializes or emits no bytes. Parent wire evidence is a separate schema/reference dependency.",
+        "SDK/backend/provider, map/variant/string-storage, allocation/destructor, notifications and import/security effects remain bounded fixtures.",
+        "No native wire, framing/integrity, transport, server acceptance, Version send, responses, clock/heartbeat/world, authorization, profile activation or online session proof.",
+        "Driver timings exclude prepare/collect and the global historical index integrity audit.",
+        "The old send_return fixture dimension is removed; this whole sender does not prove a success/failure return contract."
+      ],
+      "method": "static",
+      "next_check": "Подтвердить source service class/publisher и actual vtable+0x38 target, затем writer/transport и ownership; pending helpers исследовать общим пакетом при необходимости native promotion. Готовые 31 bounded семейство (30 drivers и UTF-8) использовать по SHA/proof/report/cache без повторного ручного разбора.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Для prepare→wire остаются публикация настоящего service singleton/vtable+0x38 и путь к writer/transport с доказанным ownership до prepare destructor. Pending insert/delegate effects и SDK/backend остаются fixtures. Version sender, current responses/clock/heartbeat/world и current entry admission открыты. Framing/integrity, OOM/SEH, произвольные повреждённые containers и целый онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
     }
   ],
   "schema": 1,

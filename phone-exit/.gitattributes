@@ -253,3 +253,17 @@ bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-LOGIN-STATE-FLOW-1132
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-STATE-FLOW-11322.md text eol=lf
 bots/resource-tools/vampir/login-state-flow-diagnostics.py text eol=lf
 bots/test_vampir_login_state_flow_diagnostics.py text eol=lf
+bots/resource-tools/vampir/login-send-handoff-rules.py text eol=lf
+bots/resource-tools/vampir/update-native-login-send-handoff.py text eol=lf
+bots/resource-tools/vampir/login-send-handoff-case-contracts.py text eol=lf
+bots/resource-tools/vampir/login-send-handoff-oracle.py text eol=lf
+bots/resource-tools/vampir/login-send-handoff-runtime.py text eol=lf
+bots/resource-tools/vampir/verify-login-send-handoff-context.py text eol=lf
+bots/resource-tools/vampir/verify-login-send-handoff-harness.py text eol=lf
+bots/resource-tools/vampir/knowledge/native-contexts/login-send-handoff-11322.json text eol=lf
+bots/test_vampir_login_send_handoff_rules.py text eol=lf
+bots/test_vampir_native_login_send_handoff_adapter.py text eol=lf
+bots/test_vampir_login_send_handoff_case_contracts.py text eol=lf
+bots/test_vampir_login_send_handoff_harness.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-LOGIN-SEND-HANDOFF-11322.json text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-SEND-HANDOFF-11322.md text eol=lf

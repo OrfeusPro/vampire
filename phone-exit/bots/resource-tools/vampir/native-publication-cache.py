@@ -35,6 +35,7 @@ INDEXES = {
     'login-container': 'generated-login-container',
     'login-dispatch': 'generated-login-dispatch',
     'login-state-flow': 'generated-login-state-flow',
+    'login-send-handoff': 'generated-login-send-handoff',
 }
 MODULES = {
     'string-writer': 'update-native-string-writer', 'archive-wire': 'update-native-archive-wire',
@@ -51,8 +52,9 @@ MODULES = {
     'login-container': 'update-native-login-container',
     'login-dispatch': 'update-native-login-dispatch',
     'login-state-flow': 'update-native-login-state-flow',
+    'login-send-handoff': 'update-native-login-send-handoff',
 }
-MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full', 'update-native-login-composition', 'update-native-login-registration', 'update-native-login-container', 'update-native-login-dispatch', 'update-native-login-state-flow'}
+MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full', 'update-native-login-composition', 'update-native-login-registration', 'update-native-login-container', 'update-native-login-dispatch', 'update-native-login-state-flow', 'update-native-login-send-handoff'}
 
 
 def canonical(value):
