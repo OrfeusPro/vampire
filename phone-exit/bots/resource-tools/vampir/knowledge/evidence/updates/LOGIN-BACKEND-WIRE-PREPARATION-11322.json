@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "method": "static",
+  "scope": "static_login_backend_wire_preparation",
+  "recipe": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\research-recipes\\login-backend-wire-11322.json",
+    "sha256": "3355c0741e82243cd8574b7698995f614c3ca8c9c80b9cb86543cc2982182f85"
+  },
+  "source_check": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-backend-wire-source-checks\\90c41ef469dde8ab922e55c8596969cfd015dc312401ea8636f23455a105d6fa\\manifest.json",
+    "sha256": "90c41ef469dde8ab922e55c8596969cfd015dc312401ea8636f23455a105d6fa"
+  },
+  "collections": [
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\collections\\e436a5f87e19db0cda11caec72dc07ae0a4764725e32bc73dae031345ff5698c\\manifest.json",
+      "sha256": "e436a5f87e19db0cda11caec72dc07ae0a4764725e32bc73dae031345ff5698c"
+    },
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\collections\\395788c90c6183f8fb537825e100cd2a0fe78949d26c610551c3d91d62369cce\\manifest.json",
+      "sha256": "395788c90c6183f8fb537825e100cd2a0fe78949d26c610551c3d91d62369cce"
+    }
+  ],
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\e95dde130a1487e6b83a81fec00574fd839abc45b5ba190b1a192f22219e0e73\\manifest.json",
+    "sha256": "e95dde130a1487e6b83a81fec00574fd839abc45b5ba190b1a192f22219e0e73"
+  },
+  "source_roots": {
+    "publisher": {
+      "address": "0x144ab0890",
+      "instruction_count": 43,
+      "body_bytes": 214,
+      "instructions_sha256": "49d816634836fa541e47974c77cf6fe013db0b98cdc659d9134bfc420a028e7f",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-fd7ea2d83bfc\\details.json",
+        "sha256": "657513cec48694d24453024e95815bea11e87ef6d4d0d35b42e246af00d587fe"
+      }
+    },
+    "backend": {
+      "address": "0x144ab2b10",
+      "instruction_count": 120,
+      "body_bytes": 488,
+      "instructions_sha256": "dd16f06bcf71dd13859b27e80096a8fdc2a04ed4bdda25b63736170f063b7763",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-fd7ea2d83bfc\\details.json",
+        "sha256": "657513cec48694d24453024e95815bea11e87ef6d4d0d35b42e246af00d587fe"
+      }
+    },
+    "wire.append": {
+      "address": "0x144aacd00",
+      "instruction_count": 19,
+      "body_bytes": 69,
+      "instructions_sha256": "22504706ea69a76446f64ab972dd23ffd922acf12ef86b4d1e1aa80aeeec7e6e",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-bc98b31b7196\\details.json",
+        "sha256": "588625ae240d8ca1e3dae003443e0d8a05f59214c45eec5bc2586eb0ef8fb461"
+      }
+    },
+    "wire.cleanup": {
+      "address": "0x144aac7e0",
+      "instruction_count": 37,
+      "body_bytes": 133,
+      "instructions_sha256": "7b8e70a29b77aff528a3a8b5a831ae132ba319ad0207bbad2d2816728ed4da06",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-bc98b31b7196\\details.json",
+        "sha256": "588625ae240d8ca1e3dae003443e0d8a05f59214c45eec5bc2586eb0ef8fb461"
+      }
+    }
+  },
+  "returning_fragments": {
+    "packet_id": {
+      "address": "0x14144c140",
+      "bytes": "b803000000c3"
+    },
+    "archive_buffer": {
+      "address": "0x144aac950",
+      "bytes": "83793000750333c0c3488b4118c3"
+    },
+    "cleanup_final": {
+      "address": "0x144aacef0",
+      "bytes": "488d0509df0204488901c3"
+    }
+  },
+  "tail_fragments": {
+    "service": {
+      "address": "0x144ab15c0",
+      "bytes": "488b4910e947150000",
+      "target": "0x144ab2b10"
+    },
+    "cleanup_wrapper": {
+      "address": "0x144aaccf0",
+      "bytes": "488d052967bc04488901e9e1faffff",
+      "target": "0x144aac7e0"
+    },
+    "cleanup_base": {
+      "address": "0x144aad2c0",
+      "bytes": "488d05f962bc04488901e921fcffff",
+      "target": "0x144aacef0"
+    }
+  },
+  "whole_roots": 29,
+  "returning_leaves": 13,
+  "tail_fragment_count": 3,
+  "source_audit_seconds": 268.973508,
+  "source_audit_metrics": {
+    "artifact_cache_hits": 0,
+    "artifact_reads": 0,
+    "image_builds": 2,
+    "image_cache_hits": 35,
+    "read_workers": 2,
+    "source_cache_hits": 0,
+    "source_reads": 2,
+    "validation_reads": 2,
+    "validation_seconds": 0.89015
+  },
+  "parent_native_suites_replayed": 0,
+  "new_jvm_in_source_audit": 0,
+  "new_jvm_in_collection": {
+    "successful": 2,
+    "failed": 1
+  },
+  "failed_collection": {
+    "run": "run-7df4f9a043d2",
+    "reason": "Decompiler block outside requested unwind ranges",
+    "log": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-7df4f9a043d2\\headless.log",
+      "sha256": "ccc12c219c46be387ca67a3b7de336ca49c69b25860a037938a8fec86df4274c"
+    },
+    "resolution": "Exact source-specific cleanup leaf LEA/MOV/JMP; no EXE edits or whole coverage relaxation."
+  },
+  "matrix": {
+    "cases": 1807,
+    "prepared_inputs": 224,
+    "core": 1792,
+    "focused_negative": 15,
+    "pending_suppressed": 448,
+    "sequence_wraps": 444,
+    "transport_result0": 672,
+    "transport_result1": 672,
+    "backend_calls": 1359,
+    "state_getter_calls": 1356,
+    "fallback_calls": 6,
+    "writer_calls": 1344,
+    "transport_calls": 1344,
+    "archive_constructor_calls": 2688,
+    "archive_cleanup_calls": 2688,
+    "initial_growth_calls": 2688
+  },
+  "matrix_sha256": "099161d419a246c8f4f5a6fb8a8a148ba74e07887c17acb5bc17a5218b50a8a8",
+  "matrix_executed": false,
+  "tooling": {
+    "id": "automatic-update-tooling",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a4038f4096a22e2b84da31ee2e36ae996785a24d8639335547a0244ef20320ab\\manifest.json",
+    "sha256": "a4038f4096a22e2b84da31ee2e36ae996785a24d8639335547a0244ef20320ab",
+    "cache_key": "698e5f0f6c08b859b7e886401cfffe756d5acbbc95e74b34b213ea981908d681",
+    "source_scope": "tooling",
+    "proves_client_compatibility": false
+  },
+  "tooling_tests": 836,
+  "collector_regression_tests": 14,
+  "collector_regression_log": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-backend-wire-collector-regression.log",
+    "sha256": "9352331aa7fb40817fe8d3066b10b31e93ef037aa3cb54a9d71e577fb9dd39da"
+  },
+  "checkout_files": 44,
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\login-backend-wire-source-freeze.json",
+    "sha256": "5de2f56037ddc5b0dd302245d66e7752a6f785f5c741b874ead65ef71cb6cd5a"
+  },
+  "native_executed": false,
+  "semantic_adapter_published": false,
+  "capability_admitted": false,
+  "runtime_activated": false,
+  "profile_activated": false,
+  "network_used": false,
+  "limits": [
+    "Это статическая подготовка exact SHA; 1807 native сценариев ещё не исполнены и adapter не опубликован.",
+    "Publisher обнуляет service+0x10; последующая ambient привязка backend остаётся fixture и не доказывает настоящий lifecycle сервиса.",
+    "Pending insert/delegate, SDK/OS, initial storage growth, checksum, identity transform и transport capture являются явными providers.",
+    "Native checksum/cipher/network, asynchronous ownership, OOM/reallocation/aligned buffers и целый онлайн-вход не подтверждены.",
+    "Будущий native проход должен вызывать publisher setup и один prepare; ручной вызов writer/backend вместо исходной цепочки запрещён."
+  ],
+  "remaining": [
+    "Реализовать native publisher setup и один prepare delivery с исходной цепочкой service / backend / writer.",
+    "Объединить packet strings, UTF-8 temporaries и archive buffers в общий ledger с проверкой caller и очисткой до prepare destructor.",
+    "Исполнить 1807 явных сценариев, сравнить реальные байты с независимым oracle, подключить semantic adapter и проверить тёплый cache."
+  ]
+}

@@ -151,9 +151,18 @@ helper aliases и Win64 ABI проверены. Pending insert / delegate / serv
 (140.784932 с). Один missing sender export собран одной JVM
 в готовом проекте; независимые parent suites не повторялись.
 
-Следующий пакет — настоящий service singleton / vtable `+0x38` → writer /
-transport с подтверждённым ownership до prepare destructor. Для подготовки
-Login → wire этот переход остаётся открытым; полный онлайн-вход не допущен.
+Исходный путь service singleton / vtable `+0x38` → writer статически подготовлен
+в новом пакете ниже. Общий native проход и ownership до prepare destructor
+ещё не подтверждены; полный онлайн-вход не допущен.
+
+[Подготовка общего Login backend / wire стенда](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-BACKEND-WIRE-PREPARATION-11322.md)
+закрыла недостающие source exports: publisher / backend / append / cleanup.
+Машинный рецепт проверяет 29 whole roots / 13 returning leaves / 3 tail fragments,
+готовые child proofs и таблицы точного SHA. Новый collector поддерживает исходный
+cleanup tail; два готовых экспорта повторно не собирались. Матрица 1807 входов
+и независимый byte oracle подготовлены и подключены к tooling checks.
+Это статическая подготовка: общий native стенд ещё предстоит реализовать и
+исполнить; новый semantic adapter и онлайн-допуск не опубликованы.
 
 ## Сохранённые записи прежних этапов
 

@@ -9,6 +9,7 @@ class RequestedTailCallsTests(unittest.TestCase):
         tool=load('collect-requested-functions');native=load('build-native-entry-code')
         sha='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
         at=0x144552540;raw=bytes.fromhex('890d9a5bc306c3')
+        tool.REVIEWED_LEAF_TAILS={sha:{at:raw.hex()}}
         image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
         self.assertEqual(tool.checked_leaf_tails(native,image,sha),{at:raw.hex()})
         self.assertEqual(tool.checked_leaf_tails(native,image,'0'*64),{})
@@ -17,7 +18,50 @@ class RequestedTailCallsTests(unittest.TestCase):
         for encoded in ('e900000000c3','9090','c3c3','90'*17):
             image.data=bytes.fromhex(encoded)
             with patch.dict(tool.REVIEWED_LEAF_TAILS,{sha:{at:encoded}},clear=True):
-                with self.assertRaisesRegex(ValueError,'budget|control flow'):
+                with self.assertRaisesRegex(ValueError,'budget|control flow|Unreviewed'):
+                    tool.checked_leaf_tails(native,image,sha)
+
+    def test_archive_cleanup_tail_requires_exact_source_bytes_and_finite_target(self):
+        tool=load('collect-requested-functions');native=load('build-native-entry-code')
+        sha='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+        at=0x144aad2c0;encoded='488d05f962bc04488901e921fcffff';raw=bytes.fromhex(encoded)
+        image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
+        leaves=tool.checked_leaf_tails(native,image,sha)
+        self.assertEqual(leaves,{at:encoded})
+        self.assertNotIn(0x144aacef0,leaves) # No recursive export/discovery.
+        row=self.row(address=0x144aac859,direct_target=at,bytes='e9620a0000')
+        self.assertEqual(tool.reviewed_tail_calls([row],set(leaves)),[
+            dict(address='0x144aac859',target=hex(at),bytes='e9620a0000')])
+        image.data=raw[:-1]+b'\x00'
+        with self.assertRaisesRegex(ValueError,'source differs'):
+            tool.checked_leaf_tails(native,image,sha)
+        for source,entry,value in ((sha,at+1,encoded),('0'*64,at,encoded),
+                (sha,at,encoded[:-2]+'00')):
+            with self.subTest(source=source,entry=entry),patch.object(tool,'REVIEWED_LEAF_TAILS',{source:{entry:value}}):
+                with self.assertRaisesRegex(ValueError,'Unreviewed'):
+                    tool.checked_leaf_tails(native,image,source)
+
+    def test_archive_cleanup_model_rejects_decoder_target_or_table_drift(self):
+        tool=load('collect-requested-functions');native=load('build-native-entry-code')
+        sha='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+        raw=bytes.fromhex(tool.REVIEWED_LEAF_TAILS[sha][0x144aad2c0])
+        image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
+        real=native.capstone.Cs
+        for drift in ('table','target'):
+            def changed(*args):
+                decoder=real(*args);decoder.detail=True
+                def disasm(code,at):
+                    rows=list(decoder.disasm(code,at));out=[]
+                    for i,r in enumerate(rows):
+                        operands=r.operands
+                        if drift=='table' and i==0:
+                            operands=[operands[0],SimpleNamespace(mem=SimpleNamespace(disp=0))]
+                        if drift=='target' and i==2:operands=[SimpleNamespace(imm=0)]
+                        out.append(SimpleNamespace(mnemonic=r.mnemonic,op_str=r.op_str,address=r.address,size=r.size,operands=operands))
+                    return out
+                return SimpleNamespace(disasm=disasm,detail=False)
+            with self.subTest(drift=drift),patch.object(native.capstone,'Cs',side_effect=changed):
+                with self.assertRaisesRegex(ValueError,'control flow'):
                     tool.checked_leaf_tails(native,image,sha)
 
     def row(self, **updates):

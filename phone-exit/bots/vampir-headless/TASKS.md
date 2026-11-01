@@ -4,11 +4,13 @@
 Продолжать по сгруппированным корневым блокерам его отчёта; неизменные готовые
 exports и проверки вручную не повторять. Счётчики прежних выпусков не складывать.
 
-- Следующий пакет: настоящий service singleton / vtable `+0x38` → writer /
-  transport и ownership до prepare destructor. Native sender / getter уже
-  подтверждены; pending insert / delegate и service sink остаются fixtures.
-  Готовые parent suites не повторять; вызов writer из координатора не заменяет
-  исходную связь сервиса с writer.
+- Следующий пакет: общий native стенд publisher → prepare / sender → thunk →
+  backend → Login writer / framing → cleanup до prepare destructor. Source recipe
+  и exports для 29 whole roots / 13 returning leaves / 3 tails, матрица 1807 входов
+  и byte oracle готовы; использовать их по SHA. Остались runtime / memory ledger,
+  общий replay, semantic adapter и cache / publication. Готовые parent suites
+  не повторять; backend binding, checksum / cipher / transport остаются fixtures.
+  [Подготовленные материалы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-BACKEND-WIRE-PREPARATION-11322.md).
 - Вход и ответы: закрыть недостающие SDK / Version / Login / Character / heartbeat
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
@@ -165,9 +167,18 @@ helper aliases и Win64 ABI проверены. Pending insert / delegate / serv
 (140.784932 с). Один missing sender export собран одной JVM
 в готовом проекте; независимые parent suites не повторялись.
 
-Следующий пакет — настоящий service singleton / vtable `+0x38` → writer /
-transport с подтверждённым ownership до prepare destructor. Для подготовки
-Login → wire этот переход остаётся открытым; полный онлайн-вход не допущен.
+Исходный путь service singleton / vtable `+0x38` → writer статически подготовлен
+в новом пакете ниже. Общий native проход и ownership до prepare destructor
+ещё не подтверждены; полный онлайн-вход не допущен.
+
+[Подготовка общего Login backend / wire стенда](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-BACKEND-WIRE-PREPARATION-11322.md)
+закрыла недостающие source exports: publisher / backend / append / cleanup.
+Машинный рецепт проверяет 29 whole roots / 13 returning leaves / 3 tail fragments,
+готовые child proofs и таблицы точного SHA. Новый collector поддерживает исходный
+cleanup tail; два готовых экспорта повторно не собирались. Матрица 1807 входов
+и независимый byte oracle подготовлены и подключены к tooling checks.
+Это статическая подготовка: общий native стенд ещё предстоит реализовать и
+исполнить; новый semantic adapter и онлайн-допуск не опубликованы.
 
 ## Сохранённые записи прежних этапов
 

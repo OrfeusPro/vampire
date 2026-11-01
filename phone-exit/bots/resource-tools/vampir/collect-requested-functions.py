@@ -12,6 +12,9 @@ import uuid
 # Reviewed source-specific leaves: no unwind entry of their own. This is an explicit
 # source-specific analysis model, never permission to discover arbitrary callees.
 REVIEWED_LEAF_TAILS = {
+    '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f': {
+        0x144aad2c0: '488d05f962bc04488901e921fcffff',
+    },
     'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c': {
         0x144552540: '890d9a5bc306c3',
         0x144ab13f0: '488b491033d2e9c51b0000',
@@ -29,7 +32,9 @@ def checked_leaf_tails(native, image, sha):
         reviewed_source = sha == 'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'
         setter_leaf = reviewed_source and at == 0x144552540 and encoded == '890d9a5bc306c3'
         terminal_jump = reviewed_source and at == 0x144ab13f0 and encoded == '488b491033d2e9c51b0000'
-        if not setter_leaf and not terminal_jump:raise ValueError('Unreviewed tail leaf model')
+        archive_cleanup = (sha == '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+            and at == 0x144aad2c0 and encoded == '488d05f962bc04488901e921fcffff')
+        if not setter_leaf and not terminal_jump and not archive_cleanup:raise ValueError('Unreviewed tail leaf model')
         raw = bytes.fromhex(encoded)
         if not 1 <= len(raw) <= 16:
             raise ValueError('Reviewed tail leaf budget')
@@ -44,6 +49,13 @@ def checked_leaf_tails(native, image, sha):
                      [('mov', 'rcx, qword ptr [rcx + 0x10]'), ('xor', 'edx, edx'), ('jmp', '0x144ab2fc0')]
                      and rows[-1].address == at + 6 and rows[-1].size == 5
                      and rows[-1].operands[0].imm == 0x144ab2fc0)
+        elif archive_cleanup:
+            valid = ([(r.mnemonic, r.op_str) for r in rows] == [
+                ('lea', 'rax, [rip + 0x4bc62f9]'), ('mov', 'qword ptr [rcx], rax'), ('jmp', '0x144aacef0')]
+                and [r.size for r in rows] == [7, 3, 5]
+                and rows[-1].address == at + 10
+                and rows[0].address + rows[0].size + rows[0].operands[1].mem.disp == 0x1496735c0
+                and rows[-1].operands[0].imm == 0x144aacef0)
         else:
             valid = (rows and rows[-1].mnemonic == 'ret'
                      and not any(row.mnemonic.startswith(('j', 'call', 'ret')) for row in rows[:-1]))

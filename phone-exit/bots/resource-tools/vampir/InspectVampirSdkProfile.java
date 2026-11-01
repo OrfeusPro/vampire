@@ -49,7 +49,11 @@ public class InspectVampirSdkProfile extends GhidraScript {
                     && entry.getValue().getAsString().equals("890d9a5bc306c3");
                 boolean jumpLeaf = reviewedSource && at.getOffset() == 0x144ab13f0L
                     && entry.getValue().getAsString().equals("488b491033d2e9c51b0000");
-                if ((!setterLeaf && !jumpLeaf) || expected.length < 1 || expected.length > 16)
+                boolean archiveCleanup = source.get("new_source_sha256").getAsString().equals(
+                    "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f")
+                    && at.getOffset() == 0x144aad2c0L
+                    && entry.getValue().getAsString().equals("488d05f962bc04488901e921fcffff");
+                if ((!setterLeaf && !jumpLeaf && !archiveCleanup) || expected.length < 1 || expected.length > 16)
                     throw new IllegalStateException("Leaf tail byte/return budget");
                 byte[] actual = new byte[expected.length];
                 currentProgram.getMemory().getBytes(at, actual);
@@ -77,6 +81,19 @@ public class InspectVampirSdkProfile extends GhidraScript {
                                 && at.add(11L + displacement).getOffset() == 0x144ab2fc0L
                                 && flows.length == 1 && flows[0].getOffset() == 0x144ab2fc0L;
                         }
+                    } else if (archiveCleanup) {
+                        String[] mnemonics = {"LEA", "MOV", "JMP"};
+                        int[] lengths = {7, 3, 5};
+                        flowMatches = count < 3 && ins.getMnemonicString().equalsIgnoreCase(mnemonics[count])
+                            && ins.getLength() == lengths[count];
+                        if (last) {
+                            Address[] flows = ins.getFlows();
+                            int displacement = java.nio.ByteBuffer.wrap(expected, 11, 4)
+                                .order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+                            flowMatches &= count == 2 && ins.getAddress().equals(at.add(10))
+                                && at.add(15L + displacement).getOffset() == 0x144aacef0L
+                                && flows.length == 1 && flows[0].getOffset() == 0x144aacef0L;
+                        }
                     } else {
                         flowMatches = last ? ins.getMnemonicString().equalsIgnoreCase("RET")
                                            : ins.getMnemonicString().equalsIgnoreCase("MOV");
@@ -86,7 +103,7 @@ public class InspectVampirSdkProfile extends GhidraScript {
                         throw new IllegalStateException("Leaf tail control flow mismatch");
                     count++;
                 }
-                if (bytes != expected.length || (jumpLeaf && count != 3)) throw new IllegalStateException("Leaf tail instruction gap");
+                if (bytes != expected.length || ((jumpLeaf || archiveCleanup) && count != 3)) throw new IllegalStateException("Leaf tail instruction gap");
                 Function leaf = currentProgram.getFunctionManager().getFunctionAt(at);
                 if (leaf == null) leaf = createFunction(at, null);
                 if (leaf == null) throw new IllegalStateException("Leaf tail function creation failed");

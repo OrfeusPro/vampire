@@ -11551,7 +11551,16 @@
         "phone-exit/bots/test_vampir_login_send_handoff_rules.py",
         "phone-exit/bots/test_vampir_native_login_send_handoff_adapter.py",
         "phone-exit/bots/test_vampir_login_send_handoff_case_contracts.py",
-        "phone-exit/bots/test_vampir_login_send_handoff_harness.py"
+        "phone-exit/bots/test_vampir_login_send_handoff_harness.py",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-source.py",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/research-recipes/login-backend-wire-11322.json",
+        "phone-exit/bots/test_vampir_login_backend_wire_contracts.py",
+        "phone-exit/bots/test_vampir_login_backend_wire_source.py",
+        "phone-exit/bots/test_vampir_requested_tail_calls.py",
+        "phone-exit/bots/resource-tools/vampir/collect-requested-functions.py",
+        "phone-exit/bots/resource-tools/vampir/InspectVampirSdkProfile.java"
       ],
       "artifact_dependencies": []
     }

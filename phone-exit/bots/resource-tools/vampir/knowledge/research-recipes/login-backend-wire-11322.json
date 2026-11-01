@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "kind": "source_recipe_not_native_admission",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+  "handoff_context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\4c34e0f60a81c6ddf78550c6d11aab235bf8a0204130e3aedf0d929a49005f8a\\manifest.json",
+    "sha256": "4c34e0f60a81c6ddf78550c6d11aab235bf8a0204130e3aedf0d929a49005f8a"
+  },
+  "wire_context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd\\manifest.json",
+    "sha256": "5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd"
+  },
+  "prepare_check": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\7ea1655e26e26c52cff02a8b0acdf635ed307a619860b4c1269d5a42f54c661f\\manifest.json",
+    "sha256": "7ea1655e26e26c52cff02a8b0acdf635ed307a619860b4c1269d5a42f54c661f"
+  },
+  "new_functions": {
+    "publisher": {
+      "address": "0x144ab0890",
+      "instruction_count": 43,
+      "body_bytes": 214,
+      "instructions_sha256": "49d816634836fa541e47974c77cf6fe013db0b98cdc659d9134bfc420a028e7f",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-fd7ea2d83bfc\\details.json",
+        "sha256": "657513cec48694d24453024e95815bea11e87ef6d4d0d35b42e246af00d587fe"
+      }
+    },
+    "backend": {
+      "address": "0x144ab2b10",
+      "instruction_count": 120,
+      "body_bytes": 488,
+      "instructions_sha256": "dd16f06bcf71dd13859b27e80096a8fdc2a04ed4bdda25b63736170f063b7763",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-fd7ea2d83bfc\\details.json",
+        "sha256": "657513cec48694d24453024e95815bea11e87ef6d4d0d35b42e246af00d587fe"
+      }
+    },
+    "wire.append": {
+      "address": "0x144aacd00",
+      "instruction_count": 19,
+      "body_bytes": 69,
+      "instructions_sha256": "22504706ea69a76446f64ab972dd23ffd922acf12ef86b4d1e1aa80aeeec7e6e",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-bc98b31b7196\\details.json",
+        "sha256": "588625ae240d8ca1e3dae003443e0d8a05f59214c45eec5bc2586eb0ef8fb461"
+      }
+    },
+    "wire.cleanup": {
+      "address": "0x144aac7e0",
+      "instruction_count": 37,
+      "body_bytes": 133,
+      "instructions_sha256": "7b8e70a29b77aff528a3a8b5a831ae132ba319ad0207bbad2d2816728ed4da06",
+      "export": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-bc98b31b7196\\details.json",
+        "sha256": "588625ae240d8ca1e3dae003443e0d8a05f59214c45eec5bc2586eb0ef8fb461"
+      }
+    }
+  },
+  "returning_fragments": {
+    "packet_id": {
+      "address": "0x14144c140",
+      "bytes": "b803000000c3"
+    },
+    "archive_buffer": {
+      "address": "0x144aac950",
+      "bytes": "83793000750333c0c3488b4118c3"
+    },
+    "cleanup_final": {
+      "address": "0x144aacef0",
+      "bytes": "488d0509df0204488901c3"
+    }
+  },
+  "tail_fragments": {
+    "service": {
+      "address": "0x144ab15c0",
+      "bytes": "488b4910e947150000",
+      "target": "0x144ab2b10"
+    },
+    "cleanup_wrapper": {
+      "address": "0x144aaccf0",
+      "bytes": "488d052967bc04488901e9e1faffff",
+      "target": "0x144aac7e0"
+    },
+    "cleanup_base": {
+      "address": "0x144aad2c0",
+      "bytes": "488d05f962bc04488901e921fcffff",
+      "target": "0x144aacef0"
+    }
+  },
+  "source_inputs": {
+    "service_global": {
+      "address": "0x14b594f80",
+      "size_bytes": 8,
+      "span": {
+        "name": ".data",
+        "rva": 185344000,
+        "size": 6187164,
+        "raw": 185338880,
+        "raw_size": 2010112
+      }
+    },
+    "gate": {
+      "address": "0x14b594ea4",
+      "size_bytes": 1,
+      "span": {
+        "name": ".data",
+        "rva": 185344000,
+        "size": 6187164,
+        "raw": 185338880,
+        "raw_size": 2010112
+      }
+    },
+    "diagnostic_pointer": {
+      "address": "0x14b594fa0",
+      "size_bytes": 8,
+      "span": {
+        "name": ".data",
+        "rva": 185344000,
+        "size": 6187164,
+        "raw": 185338880,
+        "raw_size": 2010112
+      }
+    },
+    "archive_flags": {
+      "address": "0x14b197560",
+      "bytes": "01000000"
+    },
+    "archive_table": {
+      "address": "0x149673420",
+      "bytes": "b0ceaa440100000060c9aa4401000000208a6a430100000090cbaa440100000090cbaa4401000000b0c9aa4401000000c0caaa440100000090caaa4401000000b0cbaa4401000000b0cbaa440100000060caaa440100000060caaa440100000030caaa440100000030caaa440100000000caaa440100000000caaa4401000000e0cbaa4401000000f0caaa440100000090ceaa440100000030ceaa4401000000c0caaa440100000090caaa4401000000b0cbaa4401000000b0cbaa440100000060caaa440100000060caaa440100000030caaa440100000030caaa440100000000caaa440100000000caaa4401000000e0cbaa4401000000"
+    },
+    "service_initial_table": {
+      "address": "0x1496740c8",
+      "bytes": "a00bab4401000000d03b404101000000d03b404101000000d03b404101000000d03b404101000000d03b404101000000"
+    },
+    "service_primary_table": {
+      "address": "0x1496740f8",
+      "bytes": "e00bab44010000008010ab4401000000d03b404101000000000dab4401000000d03b404101000000d03b404101000000104abb4001000000c015ab44010000000016ab4401000000d03b404101000000"
+    },
+    "service_secondary_table": {
+      "address": "0x149674148",
+      "bytes": "0018ab4401000000"
+    },
+    "cleanup_wrapper_table": {
+      "address": "0x149673420",
+      "bytes": "b0ceaa4401000000"
+    },
+    "cleanup_table": {
+      "address": "0x149673288",
+      "bytes": "a0c8aa4401000000"
+    },
+    "cleanup_base_table": {
+      "address": "0x1496735c0",
+      "bytes": "d0d2aa4401000000"
+    },
+    "cleanup_final_table": {
+      "address": "0x148adae00",
+      "bytes": "80adb04101000000"
+    }
+  },
+  "table_links": [
+    {
+      "table": "0x149673420",
+      "slot": 192,
+      "target": "0x144aaca60"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 208,
+      "target": "0x144aaca30"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 216,
+      "target": "0x144aaca30"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 136,
+      "target": "0x144aacaf0"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 40,
+      "target": "0x144aac9b0"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 96,
+      "target": "0x144aaca30"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 184,
+      "target": "0x144aacbb0"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 200,
+      "target": "0x144aaca60"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 224,
+      "target": "0x144aaca00"
+    },
+    {
+      "table": "0x149673420",
+      "slot": 240,
+      "target": "0x144aacbe0"
+    },
+    {
+      "table": "0x149928e90",
+      "slot": 16,
+      "target": "0x1456e8520"
+    },
+    {
+      "table": "0x149928e90",
+      "slot": 40,
+      "target": "0x14144c140"
+    },
+    {
+      "table": "0x1496740f8",
+      "slot": 56,
+      "target": "0x144ab15c0"
+    }
+  ],
+  "matrix_sha256": "099161d419a246c8f4f5a6fb8a8a148ba74e07887c17acb5bc17a5218b50a8a8",
+  "matrix_summary": {
+    "cases": 1807,
+    "prepared_inputs": 224,
+    "core": 1792,
+    "focused_negative": 15,
+    "pending_suppressed": 448,
+    "sequence_wraps": 444,
+    "transport_result0": 672,
+    "transport_result1": 672,
+    "backend_calls": 1359,
+    "state_getter_calls": 1356,
+    "fallback_calls": 6,
+    "writer_calls": 1344,
+    "transport_calls": 1344,
+    "archive_constructor_calls": 2688,
+    "archive_cleanup_calls": 2688,
+    "initial_growth_calls": 2688
+  },
+  "limits": [
+    "Это статическая подготовка exact SHA; 1807 native сценариев ещё не исполнены и adapter не опубликован.",
+    "Publisher обнуляет service+0x10; последующая ambient привязка backend остаётся fixture и не доказывает настоящий lifecycle сервиса.",
+    "Pending insert/delegate, SDK/OS, initial storage growth, checksum, identity transform и transport capture являются явными providers.",
+    "Native checksum/cipher/network, asynchronous ownership, OOM/reallocation/aligned buffers и целый онлайн-вход не подтверждены.",
+    "Будущий native проход должен вызывать publisher setup и один prepare; ручной вызов writer/backend вместо исходной цепочки запрещён."
+  ]
+}

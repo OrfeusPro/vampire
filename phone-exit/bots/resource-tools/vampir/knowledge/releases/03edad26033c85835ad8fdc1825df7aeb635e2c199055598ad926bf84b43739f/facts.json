@@ -646,6 +646,43 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Для prepare→wire остаются публикация настоящего service singleton/vtable+0x38 и путь к writer/transport с доказанным ownership до prepare destructor. Pending insert/delegate effects и SDK/backend остаются fixtures. Version sender, current responses/clock/heartbeat/world и current entry admission открыты. Framing/integrity, OOM/SEH, произвольные повреждённые containers и целый онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
+    },
+    {
+      "addresses": [
+        "0x144aac7e0",
+        "0x144aacd00",
+        "0x144ab0890",
+        "0x144ab2b10"
+      ],
+      "checks": [],
+      "conclusion": "Статически подготовлен исходный путь service publisher → native slot 38 thunk → backend → Login writer, framing и archive cleanup. Четыре whole exports готовы; закреплены 29 whole roots / 13 returning leaves / 3 tail fragments. Реализованы матрица 1807 сценариев и независимый byte oracle, проверки tooling прошли. Общий native эксперимент ещё не исполнялся, новый semantic adapter не опубликован.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\LOGIN-BACKEND-WIRE-PREPARATION-11322.json",
+          "sha256": "ba0d437f7c882fff228fa004941f0cc6e9c9a9af2e075c663d980482403050be"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-LOGIN-BACKEND-WIRE-PREPARATION-11322.md",
+          "sha256": "f15cdce2dd25db77f5d81309bc64f9037bcd063d8724dc55ff8d9955eaa5f6e2"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\research-recipes\\login-backend-wire-11322.json",
+          "sha256": "3355c0741e82243cd8574b7698995f614c3ca8c9c80b9cb86543cc2982182f85"
+        }
+      ],
+      "id": "3c3dcf2c3d0a34187dd5c012938a4a55dd506bb21dc0225acf9e18eed78aea58",
+      "limits": [
+        "Это статическая подготовка exact SHA; 1807 native сценариев ещё не исполнены и adapter не опубликован.",
+        "Publisher обнуляет service+0x10; последующая ambient привязка backend остаётся fixture и не доказывает настоящий lifecycle сервиса.",
+        "Pending insert/delegate, SDK/OS, initial storage growth, checksum, identity transform и transport capture являются явными providers.",
+        "Native checksum/cipher/network, asynchronous ownership, OOM/reallocation/aligned buffers и целый онлайн-вход не подтверждены.",
+        "Будущий native проход должен вызывать publisher setup и один prepare; ручной вызов writer/backend вместо исходной цепочки запрещён."
+      ],
+      "method": "static",
+      "next_check": "Реализовать общий native стенд с одним ownership ledger, publisher setup и одним prepare delivery; исполнить 1807 явных входов, затем подключить semantic adapter / cache / publication. Текущие exports / contexts / reports использовать по полному SHA без повторных standalone native suites.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Реализовать native publisher setup и один prepare delivery с исходной цепочкой service / backend / writer. Объединить packet strings, UTF-8 temporaries и archive buffers в общий ledger с проверкой caller и очисткой до prepare destructor. Исполнить 1807 явных сценариев, сравнить реальные байты с независимым oracle, подключить semantic adapter и проверить тёплый cache."
     }
   ],
   "schema": 1,
