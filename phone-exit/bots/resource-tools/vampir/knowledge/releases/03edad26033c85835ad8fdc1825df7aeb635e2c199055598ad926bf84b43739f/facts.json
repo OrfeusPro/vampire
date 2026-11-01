@@ -683,6 +683,43 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Реализовать native publisher setup и один prepare delivery с исходной цепочкой service / backend / writer. Объединить packet strings, UTF-8 temporaries и archive buffers в общий ledger с проверкой caller и очисткой до prepare destructor. Исполнить 1807 явных сценариев, сравнить реальные байты с независимым oracle, подключить semantic adapter и проверить тёплый cache."
+    },
+    {
+      "addresses": [
+        "0x144aac7e0",
+        "0x144aacd00",
+        "0x144ab0890",
+        "0x144ab2b10"
+      ],
+      "checks": [],
+      "conclusion": "Общий native publisher → prepare / sender → source service thunk / backend → Login writer / framing / cleanup прошёл 1807 сценариев. Допуск 29 whole roots / 13 returning leaves / 3 tails; same packet / strings, Win64 ABI, sequence и cleanup до prepare destructor проверены. Checksum / cipher / transport и backend binding — fixtures. 902 tooling tests прошли. Общий повтор 31 drivers использовал 93 stages / 31 publications без JVM / native / PE rebuild (302.339482 с); профиль и игровая сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-LOGIN-BACKEND-WIRE-11322.md",
+          "sha256": "b95826f8410416d84eb671818a3a25d5703362e6ada1c798b31c1abe3a662367"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-LOGIN-BACKEND-WIRE-11322.json",
+          "sha256": "b0faa74c80ecb5c3f547b34639f0cf46addef6155b953fe4029251fd80d574ad"
+        }
+      ],
+      "id": "1b91768d4214662e7558fcc4a8b1a30f70b9fc3d0ed41cba703ca3e649dc3109",
+      "limits": [
+        "Whole publisher setup and one preparation delivery execute admitted source instructions, including the service table/thunk, backend, packet ID, Login/string/UTF-8 writers, archive append and cleanup.",
+        "Publisher zeroes service+0x10; the later ambient backend binding remains an explicit provider, without a native backend assignment or concurrent publication/lifetime claim.",
+        "Pending insert/delegate, SDK/provider/map/variant/string storage, initial 1024-byte growth, allocator/destructor, notifications and security/import effects remain bounded fixtures.",
+        "The archive-flags global aliases the preparation enum provider: the same current seeded value (0 or 0xffffffff) feeds packet+0x120 and both constructor arguments. The immutable source-initial value 1 remains a source anchor, not a per-case argument claim.",
+        "Checksum returns the declared fixture constant after checking the actual inner bytes. Transform checks the exact key/in-place span and performs identity; neither real integrity nor encryption is proved.",
+        "Transport captures the actual native frame before both native archive cleanups and prepare destruction; its return AL is a fixture effect, not network or server acceptance.",
+        "No reallocation/aligned/OOM/SEH, asynchronous ownership, native checksum/cipher/transport, Version send, responses, clock/heartbeat/world, profile/runtime activation or online session admission.",
+        "Driver timings exclude prepare and the historical knowledge-index integrity audit.",
+        "All four explicit new roots were already exported by the source-preparation package; no new JVM/export was needed."
+      ],
+      "method": "static",
+      "next_check": "Следующий общий блок — source backend assignment / lifetime и transport ownership / integrity / cipher; сначала определить явные roots через готовый индекс, затем missing-only collect. Готовый publisher / prepare / sender / backend / Login writer / archive cleanup использовать по новой публикации, не вызывать standalone suites повторно. Сохранять различие fixture capture и реальной сети; 32 bounded семейства (31 drivers и UTF-8) подключены к обновлению.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Native backend assignment / реальный lifecycle сервиса, checksum / cipher / transport algorithms и async ownership остаются открытыми. Pending insert / delegate effects и SDK / OS / engine providers — fixtures. Version sender, current responses / clock / heartbeat / world и текущий entry admission ещё не закрыты. OOM / SEH / reallocation / aligned buffers и целый онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
     }
   ],
   "schema": 1,

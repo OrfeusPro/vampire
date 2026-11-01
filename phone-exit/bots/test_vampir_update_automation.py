@@ -35,7 +35,10 @@ def load_tests(loader, tests, pattern):
             'test_vampir_login_send_handoff_rules','test_vampir_native_login_send_handoff_adapter',
             'test_vampir_login_send_handoff_case_contracts','test_vampir_login_send_handoff_harness',
             'test_vampir_requested_tail_calls','test_vampir_login_backend_wire_contracts',
-            'test_vampir_login_backend_wire_source'):
+            'test_vampir_login_backend_wire_source',
+            'test_vampir_login_backend_wire_rules','test_vampir_native_login_backend_wire_adapter',
+            'test_vampir_login_backend_wire_native_contracts','test_vampir_login_backend_wire_runtime',
+            'test_vampir_login_backend_wire_codec','test_vampir_login_backend_wire_harness'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

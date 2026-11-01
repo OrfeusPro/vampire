@@ -151,9 +151,9 @@ helper aliases и Win64 ABI проверены. Pending insert / delegate / serv
 (140.784932 с). Один missing sender export собран одной JVM
 в готовом проекте; независимые parent suites не повторялись.
 
-Исходный путь service singleton / vtable `+0x38` → writer статически подготовлен
-в новом пакете ниже. Общий native проход и ownership до prepare destructor
-ещё не подтверждены; полный онлайн-вход не допущен.
+Исходный путь service singleton / vtable `+0x38` → writer и cleanup подтверждён
+новым bounded native пакетом ниже. Реальный transport / backend lifetime
+и полный онлайн-вход ещё не допущены.
 
 [Подготовка общего Login backend / wire стенда](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-BACKEND-WIRE-PREPARATION-11322.md)
 закрыла недостающие source exports: publisher / backend / append / cleanup.
@@ -161,8 +161,26 @@ helper aliases и Win64 ABI проверены. Pending insert / delegate / serv
 готовые child proofs и таблицы точного SHA. Новый collector поддерживает исходный
 cleanup tail; два готовых экспорта повторно не собирались. Матрица 1807 входов
 и независимый byte oracle подготовлены и подключены к tooling checks.
-Это статическая подготовка: общий native стенд ещё предстоит реализовать и
-исполнить; новый semantic adapter и онлайн-допуск не опубликованы.
+Эта запись описывает этап статической подготовки. Общий native стенд и semantic
+adapter завершены следующим пакетом ниже; онлайн-допуск этим не подтверждается.
+
+[Native service / backend → Login writer / framing / cleanup](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-BACKEND-WIRE-11322.md)
+подключены как `backend-wire-v1` / `login-backend-wire`: 1807 сценариев,
+29 целых функций / 13 returning leaves / 3 tails. Исполняются source publisher,
+один prepare / sender и исходная service thunk / backend цепочка до Login writer.
+Наблюдались 1344 writer / transport captures, 448 pending hits, 6 fallback calls
+и 444 sequence wrap. Packet / строки, raw flags alias, Win64 ABI и очистка outer →
+inner до prepare destructor проверены. Backend binding, initial storage,
+checksum / identity transform / transport effects остаются fixtures.
+
+Проверки: 1807 native случаев и 902 теста. Общий повтор 31 drivers использовал
+93 этапа и 31 publication из кэша без native / JVM / PE rebuild
+(302.339482 с). Новых экспортов и JVM не было; готовые parent native
+suites не исполнялись повторно. Полный онлайн-вход не допущен.
+
+Следующий общий блок — реальный backend assignment / lifetime и
+transport ownership / integrity / cipher. Готовые native пути подготовки и wire
+переиспользуются по SHA / proof / cache.
 
 ## Сохранённые записи прежних этапов
 

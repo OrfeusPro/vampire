@@ -150,6 +150,11 @@
       "id": "native-auto-login-send-handoff",
       "family": "login-send-handoff",
       "adapter": "send-handoff-v1"
+    },
+    {
+      "id": "native-auto-login-backend-wire",
+      "family": "login-backend-wire",
+      "adapter": "backend-wire-v1"
     }
   ]
 }

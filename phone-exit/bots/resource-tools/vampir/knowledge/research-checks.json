@@ -11560,7 +11560,22 @@
         "phone-exit/bots/test_vampir_login_backend_wire_source.py",
         "phone-exit/bots/test_vampir_requested_tail_calls.py",
         "phone-exit/bots/resource-tools/vampir/collect-requested-functions.py",
-        "phone-exit/bots/resource-tools/vampir/InspectVampirSdkProfile.java"
+        "phone-exit/bots/resource-tools/vampir/InspectVampirSdkProfile.java",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-rules.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-login-backend-wire.py",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-native-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-native-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-runtime.py",
+        "phone-exit/bots/resource-tools/vampir/login-backend-wire-codec.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-backend-wire-context.py",
+        "phone-exit/bots/resource-tools/vampir/verify-login-backend-wire-harness.py",
+        "phone-exit/bots/test_vampir_login_backend_wire_codec.py",
+        "phone-exit/bots/test_vampir_login_backend_wire_harness.py",
+        "phone-exit/bots/test_vampir_login_backend_wire_native_contracts.py",
+        "phone-exit/bots/test_vampir_login_backend_wire_rules.py",
+        "phone-exit/bots/test_vampir_login_backend_wire_runtime.py",
+        "phone-exit/bots/test_vampir_native_login_backend_wire_adapter.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-backend-wire-11322.json"
       ],
       "artifact_dependencies": []
     }

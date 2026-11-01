@@ -268,6 +268,18 @@ Service vtable / sink синтетические, pending insert и delegate eff
 (140.784932 с).
 [Матрица, source boundaries и приёмка](evidence/updates/HEADLESS-AUTO-LOGIN-SEND-HANDOFF-11322.md).
 
+`backend-wire-v1` / `login-backend-wire` добавляет целый source publisher,
+service thunk / backend, Login writer / framing / archive cleanup к одному native
+prepare delivery. 1807 сценариев используют независимые prepared inputs и byte
+oracle; наблюдаются реальные native bytes до cleanup. Допуск — 29 whole roots,
+13 returning leaves и 3 tails. Fixture checksum / identity transform / transport
+capture не подтверждают настоящую сеть и online admission.
+
+Новая роль публикуется в `generated-login-backend-wire/index.json`; текущая
+игровая сессия и next-profile не меняются. Общий повтор 31 drivers использовал
+93 stages / 31 publications без native / JVM / PE rebuild (302.339482 с).
+[Матрица, memory ledger, source boundaries и замеры](evidence/updates/HEADLESS-AUTO-LOGIN-BACKEND-WIRE-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,
