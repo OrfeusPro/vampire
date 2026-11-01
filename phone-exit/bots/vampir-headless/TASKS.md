@@ -4,18 +4,19 @@
 Продолжать по сгруппированным корневым блокерам его отчёта; неизменные готовые
 exports и проверки вручную не повторять. Счётчики прежних выпусков не складывать.
 
-- Следующий общий пакет: реальный backend assignment / constructor / refcount
-  lifetime и transport queue ownership / drain / socket errors. Source links уже
-  найдены: реальная запись service+0x10 и цепочка удаления требуют backend 800
-  байт; стенд прежнего backend proof на 784 байта не расширять скрытно.
-  Missing-only collect 17 остановлен на resize 0x1445e4d00: decompiler block вне
-  unwind ranges. Source E9 resize+0x55 ведёт в отдельный PE unwind root
-  0x1445dee20; добавить явный target в новый prepared missing-only набор перед
-  resize и проверить границы decompiler. Coverage не ослаблять. Resize общий
-  для archive.raw и transport.append (3 source calls); разбирать его одним
-  native пакетом для обоих потребителей, отделив allocation-tail boundary. Настоящие CRC/XOR и native writer /
-  archive cleanup подключены новым [integrity пакетом](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-FRAME-INTEGRITY-11322.md).
-  Готовые parent suites, включая прежние 1807 случаев, использовать через кэш.
+- Следующий общий пакет: реальный backend assignment → constructor → refcontrol
+  → destructor. Полные exports 17 функций и source links уже готовы в
+  run-bcb6caaf0711; resize / unwind blocker закрыт. Backend constructor требует
+  800 байт; прежний fixture object на 784 байта скрытно не расширять.
+  Использовать общий lifetime ledger и native ownership / refcount проверки;
+  scope базовых socket / engine effects сохранять явно. Source-план: 12 whole
+  roots / 42 новых сценария; это предложение, не native результат. Destructor
+  оставляет service+0x10 / +0x18 не обнулёнными; callback+0x2c копирует входные
+  stack+0x3c bits без инициализации в root — не приписывать им нули.
+- Связь frame backend с native queue: новый composition recipe должен соединить
+  готовые CRC/XOR / writer и buffer-transport без повторного standalone разбора.
+  Drain, socket errors, реальное wake scheduling, key acquisition и receive
+  integrity остаются отдельными границами. [Готовый buffer / queue пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md).
 - Вход и ответы: закрыть недостающие SDK / Version / Login / Character / heartbeat
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
@@ -36,7 +37,11 @@ exports и проверки вручную не повторять. Счётчи
 - Скорость индекса: сократить глобальную сверку около 37 тысяч исторических
   pseudocode files в prepare / collect; сохранить полные SHA используемых evidence,
   проверки повреждения и frozen proof engines. Измерить холодный и тёплый проход.
-- Скорость холодной публикации: убрать повторную проверку одинаковых child proofs
+- Скорость холодной публикации: общий whole-file guard сейчас меняется при
+  добавлении driver и требует новой проверки старых publication receipts, хотя
+  semantic stages остаются в кэше. Для новой versioned recipe отделить стабильный
+  алгоритм от registry, сохранив selected-family / tools / transitive-lineage
+  ключи и финальные SHA barriers. Это ещё не реализовано. Дальнейшая задача — убрать повторную проверку одинаковых child proofs
   внутри замороженного прохода через новый recipe / memo с полными зависимостями.
   Сохранить проверку tools / lineage и конечный source barrier; прежние proof
   engines не менять. Сравнить замеры до / после по отчёту registration.
@@ -222,10 +227,28 @@ native prepare / SDK / sender / publisher в этой новой матрице 
 Проверки: 113 native случаев и 950 tooling тестов. Общий повтор 32 drivers
 использовал 96 stages / 32 publications без native / JVM / PE rebuild
 (236.979263 с). Прежние 1807 случаев и остальные parent suites
-не повторялись. Новому семейству хватило пяти готовых exports; отдельный
-source collect assignment/lifetime/transport остановлен на конкретном
-resize / unwind blocker. Реальная сеть, backend lifetime и весь онлайн-вход
-сохраняют открытые границы.
+не повторялись. Новому integrity семейству хватило пяти готовых exports. Тогда source collect
+assignment/lifetime/transport остановился на resize / unwind blocker; этот
+blocker закрыт следующим buffer-transport пакетом ниже. Реальная сеть, backend
+lifetime и весь онлайн-вход сохраняют открытые границы.
+
+[Общий resize и native transport queue](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md)
+подключены как `buffer-transport-v1` / `buffer-transport`: 65 сценариев /
+95 последовательных шагов, 5 whole roots / 1 set-count leaf. Исполняются
+полный chained-unwind growth, resize и оба потребителя — archive.raw и
+queue.append / обычный transport wake gate. Проверены повторное использование,
+нулевые байты, alignment / raw header, sizes, retirement, guards и Win64 ABI.
+Allocator / free / CRT effects и wake callback сохраняют явные fixture-границы;
+реальные socket delivery / drain и backend lifetime ещё не подтверждены.
+
+Проверки: 65 native случаев и 1006 штатных тестов. Общий повтор 33 drivers
+использовал 99 stages / 33 publications без native / JVM / PE rebuild
+(177.023237 с). Готовые 113 CRC/XOR и 1807 backend/wire случаев
+повторно не исполнялись. Source collect закрыл resize / unwind blocker:
+17 missing whole functions получены одним JVM с обязательной coverage.
+Следующий общий блок — backend assignment / constructor / refcount lifetime;
+source links и полные exports для него готовы. Связь frame backend с этой
+native queue требует отдельной новой матрицы.
 
 ## Сохранённые записи прежних этапов
 

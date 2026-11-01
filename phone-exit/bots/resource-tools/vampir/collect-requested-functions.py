@@ -14,6 +14,7 @@ import uuid
 REVIEWED_LEAF_TAILS = {
     '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f': {
         0x144aad2c0: '488d05f962bc04488901e921fcffff',
+        0x141431fe0: 'e9fb100500',
     },
     'd30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c': {
         0x144552540: '890d9a5bc306c3',
@@ -34,7 +35,9 @@ def checked_leaf_tails(native, image, sha):
         terminal_jump = reviewed_source and at == 0x144ab13f0 and encoded == '488b491033d2e9c51b0000'
         archive_cleanup = (sha == '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
             and at == 0x144aad2c0 and encoded == '488d05f962bc04488901e921fcffff')
-        if not setter_leaf and not terminal_jump and not archive_cleanup:raise ValueError('Unreviewed tail leaf model')
+        sized_free = (sha == '03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+            and at == 0x141431fe0 and encoded == 'e9fb100500')
+        if not setter_leaf and not terminal_jump and not archive_cleanup and not sized_free:raise ValueError('Unreviewed tail leaf model')
         raw = bytes.fromhex(encoded)
         if not 1 <= len(raw) <= 16:
             raise ValueError('Reviewed tail leaf budget')
@@ -56,6 +59,10 @@ def checked_leaf_tails(native, image, sha):
                 and rows[-1].address == at + 10
                 and rows[0].address + rows[0].size + rows[0].operands[1].mem.disp == 0x1496735c0
                 and rows[-1].operands[0].imm == 0x144aacef0)
+        elif sized_free:
+            valid = (len(rows) == 1 and rows[0].mnemonic == 'jmp'
+                and rows[0].op_str == '0x1414830e0' and rows[0].address == at and rows[0].size == 5
+                and len(rows[0].operands) == 1 and rows[0].operands[0].imm == 0x1414830e0)
         else:
             valid = (rows and rows[-1].mnemonic == 'ret'
                      and not any(row.mnemonic.startswith(('j', 'call', 'ret')) for row in rows[:-1]))

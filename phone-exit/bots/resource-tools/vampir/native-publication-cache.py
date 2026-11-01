@@ -38,6 +38,7 @@ INDEXES = {
     'login-send-handoff': 'generated-login-send-handoff',
     'login-backend-wire': 'generated-login-backend-wire',
     'frame-integrity': 'generated-frame-integrity',
+    'buffer-transport': 'generated-buffer-transport',
 }
 MODULES = {
     'string-writer': 'update-native-string-writer', 'archive-wire': 'update-native-archive-wire',
@@ -57,8 +58,9 @@ MODULES = {
     'login-send-handoff': 'update-native-login-send-handoff',
     'login-backend-wire': 'update-native-login-backend-wire',
     'frame-integrity': 'update-native-frame-integrity',
+    'buffer-transport': 'update-native-buffer-transport',
 }
-MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full', 'update-native-login-composition', 'update-native-login-registration', 'update-native-login-container', 'update-native-login-dispatch', 'update-native-login-state-flow', 'update-native-login-send-handoff', 'update-native-login-backend-wire', 'update-native-frame-integrity'}
+MULTI = {'update-native-version-helpers', 'update-native-login-metadata', 'update-native-login-input', 'update-native-login-handler', 'update-native-response', 'update-native-login-full', 'update-native-login-composition', 'update-native-login-registration', 'update-native-login-container', 'update-native-login-dispatch', 'update-native-login-state-flow', 'update-native-login-send-handoff', 'update-native-login-backend-wire', 'update-native-frame-integrity', 'update-native-buffer-transport'}
 
 
 def canonical(value):

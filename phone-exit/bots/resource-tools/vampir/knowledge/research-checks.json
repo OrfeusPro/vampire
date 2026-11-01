@@ -11591,7 +11591,22 @@
         "phone-exit/bots/test_vampir_frame_integrity_runtime.py",
         "phone-exit/bots/test_vampir_frame_integrity_verifier.py",
         "phone-exit/bots/test_vampir_native_frame_integrity_adapter.py",
-        "phone-exit/bots/test_vampir_frame_integrity_rules.py"
+        "phone-exit/bots/test_vampir_frame_integrity_rules.py",
+        "phone-exit/bots/resource-tools/vampir/buffer-transport-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/buffer-transport-harness.py",
+        "phone-exit/bots/resource-tools/vampir/buffer-transport-memory.py",
+        "phone-exit/bots/resource-tools/vampir/buffer-transport-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/buffer-transport-rules.py",
+        "phone-exit/bots/resource-tools/vampir/buffer-transport-runtime.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-buffer-transport.py",
+        "phone-exit/bots/resource-tools/vampir/verify-buffer-transport-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/buffer-transport-11322.json",
+        "phone-exit/bots/test_vampir_buffer_transport_contracts.py",
+        "phone-exit/bots/test_vampir_buffer_transport_fixtures.py",
+        "phone-exit/bots/test_vampir_buffer_transport_oracle.py",
+        "phone-exit/bots/test_vampir_buffer_transport_rules.py",
+        "phone-exit/bots/test_vampir_buffer_transport_verifier.py",
+        "phone-exit/bots/test_vampir_native_buffer_transport_adapter.py"
       ],
       "artifact_dependencies": []
     }

@@ -293,6 +293,19 @@ update и XOR, отдельно и внутри direct backend → Login writer 
 (236.979263 с). Текущая сессия и next-profile не меняются.
 [Матрица, guards, source boundaries и замеры](evidence/updates/HEADLESS-AUTO-FRAME-INTEGRITY-11322.md).
 
+`buffer-transport-v1` / `buffer-transport` подключает native resize / полный
+chained growth и потребителей archive.raw / queue.append / ordinary transport.
+Матрица — 65 сценариев / 95 шагов, 5 whole roots / 1 set-count leaf. Проверяются
+aligned и small allocations, source bytes, sentinel, zero/copy/free order,
+retained ownership, guards и Win64 ABI. Opaque allocator / CRT и synthetic wake
+остаются providers; socket / drain / backend lifetime не подтверждаются.
+
+Роль публикуется в `generated-buffer-transport/index.json`; базой следующего
+патча служит проверенный SHA22 context. Тёплый общий повтор 33 drivers использовал
+99 stages / 33 publications без native / JVM / PE rebuild (177.023237 с).
+Новый driver использовал готовый source collect 17 функций; текущая сессия
+и next-profile не менялись. [Доказательства и границы](evidence/updates/HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

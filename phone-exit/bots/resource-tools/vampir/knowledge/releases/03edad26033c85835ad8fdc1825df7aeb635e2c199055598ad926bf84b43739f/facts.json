@@ -755,6 +755,42 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Native backend assignment / constructor / refcount lifetime, transport queue ownership / drain / socket errors, session key acquisition и receive integrity остаются открытыми. Storage / allocation / OS / SDK / engine effects сохраняют fixtures. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. Realloc / aligned / OOM / SEH и весь онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
+    },
+    {
+      "addresses": [
+        "0x1445dee20",
+        "0x1445e4d00",
+        "0x1445eb0b0",
+        "0x1445f1240",
+        "0x144aacaf0"
+      ],
+      "checks": [],
+      "conclusion": "buffer-transport-v1 подключил native resize/growth, queue/ordinary transport и archive.raw: 65 сценариев / 95 шагов, 5 whole / 1 leaf. 1006 tooling tests прошли. Тёплый общий повтор 33 drivers использовал 99 stages / 33 publications без JVM/native/PE rebuild (177.023237 с). Opaque allocation/CRT и synthetic wake сохраняют явные fixtures; socket/drain/lifetime и онлайн-вход не подтверждены. Профиль и сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md",
+          "sha256": "f0b341e3fc1ed347ed84d3aa7dafa226b943c0a148c352f02443af320b6861db"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-BUFFER-TRANSPORT-11322.json",
+          "sha256": "749dbdf22f096271b91056f6c405f950a39a27d8980adc799627f9a2c2379a94"
+        }
+      ],
+      "id": "a36fa96318a4da7063f27f08ee75f790ded32dd1c42024ae457d18e788aae0ff",
+      "limits": [
+        "Five whole source roots and one set-count leaf execute in 65 declared cases; cumulative steps reuse the same owned object and storage.",
+        "Resize, allocation growth, append, archive raw and ordinary transport return AL1 are native; allocator, sized-free, CRT memory effects and synthetic wake table are explicit bounded fixtures.",
+        "Archive state is an ambient 64-byte provider seeded from the accepted source constructor contract; its constructor, packet writer, CRC, transform and cleanup do not execute.",
+        "Transport always appends; only state1/busy0 invokes the synthetic wake callback, with checked source receiver and argument. No callback result, delivery, failure/reset or socket claim is made.",
+        "Small/aligned growth, byte preservation/zeroing, raw NUL, source immutability, exact helper order, ownership/retirement, guards and Win64 ABI are bounded to the declared matrix.",
+        "Negative or overflowing append lengths, malformed descriptors, huge allocation arithmetic, OOM, SEH, queue drain, real wake scheduling, backend lifetime and online admission remain outside this scope.",
+        "Driver timings exclude prepare and the historical knowledge-index audit. The separate source-preparation JVM collected17wholefunctions; the native family reuses these exports."
+      ],
+      "method": "static",
+      "next_check": "Продолжить общий backend assignment→constructor→refcontrol→dtor пакет: полные exports 17 функций run-bcb6caaf0711 и source links готовы; единый source-план предлагает 12 whole roots и 42 новых сценария. Destructor не обнуляет service+0x10/+0x18; callback+0x2c получает неинициализированные stack+0x3c bits — их нельзя считать нулевыми. Backend объект 800 байт не заменять прежним 784-byte fixture. Связать готовый frame backend с native queue отдельной новой матрицей без повтора законченных standalone suites. Drain/socketfailure/realwake остаются отдельными границами. 34 bounded семейства (33 drivers и UTF-8) подключены к обновлению.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Native backend assignment / constructor / refcount lifetime и связь frame backend с native queue ещё открыты. Standalone buffer/queue доказан в bounded normal-path scope; drain / socket errors / real wake scheduling, session key acquisition и receive integrity требуют своих проверок. Opaque allocation/CRT/OS/SDK/engine providers сохраняют явные fixtures. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. Неверные descriptors, огромные arithmetic, OOM/SEH и весь онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
     }
   ],
   "schema": 1,

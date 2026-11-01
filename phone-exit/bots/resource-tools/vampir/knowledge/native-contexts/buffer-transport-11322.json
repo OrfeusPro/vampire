@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "family": "buffer-transport",
+  "format": "reference-buffer-transport",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "functions": {
+    "archive.raw": "0x144aacaf0",
+    "vector.resize": "0x1445e4d00",
+    "vector.grow": "0x1445dee20",
+    "queue.append": "0x1445eb0b0",
+    "transport": "0x1445f1240"
+  },
+  "wire_context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd\\manifest.json",
+    "sha256": "5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd"
+  },
+  "wire_check": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af\\manifest.json",
+    "sha256": "e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af"
+  },
+  "verify_whole_exports": true,
+  "vector_bytes": 24,
+  "queue_bytes": 32,
+  "archive_bytes": 64,
+  "transport_bytes": 400,
+  "helpers": {
+    "allocate": "0x14690be10",
+    "free": "0x141431fe0",
+    "memcpy": "0x1487f8c99",
+    "memmove": "0x1487f8c9f",
+    "memset": "0x1487f8ca5"
+  },
+  "leaves": {
+    "0x1445f1350": "895108c3"
+  },
+  "source_inputs": {
+    "archive_table": {
+      "address": "0x149673420",
+      "bytes": "b0ceaa440100000060c9aa4401000000208a6a430100000090cbaa440100000090cbaa4401000000b0c9aa4401000000c0caaa440100000090caaa4401000000b0cbaa4401000000b0cbaa440100000060caaa440100000060caaa440100000030caaa440100000030caaa440100000000caaa440100000000caaa4401000000e0cbaa4401000000f0caaa440100000090ceaa440100000030ceaa4401000000c0caaa440100000090caaa4401000000b0cbaa4401000000b0cbaa440100000060caaa440100000060caaa440100000030caaa440100000030caaa440100000000caaa440100000000caaa4401000000e0cbaa4401000000"
+    },
+    "allocation_entry": {
+      "address": "0x14690be10",
+      "bytes": "4885c9b801000000ba10000000480f45c1488bc8e9973db8fa"
+    },
+    "free_entry": {
+      "address": "0x141431fe0",
+      "bytes": "e9fb100500"
+    }
+  },
+  "call_sites": {
+    "archive.raw": {
+      "0x144aacb46": "0x1445e4d00",
+      "0x144aacb61": "0x1487f8c99",
+      "0x144aacb71": "0x1445f1350"
+    },
+    "vector.resize": {
+      "0x1445e4d65": "0x1487f8ca5"
+    },
+    "vector.grow": {
+      "0x1445dee7b": "0x14690be10",
+      "0x1445deec2": "0x14690be10",
+      "0x1445deeda": "0x1487f8ca5",
+      "0x1445deeec": "0x1487f8c9f",
+      "0x1445def21": "0x141431fe0",
+      "0x1445def53": "qword ptr [rip + 0x43c00bf]",
+      "0x1445def5a": "0x1418cc330",
+      "0x1445def60": "0x1418cc150"
+    },
+    "queue.append": {
+      "0x1445eb0eb": "0x1445e4d00",
+      "0x1445eb0fd": "0x1445e4d00",
+      "0x1445eb112": "0x1487f8c99"
+    },
+    "transport": {
+      "0x1445f1250": "0x1445eb0b0",
+      "0x1445f1266": "0x1445e4ed0",
+      "0x1445f126e": "0x1445ec070",
+      "0x1445f129c": "qword ptr [rax + 0x20]"
+    }
+  },
+  "layout": {
+    "abi": "win64",
+    "executed_roots": 5,
+    "leaves": 1,
+    "tail_fragments": 0,
+    "vector_bytes": 24,
+    "queue_bytes": 32,
+    "archive_bytes": 64,
+    "transport_bytes": 400,
+    "native_resize": true,
+    "native_growth": true,
+    "native_queue_append": true,
+    "native_transport": true,
+    "native_archive_raw": true,
+    "native_set_count": true,
+    "native_allocator": false,
+    "native_socket": false,
+    "native_drain": false,
+    "native_backend_lifetime": false,
+    "native_writer": false,
+    "native_checksum": false,
+    "native_transform": false,
+    "session_executed": false
+  },
+  "exports": {
+    "run-841159b0b6c4": "f1968682b2c9db696154a519f1ed1413ed3893a578496158ea60ba8f80bbc254",
+    "run-bcb6caaf0711": "e641c59aaf761052b0d6977cfb3bfa3c351fc2aff752a4f77f2b77a1d185869c"
+  }
+}

@@ -160,6 +160,11 @@
       "id": "native-auto-frame-integrity",
       "family": "frame-integrity",
       "adapter": "frame-integrity-v1"
+    },
+    {
+      "id": "native-auto-buffer-transport",
+      "family": "buffer-transport",
+      "adapter": "buffer-transport-v1"
     }
   ]
 }

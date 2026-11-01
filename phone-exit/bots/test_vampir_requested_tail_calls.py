@@ -25,6 +25,7 @@ class RequestedTailCallsTests(unittest.TestCase):
         tool=load('collect-requested-functions');native=load('build-native-entry-code')
         sha='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
         at=0x144aad2c0;encoded='488d05f962bc04488901e921fcffff';raw=bytes.fromhex(encoded)
+        tool.REVIEWED_LEAF_TAILS={sha:{at:encoded}}
         image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
         leaves=tool.checked_leaf_tails(native,image,sha)
         self.assertEqual(leaves,{at:encoded})
@@ -45,6 +46,7 @@ class RequestedTailCallsTests(unittest.TestCase):
         tool=load('collect-requested-functions');native=load('build-native-entry-code')
         sha='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
         raw=bytes.fromhex(tool.REVIEWED_LEAF_TAILS[sha][0x144aad2c0])
+        tool.REVIEWED_LEAF_TAILS={sha:{0x144aad2c0:raw.hex()}}
         image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
         real=native.capstone.Cs
         for drift in ('table','target'):
@@ -59,6 +61,57 @@ class RequestedTailCallsTests(unittest.TestCase):
                         if drift=='target' and i==2:operands=[SimpleNamespace(imm=0)]
                         out.append(SimpleNamespace(mnemonic=r.mnemonic,op_str=r.op_str,address=r.address,size=r.size,operands=operands))
                     return out
+                return SimpleNamespace(disasm=disasm,detail=False)
+            with self.subTest(drift=drift),patch.object(native.capstone,'Cs',side_effect=changed):
+                with self.assertRaisesRegex(ValueError,'control flow'):
+                    tool.checked_leaf_tails(native,image,sha)
+
+    def test_sized_free_tail_requires_exact_source_bytes_and_finite_target(self):
+        tool=load('collect-requested-functions');native=load('build-native-entry-code')
+        sha='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+        at=0x141431fe0;target=0x1414830e0;encoded='e9fb100500';raw=bytes.fromhex(encoded)
+        self.assertEqual(tool.REVIEWED_LEAF_TAILS[sha][at],encoded)
+        tool.REVIEWED_LEAF_TAILS={sha:{at:encoded}}
+        image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
+        leaves=tool.checked_leaf_tails(native,image,sha)
+        self.assertEqual(leaves,{at:encoded})
+        self.assertNotIn(target,leaves)
+        caller=self.row(address=0x1445ea11f,direct_target=at,bytes='e9bc7ee4fc')
+        self.assertEqual(tool.reviewed_tail_calls([caller],set(leaves)),[
+            dict(address='0x1445ea11f',target=hex(at),bytes='e9bc7ee4fc')])
+        # The capsule's own E9 target never becomes an inferred export/model.
+        self.assertEqual(tool.reviewed_tail_calls([
+            self.row(address=at,direct_target=target,bytes=encoded)],set(leaves)),[])
+        image.data=raw[:-1]+b'\x01'
+        with self.assertRaisesRegex(ValueError,'source differs'):
+            tool.checked_leaf_tails(native,image,sha)
+        for source,entry,value in ((sha,at+1,encoded),('0'*64,at,encoded),
+                (sha,at,'e9fc100500')):
+            with self.subTest(source=source,entry=entry,value=value),patch.object(
+                    tool,'REVIEWED_LEAF_TAILS',{source:{entry:value}}):
+                with self.assertRaisesRegex(ValueError,'Unreviewed'):
+                    tool.checked_leaf_tails(native,image,source)
+
+    def test_sized_free_model_rejects_decoded_target_and_body_drift(self):
+        tool=load('collect-requested-functions');native=load('build-native-entry-code')
+        sha='03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f'
+        at=0x141431fe0;encoded='e9fb100500';raw=bytes.fromhex(encoded)
+        tool.REVIEWED_LEAF_TAILS={sha:{at:encoded}}
+        image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
+        real=native.capstone.Cs
+        for drift in ('target','operand_text','address','length','count'):
+            def changed(*args):
+                decoder=real(*args);decoder.detail=True
+                def disasm(code,entry):
+                    row=list(decoder.disasm(code,entry))[0]
+                    values=dict(mnemonic=row.mnemonic,op_str=row.op_str,address=row.address,
+                                size=row.size,operands=row.operands)
+                    if drift=='target':values['operands']=[SimpleNamespace(imm=0x1414830e1)]
+                    if drift=='operand_text':values['op_str']='0x1414830e1'
+                    if drift=='address':values['address']+=1
+                    if drift=='length':values['size']=4
+                    out=[SimpleNamespace(**values)]
+                    return out*2 if drift=='count' else out
                 return SimpleNamespace(disasm=disasm,detail=False)
             with self.subTest(drift=drift),patch.object(native.capstone,'Cs',side_effect=changed):
                 with self.assertRaisesRegex(ValueError,'control flow'):

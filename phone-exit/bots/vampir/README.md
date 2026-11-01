@@ -195,10 +195,28 @@ native prepare / SDK / sender / publisher в этой новой матрице 
 Проверки: 113 native случаев и 950 tooling тестов. Общий повтор 32 drivers
 использовал 96 stages / 32 publications без native / JVM / PE rebuild
 (236.979263 с). Прежние 1807 случаев и остальные parent suites
-не повторялись. Новому семейству хватило пяти готовых exports; отдельный
-source collect assignment/lifetime/transport остановлен на конкретном
-resize / unwind blocker. Реальная сеть, backend lifetime и весь онлайн-вход
-сохраняют открытые границы.
+не повторялись. Новому integrity семейству хватило пяти готовых exports. Тогда source collect
+assignment/lifetime/transport остановился на resize / unwind blocker; этот
+blocker закрыт следующим buffer-transport пакетом ниже. Реальная сеть, backend
+lifetime и весь онлайн-вход сохраняют открытые границы.
+
+[Общий resize и native transport queue](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md)
+подключены как `buffer-transport-v1` / `buffer-transport`: 65 сценариев /
+95 последовательных шагов, 5 whole roots / 1 set-count leaf. Исполняются
+полный chained-unwind growth, resize и оба потребителя — archive.raw и
+queue.append / обычный transport wake gate. Проверены повторное использование,
+нулевые байты, alignment / raw header, sizes, retirement, guards и Win64 ABI.
+Allocator / free / CRT effects и wake callback сохраняют явные fixture-границы;
+реальные socket delivery / drain и backend lifetime ещё не подтверждены.
+
+Проверки: 65 native случаев и 1006 штатных тестов. Общий повтор 33 drivers
+использовал 99 stages / 33 publications без native / JVM / PE rebuild
+(177.023237 с). Готовые 113 CRC/XOR и 1807 backend/wire случаев
+повторно не исполнялись. Source collect закрыл resize / unwind blocker:
+17 missing whole functions получены одним JVM с обязательной coverage.
+Следующий общий блок — backend assignment / constructor / refcount lifetime;
+source links и полные exports для него готовы. Связь frame backend с этой
+native queue требует отдельной новой матрицы.
 
 ## Сохранённые записи прежних этапов
 
