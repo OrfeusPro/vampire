@@ -720,6 +720,41 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Native backend assignment / реальный lifecycle сервиса, checksum / cipher / transport algorithms и async ownership остаются открытыми. Pending insert / delegate effects и SDK / OS / engine providers — fixtures. Version sender, current responses / clock / heartbeat / world и текущий entry admission ещё не закрыты. OOM / SEH / reallocation / aligned buffers и целый онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
+    },
+    {
+      "addresses": [
+        "0x1418c02f0",
+        "0x1445f7850",
+        "0x144aad670",
+        "0x144ab2b10"
+      ],
+      "checks": [],
+      "conclusion": "frame-integrity-v1 подключил real native CRC/XOR и direct backend / Login writer / archives: 113 сценариев, 16 whole / 9 returning / 2 tails. 950 tooling tests прошли. Общий тёплый повтор 32 drivers использовал 96 stages / 32 publications без JVM / native / PE rebuild (236.979263 с). Transport capture и synthetic prepared packet inputs сохраняют явные границы; профиль и игровая сессия не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-FRAME-INTEGRITY-11322.md",
+          "sha256": "686e0b1622ea867e40748824f6ce354274db258642269324bb92f695d5f3b7f1"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-FRAME-INTEGRITY-11322.json",
+          "sha256": "b382eb3f56f9f4a3e8447dd15152a32a9f02e8cb71e8c7da4ab9c9c52558ad13"
+        }
+      ],
+      "id": "cee383c060604eed241e0a22027ed76f68c5b9e8c31a843702e5a2a81de9fe0f",
+      "limits": [
+        "Three exact source leaves execute as separate explicit primitive entries, including raw CRC continuation, width/signed-length behavior, empty, unaligned and in-place inputs.",
+        "Ten direct source backend entries execute the real Login writer, archive routines, CRC initializer/update and XOR without manual helper calls inside a backend entry.",
+        "Synthetic packet fields and UTF-16 storage come from four immutable, separately proved parent prepared inputs; preparation, SDK, metadata, publisher, service assignment and session key acquisition are not executed.",
+        "The final two entries reuse the same backend/packet; the second observes the native sequence left by the first and only its explicit key field is changed before delivery.",
+        "Allocation/initial capacity, state/debug providers, CRT/import effects and transport capture remain bounded fixtures. Actual native ciphertext is captured before archive cleanup; no socket delivery or asynchronous transport ownership is proved.",
+        "Exact same-buffer and disjoint XOR are covered; partial overlap, arbitrary buffer sizes, reallocation/aligned/OOM/SEH, receive integrity validation, online admission and Android parity remain outside this scope.",
+        "Driver timings exclude prepare and the historical knowledge-index audit. One separate source-preparation JVM failed closed; it is not part of this family admission."
+      ],
+      "method": "static",
+      "next_check": "Продолжить общий source backend assignment / lifetime и transport ownership пакет по сохранённым links. Missing-only collect 17 остановлен на resize 0x1445e4d00: decompiler block outside requested unwind ranges; source E9 resize+0x55 ведёт в отдельный PE unwind root 0x1445dee20. Добавить явный target в новый prepared missing-only набор перед resize и проверить границы decompiler; coverage не ослаблять. Resize 0x1445e4d00 общий для archive.raw (1 call) и transport.append (2 calls): следующий native helper разбирать одним пакетом для обоих потребителей, сохраняя отдельную allocation-tail границу. Native CRC/XOR, writer и parents использовать через публикацию / кэш без повтора. 33 bounded семейства (32 drivers и UTF-8) подключены к обновлению.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Native backend assignment / constructor / refcount lifetime, transport queue ownership / drain / socket errors, session key acquisition и receive integrity остаются открытыми. Storage / allocation / OS / SDK / engine effects сохраняют fixtures. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. Realloc / aligned / OOM / SEH и весь онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
     }
   ],
   "schema": 1,

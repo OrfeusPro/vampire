@@ -4,13 +4,18 @@
 Продолжать по сгруппированным корневым блокерам его отчёта; неизменные готовые
 exports и проверки вручную не повторять. Счётчики прежних выпусков не складывать.
 
-- Следующий общий пакет: source backend assignment / lifetime и transport
-  ownership / integrity / cipher. Publisher → prepare / sender → backend → Login
-  writer / framing / cleanup уже проверены в 1807 native сценариях; использовать
-  публикацию и кэш без повторных standalone suites. Backend binding, initial
-  storage, checksum / identity transform / transport effects остаются fixtures.
-  Явные roots следующего блока определить через готовый индекс; собирать только
-  missing exports. [Завершённый bounded пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-LOGIN-BACKEND-WIRE-11322.md).
+- Следующий общий пакет: реальный backend assignment / constructor / refcount
+  lifetime и transport queue ownership / drain / socket errors. Source links уже
+  найдены: реальная запись service+0x10 и цепочка удаления требуют backend 800
+  байт; стенд прежнего backend proof на 784 байта не расширять скрытно.
+  Missing-only collect 17 остановлен на resize 0x1445e4d00: decompiler block вне
+  unwind ranges. Source E9 resize+0x55 ведёт в отдельный PE unwind root
+  0x1445dee20; добавить явный target в новый prepared missing-only набор перед
+  resize и проверить границы decompiler. Coverage не ослаблять. Resize общий
+  для archive.raw и transport.append (3 source calls); разбирать его одним
+  native пакетом для обоих потребителей, отделив allocation-tail boundary. Настоящие CRC/XOR и native writer /
+  archive cleanup подключены новым [integrity пакетом](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-FRAME-INTEGRITY-11322.md).
+  Готовые parent suites, включая прежние 1807 случаев, использовать через кэш.
 - Вход и ответы: закрыть недостающие SDK / Version / Login / Character / heartbeat
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
@@ -200,9 +205,27 @@ checksum / identity transform / transport effects остаются fixtures.
 (302.339482 с). Новых экспортов и JVM не было; готовые parent native
 suites не исполнялись повторно. Полный онлайн-вход не допущен.
 
-Следующий общий блок — реальный backend assignment / lifetime и
-transport ownership / integrity / cipher. Готовые native пути подготовки и wire
-переиспользуются по SHA / proof / cache.
+Integrity / cipher закрыты отдельным bounded пакетом ниже. Реальный backend
+assignment / lifetime и transport ownership остаются следующими source блокерами.
+Готовые native пути подготовки и wire переиспользуются по SHA / proof / cache.
+
+[Настоящие CRC/XOR и native Login frame](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-FRAME-INTEGRITY-11322.md)
+подключены как `frame-integrity-v1` / `frame-integrity`: 113 случаев,
+16 целых функций / 9 returning capsules / 2 cleanup tails. Три primitive leaves
+получены из source E8 anchors; проверяются инструкции и все 256 DWORD CRC table.
+103 primitive сценария охватывают raw CRC state, width / signed length, fallback
+и явные ключи, in-place / disjoint / unaligned. Десять direct backend entries
+связывают native writer / archive / CRC / XOR / cleanup, включая paired reuse.
+Prepared packet inputs синтетические и взяты из принятого parent report;
+native prepare / SDK / sender / publisher в этой новой матрице не исполняются.
+
+Проверки: 113 native случаев и 950 tooling тестов. Общий повтор 32 drivers
+использовал 96 stages / 32 publications без native / JVM / PE rebuild
+(236.979263 с). Прежние 1807 случаев и остальные parent suites
+не повторялись. Новому семейству хватило пяти готовых exports; отдельный
+source collect assignment/lifetime/transport остановлен на конкретном
+resize / unwind blocker. Реальная сеть, backend lifetime и весь онлайн-вход
+сохраняют открытые границы.
 
 ## Сохранённые записи прежних этапов
 

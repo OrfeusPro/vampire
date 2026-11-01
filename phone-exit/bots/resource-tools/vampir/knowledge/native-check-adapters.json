@@ -155,6 +155,11 @@
       "id": "native-auto-login-backend-wire",
       "family": "login-backend-wire",
       "adapter": "backend-wire-v1"
+    },
+    {
+      "id": "native-auto-frame-integrity",
+      "family": "frame-integrity",
+      "adapter": "frame-integrity-v1"
     }
   ]
 }

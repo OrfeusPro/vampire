@@ -11575,7 +11575,23 @@
         "phone-exit/bots/test_vampir_login_backend_wire_rules.py",
         "phone-exit/bots/test_vampir_login_backend_wire_runtime.py",
         "phone-exit/bots/test_vampir_native_login_backend_wire_adapter.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-backend-wire-11322.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/login-backend-wire-11322.json",
+        "phone-exit/bots/resource-tools/vampir/frame-integrity-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/frame-integrity-codec.py",
+        "phone-exit/bots/resource-tools/vampir/frame-integrity-harness.py",
+        "phone-exit/bots/resource-tools/vampir/frame-integrity-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/frame-integrity-rules.py",
+        "phone-exit/bots/resource-tools/vampir/frame-integrity-runtime.py",
+        "phone-exit/bots/resource-tools/vampir/verify-frame-integrity-context.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-frame-integrity.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/frame-integrity-11322.json",
+        "phone-exit/bots/test_vampir_frame_integrity_contracts.py",
+        "phone-exit/bots/test_vampir_frame_integrity_harness.py",
+        "phone-exit/bots/test_vampir_frame_integrity_oracle.py",
+        "phone-exit/bots/test_vampir_frame_integrity_runtime.py",
+        "phone-exit/bots/test_vampir_frame_integrity_verifier.py",
+        "phone-exit/bots/test_vampir_native_frame_integrity_adapter.py",
+        "phone-exit/bots/test_vampir_frame_integrity_rules.py"
       ],
       "artifact_dependencies": []
     }

@@ -280,6 +280,19 @@ capture не подтверждают настоящую сеть и online admi
 93 stages / 31 publications без native / JVM / PE rebuild (302.339482 с).
 [Матрица, memory ledger, source boundaries и замеры](evidence/updates/HEADLESS-AUTO-LOGIN-BACKEND-WIRE-11322.md).
 
+`frame-integrity-v1` / `frame-integrity` исполняет настоящие CRC initializer /
+update и XOR, отдельно и внутри direct backend → Login writer / archive / cleanup.
+Матрица — 113 случаев: 103 primitive + 10 backend entries, 16 whole roots /
+9 returning capsules / 2 tails. Packet fields берутся из immutable parent report;
+в этой матрице preparation / SDK / sender / publisher и service assignment
+не исполняются. Transport остаётся bounded capture фактических cipher bytes.
+
+Роль публикуется в `generated-frame-integrity/index.json`; базой следующего
+патча становится проверенный SHA22 context. Общий тёплый повтор 32 drivers
+использовал 96 stages / 32 publications без native / JVM / PE rebuild
+(236.979263 с). Текущая сессия и next-profile не меняются.
+[Матрица, guards, source boundaries и замеры](evidence/updates/HEADLESS-AUTO-FRAME-INTEGRITY-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

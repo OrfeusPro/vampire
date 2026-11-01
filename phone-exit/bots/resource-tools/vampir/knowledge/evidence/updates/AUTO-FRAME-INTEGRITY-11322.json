@@ -1,0 +1,492 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "family": "frame-integrity",
+  "adapter": "frame-integrity-v1",
+  "scope": "bounded_native_frame_integrity",
+  "context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\ac40f8c73ca607a230b59a69479c21eff8e0b22ad088b0b779f27d002a63ae89\\manifest.json",
+    "sha256": "ac40f8c73ca607a230b59a69479c21eff8e0b22ad088b0b779f27d002a63ae89"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-frame-integrity-proofs\\eb2a95a59ea2672feb540d4bc399148d6bf8c6d659af776308ba97875ed14c8b\\manifest.json",
+    "sha256": "eb2a95a59ea2672feb540d4bc399148d6bf8c6d659af776308ba97875ed14c8b"
+  },
+  "native_check": {
+    "id": "native-auto-frame-integrity",
+    "profile_activated": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\a4f2895a2d88d8eaa40690afe567d522c79582c943074ba590c5ca23ccb344d9\\manifest.json",
+    "runtime_activated": false,
+    "scope": "bounded_native_frame_integrity",
+    "sha256": "a4f2895a2d88d8eaa40690afe567d522c79582c943074ba590c5ca23ccb344d9",
+    "state": "passed"
+  },
+  "runtime": {
+    "capstone": {
+      "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+      "version": "5.0.6"
+    },
+    "unicorn": {
+      "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+      "version": "2.1.4"
+    }
+  },
+  "native_cases": 113,
+  "observed_summary": {
+    "cases": 113,
+    "primitive_cases": 103,
+    "init_cases": 3,
+    "crc_cases": 30,
+    "xor_cases": 70,
+    "backend_entries": 10,
+    "prepared_inputs": 4,
+    "checksum_init_calls": 40,
+    "checksum_update_calls": 56,
+    "transform_calls": 80,
+    "writer_calls": 10,
+    "transport_captures": 10,
+    "archive_constructor_calls": 20,
+    "archive_cleanup_calls": 20,
+    "initial_growth_calls": 20,
+    "sequence_wraps": 3,
+    "transport_result0": 5,
+    "transport_result1": 5,
+    "paired_reuses": 1
+  },
+  "matrix_sha256": "51dd2a0d8ecd526cf14a088f10743737d085c5e224dc5b4c895cd6aa733e4129",
+  "admitted_roots": {
+    "backend": "0x144ab2b10",
+    "wire.append": "0x144aacd00",
+    "wire.archive.base-constructor": "0x144aac7a0",
+    "wire.archive.bool": "0x144aacbe0",
+    "wire.archive.constructor": "0x144aaccc0",
+    "wire.archive.raw": "0x144aacaf0",
+    "wire.archive.string": "0x144aac9b0",
+    "wire.archive.u16": "0x144aaca30",
+    "wire.archive.u32": "0x144aaca60",
+    "wire.archive.u64": "0x144aacbb0",
+    "wire.archive.u8": "0x144aaca00",
+    "wire.cleanup": "0x144aac7e0",
+    "wire.convert": "0x141446650",
+    "wire.length": "0x14144c5b0",
+    "wire.login-writer": "0x1456e8520",
+    "wire.string-writer": "0x144aad400"
+  },
+  "admitted_leaves": {
+    "0x14143f380": "448bc9418b0885c90f842c0100004181f9000011000f830a010000418d810200ffff83f8010f86fa000000418bc12500f8ffff3d00d800000f84e70000004181f9800000000f82e00000004181f900080000733283f9020f8cdd000000488b02418bc9c1e9064180e13f80c9c04180c980880848ff02488b02448808b00148ff02418300fec34181f900000100734483f9030f8ca2000000488b02418bc9c1e90c80c9e08808418bc148ff024180e13f488b0a4180c980c1e806243f0c80880148ff02488b02448808b00148ff02418300fdc383f9047c62488b02418bc9c1e91280c9f08808418bc148ff02488b0ac1e80c243f0c808801418bc148ff024180e13f488b0a4180c980c1e806243f0c80880148ff02488b02448808b00148ff02418300fcc341b93f000000488b02448808b00148ff0241ff08c332c0c3",
+    "0x14144c140": "b803000000c3",
+    "0x1418c02f0": "c701ffffffff488bc1c3",
+    "0x1445f1350": "895108c3",
+    "0x1445f7850": "4c8bd14585c074294c8d1d2166f604900fb602488d5201458b0a4933c141c1e9080fb6c845330c8b45890a4183c0ff75df418b02f7d0c3",
+    "0x144aac950": "83793000750333c0c3488b4118c3",
+    "0x144aacef0": "488d0509df0204488901c3",
+    "0x144aad2a0": "488d051963bc04c7410800000000488901488bc1c7410c01000000c6411001c3",
+    "0x144aad670": "4d85c948b8a78420d0c978b39a4c8bd14c0f44c84c894c242085d27e344533c98bca4d2bd06666660f1f840000000000498bc14d8d400183e00749ffc10fb644042043324402ff418840ff4883e90175df8bc2c3"
+  },
+  "admitted_tails": {
+    "0x144aaccf0": "488d052967bc04488901e9e1faffff",
+    "0x144aad2c0": "488d05f962bc04488901e921fcffff"
+  },
+  "admitted_root_count": 16,
+  "admitted_leaf_count": 9,
+  "admitted_tail_count": 2,
+  "extents": {
+    "packet_bytes": 320,
+    "backend_bytes": 784,
+    "archive_bytes": 64
+  },
+  "source_inputs": {
+    "archive_flags": {
+      "address": "0x14b197560",
+      "bytes": "01000000"
+    },
+    "archive_table": {
+      "address": "0x149673420",
+      "bytes": "b0ceaa440100000060c9aa4401000000208a6a430100000090cbaa440100000090cbaa4401000000b0c9aa4401000000c0caaa440100000090caaa4401000000b0cbaa4401000000b0cbaa440100000060caaa440100000060caaa440100000030caaa440100000030caaa440100000000caaa440100000000caaa4401000000e0cbaa4401000000f0caaa440100000090ceaa440100000030ceaa4401000000c0caaa440100000090caaa4401000000b0cbaa4401000000b0cbaa440100000060caaa440100000060caaa440100000030caaa440100000030caaa440100000000caaa440100000000caaa4401000000e0cbaa4401000000"
+    },
+    "cleanup_base_table": {
+      "address": "0x1496735c0",
+      "bytes": "d0d2aa4401000000"
+    },
+    "cleanup_final_table": {
+      "address": "0x148adae00",
+      "bytes": "80adb04101000000"
+    },
+    "cleanup_table": {
+      "address": "0x149673288",
+      "bytes": "a0c8aa4401000000"
+    },
+    "cleanup_wrapper_table": {
+      "address": "0x149673420",
+      "bytes": "b0ceaa4401000000"
+    },
+    "diagnostic_pointer": {
+      "address": "0x14b594fa0",
+      "size_bytes": 8,
+      "span": {
+        "name": ".data",
+        "raw": 185338880,
+        "raw_size": 2010112,
+        "rva": 185344000,
+        "size": 6187164
+      }
+    },
+    "gate": {
+      "address": "0x14b594ea4",
+      "size_bytes": 1,
+      "span": {
+        "name": ".data",
+        "raw": 185338880,
+        "raw_size": 2010112,
+        "rva": 185344000,
+        "size": 6187164
+      }
+    }
+  },
+  "integrity": {
+    "anchors": {
+      "initializer": {
+        "bytes": "e8f7d6e0fc",
+        "callsite": "0x144ab2bf4",
+        "target": "0x1418c02f0"
+      },
+      "transform": {
+        "bytes": "e8e8a9ffff",
+        "callsite": "0x144ab2c83",
+        "target": "0x144aad670"
+      },
+      "update": {
+        "bytes": "e80f4cb4ff",
+        "callsite": "0x144ab2c3c",
+        "target": "0x1445f7850"
+      }
+    },
+    "fallback_key": 11147386310847661223,
+    "initializer": "0x1418c02f0",
+    "table": {
+      "address": "0x14955de80",
+      "bytes": "00000000963007772c610eeeba51099919c46d078ff46a7035a563e9a395649e3288db0ea4b8dc791ee9d5e088d9d2972b4cb609bd7cb17e072db8e7911dbf906410b71df220b06a4871b9f3de41be847dd4da1aebe4dd6d51b5d4f4c785d38356986c13c0a86b647af962fdecc9658a4f5c0114d96c0663633d0ffaf50d088dc8206e3b5e10694ce44160d5727167a2d1e4033c47d4044bfd850dd26bb50aa5faa8b5356c98b242d6c9bbdb40f9bcace36cd832755cdf45cf0dd6dc593dd1abac30d9263a00de518051d7c81661d0bfb5f4b42123c4b3569995bacf0fa5bdb89eb802280888055fb2d90cc624e90bb1877c6f2f114c6858ab1d61c13d2d66b69041dc760671db01bc20d2982a10d5ef8985b1711fb5b606a5e4bf9f33d4b8e8a2c9077834f9000f8ea8099618980ee1bb0d6a7f2d3d6d08976c6491015c63e6f4516b6b62616c1cd83065854e0062f2ed95066c7ba5011bc1f4088257c40ff5c6d9b06550e9b712eab8be8b7c88b9fcdf1ddd62492dda15f37cd38c654cd4fb5861b24dce51b53a7400bca3e230bbd441a5df4ad795d83d6dc4d1a4fbf4d6d36ae96943fcd96e34468867add0b860da732d0444e51d03335f4c0aaac97c0ddd3c710550aa41022710100bbe86200cc925b56857b3856f2009d466b99fe461ce0ef9de5e98c9d9292298d0b0b4a8d7c7173db359810db42e3b5cbdb7ad6cbac02083b8edb6b3bf9a0ce2b6039ad2b1743947d5eaaf77d29d1526db048316dc73120b63e3843b64943e6a6d0da85a6a7a0bcf0ee49dff099327ae000ab19e077d44930ff0d2a3088768f2011efec206695d5762f7cb67658071366c19e7066b6e761bd4fee02bd3895a7ada10cc4add676fdfb9f9f9efbe8e43beb717d58eb060e8a3d6d67e93d1a1c4c2d83852f2df4ff167bbd16757bca6dd06b53f4b36b248da2b0dd84c1b0aaff64a0336607a0441c3ef60df55df67a8ef8e6e3179be69468cb361cb1a8366bca0d26f2536e2685295770ccc03470bbbb91602222f260555be3bbac5280bbdb2925ab42b046ab35ca7ffd7c231cfd0b58b9ed92c1daede5bb0c2649b26f263ec9ca36a750a936d02a906099c3f360eeb8567077213570005824abf95147ab8e2ae2bb17b381bb60c9b8ed2920dbed5e5b7efdc7c21dfdb0bd4d2d38642e2d4f1f8b3dd686e83da1fcd16be815b26b9f6e177b06f7747b718e65a0888706a0fffca3b06665c0b0111ff9e658f69ae62f8d3ff6b6145cf6c1678e20aa0eed20dd75483044ec2b30339612667a7f71660d04d476949db776e3e4a6ad1aedc5ad6d9660bdf40f03bd83753aebca9c59ebbde7fcfb247e9ffb5301cf2bdbd8ac2baca3093b353a6a3b4240536d0ba9306d7cd2957de54bf67d9232e7a66b3b84a61c4021b685d942b6f2a37be0bb4a18e0cc31bdf055a8def022d",
+      "sha256": "12f3e0576d447eb37b36d82ba0c1c5481b8f0d12fdc70347ce4a076b229d4c86",
+      "size": 1024
+    },
+    "transform": "0x144aad670",
+    "update": "0x1445f7850"
+  },
+  "backend": {
+    "checksum": "0x1445f7850",
+    "checksum_init": "0x1418c02f0",
+    "cleanup_base": "0x144aad2c0",
+    "cleanup_final": "0x144aacef0",
+    "cleanup_wrapper": "0x144aaccf0",
+    "debug_first": "0x14148eee0",
+    "debug_second": "0x14148eea0",
+    "fallback": "0x144ab2dc0",
+    "get_buffer": "0x144aac950",
+    "globals": {
+      "diagnostic_pointer": "0x14b594fa0",
+      "gate": "0x14b594ea4"
+    },
+    "packet_id_getter": "0x14144c140",
+    "state_getter": "0x144210d10",
+    "transform": "0x144aad670",
+    "transport": "0x1445f1240"
+  },
+  "dependency_contexts": {
+    "backend": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593\\manifest.json",
+      "sha256": "3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593"
+    },
+    "wire": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd\\manifest.json",
+      "sha256": "5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd"
+    }
+  },
+  "dependencies": {
+    "backend": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593\\manifest.json",
+      "sha256": "3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593"
+    },
+    "backend_check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2\\manifest.json",
+      "sha256": "b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2"
+    },
+    "prepare_check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\7ea1655e26e26c52cff02a8b0acdf635ed307a619860b4c1269d5a42f54c661f\\manifest.json",
+      "sha256": "7ea1655e26e26c52cff02a8b0acdf635ed307a619860b4c1269d5a42f54c661f"
+    },
+    "wire": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd\\manifest.json",
+      "sha256": "5ebc83fbd976cf6debad0940f46090b677470fba7eab888af767f67e6bd6dcbd"
+    },
+    "wire_check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af\\manifest.json",
+      "sha256": "e52b10eb13fd811020f08d69692c5cfdde334204546ecf2914dcb27b87f017af"
+    }
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\653daa4cda7d2e3d5bc2c13f91fe202f077c1190f1cdeabafea5aa8b547114fa\\manifest.json",
+    "sha256": "653daa4cda7d2e3d5bc2c13f91fe202f077c1190f1cdeabafea5aa8b547114fa"
+  },
+  "new_jvm": 0,
+  "new_exports": 0,
+  "prior_native_suites_replayed": 0,
+  "source_preparation": {
+    "request": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\6cac1e130247854280e2d2616f03882b94f8a32e95b4a9e29c661518d90679ca\\manifest.json",
+      "sha256": "6cac1e130247854280e2d2616f03882b94f8a32e95b4a9e29c661518d90679ca"
+    },
+    "new_jvm": 1,
+    "accepted_exports": 0,
+    "failed_headless": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-6f3b658dde3f\\headless.log",
+      "sha256": "c5698b2f2cd95b5a00dd7d091c68b42f05c4872141da171c97ad057ddd31ccaf"
+    },
+    "blocker": "0x1445e4d00 decompiler block outside requested unwind ranges"
+  },
+  "source_shared_resize_frontier": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\transport-shared-resize-frontiers\\1726387032ab8a1568d632b62aae376a9a58834af27f315694806be2296142b1\\manifest.json",
+    "sha256": "1726387032ab8a1568d632b62aae376a9a58834af27f315694806be2296142b1"
+  },
+  "source_tail_frontier": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\transport-resize-tail-frontiers\\caaae9c29d90cd8beb89b0d76b5404dac552f535308cafc9bead9a053305a5cc\\manifest.json",
+    "sha256": "caaae9c29d90cd8beb89b0d76b5404dac552f535308cafc9bead9a053305a5cc"
+  },
+  "service_lifetime_source_review": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\service-lifetime-source-reviews\\072e47fe2a330d78f32ab4659b5b8824f77f8fbd9d2863747dc5357225f8b191\\manifest.json",
+    "sha256": "072e47fe2a330d78f32ab4659b5b8824f77f8fbd9d2863747dc5357225f8b191"
+  },
+  "installed_sha256_after_processing": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-frame-integrity-acceptance\\0be15cbc2e8f31f3945b17204ed151c4b9d74bbd9924b6cb0b79f3d8205037bb\\manifest.json",
+    "sha256": "0be15cbc2e8f31f3945b17204ed151c4b9d74bbd9924b6cb0b79f3d8205037bb"
+  },
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-frame-integrity-combined-acceptance\\bdb0042d893c97403f38c10484b309d92669cec0f4f26c9ced44298878600204\\manifest.json",
+    "sha256": "bdb0042d893c97403f38c10484b309d92669cec0f4f26c9ced44298878600204"
+  },
+  "acceptance_runner": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\run-frame-integrity-acceptance.py",
+    "sha256": "270e2a57304971cae8581b19ebc16d2ae031a47bb8166df22bc75d3a067db33f"
+  },
+  "passes": [
+    {
+      "counts": {
+        "native-auto-frame-integrity": 113
+      },
+      "executed": [
+        "native-plan-frame-integrity",
+        "native-context-frame-integrity",
+        "native-check-native-auto-frame-integrity"
+      ],
+      "native_replays": 1,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 3,
+        "validated": 1
+      },
+      "pass_number": 1,
+      "publication_cache": {
+        "receipts_written": 1,
+        "reused": 0,
+        "runtime_activated": false,
+        "seconds": 1190.653558,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 53,
+          "read_workers": 2,
+          "source_cache_hits": 126,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 1.015731
+        },
+        "validated": 1
+      },
+      "reused": 0,
+      "wall_seconds": 1190.828964
+    },
+    {
+      "counts": {
+        "native-auto-frame-integrity": 113
+      },
+      "executed": [
+        "native-plan-frame-integrity"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 0,
+        "validated": 1
+      },
+      "pass_number": 2,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 535.441025,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 42,
+          "read_workers": 2,
+          "source_cache_hits": 84,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 1.141373
+        },
+        "validated": 0
+      },
+      "reused": 2,
+      "wall_seconds": 535.553117
+    },
+    {
+      "counts": {
+        "native-auto-frame-integrity": 113
+      },
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 0,
+        "validated": 0
+      },
+      "pass_number": 3,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 82.040478,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 82,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.569891
+        },
+        "validated": 0
+      },
+      "reused": 3,
+      "wall_seconds": 82.16464
+    }
+  ],
+  "combined_passes": [
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 31,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 1886.08896,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 3,
+          "image_cache_hits": 385,
+          "read_workers": 2,
+          "source_cache_hits": 2304,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 1.110134
+        },
+        "validated": 31
+      },
+      "reused": 96,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 1886.189991
+    },
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 32,
+        "runtime_activated": false,
+        "seconds": 236.961618,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 1561,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.956388
+        },
+        "validated": 0
+      },
+      "reused": 96,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 236.979263
+    }
+  ],
+  "fresh_args_each_pass": true,
+  "tooling_check": {
+    "cache_key": "242c481597447d1bb641e206c5916cd1df7637a156c76ce7302c08eee84e759b",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\692971de54566610e49b04a355189784665189e5d2f8c0b436b88e4b4dfc9f6b\\manifest.json",
+    "sha256": "692971de54566610e49b04a355189784665189e5d2f8c0b436b88e4b4dfc9f6b",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 950,
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\frame-integrity-input-freezes\\60718858926201ef8ebc072e07541d27cbb3a919413405e5067d72414e85a564\\manifest.json",
+    "sha256": "60718858926201ef8ebc072e07541d27cbb3a919413405e5067d72414e85a564"
+  },
+  "checkout_byte_hashes_verified": 60,
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Three exact source leaves execute as separate explicit primitive entries, including raw CRC continuation, width/signed-length behavior, empty, unaligned and in-place inputs.",
+    "Ten direct source backend entries execute the real Login writer, archive routines, CRC initializer/update and XOR without manual helper calls inside a backend entry.",
+    "Synthetic packet fields and UTF-16 storage come from four immutable, separately proved parent prepared inputs; preparation, SDK, metadata, publisher, service assignment and session key acquisition are not executed.",
+    "The final two entries reuse the same backend/packet; the second observes the native sequence left by the first and only its explicit key field is changed before delivery.",
+    "Allocation/initial capacity, state/debug providers, CRT/import effects and transport capture remain bounded fixtures. Actual native ciphertext is captured before archive cleanup; no socket delivery or asynchronous transport ownership is proved.",
+    "Exact same-buffer and disjoint XOR are covered; partial overlap, arbitrary buffer sizes, reallocation/aligned/OOM/SEH, receive integrity validation, online admission and Android parity remain outside this scope.",
+    "Driver timings exclude prepare and the historical knowledge-index audit. One separate source-preparation JVM failed closed; it is not part of this family admission."
+  ],
+  "native_backend_used": true,
+  "native_writer_used": true,
+  "native_wire_used": true,
+  "native_archive_used": true,
+  "native_packet_id_used": true,
+  "native_archive_append_used": true,
+  "native_archive_cleanup_used": true,
+  "native_checksum_used": true,
+  "native_transform_used": true,
+  "ambient_packet_provider_used": true,
+  "ambient_backend_provider_used": true,
+  "native_prepare_used": false,
+  "native_sdk_used": false,
+  "native_metadata_used": false,
+  "native_sender_used": false,
+  "native_publisher_used": false,
+  "native_service_getter_used": false,
+  "native_service_thunk_used": false,
+  "native_backend_assignment_used": false,
+  "native_transport_used": false,
+  "native_os_effects_used": false,
+  "runtime_activated": false,
+  "session_executed": false
+}

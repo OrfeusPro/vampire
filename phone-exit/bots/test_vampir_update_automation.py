@@ -38,7 +38,11 @@ def load_tests(loader, tests, pattern):
             'test_vampir_login_backend_wire_source',
             'test_vampir_login_backend_wire_rules','test_vampir_native_login_backend_wire_adapter',
             'test_vampir_login_backend_wire_native_contracts','test_vampir_login_backend_wire_runtime',
-            'test_vampir_login_backend_wire_codec','test_vampir_login_backend_wire_harness'):
+            'test_vampir_login_backend_wire_codec','test_vampir_login_backend_wire_harness',
+            'test_vampir_frame_integrity_contracts','test_vampir_frame_integrity_oracle',
+            'test_vampir_frame_integrity_verifier','test_vampir_frame_integrity_harness',
+            'test_vampir_frame_integrity_runtime','test_vampir_frame_integrity_rules',
+            'test_vampir_native_frame_integrity_adapter'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 
