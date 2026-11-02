@@ -306,6 +306,21 @@ retained ownership, guards и Win64 ABI. Opaque allocator / CRT и synthetic wak
 Новый driver использовал готовый source collect 17 функций; текущая сессия
 и next-profile не менялись. [Доказательства и границы](evidence/updates/HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md).
 
+`service-lifecycle-v1` / `service-lifecycle` подключает native publisher /
+assignment / constructors, control move-release / deleting и backend destructor /
+reset / ring cleanup. Матрица — 42 сценария / 84 poison-раунда, 12 whole roots /
+1 dispatch leaf; service / backend / control занимают 240 / 800 / 24 байта.
+Source writes, allocator / stack unknown bits, ABI и конечные owners сверяются
+независимым oracle. Service slots после destructor остаются dangling.
+
+Heap / vector / engine / registration / callback effects — fixtures;
+`cleanup_find=end` не подтверждает native unregistration. Роль публикуется в
+`generated-service-lifecycle/index.json`, без next-profile или online admission.
+Тёплый общий повтор 34 drivers использовал 102 stages / 34 publications без
+native / JVM / PE rebuild (118.639629 с). Готовые parent native suites
+и exports переиспользованы без повторного исполнения или JVM.
+[Матрица, source границы и приёмка](evidence/updates/HEADLESS-AUTO-SERVICE-LIFECYCLE-11322.md).
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

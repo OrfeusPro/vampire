@@ -791,6 +791,54 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Native backend assignment / constructor / refcount lifetime и связь frame backend с native queue ещё открыты. Standalone buffer/queue доказан в bounded normal-path scope; drain / socket errors / real wake scheduling, session key acquisition и receive integrity требуют своих проверок. Opaque allocation/CRT/OS/SDK/engine providers сохраняют явные fixtures. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. Неверные descriptors, огромные arithmetic, OOM/SEH и весь онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "service-lifecycle-v1 подключил native service / backend constructors, assignment, control lifetime, deleting, reset и ring cleanup: 42 сценария / 84 раунда, 12 whole roots / 1 dispatch leaf. 1082 tooling тестов прошли. Тёплый повтор 34 drivers использовал 102 stages / 34 publications без native / JVM / PE rebuild (118.639629 с). Heap / vector / engine / callback providers сохраняют явные fixtures; native unregistration, socket / drain, concurrency и онлайн-вход не подтверждены. Сессия и профиль не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-SERVICE-LIFECYCLE-11322.md",
+          "sha256": "c0508c6c40d1810c17eb14ffc6478b489232bb99f8210410741fa5c9ec4974da"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-SERVICE-LIFECYCLE-11322.json",
+          "sha256": "9ceb9c5dfc2f8eb522e845f31f3d45edf2d34310705462881537b925e1749405"
+        }
+      ],
+      "id": "e1d3d4695eb7577ff8753205982e4191c11511404e6657aa12dee272ee1583c3",
+      "limits": [
+        "Twelve whole roots and one 21-byte source control-disposal dispatch capsule execute in 42 cases, each repeated with two independently seeded allocator/stack poison patterns.",
+        "Source publisher, assignment, constructors, atomic strong/weak transitions and native virtual deletion/reset/string-ring paths use the same objects throughout each declared lifetime.",
+        "Service/backend/control extents are 240/800/24 bytes. The old 784-byte backend proof is only a separately accepted parent; its suite and buffer/frame suites are never replayed here.",
+        "Callback storage 48 bytes, token, callback destruction/resize, vector helpers, engine members, iterator find/reserve/remove and external registration context are explicit bounded fixtures.",
+        "Native callback construction preserves the uninitialized allocator qword at +8 and copies actual stack poison at +0x2c; no zero-initialization of either is claimed.",
+        "Destructor leaves service backend/control slots dangling. Snapshots are captured while readable, and no reconstruction/repeated-destruction or safe backlink reuse is claimed.",
+        "The shared old backend remains under an explicit external strong owner through service deletion, then a declared native move/release disposes it; no fixture decrements native-owned counts.",
+        "Retained external strong/weak owners and destructed storage without bit0 free are explicit final observations, not leaks silently balanced by synthetic native cleanup.",
+        "Local insertion always reserves after the native base constructor. Global spare storage is an explicit input before entry; no mid-native mutation invents a local spare-capacity branch.",
+        "Every case explicitly fixes cleanup_find=end for opaque destructor/reset lookup. Iterator remove is an unmodelled trap; native unregistration and successful engine cleanup of registered observers are not claimed.",
+        "Single-thread fixtures exclude actual allocator/OS/engine/callback/container behavior, scheduling, OOM/SEH, races, process init/shutdown owner, sockets/drain and online admission.",
+        "Driver timings exclude prepare and the historical knowledge-index audit. All source exports and accepted parent native reports are reused; no previous native suite is replayed."
+      ],
+      "method": "static",
+      "next_check": "Подготовить новую общую композицию frame backend / writer / CRC-XOR → native resize / queue с доказанным service lifecycle на общих объектах, используя готовые standalone contexts и новую матрицу без повтора прежних suites. Отдельно выделить engine registration / vector helper блокеры, drain / socket failure / real wake и online admission; fixture результаты не расширять. 35 bounded семейств (34 drivers и UTF-8) подключены к обновлению.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Композиция frame backend / writer / CRC-XOR с native queue и доказанным lifecycle ещё открыта. Heap / vector helpers / engine members / registration helpers / callback lifetime остаются bounded fixtures. Во всех lifecycle cases cleanup_find=end; native unregistration и успешная очистка engine registration не подтверждены. Destructor оставляет service+0x10 / +0x18 dangling; безопасный reuse не доказан. Drain / socket errors / реальное wake scheduling, session key acquisition и receive integrity требуют своих проверок. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. OOM / SEH, конкурентное владение и весь онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
     }
   ],
   "schema": 1,

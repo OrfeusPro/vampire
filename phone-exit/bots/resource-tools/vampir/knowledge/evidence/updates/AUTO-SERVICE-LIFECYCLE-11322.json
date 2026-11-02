@@ -1,0 +1,684 @@
+{
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "family": "service-lifecycle",
+  "adapter": "service-lifecycle-v1",
+  "scope": "bounded_native_service_lifecycle",
+  "context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\3f47cc52e99c2622627b1614f54902fa9ed575c2e12349d081a8659293831c92\\manifest.json",
+    "sha256": "3f47cc52e99c2622627b1614f54902fa9ed575c2e12349d081a8659293831c92"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-service-lifecycle-proofs\\30e152e2ffb8f3bff8baf3e2a7370eaadf75ac0e4ef355a5ebd75f1f7741e474\\manifest.json",
+    "sha256": "30e152e2ffb8f3bff8baf3e2a7370eaadf75ac0e4ef355a5ebd75f1f7741e474"
+  },
+  "native_check": {
+    "id": "native-auto-service-lifecycle",
+    "profile_activated": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\263544bf8f7a6c556f61114d06b4608b62652e6294980ee24cc8f29ea2be80d3\\manifest.json",
+    "runtime_activated": false,
+    "scope": "bounded_native_service_lifecycle",
+    "sha256": "263544bf8f7a6c556f61114d06b4608b62652e6294980ee24cc8f29ea2be80d3",
+    "state": "passed"
+  },
+  "runtime": {
+    "capstone": {
+      "record_sha256": "228229200c950ccc9b55ab4b8d38958d0a81498fd9512537ae26d3f68bd537e7",
+      "version": "5.0.6"
+    },
+    "unicorn": {
+      "record_sha256": "62c6bbb872cd187a0febc22cf77d6a4d83c70ad2de031bc5d3c4ab46129f4984",
+      "version": "2.1.4"
+    }
+  },
+  "native_cases": 42,
+  "native_rounds": 84,
+  "observed_summary": {
+    "cases": 42,
+    "rounds": 84,
+    "native_entries": 230,
+    "native_calls": 972,
+    "native_allocations": 456,
+    "native_frees": 344,
+    "atomic_transitions": 116,
+    "assignment_lifecycle_cases": 12,
+    "control_move_release_cases": 10,
+    "deleting_flags_cases": 6,
+    "reset_and_ring_ownership_cases": 6,
+    "constructor_registration_branches_cases": 8,
+    "callback_copies": 20,
+    "callback_unknown_nonzero": 20,
+    "retained_owner_observations": 62,
+    "retained_fixture_owner_observations": 238,
+    "service.publisher_calls": 24,
+    "service.assign_calls": 40,
+    "control.move_release_calls": 68,
+    "control.deleting_calls": 48,
+    "backend.constructor_calls": 90,
+    "backend.base_constructor_calls": 90,
+    "service.deleting_calls": 24,
+    "backend.deleting_calls": 82,
+    "backend.destructor_calls": 82,
+    "backend.base_destructor_calls": 82,
+    "backend.reset_calls": 106,
+    "backend.string_ring_clear_calls": 188,
+    "control.dispatch_calls": 48
+  },
+  "matrix_sha256": "51398ac6c7fe410a4ffd14862772d216a9313f3fc5af75a17b504a4cd5f2996d",
+  "admitted_roots": {
+    "backend.base_constructor": "0x1445e9110",
+    "backend.base_destructor": "0x1445e9fb0",
+    "backend.constructor": "0x144ab1810",
+    "backend.deleting": "0x144ab1df0",
+    "backend.destructor": "0x144ab1b50",
+    "backend.reset": "0x1445ec070",
+    "backend.string_ring_clear": "0x1445f5020",
+    "control.deleting": "0x141409210",
+    "control.move_release": "0x141473540",
+    "service.assign": "0x144ab1080",
+    "service.deleting": "0x144ab0be0",
+    "service.publisher": "0x144ab0890"
+  },
+  "admitted_leaves": {
+    "0x14147f270": "488b49104885c9740b488b01ba0100000048ff20c3"
+  },
+  "admitted_root_count": 12,
+  "admitted_leaf_count": 1,
+  "admitted_tail_count": 0,
+  "extents": {
+    "service_bytes": 240,
+    "backend_bytes": 800,
+    "control_bytes": 24,
+    "callback_fixture_bytes": 48
+  },
+  "source_layout": {
+    "abi": "win64",
+    "backend_bytes": 800,
+    "callback_fixture_bytes": 48,
+    "concurrent_references": false,
+    "control_bytes": 24,
+    "executed_roots": 12,
+    "leaves": 1,
+    "native_allocator": false,
+    "native_assignment": true,
+    "native_backend_constructor": true,
+    "native_base_reset": true,
+    "native_callback_lifetime": false,
+    "native_engine_containers": false,
+    "native_primary_destructors": true,
+    "native_publisher": true,
+    "native_ref_control": true,
+    "native_sdk": false,
+    "native_socket": false,
+    "native_string_ring_clear": true,
+    "native_vector_storage": false,
+    "native_writer": false,
+    "service_bytes": 240,
+    "session_executed": false,
+    "tail_fragments": 0
+  },
+  "source_inputs": [
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-bcb6caaf0711\\details.json",
+      "sha256": "e641c59aaf761052b0d6977cfb3bfa3c351fc2aff752a4f77f2b77a1d185869c"
+    },
+    {
+      "path": "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\run-fd7ea2d83bfc\\details.json",
+      "sha256": "657513cec48694d24453024e95815bea11e87ef6d4d0d35b42e246af00d587fe"
+    }
+  ],
+  "source_exports": {
+    "run-bcb6caaf0711": "e641c59aaf761052b0d6977cfb3bfa3c351fc2aff752a4f77f2b77a1d185869c",
+    "run-fd7ea2d83bfc": "657513cec48694d24453024e95815bea11e87ef6d4d0d35b42e246af00d587fe"
+  },
+  "fixtures": {
+    "allocate": "0x14690be10",
+    "callback_allocate": "0x14142d0f0",
+    "callback_destroy": "0x141662e90",
+    "callback_resize": "0x141436d20",
+    "callback_token": "0x14142ef60",
+    "derived_storage_init": "0x1445e90e0",
+    "global_container": "0x1445edba0",
+    "iterator_find": "0x1445df070",
+    "iterator_remove": "0x1445e46f0",
+    "list_clear": "0x1445e4190",
+    "member_118_destroy": "0x1445e9e20",
+    "member_d0_destroy": "0x1445e96b0",
+    "observer_destroy": "0x1445dfa40",
+    "observer_init": "0x1445df7e0",
+    "reserve": "0x1445e3770",
+    "service_container_destroy": "0x141cc0350",
+    "service_engine_destroy": "0x144288ea0",
+    "service_init": "0x1442870f0",
+    "service_member_destroy": "0x144ab0970",
+    "sized_free": "0x141431fe0",
+    "string_destroy": "0x1445dfb70",
+    "unsized_free": "0x1414830e0",
+    "vector_destroy": "0x1445e9f30",
+    "vector_init": "0x1414af190"
+  },
+  "call_sites": {
+    "backend.base_constructor": {
+      "0x1445e914d": "0x14690be10",
+      "0x1445e9164": "0x1445df7e0",
+      "0x1445e9178": "0x1445df7e0",
+      "0x1445e91ef": "0x14690be10",
+      "0x1445e922f": "0x14690be10",
+      "0x1445e928f": "0x14690be10",
+      "0x1445e9305": "0x1414af190",
+      "0x1445e9318": "0x1414af190",
+      "0x1445e932b": "0x1414af190"
+    },
+    "backend.base_destructor": {
+      "0x1445e9fe3": "0x1445ec070",
+      "0x1445ea024": "0x141431fe0",
+      "0x1445ea052": "0x1445e9f30",
+      "0x1445ea05e": "0x1445e9f30",
+      "0x1445ea06a": "0x1445e9f30",
+      "0x1445ea076": "0x1445e9e20",
+      "0x1445ea082": "0x1445e96b0",
+      "0x1445ea08e": "0x1445f5020",
+      "0x1445ea0aa": "0x141431fe0",
+      "0x1445ea0b3": "0x1445dfb70",
+      "0x1445ea0bc": "0x1445dfa40",
+      "0x1445ea0c5": "0x1445dfa40",
+      "0x1445ea0e6": "0x1445e4190",
+      "0x1445ea0ed": "qword ptr [rip + 0x43b4f25]",
+      "0x1445ea0fb": "0x1445e4190"
+    },
+    "backend.constructor": {
+      "0x144ab1833": "0x1445e9110",
+      "0x144ab183f": "0x1445df7e0",
+      "0x144ab1859": "0x1445df7e0",
+      "0x144ab18c1": "0x1445e90e0",
+      "0x144ab19a8": "0x1445df070",
+      "0x144ab19e7": "0x1445e3770",
+      "0x144ab1a11": "0x14690be10",
+      "0x144ab1a31": "0x1445edba0",
+      "0x144ab1a82": "0x1445df070",
+      "0x144ab1ace": "0x1445e3770",
+      "0x144ab1af8": "0x14690be10"
+    },
+    "backend.deleting": {
+      "0x144ab1dff": "0x144ab1b50",
+      "0x144ab1e11": "0x141431fe0"
+    },
+    "backend.destructor": {
+      "0x144ab1baf": "0x1445edba0",
+      "0x144ab1c03": "0x1445df070",
+      "0x144ab1c48": "0x1445e46f0",
+      "0x144ab1c94": "0x1445df070",
+      "0x144ab1cd9": "0x1445e46f0",
+      "0x144ab1cf8": "qword ptr [rax]",
+      "0x144ab1d0c": "0x141436d20",
+      "0x144ab1d24": "0x1414830e0",
+      "0x144ab1d4a": "qword ptr [rax + 0x10]",
+      "0x144ab1d59": "0x1414830e0",
+      "0x144ab1d6a": "0x1414830e0",
+      "0x144ab1d76": "0x1445e9f30",
+      "0x144ab1d82": "0x1445dfa40",
+      "0x144ab1d8e": "0x1445dfa40"
+    },
+    "backend.reset": {
+      "0x1445ec0d8": "0x1445df070",
+      "0x1445ec11d": "0x1445e46f0",
+      "0x1445ec16e": "0x1445df070",
+      "0x1445ec1b3": "0x1445e46f0",
+      "0x1445ec1d8": "0x1445e0c00",
+      "0x1445ec1e7": "0x1445e29a0",
+      "0x1445ec1fc": "qword ptr [rax + 0x28]"
+    },
+    "backend.string_ring_clear": {
+      "0x1445f5093": "0x141431fe0",
+      "0x1445f50e4": "0x141431fe0",
+      "0x1445f511e": "0x141431fe0",
+      "0x1445f513f": "qword ptr [rip + 0x43a9ed3]"
+    },
+    "control.deleting": {
+      "0x14140922d": "0x141431fe0"
+    },
+    "control.move_release": {
+      "0x141473583": "qword ptr [rax]",
+      "0x141473597": "qword ptr [rax + 8]"
+    },
+    "service.assign": {
+      "0x144ab1097": "0x14690be10",
+      "0x144ab10a4": "0x144ab1810",
+      "0x144ab10be": "0x14690be10",
+      "0x144ab110f": "0x141473540",
+      "0x144ab113f": "qword ptr [rax]",
+      "0x144ab1155": "qword ptr [rax + 8]",
+      "0x144ab1199": "0x14142d0f0",
+      "0x144ab11b5": "0x14142ef60"
+    },
+    "service.deleting": {
+      "0x144ab0c1b": "0x1414830e0",
+      "0x144ab0c36": "0x1414830e0",
+      "0x144ab0c42": "0x144ab0970",
+      "0x144ab0c50": "0x1414830e0",
+      "0x144ab0c65": "0x1414830e0",
+      "0x144ab0c6e": "0x141cc0350",
+      "0x144ab0c98": "qword ptr [rax]",
+      "0x144ab0cac": "qword ptr [rax + 8]",
+      "0x144ab0cb8": "0x144288ea0",
+      "0x144ab0cef": "0x141431fe0"
+    },
+    "service.publisher": {
+      "0x144ab08b2": "0x1442870f0"
+    }
+  },
+  "table_roles": {
+    "backend_base": "0x14955d2c8",
+    "backend_primary": "0x1496741e8",
+    "base_container110": "0x14955d250",
+    "base_containerc8": "0x14955d208",
+    "base_initial": "0x14955c468",
+    "base_observer_initial": "0x14955d1f0",
+    "base_secondary38": "0x14955d2d0",
+    "base_secondary50": "0x14955d2e8",
+    "base_string": "0x14955cdc8",
+    "base_vector": "0x14955d268",
+    "callback": "0x1490644c8",
+    "callback_base": "0x1489e6118",
+    "callback_handler": "0x1437174cc",
+    "control": "0x1489fee48",
+    "control_base": "0x14a3e7a38",
+    "derived_observer200": "0x149674238",
+    "derived_observer218": "0x149674290",
+    "derived_observer_initial": "0x14955d270",
+    "derived_secondary38": "0x1496741f0",
+    "derived_secondary50": "0x149674208",
+    "service_base": "0x1496740c8",
+    "service_primary": "0x1496740f8",
+    "service_secondary": "0x149674148"
+  },
+  "source_tables": {
+    "0x1489e6118": "803c404101000000",
+    "0x1489fee48": "70f24741010000001092404101000000",
+    "0x1490644c8": "902e664101000000",
+    "0x14955c468": "50ad5d4401000000",
+    "0x14955cdc8": "00045e4401000000",
+    "0x14955d1f0": "90025e4401000000",
+    "0x14955d208": "d0a65e4401000000",
+    "0x14955d250": "a0a95e4401000000",
+    "0x14955d268": "20aa5e4401000000",
+    "0x14955d270": "90025e4401000000",
+    "0x14955d2c8": "60aa5e4401000000",
+    "0x14955d2d0": "eca35e4401000000",
+    "0x14955d2e8": "f8a35e4401000000",
+    "0x1496740c8": "a00bab4401000000d03b404101000000d03b404101000000d03b404101000000d03b404101000000d03b404101000000",
+    "0x1496740f8": "e00bab44010000008010ab4401000000d03b404101000000000dab4401000000d03b404101000000d03b404101000000104abb4001000000c015ab44010000000016ab4401000000d03b404101000000",
+    "0x149674148": "0018ab4401000000",
+    "0x1496741e8": "f01dab4401000000d01dab440100000020ea5e4401000000f0e95e4401000000",
+    "0x1496741f0": "d01dab4401000000",
+    "0x149674208": "dc1dab4401000000",
+    "0x149674238": "b81dab4401000000",
+    "0x149674290": "c41dab4401000000",
+    "0x14a3e7a38": "ab8c7f4801000000"
+  },
+  "source_globals": {
+    "invalid_parameter": {
+      "address": "0x14899f018",
+      "bytes": "b0120c0b00000000",
+      "section": {
+        "name": ".rdata",
+        "raw": 144292864,
+        "raw_size": 41046016,
+        "rva": 144297984,
+        "size": 41045920
+      },
+      "size_bytes": 8,
+      "storage": "file"
+    },
+    "provider": {
+      "address": "0x14b567ad8",
+      "section": {
+        "name": ".data",
+        "raw": 185338880,
+        "raw_size": 2010112,
+        "rva": 185344000,
+        "size": 6187164
+      },
+      "size_bytes": 8,
+      "storage": "zero_fill"
+    },
+    "singleton": {
+      "address": "0x14b594f80",
+      "section": {
+        "name": ".data",
+        "raw": 185338880,
+        "raw_size": 2010112,
+        "rva": 185344000,
+        "size": 6187164
+      },
+      "size_bytes": 8,
+      "storage": "zero_fill"
+    }
+  },
+  "opaque_entries": {
+    "allocate": {
+      "address": "0x14690be10",
+      "bytes": "4885c9b801000000ba10000000480f45c1488bc8e9973db8fa"
+    },
+    "sized_free": {
+      "address": "0x141431fe0",
+      "bytes": "e9fb100500"
+    }
+  },
+  "dependency_contexts": {
+    "backend": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593\\manifest.json",
+      "sha256": "3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593"
+    },
+    "backend_check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2\\manifest.json",
+      "sha256": "b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2"
+    }
+  },
+  "dependencies": {
+    "backend": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593\\manifest.json",
+      "sha256": "3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593"
+    },
+    "backend_check": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2\\manifest.json",
+      "sha256": "b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2"
+    }
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\6015b89116397dd7346ccb03430a19499d17824b2aaba706113ee349f0ec3e36\\manifest.json",
+    "sha256": "6015b89116397dd7346ccb03430a19499d17824b2aaba706113ee349f0ec3e36"
+  },
+  "source_plan": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\transport-resize-drafts\\service-lifecycle-next-package-plan-11322.json",
+    "sha256": "643e5821c123f83362145007d297b070c45f755513d3c91a7546e9bb9763a3b2"
+  },
+  "new_jvm": 0,
+  "new_exports": 0,
+  "prior_native_suites_replayed": 0,
+  "prior_attempts": [
+    {
+      "accepted": false,
+      "role": "failed_attempt_history_only",
+      "used_as_accepted_proof": false,
+      "completed_native_cases": 0,
+      "publication_written": false,
+      "native_failure": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-service-lifecycle-failures\\761fbdaddee43f2ceab57d72bb2625217f49f2b0b721cc7b6ec1bdb0d3b3d921\\manifest.json",
+        "sha256": "761fbdaddee43f2ceab57d72bb2625217f49f2b0b721cc7b6ec1bdb0d3b3d921"
+      },
+      "acceptance_failure": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-service-lifecycle-acceptance-failures\\284d7d95f4c6160b83f435f88df25a67e6717def6a273b7c2fceb09e7e2014bf\\manifest.json",
+        "sha256": "284d7d95f4c6160b83f435f88df25a67e6717def6a273b7c2fceb09e7e2014bf"
+      },
+      "freeze": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-service-lifecycle-freezes\\9c495612f6ba9ce7d999bf3b98b6e76c797173d6252a02461ab8bb465f671951\\manifest.json",
+        "sha256": "9c495612f6ba9ce7d999bf3b98b6e76c797173d6252a02461ab8bb465f671951"
+      },
+      "engine_archive": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\service-lifecycle-failed-engine-snapshots\\9c495612f6ba9ce7d999bf3b98b6e76c797173d6252a02461ab8bb465f671951\\manifest.json",
+        "sha256": "c56565e892a6d8ac81ab259178b3c09a4b854dcdb221af160eb96a7332bfb7d9"
+      },
+      "archived_files_verified": 59,
+      "reason": "The first lifecycle-00 entry stopped on an incorrect exact-base guard for the embedded backend+0x98 ring receiver. No complete case or native publication was accepted. The guard was corrected with receiver bounds tests; the changed engine requires a new tooling result, freeze and native proof."
+    }
+  ],
+  "installed_sha256_after_processing": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-service-lifecycle-acceptance\\fcd1acf03e48e200c75bd70cd0f0d6fc98f34351623cd4bdf8f885018f5cd598\\manifest.json",
+    "sha256": "fcd1acf03e48e200c75bd70cd0f0d6fc98f34351623cd4bdf8f885018f5cd598"
+  },
+  "combined": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-service-lifecycle-combined-acceptance\\2a999f9db1f1040f6fd5a39f158c43c5f897f06d8386f519f3029cf056f2eefa\\manifest.json",
+    "sha256": "2a999f9db1f1040f6fd5a39f158c43c5f897f06d8386f519f3029cf056f2eefa"
+  },
+  "acceptance_runner": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\run-service-lifecycle-acceptance.py",
+    "sha256": "255c658c5cd553d2ebb47c7be972423d4d1febc6e7f3f93513355e3b532cb7c5"
+  },
+  "passes": [
+    {
+      "counts": {
+        "native-auto-service-lifecycle": 42
+      },
+      "executed": [
+        "native-plan-service-lifecycle",
+        "native-context-service-lifecycle",
+        "native-check-native-auto-service-lifecycle"
+      ],
+      "native_replays": 1,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 3,
+        "validated": 1
+      },
+      "pass_number": 1,
+      "publication_cache": {
+        "receipts_written": 1,
+        "reused": 0,
+        "runtime_activated": false,
+        "seconds": 398.365718,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 53,
+          "read_workers": 2,
+          "source_cache_hits": 126,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.303758
+        },
+        "validated": 1
+      },
+      "reused": 0,
+      "wall_seconds": 398.402589
+    },
+    {
+      "counts": {
+        "native-auto-service-lifecycle": 42
+      },
+      "executed": [
+        "native-plan-service-lifecycle"
+      ],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 0,
+        "validated": 1
+      },
+      "pass_number": 2,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 162.728646,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 42,
+          "read_workers": 2,
+          "source_cache_hits": 84,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.410199
+        },
+        "validated": 0
+      },
+      "reused": 2,
+      "wall_seconds": 162.743317
+    },
+    {
+      "counts": {
+        "native-auto-service-lifecycle": 42
+      },
+      "executed": [],
+      "native_replays": 0,
+      "new_jvm": 0,
+      "parent_validation": {
+        "reused": 0,
+        "validated": 0
+      },
+      "pass_number": 3,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 19.759975,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 82,
+          "source_reads": 2,
+          "validation_reads": 2,
+          "validation_seconds": 0.373413
+        },
+        "validated": 0
+      },
+      "reused": 3,
+      "wall_seconds": 19.771272
+    }
+  ],
+  "combined_passes": [
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 1,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 33,
+        "reused": 1,
+        "runtime_activated": false,
+        "seconds": 619.232485,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 3,
+          "image_cache_hits": 403,
+          "read_workers": 2,
+          "source_cache_hits": 2478,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.961761
+        },
+        "validated": 33
+      },
+      "reused": 102,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 619.294776
+    },
+    {
+      "executed": [],
+      "game_session_changed": false,
+      "native_replays": 0,
+      "network_used": false,
+      "new_jvm": 0,
+      "pass_number": 2,
+      "profile_activated": false,
+      "publication_cache": {
+        "receipts_written": 0,
+        "reused": 34,
+        "runtime_activated": false,
+        "seconds": 118.629376,
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 0,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 1677,
+          "source_reads": 3,
+          "validation_reads": 3,
+          "validation_seconds": 0.802721
+        },
+        "validated": 0
+      },
+      "reused": 102,
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "wall_seconds": 118.639629
+    }
+  ],
+  "fresh_args_each_pass": true,
+  "tooling_check": {
+    "cache_key": "ee0fab9dc676ef44646517f30573c6b49356580a2f1fdb7c749f26317cac401a",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0065258d9d7a27f81d45ab9df98dfafffb9b3158cbb87ed2c2cd743b5c8c4ee8\\manifest.json",
+    "sha256": "0065258d9d7a27f81d45ab9df98dfafffb9b3158cbb87ed2c2cd743b5c8c4ee8",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 1082,
+  "service_tooling_tests": 76,
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\service-lifecycle-input-freezes\\9df4d29c418efe76972201b177e5a307ed53882e41a919703479f3256877903a\\manifest.json",
+    "sha256": "9df4d29c418efe76972201b177e5a307ed53882e41a919703479f3256877903a"
+  },
+  "checkout_byte_hashes_verified": 59,
+  "network_used": false,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "limits": [
+    "Twelve whole roots and one 21-byte source control-disposal dispatch capsule execute in 42 cases, each repeated with two independently seeded allocator/stack poison patterns.",
+    "Source publisher, assignment, constructors, atomic strong/weak transitions and native virtual deletion/reset/string-ring paths use the same objects throughout each declared lifetime.",
+    "Service/backend/control extents are 240/800/24 bytes. The old 784-byte backend proof is only a separately accepted parent; its suite and buffer/frame suites are never replayed here.",
+    "Callback storage 48 bytes, token, callback destruction/resize, vector helpers, engine members, iterator find/reserve/remove and external registration context are explicit bounded fixtures.",
+    "Native callback construction preserves the uninitialized allocator qword at +8 and copies actual stack poison at +0x2c; no zero-initialization of either is claimed.",
+    "Destructor leaves service backend/control slots dangling. Snapshots are captured while readable, and no reconstruction/repeated-destruction or safe backlink reuse is claimed.",
+    "The shared old backend remains under an explicit external strong owner through service deletion, then a declared native move/release disposes it; no fixture decrements native-owned counts.",
+    "Retained external strong/weak owners and destructed storage without bit0 free are explicit final observations, not leaks silently balanced by synthetic native cleanup.",
+    "Local insertion always reserves after the native base constructor. Global spare storage is an explicit input before entry; no mid-native mutation invents a local spare-capacity branch.",
+    "Every case explicitly fixes cleanup_find=end for opaque destructor/reset lookup. Iterator remove is an unmodelled trap; native unregistration and successful engine cleanup of registered observers are not claimed.",
+    "Single-thread fixtures exclude actual allocator/OS/engine/callback/container behavior, scheduling, OOM/SEH, races, process init/shutdown owner, sockets/drain and online admission.",
+    "Driver timings exclude prepare and the historical knowledge-index audit. All source exports and accepted parent native reports are reused; no previous native suite is replayed."
+  ],
+  "native_service_publisher_used": true,
+  "native_service_assignment_used": true,
+  "native_backend_constructor_used": true,
+  "native_backend_base_constructor_used": true,
+  "native_control_move_release_used": true,
+  "native_control_dispatch_used": true,
+  "native_control_deleting_used": true,
+  "native_service_deleting_used": true,
+  "native_backend_deleting_used": true,
+  "native_backend_destructor_used": true,
+  "native_backend_base_destructor_used": true,
+  "native_backend_reset_used": true,
+  "native_string_ring_clear_used": true,
+  "native_atomic_counter_transitions_used": true,
+  "ambient_service_provider_used": true,
+  "ambient_control_provider_used": true,
+  "ambient_registration_provider_used": true,
+  "synthetic_callback_storage_used": true,
+  "native_allocator_used": false,
+  "native_vector_storage_helpers_used": false,
+  "native_engine_effects_used": false,
+  "native_registration_helpers_used": false,
+  "native_callback_allocator_used": false,
+  "native_callback_destructor_used": false,
+  "native_callback_execution_used": false,
+  "native_writer_used": false,
+  "native_checksum_used": false,
+  "native_unregistration_used": false,
+  "native_transform_used": false,
+  "native_prepare_used": false,
+  "native_sdk_used": false,
+  "native_sender_used": false,
+  "native_transport_used": false,
+  "native_socket_used": false,
+  "native_drain_used": false,
+  "native_process_initializer_used": false,
+  "native_process_cleanup_used": false,
+  "native_concurrent_lifetime_used": false,
+  "native_os_effects_used": false,
+  "runtime_activated": false,
+  "session_executed": false
+}

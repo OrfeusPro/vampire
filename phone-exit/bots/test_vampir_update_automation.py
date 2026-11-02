@@ -45,7 +45,10 @@ def load_tests(loader, tests, pattern):
             'test_vampir_native_frame_integrity_adapter',
             'test_vampir_buffer_transport_contracts','test_vampir_buffer_transport_oracle',
             'test_vampir_buffer_transport_verifier','test_vampir_buffer_transport_fixtures',
-            'test_vampir_buffer_transport_rules','test_vampir_native_buffer_transport_adapter'):
+            'test_vampir_buffer_transport_rules','test_vampir_native_buffer_transport_adapter',
+            'test_vampir_service_lifecycle_contracts','test_vampir_service_lifecycle_oracle',
+            'test_vampir_service_lifecycle_verifier','test_vampir_service_lifecycle_fixtures',
+            'test_vampir_service_lifecycle_rules','test_vampir_native_service_lifecycle_adapter'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

@@ -152,8 +152,9 @@ helper aliases и Win64 ABI проверены. Pending insert / delegate / serv
 в готовом проекте; независимые parent suites не повторялись.
 
 Исходный путь service singleton / vtable `+0x38` → writer и cleanup подтверждён
-новым bounded native пакетом ниже. Реальный transport / backend lifetime
-и полный онлайн-вход ещё не допущены.
+новым bounded native пакетом ниже. Последующие buffer и lifecycle пакеты
+подтверждают свои ограниченные пути; реальный transport и полный онлайн-вход
+ещё не допущены.
 
 [Подготовка общего Login backend / wire стенда](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-LOGIN-BACKEND-WIRE-PREPARATION-11322.md)
 закрыла недостающие source exports: publisher / backend / append / cleanup.
@@ -178,8 +179,9 @@ checksum / identity transform / transport effects остаются fixtures.
 (302.339482 с). Новых экспортов и JVM не было; готовые parent native
 suites не исполнялись повторно. Полный онлайн-вход не допущен.
 
-Integrity / cipher закрыты отдельным bounded пакетом ниже. Реальный backend
-assignment / lifetime и transport ownership остаются следующими source блокерами.
+Integrity / cipher и bounded assignment / lifetime закрыты последующими
+пакетами ниже. Общая композиция frame backend с native queue и реальная сеть
+остаются открытыми.
 Готовые native пути подготовки и wire переиспользуются по SHA / proof / cache.
 
 [Настоящие CRC/XOR и native Login frame](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-FRAME-INTEGRITY-11322.md)
@@ -197,8 +199,9 @@ native prepare / SDK / sender / publisher в этой новой матрице 
 (236.979263 с). Прежние 1807 случаев и остальные parent suites
 не повторялись. Новому integrity семейству хватило пяти готовых exports. Тогда source collect
 assignment/lifetime/transport остановился на resize / unwind blocker; этот
-blocker закрыт следующим buffer-transport пакетом ниже. Реальная сеть, backend
-lifetime и весь онлайн-вход сохраняют открытые границы.
+blocker закрыт следующим buffer-transport пакетом ниже. Bounded lifetime
+проверен отдельным service-lifecycle пакетом; реальная сеть и весь онлайн-вход
+сохраняют открытые границы.
 
 [Общий resize и native transport queue](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md)
 подключены как `buffer-transport-v1` / `buffer-transport`: 65 сценариев /
@@ -214,9 +217,28 @@ Allocator / free / CRT effects и wake callback сохраняют явные fi
 (177.023237 с). Готовые 113 CRC/XOR и 1807 backend/wire случаев
 повторно не исполнялись. Source collect закрыл resize / unwind blocker:
 17 missing whole functions получены одним JVM с обязательной coverage.
-Следующий общий блок — backend assignment / constructor / refcount lifetime;
-source links и полные exports для него готовы. Связь frame backend с этой
-native queue требует отдельной новой матрицы.
+Следующий за buffer пакетом service-lifecycle ниже использует готовые source
+links и exports для bounded assignment / constructor / refcount lifetime.
+Связь frame backend с native queue требует отдельной новой матрицы.
+
+[Native service / backend lifecycle](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-SERVICE-LIFECYCLE-11322.md)
+подключён как `service-lifecycle-v1` / `service-lifecycle`: 42 сценария /
+84 poison-раунда, 12 whole roots / 1 source dispatch leaf. Исполняются publisher,
+assignment, constructors, control move-release, native atomic transitions,
+deleting, reset и ring cleanup. Размеры service / backend / control — 240 / 800 /
+24 байта; прежний backend-wire scope на 784 байта не менялся. Проверяются
+source writes, неизвестные allocator / stack bits, guards, ABI и конечные owners.
+Service destructor оставляет +0x10 / +0x18 dangling; безопасный reuse не доказан.
+
+Heap / vector / engine / registration / callback effects остаются fixtures.
+Во всех сценариях `cleanup_find=end`; native unregistration не подтверждена.
+Проверки: 42 native случая / 84 раунда и 1082 штатных тестов.
+Тёплый общий повтор 34 drivers использовал 102 stages / 34 publications без
+native / JVM / PE rebuild (118.639629 с). Новые exports и JVM не
+требовались, готовые 1807 / 113 / 65 native suites не исполнялись повторно.
+Следующий общий блок — композиция frame backend / writer / CRC-XOR с native
+queue и lifecycle. Drain / socket / scheduler / concurrency и онлайн-вход
+сохраняют отдельные границы; текущая сессия и next-profile не менялись.
 
 ## Сохранённые записи прежних этапов
 

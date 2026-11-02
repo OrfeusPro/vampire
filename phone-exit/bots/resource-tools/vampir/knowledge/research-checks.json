@@ -11606,7 +11606,23 @@
         "phone-exit/bots/test_vampir_buffer_transport_oracle.py",
         "phone-exit/bots/test_vampir_buffer_transport_rules.py",
         "phone-exit/bots/test_vampir_buffer_transport_verifier.py",
-        "phone-exit/bots/test_vampir_native_buffer_transport_adapter.py"
+        "phone-exit/bots/test_vampir_native_buffer_transport_adapter.py",
+        "phone-exit/bots/resource-tools/vampir/service-lifecycle-case-contracts.py",
+        "phone-exit/bots/resource-tools/vampir/service-lifecycle-harness.py",
+        "phone-exit/bots/resource-tools/vampir/service-lifecycle-memory.py",
+        "phone-exit/bots/resource-tools/vampir/service-lifecycle-oracle.py",
+        "phone-exit/bots/resource-tools/vampir/service-lifecycle-providers.py",
+        "phone-exit/bots/resource-tools/vampir/service-lifecycle-rules.py",
+        "phone-exit/bots/resource-tools/vampir/service-lifecycle-runtime.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-service-lifecycle.py",
+        "phone-exit/bots/resource-tools/vampir/verify-service-lifecycle-context.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/service-lifecycle-11322.json",
+        "phone-exit/bots/test_vampir_service_lifecycle_contracts.py",
+        "phone-exit/bots/test_vampir_service_lifecycle_fixtures.py",
+        "phone-exit/bots/test_vampir_service_lifecycle_oracle.py",
+        "phone-exit/bots/test_vampir_service_lifecycle_rules.py",
+        "phone-exit/bots/test_vampir_service_lifecycle_verifier.py",
+        "phone-exit/bots/test_vampir_native_service_lifecycle_adapter.py"
       ],
       "artifact_dependencies": []
     }

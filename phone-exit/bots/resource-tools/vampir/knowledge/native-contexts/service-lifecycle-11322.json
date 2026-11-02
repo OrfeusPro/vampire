@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "family": "service-lifecycle",
+  "format": "reference-service-lifecycle",
+  "source": "F:\\PhoneExit Resources\\Vampir\\client-code-snapshots\\03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f\\ProjectRED-Win64-Shipping.exe",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "functions": {
+    "service.publisher": "0x144ab0890",
+    "service.assign": "0x144ab1080",
+    "control.move_release": "0x141473540",
+    "control.deleting": "0x141409210",
+    "backend.constructor": "0x144ab1810",
+    "backend.base_constructor": "0x1445e9110",
+    "service.deleting": "0x144ab0be0",
+    "backend.deleting": "0x144ab1df0",
+    "backend.destructor": "0x144ab1b50",
+    "backend.base_destructor": "0x1445e9fb0",
+    "backend.reset": "0x1445ec070",
+    "backend.string_ring_clear": "0x1445f5020"
+  },
+  "backend_context": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\generated-native-contexts\\3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593\\manifest.json",
+    "sha256": "3363cc4f49deaf198f0e4c940864fa2e3b4ab1873cb8c2d1b4e1d0ce2634a593"
+  },
+  "backend_check": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-adapter-checks\\b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2\\manifest.json",
+    "sha256": "b21abfce70f6e43d05e5ed85f8f94a1213ec757496facede6387f1fc17779cd2"
+  },
+  "verify_whole_exports": true,
+  "service_bytes": 240,
+  "backend_bytes": 800,
+  "control_bytes": 24,
+  "callback_fixture_bytes": 48,
+  "leaves": {
+    "0x14147f270": "488b49104885c9740b488b01ba0100000048ff20c3"
+  },
+  "fixtures": {
+    "service_init": "0x1442870f0",
+    "allocate": "0x14690be10",
+    "callback_allocate": "0x14142d0f0",
+    "callback_token": "0x14142ef60",
+    "sized_free": "0x141431fe0",
+    "observer_init": "0x1445df7e0",
+    "derived_storage_init": "0x1445e90e0",
+    "iterator_find": "0x1445df070",
+    "reserve": "0x1445e3770",
+    "global_container": "0x1445edba0",
+    "vector_init": "0x1414af190",
+    "unsized_free": "0x1414830e0",
+    "service_member_destroy": "0x144ab0970",
+    "service_container_destroy": "0x141cc0350",
+    "service_engine_destroy": "0x144288ea0",
+    "iterator_remove": "0x1445e46f0",
+    "callback_resize": "0x141436d20",
+    "vector_destroy": "0x1445e9f30",
+    "observer_destroy": "0x1445dfa40",
+    "member_118_destroy": "0x1445e9e20",
+    "member_d0_destroy": "0x1445e96b0",
+    "string_destroy": "0x1445dfb70",
+    "list_clear": "0x1445e4190",
+    "callback_destroy": "0x141662e90"
+  },
+  "table_roles": {
+    "service_base": "0x1496740c8",
+    "service_primary": "0x1496740f8",
+    "service_secondary": "0x149674148",
+    "control": "0x1489fee48",
+    "callback_handler": "0x1437174cc",
+    "callback_base": "0x1489e6118",
+    "callback": "0x1490644c8",
+    "control_base": "0x14a3e7a38",
+    "derived_observer_initial": "0x14955d270",
+    "backend_primary": "0x1496741e8",
+    "derived_secondary38": "0x1496741f0",
+    "derived_secondary50": "0x149674208",
+    "derived_observer200": "0x149674238",
+    "derived_observer218": "0x149674290",
+    "base_initial": "0x14955c468",
+    "base_observer_initial": "0x14955d1f0",
+    "backend_base": "0x14955d2c8",
+    "base_secondary38": "0x14955d2d0",
+    "base_secondary50": "0x14955d2e8",
+    "base_string": "0x14955cdc8",
+    "base_containerc8": "0x14955d208",
+    "base_container110": "0x14955d250",
+    "base_vector": "0x14955d268"
+  },
+  "source_tables": {
+    "0x1496740c8": "a00bab4401000000d03b404101000000d03b404101000000d03b404101000000d03b404101000000d03b404101000000",
+    "0x1496740f8": "e00bab44010000008010ab4401000000d03b404101000000000dab4401000000d03b404101000000d03b404101000000104abb4001000000c015ab44010000000016ab4401000000d03b404101000000",
+    "0x149674148": "0018ab4401000000",
+    "0x1489fee48": "70f24741010000001092404101000000",
+    "0x1489e6118": "803c404101000000",
+    "0x1490644c8": "902e664101000000",
+    "0x14a3e7a38": "ab8c7f4801000000",
+    "0x14955d270": "90025e4401000000",
+    "0x1496741e8": "f01dab4401000000d01dab440100000020ea5e4401000000f0e95e4401000000",
+    "0x1496741f0": "d01dab4401000000",
+    "0x149674208": "dc1dab4401000000",
+    "0x149674238": "b81dab4401000000",
+    "0x149674290": "c41dab4401000000",
+    "0x14955c468": "50ad5d4401000000",
+    "0x14955d1f0": "90025e4401000000",
+    "0x14955d2c8": "60aa5e4401000000",
+    "0x14955d2d0": "eca35e4401000000",
+    "0x14955d2e8": "f8a35e4401000000",
+    "0x14955cdc8": "00045e4401000000",
+    "0x14955d208": "d0a65e4401000000",
+    "0x14955d250": "a0a95e4401000000",
+    "0x14955d268": "20aa5e4401000000"
+  },
+  "source_globals": {
+    "singleton": {
+      "address": "0x14b594f80",
+      "size_bytes": 8,
+      "storage": "zero_fill",
+      "section": {
+        "name": ".data",
+        "rva": 185344000,
+        "size": 6187164,
+        "raw": 185338880,
+        "raw_size": 2010112
+      }
+    },
+    "invalid_parameter": {
+      "address": "0x14899f018",
+      "size_bytes": 8,
+      "storage": "file",
+      "section": {
+        "name": ".rdata",
+        "rva": 144297984,
+        "size": 41045920,
+        "raw": 144292864,
+        "raw_size": 41046016
+      },
+      "bytes": "b0120c0b00000000"
+    },
+    "provider": {
+      "address": "0x14b567ad8",
+      "size_bytes": 8,
+      "storage": "zero_fill",
+      "section": {
+        "name": ".data",
+        "rva": 185344000,
+        "size": 6187164,
+        "raw": 185338880,
+        "raw_size": 2010112
+      }
+    }
+  },
+  "opaque_entries": {
+    "allocate": {
+      "address": "0x14690be10",
+      "bytes": "4885c9b801000000ba10000000480f45c1488bc8e9973db8fa"
+    },
+    "sized_free": {
+      "address": "0x141431fe0",
+      "bytes": "e9fb100500"
+    }
+  },
+  "call_sites": {
+    "service.publisher": {
+      "0x144ab08b2": "0x1442870f0"
+    },
+    "service.assign": {
+      "0x144ab1097": "0x14690be10",
+      "0x144ab10a4": "0x144ab1810",
+      "0x144ab10be": "0x14690be10",
+      "0x144ab110f": "0x141473540",
+      "0x144ab113f": "qword ptr [rax]",
+      "0x144ab1155": "qword ptr [rax + 8]",
+      "0x144ab1199": "0x14142d0f0",
+      "0x144ab11b5": "0x14142ef60"
+    },
+    "control.move_release": {
+      "0x141473583": "qword ptr [rax]",
+      "0x141473597": "qword ptr [rax + 8]"
+    },
+    "control.deleting": {
+      "0x14140922d": "0x141431fe0"
+    },
+    "backend.constructor": {
+      "0x144ab1833": "0x1445e9110",
+      "0x144ab183f": "0x1445df7e0",
+      "0x144ab1859": "0x1445df7e0",
+      "0x144ab18c1": "0x1445e90e0",
+      "0x144ab19a8": "0x1445df070",
+      "0x144ab19e7": "0x1445e3770",
+      "0x144ab1a11": "0x14690be10",
+      "0x144ab1a31": "0x1445edba0",
+      "0x144ab1a82": "0x1445df070",
+      "0x144ab1ace": "0x1445e3770",
+      "0x144ab1af8": "0x14690be10"
+    },
+    "backend.base_constructor": {
+      "0x1445e914d": "0x14690be10",
+      "0x1445e9164": "0x1445df7e0",
+      "0x1445e9178": "0x1445df7e0",
+      "0x1445e91ef": "0x14690be10",
+      "0x1445e922f": "0x14690be10",
+      "0x1445e928f": "0x14690be10",
+      "0x1445e9305": "0x1414af190",
+      "0x1445e9318": "0x1414af190",
+      "0x1445e932b": "0x1414af190"
+    },
+    "service.deleting": {
+      "0x144ab0c1b": "0x1414830e0",
+      "0x144ab0c36": "0x1414830e0",
+      "0x144ab0c42": "0x144ab0970",
+      "0x144ab0c50": "0x1414830e0",
+      "0x144ab0c65": "0x1414830e0",
+      "0x144ab0c6e": "0x141cc0350",
+      "0x144ab0c98": "qword ptr [rax]",
+      "0x144ab0cac": "qword ptr [rax + 8]",
+      "0x144ab0cb8": "0x144288ea0",
+      "0x144ab0cef": "0x141431fe0"
+    },
+    "backend.deleting": {
+      "0x144ab1dff": "0x144ab1b50",
+      "0x144ab1e11": "0x141431fe0"
+    },
+    "backend.destructor": {
+      "0x144ab1baf": "0x1445edba0",
+      "0x144ab1c03": "0x1445df070",
+      "0x144ab1c48": "0x1445e46f0",
+      "0x144ab1c94": "0x1445df070",
+      "0x144ab1cd9": "0x1445e46f0",
+      "0x144ab1cf8": "qword ptr [rax]",
+      "0x144ab1d0c": "0x141436d20",
+      "0x144ab1d24": "0x1414830e0",
+      "0x144ab1d4a": "qword ptr [rax + 0x10]",
+      "0x144ab1d59": "0x1414830e0",
+      "0x144ab1d6a": "0x1414830e0",
+      "0x144ab1d76": "0x1445e9f30",
+      "0x144ab1d82": "0x1445dfa40",
+      "0x144ab1d8e": "0x1445dfa40"
+    },
+    "backend.base_destructor": {
+      "0x1445e9fe3": "0x1445ec070",
+      "0x1445ea024": "0x141431fe0",
+      "0x1445ea052": "0x1445e9f30",
+      "0x1445ea05e": "0x1445e9f30",
+      "0x1445ea06a": "0x1445e9f30",
+      "0x1445ea076": "0x1445e9e20",
+      "0x1445ea082": "0x1445e96b0",
+      "0x1445ea08e": "0x1445f5020",
+      "0x1445ea0aa": "0x141431fe0",
+      "0x1445ea0b3": "0x1445dfb70",
+      "0x1445ea0bc": "0x1445dfa40",
+      "0x1445ea0c5": "0x1445dfa40",
+      "0x1445ea0e6": "0x1445e4190",
+      "0x1445ea0ed": "qword ptr [rip + 0x43b4f25]",
+      "0x1445ea0fb": "0x1445e4190"
+    },
+    "backend.reset": {
+      "0x1445ec0d8": "0x1445df070",
+      "0x1445ec11d": "0x1445e46f0",
+      "0x1445ec16e": "0x1445df070",
+      "0x1445ec1b3": "0x1445e46f0",
+      "0x1445ec1d8": "0x1445e0c00",
+      "0x1445ec1e7": "0x1445e29a0",
+      "0x1445ec1fc": "qword ptr [rax + 0x28]"
+    },
+    "backend.string_ring_clear": {
+      "0x1445f5093": "0x141431fe0",
+      "0x1445f50e4": "0x141431fe0",
+      "0x1445f511e": "0x141431fe0",
+      "0x1445f513f": "qword ptr [rip + 0x43a9ed3]"
+    }
+  },
+  "layout": {
+    "abi": "win64",
+    "executed_roots": 12,
+    "leaves": 1,
+    "tail_fragments": 0,
+    "service_bytes": 240,
+    "backend_bytes": 800,
+    "control_bytes": 24,
+    "callback_fixture_bytes": 48,
+    "native_publisher": true,
+    "native_assignment": true,
+    "native_ref_control": true,
+    "native_backend_constructor": true,
+    "native_primary_destructors": true,
+    "native_base_reset": true,
+    "native_string_ring_clear": true,
+    "native_allocator": false,
+    "native_engine_containers": false,
+    "native_vector_storage": false,
+    "native_callback_lifetime": false,
+    "native_socket": false,
+    "concurrent_references": false,
+    "native_writer": false,
+    "native_sdk": false,
+    "session_executed": false
+  },
+  "exports": {
+    "run-fd7ea2d83bfc": "657513cec48694d24453024e95815bea11e87ef6d4d0d35b42e246af00d587fe",
+    "run-bcb6caaf0711": "e641c59aaf761052b0d6977cfb3bfa3c351fc2aff752a4f77f2b77a1d185869c"
+  }
+}

@@ -30,6 +30,23 @@ Ghidra 12.1.4 и отдельная Temurin JDK21 установлены вне 
 границ функции, calling convention и проверки поведения. Decompiler warnings
 сохранять. Угаданный тип или название функции не доказывает её семантику.
 
+## Автоматические native families
+
+Готовые source-bound правила применяет штатный
+[автоматический проход](knowledge/RESUMABLE-UPDATE.md). SHA источников,
+инструментов, runtime и parent lineage входят в доказательства; новые JVM и
+native сценарии нужны только для изменённых или недостающих материалов.
+Capstone / Unicorn, собственный PE-reader и готовые BinDiff пары уже установлены;
+новые пакеты для этих семейств не требуются.
+
+Текущий [service-lifecycle пакет](knowledge/evidence/updates/HEADLESS-AUTO-SERVICE-LIFECYCLE-11322.md)
+использует 12 whole roots / 1 dispatch leaf и 42 сценария / 84 poison-раунда.
+Готовые parent suites не запускаются повторно. Heap / vector / engine /
+registration / callback providers сохраняют явные границы; semantic report
+не означает подтверждённый онлайн-вход. Результаты конкретного SHA и замеры
+приведены в отчёте, состояние открытых пакетов — в
+[TASKS](../../vampir-headless/TASKS.md).
+
 ## Установка CUE4Parse и Dumper-7
 
 Официальные источники: [CUE4Parse](https://github.com/FabianFG/CUE4Parse),
