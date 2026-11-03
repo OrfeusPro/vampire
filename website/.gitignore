@@ -3,3 +3,4 @@
 /vendor/
 /smtp.local.php
 /turnstile.local.php
+/xmail.local.php

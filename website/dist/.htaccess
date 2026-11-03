@@ -1,6 +1,9 @@
 Options -Indexes -MultiViews
 DirectoryIndex index.php
 RewriteEngine On
+RewriteRule ^(?:xmail(?:\.local|-backend|-imap)\.php|var/xmail[^/]*) - [F,L]
+RewriteRule ^xmail/(?:xmail\.(?:css|js)|index\.php)$ - [L]
+RewriteRule ^xmail(?:/.*)?$ xmail/index.php [L,QSA]
 RewriteRule ^index\.html$ index.php [L,QSA]
 RewriteRule ^(?:locales/|api/(?!order\.php$)) - [F,L]
 RewriteCond %{REQUEST_FILENAME} -f
