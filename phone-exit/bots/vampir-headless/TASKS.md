@@ -59,8 +59,11 @@ exports и проверки вручную не повторять. Счётчи
   с неизменяемым reference. Проверенное продолжение и warm-повтор 109 архивов
   завершены; получены 3344 записи / 2941 уникальный CSV, legacy blobs заново
   не хэшируются. Сбор execution inputs ускорен до 3,1–3,2 с. Далее — общий
-  ordinary update, сужение консервативных ключей зависимостей и повторных
-  archive SHA затрат внутри замороженного owner, сохраняя финальные barriers.
+  ordinary update и сужение консервативных ключей зависимостей. CSV extract
+  уже сократил собственные SHA PAK с трёх до двух; следующий пакет — общий
+  owner промежуточных resource SHA и pending cache до свежего финального
+  барьера. Нельзя заменить отдельные проверки memo без этого протокола.
+  [Приёмка CSV](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-CSV-COSTS-V1-11322.md).
   Directory paths, 235 encrypted / size gaps и подходящие table baselines
   остаются общими блокерами. Exact content match не означает resource identity,
   semantic совместимость или admission. Не повторять 34 готовых native семейства.

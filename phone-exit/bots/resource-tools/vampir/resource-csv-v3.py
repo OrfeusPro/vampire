@@ -405,24 +405,90 @@ def _accounting(report, value, record):
 
 def load_checked(index, args, report_pointer, expected_inputs=None):
     """Fresh input and every output SHA; a report never grants compatibility."""
+    _, report = _checked_pointer(index, args, report_pointer, category=CATEGORY)
+    if not isinstance(report, dict) or not isinstance(report.get('record_index'), dict):
+        raise ValueError('Неверный индекс CSV-отчёта')
+    prepared = _prepare(index, args, report['record_index'])
+    return _load_checked_prepared(index, args, report_pointer, prepared, expected_inputs)
+
+
+def _load_checked_prepared(index, args, report_pointer, prepared, expected_inputs=None, extra_pins=None):
+    """Reuse preparation only within the caller's still-open verification."""
     path, report = _checked_pointer(index, args, report_pointer, category=CATEGORY)
-    if (report.get('schema') != 3 or report.get('recipe') != RECIPE
+    if (not isinstance(report, dict) or report.get('schema') != 3 or report.get('recipe') != RECIPE
             or report.get('compatibility') != 'not_established' or report.get('state') not in ('extracted', 'partial')
             or not isinstance(report.get('tables'), list) or not isinstance(report.get('errors'), list)
             or type(report.get('skipped')) is not int or report['skipped'] < 0):
         raise ValueError('Неверный отчёт текущих CSV')
-    value, record, aliases = _prepare(index, args, report['record_index'])
-    if (report.get('inputs') != value or report.get('input_sha256') != _input_sha(value)
+    value, record, aliases = prepared
+    expected = value if expected_inputs is None else expected_inputs
+    if (report.get('inputs') != expected or report.get('input_sha256') != _input_sha(expected)
             or report.get('source') != value['source'] or (expected_inputs is not None and value != expected_inputs)):
         raise ValueError('Входы CSV-отчёта изменились')
+    if report.get('record_index') != value['record_index']:
+        raise ValueError('Индекс CSV-отчёта изменился')
     parser_path = HERE/'extract-release-tables.py'
     parser = _load_checked_module(parser_path, value['tools'][str(parser_path.resolve())])
     _outputs(index, args, report, record, parser)
     _accounting(report, value, record)
-    _barrier(index, args, value, aliases)
+    _barrier(index, args, value, aliases, extra_pins)
     if _digest(index, args, path) != report_pointer['sha256']:
         raise ValueError('CSV-отчёт изменился во время проверки')
     return copy.deepcopy(report)
+
+
+def _reuse_producer(index, args, prepared, cache):
+    knowledge = getattr(args, 'knowledge', None)
+    if knowledge is None:
+        return None
+    registry = Path(knowledge)/'resource-csv-reuse.json'
+    if not registry.is_file():
+        return None
+    raw = registry.read_bytes()
+    if len(raw) > 4096:
+        raise ValueError('CSV producer registry превышает бюджет')
+    rule = json.loads(raw)
+    if (not isinstance(rule, dict) or set(rule) != {'schema', 'recipe', 'previous_producer_sha256'}
+            or type(rule['schema']) is not int or rule['schema'] != 1
+            or rule['recipe'] != 'csv-prepared-inputs-reuse-v1'):
+        raise ValueError('Неизвестное правило переноса CSV producer')
+    previous = _full_sha(rule['previous_producer_sha256'])
+    value, record, aliases = prepared
+    old = copy.deepcopy(value)
+    producer = str(Path(__file__).resolve())
+    if previous == value['tools'][producer]:
+        raise ValueError('CSV producer registry указывает текущий producer')
+    old['tools'][producer] = previous
+    old_cache = Path(args.root).resolve()/'knowledge/resource-csv-v3-cache'/(_input_sha(old)+'.json')
+    if not old_cache.is_file():
+        return None
+    with old_cache.open('rb') as stream:
+        cache_raw = stream.read(4097)
+    if len(cache_raw) > 4096:
+        raise ValueError('CSV producer cache превышает бюджет')
+    pointer = json.loads(cache_raw)
+    old_path, report = _checked_pointer(index, args, pointer, category=CATEGORY)
+    # Only the registered producer SHA may differ. The current decoder,
+    # runtime, source, record index and budgets retain exact equality.
+    if (not isinstance(report, dict) or report.get('inputs') != old
+            or report.get('input_sha256') != _input_sha(old)):
+        raise ValueError('Прежние входы CSV отличаются от зарегистрированного переноса')
+    report = dict(report, inputs=copy.deepcopy(value), input_sha256=_input_sha(value))
+    pins = {str(registry): hashlib.sha256(raw).hexdigest(),
+        str(old_cache): hashlib.sha256(cache_raw).hexdigest(), str(old_path): pointer['sha256']}
+    aliases = dict(aliases)
+    for path in (registry, old_cache, Path(pointer['path'])):
+        aliases[str(path.absolute())] = path.resolve()
+    # Revalidate the migrated body through the same current verifier, including
+    # outputs/accounting and the final fresh SHA barrier, before cache assignment.
+    provisional = _save(Path(args.root).resolve(), report)
+    _load_checked_prepared(index, args, provisional, (value, record, aliases), extra_pins=pins)
+    report['producer_reuse'] = dict(recipe=rule['recipe'], previous_report=pointer,
+        previous_producer_sha256=previous, registry_sha256=pins[str(registry)],
+        cold_migration_only=True)
+    result = _save(Path(args.root).resolve(), report)
+    _cache_write(cache, result)
+    return result
 
 
 def _save(root, report):
@@ -465,10 +531,13 @@ def extract(index, args, record_pointer, *, source_sha256=None):
     if cache.is_file():
         raw = cache.read_bytes()
         pointer = json.loads(raw)
-        load_checked(index, args, pointer, expected_inputs=value)
+        _load_checked_prepared(index, args, pointer, (value, record, aliases), expected_inputs=value)
         if cache.read_bytes() != raw:
             raise ValueError('CSV cache pointer изменился во время проверки')
         return copy.deepcopy(pointer)
+    reused = _reuse_producer(index, args, (value, record, aliases), cache)
+    if reused is not None:
+        return reused
     reader_pointer = value['decoder']['reader']
     reader = _load_reader(Path(reader_pointer['path']), reader_pointer['sha256'])
     if (Path(reader.ROOT)/'tools/oodle-data-shared.dll').resolve() != Path(value['decoder']['oodle']['path']):

@@ -11702,7 +11702,8 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/contract-projections.json",
         "phone-exit/bots/test_vampir_contract_projections_v1.py",
         "phone-exit/bots/test_vampir_contract_writer_inheritance_v1.py",
-        "phone-exit/bots/test_vampir_contract_projection_routing_v1.py"
+        "phone-exit/bots/test_vampir_contract_projection_routing_v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/resource-csv-reuse.json"
       ],
       "artifact_dependencies": []
     }

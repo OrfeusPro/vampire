@@ -116,6 +116,7 @@ def definition_inputs(index, args, update):
             'native-publication-v3.py', 'update-native-drivers-v3.py',
             'resource-pipeline-v3.py','resource-reference-v3.py','resource-index-v3.py','resource-csv-v3.py'))
         if (args.knowledge/'resource-pipeline-engine.json').is_file():paths.add(args.knowledge/'resource-pipeline-engine.json')
+        if (args.knowledge/'resource-csv-reuse.json').is_file():paths.add(args.knowledge/'resource-csv-reuse.json')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',

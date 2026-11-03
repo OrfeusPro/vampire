@@ -1274,6 +1274,37 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты production-проверка managed owner, legacy locks, консервативные ключи execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "CSV extract использует одну подготовку и свежий конечный SHA. На четырёх PAK полных чтений 8 вместо 12, все 3344 табличные записи совпали без decode. Прежние результаты переносятся только при exact producer rule; admission не изменён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-CSV-COSTS-V1-11322.json",
+          "sha256": "a8b7560ba10cb2deff45cb663ea6cf57625b448f1feb4ca371b3a0342403a533"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-CSV-COSTS-V1-11322.md",
+          "sha256": "4b19186d42efb02d597efb7a1bfdfeaec6623b1a45a2a4f144cdbb6929aac10c"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "b18970282cee8c0d162c687cb337ed42d16ad8a257d90353c8eb276e566a9875",
+      "limits": [
+        "Four selected PAK files cover 3344 CSV records / 2941 unique CSV blobs; the complete 109-archive updater was not run.",
+        "Current inputs/outputs and fresh archive SHA barriers are checked; no resource identity or runtime admission is granted.",
+        "Wall-time samples measure the CSV component; the paired run with the tooling worker is recorded separately.",
+        "The shared owner-wide SHA barrier and narrower dependency cache keys remain separate work."
+      ],
+      "method": "static",
+      "next_check": "Объединить промежуточные resource SHA в замороженном owner с pending cache и свежим общим финальным барьером; сузить консервативные ключи зависимостей. Полный проход, восстановление и второй патч проверить по явной команде пользователя. Наблюдатель включать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты общий owner промежуточных resource SHA, консервативные ключи кэша, production-проверка managed owner, legacy locks, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

@@ -132,6 +132,96 @@ class ResourceCsvV3Tests(unittest.TestCase):
             f.extract()
         self.assertEqual(f.reader.decode.call_count, calls)
 
+    def previous_producer(self):
+        f=self.f
+        current=f.extract()
+        value=json.loads(Path(current['path']).read_bytes())
+        producer=str(Path(CSV.__file__).resolve())
+        value['inputs']['tools'][producer]='a'*64
+        value['input_sha256']=CSV._input_sha(value['inputs'])
+        previous=f.save(f.root/'knowledge'/CSV.CATEGORY,value)
+        old_cache=f.root/'knowledge/resource-csv-v3-cache'/(value['input_sha256']+'.json')
+        old_cache.write_bytes(CSV._canonical(previous))
+        current_inputs=CSV.inputs(f.index,f.args,f.pointer)
+        cache=f.root/'knowledge/resource-csv-v3-cache'/(CSV._input_sha(current_inputs)+'.json')
+        cache.unlink()
+        f.args.knowledge=f.root/'registry';f.args.knowledge.mkdir()
+        registry=f.args.knowledge/'resource-csv-reuse.json'
+        registry.write_bytes(CSV._canonical(dict(schema=1,recipe='csv-prepared-inputs-reuse-v1',
+            previous_producer_sha256='a'*64)))
+        return previous,old_cache,cache,registry
+
+    def test_warm_extract_prepares_once_and_still_hashes_archive_at_final_barrier(self):
+        f=self.f;first=f.extract()
+        f.index.digest=Mock(side_effect=digest)
+        self.assertEqual(f.extract(),first)
+        reads=[c for c in f.index.digest.call_args_list if Path(c.args[0]).resolve()==f.archive]
+        self.assertEqual(len(reads),2)
+        f.index.digest.reset_mock();f.checked(first)
+        reads=[c for c in f.index.digest.call_args_list if Path(c.args[0]).resolve()==f.archive]
+        self.assertEqual(len(reads),2)
+
+    def test_registered_previous_producer_reuses_outputs_and_creates_current_cache(self):
+        f=self.f;previous,_,cache,_=self.previous_producer()
+        calls=f.reader.decode.call_count
+        result=f.extract();report=f.checked(result)
+        self.assertEqual(report['producer_reuse']['previous_report'],previous)
+        self.assertTrue(report['producer_reuse']['cold_migration_only'])
+        self.assertEqual(json.loads(cache.read_bytes()),result)
+        self.assertEqual(f.extract(),result)
+        self.assertEqual(f.reader.decode.call_count,calls)
+
+    def test_producer_reuse_preserves_legacy_bridge_accounting(self):
+        self.f.legacy()
+        self.previous_producer()
+        result=self.f.checked(self.f.extract())
+        self.assertEqual(result['legacy_bridge']['method'],'checked_legacy_current_csv')
+        self.assertEqual(result['skipped'],0)
+        self.assertIn('producer_reuse',result)
+
+    def test_producer_reuse_rejects_changed_inputs_and_record_pointer(self):
+        f=self.f
+        previous,old_cache,cache,_=self.previous_producer()
+        for field in ('runtime','record_index'):
+            report=json.loads(Path(previous['path']).read_bytes())
+            if field=='runtime':report['inputs']['runtime']['python']='another runtime'
+            else:report['record_index']=dict(report['record_index'],sha256='b'*64)
+            corrupt=f.save(f.root/'knowledge'/CSV.CATEGORY,report)
+            old_cache.write_bytes(CSV._canonical(corrupt))
+            with self.subTest(field=field),self.assertRaises(ValueError):f.extract()
+            self.assertFalse(cache.exists())
+
+    def test_producer_reuse_checks_late_archive_registry_cache_and_output_mutations(self):
+        f=self.f;_,old_cache,cache,registry=self.previous_producer()
+        outputs=CSV._outputs
+        for filename in (f.archive,registry,old_cache):
+            before=filename.read_bytes()
+            def mutate(*args,**kwargs):
+                outputs(*args,**kwargs)
+                self.mutate_same_stat(filename)
+            with self.subTest(filename=filename),patch.object(CSV,'_outputs',side_effect=mutate):
+                with self.assertRaises(ValueError):f.extract()
+            filename.write_bytes(before)
+            self.assertFalse(cache.exists())
+        old=json.loads(old_cache.read_bytes())
+        table=json.loads(Path(old['path']).read_bytes())['tables'][0]
+        self.mutate_same_stat(table['file'])
+        with self.assertRaisesRegex(ValueError,'CSV blob'):f.extract()
+        self.assertFalse(cache.exists())
+
+    def test_producer_reuse_rejects_malformed_reports_and_oversized_cache(self):
+        f=self.f;_,old_cache,cache,_=self.previous_producer()
+        for value in ([],None,dict(schema=3)):
+            pointer=f.save(f.root/'knowledge'/CSV.CATEGORY,value)
+            old_cache.write_bytes(CSV._canonical(pointer))
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):f.extract()
+                with self.assertRaises(ValueError):f.checked(pointer)
+            self.assertFalse(cache.exists())
+        old_cache.write_bytes(b' '*4097)
+        with self.assertRaisesRegex(ValueError,'cache'):f.extract()
+        self.assertFalse(cache.exists())
+
     def test_inputs_are_stable_and_do_not_include_file_mtime(self):
         f = self.f
         before = CSV.inputs(f.index, f.args, f.pointer)
