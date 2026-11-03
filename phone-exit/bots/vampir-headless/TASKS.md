@@ -20,13 +20,10 @@ exports и проверки вручную не повторять. Счётчи
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
   unsupported reason. Function-only receipt не выдавать за исполненный сценарий.
-- Четыре Version / Login context projections: общий контракт SHA 22 ещё не
-  получает constructor / writer / packet tables из проверенных target publications.
-  Сделать один зарегистрированный projection adapter с точными source / proof /
-  report pointers и конфликтами. Готовые whole prepare / wire suites не повторять.
-  Отдельно закрыть только остатки прежних tag / writer checks: ID getter / name /
-  wrapper links и отказ на каждой field position с ABI / canaries. Успешные wire
-  cases сами по себе не закрывают эти области; coverage остаётся partial.
+- Version tag: подтвердить связь с конструктором обёртки для текущего SHA.
+  Общий адаптер уже переносит две матрицы записи и Login tag. Использовать
+  готовые публикации, точные SHA и кэш. Общий контракт входа остаётся partial.
+  [Приёмка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md).
 - Мир и параметры: подтвердить текущие source-bound позицию, HP / MP и окружение.
 - Input seed: выпустить новую версию общего recipe с ordered baseline / target
   pointers в memo key; одинаковая transitive lineage не определяет направление.

@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "recipe": "contract-projections-v1",
+  "baseline": {
+    "archive": {
+      "base": "repository",
+      "path": "native-contexts/archive-wire-11320.json",
+      "sha256": "343487de6bdb5fd3b6b5e821fd125ee8c8403d974ebe4c78f7f16b10c4bae21a"
+    },
+    "writers": {
+      "base": "library",
+      "path": "knowledge/entry-contract-checks-11320/180a350261ad8d618adb87557d35b58ecd4d26d87732d275c5202a3135726997/manifest.json",
+      "sha256": "180a350261ad8d618adb87557d35b58ecd4d26d87732d275c5202a3135726997"
+    },
+    "writer_check": {
+      "base": "library",
+      "path": "knowledge/check-results/52dab724fe51418ccebd2298e4d667db9e0a880976f5241d2c1304600d3a5566/manifest.json",
+      "sha256": "52dab724fe51418ccebd2298e4d667db9e0a880976f5241d2c1304600d3a5566"
+    },
+    "tags": {
+      "base": "library",
+      "path": "knowledge/entry-contract-checks-11320/3a079eb7aa9bef3c0950321060f26744187bc8d51d774c3f6f9318500e1d2fc6/manifest.json",
+      "sha256": "3a079eb7aa9bef3c0950321060f26744187bc8d51d774c3f6f9318500e1d2fc6"
+    },
+    "tag_check": {
+      "base": "library",
+      "path": "knowledge/check-results/057c4731c2bbfa3702a155f2079b08067233c3a7acecef86dc62eb416a187c0b/manifest.json",
+      "sha256": "057c4731c2bbfa3702a155f2079b08067233c3a7acecef86dc62eb416a187c0b"
+    },
+    "facts": {
+      "base": "repository",
+      "path": "releases/544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c/facts.json",
+      "sha256": "8008192c1fcbf2fe9970b7ac80249a17e119934e77c72bbebb210d9b410e8025"
+    },
+    "fact_id": "71a9361a3816252c70b9c17ca7b775a2fa07380652c2a74f9b93e5632a3b0eef",
+    "fixture_tools": {
+      "verify-packet-writer-context.py": "43e48a4734bab22512f039dbcc75c648ac1caee963e2659ce09f89663f41aeff",
+      "verify-entry-contracts-11320.py": "c99a94e10be2b293768259db38ed06425ec91730da97900d0113c8d49323a27a",
+      "verify-version-login-context.py": "f3a8fcff76f837b138f4ea7510e4b3eaa411223512816e45ad375e07ec396015"
+    }
+  },
+  "contracts": {
+    "game-version": {
+      "family": "version-prepare",
+      "prepare": {
+        "base": "repository",
+        "path": "native-contexts/version-prepare-11320.json",
+        "sha256": "d01d03d02cc5c98c6439bc68992fc520de12cd1cdab79324b02c225ca77a4f42"
+      },
+      "tag": {
+        "packet_id": 1,
+        "packet_name": "PktVersion",
+        "tag_field": 176,
+        "object_size": 208,
+        "start_offset": 570,
+        "stop_offset": 657,
+        "destination_offset": 80,
+        "temporary_offset": 80
+      }
+    },
+    "game-login": {
+      "family": "login-prepare",
+      "prepare": {
+        "base": "repository",
+        "path": "native-contexts/login-prepare-11320.json",
+        "sha256": "2f0f128184d184ce9af1068621cdbf081d57dfea33e3a5e08f759c62e0346549"
+      },
+      "tag": {
+        "packet_id": 3,
+        "packet_name": "PktLogin",
+        "tag_field": 272,
+        "object_size": 320,
+        "start_offset": 573,
+        "stop_offset": 678,
+        "destination_offset": 128,
+        "temporary_offset": 64
+      }
+    }
+  }
+}

@@ -54,7 +54,8 @@ def load_tests(loader, tests, pattern):
             'test_vampir_resource_reference_v3','test_vampir_resource_index_v3',
             'test_vampir_resource_csv_v3','test_vampir_resource_pipeline_v3',
             'test_vampir_update_process_group_v4','test_vampir_update_owner_lease_v4',
-            'test_vampir_update_owned_dispatch_v4'):
+            'test_vampir_update_owned_dispatch_v4','test_vampir_contract_projections_v1',
+            'test_vampir_contract_writer_inheritance_v1','test_vampir_contract_projection_routing_v1'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

@@ -17,9 +17,10 @@ def execution_inputs(index):
     # Shared dependencies belong to several groups. Parse each file once in
     # this snapshot; the next execution_inputs call always reads fresh inputs.
     scanned={}
-    # Ownership changes invalidate the complete run and its admission, not the
-    # already verified semantics of each native/resource stage.
-    owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py'}
+    # These helpers carry separate owner/projection guards in their own stage
+    # inputs; they are not dependencies of every unrelated native/resource stage.
+    owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py',
+        'contract-projections-v1.py','contract-writer-inheritance-v1.py'}
     def scan(path):
         if path in scanned:return scanned[path]
         digest=index.digest(path) if path.is_file() else None
@@ -110,6 +111,9 @@ def definition_inputs(index, args, update):
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
                 'update-owner-lease-v4.py','update-process-group-v4.py'))
+        if (args.knowledge/'contract-projections.json').is_file():
+            paths.add(args.knowledge/'contract-projections.json')
+            paths.update(index.HERE/name for name in ('contract-projections-v1.py','contract-writer-inheritance-v1.py'))
         if (args.knowledge/'native-publication-engine.json').is_file():paths.add(args.knowledge/'native-publication-engine.json')
     workspace = index.HERE.parents[3]
     for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
@@ -793,6 +797,15 @@ def run_locked(index, args, database, *, audited=None):
             record['native_contexts']=native_contexts
             record['native_checks']=native_checks
         outcomes = {}
+        projection=None;projection_issue=None
+        if (args.knowledge/'contract-projections.json').is_file():
+            projection_api=index.extension('contract-projections-v1')
+            if not projection_api.enabled(original_index,args):raise ValueError('Contract projection recipe is disabled')
+            try:
+                projection=projection_api.begin(original_index,args,sha)
+                projection.prepare(native_contexts,native_checks)
+            except (ValueError,OSError,KeyError,StopIteration) as error:
+                projection_issue=str(error)
         checked_this_run={}
         def check_once(check_id):
             if check_id in checked_this_run:return checked_this_run[check_id]
@@ -823,10 +836,15 @@ def run_locked(index, args, database, *, audited=None):
                 bindings=contexts['contracts'][name], exports=relevant_exports,
                 resource_inputs=resource_inputs(c,report['files']),
                 dependencies={d:outcomes[d] for d in c['depends_on']})
+            projected=(projection is not None or projection_issue is not None) and name in ('game-version','game-login')
+            if projection is not None and projected:context=projection.project(context)
             cp = workflow.snapshot(args.root,'update-contexts',context)
             checks = []
             for adapter in c.get('context_checks',[]):
                 def check_context():
+                    if projected:
+                        if projection_issue is not None:return dict(id=adapter,state='requires_review',reason=projection_issue)
+                        return projection.check(context,adapter)
                     module={'version-login-tag':'verify-version-login-context',
                             'packet-writer-projection':'verify-packet-writer-context'}.get(adapter)
                     if module is None:raise ValueError('Unreviewed context adapter')
@@ -841,8 +859,11 @@ def run_locked(index, args, database, *, audited=None):
                     return dict(id=adapter,state='passed',report=str(target),sha256=index.digest(target))
                 try:
                     stage_name='context-check-'+name+('' if adapter=='version-login-tag' else '-'+adapter)
-                    checked=journal.stage(stage_name,dict(context=index.digest(cp),
-                        inputs=tools['context']),check_context)
+                    check_inputs=dict(context=index.digest(cp),inputs=tools['context'])
+                    if projected:
+                        check_inputs['projection']=projection.inputs(context,adapter) if projection is not None else dict(reason=projection_issue)
+                    checked=journal.stage(stage_name,check_inputs,check_context)
+                    if projection is not None and projected:projection.observe(context,adapter,checked)
                 except (ValueError,OSError,KeyError,StopIteration) as error:
                     checked=dict(id=adapter,state='requires_review',reason=str(error))
                 checks.append(checked)
@@ -850,7 +871,7 @@ def run_locked(index, args, database, *, audited=None):
                 # run_checks owns its own dependency cache; invoke it to validate inputs even on resume.
                 checks.extend(check_once(check_id))
             missing = [d for d in c['depends_on'] if outcomes[d]['state'] != 'passed']
-            reasons = contexts['contracts'][name]['queue'][:]
+            reasons = context['bindings']['queue'][:]
             for export in exports:
                 if (export.get('address') in context['bindings']['bindings'].values()
                         and not export_satisfies(index,args.root,sha,name,context['bindings'],export)):
@@ -890,6 +911,7 @@ def run_locked(index, args, database, *, audited=None):
         # Preparation may read further immutable artifacts; validate them before
         # publishing the final journal and next-use pointers.
         scoped_exports=versioned.finish(original_index,args) if versioned else None
+        projection_result=projection.finish() if projection is not None else None
         resource_pipeline_result=resource_pipeline.finish() if resource_pipeline else None
         resource_metrics=args.resource_scope.validate() if args.resource_scope else None
         source_metrics=store.validate()
@@ -916,6 +938,7 @@ def run_locked(index, args, database, *, audited=None):
             cached_stage_validation_seconds=journal.validation_seconds,
             resource_planning_seconds=resource_planning_seconds,resource_inputs=resource_metrics,
             resource_pipeline=resource_pipeline_result,resource_stage_input_seconds=round(resource_input_seconds,6),
+            contract_projections=projection_result,
             preparation_timing=timing,
             resource_readiness=args.resource_candidates.metrics if args.resource_candidates else None,
             installation_full_sha_barrier_seconds=installation_barrier_seconds,

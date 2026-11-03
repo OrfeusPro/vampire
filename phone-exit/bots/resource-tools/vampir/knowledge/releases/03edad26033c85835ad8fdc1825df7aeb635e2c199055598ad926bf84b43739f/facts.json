@@ -1177,6 +1177,42 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Production-проверка managed owner на настоящем update ещё не выполнялась. Legacy PID-only research / ghidra locks, иной producer guard и Windows session остаются явными блокерами восстановления. Четыре context projections и их semantic остатки tag / writer, execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / full entry / world / online открыты.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x144aad400",
+        "0x1456d7590",
+        "0x1456d7c10",
+        "0x1456e8520",
+        "0x1456e8a30",
+        "0x1467d1530",
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Общий адаптер Version / Login переносит 160 writer и 4 Login tag случая статически. Все четыре результата переиспользованы на повторе. Version tag остаётся заблокирован связью с конструктором обёртки. Допуск не изменён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-CONTRACT-PROJECTIONS-V1-11322.json",
+          "sha256": "fd56311cbe3130d5dffa6242170dd67ceaea13a68424167d7a80b4a35e0469c4"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md",
+          "sha256": "6ef1f0e90fd99e991c915222d7fc3949dbfb81f37d21d1d374a445426faa464b"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "130e15f3f1f6cc265a7b405a1b9b5b44b6ea362d6b493b4a912498956f265dba",
+      "limits": [
+        "Static inheritance of bounded fixture matrices only. Target native cases: zero.",
+        "Version tag wrapper constructor link remains unproven on the target.",
+        "No installed-client update, profile activation, network, or online entry verification."
+      ],
+      "method": "static",
+      "next_check": "Закрыть оставшуюся связь Version tag по целевому SHA и сузить повторные execution-input / archive SHA затраты. Готовые публикации и проверки использовать из кэша. Наблюдатель и полный production update запускать по явной команде пользователя.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Version tag требует доказательства связи с конструктором обёртки. Открыты production-проверка managed owner, legacy locks, повторные execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

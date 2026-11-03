@@ -434,3 +434,13 @@ bots/test_vampir_update_owner_lease_v4.py text eol=lf
 bots/test_vampir_update_process_group_v4.py text eol=lf
 bots/resource-tools/vampir/update-auto.py text eol=lf
 bots/resource-tools/vampir/research-update.py text eol=lf
+
+# Contract projections and explicit inherited fixture semantics.
+bots/resource-tools/vampir/contract-projections-v1.py text eol=lf
+bots/resource-tools/vampir/contract-writer-inheritance-v1.py text eol=lf
+bots/resource-tools/vampir/knowledge/contract-projections.json text eol=lf
+bots/test_vampir_contract_projections_v1.py text eol=lf
+bots/test_vampir_contract_writer_inheritance_v1.py text eol=lf
+bots/test_vampir_contract_projection_routing_v1.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-CONTRACT-PROJECTIONS-V1-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md text eol=crlf

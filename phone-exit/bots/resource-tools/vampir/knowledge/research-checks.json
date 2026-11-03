@@ -11696,7 +11696,13 @@
         "phone-exit/bots/test_vampir_update_owned_dispatch_v4.py",
         "phone-exit/bots/test_vampir_update_owner_lease_v4.py",
         "phone-exit/bots/test_vampir_update_process_group_v4.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/update-owner-engine.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-owner-engine.json",
+        "phone-exit/bots/resource-tools/vampir/contract-projections-v1.py",
+        "phone-exit/bots/resource-tools/vampir/contract-writer-inheritance-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/contract-projections.json",
+        "phone-exit/bots/test_vampir_contract_projections_v1.py",
+        "phone-exit/bots/test_vampir_contract_writer_inheritance_v1.py",
+        "phone-exit/bots/test_vampir_contract_projection_routing_v1.py"
       ],
       "artifact_dependencies": []
     }

@@ -446,6 +446,14 @@ Batch declarations и строки его приватной SQLite остают
 
 ## Кэш публикаций v3
 
+После проверки native-публикаций [реестр проекций](contract-projections.json)
+подставляет constructor, prepare, writer и данные таблиц в контексты Version /
+Login. Старые проверенные матрицы переносятся по цепочке доказательств для
+целевого SHA. Ключ кэша учитывает контекст, правило и входные публикации.
+На неизменном повторе проверки берутся из кэша с контролем целостности.
+Статический перенос сохраняет исходный статус допуска.
+[Результат 20 → 22 и оставшийся блокер](evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md).
+
 Машинный [publication recipe](native-publication-engine.json) выбирает v3,
 сохраняя прежние native drivers / stages. [Проверенные области и замеры](evidence/updates/HEADLESS-NATIVE-PUBLICATION-V3-11322.md).
 Memo rows / tools / SHA действует только внутри одного invocation и заканчивается
