@@ -20,6 +20,13 @@ exports и проверки вручную не повторять. Счётчи
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
   unsupported reason. Function-only receipt не выдавать за исполненный сценарий.
+- Четыре Version / Login context projections: общий контракт SHA 22 ещё не
+  получает constructor / writer / packet tables из проверенных target publications.
+  Сделать один зарегистрированный projection adapter с точными source / proof /
+  report pointers и конфликтами. Готовые whole prepare / wire suites не повторять.
+  Отдельно закрыть только остатки прежних tag / writer checks: ID getter / name /
+  wrapper links и отказ на каждой field position с ABI / canaries. Успешные wire
+  cases сами по себе не закрывают эти области; coverage остаётся partial.
 - Мир и параметры: подтвердить текущие source-bound позицию, HP / MP и окружение.
 - Input seed: выпустить новую версию общего recipe с ordered baseline / target
   pointers в memo key; одинаковая transitive lineage не определяет направление.
@@ -41,12 +48,22 @@ exports и проверки вручную не повторять. Счётчи
   повтором. Полный обычный update завершён; свежий installed SHA barrier
   проверен отдельно по AST-привязке к неизменной цепочке.
   Не менять frozen engines и не заменять SHA доверием к size/mtime.
-- Resource-readiness v2 завершает обычный plan-only / resume и пропускает
-  заведомо неготовые hints без чтения blobs. Далее — отдельный discovery index
-  вместо обхода всей stage history и разделение extraction / comparison keys.
-  Полный проход потребовал SHA 85 068 historical files; это следующий общий
-  блок скорости. Не повторять 34 уже проверенных native семейства.
-  Сохранять authoritative SHA lookup, точный legacy key и final barriers.
+- Аварийное восстановление владельца: закрепить PID / creation time, run и
+  принадлежащих ему потомков в новом orchestration helper. После hard crash
+  PID-only research lock может блокировать продолжение; удаление только по
+  мёртвому PID небезопасно, поскольку Ghidra ещё может работать. Recovery должен
+  подтвердить завершение всей группы, повторно сверить lock и продолжить журнал.
+  Watcher должен подхватывать прежний живой worker или его завершённый результат,
+  сохраняя один owner и обычные SHA barriers. Frozen native engines не менять.
+- Resource pipeline v3 разделяет current record / CSV extraction и сравнения
+  с неизменяемым reference. Проверенное продолжение и warm-повтор 109 архивов
+  завершены; получены 3344 записи / 2941 уникальный CSV, legacy blobs заново
+  не хэшируются. Далее — общий ordinary update и сужение повторных execution-input /
+  archive SHA затрат внутри замороженного owner, сохраняя финальные barriers.
+  Directory paths, 235 encrypted / size gaps и подходящие table baselines
+  остаются общими блокерами. Exact content match не означает resource identity,
+  semantic совместимость или admission. Не повторять 34 готовых native семейства.
+  [Приёмка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PIPELINE-V3-11322.md).
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный

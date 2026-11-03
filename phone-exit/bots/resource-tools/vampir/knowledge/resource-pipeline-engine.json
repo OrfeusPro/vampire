@@ -1,0 +1,6 @@
+{
+  "schema": 3,
+  "recipe": "resource-pipeline-v3",
+  "reference": "immutable-hash-reference-v3",
+  "current_csv": "current-resource-csv-v3"
+}

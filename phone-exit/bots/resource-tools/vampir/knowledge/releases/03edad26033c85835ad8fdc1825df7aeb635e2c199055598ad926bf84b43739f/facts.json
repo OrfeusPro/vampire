@@ -1089,6 +1089,48 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "SDK / full entry / world / data contracts remain incomplete. Historical resource validation cost remains an optimization task.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Ресурсный pipeline v3 подключён к штатному update: 109 архивов, 3344 записи / 2941 уникальный CSV; два завершённых прохода и финальные SHA barriers, повтор без новых comparisons / native / JVM. Прошли 1326 tooling тестов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-PIPELINE-V3-11322.json",
+          "sha256": "b5ffd19e92d0d5a210b8b07d2a356a8605b761eca2187e0e43a0a41ec0145434"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-PIPELINE-V3-11322.md",
+          "sha256": "a51a585e8d8af08e740b7dd486391e67145421ba2069fc0a18cb03d9074cf41e"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "27b3746ebe3f5c97fc0151aaf58f9d5aec1e9cf329bcf9e5a38a6a5c944623fe",
+      "limits": [
+        "Tooling and resource-only acceptance, not new native behavior or complete ordinary CLI execution.",
+        "The initial cold attempt stopped before its final barrier; completed runs validate reused stages. A private closed-scope metrics query was corrected without product changes.",
+        "Legacy reference original version unknown; record/CSV data is bounded and does not establish logical identity, client compatibility, or online admission.",
+        "59 frozen native inputs and all prior fact objects preserved. Three old Windows symlink cases skipped; 83 new tests executed."
+      ],
+      "method": "static",
+      "next_check": "Запустить независимый watcher к следующему патчу и сохранить общий run по новому SHA. Не повторять готовые native suites; закрывать группами owner recovery, context projection и фактические resource blockers. Измерять новые реальные inputs и hits отдельно от повторного исполнения.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Полный ordinary update с новым ресурсным recipe ещё не измерен. Остаются стоимость execution inputs / повторных archive SHA, hard-crash recovery владельца, четыре contract context projections с отдельными semantic остатками tag / writer, directory paths / encrypted / size / table-baseline gaps. SDK, полный вход, world и online admission открыты.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

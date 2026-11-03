@@ -11333,7 +11333,7 @@
       "offline_reviewed": true,
       "on_update": true,
       "test_pattern": "test_vampir_update_automation.py",
-      "timeout_seconds": 600,
+      "timeout_seconds": 1200,
       "dependencies": [
         "phone-exit/bots/test_vampir_update_auto_watch.py",
         "phone-exit/bots/test_vampir_prepared_bundle.py",
@@ -11680,7 +11680,16 @@
         "phone-exit/bots/resource-tools/vampir/native-publication-v3.py",
         "phone-exit/bots/resource-tools/vampir/update-native-drivers-v3.py",
         "phone-exit/bots/test_vampir_native_publication_v3.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/native-publication-engine.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-publication-engine.json",
+        "phone-exit/bots/resource-tools/vampir/resource-pipeline-v3.py",
+        "phone-exit/bots/test_vampir_resource_pipeline_v3.py",
+        "phone-exit/bots/resource-tools/vampir/resource-reference-v3.py",
+        "phone-exit/bots/test_vampir_resource_reference_v3.py",
+        "phone-exit/bots/resource-tools/vampir/resource-index-v3.py",
+        "phone-exit/bots/test_vampir_resource_index_v3.py",
+        "phone-exit/bots/resource-tools/vampir/resource-csv-v3.py",
+        "phone-exit/bots/test_vampir_resource_csv_v3.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/resource-pipeline-engine.json"
       ],
       "artifact_dependencies": []
     }

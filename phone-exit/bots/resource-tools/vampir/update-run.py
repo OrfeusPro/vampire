@@ -99,7 +99,9 @@ def definition_inputs(index, args, update):
             'native-publication-v2.py', 'native-publication-utf8-v2.py',
             'update-native-drivers-v2.py', 'research-scoped-v2.py',
             'resource-planning-v2.py', 'resource-readiness-v2.py', 'update-owner-scope-v3.py',
-            'native-publication-v3.py', 'update-native-drivers-v3.py'))
+            'native-publication-v3.py', 'update-native-drivers-v3.py',
+            'resource-pipeline-v3.py','resource-reference-v3.py','resource-index-v3.py','resource-csv-v3.py'))
+        if (args.knowledge/'resource-pipeline-engine.json').is_file():paths.add(args.knowledge/'resource-pipeline-engine.json')
         if (args.knowledge/'native-publication-engine.json').is_file():paths.add(args.knowledge/'native-publication-engine.json')
     workspace = index.HERE.parents[3]
     for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
@@ -576,9 +578,16 @@ def run_locked(index, args, database, *, audited=None):
         versioned = index.extension('update-run-v2') if (args.knowledge/'update-engine.json').is_file() else None
         if versioned is not None and not versioned.enabled(index,args):
             versioned = None
+        timing={}
+        started=time.perf_counter()
         contracts = model.load(index, args.knowledge)
         definitions=definition_inputs(index,args,update)
+        timing['definition_inputs_seconds']=round(time.perf_counter()-started,6)
+        started=time.perf_counter()
         tools=execution_inputs(index)
+        timing['execution_inputs_seconds']=round(time.perf_counter()-started,6)
+        resources=index.extension('resource-pipeline-v3') if versioned else None
+        if resources is not None and not resources.enabled(index,args):resources=None
         original_index=index
         store=index.extension('update-bindings').SourceStore(index,args.root,workers=getattr(args,'workers',2))
         args.source_store=store
@@ -624,7 +633,8 @@ def run_locked(index, args, database, *, audited=None):
             r['current'].get('sha256') != (r.get('baseline') or {}).get('sha256')]
         resource_started=time.perf_counter()
         print(json.dumps(dict(event='update_resource_planning',state='running')),flush=True)
-        pending_resources=resource_work(index,args,report,contracts,changed,tools['resources'])
+        pending_resources=(resources.plan(report,contracts,changed) if resources else
+            resource_work(index,args,report,contracts,changed,tools['resources']))
         resource_planning_seconds=round(time.perf_counter()-resource_started,6)
         print(json.dumps(dict(event='update_resource_planning',state='planned',seconds=resource_planning_seconds,
             pending=len(pending_resources),readiness=args.resource_candidates.metrics if args.resource_candidates else None)),flush=True)
@@ -652,9 +662,23 @@ def run_locked(index, args, database, *, audited=None):
         record.pop('reason',None)
         save(workflow,path,record)
         queue = []
+        resource_pipeline=resources.Pipeline(original_index,args,workflow,update,journal,manifest,report,
+            pending_resources,tools['resources']) if resources else None
+        resource_input_seconds=0
         for row in pending_resources:
+            if resource_pipeline is not None:
+                result=resource_pipeline.process(row)
+                if result['state']!='passed':
+                    for reason in result.get('reasons') or [result['reason']]:
+                        queue.append(dict(contract=None,capability='resources',archive=row['path'],
+                            reason=reason,evidence=result,
+                            next_check='Review grouped resource baseline or decoder blockers; current extraction is separate'))
+                continue
+            resource_input_started=time.perf_counter()
+            selected_resource_inputs=resource_stage_inputs(index,args,row,tools['resources'],source_sha=sha,audit_sha=index.digest(manifest))
+            resource_input_seconds+=time.perf_counter()-resource_input_started
             result = journal.stage('resource-'+hashlib.sha256(row['path'].encode()).hexdigest()[:16],
-                resource_stage_inputs(index,args,row,tools['resources'],source_sha=sha,audit_sha=index.digest(manifest)),
+                selected_resource_inputs,
                 lambda row=row:checked_resource_step(index,update,workflow,args,manifest,row))
             if result['state'] != 'passed': queue.append(dict(contract=None, capability='resources',
                 archive=row['path'],reason=result['reason'], evidence=result,
@@ -671,7 +695,9 @@ def run_locked(index, args, database, *, audited=None):
             summary=dict(verified=0,requires_review=0),runtime_activated=False,profile_activated=False)
         if (args.knowledge/'native-contexts').is_dir():
             reuse_tool=index.extension('function-reuse-plan')
+            inventory_started=time.perf_counter()
             reuse_inputs=reuse_tool.inputs(args.root,args.knowledge,source_store=store)
+            timing['function_reuse_input_seconds']=round(time.perf_counter()-inventory_started,6)
             if reuse_inputs.get('present'):
                 function_reuse=journal.stage('function-reuse',
                     dict(source=sha,catalog=reuse_inputs),
@@ -846,6 +872,7 @@ def run_locked(index, args, database, *, audited=None):
         # Preparation may read further immutable artifacts; validate them before
         # publishing the final journal and next-use pointers.
         scoped_exports=versioned.finish(original_index,args) if versioned else None
+        resource_pipeline_result=resource_pipeline.finish() if resource_pipeline else None
         resource_metrics=args.resource_scope.validate() if args.resource_scope else None
         source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:
@@ -870,6 +897,8 @@ def run_locked(index, args, database, *, audited=None):
             wall_seconds=round(time.perf_counter()-run_started,6),executed_stages=journal.executed,
             cached_stage_validation_seconds=journal.validation_seconds,
             resource_planning_seconds=resource_planning_seconds,resource_inputs=resource_metrics,
+            resource_pipeline=resource_pipeline_result,resource_stage_input_seconds=round(resource_input_seconds,6),
+            preparation_timing=timing,
             resource_readiness=args.resource_candidates.metrics if args.resource_candidates else None,
             installation_full_sha_barrier_seconds=installation_barrier_seconds,
             source_store=source_metrics,unique_checks=len(checked_this_run)+len(native_checks),

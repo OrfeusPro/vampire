@@ -50,7 +50,9 @@ def load_tests(loader, tests, pattern):
             'test_vampir_service_lifecycle_verifier','test_vampir_service_lifecycle_fixtures',
             'test_vampir_service_lifecycle_rules','test_vampir_native_service_lifecycle_adapter',
             'test_vampir_knowledge_scope_v2','test_vampir_native_publication_v2','test_vampir_native_drivers_v2','test_vampir_research_scoped_v2','test_vampir_update_run_v2','test_vampir_native_publication_utf8_v2',
-            'test_vampir_resource_planning_v2','test_vampir_resource_readiness_v2','test_vampir_update_owner_scope_v3','test_vampir_native_publication_v3'):
+            'test_vampir_resource_planning_v2','test_vampir_resource_readiness_v2','test_vampir_update_owner_scope_v3','test_vampir_native_publication_v3',
+            'test_vampir_resource_reference_v3','test_vampir_resource_index_v3',
+            'test_vampir_resource_csv_v3','test_vampir_resource_pipeline_v3'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

@@ -287,7 +287,17 @@ SHA-проверка установки описаны в следующем о�
 Контроллер дополнен свежим полным SHA перед plan finalization / publication;
 1243 tooling теста и шесть compatibility checks прошли. Новая проверка отдельно
 прошла на 166 реальных файлах; неизменная часть полного прохода переиспользована
-по AST-привязке. Далее — снижение затрат проверки исторических ресурсов.
+по AST-привязке. Разделение ресурсных этапов и их повтор описаны ниже.
+
+[Ресурсный pipeline v3](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PIPELINE-V3-11322.md)
+разделяет reference hashes, record index, текущие CSV и сравнения. Для 109 архивов
+получены 3344 записи / 2941 уникальный CSV; ошибок нет, 235 записей сохраняют
+encrypted / size gaps. Первый проход оборвался до final barrier; проверенное
+продолжение заняло 273,643 секунды, следующий повтор —
+270,834 секунды без новых comparisons / native / JVM.
+Legacy blobs заново не хэшировались. Неизвестная версия reference и bounded
+record scan не подтверждают logical resource identity или runtime admission.
+Прошли 1326 tooling тестов; три прежних symlink cases пропущены.
 
 ## Сохранённые записи прежних этапов
 
