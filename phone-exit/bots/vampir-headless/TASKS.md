@@ -20,10 +20,11 @@ exports и проверки вручную не повторять. Счётчи
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
   unsupported reason. Function-only receipt не выдавать за исполненный сценарий.
-- Version tag: подтвердить связь с конструктором обёртки для текущего SHA.
-  Общий адаптер уже переносит две матрицы записи и Login tag. Использовать
-  готовые публикации, точные SHA и кэш. Общий контракт входа остаётся partial.
-  [Приёмка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md).
+- После нового патча проверить полный проход обновлятора на установленном клиенте,
+  включая продолжение после обрыва и отклонение устаревшего пакета входа.
+  Четыре проекции Version / Login подтверждены на сохранённых EXE 20 → 22;
+  общий контракт входа остаётся partial.
+  [Приёмка проекций и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-WRAPPER-11322.md).
 - Мир и параметры: подтвердить текущие source-bound позицию, HP / MP и окружение.
 - Input seed: выпустить новую версию общего recipe с ordered baseline / target
   pointers в memo key; одинаковая transitive lineage не определяет направление.

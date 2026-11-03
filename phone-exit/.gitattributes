@@ -444,3 +444,5 @@ bots/test_vampir_contract_writer_inheritance_v1.py text eol=lf
 bots/test_vampir_contract_projection_routing_v1.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-CONTRACT-PROJECTIONS-V1-11322.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-VERSION-WRAPPER-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-WRAPPER-11322.md text eol=crlf

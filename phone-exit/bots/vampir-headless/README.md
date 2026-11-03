@@ -297,9 +297,10 @@ research / Ghidra locks остаются явными блокерами. Наб
 
 Общий адаптер Version / Login использует проверенные публикации текущего SHA.
 На переходе 1.13.20 → 1.13.22 статически перенесены 160 сценариев записи
-и четыре сценария Login tag. Для Version tag остаётся связь с конструктором
-обёртки. Вход по-прежнему требует отдельного допуска.
-[Доказательства и проверка кэша](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md).
+и восемь сценариев Version / Login tag. Для Version tag подтверждена запись
+таблицы конструктором обёртки и привязка слота к Version prepare. Вход
+по-прежнему требует отдельного допуска.
+[Доказательства и проверка кэша](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-WRAPPER-11322.md).
 
 ## Сохранённые записи прежних этапов
 

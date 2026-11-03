@@ -1,0 +1,181 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\version-wrapper-v1-acceptance\\76663a7da72755639fc79bde3b96d4a61b6fede4ce26e7dde234a545c94c00dd\\manifest.json",
+    "sha256": "76663a7da72755639fc79bde3b96d4a61b6fede4ce26e7dde234a545c94c00dd"
+  },
+  "baseline_sha256": "544ef516fb168caaac13d2072ef02393d69407e964b0d8f338d50ded5cf3804c",
+  "checks": [
+    {
+      "cache_key": "1fcb49e3028434ea63e6e18a14d2dab8f2c9a1a3f0f1ad13c4777a6e816984b1",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\408f792d416d876c6b34df8ef7152a2e384f80c6d1d63472e1c1b24623fd29e0\\manifest.json",
+      "sha256": "408f792d416d876c6b34df8ef7152a2e384f80c6d1d63472e1c1b24623fd29e0",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py": "ec256ae4a128bc127214ba192e9df88041eef6e07a433c04ea9a53a4ccdadc86",
+    "phone-exit/bots/resource-tools/vampir/contract-projections-v1.py": "4f9e4ff55279c2339ed5f46f40f6dd0974caa96738e11210b363826758643ee7",
+    "phone-exit/bots/resource-tools/vampir/update-bindings.py": "65a2e98b806c6d382cb7bf8bdb37c8929b5e0b80e476a45a867c466e2abbe65f"
+  },
+  "limitations": [
+    "The wrapper proof covers the primary vptr store and Version slot only.",
+    "The 168 fixture cases are inherited statically; no target native replay.",
+    "No installed-client update, profile activation, network or online entry verification."
+  ],
+  "new_jvm": 0,
+  "runs": [
+    {
+      "final": {
+        "live_verified": false,
+        "metrics": {
+          "barrier_seconds": 0.305803,
+          "cached_checks": 0,
+          "inherited_tag_cases": 8,
+          "inherited_writer_cases": 160,
+          "projected": 2,
+          "publication_seconds": 1.353401,
+          "static_checks": 4,
+          "target_native_cases": 0
+        },
+        "owner_barrier_completed": true,
+        "profile_activated": false,
+        "recipe": "contract-projections-v1",
+        "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 102,
+          "source_reads": 2,
+          "validation_reads": 4,
+          "validation_seconds": 0.463415
+        }
+      },
+      "phase": "cold",
+      "results": [
+        {
+          "contract": "game-version",
+          "id": "version-login-tag",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\ea7cf98d2806c0d248b0ff9081397fe5459292736871301d3bf1bc1fc2314eea\\manifest.json",
+          "sha256": "ea7cf98d2806c0d248b0ff9081397fe5459292736871301d3bf1bc1fc2314eea",
+          "state": "passed"
+        },
+        {
+          "contract": "game-version",
+          "id": "packet-writer-projection",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\f9eb77475198336fedad9d83affc59ded32dc0c3e6b0ed1ec768b2fd24880c35\\manifest.json",
+          "sha256": "f9eb77475198336fedad9d83affc59ded32dc0c3e6b0ed1ec768b2fd24880c35",
+          "state": "passed"
+        },
+        {
+          "contract": "game-login",
+          "id": "version-login-tag",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\913b289d6f37cb82169b889fecd93686341a295f75f7468b31ddfe7b2305a36b\\manifest.json",
+          "sha256": "913b289d6f37cb82169b889fecd93686341a295f75f7468b31ddfe7b2305a36b",
+          "state": "passed"
+        },
+        {
+          "contract": "game-login",
+          "id": "packet-writer-projection",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\8b8756ab48557e6a4bde6a32090085d1b42e8dc49761e45b9d2fa956d24c8bfc\\manifest.json",
+          "sha256": "8b8756ab48557e6a4bde6a32090085d1b42e8dc49761e45b9d2fa956d24c8bfc",
+          "state": "passed"
+        }
+      ],
+      "seconds": 10.855991,
+      "stages_executed": 4,
+      "stages_reused": 0
+    },
+    {
+      "final": {
+        "live_verified": false,
+        "metrics": {
+          "barrier_seconds": 0.306851,
+          "cached_checks": 4,
+          "inherited_tag_cases": 8,
+          "inherited_writer_cases": 160,
+          "projected": 2,
+          "publication_seconds": 1.193863,
+          "static_checks": 0,
+          "target_native_cases": 0
+        },
+        "owner_barrier_completed": true,
+        "profile_activated": false,
+        "recipe": "contract-projections-v1",
+        "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+        "source_store": {
+          "artifact_cache_hits": 0,
+          "artifact_reads": 0,
+          "image_builds": 2,
+          "image_cache_hits": 0,
+          "read_workers": 2,
+          "source_cache_hits": 102,
+          "source_reads": 2,
+          "validation_reads": 4,
+          "validation_seconds": 0.447131
+        }
+      },
+      "phase": "warm",
+      "results": [
+        {
+          "contract": "game-version",
+          "id": "version-login-tag",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\ea7cf98d2806c0d248b0ff9081397fe5459292736871301d3bf1bc1fc2314eea\\manifest.json",
+          "sha256": "ea7cf98d2806c0d248b0ff9081397fe5459292736871301d3bf1bc1fc2314eea",
+          "state": "passed"
+        },
+        {
+          "contract": "game-version",
+          "id": "packet-writer-projection",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\f9eb77475198336fedad9d83affc59ded32dc0c3e6b0ed1ec768b2fd24880c35\\manifest.json",
+          "sha256": "f9eb77475198336fedad9d83affc59ded32dc0c3e6b0ed1ec768b2fd24880c35",
+          "state": "passed"
+        },
+        {
+          "contract": "game-login",
+          "id": "version-login-tag",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\913b289d6f37cb82169b889fecd93686341a295f75f7468b31ddfe7b2305a36b\\manifest.json",
+          "sha256": "913b289d6f37cb82169b889fecd93686341a295f75f7468b31ddfe7b2305a36b",
+          "state": "passed"
+        },
+        {
+          "contract": "game-login",
+          "id": "packet-writer-projection",
+          "reason": "",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\contract-projection-checks-v1\\8b8756ab48557e6a4bde6a32090085d1b42e8dc49761e45b9d2fa956d24c8bfc\\manifest.json",
+          "sha256": "8b8756ab48557e6a4bde6a32090085d1b42e8dc49761e45b9d2fa956d24c8bfc",
+          "state": "passed"
+        }
+      ],
+      "seconds": 5.741226,
+      "stages_executed": 0,
+      "stages_reused": 4
+    }
+  ],
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "target_native_cases": 0,
+  "tests": {
+    "skipped": 3,
+    "total": 1476
+  },
+  "wrapper_link": {
+    "constructor": "0x1467cf880",
+    "prepare": "0x1467d1ba0",
+    "store_site": "0x1467cf964",
+    "table": "0x149dcc128",
+    "version_slot": 72
+  }
+}

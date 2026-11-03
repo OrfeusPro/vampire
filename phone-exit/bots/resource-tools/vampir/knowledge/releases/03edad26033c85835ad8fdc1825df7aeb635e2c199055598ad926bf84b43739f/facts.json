@@ -1213,6 +1213,36 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Version tag требует доказательства связи с конструктором обёртки. Открыты production-проверка managed owner, legacy locks, повторные execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Version tag переносится после проверки уникальной записи таблицы обёртки и слота Version prepare. Все четыре проекции проходят и используют кэш. Допуск не изменён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-VERSION-WRAPPER-11322.json",
+          "sha256": "d5859424cdd267f47736dfccaeab392668fb4b9793eff98e0d3d0da29349e2ec"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-VERSION-WRAPPER-11322.md",
+          "sha256": "0935de333dde3314d2ce9f003a79b1fd4e5a3d2735ea1e6c78409fc8191d2fd1"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "43252b43b328b5215bf6361f3cc676588096b038a74e163234fd27d7417f7efb",
+      "limits": [
+        "The wrapper proof covers the primary vptr store and Version slot only.",
+        "The 168 fixture cases are inherited statically; no target native replay.",
+        "No installed-client update, profile activation, network or online entry verification."
+      ],
+      "method": "static",
+      "next_check": "Сузить повторные execution-input / archive SHA затраты. После нового патча проверить полный проход, продолжение после обрыва и отклонение устаревшего пакета входа. Наблюдатель и production update запускать по явной команде пользователя.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты production-проверка managed owner, legacy locks, повторные execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

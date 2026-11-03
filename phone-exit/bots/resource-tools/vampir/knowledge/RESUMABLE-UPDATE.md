@@ -451,8 +451,10 @@ Batch declarations и строки его приватной SQLite остают
 Login. Старые проверенные матрицы переносятся по цепочке доказательств для
 целевого SHA. Ключ кэша учитывает контекст, правило и входные публикации.
 На неизменном повторе проверки берутся из кэша с контролем целостности.
-Статический перенос сохраняет исходный статус допуска.
-[Результат 20 → 22 и оставшийся блокер](evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md).
+Для Version tag автомат проверяет уникальную запись таблицы в объект и
+связь слота таблицы с Version prepare. Статический перенос сохраняет
+исходный статус допуска.
+[Приёмка Version / Login 20 → 22](evidence/updates/HEADLESS-AUTO-VERSION-WRAPPER-11322.md).
 
 Машинный [publication recipe](native-publication-engine.json) выбирает v3,
 сохраняя прежние native drivers / stages. [Проверенные области и замеры](evidence/updates/HEADLESS-NATIVE-PUBLICATION-V3-11322.md).

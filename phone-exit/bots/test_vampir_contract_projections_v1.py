@@ -24,7 +24,7 @@ class Store:
     def __init__(self,root):
         self.root=root;self.validations=0
         self.target=SimpleNamespace(pe=SimpleNamespace(base=0x1000),data=bytearray(8192),offset=lambda rva:rva)
-        self.before=object()
+        self.before=SimpleNamespace(pe=SimpleNamespace(base=0x7000),data=bytearray(8192),offset=lambda rva:rva)
     def image(self,native,sha):return self.target if sha==TARGET else self.before
     def validate(self):
         self.validations+=1
@@ -45,6 +45,8 @@ class ProjectionTests(unittest.TestCase):
         tools=('contract-projections-v1.py','contract-writer-inheritance-v1.py',
             'verify-entry-contracts-11320.py','verify-packet-writer-context.py','verify-version-login-context.py')
         for name in tools:(self.here/name).write_text('# fixture '+name+'\n',encoding='utf-8')
+        for name in ('build-native-entry-code.py','update-bindings.py'):
+            (self.here/name).write_text('# fixture '+name+'\n',encoding='utf-8')
         self.fixture_tools={name:digest(self.here/name) for name in tools[2:]}
         self.artifact=self.put(self.root/'exports/details.json',dict(fixture='source export'))
         self.old_archive=dict(source_sha256=BASELINE,packets={
@@ -67,7 +69,7 @@ class ProjectionTests(unittest.TestCase):
                 literal=old['compiled_tag_source']['literal'],tag='A'*32),
                 cases=[dict(poison=value,packet_id=tag['packet_id'],events=['ascii','allocate','copy'],guards=True)
                     for value in (0,85,170,255)],
-                links=dict(wrapper_table='0x7900') if name=='game-version' else dict(login_constructor_call='0x8405',login_tag_field=272),
+                links=dict(wrapper_table='0x7900',version_slot=72) if name=='game-version' else dict(login_constructor_call='0x8405',login_tag_field=272),
                 evidence=[self.artifact])
         self.writer_report=dict(source_sha256=BASELINE,kind='writers',reports=writer_reports,
             network_used=False,profile_activated=False,runtime_activated=False)
@@ -343,7 +345,8 @@ class ProjectionTests(unittest.TestCase):
             s=self.ready();context,value,result=self.check_report(s,self.context(name),adapter)
             value.update(method=method,inherited_cases=cases)
             pointer=self.put(Path(result['report']),value);result['sha256']=pointer['sha256']
-            with self.subTest(name=name,method=method,cases=cases),self.assertRaisesRegex(ValueError,'case coverage'):
+            with self.subTest(name=name,method=method,cases=cases),self.assertRaisesRegex(ValueError,'case coverage|wrapper link'):
+                if name=='game-version':s.contexts['version-prepare']['wrapper_table']='0x2600'
                 s.observe(context,adapter,result)
 
     def test_finish_rehashes_used_files_and_rejects_mutation(self):
@@ -392,11 +395,45 @@ class ProjectionTests(unittest.TestCase):
         self.assertEqual(result['state'],'passed');self.assertEqual(result['inherited_cases'],4)
         self.assertEqual(result['target_native_cases'],0);self.assertFalse(result['network_used'])
 
-    def test_version_wrapper_gap_is_preserved_as_review_not_pass(self):
-        s=self.tag_ready('game-version');context=self.context('game-version');result=s._tag(context)
-        self.assertEqual(result['state'],'requires_review');self.assertIn('wrapper_constructor_current_provider_missing',result['reason'])
+    def wrapper_ready(self):
+        s=self.tag_ready('game-version');context=self.context('game-version')
+        context['contract']['bindings']={BASELINE:{'wrapper-constructor':'0x7a00'}}
+        old=s.baseline_prepare['game-version'];prepare=s.contexts['version-prepare']
+        old['wrapper_table']='0x7900';prepare['wrapper_table']='0x2600'
+        candidates={}
+        for image,table,root,entry in ((s.before,0x7900,0x7a00,0x7400),(s.source,0x2600,0x2700,0x2400)):
+            site=root+0x10;base=image.pe.base
+            struct.pack_into('<Q',image.data,table-base+0x48,entry)
+            fragment=(root-base,root-base+0x40,1)
+            image.containing=lambda at,fragment=fragment:fragment
+            image.roots={fragment:fragment}
+            candidates[base]=[(site,table)]
+            self.rows[root]=[dict(address=site,mnemonic='lea',operands='rax, [rip + 2]',
+                bytes='488d0502000000',rip_references=[table]),
+                dict(address=site+7,mnemonic='mov',operands='qword ptr [rbx], rax')]
+        s.native.rip_candidates=lambda image,_:candidates[image.pe.base]
+        return s,context,candidates
+
+    def test_version_wrapper_store_and_slot_allow_static_inheritance(self):
+        s,context,_=self.wrapper_ready();result=s._tag(context)
+        self.assertEqual(result['state'],'passed')
+        self.assertEqual(result['wrapper_link']['constructor'],'0x2700')
         pointer=s.check(context,'version-login-tag');s.observe(context,'version-login-tag',pointer)
-        self.assertEqual(s.metrics['inherited_tag_cases'],0)
+        self.assertEqual(s.metrics['inherited_tag_cases'],4)
+
+    def test_version_wrapper_rejects_wrong_store_wrong_slot_and_ambiguity(self):
+        for changed in ('store','slot','ambiguous','baseline'):
+            s,context,candidates=self.wrapper_ready()
+            if changed=='store':self.rows[0x2700][-1]['operands']='qword ptr [rcx], rax'
+            elif changed=='slot':struct.pack_into('<Q',s.source.data,0x1648,0x2500)
+            elif changed=='ambiguous':
+                candidates[0x1000].append((0x2720,0x2600))
+                self.rows[0x2700].extend(dict(row,address=row['address']+0x10) for row in self.rows[0x2700][:])
+            else:context['contract']['bindings'][BASELINE]['wrapper-constructor']='0x7b00'
+            with self.subTest(changed=changed):
+                pointer=s.check(context,'version-login-tag')
+                self.assertEqual(pointer['state'],'requires_review')
+                self.assertIn('wrapper',pointer['reason'])
 
     def test_tag_failure_matrix_source_data_id_or_name_changes_block_inheritance(self):
         for changed in ('matrix','pointer','id','name'):

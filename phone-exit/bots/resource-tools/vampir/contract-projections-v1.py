@@ -71,7 +71,8 @@ class Session:
                 or self.registry['recipe']!=RECIPE or set(self.registry['contracts'])!={'game-version','game-login'}):
             raise ValueError('Contract projection registry structure differs')
         self.rule={str(HERE/name):self.pin(HERE/name) for name in (
-            'contract-projections-v1.py','contract-writer-inheritance-v1.py')}
+            'contract-projections-v1.py','contract-writer-inheritance-v1.py',
+            'build-native-entry-code.py','update-bindings.py')}
         self.baseline=self.registry['baseline']
         self.baseline_archive=self.config_pointer(self.baseline['archive'])
         self.writer_report=self.config_pointer(self.baseline['writers'])
@@ -287,6 +288,41 @@ class Session:
         self._chain(prepare,self.baseline_prepare[name])
         return dict(result,state='passed',constructor=prepare['constructor'])
 
+    def _wrapper_store(self,image,table,prepare):
+        if struct.unpack('<Q',self.bytes(image,table+0x48,8))[0]!=prepare:
+            raise ValueError('Version wrapper table slot does not point to prepare')
+        matches=[]
+        for site,_ in self.native.rip_candidates(image,{table}):
+            fragment=image.containing(site)
+            if fragment is None:continue
+            root=image.pe.base+image.roots[fragment][0]
+            rows=self.bindings.rows(self.native,image,root)
+            for load,store in zip(rows,rows[1:]):
+                if (load['address']==site and load['mnemonic']=='lea'
+                        and load['operands'].startswith('rax, [rip') and load['rip_references']==[table]
+                        and store['address']==site+len(bytes.fromhex(load['bytes']))
+                        and store['mnemonic']=='mov' and store['operands']=='qword ptr [rbx], rax'):
+                    matches.append((root,site))
+        if len(matches)!=1:
+            raise ValueError('Version wrapper table requires exactly one constructor store')
+        return matches[0]
+
+    def _wrapper_link(self,context,old,prepare,links):
+        old_table=int(old['wrapper_table'],16)
+        if links.get('wrapper_table')!=old['wrapper_table'] or links.get('version_slot')!=0x48:
+            raise ValueError('Historical Version wrapper table link differs')
+        old_root,old_site=self._wrapper_store(self.before,old_table,int(old['prepare'],16))
+        baseline=self.baseline_archive['source_sha256']
+        recorded=context['contract']['bindings'][baseline]['wrapper-constructor']
+        if hex(old_root)!=recorded:
+            raise ValueError('Historical Version wrapper constructor differs')
+        table=int(prepare['wrapper_table'],16)
+        root,site=self._wrapper_store(self.source,table,int(prepare['prepare'],16))
+        if site-root!=old_site-old_root:
+            raise ValueError('Version wrapper constructor store offset differs')
+        return dict(constructor=hex(root),store_site=hex(site),table=hex(table),
+            version_slot=0x48,prepare=prepare['prepare'])
+
     def _tag(self,context):
         name=context['contract']['id'];prepare,archive,packet=self.providers(name)
         old=self.baseline_prepare[name];report=self.tag_report['reports'][name]
@@ -326,17 +362,15 @@ class Session:
         expected=(spec['packet_name']+'\0').encode('ascii')
         if len(refs)!=1 or self.bytes(self.source,refs[0],len(expected))!=expected:
             raise ValueError('Target packet name source differs')
-        reasons=[]
-        if name=='game-version' or report['links'].get('wrapper_table'):
-            # The prepare proof verifies wrapper TABLE slots, never its ctor.
-            # Do not silently drop the old optional verifier binding.
-            reasons.append('wrapper_constructor_current_provider_missing')
-        return dict(state='requires_review' if reasons else 'passed',reason='; '.join(reasons),
+        wrapper=self._wrapper_link(context,old,prepare,report['links']) if name=='game-version' else None
+        if name!='game-version' and report['links'].get('wrapper_table'):
+            raise ValueError('Unexpected wrapper link in Login tag fixture')
+        return dict(state='passed',wrapper_link=wrapper,
             method='static_inheritance',inherited_cases=4,target_native_cases=0,
             packet_id=spec['packet_id'],packet_name=spec['packet_name'],id_leaf=hex(getter),name_getter=hex(name_getter),
             runtime_activated=False,network_used=False,profile_activated=False,
             limits=['Inherited constructor/tag fixture matrix and explicit target ID/name source checks.',
-                'Original wrapper-constructor link, if present, remains required and unproven.'])
+                'Version wrapper proof covers the vptr store and Version slot only.'])
 
     def check(self,context,adapter):
         self._open()
@@ -376,9 +410,15 @@ class Session:
         cases=value.get('inherited_cases')
         if value['state']=='passed':
             expected=4 if adapter=='version-login-tag' else {'game-version':56,'game-login':104}[name]
-            if (value.get('method')!='static_inheritance' or type(cases) is not int or cases!=expected
-                    or (adapter=='version-login-tag' and (name=='game-version' or self.tag_report['reports'][name]['links'].get('wrapper_table')))):
+            if (value.get('method')!='static_inheritance' or type(cases) is not int or cases!=expected):
                 raise ValueError('Cached contract projection case coverage differs')
+            if adapter=='version-login-tag' and name=='game-version':
+                link=value.get('wrapper_link')
+                prepare=self.contexts['version-prepare']
+                if (not isinstance(link,dict) or link.get('table')!=prepare['wrapper_table']
+                        or link.get('prepare')!=prepare['prepare'] or link.get('version_slot')!=0x48
+                        or any(not re.fullmatch('0x[0-9a-f]+',str(link.get(key))) for key in ('constructor','store_site'))):
+                    raise ValueError('Cached contract projection wrapper link differs')
         self.results[(context['contract']['id'],adapter)]=copy.deepcopy(result)
         if (context['contract']['id'],adapter) not in self.executed:self.metrics['cached_checks']+=1
         if value['state']=='passed':
