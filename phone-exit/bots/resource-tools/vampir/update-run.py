@@ -421,6 +421,14 @@ def valid_install(index, audit, install):
         install, {Path(p).parent for p in expected if Path(p).suffix.lower() != '.exe'})
 
 
+def installation_barrier(index, audit, install):
+    """Fresh full installed identities; a prior audit is not a mutable-file lease."""
+    started=time.perf_counter()
+    if not valid_install(index,audit,install):
+        raise ValueError('Installed file SHA changed before finalization; resume after download completes')
+    return round(time.perf_counter()-started,6)
+
+
 def definition_status(index, args, run):
     """Inspect current registry hashes only; never launch checks or analysis."""
     saved = run.get('plan', {}).get('definition_sha256')
@@ -632,7 +640,9 @@ def run_locked(index, args, database, *, audited=None):
         if getattr(args, 'plan_only', False) or getattr(args, 'audit_only', False):
             if args.resource_scope is not None:args.resource_scope.validate()
             store.validate()
+            installation_barrier_seconds=installation_barrier(original_index,report,args.install)
             record['metrics']=dict(resource_planning_seconds=resource_planning_seconds,resource_inputs=args.resource_scope.metrics if args.resource_scope else None,
+                installation_full_sha_barrier_seconds=installation_barrier_seconds,
                 resource_readiness=args.resource_candidates.metrics if args.resource_candidates else None)
             record['state'] = 'planned'; record['queue'] = []
             save(workflow, path, record)
@@ -840,6 +850,9 @@ def run_locked(index, args, database, *, audited=None):
         source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:
             raise ValueError('Installation inventory changed during update; resume after download completes')
+        # A completed audit is the expected identity, not a lease on mutable
+        # installed bytes. Do not trust restored size/mtime at publication.
+        installation_barrier_seconds=installation_barrier(original_index,report,args.install)
         publisher=index.extension('update-bundle')
         if hasattr(publisher,'publish'):
             bundle=publisher.publish(index,args,bundle,
@@ -858,6 +871,7 @@ def run_locked(index, args, database, *, audited=None):
             cached_stage_validation_seconds=journal.validation_seconds,
             resource_planning_seconds=resource_planning_seconds,resource_inputs=resource_metrics,
             resource_readiness=args.resource_candidates.metrics if args.resource_candidates else None,
+            installation_full_sha_barrier_seconds=installation_barrier_seconds,
             source_store=source_metrics,unique_checks=len(checked_this_run)+len(native_checks),
             scoped_exports=scoped_exports,
             check_consumers=sum(len(c['checks']) for c in contracts['contracts'])+len(extra_checks),

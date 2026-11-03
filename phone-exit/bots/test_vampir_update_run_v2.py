@@ -1,6 +1,7 @@
 """Checked selected database bridge, missing-only collection and final barriers."""
 import copy
 import json
+import os
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
@@ -169,6 +170,57 @@ class ScopedNativeUpdate(unittest.TestCase):
         result,_=fixture.run_fixture()
         self.assertEqual(result['state'],'prepared_offline')
         self.assertEqual(events,['prepare','owner','publish'])
+
+    def test_installed_same_stat_mutation_after_preparation_blocks_pointer_publication(self):
+        for target in ('exe','pak'):
+            with self.subTest(target=target):
+                fixture=engine_fixtures.UpdateRunTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
+                (fixture.knowledge/'update-engine.json').write_bytes((V2.HERE/'knowledge/update-engine.json').read_bytes())
+                publisher=fixture.modules['update-bundle']
+                publisher.publish=Mock(side_effect=AssertionError('Changed installation cannot publish'))
+                def prepare(*args):
+                    before=fixture.update.signatures(fixture.install)
+                    path=getattr(fixture,target);stat=path.stat();raw=bytearray(path.read_bytes())
+                    raw[len(raw)//2]^=1;path.write_bytes(raw)
+                    os.utime(path,ns=(stat.st_atime_ns,stat.st_mtime_ns))
+                    self.assertEqual(fixture.update.signatures(fixture.install),before)
+                    return dict(bundles=[],next_profiles={},queue=[],live_verified=False)
+                publisher.prepare=prepare
+                with self.assertRaisesRegex(ValueError,'Installed file SHA changed'):
+                    fixture.run_fixture()
+                publisher.publish.assert_not_called()
+
+    def test_final_installed_sha_check_uses_original_digest_before_publication(self):
+        fixture=engine_fixtures.UpdateRunTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
+        publisher=fixture.modules['update-bundle'];called=[]
+        real=fixture.engine.valid_install
+        def verify(index,audit,install):
+            self.assertIs(index,fixture.api)
+            self.assertIs(index.digest,fixture.api.digest)
+            self.assertTrue(real(index,audit,install))
+            called.append('full_sha')
+            return True
+        def publish(index,args,bundle,**kwargs):
+            self.assertEqual(called,['full_sha'])
+            called.append('publish')
+            return bundle
+        publisher.publish=publish
+        with patch.object(fixture.engine,'valid_install',side_effect=verify):
+            result,_=fixture.run_fixture()
+        self.assertEqual(called,['full_sha','publish'])
+        self.assertGreaterEqual(result['metrics']['installation_full_sha_barrier_seconds'],0)
+
+    def test_plan_finalization_also_rejects_same_stat_installed_mutation(self):
+        fixture=engine_fixtures.UpdateRunTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
+        fixture.args.plan_only=True
+        def mutate(*args):
+            stat=fixture.pak.stat();raw=bytearray(fixture.pak.read_bytes())
+            raw[len(raw)//2]^=1;fixture.pak.write_bytes(raw)
+            os.utime(fixture.pak,ns=(stat.st_atime_ns,stat.st_mtime_ns))
+            return []
+        with patch.object(fixture.engine,'resource_work',side_effect=mutate):
+            with self.assertRaisesRegex(ValueError,'Installed file SHA changed'):
+                fixture.run_fixture()
 
 
 if __name__=='__main__':unittest.main()

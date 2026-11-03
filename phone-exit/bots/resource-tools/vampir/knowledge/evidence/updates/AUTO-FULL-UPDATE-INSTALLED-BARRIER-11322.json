@@ -1,0 +1,213 @@
+{
+  "added_final_barrier_seconds": 20.089627,
+  "added_real_installed_barrier": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\installed-final-barrier-v3-acceptance\\3ad8e77868fa35b253b7cba246dce7febc74d75352f59eb1270de17dd2e0921c\\manifest.json",
+    "sha256": "3ad8e77868fa35b253b7cba246dce7febc74d75352f59eb1270de17dd2e0921c"
+  },
+  "cached_resource_stages": 108,
+  "capabilities": {
+    "game-ui": {
+      "live_verified": false,
+      "missing": [
+        "game-ui"
+      ],
+      "state": "incomplete"
+    },
+    "launcher": {
+      "live_verified": false,
+      "missing": [
+        "sdk-gmc2",
+        "launcher"
+      ],
+      "state": "incomplete"
+    },
+    "map": {
+      "live_verified": false,
+      "missing": [
+        "position",
+        "map-data"
+      ],
+      "state": "incomplete"
+    },
+    "quests": {
+      "live_verified": false,
+      "missing": [
+        "quests"
+      ],
+      "state": "incomplete"
+    },
+    "world-session": {
+      "live_verified": false,
+      "missing": [
+        "sdk-gmc2",
+        "launcher",
+        "game-version",
+        "game-login",
+        "character-list",
+        "character-select",
+        "world-entry",
+        "position",
+        "heartbeat"
+      ],
+      "state": "incomplete"
+    }
+  },
+  "compatibility_checks": [
+    {
+      "cache_key": "4e1e386a7b47e5bcb05061d0b61810cdfae2b9577dbf995bbe34b3c14eaa889e",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ebb0e193fdb683af2c0a89ada01edc424bdd88d64ae66e428d22365ce980908c\\manifest.json",
+      "sha256": "ebb0e193fdb683af2c0a89ada01edc424bdd88d64ae66e428d22365ce980908c",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "25137cec7781356b40c79137211ab7b0f5b5ead4ed58a57dd2f4f16f75cd2a61",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\428c6aa7c7894a406e82bb3860b50cd8efa9a223ec7c28c69ed7268150c14a8f\\manifest.json",
+      "sha256": "428c6aa7c7894a406e82bb3860b50cd8efa9a223ec7c28c69ed7268150c14a8f",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "a7d746da5876fbb3831baaab55eb1947ea13f1e5dd61fff5bf285448ae1ca087",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0c3c481ce402ace0a0883ee5ec39a0e428219854065b695e68b664192c3d7d83\\manifest.json",
+      "sha256": "0c3c481ce402ace0a0883ee5ec39a0e428219854065b695e68b664192c3d7d83",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "complete_pipeline": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\ordinary-update-after-publication-v3-results\\1a6013510c2d20e650422c7b6beaf9d5a23353c86b81984d45431002c2d761d4\\manifest.json",
+    "sha256": "1a6013510c2d20e650422c7b6beaf9d5a23353c86b81984d45431002c2d761d4"
+  },
+  "complete_pipeline_seconds": 1181.524819,
+  "complete_pipeline_state": "needs_review",
+  "context_projection_results": [
+    {
+      "result": {
+        "id": "version-login-tag",
+        "reason": "'constructor'",
+        "state": "requires_review"
+      },
+      "stage": "context-check-game-login"
+    },
+    {
+      "result": {
+        "id": "packet-writer-projection",
+        "reason": "'writer'",
+        "state": "requires_review"
+      },
+      "stage": "context-check-game-login-packet-writer-projection"
+    },
+    {
+      "result": {
+        "id": "version-login-tag",
+        "reason": "'constructor'",
+        "state": "requires_review"
+      },
+      "stage": "context-check-game-version"
+    },
+    {
+      "result": {
+        "id": "packet-writer-projection",
+        "reason": "'writer'",
+        "state": "requires_review"
+      },
+      "stage": "context-check-game-version-packet-writer-projection"
+    }
+  ],
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\installed-final-barrier-v3-inputs\\e3dbfe1876d949db0c5f078d71e942e6a6d9d61508a1786e1c1f15b894bf742c\\manifest.json",
+    "sha256": "e3dbfe1876d949db0c5f078d71e942e6a6d9d61508a1786e1c1f15b894bf742c"
+  },
+  "frozen_v1_inputs_preserved": 59,
+  "installed_archive_bytes": 22717689618,
+  "installed_files": 166,
+  "limits": [
+    "The full pipeline ran at ecdae00d; only the added final SHA guard/metrics differ in the current controller, as verified by exact AST comparison.",
+    "The new guard was exercised separately against all real installed files from that audit; the entire full pipeline was not repeated.",
+    "This does not establish client compatibility or online admission. No prepared bundle was eligible.",
+    "Remaining resource key/validation I/O remains a performance task; 1176 model rows are not a count of manual actions."
+  ],
+  "method": "static_infrastructure_orchestration",
+  "native_checks_passed": 35,
+  "native_replays": 0,
+  "new_jvm": 0,
+  "new_tooling_tests": 3,
+  "portable_publication_reused": 34,
+  "prepared_bundles": {
+    "bundles": [],
+    "live_verified": false,
+    "next_profiles": {},
+    "queue": []
+  },
+  "profile_activated": false,
+  "queue_observations": 304,
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\3df59343f0176af275302fb2c1278d43332f2b4f5e3091a8735a1d346fb67f18\\manifest.json",
+    "sha256": "3df59343f0176af275302fb2c1278d43332f2b4f5e3091a8735a1d346fb67f18"
+  },
+  "resource_input_metrics": {
+    "barrier_digest_reads": 85068,
+    "barrier_path_resolves": 170574,
+    "barrier_seconds": 46.702194,
+    "barriers": 1,
+    "digest_cache_hits": 111,
+    "digest_reads": 85068,
+    "json_bytes_read": 152775773,
+    "json_cache_hits": 0,
+    "json_reads": 107,
+    "path_cache_hits": 170483,
+    "path_resolves": 85287,
+    "stage_cache_hits": 0,
+    "table_cache_hits": 0
+  },
+  "reused_stages": 215,
+  "root_blocker_model_rows": 1176,
+  "schema": 3,
+  "skipped_tests": 3,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tooling_check": {
+    "cache_key": "8d1dfc1ababc2d865f170a3df0e1a24174ad0dbe5d1e38bb3828c466a74c4fff",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\be8a855d6b3c56f2d560224ab8704fdf25743ea776a7764b07ac1e24de757948\\manifest.json",
+    "sha256": "be8a855d6b3c56f2d560224ab8704fdf25743ea776a7764b07ac1e24de757948",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 1243,
+  "validation_scope": "actual_full_pipeline_plus_verified_added_final_installed_SHA_barrier"
+}

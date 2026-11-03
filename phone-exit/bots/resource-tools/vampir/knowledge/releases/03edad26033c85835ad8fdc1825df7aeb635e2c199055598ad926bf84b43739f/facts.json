@@ -1048,6 +1048,47 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Полный обычный CLI update с ресурсами и свежей сверкой установки ещё не проверен; открытые native/client contracts сохраняются.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Завершён полный update с 215 cache / 0 native / JVM; добавлен свежий installed SHA barrier до plan/publication. 1243 tooling теста; реальные 166 файлов и AST-привязка неизменной цепочки проверены отдельно.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-FULL-UPDATE-INSTALLED-BARRIER-11322.json",
+          "sha256": "e5a8b53396b94089e1a0060612f0b3e2a25a6718117c7beafe75fe635a231c73"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-FULL-UPDATE-INSTALLED-BARRIER-11322.md",
+          "sha256": "6e6102798d11dd75bd9b2992077a8aebcf78ed8794b7b2b2da0657aaba4f717a"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c3de3708c449275b3e68fe0e86feda591ae0fc9186798af63fb705bd9817e99b",
+      "limits": [
+        "Composed evidence: full pipeline at ecdae00d plus separately executed new final SHA guard and routing regressions.",
+        "No claim of a second monolithic run of the patched CLI. No client compatibility or online admission.",
+        "Three prior symlink tests skipped; current mutation, original-digest/order and plan-only regressions passed."
+      ],
+      "method": "static",
+      "next_check": "Batch the common resource readiness/comparison dependency work; preserve exact used-input SHA barriers and existing native cache.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "SDK / full entry / world / data contracts remain incomplete. Historical resource validation cost remains an optimization task.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

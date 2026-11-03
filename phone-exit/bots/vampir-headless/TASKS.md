@@ -38,11 +38,14 @@ exports и проверки вручную не повторять. Счётчи
   при собственной записи mutable registry, без снятия SHA barriers.
 - Publication v3 использует invocation-local memo и явный bridge точных
   квитанций v2; выбранные 34 семейства проверены холодным переносом и тёплым
-  повтором. Далее — полный обычный update с ресурсами и проверкой установки.
+  повтором. Полный обычный update завершён; свежий installed SHA barrier
+  проверен отдельно по AST-привязке к неизменной цепочке.
   Не менять frozen engines и не заменять SHA доверием к size/mtime.
 - Resource-readiness v2 завершает обычный plan-only / resume и пропускает
   заведомо неготовые hints без чтения blobs. Далее — отдельный discovery index
   вместо обхода всей stage history и разделение extraction / comparison keys.
+  Полный проход потребовал SHA 85 068 historical files; это следующий общий
+  блок скорости. Не повторять 34 уже проверенных native семейства.
   Сохранять authoritative SHA lookup, точный legacy key и final barriers.
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
@@ -305,8 +308,15 @@ symlink из-за прав Windows. Case-alias и deterministic retarget про�
 bridge; новые guards и cache namespace сохраняют происхождение проверки.
 Повтор 34 семейств — 104.879736 с, 102 этапа и 34 публикации из кэша,
 без native / JVM / PE rebuild и новых квитанций. Прошли 1240 tooling тестов;
-три прежних symlink-пропуска. Далее — полный ordinary update с ресурсами и
-проверкой установленного клиента. Он пока не подтверждён этим замером.
+три прежних symlink-пропуска. Полный ordinary update и отдельная свежая
+SHA-проверка установки описаны в следующем отчёте.
+
+[Полный проход и финальный SHA установки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-FULL-UPDATE-INSTALLED-BARRIER-11322.md)
+сохранили `needs_review`: 215 этапов из кэша, 0 native / JVM, профиль не назначен.
+Контроллер дополнен свежим полным SHA перед plan finalization / publication;
+1243 tooling теста и шесть compatibility checks прошли. Новая проверка отдельно
+прошла на 166 реальных файлах; неизменная часть полного прохода переиспользована
+по AST-привязке. Далее — снижение затрат проверки исторических ресурсов.
 
 ## Сохранённые записи прежних этапов
 
