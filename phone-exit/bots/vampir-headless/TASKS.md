@@ -58,7 +58,8 @@ exports и проверки вручную не повторять. Счётчи
 - Resource pipeline v3 разделяет current record / CSV extraction и сравнения
   с неизменяемым reference. Проверенное продолжение и warm-повтор 109 архивов
   завершены; получены 3344 записи / 2941 уникальный CSV, legacy blobs заново
-  не хэшируются. Далее — общий ordinary update и сужение повторных execution-input /
+  не хэшируются. Сбор execution inputs ускорен до 3,1–3,2 с. Далее — общий
+  ordinary update, сужение консервативных ключей зависимостей и повторных
   archive SHA затрат внутри замороженного owner, сохраняя финальные barriers.
   Directory paths, 235 encrypted / size gaps и подходящие table baselines
   остаются общими блокерами. Exact content match не означает resource identity,

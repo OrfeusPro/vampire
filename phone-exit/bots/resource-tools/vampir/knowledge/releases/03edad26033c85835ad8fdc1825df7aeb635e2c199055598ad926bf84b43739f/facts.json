@@ -1243,6 +1243,37 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты production-проверка managed owner, legacy locks, повторные execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Сбор execution inputs ускорен с 23,343 до 3,209 / 3,124 с. Полные результаты шести групп совпали со старым алгоритмом на текущих файлах. Каждый снимок заново проверяет пути и SHA.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-EXECUTION-INPUTS-V1-11322.json",
+          "sha256": "1f916cc9f944fa4002851a5f8651df330ad134be333cf9dc0b795d5f9b9dcf59"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-EXECUTION-INPUTS-V1-11322.md",
+          "sha256": "b2e93c5d5071070d2bbbf862d5503c35d05279127da3bc6f10b488b845442479"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "798318c33fe4facf5033e4b8d64587002c7553522976b502da99a7b56c5d1ee8",
+      "limits": [
+        "Measurements cover local execution_inputs snapshots on the current tool tree.",
+        "Stage input equivalence is checked against the previous algorithm on the same current files.",
+        "No production updater, watcher, JVM, native replay, game login or network test was run.",
+        "Dependency closure remains conservative; archive SHA costs and full production acceptance remain open."
+      ],
+      "method": "static",
+      "next_check": "Сузить консервативные зависимости ключей и повторные archive SHA затраты. После нового патча проверить полный проход, продолжение после обрыва и отклонение устаревшего пакета входа. Наблюдатель и production update запускать по явной команде пользователя.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты production-проверка managed owner, legacy locks, консервативные ключи execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

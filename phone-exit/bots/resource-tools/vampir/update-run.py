@@ -17,10 +17,22 @@ def execution_inputs(index):
     # Shared dependencies belong to several groups. Parse each file once in
     # this snapshot; the next execution_inputs call always reads fresh inputs.
     scanned={}
+    candidates={}
+    dependency_root=index.HERE.parent.resolve()
     # These helpers carry separate owner/projection guards in their own stage
     # inputs; they are not dependencies of every unrelated native/resource stage.
     owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py',
         'contract-projections-v1.py','contract-writer-inheritance-v1.py'}
+    def dependencies(name):
+        if name not in candidates:
+            found=[]
+            for parent in (index.HERE,index.HERE.parent):
+                child=(parent/name).resolve()
+                if (child.name not in owner_scaffolding
+                        and child.is_relative_to(dependency_root) and child.is_file()):
+                    found.append(child)
+            candidates[name]=found
+        return candidates[name]
     def scan(path):
         if path in scanned:return scanned[path]
         digest=index.digest(path) if path.is_file() else None
@@ -31,10 +43,7 @@ def execution_inputs(index):
                 if len(node.value)>128 or not re.fullmatch(r'[A-Za-z0-9_./-]+',node.value):continue
                 for name in (node.value,node.value+'.py'):
                     if not name.endswith('.py') or '\n' in name:continue
-                    for parent in (index.HERE,index.HERE.parent):
-                        child=(parent/name).resolve()
-                        if (child.name not in owner_scaffolding
-                                and child.is_relative_to(index.HERE.parent.resolve()) and child.is_file()):children.append(child)
+                    children.extend(dependencies(name))
         scanned[path]=(digest,children)
         return scanned[path]
     def group(seeds):

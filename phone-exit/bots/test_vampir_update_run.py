@@ -32,6 +32,58 @@ class UpdateRunTests(fixture.ResearchUpdateTests):
         for name in first:
             self.assertNotEqual(first[name][str(shared.resolve())],second[name][str(shared.resolve())])
 
+    def test_repeated_dependency_paths_are_resolved_once_and_new_files_are_seen(self):
+        folder=self.root/'repeated-tools';folder.mkdir()
+        (folder/'update-contracts.py').write_text("'new-helper'\n"*100,encoding='utf-8')
+        api=SimpleNamespace(HERE=folder,digest=self.index.digest,
+            extension=lambda name:SimpleNamespace(runtime_inputs=lambda:{}))
+        helper=folder/'new-helper.py'
+        resolved=Path.resolve
+        calls=[]
+        def resolve(path,*args,**kwargs):
+            calls.append(path)
+            return resolved(path,*args,**kwargs)
+        with patch.object(Path,'resolve',resolve):
+            before=self.real_execution_inputs(api)
+        self.assertEqual(calls.count(helper),1)
+        self.assertNotIn(str(helper.resolve()),before['contracts'])
+        helper.write_text('# created after the first snapshot',encoding='utf-8')
+        after=self.real_execution_inputs(api)
+        self.assertEqual(after['contracts'][str(helper.resolve())],self.index.digest(helper))
+
+    def test_dependency_name_preserves_both_parent_sources(self):
+        folder=self.root/'parent-tools';folder.mkdir()
+        (folder/'update-contracts.py').write_text("'shared-helper'",encoding='utf-8')
+        local=folder/'shared-helper.py';parent=folder.parent/'shared-helper.py'
+        local.write_text('# local',encoding='utf-8');parent.write_text('# parent',encoding='utf-8')
+        api=SimpleNamespace(HERE=folder,digest=self.index.digest,
+            extension=lambda name:SimpleNamespace(runtime_inputs=lambda:{}))
+        groups=self.real_execution_inputs(api)
+        for path in (local,parent):
+            self.assertEqual(groups['contracts'][str(path.resolve())],self.index.digest(path))
+
+    def test_dependency_aliases_revalidate_targets_and_reject_subtree_escape(self):
+        folder=self.root/'alias-tools';folder.mkdir()
+        (folder/'update-contracts.py').write_text("'alias-one'\n'alias-two'\n'alias-outside'",encoding='utf-8')
+        first=folder/'first.py';second=folder/'second.py';outside=self.root.parent/'outside.py'
+        for path in (first,second,outside):path.write_text('# '+path.name,encoding='utf-8')
+        targets={folder/'alias-one.py':first,folder/'alias-two.py':first,folder/'alias-outside.py':outside}
+        resolved=Path.resolve
+        def resolve(path,*args,**kwargs):
+            return resolved(targets.get(path,path),*args,**kwargs)
+        api=SimpleNamespace(HERE=folder,digest=self.index.digest,
+            extension=lambda name:SimpleNamespace(runtime_inputs=lambda:{}))
+        with patch.object(Path,'resolve',resolve):
+            before=self.real_execution_inputs(api)
+            targets[folder/'alias-one.py']=second
+            targets[folder/'alias-two.py']=outside
+            after=self.real_execution_inputs(api)
+        self.assertIn(str(first.resolve()),before['contracts'])
+        self.assertNotIn(str(outside.resolve()),before['contracts'])
+        self.assertIn(str(second.resolve()),after['contracts'])
+        self.assertNotIn(str(first.resolve()),after['contracts'])
+        self.assertNotIn(str(outside.resolve()),after['contracts'])
+
     # Reuse the synthetic installation factory, not its inherited test methods.
     def setUp(self):
         super().setUp()

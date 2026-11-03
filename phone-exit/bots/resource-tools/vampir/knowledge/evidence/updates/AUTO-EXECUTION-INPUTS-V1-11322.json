@@ -1,0 +1,97 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\execution-inputs-v1-acceptance\\ede4fb48d7ac5aecfc4349eca48c16cc1018fcd3d8ccc857a3012effaf437287\\manifest.json",
+    "sha256": "ede4fb48d7ac5aecfc4349eca48c16cc1018fcd3d8ccc857a3012effaf437287"
+  },
+  "after_seconds": [
+    3.209385,
+    3.12437
+  ],
+  "before_seconds": 23.342895,
+  "checks": [
+    {
+      "cache_key": "e03be8d56923f837199ec9d4850b976b916045433c5878f576f54e52a51719ec",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1d8cbe2b67fcc996e138e5a95970bb613fe10744d6ce36c6e377bd211a502a38\\manifest.json",
+      "sha256": "1d8cbe2b67fcc996e138e5a95970bb613fe10744d6ce36c6e377bd211a502a38",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "854762206397b329ff1ec295c145eacbc44a89c949f0337ea071cdb1023833b5",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6b86e0ac71c5fb2c132dee9e53e9ca2104f6796066bbdef8d92b7a8076ba1605\\manifest.json",
+      "sha256": "6b86e0ac71c5fb2c132dee9e53e9ca2104f6796066bbdef8d92b7a8076ba1605",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "6da6c7857764738bc18fee5b002e9e95dabe8e13fb198cb1d50f08fe71b6c0ad",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cd09e365387801e1da899fd203ba9b31ed6792ae3ec53e0105fd62e29a494fa8\\manifest.json",
+      "sha256": "cd09e365387801e1da899fd203ba9b31ed6792ae3ec53e0105fd62e29a494fa8",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "07714035493de5b43028a20f99d6e4a836620d9a1e5bacb363fd0f171477a85c",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4db50611d92f5c99e1dfee91c5c46c2589b51f875fdaadd26646ea21f9a779d4\\manifest.json",
+      "sha256": "4db50611d92f5c99e1dfee91c5c46c2589b51f875fdaadd26646ea21f9a779d4",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "ffe172d4907a60d5ae61a07061a9607fddb527628f78750632145b1c7d707a88",
+    "phone-exit/bots/test_vampir_update_run.py": "beb3a5adffb922ef7233ca3784f798c0ee168bcb374b9a534a09c56f318d3e18"
+  },
+  "limits": [
+    "Measurements cover local execution_inputs snapshots on the current tool tree.",
+    "Stage input equivalence is checked against the previous algorithm on the same current files.",
+    "No production updater, watcher, JVM, native replay, game login or network test was run.",
+    "Dependency closure remains conservative; archive SHA costs and full production acceptance remain open."
+  ],
+  "proves_client_compatibility": false,
+  "same_stage_inputs": true,
+  "schema": 1,
+  "source_scope": "tooling",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "added": 3,
+    "focused": 33,
+    "skipped": 3,
+    "total": 1476
+  }
+}

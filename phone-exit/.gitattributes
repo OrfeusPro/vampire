@@ -446,3 +446,6 @@ bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-CONTRACT-PROJECTIONS-
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-CONTRACT-PROJECTIONS-V1-11322.md text eol=crlf
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-VERSION-WRAPPER-11322.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-WRAPPER-11322.md text eol=crlf
+bots/test_vampir_update_run.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-EXECUTION-INPUTS-V1-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-EXECUTION-INPUTS-V1-11322.md text eol=crlf
