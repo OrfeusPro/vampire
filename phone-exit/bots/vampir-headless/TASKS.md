@@ -36,11 +36,10 @@ exports и проверки вручную не повторять. Счётчи
 - Scoped research v2 уже проверяет только выбранную closure; полный legacy
   аудит истории сохранён отдельно. Далее — безопасный selected-fact projection
   при собственной записи mutable registry, без снятия SHA barriers.
-- Publication v2 уже отделяет стабильный algorithm от descriptors. Далее —
-  invocation-local memo для повторных child-proof validations; общий source
-  barrier владельца уже подключён отдельным v3 helper:
-  тёплый общий проход пока медленнее прежнего v1. Не менять frozen engines и
-  не подменять полный source/evidence SHA доверием к size/mtime.
+- Publication v3 использует invocation-local memo и явный bridge точных
+  квитанций v2; выбранные 34 семейства проверены холодным переносом и тёплым
+  повтором. Далее — полный обычный update с ресурсами и проверкой установки.
+  Не менять frozen engines и не заменять SHA доверием к size/mtime.
 - Resource-readiness v2 завершает обычный plan-only / resume и пропускает
   заведомо неготовые hints без чтения blobs. Далее — отдельный discovery index
   вместо обхода всей stage history и разделение extraction / comparison keys.
@@ -280,8 +279,8 @@ queue и lifecycle. Drain / socket / scheduler / concurrency и онлайн-в�
 результаты benchmark записаны в отдельную копию facts. Старый UTF-8 report
 поддержан отдельным typed bridge без переписывания: повтор публикации — 1,190765 с.
 
-Общий v2 native repeat остаётся медленнее прежнего v1 замера; далее нужны
-invocation-local memo для повторных child-proof/source проверок.
+Прежний v2 native repeat был медленнее v1; его продолжение — publication
+memo v3 ниже. Предыдущие замеры сохраняются в связанных отчётах.
 [Планирование ресурсов v2](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PLANNING-V2-11322.md)
 уже завершает обычные plan-only / resume: 15,5 и 15,3 с на readiness,
 108 лишних historical scans пропущены, готовый архив проверен полностью.
@@ -298,8 +297,16 @@ symlink из-за прав Windows. Case-alias и deterministic retarget про�
 сохраняет batch-результаты provisional до единой проверки всех использованных
 файлов и sources после bundle preparation. Прошли 1218 tooling тестов;
 102 этапа и 34 публикации использованы из кэша без native / JVM / PE rebuild.
-Число source reads уменьшено, но общий проход всё ещё занимает около 185 с:
-следующий блок скорости — повторные child-report validations и tools closure.
+Замер owner-v3 сохранял около 185 с; следующий publication memo v3
+закрывает повторные child-report / tools проверки отдельным рецептом ниже.
+
+[Publication memo v3](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-NATIVE-PUBLICATION-V3-11322.md)
+подключён через машинный recipe. Точные квитанции v2 используются отдельным
+bridge; новые guards и cache namespace сохраняют происхождение проверки.
+Повтор 34 семейств — 104.879736 с, 102 этапа и 34 публикации из кэша,
+без native / JVM / PE rebuild и новых квитанций. Прошли 1240 tooling тестов;
+три прежних symlink-пропуска. Далее — полный ordinary update с ресурсами и
+проверкой установленного клиента. Он пока не подтверждён этим замером.
 
 ## Сохранённые записи прежних этапов
 

@@ -1,0 +1,5 @@
+{
+  "schema": 3,
+  "recipe": "native-publication-memo-v3",
+  "driver": "update-native-drivers-v3"
+}

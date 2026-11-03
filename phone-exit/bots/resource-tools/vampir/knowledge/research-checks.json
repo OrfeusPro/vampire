@@ -11676,7 +11676,11 @@
         "phone-exit/bots/test_vampir_resource_planning_v2.py",
         "phone-exit/bots/test_vampir_resource_readiness_v2.py",
         "phone-exit/bots/resource-tools/vampir/update-owner-scope-v3.py",
-        "phone-exit/bots/test_vampir_update_owner_scope_v3.py"
+        "phone-exit/bots/test_vampir_update_owner_scope_v3.py",
+        "phone-exit/bots/resource-tools/vampir/native-publication-v3.py",
+        "phone-exit/bots/resource-tools/vampir/update-native-drivers-v3.py",
+        "phone-exit/bots/test_vampir_native_publication_v3.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-publication-engine.json"
       ],
       "artifact_dependencies": []
     }

@@ -98,7 +98,9 @@ def definition_inputs(index, args, update):
         paths.update(index.HERE/name for name in ('update-run-v2.py', 'knowledge-scope-v2.py',
             'native-publication-v2.py', 'native-publication-utf8-v2.py',
             'update-native-drivers-v2.py', 'research-scoped-v2.py',
-            'resource-planning-v2.py', 'resource-readiness-v2.py', 'update-owner-scope-v3.py'))
+            'resource-planning-v2.py', 'resource-readiness-v2.py', 'update-owner-scope-v3.py',
+            'native-publication-v3.py', 'update-native-drivers-v3.py'))
+        if (args.knowledge/'native-publication-engine.json').is_file():paths.add(args.knowledge/'native-publication-engine.json')
     workspace = index.HERE.parents[3]
     for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
         variants = [check, *check.get('source_variants',{}).values()]
@@ -731,7 +733,7 @@ def run_locked(index, args, database, *, audited=None):
             if base_publication:
                 native_contexts['base_publication_cache']=base_publication.finish()
             if (args.knowledge/'native-check-adapters.json').is_file():
-                driver=index.extension('update-native-drivers-v2' if versioned else 'update-native-drivers')
+                driver=index.extension(versioned.publication_driver(index,args) if versioned else 'update-native-drivers')
                 extra=driver.run(index,args,sha,journal,database)
                 driver.merge(native_contexts,native_checks,extra)
             record['native_contexts']=native_contexts

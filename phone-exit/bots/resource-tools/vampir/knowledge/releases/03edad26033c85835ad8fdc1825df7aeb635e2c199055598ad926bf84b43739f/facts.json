@@ -1007,6 +1007,47 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Повторные child-report/tool validations оставляют общий проход около 185 секунд; полный ordinary update ещё не проверен.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Publication v3 memo подключён с отдельным guard и точным v2 bridge; 1240 tooling тестов, два реальных 34-family прохода 106.622635 / 104.879736 с без native/JVM.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-NATIVE-PUBLICATION-V3-11322.json",
+          "sha256": "3276b8b8a195405e239aa66a94df301bbce3ec2474d1277fdb46e19cc188f822"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-NATIVE-PUBLICATION-V3-11322.md",
+          "sha256": "c9e68e4646286aad6479baae62358f725d101f1b275c508627c840d118939407"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "617ebcba6793486a0c356384fba677a6380201252447ca9c854fd7230ed83250",
+      "limits": [
+        "Selected 34-family native/publication cache pass only; not a full ordinary CLI update or online admission.",
+        "Old native engines and v2 receipts unchanged. New v3 receipts earn their own algorithm guard after final barriers.",
+        "Three prior symlink tests skipped because of Windows privileges; all 22 new tests executed."
+      ],
+      "method": "static",
+      "next_check": "Run the ordinary full automatic update, record actual selective reuse and grouped blockers; preserve unchanged completed checks.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Полный обычный CLI update с ресурсами и свежей сверкой установки ещё не проверен; открытые native/client contracts сохраняются.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

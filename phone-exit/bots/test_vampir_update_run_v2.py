@@ -81,6 +81,29 @@ class ScopedNativeUpdate(unittest.TestCase):
         (self.f.knowledge/'update-engine.json').write_bytes(real.read_bytes())
         self.assertTrue(V2.enabled(self.index,self.args))
 
+    def test_publication_recipe_is_machine_selected_and_unknown_recipe_rejected(self):
+        self.assertEqual(V2.publication_driver(self.index,self.args),'update-native-drivers-v2')
+        path=self.f.knowledge/'native-publication-engine.json'
+        path.write_bytes((V2.HERE/'knowledge/native-publication-engine.json').read_bytes())
+        self.assertEqual(V2.publication_driver(self.index,self.args),'update-native-drivers-v3')
+        path.write_text('{"schema":3,"recipe":"unknown","driver":"unreviewed"}',encoding='utf-8')
+        with self.assertRaisesRegex(ValueError,'publication recipe'):
+            V2.publication_driver(self.index,self.args)
+
+    def test_v3_driver_routes_only_publication_and_keeps_parent_native_stage_engine(self):
+        driver=load('update-native-drivers-v3')
+        parent=SimpleNamespace(run=Mock(return_value={'state':'unchanged_native_result'}))
+        v3=object();other=object()
+        index=SimpleNamespace(digest=self.index.digest,extension=lambda name:{
+            'update-native-drivers-v2':parent,'native-publication-v3':v3,'other':other}[name])
+        result=driver.run(index,self.args,self.f.source_sha,self.journal,self.database,cache_only=True)
+        self.assertEqual(result,{'state':'unchanged_native_result'})
+        proxy=parent.run.call_args.args[0]
+        self.assertIs(proxy.extension('native-publication-v2'),v3)
+        self.assertIs(proxy.extension('other'),other)
+        self.assertIs(index.extension('other'),other)
+        self.assertTrue(parent.run.call_args.kwargs['cache_only'])
+
     def test_regular_update_routes_through_selected_index_and_keeps_profile_gates(self):
         fixture=engine_fixtures.UpdateRunTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
         (fixture.knowledge/'update-engine.json').write_bytes((V2.HERE/'knowledge/update-engine.json').read_bytes())

@@ -35,6 +35,15 @@ def tools(index):
         'research-workflow.py', 'update-bindings.py', 'extract-native-enums.py', 'update-owner-scope-v3.py')}
 
 
+def publication_driver(index, args):
+    path = Path(args.knowledge)/'native-publication-engine.json'
+    if not path.is_file():
+        return 'update-native-drivers-v2'
+    if index.read_json(path) != dict(schema=3, recipe='native-publication-memo-v3', driver='update-native-drivers-v3'):
+        raise ValueError('Неизвестный publication recipe')
+    return 'update-native-drivers-v3'
+
+
 def ensure_index(index, args, database):
     """Create a distinct selected DB; never assert global discovery integrity."""
     if (not hasattr(args, '_scope_v2_state')

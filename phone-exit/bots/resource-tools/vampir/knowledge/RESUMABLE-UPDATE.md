@@ -371,6 +371,18 @@ Batch declarations и строки его приватной SQLite остают
 повторно не используется. Отдельная команда research сохраняет прежний полный
 барьер. Новых CLI-флагов для этого шага нет.
 
+## Кэш публикаций v3
+
+Машинный [publication recipe](native-publication-engine.json) выбирает v3,
+сохраняя прежние native drivers / stages. [Проверенные области и замеры](evidence/updates/HEADLESS-NATIVE-PUBLICATION-V3-11322.md).
+Memo rows / tools / SHA действует только внутри одного invocation и заканчивается
+свежим полным барьером. Собственная запись index сбрасывает row memo.
+Новое доказательство имеет собственный guard, receipt и namespace;
+точный завершённый v2 proof переносится явным bridge, старые receipts сохраняются.
+Не удалять старую квитанцию для обхода конкретного corruption-блокера.
+При отсутствии publication selector прежний reviewed v2 путь остаётся доступен;
+неизвестный selector отклоняется. Команды CLI не изменились.
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

@@ -1,0 +1,98 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-v3-acceptance\\9847ae713e43dcb56e2bdd2ea4978ce0418af5efae62854dd833cde50307fca6\\manifest.json",
+    "sha256": "9847ae713e43dcb56e2bdd2ea4978ce0418af5efae62854dd833cde50307fca6"
+  },
+  "first_publication_metrics": {
+    "memo_digest_hits": 17278,
+    "memo_row_hits": 341,
+    "memo_tools_hits": 170,
+    "receipts_written": 34,
+    "reused": 34,
+    "runtime_activated": false,
+    "seconds": 105.499941,
+    "source_store": {
+      "artifact_cache_hits": 0,
+      "artifact_reads": 0,
+      "image_builds": 0,
+      "image_cache_hits": 0,
+      "read_workers": 2,
+      "source_cache_hits": 35087,
+      "source_reads": 3,
+      "validation_reads": 3,
+      "validation_seconds": 0.540679
+    },
+    "v2_bridges": 34,
+    "v3_hits": 0,
+    "validated": 0
+  },
+  "first_seconds": 106.622635,
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-v3-inputs\\4d86550ed055e3a479a09902390cacbe7d34f79a3e6b0b605b5248433e369e16\\manifest.json",
+    "sha256": "4d86550ed055e3a479a09902390cacbe7d34f79a3e6b0b605b5248433e369e16"
+  },
+  "frozen_v1_inputs_preserved": 59,
+  "independent_review": "Read-only review of separate guard, exact bridge, own-write invalidation and final barriers found no new admission defects.",
+  "limits": [
+    "Measured 34-family cache pass, not the whole ordinary CLI update or online admission.",
+    "Cold v3 receipts explicitly bind the exact completed v2 receipt and new recipe SHA.",
+    "Fresh used-file/index/runtime/source barriers remain mandatory; file stamps are not admission.",
+    "Three prior symlink tests skipped because of Windows permissions; all 22 new tests executed."
+  ],
+  "method": "static_infrastructure_orchestration",
+  "native_pe_rebuilds": 0,
+  "native_replays": 0,
+  "native_stage_cache_hits_per_pass": 102,
+  "new_jvm": 0,
+  "new_tooling_tests": 22,
+  "previous_profile_seconds": 180.813571,
+  "previous_v2_profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-publication-v2-profiles\\bfee7921bc7f363ca016abb7614508b07cad816763257039585ce120cf56fe19\\manifest.json",
+    "sha256": "bfee7921bc7f363ca016abb7614508b07cad816763257039585ce120cf56fe19"
+  },
+  "profile_activated": false,
+  "publication_cache_hits_per_pass": 34,
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\ee5fa36dfb2a43f5b7355f7db6c555b704db80e97a833027e28755e1f2e74b58\\manifest.json",
+    "sha256": "ee5fa36dfb2a43f5b7355f7db6c555b704db80e97a833027e28755e1f2e74b58"
+  },
+  "schema": 3,
+  "skipped_tests": 3,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tooling_check": {
+    "cache_key": "22487c30488c500a65c3c212693661bf599d84bab0286a7eb6bb97f2b6d37390",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\11f03a9ecaf87cdf17eb94826c22fd9f36618fb95f7fa215ad50542c29dd10e5\\manifest.json",
+    "sha256": "11f03a9ecaf87cdf17eb94826c22fd9f36618fb95f7fa215ad50542c29dd10e5",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 1240,
+  "v2_cache_indexes_facts_unchanged": 71,
+  "validation_scope": "versioned_publication_memo_and_exact_v2_proof_reuse",
+  "warm_publication_metrics": {
+    "memo_digest_hits": 17142,
+    "memo_row_hits": 341,
+    "memo_tools_hits": 170,
+    "receipts_written": 0,
+    "reused": 34,
+    "runtime_activated": false,
+    "seconds": 104.129652,
+    "source_store": {
+      "artifact_cache_hits": 0,
+      "artifact_reads": 0,
+      "image_builds": 0,
+      "image_cache_hits": 0,
+      "read_workers": 2,
+      "source_cache_hits": 35087,
+      "source_reads": 3,
+      "validation_reads": 3,
+      "validation_seconds": 0.442126
+    },
+    "v2_bridges": 0,
+    "v3_hits": 34,
+    "validated": 0
+  },
+  "warm_seconds": 104.879736
+}
