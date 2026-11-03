@@ -33,22 +33,18 @@ exports и проверки вручную не повторять. Счётчи
   Сохранить исходный порядок результата, caller / memory guards и конечную
   сверку; старые frozen proof engines не менять. Это открытая оптимизация,
   текущий неизменный повтор уже обходится без native replay.
-- Скорость индекса: сократить глобальную сверку около 37 тысяч исторических
-  pseudocode files в prepare / collect; сохранить полные SHA используемых evidence,
-  проверки повреждения и frozen proof engines. Измерить холодный и тёплый проход.
-- Скорость холодной публикации: общий whole-file guard сейчас меняется при
-  добавлении driver и требует новой проверки старых publication receipts, хотя
-  semantic stages остаются в кэше. Для новой versioned recipe отделить стабильный
-  алгоритм от registry, сохранив selected-family / tools / transitive-lineage
-  ключи и финальные SHA barriers. Это ещё не реализовано. Дальнейшая задача — убрать повторную проверку одинаковых child proofs
-  внутри замороженного прохода через новый recipe / memo с полными зависимостями.
-  Сохранить проверку tools / lineage и конечный source barrier; прежние proof
-  engines не менять. Сравнить замеры до / после по отчёту registration.
-  Для нового container recipe проверка родителя уже имеет SourceStore-local memo;
-  остальные frozen families требуют отдельной новой версии, без переписывания proofs.
-  Для state-flow сократить повторные validate / export coverage, сканирование EXE
-  и rehash lineage до memo hit; точные вызовы и безопасные ключи сохранены
-  в infrastructure_review нового отчёта. Это отдельная оптимизация, не готовый результат.
+- Scoped research v2 уже проверяет только выбранную closure; полный legacy
+  аудит истории сохранён отдельно. Далее — безопасный selected-fact projection
+  при собственной записи mutable registry, без снятия SHA barriers.
+- Publication v2 уже отделяет стабильный algorithm от descriptors. Далее —
+  invocation-local memo для повторных child-proof validations и source barriers:
+  тёплый общий проход пока медленнее прежнего v1. Не менять frozen engines и
+  не подменять полный source/evidence SHA доверием к size/mtime.
+- Resource-readiness planning: убрать повторный обход historical resource inputs
+  из обычного прохода. Реальный plan-only сохранил полный SHA inventory, но был
+  прерван на долгой сверке данных ресурсов. Сначала измерить и разделить
+  extraction / comparison / readiness dependencies; не объявлять кеш готовым
+  по inventory или файловым stamps. Сохранять полноту used-input barriers.
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный
@@ -270,6 +266,26 @@ native / JVM / PE rebuild (118.639629 с). Новые exports и JVM не
 Следующий общий блок — композиция frame backend / writer / CRC-XOR с native
 queue и lifecycle. Drain / socket / scheduler / concurrency и онлайн-вход
 сохраняют отдельные границы; текущая сессия и next-profile не менялись.
+
+[Выбранные исследования и стабильная публикация v2](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md)
+подключены к обычному `update --auto` через машинный recipe. Scoped admission
+восстанавливает выбранные строки из SHA-checked report / receipt / pseudocode и
+точного EXE, а frozen adapters получают отдельную проверенную SQLite.
+Полная history этим не сертифицируется. Добавление descriptor больше не меняет
+стабильный publication algorithm; выбранные inputs и final barriers сохраняются.
+
+Прошли 1162 tooling теста. Повтор 34 drivers использовал 102 stages /
+34 publications из кэша без native / JVM / native PE rebuild за 185,417547 с.
+На 12 реальных exports scoped prepare занял около 4 с, finish — около 5 с;
+результаты benchmark записаны в отдельную копию facts. Старый UTF-8 report
+поддержан отдельным typed bridge без переписывания: повтор публикации — 1,190765 с.
+
+Общий v2 repeat пока медленнее прежнего v1 замера. Следующие задачи скорости —
+invocation-local memo для повторных child-proof/source проверок и legacy
+resource-readiness planning: обычный plan-only после SHA-аудита был прерван
+на дорогой сверке historical resource inputs. Это не end-to-end passed update.
+Полный `knowledge-index.py check` перед коммитом остаётся обязательным.
+Текущая сессия и next-profile не менялись; онлайн-вход не подтверждён.
 
 ## Сохранённые записи прежних этапов
 

@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-state-flow",
+  "family": "login-state-flow",
+  "adapter": "state-flow-v1",
+  "module_basename": "update-native-login-state-flow",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-state-flow",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-state-flow.py",
+    "sha256": "1c22fdd101db62c8d3b3862e2edbfe614972a2e0eadc6aecd51f953917a73163"
+  },
+  "order": 29
+}

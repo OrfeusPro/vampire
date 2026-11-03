@@ -839,6 +839,51 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Композиция frame backend / writer / CRC-XOR с native queue и доказанным lifecycle ещё открыта. Heap / vector helpers / engine members / registration helpers / callback lifetime остаются bounded fixtures. Во всех lifecycle cases cleanup_find=end; native unregistration и успешная очистка engine registration не подтверждены. Destructor оставляет service+0x10 / +0x18 dangling; безопасный reuse не доказан. Drain / socket errors / реальное wake scheduling, session key acquisition и receive integrity требуют своих проверок. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. OOM / SEH, конкурентное владение и весь онлайн-вход не доказаны. Инфраструктурные задачи индекса, cold publication и ordered-pair input seed сохраняются."
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Реализованы scoped research и стабильная native publication v2 в обычном обновлении. Прошли 1162 инфраструктурных теста. Повтор 34 drivers использовал 102 stages / 34 publications без native / JVM / native PE rebuild (185.417547 с). Реальные выбранные exports проверены через отдельный scoped workflow; benchmark не менял product facts и не подтверждает онлайн.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md",
+          "sha256": "e51c2d080fe373d89c62a04b88a637d7b4f73ea94d8713e667180635d9af9ed9"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-UPDATE-INFRASTRUCTURE-V2-11322.json",
+          "sha256": "09efe6ff043bc24dc65372c22c4539e2727761820de6fdcfcc18fc94d78870c5"
+        }
+      ],
+      "id": "9f5881f0ccf610ffbcfb75feb01265c030b6f3f1f77e8ffbb7e48d403b102ab3",
+      "limits": [
+        "Selected research validates only explicitly selected source/report/receipt/pseudocode/context inputs; it does not certify all historical files.",
+        "A separate legacy knowledge-index.py check remains mandatory before commits; full-history audit is not silently skipped.",
+        "The research benchmark uses real selected exports and current registered tooling checks, but writes only isolated copied facts. It makes no new native/client semantic claim.",
+        "Native reports are reused after full frozen-adapter publication migration and exact selected lineage/source/runtime barriers. No old native or JVM suite is replayed.",
+        "Unit tests cover unrelated descriptor/release additions, input corruption, mutation before final barrier, missing/ambiguous membership, scoped discovery forgery, rollback and resume.",
+        "Pinned --context inputs are immutable for the request; editing one requires a new request. Full selected-fact projection across owned registry writes is not exposed by the research CLI.",
+        "Unchanged repetitions still read the complete used source/evidence closure. Header-only PE parsing for export admission is distinct from native image rebuilding.",
+        "The ordinary CLI plan-only diagnostic completed its full installation SHA audit, then was deliberately interrupted during expensive legacy resource-readiness planning; it is not an end-to-end passed update.",
+        "Existing missing SDK/world/clock/transport contracts and online admission remain separate blockers. This package does not connect to the game or activate a profile."
+      ],
+      "method": "static",
+      "next_check": "Подготовить новую общую композицию frame backend / writer / CRC-XOR → native resize / queue с доказанным service lifecycle на общих объектах, используя готовые standalone contexts и новую матрицу без повтора прежних suites. Отдельно выделить engine registration / vector helper блокеры, drain / socket failure / real wake и online admission; fixture результаты не расширять. 35 bounded семейств (34 drivers и UTF-8) подключены к обновлению.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Композиция frame backend / writer / CRC-XOR с native queue и доказанным lifecycle ещё открыта. Heap / vector helpers / engine members / registration helpers / callback lifetime остаются bounded fixtures. Во всех lifecycle cases cleanup_find=end; native unregistration и успешная очистка engine registration не подтверждены. Destructor оставляет service+0x10 / +0x18 dangling; безопасный reuse не доказан. Drain / socket errors / реальное wake scheduling, session key acquisition и receive integrity требуют своих проверок. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. OOM / SEH, конкурентное владение и весь онлайн-вход не доказаны. Для v2 selected research и стабильного publication key есть отдельные результаты. Legacy full-history audit и resource-readiness planning остаются дорогими; общий тёплый v2 проход пока не быстрее прежнего v1. Требуются invocation-local memo с полными SHA barriers и устранение повторного чтения historical resource inputs. Frozen ordered-pair input seed сохраняет свои ограничения; текущий CLI не переносит выбранные fact projections через собственную запись registry."
     }
   ],
   "schema": 1,

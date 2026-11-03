@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-metadata",
+  "family": "login-metadata",
+  "adapter": "login-metadata-v1",
+  "module_basename": "update-native-login-metadata",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-metadata/login-metadata",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-metadata.py",
+    "sha256": "fdab82c2d2641111010fb408f977707fb77da7f2359975acd75a6fb834ec670a"
+  },
+  "order": 16
+}

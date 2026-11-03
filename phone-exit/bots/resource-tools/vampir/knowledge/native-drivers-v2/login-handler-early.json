@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-handler-early",
+  "family": "login-handler-early",
+  "adapter": "login-handler-v1",
+  "module_basename": "update-native-login-handler",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-handlers/login-handler-early",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-handler.py",
+    "sha256": "f3715a4a50910bc2c0028247baece575f47aa2a851ce7ed09e6251afb9fa5a9b"
+  },
+  "order": 21
+}

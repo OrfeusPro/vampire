@@ -1,0 +1,7 @@
+{
+  "schema": 2,
+  "recipe": "scoped-native-update-v2",
+  "native_drivers": "native-drivers-v2",
+  "research": "research-scoped-v2",
+  "full_history_audit": "knowledge-index.py check"
+}

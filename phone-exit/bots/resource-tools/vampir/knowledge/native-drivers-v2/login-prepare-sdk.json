@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-sdk",
+  "family": "login-prepare-sdk",
+  "adapter": "login-sdk-v1",
+  "module_basename": "update-native-login-sdk",
+  "factory_kind": "module",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-sdk",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-sdk.py",
+    "sha256": "93efb2a8e6f33ccfc8e7b1bbeb6d889358a22943a5661f25d1ee867fb285d3fe"
+  },
+  "order": 6
+}

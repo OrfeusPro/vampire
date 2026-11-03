@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-utf8",
+  "family": "utf8",
+  "adapter": "utf8-v1",
+  "module_basename": "update-native-contexts",
+  "factory_kind": "utf8-module",
+  "execution_kind": "lineage-only",
+  "index_relative_path": "generated-native",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-contexts.py",
+    "sha256": "92dc45584dbaef2f12f4388e44845c2fd112fc7c277c4296d618578d02b057db"
+  },
+  "order": 0
+}

@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-string-writer",
+  "family": "string-writer",
+  "adapter": "string-writer-v1",
+  "module_basename": "update-native-string-writer",
+  "factory_kind": "module",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-string-writers",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-string-writer.py",
+    "sha256": "f1c3080c4927e300ea2d935fd62717f790e6c20d67407058f97c5c746dc124f9"
+  },
+  "order": 1
+}

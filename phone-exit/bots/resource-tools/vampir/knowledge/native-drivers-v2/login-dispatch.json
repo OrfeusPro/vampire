@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-dispatch",
+  "family": "login-dispatch",
+  "adapter": "dispatch-v1",
+  "module_basename": "update-native-login-dispatch",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-dispatch",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-dispatch.py",
+    "sha256": "003729cfac2d847a566b3718bc16173a428eb8e50e9b18dbc9d222d419469a4a"
+  },
+  "order": 28
+}

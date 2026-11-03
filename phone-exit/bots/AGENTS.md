@@ -130,18 +130,22 @@
 [questions.json](resource-tools/vampir/knowledge/questions.json) и его evidence.
 Правила структуры знаний — в [knowledge/README](resource-tools/vampir/knowledge/README.md).
 
-1. Начинать новое исследование через `knowledge-index.py prepare` с question ID,
-   явными адресами и `--release installed`. Команды запускать из корня репозитория;
-   инструмент находится в `phone-exit/bots/resource-tools/vampir/`.
-2. Использовать найденные материалы. Для дополнительного поиска — `function`,
-   `search`, `callers` с явной версией. Отсутствующий индекс / новые выгрузки
-   обрабатывать через `build`; `prepare` делает это сам.
-3. Недостающий явный набор получать через `collect --request <manifest>`.
+1. Начинать новый явный пакет через `research-scoped-v2.py prepare` с question ID,
+   адресами машинного блокера и `--release installed` либо полным SHA. Команды
+   запускать из корня; инструменты — в `phone-exit/bots/resource-tools/vampir/`.
+   Прежние v1 requests продолжать через `knowledge-index.py`, не менять их recipe.
+2. Использовать найденные материалы. Для поиска — `function`, `search`, `callers`
+   с явной версией. Discovery index не даёт допуска: выбранные rows восстановить
+   из SHA-checked report / receipt / pseudocode и точного EXE. Отсутствие кандидата
+   не доказывает отсутствие функции. Полный `build` / audit — отдельная операция.
+3. Недостающий набор получать через `collect --request <manifest>` того же recipe.
    Не расширять анализ на весь EXE. Повтор разобранной ветви допустим только
    при изменении входов или для конкретного записанного unknown / decision_rule.
-4. Завершать через `finish --request <manifest> --result <JSON>`: вывод, метод,
+4. Завершать тем же recipe через `finish --request <manifest> --result <JSON>`: вывод, метод,
    границы fixtures, оставшееся неизвестное, следующая проверка и evidence.
    Обновлять смысловые README / вопрос по фактическому результату.
+   Scoped receipt подтверждает только выбранные материалы, не целостность всей
+   истории. Tooling checks не заменяют source-bound semantic и online результаты.
 5. Перед коммитом выполнять `knowledge-index.py check` и
    `git diff --cached --check`. Проверять русский текст и смысл чисел по diff;
    не делать массовую замену слов / цифр в технических обозначениях.

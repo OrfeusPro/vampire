@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-frame-integrity",
+  "family": "frame-integrity",
+  "adapter": "frame-integrity-v1",
+  "module_basename": "update-native-frame-integrity",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-frame-integrity",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-frame-integrity.py",
+    "sha256": "0e2fac2790af7cfebadf36844cf351f5d6fb45b669f881431db3a6e055cf4d68"
+  },
+  "order": 32
+}

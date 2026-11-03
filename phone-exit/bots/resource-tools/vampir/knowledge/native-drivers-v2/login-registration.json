@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-registration",
+  "family": "login-registration",
+  "adapter": "registration-v1",
+  "module_basename": "update-native-login-registration",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-registration",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-registration.py",
+    "sha256": "2e79fec52edaa6dfa261b2a4affa2fea9d2adbab564cdd56efdb0e36afd48b39"
+  },
+  "order": 26
+}

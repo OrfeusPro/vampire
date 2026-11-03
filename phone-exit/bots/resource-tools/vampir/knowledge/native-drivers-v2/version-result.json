@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-version-result",
+  "family": "version-result",
+  "adapter": "version-result-v1",
+  "module_basename": "update-native-version-result",
+  "factory_kind": "module",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-version-results",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-version-result.py",
+    "sha256": "c5c15b758ad751b5b5d714e7c56991d4eeead88c1203bd3a3835256ad151a723"
+  },
+  "order": 3
+}

@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-archive-wire",
+  "family": "archive-wire",
+  "adapter": "archive-wire-v1",
+  "module_basename": "update-native-archive-wire",
+  "factory_kind": "module",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-archive-wire",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-archive-wire.py",
+    "sha256": "142b7340425a849ae0927cfc26ad89cc135c9dc022ec1155935196c028f37121"
+  },
+  "order": 2
+}

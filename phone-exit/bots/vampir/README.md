@@ -240,6 +240,26 @@ native / JVM / PE rebuild (118.639629 с). Новые exports и JVM не
 queue и lifecycle. Drain / socket / scheduler / concurrency и онлайн-вход
 сохраняют отдельные границы; текущая сессия и next-profile не менялись.
 
+[Выбранные исследования и стабильная публикация v2](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md)
+подключены к обычному `update --auto` через машинный recipe. Scoped admission
+восстанавливает выбранные строки из SHA-checked report / receipt / pseudocode и
+точного EXE, а frozen adapters получают отдельную проверенную SQLite.
+Полная history этим не сертифицируется. Добавление descriptor больше не меняет
+стабильный publication algorithm; выбранные inputs и final barriers сохраняются.
+
+Прошли 1162 tooling теста. Повтор 34 drivers использовал 102 stages /
+34 publications из кэша без native / JVM / native PE rebuild за 185,417547 с.
+На 12 реальных exports scoped prepare занял около 4 с, finish — около 5 с;
+результаты benchmark записаны в отдельную копию facts. Старый UTF-8 report
+поддержан отдельным typed bridge без переписывания: повтор публикации — 1,190765 с.
+
+Общий v2 repeat пока медленнее прежнего v1 замера. Следующие задачи скорости —
+invocation-local memo для повторных child-proof/source проверок и legacy
+resource-readiness planning: обычный plan-only после SHA-аудита был прерван
+на дорогой сверке historical resource inputs. Это не end-to-end passed update.
+Полный `knowledge-index.py check` перед коммитом остаётся обязательным.
+Текущая сессия и next-profile не менялись; онлайн-вход не подтверждён.
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

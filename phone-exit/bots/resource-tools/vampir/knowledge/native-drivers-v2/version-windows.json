@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-version-windows",
+  "family": "version-windows",
+  "adapter": "version-helper-v1",
+  "module_basename": "update-native-version-helpers",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-version-helpers/version-windows",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-version-helpers.py",
+    "sha256": "46cc9bdf46dd74c45c9e0e999ea2fe2d798515c0be30a330aba3b2a4bcbdae5e"
+  },
+  "order": 9
+}

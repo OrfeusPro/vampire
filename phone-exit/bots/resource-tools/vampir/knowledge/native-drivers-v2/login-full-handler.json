@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-full-handler",
+  "family": "login-full-handler",
+  "adapter": "login-full-v1",
+  "module_basename": "update-native-login-full",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-full",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-full.py",
+    "sha256": "0249a9fa470cb23c1fafe3e84ff3183d2a3aacab4b838b78f9f6558fca94b902"
+  },
+  "order": 24
+}

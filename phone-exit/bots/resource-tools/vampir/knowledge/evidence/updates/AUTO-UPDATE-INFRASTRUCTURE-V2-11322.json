@@ -1,0 +1,242 @@
+{
+  "schema": 2,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "method": "static_infrastructure_orchestration",
+  "native_reports_replayed": false,
+  "new_jvm": 0,
+  "game_session_changed": false,
+  "profile_activated": false,
+  "tooling_check": {
+    "cache_key": "525ce104716020b46e56023404097989159559e9a366e79ef9ba0377579419c8",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7f19962de3488ca056b888be02df5b662b908c9f843cf3d438e413a6e5061ad1\\manifest.json",
+    "sha256": "7f19962de3488ca056b888be02df5b662b908c9f843cf3d438e413a6e5061ad1",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 1162,
+  "new_tooling_tests": 80,
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-infrastructure-v2-final-inputs\\8f2c0148eca0878d35f367cf8de7c937afaa60a87beb587f64f4a615f57568d2\\manifest.json",
+    "sha256": "8f2c0148eca0878d35f367cf8de7c937afaa60a87beb587f64f4a615f57568d2"
+  },
+  "checkout_bytes_verified": 111,
+  "frozen_v1_inputs_preserved": 59,
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-infrastructure-v2-final-evidence-bindings\\2a484b1702453529d534c4d6e7ecf2dcc52a089980f79ebfa7843b4377037bf2\\manifest.json",
+    "sha256": "2a484b1702453529d534c4d6e7ecf2dcc52a089980f79ebfa7843b4377037bf2"
+  },
+  "scoped_research_benchmark": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\scoped-research-v2-benchmark-results\\246387ac9bf985a354a2f4e421224cc980472758b5889f40fa0c90d57267a358\\manifest.json",
+    "sha256": "246387ac9bf985a354a2f4e421224cc980472758b5889f40fa0c90d57267a358"
+  },
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\requests\\b33c4cfd7028ddee4f358d00bbe97fe2ee00245ff0ed347aebd6100b22eda9c2\\manifest.json",
+    "sha256": "b33c4cfd7028ddee4f358d00bbe97fe2ee00245ff0ed347aebd6100b22eda9c2"
+  },
+  "utf8_bridge_acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\utf8-publication-v2-acceptance\\5eeabeb09ebc0f8e492282e01f4593fd84d1a34137f325e89d517afb5f499992\\manifest.json",
+    "sha256": "5eeabeb09ebc0f8e492282e01f4593fd84d1a34137f325e89d517afb5f499992"
+  },
+  "ordinary_cli_diagnostic": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-infrastructure-v2-cli-diagnostics\\9eff37205d8e1603e25a26654f0eba4f63ff7de8a5f0af07d4738cb1041a63c0\\manifest.json",
+    "sha256": "9eff37205d8e1603e25a26654f0eba4f63ff7de8a5f0af07d4738cb1041a63c0"
+  },
+  "normal_entry": {
+    "cli": "knowledge-index.py update --auto",
+    "route": [
+      "update-auto.execute",
+      "research-update.update",
+      "update-run.run_locked",
+      "update-run-v2",
+      "update-native-drivers-v2",
+      "native-publication-v2"
+    ],
+    "registry": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\update-engine.json",
+      "sha256": "fb95c66b0bd7f2c3cc0d0d5dd52b4ce4d468c0a078f7f0a2e56d9fc6ef69e48e"
+    },
+    "watcher": "Existing update-watch ownership and worker route are preserved."
+  },
+  "descriptors": [
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\archive-wire.json",
+      "sha256": "49befcde520e696e384cc263e242b3c514af254a3f65e4d878258c8c398e0e21"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\buffer-transport.json",
+      "sha256": "5740ea573d162bf4e19d16bf3e7c70a0d8deabe6f0059d8a95c7c7e45d10a4ba"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\frame-integrity.json",
+      "sha256": "b0dffd895113aa45e5167bad74e3a576a4c83d52ba6264a1b5a9a6f4a14f1ef8"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-backend-wire.json",
+      "sha256": "5f4135ef6079a27028f00d6e2efc64a2f5eea91366c84ccdc926de4e9003515d"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-container.json",
+      "sha256": "a2f8fd04a32c9850389f9b6bab98987fa7bb648dbf7ceb0d6003ff7107eb4c15"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-continuation.json",
+      "sha256": "41baccc08dc66d536440fb2cf36e8edb67d472285ff950c6e586517112dea2fc"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-dispatch.json",
+      "sha256": "3947cc2431370ef50de957cb11c10f8a0457bc4fc2b60943d9da25df02fb2c8d"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-full-handler.json",
+      "sha256": "a75139a688aa3745283e6710abb268fa8ade81694e3f7c4eac8fd029d0636027"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-handler-early.json",
+      "sha256": "1941895f1374da036fa216e41f35dd50622385b121750e8c4cdd508a598c049f"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-metadata.json",
+      "sha256": "b1a61552a6e2dec8686459f3db16dd8a0cb8b66de2c98f36c91fab8ad63b77af"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-nested.json",
+      "sha256": "0797048c26cce761518bb4fc0eca1924ffe412b0484e3f45ec7107454984b853"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-post-state.json",
+      "sha256": "79bdb0ff85ab9684fc62f5622004d4d61eb64fd721d1014adbaf700591afa6f6"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-prepare-metadata.json",
+      "sha256": "0c48a5cfda6119d693dac42357075f338b75d7c7e139bb9bf976165be9b0c586"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-prepare-sdk.json",
+      "sha256": "e02073c2ad953fc9a94f1b0e62669f9695ff5d731e09af656a4c31840f0873d7"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-prepare.json",
+      "sha256": "e2b4245cf828c3c9b6eacf9f95200cacdfc6838ff2e289cb9d8b9cd3a25c4e10"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-registration.json",
+      "sha256": "d5b70e479b838999094cb940e1230d22edaa2e4a9b0168d947d9b2cf2909f048"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-response-composition.json",
+      "sha256": "a935f1b0e56816c3074d14a0962bb13ef5594cab41e3a1b6110f2a575508f06c"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-send-handoff.json",
+      "sha256": "40353a52cbfad171b399a1160d7cb78dc3d78e8a3ffc146e08f52571e2bb944f"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-state-flow.json",
+      "sha256": "445001ed6f52c317896093546ef3f8373311c70cc1e1568838dcbfa427a94de4"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\login-strings-buffer.json",
+      "sha256": "29251771b05fd74125b58f93b1ec81226ffebbc16b5fdd0e45e35aece4fb6cbf"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\result-gate.json",
+      "sha256": "07f6ed7d7cec415f5ee6b2087f4c104bd88b122a89ec29314c4e16275aebcee1"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\service-lifecycle.json",
+      "sha256": "ddf4e65c1dd050863e173e6745e3275d0963de572ebae7c9f05e05eb977a23ee"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\string-writer.json",
+      "sha256": "67f5264bd52cd64b13e1cc418121ffa51db2e7219fec3307c39186b4c0e62dc1"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\utf8.json",
+      "sha256": "60207802cf7e2d5c7f073a6dfaa1e67ce0646c9d4497f1ee8e06cd3c81d69901"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-combiner.json",
+      "sha256": "507ad445f46447d97a7480dfe17314a75bea2cc0cc911315ce25a8285abb3298"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-cpu.json",
+      "sha256": "08d65d9d61ce3b7e62bbf499a49e3e0687450dfdfaf528cd74610673a388f5b5"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-nm-device.json",
+      "sha256": "a000748449fa8b2f26ba275260eab2fd3a758c72d31d3a07379f78e999fa5d4a"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-platform.json",
+      "sha256": "cc809332fbdff153d4148e6398364f65664c1d1596047a6249cfbd8f8ef20a6a"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-prepare-combiner.json",
+      "sha256": "6476f1d66c6cf7e19493168847950b388b9ce2fc66504a463e56f6cc8632ca64"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-prepare-nm.json",
+      "sha256": "c7aeeeef460fab925f653f35bd6edd643c192825947500b559297715386508e2"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-prepare-platform.json",
+      "sha256": "d5b6fdfaf6dc1c65cb0084d37d37c898415b0743219802eb34554bdf49431ce9"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-prepare-system.json",
+      "sha256": "c6df962f2c08321a6c93c0875e9395a621c650688f77a410ddc4cfa7ddca9cd5"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-prepare.json",
+      "sha256": "5b581ddca14a5ac10f73ad5d3fa1c9506ecb522a8eec0511af739b5048271b38"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-result.json",
+      "sha256": "822e30f81f9ad03d068f65976dee8e5797f6ddeccb50e86933b704544b2140c3"
+    },
+    {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-drivers-v2\\version-windows.json",
+      "sha256": "bb32535bb6900cae193bcb8883d8e78bfb47957ac53cbd9584841a531c2daf7c"
+    }
+  ],
+  "summary": {
+    "portable_drivers": 34,
+    "lineage_utf8_descriptor": 1,
+    "cold_seconds": 738.300569,
+    "warm_seconds": 185.417547,
+    "warm_stages": 102,
+    "warm_publications": 34,
+    "cold_publications_validated": 34,
+    "scoped_prepare_seconds": [
+      4.084042,
+      3.9868
+    ],
+    "scoped_collect_seconds": [
+      1.580999,
+      1.516532
+    ],
+    "scoped_finish_seconds": [
+      5.557242,
+      5.098418
+    ],
+    "scoped_check_seconds": [
+      4.314069,
+      4.641177
+    ],
+    "scoped_addresses": 12,
+    "global_historical_pseudocode_reads": 0
+  },
+  "limits": [
+    "Selected research validates only explicitly selected source/report/receipt/pseudocode/context inputs; it does not certify all historical files.",
+    "A separate legacy knowledge-index.py check remains mandatory before commits; full-history audit is not silently skipped.",
+    "The research benchmark uses real selected exports and current registered tooling checks, but writes only isolated copied facts. It makes no new native/client semantic claim.",
+    "Native reports are reused after full frozen-adapter publication migration and exact selected lineage/source/runtime barriers. No old native or JVM suite is replayed.",
+    "Unit tests cover unrelated descriptor/release additions, input corruption, mutation before final barrier, missing/ambiguous membership, scoped discovery forgery, rollback and resume.",
+    "Pinned --context inputs are immutable for the request; editing one requires a new request. Full selected-fact projection across owned registry writes is not exposed by the research CLI.",
+    "Unchanged repetitions still read the complete used source/evidence closure. Header-only PE parsing for export admission is distinct from native image rebuilding.",
+    "The ordinary CLI plan-only diagnostic completed its full installation SHA audit, then was deliberately interrupted during expensive legacy resource-readiness planning; it is not an end-to-end passed update.",
+    "Existing missing SDK/world/clock/transport contracts and online admission remain separate blockers. This package does not connect to the game or activate a profile."
+  ]
+}

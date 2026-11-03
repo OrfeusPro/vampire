@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-send-handoff",
+  "family": "login-send-handoff",
+  "adapter": "send-handoff-v1",
+  "module_basename": "update-native-login-send-handoff",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-send-handoff",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-send-handoff.py",
+    "sha256": "dd8a89cde1a8388d6708f3621461784db862296dfe19a678bf592b7ea0df4e81"
+  },
+  "order": 30
+}

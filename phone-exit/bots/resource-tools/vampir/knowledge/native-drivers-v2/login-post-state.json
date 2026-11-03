@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-post-state",
+  "family": "login-post-state",
+  "adapter": "response-v1",
+  "module_basename": "update-native-response",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-responses/login-post-state",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-response.py",
+    "sha256": "b68f4fb18b1393286d39cedbf872e181c85fdf3266a50ceee2cd278de522563a"
+  },
+  "order": 23
+}

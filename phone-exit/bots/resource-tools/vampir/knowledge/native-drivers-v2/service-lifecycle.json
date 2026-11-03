@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-service-lifecycle",
+  "family": "service-lifecycle",
+  "adapter": "service-lifecycle-v1",
+  "module_basename": "update-native-service-lifecycle",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-service-lifecycle",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-service-lifecycle.py",
+    "sha256": "581720c3347c415238ed0a874edc9bafedb6346b2c467a0a6a5d8b9e6ac5df1f"
+  },
+  "order": 34
+}

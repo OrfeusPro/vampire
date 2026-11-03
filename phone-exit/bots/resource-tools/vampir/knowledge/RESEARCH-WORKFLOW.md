@@ -5,7 +5,46 @@
 в `F:/PhoneExit Resources/Vampir/`. Инструменты не входят в runtime бота,
 не запускают авторизацию или игровые действия.
 
-## Команды
+## Новые выбранные пакеты
+
+Обычное обновление начинается общим `update --auto`. Новый scoped workflow нужен
+для конкретного общего блокера или нового правила. Адреса берутся из машинного
+отчёта, полный SHA проверяется фактически. В переменные ниже передаются адрес
+блокера и пути manifests, напечатанные предыдущей командой:
+
+```powershell
+python -X utf8 phone-exit/bots/resource-tools/vampir/research-scoped-v2.py prepare --question release-automatic-update --function $taskAddress --release installed
+python -X utf8 phone-exit/bots/resource-tools/vampir/research-scoped-v2.py collect --request $requestPath
+python -X utf8 phone-exit/bots/resource-tools/vampir/research-scoped-v2.py finish --request $requestPath --result $resultPath
+python -X utf8 phone-exit/bots/resource-tools/vampir/research-scoped-v2.py check --completion $completionPath
+```
+
+Глобальные `--root`, `--knowledge`, `--database` указываются до операции.
+Prepare принимает 1..32 уникальных явных адреса, installed либо полный SHA;
+при необходимости `--export` передаёт конкретный готовый Ghidra report.
+Report pointers сохраняются и используются при повторе даже без discovery DB.
+Collect запускает только недостающий набор; сохранённый неизвестный / failed
+outcome не повторяется вслепую. Новая причина или изменённые inputs требуют нового
+request. Старые v1 requests продолжаются прежним entrypoint, не конвертируются.
+
+Scoped admission проверяет выбранную closure, не всю history. Непроверенные
+SQLite status / body_json / name и Markdown не дают role или runtime admission.
+Полные SHA EXE, использованных report / receipt / pseudocode, tools / runtime
+проверяются перед результатом. Неиспользованная история остаётся за границами.
+Finish сохраняет прежние fact objects и проверяет атомарную запись / rollback.
+Изменение decision rules требует нового request; known / unknown / next_action /
+evidence — поля вывода question, их можно обновить между операциями.
+
+Tooling checks остаются инфраструктурным gate, не доказательством клиента.
+Для method=bounded_native нужен source-bound client check. SHA-pinned --context
+файл должен оставаться неизменным; scoped CLI пока не переносит selected-fact
+projection через собственную запись этого registry. Использовать отдельные
+immutable context pointers. Полная история и обязательный staged Markdown audit
+по-прежнему проверяются `knowledge-index.py check` перед коммитом.
+
+[Результаты и ограничения v2](evidence/updates/HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md).
+
+## Команды v1 и история
 
 Из корня репозитория:
 

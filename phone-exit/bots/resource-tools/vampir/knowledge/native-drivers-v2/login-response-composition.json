@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-response-composition",
+  "family": "login-response-composition",
+  "adapter": "login-composition-v1",
+  "module_basename": "update-native-login-composition",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-composition",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-composition.py",
+    "sha256": "dbf38aa95e3a3cfa8fe17b11400e177dd9babe7e6ca6e0b0d6d78c0d34beb779"
+  },
+  "order": 25
+}

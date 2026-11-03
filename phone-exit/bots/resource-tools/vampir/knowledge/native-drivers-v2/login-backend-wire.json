@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-backend-wire",
+  "family": "login-backend-wire",
+  "adapter": "backend-wire-v1",
+  "module_basename": "update-native-login-backend-wire",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-backend-wire",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-backend-wire.py",
+    "sha256": "d5b58c300d62a1ba4a33d9e452e3894336e65f127914a0095a713f6c58ce1cfa"
+  },
+  "order": 31
+}

@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-login-container",
+  "family": "login-container",
+  "adapter": "container-v1",
+  "module_basename": "update-native-login-container",
+  "factory_kind": "select-family",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-login-container",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-login-container.py",
+    "sha256": "cac8b3edd7258e0a45bc0adad2b45cf8d2313571df82fcfb6c57cb0971183376"
+  },
+  "order": 27
+}

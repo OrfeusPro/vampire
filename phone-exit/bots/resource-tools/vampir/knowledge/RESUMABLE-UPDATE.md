@@ -321,6 +321,38 @@ native / JVM / PE rebuild (118.639629 с). Готовые parent native suites
 и exports переиспользованы без повторного исполнения или JVM.
 [Матрица, source границы и приёмка](evidence/updates/HEADLESS-AUTO-SERVICE-LIFECYCLE-11322.md).
 
+## Выбранные материалы и публикации v2
+
+Обычный `update --auto` и существующий watcher выбирают v2 через
+`knowledge/update-engine.json`. Explicit baseline / resume сохраняются;
+изменение definitions создаёт новый run с выборочным reuse. Каталог native
+drivers находится в `knowledge/native-drivers-v2/*.json`: точные module SHA,
+factory, family, index path и publication contract проверяются до исполнения.
+
+Discovery search.sqlite3 служит только поиском кандидатов. Выбранные export rows
+восстанавливаются из completion receipt / report / pseudocode и точного EXE,
+затем попадают в отдельную SQLite для frozen adapters. Missing не доказывает
+отсутствие функции. Изменённый / неоднозначный материал остаётся блокером.
+
+Новая публикация получает свою v2 квитанцию через обычный frozen publish;
+в последующих ключах участвуют выбранные descriptors / release rows / tools /
+lineage, а mutable selectors проходят полный before/after barrier invocation.
+Добавление несвязанного descriptor не сбрасывает старые квитанции. Legacy UTF-8
+provenance обрабатывает отдельный typed bridge, не меняющий старый report.
+
+Новые ручные исследования общих блокеров ведутся через
+`research-scoped-v2.py prepare/collect/finish`; старые requests остаются в своём
+workflow. Команда scoped check проверяет одну completion, полную историю —
+прежний `knowledge-index.py check`. Квитанции явно содержат
+`validation_scope=selected_materials_only`, `global_history_verified=false`.
+Файлы, переданные через --context, остаются SHA-pinned inputs: их изменение,
+включая собственную запись такого файла, требует нового request.
+
+Границы скорости, real benchmark и оставшиеся расходы ordinary resource planning
+сохранены в [отчёте](evidence/updates/HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md).
+Обычный CLI diagnostic plan-only не завершил resource readiness; его полный
+SHA inventory сохранён. Наличие нового слоя не означает завершение всего входа.
+
 ## Журналы и дальнейшая работа
 
 В библиотеке ресурсов вне Git хранятся `knowledge/update-runs`, `update-stages`,

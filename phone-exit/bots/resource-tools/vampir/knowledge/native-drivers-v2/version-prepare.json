@@ -1,0 +1,17 @@
+{
+  "schema": 2,
+  "recipe_id": "native-drivers-v2",
+  "id": "native-auto-version-prepare",
+  "family": "version-prepare",
+  "adapter": "version-prepare-v1",
+  "module_basename": "update-native-version-prepare",
+  "factory_kind": "module",
+  "execution_kind": "portable",
+  "index_relative_path": "generated-version-prepare",
+  "publication_contract_id": "bounded-native-publication-v2",
+  "reviewed_rule_pointer": {
+    "path": "update-native-version-prepare.py",
+    "sha256": "308e6a5523d7c6dc0038e4d2bc3a01015c93313e729a9e9ca3ab4c1cf7a176c7"
+  },
+  "order": 4
+}

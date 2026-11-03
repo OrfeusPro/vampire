@@ -91,6 +91,13 @@ def definition_inputs(index, args, update):
     paths.update((args.knowledge/'native-contexts').glob('*.json'))
     paths.update(p for p in (args.knowledge/'native-release-registry.json',
         args.knowledge/'native-check-adapters.json') if p.is_file())
+    engine = args.knowledge/'update-engine.json'
+    if engine.is_file():
+        paths.add(engine)
+        paths.update((args.knowledge/'native-drivers-v2').glob('*.json'))
+        paths.update(index.HERE/name for name in ('update-run-v2.py', 'knowledge-scope-v2.py',
+            'native-publication-v2.py', 'native-publication-utf8-v2.py',
+            'update-native-drivers-v2.py', 'research-scoped-v2.py'))
     workspace = index.HERE.parents[3]
     for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
         variants = [check, *check.get('source_variants',{}).values()]
@@ -537,6 +544,9 @@ def run_locked(index, args, database, *, audited=None):
     model = index.extension('update-contracts')
     path=None
     try:
+        versioned = index.extension('update-run-v2') if (args.knowledge/'update-engine.json').is_file() else None
+        if versioned is not None and not versioned.enabled(index,args):
+            versioned = None
         contracts = model.load(index, args.knowledge)
         definitions=definition_inputs(index,args,update)
         tools=execution_inputs(index)
@@ -651,11 +661,12 @@ def run_locked(index, args, database, *, audited=None):
             resolve_contracts)
         contexts=apply_function_reuse(index,args.root,contracts,contexts,sha,function_reuse)
         started=time.perf_counter()
-        indexed=ensure_index(index,args,database)
+        indexed=versioned.ensure_index(index,args,database) if versioned else ensure_index(index,args,database)
         record['stages']['index-before-exports']=dict(state='completed',inputs=dict(source=sha),
             result=indexed,seconds=round(time.perf_counter()-started,6),outputs={})
         save(workflow,path,record)
-        exports = collect_batches(index, workflow, journal, args, database, contexts, sha)
+        exports = (versioned.collect_batches if versioned else collect_batches)(
+            index, workflow, journal, args, database, contexts, sha)
         native_contexts=dict(checks=[],queue=[],state='skipped')
         native_checks=[]
         if (args.knowledge/'native-release-registry.json').is_file():
@@ -672,18 +683,25 @@ def run_locked(index, args, database, *, audited=None):
                 generated_index_sha256=index.digest(generated) if generated.is_file() else None),materialize_native)
             # Extensions must not mutate the cached base adapter's stage value.
             native_contexts=copy.deepcopy(native_contexts)
+            base_publication = index.extension('native-publication-utf8-v2').begin(index,args,sha) if versioned else None
             for declaration in native_contexts['checks']:
                 try:
                     checked=journal.stage('native-check-'+declaration['id'],dict(source=sha,
                         declaration=declaration,suite_runtime=index.extension('update-native-harness').runtime_inputs()),
                         lambda declaration=declaration:native_tool.execute(index,args,sha,declaration))
                     if checked['state']=='passed' and hasattr(native_tool,'publish'):
-                        native_tool.publish(index,args,sha,declaration,checked)
+                        if base_publication:
+                            base_publication.publish(dict(id=declaration['id'],family='utf8',adapter='utf8-v1'),
+                                native_tool,declaration,checked)
+                        else:
+                            native_tool.publish(index,args,sha,declaration,checked)
                 except (ValueError,OSError,KeyError,StopIteration) as error:
                     checked=dict(id=declaration['id'],state='requires_review',reason=str(error))
                 native_checks.append(checked)
+            if base_publication:
+                native_contexts['base_publication_cache']=base_publication.finish()
             if (args.knowledge/'native-check-adapters.json').is_file():
-                driver=index.extension('update-native-drivers')
+                driver=index.extension('update-native-drivers-v2' if versioned else 'update-native-drivers')
                 extra=driver.run(index,args,sha,journal,database)
                 driver.merge(native_contexts,native_checks,extra)
             record['native_contexts']=native_contexts
@@ -782,6 +800,7 @@ def run_locked(index, args, database, *, audited=None):
         if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index)!=tools:
             raise ValueError('Update definitions changed during profile preparation')
         source_metrics=store.validate()
+        scoped_exports=versioned.finish(original_index,args) if versioned else None
         bundle=index.extension('update-bundle').prepare(index,args,contracts,outcomes,capabilities,profiles,contexts,report)
         # Preparation may read further immutable artifacts; validate them before
         # publishing the final journal and next-use pointers.
@@ -805,6 +824,7 @@ def run_locked(index, args, database, *, audited=None):
             wall_seconds=round(time.perf_counter()-run_started,6),executed_stages=journal.executed,
             cached_stage_validation_seconds=journal.validation_seconds,
             source_store=source_metrics,unique_checks=len(checked_this_run)+len(native_checks),
+            scoped_exports=scoped_exports,
             check_consumers=sum(len(c['checks']) for c in contracts['contracts'])+len(extra_checks),
             root_blockers=len(record['root_blockers']),legacy_queue_observations=len(queue),
             profile_validation_seconds=round(profile_validation_seconds,6),
