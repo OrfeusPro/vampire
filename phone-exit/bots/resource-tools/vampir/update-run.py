@@ -98,7 +98,7 @@ def definition_inputs(index, args, update):
         paths.update(index.HERE/name for name in ('update-run-v2.py', 'knowledge-scope-v2.py',
             'native-publication-v2.py', 'native-publication-utf8-v2.py',
             'update-native-drivers-v2.py', 'research-scoped-v2.py',
-            'resource-planning-v2.py', 'resource-readiness-v2.py'))
+            'resource-planning-v2.py', 'resource-readiness-v2.py', 'update-owner-scope-v3.py'))
     workspace = index.HERE.parents[3]
     for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
         variants = [check, *check.get('source_variants',{}).values()]
@@ -830,10 +830,10 @@ def run_locked(index, args, database, *, audited=None):
         if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index)!=tools:
             raise ValueError('Update definitions changed during profile preparation')
         source_metrics=store.validate()
-        scoped_exports=versioned.finish(original_index,args) if versioned else None
         bundle=index.extension('update-bundle').prepare(index,args,contracts,outcomes,capabilities,profiles,contexts,report)
         # Preparation may read further immutable artifacts; validate them before
         # publishing the final journal and next-use pointers.
+        scoped_exports=versioned.finish(original_index,args) if versioned else None
         resource_metrics=args.resource_scope.validate() if args.resource_scope else None
         source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:

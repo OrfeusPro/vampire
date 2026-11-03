@@ -11674,7 +11674,9 @@
         "phone-exit/bots/resource-tools/vampir/resource-planning-v2.py",
         "phone-exit/bots/resource-tools/vampir/resource-readiness-v2.py",
         "phone-exit/bots/test_vampir_resource_planning_v2.py",
-        "phone-exit/bots/test_vampir_resource_readiness_v2.py"
+        "phone-exit/bots/test_vampir_resource_readiness_v2.py",
+        "phone-exit/bots/resource-tools/vampir/update-owner-scope-v3.py",
+        "phone-exit/bots/test_vampir_update_owner_scope_v3.py"
       ],
       "artifact_dependencies": []
     }

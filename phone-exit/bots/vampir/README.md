@@ -267,6 +267,13 @@ symlink из-за прав Windows. Case-alias и deterministic retarget про�
 Полный `knowledge-index.py check` перед коммитом остаётся обязательным.
 Текущая сессия и next-profile не менялись; онлайн-вход не подтверждён.
 
+[Общий барьер владельца v3](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-OWNER-SCOPE-V3-11322.md)
+сохраняет batch-результаты provisional до единой проверки всех использованных
+файлов и sources после bundle preparation. Прошли 1218 tooling тестов;
+102 этапа и 34 публикации использованы из кэша без native / JVM / PE rebuild.
+Число source reads уменьшено, но общий проход всё ещё занимает около 185 с:
+следующий блок скорости — повторные child-report validations и tools closure.
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

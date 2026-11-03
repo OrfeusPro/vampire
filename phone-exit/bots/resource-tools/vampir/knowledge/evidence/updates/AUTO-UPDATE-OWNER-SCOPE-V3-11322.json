@@ -1,0 +1,55 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-owner-scope-v3-acceptance\\7d0ab6a1c554b5708d6ff1587c6bd5054d519ff8bd50aacbac35d6754f450ddf\\manifest.json",
+    "sha256": "7d0ab6a1c554b5708d6ff1587c6bd5054d519ff8bd50aacbac35d6754f450ddf"
+  },
+  "final_source_validation_reads": 6,
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\update-owner-scope-v3-inputs\\06657f5ef1783d96775d3c71e0dc75d1833fab2f5677482cf8cfd5d86581dd36\\manifest.json",
+    "sha256": "06657f5ef1783d96775d3c71e0dc75d1833fab2f5677482cf8cfd5d86581dd36"
+  },
+  "frozen_v1_inputs_preserved": 59,
+  "limits": [
+    "The new owner barrier is a selected-material infrastructure admission, not role transfer or online admission.",
+    "All native stages and publication keys reused; publication/research algorithms and 59 frozen inputs unchanged.",
+    "The whole cached pass is not materially faster yet; child report validation remains to optimize.",
+    "Not a completed ordinary full CLI update."
+  ],
+  "method": "static_infrastructure_orchestration",
+  "native_pe_rebuilds": 0,
+  "native_replays": 0,
+  "new_jvm": 0,
+  "new_tooling_tests": 20,
+  "owner_source_barriers": 1,
+  "previous_warm_seconds": 185.417547,
+  "profile_activated": false,
+  "provisional_scopes": 35,
+  "publication_source_validation_reads_after": 3,
+  "publication_source_validation_reads_before": 84,
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\7f73f2a7f0be9fbeb2c6df4923e5257156b6a1a2464360de344d7a8021b9d3f8\\manifest.json",
+    "sha256": "7f73f2a7f0be9fbeb2c6df4923e5257156b6a1a2464360de344d7a8021b9d3f8"
+  },
+  "schema": 3,
+  "seconds": 184.722085,
+  "skipped_tests": 3,
+  "source_identities": 3,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tooling_check": {
+    "cache_key": "8bfb9e6d360812e892f71b6ea014c9885fb67af7527baff52b949fddcbc9337a",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2753c3a8aac8d23be75de725c234118c672743e1d425241e1350b60a533c8d7a\\manifest.json",
+    "sha256": "2753c3a8aac8d23be75de725c234118c672743e1d425241e1350b60a533c8d7a",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 1218,
+  "unchanged_native_publication_and_research_guard": {
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge-scope-v2.py": "bd9648281c089a928f386f3d59d5a66065f582b9bf669beae88a81c74de7d605",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\native-publication-v2.py": "6193117a2d064c8068697cf33a932ae6d7a40b20c0f2fffe3f661dcda3ee753b",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-native-drivers-v2.py": "04458f5d1429bbe3b2a7a27afb2081de51958fc65219e533bfc5ebfee3c5f687"
+  },
+  "unique_final_files": 144,
+  "validation_scope": "owner_scoped_input_barrier_and_cached_native_reuse"
+}

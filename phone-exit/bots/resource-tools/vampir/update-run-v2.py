@@ -32,7 +32,7 @@ def enabled(index, args):
 def tools(index):
     return {str(HERE / name): index.digest(HERE / name) for name in (
         'update-run-v2.py', 'knowledge-scope-v2.py', 'knowledge-index.py',
-        'research-workflow.py', 'update-bindings.py', 'extract-native-enums.py')}
+        'research-workflow.py', 'update-bindings.py', 'extract-native-enums.py', 'update-owner-scope-v3.py')}
 
 
 def ensure_index(index, args, database):
@@ -53,7 +53,10 @@ def ensure_index(index, args, database):
         args.scoped_database = path
         args._scope_v2_state = dict(discovery=Path(database).resolve(), scopes=[],
             source_store=args.source_store, hints={}, admitted={}, databases={str(path): index.digest(path)},
-            definition_tools=tools(index))
+            definition_tools=tools(index),
+            owner=index.extension('update-owner-scope-v3').Owner(args.source_store.index,args,args.source_store))
+    if args._scope_v2_state['owner'].closed:
+        raise ValueError('Scoped update owner закрыт; нужен новый проход с новым SourceStore')
     return dict(database=str(args.scoped_database), reused=False,
         writer_started=True, validation_scope='selected_materials_only',
         global_history_verified=False, discovery_database=str(args._scope_v2_state['discovery']))
@@ -104,7 +107,7 @@ def _write_rows(index, args, scope, functions):
                     receipt = row['receipt']
                     connection.execute('INSERT OR IGNORE INTO artifacts VALUES(?,?,?,?,?,?)', (
                         row['artifact'], row['artifact_sha256'], receipt['path'], receipt['sha256'],
-                        'verified_selected_source_and_outputs', json.dumps(dict(recipe=RECIPE))))
+                        'provisional_selected_source_and_outputs', json.dumps(dict(recipe=RECIPE, pending_owner_barrier=True))))
                     connection.execute('INSERT OR IGNORE INTO functions VALUES(?,?)', key)
                     connection.execute('INSERT OR IGNORE INTO variants VALUES(?,?,?,?,?,?,?)', (
                         row['variant'], row['source_sha'], row['address'], row['pseudocode_sha256'],
@@ -190,9 +193,9 @@ def collect_batches(index, workflow, journal, args, database, contexts, sha):
                 body = dict(source_sha256=sha, export_hints=extra)
                 workflow.atomic(folder / (hashlib.sha256(workflow.canonical(body)).hexdigest() + '.json'),
                     workflow.canonical(body))
-        # Keep the admission closure, not a second copy of report/runtime
-        # buffers per family. The final barrier rereads these exact bytes.
-        args._scope_v2_state['scopes'].append(scope.finish_barrier())
+        # Retain a provisional closure, never a completed admission receipt.
+        # The owner performs one fresh union/source barrier before publication.
+        args._scope_v2_state['scopes'].append(args._scope_v2_state['owner'].retain(scope))
         for row in functions:
             results.append(dict(address=row['address'], state=row['state'], artifacts=[
                 dict(path=variant['artifact'], sha256=variant['artifact_sha256'])
@@ -209,17 +212,10 @@ def finish(index, args):
     if any(index.digest(path) != expected for path, expected in state['databases'].items()):
         raise ValueError('Selected SQLite изменился после admission')
     receipts = state['scopes']
-    inputs = {}
-    for row in receipts:
-        for path, expected in row['inputs'].items():
-            if path in inputs and inputs[path] != expected:
-                raise ValueError('Scoped input изменился между семействами')
-            inputs[path] = expected
-    if any(index.digest(path) != expected for path, expected in inputs.items()):
-        raise ValueError('Scoped input изменился перед окончательной публикацией')
-    args.source_store.validate()
+    admission=state['owner'].finish()
+    inputs=admission['inputs']
     return dict(validation_scope='selected_materials_only', global_history_verified=False,
         scopes=len(receipts), selected_rows=len(state['admitted']),
         global_historical_pseudocode_reads=0,
         selected_pseudocode_reads=sum(row['metrics']['selected_pseudocode_reads'] for row in receipts),
-        inputs=inputs)
+        inputs=inputs, owner_admission=admission)

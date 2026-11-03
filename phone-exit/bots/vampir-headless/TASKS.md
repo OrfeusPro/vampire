@@ -37,7 +37,8 @@ exports и проверки вручную не повторять. Счётчи
   аудит истории сохранён отдельно. Далее — безопасный selected-fact projection
   при собственной записи mutable registry, без снятия SHA barriers.
 - Publication v2 уже отделяет стабильный algorithm от descriptors. Далее —
-  invocation-local memo для повторных child-proof validations и source barriers:
+  invocation-local memo для повторных child-proof validations; общий source
+  barrier владельца уже подключён отдельным v3 helper:
   тёплый общий проход пока медленнее прежнего v1. Не менять frozen engines и
   не подменять полный source/evidence SHA доверием к size/mtime.
 - Resource-readiness v2 завершает обычный plan-only / resume и пропускает
@@ -292,6 +293,13 @@ symlink из-за прав Windows. Case-alias и deterministic retarget про�
 Полный update и онлайн-вход этим пакетом не подтверждены.
 Полный `knowledge-index.py check` перед коммитом остаётся обязательным.
 Текущая сессия и next-profile не менялись; онлайн-вход не подтверждён.
+
+[Общий барьер владельца v3](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-OWNER-SCOPE-V3-11322.md)
+сохраняет batch-результаты provisional до единой проверки всех использованных
+файлов и sources после bundle preparation. Прошли 1218 tooling тестов;
+102 этапа и 34 публикации использованы из кэша без native / JVM / PE rebuild.
+Число source reads уменьшено, но общий проход всё ещё занимает около 185 с:
+следующий блок скорости — повторные child-report validations и tools closure.
 
 ## Сохранённые записи прежних этапов
 

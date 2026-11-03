@@ -99,5 +99,53 @@ class ScopedNativeUpdate(unittest.TestCase):
         self.assertGreater(again['reused_stages'],0)
         self.assertFalse(again['metrics']['executed_stages'])
 
+    def test_batches_remain_provisional_until_one_owner_barrier(self):
+        store=self.args.source_store
+        with patch.object(store,'validate',wraps=store.validate) as barrier:
+            self.collect();self.collect()
+            receipts=self.args._scope_v2_state['scopes']
+            self.assertEqual(len(receipts),2)
+            for row in receipts:
+                self.assertFalse(row['source_barrier_completed'])
+                self.assertFalse(row['admission_completed'])
+                self.assertTrue(row['pending_owner'])
+                self.assertNotIn('validation_sha256',row)
+            barrier.assert_not_called()
+            finished=V2.finish(self.index,self.args)
+            barrier.assert_called_once()
+        self.assertTrue(finished['owner_admission']['admission_completed'])
+        self.assertTrue(finished['owner_admission']['source_barrier_completed'])
+
+    def test_finished_owner_rejects_more_collection_before_database_write(self):
+        self.collect();V2.finish(self.index,self.args)
+        before=self.args.scoped_database.read_bytes()
+        with self.assertRaisesRegex(ValueError,'закрыт'):
+            self.collect()
+        self.assertEqual(self.args.scoped_database.read_bytes(),before)
+
+    def test_owner_finishes_after_bundle_preparation_before_pointer_publication(self):
+        fixture=engine_fixtures.UpdateRunTests();fixture.setUp();self.addCleanup(fixture.doCleanups)
+        (fixture.knowledge/'update-engine.json').write_bytes((V2.HERE/'knowledge/update-engine.json').read_bytes())
+        real_v2=fixture.api.extension('update-run-v2')
+        events=[]
+        def finish(index,args):
+            events.append('owner')
+            self.assertEqual(events,['prepare','owner'])
+            return real_v2.finish(index,args)
+        fixture.modules['update-run-v2']=SimpleNamespace(enabled=real_v2.enabled,
+            ensure_index=real_v2.ensure_index,collect_batches=real_v2.collect_batches,finish=finish)
+        publisher=fixture.modules['update-bundle']
+        def prepare(*args):
+            events.append('prepare')
+            return dict(bundles=[],next_profiles={},queue=[],live_verified=False)
+        def publish(index,args,bundle,**kwargs):
+            events.append('publish')
+            self.assertEqual(events,['prepare','owner','publish'])
+            return bundle
+        publisher.prepare=prepare;publisher.publish=publish
+        result,_=fixture.run_fixture()
+        self.assertEqual(result['state'],'prepared_offline')
+        self.assertEqual(events,['prepare','owner','publish'])
+
 
 if __name__=='__main__':unittest.main()

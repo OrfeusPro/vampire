@@ -966,6 +966,47 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Полный ordinary update и оптимизация повторных native publication validations ещё не завершены.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Введён единый source/input барьер владельца: batch declarations остаются provisional; 1218 tooling тестов прошли, 102 этапа и 34 публикации переиспользованы без native/JVM.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-UPDATE-OWNER-SCOPE-V3-11322.json",
+          "sha256": "61883329cc8b07cba9b06bc64a9987fd9a5201741f6de51c8409e1d87f848006"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-UPDATE-OWNER-SCOPE-V3-11322.md",
+          "sha256": "2b528a660ea320a7d0c8f17a6dc6fe56b5f2522872fbc3a112894a2dcffe5152"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "3e5deeaea4239e3f475bd1ecbcd754870caa35afef546313dd71eb061fea33e7",
+      "limits": [
+        "Selected-material infrastructure admission only; no native role transfer, client semantic or online admission.",
+        "Publication/research engines and native keys unchanged. Full CLI update not executed in this acceptance.",
+        "Three prior real-symlink tests skipped; all 20 new owner / integration tests executed."
+      ],
+      "method": "static",
+      "next_check": "Profile child-report validations and add a versioned memo/compatibility bridge; then run the ordinary full update.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Повторные child-report/tool validations оставляют общий проход около 185 секунд; полный ordinary update ещё не проверен.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
