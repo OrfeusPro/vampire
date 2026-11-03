@@ -22,6 +22,7 @@ QUIET_SECONDS=120
 MAX_EVENT_LOG=2*1024*1024
 EVENT_TAIL=64*1024
 RETAIN_RUNS=20
+MANAGED_CHILD_RECIPE='update-owner-recovery-v4'
 
 
 class EventLog:
@@ -186,26 +187,86 @@ def child_command(args,result):
         '--result',str(result)]
 
 
+class ObservedChild:
+    """Reattach a proven existing worker; no PID-based termination."""
+    def __init__(self,owner,backend):
+        self.owner,self.backend=owner,backend
+        self.pid=owner['pid'];self.returncode=None
+    def poll(self):
+        value=self.backend.process_probe(self.pid)
+        if value.get('state') not in ('alive','exited'):
+            raise ValueError('Неизвестно состояние прежнего update worker')
+        if value['state']=='alive' and (not isinstance(value.get('creation_time'),str) or value.get('session_id') is None):
+            raise ValueError('Не подтверждена идентичность прежнего update worker')
+        if value['state']=='alive' and value['creation_time']==self.owner['creation_time']:
+            return None
+        # We can prove that the original process ended, not its exit code.
+        return 1
+    def wait(self,timeout=None):
+        started=time.monotonic()
+        while self.poll() is None:
+            if timeout is not None and time.monotonic()-started>=timeout:
+                raise subprocess.TimeoutExpired('observed update worker',timeout)
+            time.sleep(0.05)
+        return 1
+
+
+def previous_child(index,folder,state):
+    owner=state.get('child')
+    if not owner:return None,None,None,False
+    if owner.get('recipe')!=MANAGED_CHILD_RECIPE or not state.get('result_path'):
+        if alive(owner):raise ValueError('Прежний legacy update worker ещё жив; новый не запускается')
+        return None,None,None,False
+    path=Path(state['result_path']).resolve()
+    if path.parent!=folder.resolve() or not re.fullmatch(r'result-[0-9a-f]{24}\.json',path.name):
+        raise ValueError('Прежний result находится вне каталога владельца')
+    backend=index.extension('update-process-group-v4')
+    observed=ObservedChild(owner,backend)
+    if observed.poll() is None:return observed,path,None,False
+    if path.is_file():return None,path,index.read_json(path),False
+    # Retry once after a new explicitly started watcher owns the lease. The
+    # managed dispatcher will independently verify its job and research lock.
+    return None,path,dict(state='interrupted',reason='previous_update_worker_lost_before_result'),True
+
+
+def settle_child(index,state,child,result_path,*,draining=False):
+    """Persist terminal state before discarding the owned process identity."""
+    retry=False
+    if result_path.is_file():
+        state['last_result']=index.read_json(result_path)
+    else:
+        state['last_result']=dict(state='failed',reason='update_worker_no_result',returncode=child.returncode)
+        if isinstance(child,ObservedChild) or (draining and (state.get('child') or {}).get('recipe')==MANAGED_CHILD_RECIPE):
+            state['last_result']['state']='interrupted'
+            state['retry_interrupted']=retry=True
+    state['child']=None
+    state['state']='needs_review' if state['last_result'].get('state') not in ('prepared_offline','planned') else 'watching'
+    return retry
+
+
 def watch(index,args,*,ready=None,stop_after=None,clock=time.monotonic,sleep=time.sleep,launcher=subprocess.Popen):
     folder=folder_for(args)
     with owner_lock(folder):
         previous=read_state(index,folder)
-        child_owner=previous.get('child')
-        if alive(child_owner):raise ValueError('Прежний update worker ещё жив; новый не запускается')
+        child,result_path,recovered_result,interrupted=previous_child(index,folder,previous)
         token=secrets.token_hex(32)
         owner=dict(pid=os.getpid(),creation_time=process_creation(os.getpid()),start_token=token)
         if owner['creation_time'] is None:raise ValueError('Cannot establish watcher process identity')
-        state=dict(state='watching',owner=owner,child=None,poll_seconds=POLL_SECONDS,quiet_seconds=QUIET_SECONDS,
-            install=str(args.install.resolve()),root=str(args.root.resolve()),last_result=previous.get('last_result'),
+        state=dict(state='updating' if child is not None else 'watching',owner=owner,
+            child=previous.get('child') if child is not None else None,result_path=str(result_path) if result_path else None,
+            poll_seconds=POLL_SECONDS,quiet_seconds=QUIET_SECONDS,
+            install=str(args.install.resolve()),root=str(args.root.resolve()),last_result=recovered_result or previous.get('last_result'),
             event_log=previous.get('event_log'),
             attempted_identity=previous.get('attempted_identity'),attempted_definitions=previous.get('attempted_definitions'),
+            retry_interrupted=bool(interrupted or previous.get('retry_interrupted')),
             network_attempted=False,game_session_changed=False)
         save_state(index,folder,state)
         if ready:ready(dict(status='ready',pid=os.getpid(),creation_time=owner['creation_time'],state_file=str(folder/'state.json')))
         trigger=Trigger()
         if state['attempted_identity'] is not None:
             trigger.attempted=(state['attempted_identity'],state['attempted_definitions'])
-        child=None;result_path=None;draining=False;started=clock()
+        if state['retry_interrupted']:trigger.request_retry()
+        draining=False;started=clock()
         try:
             while True:
                 for command in queued_commands(index,folder,token):
@@ -216,11 +277,8 @@ def watch(index,args,*,ready=None,stop_after=None,clock=time.monotonic,sleep=tim
                     if child.poll() is None:
                         state['state']='draining' if draining else 'updating'
                     else:
-                        if result_path.is_file():
-                            state['last_result']=index.read_json(result_path)
-                        else:state['last_result']=dict(state='failed',reason='update_worker_no_result',returncode=child.returncode)
-                        state['child']=None;child=None
-                        state['state']='needs_review' if state['last_result'].get('state') not in ('prepared_offline','planned') else 'watching'
+                        if settle_child(index,state,child,result_path,draining=draining):trigger.request_retry()
+                        child=None
                 if draining and child is None:break
                 if not draining and child is None:
                     try:
@@ -243,7 +301,9 @@ def watch(index,args,*,ready=None,stop_after=None,clock=time.monotonic,sleep=tim
                             if creation is None:
                                 child.wait(timeout=5)
                                 raise ValueError('Update worker identity unavailable')
-                            state.update(state='updating',child=dict(pid=child.pid,creation_time=creation,start_token=secrets.token_hex(32)),
+                            managed=(args.knowledge/'update-owner-engine.json').is_file()
+                            state.update(state='updating',child=dict(pid=child.pid,creation_time=creation,start_token=secrets.token_hex(32),
+                                recipe=MANAGED_CHILD_RECIPE if managed else None),result_path=str(result_path),retry_interrupted=False,
                                 attempted_identity=hint,attempted_definitions=definitions,
                                 event_log=str(result_path.with_suffix('.events.jsonl')))
                         elif decision=='waiting_for_install':state['state']=decision
@@ -258,6 +318,8 @@ def watch(index,args,*,ready=None,stop_after=None,clock=time.monotonic,sleep=tim
             if child is not None and child.poll() is None:
                 state['state']='draining';save_state(index,folder,state)
                 child.wait()
+            if child is not None:
+                settle_child(index,state,child,result_path,draining=True)
             state.update(state='stopped',child=None)
             save_state(index,folder,state)
         return state

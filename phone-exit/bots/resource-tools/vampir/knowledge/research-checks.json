@@ -11689,7 +11689,14 @@
         "phone-exit/bots/test_vampir_resource_index_v3.py",
         "phone-exit/bots/resource-tools/vampir/resource-csv-v3.py",
         "phone-exit/bots/test_vampir_resource_csv_v3.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/resource-pipeline-engine.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/resource-pipeline-engine.json",
+        "phone-exit/bots/resource-tools/vampir/update-owned-dispatch-v4.py",
+        "phone-exit/bots/resource-tools/vampir/update-owner-lease-v4.py",
+        "phone-exit/bots/resource-tools/vampir/update-process-group-v4.py",
+        "phone-exit/bots/test_vampir_update_owned_dispatch_v4.py",
+        "phone-exit/bots/test_vampir_update_owner_lease_v4.py",
+        "phone-exit/bots/test_vampir_update_process_group_v4.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-owner-engine.json"
       ],
       "artifact_dependencies": []
     }

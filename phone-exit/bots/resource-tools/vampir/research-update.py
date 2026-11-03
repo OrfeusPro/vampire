@@ -139,6 +139,9 @@ def run_update_checks(index, workflow, args, sha):
 
 
 def update(index, args, database):
+    owner=index.extension('update-owned-dispatch-v4') if (args.knowledge/'update-owner-engine.json').is_file() else None
+    if owner is not None and owner.enabled(index,args) and not owner.admitted(index,args):
+        return owner.dispatch(index,args,database,'explicit')
     if getattr(args, 'resume', None) or (args.knowledge/'update-contracts.json').is_file():
         return index.extension('update-run').run(index,args,database)
     if getattr(args, 'plan_only', False):

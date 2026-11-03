@@ -107,6 +107,9 @@ def select(index,args):
 
 
 def execute(index,args,database):
+    owner=index.extension('update-owned-dispatch-v4') if (args.knowledge/'update-owner-engine.json').is_file() else None
+    if owner is not None and owner.enabled(index,args) and not owner.admitted(index,args):
+        return owner.dispatch(index,args,database,'auto')
     selection=select(index,args)
     explicit=copy.copy(args)
     explicit.auto=False;explicit.baseline=selection['baseline'];explicit.resume=selection['resume']
@@ -116,6 +119,8 @@ def execute(index,args,database):
             raise ValueError('Automatic journal source differs from frozen selection')
         index.extension('research-workflow').atomic(selection['receipt'],canonical(
             dict(schema=1,identity=selection['identity'],run=str(Path(path).resolve()))))
+        if callable(getattr(args,'journal_created',None)):
+            args.journal_created(path,record)
     explicit.journal_created=remember
     result=index.extension('research-update').update(index,explicit,database)
     workflow=index.extension('research-workflow')

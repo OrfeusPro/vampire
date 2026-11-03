@@ -1131,6 +1131,52 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Полный ordinary update с новым ресурсным recipe ещё не измерен. Остаются стоимость execution inputs / повторных archive SHA, hard-crash recovery владельца, четыре contract context projections с отдельными semantic остатками tag / writer, directory paths / encrypted / size / table-baseline gaps. SDK, полный вход, world и online admission открыты.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Owner recovery v4 подключён к разовому обновлению без изменения 59 frozen native inputs. 1422 tooling теста (96 новых), шесть дополнительных checks и ограниченные Windows fixture процессы подтверждают guardian/job/lock, reattach, interrupted retry и drain result. Production update и online не исполнялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-UPDATE-OWNER-RECOVERY-V4-11322.json",
+          "sha256": "3855090b4861cdf8155dbe729c35d78ad6d828adb827e61b8173fb178f8bb696"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-UPDATE-OWNER-RECOVERY-V4-11322.md",
+          "sha256": "13545b143d08806e4269cd0e5bfde3226fe32f03d3d954046d5e39061fb20ef8"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "6bedca4ad1eb773806cc688939d16387560c444f647f0b364831c015de177146",
+      "limits": [
+        "Production installation, EXE, PAK and real update journal were not run or audited by this package.",
+        "Real process tests use an isolated copy with a stub consumer and fixture journal; they validate orchestration, not production game compatibility.",
+        "Recovery applies only to this exact versioned producer guard and the same Windows session. Changed producer files or cross-session records stay blocked.",
+        "Legacy PID-only research.lock and ghidra.lock remain explicit blockers and are not deleted. No universal Ghidra recovery is claimed.",
+        "Non-Windows lease code supports cooperating fixtures; the managed production backend requires Windows.",
+        "Automatic watcher restart and Windows autostart are not enabled. The user left the watcher stopped.",
+        "The inherited client source anchors identify the research scope; this package establishes no new client semantics.",
+        "Three old Windows symlink tests skipped; all 96 new tests executed. Existing native suites were not replayed."
+      ],
+      "method": "static",
+      "next_check": "Продолжить общий адаптер context projections по сохранённому proposal и уменьшение повторных затрат, используя готовые native proofs. Наблюдатель и полный production update запускать только по явной команде пользователя. Ручной ярлык выполняет один выбранный пользователем проход; готовые проверки переиспользовать по SHA.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Production-проверка managed owner на настоящем update ещё не выполнялась. Legacy PID-only research / ghidra locks, иной producer guard и Windows session остаются явными блокерами восстановления. Четыре context projections и их semantic остатки tag / writer, execution inputs / archive SHA затраты, directory / encrypted / size / table-baseline gaps, SDK / full entry / world / online открыты.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

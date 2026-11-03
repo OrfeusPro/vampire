@@ -17,6 +17,9 @@ def execution_inputs(index):
     # Shared dependencies belong to several groups. Parse each file once in
     # this snapshot; the next execution_inputs call always reads fresh inputs.
     scanned={}
+    # Ownership changes invalidate the complete run and its admission, not the
+    # already verified semantics of each native/resource stage.
+    owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py'}
     def scan(path):
         if path in scanned:return scanned[path]
         digest=index.digest(path) if path.is_file() else None
@@ -29,7 +32,8 @@ def execution_inputs(index):
                     if not name.endswith('.py') or '\n' in name:continue
                     for parent in (index.HERE,index.HERE.parent):
                         child=(parent/name).resolve()
-                        if child.is_relative_to(index.HERE.parent.resolve()) and child.is_file():children.append(child)
+                        if (child.name not in owner_scaffolding
+                                and child.is_relative_to(index.HERE.parent.resolve()) and child.is_file()):children.append(child)
         scanned[path]=(digest,children)
         return scanned[path]
     def group(seeds):
@@ -102,6 +106,10 @@ def definition_inputs(index, args, update):
             'native-publication-v3.py', 'update-native-drivers-v3.py',
             'resource-pipeline-v3.py','resource-reference-v3.py','resource-index-v3.py','resource-csv-v3.py'))
         if (args.knowledge/'resource-pipeline-engine.json').is_file():paths.add(args.knowledge/'resource-pipeline-engine.json')
+        if (args.knowledge/'update-owner-engine.json').is_file():
+            paths.add(args.knowledge/'update-owner-engine.json')
+            paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
+                'update-owner-lease-v4.py','update-process-group-v4.py'))
         if (args.knowledge/'native-publication-engine.json').is_file():paths.add(args.knowledge/'native-publication-engine.json')
     workspace = index.HERE.parents[3]
     for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
@@ -455,6 +463,9 @@ def status(index, args):
     for name in ('research','ghidra'):
         lock = args.root/'knowledge/locks'/(name+'.lock')
         if lock.is_file():
+            if name=='research' and lock.read_text('utf-8').lstrip().startswith('{'):
+                owners[name]=index.extension('update-owned-dispatch-v4').lock_status(args.root)
+                continue
             pid = int(lock.read_text('utf-8'))
             owners[name] = dict(pid=pid, alive=owner_alive(pid),
                 action='Inspect owner and its children; status never removes locks or starts another JVM')
@@ -564,6 +575,13 @@ def resource_artifacts(index, root, result):
 
 
 def run(index, args, database, *, audited=None):
+    owner=index.extension('update-owned-dispatch-v4') if (args.knowledge/'update-owner-engine.json').is_file() else None
+    if owner is not None and owner.enabled(index,args):
+        if not owner.admitted(index,args):
+            if audited is not None:
+                raise ValueError('Managed pre-audited invocation requires its owner admission')
+            return owner.dispatch(index,args,database,'explicit')
+        return run_locked(index,args,database,audited=audited)
     workflow=index.extension('research-workflow')
     with workflow.locked(args.root,'research'):
         return run_locked(index,args,database,audited=audited)

@@ -286,6 +286,15 @@ Legacy blobs заново не хэшировались. Неизвестная 
 record scan не подтверждают logical resource identity или runtime admission.
 Прошли 1326 tooling тестов; три прежних symlink cases пропущены.
 
+[Управляемый owner и восстановление v4](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-OWNER-RECOVERY-V4-11322.md)
+подключены к разовому обновлению: guardian, Windows Job Object, точные PID /
+creation time / session, защищённый JSON lock и квитанции восстановления.
+1422 tooling теста и шесть дополнительных checks прошли; 96 новых случаев
+включают реальные временные процессы и продолжение fixture stage после аварии.
+Production update и вход в игру этим пакетом не выполнялись. Старые PID-only
+research / Ghidra locks остаются явными блокерами. Наблюдатель запускается
+только явно; для одного прохода доступен ярлык «Обновить Vampir вручную».
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

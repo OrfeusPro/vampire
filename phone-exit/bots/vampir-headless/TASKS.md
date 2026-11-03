@@ -48,13 +48,15 @@ exports и проверки вручную не повторять. Счётчи
   повтором. Полный обычный update завершён; свежий installed SHA barrier
   проверен отдельно по AST-привязке к неизменной цепочке.
   Не менять frozen engines и не заменять SHA доверием к size/mtime.
-- Аварийное восстановление владельца: закрепить PID / creation time, run и
-  принадлежащих ему потомков в новом orchestration helper. После hard crash
-  PID-only research lock может блокировать продолжение; удаление только по
-  мёртвому PID небезопасно, поскольку Ghidra ещё может работать. Recovery должен
-  подтвердить завершение всей группы, повторно сверить lock и продолжить журнал.
-  Watcher должен подхватывать прежний живой worker или его завершённый результат,
-  сохраняя один owner и обычные SHA barriers. Frozen native engines не менять.
+- Owner recovery v4 подключён к разовому update: управляемая Windows-группа,
+  точные process identities, JSON research lock и восстановление того же producer
+  guard / session. 96 новых tooling случаев включают реальные временные процессы;
+  повтор использует durable fixture stage после аварии guardian. Подхват worker,
+  interrupted retry и результат drain также проверены. Далее — production-проверка
+  только после явной команды пользователя; старые PID-only research / Ghidra locks
+  требуют отдельного доказательства принадлежности. Наблюдатель остаётся выключенным
+  до явного включения; frozen native engines не менять.
+  [Приёмка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-OWNER-RECOVERY-V4-11322.md).
 - Resource pipeline v3 разделяет current record / CSV extraction и сравнения
   с неизменяемым reference. Проверенное продолжение и warm-повтор 109 архивов
   завершены; получены 3344 записи / 2941 уникальный CSV, legacy blobs заново

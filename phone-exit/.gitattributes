@@ -423,3 +423,14 @@ bots/test_vampir_resource_index_v3.py text eol=lf
 bots/resource-tools/vampir/resource-csv-v3.py text eol=lf
 bots/test_vampir_resource_csv_v3.py text eol=lf
 bots/resource-tools/vampir/knowledge/resource-pipeline-engine.json text eol=lf
+
+# Managed updater ownership and crash-recovery receipts.
+bots/resource-tools/vampir/update-owned-dispatch-v4.py text eol=lf
+bots/resource-tools/vampir/update-owner-lease-v4.py text eol=lf
+bots/resource-tools/vampir/update-process-group-v4.py text eol=lf
+bots/resource-tools/vampir/knowledge/update-owner-engine.json text eol=lf
+bots/test_vampir_update_owned_dispatch_v4.py text eol=lf
+bots/test_vampir_update_owner_lease_v4.py text eol=lf
+bots/test_vampir_update_process_group_v4.py text eol=lf
+bots/resource-tools/vampir/update-auto.py text eol=lf
+bots/resource-tools/vampir/research-update.py text eol=lf

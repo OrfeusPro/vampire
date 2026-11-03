@@ -1,0 +1,143 @@
+{
+  "client_compatibility_established": false,
+  "compatibility_checks": [
+    {
+      "cache_key": "851c6185022b865e894f62cfdba673e57648aa52f6d036a3e8f1bd08b31eb699",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\25710b79e0f24991b363253f9ab9f76933cf4eead83ddd59654b0d45df7fd085\\manifest.json",
+      "sha256": "25710b79e0f24991b363253f9ab9f76933cf4eead83ddd59654b0d45df7fd085",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "6cb9b3eca4c5c048a0a16e08003c8d28124eab06d3f5193edcb2d216f8964749",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ae9abde8eb87131d3ab42711fe51ddd32e4ead156037fa9f108b74603e62e817\\manifest.json",
+      "sha256": "ae9abde8eb87131d3ab42711fe51ddd32e4ead156037fa9f108b74603e62e817",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "c84ca775ed3ee4d5baa5ff42793db36bccdbb965bf99b0021601aaf67f480628",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4efed29460a6a6a0a192eb41b8999467b700e96c18ca047c83877c53e9e02165\\manifest.json",
+      "sha256": "4efed29460a6a6a0a192eb41b8999467b700e96c18ca047c83877c53e9e02165",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\research-checks.json": "49ea5673ae829d9797a1065f3b94ef922713538537be66b9f0f86e9186264401",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\update-owner-engine.json": "fa8f127a7720b6e9ba346c999485a82a7fef0cb7f3d0c8d980e93583b1847bda",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\research-update.py": "1ad4c76206cbdeb29b0770c2defda0b2640d217b02d52c506b877459afbeb876",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-auto.py": "734bc43f1d919989b920dc81cf6beb9671837c6d16ad673bfb6939f3a3eeb3b1",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-owned-dispatch-v4.py": "33ed3f13096b514e16f6ea5db469dc04ecf55b8a6afaddbfdcf341bc70a2bf5d",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-owner-lease-v4.py": "b23d43cdee37b92ea2af5bab18776b83f2c5fa63328797b1ef0a6be98620fba4",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-process-group-v4.py": "f79685b02a71d8a5b3c4aaf650e43c660b2409381e67c5e3b255c76bf593d857",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-run.py": "0169b1fa2bdff649fd80e68044cc4cb60c113f9917c53a0242582e61d1c7675c",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\update-watch.py": "3937dd57baf7ef82b14eccd6c526a72d4c1fa707ffc79b2ca0630cd278899a5d",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\test_vampir_update_automation.py": "69392afd713ceb81f4c1da628d03f87c9d0a3b34059f7c524f75b780c9f17518",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\test_vampir_update_owned_dispatch_v4.py": "060e4465233e23ca1cb8864660788acdb7a0becdd6c06cae84eeeb035cfb5135",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\test_vampir_update_owner_lease_v4.py": "158fb96bd7a0ea5fe707d5ba72128d93d05783e8a0b7df8154858b3a8c438731",
+    "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\test_vampir_update_process_group_v4.py": "4e4fe8d5eac848d716162d539285136f8467b26ea1c0a236f471f5f23ce214bd"
+  },
+  "docs_sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/procthread/job-objects",
+    "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-createjobobjectw",
+    "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-queryinformationjobobject",
+    "https://docs.python.org/3.14/library/site.html"
+  ],
+  "frozen_native_inputs": {
+    "count": 59,
+    "manifest": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\service-lifecycle-freeze-current.json",
+      "sha256": "9df4d29c418efe76972201b177e5a307ed53882e41a919703479f3256877903a"
+    },
+    "unchanged": true
+  },
+  "limitations": [
+    "Production installation, EXE, PAK and real update journal were not run or audited by this package.",
+    "Real process tests use an isolated copy with a stub consumer and fixture journal; they validate orchestration, not production game compatibility.",
+    "Recovery applies only to this exact versioned producer guard and the same Windows session. Changed producer files or cross-session records stay blocked.",
+    "Legacy PID-only research.lock and ghidra.lock remain explicit blockers and are not deleted. No universal Ghidra recovery is claimed.",
+    "Non-Windows lease code supports cooperating fixtures; the managed production backend requires Windows.",
+    "Automatic watcher restart and Windows autostart are not enabled. The user left the watcher stopped."
+  ],
+  "new_jvm": 0,
+  "online_verified": false,
+  "process_tests": {
+    "fixture_dispatch_consumer": true,
+    "game_commands_executed": false,
+    "production_updater_executed": false,
+    "real_isolated_dispatcher_tests": 2,
+    "real_windows_job_tests": 3,
+    "scenarios": [
+      "Worker and grandchild inherit a named non-inheritable Windows Job with kill-on-close and no breakaway.",
+      "Gated -S startup executes sitecustomize only after exact job assignment and primary lock claim.",
+      "Hard-killed dummy guardian closes its group; next explicit temporary dispatch recovers the managed lock and reuses its durable fixture stage without another stage execution.",
+      "Process identity includes creation time and Windows session; denied/unknown probe is a blocker.",
+      "Exact protected file handle verifies bytes, file identity and aliases before primary lock deletion.",
+      "Prepared recovery can continue with changed process observations without overwriting the previous attempt.",
+      "Live reattached worker lost before result retries once after quiet; Stop preserves pending interrupted retry.",
+      "Result written during interrupted drain is reconciled before child identity is discarded."
+    ],
+    "temporary_only": true,
+    "watcher_started": false
+  },
+  "profile_changed": false,
+  "recipe": "update-owner-recovery-v4",
+  "schema": 1,
+  "source_bound_native_replays": 0,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "dispatcher_and_routing": 27,
+    "lease": 35,
+    "new": 96,
+    "old_windows_symlink_skips": 3,
+    "process_group": 34,
+    "seconds": 147.392,
+    "total": 1422
+  },
+  "tooling_checks": [
+    {
+      "cache_key": "1f35424ee0dfa7dfd6aa531252377d3191dee9e40b227c65eba1e65b9d02afaa",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d501eb81eae64f9e0c5164bfea03c4040667b1905570d8b0583df36a36e76b20\\manifest.json",
+      "sha256": "d501eb81eae64f9e0c5164bfea03c4040667b1905570d8b0583df36a36e76b20",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "validation_scope": "tooling_and_isolated_windows_process_fixtures"
+}
