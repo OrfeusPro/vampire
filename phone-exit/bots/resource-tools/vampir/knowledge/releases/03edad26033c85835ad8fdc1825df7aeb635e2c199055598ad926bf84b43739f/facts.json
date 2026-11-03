@@ -884,6 +884,88 @@
       "question": "release-automatic-update",
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Композиция frame backend / writer / CRC-XOR с native queue и доказанным lifecycle ещё открыта. Heap / vector helpers / engine members / registration helpers / callback lifetime остаются bounded fixtures. Во всех lifecycle cases cleanup_find=end; native unregistration и успешная очистка engine registration не подтверждены. Destructor оставляет service+0x10 / +0x18 dangling; безопасный reuse не доказан. Drain / socket errors / реальное wake scheduling, session key acquisition и receive integrity требуют своих проверок. Version sender, responses / clock / heartbeat / world и entry admission ещё не закрыты. OOM / SEH, конкурентное владение и весь онлайн-вход не доказаны. Для v2 selected research и стабильного publication key есть отдельные результаты. Legacy full-history audit и resource-readiness planning остаются дорогими; общий тёплый v2 проход пока не быстрее прежнего v1. Требуются invocation-local memo с полными SHA barriers и устранение повторного чтения historical resource inputs. Frozen ordered-pair input seed сохраняет свои ограничения; текущий CLI не переносит выбранные fact projections через собственную запись registry."
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Resource planning v2 подключён к обычному обновлению: plan-only и resume завершены; hints не дают admission, выбранные legacy inputs и stage keys совпадают, полный SHA/alias barrier сохранён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-PLANNING-V2-11322.json",
+          "sha256": "e1a2479ee9b1467ca9dac18ea28b12aace30db756f686a747670ba930d3e0764"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-PLANNING-V2-11322.md",
+          "sha256": "91a1a097c62f8bf6d3451f6025666367af65f97c81cad0ffe7c071940e2769b3"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c5d34ed35c732ec8c82501f87116205f7fcede58059be1ccd65f2b1770e7a1c1",
+      "limits": [
+        "Tooling и выбранные resource inputs; native семантика и онлайн не подтверждаются.",
+        "Исторические native suites, JVM и extraction не запускались.",
+        "Discovery ещё обходит все stage-cache manifests; полный update и разделение extraction/comparison keys остаются открытыми."
+      ],
+      "method": "static",
+      "next_check": "Оптимизировать invocation-local native publication validations с полными used-input barriers и затем выполнить обычный полный проход на сохранённых материалах.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Повторные child-proof/source validations publication v2 и общий полный проход после оптимизации не завершены.",
+      "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Исправлено сопоставление Windows case aliases при выборе table baseline; прежние actual resource keys и SHA/alias barriers сохранены, зарегистрированный tooling gate1198 passed.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-WINDOWS-PATHS-V2-11322.json",
+          "sha256": "479af6ed9e7cf404af3cae910de9cb9fb29e15e21ecbc0e5c71a1b3574bbe14d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-WINDOWS-PATHS-V2-11322.md",
+          "sha256": "ef59a71142445fb89b62fb72b7893ec768a5cb84d53eb296c44a4de309cfb2b5"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "0d896db48b070ec9010779952e113d23825183cc67043e5183bcfcb408581f30",
+      "limits": [
+        "Infrastructure / selected resource inputs only; no native semantic or online admission.",
+        "Previous recorded evidence and fact are retained; initial source bytes archived by SHA.",
+        "Three real symlink tests skipped due Windows privileges; deterministic alias tests and new case test executed."
+      ],
+      "method": "static",
+      "next_check": "Invocation-local memo повторных child-proof/source validations с полным итоговым барьером; затем общий полный проход.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Полный ordinary update и оптимизация повторных native publication validations ещё не завершены.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

@@ -396,3 +396,9 @@ bots/resource-tools/vampir/knowledge/native-drivers-v2/version-result.json text 
 bots/resource-tools/vampir/knowledge/native-drivers-v2/version-windows.json text eol=lf
 bots/resource-tools/vampir/native-publication-utf8-v2.py text eol=lf
 bots/test_vampir_native_publication_utf8_v2.py text eol=lf
+
+# Resource planning v2 uses byte-stable scoped recipe inputs.
+bots/resource-tools/vampir/resource-planning-v2.py text eol=lf
+bots/resource-tools/vampir/resource-readiness-v2.py text eol=lf
+bots/test_vampir_resource_planning_v2.py text eol=lf
+bots/test_vampir_resource_readiness_v2.py text eol=lf

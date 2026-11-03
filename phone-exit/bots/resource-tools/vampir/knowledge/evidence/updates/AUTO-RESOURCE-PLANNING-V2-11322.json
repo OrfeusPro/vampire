@@ -1,0 +1,119 @@
+{
+  "archive_extractions": 0,
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-v2-inputs\\b2611e80c75f1fdafbfd0d892c2a3bee218a4aca3811406de45e807a742e0497\\manifest.json",
+    "sha256": "b2611e80c75f1fdafbfd0d892c2a3bee218a4aca3811406de45e807a742e0497"
+  },
+  "frozen_v1_inputs_preserved": 59,
+  "game_commands": 0,
+  "limits": [
+    "This is a completed ordinary plan-only and resume, not a completed full update or client semantic/online admission.",
+    "Discovery reads all stage-cache manifests once per invocation; 108 negative hints leave archives pending.",
+    "First material reads and final full SHA/alias barriers remain mandatory. No size/mtime trust.",
+    "Legacy extraction/comparison persistent keys and native engines remain unchanged."
+  ],
+  "method": "static_infrastructure_orchestration",
+  "native_replays": 0,
+  "new_jvm": 0,
+  "new_tooling_tests": 35,
+  "ordinary_cli": [
+    {
+      "audit_reused": false,
+      "audit_seconds": 25.349164,
+      "metrics": {
+        "resource_inputs": {
+          "barrier_digest_reads": 3454,
+          "barrier_path_resolves": 6914,
+          "barrier_seconds": 2.570072,
+          "barriers": 1,
+          "digest_cache_hits": 1,
+          "digest_reads": 3454,
+          "json_bytes_read": 3535458,
+          "json_cache_hits": 0,
+          "json_reads": 2,
+          "path_cache_hits": 7032,
+          "path_resolves": 3457,
+          "stage_cache_hits": 0,
+          "table_cache_hits": 0
+        },
+        "resource_planning_seconds": 15.478174,
+        "resource_readiness": {
+          "discovery_reads": 1288,
+          "discovery_seconds": 12.897061,
+          "invalid_hints": 0,
+          "material_scans_avoided": 108,
+          "passed_resource_hints": 1
+        }
+      },
+      "pending_archives": 108,
+      "snapshot": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-v2-cli-snapshots\\a0ded1686ecae0e02b4da011ec608999a086994db6927b0480e9b1d611aafcc0\\manifest.json",
+        "sha256": "a0ded1686ecae0e02b4da011ec608999a086994db6927b0480e9b1d611aafcc0"
+      },
+      "state": "planned"
+    },
+    {
+      "audit_reused": true,
+      "audit_seconds": 22.710564,
+      "metrics": {
+        "resource_inputs": {
+          "barrier_digest_reads": 3454,
+          "barrier_path_resolves": 6914,
+          "barrier_seconds": 3.608679,
+          "barriers": 1,
+          "digest_cache_hits": 1,
+          "digest_reads": 3454,
+          "json_bytes_read": 3535458,
+          "json_cache_hits": 0,
+          "json_reads": 2,
+          "path_cache_hits": 7032,
+          "path_resolves": 3457,
+          "stage_cache_hits": 0,
+          "table_cache_hits": 0
+        },
+        "resource_planning_seconds": 15.254757,
+        "resource_readiness": {
+          "discovery_reads": 1288,
+          "discovery_seconds": 12.329991,
+          "invalid_hints": 0,
+          "material_scans_avoided": 108,
+          "passed_resource_hints": 1
+        }
+      },
+      "pending_archives": 108,
+      "snapshot": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-v2-cli-snapshots\\78c6be7b0e7500b460cc1972708fde1d9d1185359463805efcec94da9a230024\\manifest.json",
+        "sha256": "78c6be7b0e7500b460cc1972708fde1d9d1185359463805efcec94da9a230024"
+      },
+      "state": "planned"
+    }
+  ],
+  "profile": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-profiles-v2\\d5847c9ff1f0eef5cfd4c924a65a2ebdeb31d1efc008387a754d2745c3c1cc2e\\manifest.json",
+    "sha256": "d5847c9ff1f0eef5cfd4c924a65a2ebdeb31d1efc008387a754d2745c3c1cc2e"
+  },
+  "profile_activated": false,
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\e9bfc1757446e7fc10e78995fa3a6e7d01516dadecfdba6f57af142cc9422fc2\\manifest.json",
+    "sha256": "e9bfc1757446e7fc10e78995fa3a6e7d01516dadecfdba6f57af142cc9422fc2"
+  },
+  "schema": 2,
+  "selected_acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-v2-acceptance\\7f28d72f6dbce3f9f086edfca2d370ba2a62c263ac1adab7ff5915858ff24ef9\\manifest.json",
+    "sha256": "7f28d72f6dbce3f9f086edfca2d370ba2a62c263ac1adab7ff5915858ff24ef9"
+  },
+  "skip_reason": "Windows symlink privilege unavailable; deterministic alias-retarget tests executed.",
+  "skipped_tests": 3,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tooling_check": {
+    "cache_key": "a24c97e4dbdbd4e51bdcfbe1c26e34baa00620d4ff63a4398b56d2bc7d3b3e80",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8083c77e574e66e83398443ed394962a6abf331ed817a18446959aa825037a9\\manifest.json",
+    "sha256": "d8083c77e574e66e83398443ed394962a6abf331ed817a18446959aa825037a9",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 1197,
+  "validation_scope": "resource_planning_and_selected_legacy_input_equivalence"
+}

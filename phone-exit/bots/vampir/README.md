@@ -253,10 +253,17 @@ queue и lifecycle. Drain / socket / scheduler / concurrency и онлайн-в�
 результаты benchmark записаны в отдельную копию facts. Старый UTF-8 report
 поддержан отдельным typed bridge без переписывания: повтор публикации — 1,190765 с.
 
-Общий v2 repeat пока медленнее прежнего v1 замера. Следующие задачи скорости —
-invocation-local memo для повторных child-proof/source проверок и legacy
-resource-readiness planning: обычный plan-only после SHA-аудита был прерван
-на дорогой сверке historical resource inputs. Это не end-to-end passed update.
+Общий v2 native repeat остаётся медленнее прежнего v1 замера; далее нужны
+invocation-local memo для повторных child-proof/source проверок.
+[Планирование ресурсов v2](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PLANNING-V2-11322.md)
+уже завершает обычные plan-only / resume: 15,5 и 15,3 с на readiness,
+108 лишних historical scans пропущены, готовый архив проверен полностью.
+Повтор inputs трёх реальных архивов не читает файлы заново; финальный SHA-барьер
+обязателен. Первый отчёт содержит 1197 tooling тестов.
+[Исправление путей Windows](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-WINDOWS-PATHS-V2-11322.md)
+сохранило прежние ключи реальных архивов; новый итог — 1198 тестов, три пропуска
+symlink из-за прав Windows. Case-alias и deterministic retarget проверки выполнены.
+Полный update и онлайн-вход этим пакетом не подтверждены.
 Полный `knowledge-index.py check` перед коммитом остаётся обязательным.
 Текущая сессия и next-profile не менялись; онлайн-вход не подтверждён.
 

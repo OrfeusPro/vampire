@@ -348,10 +348,19 @@ workflow. Команда scoped check проверяет одну completion, п
 Файлы, переданные через --context, остаются SHA-pinned inputs: их изменение,
 включая собственную запись такого файла, требует нового request.
 
-Границы скорости, real benchmark и оставшиеся расходы ordinary resource planning
-сохранены в [отчёте](evidence/updates/HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md).
-Обычный CLI diagnostic plan-only не завершил resource readiness; его полный
-SHA inventory сохранён. Наличие нового слоя не означает завершение всего входа.
+Первый слой и его границы сохранены в
+[отчёте v2](evidence/updates/HEADLESS-UPDATE-INFRASTRUCTURE-V2-11322.md).
+[Resource planning v2](evidence/updates/HEADLESS-RESOURCE-PLANNING-V2-11322.md)
+завершил обычный plan-only и resume. Отрицательные cache hints оставляют архив
+pending; положительные проходят прежний полный ключ / manifest / output SHA.
+Промежуточные JSON, SHA и table projections используются повторно только внутри
+Scope; перед сохранением плана и итоговой публикацией выполняется свежий полный
+SHA / alias barrier. Изменившийся, в том числе своим адаптером, вход требует
+нового прохода. Поиск hints ещё обходит всю stage history; разделение resource
+keys остаётся открытым. Эта проверка плана не подтверждает целый игровой вход.
+[Уточнение для Windows Path](evidence/updates/HEADLESS-RESOURCE-WINDOWS-PATHS-V2-11322.md)
+сохраняет нечувствительное к регистру сопоставление отсутствующих архивов;
+на других системах используются их штатные правила сравнения путей.
 
 ## Журналы и дальнейшая работа
 

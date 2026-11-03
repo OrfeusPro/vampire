@@ -97,7 +97,8 @@ def definition_inputs(index, args, update):
         paths.update((args.knowledge/'native-drivers-v2').glob('*.json'))
         paths.update(index.HERE/name for name in ('update-run-v2.py', 'knowledge-scope-v2.py',
             'native-publication-v2.py', 'native-publication-utf8-v2.py',
-            'update-native-drivers-v2.py', 'research-scoped-v2.py'))
+            'update-native-drivers-v2.py', 'research-scoped-v2.py',
+            'resource-planning-v2.py', 'resource-readiness-v2.py'))
     workspace = index.HERE.parents[3]
     for check in index.read_json(args.knowledge/'research-checks.json').get('checks',[]):
         variants = [check, *check.get('source_variants',{}).values()]
@@ -111,6 +112,9 @@ def definition_inputs(index, args, update):
 
 def resource_stage_inputs(index, args, row, tools, *, source_sha=None, audit_sha=None):
     """Selected archive material only; another archive's audit is irrelevant."""
+    scope=getattr(args,'resource_scope',None)
+    if scope is not None:
+        return scope.stage_inputs(row,tools,source_sha=source_sha,audit_sha=audit_sha)
     def material(value):
         if value is None:return None
         return {key:value.get(key) for key in ('sha256','size','pak_version')}
@@ -145,6 +149,8 @@ def resource_stage_inputs(index, args, row, tools, *, source_sha=None, audit_sha
 
 def table_baseline(index,args,row):
     """Only this archive's table identities and files affect its comparison."""
+    scope=getattr(args,'resource_scope',None)
+    if scope is not None:return scope.table_baseline(row)
     path=args.root/'table-study/index.json'
     if not path.is_file():return dict(path=str(path),state='missing',tables=[])
     value=index.read_json(path)
@@ -166,6 +172,12 @@ def resource_work(index,args,report,contracts,changed,tools=None):
     if not wanted:return list(selected.values())
     workflow=index.extension('research-workflow')
     for row in wanted:
+        if row['path'] in selected:continue
+        candidates=getattr(args,'resource_candidates',None)
+        if tools is not None and candidates is not None and not candidates.possible(
+                row,tools,source_sha=report['exe']['sha256'],audit_sha=report.get('baseline_sha256')):
+            selected[row['path']]=row
+            continue
         ready=False
         if tools is not None:
             inputs=resource_stage_inputs(index,args,row,tools,source_sha=report['exe']['sha256'],
@@ -498,6 +510,13 @@ def resource_step(index, update, workflow, args, manifest, row):
     return result
 
 
+def checked_resource_step(index,update,workflow,args,manifest,row):
+    result=resource_step(index,update,workflow,args,manifest,row)
+    scope=getattr(args,'resource_scope',None)
+    if scope is not None:scope.validate(row)
+    return result
+
+
 def resource_artifacts(index, root, result):
     """Pin extracted CSV/config bytes as well as their immutable reports."""
     pinned=outputs(index,result,root)
@@ -553,6 +572,8 @@ def run_locked(index, args, database, *, audited=None):
         original_index=index
         store=index.extension('update-bindings').SourceStore(index,args.root,workers=getattr(args,'workers',2))
         args.source_store=store
+        args.resource_scope=original_index.extension('resource-planning-v2').Scope(original_index,args) if versioned else None
+        args.resource_candidates=original_index.extension('resource-readiness-v2').Candidates(original_index,args) if versioned else None
         index=SimpleNamespace(**vars(index));index.digest=store.digest
         previous = None
         if getattr(args, 'resume', None):
@@ -591,7 +612,12 @@ def run_locked(index, args, database, *, audited=None):
         comparison = index.extension('compare-release-snapshots').compare(normalized, report)
         changed = [r for r in report['files'] if not r['current'] or
             r['current'].get('sha256') != (r.get('baseline') or {}).get('sha256')]
+        resource_started=time.perf_counter()
+        print(json.dumps(dict(event='update_resource_planning',state='running')),flush=True)
         pending_resources=resource_work(index,args,report,contracts,changed,tools['resources'])
+        resource_planning_seconds=round(time.perf_counter()-resource_started,6)
+        print(json.dumps(dict(event='update_resource_planning',state='planned',seconds=resource_planning_seconds,
+            pending=len(pending_resources),readiness=args.resource_candidates.metrics if args.resource_candidates else None)),flush=True)
         changes = [dict(archive=r['path'], paths=None) for r in changed]
         changes.extend(dict(archive=r['path'],paths=None) for r in pending_resources if r not in changed)
         check_registry=workflow.registry(index,args.knowledge)['checks']
@@ -602,6 +628,10 @@ def run_locked(index, args, database, *, audited=None):
             checks={c['id']:c for c in check_registry},tools=tools, definition_sha256=definitions,
             resource_work=[r['path'] for r in pending_resources])
         if getattr(args, 'plan_only', False) or getattr(args, 'audit_only', False):
+            if args.resource_scope is not None:args.resource_scope.validate()
+            store.validate()
+            record['metrics']=dict(resource_planning_seconds=resource_planning_seconds,resource_inputs=args.resource_scope.metrics if args.resource_scope else None,
+                resource_readiness=args.resource_candidates.metrics if args.resource_candidates else None)
             record['state'] = 'planned'; record['queue'] = []
             save(workflow, path, record)
             return dict(run=str(path), state='planned', source_sha256=sha, affected=dirty,
@@ -613,7 +643,7 @@ def run_locked(index, args, database, *, audited=None):
         for row in pending_resources:
             result = journal.stage('resource-'+hashlib.sha256(row['path'].encode()).hexdigest()[:16],
                 resource_stage_inputs(index,args,row,tools['resources'],source_sha=sha,audit_sha=index.digest(manifest)),
-                lambda row=row:resource_step(index,update,workflow,args,manifest,row))
+                lambda row=row:checked_resource_step(index,update,workflow,args,manifest,row))
             if result['state'] != 'passed': queue.append(dict(contract=None, capability='resources',
                 archive=row['path'],reason=result['reason'], evidence=result,
                 next_check='Inspect the named resource adapter or add a matching baseline'))
@@ -804,6 +834,7 @@ def run_locked(index, args, database, *, audited=None):
         bundle=index.extension('update-bundle').prepare(index,args,contracts,outcomes,capabilities,profiles,contexts,report)
         # Preparation may read further immutable artifacts; validate them before
         # publishing the final journal and next-use pointers.
+        resource_metrics=args.resource_scope.validate() if args.resource_scope else None
         source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:
             raise ValueError('Installation inventory changed during update; resume after download completes')
@@ -823,6 +854,8 @@ def run_locked(index, args, database, *, audited=None):
         record['metrics']=dict(reused_stages=journal.reused,manual_tasks=len(queue),
             wall_seconds=round(time.perf_counter()-run_started,6),executed_stages=journal.executed,
             cached_stage_validation_seconds=journal.validation_seconds,
+            resource_planning_seconds=resource_planning_seconds,resource_inputs=resource_metrics,
+            resource_readiness=args.resource_candidates.metrics if args.resource_candidates else None,
             source_store=source_metrics,unique_checks=len(checked_this_run)+len(native_checks),
             scoped_exports=scoped_exports,
             check_consumers=sum(len(c['checks']) for c in contracts['contracts'])+len(extra_checks),

@@ -1,0 +1,51 @@
+{
+  "archive_extractions": 0,
+  "correction": "Use Path objects for source-group keys and lookup, retaining native OS equality and original row order.",
+  "defect": "Windows Path equality was lost by grouping table sources using case-sensitive strings for absent archive paths.",
+  "freeze": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-v2-windows-inputs\\fc219b91eccce28583ea0546092c4514fac6f1b71fbf1199489789424bdc402d\\manifest.json",
+    "sha256": "fc219b91eccce28583ea0546092c4514fac6f1b71fbf1199489789424bdc402d"
+  },
+  "frozen_v1_inputs_preserved": 59,
+  "game_commands": 0,
+  "initial_source_binding": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-v2-initial-source-bindings\\b04ee1f4655d3d94c72c654acee1dac38690cc940845b851e84fa23e87145b6e\\manifest.json",
+    "sha256": "b04ee1f4655d3d94c72c654acee1dac38690cc940845b851e84fa23e87145b6e"
+  },
+  "limits": [
+    "Earlier recorded evidence and fact are preserved; initial source bytes have an immutable archive binding.",
+    "Actual selected archive keys match their earlier admitted keys; no old native suite was repeated.",
+    "Not a full ordinary update or client semantic/online admission."
+  ],
+  "method": "static_infrastructure_orchestration",
+  "native_replays": 0,
+  "new_jvm": 0,
+  "new_tooling_tests": 36,
+  "previous_recorded_evidence": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-PLANNING-V2-11322.json",
+    "sha256": "e1a2479ee9b1467ca9dac18ea28b12aace30db756f686a747670ba930d3e0764"
+  },
+  "profile_activated": false,
+  "request": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-requests\\9c8d23f039b56e0a493b2e08f399f161580a2ada170dd6da0e6c8562a7e893a2\\manifest.json",
+    "sha256": "9c8d23f039b56e0a493b2e08f399f161580a2ada170dd6da0e6c8562a7e893a2"
+  },
+  "schema": 2,
+  "selected_actual_inputs": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-planning-v2-windows-acceptance\\1b1cc62a8b9afe5a3dd17abebf17ef06f4c3316ef2e7b8647059d721195d4380\\manifest.json",
+    "sha256": "1b1cc62a8b9afe5a3dd17abebf17ef06f4c3316ef2e7b8647059d721195d4380"
+  },
+  "skipped_tests": 3,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tooling_check": {
+    "cache_key": "e913af68cf339e72e8ea007449d312a3a907ec4873485e32dba06bc18d5b1a9a",
+    "id": "automatic-update-tooling",
+    "proves_client_compatibility": false,
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d7e1368267560b94223c9339ef03a6bab97bda53a996819df99f6b2748a28686\\manifest.json",
+    "sha256": "d7e1368267560b94223c9339ef03a6bab97bda53a996819df99f6b2748a28686",
+    "source_scope": "tooling",
+    "state": "passed"
+  },
+  "tooling_tests": 1198,
+  "validation_scope": "windows_path_alias_regression_and_selected_actual_key_reuse"
+}
