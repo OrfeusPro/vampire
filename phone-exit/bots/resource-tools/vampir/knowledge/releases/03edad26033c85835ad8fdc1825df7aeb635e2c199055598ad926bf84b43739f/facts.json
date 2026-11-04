@@ -2055,6 +2055,46 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты native Tutorial apply и опустошение очереди, реальное обновление модели QuestSync и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14142e750",
+        "0x14584c1a0",
+        "0x1464a3240",
+        "0x1464c6980",
+        "0x1464c7550",
+        "0x1464c85c0",
+        "0x1464cf330",
+        "0x1464cf4d0",
+        "0x1464d1c90",
+        "0x1464d22f0",
+        "0x1464d3550"
+      ],
+      "checks": [],
+      "conclusion": "Три source-bound native области применения и очереди Tutorial подключены к общему переносу, штатному обновлению, кэшу и конечному барьеру. Подтверждены 736 сценариев, 1456 вызовов Win64 и два повтора по семи готовым этапам.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-TUTORIAL-STATE-NATIVE-V1-11322.json",
+          "sha256": "d4d1bbade74e54b6b42cb4439df845e517c48e8c7a31369a1fab2cc795307f82"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-TUTORIAL-STATE-NATIVE-V1-11322.md",
+          "sha256": "1d7261a962bb47f2b36a537f95422595917c073072db0c17b4a011cb76c2303d"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "3b3a7e3f107bb10f2b085ce70484d2fe0d193a7b5817afecf38878360750a3e2",
+      "limits": [
+        "Native application, map copy, bootstrap and early gate execute with bounded fresh table/storage/task-launch fixtures.",
+        "Native existing-record lookup and updates execute with insertion, gate result and task-launch fixtures.",
+        "Native queue consumer executes with state, application, deleting destructor and shrink fixtures. Other packet types and heap ownership remain open."
+      ],
+      "method": "static",
+      "next_check": "Перенести и проверить QuestSync state / progress matching-task по готовому плану и baseline на 324 сценария. Для Tutorial связать consumer с apply и проверить heap lifecycle. Использовать кэш готовых пакетов. Полный update и watcher запускать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты композиция Tutorial consumer → настоящий apply, реальное обновление модели QuestSync и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

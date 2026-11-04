@@ -32,7 +32,9 @@ def execution_inputs(index, knowledge=None):
         'quest-action-transfer-v1.py','quest-action-transfer-rules-v1.py',
         'quest-wire-native-v1.py','quest-wire-harness-v1.py','quest-wire-cases-v1.py',
         'quest-dispatch-native-v1.py','quest-dispatch-harness-v1.py','quest-tutorial-dispatch-cases-v1.py',
-        'quest-sync-dispatch-transfer-v1.py','quest-sync-dispatch-cases-v1.py'}
+        'quest-sync-dispatch-transfer-v1.py','quest-sync-dispatch-cases-v1.py',
+        'quest-tutorial-state-native-v1.py','quest-tutorial-state-transfer-v1.py',
+        'quest-tutorial-state-harness-v1.py','quest-tutorial-state-cases-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -206,6 +208,10 @@ def definition_inputs(index, args, update):
             paths.update(args.knowledge/name for name in ('quest-dispatch-native.json','quest-sync-dispatch-transfer.json'))
             paths.update(index.HERE/name for name in ('quest-dispatch-native-v1.py','quest-dispatch-harness-v1.py',
                 'quest-tutorial-dispatch-cases-v1.py','quest-sync-dispatch-transfer-v1.py','quest-sync-dispatch-cases-v1.py'))
+        if (args.knowledge/'quest-tutorial-state-native.json').is_file():
+            paths.update(args.knowledge/name for name in ('quest-tutorial-state-native.json','quest-tutorial-state-transfer.json'))
+            paths.update(index.HERE/name for name in ('quest-tutorial-state-native-v1.py','quest-tutorial-state-transfer-v1.py',
+                'quest-tutorial-state-harness-v1.py','quest-tutorial-state-cases-v1.py'))
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -1000,6 +1006,14 @@ def run_locked(index, args, database, *, audited=None):
                             if check['state']!='passed':
                                 queue.append(dict(contract='quests',capability=family,reason='quest_dispatch_native_requires_review',
                                     evidence=check,next_check='Review exact handler scope or the failed dispatch case'))
+                    if (args.knowledge/'quest-tutorial-state-native.json').is_file():
+                        tutorial=index.extension('quest-tutorial-state-native-v1').run(index,args,sha,journal,action,
+                            getattr(args,'scoped_database',database))
+                        record['quest_tutorial_state_native']=tutorial
+                        for family,check in tutorial['checks'].items():
+                            if check['state']!='passed':
+                                queue.append(dict(contract='quests',capability=family,reason='quest_tutorial_state_requires_review',
+                                    evidence=check,next_check='Inspect Tutorial state transfer or the failed bounded case'))
             record['native_contexts']=native_contexts
             record['native_checks']=native_checks
         outcomes = {}
@@ -1162,6 +1176,9 @@ def run_locked(index, args, database, *, audited=None):
         if 'quest_dispatch_native' in record:
             record['quest_dispatch_native']=index.extension('quest-dispatch-native-v1').finalize(
                 original_index,args,record['quest_dispatch_native'])
+        if 'quest_tutorial_state_native' in record:
+            record['quest_tutorial_state_native']=index.extension('quest-tutorial-state-native-v1').finalize(
+                original_index,args,record['quest_tutorial_state_native'])
         publisher=index.extension('update-bundle')
         if hasattr(publisher,'publish'):
             bundle=publisher.publish(index,args,bundle,

@@ -236,6 +236,18 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## Применение состояния Tutorial
+
+Селектор включает общий перенос Tutorial startup / populated / drain
+и три независимых native-этапа. Журнал содержит quest_tutorial_state_native.
+Готовый action proof задаёт source и начальные связи. Сборщик получает
+только недостающие whole exports. Отчёты содержат точные матрицы и сохраняют
+границы fixtures. Повтор использует доказательства после проверки SHA,
+runtime и конечного барьера владельца.
+[Селектор](quest-tutorial-state-native.json).
+[Правило переноса](quest-tutorial-state-transfer.json).
+[Приёмка и границы](evidence/updates/HEADLESS-TUTORIAL-STATE-NATIVE-V1-11322.md).
+
 ## Обработчики Tutorial и QuestSync
 
 Селектор добавляет два этапа проверки исполнения в quest_dispatch_native.

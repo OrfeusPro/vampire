@@ -1,0 +1,146 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-tutorial-state-native-v1-acceptance\\2afed04cc951a557a0af1e4ca118087ce2693b3aa59fcb91cc7c36e1d6f9266d\\manifest.json",
+    "sha256": "2afed04cc951a557a0af1e4ca118087ce2693b3aa59fcb91cc7c36e1d6f9266d"
+  },
+  "cases": {
+    "drain": 160,
+    "populated": 384,
+    "startup": 192,
+    "total": 736
+  },
+  "checks": [
+    {
+      "cache_key": "2785bb30026e8a60aba1c220cb4afe0827c7549a683cc7387e72099787c33840",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b02906ead7ccf4c2415a8621cdf00f84cf44b5280e370f7155478db403b20ee3\\manifest.json",
+      "sha256": "b02906ead7ccf4c2415a8621cdf00f84cf44b5280e370f7155478db403b20ee3",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89efd943ee125f8d22c738f77d557f851baac9322ad0ecc3ff7f47aef4d6014b",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\35c0ddbe02306b4f61b0864b81d8f1bb267df08d6628f7bd264e79f8cb31fa56\\manifest.json",
+      "sha256": "35c0ddbe02306b4f61b0864b81d8f1bb267df08d6628f7bd264e79f8cb31fa56",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "b21aa7f21e49a9cddb5c45bcf9fc5a5a332b5cad55b8b9d546b53d9e7bab9d92",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e047d4ef861b54f12becf41b6a4c18e22022d191a24464b5a4c97be3173ea3fe\\manifest.json",
+      "sha256": "e047d4ef861b54f12becf41b6a4c18e22022d191a24464b5a4c97be3173ea3fe",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "9466e098ad34765b4ae46f44844758e7f0702a1edd6610617fc0e898f46ae603",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2e17253ef8d61163ed45ab947052a5ba6e06070d6f373ad41ebb5c9306ae372d\\manifest.json",
+      "sha256": "2e17253ef8d61163ed45ab947052a5ba6e06070d6f373ad41ebb5c9306ae372d",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-tutorial-state-native.json": "a6170e1f677599018e1a2c393267be1d2d5d9a7b4a75dcf7d48035a4f48ea819",
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-tutorial-state-transfer.json": "9eda3b10dd92279bb6c6c197856131f32b67cfc8b10c4f8e07404b3bf4ec472e",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "7d8a940132c2726cd79a5e3ab9a41c77174d12a06aeaeb0e840d16ffb2924be4",
+    "phone-exit/bots/resource-tools/vampir/quest-tutorial-state-cases-v1.py": "b6771942f7d6794ae5e8858131aee3185eceefc40b2dceea56f27556a08ee34d",
+    "phone-exit/bots/resource-tools/vampir/quest-tutorial-state-harness-v1.py": "cef1ce14a0a7a2aee2a5064ed571501653bb1b9a11aafc7f938976ee817b179e",
+    "phone-exit/bots/resource-tools/vampir/quest-tutorial-state-native-v1.py": "64806d35d47407bf706f989d90ece6372d1e443da831882c06b5f1babbf0bb6e",
+    "phone-exit/bots/resource-tools/vampir/quest-tutorial-state-transfer-v1.py": "b43cc8fe306ee5107635982609422e27ea680e5cb80624ec94eafa5d12437ef7",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "1263bf962d19264e2d3220bcac7ab414dea39ac86fb721d720f4978f7f42ef6e",
+    "phone-exit/bots/test_vampir_tutorial_state_harness_v1.py": "af2d7710509d0c53b255e23855e6d56ac74d2f802190e98c9768a00f42b08750",
+    "phone-exit/bots/test_vampir_tutorial_state_integration_v1.py": "cdb6aeb890f3166c40e61382996adfd158bd164bffab86be78a1123e25dd8423",
+    "phone-exit/bots/test_vampir_update_automation.py": "e3f5d9df1be49acfe6a64b16649fc619dd8ef10784b00b722197ac38b5b56841"
+  },
+  "exports": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\tutorial-state-v1-export-handoff\\f3dee4c9954a2396333120f3a1a1e57ef425bbe9fff2a32e44a47f681b31db19\\manifest.json",
+    "sha256": "f3dee4c9954a2396333120f3a1a1e57ef425bbe9fff2a32e44a47f681b31db19"
+  },
+  "first_component_seconds": 68.313484,
+  "limits": {
+    "tutorial-drain": "Native queue consumer executes with state, application, deleting destructor and shrink fixtures. Other packet types and heap ownership remain open.",
+    "tutorial-populated": "Native existing-record lookup and updates execute with insertion, gate result and task-launch fixtures.",
+    "tutorial-startup": "Native application, map copy, bootstrap and early gate execute with bounded fresh table/storage/task-launch fixtures."
+  },
+  "method": "bounded_native_component_acceptance",
+  "native_calls": {
+    "drain": 880,
+    "populated": 384,
+    "startup": 192,
+    "total": 1456
+  },
+  "native_checks": {
+    "tutorial-drain": {
+      "cases": 160,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-tutorial-state-checks-v1\\df23e6c0fb25de58ea976f9d3213d6b64055adcd101fe11e76f0ab0519154cd6\\manifest.json",
+      "sha256": "df23e6c0fb25de58ea976f9d3213d6b64055adcd101fe11e76f0ab0519154cd6",
+      "state": "passed"
+    },
+    "tutorial-populated": {
+      "cases": 384,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-tutorial-state-checks-v1\\bfa0a1390bb7bcf10a8f55bee24a14218a2a87fe4b59cfed420fe0cf903cc2ba\\manifest.json",
+      "sha256": "bfa0a1390bb7bcf10a8f55bee24a14218a2a87fe4b59cfed420fe0cf903cc2ba",
+      "state": "passed"
+    },
+    "tutorial-startup": {
+      "cases": 192,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-tutorial-state-checks-v1\\7c4e3e9b71f0997f739c2b72a897a37144dd9c089022ac1b83c6fc888d0310bc\\manifest.json",
+      "sha256": "7c4e3e9b71f0997f739c2b72a897a37144dd9c089022ac1b83c6fc888d0310bc",
+      "state": "passed"
+    }
+  },
+  "new_jvm": 0,
+  "next_quest_model_plan": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-model-application-next-package-v1\\b0814add044f54923f03d56a6e66894cab6f4bd45bef96931da7b0b71e47299e\\manifest.json",
+    "sha256": "b0814add044f54923f03d56a6e66894cab6f4bd45bef96931da7b0b71e47299e"
+  },
+  "profile_activated": false,
+  "recipe": "quest-tutorial-state-native-v1",
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "added": 14,
+    "aggregate": 1960,
+    "skipped": 3
+  },
+  "warm_reused_stages": 7,
+  "warm_seconds": [
+    19.107977,
+    18.342943
+  ]
+}

@@ -426,8 +426,12 @@ native replay. Проверка выполнения обработчиков п
 
 [Проверка обработчиков Tutorial и QuestSync](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-DISPATCH-NATIVE-V1-11322.md)
 подключена к обновлению и кэшу. На 1.13.22 прошли 192 сценария Tutorial
-и 140 сценариев QuestSync. Реальное применение состояния и runtime-контракт
-остаются открытыми.
+и 140 сценариев QuestSync. Применение Tutorial описано следующим пакетом.
+
+[Применение состояния Tutorial и очередь](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TUTORIAL-STATE-NATIVE-V1-11322.md)
+подключены к обновлению и кэшу. На 1.13.22 прошли 192 startup, 384 populated
+и 160 drain сценариев. Два повтора используют семь готовых этапов.
+Следующий пакет — применение состояния QuestSync и композиция Tutorial.
 
 ## Сохранённые записи прежних этапов
 
