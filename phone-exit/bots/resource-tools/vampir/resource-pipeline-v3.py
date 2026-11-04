@@ -45,6 +45,8 @@ class Pipeline:
         self.csv_api=index.extension('resource-csv-v3')
         self.assets=index.extension('compare-release-assets')
         self.tables=index.extension('extract-release-tables')
+        self.directory_api=index.extension('resource-directory-v1') if (Path(args.knowledge)/'resource-directory-engine.json').is_file() else None
+        if self.directory_api is not None and not self.directory_api.enabled(index,args):self.directory_api=None
         self.reference,self.reference_error=None,None
         self.files,self.aliases={},{}
         self.optional_files,self.pending={},{}
@@ -56,6 +58,7 @@ class Pipeline:
             asset_comparison_seconds=0,table_comparison_seconds=0,report_validation_seconds=0,
             comparison_cache_hits=0,comparison_executions=0,final_barrier_seconds=0,
             current_csv_tables=0,current_csv_errors=0,common_table_baseline_missing=0)
+        if self.directory_api is not None:self.metrics['directory_seconds']=0
         self.finished=False
 
     def pin(self,path,expected=None):
@@ -230,12 +233,21 @@ class Pipeline:
             csv_report=self.read(csv_pointer)
             for table in csv_report['tables']:self.pin(table['file'],table['sha256'])
             self.metrics['current_csv_seconds']+=time.perf_counter()-started
+            directory=None
+            if self.directory_api is not None:
+                started=time.perf_counter()
+                try:
+                    directory=self.directory_api.process(self.index,self.args,row,record_pointer,csv_pointer)
+                except (ValueError,OSError,KeyError) as error:
+                    directory=dict(state='requires_review',reason=str(error))
+                finally:self.metrics['directory_seconds']+=time.perf_counter()-started
             self.metrics['current_csv_tables']+=len(csv_report['tables'])
             self.metrics['current_csv_errors']+=len(csv_report['errors'])
             reference=self._reference(row)
             asset_pointer,asset_report=self._asset_comparison(record_pointer,record,reference)
             table_pointer,table_report=self._table_comparison(row,csv_pointer,csv_report)
             reasons=[]
+            if directory is not None and directory['state']!='bound':reasons.append('resource_directory_incomplete')
             if config is not None and config.get('state')!='passed':reasons.append('current_game_config_extraction_incomplete')
             if csv_report['state']!='extracted':reasons.append('current_csv_extraction_errors')
             if asset_report['state']!='compared':reasons.append(asset_report['reason'])
@@ -249,12 +261,14 @@ class Pipeline:
                 directory_index_parsed=record['directory_index_parsed'],compatibility='not_established',
                 resource_identity_proven=False,owner_barrier_pending=True)
             if config is not None:outcome['config']=config
+            if directory is not None:outcome['directory']=directory
             pointer=self.receipt('resource-processing-v3',outcome)
             inputs=dict(record_index=record_pointer,current_csv=csv_pointer,asset_comparison=asset_pointer,
                 table_comparison=table_pointer,rules=self.rules)
             if config is not None:
                 inputs['config_outcome']=copy.deepcopy(config)
                 inputs['config_source_sha256']=self.report['exe']['sha256']
+            if directory is not None:inputs['directory']=directory
             result=self.journal.stage('resource-v3-'+hashlib.sha256(row['path'].encode()).hexdigest()[:16],inputs,
                 lambda:dict(outcome,report=pointer['path'],sha256=pointer['sha256']))
             print(json.dumps(dict(event='update_resource_v3',archive=Path(row['path']).name,
@@ -273,6 +287,8 @@ class Pipeline:
             self.finished=True
             if self.owner is not None and not self.owner.closed:self.owner.abort()
             raise
+        finally:
+            if self.directory_api is not None:self.directory_api.close(self.args)
 
     def _finish(self):
         started=time.perf_counter()
@@ -305,6 +321,9 @@ class Pipeline:
                 else:self.workflow.atomic(cache,self.workflow.canonical(pointer))
         self.metrics['final_barrier_seconds']=round(time.perf_counter()-started,6)
         self.finished=True
-        return dict(recipe=RECIPE,reference=reference,record_indexes=indexes,owner=owner,
+        directory=self.directory_api.close(self.args) if self.directory_api is not None else None
+        result=dict(recipe=RECIPE,reference=reference,record_indexes=indexes,owner=owner,
             metrics=copy.deepcopy(self.metrics),validation_scope='bounded_resource_processing_only',
             compatibility='not_established',resource_identity_proven=False)
+        if directory is not None:result['directory']=directory
+        return result

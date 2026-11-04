@@ -120,6 +120,21 @@ Standalone проверки и внешний полный SHA установк�
 Квитанции находятся в knowledge/resource-owner-barriers-v4 библиотеки ресурсов.
 [Матрица проверки и границы](evidence/updates/HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md).
 
+## Имена ресурсов из подтверждённого каталога PAK
+
+[Directory selector](resource-directory-engine.json) включает штатный адаптер
+поверх точных record/CSV reports. Полный SHA PAK, проверенные main/directory
+индексы и encoded offset связывают имя с payload SHA. Shared owner назначает
+кэш только после fresh barrier. Для нового SHA строится собственный report;
+неизменные outputs проверяются и используются повторно. Native replay ключа
+и CSV extraction для этого шага не нужны. Без selector действует старый путь.
+
+Неподдержанная форма mount/path и неоднозначная CSV-привязка сохраняют
+конкретный blocker; готовые CSV не отбрасываются. Исходные raw directory
+names и canonical path различаются. Схема таблицы не подтверждает имя,
+а точное имя не подтверждает её игровую семантику или старую baseline.
+[Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-V1-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver

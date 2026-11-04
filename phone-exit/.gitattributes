@@ -478,3 +478,10 @@ bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-NATIVE-ACTION-INPUTS-
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-NATIVE-ACTION-INPUTS-V2-11322.md text eol=crlf
 bots/resource-tools/vampir/knowledge/evidence/updates/RESOURCE-PATCH-268356-11322.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PATCH-268356-11322.md text eol=crlf
+bots/resource-tools/vampir/resource-directory-v1.py text eol=lf
+bots/resource-tools/vampir/resource-directory-format-v1.py text eol=lf
+bots/resource-tools/vampir/knowledge/resource-directory-engine.json text eol=lf
+bots/test_vampir_resource_directory_v1.py text eol=lf
+bots/test_vampir_resource_directory_format_v1.py text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-RESOURCE-DIRECTORY-V1-268356.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-DIRECTORY-V1-268356.md text eol=crlf

@@ -23,7 +23,8 @@ def execution_inputs(index, knowledge=None):
     # inputs; they are not dependencies of every unrelated native/resource stage.
     owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py',
         'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py',
-        'stage-action-tools-v1.py','native-materialize-inputs-v2.py'}
+        'stage-action-tools-v1.py','native-materialize-inputs-v2.py',
+        'resource-directory-v1.py','resource-directory-format-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -155,6 +156,9 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'resource-owner-engine.json').is_file():
             paths.add(args.knowledge/'resource-owner-engine.json')
             paths.add(index.HERE/'resource-owner-v4.py')
+        if (args.knowledge/'resource-directory-engine.json').is_file():
+            paths.add(args.knowledge/'resource-directory-engine.json')
+            paths.update(index.HERE/name for name in ('resource-directory-v1.py','resource-directory-format-v1.py'))
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',

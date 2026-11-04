@@ -1521,6 +1521,55 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты остальные широкие потребители tool groups и консервативные данные native-materialize, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Directory adapter подключён к update/cache: подтверждены target пути 3109 CSV и одной TXT; 53 299 raw names, 5276 canonical gaps. Повтор: 9 из 9 cache hits, native replay 0. 39 новых cases, границы admission сохранены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-DIRECTORY-V1-268356.json",
+          "sha256": "ae0e7c93f2d8d2e904474c61ee1e949a66936ee7d45fd954e38a2ea291f70b3f"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-DIRECTORY-V1-268356.md",
+          "sha256": "d1357495c8728f876d8d46380e0a95796622b32caf81a02f09682a79b745df0a"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "cfed42436d9c240c64dc2e29515d85fad7383fef69e7e71882595c15e6bde734",
+      "limits": [
+        "Selected directory/CSV component, not a full ordinary update.",
+        "Historical static key candidate is checked in memory against existing proof; no key bytes saved.",
+        "PAK main and full directory SHA1 plus full archive SHA authenticate names only for that archive.",
+        "No resource interpretation, current EXE key binding or runtime/online admission is established.",
+        "Changed named CSV records are selected by exact prior CSV payload hashes, not the bounded record decoder budget.",
+        "The acceptance helper candidate name lists use old record decoded hashes; those lists are not a complete CSV content delta.",
+        "Current names are authenticated for the target PAK; interpretation and older table identity remain separate.",
+        "5276 authenticated raw paths with a leading slash retain unknown canonical mount joins; this is one format gap, not 5276 manual tasks.",
+        "3110 CSV-like records contain 3109 .csv files and one .txt payload; syntax alone does not prove extension or semantics.",
+        "Target names do not establish identities of older unnamed baseline tables; impact planning remains conservative.",
+        "All existing source, runtime, admission, profile and active-session guards remain."
+      ],
+      "method": "static",
+      "next_check": "Разобрать общий leading-slash/mount case и точные исторические named baselines; подключать проверенное правило к штатному recipe/cache. По явной команде выполнить полный проход/owner recovery и второй patch admission. Watcher включать явно.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты canonical mount joins leading-slash paths и старые named table baselines для selective impact, encrypted/size и resource semantic gaps; остальные широкие потребители tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

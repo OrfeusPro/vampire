@@ -1,0 +1,124 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-v1-acceptance\\6f8037e3b0c84f2f81439836b4a3cde1a349b9022f17f39f675add4ae495a76d\\manifest.json",
+    "sha256": "6f8037e3b0c84f2f81439836b4a3cde1a349b9022f17f39f675add4ae495a76d"
+  },
+  "checks": [
+    {
+      "cache_key": "ebbf420111ece1310bd12006a28c6f918f0bb4e385a039bd82a9447d2b6984b1",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c2ba14dd0af933161ef6ecf957a854418ae5de6be96de07f6f0db8e80852ae94\\manifest.json",
+      "sha256": "c2ba14dd0af933161ef6ecf957a854418ae5de6be96de07f6f0db8e80852ae94",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "ec4a1e6bb0aedb665dedaa48b819985fd31c1d02e0bcc3389acfeecfdf26e856",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e203f2a406b5ce432637d68e480a1f27c8e0d159fccefdc890ca045aca673ff7\\manifest.json",
+      "sha256": "e203f2a406b5ce432637d68e480a1f27c8e0d159fccefdc890ca045aca673ff7",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "0191977a574d132ec6e14262d688b2cc6072fa9e09cede01f343dbc56706023d",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9903d6d85994b93142ea79f9c14519ef282db4ea2aa2812aa733bbc85213fbc7\\manifest.json",
+      "sha256": "9903d6d85994b93142ea79f9c14519ef282db4ea2aa2812aa733bbc85213fbc7",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "dc13a9355857780c345a0e289c9d7ae3e3efe402c17c2a41af09d75cf7e2fd2a",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0e34fd3c46522d1a923742458b42a6facb5850942fac35f146392aa3be7181a2\\manifest.json",
+      "sha256": "0e34fd3c46522d1a923742458b42a6facb5850942fac35f146392aa3be7181a2",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "4eb1ab2ab1eb83db56fd4365405296ede32e4589a5a30f861c5a095a1b17e424",
+    "phone-exit/bots/resource-tools/vampir/knowledge/resource-directory-engine.json": "54388bf460730777666a7065422a6fb9b7bd01d49917fa15ee9ed98381d311fc",
+    "phone-exit/bots/resource-tools/vampir/resource-directory-format-v1.py": "781da3f6d73cc7ae1b7406bf92882c7f354efdfa65262e151e60ea37b3077d11",
+    "phone-exit/bots/resource-tools/vampir/resource-directory-v1.py": "3bb33aa18e0a5971e13bbe448a6fce349480cf62f4ff5896bc47ce1bd51781af",
+    "phone-exit/bots/resource-tools/vampir/resource-pipeline-v3.py": "fca98c70f7a325c952a303944a81a082f685c0be1957a822b09960287528f589",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "c59d327dc930755d4bfa0adeb4b432ca3ca307447525b5109d347085c091232b",
+    "phone-exit/bots/test_vampir_resource_directory_format_v1.py": "e549242edd9ca8a1c732a518068670a2da62241654ed50a1b47ef9e700cdccd6",
+    "phone-exit/bots/test_vampir_resource_directory_v1.py": "027e7d0752d62eccbe0e29335a0cfa9ef930f8930952afa1bf0f94682016fdaf",
+    "phone-exit/bots/test_vampir_update_automation.py": "d6194cb0f368c355ccbeddda4904c2b9a945d37f7d1194f99f537a7bc47f5976"
+  },
+  "details": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-v1-details\\2260945127a0eb0d18e80b129f5a26db8ea05f2b8ecd901626f943330747e69e\\manifest.json",
+    "sha256": "2260945127a0eb0d18e80b129f5a26db8ea05f2b8ecd901626f943330747e69e"
+  },
+  "limits": [
+    "Selected directory/CSV component, not a full ordinary update.",
+    "Historical static key candidate is checked in memory against existing proof; no key bytes saved.",
+    "PAK main and full directory SHA1 plus full archive SHA authenticate names only for that archive.",
+    "No resource interpretation, current EXE key binding or runtime/online admission is established.",
+    "Changed named CSV records are selected by exact prior CSV payload hashes, not the bounded record decoder budget.",
+    "The acceptance helper candidate name lists use old record decoded hashes; those lists are not a complete CSV content delta.",
+    "Current names are authenticated for the target PAK; interpretation and older table identity remain separate.",
+    "5276 authenticated raw paths with a leading slash retain unknown canonical mount joins; this is one format gap, not 5276 manual tasks.",
+    "3110 CSV-like records contain 3109 .csv files and one .txt payload; syntax alone does not prove extension or semantics.",
+    "Target names do not establish identities of older unnamed baseline tables; impact planning remains conservative.",
+    "All existing source, runtime, admission, profile and active-session guards remain."
+  ],
+  "native_replays": 0,
+  "new_jvm": 0,
+  "patch_revision": "Revision268356",
+  "profile_activated": false,
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "summary": {
+    "canonical_path_gaps": 5276,
+    "canonical_paths": 48023,
+    "directory_entries": 53299,
+    "named_csv_files": 3109,
+    "named_csv_like_txt_records": 1,
+    "new_named_csv_records_without_old_exact_hash": 755,
+    "new_unique_csv_contents": 754,
+    "unmatched_csv_records": 0
+  },
+  "tests": {
+    "added": 39,
+    "aggregate": 1608,
+    "aggregate_skipped": 3,
+    "controller": 40,
+    "directory_and_pipeline": 23,
+    "format": 16
+  },
+  "watcher_started": false
+}
