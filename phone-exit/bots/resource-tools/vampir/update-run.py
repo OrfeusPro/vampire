@@ -25,7 +25,8 @@ def execution_inputs(index, knowledge=None):
         'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py',
         'stage-action-tools-v1.py','native-materialize-inputs-v2.py',
         'resource-directory-v1.py','resource-directory-format-v1.py','resource-directory-paths-v2.py',
-        'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py'}
+        'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py',
+        'resource-selected-hashes-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -170,6 +171,9 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'resource-context-keys.json').is_file():
             paths.add(args.knowledge/'resource-context-keys.json')
             paths.add(index.HERE/'resource-context-keys-v1.py')
+        if (args.knowledge/'resource-selected-hashes.json').is_file():
+            paths.add(args.knowledge/'resource-selected-hashes.json')
+            paths.add(index.HERE/'resource-selected-hashes-v1.py')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',

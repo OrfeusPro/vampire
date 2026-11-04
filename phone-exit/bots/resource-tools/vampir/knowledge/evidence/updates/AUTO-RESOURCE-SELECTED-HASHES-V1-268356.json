@@ -1,0 +1,159 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-selected-hashes-v1-acceptance\\9facb9a11ba08785f32fe3330a2a2ef312de6c9d87c959bc077de5a060854adb\\manifest.json",
+    "sha256": "9facb9a11ba08785f32fe3330a2a2ef312de6c9d87c959bc077de5a060854adb"
+  },
+  "blocked_paths": [
+    "Engine/Plugins/Developer/Concert/ConcertUI/ConcertSharedSlate/ConcertSharedSlate.uplugin",
+    "Engine/Plugins/WorldMetrics/WorldMetrics.uplugin",
+    "ProjectRED/Content/RED/NavMesh/TestNavData_Nav.bin"
+  ],
+  "checks": [
+    {
+      "cache_key": "d259cde47ba425c8e8f5b97579a321431eac42bfacf785039683b28b9bc6c287",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\36e0ac9fb7dbe470356de83bf8871200ae9cad43d4566fe6ec947232bc49f10d\\manifest.json",
+      "sha256": "36e0ac9fb7dbe470356de83bf8871200ae9cad43d4566fe6ec947232bc49f10d",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "552714cb8fc1e084e1fa1b355e00412e86c5eb18538c58b496da0e00a3b45c4b",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0dc34b087e6625ad602fd83130410455a6337a6e574525d3b970620c73f67a3f\\manifest.json",
+      "sha256": "0dc34b087e6625ad602fd83130410455a6337a6e574525d3b970620c73f67a3f",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "857f7e0ab4d6bcf1789be1636661a3a230d71cb73218ec6e745f14af7e72955b",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\18ff6fd164a23d45eba6dee84d0528c8692d48dcfdfffcb65dac6d93319dbde0\\manifest.json",
+      "sha256": "18ff6fd164a23d45eba6dee84d0528c8692d48dcfdfffcb65dac6d93319dbde0",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "2aeaff60e28d78d7b713b19382d3440a24b07c667762532dfe493ea4d259ff0b",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\67a7254f935afc23b748c2d57e919d579e048c23100486e7c66d981416249927\\manifest.json",
+      "sha256": "67a7254f935afc23b748c2d57e919d579e048c23100486e7c66d981416249927",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "4c66ca5a3cbd4ba0a2d09699d6b06b657aa726aaa439df3171420de4984109c8",
+    "phone-exit/bots/resource-tools/vampir/knowledge/resource-selected-hashes.json": "c90c9cfb8a5ad707581ed2e03405d083a95f6373cdf55a8cad2d59dcd1d5db9b",
+    "phone-exit/bots/resource-tools/vampir/resource-context-keys-v1.py": "4fa9b8ad0cd06e0505564295f3e4fd544ce4b048d28a74771a1492413fa971dc",
+    "phone-exit/bots/resource-tools/vampir/resource-selected-hashes-v1.py": "f16565e3ff786f10c82b1ecce06afb57ac721414bd9d2788d1d8d6727fd516d8",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "01b918f3ae4408f5c6f7483c89910566982a662796e7cb51c0eeda4da469798f",
+    "phone-exit/bots/test_vampir_resource_selected_hashes_v1.py": "0f4f9f10128848aea576e1f65da47b72d090c9bbdabf5f200846be1574ac8cab",
+    "phone-exit/bots/test_vampir_selected_hash_integration.py": "e6f09e6e0ce0423a5f633cab3f67ddae90cd8ab536bda24f91bc20d5763b0bbf",
+    "phone-exit/bots/test_vampir_update_automation.py": "d9cb9c8bfe2f5f8fdda70a0065f4944cb0e1aaae1c3142094a978459e258cee7"
+  },
+  "consumer_counts": {
+    "game-ui": {
+      "fallback": 1,
+      "selected": 17,
+      "selected_entries": 27318
+    },
+    "map-data": {
+      "fallback": 2,
+      "selected": 25,
+      "selected_entries": 5345
+    },
+    "quests": {
+      "fallback": 0,
+      "selected": 9,
+      "selected_entries": 414
+    }
+  },
+  "csv_extractions": 0,
+  "first_hash_metrics": {
+    "blocked_records": 3,
+    "cache_hits": 0,
+    "decoded_bytes": 918580558,
+    "decodes": 244,
+    "memo_hits": 239,
+    "stored_bytes": 273194369,
+    "unique_records": 247
+  },
+  "limits": [
+    "Only declared resources of three guarded partial, builder-free contexts are keyed by content.",
+    "The diagnostic stages have a distinct component namespace and requires_review state; no semantic checks were replaced.",
+    "Only nine changed archives were selected; no full ordinary update or complete runtime dependency claim.",
+    "Three matching directory offsets absent from the linear record index retain full-archive fallback; decoder does not guess missing records.",
+    "Supplementary hashes prove decoded bytes of exact selected current records, not UObject semantics or complete runtime dependencies.",
+    "Three directory offsets absent from the linear record index remain explicit blockers; no directory-only header fallback is inferred.",
+    "Old directory, record and named capture proofs are unchanged; payload contents are not saved.",
+    "Full source/runtime/alias barriers remain required even for a warm hash cache."
+  ],
+  "native_replays": 0,
+  "new_jvm": 0,
+  "patch_revision": "Revision268356",
+  "profile_activated": false,
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "summary": {
+    "archive_fallback_after": 3,
+    "archive_fallback_before": 16,
+    "blocked_records": 3,
+    "component_stage_reuse": 3,
+    "decoded_records": 244,
+    "matching_unknown_references": 486,
+    "selected_content_inputs_after": 51,
+    "selected_content_inputs_before": 38,
+    "unique_unknown_records": 247,
+    "warm_decodes": 0,
+    "warm_hash_cache_hits": 244
+  },
+  "tests": {
+    "added": 27,
+    "aggregate": 1735,
+    "decoder_scope": 23,
+    "integration": 4,
+    "skipped": 3
+  },
+  "warm_hash_metrics": {
+    "blocked_records": 3,
+    "cache_hits": 244,
+    "decoded_bytes": 0,
+    "decodes": 0,
+    "memo_hits": 239,
+    "stored_bytes": 0,
+    "unique_records": 247
+  },
+  "watcher_started": false
+}

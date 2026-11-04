@@ -62,7 +62,8 @@ def load_tests(loader, tests, pattern):
             'test_vampir_resource_directory_v1','test_vampir_resource_directory_format_v1',
             'test_vampir_resource_directory_paths_v2','test_vampir_resource_mount_join_v2',
             'test_vampir_resource_named_reference_v1','test_vampir_resource_named_tables_v1',
-            'test_vampir_resource_impact_v1','test_vampir_resource_context_keys_v1'):
+            'test_vampir_resource_impact_v1','test_vampir_resource_context_keys_v1',
+            'test_vampir_resource_selected_hashes_v1','test_vampir_selected_hash_integration'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

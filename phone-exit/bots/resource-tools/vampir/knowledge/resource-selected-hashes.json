@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "recipe": "selected-record-hashes-v1",
+  "record_bytes": 33554432,
+  "total_decoded_bytes": 1073741824,
+  "total_stored_bytes": 536870912,
+  "max_records": 4096
+}

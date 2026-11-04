@@ -1753,6 +1753,52 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты decoded hashes нужных записей для 16 fallback inputs, полные runtime/data dependencies потребителей и перенос legacy source checks карты/квестов/обучения; девять исторических unknown decoded SHA, ближайшая prepatch named база, encrypted/size и resource semantics, остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Selected hashes v1: 244 bounded decodes из 247 unique unknown records, 3 missing-index blockers; 51 selected / 3 fallback inputs. Warm 244 cache hits / 0 decode; 27 новых / 1735 aggregate tests. Admission unchanged.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-SELECTED-HASHES-V1-268356.json",
+          "sha256": "0c8007e04bbe08aa092d0c764a95acf0eb5f959e11331256015d37e82263c197"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-SELECTED-HASHES-V1-268356.md",
+          "sha256": "274916f9bcb279cdc1e2268df15f7e7e011f0a7429b60056b52ee45844ba3175"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "2f97364a6032f60171a13d23769d03b324c32733c17f9dc33a6d93e30a026f29",
+      "limits": [
+        "Only declared resources of three guarded partial, builder-free contexts are keyed by content.",
+        "The diagnostic stages have a distinct component namespace and requires_review state; no semantic checks were replaced.",
+        "Only nine changed archives were selected; no full ordinary update or complete runtime dependency claim.",
+        "Three matching directory offsets absent from the linear record index retain full-archive fallback; decoder does not guess missing records.",
+        "Supplementary hashes prove decoded bytes of exact selected current records, not UObject semantics or complete runtime dependencies.",
+        "Three directory offsets absent from the linear record index remain explicit blockers; no directory-only header fallback is inferred.",
+        "Old directory, record and named capture proofs are unchanged; payload contents are not saved.",
+        "Full source/runtime/alias barriers remain required even for a warm hash cache."
+      ],
+      "method": "static",
+      "next_check": "Подтвердить общий directory/fresh-header recipe для трёх missing-index records, включая empty record, с отдельными SHA-bound receipts; не переписывать старый linear index и не декодировать готовые 244 hashes. Runtime closure перед source_checks/builders остаётся отдельной. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты 3 missing-index directory records для трёх fallback inputs (2 plugin / 1 empty), их отдельный fresh-header recipe, полные runtime/data dependencies и перенос legacy source checks карты/квестов/обучения; девять исторических unknown SHA, ближайшая prepatch named база, encrypted/size и resource semantics, остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

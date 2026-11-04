@@ -378,6 +378,13 @@ comparisons. 1686 тестов и шесть дополнительных checks
 прошли. Semantic checks и admission не изменены; полнота runtime dependencies
 и перенос legacy source checks остаются отдельными задачами.
 
+[Хэши выбранных записей PAK](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-SELECTED-HASHES-V1-268356.md)
+подключены к update/cache: 486 обращений объединены в 247 записей; 244
+декодированы, 3 missing-index blockers сохранены. Теперь 51 из 54 resource
+inputs используют нужные файлы. Повтор дал 244 hash cache hits и 0 decode.
+1735 тестов и шесть дополнительных checks прошли. Runtime admission
+и legacy semantic checks остаются отдельными границами.
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

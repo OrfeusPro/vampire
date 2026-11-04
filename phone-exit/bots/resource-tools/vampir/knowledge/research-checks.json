@@ -11738,7 +11738,11 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/resource-context-keys.json",
         "phone-exit/bots/test_vampir_resource_context_keys_v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
-        "phone-exit/bots/resource-tools/vampir/audit-release-map-projection.py"
+        "phone-exit/bots/resource-tools/vampir/audit-release-map-projection.py",
+        "phone-exit/bots/resource-tools/vampir/resource-selected-hashes-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/resource-selected-hashes.json",
+        "phone-exit/bots/test_vampir_resource_selected_hashes_v1.py",
+        "phone-exit/bots/test_vampir_selected_hash_integration.py"
       ],
       "artifact_dependencies": []
     }

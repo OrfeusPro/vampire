@@ -49,6 +49,11 @@ class Scope:
         self.owner.remember(selector,raw)
         self.runtime=dict(python=platform.python_version(),executable_sha256=self.owner.digest(sys.executable),
             fnmatch_sha256=self.owner.digest(fnmatch.__file__))
+        self.hashes=None
+        if (Path(args.knowledge)/'resource-selected-hashes.json').is_file():
+            self.hashes=index.extension('resource-selected-hashes-v1').scope(index,args)
+            self.rules.update(self.hashes.rules)
+            self.runtime['selected_hashes']=self.hashes.runtime
         self.key=hashlib.sha256(self.workflow.canonical(dict(rules=self.rules,runtime=self.runtime))).hexdigest()
         self.observed,self.documents,self.contexts={},{},{}
         self.prepared=None;self.published=False
@@ -102,6 +107,7 @@ class Scope:
             if any(not isinstance(p,str) or not p for p in paths) or len(paths)!=len(set(paths)):
                 raise ValueError('Resource context directory names differ')
             result=(entries,None)
+            self.documents[slot+'-proof']=document
         self.documents[slot]=result
         return result
 
@@ -121,6 +127,17 @@ class Scope:
                 if eligible:entries,reason=self.directory(row)
                 matching=([e for e in entries if fnmatch.fnmatchcase(e['canonical_path'],dep['path'])]
                     if entries is not None else None)
+                supplementary=[]
+                if matching is not None and self.hashes is not None:
+                    enriched=[];document=self.documents[str(Path(row['path']).resolve())+'-proof']
+                    for e in matching:
+                        value=e
+                        if e.get('decoded_sha256') is None:
+                            extra=self.hashes.resolve(row,document,e)
+                            supplementary.append(dict(path=e['canonical_path'],**extra))
+                            if extra['state']=='hashed':value=dict(e,decoded_sha256=extra['sha256'])
+                        enriched.append(value)
+                    matching=enriched
                 if matching is not None and any(not isinstance(e.get('decoded_sha256'),str)
                         or not SHA.fullmatch(e['decoded_sha256']) or type(e.get('uncompressed')) is not int
                         or e['uncompressed']<0 for e in matching):
@@ -136,6 +153,7 @@ class Scope:
                 proof.append(dict(archive=row['path'],source_sha256=(row.get('current') or {}).get('sha256'),
                     pattern=dep['path'],directory=(self.observed.get(str(Path(row['path']).resolve())) or {}).get('directory'),
                     mode='selected_content' if matching is not None else 'full_archive',reason=reason))
+                if supplementary:proof[-1]['selected_record_hashes']=supplementary
         entry=dict(contract_key=contract_key(self.workflow,contract),resource_inputs_sha256=hashlib.sha256(
             self.workflow.canonical(selected)).hexdigest(),eligible=eligible,proof=proof)
         if contract['id'] in self.contexts and self.contexts[contract['id']]!=entry:
@@ -149,6 +167,7 @@ class Scope:
         body=dict(schema=1,recipe=RECIPE,rules=self.rules,runtime=self.runtime,contexts=self.contexts,
             metrics=self.metrics,scope='declared_resources_of_guarded_partial_contexts',
             semantic_checks_unchanged=True,runtime_dependency_completeness_verified=False,profile_activated=False)
+        if self.hashes is not None:body['selected_hash_metrics']=copy.deepcopy(self.hashes.metrics)
         raw=self.workflow.canonical(body)
         if len(raw)>LIMIT:raise ValueError('Resource context proof exceeds budget')
         path=self.workflow.snapshot(self.root,'resource-context-key-proofs-v1',body)
@@ -174,5 +193,7 @@ class Scope:
         body=dict(schema=1,recipe=RECIPE,proof=self.prepared,owner_barrier=dict(path=str(target),sha256=sha),
             semantic_checks_unchanged=True,runtime_dependency_completeness_verified=False,profile_activated=False)
         path=self.workflow.snapshot(self.root,'resource-context-key-receipts-v1',body);self.published=True
-        return dict(report=str(path),sha256=self.index.digest(path),proof=copy.deepcopy(self.prepared),
+        result=dict(report=str(path),sha256=self.index.digest(path),proof=copy.deepcopy(self.prepared),
             metrics=copy.deepcopy(self.metrics),semantic_checks_unchanged=True)
+        if self.hashes is not None:result['selected_hashes']=copy.deepcopy(self.hashes.metrics)
+        return result

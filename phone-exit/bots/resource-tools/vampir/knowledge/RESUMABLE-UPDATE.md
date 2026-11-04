@@ -207,6 +207,21 @@ resource-context-key-receipts-v1 библиотеки. Журнал содерж
 и допуск не меняются; проверена область declared partial inputs.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-CONTEXT-KEYS-V1-268356.md).
 
+## Дополнительные хэши выбранных записей
+
+[Selector](resource-selected-hashes.json) включает bounded decoder неизвестных
+совпавших records. Он работает только поверх текущего точного directory /
+record proof того же SHA owner. Known hashes пропускаются; одинаковый
+source / offset обрабатывается один раз для всех consumers. Missing index,
+encrypted и budget gaps сохраняют fallback; имена или схемы его не снимают.
+
+Отчёты — resource-selected-hashes-v1 библиотеки, cache pointers — knowledge/
+resource-comparison-cache-v3/selected-hash-<key>.json. Они назначаются после
+owner barrier. Payloads не сохраняются. Context proof содержит
+selected_record_hashes, receipt — selected_hashes metrics. Повтор использует
+record hashes без нового Oodle decode, сохраняя свежий полный source SHA.
+[Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-SELECTED-HASHES-V1-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver
