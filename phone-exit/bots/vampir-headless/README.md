@@ -422,8 +422,12 @@ INPUT-композиция описана ниже.
 [QuestUpdate wire и Tutorial dispatch](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-ACTION-WIRE-V1-11322.md)
 подключены к update/cache: 19 статических roots и 117 native wire случаев
 QuestUpdate 1810. Два повтора использовали четыре готовых stages без JVM /
-native replay. Native handlers, применение состояния и runtime quest-контракт
-остаются следующим пакетом.
+native replay. Проверка выполнения обработчиков приведена ниже.
+
+[Проверка обработчиков Tutorial и QuestSync](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-DISPATCH-NATIVE-V1-11322.md)
+подключена к обновлению и кэшу. На 1.13.22 прошли 192 сценария Tutorial
+и 140 сценариев QuestSync. Реальное применение состояния и runtime-контракт
+остаются открытыми.
 
 ## Сохранённые записи прежних этапов
 

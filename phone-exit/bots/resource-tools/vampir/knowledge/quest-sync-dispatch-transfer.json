@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "recipe": "quest-sync-dispatch-transfer-v1",
+  "baseline_probe_sha256": "9d2bbcd0a02d63a6576af38b4e282f0ca8173434c36c3bf8b0072be07ea7afc4",
+  "registration_relocation_bytes": [3, 4, 5, 6, 21, 22, 23, 24, 34, 35, 36, 37, 53, 54, 55, 56],
+  "fixture_offsets": {
+    "reset_prepare": [29],
+    "reset_storage": [41, 54],
+    "reset_finish": [73],
+    "progress": [181],
+    "key_wrapper": [202],
+    "notify_lookup": [269],
+    "notify_flag": [284],
+    "notify_model": [292],
+    "notify_dispatch": [325]
+  },
+  "indirect_model_apply": {
+    "offset": 225,
+    "operand": "rbp",
+    "slot": "0x48",
+    "fixture": "0x2803e000"
+  }
+}

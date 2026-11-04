@@ -11778,7 +11778,16 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/quest-wire-native.json",
         "phone-exit/bots/test_vampir_quest_wire_v1.py",
         "phone-exit/bots/test_vampir_quest_action_integration_v1.py",
-        "phone-exit/bots/test_vampir_quest_action_rules_v1.py"
+        "phone-exit/bots/test_vampir_quest_action_rules_v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-dispatch-native-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-dispatch-harness-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-sync-dispatch-transfer-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-sync-dispatch-cases-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-tutorial-dispatch-cases-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-dispatch-native.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-sync-dispatch-transfer.json",
+        "phone-exit/bots/test_vampir_quest_dispatch_harness_v1.py",
+        "phone-exit/bots/test_vampir_quest_dispatch_integration_v1.py"
       ],
       "artifact_dependencies": []
     }

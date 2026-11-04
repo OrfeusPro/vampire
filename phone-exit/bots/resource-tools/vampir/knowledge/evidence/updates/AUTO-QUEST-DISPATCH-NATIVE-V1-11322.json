@@ -1,0 +1,142 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-dispatch-native-v1-acceptance\\684ba222bc9e0ac3ccd2e195cd8af241571b6e4a74e9ed97b1f4a2c5b277b3ab\\manifest.json",
+    "sha256": "684ba222bc9e0ac3ccd2e195cd8af241571b6e4a74e9ed97b1f4a2c5b277b3ab"
+  },
+  "cases": {
+    "quest_sync": 140,
+    "total": 332,
+    "tutorial": 192
+  },
+  "checks": [
+    {
+      "cache_key": "7a79c991113c6cb0a062479c66002fbfece2a74103ebcfb28d1b08ee293d6dd9",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\331e7cca9c4323e22edf14b2d709c1d5458766e546badf31b3adcb1a24e8da76\\manifest.json",
+      "sha256": "331e7cca9c4323e22edf14b2d709c1d5458766e546badf31b3adcb1a24e8da76",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "4b6790e056a57d72111614957b0242f4fce59c6d0ab6b662ac2ad58f1985c097",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\5d0aebf8f9e756602a5b0c3892feefd3051bb4d523de5dd7a2425248345ee2e9\\manifest.json",
+      "sha256": "5d0aebf8f9e756602a5b0c3892feefd3051bb4d523de5dd7a2425248345ee2e9",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "8f876e4ba2eff36fa03da7e16e5be421c617b91a382fc78fee65e26df8efea24",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\ea5f80704bef02a16e23719ba5c2960316b84c2c7e60d1d752704825e01d932a\\manifest.json",
+      "sha256": "ea5f80704bef02a16e23719ba5c2960316b84c2c7e60d1d752704825e01d932a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "c91002547bdd52994553aa2ddad54d20c906c7854c7d2bcb916ae326dfe1bf60",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\786438f20ab8af1905563e1e32a55c759e1f9698de86a2ba6ecdd5fc1340556a\\manifest.json",
+      "sha256": "786438f20ab8af1905563e1e32a55c759e1f9698de86a2ba6ecdd5fc1340556a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-dispatch-native.json": "074549b730db2acdc25e3010a68179187ba72d3043a9579b2b6d73f388f9e2f7",
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-sync-dispatch-transfer.json": "60714c4cb31084f7b965f6e0630f602b39e9c2d6b951561040d51d314b9bac20",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "79a7a126afe270d00e099d85febc20d9168ba0a2688911121af2afc5faa6f1ea",
+    "phone-exit/bots/resource-tools/vampir/quest-dispatch-harness-v1.py": "1b50472baccf36e0336cef2ac3dffe2ba41d64acd2a9ee7c5a79702cf6c45b3e",
+    "phone-exit/bots/resource-tools/vampir/quest-dispatch-native-v1.py": "7d66efdebfa8da382b877a4f374d92ed0e67211a11583d2d343840b86de8ae50",
+    "phone-exit/bots/resource-tools/vampir/quest-sync-dispatch-cases-v1.py": "ab3c4577807e88e784eb5a2fa09eeba37814b7f27e9d80491c7a055f3ef547af",
+    "phone-exit/bots/resource-tools/vampir/quest-sync-dispatch-transfer-v1.py": "6080e9c506e456bdb2402f11195f77b106920f3bfd10ea48a636a493acd2e854",
+    "phone-exit/bots/resource-tools/vampir/quest-tutorial-dispatch-cases-v1.py": "1d587114ab5c10531b0cf3f4762d2d1c071280ab9629eb594615bd0a8ceda78f",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "9e16075bb1bfa28b150452436a4a9175c478747fb77d07f8b145b285eb1bd6f3",
+    "phone-exit/bots/test_vampir_quest_dispatch_harness_v1.py": "60f87a7f955ac1acadc867cc7b3055b89b56f6785d50012e2117e40e6cb40120",
+    "phone-exit/bots/test_vampir_quest_dispatch_integration_v1.py": "6bb189f1bf52a65588d2d2b3b12fa016ee89163d941053c58f71941cbcce5b07",
+    "phone-exit/bots/test_vampir_update_automation.py": "6ad47a1e4c5f6e1551d9b1175cea65de2a88ac1b10f475c172e63b9a9e847e91"
+  },
+  "first_component_seconds": 12.933633,
+  "limits": {
+    "quest-sync-dispatch": "Registered trampoline, wrapper, provider leaf and receiver execute. Reset, model application, progress construction and notifications are observed at fixture boundaries. Real model and server effects are excluded.",
+    "tutorial-dispatch": "Immediate apply, state provider and allocation use fixtures. Fresh deferred copies and a bounded prepared queue are verified. Real application, queue drain and growth are excluded."
+  },
+  "method": "bounded_native_component_acceptance",
+  "native_calls": {
+    "quest_sync": 140,
+    "tutorial": 384
+  },
+  "native_checks": {
+    "quest-sync-dispatch": {
+      "cases": 140,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-dispatch-native-checks-v1\\f0968d2bef144afc4f0bea96cce12515e568cd645390524605a7d6ed9b052c31\\manifest.json",
+      "sha256": "f0968d2bef144afc4f0bea96cce12515e568cd645390524605a7d6ed9b052c31",
+      "state": "passed"
+    },
+    "tutorial-dispatch": {
+      "cases": 192,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-dispatch-native-checks-v1\\2d0362f749467c401156350eb02441b27628c9daba79102962b74a225ffb98f4\\manifest.json",
+      "sha256": "2d0362f749467c401156350eb02441b27628c9daba79102962b74a225ffb98f4",
+      "state": "passed"
+    }
+  },
+  "new_jvm": 0,
+  "profile_activated": false,
+  "quest_sync_projections": 1560,
+  "recipe": "quest-dispatch-native-v1",
+  "schema": 1,
+  "server_effects_verified": false,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "stage_seconds": {
+    "quest-dispatch-native-quest-sync-dispatch": 0.631035,
+    "quest-dispatch-native-tutorial-dispatch": 2.372275,
+    "quest-sync-dispatch-transfer-v1": 2.688711
+  },
+  "tests": {
+    "added": 11,
+    "aggregate": 1946,
+    "skipped": 3
+  },
+  "tutorial_apply_fixture": 128,
+  "tutorial_deferred": 64,
+  "warm_reused_stages": 6,
+  "warm_seconds": [
+    6.122135,
+    6.610745
+  ],
+  "whole_exports": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-handler-whole-exports-v1\\c635420a49554d1420d0b2b7fa6f369687642760111a0a5320e25136f2043671\\manifest.json",
+    "sha256": "c635420a49554d1420d0b2b7fa6f369687642760111a0a5320e25136f2043671"
+  }
+}

@@ -32,13 +32,13 @@ exports и проверки вручную не повторять. Счётчи
   Старый MapProjection allowlist и legacy check не расширять по одному
   совпадению таблиц.
   [Данные и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MAP-TABLES-V1-268356.md).
-- Квесты / обучение: готовые INPUT seed / 22 static roots / 1178 INPUT случаев
-  используются из кэша. QuestUpdate 1810 wire прошёл новый пакет из 117 случаев;
-  19 roots QuestUpdate / Tutorial dispatch перенесены статически. Следующий
-  общий пакет — native Tutorial handler / defer / apply / queue и QuestSync
-  handler, затем runtime quest-контракт. Storage reuse / growth / настоящий
-  allocator / destructor и online effects требуют собственных сценариев.
-  [Новый wire / dispatch пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-ACTION-WIRE-V1-11322.md).
+- Квесты / обучение: чтение пакетов и QuestUpdate wire подтверждены отдельными
+  пакетами. Tutorial 9905 и QuestSync 1854 прошли 332 сценария исполнения
+  обработчиков с явными заглушками. Проверки подключены к обновлению и кэшу.
+  Дальше проверить native apply и опустошение очереди Tutorial, обновление
+  модели QuestSync, затем связать с runtime quest-контрактом. Реальное
+  владение storage и серверное подтверждение требуют собственных проверок.
+  [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-DISPATCH-NATIVE-V1-11322.md).
 - Input seed v2: новая композиция имеет упорядоченные baseline / target
   pointers в ключе кэша и собственный финальный барьер. Frozen login-input
   engine сохраняется; его прежний memo не использовать в новом recipe.

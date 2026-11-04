@@ -2020,6 +2020,41 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты native Tutorial handler / defer / apply / queue, QuestSync handler и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x14584c1a0",
+        "0x145d84e70",
+        "0x1464aac70",
+        "0x1464c2460",
+        "0x1464c6c80",
+        "0x1467b5b10",
+        "0x1467cca00"
+      ],
+      "checks": [],
+      "conclusion": "Обновлятор подключает статическую привязку и две ограниченные проверки исполнения обработчиков. Native-отчёты по точному SHA фиксируют 192 сценария Tutorial и 140 QuestSync. Повтор использует шесть сохранённых этапов.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-QUEST-DISPATCH-NATIVE-V1-11322.json",
+          "sha256": "15dc58f96e005f275104f1f8c0fbd51ad18fa24f889dc0bd3ff9e8d3d607ec54"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-QUEST-DISPATCH-NATIVE-V1-11322.md",
+          "sha256": "7743aeee746d80ca17bb3fdc5bce8dcddaf48d9ab0c318db2ccf5f93769d641c"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "488a1fe0d6df74570c034ab72a7f71cd222343c49004b5b2a200d69d9bd80e57",
+      "limits": [
+        "Immediate apply, state provider and allocation use fixtures. Fresh deferred copies and a bounded prepared queue are verified. Real application, queue drain and growth are excluded.",
+        "Registered trampoline, wrapper, provider leaf and receiver execute. Reset, model application, progress construction and notifications are observed at fixture boundaries. Real model and server effects are excluded."
+      ],
+      "method": "static",
+      "next_check": "Проверить Tutorial apply и опустошение очереди, а также обновление модели QuestSync поверх готовых INPUT и dispatch proofs. Использовать готовые результаты из кэша. Подключить сценарии к штатному обновлению. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты native Tutorial apply и опустошение очереди, реальное обновление модели QuestSync и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

@@ -236,6 +236,17 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## Обработчики Tutorial и QuestSync
+
+Селектор добавляет два этапа проверки исполнения в quest_dispatch_native.
+QuestSync связывает регистрацию с текущим конструктором. Tutorial использует
+готовый статический контекст. Раздельные ключи позволяют повторно использовать
+один отчёт при изменении сценариев другого. Сборщик использует готовые экспорты
+и проверяет контекст и отчёты перед публикацией.
+[Селектор](quest-dispatch-native.json).
+[Правило QuestSync](quest-sync-dispatch-transfer.json).
+[Приёмка и границы](evidence/updates/HEADLESS-QUEST-DISPATCH-NATIVE-V1-11322.md).
+
 ## QuestUpdate wire и Tutorial dispatch
 
 [Статический selector](quest-action-transfer.json) связывает готовые INPUT /
