@@ -1663,6 +1663,51 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты девять исторических unknown decoded SHA, ближайшая prepatch named база, selective impact потребителей, encrypted/size и resource semantic gaps; остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Post-barrier resource impact v1 подключён к pipeline/cache/журналу: 4 declared consumers (3 matched), 45 archive/pattern сочетаний; warm один cached analysis и девять named cache hits. 20 новых / 1686 aggregate tests. Исполнение и admission не менялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-IMPACT-V1-268356.json",
+          "sha256": "6af0725716cfb971a741eead77eff811ad48eb75321414673d9e5d7b9d13050d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-IMPACT-V1-268356.md",
+          "sha256": "c1d341386fa786ce94db7b365ac011b80713c67288ca4011dd0feefa26406003"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "82179a2644f6cb2188964ac03b62ad8863469de504c69f8c34914aff2e828db7",
+      "limits": [
+        "Only the nine changed archives were processed; this is not a full ordinary update or whole-install impact proof.",
+        "The named reference 15cf... differs from the nearest prepatch audit identity 7c186d92...",
+        "Broad resource patterns include non-table assets; saved consumer resource inputs were not verified.",
+        "The diagnostics do not narrow execution/cache keys, change affected plan, or establish semantic/online admission.",
+        "Archive identity is matched against the audit, not against a saved consumer check context.",
+        "A diagnostic resource state does not skip checks, narrow execution/cache keys or change admission.",
+        "Unknown named hashes and non-table assets retain conservative fallback. Unchanged archives receive full SHA checks."
+      ],
+      "method": "static",
+      "next_check": "Подтвердить ресурсные inputs сохранённой проверки каждого потребителя и полное покрытие выбранного pattern; затем сужать resource_inputs/cache keys с точным before SHA и conservative fallback. Не повторять готовый named matching/post-barrier impact. Полный проход и watcher — только по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты точные resource inputs сохранённых consumer checks и полнота patterns для selective cache keys, девять исторических unknown decoded SHA, ближайшая prepatch named база, encrypted/size и resource semantics; остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

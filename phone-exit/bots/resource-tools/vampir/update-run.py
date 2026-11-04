@@ -25,7 +25,7 @@ def execution_inputs(index, knowledge=None):
         'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py',
         'stage-action-tools-v1.py','native-materialize-inputs-v2.py',
         'resource-directory-v1.py','resource-directory-format-v1.py','resource-directory-paths-v2.py',
-        'resource-named-tables-v1.py','resource-named-reference-v1.py'}
+        'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -164,6 +164,9 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'resource-named-tables-engine.json').is_file():
             paths.add(args.knowledge/'resource-named-tables-engine.json')
             paths.update(index.HERE/name for name in ('resource-named-tables-v1.py','resource-named-reference-v1.py'))
+        if (args.knowledge/'resource-impact-engine.json').is_file():
+            paths.add(args.knowledge/'resource-impact-engine.json')
+            paths.add(index.HERE/'resource-impact-v1.py')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -1037,6 +1040,8 @@ def run_locked(index, args, database, *, audited=None):
         scoped_exports=versioned.finish(original_index,args) if versioned else None
         projection_result=projection.finish() if projection is not None else None
         resource_pipeline_result=resource_pipeline.finish() if resource_pipeline else None
+        if resource_pipeline_result and 'impact' in resource_pipeline_result:
+            record['resource_impact']=resource_pipeline_result['impact']
         resource_metrics=args.resource_scope.validate() if args.resource_scope else None
         source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:

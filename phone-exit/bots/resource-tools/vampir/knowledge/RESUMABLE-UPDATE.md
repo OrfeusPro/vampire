@@ -172,6 +172,24 @@ evidence не объявляется свежим чтением старого 
 база не заменяется другой без явного указания области сравнения.
 [Приёмка и ограничения](evidence/updates/HEADLESS-RESOURCE-NAMED-BASELINE-V1-268356.md).
 
+## Отчёт влияния ресурсов после барьера
+
+[Selector](resource-impact-engine.json) включает расчёт для resource consumers
+из update-contracts.json. Анализ готовится внутри общего owner; cache pointer
+и итоговая квитанция назначаются после успешного SHA-барьера. При повторе
+analysis берётся из кэша, квитанция получает свежий owner epoch.
+
+В журнале обычного update поле resource_impact содержит report / sha256,
+analysis pointer и metrics; копия находится в metrics.resource_pipeline.impact.
+Артефакты — resource-impact-analyses-v1 / resource-impact-receipts-v1
+библиотеки; cache pointer — knowledge/resource-comparison-cache-v3/impact-<key>.json.
+
+Отчёт показывает совпавшие paths и причины fallback: несовпавшие базы,
+unknown hashes, missing comparison и patterns шире CSV. Проверка before SHA
+аудита не заменяет inputs сохранённого consumer check. Исполнение, affected
+plan, context cache keys и admission этим отчётом не изменяются.
+[Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-IMPACT-V1-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver

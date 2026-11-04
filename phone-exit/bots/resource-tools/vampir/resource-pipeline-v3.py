@@ -49,6 +49,10 @@ class Pipeline:
         if self.directory_api is not None and not self.directory_api.enabled(index,args):self.directory_api=None
         self.named_api=index.extension('resource-named-tables-v1') if (Path(args.knowledge)/'resource-named-tables-engine.json').is_file() else None
         if self.named_api is not None and not self.named_api.enabled(index,args):self.named_api=None
+        self.impact=None
+        if (Path(args.knowledge)/'resource-impact-engine.json').is_file():
+            impact=index.extension('resource-impact-v1')
+            if impact.enabled(index,args):self.impact=impact.Scope(index,args,manifest,report)
         self.reference,self.reference_error=None,None
         self.files,self.aliases={},{}
         self.optional_files,self.pending={},{}
@@ -204,6 +208,11 @@ class Pipeline:
         return result
 
     def process(self,row):
+        result=self._process(row)
+        if self.impact is not None:self.impact.observe(row,result)
+        return result
+
+    def _process(self,row):
         if self.finished:raise ValueError('Resource pipeline already finished')
         self.metrics['archives']+=1
         current=row.get('current')
@@ -329,6 +338,7 @@ class Pipeline:
         for lexical,expected in self.aliases.items():
             if Path(lexical).resolve()!=expected:raise ValueError('Resource pipeline alias changed during final barrier')
         if self.owner is not None:
+            if self.impact is not None:self.impact.prepare()
             for cache,pointer in self.pending.items():self.owner.defer(cache,pointer)
             owner=self.owner.finish()
             indexes=dict(indexes,source_barrier_completed=True,source_barrier_pending=False,
@@ -349,4 +359,5 @@ class Pipeline:
         if directory is not None:result['directory']=directory
         named=getattr(self.args,'resource_named_tables_v1_scope',None)
         if named is not None:result['named_tables']=copy.deepcopy(named.metrics)
+        if self.impact is not None:result['impact']=self.impact.publish(owner)
         return result

@@ -11730,7 +11730,10 @@
         "phone-exit/bots/resource-tools/vampir/resource-named-tables-v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/resource-named-tables-engine.json",
         "phone-exit/bots/test_vampir_resource_named_reference_v1.py",
-        "phone-exit/bots/test_vampir_resource_named_tables_v1.py"
+        "phone-exit/bots/test_vampir_resource_named_tables_v1.py",
+        "phone-exit/bots/resource-tools/vampir/resource-impact-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/resource-impact-engine.json",
+        "phone-exit/bots/test_vampir_resource_impact_v1.py"
       ],
       "artifact_dependencies": []
     }

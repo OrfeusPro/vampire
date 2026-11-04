@@ -1,0 +1,6 @@
+{
+  "schema": 1,
+  "recipe": "resource-impact-post-barrier-v1",
+  "scope": "named-tables",
+  "execution_reuse": false
+}
