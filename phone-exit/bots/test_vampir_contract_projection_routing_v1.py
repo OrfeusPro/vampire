@@ -13,6 +13,7 @@ class ProjectionRoutingTests(parent.UpdateRunTests):
     def setUp(self):
         super().setUp()
         self.events=[];self.actions=[];self.observed=[];self.fail_finish=False
+        self.projection_rule='fixture-v1'
         contract=self.contracts['contracts'][0]
         contract.update(id='game-version',coverage='partial',context_checks=['version-login-tag','packet-writer-projection'])
         self.contracts['capabilities']={'fixture':dict(requires=['game-version'])}
@@ -25,7 +26,7 @@ class ProjectionRoutingTests(parent.UpdateRunTests):
                 result=copy.deepcopy(context);result['bindings']['queue']=[]
                 result['projection']={'source':'fixture-publication'}
                 return result
-            def inputs(self,context,adapter):return dict(rule='fixture-v1',adapter=adapter)
+            def inputs(self,context,adapter):return dict(rule=outer.projection_rule,adapter=adapter)
             def check(self,context,adapter):
                 outer.actions.append(adapter)
                 value=dict(state='requires_review' if adapter=='version-login-tag' else 'passed',
@@ -75,11 +76,22 @@ class ProjectionRoutingTests(parent.UpdateRunTests):
         with self.assertRaisesRegex(ValueError,'late projection input changed'):self.projected_run()
         self.assertNotIn('bundle_publish',self.events)
 
+    def test_projected_cache_ignores_unrelated_context_tools_but_rechecks_own_rule(self):
+        first=self.projected_run()
+        self.args.resume=Path(first['run'])
+        self.tools['context']['unrelated-suite']='changed'
+        self.projected_run()
+        self.assertEqual(len(self.actions),2)
+        self.projection_rule='fixture-v2'
+        self.projected_run()
+        self.assertEqual(len(self.actions),4)
+
 
 def load_tests(loader,tests,pattern):
     # Reuse the factory, not all inherited unchanged controller test methods.
     names=('test_projected_checks_reuse_cache_and_preserve_real_blocker',
-        'test_projection_barrier_precedes_bundle_publication','test_late_projection_change_blocks_publication')
+        'test_projection_barrier_precedes_bundle_publication','test_late_projection_change_blocks_publication',
+        'test_projected_cache_ignores_unrelated_context_tools_but_rechecks_own_rule')
     return unittest.TestSuite(ProjectionRoutingTests(name) for name in names)
 
 

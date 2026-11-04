@@ -12,7 +12,7 @@ import time
 from types import SimpleNamespace
 
 
-def execution_inputs(index):
+def execution_inputs(index, knowledge=None):
     """Hash local tool dependencies without importing/executing their code."""
     # Shared dependencies belong to several groups. Parse each file once in
     # this snapshot; the next execution_inputs call always reads fresh inputs.
@@ -46,7 +46,7 @@ def execution_inputs(index):
                     children.extend(dependencies(name))
         scanned[path]=(digest,children)
         return scanned[path]
-    def group(seeds):
+    def group(seeds, leaves=None):
         pending=[(index.HERE/name).resolve() for name in seeds]; found={}
         while pending:
             path=pending.pop()
@@ -54,7 +54,8 @@ def execution_inputs(index):
             if len(found)>=256:raise ValueError('Tool dependency budget exceeded')
             digest,children=scan(path)
             found[str(path)]=digest
-            pending.extend(children)
+            if not leaves or leaves.get(path)!=digest:
+                pending.extend(children)
         return found
     # Journal/CLI changes create a new run identity, not a blanket cache miss.
     # Bump this format only when interpretation of stored stage results changes.
@@ -67,6 +68,25 @@ def execution_inputs(index):
         'context':['verify-version-login-context.py','verify-packet-writer-context.py','update-native-harness.py',
             'update-native-contexts.py','verify-utf8-context.py','native-release-registry.py','update-native-drivers.py'],
         'profile':['update-profile.py','update-bundle.py']}.items()}
+    selector=Path(knowledge) if knowledge is not None else index.HERE/'knowledge'
+    selector=selector/'binding-tool-scope.json'
+    if selector.is_file():
+        raw=selector.read_bytes()
+        if len(raw)>4096:raise ValueError('Binding tool scope exceeds budget')
+        rule=json.loads(raw)
+        if (not isinstance(rule,dict) or set(rule)!={'schema','recipe','roots','hash_only'}
+                or type(rule['schema']) is not int or rule['schema']!=1
+                or rule['recipe']!='binding-tool-scope-v1'
+                or rule['roots']!=['update-bindings.py','binary-diff-candidates.py']
+                or not isinstance(rule['hash_only'],dict) or set(rule['hash_only'])!={'binary-diff.py'}
+                or not isinstance(rule['hash_only']['binary-diff.py'],str)
+                or not re.fullmatch('[0-9a-f]{64}',rule['hash_only']['binary-diff.py'])):
+            raise ValueError('Unknown binding tool scope')
+        # Only the reviewed BinDiff receipt reader is a traversal boundary.
+        # Changed code resumes the conservative scan and exposes new callees.
+        leaves={(index.HERE/name).resolve():sha for name,sha in rule['hash_only'].items()}
+        groups['bindings']={**common,**group(rule['roots'],leaves),
+            str(selector.resolve()):hashlib.sha256(raw).hexdigest()}
     shared=index.HERE.parents[1]/'vampir-shared/vampir_core'
     for name in ('release_bundle.py','runtime_admission.py','sdk_config.py'):
         path=shared/name
@@ -105,6 +125,7 @@ def definition_inputs(index, args, update):
     paths.update((args.knowledge/'native-contexts').glob('*.json'))
     paths.update(p for p in (args.knowledge/'native-release-registry.json',
         args.knowledge/'native-check-adapters.json') if p.is_file())
+    if (args.knowledge/'binding-tool-scope.json').is_file():paths.add(args.knowledge/'binding-tool-scope.json')
     engine = args.knowledge/'update-engine.json'
     if engine.is_file():
         paths.add(engine)
@@ -619,7 +640,7 @@ def run_locked(index, args, database, *, audited=None):
         definitions=definition_inputs(index,args,update)
         timing['definition_inputs_seconds']=round(time.perf_counter()-started,6)
         started=time.perf_counter()
-        tools=execution_inputs(index)
+        tools=execution_inputs(index,args.knowledge)
         timing['execution_inputs_seconds']=round(time.perf_counter()-started,6)
         resources=index.extension('resource-pipeline-v3') if versioned else None
         if resources is not None and not resources.enabled(index,args):resources=None
@@ -872,9 +893,11 @@ def run_locked(index, args, database, *, audited=None):
                     return dict(id=adapter,state='passed',report=str(target),sha256=index.digest(target))
                 try:
                     stage_name='context-check-'+name+('' if adapter=='version-login-tag' else '-'+adapter)
-                    check_inputs=dict(context=index.digest(cp),inputs=tools['context'])
+                    check_inputs=dict(context=index.digest(cp))
                     if projected:
                         check_inputs['projection']=projection.inputs(context,adapter) if projection is not None else dict(reason=projection_issue)
+                    else:
+                        check_inputs['inputs']=tools['context']
                     checked=journal.stage(stage_name,check_inputs,check_context)
                     if projection is not None and projected:projection.observe(context,adapter,checked)
                 except (ValueError,OSError,KeyError,StopIteration) as error:
@@ -899,7 +922,7 @@ def run_locked(index, args, database, *, audited=None):
             for reason in reasons: queue.append(dict(contract=name, capability=[k for k,v in contracts['capabilities'].items() if name in v['requires']],
                 reason=reason, evidence=dict(context=str(cp),checks=checks), next_check=c['next_check']))
         capabilities = model.readiness(contracts, outcomes)
-        if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index)!=tools:
+        if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index,args.knowledge)!=tools:
             raise ValueError('Update definitions or tools changed during execution; resume with current inputs')
         profiles = []
         profile_validation_seconds=0
@@ -917,7 +940,7 @@ def run_locked(index, args, database, *, audited=None):
                     queue.append(dict(contract=c['id'],capability='launcher',reason='Profile build rejected: '+str(error),
                         evidence=outcomes[c['id']],next_check=c['next_check']))
         capabilities = model.readiness(contracts,outcomes)
-        if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index)!=tools:
+        if definition_inputs(original_index,args,update)!=definitions or execution_inputs(original_index,args.knowledge)!=tools:
             raise ValueError('Update definitions changed during profile preparation')
         source_metrics=store.validate()
         bundle=index.extension('update-bundle').prepare(index,args,contracts,outcomes,capabilities,profiles,contexts,report)

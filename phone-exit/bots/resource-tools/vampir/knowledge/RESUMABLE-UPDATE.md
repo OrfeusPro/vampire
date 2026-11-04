@@ -120,6 +120,22 @@ Standalone проверки и внешний полный SHA установк�
 Квитанции находятся в knowledge/resource-owner-barriers-v4 библиотеки ресурсов.
 [Матрица проверки и границы](evidence/updates/HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md).
 
+## Ключи разрешения адресов и проекций
+
+[Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver
+и consumer готовых BinDiff receipts. Для точного reviewed SHA BinDiff
+сканируется собственный файл; изменение его кода возвращает консервативный
+обход зависимостей. Новые зависимости resolver обходятся обычным способом.
+Правило входит в ключ и definitions. Во всех сверках используется выбранный
+knowledge. Первая обработка нового binding key создаёт собственную запись.
+
+Проекции Version / Login используют SHA контекста и собственные inputs
+с rule / publication / transitive files / runtime вместо дополнительного
+общего context tool key. Их prepare / observe / finish сохраняются.
+Остальные группы, affected / readiness planning и native-materialize пока
+имеют консервативные ключи.
+[Компонентная приёмка](evidence/updates/HEADLESS-AUTO-STAGE-TOOL-KEYS-V1-11322.md).
+
 ## Базы, зависимости и повторное использование
 
 Полная опись файлов и последняя доказанная база роли выбираются отдельно.

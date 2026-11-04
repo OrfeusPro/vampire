@@ -1337,6 +1337,39 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты консервативные ключи кэша, полный ordinary update / production-проверка managed owner и legacy locks, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн. Полный resource process 109 архивов с owner v4 ещё не измерен.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Ключ разрешения адресов сужен со 197 до 6 файлов. Изменённый BinDiff возвращает полный обход. Проверки проекций используют собственные inputs. Один статический root resolution и два Journal cache повтора подтвердили reuse без повышения admission.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-STAGE-TOOL-KEYS-V1-11322.json",
+          "sha256": "413234efec8a8dd50ecfe229265a9148b5d8321803ea372a6c1622d8c1f6f3fd"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-STAGE-TOOL-KEYS-V1-11322.md",
+          "sha256": "799c5e2e04a066557ca95125fa378dc9e47a82761be98ae51a985db86d237673"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "8c8e8a28561bbb205ae1ac6d7ee3cad52eb0b6a990df70b28bfdf3dbe8080576",
+      "limits": [
+        "One explicitly reviewed unwind root checked statically; no client role or semantic readiness is established.",
+        "Unrelated digest change is a key-model fixture; actual file contents were preserved.",
+        "Other tool groups and materialize/readiness planning remain conservative.",
+        "Only binding-resolution group and projected Version/Login check keys were narrowed.",
+        "Other tool groups, affected/readiness planning and native materialization remain conservative.",
+        "No installed-client updater, new JVM, native replay, profile activation or online entry was run."
+      ],
+      "method": "static",
+      "next_check": "Продолжить сужение ключей по фактическим call paths остальных групп и native-materialize, сохраняя явные зависимости exports / runtime. По явной команде измерить полный проход, восстановление и второй патч. Наблюдатель включать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты консервативные остальные tool groups, affected/readiness planning и native-materialize key; полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

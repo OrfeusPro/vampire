@@ -59,7 +59,11 @@ exports и проверки вручную не повторять. Счётчи
   с неизменяемым reference. Проверенное продолжение и warm-повтор 109 архивов
   завершены; получены 3344 записи / 2941 уникальный CSV, legacy blobs заново
   не хэшируются. Сбор execution inputs ускорен до 3,1–3,2 с. Далее — общий
-  ordinary update и сужение консервативных ключей зависимостей. CSV extract
+  ordinary update и сужение остальных консервативных ключей. Binding key
+  уже сужен со 197 до шести файлов; проекции Version / Login используют
+  собственные полные inputs. Остаются другие tool groups, affected /
+  readiness planning и native-materialize.
+  [Приёмка ключей](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STAGE-TOOL-KEYS-V1-11322.md). CSV extract
   уже сократил собственные SHA PAK с трёх до двух. Общий owner v4 и pending
   cache подключены, на четырёх PAK подтверждены 8 чтений вместо 16. Далее —
   сужение консервативных ключей и полный замер 109 архивов по явной команде.

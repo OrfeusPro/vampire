@@ -84,6 +84,75 @@ class UpdateRunTests(fixture.ResearchUpdateTests):
         self.assertNotIn(str(first.resolve()),after['contracts'])
         self.assertNotIn(str(outside.resolve()),after['contracts'])
 
+    def binding_tool_scope(self):
+        folder=(self.root/'binding-tools').resolve();folder.mkdir()
+        knowledge=self.root/'binding-rules';knowledge.mkdir()
+        for name,body in {
+                'update-bindings.py':"'build-native-entry-code'",
+                'build-native-entry-code.py':"'extract-native-enums'",
+                'extract-native-enums.py':'# PE reader',
+                'binary-diff-candidates.py':"'binary-diff'\n'update-bindings'",
+                'binary-diff.py':"'unused-export-tool'",
+                'unused-export-tool.py':'# export path outside receipt reader',
+                'function-reuse-plan.py':"'unrelated-native-check'",
+                'unrelated-native-check.py':'# separate native suite'}.items():
+            (folder/name).write_text(body,encoding='utf-8')
+        rule=dict(schema=1,recipe='binding-tool-scope-v1',
+            roots=['update-bindings.py','binary-diff-candidates.py'],
+            hash_only={'binary-diff.py':self.index.digest(folder/'binary-diff.py')})
+        path=knowledge/'binding-tool-scope.json';path.write_text(json.dumps(rule),encoding='utf-8')
+        api=SimpleNamespace(HERE=folder,digest=self.index.digest,
+            extension=lambda name:SimpleNamespace(runtime_inputs=lambda:{'capstone':'fixture-v1'}))
+        return folder,knowledge,path,api
+
+    def test_binding_stage_ignores_unrelated_native_change_and_reuses_cached_result(self):
+        folder,knowledge,_,api=self.binding_tool_scope()
+        first=self.real_execution_inputs(api,knowledge)['bindings']
+        journal=self.engine.Journal(self.api,self.workflow,self.args,dict(stages={}),self.root/'binding-key-run.json')
+        action=Mock(return_value=dict(state='passed'))
+        journal.stage('bindings-fixture',dict(source='a'*64,tools=first),action)
+        (folder/'unrelated-native-check.py').write_text('# unrelated changed',encoding='utf-8')
+        second=self.real_execution_inputs(api,knowledge)['bindings']
+        self.assertEqual(first,second)
+        journal.stage('bindings-fixture',dict(source='a'*64,tools=second),action)
+        self.assertEqual(action.call_count,1)
+        (folder/'extract-native-enums.py').write_text('# PE behavior changed',encoding='utf-8')
+        third=self.real_execution_inputs(api,knowledge)['bindings']
+        self.assertNotEqual(second,third)
+        journal.stage('bindings-fixture',dict(source='a'*64,tools=third),action)
+        self.assertEqual(action.call_count,2)
+
+    def test_changed_reviewed_bindiff_reader_restores_transitive_scan(self):
+        folder,knowledge,_,api=self.binding_tool_scope()
+        first=self.real_execution_inputs(api,knowledge)['bindings']
+        tool=str((folder/'unused-export-tool.py').resolve())
+        self.assertNotIn(tool,first)
+        (folder/'binary-diff.py').write_text("'unused-export-tool'\n# new reader",encoding='utf-8')
+        second=self.real_execution_inputs(api,knowledge)['bindings']
+        self.assertIn(tool,second)
+        self.assertNotEqual(first,second)
+        (folder/'unused-export-tool.py').write_text('# changed transitive dependency',encoding='utf-8')
+        self.assertNotEqual(second,self.real_execution_inputs(api,knowledge)['bindings'])
+
+    def test_binding_scope_tracks_new_resolver_dependency_and_rule_inputs(self):
+        folder,knowledge,path,api=self.binding_tool_scope()
+        first=self.real_execution_inputs(api,knowledge)['bindings']
+        (folder/'new-reader.py').write_text('# new implementation',encoding='utf-8')
+        (folder/'update-bindings.py').write_text("'build-native-entry-code'\n'new-reader'",encoding='utf-8')
+        second=self.real_execution_inputs(api,knowledge)['bindings']
+        self.assertIn(str((folder/'new-reader.py').resolve()),second)
+        self.assertNotEqual(first,second)
+        path.write_text(path.read_text()+'\n',encoding='utf-8')
+        self.assertNotEqual(second,self.real_execution_inputs(api,knowledge)['bindings'])
+
+    def test_binding_scope_uses_selected_knowledge_and_rejects_unknown_roots(self):
+        folder,knowledge,path,api=self.binding_tool_scope()
+        old=self.real_execution_inputs(api)['bindings']
+        self.assertIn(str((folder/'unrelated-native-check.py').resolve()),old)
+        rule=json.loads(path.read_bytes());rule['roots']=['update-bindings.py']
+        path.write_text(json.dumps(rule),encoding='utf-8')
+        with self.assertRaisesRegex(ValueError,'scope'):self.real_execution_inputs(api,knowledge)
+
     # Reuse the synthetic installation factory, not its inherited test methods.
     def setUp(self):
         super().setUp()

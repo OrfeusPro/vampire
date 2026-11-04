@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "recipe": "binding-tool-scope-v1",
+  "roots": [
+    "update-bindings.py",
+    "binary-diff-candidates.py"
+  ],
+  "hash_only": {
+    "binary-diff.py": "159334d74e5411dd6846e502d5b1d3a783161e2a27dcf5554a4d3925ffcc8787"
+  }
+}

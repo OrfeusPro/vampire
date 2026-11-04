@@ -1,0 +1,98 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\stage-tool-keys-v1-acceptance\\1a1fc9b8da979865415f0d531a3b1932bb13fc0bcce7a98bc088ca29a9ad0667\\manifest.json",
+    "sha256": "1a1fc9b8da979865415f0d531a3b1932bb13fc0bcce7a98bc088ca29a9ad0667"
+  },
+  "checks": [
+    {
+      "cache_key": "e85aa65d55dc5049ab20d4c8399298c5164c48cd0738a8cd77411884d334bd67",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4ab17d4978ead25f4d19673f9fdc5beda55b1e09fc5cb6294e02a540aa4391b3\\manifest.json",
+      "sha256": "4ab17d4978ead25f4d19673f9fdc5beda55b1e09fc5cb6294e02a540aa4391b3",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "21271dd832110dca8f6d08fc25f49237b3a485597adb2b1e2d7ade8675de411a",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8289e5754816675287a968a2b706696a72a8354e5143a1e3cfb174e2ddeb14b7\\manifest.json",
+      "sha256": "8289e5754816675287a968a2b706696a72a8354e5143a1e3cfb174e2ddeb14b7",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "820bca69f7f8821f678f726ee5fd6620f0e8975a453e43cfff6b96c152136228",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\304b1a6c2050aa64d4653cb743c017670e97ba9681d34d76d8e4dff46033c5d0\\manifest.json",
+      "sha256": "304b1a6c2050aa64d4653cb743c017670e97ba9681d34d76d8e4dff46033c5d0",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "de62d037200fe2cb403551633cbc1031352e2ddb64ae787d5fef9e59524507eb",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8e637934474ab445006bdc1115aa69e331fe03080390d290f20673c3a513bd72\\manifest.json",
+      "sha256": "8e637934474ab445006bdc1115aa69e331fe03080390d290f20673c3a513bd72",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/binding-tool-scope.json": "df4fd370e2c6440a6ee0885b168ab57b5343f866589379a10acb6c1b16d7effc",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "431ac701ec3f53fa082223fa40b1b3d78934e8dedee4f1f784bc3b1e6233eb77",
+    "phone-exit/bots/test_vampir_contract_projection_routing_v1.py": "a5256a2a53a02d26fdec22ddfa9a14ba5c5c89e31e2ade3053950d267d397d37",
+    "phone-exit/bots/test_vampir_update_run.py": "10b9923c6fe9ad8e2faac55e9d963050407e3ed9a565d891afc633e0cfea06f7"
+  },
+  "limits": [
+    "One explicitly reviewed unwind root checked statically; no client role or semantic readiness is established.",
+    "Unrelated digest change is a key-model fixture; actual file contents were preserved.",
+    "Other tool groups and materialize/readiness planning remain conservative.",
+    "Only binding-resolution group and projected Version/Login check keys were narrowed.",
+    "Other tool groups, affected/readiness planning and native materialization remain conservative.",
+    "No installed-client updater, new JVM, native replay, profile activation or online entry was run."
+  ],
+  "new_binding_file_count": 6,
+  "old_binding_file_count": 197,
+  "schema": 1,
+  "source_scope": "tooling_and_saved_unwind_root",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "added_controller": 4,
+    "added_projection": 1,
+    "aggregate": 1516,
+    "aggregate_skipped": 3,
+    "controller": 37,
+    "projection_routing": 4
+  }
+}
