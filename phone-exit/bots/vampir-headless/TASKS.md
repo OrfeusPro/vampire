@@ -83,6 +83,12 @@ exports и проверки вручную не повторять. Счётчи
   semantic совместимость или admission. Не повторять 34 готовых native семейства.
   [Приёмка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PIPELINE-V3-11322.md).
 
+- Ресурсный патч Revision268356 при прежнем EXE обработан компонентом
+  штатного update: девять изменившихся PAK, полные SHA всей установки,
+  новые CSV и candidate diffs сохранены. Следующий шаг — закрывать общие
+  directory / resource identity gaps; candidate schema не повышает admission.
+  [Данные патча](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PATCH-268356-11322.md).
+
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный
 остаток. Текущая очередь находится в машинном run, открытые исследования — в

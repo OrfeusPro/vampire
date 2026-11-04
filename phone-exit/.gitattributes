@@ -476,3 +476,5 @@ bots/test_vampir_native_materialize_inputs_v2.py text eol=lf
 bots/test_vampir_native_materialize_stage_v2.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-NATIVE-ACTION-INPUTS-V2-11322.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-NATIVE-ACTION-INPUTS-V2-11322.md text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/updates/RESOURCE-PATCH-268356-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PATCH-268356-11322.md text eol=crlf

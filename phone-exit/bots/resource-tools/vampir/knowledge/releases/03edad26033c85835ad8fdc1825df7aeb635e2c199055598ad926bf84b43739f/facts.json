@@ -1474,6 +1474,53 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты остальные широкие потребители tool groups и консервативные данные native-materialize, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Resource-only Revision268356 при прежнем EXE: девять изменённых PAK, 3110 CSV-записей, 0 ошибок; candidate diffs и полные barriers сохранены. Native / admission не изменены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\RESOURCE-PATCH-268356-11322.json",
+          "sha256": "8c8342c4260f2933bc32fc9173788c5c50971791769585445bd2793bce2167b7"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-PATCH-268356-11322.md",
+          "sha256": "a899affce38061d8137a0c91efedb463690f32e7270362a307d1955364e95992"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "7ad2b2f504ea8c6af0a62e8ea4cd742c6c532a16652e5583d008dafeeef3f7f5",
+      "limits": [
+        "Selected changed-resource processing and full SHA installation audit, not a complete native update.",
+        "No authoritative directory names or resource identity are inferred from decoded bytes.",
+        "Previous reference blob source version is unknown; candidate schema/content comparison is not semantic compatibility.",
+        "Decoded record hash matching compares content, not resource identity or logical filenames.",
+        "Unique CSV schemas and unique textual first columns define candidates, not game semantics.",
+        "Archive directory indices are not parsed; unchanged-size PAKs were nevertheless covered by the complete audit.",
+        "Affected contracts are conservative because authoritative internal paths remain unknown.",
+        "This is the registered resource component plus complete installation audit, not a full ordinary CLI update.",
+        "The launcher binary was not checked. No gameplay or prepared-next activation was performed."
+      ],
+      "method": "static",
+      "next_check": "Оценить оставшиеся ключи по фактическим потребителям данных и инструментов. По явной команде измерить полный проход, восстановление после обрыва и отклонение пакета после второго патча. Готовые доказательства использовать из проверенного кэша. Наблюдатель включать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты остальные широкие потребители tool groups и консервативные данные native-materialize, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

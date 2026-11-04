@@ -1,0 +1,43 @@
+{
+  "affected_resource_contracts": [
+    "game-ui",
+    "map-data",
+    "quests"
+  ],
+  "comparison": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-patch-268356-comparisons\\761631b2a238ac12c9f49ee8264927cb7788fe137bbb31df195e0aa7e4ae128b\\manifest.json",
+    "sha256": "761631b2a238ac12c9f49ee8264927cb7788fe137bbb31df195e0aa7e4ae128b"
+  },
+  "limits": [
+    "Selected changed-resource processing and full SHA installation audit, not a complete native update.",
+    "No authoritative directory names or resource identity are inferred from decoded bytes.",
+    "Previous reference blob source version is unknown; candidate schema/content comparison is not semantic compatibility.",
+    "Decoded record hash matching compares content, not resource identity or logical filenames.",
+    "Unique CSV schemas and unique textual first columns define candidates, not game semantics.",
+    "Archive directory indices are not parsed; unchanged-size PAKs were nevertheless covered by the complete audit.",
+    "Affected contracts are conservative because authoritative internal paths remain unknown.",
+    "This is the registered resource component plus complete installation audit, not a full ordinary CLI update.",
+    "The launcher binary was not checked. No gameplay or prepared-next activation was performed."
+  ],
+  "native_replays": 0,
+  "new_jvm": 0,
+  "patch_revision": "Revision268356",
+  "processing": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-patch-268356-results\\8f2163f369bc59557bb9823ea3f7b21711375a9b84b5a346fa43eeecdd539096\\manifest.json",
+    "sha256": "8f2163f369bc59557bb9823ea3f7b21711375a9b84b5a346fa43eeecdd539096"
+  },
+  "profile_activated": false,
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "totals": {
+    "archives": 9,
+    "csv_after": 3110,
+    "csv_before": 3095,
+    "csv_errors": 0,
+    "csv_unique_hashes_added_per_archive": 754,
+    "csv_unique_hashes_not_observed_per_archive": 740,
+    "new_observed_uasset_rows": 137,
+    "unique_schema_pairs_with_row_diff": 61
+  },
+  "watcher_started": false
+}
