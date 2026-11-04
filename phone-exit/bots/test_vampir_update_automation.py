@@ -67,7 +67,9 @@ def load_tests(loader, tests, pattern):
             'test_vampir_resource_directory_record_v1','test_vampir_directory_record_integration',
             'test_vampir_resource_map_tables_v1','test_vampir_quest_input_seed_v2',
             'test_vampir_quest_input_seed_integration','test_vampir_quest_reader_transfer_v1',
-            'test_vampir_quest_reader_transfer_integration','test_vampir_quest_reader_rules_v1'):
+            'test_vampir_quest_reader_transfer_integration','test_vampir_quest_reader_rules_v1',
+            'test_vampir_quest_packet_native_v1','test_vampir_quest_packet_harness_v1',
+            'test_vampir_quest_packet_native_integration'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

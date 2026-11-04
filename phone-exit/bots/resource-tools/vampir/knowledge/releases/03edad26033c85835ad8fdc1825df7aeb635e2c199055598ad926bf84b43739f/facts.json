@@ -1926,6 +1926,57 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты 15 основных consumer roots квестов / обучения, включая vector и общий packet reader, их оставшаяся leaf / callback / storage / data closure; затем QuestUpdate 1810. Также native projection карты, texture/runtime world selection/engine correction и полная resource dependency closure, девять исторических unknown SHA, ближайшая prepatch named база, остальные tool groups, полный ordinary update/production recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x144aac220",
+        "0x144aac340",
+        "0x144aac390",
+        "0x144aac590",
+        "0x144aac5e0",
+        "0x144aac620",
+        "0x144aac6b0",
+        "0x144aacc30",
+        "0x1456b70f0",
+        "0x1457a68b0",
+        "0x1457a6a70",
+        "0x1457a6b10",
+        "0x1457a6b70",
+        "0x1457a8db0",
+        "0x1457a8ec0",
+        "0x1457a9e20",
+        "0x1457a9e60",
+        "0x1457fe280",
+        "0x1457fe310",
+        "0x1457fe3a0",
+        "0x145828e10",
+        "0x14584c1a0"
+      ],
+      "checks": [],
+      "conclusion": "Новое правило автоматизации подключает целевые INPUT-контексты QuestSync / Tutorial к whole native harness, точной матрице, durable journal cache и конечным source / Owner barriers. Source-bound bounded-native результаты клиента сохранены отдельными машинными отчётами.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-QUEST-PACKET-NATIVE-V1-11322.json",
+          "sha256": "d804bc86b2f69d2e20a5294f4f04962a833855aee5e0ac003de7f517fc338510"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-QUEST-PACKET-NATIVE-V1-11322.md",
+          "sha256": "fcf9d0bf04cc8697b9217937a10c1472f74fe99718c152364d6e3d3f89f47e38"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "bc20e4b7d1641c76dc18b19e8d9cc6972268e39b80fbabb188dcc21c8f459ee4",
+      "limits": [
+        "Fresh zeroed storage is bounded to eight quest groups and eight quests per group, or 64 tutorial records.",
+        "Allocation, cleanup and memcpy use explicit caller-bound fixtures, with temporary storage poisoned after free.",
+        "Reuse, real storage providers, handlers, active quest selection, outgoing actions and online admission remain open."
+      ],
+      "method": "static",
+      "next_check": "Общим пакетом перенести и проверить handlers QuestSync / Tutorial и QuestUpdate 1810 с готовыми INPUT proofs. Повторно не исполнять неизменные packet suites, 22 static roots, INPUT seed, 54 resource inputs / 247 hashes. Подключить новые случаи к обычному update/cache и сохранить отдельные runtime admission границы. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты handlers QuestSync / Tutorial, QuestUpdate 1810 и runtime quest-контракт. Reuse / growth / реальные storage providers и cleanup effects требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

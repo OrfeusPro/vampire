@@ -27,7 +27,8 @@ def execution_inputs(index, knowledge=None):
         'resource-directory-v1.py','resource-directory-format-v1.py','resource-directory-paths-v2.py',
         'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py',
         'resource-selected-hashes-v1.py','resource-directory-record-v1.py','resource-map-tables-v1.py',
-        'quest-input-seed-v2.py','quest-reader-transfer-v1.py','quest-reader-transfer-rules-v1.py'}
+        'quest-input-seed-v2.py','quest-reader-transfer-v1.py','quest-reader-transfer-rules-v1.py',
+        'quest-packet-native-v1.py','quest-packet-harness-v1.py','quest-packet-cases-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -188,6 +189,9 @@ def definition_inputs(index, args, update):
             paths.add(args.knowledge/'quest-reader-transfer.json')
             paths.update(index.HERE/name for name in ('quest-reader-transfer-v1.py','quest-reader-transfer-rules-v1.py'))
             paths.add(args.knowledge/'quest-reader-transfer-rules.json')
+        if (args.knowledge/'quest-packet-native.json').is_file():
+            paths.add(args.knowledge/'quest-packet-native.json')
+            paths.update(index.HERE/name for name in ('quest-packet-native-v1.py','quest-packet-harness-v1.py','quest-packet-cases-v1.py'))
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -949,6 +953,14 @@ def run_locked(index, args, database, *, audited=None):
                         queue.append(dict(contract='quests',capability='quest-reader-transfer',
                             reason='quest_reader_transfer_requires_review',evidence=transfer,
                             next_check='Review exact consumer roots, leaves and data; packet semantic proof remains separate'))
+                    if (args.knowledge/'quest-packet-native.json').is_file():
+                        packets=index.extension('quest-packet-native-v1').run(index,args,sha,journal,transfer,
+                            getattr(args,'scoped_database',database))
+                        record['quest_packet_native']=packets
+                        if packets['state']!='passed_bounded_native':
+                            queue.append(dict(contract='quests',capability='quest-packet-input',
+                                reason='quest_packet_native_requires_review',evidence=packets,
+                                next_check='Inspect exact target exports or the failed bounded packet case'))
             record['native_contexts']=native_contexts
             record['native_checks']=native_checks
         outcomes = {}
@@ -1099,6 +1111,9 @@ def run_locked(index, args, database, *, audited=None):
         if 'quest_reader_transfer' in record:
             record['quest_reader_transfer']=index.extension('quest-reader-transfer-v1').finalize(
                 original_index,args,record['quest_reader_transfer'])
+        if 'quest_packet_native' in record:
+            record['quest_packet_native']=index.extension('quest-packet-native-v1').finalize(
+                original_index,args,record['quest_packet_native'])
         publisher=index.extension('update-bundle')
         if hasattr(publisher,'publish'):
             bundle=publisher.publish(index,args,bundle,

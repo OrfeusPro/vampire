@@ -11760,7 +11760,14 @@
         "phone-exit/bots/resource-tools/vampir/knowledge/quest-reader-transfer-rules.json",
         "phone-exit/bots/test_vampir_quest_reader_transfer_v1.py",
         "phone-exit/bots/test_vampir_quest_reader_transfer_integration.py",
-        "phone-exit/bots/test_vampir_quest_reader_rules_v1.py"
+        "phone-exit/bots/test_vampir_quest_reader_rules_v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-packet-native-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-packet-harness-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-packet-cases-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-packet-native.json",
+        "phone-exit/bots/test_vampir_quest_packet_native_v1.py",
+        "phone-exit/bots/test_vampir_quest_packet_harness_v1.py",
+        "phone-exit/bots/test_vampir_quest_packet_native_integration.py"
       ],
       "artifact_dependencies": []
     }

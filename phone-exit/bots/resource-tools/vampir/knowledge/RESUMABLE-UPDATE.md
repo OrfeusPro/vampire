@@ -236,6 +236,20 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## Native INPUT пакеты квестов и обучения
+
+[Selector](quest-packet-native.json) включает два ограниченных native stages
+после статического переноса. Штатный collector получает недостающие whole
+exports, общий proof-bound harness проверяет память / ABI и точную матрицу.
+Журнал содержит quest_packet_native, отчёты — quest-packet-native-checks-v1.
+
+Неизменный повтор использует ready exports и cached native reports после
+проверки SHA, кода, runtime и матриц. Перед публикацией выполняется конечная
+проверка выбранных материалов и Owner. Результат passed_bounded_native
+покрывает описанные INPUT-сценарии. Остальные quest handlers, runtime contract
+и online admission сохраняют собственные обязательные проверки.
+[Приёмка и границы](evidence/updates/HEADLESS-QUEST-PACKET-NATIVE-V1-11322.md).
+
 ## Статические consumer readers квестов и обучения
 
 [Selector](quest-reader-transfer.json) включает после INPUT seed статический

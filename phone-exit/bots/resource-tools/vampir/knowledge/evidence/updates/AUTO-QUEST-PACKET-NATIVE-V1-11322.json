@@ -1,0 +1,124 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-packet-native-v1-acceptance\\45b335f6daec97a2d608e596df4b4b0ff1269960e1a27a5eeccacf2f7bed76cd\\manifest.json",
+    "sha256": "45b335f6daec97a2d608e596df4b4b0ff1269960e1a27a5eeccacf2f7bed76cd"
+  },
+  "bootstrap_extra_export_batches": 1,
+  "bounded_native_execution_verified": true,
+  "checks": [
+    {
+      "cache_key": "9004f2ae8d4e52fbd45f13700980579fbe1e4e340e7c0ed48283152e9c88c173",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\73dbb99113bde2c55b861e2cb43f4f1d4d4c174ac487a589c45633b84bd1b009\\manifest.json",
+      "sha256": "73dbb99113bde2c55b861e2cb43f4f1d4d4c174ac487a589c45633b84bd1b009",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "376774c9f601a6e2ecad5f2445c24a6c0101f1cae47955ade9471adb5dd4c8b9",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7e49d99a2d55b6b2f9d3a974c6dc37defbd98be272298d8271f5acbc7b5c3123\\manifest.json",
+      "sha256": "7e49d99a2d55b6b2f9d3a974c6dc37defbd98be272298d8271f5acbc7b5c3123",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "196fc58d30580cc9dcaab3a6acd6a048c58509afe49c5dffc4564cff34538e5a",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c6d19aa4eb30f869f861ddf3593bf6cb3367e59984dc70a0bd61dec662a52575\\manifest.json",
+      "sha256": "c6d19aa4eb30f869f861ddf3593bf6cb3367e59984dc70a0bd61dec662a52575",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "ba0b0ac6d58700f99c7ab66128c6bbfd0b45a337ac66cf271726082c3e3023f1",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d718ded5c1291ee2bc29888dbb03559e49bacd4574274525f31745567e16c18f\\manifest.json",
+      "sha256": "d718ded5c1291ee2bc29888dbb03559e49bacd4574274525f31745567e16c18f",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "cold_native_stage_seconds": {
+    "quest-packet-native-quest-sync": 38.681504,
+    "quest-packet-native-tutorial-update": 37.32166
+  },
+  "complete_quest_contract_verified": false,
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-packet-native.json": "d5ab51bd092884bb42d5b75ce81219661fd02fcd987469120e299e5c5ffa9f66",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "ed02fa4f8e2a719a39ccb357351de92f5cb527c992fa933cf95e3d9b8d1fbe33",
+    "phone-exit/bots/resource-tools/vampir/quest-packet-cases-v1.py": "df4169842df4d4f7919eb1163a34c419be5ad86666d076ed46915c05148fa3d8",
+    "phone-exit/bots/resource-tools/vampir/quest-packet-harness-v1.py": "ce6a215cf07be0cba8fa90c08091e0b8cbf409bb760bfb7e937ebdd5a145bda0",
+    "phone-exit/bots/resource-tools/vampir/quest-packet-native-v1.py": "6b1b3d5b7e9d4064e64993c29c937fe2c84f11b392415639049a1c9187eb5a20",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "9aaa1290bc8f8f7086a93a2c3aa4802b429a1cb5572d44e43b11165c19a878bb",
+    "phone-exit/bots/test_vampir_quest_packet_harness_v1.py": "ab5ca4d4dfcce00f72e48ef1468b95d5a41307769b1b520cea27b1924e5e6a42",
+    "phone-exit/bots/test_vampir_quest_packet_native_integration.py": "e1cc34ba1478b508ffcc91032c5a801bf63766113068372ad712e1fd5e069351",
+    "phone-exit/bots/test_vampir_quest_packet_native_v1.py": "5abef20863e35802a878e3690c82aff2f06da4ccd6a3d9977074204da50c6f7d",
+    "phone-exit/bots/test_vampir_update_automation.py": "6a83b7c3c56a6f33dba2d4bff3335d5d87a50f1e5589ca8020e3c90db61ca53b"
+  },
+  "initial_missing_export_batch": 15,
+  "limits": [
+    "Fresh zeroed storage is bounded to eight quest groups and eight quests per group, or 64 tutorial records.",
+    "Allocation, cleanup and memcpy use explicit caller-bound fixtures, with temporary storage poisoned after free.",
+    "Reuse, real storage providers, handlers, active quest selection, outgoing actions and online admission remain open."
+  ],
+  "method": "bounded_native_component_acceptance",
+  "packet_cases": {
+    "quest_sync": 269,
+    "total": 1178,
+    "tutorial_update": 909
+  },
+  "production_update_executed": false,
+  "profile_activated": false,
+  "recipe": "quest-packet-native-v1",
+  "runtime_activated": false,
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "target_exports_verified": true,
+  "tests": {
+    "added": 25,
+    "aggregate": 1877,
+    "skipped": 3
+  },
+  "trailing_cases": 2,
+  "truncated_cases": 1007,
+  "valid_cases": 169,
+  "warm_native_executions": 0,
+  "warm_new_jvm": 0,
+  "warm_seconds": [
+    4.248983,
+    4.44688
+  ],
+  "watcher_started": false
+}

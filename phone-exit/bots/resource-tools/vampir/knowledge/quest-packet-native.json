@@ -1,0 +1,5 @@
+{
+  "schema": 1,
+  "recipe": "quest-packet-native-v1",
+  "families": ["quest-sync", "tutorial-update"]
+}

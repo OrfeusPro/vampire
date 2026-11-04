@@ -423,8 +423,14 @@ replay; 1816 тестов и шесть дополнительных checks пр
 подключён к обычному update/cache: 15 новых функций плюс семь готовых INPUT,
 девять leaves и 13 таблиц. Оба consumer contexts подготовлены для текущего
 SHA; повтор не выполняет transfer или PE build. 1852 теста и шесть checks
-прошли. Target exports, packet native semantics и онлайн-допуск остаются
-открытыми; следующий пакет — общий proof-bound harness ID 1854 / 9905.
+прошли. Границы статического этапа сохранены в его квитанции. Последующая
+INPUT-композиция описана ниже.
+
+[Native INPUT пакеты квестов и обучения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-PACKET-NATIVE-V1-11322.md)
+подключены к update/cache. QuestSync 1854 прошёл 269 входов, Tutorial 9905 —
+909, с guards памяти и Win64 ABI. Два повтора взяли четыре stages из кэша.
+1877 tooling тестов и шесть дополнительных checks прошли. Следующий пакет —
+handlers, QuestUpdate 1810 и остающаяся контрактная / онлайн-проверка.
 
 ## Сохранённые записи прежних этапов
 
