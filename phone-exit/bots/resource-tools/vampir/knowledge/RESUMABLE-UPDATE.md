@@ -142,6 +142,36 @@ filename таким разрешением не обладает. Schema1 сох
 Правило и новый helper входят в definitions/cache; другой SHA архива требует
 нового доказательства. [Приёмка v2](evidence/updates/HEADLESS-RESOURCE-MOUNT-JOIN-V2-268356.md).
 
+## Именованные таблицы и следующая ресурсная база
+
+[Named table selector](resource-named-tables-engine.json) включает сравнение
+по точному slot PAK и canonical path. Legacy references регистрируются
+явно с полными SHA и порядком rank; схема CSV не назначает имён. Полнота
+имён и наличие payload различаются. Hash-only записи участвуют в byte
+comparison, неизвестные decoded SHA сохраняют unknown. Для CSV-подобных
+файлов другого расширения проверяется полный directory lookup, чтобы
+смена формата payload не стала ложным добавлением / удалением.
+
+Текущий named report и CSV становятся неизменяемой capsule. Cache pointer
+назначается после общего owner barrier. Следующий SHA выбирает последнюю
+назначенную базу, тёплый повтор — её сохранённого predecessor. Новые JVM
+и native replay для сравнения не нужны. Повреждённые proofs и равные
+последние ranks оставляют blocker. Код, selector, runtime и точные
+pointers входят в cache key; lookup выводится из проверенного proof.
+
+Captures и comparisons находятся в resource-named-baselines-v1 /
+resource-named-comparisons-v1 библиотеки. Указатели — knowledge/
+resource-comparison-cache-v3/named-<slot-sha>/ и named-compare-<key>.json.
+Capture bridge разрешает только зарегистрированную смену own producer SHA
+с повторной проверкой исходного named proof и всех payloads; остальные
+producer dependencies должны совпасть. Новая версия helper без такого
+правила даёт конкретный blocker. Старые capsules не переписываются.
+
+Named delta ещё не сужает admission или affected plan. Historical captured
+evidence не объявляется свежим чтением старого PAK. Неполная ближайшая
+база не заменяется другой без явного указания области сравнения.
+[Приёмка и ограничения](evidence/updates/HEADLESS-RESOURCE-NAMED-BASELINE-V1-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver

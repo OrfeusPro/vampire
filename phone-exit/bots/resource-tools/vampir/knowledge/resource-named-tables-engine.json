@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "recipe": "named-table-baselines-v1",
+  "legacy_references": [
+    {
+      "reference": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-named-reference-v1-imports\\8c720b9cae7de53b851c3495be4d6898d5f14922e5aeab5b14ab3914b0effd4e\\manifest.json",
+        "sha256": "8c720b9cae7de53b851c3495be4d6898d5f14922e5aeab5b14ab3914b0effd4e"
+      },
+      "rank": 0
+    }
+  ],
+  "legacy_bridge": {
+    "48f9af097d231ffd81ff5f9d7818c9550bd33a6fcf940786de7af5846771a2ec": "08dbfde34e3cff165fa8a6b3743555d1f22943e5242eb1077212759927c8ddca"
+  },
+  "capture_bridge": {
+    "6257c8ffde57cfb91b715cf8c3c4f51dd4cf450ad42060fcc7aa6286f52119d3": "96507b950cea4ab4d3fb37ade02ef5bfd347d5802af1bdbde2ca5425a5660f33"
+  }
+}

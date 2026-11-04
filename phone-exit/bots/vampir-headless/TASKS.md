@@ -78,7 +78,7 @@ exports и проверки вручную не повторять. Счётчи
   сужение консервативных ключей и полный замер 109 архивов по явной команде.
   [Приёмка owner](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md).
   [Приёмка CSV](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-CSV-COSTS-V1-11322.md).
-  235 encrypted / size gaps и подходящие named table baselines
+  235 encrypted / size gaps и пропуски конкретных named table baselines
   остаются общими блокерами. Exact content match не означает resource identity,
   semantic совместимость или admission. Не повторять 34 готовых native семейства.
   [Приёмка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PIPELINE-V3-11322.md).
@@ -89,11 +89,18 @@ exports и проверки вручную не повторять. Счётчи
   directory / resource identity gaps; candidate schema не повышает admission.
   [Данные патча](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PATCH-268356-11322.md).
 
-- Directory adapter v2 закрывает mount join всех 53 299 путей, включая 5276
-  прежних пробелов. Следующий пакет — точные старые named baselines для
-  selective impact; схемы и offsets между разными архивами не переносить
-  как подтверждённую идентичность.
-  [Пути и проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MOUNT-JOIN-V2-268356.md).
+- Именованные CSV подключены к update/cache; текущие базы сохраняются
+  автоматически. Доступная старая база дала 2074 unchanged / 1024 changed /
+  15 added / 9 unknown. Остались девять неизвестных старых decoded SHA,
+  отсутствие ближайшей prepatch named базы и привязка named delta к
+  selective impact потребителей. Начать с post-barrier impact receipt: before
+  archive SHA должен совпасть с ресурсным входом сохранённой проверки;
+  широкие Quest / Map / UI patterns нельзя сузить по одному CSV delta.
+  Сам affected plan пока диагностический, resource_inputs использует SHA
+  целого архива. Для экономии исполнения нужен отдельный доказанный ключ
+  selected resources. Не повторять готовый разбор directory
+  и не угадывать имена по схемам.
+  [Базы, проверки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-NAMED-BASELINE-V1-268356.md).
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный

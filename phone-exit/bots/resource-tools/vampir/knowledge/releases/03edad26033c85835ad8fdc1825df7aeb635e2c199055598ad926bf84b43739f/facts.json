@@ -1615,6 +1615,54 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты точные исторические named table baselines для selective impact, encrypted/size и resource semantic gaps; остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Named CSV v1 подключён к update/cache: 2074 unchanged, 1024 changed, 15 added, 9 unknown к доступной старой базе; 9 captures и 9 warm cache hits. 36 новых tests, 1666 aggregate; admission не менялся.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-NAMED-BASELINE-V1-268356.json",
+          "sha256": "02127a9732746019557b8155525d94592cf9da74edd2fbf1db99b3880eb10707"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-NAMED-BASELINE-V1-268356.md",
+          "sha256": "44076d13f9ef8ad3433e0ff1bb29ad3d9548da93383e166a327c79192a7dcffa"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "f460b8da649a407426df8abbb4a6f7f22536c4b81fbcf5ed3be77eb347a51ab0",
+      "limits": [
+        "Named-table component plus exact current directory validation, not a full ordinary CLI update.",
+        "Historical reference is the available older archive 15cf4f88..., not nearest prepatch 7c186d92...",
+        "Historical PAK is not reread; captured proof and payload files are checked, with nine unknown hashes retained.",
+        "Named delta does not establish game row-key semantics, resource layer precedence or runtime admission.",
+        "The nearest prepatch archive 7c186d92... has no saved authenticated directory; its names were not inferred.",
+        "The nine historical unknown hashes and 377 missing payloads remain explicit gaps.",
+        "Full directory fallback prevents false add/remove when a CSV-like non-.csv record stops parsing.",
+        "The registered capture bridge revalidates original source/name/payload proofs and changes only the own producer SHA.",
+        "Other producer dependency changes are rejected until a separate proven bridge or new baseline is supplied.",
+        "Resource impact planning remains conservative; neither native semantic admission nor online is established."
+      ],
+      "method": "static",
+      "next_check": "Связать точный named delta с source-bound dependency потребителей для selective impact, сохранив conservative fallback и unknown hashes. Новые named bases сохраняются штатным update; не повторять готовое directory/legacy matching. Полный проход/owner recovery и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты девять исторических unknown decoded SHA, ближайшая prepatch named база, selective impact потребителей, encrypted/size и resource semantic gaps; остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

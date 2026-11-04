@@ -47,6 +47,8 @@ class Pipeline:
         self.tables=index.extension('extract-release-tables')
         self.directory_api=index.extension('resource-directory-v1') if (Path(args.knowledge)/'resource-directory-engine.json').is_file() else None
         if self.directory_api is not None and not self.directory_api.enabled(index,args):self.directory_api=None
+        self.named_api=index.extension('resource-named-tables-v1') if (Path(args.knowledge)/'resource-named-tables-engine.json').is_file() else None
+        if self.named_api is not None and not self.named_api.enabled(index,args):self.named_api=None
         self.reference,self.reference_error=None,None
         self.files,self.aliases={},{}
         self.optional_files,self.pending={},{}
@@ -59,6 +61,7 @@ class Pipeline:
             comparison_cache_hits=0,comparison_executions=0,final_barrier_seconds=0,
             current_csv_tables=0,current_csv_errors=0,common_table_baseline_missing=0)
         if self.directory_api is not None:self.metrics['directory_seconds']=0
+        if self.named_api is not None:self.metrics['named_table_seconds']=0
         self.finished=False
 
     def pin(self,path,expected=None):
@@ -241,12 +244,28 @@ class Pipeline:
                 except (ValueError,OSError,KeyError) as error:
                     directory=dict(state='requires_review',reason=str(error))
                 finally:self.metrics['directory_seconds']+=time.perf_counter()-started
+            named=None
+            if self.named_api is not None:
+                started=time.perf_counter()
+                try:
+                    if directory is None or not directory.get('report'):
+                        raise ValueError('Named comparison needs a verified directory report')
+                    named=self.named_api.process(self.index,self.args,row,directory)
+                except (ValueError,OSError,KeyError) as error:
+                    named=dict(state='requires_review',reason=str(error))
+                finally:self.metrics['named_table_seconds']+=time.perf_counter()-started
             self.metrics['current_csv_tables']+=len(csv_report['tables'])
             self.metrics['current_csv_errors']+=len(csv_report['errors'])
             reference=self._reference(row)
             asset_pointer,asset_report=self._asset_comparison(record_pointer,record,reference)
-            table_pointer,table_report=self._table_comparison(row,csv_pointer,csv_report)
+            if named is not None and named['state']=='compared':
+                table_pointer=named['report'];table_report=self.read(table_pointer)
+            else:table_pointer,table_report=self._table_comparison(row,csv_pointer,csv_report)
             reasons=[]
+            if named is not None:
+                if named['state']=='requires_review':reasons.append('named_table_comparison_rejected')
+                elif named['state']=='compared' and named['counts']['unknown']:
+                    reasons.append('named_table_reference_hashes_incomplete')
             if directory is not None and directory['state']!='bound':reasons.append('resource_directory_incomplete')
             if config is not None and config.get('state')!='passed':reasons.append('current_game_config_extraction_incomplete')
             if csv_report['state']!='extracted':reasons.append('current_csv_extraction_errors')
@@ -262,6 +281,7 @@ class Pipeline:
                 resource_identity_proven=False,owner_barrier_pending=True)
             if config is not None:outcome['config']=config
             if directory is not None:outcome['directory']=directory
+            if named is not None:outcome['named_tables']=named
             pointer=self.receipt('resource-processing-v3',outcome)
             inputs=dict(record_index=record_pointer,current_csv=csv_pointer,asset_comparison=asset_pointer,
                 table_comparison=table_pointer,rules=self.rules)
@@ -269,6 +289,7 @@ class Pipeline:
                 inputs['config_outcome']=copy.deepcopy(config)
                 inputs['config_source_sha256']=self.report['exe']['sha256']
             if directory is not None:inputs['directory']=directory
+            if named is not None:inputs['named_tables']=named
             result=self.journal.stage('resource-v3-'+hashlib.sha256(row['path'].encode()).hexdigest()[:16],inputs,
                 lambda:dict(outcome,report=pointer['path'],sha256=pointer['sha256']))
             print(json.dumps(dict(event='update_resource_v3',archive=Path(row['path']).name,
@@ -326,4 +347,6 @@ class Pipeline:
             metrics=copy.deepcopy(self.metrics),validation_scope='bounded_resource_processing_only',
             compatibility='not_established',resource_identity_proven=False)
         if directory is not None:result['directory']=directory
+        named=getattr(self.args,'resource_named_tables_v1_scope',None)
+        if named is not None:result['named_tables']=copy.deepcopy(named.metrics)
         return result
