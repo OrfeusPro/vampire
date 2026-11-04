@@ -21818,6 +21818,50 @@
       "question": "quest-click-action-11316",
       "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
       "unknown": "Real world record loader+0C/name, active task и full Time для concrete offer; совместимость installed1.13.18 и online action."
+    },
+    {
+      "addresses": [
+        "0x144aac530",
+        "0x1456b70d0",
+        "0x1457a64f0",
+        "0x1457a66b0",
+        "0x1457a6750",
+        "0x1457a67b0",
+        "0x1457a89f0",
+        "0x1457a8b00",
+        "0x1457a9a60",
+        "0x1457a9aa0",
+        "0x1457fde80",
+        "0x1457fdf10",
+        "0x1457fdfa0",
+        "0x145828a10",
+        "0x14584bda0"
+      ],
+      "checks": [],
+      "conclusion": "Зарегистрировано общее статическое правило переноса 15 consumer roots QuestSync / Tutorial из доказанной базы 1.13.16 на точный EXE 1.13.22; source-bound machine proof и warm/final SHA checks подтверждены. Семь INPUT roots переиспользуются, native/export/consumer admission остаётся открытым.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-QUEST-READER-TRANSFER-V1-11322.json",
+          "sha256": "22bf4c0bec52ae77a42b8534af970a57a3ea61bf14ba5c30e5b93043f8f355b7"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-QUEST-READER-TRANSFER-V1-11322.md",
+          "sha256": "c9d17284c30101437790113826f8f45dc898fcb2befb8af4eed744a806295091"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "fcf5d384e3e757be1bbefc45c86ef21ec9d46f9e89a2599571b9e87f84e3b398",
+      "limits": [
+        "Whole consumer root instruction/control and declared leaf/table/fixture links are checked statically.",
+        "No target packet native scenario, handler application, storage effect or game command has been executed.",
+        "Static contexts do not grant consumer semantic, runtime, profile or online admission."
+      ],
+      "method": "static",
+      "next_check": "Использовать готовые static target_contexts двух readers для нового общего proof-bound packet harness ID 1854 / 9905 и whole native сценариев; сначала получить только недостающие source-bound exports. Caller / memory / ABI guards и границы storage fixtures сохранить. Не повторять 22 static roots, INPUT suites, 54 resource inputs / 247 hashes. Затем отдельно QuestUpdate 1810. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+      "unknown": "Открыты exact target exports и общий proof-bound native harness QuestSync 1854 / Tutorial 9905, storage effects / handlers и затем QuestUpdate 1810. Также native projection карты, texture/runtime selection/engine correction и полная resource dependency closure, девять исторических unknown SHA, ближайшая prepatch named база, остальные tool groups, полный ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

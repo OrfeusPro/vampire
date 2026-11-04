@@ -1,0 +1,124 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-reader-transfer-v1-acceptance\\0cc01d7855f285c4edd89d47c2d289c70284d5701fcd889de6dc5281a8b4afca\\manifest.json",
+    "sha256": "0cc01d7855f285c4edd89d47c2d289c70284d5701fcd889de6dc5281a8b4afca"
+  },
+  "baseline_source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "boundaries": 13,
+  "checks": [
+    {
+      "cache_key": "0e8050609891e2d6f252e54ab11877da3f0653ed3d843979b668feba134d4a52",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\83c9b7fb31c523430f9552bfbb2a95728585ff4a25f8f11f6e2bd91992fa5ead\\manifest.json",
+      "sha256": "83c9b7fb31c523430f9552bfbb2a95728585ff4a25f8f11f6e2bd91992fa5ead",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "2bccb3ca8f9f9ef9b6f944b8d365007740e014bc56e4f2711db0841939733563",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\47a3bfc2293e75ce6a60b1152e59fb9d8555988a7e3d7a00da5cb330df1111e0\\manifest.json",
+      "sha256": "47a3bfc2293e75ce6a60b1152e59fb9d8555988a7e3d7a00da5cb330df1111e0",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "bccf190cc44e29035382a1127a3b0aaee36d9ef6077d7c355a51c8fe8cb20204",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\43b0529968f45a44005080a7cb558fb516e452b85b8912e4c97737e19fac533b\\manifest.json",
+      "sha256": "43b0529968f45a44005080a7cb558fb516e452b85b8912e4c97737e19fac533b",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "c0b9eb476d7228576e86123a65afdf6570a780b498c1295da33a0da945071e0f",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2b9f264da549053f6509b3574b9fbb0fb4275e3f9a3471a36df7cfa06a72695a\\manifest.json",
+      "sha256": "2b9f264da549053f6509b3574b9fbb0fb4275e3f9a3471a36df7cfa06a72695a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "cold_seconds": 18.385749,
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-reader-transfer-rules.json": "2ce021bca031ce7039c962207f6372bf67c9f0f92fa68638aa1d6be966654c23",
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-reader-transfer.json": "30f14d49466555a0984a5ffa7a19e80940b41b3d87ec8052102567d3a1d149ad",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "34cd91b017be5dad1f081b2284791e8b1f593fd628deee8dce81ef45221d4eb6",
+    "phone-exit/bots/resource-tools/vampir/quest-reader-transfer-rules-v1.py": "856edc2e138d72fed97d700250545886adcd75546cfa0d0044ddee0827963e9a",
+    "phone-exit/bots/resource-tools/vampir/quest-reader-transfer-v1.py": "a392f9f0d40acfc23ebaaa5cc2b3e77e981a65afd5136686f9e92a5af1fb6fe7",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "c91937bcceda180ad617e991db1f65a931672553f02a54e6e06a1e4566555bd5",
+    "phone-exit/bots/test_vampir_quest_reader_rules_v1.py": "84e4a55635e0814cbb0ff636a48dc6d3b501c4b50da152e7ef423136a29f8126",
+    "phone-exit/bots/test_vampir_quest_reader_transfer_integration.py": "7cbfcdf7f29a40303e7bc9d1f5ffb2a9a16238ee9e6e37cdda346f7c27b401c5",
+    "phone-exit/bots/test_vampir_quest_reader_transfer_v1.py": "0a7690f0dee1a62ab1c5f761a122f9298533124547e901211234870590aac41d",
+    "phone-exit/bots/test_vampir_update_automation.py": "55730633d3e4534dc3f89551f713eceed51867c51de17c52db266beceecc9a56"
+  },
+  "counts": {
+    "seed_roots": 7,
+    "total_roots": 22,
+    "transferred_roots": 15
+  },
+  "leaves": 9,
+  "limits": [
+    "Whole consumer root instruction/control and declared leaf/table/fixture links are checked statically.",
+    "No target packet native scenario, handler application, storage effect or game command has been executed.",
+    "Static contexts do not grant consumer semantic, runtime, profile or online admission."
+  ],
+  "mapping_edges": 705,
+  "method": "static",
+  "native_consumer_verified": false,
+  "native_replays": 0,
+  "new_jvm": 0,
+  "previous_fact_count": 218,
+  "production_update_executed": false,
+  "profile_activated": false,
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-reader-transfer-proofs-v1\\88b0c9a2d7fd61f7a2d974acf894f44844b9f4c5277499756f34821a1eac87e3\\manifest.json",
+    "sha256": "88b0c9a2d7fd61f7a2d974acf894f44844b9f4c5277499756f34821a1eac87e3"
+  },
+  "recipe": "quest-reader-transfer-v1",
+  "research_fact_file": "phone-exit/bots/resource-tools/vampir/knowledge/releases/d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960/facts.json",
+  "research_scope": "reviewed_baseline_rule",
+  "runtime_activated": false,
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tables": 13,
+  "target_exports_verified": false,
+  "tests": {
+    "added": 36,
+    "aggregate": 1852,
+    "skipped": 3
+  },
+  "warm_seconds": 2.014346,
+  "watcher_started": false
+}

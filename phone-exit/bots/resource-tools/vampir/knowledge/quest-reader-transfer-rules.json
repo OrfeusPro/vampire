@@ -1,0 +1,586 @@
+{
+  "schema": 1,
+  "recipe": "quest-reader-transfer-rules-v1",
+  "baseline_source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "consumers": {
+    "quest-sync": {
+      "context_sha256": "51d5cee5c7bf37043345cc88034f5b3a15e4c05457e9b74dee2de8cf08fa28ad",
+      "functions": {
+        "vector": "0x144aac530",
+        "input_constructor": "0x144aacb40",
+        "input_buffer_constructor": "0x144aac130",
+        "input_u16": "0x144aac250",
+        "input_u32": "0x144aac2a0",
+        "input_u64": "0x144aac4a0",
+        "input_bool": "0x144aac4f0",
+        "input_raw": "0x144aac5c0",
+        "packet_constructor": "0x145828a10",
+        "reader": "0x1456b70d0",
+        "nested_reader": "0x1457a66b0",
+        "group_reader": "0x1457a67b0",
+        "quest_reader": "0x1457a64f0",
+        "progress_reader": "0x1457a6750",
+        "group_callback": "0x1457a8b00",
+        "quest_callback": "0x1457a89f0",
+        "group_reserve": "0x1457a9aa0",
+        "quest_reserve": "0x1457a9a60"
+      },
+      "leaves": {
+        "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+        "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+        "0x144aac240": "488b0141b80100000048ffa090000000",
+        "0x144aad1a0": "895110c3",
+        "0x1457a2a70": "488d0599611a0448890133c0488941084889411048894118488bc1c3",
+        "0x145834440": "b83e070000c3",
+        "0x145781e90": "4585c074704883c210488d41284c8d0de46c1c044c8d15956c1c040f1f4400004c8948d8488d4048488b4af8488d5248488948980fb64ab88848a04c8950a80fb64ac88848b0488b4ad0488948b8488b4ad8488948c00fb64ae08848c88b4ae48948cc8b4ae88948d08b4aec8948d44183e80175abc3"
+      },
+      "bindings": [
+        [
+          "0x1499654c0",
+          "0x20",
+          "0x1456b70d0"
+        ],
+        [
+          "0x1499654c0",
+          "0x28",
+          "0x145834440"
+        ],
+        [
+          "0x149948c10",
+          "0x20",
+          "0x1457a66b0"
+        ],
+        [
+          "0x149948bc8",
+          "0x20",
+          "0x1457a67b0"
+        ],
+        [
+          "0x149948b88",
+          "0x20",
+          "0x1457a64f0"
+        ],
+        [
+          "0x149948b40",
+          "0x20",
+          "0x1457a6750"
+        ],
+        [
+          "0x149949cf8",
+          "0x8",
+          "0x1457a9aa0"
+        ],
+        [
+          "0x149949cf8",
+          "0x10",
+          "0x1457a8b00"
+        ],
+        [
+          "0x149949d10",
+          "0x8",
+          "0x1457a9a60"
+        ],
+        [
+          "0x149949d10",
+          "0x10",
+          "0x1457a89f0"
+        ]
+      ]
+    },
+    "tutorial-update": {
+      "context_sha256": "d963ad1b0e6b18d741742c1b290db95d926be1987d0871482eb8938c11339d43",
+      "functions": {
+        "vector": "0x144aac530",
+        "input_constructor": "0x144aacb40",
+        "input_buffer_constructor": "0x144aac130",
+        "input_u16": "0x144aac250",
+        "input_u32": "0x144aac2a0",
+        "input_u64": "0x144aac4a0",
+        "input_bool": "0x144aac4f0",
+        "input_raw": "0x144aac5c0",
+        "packet_constructor": "0x14584bda0",
+        "reader": "0x1456b70d0",
+        "nested_reader": "0x1457fdf10",
+        "item_reader": "0x1457fde80",
+        "callback": "0x1457fdfa0"
+      },
+      "leaves": {
+        "0x144aace10": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+        "0x144aad190": "488b024c8bc2488bd1498bc848ff6020",
+        "0x144aac240": "488b0141b80100000048ffa090000000",
+        "0x1457fdba0": "488d0539b51204c641080048890133c04889411048894118488bc1c3",
+        "0x145855ec0": "b8b1260000c3",
+        "0x144aad1a0": "895110c3"
+      },
+      "bindings": [
+        [
+          "0x149969ad8",
+          "0x20",
+          "0x1456b70d0"
+        ],
+        [
+          "0x149969ad8",
+          "0x28",
+          "0x145855ec0"
+        ],
+        [
+          "0x1499290e0",
+          "0x20",
+          "0x1457fdf10"
+        ],
+        [
+          "0x1499290a0",
+          "0x20",
+          "0x1457fde80"
+        ],
+        [
+          "0x14995ffd0",
+          "0x8",
+          "0x1456ba3a0"
+        ],
+        [
+          "0x14995ffd0",
+          "0x10",
+          "0x1457fdfa0"
+        ],
+        [
+          "0x149670880",
+          "0x78",
+          "0x144aac240"
+        ]
+      ]
+    }
+  },
+  "roots": {
+    "0x144aac530": {
+      "roles": [
+        "quest-sync:vector",
+        "tutorial-update:vector"
+      ],
+      "calls": {
+        "37": "qword ptr [rax + 0x68]",
+        "59": "qword ptr [rax + 8]",
+        "100": "qword ptr [rax + 0x10]"
+      },
+      "data": {}
+    },
+    "0x1456b70d0": {
+      "roles": [
+        "quest-sync:reader",
+        "tutorial-update:reader"
+      ],
+      "calls": {
+        "14": "0x144aad190"
+      },
+      "data": {}
+    },
+    "0x1457a64f0": {
+      "roles": [
+        "quest-sync:quest_reader"
+      ],
+      "calls": {
+        "27": "qword ptr [rax + 0x50]",
+        "58": "qword ptr [rax + 0x78]",
+        "90": "0x144aad190",
+        "109": "qword ptr [rax + 0x88]",
+        "129": "qword ptr [rax + 0x60]",
+        "146": "qword ptr [rax + 0x60]",
+        "164": "qword ptr [rax + 0x60]"
+      },
+      "data": {}
+    },
+    "0x1457a66b0": {
+      "roles": [
+        "quest-sync:nested_reader"
+      ],
+      "calls": {
+        "28": "0x145782280",
+        "52": "0x141437f60",
+        "84": "qword ptr [rax + 0x18]",
+        "102": "qword ptr [rax + 0x50]"
+      },
+      "data": {
+        "57": [
+          "0x149949cf8"
+        ]
+      }
+    },
+    "0x1457a6750": {
+      "roles": [
+        "quest-sync:progress_reader"
+      ],
+      "calls": {
+        "26": "qword ptr [rax + 0x80]",
+        "46": "qword ptr [rax + 0x50]",
+        "63": "qword ptr [rax + 0x50]"
+      },
+      "data": {}
+    },
+    "0x1457a67b0": {
+      "roles": [
+        "quest-sync:group_reader"
+      ],
+      "calls": {
+        "27": "qword ptr [rax + 0x78]",
+        "63": "0x145782250",
+        "87": "0x141865280",
+        "119": "qword ptr [rax + 0x18]"
+      },
+      "data": {
+        "92": [
+          "0x149949d10"
+        ]
+      }
+    },
+    "0x1457a89f0": {
+      "roles": [
+        "quest-sync:quest_callback"
+      ],
+      "calls": {
+        "82": "0x144aad190",
+        "137": "0x1414d7f70"
+      },
+      "data": {
+        "18": [
+          "0x149948b88"
+        ],
+        "29": [
+          "0x149948b40"
+        ]
+      }
+    },
+    "0x1457a8b00": {
+      "roles": [
+        "quest-sync:group_callback"
+      ],
+      "calls": {
+        "52": "0x144aad190",
+        "75": "0x145782250",
+        "90": "0x141483080",
+        "144": "0x141437520",
+        "206": "0x141864f90",
+        "220": "0x145781e90",
+        "239": "0x145782250",
+        "264": "0x141483080"
+      },
+      "data": {
+        "26": [
+          "0x149948bc8"
+        ]
+      }
+    },
+    "0x1457a9a60": {
+      "roles": [
+        "quest-sync:quest_reserve"
+      ],
+      "calls": {
+        "23": "0x145782250",
+        "45": "0x141865280"
+      },
+      "data": {}
+    },
+    "0x1457a9aa0": {
+      "roles": [
+        "quest-sync:group_reserve"
+      ],
+      "calls": {
+        "23": "0x145782280",
+        "45": "0x141437f60"
+      },
+      "data": {}
+    },
+    "0x1457fde80": {
+      "roles": [
+        "tutorial-update:item_reader"
+      ],
+      "calls": {
+        "26": "qword ptr [rax + 0x60]",
+        "43": "qword ptr [rax + 0x60]",
+        "60": "qword ptr [rax + 0x60]",
+        "78": "qword ptr [rax + 0x78]"
+      },
+      "data": {}
+    },
+    "0x1457fdf10": {
+      "roles": [
+        "tutorial-update:nested_reader"
+      ],
+      "calls": {
+        "26": "qword ptr [rax + 0x88]",
+        "43": "0x1456b5990",
+        "67": "0x141437ee0",
+        "99": "qword ptr [rax + 0x18]"
+      },
+      "data": {
+        "72": [
+          "0x14995ffd0"
+        ]
+      }
+    },
+    "0x1457fdfa0": {
+      "roles": [
+        "tutorial-update:callback"
+      ],
+      "calls": {
+        "48": "0x144aad190",
+        "93": "0x14141c410"
+      },
+      "data": {
+        "12": [
+          "0x1499290a0"
+        ]
+      }
+    },
+    "0x145828a10": {
+      "roles": [
+        "quest-sync:packet_constructor"
+      ],
+      "calls": {
+        "23": "0x1457a2a70"
+      },
+      "data": {
+        "6": [
+          "0x1499654c0"
+        ]
+      }
+    },
+    "0x14584bda0": {
+      "roles": [
+        "tutorial-update:packet_constructor"
+      ],
+      "calls": {
+        "23": "0x1457fdba0"
+      },
+      "data": {
+        "6": [
+          "0x149969ad8"
+        ]
+      }
+    }
+  },
+  "leaves": {
+    "0x144aace10": {
+      "bytes": "488d05093cbc04c741140100000048890133c048894108894110488bc1c6411801c3",
+      "data": {
+        "0": [
+          "0x149670a20"
+        ]
+      },
+      "relocation_bytes": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "0x144aad190": {
+      "bytes": "488b024c8bc2488bd1498bc848ff6020",
+      "data": {},
+      "relocation_bytes": []
+    },
+    "0x144aac240": {
+      "bytes": "488b0141b80100000048ffa090000000",
+      "data": {},
+      "relocation_bytes": []
+    },
+    "0x144aad1a0": {
+      "bytes": "895110c3",
+      "data": {},
+      "relocation_bytes": []
+    },
+    "0x1457a2a70": {
+      "bytes": "488d0599611a0448890133c0488941084889411048894118488bc1c3",
+      "data": {
+        "0": [
+          "0x149948c10"
+        ]
+      },
+      "relocation_bytes": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "0x145834440": {
+      "bytes": "b83e070000c3",
+      "data": {},
+      "relocation_bytes": []
+    },
+    "0x145781e90": {
+      "bytes": "4585c074704883c210488d41284c8d0de46c1c044c8d15956c1c040f1f4400004c8948d8488d4048488b4af8488d5248488948980fb64ab88848a04c8950a80fb64ac88848b0488b4ad0488948b8488b4ad8488948c00fb64ae08848c88b4ae48948cc8b4ae88948d08b4aec8948d44183e80175abc3",
+      "data": {
+        "13": [
+          "0x149948b88"
+        ],
+        "20": [
+          "0x149948b40"
+        ]
+      },
+      "relocation_bytes": [
+        16,
+        17,
+        18,
+        19,
+        23,
+        24,
+        25,
+        26
+      ]
+    },
+    "0x1457fdba0": {
+      "bytes": "488d0539b51204c641080048890133c04889411048894118488bc1c3",
+      "data": {
+        "0": [
+          "0x1499290e0"
+        ]
+      },
+      "relocation_bytes": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "0x145855ec0": {
+      "bytes": "b8b1260000c3",
+      "data": {},
+      "relocation_bytes": []
+    }
+  },
+  "tables": {
+    "0x1499654c0": {
+      "bytes": "b0a0824501000000b03a40410100000000a56b4501000000b03a404101000000d0706b45010000004044834501000000",
+      "used": {
+        "0x20": "0x1456b70d0",
+        "0x28": "0x145834440"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149948c10": {
+      "bytes": "a060784501000000b03a40410100000010b07a4501000000b03a404101000000b0667a4501000000",
+      "used": {
+        "0x20": "0x1457a66b0"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149948bc8": {
+      "bytes": "e060784501000000b03a40410100000010b17a4501000000b03a404101000000b0677a4501000000",
+      "used": {
+        "0x20": "0x1457a67b0"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149948b88": {
+      "bytes": "6060784501000000b03a40410100000070ae7a4501000000b03a404101000000f0647a4501000000",
+      "used": {
+        "0x20": "0x1457a64f0"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149948b40": {
+      "bytes": "006b6b4501000000b03a404101000000a0b07a4501000000b03a40410100000050677a4501000000",
+      "used": {
+        "0x20": "0x1457a6750"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149949cf8": {
+      "bytes": "50aab04101000000a09a7a4501000000008b7a4501000000",
+      "used": {
+        "0x8": "0x1457a9aa0",
+        "0x10": "0x1457a8b00"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149949d10": {
+      "bytes": "50aab04101000000609a7a4501000000f0897a4501000000",
+      "used": {
+        "0x8": "0x1457a9a60",
+        "0x10": "0x1457a89f0"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149969ad8": {
+      "bytes": "f0d2844501000000b03a40410100000000a56b4501000000b03a404101000000d0706b4501000000c05e854501000000",
+      "used": {
+        "0x20": "0x1456b70d0",
+        "0x28": "0x145855ec0"
+      },
+      "kind": "consumer-table"
+    },
+    "0x1499290e0": {
+      "bytes": "20fe6e4501000000b03a404101000000d0e27f4501000000b03a40410100000010df7f4501000000",
+      "used": {
+        "0x20": "0x1457fdf10"
+      },
+      "kind": "consumer-table"
+    },
+    "0x1499290a0": {
+      "bytes": "90676b4501000000b03a40410100000050e27f4501000000b03a40410100000080de7f4501000000",
+      "used": {
+        "0x20": "0x1457fde80"
+      },
+      "kind": "consumer-table"
+    },
+    "0x14995ffd0": {
+      "bytes": "50aab04101000000a0a36b4501000000a0df7f4501000000",
+      "used": {
+        "0x8": "0x1456ba3a0",
+        "0x10": "0x1457fdfa0"
+      },
+      "kind": "consumer-table"
+    },
+    "0x149670880": {
+      "bytes": "90cbaa440100000030c6aa4401000000a0c6aa440100000030c5aa440100000070c4aa440100000070c4aa440100000090c3aa440100000040c3aa4401000000f0c2aa4401000000a0c4aa4401000000a0c4aa4401000000a0c2aa4401000000a0c2aa440100000050c2aa440100000050c2aa440100000040c2aa440100000040c2aa4401000000f0c4aa4401000000c0c5aa4401000000",
+      "used": {
+        "0x18": "0x144aac530",
+        "0x50": "0x144aac4a0",
+        "0x60": "0x144aac2a0",
+        "0x68": "0x144aac250",
+        "0x78": "0x144aac240",
+        "0x80": "0x144aac240",
+        "0x88": "0x144aac4f0",
+        "0x90": "0x144aac5c0"
+      },
+      "kind": "shared-input-table"
+    },
+    "0x149670a20": {
+      "bytes": "50ceaa4401000000",
+      "used": {},
+      "kind": "base-constructor-vptr-only"
+    }
+  },
+  "packets": {
+    "quest-sync": {
+      "id_getter": "0x145834440",
+      "id": 1854,
+      "table": "0x1499654c0",
+      "reader": "0x1456b70d0"
+    },
+    "tutorial-update": {
+      "id_getter": "0x145855ec0",
+      "id": 9905,
+      "table": "0x149969ad8",
+      "reader": "0x1456b70d0"
+    }
+  },
+  "boundaries": {
+    "quest-sync": {
+      "group_allocate": "0x141437f60",
+      "quest_allocate": "0x141865280",
+      "temporary_quest_allocate": "0x141864f90",
+      "empty_groups_cleanup": "0x145782280",
+      "quest_cleanup": "0x145782250",
+      "free": "0x141483080",
+      "group_no_growth": "0x141437520",
+      "quest_no_growth": "0x1414d7f70"
+    },
+    "tutorial-update": {
+      "empty_items_cleanup": "0x1456b5990",
+      "reserve": "0x1456ba3a0",
+      "nested_no_growth": "0x141437ee0",
+      "callback_no_growth": "0x14141c410"
+    }
+  }
+}

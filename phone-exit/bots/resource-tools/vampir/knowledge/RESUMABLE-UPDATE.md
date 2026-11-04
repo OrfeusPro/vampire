@@ -236,6 +236,21 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## Статические consumer readers квестов и обучения
+
+[Selector](quest-reader-transfer.json) включает после INPUT seed статический
+stage quest-reader-transfer-v1. [Reviewed rule](quest-reader-transfer-rules.json)
+задаёт source-bound роли, call / RIP policy, leaves, таблицы и границы fixtures.
+Target адреса определяются по целым инструкциям и связям, а не из Markdown.
+
+Журнал: quest_reader_transfer; proofs — quest-reader-transfer-proofs-v1.
+Ключ включает seed proof, обе source identities, consumer pointers, код,
+правило, lineage и runtime. Warm проверяет exact proof/package inventory.
+Перед публикацией выполняется отдельный финальный SHA / owner guard.
+Результат prepared_static не повышает native, export, runtime или online
+admission. Native packet harness остаётся отдельной необходимой проверкой.
+[Приёмка и границы](evidence/updates/HEADLESS-QUEST-READER-TRANSFER-V1-11322.md).
+
 ## Общий INPUT seed квестов и обучения
 
 [Selector](quest-input-seed.json) включает отдельный статический stage после

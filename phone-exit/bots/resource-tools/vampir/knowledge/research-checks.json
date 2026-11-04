@@ -11753,7 +11753,14 @@
         "phone-exit/bots/resource-tools/vampir/quest-input-seed-v2.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/quest-input-seed.json",
         "phone-exit/bots/test_vampir_quest_input_seed_v2.py",
-        "phone-exit/bots/test_vampir_quest_input_seed_integration.py"
+        "phone-exit/bots/test_vampir_quest_input_seed_integration.py",
+        "phone-exit/bots/resource-tools/vampir/quest-reader-transfer-v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-reader-transfer-rules-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-reader-transfer.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-reader-transfer-rules.json",
+        "phone-exit/bots/test_vampir_quest_reader_transfer_v1.py",
+        "phone-exit/bots/test_vampir_quest_reader_transfer_integration.py",
+        "phone-exit/bots/test_vampir_quest_reader_rules_v1.py"
       ],
       "artifact_dependencies": []
     }

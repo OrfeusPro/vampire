@@ -27,7 +27,7 @@ def execution_inputs(index, knowledge=None):
         'resource-directory-v1.py','resource-directory-format-v1.py','resource-directory-paths-v2.py',
         'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py',
         'resource-selected-hashes-v1.py','resource-directory-record-v1.py','resource-map-tables-v1.py',
-        'quest-input-seed-v2.py'}
+        'quest-input-seed-v2.py','quest-reader-transfer-v1.py','quest-reader-transfer-rules-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -184,6 +184,10 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'quest-input-seed.json').is_file():
             paths.add(args.knowledge/'quest-input-seed.json')
             paths.add(index.HERE/'quest-input-seed-v2.py')
+        if (args.knowledge/'quest-reader-transfer.json').is_file():
+            paths.add(args.knowledge/'quest-reader-transfer.json')
+            paths.update(index.HERE/name for name in ('quest-reader-transfer-v1.py','quest-reader-transfer-rules-v1.py'))
+            paths.add(args.knowledge/'quest-reader-transfer-rules.json')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -938,6 +942,13 @@ def run_locked(index, args, database, *, audited=None):
                     queue.append(dict(contract='quests',capability='quest-input-seed',
                         reason='quest_input_seed_requires_review',evidence=seed,
                         next_check='Review source-bound shared INPUT seed; packet semantic proof remains separate'))
+                if (args.knowledge/'quest-reader-transfer.json').is_file():
+                    transfer=index.extension('quest-reader-transfer-v1').run(index,args,sha,journal,seed)
+                    record['quest_reader_transfer']=transfer
+                    if transfer['state']!='prepared_static':
+                        queue.append(dict(contract='quests',capability='quest-reader-transfer',
+                            reason='quest_reader_transfer_requires_review',evidence=transfer,
+                            next_check='Review exact consumer roots, leaves and data; packet semantic proof remains separate'))
             record['native_contexts']=native_contexts
             record['native_checks']=native_checks
         outcomes = {}
@@ -1085,6 +1096,9 @@ def run_locked(index, args, database, *, audited=None):
         if 'quest_input_seed' in record:
             record['quest_input_seed']=index.extension('quest-input-seed-v2').finalize(
                 original_index,args,record['quest_input_seed'])
+        if 'quest_reader_transfer' in record:
+            record['quest_reader_transfer']=index.extension('quest-reader-transfer-v1').finalize(
+                original_index,args,record['quest_reader_transfer'])
         publisher=index.extension('update-bundle')
         if hasattr(publisher,'publish'):
             bundle=publisher.publish(index,args,bundle,

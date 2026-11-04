@@ -414,10 +414,17 @@ legacy semantic checks по-прежнему требуют своих дока�
 
 [Общий INPUT seed квестов / обучения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-INPUT-SEED-V2-11322.md)
 подключён к обычному update и кэшу. Семь общих primitive / buffer функций
-связаны с отдельно проверенным VersionResult текущего EXE; 15 остальных
-основных функций остаются открытыми. Повтор не выполняет transfer / native
+связаны с отдельно проверенным VersionResult текущего EXE; границы
+первоначального seed сохранены в его отдельной квитанции. Повтор не выполняет transfer / native
 replay; 1816 тестов и шесть дополнительных checks прошли. Допуск пакетов
 квестов / обучения и онлайн-вход этим статическим этапом не подтверждаются.
+
+[Общий статический перенос readers](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-READER-TRANSFER-V1-11322.md)
+подключён к обычному update/cache: 15 новых функций плюс семь готовых INPUT,
+девять leaves и 13 таблиц. Оба consumer contexts подготовлены для текущего
+SHA; повтор не выполняет transfer или PE build. 1852 теста и шесть checks
+прошли. Target exports, packet native semantics и онлайн-допуск остаются
+открытыми; следующий пакет — общий proof-bound harness ID 1854 / 9905.
 
 ## Сохранённые записи прежних этапов
 

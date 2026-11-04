@@ -32,14 +32,15 @@ exports и проверки вручную не повторять. Счётчи
   Старый MapProjection allowlist и legacy check не расширять по одному
   совпадению таблиц.
   [Данные и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MAP-TABLES-V1-268356.md).
-- Квесты / обучение: общий INPUT seed от d00a... / 1.13.16 подключён
-  к update/cache. Семь общих primitive / buffer mappings подготовлены;
-  из 22 уникальных основных функций 15 остаются открытыми. Следующий
-  пакет — vector loop / общий packet reader и consumer closure QuestSync
-  1854 / Tutorial 9905: callbacks, leaves, fixtures и data bindings проверять
-  явно новым proof-bound harness. Затем отдельно QuestUpdate 1810.
-  Старый release list 1802 и OUTPUT archive-wire этот INPUT не подтверждают.
-  [Seed и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-INPUT-SEED-V2-11322.md).
+- Квесты / обучение: общий INPUT seed и статический перенос consumer readers
+  подключены к update/cache: 7 + 15 = 22 уникальные основные функции,
+  9 leaves, 13 таблиц и явные storage / import boundaries. Статические
+  target contexts QuestSync 1854 / Tutorial 9905 готовы. Следующий пакет —
+  недостающие exact target exports и общий proof-bound packet harness с
+  whole native сценариями / ABI / memory guards. Storage fixtures, handlers
+  и packet semantics не считать подтверждёнными статическим переносом.
+  Затем отдельно QuestUpdate 1810. Готовые INPUT suites не повторять.
+  [Reader rule и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-READER-TRANSFER-V1-11322.md).
 - Input seed v2: новая композиция имеет упорядоченные baseline / target
   pointers в ключе кэша и собственный финальный барьер. Frozen login-input
   engine сохраняется; его прежний memo не использовать в новом recipe.
