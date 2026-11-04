@@ -25,7 +25,7 @@ def execution_inputs(index, knowledge=None):
         'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py',
         'stage-action-tools-v1.py','native-materialize-inputs-v2.py',
         'resource-directory-v1.py','resource-directory-format-v1.py','resource-directory-paths-v2.py',
-        'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py'}
+        'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -167,6 +167,9 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'resource-impact-engine.json').is_file():
             paths.add(args.knowledge/'resource-impact-engine.json')
             paths.add(index.HERE/'resource-impact-v1.py')
+        if (args.knowledge/'resource-context-keys.json').is_file():
+            paths.add(args.knowledge/'resource-context-keys.json')
+            paths.add(index.HERE/'resource-context-keys-v1.py')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -954,7 +957,9 @@ def run_locked(index, args, database, *, audited=None):
             context = dict(schema=1, source_sha256=sha, source=str(args.root/'client-code-snapshots'/sha/Path(report['exe']['path']).name),
                 contract={k:v for k,v in c.items() if k not in ('purpose','limits','next_check')},
                 bindings=contexts['contracts'][name], exports=relevant_exports,
-                resource_inputs=resource_inputs(c,report['files']),
+                resource_inputs=(resource_pipeline.context_inputs(c,report['files'])
+                    if resource_pipeline is not None and resource_pipeline.__dict__.get('context_keys') is not None
+                    else resource_inputs(c,report['files'])),
                 dependencies={d:outcomes[d] for d in c['depends_on']})
             projected=(projection is not None or projection_issue is not None) and name in ('game-version','game-login')
             if projection is not None and projected:context=projection.project(context)
@@ -1042,6 +1047,8 @@ def run_locked(index, args, database, *, audited=None):
         resource_pipeline_result=resource_pipeline.finish() if resource_pipeline else None
         if resource_pipeline_result and 'impact' in resource_pipeline_result:
             record['resource_impact']=resource_pipeline_result['impact']
+        if resource_pipeline_result and 'context_keys' in resource_pipeline_result:
+            record['resource_context_keys']=resource_pipeline_result['context_keys']
         resource_metrics=args.resource_scope.validate() if args.resource_scope else None
         source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:

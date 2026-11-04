@@ -1,0 +1,136 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-context-keys-v1-acceptance\\b6618fd91f85c9eff4acbd9cbef4dcbecdaf3b504e283f6a7ea91d24d60330ae\\manifest.json",
+    "sha256": "b6618fd91f85c9eff4acbd9cbef4dcbecdaf3b504e283f6a7ea91d24d60330ae"
+  },
+  "checks": [
+    {
+      "cache_key": "0c589d7a3e5804bdaa369f35d8ed2dbe0cc8bf81653d0273bfec1c020ad9bdb1",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6994ee4c16bfba3f190cbdcbef52ad35c59bd6a80b0b970e4e0926a50e03ecc3\\manifest.json",
+      "sha256": "6994ee4c16bfba3f190cbdcbef52ad35c59bd6a80b0b970e4e0926a50e03ecc3",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "6c35c60ca031dbde956684cf378b0a09c16ce511caef6497809e0343c07ad9cb",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b178cc9cd454b68f08e04b653660af8e9d5e1b8937f108828315cedd968b6567\\manifest.json",
+      "sha256": "b178cc9cd454b68f08e04b653660af8e9d5e1b8937f108828315cedd968b6567",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "a00e388e27372aa437e1f7b7dce8fb17fb2d01dd2e12b81da7fd61c6af7d10e3",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b2bb49529b866b1d68df5e8de0a02d507916aebfa0f935ae9ab702f5de72dc21\\manifest.json",
+      "sha256": "b2bb49529b866b1d68df5e8de0a02d507916aebfa0f935ae9ab702f5de72dc21",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "17ec97cfe213a62597b4db572f89a756ef51e0c2cf1bedebaa2c4a224596242f",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\3b9e9baa43b4903a6e34fb7f85c574145dc1956c6d9ea6614155acc4de0ab9df\\manifest.json",
+      "sha256": "3b9e9baa43b4903a6e34fb7f85c574145dc1956c6d9ea6614155acc4de0ab9df",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "1578a45b4b519a13d2365b60bea970a3c3fbae486f7361693606eed0510c011a",
+    "phone-exit/bots/resource-tools/vampir/knowledge/resource-context-keys.json": "0ca45512c900531df88e5896c1b11dbf70de848fa9448510b2dcd9142e7aa731",
+    "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json": "f0be399872dbdbf2dd542973e69fbe556cd766d83f72666d807fa482bce0596b",
+    "phone-exit/bots/resource-tools/vampir/resource-context-keys-v1.py": "c00389db567fe436c7ff7b2ab002c9707bc650fb9e6b534b1137c44300b1e94b",
+    "phone-exit/bots/resource-tools/vampir/resource-pipeline-v3.py": "1fd3263b1edd7f841143dc91180301f07e87eb96c0b5d3117a8a45e6876de545",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "836c6f4a32def8d2dee8fb2dd0b0dd45e49e5bd41e9f959563ee9449b2aca206",
+    "phone-exit/bots/test_vampir_resource_context_keys_v1.py": "e5321341059086275dbe876d43dbc4bc222179ce35afa10aff92bd178057846f",
+    "phone-exit/bots/test_vampir_update_automation.py": "330a36a79fccbea733adb6f498aae8da5a4217e1857808fb4ac7919361158365"
+  },
+  "consumer_counts": {
+    "game-ui": {
+      "fallback": 7,
+      "selected": 11,
+      "selected_entries": 268
+    },
+    "map-data": {
+      "fallback": 8,
+      "selected": 19,
+      "selected_entries": 536
+    },
+    "quests": {
+      "fallback": 1,
+      "selected": 8,
+      "selected_entries": 328
+    }
+  },
+  "consumer_source": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\audit-release-map-projection.py",
+    "selected_tables": [
+      "World",
+      "Map"
+    ],
+    "sha256": "7757955a189b3f040965ab05ffabaa968815f1d2be69d343b8a5fd63c0854b05",
+    "symbol": "run"
+  },
+  "csv_extractions": 0,
+  "limits": [
+    "Only declared resources of three guarded partial, builder-free contexts are keyed by content.",
+    "The diagnostic stages have a distinct component namespace and requires_review state; no semantic checks were replaced.",
+    "Only nine changed archives were selected; no full ordinary update or complete runtime dependency claim.",
+    "Unknown matching hashes preserve the full archive SHA. Client SHA, checks and admission remain unchanged.",
+    "The rule is restricted to exact registered partial contract declarations without builders or context adapters.",
+    "Logical identity keys describe declared resource inputs; they do not prove complete game runtime dependencies.",
+    "Legacy map/quest/tutorial semantic checks retain their source restrictions; no new SHA was admitted."
+  ],
+  "native_replays": 0,
+  "new_jvm": 0,
+  "patch_revision": "Revision268356",
+  "profile_activated": false,
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "summary": {
+    "archive_pattern_inputs": 54,
+    "component_stage_reuse": 3,
+    "full_archive_fallback": 16,
+    "selected_content_inputs": 38,
+    "semantic_check_reuse_changed": false
+  },
+  "tests": {
+    "added": 22,
+    "aggregate": 1708,
+    "skipped": 3
+  },
+  "watcher_started": false
+}

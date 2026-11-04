@@ -1637,6 +1637,10 @@
         {
           "archive": "*.pak",
           "path": "*Nav*"
+        },
+        {
+          "archive": "*.pak",
+          "path": "*World*"
         }
       ],
       "builder": null,

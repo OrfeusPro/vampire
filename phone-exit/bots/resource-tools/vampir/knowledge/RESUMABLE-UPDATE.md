@@ -190,6 +190,23 @@ unknown hashes, missing comparison и patterns шире CSV. Проверка be
 plan, context cache keys и admission этим отчётом не изменяются.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-IMPACT-V1-268356.md).
 
+## Ресурсные ключи незавершённых контекстов
+
+[Selector](resource-context-keys.json) разрешает сужение объявленных resource
+inputs только для точных partial contracts без builder / context checks.
+Полный текущий каталог и SHA совпавших записей дают ключ по содержимому;
+unknown matching hash, gap или неподходящее правило сохраняют целый PAK.
+Все расширения файлов учитываются. При повышении coverage или изменении
+технической declaration действует fallback до отдельного доказательства.
+
+Proofs — resource-context-key-proofs-v1, квитанции после SHA owner barrier —
+resource-context-key-receipts-v1 библиотеки. Журнал содержит resource_context_keys
+и metrics.resource_pipeline.context_keys. Полные source SHA / directory pointers
+остаются в свежем proof, стабильные выбранные path/hash — в самом context.
+Код правила, selector и runtime входят в rule digest. Семантические проверки
+и допуск не меняются; проверена область declared partial inputs.
+[Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-CONTEXT-KEYS-V1-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver

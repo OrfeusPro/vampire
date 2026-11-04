@@ -1708,6 +1708,51 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты точные resource inputs сохранённых consumer checks и полнота patterns для selective cache keys, девять исторических unknown decoded SHA, ближайшая prepatch named база, encrypted/size и resource semantics; остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Partial resource context keys v1: 38 selected / 16 fallback из 54 declared inputs, три cached diagnostic stages. 22 новых / 1708 aggregate tests. Semantic checks и admission не изменены.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-CONTEXT-KEYS-V1-268356.json",
+          "sha256": "350bce2296179dacb0436f915bd24f15966f58c77df11f6435786106fb8cb067"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-CONTEXT-KEYS-V1-268356.md",
+          "sha256": "aec1f44cc9e75abe9d98291d8d118d8d1259deba1c4089be6c98691c04532980"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "e542d900b65dfc5de14ebdd8afb9678ea8af2843b4af87c706e5b3c944e726c4",
+      "limits": [
+        "Only declared resources of three guarded partial, builder-free contexts are keyed by content.",
+        "The diagnostic stages have a distinct component namespace and requires_review state; no semantic checks were replaced.",
+        "Only nine changed archives were selected; no full ordinary update or complete runtime dependency claim.",
+        "Unknown matching hashes preserve the full archive SHA. Client SHA, checks and admission remain unchanged.",
+        "The rule is restricted to exact registered partial contract declarations without builders or context adapters.",
+        "Logical identity keys describe declared resource inputs; they do not prove complete game runtime dependencies.",
+        "Legacy map/quest/tutorial semantic checks retain their source restrictions; no new SHA was admitted."
+      ],
+      "method": "static",
+      "next_check": "Пакетом получить доказанные hashes только совпавших записей 16 fallback inputs; не повторять готовые 38 selected inputs. Отдельно подтвердить runtime dependency closure перед применением к source_checks/builders; legacy checks сохраняют source restrictions. Полный проход и watcher — только по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты decoded hashes нужных записей для 16 fallback inputs, полные runtime/data dependencies потребителей и перенос legacy source checks карты/квестов/обучения; девять исторических unknown decoded SHA, ближайшая prepatch named база, encrypted/size и resource semantics, остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

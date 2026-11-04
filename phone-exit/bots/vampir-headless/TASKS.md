@@ -94,15 +94,17 @@ exports и проверки вручную не повторять. Счётчи
   15 added / 9 unknown. Остались девять неизвестных старых decoded SHA,
   отсутствие ближайшей prepatch named базы и привязка named delta к
   selective impact потребителей. Post-barrier impact receipt подключён к
-  pipeline и журналу; далее — точные inputs сохранённого consumer check.
-  Before archive SHA должен совпасть с этими inputs, а каждый pattern
-  должен иметь полное покрытие. Широкие Quest / Map / UI patterns нельзя
-  сузить по одному CSV delta. Затем сужать resource_inputs / cache keys:
-  сейчас они используют SHA целого архива, affected plan диагностический.
+  pipeline и журналу. Partial context keys уже сужены по полному каталогу
+  и decoded SHA всех совпавших файлов: 38 из 54 inputs, 16 fallback.
+  Далее — недостающие hashes нужных записей и доказательство полных
+  runtime dependencies перед source_checks / builder / context adapters.
+  Legacy semantic checks не сужены и не перенесены этим правилом.
+  Широкие patterns охватывают все расширения, не только CSV.
   Не повторять готовый разбор directory и расчёт post-barrier diagnostics
   и не угадывать имена по схемам.
   [Базы, проверки и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-NAMED-BASELINE-V1-268356.md).
   [Влияние после барьера](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-IMPACT-V1-268356.md).
+  [Ключи объявленных ресурсов](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-CONTEXT-KEYS-V1-268356.md).
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный

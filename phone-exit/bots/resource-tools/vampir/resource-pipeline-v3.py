@@ -53,6 +53,9 @@ class Pipeline:
         if (Path(args.knowledge)/'resource-impact-engine.json').is_file():
             impact=index.extension('resource-impact-v1')
             if impact.enabled(index,args):self.impact=impact.Scope(index,args,manifest,report)
+        self.context_keys=None
+        if (Path(args.knowledge)/'resource-context-keys.json').is_file():
+            self.context_keys=index.extension('resource-context-keys-v1').Scope(index,args)
         self.reference,self.reference_error=None,None
         self.files,self.aliases={},{}
         self.optional_files,self.pending={},{}
@@ -210,7 +213,12 @@ class Pipeline:
     def process(self,row):
         result=self._process(row)
         if self.impact is not None:self.impact.observe(row,result)
+        if self.context_keys is not None:self.context_keys.observe(row,result)
         return result
+
+    def context_inputs(self,contract,rows):
+        return (self.context_keys.inputs(contract,rows) if self.context_keys is not None
+            else self.engine.resource_inputs(contract,rows))
 
     def _process(self,row):
         if self.finished:raise ValueError('Resource pipeline already finished')
@@ -339,6 +347,7 @@ class Pipeline:
             if Path(lexical).resolve()!=expected:raise ValueError('Resource pipeline alias changed during final barrier')
         if self.owner is not None:
             if self.impact is not None:self.impact.prepare()
+            if self.context_keys is not None:self.context_keys.prepare()
             for cache,pointer in self.pending.items():self.owner.defer(cache,pointer)
             owner=self.owner.finish()
             indexes=dict(indexes,source_barrier_completed=True,source_barrier_pending=False,
@@ -360,4 +369,5 @@ class Pipeline:
         named=getattr(self.args,'resource_named_tables_v1_scope',None)
         if named is not None:result['named_tables']=copy.deepcopy(named.metrics)
         if self.impact is not None:result['impact']=self.impact.publish(owner)
+        if self.context_keys is not None:result['context_keys']=self.context_keys.publish(owner)
         return result

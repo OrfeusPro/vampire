@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "recipe": "partial-resource-context-keys-v1",
+  "contracts": {
+    "map-data": "b30074fcfbe901462a6739ea58056d665f19390c6bae700c08040d62700fd412",
+    "quests": "6522afcc88ffdab0df90d852a2b06c7e638528e8abda9cbd50889dcaf116a8aa",
+    "game-ui": "99c3a7e49a77b63b3564f20d16dffac7cdfffca26cfd0629f4fc59150fbc3595"
+  }
+}

@@ -11733,7 +11733,12 @@
         "phone-exit/bots/test_vampir_resource_named_tables_v1.py",
         "phone-exit/bots/resource-tools/vampir/resource-impact-v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/resource-impact-engine.json",
-        "phone-exit/bots/test_vampir_resource_impact_v1.py"
+        "phone-exit/bots/test_vampir_resource_impact_v1.py",
+        "phone-exit/bots/resource-tools/vampir/resource-context-keys-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/resource-context-keys.json",
+        "phone-exit/bots/test_vampir_resource_context_keys_v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/update-contracts.json",
+        "phone-exit/bots/resource-tools/vampir/audit-release-map-projection.py"
       ],
       "artifact_dependencies": []
     }
