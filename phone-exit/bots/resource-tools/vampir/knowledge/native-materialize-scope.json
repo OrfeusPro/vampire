@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "recipe": "native-materialize-check-scope-v1",
+  "reviewed_tools": {
+    "update-native-contexts.py": "92dc45584dbaef2f12f4388e44845c2fd112fc7c277c4296d618578d02b057db",
+    "native-release-registry.py": "21d1ce546e7e224332e677a7900390f6a0ef931e2081bc372649301c989ee6d5",
+    "function-reuse-plan.py": "a82c113210f6d59a828245b7cb38155b065566be033643ea10814d292142f205",
+    "research-workflow.py": "9b6ef42ffb028c044f639f3149f5bc05db446377fc23dfa1a61d0b41e9fd7398",
+    "verify-utf8-context.py": "e01c13779b5c577b338bbc2464060a8ba948ef8724de780871a21e4521f475ef",
+    "update-native-harness.py": "2b9f80a4d4e074c5e2f3caa3bf7d1b96c1478fc9968a223497758b252f05c9cf",
+    "update-bindings.py": "65a2e98b806c6d382cb7bf8bdb37c8929b5e0b80e476a45a867c466e2abbe65f",
+    "build-native-entry-code.py": "ec256ae4a128bc127214ba192e9df88041eef6e07a433c04ea9a53a4ccdadc86",
+    "build-object-zero-init-code.py": "8d9900158694e17dd3d70b1654c0eb0824a29ebe07bd78219563bb8ff01c4c05",
+    "extract-native-enums.py": "7da6168cd16c7d5bd49b5fa02be81119e2056a59fa19e7edb69025aab7d7b81f"
+  }
+}

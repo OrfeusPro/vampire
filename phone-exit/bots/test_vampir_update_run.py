@@ -316,6 +316,76 @@ class UpdateRunTests(fixture.ResearchUpdateTests):
         saved=self.engine.read(self.api,self.workflow,Path(second['run']),self.root)
         self.assertIn('fixture',saved['plan']['affected'])
 
+    def native_materialize_fixture(self):
+        here=(self.root/'workspace/phone-exit/bots/resource-tools/vampir').resolve()
+        knowledge=here/'knowledge';knowledge.mkdir(parents=True)
+        for path in self.knowledge.iterdir():
+            if path.is_file():(knowledge/path.name).write_bytes(path.read_bytes())
+        self.knowledge=knowledge;self.args.knowledge=knowledge
+        self.api.HERE=here;self.api.KNOWLEDGE=knowledge
+        names=('update-native-contexts.py','native-release-registry.py',
+            'function-reuse-plan.py','research-workflow.py','verify-utf8-context.py',
+            'update-native-harness.py','update-bindings.py','build-native-entry-code.py',
+            'build-object-zero-init-code.py','extract-native-enums.py')
+        for name in names:(here/name).write_text('# reviewed fixture '+name,encoding='utf-8')
+        rule=dict(schema=1,recipe='native-materialize-check-scope-v1',
+            reviewed_tools={name:self.api.digest(here/name) for name in names})
+        (knowledge/'native-materialize-scope.json').write_text(json.dumps(rule),encoding='utf-8')
+        registry=knowledge/'native-release-registry.json'
+        registry.write_text('{}',encoding='utf-8')
+        test=here.parents[1]/'test_vampir_scope_fixture.py'
+        test.write_text('# fixture check v1',encoding='utf-8')
+        checks=dict(checks=[dict(id='fixture-check',test_pattern=test.name,dependencies=[])])
+        (knowledge/'research-checks.json').write_text(json.dumps(checks),encoding='utf-8')
+        native=SimpleNamespace(operational_model=lambda index,args,model:model,
+            materialize=Mock(return_value=dict(checks=[],queue=[],state='fixture-materialized')))
+        self.modules['update-native-contexts']=native
+        return here,test,registry,native
+
+    def test_native_stage_reuses_after_check_changes_but_tracks_native_registry(self):
+        here,test,registry,native=self.native_materialize_fixture()
+        first,_=self.run_fixture();self.args.resume=Path(first['run'])
+        test.write_text('# fixture check v2',encoding='utf-8')
+        checks=json.loads((self.knowledge/'research-checks.json').read_bytes())
+        checks['checks'].append(dict(id='unassigned-other-check'))
+        (self.knowledge/'research-checks.json').write_text(json.dumps(checks),encoding='utf-8')
+        second,_=self.run_fixture()
+        self.assertNotEqual(first['run'],second['run'])
+        self.assertEqual(native.materialize.call_count,1)
+        self.args.resume=Path(second['run'])
+        registry.write_text('{"changed":true}',encoding='utf-8')
+        self.run_fixture()
+        self.assertEqual(native.materialize.call_count,2)
+
+    def test_native_scope_falls_back_after_code_change_or_for_custom_knowledge(self):
+        here,test,_,_=self.native_materialize_fixture()
+        definitions={str(test):self.api.digest(test),
+            str(self.knowledge/'research-checks.json'):self.api.digest(self.knowledge/'research-checks.json'),
+            str(here/'update-native-contexts.py'):self.api.digest(here/'update-native-contexts.py')}
+        selected=self.engine.native_materialize_definitions(self.api,self.args,definitions)
+        self.assertNotIn(str(test),selected)
+        self.assertIn(str(here/'update-native-contexts.py'),selected)
+        (here/'update-native-contexts.py').write_text('# changed materializer',encoding='utf-8')
+        self.assertEqual(self.engine.native_materialize_definitions(self.api,self.args,definitions),definitions)
+        foreign=here/'custom';foreign.mkdir()
+        rule=(self.knowledge/'native-materialize-scope.json').read_bytes()
+        (foreign/'native-materialize-scope.json').write_bytes(rule)
+        self.args.knowledge=foreign
+        self.assertEqual(self.engine.native_materialize_definitions(self.api,self.args,definitions),definitions)
+
+    def test_native_scope_rejects_unknown_rule_and_preserves_other_inputs(self):
+        here,test,registry,_=self.native_materialize_fixture()
+        paths=(test,registry,here/'research-workflow.py',here/'custom-runtime.dll',
+            self.knowledge/'native-contexts/fixture.json',self.knowledge/'reviewed-data.json')
+        definitions={str(path):'a'*64 for path in paths}
+        selected=self.engine.native_materialize_definitions(self.api,self.args,definitions)
+        self.assertEqual(selected,{k:v for k,v in definitions.items() if k!=str(test)})
+        path=self.knowledge/'native-materialize-scope.json'
+        rule=json.loads(path.read_bytes());rule['reviewed_tools'].pop('function-reuse-plan.py')
+        path.write_text(json.dumps(rule),encoding='utf-8')
+        with self.assertRaisesRegex(ValueError,'scope'):
+            self.engine.native_materialize_definitions(self.api,self.args,definitions)
+
     def test_unchanged_index_is_validated_without_starting_writer(self):
         first,_=self.run_fixture();self.args.resume=Path(first['run'])
         with patch.object(self.api,'build',side_effect=AssertionError('Unchanged index must not be rebuilt')):

@@ -126,6 +126,7 @@ def definition_inputs(index, args, update):
     paths.update(p for p in (args.knowledge/'native-release-registry.json',
         args.knowledge/'native-check-adapters.json') if p.is_file())
     if (args.knowledge/'binding-tool-scope.json').is_file():paths.add(args.knowledge/'binding-tool-scope.json')
+    if (args.knowledge/'native-materialize-scope.json').is_file():paths.add(args.knowledge/'native-materialize-scope.json')
     engine = args.knowledge/'update-engine.json'
     if engine.is_file():
         paths.add(engine)
@@ -247,7 +248,40 @@ def resource_work(index,args,report,contracts,changed,tools=None):
     return list(selected.values())
 
 
-def affected_plan(model, contracts, checks, *, exe_changed, changes, previous, definitions, tools):
+def native_materialize_definitions(index, args, definitions):
+    """Exclude only check registration/tests under a reviewed implementation."""
+    path=args.knowledge/'native-materialize-scope.json'
+    if not path.is_file():return definitions
+    rule=index.read_json(path)
+    required={'update-native-contexts.py','native-release-registry.py',
+        'function-reuse-plan.py','research-workflow.py','verify-utf8-context.py',
+        'update-native-harness.py','update-bindings.py','build-native-entry-code.py',
+        'build-object-zero-init-code.py','extract-native-enums.py'}
+    if (not isinstance(rule,dict) or set(rule)!={'schema','recipe','reviewed_tools'}
+            or type(rule['schema']) is not int or rule['schema']!=1
+            or rule['recipe']!='native-materialize-check-scope-v1'
+            or not isinstance(rule['reviewed_tools'],dict) or set(rule['reviewed_tools'])!=required
+            or any(not isinstance(v,str) or not re.fullmatch('[0-9a-f]{64}',v)
+                for v in rule['reviewed_tools'].values())):
+        raise ValueError('Unknown native materialize scope')
+    # A changed implementation or custom knowledge retains the complete key.
+    if (args.knowledge.resolve()!=(index.HERE/'knowledge').resolve()
+            or any(index.digest(index.HERE/name)!=sha for name,sha in rule['reviewed_tools'].items())):
+        return definitions
+    tests=(index.HERE.parents[1]).resolve()
+    check_registry=(args.knowledge/'research-checks.json').resolve()
+    selected={}
+    for filename,sha in definitions.items():
+        source=Path(filename).resolve()
+        if source==check_registry:continue
+        if source.is_relative_to(tests) and source.name.startswith('test_') and source.suffix=='.py':
+            continue
+        selected[filename]=sha
+    return selected
+
+
+def affected_plan(model, contracts, checks, *, exe_changed, changes, previous, definitions, tools,
+        workspace=None, source_sha=None, select_check=None):
     """Impact includes check/tool/recipe changes and all reverse consumers."""
     dirty = set(model.affected(contracts,exe_changed=exe_changed,changes=changes))
     old = (previous or {}).get('plan',{})
@@ -258,6 +292,15 @@ def affected_plan(model, contracts, checks, *, exe_changed, changes, previous, d
     reasons = {name:['release_material_changed'] for name in dirty}
     registry = {c['id']:c for c in checks}
     previous_checks=old.get('checks',{})
+    workspace=Path(workspace or Path(__file__).resolve().parents[4])
+    def path_key(value):
+        path=Path(value)
+        return os.path.normcase(str((path if path.is_absolute() else workspace/path).resolve()))
+    changed_keys={path_key(path) for path in changed_paths}
+    def effective(check, sha):
+        if select_check is None or sha is None:return check
+        return {k:v for k,v in select_check(check,sha).items() if k!='source_variants'}
+    old_sha=(previous or {}).get('source_sha256')
     for contract in contracts['contracts']:
         causes=[]; name=contract['id']
         if old and prior_contracts.get(name)!=contract:causes.append('contract_definition_changed')
@@ -265,12 +308,20 @@ def affected_plan(model, contracts, checks, *, exe_changed, changes, previous, d
             check=registry.get(check_id,{})
             if exe_changed and check.get('source_scope','client')=='client':causes.append('client_check_source_changed')
             if old:
-                inputs=[check,*check.get('source_variants',{}).values()]
-                names={Path(p).name for item in inputs for p in item.get('dependencies',[])}
-                names.update(item['test_pattern'] for item in inputs if item.get('test_pattern'))
-                registry_changed=(previous_checks.get(check_id)!=check if previous_checks else
+                selected=effective(check,source_sha)
+                inputs=([selected] if source_sha is not None and select_check is not None else
+                    [check,*check.get('source_variants',{}).values()])
+                names={path_key(p) for item in inputs for p in item.get('dependencies',[])}
+                names.update(path_key('phone-exit/bots/'+item['test_pattern'])
+                    for item in inputs if item.get('test_pattern'))
+                prior=previous_checks.get(check_id)
+                # Legacy journals without a source identity retain the full
+                # declaration comparison, including all source variants.
+                registry_changed=((effective(prior,old_sha)!=selected if old_sha is not None
+                    and source_sha is not None and select_check is not None and prior is not None
+                    else prior!=check) if previous_checks else
                     any(Path(p).name=='research-checks.json' for p in changed_paths))
-                if registry_changed or any(Path(p).name in names for p in changed_paths):
+                if registry_changed or names.intersection(changed_keys):
                     causes.append('check_inputs_changed:'+check_id)
         old_tools=old.get('tools',{})
         for group,used in (('bindings',bool(contract['recipes'])),('context',bool(contract.get('context_checks'))),
@@ -698,7 +749,8 @@ def run_locked(index, args, database, *, audited=None):
         changes.extend(dict(archive=r['path'],paths=None) for r in pending_resources if r not in changed)
         check_registry=workflow.registry(index,args.knowledge)['checks']
         impact=affected_plan(model,contracts,check_registry,exe_changed=not comparison['exe']['full_hash_equal'],
-            changes=changes,previous=previous,definitions=definitions,tools=tools)
+            changes=changes,previous=previous,definitions=definitions,tools=tools,
+            workspace=index.HERE.parents[3],source_sha=sha,select_check=workflow.source_definition)
         dirty=impact['affected']
         record['plan'] = dict(affected=dirty, impact_reasons=impact['reasons'],contracts=contracts,
             checks={c['id']:c for c in check_registry},tools=tools, definition_sha256=definitions,
@@ -803,7 +855,8 @@ def run_locked(index, args, database, *, audited=None):
                 result.pop('generated_index',None)
                 return result
             native_contexts=journal.stage('native-materialize',dict(source=sha,contexts=contexts,
-                reuse=function_reuse,definitions=definitions,tools=tools['context'],
+                reuse=function_reuse,definitions=native_materialize_definitions(original_index,args,definitions),
+                tools=tools['context'],
                 generated_index_sha256=index.digest(generated) if generated.is_file() else None),materialize_native)
             # Extensions must not mutate the cached base adapter's stage value.
             native_contexts=copy.deepcopy(native_contexts)

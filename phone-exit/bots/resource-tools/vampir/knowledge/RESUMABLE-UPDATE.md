@@ -136,6 +136,21 @@ knowledge. Первая обработка нового binding key создаё
 имеют консервативные ключи.
 [Компонентная приёмка](evidence/updates/HEADLESS-AUTO-STAGE-TOOL-KEYS-V1-11322.md).
 
+## Подготовка native-контекстов и план пересчёта
+
+[Native materialize scope](native-materialize-scope.json) отделяет test-модули
+и реестр проверок от definitions подготовки. Применение требует точных SHA
+десяти reviewed tools и штатного knowledge. Изменение кода либо custom
+knowledge сохраняет полный ключ. Source, contexts, function reuse, tool
+groups, native metadata и generated index остаются в прежних входах.
+
+Affected plan сопоставляет полные workspace-пути и effective definition
+проверки, выбранное штатным source_definition для текущего и прежнего SHA.
+Изменение чужого variant не затрагивает текущего потребителя. Выбранная
+зависимость и её обратные потребители пересчитываются. Старый journal без
+source identity сохраняет консервативное сравнение.
+[Компонентная приёмка](evidence/updates/HEADLESS-AUTO-NATIVE-PLAN-KEYS-V1-11322.md).
+
 ## Базы, зависимости и повторное использование
 
 Полная опись файлов и последняя доказанная база роли выбираются отдельно.

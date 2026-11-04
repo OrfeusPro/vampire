@@ -61,8 +61,10 @@ exports и проверки вручную не повторять. Счётчи
   не хэшируются. Сбор execution inputs ускорен до 3,1–3,2 с. Далее — общий
   ordinary update и сужение остальных консервативных ключей. Binding key
   уже сужен со 197 до шести файлов; проекции Version / Login используют
-  собственные полные inputs. Остаются другие tool groups, affected /
-  readiness planning и native-materialize.
+  собственные полные inputs. Definitions native-materialize сужены 1248 → 828;
+  affected plan использует полные пути и выбранные source variants. Далее —
+  остальные широкие tool groups и оставшиеся входы native-materialize.
+  [Приёмка подготовки и плана](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-NATIVE-PLAN-KEYS-V1-11322.md).
   [Приёмка ключей](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STAGE-TOOL-KEYS-V1-11322.md). CSV extract
   уже сократил собственные SHA PAK с трёх до двух. Общий owner v4 и pending
   cache подключены, на четырёх PAK подтверждены 8 чтений вместо 16. Далее —

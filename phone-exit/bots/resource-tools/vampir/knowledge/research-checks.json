@@ -11707,7 +11707,9 @@
         "phone-exit/bots/resource-tools/vampir/resource-owner-v4.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/resource-owner-engine.json",
         "phone-exit/bots/test_vampir_resource_owner_v4.py",
-        "phone-exit/bots/resource-tools/vampir/knowledge/binding-tool-scope.json"
+        "phone-exit/bots/resource-tools/vampir/knowledge/binding-tool-scope.json",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-materialize-scope.json",
+        "phone-exit/bots/test_vampir_update_plan_keys.py"
       ],
       "artifact_dependencies": []
     }

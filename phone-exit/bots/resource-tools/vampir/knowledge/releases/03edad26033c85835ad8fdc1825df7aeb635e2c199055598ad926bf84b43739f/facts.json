@@ -1370,6 +1370,39 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты консервативные остальные tool groups, affected/readiness planning и native-materialize key; полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Native preparation исключает только tooling check inputs при совпадении десяти guards. Definitions сужены 1248 → 828, два saved-source повтора использовали кэш. Affected plan учитывает полные пути и выбранные варианты. Admission не изменён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-NATIVE-PLAN-KEYS-V1-11322.json",
+          "sha256": "71b867217b41618696c63ac3504c78683cac7b56e83a5ec3aae3db18cc214190"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-NATIVE-PLAN-KEYS-V1-11322.md",
+          "sha256": "ed3ad17e97ed57d3ee231e2676c46d4c56da9756b1f96745cc30152e18f63830"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "7ce94aad2fc86f8292273beff945eabd41eea241d0db71d21291b55ca998f7f0",
+      "limits": [
+        "One saved-source materialization plus two Journal cache repeats.",
+        "Test digest change is a key-model fixture; all actual files preserve their SHA.",
+        "Tool groups, contexts, function reuse and generated index key remain conservative.",
+        "The materialization key retains other code/data/tool groups and generated metadata.",
+        "Only test modules and selected research-checks registry are excluded under exact reviewed code guards.",
+        "No complete installed-client update, native suite, JVM or online entry was executed."
+      ],
+      "method": "static",
+      "next_check": "Оценить оставшиеся широкие tool groups по фактическим потребителям. По явной команде измерить полный проход, восстановление после обрыва и отклонение пакета после второго патча. Готовые доказательства использовать из проверенного кэша. Наблюдатель включать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты консервативные остальные tool groups и остаток native-materialize key, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

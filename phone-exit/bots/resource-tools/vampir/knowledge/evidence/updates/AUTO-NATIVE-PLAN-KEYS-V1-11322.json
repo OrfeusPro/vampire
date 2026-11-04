@@ -1,0 +1,98 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-plan-keys-v1-acceptance\\2b0f6068c8d5c9a037d9de5455d1c23f32b38d1a05c761b5782290afa8c92f1a\\manifest.json",
+    "sha256": "2b0f6068c8d5c9a037d9de5455d1c23f32b38d1a05c761b5782290afa8c92f1a"
+  },
+  "checks": [
+    {
+      "cache_key": "c89380b4e25c34d9e0f916a19523a5ec76efbd5b13db4b8bec65e7da7a51718e",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e4164cf77e4dbf6c3343a06087d5edec80eec01172ed825fa2055b7f3bb93d4c\\manifest.json",
+      "sha256": "e4164cf77e4dbf6c3343a06087d5edec80eec01172ed825fa2055b7f3bb93d4c",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "971ca71ab54e06a03d4ca1cc066b404d8f3ada4860f8dc584a36e5f1d23a0454",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8bdc83d489223745bc6f1c8c105aea5244b5366e4cf5870a64ad57765c40cdc1\\manifest.json",
+      "sha256": "8bdc83d489223745bc6f1c8c105aea5244b5366e4cf5870a64ad57765c40cdc1",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "0bf8e61ef8529e884473937d18b76dc52a5790d5b873698a7dd19a26b9ae498f",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\10e0f875b67528ca06c7578c9dd36abf1ecaa16c242daa0d9113589390fd7aa2\\manifest.json",
+      "sha256": "10e0f875b67528ca06c7578c9dd36abf1ecaa16c242daa0d9113589390fd7aa2",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "0ee586cd029f9fc18e25ca8680d696425bcf4c01fe128b2aaa96b54cc2b3f599",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\8f12acca9c12b6769479c973443bd00a9169802053c1ab2535e0e4b3b251a5a6\\manifest.json",
+      "sha256": "8f12acca9c12b6769479c973443bd00a9169802053c1ab2535e0e4b3b251a5a6",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/native-materialize-scope.json": "e871a917e404a276f34a2bbfad19e795263ff2a125633d55c346cce203f56e45",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "6124f8027126e9b204cd7e7db55c41acca93ff5eb33beb4088182fd8510042f9",
+    "phone-exit/bots/test_vampir_update_plan_keys.py": "6edfd8444f8925d3a7d6751812386591ec5f531ad2a49b9e2e5d2a1ad76e11f4",
+    "phone-exit/bots/test_vampir_update_run.py": "27edb2c77dfc5d693dbbb923ac58c8c858a679cd942d39b5c2c34b625cc657fb"
+  },
+  "definition_count_after": 828,
+  "definition_count_before": 1248,
+  "limits": [
+    "One saved-source materialization plus two Journal cache repeats.",
+    "Test digest change is a key-model fixture; all actual files preserve their SHA.",
+    "Tool groups, contexts, function reuse and generated index key remain conservative.",
+    "The materialization key retains other code/data/tool groups and generated metadata.",
+    "Only test modules and selected research-checks registry are excluded under exact reviewed code guards.",
+    "No complete installed-client update, native suite, JVM or online entry was executed."
+  ],
+  "schema": 1,
+  "source_scope": "tooling_and_saved_static_materialization",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "added_controller": 3,
+    "added_selected_plan": 10,
+    "aggregate": 1526,
+    "aggregate_skipped": 3,
+    "controller": 40,
+    "selected_plan": 10
+  }
+}
