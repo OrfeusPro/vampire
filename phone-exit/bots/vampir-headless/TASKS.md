@@ -63,7 +63,11 @@ exports и проверки вручную не повторять. Счётчи
   уже сужен со 197 до шести файлов; проекции Version / Login используют
   собственные полные inputs. Definitions native-materialize сужены 1248 → 828;
   affected plan использует полные пути и выбранные source variants. Далее —
-  остальные широкие tool groups и оставшиеся входы native-materialize.
+  остальные широкие потребители tool groups и оставшиеся входы native-materialize.
+  Legacy context checks уже используют по 14 файлов, profile-builder — шесть;
+  runtime / metadata / guards и fallback сохранены. Профиль учитывает полные
+  contexts, passed checks и путь EXE.
+  [Приёмка ключей действий](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-ACTION-TOOL-KEYS-V1-11322.md).
   [Приёмка подготовки и плана](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-NATIVE-PLAN-KEYS-V1-11322.md).
   [Приёмка ключей](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-STAGE-TOOL-KEYS-V1-11322.md). CSV extract
   уже сократил собственные SHA PAK с трёх до двух. Общий owner v4 и pending

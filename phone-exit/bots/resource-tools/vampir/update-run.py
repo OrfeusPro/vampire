@@ -22,7 +22,8 @@ def execution_inputs(index, knowledge=None):
     # These helpers carry separate owner/projection guards in their own stage
     # inputs; they are not dependencies of every unrelated native/resource stage.
     owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py',
-        'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py'}
+        'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py',
+        'stage-action-tools-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -106,6 +107,9 @@ def execution_inputs(index, knowledge=None):
     except importlib.metadata.PackageNotFoundError:groups['resources']['cryptography']=None
     dll=Path(os.environ.get('PHONEEXIT_RF_RESOURCES','F:/PhoneExit Resources/RF Online Next'))/'tools/oodle-data-shared.dll'
     groups['resources'][str(dll)]=index.digest(dll) if dll.is_file() else None
+    selected_knowledge=Path(knowledge) if knowledge is not None else index.HERE/'knowledge'
+    if (selected_knowledge/'stage-action-tools.json').is_file():
+        groups.update(index.extension('stage-action-tools-v1').inputs(index,selected_knowledge,groups,runtime))
     return groups
 
 
@@ -127,6 +131,9 @@ def definition_inputs(index, args, update):
         args.knowledge/'native-check-adapters.json') if p.is_file())
     if (args.knowledge/'binding-tool-scope.json').is_file():paths.add(args.knowledge/'binding-tool-scope.json')
     if (args.knowledge/'native-materialize-scope.json').is_file():paths.add(args.knowledge/'native-materialize-scope.json')
+    if (args.knowledge/'stage-action-tools.json').is_file():
+        paths.add(args.knowledge/'stage-action-tools.json')
+        paths.add(index.HERE/'stage-action-tools-v1.py')
     engine = args.knowledge/'update-engine.json'
     if engine.is_file():
         paths.add(engine)
@@ -326,7 +333,13 @@ def affected_plan(model, contracts, checks, *, exe_changed, changes, previous, d
         old_tools=old.get('tools',{})
         for group,used in (('bindings',bool(contract['recipes'])),('context',bool(contract.get('context_checks'))),
                 ('profile',bool(contract.get('builder')))):
-            if old and used and old_tools.get(group)!=tools[group]:causes.append(group+'_tools_changed')
+            selected_groups=[group]
+            if group=='context':
+                selected_groups=[{'version-login-tag':'context-tag',
+                    'packet-writer-projection':'context-writer'}[adapter] for adapter in contract.get('context_checks',[])]
+            elif group=='profile':selected_groups=['profile-builder']
+            changed=any(old_tools.get(key,old_tools.get(group))!=tools.get(key,tools[group]) for key in selected_groups)
+            if old and used and changed:causes.append(group+'_tools_changed')
         if causes:dirty.add(name);reasons.setdefault(name,[]).extend(causes)
     for name in contracts['order']:
         contract=next(c for c in contracts['contracts'] if c['id']==name)
@@ -950,7 +963,8 @@ def run_locked(index, args, database, *, audited=None):
                     if projected:
                         check_inputs['projection']=projection.inputs(context,adapter) if projection is not None else dict(reason=projection_issue)
                     else:
-                        check_inputs['inputs']=tools['context']
+                        scoped={'version-login-tag':'context-tag','packet-writer-projection':'context-writer'}[adapter]
+                        check_inputs['inputs']=tools.get(scoped,tools['context'])
                     checked=journal.stage(stage_name,check_inputs,check_context)
                     if projection is not None and projected:projection.observe(context,adapter,checked)
                 except (ValueError,OSError,KeyError,StopIteration) as error:
@@ -985,7 +999,11 @@ def run_locked(index, args, database, *, audited=None):
                     started=time.perf_counter()
                     selected=index.extension('update-profile').inputs(index,workflow,args,c,outcomes,sha)
                     profile_validation_seconds+=time.perf_counter()-started
-                    profiles.append(journal.stage('profile-'+c['id'], dict(context=outcomes[c['id']], inputs=selected,tools=tools['profile']),
+                    source=args.install/'ProjectRED/Binaries/Win64/ProjectRED-Win64-Shipping.exe'
+                    profiles.append(journal.stage('profile-'+c['id'], dict(context=outcomes[c['id']], inputs=selected,
+                        tools=tools.get('profile-builder',tools['profile']),contexts=contexts,
+                        passed_checks={name:row['checks'] for name,row in outcomes.items() if row['state']=='passed'},
+                        installed_source=dict(path=str(source),resolved=str(source.resolve()))),
                         lambda c=c:build_profile(index,workflow,args,c,outcomes,sha,contexts)))
                 except (ValueError,OSError) as error:
                     # Do not poison a cached contract result with a later builder failure.

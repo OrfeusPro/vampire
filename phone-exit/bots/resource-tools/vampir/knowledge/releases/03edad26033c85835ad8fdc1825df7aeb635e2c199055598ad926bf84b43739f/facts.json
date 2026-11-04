@@ -1403,6 +1403,40 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты консервативные остальные tool groups и остаток native-materialize key, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Три action tool keys используют 14 / 14 / 6 файлов и сохраняют runtime, metadata и conservative fallback. Закрыты serialized-input gaps profile stage; 24 новых fixture / planner cases. Admission не изменён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-ACTION-TOOL-KEYS-V1-11322.json",
+          "sha256": "6040def646ece7779a82cf9402099a9d4835014a802ca479bac284377e446dc4"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-ACTION-TOOL-KEYS-V1-11322.md",
+          "sha256": "4d16056ed99fadcce1d4875a549bd58b689d21495514380cc3fd48e99c687da6"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c720189de95e8db6f8187676a8602a6d8cd584fbd123fea85369920609a0be3a",
+      "limits": [
+        "Digest substitutions model invalidation without editing real engine or registry files.",
+        "The full installed update, native replay, Ghidra and online entry were not run.",
+        "Broad parent groups remain for native materialization and other update consumers.",
+        "Admission and active runtime bundles are unchanged.",
+        "Only exact reviewed role methods use narrowed keys; new code and custom knowledge retain full parent groups.",
+        "Ordinary updater tests use synthetic source/reports and mocked semantic/profile adapters.",
+        "No prepared-next pointer, runtime admission, existing session or watcher state was changed."
+      ],
+      "method": "static",
+      "next_check": "Оценить оставшиеся широкие потребители по фактическим методам и зависимостям. По явной команде измерить полный проход, восстановление после обрыва и отклонение пакета после второго патча. Готовые доказательства использовать из проверенного кэша. Наблюдатель включать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты остальные широкие потребители tool groups и остаток native-materialize key, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

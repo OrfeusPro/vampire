@@ -43,13 +43,14 @@ class UpdatePlanKeysTests(unittest.TestCase):
         return {str((self.workspace/path).resolve()):identity}
 
     def plan(self, checks=None, *, old_checks=None, before=None, after=None,
-            old_sha=CURRENT, current_sha=CURRENT, selected=True, contracts=None):
+            old_sha=CURRENT, current_sha=CURRENT, selected=True, contracts=None, old_tools=None):
         checks = self.checks if checks is None else checks
         old_checks = checks if old_checks is None else old_checks
         contracts = self.contracts if contracts is None else contracts
         previous = dict(plan=dict(contracts=copy.deepcopy(contracts),
             checks={c['id']:copy.deepcopy(c) for c in old_checks},
-            tools=copy.deepcopy(self.tools),definition_sha256=copy.deepcopy(before or {})))
+            tools=copy.deepcopy(self.tools if old_tools is None else old_tools),
+            definition_sha256=copy.deepcopy(before or {})))
         if old_sha is not None:
             previous['source_sha256'] = old_sha
         before_call = copy.deepcopy((checks,contracts,previous,self.tools))
@@ -153,6 +154,53 @@ class UpdatePlanKeysTests(unittest.TestCase):
                 result = self.plan(before=self.definitions(helper,'old'),
                     after=self.definitions(helper,'new'),**arguments)
                 self.assertEqual(result['affected'],['first','dependent','leaf'])
+
+    def action_contracts(self):
+        contracts = copy.deepcopy(self.contracts)
+        contracts['contracts'][0]['context_checks'] = ['version-login-tag']
+        contracts['contracts'][1]['context_checks'] = ['packet-writer-projection']
+        contracts['contracts'][-1]['builder'] = 'sdk-launcher'
+        return contracts
+
+    def test_scoped_action_keys_ignore_changed_unrelated_broad_context_and_profile(self):
+        self.tools.update({role:dict(rule='same') for role in
+            ('context-tag','context-writer','profile-builder')})
+        old_tools = copy.deepcopy(self.tools)
+        self.tools['context']['unrelated'] = 'changed native suite'
+        self.tools['profile']['unrelated'] = 'changed bundle publisher'
+        result = self.plan(contracts=self.action_contracts(),old_tools=old_tools)
+        self.assertEqual(result['affected'],[])
+
+    def test_changed_tag_action_affects_only_tag_and_reverse_consumers(self):
+        self.tools.update({role:dict(rule='same') for role in
+            ('context-tag','context-writer','profile-builder')})
+        old_tools = copy.deepcopy(self.tools)
+        self.tools['context-tag']['rule'] = 'changed own verifier'
+        result = self.plan(contracts=self.action_contracts(),old_tools=old_tools)
+        self.assertEqual(result['affected'],['first','dependent','leaf'])
+        self.assertEqual(result['reasons']['first'],['context_tools_changed'])
+        self.assertNotIn('second',result['reasons'])
+
+    def test_changed_profile_builder_action_affects_only_builder(self):
+        self.tools.update({role:dict(rule='same') for role in
+            ('context-tag','context-writer','profile-builder')})
+        old_tools = copy.deepcopy(self.tools)
+        self.tools['profile-builder']['rule'] = 'changed portable helper'
+        result = self.plan(contracts=self.action_contracts(),old_tools=old_tools)
+        self.assertEqual(result['affected'],['unrelated'])
+        self.assertEqual(result['reasons']['unrelated'],['profile_tools_changed'])
+
+    def test_legacy_tools_without_action_keys_fall_back_to_broad_groups(self):
+        contracts = self.action_contracts()
+        initial = copy.deepcopy(self.tools)
+        for group,expected in (('context',['first','second','dependent','leaf']),
+                ('profile',['unrelated'])):
+            self.tools = copy.deepcopy(initial)
+            old_tools = copy.deepcopy(self.tools)
+            self.tools[group]['fixture'] = 'changed broad tools'
+            with self.subTest(group=group):
+                result = self.plan(contracts=contracts,old_tools=old_tools)
+                self.assertEqual(result['affected'],expected)
 
 
 if __name__=='__main__':

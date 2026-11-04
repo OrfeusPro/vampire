@@ -11709,7 +11709,11 @@
         "phone-exit/bots/test_vampir_resource_owner_v4.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/binding-tool-scope.json",
         "phone-exit/bots/resource-tools/vampir/knowledge/native-materialize-scope.json",
-        "phone-exit/bots/test_vampir_update_plan_keys.py"
+        "phone-exit/bots/test_vampir_update_plan_keys.py",
+        "phone-exit/bots/resource-tools/vampir/stage-action-tools-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/stage-action-tools.json",
+        "phone-exit/bots/test_vampir_stage_action_tools.py",
+        "phone-exit/bots/test_vampir_profile_stage_keys.py"
       ],
       "artifact_dependencies": []
     }

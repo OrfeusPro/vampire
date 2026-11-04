@@ -1,0 +1,117 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\action-tool-keys-v1-acceptance\\d3222aee6fc5064e1b11455451bbe1ed5a4bcec1d68699accaf077bdde40bd3d\\manifest.json",
+    "sha256": "d3222aee6fc5064e1b11455451bbe1ed5a4bcec1d68699accaf077bdde40bd3d"
+  },
+  "checks": [
+    {
+      "cache_key": "4b3ff37cfa1d0f35f2830ba6ac0665de65863ad765a23f41019ec1701bb1d837",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\7f4a18ebe351a9dff4757cd051ce67acec94e2317c95c97c6f615100748e3d56\\manifest.json",
+      "sha256": "7f4a18ebe351a9dff4757cd051ce67acec94e2317c95c97c6f615100748e3d56",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "bbbfc9aec8f17c17778da7100b0bed74d5dd16f2758bb1f54fc86852ddd55b3e",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fb68da35aada0be23fadc5c242e597468b6c7494e57911529becf5a01eeda27b\\manifest.json",
+      "sha256": "fb68da35aada0be23fadc5c242e597468b6c7494e57911529becf5a01eeda27b",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "8d272640d7c368e545cec06e3a43b3cb7cb4e27404c9b1eab2f1def7a773741d",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b24f465308c4ab55b70ef89131753ccbfeda0b9bee94e72ca3dde6f79f2fc01a\\manifest.json",
+      "sha256": "b24f465308c4ab55b70ef89131753ccbfeda0b9bee94e72ca3dde6f79f2fc01a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "11eb4be5b2300d2c7f8eb0d28669c768da8384215f31bcaea31f511f235c849f",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0efe0f14248b6b8a1c9a2c52f51364373fb6c96315d1e0110d8e58f0a6ff8c24\\manifest.json",
+      "sha256": "0efe0f14248b6b8a1c9a2c52f51364373fb6c96315d1e0110d8e58f0a6ff8c24",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "b2021631633bc31185dd6425d1be08a651fe198e5629ff6f61f590b2de7ebeb0",
+    "phone-exit/bots/resource-tools/vampir/knowledge/stage-action-tools.json": "6a4938a6ddad1454b56fa9c9ae48c9c61d24519d2a40c6db3c7fb025c06876b5",
+    "phone-exit/bots/resource-tools/vampir/stage-action-tools-v1.py": "83650955e43278385936fe09f071d46abe9ab416bba20591a5a68f50f44e92d9",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "ee8ea1546bb68a78ce21481feec012c5c328a3323387bd09c9b14d05aceabcf7",
+    "phone-exit/bots/test_vampir_profile_stage_keys.py": "6a8f3ea50f4efd106fea0a4941a208027ac72239b1b0426118192e12e7101deb",
+    "phone-exit/bots/test_vampir_stage_action_tools.py": "2f41a716f07bdcdddc61e819087f3ee18f24c1df11cb9bc3c0372fba350da822",
+    "phone-exit/bots/test_vampir_update_automation.py": "dc01d1ae28b5008003c192fea7968022ee8d0974c9e4aaa0e480d187b83454ba",
+    "phone-exit/bots/test_vampir_update_plan_keys.py": "8e162c057c82ead9e64c1926c29ec14ee962250e2039898f04ccc36f03f292eb"
+  },
+  "legacy_code_files": {
+    "context": 197,
+    "profile": 200
+  },
+  "limits": [
+    "Digest substitutions model invalidation without editing real engine or registry files.",
+    "The full installed update, native replay, Ghidra and online entry were not run.",
+    "Broad parent groups remain for native materialization and other update consumers.",
+    "Admission and active runtime bundles are unchanged.",
+    "Only exact reviewed role methods use narrowed keys; new code and custom knowledge retain full parent groups.",
+    "Ordinary updater tests use synthetic source/reports and mocked semantic/profile adapters.",
+    "No prepared-next pointer, runtime admission, existing session or watcher state was changed."
+  ],
+  "portable_runtime_files": 10,
+  "profile_serialized_inputs": [
+    "contexts",
+    "all_passed_contract_checks",
+    "installed_source_path_and_resolved_path"
+  ],
+  "schema": 1,
+  "scoped_code_files": {
+    "context-tag": 14,
+    "context-writer": 14,
+    "profile-builder": 6
+  },
+  "source_scope": "tooling_snapshot_and_synthetic_updater",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "action_tools": 15,
+    "added": 24,
+    "aggregate": 1550,
+    "aggregate_skipped": 3,
+    "controller": 40,
+    "profile_stage_keys": 5,
+    "selected_plan": 14
+  }
+}
