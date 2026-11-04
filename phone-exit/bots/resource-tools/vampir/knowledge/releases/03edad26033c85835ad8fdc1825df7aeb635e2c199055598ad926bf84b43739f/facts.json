@@ -1799,6 +1799,52 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты 3 missing-index directory records для трёх fallback inputs (2 plugin / 1 empty), их отдельный fresh-header recipe, полные runtime/data dependencies и перенос legacy source checks карты/квестов/обучения; девять исторических unknown SHA, ближайшая prepatch named база, encrypted/size и resource semantics, остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Direct directory/header v1 закрыл 3 missing-index records: 54 selected / 0 fallback declared inputs, 244 cached indexed hashes; direct warm 3 cache hits / 0 decode. 30 новых / 1765 aggregate tests; admission unchanged.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-DIRECTORY-RECORD-V1-268356.json",
+          "sha256": "afcb8e12397848e6a8111c727c32e322a2bd045b1b237d1acc2ecc7200c5cd71"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md",
+          "sha256": "fee0ead53bafad5cfe5b896214bd92bd66ec10992e09224c9a3b1fe71fb79e3c"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "dd6cfe0f616a6c8ec9076500f4074f2ab6391ae0f08cd922385334f32cdc2d8f",
+      "limits": [
+        "Only declared resources of three guarded partial, builder-free contexts are keyed by content.",
+        "The diagnostic stages have a distinct component namespace and requires_review state; no semantic checks were replaced.",
+        "Only nine changed archives were selected; no full ordinary update or complete runtime dependency claim.",
+        "Direct header proofs cover three missing-index records with separate receipts; the original record index and all 244 selected-hash caches are unchanged.",
+        "The supported rule requires v11 directory/header scalar agreement, local offset zero, flags zero and stored-payload SHA1 equality.",
+        "CUE4Parse primary source confirms layout but skips the Hash field; stored SHA1 equality is an independent stricter acceptance predicate.",
+        "The empty branch hashes zero payload bytes only after checking its exact serialized header and directory sizes.",
+        "54 selected inputs cover three partial contexts on nine selected archives, not full runtime dependency closure or source_checks admission."
+      ],
+      "method": "static",
+      "next_check": "Использовать готовые 54 declared resource inputs без повторного decode; подтвердить полную runtime/data closure потребителей перед source_checks/builders и переносом legacy проверок на текущий SHA. Исторические unknown hashes и общий production update остаются отдельными областями. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты полные runtime/data dependencies потребителей и перенос legacy source checks карты/квестов/обучения; девять исторических unknown SHA, ближайшая prepatch named база, encrypted/size и resource semantics вне текущих выбранных inputs, остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

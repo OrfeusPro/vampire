@@ -1,0 +1,198 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-record-v1-acceptance\\6f8c8ec176cabc584792f2e711804bac39b8cde6df359c57e9626bb68b55ebf8\\manifest.json",
+    "sha256": "6f8c8ec176cabc584792f2e711804bac39b8cde6df359c57e9626bb68b55ebf8"
+  },
+  "checks": [
+    {
+      "cache_key": "32bf7a3ea9eace2609fb52b905ea33623e5a90fe35f2af4ccfdd8f33ca9ee3f9",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\92cb52f8698f9232caa9fa1061cf83ed2d5336b25121f97a7ae6206ecdecb061\\manifest.json",
+      "sha256": "92cb52f8698f9232caa9fa1061cf83ed2d5336b25121f97a7ae6206ecdecb061",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "ff4c52e77dfcd376937a13896b592c098fb6fc8b0aa6bbdb9d1a6635f30bcd41",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\9619ec6957f23af4edb7ab3de4c2551951bc2dbd679fa2fdb49890020a880c44\\manifest.json",
+      "sha256": "9619ec6957f23af4edb7ab3de4c2551951bc2dbd679fa2fdb49890020a880c44",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "6a35b5bb32e4ce27cfe17347069f183b68ca2469a494445bceddceff9ed3baf6",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\40ecd4a7cc6e3148903b3235663a38ca36f8c97224fe38597503950c51d682da\\manifest.json",
+      "sha256": "40ecd4a7cc6e3148903b3235663a38ca36f8c97224fe38597503950c51d682da",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "8687e88323a6095a798efe190a0b12c42ba969b522417f21854e938405ae8b15",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\076f4ebde5b310b5258ce32e7070093569a15fdf4b450d91917977f80f325e36\\manifest.json",
+      "sha256": "076f4ebde5b310b5258ce32e7070093569a15fdf4b450d91917977f80f325e36",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "50fe98b6446786ac313c58415071948b6fcd6d7533dae8ac9cf31bc293f14c3c",
+    "phone-exit/bots/resource-tools/vampir/knowledge/resource-directory-record.json": "a0772637245762e33b1cc8e34305d6fbe5c83284b52d46a3130fe6891c3deb0a",
+    "phone-exit/bots/resource-tools/vampir/resource-context-keys-v1.py": "986edaa8d15b91342a734ea740a6e018c6c1621ad2a7b2e91fb6cd45e60ade62",
+    "phone-exit/bots/resource-tools/vampir/resource-directory-record-v1.py": "9f0a751344c325099b1427ce7ad0ef1d4abec3576ce5199f73336dd4f8e14753",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "29ca981ceccb67eea5c5a0ab091942bd6754a469504e9d09c75cc85c0baa1f68",
+    "phone-exit/bots/test_vampir_directory_record_integration.py": "b4ad94a3be178a6110ff3889221f987c707556ae92f0d2704b71473e0f5fb17d",
+    "phone-exit/bots/test_vampir_resource_directory_record_v1.py": "30d276693818e337e8e2ef97e7c6a4c8eb7582b7f3538c95f9b10649a00422a9",
+    "phone-exit/bots/test_vampir_update_automation.py": "7ff279322ccdc6dcf0626cdd335807c83f0fdf6223796389405203d4ff7dce7f"
+  },
+  "consumer_counts": {
+    "game-ui": {
+      "fallback": 0,
+      "selected": 18,
+      "selected_entries": 27368
+    },
+    "map-data": {
+      "fallback": 0,
+      "selected": 27,
+      "selected_entries": 5446
+    },
+    "quests": {
+      "fallback": 0,
+      "selected": 9,
+      "selected_entries": 414
+    }
+  },
+  "csv_extractions": 0,
+  "first_direct_metrics": {
+    "blocked_records": 0,
+    "cache_hits": 0,
+    "compressed_decodes": 1,
+    "decoded_bytes": 1905,
+    "empty_records": 1,
+    "memo_hits": 0,
+    "plain_reads": 1,
+    "stored_bytes": 1379,
+    "unique_records": 3
+  },
+  "limits": [
+    "Only declared resources of three guarded partial, builder-free contexts are keyed by content.",
+    "The diagnostic stages have a distinct component namespace and requires_review state; no semantic checks were replaced.",
+    "Only nine changed archives were selected; no full ordinary update or complete runtime dependency claim.",
+    "Direct header proofs cover three missing-index records with separate receipts; the original record index and all 244 selected-hash caches are unchanged.",
+    "The supported rule requires v11 directory/header scalar agreement, local offset zero, flags zero and stored-payload SHA1 equality.",
+    "CUE4Parse primary source confirms layout but skips the Hash field; stored SHA1 equality is an independent stricter acceptance predicate.",
+    "The empty branch hashes zero payload bytes only after checking its exact serialized header and directory sizes.",
+    "54 selected inputs cover three partial contexts on nine selected archives, not full runtime dependency closure or source_checks admission."
+  ],
+  "native_replays": 0,
+  "new_jvm": 0,
+  "patch_revision": "Revision268356",
+  "primary": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-header-v1-primary\\6f359f12c2ccdeee7e05dff4a25de2d45854f133d6ae96e2bbe86cad0ae3e9f7\\manifest.json",
+    "sha256": "6f359f12c2ccdeee7e05dff4a25de2d45854f133d6ae96e2bbe86cad0ae3e9f7"
+  },
+  "profile_activated": false,
+  "records": [
+    {
+      "decoded_bytes": 1040,
+      "decoded_sha256": "9c045a1340360f0cca8f1ab55d8b6bc70a7cbb6b3b758294002d00dd63cc7cc2",
+      "method": 1,
+      "path": "Engine/Plugins/Developer/Concert/ConcertUI/ConcertSharedSlate/ConcertSharedSlate.uplugin",
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-record-v1\\81951106d678bdb936ea24c42d97d0d62e0367d97ddbb5ccc9ea37feb652a958\\manifest.json",
+        "sha256": "81951106d678bdb936ea24c42d97d0d62e0367d97ddbb5ccc9ea37feb652a958"
+      },
+      "stored_bytes": 514,
+      "stored_sha1": "2bca0ec0b6c9e44ffa6d7d518d25ca74e986a576"
+    },
+    {
+      "decoded_bytes": 0,
+      "decoded_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "method": 0,
+      "path": "ProjectRED/Content/RED/NavMesh/TestNavData_Nav.bin",
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-record-v1\\63ed3d1def6b254ae57c8769178484dc880cfba31a5980a13d4bcb8d551c06bb\\manifest.json",
+        "sha256": "63ed3d1def6b254ae57c8769178484dc880cfba31a5980a13d4bcb8d551c06bb"
+      },
+      "stored_bytes": 0,
+      "stored_sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+    },
+    {
+      "decoded_bytes": 865,
+      "decoded_sha256": "25e1bbe544640ea2d4cd9ff2f1e4858937f64abb6cba654ed78ebd50cc5450a6",
+      "method": 0,
+      "path": "Engine/Plugins/WorldMetrics/WorldMetrics.uplugin",
+      "proof": {
+        "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-record-v1\\3129d48462b62f079518ba0dedd82dccb8d64cc309296a1f3438d6f4e9cb1236\\manifest.json",
+        "sha256": "3129d48462b62f079518ba0dedd82dccb8d64cc309296a1f3438d6f4e9cb1236"
+      },
+      "stored_bytes": 865,
+      "stored_sha1": "e4e4558e622653ea0bf57a0de2cbcbe21a8e6611"
+    }
+  ],
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "summary": {
+    "archive_fallback_after": 0,
+    "archive_fallback_before": 3,
+    "direct_records": 3,
+    "direct_warm_cache_hits": 3,
+    "direct_warm_decodes": 0,
+    "indexed_decodes": 0,
+    "indexed_hash_cache_hits": 244,
+    "selected_inputs_after": 54,
+    "selected_inputs_before": 51
+  },
+  "tests": {
+    "added": 30,
+    "aggregate": 1765,
+    "direct_reader": 26,
+    "integration": 4,
+    "skipped": 3
+  },
+  "warm_direct_metrics": {
+    "blocked_records": 0,
+    "cache_hits": 3,
+    "compressed_decodes": 0,
+    "decoded_bytes": 0,
+    "empty_records": 0,
+    "memo_hits": 0,
+    "plain_reads": 0,
+    "stored_bytes": 0,
+    "unique_records": 3
+  },
+  "watcher_started": false
+}

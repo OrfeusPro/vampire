@@ -222,6 +222,20 @@ selected_record_hashes, receipt — selected_hashes metrics. Повтор исп
 record hashes без нового Oodle decode, сохраняя свежий полный source SHA.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-SELECTED-HASHES-V1-268356.md).
 
+## Записи каталога вне линейного индекса
+
+[Selector](resource-directory-record.json) включает отдельное direct header
+правило только после selected_record_missing_from_index. Exact directory
+и свежий serialized header должны совпасть; проверяются payload SHA1,
+соседние offsets и размеры, включая явный empty branch. Иные причины
+fallback старого handler этим путём не обходятся. Индексные rows не создаются.
+
+Отчёты — resource-directory-record-v1, pointers — knowledge/
+resource-comparison-cache-v3/directory-record-<key>.json. Назначение после
+общего SHA owner barrier. Context proof отмечает method, receipt содержит
+directory_records metrics. Warm reuse не вызывает новый decode.
+[Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver

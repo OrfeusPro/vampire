@@ -95,10 +95,10 @@ exports и проверки вручную не повторять. Счётчи
   отсутствие ближайшей prepatch named базы и привязка named delta к
   selective impact потребителей. Post-barrier impact receipt подключён к
   pipeline и журналу. Partial context keys уже сужены по полному каталогу
-  и decoded SHA всех совпавших файлов: 51 из 54 inputs, 3 fallback после
-  пакетного decode 244 записей. Остались 3 missing-index records: нужен
-  отдельный directory → fresh header proof, включая пустую запись.
-  Готовые hashes повторно не декодировать. Далее — доказательство полных
+  и decoded SHA всех совпавших файлов: 54 из 54 inputs, без archive fallback
+  в области девяти архивов. Directory/header recipe закрыл 3 missing-index
+  записи, включая empty; 244 indexed hashes сохранены. Готовые hashes
+  повторно не декодировать. Далее — доказательство полных
   runtime dependencies перед source_checks / builder / context adapters.
   Legacy semantic checks не сужены и не перенесены этим правилом.
   Широкие patterns охватывают все расширения, не только CSV.
@@ -108,6 +108,7 @@ exports и проверки вручную не повторять. Счётчи
   [Влияние после барьера](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-IMPACT-V1-268356.md).
   [Ключи объявленных ресурсов](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-CONTEXT-KEYS-V1-268356.md).
   [Выбранные record hashes](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-SELECTED-HASHES-V1-268356.md).
+  [Directory/header proofs](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный

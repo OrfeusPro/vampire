@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "recipe": "directory-record-header-v1",
+  "record_bytes": 1048576,
+  "total_bytes": 16777216,
+  "max_records": 64,
+  "format_proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-directory-header-v1-primary\\6f359f12c2ccdeee7e05dff4a25de2d45854f133d6ae96e2bbe86cad0ae3e9f7\\manifest.json",
+    "sha256": "6f359f12c2ccdeee7e05dff4a25de2d45854f133d6ae96e2bbe86cad0ae3e9f7"
+  }
+}

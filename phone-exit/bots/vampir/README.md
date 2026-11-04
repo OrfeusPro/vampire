@@ -399,6 +399,13 @@ inputs используют нужные файлы. Повтор дал 244 has
 1735 тестов и шесть дополнительных checks прошли. Runtime admission
 и legacy semantic checks остаются отдельными границами.
 
+[Прямые directory/header proofs](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md)
+закрыли три missing-index записи, включая пустую. Все 54 resource inputs
+выбранных partial-контекстов теперь используют нужные файлы. Повтор взял
+244 indexed и 3 direct hashes из кэша без decode. 1765 тестов и шесть
+дополнительных checks прошли. Полнота runtime dependencies и перенос
+legacy semantic checks по-прежнему требуют своих доказательств.
+
 ## Сохранённые записи прежних этапов
 
 Утверждения о версии, очереди и живой сессии ниже относятся к описанному этапу.

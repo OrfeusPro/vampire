@@ -54,6 +54,10 @@ class Scope:
             self.hashes=index.extension('resource-selected-hashes-v1').scope(index,args)
             self.rules.update(self.hashes.rules)
             self.runtime['selected_hashes']=self.hashes.runtime
+        self.direct=None
+        if (Path(args.knowledge)/'resource-directory-record.json').is_file():
+            self.direct=index.extension('resource-directory-record-v1').scope(index,args)
+            self.rules.update(self.direct.rules);self.runtime['directory_record']=self.direct.runtime
         self.key=hashlib.sha256(self.workflow.canonical(dict(rules=self.rules,runtime=self.runtime))).hexdigest()
         self.observed,self.documents,self.contexts={},{},{}
         self.prepared=None;self.published=False
@@ -134,6 +138,8 @@ class Scope:
                         value=e
                         if e.get('decoded_sha256') is None:
                             extra=self.hashes.resolve(row,document,e)
+                            if (self.direct is not None and extra.get('reason')=='selected_record_missing_from_index'):
+                                extra=self.direct.resolve(row,self.observed[str(Path(row['path']).resolve())]['directory'],e)
                             supplementary.append(dict(path=e['canonical_path'],**extra))
                             if extra['state']=='hashed':value=dict(e,decoded_sha256=extra['sha256'])
                         enriched.append(value)
@@ -168,6 +174,7 @@ class Scope:
             metrics=self.metrics,scope='declared_resources_of_guarded_partial_contexts',
             semantic_checks_unchanged=True,runtime_dependency_completeness_verified=False,profile_activated=False)
         if self.hashes is not None:body['selected_hash_metrics']=copy.deepcopy(self.hashes.metrics)
+        if self.direct is not None:body['directory_record_metrics']=copy.deepcopy(self.direct.metrics)
         raw=self.workflow.canonical(body)
         if len(raw)>LIMIT:raise ValueError('Resource context proof exceeds budget')
         path=self.workflow.snapshot(self.root,'resource-context-key-proofs-v1',body)
@@ -196,4 +203,5 @@ class Scope:
         result=dict(report=str(path),sha256=self.index.digest(path),proof=copy.deepcopy(self.prepared),
             metrics=copy.deepcopy(self.metrics),semantic_checks_unchanged=True)
         if self.hashes is not None:result['selected_hashes']=copy.deepcopy(self.hashes.metrics)
+        if self.direct is not None:result['directory_records']=copy.deepcopy(self.direct.metrics)
         return result
