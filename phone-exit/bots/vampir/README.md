@@ -364,12 +364,12 @@ PAK из 165. Штатный ресурсный компонент получи�
 Новые контексты native-функций не требовались. Логические имена ресурсов,
 semantic совместимость и целый вход этим результатом не подтверждены.
 
-[Имена ресурсов и штатный directory adapter](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-DIRECTORY-V1-268356.md)
-подтверждают пути всех 3109 CSV-файлов патча; дополнительная CSV-подобная
-запись оказалась PathFindingGolden.txt. Получены 53 299 имён, из них
-5276 raw paths сохраняют общий leading-slash / mount пробел. Второй проход
-взял девять результатов из кэша без native / CSV replay. 1608 общих тестов
-и шесть дополнительных checks прошли. Semantic и online admission отдельные.
+[Канонические имена ресурсов и directory adapter v2](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MOUNT-JOIN-V2-268356.md)
+подтверждают все 53 299 путей, включая 5276 прежних leading-slash случаев.
+Пути 3109 CSV-файлов и PathFindingGolden.txt сохранились. Независимый pinned
+CUE4Parse получил те же имена; тёплый повтор использовал 9 результатов кэша.
+1630 общих тестов и шесть дополнительных checks прошли. Далее — точные
+исторические named baselines; semantic и online admission отдельные.
 
 ## Сохранённые записи прежних этапов
 

@@ -1,8 +1,9 @@
 {
-  "schema": 1,
+  "schema": 2,
   "recipe": "resource-directory-v1",
   "key_proof": {
     "path": "F:\\PhoneExit Resources\\Vampir\\resource-config-snapshots\\393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db\\manifest.json",
     "sha256": "393c0697115ec6beceeb0e822bed0f6907eab83dfe9a47f81e9c7875deff35db"
-  }
+  },
+  "path_rule": "pak-directory-mount-join-v1"
 }

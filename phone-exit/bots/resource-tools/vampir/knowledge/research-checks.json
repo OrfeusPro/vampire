@@ -11722,7 +11722,10 @@
         "phone-exit/bots/resource-tools/vampir/resource-directory-format-v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/resource-directory-engine.json",
         "phone-exit/bots/test_vampir_resource_directory_v1.py",
-        "phone-exit/bots/test_vampir_resource_directory_format_v1.py"
+        "phone-exit/bots/test_vampir_resource_directory_format_v1.py",
+        "phone-exit/bots/resource-tools/vampir/resource-directory-paths-v2.py",
+        "phone-exit/bots/test_vampir_resource_directory_paths_v2.py",
+        "phone-exit/bots/test_vampir_resource_mount_join_v2.py"
       ],
       "artifact_dependencies": []
     }

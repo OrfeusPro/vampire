@@ -59,7 +59,8 @@ def load_tests(loader, tests, pattern):
             'test_vampir_resource_owner_v4','test_vampir_update_plan_keys',
             'test_vampir_stage_action_tools','test_vampir_profile_stage_keys',
             'test_vampir_native_materialize_inputs_v2','test_vampir_native_materialize_stage_v2',
-            'test_vampir_resource_directory_v1','test_vampir_resource_directory_format_v1'):
+            'test_vampir_resource_directory_v1','test_vampir_resource_directory_format_v1',
+            'test_vampir_resource_directory_paths_v2','test_vampir_resource_mount_join_v2'):
         result.addTests(loader.loadTestsFromModule(importlib.import_module(name)))
     return result
 

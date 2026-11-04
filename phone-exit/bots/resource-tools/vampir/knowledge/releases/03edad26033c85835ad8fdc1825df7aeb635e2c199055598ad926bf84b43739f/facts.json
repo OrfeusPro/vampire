@@ -1570,6 +1570,51 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты canonical mount joins leading-slash paths и старые named table baselines для selective impact, encrypted/size и resource semantic gaps; остальные широкие потребители tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Mount join v2 закрыл 5276 общих path gaps: 53 299 canonical names, 0 collisions; source/package equivalence и 9 warm cache hits. CSV bindings сохранены; 22 новых cases, admission не менялся.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-MOUNT-JOIN-V2-268356.json",
+          "sha256": "bb8e6fd1e91c7c948703fb73bbcfa7ba660fdb304302170f9071eb9ff0c9c9f1"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-MOUNT-JOIN-V2-268356.md",
+          "sha256": "291b0f0c69e71618c034579f1948d84e364574c00856843bb3d3520fb41da125"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c4ebf8cddd5631a0239136bbd7f612981f0f015c214b494a34941600912eb0b5",
+      "limits": [
+        "Selected directory/CSV component, not a full ordinary update.",
+        "Historical static key candidate is checked in memory against existing proof; no key bytes saved.",
+        "PAK main and full directory SHA1 plus full archive SHA authenticate names only for that archive.",
+        "No resource interpretation, current EXE key binding or runtime/online admission is established.",
+        "Canonical mount joining is equivalent to the pinned CUE4Parse reader; the game client was not executed.",
+        "Only one directory-leading separator is normalized; filename-leading separators, traversal and aliases stay rejected.",
+        "Current resource names do not identify older unnamed table baselines or establish runtime/online compatibility."
+      ],
+      "method": "static",
+      "next_check": "Сопоставить фактические SHA старых archived resource snapshots с named directory/CSV proofs, подключить общую проверку сравнения по имени к update/cache. Не угадывать старые имена по схеме. Полный проход/owner recovery и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты точные исторические named table baselines для selective impact, encrypted/size и resource semantic gaps; остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

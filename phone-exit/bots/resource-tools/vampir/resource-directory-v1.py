@@ -22,9 +22,11 @@ def rule(index, args):
         raw = stream.read(8193)
     value = json.loads(raw)
     if (len(raw) > 8192 or not isinstance(value, dict)
-            or set(value) != {'schema', 'recipe', 'key_proof'}
-            or type(value['schema']) is not int or value['schema'] != 1
-            or value['recipe'] != RECIPE):
+            or type(value.get('schema')) is not int or value['schema'] not in (1,2)
+            or set(value) != ({'schema','recipe','key_proof'} if value['schema']==1 else
+                {'schema','recipe','key_proof','path_rule'})
+            or value['recipe'] != RECIPE
+            or (value['schema']==2 and value['path_rule']!='pak-directory-mount-join-v1')):
         raise ValueError('Unknown resource directory recipe')
     pointer=value['key_proof']
     if (not isinstance(pointer,dict) or set(pointer)!={'path','sha256'}
@@ -66,6 +68,10 @@ class Scope:
         self.configuration = rule(index, args)
         if self.configuration is None:
             raise ValueError('Resource directory selector is missing')
+        self.paths=None
+        if self.configuration['schema']==2:
+            self.paths=index.extension('resource-directory-paths-v2')
+            self.rules[str(HERE/'resource-directory-paths-v2.py')]=self.owner.digest(HERE/'resource-directory-paths-v2.py')
         selector = Path(args.knowledge)/'resource-directory-engine.json'
         raw=selector.read_bytes()
         if len(raw)>8192 or json.loads(raw)!=self.configuration:
@@ -142,6 +148,13 @@ class Scope:
             directory_info = metadata['side_indexes']['full_directory']
             raw = self.core.read_verified_index(stream, directory_info, key, limit)
             directory = self.core.parse_directory(raw, metadata['entry_count'])
+            if self.paths is not None:
+                parts=self.paths.directory_parts(raw,metadata['entry_count'],self.core.Cursor)
+                projected=dict(parts,entries=[{key:e[key] for key in ('path','encoded_entry_offset')}
+                    for e in parts['entries']])
+                if projected!=directory:
+                    raise ValueError('Directory component provenance differs from authenticated parser')
+                directory=parts
         return metadata, encoded, directory, dict(main=main_info,directory=directory_info,
             decrypted_directory_sha256=hashlib.sha256(raw).hexdigest(),
             encoded_entries_sha256=hashlib.sha256(encoded).hexdigest())
@@ -172,13 +185,19 @@ class Scope:
             if found is not None and any(prefix[key] != found[key]
                     for key in ('bytes','uncompressed','method','encrypted')):
                 raise ValueError('Authenticated directory and record prefix disagree')
+            if self.paths is not None and (not isinstance(entry.get('directory'),str)
+                    or not isinstance(entry.get('name'),str) or entry['directory']+entry['name']!=entry['path']):
+                raise ValueError('Directory component provenance is missing or inconsistent')
             try:
-                canonical=self.format.canonical_path(metadata['mount'],entry['path'])
+                canonical=(self.paths.canonical_path(metadata['mount'],entry['directory'],entry['name'],self.format)
+                    if self.paths is not None else self.format.canonical_path(metadata['mount'],entry['path']))
             except ValueError:
                 canonical=None
                 path_gaps.append(dict(path=entry['path'],reason='unsupported_logical_path_form'))
             identity = dict(path=entry['path'],canonical_path=canonical,
                 encoded_entry_offset=entry['encoded_entry_offset'],**prefix)
+            if self.paths is not None:
+                identity.update(directory=entry['directory'],name=entry['name'])
             if canonical is not None and canonical in names_seen:
                 raise ValueError('Authenticated directory names are ambiguous')
             if canonical is not None:names_seen.add(canonical)
@@ -206,6 +225,7 @@ class Scope:
                 mount_point=metadata['mount'],directory_identity_verified=True))
         inputs = dict(recipe=RECIPE,source=csv['source'],record_index=record_pointer,current_csv=csv_pointer,
             key_proof=self.configuration['key_proof'],key_source=self.key_source,rules=self.rules,runtime=self.runtime)
+        if self.paths is not None:inputs['path_rule']=self.configuration['path_rule']
         result = dict(schema=1,recipe=RECIPE,inputs=inputs,proof=proof,mount_point=metadata['mount'],
             directory_entries=identities,csv_bindings=bindings,unmatched_csv=unmatched,path_gaps=path_gaps,
             state='partial' if unmatched or path_gaps else 'bound',authoritative_directory_for_archive=True,

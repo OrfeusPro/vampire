@@ -78,7 +78,7 @@ exports и проверки вручную не повторять. Счётчи
   сужение консервативных ключей и полный замер 109 архивов по явной команде.
   [Приёмка owner](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md).
   [Приёмка CSV](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-CSV-COSTS-V1-11322.md).
-  Канонизация оставшихся directory paths, 235 encrypted / size gaps и подходящие table baselines
+  235 encrypted / size gaps и подходящие named table baselines
   остаются общими блокерами. Exact content match не означает resource identity,
   semantic совместимость или admission. Не повторять 34 готовых native семейства.
   [Приёмка и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PIPELINE-V3-11322.md).
@@ -89,11 +89,11 @@ exports и проверки вручную не повторять. Счётчи
   directory / resource identity gaps; candidate schema не повышает admission.
   [Данные патча](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-PATCH-268356-11322.md).
 
-- Directory adapter уже подключён к update/cache: пути 3109 CSV подтверждены,
-  следующий общий пробел — canonical mount join raw paths с начальным slash,
-  затем точные старые named baselines для selective impact. Схемы и offsets
-  между разными архивами не переносить как подтверждённую идентичность.
-  [Имена и проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-DIRECTORY-V1-268356.md).
+- Directory adapter v2 закрывает mount join всех 53 299 путей, включая 5276
+  прежних пробелов. Следующий пакет — точные старые named baselines для
+  selective impact; схемы и offsets между разными архивами не переносить
+  как подтверждённую идентичность.
+  [Пути и проверки](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MOUNT-JOIN-V2-268356.md).
 
 Критерий завершения пакета: доказательство точного SHA и области поведения,
 воспроизводимая проверка, подключение к штатному обновлению / кэшу и конкретный

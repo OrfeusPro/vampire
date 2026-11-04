@@ -135,6 +135,13 @@ names и canonical path различаются. Схема таблицы не �
 а точное имя не подтверждает её игровую семантику или старую baseline.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-V1-268356.md).
 
+Schema2 selector дополнительно закрепляет path_rule=pak-directory-mount-join-v1.
+Сохраняются исходные directory/name components и точная проекция на старый
+parser. Начальный slash снимается только с directory на границе mount,
+filename таким разрешением не обладает. Schema1 сохраняет строгий путь.
+Правило и новый helper входят в definitions/cache; другой SHA архива требует
+нового доказательства. [Приёмка v2](evidence/updates/HEADLESS-RESOURCE-MOUNT-JOIN-V2-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver
