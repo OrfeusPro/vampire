@@ -1,0 +1,126 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-input-seed-v2-acceptance\\7c3250308399f89b0d0f6083356066b950c05f3f0f9891484d329c5083cd7bba\\manifest.json",
+    "sha256": "7c3250308399f89b0d0f6083356066b950c05f3f0f9891484d329c5083cd7bba"
+  },
+  "baseline_source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+  "checks": [
+    {
+      "cache_key": "b49f9ac9fbfd0192de48d13055f7c25d0ad3bdfbdb63ce0e42495d7e40196511",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\18d91b2d2dff1e9db1a5429baaea171b2a809be5ca162e383ad8ea5648431296\\manifest.json",
+      "sha256": "18d91b2d2dff1e9db1a5429baaea171b2a809be5ca162e383ad8ea5648431296",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "970b3530b22bca9a149826a287062f2929f4b5062e6e5eb98fad09a69e076b38",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\001297712cc0ab1fa23d5e101251ca7693d7c79001400f9ee555d64e89e8c482\\manifest.json",
+      "sha256": "001297712cc0ab1fa23d5e101251ca7693d7c79001400f9ee555d64e89e8c482",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "3ba53f14b0e66d3f43567e1c36c0429572415be1d415adeedb42c792114b69d3",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\a468ca62c0fd4c125fc0752d67a1746733241a1003ae3705d1b1eaa45f87bfd7\\manifest.json",
+      "sha256": "a468ca62c0fd4c125fc0752d67a1746733241a1003ae3705d1b1eaa45f87bfd7",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "9311074e4ce3f3e7131392c628447b4b09fe69265c717d8cfc4b656ea4ece2ab",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fe218f218b16ceb537759f8ed65adfedc3d8e9c957a0c429c9ad685801936dd0\\manifest.json",
+      "sha256": "fe218f218b16ceb537759f8ed65adfedc3d8e9c957a0c429c9ad685801936dd0",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "cold_stage_seconds": 20.842353,
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/quest-input-seed.json": "e330fe833afbafed55cb04e558ac34086825aab713a30e4c2daa016bb44b0fab",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "be752a6c9679024346532ad4b403f51226b9827ac37993011297202f0256451d",
+    "phone-exit/bots/resource-tools/vampir/quest-input-seed-v2.py": "21775ecd4acf2258e2b83a51dee17ec67849173fc86c30c35ee487ad8e6fc13c",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "b4f4e46d4636160864599654c90ebebcea3987c96c4d9b46d28a6dad4746eceb",
+    "phone-exit/bots/test_vampir_quest_input_seed_integration.py": "77fdee4ab6a368df6313c497352c4eefd252931d4b3ff35dd1cdb01558a91d9a",
+    "phone-exit/bots/test_vampir_quest_input_seed_v2.py": "e42f4afb459304ce359fb03d30d5626b0f68da6cabd907d08e9f097a0fbfeb1b",
+    "phone-exit/bots/test_vampir_update_automation.py": "f6a2ee7181b467e872587e674cb90a51c30dcaaa7c42f4137ed2f96cbc424256"
+  },
+  "counts": {
+    "mapped_roots": 7,
+    "pending_roots": 15,
+    "shared_roots": 9,
+    "unique_roots": 22
+  },
+  "limits": [
+    "Seven primitive/buffer mappings are static projections of a separately checked VersionResult input closure.",
+    "Consumer packet constructors/readers, vector loop, callbacks and storage effects have not been transferred or executed.",
+    "No consumer semantic check, runtime source allowlist, profile, live session or gameplay action is changed."
+  ],
+  "method": "static",
+  "native_consumer_verified": false,
+  "native_replays": 0,
+  "new_jvm": 0,
+  "production_update_executed": false,
+  "profile_activated": false,
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\quest-input-seed-proofs-v2\\fda965ba893977f482067775a4a0717c24594eaf98d820f5cf88c30c85088f28\\manifest.json",
+    "sha256": "fda965ba893977f482067775a4a0717c24594eaf98d820f5cf88c30c85088f28"
+  },
+  "recipe": "quest-input-seed-v2",
+  "runtime_activated": false,
+  "schema": 2,
+  "selector": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\quest-input-seed.json",
+    "sha256": "e330fe833afbafed55cb04e558ac34086825aab713a30e4c2daa016bb44b0fab"
+  },
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "static_transfer_mapping_edges": 803,
+  "subagent_review": {
+    "blocking_findings": 0,
+    "helper_sha256": "21775ecd4acf2258e2b83a51dee17ec67849173fc86c30c35ee487ad8e6fc13c"
+  },
+  "tests": {
+    "added": 29,
+    "aggregate": 1816,
+    "skipped": 3
+  },
+  "warm_seconds": [
+    1.466203,
+    1.452072
+  ],
+  "watcher_started": false
+}

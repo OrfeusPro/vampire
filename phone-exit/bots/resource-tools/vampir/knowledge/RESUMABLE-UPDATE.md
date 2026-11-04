@@ -236,6 +236,21 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## Общий INPUT seed квестов и обучения
+
+[Selector](quest-input-seed.json) включает отдельный статический stage после
+завершённых native drivers. VersionResult declaration / passed check задают
+целевой INPUT; три точных source-bound контекста задают исходную базу.
+Результат quest_input_seed содержит семь общих mappings и явные 15 pending
+основных функций. Native semantic checks / runtime admission не повышаются.
+
+Упорядоченные baseline / target pointers, SHA, check, инструменты, lineage
+и runtime входят в ключ stage native-input-seed-quest-tutorial-v2. Proofs —
+quest-input-seed-proofs-v2 библиотеки; обычный journal проверяет их и при кэше.
+Финальный барьер перед публикацией перепроверяет выбранные материалы.
+Отсутствие или неоднозначность цели оставляет конкретный blocker.
+[Приёмка и границы](evidence/updates/HEADLESS-QUEST-INPUT-SEED-V2-11322.md).
+
 ## Данные проверенной проекции карты
 
 [Selector](resource-map-tables.json) включает data-only проверку текущих

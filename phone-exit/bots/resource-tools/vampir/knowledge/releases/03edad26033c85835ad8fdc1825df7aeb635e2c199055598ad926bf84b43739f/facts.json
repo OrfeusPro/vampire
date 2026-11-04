@@ -1890,6 +1890,42 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты native projection functions карты, texture/runtime world selection/engine correction и полная dependency closure; общий input archive QuestSync1854/Tutorial9905 и затем QuestUpdate1810 на текущий SHA от d00a11316; девять исторических unknown SHA, ближайшая prepatch named база, resource semantics вне data-only проверки, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x144aac220",
+        "0x144aac340",
+        "0x144aac390",
+        "0x144aac590",
+        "0x144aac5e0",
+        "0x144aac6b0",
+        "0x144aacc30"
+      ],
+      "checks": [],
+      "conclusion": "Штатный static INPUT seed автоматически связал семь общих primitive/buffer функций QuestSync / Tutorial от базы 1.13.16 с отдельно проверенным VersionResult текущего EXE; неизменный повтор и финальный барьер подтверждены, 15 основных consumer roots остаются открытыми.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-QUEST-INPUT-SEED-V2-11322.json",
+          "sha256": "b7ea6e1e7a134bbda55620b0ceb68e6a67b526c87628934bc8a9d831cef0f160"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-QUEST-INPUT-SEED-V2-11322.md",
+          "sha256": "dc07037a9c6c5c7db13c8bda0ab2e029cbb12bb2a715e14855d88ae7ed058f60"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "40b7dfc279b681bca41f1d58b87f8942636d26d734c8fa0919bfb2df8af23bd0",
+      "limits": [
+        "Seven primitive/buffer mappings are static projections of a separately checked VersionResult input closure.",
+        "Consumer packet constructors/readers, vector loop, callbacks and storage effects have not been transferred or executed.",
+        "No consumer semantic check, runtime source allowlist, profile, live session or gameplay action is changed."
+      ],
+      "method": "static",
+      "next_check": "Следующим общим пакетом переносить vector / packet reader и оставшуюся QuestSync 1854 / Tutorial 9905 closure с новым proof-bound packet harness. Использовать готовые семь INPUT mappings и source-bound VersionResult seed без повтора его native suite; OUTPUT archive-wire не считать input proof. Затем отдельно QuestUpdate 1810. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты 15 основных consumer roots квестов / обучения, включая vector и общий packet reader, их оставшаяся leaf / callback / storage / data closure; затем QuestUpdate 1810. Также native projection карты, texture/runtime world selection/engine correction и полная resource dependency closure, девять исторических unknown SHA, ближайшая prepatch named база, остальные tool groups, полный ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

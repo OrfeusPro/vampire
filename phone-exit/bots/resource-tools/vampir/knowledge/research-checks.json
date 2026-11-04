@@ -11749,7 +11749,11 @@
         "phone-exit/bots/test_vampir_directory_record_integration.py",
         "phone-exit/bots/resource-tools/vampir/resource-map-tables-v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/resource-map-tables.json",
-        "phone-exit/bots/test_vampir_resource_map_tables_v1.py"
+        "phone-exit/bots/test_vampir_resource_map_tables_v1.py",
+        "phone-exit/bots/resource-tools/vampir/quest-input-seed-v2.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/quest-input-seed.json",
+        "phone-exit/bots/test_vampir_quest_input_seed_v2.py",
+        "phone-exit/bots/test_vampir_quest_input_seed_integration.py"
       ],
       "artifact_dependencies": []
     }

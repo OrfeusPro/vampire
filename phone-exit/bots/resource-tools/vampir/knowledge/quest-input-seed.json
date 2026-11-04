@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "recipe": "quest-input-seed-v2",
+  "version_baseline": {
+    "path": "G:/OSPanel/home/vampire/phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/version-result-11316.json",
+    "sha256": "82104cfc30a209b20cdc2aec29d40d0b5a637c89569fbe8b9e461f9e5ab9a112"
+  },
+  "consumers": {
+    "quest-sync": {
+      "path": "G:/OSPanel/home/vampire/phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/quest-sync-11316.json",
+      "sha256": "51d5cee5c7bf37043345cc88034f5b3a15e4c05457e9b74dee2de8cf08fa28ad"
+    },
+    "tutorial-update": {
+      "path": "G:/OSPanel/home/vampire/phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/tutorial-update-11316.json",
+      "sha256": "d963ad1b0e6b18d741742c1b290db95d926be1987d0871482eb8938c11339d43"
+    }
+  }
+}

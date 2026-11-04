@@ -26,7 +26,8 @@ def execution_inputs(index, knowledge=None):
         'stage-action-tools-v1.py','native-materialize-inputs-v2.py',
         'resource-directory-v1.py','resource-directory-format-v1.py','resource-directory-paths-v2.py',
         'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py',
-        'resource-selected-hashes-v1.py','resource-directory-record-v1.py','resource-map-tables-v1.py'}
+        'resource-selected-hashes-v1.py','resource-directory-record-v1.py','resource-map-tables-v1.py',
+        'quest-input-seed-v2.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -180,6 +181,9 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'resource-map-tables.json').is_file():
             paths.add(args.knowledge/'resource-map-tables.json')
             paths.add(index.HERE/'resource-map-tables-v1.py')
+        if (args.knowledge/'quest-input-seed.json').is_file():
+            paths.add(args.knowledge/'quest-input-seed.json')
+            paths.add(index.HERE/'quest-input-seed-v2.py')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -927,6 +931,13 @@ def run_locked(index, args, database, *, audited=None):
                 driver=index.extension(versioned.publication_driver(index,args) if versioned else 'update-native-drivers')
                 extra=driver.run(index,args,sha,journal,database)
                 driver.merge(native_contexts,native_checks,extra)
+            if (args.knowledge/'quest-input-seed.json').is_file():
+                seed=index.extension('quest-input-seed-v2').run(index,args,sha,journal,native_contexts,native_checks)
+                record['quest_input_seed']=seed
+                if seed['state']!='prepared_static':
+                    queue.append(dict(contract='quests',capability='quest-input-seed',
+                        reason='quest_input_seed_requires_review',evidence=seed,
+                        next_check='Review source-bound shared INPUT seed; packet semantic proof remains separate'))
             record['native_contexts']=native_contexts
             record['native_checks']=native_checks
         outcomes = {}
@@ -1071,6 +1082,9 @@ def run_locked(index, args, database, *, audited=None):
         # A completed audit is the expected identity, not a lease on mutable
         # installed bytes. Do not trust restored size/mtime at publication.
         installation_barrier_seconds=installation_barrier(original_index,report,args.install)
+        if 'quest_input_seed' in record:
+            record['quest_input_seed']=index.extension('quest-input-seed-v2').finalize(
+                original_index,args,record['quest_input_seed'])
         publisher=index.extension('update-bundle')
         if hasattr(publisher,'publish'):
             bundle=publisher.publish(index,args,bundle,

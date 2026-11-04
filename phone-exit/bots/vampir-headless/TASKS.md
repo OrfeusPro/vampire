@@ -32,16 +32,17 @@ exports и проверки вручную не повторять. Счётчи
   Старый MapProjection allowlist и legacy check не расширять по одному
   совпадению таблиц.
   [Данные и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MAP-TABLES-V1-268356.md).
-- Следующий общий native пакет квестов/обучения: база d00a... / 1.13.16,
-  input archive → QuestSync 1854 / Tutorial 9905. 22 уникальные основные
-  функции, девять общих; callbacks / leaves и data closure проверять явно.
-  Использовать quest-sync-11316 / tutorial-update-11316, затем отдельно
-  quest-update-wire-11316 (1810). Старый release list 1802 и текущий output
-  archive-wire не заменяют эти input readers. Native adapter ещё нужен;
-  registry-only повышение допуска запрещено.
-- Input seed: выпустить новую версию общего recipe с ordered baseline / target
-  pointers в memo key; одинаковая transitive lineage не определяет направление.
-  Новый composition adapter изолирует свой memo, старый engine сохраняет историю.
+- Квесты / обучение: общий INPUT seed от d00a... / 1.13.16 подключён
+  к update/cache. Семь общих primitive / buffer mappings подготовлены;
+  из 22 уникальных основных функций 15 остаются открытыми. Следующий
+  пакет — vector loop / общий packet reader и consumer closure QuestSync
+  1854 / Tutorial 9905: callbacks, leaves, fixtures и data bindings проверять
+  явно новым proof-bound harness. Затем отдельно QuestUpdate 1810.
+  Старый release list 1802 и OUTPUT archive-wire этот INPUT не подтверждают.
+  [Seed и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-INPUT-SEED-V2-11322.md).
+- Input seed v2: новая композиция имеет упорядоченные baseline / target
+  pointers в ключе кэша и собственный финальный барьер. Frozen login-input
+  engine сохраняется; его прежний memo не использовать в новом recipe.
 - Квесты: закончить команды, диалоги и обучение по открытым вопросам; автоматизация
   квестов остаётся отдельной возможностью, а обновление не выполняет игровые команды.
 - Карта и UI: подключать только проверенные ресурсы, проекции и bindings.
