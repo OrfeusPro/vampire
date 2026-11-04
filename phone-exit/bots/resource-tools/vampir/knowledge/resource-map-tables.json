@@ -1,0 +1,13 @@
+{
+  "archive": "*/Patch/Install/pakchunk1-Windows.pak",
+  "baseline": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-map-table-baselines-v1\\2b3f506f0d943e8fcb9f3d6ad8efc6b296e2bb740d1dc0c3caed9e642528de17\\manifest.json",
+    "sha256": "2b3f506f0d943e8fcb9f3d6ad8efc6b296e2bb740d1dc0c3caed9e642528de17"
+  },
+  "recipe": "map-table-data-v1",
+  "schema": 1,
+  "tables": {
+    "Map": "ProjectRED/Content/RED/Data/CSV/Map.csv",
+    "World": "ProjectRED/Content/RED/Data/CSV/World.csv"
+  }
+}

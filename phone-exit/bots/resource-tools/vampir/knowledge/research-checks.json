@@ -11746,7 +11746,10 @@
         "phone-exit/bots/resource-tools/vampir/resource-directory-record-v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/resource-directory-record.json",
         "phone-exit/bots/test_vampir_resource_directory_record_v1.py",
-        "phone-exit/bots/test_vampir_directory_record_integration.py"
+        "phone-exit/bots/test_vampir_directory_record_integration.py",
+        "phone-exit/bots/resource-tools/vampir/resource-map-tables-v1.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/resource-map-tables.json",
+        "phone-exit/bots/test_vampir_resource_map_tables_v1.py"
       ],
       "artifact_dependencies": []
     }

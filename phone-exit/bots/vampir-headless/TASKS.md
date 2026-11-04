@@ -26,6 +26,19 @@ exports и проверки вручную не повторять. Счётчи
   общий контракт входа остаётся partial.
   [Приёмка проекций и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-VERSION-WRAPPER-11322.md).
 - Мир и параметры: подтвердить текущие source-bound позицию, HP / MP и окружение.
+- Map data: текущие именованные Map / World подтверждены для Map 10/11
+  и 36 миров новым update/cache adapter. Native-перенос трёх map functions,
+  texture freshness / engine correction / runtime selection остаются открыты.
+  Старый MapProjection allowlist и legacy check не расширять по одному
+  совпадению таблиц.
+  [Данные и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-RESOURCE-MAP-TABLES-V1-268356.md).
+- Следующий общий native пакет квестов/обучения: база d00a... / 1.13.16,
+  input archive → QuestSync 1854 / Tutorial 9905. 22 уникальные основные
+  функции, девять общих; callbacks / leaves и data closure проверять явно.
+  Использовать quest-sync-11316 / tutorial-update-11316, затем отдельно
+  quest-update-wire-11316 (1810). Старый release list 1802 и текущий output
+  archive-wire не заменяют эти input readers. Native adapter ещё нужен;
+  registry-only повышение допуска запрещено.
 - Input seed: выпустить новую версию общего recipe с ordered baseline / target
   pointers в memo key; одинаковая transitive lineage не определяет направление.
   Новый composition adapter изолирует свой memo, старый engine сохраняет историю.

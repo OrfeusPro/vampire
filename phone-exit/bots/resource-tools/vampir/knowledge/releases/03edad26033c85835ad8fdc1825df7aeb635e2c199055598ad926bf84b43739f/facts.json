@@ -1845,6 +1845,51 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты полные runtime/data dependencies потребителей и перенос legacy source checks карты/квестов/обучения; девять исторических unknown SHA, ближайшая prepatch named база, encrypted/size и resource semantics вне текущих выбранных inputs, остальные широкие tool groups, полный ordinary update/production owner recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x141409210",
+        "0x141473540",
+        "0x1445e9110",
+        "0x1445e9fb0",
+        "0x1445ec070",
+        "0x1445f5020",
+        "0x144ab0890",
+        "0x144ab0be0",
+        "0x144ab1080",
+        "0x144ab1810",
+        "0x144ab1b50",
+        "0x144ab1df0"
+      ],
+      "checks": [],
+      "conclusion": "Map table data v1 подтвердил 2 Map10/11 rows и 36 world bindings из текущих exact named CSV; warm: 1 cache hit, 22 новых / 1787 tests. Native transfer и runtime admission pending.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-MAP-TABLES-V1-268356.json",
+          "sha256": "1bebfdf9ddd133bac47a597cbac2cd09523a2b986a665c0d82034abc03f03463"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-RESOURCE-MAP-TABLES-V1-268356.md",
+          "sha256": "deffc6381de90d8c05ceb467e5f6e51f85d6d4206ab2d7650619f470ec7d0207"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "d9623b6ec8ac05f25e695aae656089cd680808e7b152d888379d453edc1ff1a0",
+      "limits": [
+        "Only current named Map/World data for the previously reviewed Map10/11 projection is compared.",
+        "The historical baseline is captured evidence; neither historical PAK nor current native map code was executed.",
+        "Texture freshness, world runtime selection, correction, navigation, UI bindings and whole runtime dependency closure remain unverified.",
+        "No map runtime allowlist, native semantic check, profile or admission was promoted.",
+        "All 15 fields of the two reviewed Map rows and exact membership plus Id/MapId/LevelPath of 36 worlds match the captured baseline.",
+        "Other World fields and unrelated rows are outside this rule. Invalid or duplicated IDs and changed Map columns are rejected.",
+        "Legacy map native/projection code and runtime allowlists remain unchanged; this is not whole contract coverage."
+      ],
+      "method": "static",
+      "next_check": "Пакетом переносить input archive / QuestSync1854 / Tutorial9905 от более новой базы d00a11316 с общими 9 ролями и 22 уникальными основными функциями; output archive-wire не использовать как input proof. Map native projection проверять отдельно от готовых Map/World data. Не повторять готовые 54 resource inputs / 247 hashes. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты native projection functions карты, texture/runtime world selection/engine correction и полная dependency closure; общий input archive QuestSync1854/Tutorial9905 и затем QuestUpdate1810 на текущий SHA от d00a11316; девять исторических unknown SHA, ближайшая prepatch named база, resource semantics вне data-only проверки, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

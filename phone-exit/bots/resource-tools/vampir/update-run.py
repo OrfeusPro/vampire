@@ -26,7 +26,7 @@ def execution_inputs(index, knowledge=None):
         'stage-action-tools-v1.py','native-materialize-inputs-v2.py',
         'resource-directory-v1.py','resource-directory-format-v1.py','resource-directory-paths-v2.py',
         'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py',
-        'resource-selected-hashes-v1.py','resource-directory-record-v1.py'}
+        'resource-selected-hashes-v1.py','resource-directory-record-v1.py','resource-map-tables-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -177,6 +177,9 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'resource-directory-record.json').is_file():
             paths.add(args.knowledge/'resource-directory-record.json')
             paths.add(index.HERE/'resource-directory-record-v1.py')
+        if (args.knowledge/'resource-map-tables.json').is_file():
+            paths.add(args.knowledge/'resource-map-tables.json')
+            paths.add(index.HERE/'resource-map-tables-v1.py')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -1056,6 +1059,11 @@ def run_locked(index, args, database, *, audited=None):
             record['resource_impact']=resource_pipeline_result['impact']
         if resource_pipeline_result and 'context_keys' in resource_pipeline_result:
             record['resource_context_keys']=resource_pipeline_result['context_keys']
+        if resource_pipeline_result and 'map_tables' in resource_pipeline_result:
+            record['map_table_data']=resource_pipeline_result['map_tables']
+            if record['map_table_data']['state']!='data_matched':
+                queue.append(dict(contract='map-data',capability='resources',reason='map_table_data_requires_review',
+                    evidence=record['map_table_data'],next_check='Review exact named Map/World rows; native transfer remains separate'))
         resource_metrics=args.resource_scope.validate() if args.resource_scope else None
         source_metrics=store.validate()
         if update.signatures(args.install,roots)!=installed_stamps:

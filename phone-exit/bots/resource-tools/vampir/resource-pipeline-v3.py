@@ -56,6 +56,9 @@ class Pipeline:
         self.context_keys=None
         if (Path(args.knowledge)/'resource-context-keys.json').is_file():
             self.context_keys=index.extension('resource-context-keys-v1').Scope(index,args)
+        self.map_tables=None
+        if (Path(args.knowledge)/'resource-map-tables.json').is_file():
+            self.map_tables=index.extension('resource-map-tables-v1').Scope(index,args,report)
         self.reference,self.reference_error=None,None
         self.files,self.aliases={},{}
         self.optional_files,self.pending={},{}
@@ -214,6 +217,7 @@ class Pipeline:
         result=self._process(row)
         if self.impact is not None:self.impact.observe(row,result)
         if self.context_keys is not None:self.context_keys.observe(row,result)
+        if self.map_tables is not None:self.map_tables.observe(row,result)
         return result
 
     def context_inputs(self,contract,rows):
@@ -348,6 +352,7 @@ class Pipeline:
         if self.owner is not None:
             if self.impact is not None:self.impact.prepare()
             if self.context_keys is not None:self.context_keys.prepare()
+            if self.map_tables is not None:self.map_tables.prepare()
             for cache,pointer in self.pending.items():self.owner.defer(cache,pointer)
             owner=self.owner.finish()
             indexes=dict(indexes,source_barrier_completed=True,source_barrier_pending=False,
@@ -370,4 +375,5 @@ class Pipeline:
         if named is not None:result['named_tables']=copy.deepcopy(named.metrics)
         if self.impact is not None:result['impact']=self.impact.publish(owner)
         if self.context_keys is not None:result['context_keys']=self.context_keys.publish(owner)
+        if self.map_tables is not None:result['map_tables']=self.map_tables.publish(owner)
         return result

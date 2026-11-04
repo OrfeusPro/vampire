@@ -1,0 +1,165 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-map-tables-v1-acceptance\\85f857f83e804ad30af5de63a70f44d30e75ccf1221cda1e9ad637a753422591\\manifest.json",
+    "sha256": "85f857f83e804ad30af5de63a70f44d30e75ccf1221cda1e9ad637a753422591"
+  },
+  "baseline": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-map-table-baselines-v1\\2b3f506f0d943e8fcb9f3d6ad8efc6b296e2bb740d1dc0c3caed9e642528de17\\manifest.json",
+    "sha256": "2b3f506f0d943e8fcb9f3d6ad8efc6b296e2bb740d1dc0c3caed9e642528de17"
+  },
+  "checks": [
+    {
+      "cache_key": "613e20f2b64113d2c9416e1a2cc577cce460c9f77ab4b1395d12ad5e1e92440a",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\b834888c34230a17659b6d9808c46ce53fe1ffc4d57152bb038ac583aca68e82\\manifest.json",
+      "sha256": "b834888c34230a17659b6d9808c46ce53fe1ffc4d57152bb038ac583aca68e82",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "884c347a199ab88070cc03f4bdaeb739122b20d0521dec7f43550fad6e47c316",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6c0c619b86b2b6009333ad97fb34a3efd8254bcd9c78c8df91fccb9cbfbe4141\\manifest.json",
+      "sha256": "6c0c619b86b2b6009333ad97fb34a3efd8254bcd9c78c8df91fccb9cbfbe4141",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "c743ca09e0f37e188f6d26b2b3edc03a7068f1a23e9648ea97956b63b416f391",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\c4112690e5aac4b92c8d505be874cae7d54c052ba8320cff619a55c67fcf3710\\manifest.json",
+      "sha256": "c4112690e5aac4b92c8d505be874cae7d54c052ba8320cff619a55c67fcf3710",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "dc911138f573f28e30bd3b085a714c8334cb3ec3cd247cf6fbe151b14406d7b7",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\2fe532e9ba66a6e226d38d9d9aeb25dc0d91b2dc07ef952d94be9a338d912bc8\\manifest.json",
+      "sha256": "2fe532e9ba66a6e226d38d9d9aeb25dc0d91b2dc07ef952d94be9a338d912bc8",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "d3d319d842e8c88892fdfebd2f241593d5a4077b30666ad384471c6fbcfa16ea",
+    "phone-exit/bots/resource-tools/vampir/knowledge/resource-map-tables.json": "d11f92c37a34ed028dec167fc85f22e2e28ce92523acaeb52ff3c57fad0f9fce",
+    "phone-exit/bots/resource-tools/vampir/resource-map-tables-v1.py": "afa52c987c0873a1b3cc7a10f4ed60950b7304a70cd235c731c384b1a8ecc04e",
+    "phone-exit/bots/resource-tools/vampir/resource-pipeline-v3.py": "1e2eed42c056ec260265b1d91d41d96c2e618774083278e02fa8b40b629cc13a",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "eadf2a378bfc5f7416b3c15bb650a73802605ea869bf89732f364b0b8a3bd02c",
+    "phone-exit/bots/test_vampir_resource_map_tables_v1.py": "c7f1f37914a4faf1faef2483caccd3481f2924c5aa6390ebb5fb81da873b5cf9",
+    "phone-exit/bots/test_vampir_update_automation.py": "e021fdf5a70a61f132b300425f440933d66b89d71363d5f5cd099282fc308c4f"
+  },
+  "csv_extractions": 0,
+  "current_tables": {
+    "Map": {
+      "bytes": 14183,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/Map.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\45e3877a30f0651721d826c2e4179032a22e7ebf1c3fcc95e8d929615cd32e46.csv",
+      "rows": 163,
+      "sha256": "45e3877a30f0651721d826c2e4179032a22e7ebf1c3fcc95e8d929615cd32e46"
+    },
+    "World": {
+      "bytes": 70870,
+      "canonical_path": "ProjectRED/Content/RED/Data/CSV/World.csv",
+      "file": "F:\\PhoneExit Resources\\Vampir\\knowledge\\resource-csv-blobs-v3\\489d8f2f57c0a00d657f753656f2cb3b94597ee37efc81e8bb00cf1aa449630b.csv",
+      "rows": 263,
+      "sha256": "489d8f2f57c0a00d657f753656f2cb3b94597ee37efc81e8bb00cf1aa449630b"
+    }
+  },
+  "limits": [
+    "Only current named Map/World data for the previously reviewed Map10/11 projection is compared.",
+    "The historical baseline is captured evidence; neither historical PAK nor current native map code was executed.",
+    "Texture freshness, world runtime selection, correction, navigation, UI bindings and whole runtime dependency closure remain unverified.",
+    "No map runtime allowlist, native semantic check, profile or admission was promoted.",
+    "All 15 fields of the two reviewed Map rows and exact membership plus Id/MapId/LevelPath of 36 worlds match the captured baseline.",
+    "Other World fields and unrelated rows are outside this rule. Invalid or duplicated IDs and changed Map columns are rejected.",
+    "Legacy map native/projection code and runtime allowlists remain unchanged; this is not whole contract coverage."
+  ],
+  "native_replays": 0,
+  "new_jvm": 0,
+  "next_quest_tutorial_inventory": {
+    "contexts": [
+      {
+        "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\quest-sync-11316.json",
+        "sha256": "51d5cee5c7bf37043345cc88034f5b3a15e4c05457e9b74dee2de8cf08fa28ad"
+      },
+      {
+        "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\tutorial-update-11316.json",
+        "sha256": "d963ad1b0e6b18d741742c1b290db95d926be1987d0871482eb8938c11339d43"
+      }
+    ],
+    "exports": {
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-37e9b03845d5\\details.json": "6116d02deeea0867bcfae286d2710edb61f84a73de19b6980a19eeddbcb7e04f",
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-47f1d0c509ca\\details.json": "637ed2b63b6e81eec72bb246c2cfb5e5a7e9ed4b5a88c632000f905798b542bf",
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-6c5bd9da86eb\\details.json": "27a8b9d5a1be3a9b4650e0197d27d3a88ca14104b28cf7c1f29b668756426922",
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-80386d1eb460\\details.json": "d7270acf4727f1c559ad774be876f7e3ca6cf3a14ecec118cc075dc17efd20c1",
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-a096b2a0bf20\\details.json": "ca659aa014494d7205feb1b80e7ada9dbcea526ed26b7be277bbfa05238e39c7",
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-b6b0576b96ef\\details.json": "5aafa2a15deb93e9b38935b5d4ae3d87e0fe688da3d43d18ce0686c2416cbba6",
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-e6ab6fd97914\\details.json": "9828dfd4a26853235433aa7b702150ceec552d05796a8bea82ce915332284454",
+      "F:\\PhoneExit Resources\\Vampir\\ghidra\\request-exports\\d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960\\run-edd5235c81bf\\details.json": "d979c8625c0656b7c372148645fe384899a8a9f587054cdb88bbcb856d0d7601"
+    },
+    "native_adapter_implemented": false,
+    "shared_functions": 9,
+    "source_sha256": "d00a197796b7cee30f46854b2a8579049726c2bfba542d359f41b3817ec8b960",
+    "target_transfer_verified": false,
+    "unique_functions": 22
+  },
+  "patch_revision": "Revision268356",
+  "profile_activated": false,
+  "resource_record_decodes": 0,
+  "runtime_activated": false,
+  "schema": 1,
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "summary": {
+    "map_fields": 15,
+    "map_rows_total": 163,
+    "matched_maps": 2,
+    "matched_worlds": 36,
+    "warm_data_cache_hits": 1,
+    "world_fields": [
+      "Id",
+      "MapId",
+      "LevelPath"
+    ],
+    "world_rows_total": 263
+  },
+  "target_native_projection_verified": false,
+  "tests": {
+    "added": 22,
+    "aggregate": 1787,
+    "skipped": 3
+  },
+  "watcher_started": false
+}

@@ -236,6 +236,19 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## Данные проверенной проекции карты
+
+[Selector](resource-map-tables.json) включает data-only проверку текущих
+именованных Map / World для Map 10/11. Native проверки и runtime allowlists
+она не меняет. Проверяются exact CSV bytes, reviewed Map fields и точный
+состав / Id / MapId / LevelPath 36 миров относительно immutable captured базы.
+
+Результаты — resource-map-table-results-v1, receipts после owner barrier —
+resource-map-table-receipts-v1; cache — knowledge/resource-comparison-cache-v3/
+map-tables-<key>.json. Журнал содержит map_table_data и
+metrics.resource_pipeline.map_tables. Несовпадение остаётся в очереди update.
+[Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-MAP-TABLES-V1-268356.md).
+
 ## Ключи разрешения адресов и проекций
 
 [Binding tool scope](binding-tool-scope.json) задаёт корни текущего resolver
