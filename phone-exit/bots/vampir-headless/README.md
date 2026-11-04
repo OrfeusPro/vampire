@@ -415,8 +415,15 @@ INPUT-композиция описана ниже.
 [Native INPUT пакеты квестов и обучения](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-PACKET-NATIVE-V1-11322.md)
 подключены к update/cache. QuestSync 1854 прошёл 269 входов, Tutorial 9905 —
 909, с guards памяти и Win64 ABI. Два повтора взяли четыре stages из кэша.
-1877 tooling тестов и шесть дополнительных checks прошли. Следующий пакет —
-handlers, QuestUpdate 1810 и остающаяся контрактная / онлайн-проверка.
+1877 tooling тестов и шесть дополнительных checks прошли. Wire QuestUpdate
+и статический Tutorial dispatch описаны следующим пакетом; native handlers
+и контрактная / онлайн-проверка остаются открытыми.
+
+[QuestUpdate wire и Tutorial dispatch](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-QUEST-ACTION-WIRE-V1-11322.md)
+подключены к update/cache: 19 статических roots и 117 native wire случаев
+QuestUpdate 1810. Два повтора использовали четыре готовых stages без JVM /
+native replay. Native handlers, применение состояния и runtime quest-контракт
+остаются следующим пакетом.
 
 ## Сохранённые записи прежних этапов
 

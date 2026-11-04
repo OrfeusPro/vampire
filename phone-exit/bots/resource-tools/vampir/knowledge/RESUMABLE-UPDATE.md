@@ -236,6 +236,20 @@ resource-comparison-cache-v3/directory-record-<key>.json. Назначение �
 directory_records metrics. Warm reuse не вызывает новый decode.
 [Приёмка и границы](evidence/updates/HEADLESS-RESOURCE-DIRECTORY-RECORD-V1-268356.md).
 
+## QuestUpdate wire и Tutorial dispatch
+
+[Статический selector](quest-action-transfer.json) связывает готовые INPUT /
+OUTPUT proofs с 19 whole roots. [Native selector](quest-wire-native.json)
+добавляет 117 ограниченных QuestUpdate wire сценариев. Журнал содержит
+quest_action_transfer и quest_wire_native; отчёты — quest-action-transfer-proofs-v1
+и quest-wire-native-checks-v1 библиотеки. Новое правило покрывает перенос
+инструкций / данных отдельно от native handler application и online admission.
+
+Готовые отчёты используются после SHA / matrix / tools / runtime проверок.
+Same-invocation Owner и SourceStore завершаются до финального барьера
+и публикации; предыдущие INPUT suites повторно не запускаются.
+[Приёмка и границы](evidence/updates/HEADLESS-QUEST-ACTION-WIRE-V1-11322.md).
+
 ## Native INPUT пакеты квестов и обучения
 
 [Selector](quest-packet-native.json) включает два ограниченных native stages

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "recipe": "quest-action-transfer-v1",
+  "baselines": {
+    "quest-update-wire": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\quest-update-wire-11316.json",
+      "sha256": "23d2bbc92314bae93c263529de16e93c1e99d6dc1df6e20adcaa1c550a42d341"
+    },
+    "tutorial-dispatch": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\tutorial-dispatch-11316.json",
+      "sha256": "8cf53dbdff0a30f6120281a04bdc945168112d894ba5b959dda49cb7ef52e01c"
+    },
+    "archive-wire": {
+      "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\archive-wire-11316.json",
+      "sha256": "bace7773a5ee47b46e51dbaba4f7190cd53f89ab762d3201acc703297ebfdf19"
+    }
+  }
+}

@@ -1977,6 +1977,49 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты handlers QuestSync / Tutorial, QuestUpdate 1810 и runtime quest-контракт. Reuse / growth / реальные storage providers и cleanup effects требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x144aac280",
+        "0x144aac3e0",
+        "0x144aac590",
+        "0x144aac6b0",
+        "0x144aac7a0",
+        "0x144aaca00",
+        "0x144aaca90",
+        "0x144aacaf0",
+        "0x144aacbb0",
+        "0x144aaccc0",
+        "0x144aad030",
+        "0x144aad370",
+        "0x14582c060",
+        "0x145837430"
+      ],
+      "checks": [],
+      "conclusion": "Правило переноса QuestUpdate wire / Tutorial dispatch и отдельная source-bound native wire проверка подключены к ordinary update/cache. Машинная приёмка фиксирует 19 статических roots, 117 native случаев и два повтора без replay. Native handlers и online admission остаются открытыми.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-QUEST-ACTION-WIRE-V1-11322.json",
+          "sha256": "91b5d45ca3efaa36bba881378b0f52e837c08103084bbde8bffaecc56eec0dee"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-QUEST-ACTION-WIRE-V1-11322.md",
+          "sha256": "ed84c34e5a6a33e1a2c5b042159a37497e7863c8d193453ec163229015fbb484"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "822bf9e3bdd7e380d68c5344d8865d1c09755ab856d4337ba6b387d0cfabf3b1",
+      "limits": [
+        "Fresh preallocated OUTPUT storage and unbuffered INPUT are bounded to the 29-byte QuestUpdate1810 body.",
+        "Whole IO executes native raw writes; six separate failure cases replace only raw-write through caller-bound fixtures.",
+        "Growth, endian conversion helpers, handlers, real storage providers and online action admission remain open."
+      ],
+      "method": "static",
+      "next_check": "Проверить native Tutorial handler / defer / apply / queue и QuestSync handler общим пакетом с готовыми INPUT и wire proofs. Не повторять неизменные suites, static roots и resource inputs. Новые сценарии подключить к ordinary update/cache с отдельными runtime admission границами. Полный проход и watcher — по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты native Tutorial handler / defer / apply / queue, QuestSync handler и runtime quest-контракт. Reuse / growth / настоящие storage providers / cleanup effects и server action admission требуют своих сценариев. Также native projection карты, runtime world selection/engine correction, resource dependency closure, исторические unknown SHA, ближайшая prepatch named база, остальные tool groups, full ordinary update/production recovery, SDK/вход/world/online.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

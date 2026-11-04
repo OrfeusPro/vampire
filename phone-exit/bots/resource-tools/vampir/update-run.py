@@ -28,7 +28,9 @@ def execution_inputs(index, knowledge=None):
         'resource-named-tables-v1.py','resource-named-reference-v1.py','resource-impact-v1.py','resource-context-keys-v1.py',
         'resource-selected-hashes-v1.py','resource-directory-record-v1.py','resource-map-tables-v1.py',
         'quest-input-seed-v2.py','quest-reader-transfer-v1.py','quest-reader-transfer-rules-v1.py',
-        'quest-packet-native-v1.py','quest-packet-harness-v1.py','quest-packet-cases-v1.py'}
+        'quest-packet-native-v1.py','quest-packet-harness-v1.py','quest-packet-cases-v1.py',
+        'quest-action-transfer-v1.py','quest-action-transfer-rules-v1.py',
+        'quest-wire-native-v1.py','quest-wire-harness-v1.py','quest-wire-cases-v1.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -192,6 +194,12 @@ def definition_inputs(index, args, update):
         if (args.knowledge/'quest-packet-native.json').is_file():
             paths.add(args.knowledge/'quest-packet-native.json')
             paths.update(index.HERE/name for name in ('quest-packet-native-v1.py','quest-packet-harness-v1.py','quest-packet-cases-v1.py'))
+        if (args.knowledge/'quest-action-transfer.json').is_file():
+            paths.update(args.knowledge/name for name in ('quest-action-transfer.json','quest-action-transfer-rules.json'))
+            paths.update(index.HERE/name for name in ('quest-action-transfer-v1.py','quest-action-transfer-rules-v1.py'))
+        if (args.knowledge/'quest-wire-native.json').is_file():
+            paths.add(args.knowledge/'quest-wire-native.json')
+            paths.update(index.HERE/name for name in ('quest-wire-native-v1.py','quest-wire-harness-v1.py','quest-wire-cases-v1.py'))
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -961,6 +969,22 @@ def run_locked(index, args, database, *, audited=None):
                             queue.append(dict(contract='quests',capability='quest-packet-input',
                                 reason='quest_packet_native_requires_review',evidence=packets,
                                 next_check='Inspect exact target exports or the failed bounded packet case'))
+                    if (args.knowledge/'quest-action-transfer.json').is_file():
+                        action=index.extension('quest-action-transfer-v1').run(index,args,sha,journal,seed,transfer,
+                            native_contexts,native_checks)
+                        record['quest_action_transfer']=action
+                        if action['state']!='prepared_static':
+                            queue.append(dict(contract='quests',capability='quest-action-transfer',
+                                reason='quest_action_transfer_requires_review',evidence=action,
+                                next_check='Review exact QuestUpdate IO and Tutorial dispatch dependencies'))
+                        if (args.knowledge/'quest-wire-native.json').is_file():
+                            wire=index.extension('quest-wire-native-v1').run(index,args,sha,journal,action,
+                                getattr(args,'scoped_database',database))
+                            record['quest_wire_native']=wire
+                            if wire['state']!='passed_bounded_native':
+                                queue.append(dict(contract='quests',capability='quest-update-wire',
+                                    reason='quest_wire_native_requires_review',evidence=wire,
+                                    next_check='Inspect target exports or the failed bounded QuestUpdate wire case'))
             record['native_contexts']=native_contexts
             record['native_checks']=native_checks
         outcomes = {}
@@ -1114,6 +1138,12 @@ def run_locked(index, args, database, *, audited=None):
         if 'quest_packet_native' in record:
             record['quest_packet_native']=index.extension('quest-packet-native-v1').finalize(
                 original_index,args,record['quest_packet_native'])
+        if 'quest_action_transfer' in record:
+            record['quest_action_transfer']=index.extension('quest-action-transfer-v1').finalize(
+                original_index,args,record['quest_action_transfer'])
+        if 'quest_wire_native' in record:
+            record['quest_wire_native']=index.extension('quest-wire-native-v1').finalize(
+                original_index,args,record['quest_wire_native'])
         publisher=index.extension('update-bundle')
         if hasattr(publisher,'publish'):
             bundle=publisher.publish(index,args,bundle,
