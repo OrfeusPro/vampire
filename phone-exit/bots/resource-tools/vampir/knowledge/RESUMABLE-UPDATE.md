@@ -138,11 +138,24 @@ knowledge. Первая обработка нового binding key создаё
 
 ## Подготовка native-контекстов и план пересчёта
 
-[Native materialize scope](native-materialize-scope.json) отделяет test-модули
-и реестр проверок от definitions подготовки. Применение требует точных SHA
-десяти reviewed tools и штатного knowledge. Изменение кода либо custom
-knowledge сохраняет полный ключ. Source, contexts, function reuse, tool
-groups, native metadata и generated index остаются в прежних входах.
+[Native materialize inputs v2](native-materialize-inputs.json) закрепляет
+11 модулей подготовки и общий helper идентификации runtime. Только при
+совпадении всех SHA и штатном knowledge ключ инструментов использует эти
+12 файлов вместо общей context-группы из 197.
+
+Definitions этого действия исключают реестр проверок и посторонние Python
+модули внутри canonical bots. Сохраняются точные пути закреплённого кода,
+controller и helper правила, все данные / JSON, Java, DLL и внешний код.
+Source, contexts, function reuse, native metadata и generated index остаются
+в ключе. Новая версия кода, отсутствующий файл или custom knowledge возвращают
+полные definitions и прежнюю общую группу инструментов. Fresh barriers
+проверяют полные входы прохода перед результатом. Выполнение native checks
+и публикация продолжают проверять свои исходные зависимости.
+
+Без selector v2 действует прежний [scope v1](native-materialize-scope.json),
+который исключает только test-модули и реестр проверок по десяти guards;
+без обоих selectors используется полный ключ.
+[Приёмка v2](evidence/updates/HEADLESS-AUTO-NATIVE-ACTION-INPUTS-V2-11322.md).
 
 Affected plan сопоставляет полные workspace-пути и effective definition
 проверки, выбранное штатным source_definition для текущего и прежнего SHA.

@@ -23,7 +23,7 @@ def execution_inputs(index, knowledge=None):
     # inputs; they are not dependencies of every unrelated native/resource stage.
     owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py',
         'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py',
-        'stage-action-tools-v1.py'}
+        'stage-action-tools-v1.py','native-materialize-inputs-v2.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -110,6 +110,9 @@ def execution_inputs(index, knowledge=None):
     selected_knowledge=Path(knowledge) if knowledge is not None else index.HERE/'knowledge'
     if (selected_knowledge/'stage-action-tools.json').is_file():
         groups.update(index.extension('stage-action-tools-v1').inputs(index,selected_knowledge,groups,runtime))
+    if (selected_knowledge/'native-materialize-inputs.json').is_file():
+        groups['native-materialize']=index.extension('native-materialize-inputs-v2').tool_inputs(
+            index,selected_knowledge,groups['context'],runtime)
     return groups
 
 
@@ -131,6 +134,9 @@ def definition_inputs(index, args, update):
         args.knowledge/'native-check-adapters.json') if p.is_file())
     if (args.knowledge/'binding-tool-scope.json').is_file():paths.add(args.knowledge/'binding-tool-scope.json')
     if (args.knowledge/'native-materialize-scope.json').is_file():paths.add(args.knowledge/'native-materialize-scope.json')
+    if (args.knowledge/'native-materialize-inputs.json').is_file():
+        paths.add(args.knowledge/'native-materialize-inputs.json')
+        paths.add(index.HERE/'native-materialize-inputs-v2.py')
     if (args.knowledge/'stage-action-tools.json').is_file():
         paths.add(args.knowledge/'stage-action-tools.json')
         paths.add(index.HERE/'stage-action-tools-v1.py')
@@ -256,7 +262,9 @@ def resource_work(index,args,report,contracts,changed,tools=None):
 
 
 def native_materialize_definitions(index, args, definitions):
-    """Exclude only check registration/tests under a reviewed implementation."""
+    """Select reviewed action inputs; retain complete definitions after code drift."""
+    if (args.knowledge/'native-materialize-inputs.json').is_file():
+        return index.extension('native-materialize-inputs-v2').definitions(index,args,definitions)
     path=args.knowledge/'native-materialize-scope.json'
     if not path.is_file():return definitions
     rule=index.read_json(path)
@@ -869,7 +877,7 @@ def run_locked(index, args, database, *, audited=None):
                 return result
             native_contexts=journal.stage('native-materialize',dict(source=sha,contexts=contexts,
                 reuse=function_reuse,definitions=native_materialize_definitions(original_index,args,definitions),
-                tools=tools['context'],
+                tools=tools.get('native-materialize',tools['context']),
                 generated_index_sha256=index.digest(generated) if generated.is_file() else None),materialize_native)
             # Extensions must not mutate the cached base adapter's stage value.
             native_contexts=copy.deepcopy(native_contexts)

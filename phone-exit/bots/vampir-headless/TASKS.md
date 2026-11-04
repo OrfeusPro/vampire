@@ -63,7 +63,10 @@ exports и проверки вручную не повторять. Счётчи
   уже сужен со 197 до шести файлов; проекции Version / Login используют
   собственные полные inputs. Definitions native-materialize сужены 1248 → 828;
   affected plan использует полные пути и выбранные source variants. Далее —
-  остальные широкие потребители tool groups и оставшиеся входы native-materialize.
+  остальные широкие потребители tool groups и оставшиеся данные native-materialize.
+  Подготовка v2 уже использует 12 файлов кода вместо 197, definitions —
+  272 вместо 832; два повтора saved-source static action взяли кэш.
+  [Приёмка подготовки v2](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-NATIVE-ACTION-INPUTS-V2-11322.md).
   Legacy context checks уже используют по 14 файлов, profile-builder — шесть;
   runtime / metadata / guards и fallback сохранены. Профиль учитывает полные
   contexts, passed checks и путь EXE.

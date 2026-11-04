@@ -1437,6 +1437,43 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты остальные широкие потребители tool groups и остаток native-materialize key, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Native materialize v2 использует 12 файлов и 272 definitions вместо 197 / 832; guards и source/data barriers сохранены, два saved-source повтора взяли кэш. 19 новых fixture cases. Admission не изменён.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-NATIVE-ACTION-INPUTS-V2-11322.json",
+          "sha256": "26296d09ce982c06b169d56d6f31190c6f41af9327545532d92fe7d1a2d3b89b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-NATIVE-ACTION-INPUTS-V2-11322.md",
+          "sha256": "b310720809be5e614c0b87e6b2f671aa6445cf0e7871fe87be08e46c9fd63337"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "fa72ec26912c6609cfb6aa142f69f52df28b85f2aa116ab5f5b94a790e6d62ee",
+      "limits": [
+        "One saved-source static materialization plus two Journal cache repeats.",
+        "Unrelated adapter digest substitution does not edit any actual engine files.",
+        "All non-Python data and external code remain in definitions; other stage payloads are unchanged.",
+        "No complete installed update, native replay, Ghidra, watcher or online entry was run.",
+        "Exact reviewed native11 and shared runtime helper are required for narrowed definitions and tools.",
+        "New code, missing reviewed code or custom knowledge restores full definitions and the legacy tool group.",
+        "Ordinary updater checks use synthetic sources and mocked materialization; saved static action separately verifies real outputs.",
+        "The remaining 272 definitions retain conservative data and external inputs.",
+        "Existing reviewed target context was selected; new PE analysis or function transfer was not demonstrated.",
+        "Native semantic execution, publication and runtime admission retain their own original checks."
+      ],
+      "method": "static",
+      "next_check": "Оценить оставшиеся ключи по фактическим потребителям данных и инструментов. По явной команде измерить полный проход, восстановление после обрыва и отклонение пакета после второго патча. Готовые доказательства использовать из проверенного кэша. Наблюдатель включать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты остальные широкие потребители tool groups и консервативные данные native-materialize, полный ordinary update / production-проверка owner и legacy locks, resource process 109 архивов с owner v4; directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

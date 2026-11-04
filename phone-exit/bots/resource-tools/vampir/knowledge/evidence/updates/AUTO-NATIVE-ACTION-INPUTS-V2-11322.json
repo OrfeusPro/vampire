@@ -1,0 +1,108 @@
+{
+  "acceptance": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\native-action-inputs-v2-acceptance\\9a4c7d0846f0f749c34817e89bf7fe31cf3496f95a10de0384b5421c7109068f\\manifest.json",
+    "sha256": "9a4c7d0846f0f749c34817e89bf7fe31cf3496f95a10de0384b5421c7109068f"
+  },
+  "checks": [
+    {
+      "cache_key": "88b851220e3f8f3e5dd93eeb5c37f718e62ac58152afb7a277a77930c96a6f62",
+      "id": "automatic-update-tooling",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\fb5f65e7f3bcef770dc36529d060c4e9aac6d94806b077a7c30dc1b5909d588e\\manifest.json",
+      "sha256": "fb5f65e7f3bcef770dc36529d060c4e9aac6d94806b077a7c30dc1b5909d588e",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "e48a57cfcb4584daf776967323ee2e3859b0d92e080ca2d376b1ae4f19b4d920",
+      "id": "update-contract-registry",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\cf4560fd3075091b9738193edc9484a52d127928124f413893568105b0cc6ebf\\manifest.json",
+      "sha256": "cf4560fd3075091b9738193edc9484a52d127928124f413893568105b0cc6ebf",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "af31090fd566485676076d567896d2a9b67ba6fe30c7564464fe88ca8b762410",
+      "id": "update-binding-closure",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\0d3f06d61026c0b68d47bf61e496c892ebe1b155b0a21aa2f88dffdc0d0be128\\manifest.json",
+      "sha256": "0d3f06d61026c0b68d47bf61e496c892ebe1b155b0a21aa2f88dffdc0d0be128",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "57befa8a7e0af42174fdd2241a8dde1f14de646566ae58793c98f0b797c00711",
+      "id": "update-run-offline",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\4ee848e7cbc45a1611b616fa5531ea2a331f63193e2c053b9bf1441c4caba57e\\manifest.json",
+      "sha256": "4ee848e7cbc45a1611b616fa5531ea2a331f63193e2c053b9bf1441c4caba57e",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "1f6243d9fc68342144ec1d4856319046795de0f8bfe49ab7c91880aecfe3beb0",
+      "id": "knowledge-index-incremental",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a\\manifest.json",
+      "sha256": "d8451318d78c96582c43586369c944001732f343d93562e50791da9d2343db9a",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "89c8ee28ba2652f73edb5d73317087612e2ecc09d24b0ab284b79974225203c1",
+      "id": "tooling-check-scope",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610\\manifest.json",
+      "sha256": "e03aee8d75fa6a500454d3aa5464b811f57b8d995380fcf167c9a2659d081610",
+      "source_scope": "tooling",
+      "state": "passed"
+    },
+    {
+      "cache_key": "f34d0361543f91c894b26d9b8d9e56949f4bacea55d61c469179e68862d1f2bb",
+      "id": "check-source-variants",
+      "proves_client_compatibility": false,
+      "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486\\manifest.json",
+      "sha256": "103fab0ceb91b763541a3e29cbbd6102d67e0617c4a97d31ecab71c6e1442486",
+      "source_scope": "tooling",
+      "state": "passed"
+    }
+  ],
+  "code_files_after": 12,
+  "code_files_before": 197,
+  "components": {
+    "phone-exit/bots/resource-tools/vampir/knowledge/native-materialize-inputs.json": "37b7aaaff51fb1ff6a0310908e4bab966d5b40d2396fd36dc30593eec28fd3d2",
+    "phone-exit/bots/resource-tools/vampir/knowledge/research-checks.json": "2c6bf64d178552d95eadd923068e5f9540bd58baf2badfb96481eec67c1b4278",
+    "phone-exit/bots/resource-tools/vampir/native-materialize-inputs-v2.py": "3727c96613b137108cfcaad14d40317dd4ba0759108e50c3e467f6f30166ba00",
+    "phone-exit/bots/resource-tools/vampir/update-run.py": "e7f22e56e3405506ff87a4c9985fe2caf905e82dd0d0e742771557cd415bf796",
+    "phone-exit/bots/test_vampir_native_materialize_inputs_v2.py": "1549ffeb5383a609a19bd5d2878dac2c12734defe353ef97cbe2bb013dedce4c",
+    "phone-exit/bots/test_vampir_native_materialize_stage_v2.py": "d476de01fa4728efd78d9a3b3c42e82819d0a4662846755e170bf16984e3a73f",
+    "phone-exit/bots/test_vampir_update_automation.py": "cdcc89ee5a3613466a2152e73ca2abb8a093d5134a37a3d48eb26b107c12692d"
+  },
+  "definition_count_after": 272,
+  "definition_count_before": 832,
+  "definition_count_full": 1256,
+  "limits": [
+    "One saved-source static materialization plus two Journal cache repeats.",
+    "Unrelated adapter digest substitution does not edit any actual engine files.",
+    "All non-Python data and external code remain in definitions; other stage payloads are unchanged.",
+    "No complete installed update, native replay, Ghidra, watcher or online entry was run.",
+    "Exact reviewed native11 and shared runtime helper are required for narrowed definitions and tools.",
+    "New code, missing reviewed code or custom knowledge restores full definitions and the legacy tool group.",
+    "Ordinary updater checks use synthetic sources and mocked materialization; saved static action separately verifies real outputs.",
+    "The remaining 272 definitions retain conservative data and external inputs.",
+    "Existing reviewed target context was selected; new PE analysis or function transfer was not demonstrated.",
+    "Native semantic execution, publication and runtime admission retain their own original checks."
+  ],
+  "schema": 1,
+  "source_scope": "saved_static_materialization_and_synthetic_updater",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "tests": {
+    "added": 19,
+    "aggregate": 1569,
+    "aggregate_skipped": 3,
+    "controller": 40,
+    "input_scope": 14,
+    "ordinary_stage": 5
+  }
+}

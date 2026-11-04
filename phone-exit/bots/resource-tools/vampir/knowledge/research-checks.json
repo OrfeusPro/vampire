@@ -11713,7 +11713,11 @@
         "phone-exit/bots/resource-tools/vampir/stage-action-tools-v1.py",
         "phone-exit/bots/resource-tools/vampir/knowledge/stage-action-tools.json",
         "phone-exit/bots/test_vampir_stage_action_tools.py",
-        "phone-exit/bots/test_vampir_profile_stage_keys.py"
+        "phone-exit/bots/test_vampir_profile_stage_keys.py",
+        "phone-exit/bots/resource-tools/vampir/native-materialize-inputs-v2.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-materialize-inputs.json",
+        "phone-exit/bots/test_vampir_native_materialize_inputs_v2.py",
+        "phone-exit/bots/test_vampir_native_materialize_stage_v2.py"
       ],
       "artifact_dependencies": []
     }
