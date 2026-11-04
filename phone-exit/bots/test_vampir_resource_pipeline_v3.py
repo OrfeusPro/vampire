@@ -69,6 +69,42 @@ class ResourcePipelineV3(unittest.TestCase):
         self.assertEqual(p.finish()['reference']['legacy_files_rehashed'],0)
         self.assertEqual(len(list((self.root/'knowledge/resource-comparison-cache-v3').glob('*.json'))),2)
 
+    def enable_owner(self):
+        (self.args.knowledge/'resource-owner-engine.json').write_text(
+            '{"schema":4,"recipe":"resource-owner-sha-v4"}',encoding='utf-8')
+        self.consumer.consumed_inputs=lambda:dict(files={},aliases={})
+
+    def test_pipeline_uses_union_owner_before_assigning_comparison_caches(self):
+        self.enable_owner();p=self.pipeline();p.process(self.row)
+        self.assertFalse(list((self.root/'knowledge/resource-comparison-cache-v3').glob('*.json')))
+        result=p.finish()
+        self.assertTrue(result['owner']['barrier_completed'])
+        self.assertEqual(result['owner']['metrics']['assigned_caches'],2)
+        self.assertTrue(result['record_indexes']['source_barrier_completed'])
+
+    def test_owner_failure_and_earlier_index_failure_assign_no_comparison_cache(self):
+        self.enable_owner();p=self.pipeline();p.process(self.row)
+        self.index_api.finish.side_effect=ValueError('index inventory changed')
+        with self.assertRaisesRegex(ValueError,'inventory'):p.finish()
+        self.assertTrue(p.owner.closed)
+        self.assertFalse(list((self.root/'knowledge/resource-comparison-cache-v3').glob('*.json')))
+
+    def test_owner_catches_reference_bytes_changed_after_reference_barrier(self):
+        self.enable_owner()
+        active=self.root/'active-reference.json';active.write_bytes(b'active reference')
+        self.consumer.consumed_inputs=lambda:dict(files={str(active):self.index.digest(active)},aliases={})
+        self.consumer.finish_barrier.side_effect=lambda:active.write_bytes(b'changed reference')
+        p=self.pipeline();p.process(self.row)
+        with self.assertRaisesRegex(ValueError,'input'):p.finish()
+        self.assertFalse(list((self.root/'knowledge/resource-comparison-cache-v3').glob('*.json')))
+
+    def test_owner_catches_warm_comparison_pointer_changed_before_final_barrier(self):
+        self.enable_owner();p=self.pipeline();p.process(self.row);p.finish()
+        p=self.pipeline();p.process(self.row)
+        pointer=next((self.root/'knowledge/resource-comparison-cache-v3').glob('*.json'))
+        pointer.write_bytes(b'corrupt late pointer')
+        with self.assertRaisesRegex(ValueError,'input'):p.finish()
+
     def test_available_matching_tables_use_exact_old_comparison_functions(self):
         old=self.tables();p=self.pipeline();result=p.process(self.row)
         self.assertEqual(result['state'],'passed')

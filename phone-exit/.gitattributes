@@ -452,3 +452,8 @@ bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-EXECUTION-IN
 bots/resource-tools/vampir/knowledge/resource-csv-reuse.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-CSV-COSTS-V1-11322.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-CSV-COSTS-V1-11322.md text eol=crlf
+bots/resource-tools/vampir/resource-owner-v4.py text eol=lf
+bots/test_vampir_resource_owner_v4.py text eol=lf
+bots/resource-tools/vampir/knowledge/resource-owner-engine.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-RESOURCE-OWNER-V4-11322.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md text eol=crlf

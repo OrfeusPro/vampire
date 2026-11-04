@@ -87,6 +87,28 @@ class ResourceIndexV3Tests(unittest.TestCase):
         self.assertEqual(result['compatibility'],'not_established')
         self.assertEqual(result['inputs'][str(self.archive.resolve())],digest(self.archive))
 
+    def begin_owner(self):
+        self.args.knowledge=self.root/'registry';self.args.knowledge.mkdir()
+        (self.args.knowledge/'resource-owner-engine.json').write_text(
+            '{"schema":4,"recipe":"resource-owner-sha-v4"}',encoding='utf-8')
+        previous=self.index.extension
+        self.index.extension=lambda name:self.workflow if name=='research-workflow' else previous(name)
+        return load('resource-owner-v4').begin(self.index,self.args)
+
+    def test_shared_owner_defers_index_barrier_to_fresh_union(self):
+        self.index.digest=Mock(side_effect=digest);owner=self.begin_owner()
+        self.find();result=self.finish()
+        self.assertFalse(result['source_barrier_completed']);self.assertTrue(result['source_barrier_pending'])
+        reads=lambda:sum(Path(c.args[0]).resolve()==self.archive.resolve() for c in self.index.digest.call_args_list)
+        self.assertEqual(reads(),1)
+        owner.finish();self.assertEqual(reads(),2)
+
+    def test_owner_rechecks_summary_inventory_after_index_scope_closed(self):
+        owner=self.begin_owner();self.find();self.finish()
+        changed=copy.deepcopy(self.report_value);changed['observed_path_comparison']={}
+        self.write_report(changed)
+        with self.assertRaisesRegex(ValueError,'inventory'):owner.finish()
+
     def test_complete_checked_audit_and_exact_caller_material_required(self):
         for change in ('missing_full','changed_sha','duplicate_row','outside_install','missing_source'):
             with self.subTest(change=change):

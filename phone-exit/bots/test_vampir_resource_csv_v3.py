@@ -161,6 +161,41 @@ class ResourceCsvV3Tests(unittest.TestCase):
         reads=[c for c in f.index.digest.call_args_list if Path(c.args[0]).resolve()==f.archive]
         self.assertEqual(len(reads),2)
 
+    def begin_owner(self):
+        f=self.f
+        f.args.knowledge=f.root/'registry'
+        f.args.knowledge.mkdir(exist_ok=True)
+        (f.args.knowledge/'resource-owner-engine.json').write_bytes(CSV._canonical(
+            dict(schema=4,recipe='resource-owner-sha-v4')))
+        f.index.extension=load
+        return load('resource-owner-v4').begin(f.index,f.args)
+
+    def test_owner_keeps_csv_cache_pending_and_reuses_pending_result(self):
+        f=self.f;f.index.digest=Mock(side_effect=digest);owner=self.begin_owner()
+        pointer=f.extract();calls=f.reader.decode.call_count
+        self.assertEqual(f.extract(),pointer)
+        self.assertEqual(f.reader.decode.call_count,calls)
+        self.assertFalse(list((f.root/'knowledge/resource-csv-v3-cache').glob('*.json')))
+        reads=lambda:sum(Path(c.args[0]).resolve()==f.archive for c in f.index.digest.call_args_list)
+        self.assertEqual(reads(),1)
+        result=owner.finish();self.assertTrue(result['barrier_completed'])
+        self.assertEqual(reads(),2)
+        self.assertEqual(len(list((f.root/'knowledge/resource-csv-v3-cache').glob('*.json'))),1)
+        f.args.resource_owner=None
+        self.assertEqual(f.checked(pointer)['tables'][0]['header'],['ID','Text'])
+
+    def test_owner_final_barrier_rejects_late_pak_and_blob_changes_without_cache(self):
+        f=self.f;owner=self.begin_owner();pointer=f.extract()
+        table=json.loads(Path(pointer['path']).read_bytes())['tables'][0]
+        for path in (f.archive,Path(table['file'])):
+            before=path.read_bytes();self.mutate_same_stat(path)
+            with self.assertRaises(ValueError):owner.finish()
+            self.assertFalse(list((f.root/'knowledge/resource-csv-v3-cache').glob('*.json')))
+            path.write_bytes(before)
+            if path==f.archive:
+                owner=load('resource-owner-v4').begin(f.index,f.args)
+                f.extract()
+
     def test_registered_previous_producer_reuses_outputs_and_creates_current_cache(self):
         f=self.f;previous,_,cache,_=self.previous_producer()
         calls=f.reader.decode.call_count

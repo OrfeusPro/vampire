@@ -1305,6 +1305,38 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Открыты общий owner промежуточных resource SHA, консервативные ключи кэша, production-проверка managed owner, legacy locks, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1467d1ba0"
+      ],
+      "checks": [],
+      "conclusion": "Resource owner v4 подключён к index/CSV/pipeline с общим свежим SHA-барьером и pending cache. На четырёх PAK чтений 8 вместо 16, pointers совпали. Временные fixtures подтвердили назначение после барьера, ошибки и retry. Полный update и online не проверялись.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-RESOURCE-OWNER-V4-11322.json",
+          "sha256": "047f2a0e8eccc9df0d7032f1d976485103dcd3facad767d4876a3cd07cc222da"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md",
+          "sha256": "5bbeaba00d39b3af00c44aeb381c226e56df05c831f2407ab4ce94148dbca3d1"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "8533d33f2197e99c65396062e04145ddb4ad33badd1762e21278c493b7b9cd16",
+      "limits": [
+        "Real data acceptance covers selected index/CSV/pipeline-output consumption for four PAK files, not complete Pipeline.process or all 109 archives.",
+        "Config extraction, legacy reference import, decoder, native suites, game and production updater were not executed in the data benchmark.",
+        "Runtime file contents enter the union; runtime membership keeps the existing CSV per-call boundary.",
+        "The external fresh installed-file barrier before bundle publication remains separate.",
+        "New cache promotion and failure paths are tested on temporary fixtures. The real data final acceptance revalidates existing cached outputs."
+      ],
+      "method": "static",
+      "next_check": "Сузить консервативные ключи зависимостей и по явной команде измерить полный проход, восстановление и второй патч. Готовые native proofs и неизменные ресурсы использовать после проверки целостности. Наблюдатель включать по явной команде.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Открыты консервативные ключи кэша, полный ordinary update / production-проверка managed owner и legacy locks, directory / encrypted / size / table-baseline gaps, SDK / полный вход / мир / онлайн. Полный resource process 109 архивов с owner v4 ещё не измерен.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

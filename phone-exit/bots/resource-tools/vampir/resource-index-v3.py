@@ -80,6 +80,10 @@ class _State:
         if getattr(self.digest, '__self__', None) is store and store is not None:
             raise ValueError('Resource index needs an original uncached digest')
         self.store = store
+        self.owner = getattr(args, 'resource_owner', None)
+        if self.owner is not None:
+            self.owner.check(index, args)
+            self.digest = self.owner.digest
         self.closed = False
         self.files, self.aliases, self.documents, self.sources = {}, {}, {}, {}
         self.inventory_files, self.hints, self.found = None, {}, {}
@@ -98,6 +102,10 @@ class _State:
         if (Path(args.root).resolve() != self.root or args is not self.args
                 or getattr(args, 'source_store', None) is not self.store):
             raise ValueError('Resource index owner or root changed')
+        if getattr(args, 'resource_owner', None) is not self.owner:
+            raise ValueError('Resource index SHA owner changed')
+        if self.owner is not None:
+            self.owner.check(index, args)
 
     def resolve(self, filename):
         if not isinstance(filename,(str,os.PathLike)):
@@ -128,6 +136,8 @@ class _State:
             self.files[path] = actual
             self.metrics['file_sha_reads'] += 1
         if expected is not None and actual != expected:
+            if self.owner is not None:
+                self.owner.fail('Resource index expected SHA differs: '+str(path))
             raise ValueError('Resource index ' + kind + ' SHA differs: ' + str(path))
         return actual
 
@@ -147,6 +157,8 @@ class _State:
             raise ValueError('Resource index selected JSON SHA differs: ' + str(path))
         if path in self.files and self.files[path] != actual:
             raise ValueError('Resource index JSON changed while reading')
+        if self.owner is not None:
+            self.owner.remember(filename, raw)
         self.files[path] = actual
         value = json.loads(raw.decode('utf-8-sig'))
         self.documents[path] = value
@@ -199,6 +211,7 @@ class _State:
             if len(raw) > JSON_LIMIT:
                 raise ValueError('Resource summary exceeds discovery budget')
             actual = hashlib.sha256(raw).hexdigest()
+            if self.owner is not None:self.owner.remember(path,raw)
             found[path] = actual
             try:
                 value = json.loads(raw.decode('utf-8-sig'))
@@ -402,6 +415,11 @@ class _State:
         started=time.perf_counter()
         try:
             if self.inventory_files is not None:
+                if self.owner is not None:
+                    def inventory_unchanged():
+                        if {Path(p).resolve() for p in self.summary_paths()} != set(self.inventory_files):
+                            raise ValueError('Resource summary inventory changed at owner barrier')
+                    self.owner.final_check(inventory_unchanged)
                 if {self.allowed(path) for path in self.summary_paths()} != set(self.inventory_files):
                     raise ValueError('Resource discovery summary inventory changed before final barrier')
                 for path,expected in self.inventory_files.items():
@@ -415,8 +433,13 @@ class _State:
             for lexical,path in self.aliases.items():
                 if Path(lexical).resolve()!=path:raise ValueError('Resource index alias changed during final barrier')
             self.metrics['barrier_seconds'] += round(time.perf_counter()-started,6)
+            if self.owner is not None:
+                self.owner.bind_aliases(self.aliases)
+                for path,expected in self.files.items():self.owner.expect(path, expected)
+                for path,expected in (self.inventory_files or {}).items():self.owner.expect(path, expected)
             return dict(validation_scope='bounded_source_record_indexes_only',compatibility='not_established',
-                directory_identity_proven=False,source_barrier_completed=True,
+                directory_identity_proven=False,source_barrier_completed=self.owner is None,
+                source_barrier_pending=self.owner is not None,
                 inputs={str(path):sha for path,sha in self.files.items()},metrics=copy.deepcopy(self.metrics))
         finally:
             self.closed=True

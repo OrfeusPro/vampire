@@ -46,12 +46,24 @@ def _full_sha(value):
 
 
 def _digest(index, args, path):
+    owner = _owner(index, args)
+    if owner is not None:
+        return owner.digest(path)
     store = getattr(args, 'source_store', None)
     original = getattr(store, 'index', index)
     digest = original.digest
     if store is not None and getattr(digest, '__self__', None) is store:
         raise ValueError('CSV barrier требует исходный digest без memo')
     return _full_sha(digest(Path(path)))
+
+
+def _owner(index, args):
+    owner = getattr(args, 'resource_owner', None)
+    if owner is not None:
+        if getattr(owner, 'recipe', None) != 'resource-owner-sha-v4':
+            raise ValueError('Неизвестный resource owner')
+        owner.check(index, args)
+    return owner
 
 
 def _checked_pointer(index, args, pointer, *, category=None):
@@ -69,6 +81,10 @@ def _checked_pointer(index, args, pointer, *, category=None):
         raw = stream.read(JSON_LIMIT + 1)
     if len(raw) > JSON_LIMIT or hashlib.sha256(raw).hexdigest() != expected:
         raise ValueError('Manifest ресурса превышает бюджет или изменён')
+    owner = _owner(index, args)
+    if owner is not None:
+        owner.bind_aliases({str(Path(pointer['path']).absolute()): path})
+        owner.remember(pointer['path'], raw)
     return path, json.loads(raw.decode('utf-8-sig'))
 
 
@@ -105,7 +121,7 @@ def _runtime(index, args):
 
 def _prepare(index, args, record_pointer):
     path, record = _checked_pointer(index, args, record_pointer)
-    if record.get('schema') != 1 or not isinstance(record.get('entries'), list) or len(record['entries']) > MAX_ENTRIES:
+    if not isinstance(record, dict) or record.get('schema') != 1 or not isinstance(record.get('entries'), list) or len(record['entries']) > MAX_ENTRIES:
         raise ValueError('Неподдержанная структура индекса записей')
     source = record.get('source') or {}
     if not isinstance(source.get('path'), str) or not Path(source['path']).is_absolute():
@@ -161,6 +177,9 @@ def _input_sha(value):
 
 
 def _barrier(index, args, value, aliases, extra_pins=None):
+    owner = _owner(index, args)
+    if owner is not None:
+        owner.bind_aliases(aliases)
     for lexical, expected in aliases.items():
         if Path(lexical).resolve() != expected:
             raise ValueError('Путь ресурса перенаправлен во время извлечения')
@@ -170,7 +189,8 @@ def _barrier(index, args, value, aliases, extra_pins=None):
     for item in (value['record_index'], value['source'], value['decoder']['reader'], value['decoder']['oodle']):
         expected_files[item['path']] = item['sha256']
     for filename, expected in expected_files.items():
-        if _digest(index, args, filename) != expected:
+        actual = owner.expect(filename, expected) if owner is not None else _digest(index, args, filename)
+        if actual != expected:
             raise ValueError('Вход CSV изменился во время извлечения: ' + filename)
     if _runtime(index, args) != value['runtime']:
         raise ValueError('Runtime CSV изменился во время извлечения')
@@ -348,6 +368,10 @@ def _outputs(index, args, report, record, parser):
                 raw = stream.read(LIMIT + 1)
             if len(raw) > LIMIT or hashlib.sha256(raw).hexdigest() != expected:
                 raise ValueError('SHA сохранённого CSV blob изменился')
+            owner = _owner(index, args)
+            if owner is not None:
+                owner.bind_aliases({str(Path(table['file']).absolute()): path})
+                owner.remember(path, raw)
             checked[path] = (len(raw), _parse(parser, raw))
         size, parsed = checked[path]
         if (parsed is None or table.get('bytes') != size or size != entry['uncompressed']
@@ -487,7 +511,7 @@ def _reuse_producer(index, args, prepared, cache):
         previous_producer_sha256=previous, registry_sha256=pins[str(registry)],
         cold_migration_only=True)
     result = _save(Path(args.root).resolve(), report)
-    _cache_write(cache, result)
+    _cache_write(cache, result, owner=_owner(index, args))
     return result
 
 
@@ -505,7 +529,10 @@ def _save(root, report):
     return dict(path=str(path), sha256=digest)
 
 
-def _cache_write(path, pointer):
+def _cache_write(path, pointer, *, owner=None):
+    if owner is not None:
+        owner.defer(path, pointer)
+        return
     path.parent.mkdir(parents=True, exist_ok=True)
     raw = _canonical(pointer)
     if path.exists():
@@ -528,11 +555,13 @@ def extract(index, args, record_pointer, *, source_sha256=None):
         raise ValueError('Запрошен другой SHA исходного архива')
     root = Path(args.root).resolve()
     cache = root/'knowledge/resource-csv-v3-cache'/(_input_sha(value)+'.json')
-    if cache.is_file():
-        raw = cache.read_bytes()
-        pointer = json.loads(raw)
+    owner = _owner(index, args)
+    pending = owner.cached(cache) if owner is not None else None
+    if pending is not None or cache.is_file():
+        raw = cache.read_bytes() if cache.is_file() else None
+        pointer = pending if pending is not None else json.loads(raw)
         _load_checked_prepared(index, args, pointer, (value, record, aliases), expected_inputs=value)
-        if cache.read_bytes() != raw:
+        if raw is not None and cache.read_bytes() != raw:
             raise ValueError('CSV cache pointer изменился во время проверки')
         return copy.deepcopy(pointer)
     reused = _reuse_producer(index, args, (value, record, aliases), cache)
@@ -601,5 +630,5 @@ def _finish(index, args, value, record, aliases, parser, tables, errors, skip_re
     _accounting(report, value, record)
     _barrier(index, args, value, aliases, pins)
     pointer = _save(Path(args.root).resolve(), report)
-    _cache_write(cache, pointer)
+    _cache_write(cache, pointer, owner=_owner(index, args))
     return pointer

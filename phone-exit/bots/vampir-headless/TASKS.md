@@ -60,9 +60,10 @@ exports и проверки вручную не повторять. Счётчи
   завершены; получены 3344 записи / 2941 уникальный CSV, legacy blobs заново
   не хэшируются. Сбор execution inputs ускорен до 3,1–3,2 с. Далее — общий
   ordinary update и сужение консервативных ключей зависимостей. CSV extract
-  уже сократил собственные SHA PAK с трёх до двух; следующий пакет — общий
-  owner промежуточных resource SHA и pending cache до свежего финального
-  барьера. Нельзя заменить отдельные проверки memo без этого протокола.
+  уже сократил собственные SHA PAK с трёх до двух. Общий owner v4 и pending
+  cache подключены, на четырёх PAK подтверждены 8 чтений вместо 16. Далее —
+  сужение консервативных ключей и полный замер 109 архивов по явной команде.
+  [Приёмка owner](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md).
   [Приёмка CSV](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-CSV-COSTS-V1-11322.md).
   Directory paths, 235 encrypted / size gaps и подходящие table baselines
   остаются общими блокерами. Exact content match не означает resource identity,

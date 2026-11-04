@@ -22,7 +22,7 @@ def execution_inputs(index):
     # These helpers carry separate owner/projection guards in their own stage
     # inputs; they are not dependencies of every unrelated native/resource stage.
     owner_scaffolding={'update-owned-dispatch-v4.py','update-owner-lease-v4.py','update-process-group-v4.py',
-        'contract-projections-v1.py','contract-writer-inheritance-v1.py'}
+        'contract-projections-v1.py','contract-writer-inheritance-v1.py','resource-owner-v4.py'}
     def dependencies(name):
         if name not in candidates:
             found=[]
@@ -117,6 +117,9 @@ def definition_inputs(index, args, update):
             'resource-pipeline-v3.py','resource-reference-v3.py','resource-index-v3.py','resource-csv-v3.py'))
         if (args.knowledge/'resource-pipeline-engine.json').is_file():paths.add(args.knowledge/'resource-pipeline-engine.json')
         if (args.knowledge/'resource-csv-reuse.json').is_file():paths.add(args.knowledge/'resource-csv-reuse.json')
+        if (args.knowledge/'resource-owner-engine.json').is_file():
+            paths.add(args.knowledge/'resource-owner-engine.json')
+            paths.add(index.HERE/'resource-owner-v4.py')
         if (args.knowledge/'update-owner-engine.json').is_file():
             paths.add(args.knowledge/'update-owner-engine.json')
             paths.update(index.HERE/name for name in ('update-owned-dispatch-v4.py',
@@ -972,6 +975,8 @@ def run_locked(index, args, database, *, audited=None):
             baseline_promoted=False, profile_activation=False,
             function_reuse=function_reuse.get('summary',{}))
     except BaseException as error:
+        resource_owner=getattr(args,'resource_owner',None)
+        if resource_owner is not None and not resource_owner.closed:resource_owner.abort()
         if path is not None and path.is_file():
             try:
                 failed=read(index,workflow,path,args.root)

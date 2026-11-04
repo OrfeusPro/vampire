@@ -449,6 +449,15 @@ class Snapshot:
         result['projection_sha256'] = fingerprint(result)
         return result
 
+    def consumed_inputs(self):
+        if self.finished:
+            raise ValueError('Reference snapshot consumer is closed')
+        files = dict(self.guard['files'])
+        files.update({str(self.path): self.pointer['sha256'],
+            str(self.activation_path): self.activation['sha256'],
+            str(self.current): hashlib.sha256(self.current_raw).hexdigest()})
+        return dict(files=files, aliases=dict(self.aliases))
+
     def finish_barrier(self):
         if self.finished:
             raise ValueError('Reference snapshot consumer is closed')

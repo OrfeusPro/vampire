@@ -108,6 +108,18 @@ PID вместе с creation time, Windows session и отсутствие ак�
 нового cache pointer. Повреждение старого кэша оставляет конкретный блокер.
 [Измерения и границы](evidence/updates/HEADLESS-AUTO-CSV-COSTS-V1-11322.md).
 
+## Общий SHA-владелец ресурсов
+
+[Selector v4](resource-owner-engine.json) подключает владельца к pipeline.
+Первое чтение считает полный SHA, следующие index / CSV / pipeline запросы
+используют его внутри одного owner. Новые CSV и comparison cache pointers
+ждут общего свежего барьера всех использованных файлов, aliases и inventories.
+Внутренний pending результат доступен повторному запросу. После abort или
+ошибки следующий запуск создаёт новый owner и заново читает исходные SHA.
+Standalone проверки и внешний полный SHA установки сохраняют свои barriers.
+Квитанции находятся в knowledge/resource-owner-barriers-v4 библиотеки ресурсов.
+[Матрица проверки и границы](evidence/updates/HEADLESS-AUTO-RESOURCE-OWNER-V4-11322.md).
+
 ## Базы, зависимости и повторное использование
 
 Полная опись файлов и последняя доказанная база роли выбираются отдельно.

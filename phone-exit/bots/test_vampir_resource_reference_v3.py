@@ -107,6 +107,22 @@ class ResourceReferenceV3Tests(unittest.TestCase):
         self.assertEqual((other['state'], other['entries'], other['blobs']), ('not_imported', None, []))
         snapshot.finish_barrier()
 
+    def test_owner_inputs_cover_active_snapshot_without_reopening_legacy_blobs(self):
+        snapshot=self.snapshot(self.import_())
+        self.calls.clear()
+        inputs=snapshot.consumed_inputs()
+        for path,sha in inputs['files'].items():self.assertEqual(digest(path),sha)
+        self.assertIn(str(snapshot.path),inputs['files'])
+        self.assertIn(str(snapshot.activation_path),inputs['files'])
+        self.assertIn(str(self.current),inputs['files'])
+        self.assertNotIn(str(self.blob_a),inputs['files'])
+        self.assertNotIn(str(self.entries_a),inputs['files'])
+        self.assertEqual(self.calls[self.blob_a],0)
+        inputs['files'].clear()
+        self.assertTrue(snapshot.consumed_inputs()['files'])
+        snapshot.finish_barrier()
+        with self.assertRaisesRegex(ValueError,'closed'):snapshot.consumed_inputs()
+
     def test_warm_selection_never_reads_old_metadata_or_blob_bytes(self):
         pointer = self.import_()
         self.entries_a.unlink(); self.blob_a.unlink(); self.blob_b.write_bytes(b'legacy now changed')

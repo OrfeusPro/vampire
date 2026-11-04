@@ -37,6 +37,8 @@ class Pipeline:
         self.journal,self.manifest,self.report=journal,Path(manifest),report
         self.rows,self.resource_tools=rows,copy.deepcopy(resource_tools)
         self.root=Path(args.root).resolve()
+        owner_api=index.extension('resource-owner-v4')
+        self.owner=owner_api.begin(index,args) if owner_api.enabled(index,args) else None
         self.engine=index.extension('update-run')
         self.reference_api=index.extension('resource-reference-v3')
         self.index_api=index.extension('resource-index-v3')
@@ -62,10 +64,13 @@ class Pipeline:
             raise ValueError('Resource pipeline path alias changed')
         self.aliases[lexical]=canonical
         name=str(canonical)
-        if name not in self.files:self.files[name]=self.index.digest(canonical)
+        if name not in self.files:
+            self.files[name]=self.owner.digest(path) if self.owner is not None else self.index.digest(canonical)
         actual=self.files[name]
         if expected is not None and actual!=expected:
             raise ValueError('Resource pipeline input SHA differs: '+name)
+        if self.owner is not None:
+            self.owner.expect(path, actual if expected is None else expected)
         return actual
 
     def read(self,pointer):
@@ -162,6 +167,7 @@ class Pipeline:
         if canonical in self.optional_files and self.optional_files[canonical]!=exists:
             raise ValueError('Resource table catalogue appeared or disappeared')
         self.optional_files[canonical]=exists
+        if self.owner is not None:self.owner.watch(metadata, exists)
         if exists:self.pin(metadata)
         baseline=self.engine.table_baseline(self.index,self.args,row)
         previous=copy.deepcopy(baseline['tables'])
@@ -261,7 +267,19 @@ class Pipeline:
 
     def finish(self):
         if self.finished:raise ValueError('Resource pipeline already finished')
+        try:
+            return self._finish()
+        except BaseException:
+            self.finished=True
+            if self.owner is not None and not self.owner.closed:self.owner.abort()
+            raise
+
+    def _finish(self):
         started=time.perf_counter()
+        if self.owner is not None and self.reference is not None:
+            inputs=self.reference.consumed_inputs()
+            self.owner.bind_aliases(inputs['aliases'])
+            for path,sha in inputs['files'].items():self.owner.expect(path,sha)
         reference=self.reference.finish_barrier() if self.reference is not None else dict(state='not_consumed',reason=self.reference_error)
         indexes=self.index_api.finish(self.index,self.args)
         for path,exists in self.optional_files.items():
@@ -269,16 +287,24 @@ class Pipeline:
         for lexical,expected in self.aliases.items():
             if Path(lexical).resolve()!=expected:raise ValueError('Resource pipeline alias changed before publication')
         for path,expected in self.files.items():
-            if self.index.digest(path)!=expected:raise ValueError('Resource pipeline bytes changed before publication: '+path)
+            digest=self.owner.expect(path,expected) if self.owner is not None else self.index.digest(path)
+            if digest!=expected:raise ValueError('Resource pipeline bytes changed before publication: '+path)
         for lexical,expected in self.aliases.items():
             if Path(lexical).resolve()!=expected:raise ValueError('Resource pipeline alias changed during final barrier')
-        for cache,pointer in self.pending.items():
-            if cache.exists():
-                if self.index.read_json(cache)!=pointer:
-                    raise ValueError('Resource comparison cache changed before activation')
-            else:self.workflow.atomic(cache,self.workflow.canonical(pointer))
+        if self.owner is not None:
+            for cache,pointer in self.pending.items():self.owner.defer(cache,pointer)
+            owner=self.owner.finish()
+            indexes=dict(indexes,source_barrier_completed=True,source_barrier_pending=False,
+                source_barrier_owner=dict(path=owner['report'],sha256=owner['sha256']))
+        else:
+            owner=None
+            for cache,pointer in self.pending.items():
+                if cache.exists():
+                    if self.index.read_json(cache)!=pointer:
+                        raise ValueError('Resource comparison cache changed before activation')
+                else:self.workflow.atomic(cache,self.workflow.canonical(pointer))
         self.metrics['final_barrier_seconds']=round(time.perf_counter()-started,6)
         self.finished=True
-        return dict(recipe=RECIPE,reference=reference,record_indexes=indexes,
+        return dict(recipe=RECIPE,reference=reference,record_indexes=indexes,owner=owner,
             metrics=copy.deepcopy(self.metrics),validation_scope='bounded_resource_processing_only',
             compatibility='not_established',resource_identity_proven=False)
