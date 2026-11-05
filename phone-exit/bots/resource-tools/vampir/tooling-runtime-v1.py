@@ -6,6 +6,7 @@ import locale
 import os
 from pathlib import Path
 import platform
+import re
 import sys
 import sysconfig
 
@@ -13,6 +14,36 @@ import sysconfig
 def digest(path):
     with Path(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
+def worker_path(environment):
+    """Exclude Codex tool directories that the reviewed fixture suite never uses."""
+    path = environment.get('PATH')
+    if path is None or os.name != 'nt':
+        return path
+    managed = []
+    for variable, suffix, pattern in (
+            ('USERPROFILE', '.codex/tmp/arg0-windows', r'codex-arg0[a-z0-9]+'),
+            ('LOCALAPPDATA', 'OpenAI/Codex/bin', r'[0-9a-f]{16}')):
+        base = Path(environment.get(variable, ''))
+        if base.is_absolute():
+            managed.append((base / suffix, pattern))
+    retained = []
+    for entry in path.split(os.pathsep):
+        directory = Path(entry.strip('"'))
+        if not any(directory.parent == base and re.fullmatch(pattern, directory.name, re.I)
+                   for base, pattern in managed):
+            retained.append(entry)
+    return os.pathsep.join(retained)
+
+
+def environment_fingerprints(environment):
+    result = {}
+    for name in ('PATH', 'PYTHONPATH', 'PYTHONHOME', 'PYTHONHASHSEED', 'PYTHONUTF8',
+                 'PYTHONIOENCODING', 'SystemRoot', 'TEMP', 'TMP', 'TZ', 'LANG', 'LC_ALL'):
+        value = worker_path(environment) if name == 'PATH' else environment.get(name)
+        result[name] = None if value is None else hashlib.sha256(value.encode('utf-8')).hexdigest()
+    return result
 
 
 def snapshot(workspace):
@@ -61,13 +92,8 @@ def snapshot(workspace):
             if origin is None or Path(origin.origin).resolve() != expected:
                 raise ValueError('Cryptography distribution differs from the import target')
         distributions[name] = dict(version=distribution.version, files=sorted(package_files))
-    environment = {}
-    for name in ('PATH', 'PYTHONPATH', 'PYTHONHOME', 'PYTHONHASHSEED', 'PYTHONUTF8',
-                 'PYTHONIOENCODING', 'SystemRoot', 'TEMP', 'TMP', 'TZ', 'LANG', 'LC_ALL'):
-        value = os.environ.get(name)
-        environment[name] = None if value is None else hashlib.sha256(value.encode('utf-8')).hexdigest()
     return dict(python_version=platform.python_version(), implementation=platform.python_implementation(),
                 executable=str(Path(sys.executable).resolve()), platform=platform.platform(),
                 locale=locale.setlocale(locale.LC_ALL), distributions=distributions,
-                environment_sha256=environment,
+                environment_sha256=environment_fingerprints(os.environ),
                 files={str(path.resolve()): digest(path) for path in sorted(files)})

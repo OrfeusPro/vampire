@@ -275,10 +275,19 @@ def launch_group(workspace, definition, run_folder, timeout_seconds):
     run_folder.mkdir(parents=True, exist_ok=True)
     request, result, log_path = (run_folder / name for name in ('definition.json', 'result.json', 'worker.log'))
     request.write_bytes(canonical(definition))
-    fixture = tempfile.TemporaryDirectory(prefix='fixture-', dir=run_folder)
-    environment = {key: value for key, value in os.environ.items()
+    environment = os.environ.copy()
+    runtime_tool = load('tooling-runtime-v1')
+    effective_path = runtime_tool.worker_path(environment)
+    expected_environment = definition['runtime'].get('environment_sha256', {})
+    path_sha256 = None if effective_path is None else hashlib.sha256(effective_path.encode('utf-8')).hexdigest()
+    if 'PATH' in expected_environment and path_sha256 != expected_environment['PATH']:
+        raise ValueError('Tooling worker PATH changed before launch')
+    if effective_path is not None:
+        environment['PATH'] = effective_path
+    environment = {key: value for key, value in environment.items()
                    if not key.upper().startswith('PHONEEXIT_')
                    and key.upper() not in ('PYTHONPATH', 'PYTHONHOME', 'PYTHONSTARTUP')}
+    fixture = tempfile.TemporaryDirectory(prefix='fixture-', dir=run_folder)
     command = [sys.executable, '-I', '-B', '-X', 'utf8', '-X',
                'pycache_prefix=' + str(Path(fixture.name) / 'pycache'),
                str(HERE / 'tooling-group-worker-v1.py'),

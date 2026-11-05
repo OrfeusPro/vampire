@@ -51,6 +51,8 @@ exports и проверки вручную не повторять. Счётчи
   `automatic-update-tooling` подключён к группам с собственными квитанциями.
   Четыре проверочных скрипта Version закреплены за 10 группами вместо 27.
   Вычисляемые контексты и импортируемые фикстуры добавлены в ключи.
+  Ротация служебных каталогов Codex в PATH сохраняет групповой кэш.
+  [Приёмка PATH](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TOOLING-PATH-V1.md).
   Далее — уточнение других общих входов по подтверждённым потребителям.
   [Приёмка зависимостей](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TOOLING-SHARED-DEPS-V1.md).
   Изменение `update-run.py` по-прежнему затрагивает его потребителей.

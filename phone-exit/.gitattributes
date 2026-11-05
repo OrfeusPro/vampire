@@ -607,3 +607,5 @@ bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TOOLING-GROUPS-V1
 bots/resource-tools/vampir/knowledge/TOOLING-GROUPS.md text eol=crlf
 bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TOOLING-SHARED-DEPS-V1.md text eol=crlf
 bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-TOOLING-SHARED-DEPS-V1.json text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/updates/HEADLESS-TOOLING-PATH-V1.md text eol=crlf
+bots/resource-tools/vampir/knowledge/evidence/updates/AUTO-TOOLING-PATH-V1.json text eol=lf

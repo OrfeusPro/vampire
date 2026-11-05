@@ -154,6 +154,43 @@ class ToolingGroupsV1Tests(unittest.TestCase):
         self.assertNotEqual(first['cache_key'], second['cache_key'])
         self.assertEqual(self.launches, ['alpha', 'beta'])
 
+    @unittest.skipUnless(os.name == 'nt', 'Codex Windows PATH layout')
+    def test_codex_path_rotation_reuses_receipts_and_real_worker_gets_filtered_path(self):
+        runtime_tool = self.runner.load('tooling-runtime-v1')
+        profile = self.folder.resolve() / 'profile'
+        local = profile / 'AppData/Local'
+        temporary = profile / '.codex/tmp/arg0-windows'
+        bundled = local / 'OpenAI/Codex/bin'
+        ordinary = [str(Path(os.environ['SystemRoot']) / 'System32'),
+                    str(self.folder / 'ordinary/codex-arg0SameName')]
+        alpha = self.bots / (self.expected[0] + '.py')
+        with alpha.open('a', encoding='utf-8') as stream:
+            stream.write('import os\nclass PathCase(unittest.TestCase):\n'
+                         '    def test_effective_path(self):\n'
+                         '        entries = os.environ["PATH"].split(os.pathsep)\n'
+                         f'        self.assertEqual(entries[:2], {ordinary!r})\n'
+                         f'        self.assertFalse(any(str({str(profile)!r}) in p for p in entries))\n')
+
+        def snapshot(_workspace):
+            return dict(self.runtime, environment_sha256=runtime_tool.environment_fingerprints(os.environ))
+
+        first_path = [*ordinary[:1], str(temporary / 'codex-arg0First'), ordinary[1],
+                      str(bundled / '0123456789abcdef')]
+        rotated_path = [str(bundled / 'fedcba9876543210'), *ordinary,
+                        str(temporary / 'codex-arg0Second')]
+        outcomes = []
+        for path in (first_path, rotated_path, [*rotated_path, str(self.folder / 'new tools')]):
+            with patch.dict(os.environ, {'USERPROFILE': str(profile), 'LOCALAPPDATA': str(local),
+                                         'PATH': os.pathsep.join(path)}):
+                outcomes.append(self.run_groups(launch=self.runner.launch_group, runtime=snapshot))
+        first, repeated, changed = outcomes
+        self.assertTrue(all(row['state'] == 'passed' for row in outcomes))
+        self.assertEqual(first['sha256'], repeated['sha256'])
+        self.assertEqual(repeated['metrics']['executed_groups'], 0)
+        self.assertEqual(repeated['metrics']['cached_groups'], 2)
+        self.assertNotEqual(repeated['cache_key'], changed['cache_key'])
+        self.assertEqual(changed['metrics']['executed_groups'], 2)
+
     def test_same_size_restored_mtime_change_between_runs_invalidates_family(self):
         self.run_groups()
         self.launches.clear()

@@ -2223,6 +2223,36 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Остальные широкие зависимости должны быть сопоставлены с путями чтения прежде чем сужать их.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1455f4a70",
+        "0x1455fd340"
+      ],
+      "checks": [],
+      "conclusion": "Windows tooling group cache использует фактический PATH воркера. Ротация двух служебных каталогов Codex сохраняет ключи всех 27 групп, изменение обычного пути пересчитывает группы. Прошли 2037 случаев с прежней кратностью 2036 IDs.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-TOOLING-PATH-V1.md",
+          "sha256": "0b7771b61e2f71a7e40401a0fce5fe6cdca71d5ad498ef0613b44e0fdbbe870d"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-TOOLING-PATH-V1.json",
+          "sha256": "ca86ae6a7c976a5776949d25c1663ed266523bd6eab965131650a91270af0030"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c6242bc3b70ac51a3dc13737a0b2ac197d779a0164f0db343599b3369ffbaf65",
+      "limits": [
+        "Ротация служебных путей воспроизведена заменой записей PATH в процессе проверки.",
+        "Адреса и SHA служат опорой scoped research. Результат относится к инфраструктурным проверкам."
+      ],
+      "method": "static",
+      "next_check": "При следующем обычном запуске смотреть причину пересчёта по runtime и объявленным входам.",
+      "question": "release-automatic-update",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Состав исторического PATH неизвестен. Остальные общие зависимости ещё можно уточнять по потребителям.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
