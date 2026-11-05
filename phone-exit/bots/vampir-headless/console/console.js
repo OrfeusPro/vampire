@@ -1,7 +1,7 @@
 'use strict';
 const token=document.querySelector('meta[name="console-token"]').content;
 const el=id=>document.getElementById(id);
-let snapshot={accounts:[],jobs:{},catalogs:{}}, selected=null, initial=true;
+let snapshot={accounts:[],jobs:{},catalogs:{}}, selected=null, initial=true, currentPc=null;
 const labels={active:'В мире',connecting:'Подключение',stopped:'Остановлен',error:'Ошибка',needs_character:'Нужен персонаж',disabled:'Отключён'};
 const stages={sdk_fetch_player:'Проверка игрового профиля',sdk_basic_terms:'Чтение основных условий',sdk_individual_terms:'Чтение индивидуальных условий',sdk_first_profile:'Первое создание профиля SDK',registration_form:'Регистрация · отдельное окно Netmarble',registration_code:'Ожидание нового письма с кодом',configuration:'Загрузка конфигурации',source_validation:'Проверка версии',lobby_preparation:'Подготовка лобби',nid_browser:'Вход Netmarble · отдельное окно',sdk_sign_in:'Авторизация SDK',sdk_launcher_token:'Получение SDK token',sdk_launcher_sign_in:'Вход SDK',lobby_connect:'Подключение к лобби',lobby_exchange:'Обмен с лобби',game_target_selection:'Проверка сервера',selected_lobby_login:'Вход в выбранное лобби',game_system_inputs:'Подготовка клиента',game_connect:'Подключение к игре',game_login_preparation:'Подготовка входа',game_login_exchange:'Вход и получение персонажей',character_creation:'Создание персонажа'};
 async function api(path,body){const response=await fetch(path,{method:body?'POST':'GET',headers:{'X-Console-Token':token,...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{})});const data=await response.json();if(!response.ok)throw Error(data.error||'Операция не выполнена');return data;}
@@ -14,7 +14,7 @@ function renderProvider(){
  const google=el('login-provider').value==='google',running=!!snapshot.jobs[selected]?.running;
  el('login-provider').disabled=running||!!selected;
  el('password').required=!selected&&!google;el('password').disabled=running||google;el('mail-password').disabled=running||google;
- el('provider-hint').textContent=google?'Вход через Google пока не подключён. Пароль Netmarble не нужен. Код из Gmail вводится вручную. Настройки аккаунта можно сохранить.':'Почтовый вход Netmarble. Ручной ввод доступен в отдельном окне.';
+ el('provider-hint').textContent=google?'Верификация: выберите аккаунт в таблице. Войдите через Google во внешнем браузере; код из Gmail введите сами в окне Netmarble. Пароли не сохраняются. Прямой выход ПК.':'Почтовый вход Netmarble. Ручной ввод доступен в отдельном окне.';
  if(google)for(const id of ['start','servers','characters','create','register','prepare-sdk','manual-sign-in','auth-flow'])el(id).disabled=true;
 }
 el('login-provider').onchange=()=>{el('password').value='';el('mail-password').value='';render();};
@@ -35,6 +35,8 @@ stages['verify_device-registration']='Регистрация устройств�
 stages.verify_workplace='Подтверждение защиты аккаунта';
 stages.verification_mail='Ожидание свежего письма';
 stages.manual_nid_browser='Введите логин и пароль в отдельном окне Netmarble';
+stages.manual_google_browser='Нажмите Google и войдите в аккаунт во внешнем браузере';
+stages.manual_verification_code='Введите код из Gmail в окне Netmarble · до 10 минут';
 
 function renderVerification(){
  const queue=snapshot.verification;
@@ -95,8 +97,9 @@ function renderRoster(){
   checkbox.type='checkbox';checkbox.className='verify-checkbox';
   checkbox.setAttribute('aria-label','Выбрать для верификации '+account.email);
   checkbox.checked=verificationSelection.has(account.id);
-  checkbox.disabled=active||isGoogle(account)||account.enabled===false||!account.email.endsWith('@vampir.top')||
-   !account.mail_password_saved||!!snapshot.jobs[account.id]?.running;
+  checkbox.disabled=active||account.enabled===false||!!snapshot.jobs[account.id]?.running||
+   (isGoogle(account)?account.socks_port!=null:(!account.email.endsWith('@vampir.top')||!account.mail_password_saved));
+  checkbox.title=isGoogle(account)?'Ручной вход Google и код Gmail; требуется прямой выход ПК.':'Верификация с кодом из почты @vampir.top';
   checkbox.onchange=()=>{
    if(checkbox.checked) verificationSelection.add(account.id);
    else verificationSelection.delete(account.id);
@@ -112,7 +115,7 @@ function renderRoster(){
   if(active&&queue.pending.includes(account.id)) sessionStatus='В очереди на верификацию';
   if(active&&job?.stage==='manual_nid_browser'&&job.running) sessionStatus='Ожидает ручного входа';
   const mailStatus=({created:'Почта создана',verified:'Почта проверена',unconfirmed:'Создание почты не подтверждено',error:'Ошибка почты'})[account.mail_status];
-  const status=isGoogle(account)?'Google · вход пока не подключён':(account.mail_status==='planned'?'Ящик ещё не создан':(mailStatus?mailStatus+' · ':'')+sessionStatus);
+  const status=isGoogle(account)?'Google · '+(job||queue?.completed.includes(account.id)?sessionStatus:'Ручной вход и код'):(account.mail_status==='planned'?'Ящик ещё не создан':(mailStatus?mailStatus+' · ':'')+sessionStatus);
   const attempt=(snapshot.creation_attempts||[]).filter(a=>a.account_id===account.id&&a.region===account.region&&a.server_id===account.server_id).at(-1);
   const name=document.createElement('td');
   name.textContent=character?.name||account.reported_character_name||
@@ -148,7 +151,7 @@ el('copy-roster').onclick=async()=>{
 
 function renderReadiness(){
  const box=el('readiness'),plan=snapshot.readiness?.[selected];box.replaceChildren();
- if(isGoogle(current())){box.textContent='Google: аккаунт сохранён. Ручная авторизация через Google ещё не подключена.';return;}
+ if(isGoogle(current())){box.textContent='Google: для верификации выберите флажок в таблице. Вход и код из Gmail вводятся вручную; дальнейшие этапы продолжаются автоматически.';return;}
  if(!plan){box.textContent='Сохраните аккаунт, чтобы увидеть этапы подготовки.';return;}
  const title=document.createElement('strong');title.textContent='Подготовка по сохранённым данным';box.append(title);
  const list=document.createElement('ul');
@@ -158,7 +161,7 @@ function renderReadiness(){
  const limits=document.createElement('small');limits.textContent='Показаны сохранённые наблюдения. Доступность серверов и совместимость текущей сборки проверяются отдельно. Изменения формы учитываются после сохранения.';
  box.append(list,route,next,limits);
 }
-function render(){renderReadiness();renderRoster();el('accounts').replaceChildren();for(const account of snapshot.accounts){const job=snapshot.jobs[account.id],status=account.enabled===false?'disabled':(job?.status||'stopped');const button=document.createElement('button');button.className='account'+(selected===account.id?' selected':'');const name=document.createElement('strong');name.textContent=account.label||account.email;const badge=document.createElement('span');badge.className='badge '+status;badge.textContent=labels[status]||status;const detail=document.createElement('small');detail.textContent=account.region+' · '+(snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id)?.name||(account.server_id?'Сервер '+account.server_id:'Сервер не выбран'));button.append(name,badge,detail);button.onclick=()=>edit(account);el('accounts').append(button);}const job=snapshot.jobs[selected],status=job?.status||'stopped';el('badge').className='badge '+status;el('badge').textContent=labels[status]||status;el('message').textContent=job?.message||'Сохраните настройки и выберите действие';el('stage').textContent=job?.running?(job.manual_sign_in&&job.stage==='nid_browser'?'Введите логин и пароль в отдельном окне Netmarble':(stages[job.stage]||job.stage)):'';el('stop').disabled=!job?.running;el('start-all').disabled=runnableAccounts().length<2||Object.values(snapshot.jobs).some(j=>j.running);for(const node of el('settings').elements)node.disabled=!!job?.running;el('password').disabled=!!job?.running;for(const id of ['start','servers','characters'])el(id).disabled=!selected||current()?.enabled===false||!!job?.running;el('prepare-sdk').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.registration_status==='sdk_created'||current()?.character_index!==null||current()?.character_key!==null;el('create').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.create_class!=='Gunner'||!current()?.server_id||current()?.character_index!==null;const registration=current()?.registration_status||'unknown';el('registration-state').textContent=({unknown:'Регистрация не проверялась',in_progress:'Регистрация выполняется',unconfirmed:'Предыдущая попытка не подтверждена. Проверьте окно или попробуйте обычный вход; автоматического повтора нет.',registered:'Регистрация Netmarble подтверждена',sdk_created:'Игровой профиль SDK создан. Можно перейти к выбору сервера и персонажа.',nid_verified:'Ранее вход Netmarble был подтверждён. Результат текущей попытки показан ниже, в состоянии сессии.',email_in_use:'Netmarble: почта уже используется. Повторная регистрация не нужна; вход ещё не проверен.'})[registration];el('register').disabled=!selected||current()?.enabled===false||!!job?.running||(!current()?.mail_password_saved&&!el('manual-mail-code').checked)||!el('terms').checked||registration==='registered'||registration==='in_progress'||registration==='email_in_use'||registration==='nid_verified'||registration==='sdk_created';el('code-entry').hidden=!(job?.running&&job.manual_mail_code&&job.stage==='registration_code'&&!job.code_sent);renderProvider();}
+function render(){renderReadiness();renderRoster();el('accounts').replaceChildren();for(const account of snapshot.accounts){const job=snapshot.jobs[account.id],status=account.enabled===false?'disabled':(job?.status||'stopped');const button=document.createElement('button');button.className='account'+(selected===account.id?' selected':'');const name=document.createElement('strong');name.textContent=account.label||account.email;const badge=document.createElement('span');badge.className='badge '+status;badge.textContent=labels[status]||status;const detail=document.createElement('small');detail.textContent=account.region+' · '+(snapshot.catalogs[account.region]?.servers.find(s=>s.id===account.server_id)?.name||(account.server_id?'Сервер '+account.server_id:'Сервер не выбран'));button.append(name,badge,detail);button.onclick=()=>edit(account);el('accounts').append(button);}const job=snapshot.jobs[selected],status=job?.status||'stopped';el('badge').className='badge '+status;el('badge').textContent=labels[status]||status;el('message').textContent=job?.message||'Сохраните настройки и выберите действие';el('stage').textContent=job?.running?(job.manual_sign_in&&job.stage==='nid_browser'?'Введите логин и пароль в отдельном окне Netmarble':(stages[job.stage]||job.stage)):'';el('stop').disabled=!job?.running;el('start-all').disabled=runnableAccounts().length<2||Object.values(snapshot.jobs).some(j=>j.running);for(const node of el('settings').elements)node.disabled=!!job?.running;el('password').disabled=!!job?.running;for(const id of ['start','servers','characters'])el(id).disabled=!selected||current()?.enabled===false||!!job?.running;el('prepare-sdk').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.registration_status==='sdk_created'||current()?.character_index!==null||current()?.character_key!==null;el('create').disabled=!selected||current()?.enabled===false||!!snapshot.jobs[selected]?.running||current()?.create_class!=='Gunner'||!current()?.server_id||current()?.character_index!==null;const registration=current()?.registration_status||'unknown';el('registration-state').textContent=({unknown:'Регистрация не проверялась',in_progress:'Регистрация выполняется',unconfirmed:'Предыдущая попытка не подтверждена. Проверьте окно или попробуйте обычный вход; автоматического повтора нет.',registered:'Регистрация Netmarble подтверждена',sdk_created:'Игровой профиль SDK создан. Можно перейти к выбору сервера и персонажа.',nid_verified:'Ранее вход Netmarble был подтверждён. Результат текущей попытки показан ниже, в состоянии сессии.',email_in_use:'Netmarble: почта уже используется. Повторная регистрация не нужна; вход ещё не проверен.'})[registration];el('register').disabled=!selected||current()?.enabled===false||!!job?.running||(!current()?.mail_password_saved&&!el('manual-mail-code').checked)||!el('terms').checked||registration==='registered'||registration==='in_progress'||registration==='email_in_use'||registration==='nid_verified'||registration==='sdk_created';el('code-entry').hidden=!(job?.running&&job.manual_mail_code&&job.stage==='registration_code'&&!job.code_sent);renderProvider();el('copy-current-pc').disabled=!currentPc||!!job?.running;}
 async function refresh(){const wasRunning=snapshot.jobs[selected]?.running;const catalogStamp=snapshot.catalogs[el('region').value]?.observed_utc;snapshot=await api('/api/state');if(initial){initial=false;edit(snapshot.accounts[0]);}else{if(catalogStamp!==snapshot.catalogs[el('region').value]?.observed_utc)servers(el('server').value);if(wasRunning&&!snapshot.jobs[selected]?.running){el('nickname').value=current()?.create_nickname||'';servers(el('server').value);characters(el('character').value===''?null:Number(el('character').value));}render();}}
 el('generate-nickname').onclick=async()=>{try{const data=await api('/api/nickname',{});el('nickname').value=data.nickname;notice('Новый ник в форме. Нажмите «Сохранить настройки», чтобы использовать его.');}catch(error){notice(error.message);}};
 el('terms').onchange=()=>render();
@@ -179,14 +182,40 @@ const deviceFields=[
  ['major','Windows major','windows'],['minor','Windows minor','windows'],['build','Windows build','windows'],['product_type','Windows product type','windows'],['suite_mask','Windows suite mask','windows'],
  ['I_DeviceModel','Модель устройства','metadata'],['I_DeviceOSVersion','Версия ОС · metadata, автоматически из Windows при заполнении','metadata'],['I_NMCPU','CPU · metadata, автоматически из CPU при заполнении','metadata'],['I_NMRAM','Оперативная память · metadata','metadata'],['I_NMVGA','Видеокарта · metadata','metadata'],['I_TimeZone','Часовой пояс · metadata','metadata'],['I_LanguageCD','Язык · metadata','metadata']];
 for(const [key,label,group] of deviceFields){const wrap=document.createElement('label'),input=document.createElement('input');wrap.textContent=label;input.id='device-'+key;input.maxLength=group==='identity'?128:256;if(group==='identity')input.type='password';if(group==='windows'){input.type='number';input.min='0';}wrap.append(input);el('device-fields').append(wrap);}
-function fillDevice(settings={}){for(const [key,,group] of deviceFields)el('device-'+key).value=settings[group]?.[key]??'';}
+function fillDevice(settings={}){
+ for(const [key,,group] of deviceFields){const node=el('device-'+key);node.value=settings[group]?.[key]??'';node.readOnly=el('device').value==='current-pc';}
+}
+function showCurrentPc(){
+ if(!currentPc)return;
+ const data=currentPc.device_settings;
+ el('current-pc-info').textContent=[currentPc.os_display,currentPc.source,currentPc.limits,...currentPc.unknown].filter(Boolean).join(' ');
+ if(el('device').value==='current-pc')fillDevice({...data,metadata:currentPc.display_metadata});
+ el('copy-current-pc').disabled=!!snapshot.jobs[selected]?.running||!Object.keys(data).length;
+}
+el('refresh-current-pc').onclick=async()=>{
+ const button=el('refresh-current-pc');button.disabled=true;
+ try{const value=await api('/api/current-pc',{});if(!value.device_settings||!Array.isArray(value.unknown))throw Error('Нет данных этого ПК.');currentPc=value;showCurrentPc();}
+ catch(error){el('current-pc-info').textContent=error.message;}
+ finally{button.disabled=false;}
+};
+el('copy-current-pc').onclick=()=>{
+ if(!currentPc||snapshot.jobs[selected]?.running)return;
+ const identity=readDevice().identity;
+ el('device').value='custom';el('connection-preset').value='';
+ fillDevice({...currentPc.device_settings,...(identity?{identity}:{})});
+ notice('Данные этого ПК перенесены в форму отдельного профиля. Проверьте их и сохраните настройки. Личные ключи не скопированы.');
+};
+el('device').onchange=()=>{
+ for(const [key] of deviceFields)el('device-'+key).readOnly=el('device').value==='current-pc';
+ showCurrentPc();
+};
 function editConnection(account){
  el('connection-preset').replaceChildren(option('','Ручные настройки'),...(snapshot.connection_presets||[]).map(p=>option(p.id,p.name)));
  const stable=value=>JSON.stringify(value,(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);
  const device={...(account?.device_settings||{})};delete device.identity;
  const matched=(snapshot.connection_presets||[]).find(p=>p.device_profile===(account?.device_profile||'current-pc')&&(p.socks_port??null)===(account?.socks_port??null)&&stable(p.device_settings)===stable(device));
  el('connection-preset').value=matched?.id||'';
- el('socks-port').value=account?.socks_port??'';fillDevice(account?.device_settings||{});
+ el('socks-port').value=account?.socks_port??'';fillDevice(account?.device_settings||{});showCurrentPc();
 }
 function restoreCharacterConnection(){
  const key=el('character').selectedOptions[0]?.dataset.key;
@@ -207,12 +236,12 @@ el('connection-preset').onchange=async()=>{
  if(preset.device_profile==='custom'&&!identity)identity=(await api('/api/device-identity',{})).identity;
  if(selected!==owner||el('character').selectedOptions[0]?.dataset.key!==characterTarget||el('connection-preset').value!==preset.id)return;
  el('device').value=preset.device_profile;el('socks-port').value=preset.socks_port??'';
- fillDevice({...preset.device_settings,...(identity&&preset.device_profile==='custom'?{identity}:{})});
+ fillDevice({...preset.device_settings,...(identity&&preset.device_profile==='custom'?{identity}:{})});showCurrentPc();
  notice('Пресет заполнен в форме. Применяется после сохранения настроек.');
  }catch(error){notice(error.message);}
 };
 el('save-preset').onclick=async()=>{try{const settings={device_profile:el('device').value,device_settings:readDevice(),socks_port:el('socks-port').value?Number(el('socks-port').value):null};await api('/api/connection-preset',{name:el('preset-name').value,settings});const currentSettings=readDevice(),port=el('socks-port').value,mode=el('device').value;snapshot=await api('/api/state');const presets=el('connection-preset');presets.replaceChildren(option('','Ручные настройки'),...(snapshot.connection_presets||[]).map(p=>option(p.id,p.name)));el('device').value=mode;el('socks-port').value=port;fillDevice(currentSettings);notice('Пресет сохранён без личных ключей. Настройки аккаунта сохраняются отдельно.');}catch(error){notice(error.message);}};
-el('generate-device').onclick=async()=>{try{const data=await api('/api/device-identity',{});el('device').value='custom';for(const [key,value] of Object.entries(data.identity))el('device-'+key).value=value;el('connection-preset').value='';notice('Новые ключи в форме. Сохраните настройки, чтобы закрепить их за ботом.');}catch(error){notice(error.message);}};
+el('generate-device').onclick=async()=>{try{const data=await api('/api/device-identity',{});el('device').value='custom';for(const [key] of deviceFields)el('device-'+key).readOnly=false;for(const [key,value] of Object.entries(data.identity))el('device-'+key).value=value;el('connection-preset').value='';notice('Новые ключи в форме. Сохраните настройки, чтобы закрепить их за ботом.');}catch(error){notice(error.message);}};
 
 setInterval(()=>refresh().catch(()=>notice('Панель потеряла связь с локальным процессом.')),2000);
-refresh().catch(error=>notice(error.message));
+refresh().then(()=>el('refresh-current-pc').onclick()).catch(error=>notice(error.message));

@@ -63,6 +63,23 @@ def check_source(source_sha256):
         raise ValueError('Verification web contract is not available for this client SHA')
 
 
+def check_google_web():
+    contract = json.loads((KNOWLEDGE / 'google-verification-web-current.json').read_bytes())
+    pointer = contract['auth_snapshot']
+    folder = ROOT / 'auth-web-snapshots' / pointer['sha256']
+    manifest = folder / 'manifest.json'
+    if (contract.get('schema') != 1 or contract.get('provider_channel') != 29
+            or contract.get('sdk_credential_channel') != 33 or Path(pointer['path']).resolve() != manifest.resolve()
+            or hashlib.sha256(manifest.read_bytes()).hexdigest() != pointer['sha256']):
+        raise ValueError('Google web evidence is invalid')
+    source = (folder / 'auth.js').read_bytes()
+    snapshot = json.loads(manifest.read_bytes())
+    if (hashlib.sha256(source).hexdigest() != contract['public_js_sha256']
+            or snapshot['files']['auth.js']['sha256'] != contract['public_js_sha256']
+            or not all(marker.encode('utf-8') in source for marker in contract['required_markers'])):
+        raise ValueError('Google web contract changed; update its evidence')
+
+
 def web_url(purpose, prepared, data, device_name):
     key, endpoint = ENDPOINTS[purpose]
     if prepared.constants.get(key) != endpoint:
@@ -89,7 +106,7 @@ def browser(purpose, *, url, email, directory, port, library, mailbox, progress)
     command = ['powershell.exe', '-NoProfile', '-STA', '-ExecutionPolicy', 'Bypass', '-File',
                str(HERE / 'windows/verification-browser.ps1')]
     request = dict(url=url, purpose=purpose, game_code='thered', email=email,
-        directory=str(directory), port=port or 0, library=str(library))
+        directory=str(directory), port=port or 0, library=str(library), manual_code=mailbox is None)
     process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                                creationflags=subprocess.CREATE_NO_WINDOW)
     def terminate():
@@ -105,15 +122,16 @@ def browser(purpose, *, url, email, directory, port, library, mailbox, progress)
         process.stdin.flush()
         event = process.stdout.readline(128).strip()
         if event == b'mail_sent':
-            progress('verification_mail')
-            try:
-                code = mailbox.get_code(600, cancelled=lambda: process.poll() is not None)
-            except (OSError, RuntimeError, ValueError, imaplib.IMAP4.error):
-                code = ''
-            if process.poll() is None:
-                process.stdin.write(code.encode('ascii') + b'\n')
-                process.stdin.flush()
-            code = None
+            progress('manual_verification_code' if mailbox is None else 'verification_mail')
+            if mailbox is not None:
+                try:
+                    code = mailbox.get_code(600, cancelled=lambda: process.poll() is not None)
+                except (OSError, RuntimeError, ValueError, imaplib.IMAP4.error):
+                    code = ''
+                if process.poll() is None:
+                    process.stdin.write(code.encode('ascii') + b'\n')
+                    process.stdin.flush()
+                code = None
             event = process.stdout.readline(128).strip()
         status = event.decode('ascii', 'replace')
         if process.wait(timeout=10) != 0 or status not in BROWSER_RESULTS:
@@ -129,17 +147,47 @@ def browser(purpose, *, url, email, directory, port, library, mailbox, progress)
             process.stdout.close()
 
 
+def ensure_pc_binding(runner, email):
+    registry = runner.DeviceRegistry(HERE / '.local/accounts.sqlite3')
+    try:
+        binding = registry.get(email)
+    except KeyError:
+        binding = None
+    missing_identity = binding is None or (binding.kind == 'real' and not binding.identity_recorded)
+    missing_nid = binding is None or (binding.kind == 'real' and not binding.nid_identity_recorded)
+    if not (missing_identity or missing_nid):
+        return
+    identity = runner.observe_windows_device_identity(store_name='Netmarble', game_code='thered')
+    if binding is None:
+        registry.register(email, kind='real')
+    if missing_identity:
+        registry.record_real_identity(email, device_key=identity.device_key, nm_device_key=identity.nm_device_key,
+            source='Observed current Windows PC, account verification')
+    if missing_nid:
+        registry.record_real_nid_identity(email, nid_device_key=identity.nid_device_key,
+            source='Observed current Windows PC, account verification')
+
+
 def verify(store, account, *, selector=None, manual_sign_in=False, progress=lambda stage: None):
-    email, password, settings = store.credential(account)
-    settings = AccountStore.assignment(settings)
-    if not settings['enabled'] or not email.endswith('@vampir.top'):
-        raise ValueError('An enabled @vampir.top account is required')
-    mail_password = store.reveal_password(account, 'mail')
+    saved = next((a for a in store.accounts() if a['id'] == account), None)
+    google = saved is not None and saved.get('login_provider') == 'google'
+    if google:
+        check_google_web()
+        email, password, settings = saved['email'], '', AccountStore.assignment({k: saved[k] for k in AccountStore.assignment({})})
+        if settings['socks_port'] is not None:
+            raise ValueError('Ручной вход Google поддерживает прямой выход ПК.')
+    else:
+        email, password, settings = store.credential(account)
+        settings = AccountStore.assignment(settings)
+    if not settings['enabled'] or (not google and not email.endswith('@vampir.top')):
+        raise ValueError('An enabled account with a supported sign-in provider is required')
+    mail_password = None if google else store.reveal_password(account, 'mail')
     selector = selector or selected_profile()
     port = settings['socks_port']
     route = SocksRoute(port) if port is not None else None
     runner = load('run-nid-sdk-sign-in')
     nid = load('nid-browser')
+    ensure_pc_binding(runner, email)
 
     def sign_in(manual):
         with scope(selector, root=ROOT, workspace=WORKSPACE):
@@ -148,17 +196,18 @@ def verify(store, account, *, selector=None, manual_sign_in=False, progress=lamb
                                           device_settings=settings['device_settings'])
             check_source(prepared.source_sha256)
             def sign_in_progress(stage):
-                progress('manual_nid_browser' if manual and stage == 'nid_browser' else stage)
-            capture = partial(nid.capture_nid_credential, bind_manual_email=True) if manual else nid.capture_nid_credential
-            data = runner.run(email, password='' if manual else password, timeout=180, selected_profile=selector,
+                progress(('manual_google_browser' if google else 'manual_nid_browser') if manual and stage == 'nid_browser' else stage)
+            capture = (partial(nid.capture_nid_credential, manual_google=True) if google else
+                       partial(nid.capture_nid_credential, bind_manual_email=True) if manual else nid.capture_nid_credential)
+            data = runner.run(email, password='' if manual else password, timeout=600 if google else 180, selected_profile=selector,
                 auth_flow='launcher', socks_port=port, _prepared_inputs=prepared, _capture=capture,
                 device_settings=settings['device_settings'], _progress=sign_in_progress)
         return data, prepared
 
     try:
-        data, prepared = sign_in(manual_sign_in)
+        data, prepared = sign_in(manual_sign_in or google)
     except nid.NidBrowserStatusError as error:
-        if manual_sign_in or error.browser_status != 'login_failed':
+        if google or manual_sign_in or error.browser_status != 'login_failed':
             raise
         # NID refused before SDK or mail actions. Open the same account's form without autofill.
         data, prepared = sign_in(True)
@@ -168,20 +217,20 @@ def verify(store, account, *, selector=None, manual_sign_in=False, progress=lamb
     completed = []
     if not data.verification_steps:
         return 'verified', completed
-    mail = load('nid-mail-code')
+    mail = None if google else load('nid-mail-code')
     library = nid._library()
     private_key = '|'.join((email, prepared.binding.device_key, prepared.binding.nm_device_key, str(port)))
     directory = HERE / '.local/verification-browser' / hashlib.sha256(private_key.encode()).hexdigest()[:32]
     for purpose in data.verification_steps:
         url = web_url(purpose, prepared, data, socket.gethostname()[:20])
         progress('verify_' + purpose)
-        mailbox = mail.RegistrationMailbox(email, mail_password,
+        mailbox = None if google else mail.RegistrationMailbox(email, mail_password,
             purpose=purpose if purpose == 'device-registration' else 'account-protection')
         try:
             result = browser(purpose, url=url, email=email, directory=directory, port=port,
                              library=library, mailbox=mailbox, progress=progress)
         finally:
-            mailbox.close()
+            if mailbox is not None: mailbox.close()
         if result != 'verified':
             return result, completed
         completed.append(purpose)

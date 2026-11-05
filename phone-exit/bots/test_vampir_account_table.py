@@ -138,18 +138,27 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  assert.equal(google.children[3].textContent,'Player');
  assert.equal(google.children[6].textContent,'UgPhone');
  assert.match(google.children[7].textContent,/Google/);
- assert.equal(google.children[0].children[0].disabled,true);
+ assert.equal(google.children[0].children[0].disabled,false);
  for(const column of [1,2]){assert.equal(google.children[column].children[0].children[0].textContent,'—');assert.equal(google.children[column].children[0].children[1].disabled,true);}
  vm.runInContext('edit(snapshot.accounts.at(-1))',context);
  assert.equal(nodes.get('login-provider').value,'google');
  assert.equal(nodes.get('login-provider').disabled,true);
  assert.equal(nodes.get('password').required,false);assert.equal(nodes.get('password').disabled,true);
  for(const id of ['start','servers','characters','create','register','prepare-sdk','manual-sign-in'])assert.equal(nodes.get(id).disabled,true,id);
- assert.match(nodes.get('provider-hint').textContent,/пока не подключён/);
+ assert.match(nodes.get('provider-hint').textContent,/код из Gmail/i);
  vm.runInContext("edit(null);el('login-provider').value='google';el('login-provider').onchange();",context);
  assert.equal(nodes.get('login-provider').disabled,false);assert.equal(nodes.get('password').required,false);
  vm.runInContext("el('login-provider').value='email';el('login-provider').onchange();",context);
  assert.equal(nodes.get('password').required,true);assert.equal(nodes.get('password').disabled,false);
+ vm.runInContext(`currentPc={device_settings:{cpu:{vendor:'AuthenticAMD',brand:'Fixture CPU'},windows:{major:10,minor:0,build:12345,product_type:1,suite_mask:256}},
+  display_metadata:{I_NMCPU:'AuthenticAMD|Fixture CPU',I_DeviceOSVersion:'10.0.12345.1.256.64bit'},unknown:[],os_display:'Windows fixture',source:'Fixture source',limits:''};
+  el('device').value='current-pc';showCurrentPc();`,context);
+ assert.equal(nodes.get('device-brand').value,'Fixture CPU');assert.equal(nodes.get('device-brand').readOnly,true);
+ assert.equal(vm.runInContext('JSON.stringify(readDevice())',context),'{}');
+ nodes.get('copy-current-pc').onclick();
+ assert.equal(nodes.get('device').value,'custom');assert.equal(nodes.get('device-brand').readOnly,false);
+ assert.equal(vm.runInContext('readDevice().cpu.brand',context),'Fixture CPU');
+ assert.equal(vm.runInContext('readDevice().identity',context),undefined);
  process.stdout.write('passed');
 })().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
 '''

@@ -1,0 +1,20 @@
+{
+  "observed_utc": "2026-11-05T22:23:21.274854+00:00",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "status": "verified",
+  "verification_status": "verified",
+  "verification_steps": [
+    "device-registration",
+    "workplace"
+  ],
+  "running": false,
+  "queue_state": "completed",
+  "manual_google": true,
+  "manual_gmail_code": true,
+  "schema": 1,
+  "provider": "google",
+  "account_reference": "User-selected Google account; identity retained in local private evidence",
+  "scope": "NID + SDK verification only; no game-world admission",
+  "netmarble_password_used": false,
+  "imap_used": false
+}

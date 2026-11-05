@@ -16,5 +16,5 @@ if ($request.compile_only) {
 }
 $script = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'verification-form.js') -Raw -Encoding UTF8
 $result = [VerificationBrowser]::Run([string]$request.url, [string]$request.purpose, [string]$request.game_code,
-    [string]$request.email, [string]$request.directory, [int]$request.port, $script)
+    [string]$request.email, [string]$request.directory, [int]$request.port, $script, [bool]$request.manual_code)
 [Console]::WriteLine($result)

@@ -2751,6 +2751,43 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Результат оставшихся этапов восстановленной очереди определяется текущими ответами сервера.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1450f3ef0"
+      ],
+      "checks": [
+        {
+          "cache_key": "b69cb041f3d3f72938bb8ea0ba36fafd5f6b28cd714fe6be8094741afa4a8a08",
+          "id": "sdk-runtime-launcher-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\62212bcc2a6fdc2a13967271f889eb9b526785003098e7d637a3c9e18b02164d\\manifest.json",
+          "sha256": "62212bcc2a6fdc2a13967271f889eb9b526785003098e7d637a3c9e18b02164d",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Google PCV2 связан с отдельным provider 29, Netmarble SDK credential 33 и ручным Gmail-кодом. Готовый native OnResult и SDK proofs переиспользованы. В живой проверке подтверждены device-registration и workplace; очередь завершена.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-GOOGLE-MANUAL-VERIFICATION.md",
+          "sha256": "2293acd3cd893d621f4bcdfc401aa3f78a80f7f3a04983c331fc7eb0d62a32d0"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\auth\\HEADLESS-GOOGLE-MANUAL-VERIFICATION-LIVE.json",
+          "sha256": "01ed3fc63edb59561605e4e7c2f6ebd5f88436c5ef0ad4eb0bc78789a40d9976"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "346bfe69d2c47c338d6d60536a35957fcded850d3479d09b6c08438db7e2b0d3",
+      "limits": [
+        "Статический OnResult и публичный web код; новый native Google lifecycle не исполнялся.",
+        "Новый Launcher composition использует HTTP/browser fixtures."
+      ],
+      "method": "static",
+      "next_check": "Игровой вход через Google и другие маршруты исследовать отдельными контрактами, не расширяя текущий допуск.",
+      "question": "sdk-launcher-runtime-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Google через SOCKS и игровой мир не подключены. Дополнительные аппаратные metadata custom-профилей сервером отдельно не проверены.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

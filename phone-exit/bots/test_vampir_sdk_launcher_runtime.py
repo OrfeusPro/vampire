@@ -140,6 +140,25 @@ class SdkLauncherRuntimeTests(unittest.TestCase):
         self.assertNotIn('provider-fixture', repr(first))
         self.assertNotIn('launcher-fixture', repr(second))
 
+    def test_google_nid_result_uses_the_same_admitted_launcher_token_contract(self):
+        from vampir_core.nid_google import parse_nid_google_callback
+        from vampir_core.sdk_launcher_auth import LauncherToken
+        provider = parse_nid_google_callback('nmthered://nmidprovider/result?resultCode=0&'
+            'accessToken=google-netmarble-fixture&refreshToken=&channelKey=googleIdKey&'
+            'netmarbleId=fixture-id&joinedCountryCode=HK', expected_game_code='thered')
+        with self.composition_fixture():
+            prepared = self.prepared()
+            token = Mock(return_value=LauncherToken('launcher-fixture'))
+            execute = Mock(return_value='synthetic-google-accepted')
+            with patch.object(self.runner.time, 'monotonic', return_value=100):
+                result = self.run_prepared(prepared, _capture=Mock(return_value=provider),
+                    _execute_token=token, _execute=execute)
+        self.assertEqual(result, 'synthetic-google-accepted')
+        self.assertEqual(json.loads(token.call_args.args[0].body)['credential']['channelCode'], 33)
+        self.assertEqual(json.loads(token.call_args.args[0].body)['credential']['channelAccessToken'],
+                         'google-netmarble-fixture')
+        self.assertNotIn('google-netmarble-fixture', repr(token.call_args.args[0]))
+
     def test_token_delay_expires_context_before_second_post(self):
         from vampir_core.sdk_launcher_auth import LauncherToken
         with self.composition_fixture():
@@ -339,6 +358,7 @@ class VerificationWebTests(unittest.TestCase):
         class LoginError(RuntimeError):
             browser_status = 'login_failed'
         store = Mock()
+        store.accounts.return_value = []
         store.credential.return_value = ('fixture@vampir.top', 'saved-password', {})
         runner = Mock()
         first, second = SimpleNamespace(source_sha256='fixture'), SimpleNamespace(source_sha256='fixture')

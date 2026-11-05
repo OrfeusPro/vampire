@@ -6,6 +6,7 @@ is an input to SDK sign-in, not its HTTP request, server token or game session.
 from dataclasses import dataclass, field
 
 from .nid_result import NidEmailCredential, validate_nid_email_result_fields
+from .nid_google import NidGoogleCredential, validate_nid_google_result_fields
 
 
 @dataclass(frozen=True, slots=True)
@@ -19,6 +20,14 @@ class NidSdkCredential:
 
 
 def build_nid_sdk_credential(email: NidEmailCredential) -> NidSdkCredential:
+    if isinstance(email, NidGoogleCredential):
+        # The official NID result follows /idp/google/token -> /signin/netmarble.
+        # Google ID tokens are handled by that web flow, never sent to SDK channel33.
+        checked = validate_nid_google_result_fields(dict(
+            resultCode='0', channelKey='googleIdKey', accessToken=email.access_token,
+            refreshToken=email.refresh_token, netmarbleId=email.netmarble_id,
+            joinedCountryCode=email.joined_country_code))
+        return NidSdkCredential(checked.access_token)
     if not isinstance(email, NidEmailCredential) or email.channel_type != 20:
         raise ValueError('Expected an explicitly validated NID email credential')
     checked = validate_nid_email_result_fields(dict(resultCode='0', channelKey='mailUserKey',

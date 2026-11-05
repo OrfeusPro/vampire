@@ -63,7 +63,7 @@ def validate_nid_email_result_fields(fields: dict[str, str]) -> NidEmailCredenti
     return NidEmailCredential(fields['accessToken'], fields['refreshToken'], fields['netmarbleId'], country)
 
 
-def parse_nid_email_callback(url: str, *, expected_game_code: str) -> NidEmailCredential:
+def parse_nid_callback_fields(url: str, *, expected_game_code: str) -> dict[str, str]:
     """Local callback boundary for the explicitly expected game/result route.
 
     Mirrors observed whole-query percent decoding before splitting fields,
@@ -98,4 +98,8 @@ def parse_nid_email_callback(url: str, *, expected_game_code: str) -> NidEmailCr
         if not separator or not name or name in fields:
             raise ValueError('Malformed or duplicate NID callback field')
         fields[name] = value
-    return validate_nid_email_result_fields(fields)
+    return fields
+
+
+def parse_nid_email_callback(url: str, *, expected_game_code: str) -> NidEmailCredential:
+    return validate_nid_email_result_fields(parse_nid_callback_fields(url, expected_game_code=expected_game_code))

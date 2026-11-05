@@ -4619,7 +4619,23 @@
         "phone-exit/bots/vampir-shared/vampir_core/windows_device_identity.py",
         "phone-exit/bots/vampir-shared/vampir_core/windows_version.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
-        "phone-exit/bots/vampir-headless/windows/nid-sign-in.js"
+        "phone-exit/bots/vampir-headless/windows/nid-sign-in.js",
+        "phone-exit/bots/vampir-shared/vampir_core/nid_google.py",
+        "phone-exit/bots/vampir-headless/current-pc.py",
+        "phone-exit/bots/vampir-headless/windows-system-inputs.py",
+        "phone-exit/bots/vampir-headless/windows/system-inputs.cpp",
+        "phone-exit/bots/vampir-headless/windows/system-inputs.vcxproj",
+        "phone-exit/bots/vampir-headless/build-system-inputs.ps1",
+        "phone-exit/bots/vampir-shared/vampir_core/windows_cpu.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/google-verification-web-current.json",
+        "phone-exit/bots/vampir-headless/nid-browser.py",
+        "phone-exit/bots/vampir-headless/windows/nid-browser.cs",
+        "phone-exit/bots/vampir-headless/windows/nid-browser.ps1",
+        "phone-exit/bots/vampir-headless/windows/nid-google-bridge.cs",
+        "phone-exit/bots/vampir-headless/windows/nid-http-diagnostics.cs",
+        "phone-exit/bots/vampir-headless/windows/verification-browser.cs",
+        "phone-exit/bots/vampir-headless/windows/verification-browser.ps1",
+        "phone-exit/bots/resource-tools/vampir/webview2.lock.json"
       ]
     }
   ],

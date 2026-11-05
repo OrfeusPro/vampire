@@ -8,8 +8,8 @@ $env:PATH = $library + ';' + $env:PATH
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -Path (Join-Path $library 'Microsoft.Web.WebView2.Core.dll')
 Add-Type -Path (Join-Path $library 'Microsoft.Web.WebView2.WinForms.dll')
-Add-Type -Path @((Join-Path $PSScriptRoot 'nid-browser.cs'), (Join-Path $PSScriptRoot 'nid-http-diagnostics.cs')) -ReferencedAssemblies @(
-    'System.Windows.Forms', 'System.Drawing', 'System.Web.Extensions',
+Add-Type -Path @((Join-Path $PSScriptRoot 'nid-browser.cs'), (Join-Path $PSScriptRoot 'nid-http-diagnostics.cs'), (Join-Path $PSScriptRoot 'nid-google-bridge.cs')) -ReferencedAssemblies @(
+    'System.Windows.Forms', 'System.Drawing', 'System.Web.Extensions', 'System.Web',
     (Join-Path $library 'Microsoft.Web.WebView2.Core.dll'),
     (Join-Path $library 'Microsoft.Web.WebView2.WinForms.dll')
 )
@@ -25,7 +25,7 @@ try {
     [NidBrowserHost]::Run([string]$request.url, [string]$request.game_code,
         [string]$request.data_directory, [int]$request.timeout, [bool]$request.smoke, [string]$request.account_hint,
         $signInScript, $emailJson, $passwordJson, [int]$request.socks_port, $registrationScript, $statusScript,
-        [bool]$request.bind_manual_email)
+        [bool]$request.bind_manual_email, [bool]$request.manual_google)
     @{status=[NidBrowserHost]::Status; callback=[NidBrowserHost]::Callback;
       blocked_external=[NidBrowserHost]::BlockedExternal; blocked_popups=[NidBrowserHost]::BlockedPopups;
       blocked_scheme=[NidBrowserHost]::LastBlockedScheme; sign_in_step=[NidBrowserHost]::SignInStep;

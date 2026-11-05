@@ -43,11 +43,11 @@ class Jobs:
         accounts = {row['id']: row for row in self.store.accounts()}
         for identifier in identifiers:
             row = accounts.get(identifier)
-            if (not row or not row['enabled'] or not row['mail_password_saved']
-                    or row.get('login_provider', 'email') != 'email'
-                    or not row['email'].endswith('@vampir.top')
-                    or self.jobs.get(identifier, {}).get('running')):
-                raise ValueError('Selected accounts must be enabled, stopped and have mail credentials')
+            google = row and row.get('login_provider') == 'google'
+            if (not row or not row['enabled'] or self.jobs.get(identifier, {}).get('running')
+                    or (google and row['socks_port'] is not None)
+                    or (not google and (not row['mail_password_saved'] or not row['email'].endswith('@vampir.top')))):
+                raise ValueError('Выберите свободные включённые аккаунты: Google с прямым выходом либо Netmarble с паролем почты @vampir.top.')
         spec = importlib.util.spec_from_file_location('account_verification_profile', HERE / 'verify-account.py')
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
@@ -137,7 +137,11 @@ class Jobs:
         if account is None:
             raise ValueError('Unknown account')
         if account.get('login_provider', 'email') == 'google':
-            raise ValueError('Вход через Google пока не подключён. Пароль Netmarble не используется.')
+            if operation != 'verify':
+                raise ValueError('Для Google пока доступна верификация с ручным входом и кодом.')
+            if account['socks_port'] is not None:
+                raise ValueError('Ручной вход Google поддерживает прямой выход ПК.')
+            manual_sign_in = True
         if not account.get('enabled', True):
             raise ValueError('This account is disabled')
         if operation == 'prepare-sdk':
@@ -369,6 +373,13 @@ def server(store, *, port=17949):
                     return self.response(200, dict(nickname=random_nickname(a.get('create_nickname', '') for a in store.accounts())))
                 if self.path == '/api/device-identity':
                     return self.response(200, dict(identity=new_identity()))
+                if self.path == '/api/current-pc':
+                    if body:
+                        raise ValueError('Current PC observation does not accept settings')
+                    spec = importlib.util.spec_from_file_location('console_current_pc', HERE / 'current-pc.py')
+                    module = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(module)
+                    return self.response(200, module.observation())
                 if self.path == '/api/connection-preset':
                     return self.response(200, dict(id=store.save_connection_preset(body['name'], body['settings'])))
                 if self.path == '/api/reveal':

@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "capability": "google-manual-verification",
+  "auth_snapshot": {
+    "path": "F:/PhoneExit Resources/Vampir/auth-web-snapshots/9cb5b24088a0fdaa5e40f42892442f7c9a310e8215eb29e9a25a0dc1ff40f2da/manifest.json",
+    "sha256": "9cb5b24088a0fdaa5e40f42892442f7c9a310e8215eb29e9a25a0dc1ff40f2da"
+  },
+  "public_js_sha256": "145539aa82203cc6d116938b505635275942ad5f65b0562983a0f8f35ddf85ac",
+  "observed_client_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "provider_channel": 29,
+  "sdk_credential_channel": 33,
+  "external_path": "/auth/idp/start/external-browser/google",
+  "callback": "onIDPResponse",
+  "required_markers": [
+    "google:\"googleIdKey\"",
+    "/idp/start/external-browser/",
+    "/idp/callback/external-browser/",
+    "/showExternalBrowser?url=",
+    "\"onIDPResponse\"",
+    "window.onIDPResponse=",
+    "method:\"get\",target:\"iframe\"",
+    "n.action=t,n.submit()",
+    "/signin/netmarble",
+    "/idp/signin/"
+  ],
+  "limits": [
+    "Manual Google input and Gmail code; direct PC route only.",
+    "The local JWT payload check binds the email; the official NID endpoint validates the ID token.",
+    "SDK and verification forms require their own admitted client profile; web evidence does not admit a different EXE."
+  ]
+}

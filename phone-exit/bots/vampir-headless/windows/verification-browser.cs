@@ -58,7 +58,7 @@ public static class VerificationBrowser {
         }
     }
 
-    public static string Run(string url, string purpose, string game, string email, string directory, int port, string script) {
+    public static string Run(string url, string purpose, string game, string email, string directory, int port, string script, bool manualCode) {
         bool device = purpose == "device-registration";
         string root = device ? "/secure/device" : "/restriction";
         string callback = "nm" + game + "://nmwebview/" + (device ?
@@ -134,13 +134,19 @@ public static class VerificationBrowser {
                     try {
                         var body = await Response(e.Response);
                         if (done) return;
-                        if (body == null || !Accepted(body)) { finish("server_rejected"); return; }
+                        if (body == null) { finish("response_unknown"); return; }
+                        if (!Accepted(body)) {
+                            if (manualCode && path == Mail + "/verify") return;
+                            finish("server_rejected"); return;
+                        }
                         if (path == Mail) {
                             sent = true;
                             actions.Add("mail_requested");
                             Console.WriteLine("mail_sent");
                             Console.Out.Flush();
-                            codeRead = Task.Factory.StartNew(() => Console.In.ReadLine());
+                            if (!manualCode) codeRead = Task.Factory.StartNew(() => Console.In.ReadLine());
+                        } else if (path == Mail + "/verify" && manualCode) {
+                            actions.Add("code_submitted");
                         } else if (path == completePath) {
                             mutation = true;
                             if (success) finish("verified");

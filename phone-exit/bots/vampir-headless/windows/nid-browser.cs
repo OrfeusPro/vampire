@@ -18,7 +18,7 @@ public static class NidBrowserHost {
 
     public static void Run(string startUrl, string gameCode, string dataDirectory, int timeoutSeconds, bool smoke, string accountHint,
             string signInScript, string emailJson, string passwordJson, int socksPort, string registrationScript, string statusScript,
-            bool bindManualEmail) {
+            bool bindManualEmail, bool manualGoogle) {
         Callback = null; Status = "cancelled"; BlockedExternal = 0; BlockedPopups = 0; LastBlockedScheme = "";
         SignInStep = "manual";
         NidHttpStatus = 0; NidErrorCode = null;
@@ -36,7 +36,8 @@ public static class NidBrowserHost {
         Application.EnableVisualStyles();
         using (Form form = new Form())
         using (WebView2 view = new WebView2())
-        using (Timer timer = new Timer()) {
+        using (Timer timer = new Timer())
+        using (var google = new NidGoogleBridge()) {
             form.Text = "Vampir — вход в аккаунт Netmarble";
             form.Width = 1050; form.Height = 800; form.StartPosition = FormStartPosition.CenterScreen;
             view.Dock = DockStyle.Fill;
@@ -52,7 +53,7 @@ public static class NidBrowserHost {
                 form.Controls.Add(hint);
             }
             if (smoke) { form.ShowInTaskbar = false; form.Opacity = 0; }
-            bool done = false, manualEmailMatched = false;
+            bool done = false, manualEmailMatched = false, googleReturned = false;
             bool signInBusy = false, emailOpened = false, filled = false;
             bool autoSignIn = !smoke && passwordJson != "\"\"" && !String.IsNullOrEmpty(passwordJson);
             bool registering = !smoke && !String.IsNullOrEmpty(registrationScript);
@@ -66,6 +67,18 @@ public static class NidBrowserHost {
             Action<string> custom = uri => {
                 BlockedExternal++;
                 if (done || uri == null || uri.Length > 32768) return;
+                if (manualGoogle && !smoke) {
+                    Uri origin;
+                    string externalUrl = NidGoogleBridge.ExternalUrl(uri, gameCode);
+                    bool official = Uri.TryCreate(view.CoreWebView2.Source,UriKind.Absolute,out origin) &&
+                        origin.Scheme == "https" && origin.Host == "members.netmarble.com" && origin.IsDefaultPort && origin.UserInfo == "";
+                    if (externalUrl != null && official && google.Response == null) {
+                        try { google.Start(externalUrl,accountHint); SignInStep = "manual_google";
+                            if (hint != null) hint.Text = "Войдите через Google в открытом браузере: " + accountHint;
+                        } catch { finish("browser_initialization_failed"); }
+                        return;
+                    }
+                }
                 Uri result;
                 if (Uri.TryCreate(uri, UriKind.Absolute, out result)) LastBlockedScheme = result.Scheme;
                 if (!Uri.TryCreate(uri, UriKind.Absolute, out result) || result.Scheme != "nm" + gameCode ||
@@ -74,7 +87,7 @@ public static class NidBrowserHost {
                 bool trusted = smoke || (Uri.TryCreate(view.CoreWebView2.Source, UriKind.Absolute, out source) &&
                     source.Scheme == "https" && source.Host == "members.netmarble.com");
                 if (!trusted) { finish("untrusted_callback_origin"); return; }
-                if (bindManualEmail && !manualEmailMatched) { finish("manual_account_unconfirmed"); return; }
+                if ((bindManualEmail && !manualEmailMatched) || (manualGoogle && !google.AccountMatched)) { finish("manual_account_unconfirmed"); return; }
                 Callback = uri;
                 finish("callback");
             };
@@ -184,6 +197,22 @@ public static class NidBrowserHost {
                 Uri source;
                 if (!Uri.TryCreate(view.CoreWebView2.Source, UriKind.Absolute, out source) || source.Scheme != "https" ||
                     source.Host != "members.netmarble.com" || !source.IsDefaultPort || source.UserInfo != "") return;
+                if (manualGoogle && google.Response != null && google.Response.IsCompleted) {
+                    if (google.Response.IsFaulted || google.Response.IsCanceled) { finish("browser_process_failed"); return; }
+                    string response = google.Response.Result;
+                    if (response != null) {
+                        signInBusy = true;
+                        try {
+                            // A closure-local flag prevents sending the same response twice.
+                            if (!googleReturned) {
+                                googleReturned = true;
+                                var json = new System.Web.Script.Serialization.JavaScriptSerializer();
+                                await view.CoreWebView2.ExecuteScriptAsync("window.onIDPResponse(" + json.Serialize(response) + ")");
+                            }
+                        } catch { finish("browser_process_failed"); return; }
+                        finally { signInBusy = false; }
+                    }
+                }
                 if (!registering) {
                     signInBusy = true;
                     try {

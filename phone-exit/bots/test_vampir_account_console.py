@@ -27,6 +27,132 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_first_verification_records_existing_pc_keys_without_replacing_a_complete_binding(self):
+        spec = importlib.util.spec_from_file_location('verify_binding_fixture', HERE / 'vampir-headless/verify-account.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        runner = MagicMock()
+        registry = runner.DeviceRegistry.return_value
+        registry.get.side_effect = KeyError('not bound')
+        identity = SimpleNamespace(device_key='observed-sdk', nm_device_key='observed-nm', nid_device_key='observed-nid')
+        runner.observe_windows_device_identity.return_value = identity
+        tool.ensure_pc_binding(runner, 'fixture@gmail.com')
+        registry.register.assert_called_once_with('fixture@gmail.com', kind='real')
+        self.assertEqual(registry.record_real_identity.call_args.kwargs['device_key'], 'observed-sdk')
+        self.assertEqual(registry.record_real_nid_identity.call_args.kwargs['nid_device_key'], 'observed-nid')
+        runner.reset_mock()
+        registry.get.side_effect = None
+        registry.get.return_value = SimpleNamespace(kind='real', identity_recorded=True, nid_identity_recorded=True)
+        tool.ensure_pc_binding(runner, 'fixture@gmail.com')
+        runner.observe_windows_device_identity.assert_not_called()
+        registry.register.assert_not_called()
+
+    def test_google_nid_result_keeps_provider_29_and_sdk_33_distinct(self):
+        from vampir_core.nid_google import parse_nid_google_callback
+        from vampir_core.nid_result import parse_nid_email_callback
+        from vampir_core.nid_sdk_credential import build_nid_sdk_credential
+        url = ('nmthered://nmidprovider/result?resultCode=0&accessToken=netmarble-fixture&refreshToken='
+               '&channelKey=googleIdKey&netmarbleId=fixture-id&joinedCountryCode=UA')
+        credential = parse_nid_google_callback(url, expected_game_code='thered')
+        self.assertEqual(credential.channel_type, 29)
+        self.assertEqual(build_nid_sdk_credential(credential).as_object(),
+                         dict(channelAccessToken='netmarble-fixture', channelCode=33))
+        self.assertNotIn('netmarble-fixture', repr(credential))
+        with self.assertRaises(ValueError):
+            parse_nid_email_callback(url, expected_game_code='thered')
+        for invalid in (url.replace('googleIdKey', 'mailUserKey'), url.replace('resultCode=0', 'resultCode=1'),
+                        url + '&accessToken=duplicate', url.replace('nmthered:', 'nmother:')):
+            with self.assertRaises(ValueError):
+                parse_nid_google_callback(invalid, expected_game_code='thered')
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows managed bridge')
+    def test_google_external_bridge_checks_route_and_account_without_opening_a_browser(self):
+        source = str((HERE / 'vampir-headless/windows/nid-google-bridge.cs').resolve()).replace("'", "''")
+        script = """$ErrorActionPreference='Stop'
+Add-Type -Path '__SOURCE__' -ReferencedAssemblies System.Web,System.Web.Extensions
+$nested='https://members.netmarble.com/auth/idp/start/external-browser/google?webViewType=sdk&clientId=fixture&encodedIdpUrl=https%3A%2F%2Faccounts.google.com%2F'
+$target='nmthered://nmwebview/showExternalBrowser?url='+[Uri]::EscapeDataString($nested)+'&callback=onIDPResponse'
+if (-not [NidGoogleBridge]::ExternalUrl($target,'thered')) { throw 'expected external route' }
+if ([NidGoogleBridge]::ExternalUrl($target.Replace('callback=onIDPResponse','callback=other'),'thered')) { throw 'wrong callback accepted' }
+if ([NidGoogleBridge]::ExternalUrl($target.Replace('nmthered:','nmother:'),'thered')) { throw 'wrong game accepted' }
+$claims='{"email":"fixture@gmail.com","email_verified":true,"iss":"https://accounts.google.com","aud":"fixture.apps.googleusercontent.com"}'
+$payload=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($claims)).TrimEnd('=').Replace('+','-').Replace('/','_')
+$query='?idToken=fixture.'+$payload+'.fixture'
+if (-not [NidGoogleBridge]::MatchesGoogleAccount($query,'fixture@gmail.com')) { throw 'account binding failed' }
+if ([NidGoogleBridge]::MatchesGoogleAccount($query,'other@gmail.com')) { throw 'wrong account accepted' }
+if ([NidGoogleBridge]::MatchesGoogleAccount('?idToken=malformed','fixture@gmail.com')) { throw 'bad token shape accepted' }
+$bridge=[NidGoogleBridge]::new()
+$client=[Net.WebClient]::new()
+$client.Proxy=$null
+try {
+  $script:opened=''
+  $bridge.Start($nested,'fixture@gmail.com',[Action[string]]{param($url) $script:opened=$url})
+  $redirect=[Web.HttpUtility]::ParseQueryString(([Uri]$script:opened).Query)['redirectUrl']
+  try { $null=$client.DownloadString($redirect.Replace(([Uri]$redirect).AbsolutePath,'/wrong/')+$query); throw 'bad nonce accepted' }
+  catch [Net.WebException] { if ([int]$_.Exception.Response.StatusCode -ne 403) { throw } }
+  $null=$client.DownloadString($redirect+$query)
+  if ($bridge.Response.Result -ne $query.Substring(1)) { throw 'callback query shape differs' }
+  if (-not $bridge.AccountMatched) { throw 'callback email unconfirmed' }
+} finally { $bridge.Dispose();$client.Dispose() }
+[Console]::Write('passed')
+""".replace('__SOURCE__', source)
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'bridge.ps1'
+            path.write_text(script, encoding='utf-8-sig')
+            result = __import__('subprocess').run(['powershell.exe', '-NoProfile', '-File', str(path)],
+                capture_output=True, timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr.decode('utf-8', 'replace'))
+        self.assertEqual(result.stdout.decode('utf-8-sig'), 'passed')
+
+    def test_google_verification_uses_manual_input_and_never_reads_mail_credentials(self):
+        from contextlib import nullcontext
+        spec = importlib.util.spec_from_file_location('google_verify_fixture', HERE / 'vampir-headless/verify-account.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('fixture@gmail.com', assignment={'login_provider': 'google'})
+            runner, nid = MagicMock(), MagicMock()
+            runner.load_inputs.return_value = SimpleNamespace(source_sha256='fixture-source',
+                binding=SimpleNamespace(device_key='fixture-sdk', nm_device_key='fixture-nm'))
+            runner.run.return_value = SimpleNamespace(verification_steps=['device-registration', 'workplace'])
+            modules = {'run-nid-sdk-sign-in': runner, 'nid-browser': nid}
+            with patch.object(tool, 'load', side_effect=lambda name: modules[name]), \
+                    patch.object(tool, 'scope', return_value=nullcontext()), patch.object(tool, 'check_source'), \
+                    patch.object(tool, 'check_google_web'), patch.object(tool, 'web_url', return_value='https://fixture.invalid'), \
+                    patch.object(tool, 'browser', return_value='verified') as browser, \
+                    patch.object(store, 'credential', side_effect=AssertionError('No password for Google')), \
+                    patch.object(store, 'reveal_password', side_effect=AssertionError('No IMAP for Google')):
+                result = tool.verify(store, identifier, selector='fixture-profile')
+            self.assertEqual(result, ('verified', ['device-registration', 'workplace']))
+            self.assertEqual(runner.run.call_args.kwargs['password'], '')
+            self.assertTrue(runner.run.call_args.kwargs['_capture'].keywords['manual_google'])
+            self.assertEqual(browser.call_count, 2)
+            self.assertTrue(all(call.kwargs['mailbox'] is None for call in browser.call_args_list))
+
+    def test_current_pc_observation_copies_hardware_without_private_identity(self):
+        from vampir_core.version_cpu import VersionCpuInput
+        from vampir_core.windows_version import WindowsVersion
+        spec = importlib.util.spec_from_file_location('current_pc_fixture', HERE / 'vampir-headless/current-pc.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        hardware = dict(manufacturer='Fixture Vendor', model='Fixture PC', memory_bytes=32 * 2**30,
+            gpu=['Fixture GPU', 'Fixture GPU'], os_caption='Windows fixture', os_version='10.0.12345',
+            timezone='Fixture Time', locale='uk-UA')
+        result = tool.observation(_system=lambda: (VersionCpuInput('GenuineIntel', 'Fixture CPU'),
+            WindowsVersion(10, 0, 12345, 1, 256)), _hardware=lambda: hardware)
+        self.assertNotIn('identity', result['device_settings'])
+        self.assertEqual(result['device_settings']['cpu']['brand'], 'Fixture CPU')
+        self.assertEqual(result['display_metadata']['I_NMRAM'], '32.00 GiB')
+        self.assertEqual(result['display_metadata']['I_NMVGA'], 'Fixture GPU')
+        self.assertEqual(result['display_metadata']['I_DeviceModel'], 'Fixture Vendor Fixture PC')
+        self.assertIn('10.0.12345', result['os_display'])
+        self.assertFalse(result['unknown'])
+        failed = MagicMock(side_effect=RuntimeError('fixture reader unavailable'))
+        unavailable = tool.observation(_system=failed, _hardware=failed)
+        self.assertEqual(unavailable['device_settings'], {})
+        self.assertEqual(len(unavailable['unknown']), 2)
+
     def test_google_accounts_have_no_netmarble_password_and_keep_their_provider(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'console.sqlite3'
@@ -61,7 +187,7 @@ class AccountConsoleTests(unittest.TestCase):
         spec.loader.exec_module(tool)
         with tempfile.TemporaryDirectory() as folder:
             store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
-            identifier = store.save('google@vampir.top', mail_password='fixture', assignment={'login_provider': 'google'})
+            identifier = store.save('google@unit.invalid', assignment={'login_provider': 'google'})
             jobs = tool.Jobs(store)
             with patch.object(tool.subprocess, 'Popen') as popen:
                 for operation in ('servers', 'characters', 'start', 'create', 'prepare-sdk'):
@@ -71,10 +197,14 @@ class AccountConsoleTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'Google'):
                     jobs.start(identifier, 'register')
                 popen.assert_not_called()
-            with patch.object(tool.importlib.util, 'spec_from_file_location') as load:
-                with self.assertRaises(ValueError):
-                    jobs.verify_batch([identifier])
-                load.assert_not_called()
+            verifier = MagicMock()
+            verifier.selected_profile.return_value = 'sdk-launcher:fixture'
+            with patch.object(tool.importlib.util, 'spec_from_file_location'), \
+                    patch.object(tool.importlib.util, 'module_from_spec', return_value=verifier), \
+                    patch.object(tool.subprocess, 'Popen') as popen, patch.object(tool.threading, 'Thread'):
+                jobs.verify_batch([identifier])
+                self.assertIn('--manual-sign-in', popen.call_args.args[0])
+                self.assertEqual(jobs.verification_snapshot()['active'], identifier)
 
     def test_manual_verification_resumes_saved_queue_without_repeating_completed_accounts(self):
         spec = importlib.util.spec_from_file_location('manual_verification_queue', HERE / 'vampir-headless/account-manager.py')

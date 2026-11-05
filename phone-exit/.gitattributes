@@ -643,3 +643,10 @@ bots/vampir-headless/windows/nid-browser.cs text eol=lf
 bots/vampir-headless/windows/nid-browser.ps1 text eol=lf
 bots/vampir-headless/windows/nid-sign-in.js text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-MANUAL-NID-QUEUE.md text eol=lf
+# Google verification evidence and its adapters retain exact hashes.
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GOOGLE-MANUAL-VERIFICATION.md text eol=lf
+bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-GOOGLE-MANUAL-VERIFICATION-LIVE.json text eol=lf
+bots/resource-tools/vampir/knowledge/google-verification-web-current.json text eol=lf
+bots/vampir-headless/current-pc.py text eol=lf
+bots/vampir-headless/windows/nid-google-bridge.cs text eol=lf
+bots/vampir-shared/vampir_core/nid_google.py text eol=lf
