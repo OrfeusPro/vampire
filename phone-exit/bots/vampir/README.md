@@ -14,6 +14,9 @@
 
 Текущий выпуск исследования — 1.13.22; целый игровой вход ещё не подтверждён.
 [Доказательства и границы](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-UPDATE-11322.md).
+[Статическая сверка семи SDK / Launcher entry функций](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-SDK-LAUNCHER-ENTRY-11322.md)
+подключена к штатному обновлению и кэшу. Следующий пакет — исполнение SDK/GMC2/NID
+и зависимости Launcher на текущем SHA.
 Свежие результаты работы скрипта читать из `update-watch status` и указанного
 run: версия в этом абзаце не заменяет проверку установленных файлов.
 

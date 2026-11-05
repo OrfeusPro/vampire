@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "recipe": "sdk-launcher-entry-shapes",
+  "scope": "static_entries_only",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "context": {
+    "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\native-contexts\\sdk-launcher-entry-11322.json",
+    "sha256": "29710075c6d2c06a3632c6bb2555d1aecd8186ef6ac5c60599564474bcb59d75"
+  },
+  "proof": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-launcher-entry-checks\\39f5a3be915107a68ebbc6b21dffd99770223f12a1ed6303b889f30526add6b9\\manifest.json",
+    "sha256": "39f5a3be915107a68ebbc6b21dffd99770223f12a1ed6303b889f30526add6b9"
+  },
+  "check": {
+    "id": "sdk-launcher-entry-shapes",
+    "state": "passed",
+    "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6d44cc6e4ea7a90705a4cc12f885bb4e27b7574a87944ae5af49372e04a800d3\\manifest.json",
+    "sha256": "6d44cc6e4ea7a90705a4cc12f885bb4e27b7574a87944ae5af49372e04a800d3",
+    "cache_key": "88696d8b42d56e549ab4af04daa73a2a4e9b5ff6ba1053a5b32d0aef0a0244da"
+  },
+  "instructions": {
+    "launcher-sign-in": 679,
+    "launcher-sign-in-response": 762,
+    "launcher-token": 652,
+    "launcher-token-response": 551,
+    "nid-context": 972,
+    "nid-result": 1041,
+    "sdk-constructor": 137
+  },
+  "instructions_total": 4794,
+  "new_exports": {
+    "jvm_runs": 1,
+    "roots": 5,
+    "run": "run-ff9992487494",
+    "project_reused": true
+  },
+  "ready_exports_reused": {
+    "roots": 2,
+    "run": "run-e1e179d90d4c"
+  },
+  "final_collection": "F:\\PhoneExit Resources\\Vampir\\knowledge\\research-scoped-v2-collections\\3855adb112599219a55510707cfcd6aa3e6877cb52531b9c530e5e1859e5847e\\manifest.json",
+  "registered_contracts": [
+    "sdk-gmc2",
+    "launcher"
+  ],
+  "historical_baseline": {
+    "batch": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-verified-11318\\084b88caf38b6a291b73216b441c6b3b177348222b3584f6824bc16adb349d9e\\manifest.json",
+      "sha256": "084b88caf38b6a291b73216b441c6b3b177348222b3584f6824bc16adb349d9e"
+    },
+    "profile": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\sdk-source-profiles\\4c8057b367524bc26e226088f5f5ef790309f82b8c81af90ffd7e829acdcd4d2\\manifest.json",
+      "sha256": "4c8057b367524bc26e226088f5f5ef790309f82b8c81af90ffd7e829acdcd4d2"
+    },
+    "historical_replay_executed": false
+  },
+  "unresolved_dependencies_in_proof": true,
+  "network_used": false,
+  "profile_activated": false,
+  "runtime_admitted": false,
+  "semantic_verification": false
+}

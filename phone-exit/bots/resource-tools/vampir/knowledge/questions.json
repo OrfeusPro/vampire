@@ -1243,6 +1243,29 @@
         "evidence/updates/AUTO-TOOLING-PATH-V1.json",
         "evidence/updates/AUTO-LIVE-OWNER-DIRECT-EU-V1.json"
       ]
+    },
+    {
+      "id": "sdk-launcher-entry-current",
+      "status": "bounded_answer",
+      "question": "Какие SDK/GMC2/NID и Launcher entry функции текущего SHA совпали с последней проверенной базой и какие зависимости ещё нужны для входа?",
+      "known": "Для 1.13.22 сопоставлены семь целых entry функций с базой 1.13.18. Два Launcher root взяты из готового экспорта, пять недостающих roots собраны одним пакетом. Статическая сверка проверяет NID switch, пути Launcher callbacks, route literals и CRT import _wtoi.",
+      "unknown": "Внешние calls/data, native исполнение SDK settings, GMC2/NID и Launcher requests/responses, runtime profile assembly и допуск целого входа текущего SHA.",
+      "next_action": "Перенести общий SDK batch по базе 1.13.18 и проверить Launcher transport/getters/dispatch/identity через сохранённые pairs. Готовые exports и entry shapes брать из проверенного кэша.",
+      "decision_rule": "Совпадение формы entry не доказывает implementations внешних callees/data, semantic контракт или runtime admission. Current SHA требует собственных проверок.",
+      "do_not_repeat": "Не собирать заново семь экспортированных roots и не повторять неизменную статическую сверку после проверки SHA квитанции.",
+      "addresses": [
+        "0x1444c4370",
+        "0x1450e3d30",
+        "0x1450f3ef0",
+        "0x1444eeb30",
+        "0x144503c70",
+        "0x1444cc310",
+        "0x1444d3890"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-SDK-LAUNCHER-ENTRY-11322.md",
+        "evidence/updates/AUTO-SDK-LAUNCHER-ENTRY-11322.json"
+      ]
     }
   ]
 }

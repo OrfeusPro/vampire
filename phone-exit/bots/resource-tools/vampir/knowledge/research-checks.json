@@ -11900,6 +11900,41 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py"
       ],
       "artifact_dependencies": []
+    },
+    {
+      "id": "sdk-launcher-entry-shapes",
+      "questions": [
+        "sdk-launcher-entry-current"
+      ],
+      "source_sha256": [
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f"
+      ],
+      "offline_reviewed": true,
+      "on_update": true,
+      "test_pattern": "test_vampir_sdk_launcher_entry.py",
+      "timeout_seconds": 90,
+      "runtime_distributions": [
+        "capstone"
+      ],
+      "dependencies": [
+        "phone-exit/bots/test_vampir_sdk_launcher_entry.py",
+        "phone-exit/bots/resource-tools/vampir/audit-sdk-launcher-entry.py",
+        "phone-exit/bots/resource-tools/vampir/audit-launcher-shape-11318.py",
+        "phone-exit/bots/resource-tools/vampir/build-native-entry-code.py",
+        "phone-exit/bots/resource-tools/vampir/build-object-zero-init-code.py",
+        "phone-exit/bots/resource-tools/vampir/extract-native-enums.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge-index.py",
+        "phone-exit/bots/resource-tools/vampir/knowledge/native-contexts/sdk-launcher-entry-11322.json"
+      ],
+      "artifact_dependencies": [
+        "client-code-snapshots/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/ProjectRED-Win64-Shipping.exe",
+        "client-code-snapshots/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/ProjectRED-Win64-Shipping.exe",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-9e79cd7f7832/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-5e88e50e265d/details.json",
+        "ghidra/request-exports/d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c/run-e3abc26162e7/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-e1e179d90d4c/details.json",
+        "ghidra/request-exports/03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f/run-ff9992487494/details.json"
+      ]
     }
   ]
 }

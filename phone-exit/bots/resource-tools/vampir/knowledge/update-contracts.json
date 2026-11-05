@@ -45,7 +45,8 @@
       "checks": [
         "sdk-profile-assembly-11316",
         "gmc2-geo-native-11316",
-        "sdk-native-batch-11318"
+        "sdk-native-batch-11318",
+        "sdk-launcher-entry-shapes"
       ],
       "recipes": [
         {
@@ -97,7 +98,8 @@
       ],
       "checks": [
         "release-launcher-contract",
-        "sdk-runtime-launcher-11316"
+        "sdk-runtime-launcher-11316",
+        "sdk-launcher-entry-shapes"
       ],
       "recipes": [
         {

@@ -2278,6 +2278,49 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Для текущего SHA нет подтверждённого пакета входа; создание персонажа требует отдельного допуска.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444c4370",
+        "0x1444cc310",
+        "0x1444d3890",
+        "0x1444eeb30",
+        "0x144503c70",
+        "0x1450e3d30",
+        "0x1450f3ef0"
+      ],
+      "checks": [
+        {
+          "cache_key": "88696d8b42d56e549ab4af04daa73a2a4e9b5ff6ba1053a5b32d0aef0a0244da",
+          "id": "sdk-launcher-entry-shapes",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\6d44cc6e4ea7a90705a4cc12f885bb4e27b7574a87944ae5af49372e04a800d3\\manifest.json",
+          "sha256": "6d44cc6e4ea7a90705a4cc12f885bb4e27b7574a87944ae5af49372e04a800d3",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "По точным EXE и SHA-checked exports совпали формы семи SDK/Launcher entry функций 18→22, всего 4794 инструкции. Проверены NID table, Launcher route/callback и CRT identity. Check включён в on_update и оба контракта.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-SDK-LAUNCHER-ENTRY-11322.md",
+          "sha256": "c4eaf23f08ab0ed686e88b0935a14cf929d78e4de237f27aabd6b91ad306b00b"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-SDK-LAUNCHER-ENTRY-11322.json",
+          "sha256": "f4f8692150602b8a2a2862ebd015181db347c4054f2601acaeba93bb527c1ba8"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "d0f2d5f1cd2c1a2344757e1d30a211aedfb3c85a683acd5278dff54dc8e88b10",
+      "limits": [
+        "Проверены статические формы entry, а внешние callees/data сохранены открытыми парами.",
+        "Native исполнение, active settings, profile assembly, создание и живой вход остаются отдельными проверками."
+      ],
+      "method": "static",
+      "next_check": "Перенести общий SDK batch по базе 1.13.18 и проверить Launcher transport/getters/dispatch/identity через сохранённые pairs. Готовые exports и entry shapes брать из проверенного кэша.",
+      "question": "sdk-launcher-entry-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Внешние calls/data, native исполнение SDK settings, GMC2/NID и Launcher requests/responses, runtime profile assembly и допуск целого входа текущего SHA.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,
