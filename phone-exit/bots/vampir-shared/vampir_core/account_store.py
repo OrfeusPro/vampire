@@ -89,6 +89,9 @@ class AccountStore:
             db.execute('''CREATE TABLE IF NOT EXISTS active_game_roster(
                 account_id TEXT PRIMARY KEY,region TEXT NOT NULL,server_id INTEGER NOT NULL,
                 character_name TEXT NOT NULL)''')
+            roster_columns = {row[1] for row in db.execute('PRAGMA table_info(active_game_roster)')}
+            if 'device_name' not in roster_columns:
+                db.execute("ALTER TABLE active_game_roster ADD COLUMN device_name TEXT NOT NULL DEFAULT ''")
             db.execute('CREATE TABLE IF NOT EXISTS verification_checkpoint(id INTEGER PRIMARY KEY CHECK(id=1), data TEXT NOT NULL)')
 
     def load_verification_checkpoint(self):
@@ -140,7 +143,7 @@ class AccountStore:
 
     @staticmethod
     def assignment(value):
-        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'device_settings', 'socks_port', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname', 'auth_flow'}:
+        if type(value) is not dict or set(value) - {'label', 'enabled', 'device_profile', 'device_settings', 'socks_port', 'region', 'server_id', 'character_index', 'character_key', 'create_nickname', 'create_class', 'create_random_nickname', 'auth_flow', 'login_provider'}:
             raise ValueError('Unknown account setting')
         enabled = value.get('enabled', True)
         if type(enabled) is not bool:
@@ -153,6 +156,9 @@ class AccountStore:
         auth_flow = value.get('auth_flow', 'launcher')
         if auth_flow not in ('launcher', 'nid'):
             raise ValueError('Invalid sign-in flow')
+        login_provider = value.get('login_provider', 'email')
+        if login_provider not in ('email', 'google'):
+            raise ValueError('Unknown login provider')
         create_class = value.get('create_class', DEFAULT_CLASS)
         random_name = value.get('create_random_nickname', True)
         if type(create_class) is not str or create_class not in {key for key, _ in CLASS_CHOICES} or type(random_name) is not bool:
@@ -181,19 +187,27 @@ class AccountStore:
         return dict(label=label, enabled=enabled, device_profile=profile, device_settings=device,
             socks_port=route_port(value.get('socks_port')), region=region, server_id=server,
             character_index=character, character_key=key, create_nickname=nickname,
-            create_class=create_class, create_random_nickname=random_name, auth_flow=auth_flow)
+            create_class=create_class, create_random_nickname=random_name, auth_flow=auth_flow,
+            login_provider=login_provider)
 
     def save(self, email, *, password=None, mail_password=None, assignment):
         email, assignment = _email(email), self.assignment(assignment)
+        google = assignment['login_provider'] == 'google'
+        if google and password is not None:
+            raise ValueError('Для Google пароль Netmarble не сохраняется.')
         protected = self.vault.encrypt(password) if password is not None else None
         protected_mail = self.vault.encrypt(mail_password) if mail_password is not None else None
         with self._db() as db:
             old = db.execute('SELECT id,password,assignment FROM accounts WHERE email=?', (email,)).fetchone()
-            if old is None and protected is None:
+            if old and self.assignment(json.loads(old[2]))['login_provider'] != assignment['login_provider']:
+                raise ValueError('Способ входа существующего аккаунта менять нельзя.')
+            if old is None and protected is None and not google:
                 raise ValueError('A new account requires a password')
             identifier = old[0] if old else str(uuid.uuid4())
+            # Empty BLOB means no password for federated accounts; it is never decrypted.
+            credential = protected if protected is not None else (old[1] if old else b'')
             db.execute('INSERT INTO accounts(id,email,password,assignment) VALUES(?,?,?,?) ON CONFLICT(email) DO UPDATE SET password=excluded.password,assignment=excluded.assignment',
-                (identifier, email, protected if protected is not None else old[1], json.dumps(assignment)))
+                (identifier, email, credential, json.dumps(assignment)))
             if old:
                 previous = self.assignment(json.loads(old[2]))
                 if any(previous[key] != assignment[key] for key in ('device_profile', 'device_settings', 'socks_port')):
@@ -225,6 +239,9 @@ class AccountStore:
                 if email in seen or type(name) is not str or not name.strip() or len(name) > 40 or any(ord(c) < 32 for c in name):
                     raise ValueError('Invalid active game roster entry')
                 seen.add(email)
+                device = entry.get('device')
+                if device is not None and (type(device) is not str or len(device) > 100 or any(ord(c) < 32 for c in device)):
+                    raise ValueError('Invalid reported device')
                 row = db.execute('SELECT id,assignment FROM accounts WHERE email=?', (email,)).fetchone()
                 if row is None:
                     raise ValueError('Active game roster requires an existing account')
@@ -238,24 +255,25 @@ class AccountStore:
                     assignment = self.assignment(assignment)
                     db.execute('UPDATE accounts SET assignment=? WHERE id=?', (json.dumps(assignment), identifier))
                     changed += 1
-                db.execute('''INSERT INTO active_game_roster VALUES(?,?,?,?)
+                db.execute('''INSERT INTO active_game_roster(account_id,region,server_id,character_name,device_name)
+                    VALUES(?,?,?,?,COALESCE(?,(SELECT device_name FROM active_game_roster WHERE account_id=?),''))
                     ON CONFLICT(account_id) DO UPDATE SET region=excluded.region,
-                    server_id=excluded.server_id,character_name=excluded.character_name''',
-                    (identifier, region, server, name))
+                    server_id=excluded.server_id,character_name=excluded.character_name,device_name=excluded.device_name''',
+                    (identifier, region, server, name, device, identifier))
         return changed
 
     def accounts(self):
         with self._db() as db:
             rows = db.execute('''SELECT a.id,a.email,a.assignment,a.mail_password IS NOT NULL,
-                    a.registration_status,a.mail_status,r.region,r.server_id,r.character_name
+                    a.registration_status,a.mail_status,r.region,r.server_id,r.character_name,length(a.password)>0,r.device_name
                 FROM accounts a LEFT JOIN active_game_roster r ON r.account_id=a.id ORDER BY a.rowid''').fetchall()
         result = []
-        for identifier, email, raw, mail_saved, registration, mail_status, region, server, name in rows:
+        for identifier, email, raw, mail_saved, registration, mail_status, region, server, name, password_saved, device in rows:
             assignment = self.assignment(json.loads(raw))
             same_server = (assignment['region'], assignment['server_id']) == (region, server)
-            result.append(dict(id=identifier, email=email, password_saved=True, mail_password_saved=bool(mail_saved),
+            result.append(dict(id=identifier, email=email, password_saved=bool(password_saved), mail_password_saved=bool(mail_saved),
                 registration_status=registration, mail_status=mail_status, active_game_account=name is not None,
-                reported_character_name=name if same_server else None, **assignment))
+                reported_character_name=name if same_server else None, reported_device=device or '', **assignment))
         return result
 
     def reveal_password(self, identifier, kind):
@@ -265,7 +283,7 @@ class AccountStore:
         column = 'mail_password' if kind == 'mail' else 'password'
         with self._db() as db:
             row = db.execute('SELECT ' + column + ' FROM accounts WHERE id=?', (identifier,)).fetchone()
-        if row is None or row[0] is None:
+        if row is None or not row[0]:
             raise ValueError('Password is not saved')
         return self.vault.decrypt(row[0])
 
@@ -427,6 +445,8 @@ class AccountStore:
             row = db.execute('SELECT email,password,assignment FROM accounts WHERE id=?', (identifier,)).fetchone()
         if row is None:
             raise KeyError('Unknown account')
+        if self.assignment(json.loads(row[2]))['login_provider'] == 'google':
+            raise ValueError('Вход через Google пока не подключён. Пароль Netmarble не используется.')
         return row[0], self.vault.decrypt(row[1]), json.loads(row[2])
 
     def save_catalog(self, region, data):

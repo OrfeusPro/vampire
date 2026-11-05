@@ -44,6 +44,7 @@ class Jobs:
         for identifier in identifiers:
             row = accounts.get(identifier)
             if (not row or not row['enabled'] or not row['mail_password_saved']
+                    or row.get('login_provider', 'email') != 'email'
                     or not row['email'].endswith('@vampir.top')
                     or self.jobs.get(identifier, {}).get('running')):
                 raise ValueError('Selected accounts must be enabled, stopped and have mail credentials')
@@ -135,6 +136,8 @@ class Jobs:
         account = next((a for a in self.store.accounts() if a['id'] == identifier), None)
         if account is None:
             raise ValueError('Unknown account')
+        if account.get('login_provider', 'email') == 'google':
+            raise ValueError('Вход через Google пока не подключён. Пароль Netmarble не используется.')
         if not account.get('enabled', True):
             raise ValueError('This account is disabled')
         if operation == 'prepare-sdk':

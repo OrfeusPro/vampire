@@ -91,8 +91,8 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  await new Promise(resolve=>setImmediate(resolve));
  vm.runInContext(`snapshot={accounts:[{id:'fixture',email:'fixture@unit.invalid',region:'EU',server_id:384,password_saved:true,mail_password_saved:true,mail_status:'planned',create_class:'Gunner',character_key:'11'}],jobs:{},catalogs:{EU:{servers:[{id:384,name:'Prelude 2'}]}},creation_classes:[{key:'Gunner',label:'Carnage'}],character_lists:{'fixture|EU|384':{characters:[{key:'11',name:'Confirmed'}]}}};renderRoster();`,context);
  let row=nodes.get('roster-body').children[0];
- assert.equal(row.children.length,7);assert.equal(row.children[3].textContent,'Confirmed');
- assert.equal(row.children[5].textContent,'EU · Prelude 2');assert.equal(row.children[6].textContent,'Ящик ещё не создан');
+ assert.equal(row.children.length,8);assert.equal(row.children[3].textContent,'Confirmed');
+ assert.equal(row.children[5].textContent,'EU · Prelude 2');assert.equal(row.children[7].textContent,'Ящик ещё не создан');
  assert.equal(calls.filter(c=>c.path==='/api/reveal').length,0);
  await row.children[1].children[0].children[1].onclick();
  row=nodes.get('roster-body').children[0];assert.equal(row.children[1].children[0].children[0].textContent,'fake-private-secret');
@@ -101,7 +101,7 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  assert.equal(row.children[1].children[0].children[0].textContent,'••••••••');
  assert.equal(vm.runInContext('shownPasswords.size',context),0);
  vm.runInContext(`snapshot.accounts[0].mail_status='verified';snapshot.accounts[0].registration_status='registered';snapshot.jobs.fixture={operation:'register',running:false,status:'stopped'};renderRoster();`,context);
- assert.match(nodes.get('roster-body').children[0].children[6].textContent,/Netmarble зарегистрирован/);
+ assert.match(nodes.get('roster-body').children[0].children[7].textContent,/Netmarble зарегистрирован/);
  let copied='',writes=0;
  context.navigator={clipboard:{writeText:async text=>{copied=text;writes++;}}};
  const cell=text=>({textContent:text,querySelector:()=>null});
@@ -129,6 +129,27 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  document.getElementById('roster').rows.push({cells:['active@vampir.top','••••••••','••••••••'].map(cell)});
  await nodes.get('copy-roster').onclick();
  assert.match(copied,/fixture@unit.invalid\tfixture\tfixture\r\nactive@vampir.top\tactive\tactive$/);
+ vm.runInContext(`snapshot.accounts.push({id:'google',email:'google@unit.invalid',login_provider:'google',region:'EU',server_id:381,
+  character_index:null,character_key:null,active_game_account:true,reported_character_name:'Player',reported_device:'UgPhone',
+  password_saved:false,mail_password_saved:false,create_class:'Gunner'});renderRoster();`,context);
+ const google=nodes.get('roster-body').children.at(-1);
+ assert.equal(google.children.length,8);
+ assert.equal(google.className,'active-game-account');
+ assert.equal(google.children[3].textContent,'Player');
+ assert.equal(google.children[6].textContent,'UgPhone');
+ assert.match(google.children[7].textContent,/Google/);
+ assert.equal(google.children[0].children[0].disabled,true);
+ for(const column of [1,2]){assert.equal(google.children[column].children[0].children[0].textContent,'—');assert.equal(google.children[column].children[0].children[1].disabled,true);}
+ vm.runInContext('edit(snapshot.accounts.at(-1))',context);
+ assert.equal(nodes.get('login-provider').value,'google');
+ assert.equal(nodes.get('login-provider').disabled,true);
+ assert.equal(nodes.get('password').required,false);assert.equal(nodes.get('password').disabled,true);
+ for(const id of ['start','servers','characters','create','register','prepare-sdk','manual-sign-in'])assert.equal(nodes.get(id).disabled,true,id);
+ assert.match(nodes.get('provider-hint').textContent,/пока не подключён/);
+ vm.runInContext("edit(null);el('login-provider').value='google';el('login-provider').onchange();",context);
+ assert.equal(nodes.get('login-provider').disabled,false);assert.equal(nodes.get('password').required,false);
+ vm.runInContext("el('login-provider').value='email';el('login-provider').onchange();",context);
+ assert.equal(nodes.get('password').required,true);assert.equal(nodes.get('password').disabled,false);
  process.stdout.write('passed');
 })().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
 '''

@@ -27,6 +27,55 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_google_accounts_have_no_netmarble_password_and_keep_their_provider(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'console.sqlite3'
+            store = AccountStore(path, FixtureVault())
+            identifier = store.save('google@unit.invalid', assignment={'login_provider': 'google', 'server_id': 381})
+            store.save('google@unit.invalid', assignment={'login_provider': 'google', 'server_id': 382})
+            account, = AccountStore(path, FixtureVault()).accounts()
+            self.assertEqual(account['id'], identifier)
+            self.assertEqual(account['login_provider'], 'google')
+            self.assertFalse(account['password_saved'])
+            self.assertFalse(account['mail_password_saved'])
+            self.assertEqual(account['server_id'], 382)
+            with self.assertRaisesRegex(ValueError, 'Google'):
+                store.credential(identifier)
+            with self.assertRaisesRegex(ValueError, 'not saved'):
+                store.reveal_password(identifier, 'netmarble')
+            with self.assertRaises(ValueError):
+                store.save(account['email'], password='not-a-google-password', assignment={'login_provider': 'google'})
+            with self.assertRaises(ValueError):
+                store.save(account['email'], password='fixture', assignment={})
+            self.assertFalse(store.accounts()[0]['password_saved'])
+            email_id = store.save('email@unit.invalid', password='fixture', assignment={})
+            with self.assertRaises(ValueError):
+                store.save('email@unit.invalid', assignment={'login_provider': 'google'})
+            email = next(a for a in store.accounts() if a['id'] == email_id)
+            self.assertEqual(email['login_provider'], 'email')
+            self.assertTrue(email['password_saved'])
+
+    def test_google_manual_login_cannot_start_the_email_worker(self):
+        spec = importlib.util.spec_from_file_location('google_account_jobs', HERE / 'vampir-headless/account-manager.py')
+        tool = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tool)
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            identifier = store.save('google@vampir.top', mail_password='fixture', assignment={'login_provider': 'google'})
+            jobs = tool.Jobs(store)
+            with patch.object(tool.subprocess, 'Popen') as popen:
+                for operation in ('servers', 'characters', 'start', 'create', 'prepare-sdk'):
+                    for manual in (True, False):
+                        with self.assertRaisesRegex(ValueError, 'Google'):
+                            jobs.start(identifier, operation, manual_sign_in=manual)
+                with self.assertRaisesRegex(ValueError, 'Google'):
+                    jobs.start(identifier, 'register')
+                popen.assert_not_called()
+            with patch.object(tool.importlib.util, 'spec_from_file_location') as load:
+                with self.assertRaises(ValueError):
+                    jobs.verify_batch([identifier])
+                load.assert_not_called()
+
     def test_manual_verification_resumes_saved_queue_without_repeating_completed_accounts(self):
         spec = importlib.util.spec_from_file_location('manual_verification_queue', HERE / 'vampir-headless/account-manager.py')
         tool = importlib.util.module_from_spec(spec)
@@ -67,7 +116,7 @@ class AccountConsoleTests(unittest.TestCase):
             store.save_characters(identifier, region='EU', server_id=381, observed_utc='2026-11-05T20:00:00Z',
                                   characters=[dict(index=0, key='123', name='Old server character')])
             store.registration_status(identifier, 'registered')
-            entry = dict(email=address, region='EU', server_id=385, character_name='Reported')
+            entry = dict(email=address, region='EU', server_id=385, character_name='Reported', device='UgPhone')
             with self.assertRaises(ValueError):
                 store.update_active_game_roster([entry, dict(entry, email='missing@vampir.top')])
             self.assertEqual(store.accounts()[0]['server_id'], 381)
@@ -85,6 +134,12 @@ class AccountConsoleTests(unittest.TestCase):
             self.assertTrue(updated['mail_password_saved'])
             self.assertTrue(updated['active_game_account'])
             self.assertEqual(updated['reported_character_name'], 'Reported')
+            self.assertEqual(updated['reported_device'], 'UgPhone')
+            store.update_active_game_roster([{k: v for k, v in entry.items() if k != 'device'}])
+            self.assertEqual(store.accounts()[0]['reported_device'], 'UgPhone')
+            with self.assertRaises(ValueError):
+                store.update_active_game_roster([dict(entry, device='bad\nvalue')])
+            self.assertEqual(store.accounts()[0]['reported_device'], 'UgPhone')
             self.assertEqual(store.character_lists()[identifier + '|EU|381']['characters'][0]['key'], '123')
             store.save(address, assignment=dict(server_id=386))
             self.assertTrue(store.accounts()[0]['active_game_account'])
