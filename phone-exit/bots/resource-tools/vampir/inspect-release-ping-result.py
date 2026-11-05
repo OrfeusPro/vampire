@@ -28,7 +28,8 @@ def run(packet='PktPingResult', *, source_sha=SHA, record=False):
             'PktNpc','PktNpcCreateData','PktNpcParam','PktNpcMoveNotify','PktCharacterOther',
             'PktCharacterLevelUpNotify','PktStat','PktStatChange','PktCharacter','PktStatChangeNotify','PktCharacterStopNotify'):
         raise ValueError('Explicit supported packet name required')
-    if type(record) is not bool or (record and packet not in ('PktStat','PktStatChange','PktCharacter')):
+    if type(record) is not bool or (record and packet not in ('PktStat','PktStatChange','PktCharacter',
+            'PktNpc','PktNpcCreateData','PktNpcParam')):
         raise ValueError('Explicit supported record name required')
     spec=importlib.util.spec_from_file_location('ping_result_native',HERE/'build-native-entry-code.py')
     native=importlib.util.module_from_spec(spec);spec.loader.exec_module(native)
