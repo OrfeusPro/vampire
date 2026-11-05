@@ -636,3 +636,4 @@ bots/resource-tools/vampir/knowledge/verification-web-current.json text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/auth/HEADLESS-ACCOUNT-VERIFICATION-11322.md text eol=lf
 bots/test_vampir_account_table.py text eol=lf
 bots/resource-tools/vampir/knowledge/evidence/auth/ACCOUNT-VERIFICATION-11322-VALIDATION.json text eol=lf
+bots/vampir-shared/vampir_core/account_store.py text eol=lf

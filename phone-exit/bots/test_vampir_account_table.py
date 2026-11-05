@@ -90,6 +90,18 @@ vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),context);
  await nodes.get('copy-roster').onclick();
  assert.equal(writes,1);assert.match(nodes.get('copy-roster-status').textContent,/Не удалось/);
  assert.equal(nodes.get('copy-roster').disabled,false);
+ context.fetch=async(path,request)=>({ok:true,json:async()=>({password:JSON.parse(request.body).id})});
+ vm.runInContext(`snapshot.accounts.unshift({id:'active',email:'active@vampir.top',region:'EU',server_id:384,
+  active_game_account:true,reported_character_name:'Reported',password_saved:true,mail_password_saved:true,create_class:'Gunner'});
+  renderRoster();`,context);
+ const [ordinary,active]=nodes.get('roster-body').children;
+ assert.equal(ordinary.children[0].children.at(-1).textContent,'fixture@unit.invalid');
+ assert.equal(active.className,'active-game-account');
+ assert.equal(active.children[3].textContent,'Reported');
+ assert.equal(active.children[5].textContent,'EU · Prelude 2');
+ document.getElementById('roster').rows.push({cells:['active@vampir.top','••••••••','••••••••'].map(cell)});
+ await nodes.get('copy-roster').onclick();
+ assert.match(copied,/fixture@unit.invalid\tfixture\tfixture\r\nactive@vampir.top\tactive\tactive$/);
  process.stdout.write('passed');
 })().catch(error=>{process.stderr.write(error.stack);process.exitCode=1;});
 '''

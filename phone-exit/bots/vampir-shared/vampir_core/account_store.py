@@ -86,6 +86,9 @@ class AccountStore:
             db.execute('''CREATE TABLE IF NOT EXISTS character_connections(
                 account_id TEXT,region TEXT,server_id INTEGER,character_key TEXT,data TEXT NOT NULL,
                 PRIMARY KEY(account_id,region,server_id,character_key))''')
+            db.execute('''CREATE TABLE IF NOT EXISTS active_game_roster(
+                account_id TEXT PRIMARY KEY,region TEXT NOT NULL,server_id INTEGER NOT NULL,
+                character_name TEXT NOT NULL)''')
 
     def character_connections(self):
         with self._db() as db:
@@ -199,11 +202,50 @@ class AccountStore:
                          json.dumps(connection)))
         return identifier
 
+    def update_active_game_roster(self, entries):
+        """Apply user-reported server and character details to existing accounts."""
+        seen = set()
+        changed = 0
+        with self._db() as db:
+            db.execute('BEGIN IMMEDIATE')
+            for entry in entries:
+                email = _email(entry['email'])
+                name = entry['character_name']
+                if email in seen or type(name) is not str or not name.strip() or len(name) > 40 or any(ord(c) < 32 for c in name):
+                    raise ValueError('Invalid active game roster entry')
+                seen.add(email)
+                row = db.execute('SELECT id,assignment FROM accounts WHERE email=?', (email,)).fetchone()
+                if row is None:
+                    raise ValueError('Active game roster requires an existing account')
+                identifier, previous = row
+                assignment = self.assignment(json.loads(previous))
+                region, server = entry['region'], entry['server_id']
+                if type(server) is not int:
+                    raise ValueError('Active game roster requires a server')
+                if (assignment['region'], assignment['server_id']) != (region, server):
+                    assignment.update(region=region, server_id=server, character_index=None, character_key=None)
+                    assignment = self.assignment(assignment)
+                    db.execute('UPDATE accounts SET assignment=? WHERE id=?', (json.dumps(assignment), identifier))
+                    changed += 1
+                db.execute('''INSERT INTO active_game_roster VALUES(?,?,?,?)
+                    ON CONFLICT(account_id) DO UPDATE SET region=excluded.region,
+                    server_id=excluded.server_id,character_name=excluded.character_name''',
+                    (identifier, region, server, name))
+        return changed
+
     def accounts(self):
         with self._db() as db:
-            rows = db.execute('SELECT id,email,assignment,mail_password IS NOT NULL,registration_status,mail_status FROM accounts ORDER BY rowid').fetchall()
-        return [dict(id=i, email=e, password_saved=True, mail_password_saved=bool(m), registration_status=r, mail_status=ms,
-            **self.assignment(json.loads(a))) for i, e, a, m, r, ms in rows]
+            rows = db.execute('''SELECT a.id,a.email,a.assignment,a.mail_password IS NOT NULL,
+                    a.registration_status,a.mail_status,r.region,r.server_id,r.character_name
+                FROM accounts a LEFT JOIN active_game_roster r ON r.account_id=a.id ORDER BY a.rowid''').fetchall()
+        result = []
+        for identifier, email, raw, mail_saved, registration, mail_status, region, server, name in rows:
+            assignment = self.assignment(json.loads(raw))
+            same_server = (assignment['region'], assignment['server_id']) == (region, server)
+            result.append(dict(id=identifier, email=email, password_saved=True, mail_password_saved=bool(mail_saved),
+                registration_status=registration, mail_status=mail_status, active_game_account=name is not None,
+                reported_character_name=name if same_server else None, **assignment))
+        return result
 
     def reveal_password(self, identifier, kind):
         # Explicit local UI action only; never include this in accounts()/state.

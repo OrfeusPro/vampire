@@ -27,6 +27,38 @@ class FixtureVault:
 
 
 class AccountConsoleTests(unittest.TestCase):
+    def test_active_game_roster_updates_existing_account_without_reusing_old_character_slot(self):
+        with tempfile.TemporaryDirectory() as folder:
+            store = AccountStore(Path(folder) / 'console.sqlite3', FixtureVault())
+            address = 'roster@vampir.top'
+            identifier = store.save(address, password='fixture', mail_password='mail', assignment=dict(
+                server_id=381, character_index=0, character_key='123', label='Personal label'))
+            store.save_characters(identifier, region='EU', server_id=381, observed_utc='2026-11-05T20:00:00Z',
+                                  characters=[dict(index=0, key='123', name='Old server character')])
+            store.registration_status(identifier, 'registered')
+            entry = dict(email=address, region='EU', server_id=385, character_name='Reported')
+            with self.assertRaises(ValueError):
+                store.update_active_game_roster([entry, dict(entry, email='missing@vampir.top')])
+            self.assertEqual(store.accounts()[0]['server_id'], 381)
+            self.assertFalse(store.accounts()[0]['active_game_account'])
+
+            self.assertEqual(store.update_active_game_roster([entry]), 1)
+            self.assertEqual(store.update_active_game_roster([entry]), 0)
+            updated, = store.accounts()
+            self.assertEqual(updated['server_id'], 385)
+            self.assertIsNone(updated['character_index'])
+            self.assertIsNone(updated['character_key'])
+            self.assertEqual(updated['id'], identifier)
+            self.assertEqual(updated['label'], 'Personal label')
+            self.assertEqual(updated['registration_status'], 'registered')
+            self.assertTrue(updated['mail_password_saved'])
+            self.assertTrue(updated['active_game_account'])
+            self.assertEqual(updated['reported_character_name'], 'Reported')
+            self.assertEqual(store.character_lists()[identifier + '|EU|381']['characters'][0]['key'], '123')
+            store.save(address, assignment=dict(server_id=386))
+            self.assertTrue(store.accounts()[0]['active_game_account'])
+            self.assertIsNone(store.accounts()[0]['reported_character_name'])
+
     def test_verification_queue_waits_for_cleanup_and_cancel_stops_next_account(self):
         spec = importlib.util.spec_from_file_location('verification_queue', HERE / 'vampir-headless/account-manager.py')
         tool = importlib.util.module_from_spec(spec)

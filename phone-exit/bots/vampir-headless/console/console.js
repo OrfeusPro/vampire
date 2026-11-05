@@ -8,6 +8,12 @@ async function api(path,body){const response=await fetch(path,{method:body?'POST
 function notice(text){el('notice').textContent=text;}
 function option(value,text){const node=document.createElement('option');node.value=value;node.textContent=text;return node;}
 function current(){return snapshot.accounts.find(a=>a.id===selected);}
+function rosterAccounts(){
+ return [
+  ...snapshot.accounts.filter(account=>!account.active_game_account),
+  ...snapshot.accounts.filter(account=>account.active_game_account),
+ ];
+}
 function servers(value){const catalog=snapshot.catalogs[el('region').value];el('server').replaceChildren(option('','Выберите сервер'));for(const server of catalog?.servers||[]){const node=option(server.id,server.name+(server.excluded?' · вход ограничен':''));node.disabled=server.excluded;el('server').append(node);}if(value&&!Array.from(el('server').options).some(o=>o.value===String(value)))el('server').append(option(value,'Сервер '+value+(catalog?' · отсутствует в каталоге':' · обновите каталог')));el('server').value=value??'';el('catalog-age').textContent=catalog?'Каталог: '+new Date(catalog.observed_utc).toLocaleString('ru-RU'): 'Каталог ещё не загружен';}
 function characters(value){const cached=snapshot.character_lists?.[selected+'|'+el('region').value+'|'+el('server').value];const job=snapshot.jobs[selected];const sameTarget=job?.region===el('region').value&&String(job?.server_id)===el('server').value;const rows=cached?.characters||(sameTarget?(job?.characters||[]):[]);el('characters-age').textContent=cached?'Подтверждённый список: '+new Date(cached.observed_utc).toLocaleString('ru-RU'):'Подтверждённый список пока не сохранён';el('character').replaceChildren(option('','Не назначен'));for(const row of rows){const node=option(row.index,row.name||'Персонаж '+(row.index+1));node.dataset.key=row.key;el('character').append(node);}if(value!==null&&value!==undefined&&!rows.some(r=>r.index===value)){const node=option(value,'Слот '+(value+1)+' · прочитайте персонажей');node.dataset.key=current()?.character_key||'';el('character').append(node);}el('character').value=value??'';}
 function edit(account){selected=account?.id||null;el('heading').textContent=account?.email||'Новый аккаунт';el('email').value=account?.email||'';el('email').readOnly=!!account;el('password').value='';el('mail-password').value='';el('terms').checked=false;el('manual-mail-code').checked=false;el('manual-sign-in').checked=false;el('registration-code').value='';el('sdk-country').value='';el('sdk-locale').value='';el('sdk-terms-mode').value='';el('password').required=!account;el('enabled').checked=account?.enabled!==false;el('label').value=account?.label||'';el('device').value=account?.device_profile||'current-pc';editConnection(account);el('auth-flow').value=account?.auth_flow||'launcher';el('region').value=account?.region||'EU';el('nickname').value=account?.create_nickname||'';el('random-nickname').checked=account?.create_random_nickname!==false;el('create-class').replaceChildren(...(snapshot.creation_classes||[]).map(c=>option(c.key,c.label)));el('create-class').value=account?.create_class||'Gunner';servers(account?.server_id);characters(account?.character_index);render();}
@@ -63,8 +69,9 @@ function renderRoster(){
  const body=el('roster-body');body.replaceChildren();
  const queue=snapshot.verification;
  const active=queue?.state==='running'||queue?.state==='cancelling';
- for(const account of snapshot.accounts){
+ for(const account of rosterAccounts()){
   const row=document.createElement('tr'),email=document.createElement('td'),link=document.createElement('button');
+  if(account.active_game_account) row.className='active-game-account';
   const checkbox=document.createElement('input');
   checkbox.type='checkbox';checkbox.className='verify-checkbox';
   checkbox.setAttribute('aria-label','Выбрать для верификации '+account.email);
@@ -86,7 +93,12 @@ function renderRoster(){
   const mailStatus=({created:'Почта создана',verified:'Почта проверена',unconfirmed:'Создание почты не подтверждено',error:'Ошибка почты'})[account.mail_status];
   const status=account.mail_status==='planned'?'Ящик ещё не создан':(mailStatus?mailStatus+' · ':'')+sessionStatus;
   const attempt=(snapshot.creation_attempts||[]).filter(a=>a.account_id===account.id&&a.region===account.region&&a.server_id===account.server_id).at(-1);
-  for(const value of [character?.name||(attempt?.character_name?attempt.character_name+' · не подтверждён списком':'—'),snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+(server?.name||account.server_id||'Не выбран'),status]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}
+  const name=document.createElement('td');
+  name.textContent=character?.name||account.reported_character_name||
+   (attempt?.character_name?attempt.character_name+' · не подтверждён списком':'—');
+  if(!character?.name&&account.reported_character_name) name.title='Ник из списка владельца аккаунтов';
+  row.append(name);
+  for(const value of [snapshot.creation_classes?.find(c=>c.key===account.create_class)?.label||account.create_class,account.region+' · '+(server?.name||account.server_id||'Не выбран'),status]){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}
   body.append(row);
  }
  renderVerification();
@@ -95,7 +107,7 @@ window.addEventListener('blur',()=>{shownPasswords.clear();renderRoster();});
 
 el('copy-roster').onclick=async()=>{
  const button=el('copy-roster'),status=el('copy-roster-status');
- const accounts=[...snapshot.accounts];
+ const accounts=rosterAccounts();
  const rows=Array.from(el('roster').rows,row=>Array.from(row.cells,cell=>
   (cell.querySelector('.password-cell span')||cell).textContent.replace(/[\t\r\n]+/g,' ')
  ));
