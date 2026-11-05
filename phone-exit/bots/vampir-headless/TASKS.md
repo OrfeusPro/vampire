@@ -18,9 +18,10 @@ exports и проверки вручную не повторять. Счётчи
   integrity остаются отдельными границами. [Готовый buffer / queue пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-AUTO-BUFFER-TRANSPORT-11322.md).
 - Вход и ответы: закрыть недостающие SDK / Version / Login / Character / heartbeat
   контракты текущего SHA; общий helper разбирать один раз для всех потребителей.
-  Семь SDK / Launcher entry форм проверены общим check в on_update. Продолжить
-  с полным SDK/GMC2/NID пакетом по финальной базе 1.13.18 и Launcher dependencies.
-  [Готовые exports, правила и следующий пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-SDK-LAUNCHER-ENTRY-11322.md).
+  SDK/GMC2/NID текущего SHA прошёл 3667 native случаев, девять component reports
+  подключены к трём source checks и общему кэшу. Продолжить с Launcher dependencies
+  и runtime composition, используя готовые четыре request / response формы.
+  [Готовые SDK доказательства и следующий пакет](../resource-tools/vampir/knowledge/evidence/updates/HEADLESS-SDK-BATCH-CURRENT.md).
 - Semantic adapters: подключать семейства, для которых автомат выдаёт конкретный
   unsupported reason. Function-only receipt не выдавать за исполненный сценарий.
 - После нового патча проверить полный проход обновлятора на установленном клиенте,

@@ -92,5 +92,48 @@ class UpdateProfileTests(unittest.TestCase):
         self.paths['defaults'].unlink();self.store('defaults',report)
         with self.assertRaisesRegex(ValueError,'stale=1'):self.resolve()
 
+    def generated_report(self):
+        definition=dict(schema=1,recipe='sdk-batch-generated-v1',source_sha256=self.sha,
+            baseline_sha256='a'*64,inputs={str(self.crt):self.index.digest(self.crt)},
+            templates={},tools_directory=str(HERE),exports={},runtime={})
+        key=hashlib.sha256(self.workflow.canonical(definition)).hexdigest()
+        folder=self.root/'knowledge/sdk-batch-generated-code'/key
+        folder.mkdir(parents=True)
+        files={}
+        for i in range(12):
+            path=folder/('fixture'+str(i)+'.py');path.write_text('# fixture, never imported\n')
+            files[str(path.resolve())]=self.index.digest(path)
+        proof=dict(definition,generation_key=key,files=files,
+            generated_templates={Path(path).name:path for path in files},
+            semantic_verification=False,network_used=False,profile_activated=False)
+        path=self.workflow.snapshot(self.root,'sdk-batch-generated-v1',proof)
+        report=copy.deepcopy(self.reports['defaults'])
+        file=Path(next(iter(files)))
+        report['dependencies'][str(file.resolve())]=files[str(file.resolve())]
+        report['sdk_generated_proof']=dict(path=str(path),sha256=self.index.digest(path))
+        self.paths['defaults'].unlink();self.store('defaults',report)
+        return file,report
+
+    def test_declared_generated_dependency_and_changed_output(self):
+        file,report=self.generated_report()
+        self.assertIn('defaults',self.resolve()['reports'])
+        file.write_text('# changed')
+        with self.assertRaisesRegex(ValueError,'generated input or output changed'):self.resolve()
+
+    def test_undeclared_external_dependency_rejects_even_with_generation(self):
+        file,report=self.generated_report()
+        extra=file.with_name('undeclared.py');extra.write_text('# never imported')
+        report['dependencies'][str(extra)]=self.index.digest(extra)
+        self.store('defaults',report,suffix='changed')
+        with self.assertRaisesRegex(ValueError,'outside tools or declared SDK generation'):self.resolve()
+
+    def test_generation_proof_sha_and_inputs_are_checked(self):
+        file,report=self.generated_report()
+        self.crt.write_bytes(b'changed generation input')
+        with self.assertRaisesRegex(ValueError,'generated input or output changed'):self.resolve()
+        self.crt.write_bytes(b'fixture CRT; never loaded')
+        proof=Path(report['sdk_generated_proof']['path']);proof.write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError,'proof path or SHA'):self.resolve()
+
 
 if __name__=='__main__':unittest.main()

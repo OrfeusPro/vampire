@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import subprocess
 import uuid
+import hashlib
 
 # Reviewed source-specific leaves: no unwind entry of their own. This is an explicit
 # source-specific analysis model, never permission to discover arbitrary callees.
@@ -23,7 +24,57 @@ REVIEWED_LEAF_TAILS = {
 }
 
 
-def checked_leaf_tails(native, image, sha):
+def declared_leaf_tails(native, image, sha, registry_path, root):
+    """Load finite returning stores from a source-checked SDK transfer proof."""
+    raw = Path(registry_path).read_bytes()
+    registry = json.loads(raw)
+    if len(raw) > 32768 or set(registry) != {'schema', 'models'} or registry['schema'] != 1 or len(registry['models']) > 16:
+        raise ValueError('Requested leaf registry budget or schema differs')
+    result = {}
+    decoder = native.capstone.Cs(native.capstone.CS_ARCH_X86, native.capstone.CS_MODE_64)
+    decoder.detail = True
+    for model in registry['models']:
+        if (set(model) != {'source_sha256', 'address', 'bytes', 'kind', 'proof'}
+                or not re.fullmatch('[0-9a-f]{64}', model['source_sha256'])
+                or model['kind'] != 'rip-u32-store-return'):
+            raise ValueError('Unreviewed requested leaf declaration')
+        if model['source_sha256'] != sha:
+            continue
+        proof = model['proof']
+        path = Path(proof['path']).resolve()
+        folder = (Path(root) / 'knowledge/sdk-batch-transfer-v1').resolve()
+        if (set(proof) != {'path', 'sha256'} or not path.is_relative_to(folder)
+                or path.name != 'manifest.json' or path.parent.name != proof['sha256']
+                or path.stat().st_size > 16 * 1024 * 1024):
+            raise ValueError('Requested leaf proof pointer differs')
+        payload = path.read_bytes()
+        if hashlib.sha256(payload).hexdigest() != proof['sha256']:
+            raise ValueError('Requested leaf proof SHA differs')
+        transfer = json.loads(payload)
+        if (transfer.get('recipe') != 'sdk-batch-transfer-v1' or transfer.get('source_sha256') != sha
+                or transfer.get('unresolved') != {} or transfer.get('semantic_verification') is not False):
+            raise ValueError('Requested leaf transfer source or scope differs')
+        at = int(model['address'], 16)
+        data = bytes.fromhex(model['bytes'])
+        leaves = [leaf for leaf in transfer['leaves'] if leaf['target'] == hex(at)
+                  and leaf['target_bytes'] == data.hex() and leaf['size'] == len(data) and leaf['kind'] == 'leaf']
+        if len(leaves) != 1 or len(data) != 7 or data[:2] != b'\x89\x0d' or data[-1:] != b'\xc3':
+            raise ValueError('Requested leaf proof body differs')
+        offset = image.offset(at - image.pe.base)
+        rows = list(decoder.disasm(data, at))
+        if (image.data[offset:offset + len(data)] != data or len(rows) != 2
+                or [row.mnemonic for row in rows] != ['mov', 'ret']
+                or rows[0].size != 6 or rows[1].size != 1):
+            raise ValueError('Requested leaf source or returning-store shape differs')
+        if at in result:
+            raise ValueError('Duplicate requested leaf model')
+        result[at] = data.hex()
+    if Path(registry_path).read_bytes() != raw:
+        raise ValueError('Requested leaf registry changed')
+    return result
+
+
+def checked_leaf_tails(native, image, sha, *, registry_path=None, root=None):
     result = {}
     decoder = native.capstone.Cs(native.capstone.CS_ARCH_X86, native.capstone.CS_MODE_64)
     decoder.detail = True
@@ -69,6 +120,11 @@ def checked_leaf_tails(native, image, sha):
         if sum(row.size for row in rows) != len(raw) or not valid:
             raise ValueError('Reviewed tail leaf control flow differs')
         result[at] = encoded
+    if registry_path is not None:
+        additional = declared_leaf_tails(native, image, sha, registry_path, root)
+        if set(additional) & set(result) or len(additional) + len(result) > 4:
+            raise ValueError('Requested leaf declarations overlap or exceed budget')
+        result.update(additional)
     return result
 
 
@@ -116,7 +172,10 @@ def collect(index, args, request, addresses):
     native = index.extension('build-native-entry-code')
     image = native.Image(source.read_bytes())
     function_ranges, tail_calls, tail_scans = {}, {}, {}
-    leaf_targets = checked_leaf_tails(native, image, sha)
+    leaf_registry = index.HERE / 'knowledge/requested-leaf-models.json'
+    leaf_registry_sha = index.digest(leaf_registry) if leaf_registry.is_file() else None
+    leaf_targets = checked_leaf_tails(native, image, sha,
+        registry_path=leaf_registry if leaf_registry.is_file() else None, root=args.root)
     explicit_roots = set()
     for item in request['functions']:
         at = int(item['address'], 16)
@@ -142,6 +201,13 @@ def collect(index, args, request, addresses):
             raise ValueError('Pinned Ghidra tooling required')
     script = index.HERE / 'InspectVampirSdkProfile.java'
     inputs = {str(path): index.digest(path) for path in (Path(__file__), script, lock_path, args.request)}
+    if leaf_registry.is_file():
+        if index.digest(leaf_registry) != leaf_registry_sha:
+            raise ValueError('Requested leaf registry changed before collection')
+        inputs[str(leaf_registry)] = leaf_registry_sha
+        for model in index.read_json(leaf_registry)['models']:
+            if model['source_sha256'] == sha:
+                inputs[model['proof']['path']] = model['proof']['sha256']
     project = args.root / 'ghidra/request-projects' / sha
     project.mkdir(parents=True, exist_ok=True)
     receipt_path = project / 'project.json'
@@ -159,9 +225,15 @@ def collect(index, args, request, addresses):
     context, references = out / 'source.json', out / 'references.json'
     used_leaves = {tail['target']: leaf_targets[int(tail['target'], 16)]
                    for tails in tail_calls.values() for tail in tails if int(tail['target'], 16) in leaf_targets}
+    returning_stores = {}
+    if leaf_registry.is_file():
+        for model in index.read_json(leaf_registry)['models']:
+            if model['source_sha256'] == sha and model['address'] in used_leaves:
+                returning_stores[model['address']] = model['bytes']
     context.write_bytes(workflow.canonical(dict(new_source_sha256=sha, requested_unwind_ranges=function_ranges,
                                               requested_tail_calls=tail_calls,requested_tail_scans=tail_scans,
-                                              requested_leaf_tail_targets=used_leaves)))
+                                              requested_leaf_tail_targets=used_leaves,
+                                              requested_leaf_returning_stores=returning_stores)))
     references.write_bytes(workflow.canonical(dict(source_sha256=sha,
         references=[dict(function=at, reason='Explicit request/unwind root; no role assigned') for at in addresses])))
     command = command_for(launcher=tools / lock['ghidra']['directory'] / 'support/analyzeHeadless.bat',

@@ -101,6 +101,8 @@ def run_checks(index, args, sha, question, *, check_ids=None, workflow=None):
     for definition in selected_checks(workflow, index, args.knowledge, question, check_ids):
         if definition['id'] == CHECK_ID:
             outcomes.append(grouped(index, workflow, args, definition))
+        elif sha in definition.get('generated_sdk_contexts', {}):
+            outcomes.extend(index.extension('sdk-check-guard').run(index, workflow, args, sha, definition))
         else:
             outcomes.extend(workflow.run_checks(index, args, sha, question,
                                                check_ids=[definition['id']]))

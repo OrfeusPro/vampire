@@ -2,11 +2,13 @@
 import ast
 import importlib.util
 import json
+import os
+import sys
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 
 HERE = Path(__file__).parent / 'resource-tools/vampir'
@@ -113,6 +115,69 @@ class ToolingCheckDispatchTests(unittest.TestCase):
         self.engine.run.assert_not_called()
         self.legacy.assert_called_once()
         self.assertEqual(self.legacy.call_args.kwargs['check_ids'], ['client-fixture'])
+
+    def generated_sdk_fixture(self):
+        sha='a'*64;identifier='sdk-native-batch-11318'
+        file=self.root/'generated.py';file.write_text('# fixture, never imported')
+        files={str(file):self.index.digest(file)}
+        executable=str(Path(sys.executable).resolve())
+        generation=self.workflow.snapshot(self.root,'sdk-batch-generated-v1',dict(
+            source_sha256=sha,inputs={executable:self.index.digest(executable)},files=files,
+            runtime=dict(executable=executable)))
+        context=self.knowledge/'sdk-fixture.json'
+        context.write_text(json.dumps(dict(schema=1,source_sha256=sha,
+            generation=dict(path=str(generation),sha256=self.index.digest(generation)))))
+        definition=dict(self.client,id=identifier,generated_sdk_contexts={sha:context.name},
+            dependencies=[context.relative_to(self.workspace).as_posix()])
+        self.write_registry([definition])
+        profile=SimpleNamespace(generated_dependencies=Mock(return_value=files))
+        self.engine._owner=load('tooling-groups-v1')._owner
+        original=self.index.extension
+        self.index.extension=lambda name: profile if name=='update-profile' else original(name)
+        def checked(*args,**kwargs):
+            self.assertEqual(os.environ.get('PHONEEXIT_VAMPIR_SDK_CHECK_SOURCE_SHA256'),sha)
+            path=self.workflow.snapshot(self.root,'check-results',dict(state='passed',
+                definition=dict(source_sha256=sha,check=dict(id=identifier),inputs={},artifacts={},executable=sys.executable)))
+            return [dict(id=identifier,state='passed',report=str(path),sha256=self.index.digest(path),cache_key='fixture')]
+        self.legacy.side_effect=checked
+        return identifier,file,context
+
+    def test_sdk_source_binding_and_generated_artifacts_survive_cached_check(self):
+        identifier,file,context=self.generated_sdk_fixture()
+        env='PHONEEXIT_VAMPIR_SDK_CHECK_SOURCE_SHA256'
+        with patch.dict(os.environ,{env:'prior-fixture'}):
+            result=self.run_check(check_ids=[identifier])[0]
+            self.assertEqual(os.environ[env],'prior-fixture')
+        report=self.index.read_json(result['report'])
+        self.assertIn(str(file),report['definition']['artifacts'])
+        self.assertIn(str(context.resolve()),report['definition']['artifacts'])
+        self.assertEqual(report['sdk_generation_guard']['recipe'],'sdk-check-guard-v1')
+        self.assertEqual(report['definition']['source_sha256'],'a'*64)
+
+    def test_sdk_input_change_during_cached_check_is_rejected(self):
+        identifier,file,_=self.generated_sdk_fixture()
+        original=self.legacy.side_effect
+        def changed(*args,**kwargs):
+            result=original(*args,**kwargs);file.write_text('# changed after parent result')
+            return result
+        self.legacy.side_effect=changed
+        with self.assertRaisesRegex(ValueError,'SDK check input changed'):
+            self.run_check(check_ids=[identifier])
+
+    def test_scoped_sdk_check_pins_only_the_current_python_as_runtime(self):
+        identifier,_,_=self.generated_sdk_fixture()
+        outcome=self.run_check(check_ids=[identifier])[0]
+        route=load('research-scoped-v2');kinds={}
+        scope=SimpleNamespace(root=self.root,pin=lambda path,sha,kind:kinds.update({str(path):kind}))
+        route.pin_checks(self.index,scope,[outcome])
+        self.assertEqual(kinds[str(Path(sys.executable).resolve())],'runtime')
+        guard=load('sdk-check-guard')
+        report=self.index.read_json(outcome['report'])
+        with self.assertRaisesRegex(ValueError,'registered SDK check'):
+            guard.runtime_inputs(self.index,self.workflow,self.root,report,'unreviewed-client')
+        report['definition']['executable']=str(self.runtime)
+        with self.assertRaisesRegex(ValueError,'Python identity'):
+            guard.runtime_inputs(self.index,self.workflow,self.root,report,identifier)
 
     def test_absent_manifest_keeps_legacy_fixture_behavior(self):
         self.manifest.unlink()

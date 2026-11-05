@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "recipe": "sdk-batch-v1",
+  "baseline_context": {
+    "path": "native-contexts/sdk-batch-11318.json",
+    "sha256": "ee415baa901a157f7a68ca2f301abe3595eb84caedc2a03397eddb8a6b367b64"
+  },
+  "baseline_native": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-verified-11318\\084b88caf38b6a291b73216b441c6b3b177348222b3584f6824bc16adb349d9e\\manifest.json",
+    "sha256": "084b88caf38b6a291b73216b441c6b3b177348222b3584f6824bc16adb349d9e"
+  },
+  "leaves": [
+    {
+      "address": "0x14145f1e0",
+      "size": 71,
+      "kind": "leaf"
+    },
+    {
+      "address": "0x14145f230",
+      "size": 75,
+      "kind": "leaf"
+    },
+    {
+      "address": "0x144552540",
+      "size": 7,
+      "kind": "leaf"
+    },
+    {
+      "address": "0x141453890",
+      "size": 5,
+      "kind": "tail"
+    },
+    {
+      "address": "0x1450f33eb",
+      "size": 5,
+      "kind": "boundary"
+    },
+    {
+      "address": "0x1450f46d1",
+      "size": 11,
+      "kind": "boundary"
+    }
+  ],
+  "cases": {
+    "replay-sdk-defaults-11318.py": 9,
+    "replay-sdk-overrides-11318.py": 106,
+    "replay-sdk-platform-11318.py": 12,
+    "replay-gmc2-base-11318.py": 512,
+    "replay-gmc2-url-11318.py": 27,
+    "replay-gmc2-headers-11318.py": 73,
+    "replay-gmc2-geo-11318.py": 672,
+    "replay-nid-context-11318.py": 32,
+    "replay-nid-result-11318.py": 1100,
+    "replay-nid-primitives-11318.py": 1124
+  }
+}

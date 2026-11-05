@@ -140,6 +140,9 @@ def pin_checks(index, scope, checks):
                     or any(definition.get('artifacts', {}).get(name) != expected
                            for name, expected in runtime_inputs.items())):
                 raise ValueError('Runtime групповой проверки не соответствует artifacts')
+        elif report.get('sdk_generation_guard', {}).get('recipe') == 'sdk-check-guard-v1':
+            runtime_inputs = index.extension('sdk-check-guard').runtime_inputs(
+                index, index.extension('research-workflow'), scope.root, report, outcome['id'])
         for field in ('inputs', 'artifacts'):
             for path, expected in definition.get(field, {}).items():
                 kind = ('runtime' if path in runtime_inputs or Path(path).parent ==

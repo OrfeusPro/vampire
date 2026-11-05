@@ -1,10 +1,35 @@
 import unittest
+import hashlib
+import json
+from pathlib import Path
+import tempfile
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 from test_vampir_update_contracts import load
 
 
 class RequestedTailCallsTests(unittest.TestCase):
+    def test_declared_store_model_checks_proof_source_and_body(self):
+        tool=load('collect-requested-functions');native=load('build-native-entry-code')
+        sha='b'*64;at=0x1445523a0;raw=bytes.fromhex('890d00000000c3')
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary)
+            proof=dict(recipe='sdk-batch-transfer-v1',source_sha256=sha,unresolved={},semantic_verification=False,
+                leaves=[dict(target=hex(at),target_bytes=raw.hex(),size=7,kind='leaf')])
+            payload=json.dumps(proof).encode();digest=hashlib.sha256(payload).hexdigest()
+            path=root/'knowledge/sdk-batch-transfer-v1'/digest/'manifest.json'
+            path.parent.mkdir(parents=True);path.write_bytes(payload)
+            model=dict(source_sha256=sha,address=hex(at),bytes=raw.hex(),kind='rip-u32-store-return',
+                proof=dict(path=str(path),sha256=digest))
+            registry=root/'models.json';registry.write_text(json.dumps(dict(schema=1,models=[model])))
+            image=SimpleNamespace(pe=SimpleNamespace(base=0x140000000),data=raw,offset=lambda rva:0)
+            self.assertEqual(tool.declared_leaf_tails(native,image,sha,registry,root),{at:raw.hex()})
+            self.assertEqual(tool.declared_leaf_tails(native,image,'a'*64,registry,root),{})
+            image.data=b'\x90'+raw[1:]
+            with self.assertRaisesRegex(ValueError,'source or returning-store'):tool.declared_leaf_tails(native,image,sha,registry,root)
+            image.data=raw;path.write_bytes(b'changed')
+            with self.assertRaisesRegex(ValueError,'proof SHA'):tool.declared_leaf_tails(native,image,sha,registry,root)
+
     def test_reviewed_sdk_leaf_requires_exact_source_and_bounded_return(self):
         tool=load('collect-requested-functions');native=load('build-native-entry-code')
         sha='d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c'

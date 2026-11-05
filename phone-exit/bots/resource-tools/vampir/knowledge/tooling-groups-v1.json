@@ -24,7 +24,9 @@
     "phone-exit/bots/resource-tools/vampir/tooling-runtime-v1.py",
     "phone-exit/bots/resource-tools/vampir/update-contracts.py",
     "phone-exit/bots/test_vampir_knowledge_index.py",
-    "phone-exit/bots/test_vampir_update_contracts.py"
+    "phone-exit/bots/test_vampir_update_contracts.py",
+    "phone-exit/bots/resource-tools/vampir/sdk-check-guard.py",
+    "phone-exit/bots/resource-tools/vampir/knowledge/requested-leaf-models.json"
   ],
   "groups": [
     {
@@ -4421,7 +4423,14 @@
         "phone-exit/bots/vampir-shared/vampir_core/world_move_finish_result.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start.py",
         "phone-exit/bots/vampir-shared/vampir_core/world_move_start_result.py",
-        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py"
+        "phone-exit/bots/vampir-shared/vampir_core/world_reserve_context.py",
+        "phone-exit/bots/resource-tools/vampir/generate-sdk-batch.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-batch-runner.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-batch-transfer.py",
+        "phone-exit/bots/resource-tools/vampir/sdk-check-guard.py",
+        "phone-exit/bots/resource-tools/vampir/update-profile.py",
+        "phone-exit/bots/test_vampir_sdk_batch_tools.py",
+        "phone-exit/bots/test_vampir_update_profile.py"
       ],
       "id": "update-orchestration",
       "test_modules": [
@@ -4435,6 +4444,8 @@
         "test_vampir_post_state_case_contracts",
         "test_vampir_native_response_adapter",
         "test_vampir_requested_tail_calls",
+        "test_vampir_sdk_batch_tools",
+        "test_vampir_update_profile",
         "test_vampir_update_run_v2",
         "test_vampir_update_owner_scope_v3",
         "test_vampir_update_process_group_v4",

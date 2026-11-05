@@ -47,6 +47,12 @@ public class InspectVampirSdkProfile extends GhidraScript {
                     "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c");
                 boolean setterLeaf = reviewedSource && at.getOffset() == 0x144552540L
                     && entry.getValue().getAsString().equals("890d9a5bc306c3");
+                boolean declaredSetter = source.has("requested_leaf_returning_stores")
+                    && source.getAsJsonObject("requested_leaf_returning_stores").has(entry.getKey())
+                    && source.getAsJsonObject("requested_leaf_returning_stores").get(entry.getKey()).getAsString()
+                        .equals(entry.getValue().getAsString())
+                    && expected.length == 7 && expected[0] == (byte)0x89 && expected[1] == (byte)0x0d
+                    && expected[6] == (byte)0xc3;
                 boolean jumpLeaf = reviewedSource && at.getOffset() == 0x144ab13f0L
                     && entry.getValue().getAsString().equals("488b491033d2e9c51b0000");
                 boolean archiveCleanup = source.get("new_source_sha256").getAsString().equals(
@@ -57,7 +63,7 @@ public class InspectVampirSdkProfile extends GhidraScript {
                     "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f")
                     && at.getOffset() == 0x141431fe0L
                     && entry.getValue().getAsString().equals("e9fb100500");
-                if ((!setterLeaf && !jumpLeaf && !archiveCleanup && !sizedFree) || expected.length < 1 || expected.length > 16)
+                if ((!setterLeaf && !declaredSetter && !jumpLeaf && !archiveCleanup && !sizedFree) || expected.length < 1 || expected.length > 16)
                     throw new IllegalStateException("Leaf tail byte/return budget");
                 byte[] actual = new byte[expected.length];
                 currentProgram.getMemory().getBytes(at, actual);
@@ -116,7 +122,8 @@ public class InspectVampirSdkProfile extends GhidraScript {
                     count++;
                 }
                 if (bytes != expected.length || ((jumpLeaf || archiveCleanup) && count != 3)
-                    || (sizedFree && count != 1)) throw new IllegalStateException("Leaf tail instruction gap");
+                    || (sizedFree && count != 1) || (declaredSetter && count != 2))
+                    throw new IllegalStateException("Leaf tail instruction gap");
                 Function leaf = currentProgram.getFunctionManager().getFunctionAt(at);
                 if (leaf == null) leaf = createFunction(at, null);
                 if (leaf == null) throw new IllegalStateException("Leaf tail function creation failed");

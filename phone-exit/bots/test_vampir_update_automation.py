@@ -64,6 +64,8 @@ MODULES = (
     'test_vampir_login_send_handoff_case_contracts',
     'test_vampir_login_send_handoff_harness',
     'test_vampir_requested_tail_calls',
+    'test_vampir_sdk_batch_tools',
+    'test_vampir_update_profile',
     'test_vampir_login_backend_wire_contracts',
     'test_vampir_login_backend_wire_source',
     'test_vampir_login_backend_wire_rules',

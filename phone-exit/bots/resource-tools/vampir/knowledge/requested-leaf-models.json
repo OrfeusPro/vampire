@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "models": [
+    {
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "address": "0x1445523a0",
+      "bytes": "890d3a6dc306c3",
+      "kind": "rip-u32-store-return",
+      "proof": {
+        "path": "F:/PhoneExit Resources/Vampir/knowledge/sdk-batch-transfer-v1/afc15bc191ef22d8efceec903d407dfc3c253be31d3f2823b210dfd2196ccaba/manifest.json",
+        "sha256": "afc15bc191ef22d8efceec903d407dfc3c253be31d3f2823b210dfd2196ccaba"
+      }
+    }
+  ]
+}

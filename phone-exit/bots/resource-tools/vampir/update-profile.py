@@ -2,8 +2,41 @@
 import hashlib
 import locale
 from pathlib import Path
+import re
 
 HERE=Path(__file__).resolve().parent
+
+
+def generated_dependencies(index, workflow, args, pointer, sha):
+    """Admit only files recorded by the immutable SDK generation recipe."""
+    if not isinstance(pointer,dict) or set(pointer)!={'path','sha256'}:
+        raise ValueError('SDK generated proof pointer differs')
+    path=Path(pointer['path']).resolve()
+    folder=(args.root/'knowledge/sdk-batch-generated-v1').resolve()
+    if (path.parent.parent!=folder or path.name!='manifest.json'
+            or path.parent.name!=pointer['sha256'] or index.digest(path)!=pointer['sha256']):
+        raise ValueError('SDK generated proof path or SHA differs')
+    proof=workflow.checked_manifest(index,path)
+    if (proof.get('schema')!=1 or proof.get('recipe')!='sdk-batch-generated-v1'
+            or proof.get('source_sha256')!=sha or proof.get('semantic_verification') is not False
+            or proof.get('network_used') is not False or proof.get('profile_activated') is not False
+            or not isinstance(proof.get('files'),dict) or len(proof['files'])!=12
+            or not isinstance(proof.get('inputs'),dict) or not 1<=len(proof['inputs'])<=256):
+        raise ValueError('SDK generated proof source, scope or files differ')
+    fields=('schema','recipe','source_sha256','baseline_sha256','inputs','templates',
+            'tools_directory','exports','runtime')
+    key=hashlib.sha256(workflow.canonical({name:proof[name] for name in fields})).hexdigest()
+    if key!=proof.get('generation_key') or set(proof['files'])!=set(proof['generated_templates'].values()):
+        raise ValueError('SDK generated definition differs')
+    output=(args.root/'knowledge/sdk-batch-generated-code'/key).resolve()
+    for name,digest in proof['files'].items():
+        file=Path(name)
+        if file.resolve().parent!=output or file.suffix!='.py' or str(file.resolve())!=name:
+            raise ValueError('SDK generated file outside declared output')
+    for name,digest in {**proof['inputs'],**proof['files']}.items():
+        if not isinstance(digest,str) or not re.fullmatch('[0-9a-f]{64}',digest) or index.digest(Path(name))!=digest:
+            raise ValueError('SDK generated input or output changed')
+    return proof['files']
 
 def assemble(reports):
     """Cross-check independently recorded outputs, without inventing missing cases."""
@@ -69,7 +102,7 @@ def resolve(index, workflow, args, contract, outcomes, sha):
             if (index.digest(path)!=check['sha256'] or proof.get('definition',{}).get('source_sha256')!=sha or
                 proof.get('state')!='passed' or proof.get('definition',{}).get('check',{}).get('id')!=check['id']):
                 raise ValueError('Profile check source/hash differs')
-    reports={};evidence={}
+    reports={};evidence={};generated={}
     for role,definition in contract['profile_reports'].items():
         pattern=definition['pattern']
         if not pattern.startswith('code-clues/') or '..' in pattern or not pattern.endswith('/*/manifest.json'):
@@ -82,9 +115,17 @@ def resolve(index, workflow, args, contract, outcomes, sha):
                 stale.append(str(path));continue
             current=True
             if not report.get('dependencies'):raise ValueError('Profile report has no dependencies')
+            allowed={}
+            if 'sdk_generated_proof' in report:
+                pointer=report['sdk_generated_proof']
+                key=(pointer.get('path'),pointer.get('sha256')) if isinstance(pointer,dict) else None
+                if key not in generated:
+                    generated[key]=generated_dependencies(index,workflow,args,pointer,sha)
+                allowed=generated[key]
             for filename,digest in report['dependencies'].items():
                 dependency=(HERE/filename).resolve()
-                if not dependency.is_relative_to(HERE.resolve()):raise ValueError('Profile dependency outside tools')
+                if not dependency.is_relative_to(HERE.resolve()) and allowed.get(str(dependency))!=digest:
+                    raise ValueError('Profile dependency outside tools or declared SDK generation')
                 if index.digest(dependency)!=digest:current=False
             if not current:stale.append(str(path));continue
             for artifact in report.get('evidence',[]):

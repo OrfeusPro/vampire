@@ -72,6 +72,11 @@
           "constructor": "0x1444c4510",
           "nid-context": "0x1450e3fb0",
           "nid-result": "0x1450f4170"
+        },
+        "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f": {
+          "constructor": "0x1444c4370",
+          "nid-context": "0x1450e3d30",
+          "nid-result": "0x1450f3ef0"
         }
       },
       "resources": [],
@@ -80,7 +85,7 @@
       "limits": [
         "Source checks cover only declared evidence/fixtures; no active game state or live compatibility claim."
       ],
-      "next_check": "SDK/GMC2/NID 1.13.18: общий native пакет и offline candidate проверены; новый runtime launcher профиль/source guards, актуальные CharacterList/clock/game profile и отдельная живая сессия ещё требуются.",
+      "next_check": "SDK/GMC2/NID текущего SHA проверен общим native пакетом. Далее Launcher source/runtime, остальные world contracts и отдельная живая проверка.",
       "targets": [
         "sdk-defaults-gmc2",
         "sdk-game-overrides",

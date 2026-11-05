@@ -2321,6 +2321,60 @@
       "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
       "unknown": "Внешние calls/data, native исполнение SDK settings, GMC2/NID и Launcher requests/responses, runtime profile assembly и допуск целого входа текущего SHA.",
       "validation_scope": "selected_materials_only"
+    },
+    {
+      "addresses": [
+        "0x1444c4370",
+        "0x1450e3d30",
+        "0x1450f3ef0"
+      ],
+      "checks": [
+        {
+          "cache_key": "78c1314424b8a8e0e3c0d39c9479961b4619f1000d8bbd9f9ef707df63e48d1b",
+          "id": "sdk-profile-assembly-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\dc7945c330b63fa313fcf6e3798fcab6d9fc65b84ab52166765aaec783e0b102\\manifest.json",
+          "sha256": "dc7945c330b63fa313fcf6e3798fcab6d9fc65b84ab52166765aaec783e0b102",
+          "state": "passed"
+        },
+        {
+          "cache_key": "24e57b0bacb249486a9438b83843424040844104d694701e7a48e37ef98cf569",
+          "id": "gmc2-geo-native-11316",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\18bab708f14aafdec7de53f1f0aa259d51aec63f00a7ce8fccba37bbfe8578b3\\manifest.json",
+          "sha256": "18bab708f14aafdec7de53f1f0aa259d51aec63f00a7ce8fccba37bbfe8578b3",
+          "state": "passed"
+        },
+        {
+          "cache_key": "a5c1836775977ff89225481eee1537b6a9c3c268e178fbb3f00986dc55204ff9",
+          "id": "sdk-native-batch-11318",
+          "report": "F:\\PhoneExit Resources\\Vampir\\knowledge\\check-results\\1fa180150ce47a0d513c0196d9aedf85e5bb4b0e46d13c98481c0d7cbedaa79a\\manifest.json",
+          "sha256": "1fa180150ce47a0d513c0196d9aedf85e5bb4b0e46d13c98481c0d7cbedaa79a",
+          "state": "passed"
+        }
+      ],
+      "conclusion": "Общий SDK/GMC2/NID перенос 34 roots на текущий SHA прошёл 3667 native случаев. Девять component reports и offline SDK candidate опубликованы, три обязательных source checks подключены к обновлению и общему cache.",
+      "evidence": [
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\HEADLESS-SDK-BATCH-CURRENT.md",
+          "sha256": "15fb46afd79f4eb08a856f313117774221adecc9d1ff20a041d9c024e0139ce9"
+        },
+        {
+          "path": "G:\\OSPanel\\home\\vampire\\phone-exit\\bots\\resource-tools\\vampir\\knowledge\\evidence\\updates\\AUTO-SDK-BATCH-CURRENT.json",
+          "sha256": "ce4d937d74b819fbb88a06684a4a509a0cc5e7bd00b010cca76a8dd68171d705"
+        }
+      ],
+      "global_history_verified": false,
+      "id": "c1c439784b0d92440d3e32eb09b6e94a759ec1cdb74d36a91b862cc4c1c22e1a",
+      "limits": [
+        "SDK storage/engine/HTTP boundaries остаются объявленными fixtures; active startup/backend не выполнялись.",
+        "Профиль целого входа, создание персонажа и online acceptance требуют Launcher и остальных world contracts.",
+        "Следующий SHA получает собственные exports/proofs и зарегистрированный source variant."
+      ],
+      "method": "bounded_native",
+      "next_check": "Перенести общий Launcher пакет и выполнить его offline composition через текущие SDK reports, затем подготовить bundle после остальных admission checks.",
+      "question": "sdk-batch-native-current",
+      "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+      "unknown": "Launcher keys/transport/getters/dispatch/identity и runtime composition, прочие world entry и создание Carnage текущего SHA.",
+      "validation_scope": "selected_materials_only"
     }
   ],
   "schema": 1,

@@ -1266,6 +1266,25 @@
         "evidence/updates/HEADLESS-SDK-LAUNCHER-ENTRY-11322.md",
         "evidence/updates/AUTO-SDK-LAUNCHER-ENTRY-11322.json"
       ]
+    },
+    {
+      "id": "sdk-batch-native-current",
+      "status": "bounded_answer",
+      "question": "Как перенести проверенный SDK/GMC2/NID пакет на текущий SHA и использовать его при следующем входе?",
+      "known": "Все 34 roots, две switch tables, четыре leaves и две code boundaries сопоставлены с базой 1.13.18. На target 1.13.22 прошли 3667 native случаев. Опубликованы девять component reports для существующего сборщика профиля. Готовые исторические сценарии не запускались.",
+      "unknown": "Launcher contract текущего SHA, active startup settings, реальный HTTP/backend, целый world-session bundle и live server acceptance.",
+      "next_action": "Использовать SDK package и кэш. Перенести Launcher keys/transport/getters/dispatch/identity, затем закрыть остальные world admission prerequisites до входа.",
+      "decision_rule": "SDK native fixtures подтверждают только объявленные границы. Свежая серверная авторизация и активные настройки требуют отдельного результата. Генерируемый код и reports допускаются только по точным SHA.",
+      "do_not_repeat": "Не повторять исторические native матрицы и неизменные целевые компоненты; продолжать сохранённый checkpoint.",
+      "addresses": [
+        "0x1444c4370",
+        "0x1450e3d30",
+        "0x1450f3ef0"
+      ],
+      "evidence": [
+        "evidence/updates/HEADLESS-SDK-BATCH-CURRENT.md",
+        "evidence/updates/AUTO-SDK-BATCH-CURRENT.json"
+      ]
     }
   ]
 }

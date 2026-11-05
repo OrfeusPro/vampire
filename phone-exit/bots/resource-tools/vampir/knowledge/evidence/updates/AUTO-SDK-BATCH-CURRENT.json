@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "recipe": "sdk-batch-v1",
+  "source_sha256": "03edad26033c85835ad8fdc1825df7aeb635e2c199055598ad926bf84b43739f",
+  "baseline_sha256": "d30708283d893756b0fc1ffe700344be1a41fe746683106704b01ce32611532c",
+  "method": "bounded_native",
+  "transfer": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-transfer-v1\\afc15bc191ef22d8efceec903d407dfc3c253be31d3f2823b210dfd2196ccaba\\manifest.json",
+    "sha256": "afc15bc191ef22d8efceec903d407dfc3c253be31d3f2823b210dfd2196ccaba"
+  },
+  "generation": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-generated-v1\\3fd0e3356d14ef4dab08fd65bf59fa1042d23a7591ae83e2e7fd4804f01e3a89\\manifest.json",
+    "sha256": "3fd0e3356d14ef4dab08fd65bf59fa1042d23a7591ae83e2e7fd4804f01e3a89"
+  },
+  "native": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-native-v1\\d73b3f0e246fb4fe5c3765698a33311a43fb9ae7c10f5155466db3cc952759ec\\manifest.json",
+    "sha256": "d73b3f0e246fb4fe5c3765698a33311a43fb9ae7c10f5155466db3cc952759ec"
+  },
+  "cold": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-native-invocations-v1\\2af0f64b9e9d203f05ee318c70eee087b329e8ea8479c34e17336508271e0f5e\\manifest.json",
+    "sha256": "2af0f64b9e9d203f05ee318c70eee087b329e8ea8479c34e17336508271e0f5e"
+  },
+  "warm": {
+    "path": "F:\\PhoneExit Resources\\Vampir\\knowledge\\sdk-batch-warm-acceptance\\2257b6a72c3f0ad9e3d35560483a530b24e5562b9c63d3fe9df6a752665a9dbb\\manifest.json",
+    "sha256": "2257b6a72c3f0ad9e3d35560483a530b24e5562b9c63d3fe9df6a752665a9dbb"
+  },
+  "cases": 3667,
+  "root_count": 34,
+  "unique_links": 6465,
+  "switch_tables": 2,
+  "leaves": 6,
+  "components": {
+    "defaults": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\sdk-defaults-generated-03edad26033c\\bc8939249c4efac2ace5596ffb8926604d131aa62402acabdd387f14bab70c12\\manifest.json",
+      "sha256": "bc8939249c4efac2ace5596ffb8926604d131aa62402acabdd387f14bab70c12"
+    },
+    "geo": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\gmc2-geo-generated-03edad26033c\\997bf91e0062fa486fbe24458a663659990556fe09803e0568a54ccb52f41c25\\manifest.json",
+      "sha256": "997bf91e0062fa486fbe24458a663659990556fe09803e0568a54ccb52f41c25"
+    },
+    "headers": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\gmc2-headers-generated-03edad26033c\\79401ba54dfa617fd1437ae852ad668365388edaa86b4e99c73f3cc50aed9110\\manifest.json",
+      "sha256": "79401ba54dfa617fd1437ae852ad668365388edaa86b4e99c73f3cc50aed9110"
+    },
+    "nid_base": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\nid-context-generated-03edad26033c\\c0ebdc2e50aabe28c779945ce0a9dbfe1d1648221da15dfc9f402afb2cd24bf3\\manifest.json",
+      "sha256": "c0ebdc2e50aabe28c779945ce0a9dbfe1d1648221da15dfc9f402afb2cd24bf3"
+    },
+    "nid_helpers": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\nid-primitives-generated-03edad26033c\\4e47a2ae7e383933c485660d0ff506336c5fb82e859178539cdb1b0df41d9fb2\\manifest.json",
+      "sha256": "4e47a2ae7e383933c485660d0ff506336c5fb82e859178539cdb1b0df41d9fb2"
+    },
+    "override": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\sdk-overrides-generated-03edad26033c\\7633396758d99cc2f37a8a53125ae48abc8862488305fabfe23b9eac2ff3454c\\manifest.json",
+      "sha256": "7633396758d99cc2f37a8a53125ae48abc8862488305fabfe23b9eac2ff3454c"
+    },
+    "platform": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\sdk-platform-generated-03edad26033c\\02883a9ce9be995b1dc9089c4ecdb82ee206416d8a5b68bebb0e1acffe3b3a49\\manifest.json",
+      "sha256": "02883a9ce9be995b1dc9089c4ecdb82ee206416d8a5b68bebb0e1acffe3b3a49"
+    },
+    "start": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\gmc2-base-generated-03edad26033c\\575235efc82f22bc5c1723f0d16e948c19d86c3863a71f0d38c5e4cc70d9162a\\manifest.json",
+      "sha256": "575235efc82f22bc5c1723f0d16e948c19d86c3863a71f0d38c5e4cc70d9162a"
+    },
+    "url": {
+      "path": "F:\\PhoneExit Resources\\Vampir\\code-clues\\gmc2-url-generated-03edad26033c\\f48cd4160d2e2f5c8eabc7a81f2c4b4b31ede24dbbc4985d701b841598f32045\\manifest.json",
+      "sha256": "f48cd4160d2e2f5c8eabc7a81f2c4b4b31ede24dbbc4985d701b841598f32045"
+    }
+  },
+  "primitive_cases": {
+    "channels": 176,
+    "numeric": 112
+  },
+  "historical_native_replayed": false,
+  "registered_checks": [
+    "sdk-profile-assembly-11316",
+    "gmc2-geo-native-11316",
+    "sdk-native-batch-11318"
+  ],
+  "profile_activated": false,
+  "runtime_admitted": false,
+  "network_used": false
+}
